@@ -21,6 +21,12 @@ android {
 
 group = 'co.touchlab.touchkit'
 version = '0.0.1'
+install {
+    repositories.mavenInstaller {
+        pom.artifactId = 'rk'
+        pom.packaging = 'aar'
+    }
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
