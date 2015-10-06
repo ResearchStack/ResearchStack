@@ -1,4 +1,4 @@
-# ResearchKit
+# RK
 
 ## Development Setup
 
@@ -27,7 +27,7 @@ Then add the following entry to your dependencies:
 ```
 dependencies {
     ...
-    compile 'android.researchkit:app:1.0'
+    compile 'co.touchlab.touchkit:app:1.0'
     ...
 }
 ```

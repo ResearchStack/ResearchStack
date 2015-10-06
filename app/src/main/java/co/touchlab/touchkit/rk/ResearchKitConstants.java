@@ -1,4 +1,4 @@
-package android.researchkit;
+package co.touchlab.touchkit.rk;
 
 public class ResearchKitConstants {
 

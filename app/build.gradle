@@ -19,7 +19,7 @@ android {
     }
 }
 
-group = 'android.researchkit'
+group = 'co.touchlab.touchkit'
 version = '0.0.1'
 
 dependencies {
