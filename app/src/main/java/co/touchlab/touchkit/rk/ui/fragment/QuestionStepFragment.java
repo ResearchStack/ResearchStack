@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.answerformat.BooleanAnswerFormat;
 import co.touchlab.touchkit.rk.common.helpers.TextChoice;
+import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
 import co.touchlab.touchkit.rk.common.step.Step;
 
@@ -23,7 +24,7 @@ public class QuestionStepFragment extends StepFragment
     {
     }
 
-    public static Fragment newInstance(QuestionStep step)
+    public static Fragment newInstance(QuestionStep step, StepResult result)
     {
         QuestionStepFragment fragment = new QuestionStepFragment();
         Bundle args = new Bundle();
