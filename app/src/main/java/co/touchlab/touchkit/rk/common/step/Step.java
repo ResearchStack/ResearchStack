@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import co.touchlab.touchkit.rk.common.task.Task;
 
-public class Step implements Parcelable
+public abstract class Step implements Parcelable
 {
 
     private String identifier;
@@ -20,9 +20,18 @@ public class Step implements Parcelable
 
     private Task task;
 
-    public Step(String identifier)
+    private boolean shouldTintImages;
+
+    private boolean showsProgress;
+
+    private boolean allowsBackNavigation;
+
+    private boolean useSurveyMode;
+
+    public Step(String identifier, String title)
     {
         this.identifier = identifier;
+        this.title = title;
     }
 
     public Step(Parcel in)
@@ -33,6 +42,10 @@ public class Step implements Parcelable
         title = in.readString();
         text = in.readString();
         task = in.readParcelable(Task.class.getClassLoader());
+        shouldTintImages = in.readInt() == 1;
+        showsProgress = in.readInt() == 1;
+        allowsBackNavigation = in.readInt() == 1;
+        useSurveyMode = in.readInt() == 1;
     }
 
     public String getIdentifier()
@@ -60,11 +73,6 @@ public class Step implements Parcelable
         return title;
     }
 
-    public void setTitle(String title)
-    {
-        this.title = title;
-    }
-
     public String getText()
     {
         return text;
@@ -85,12 +93,47 @@ public class Step implements Parcelable
         this.task = task;
     }
 
-
-    @Override
-    public int describeContents()
+    public boolean isUseSurveyMode()
     {
-        return 0;
+        return useSurveyMode;
     }
+
+    public void setUseSurveyMode(boolean useSurveyMode)
+    {
+        this.useSurveyMode = useSurveyMode;
+    }
+
+    public boolean isAllowsBackNavigation()
+    {
+        return allowsBackNavigation;
+    }
+
+    public void setAllowsBackNavigation(boolean allowsBackNavigation)
+    {
+        this.allowsBackNavigation = allowsBackNavigation;
+    }
+
+    public boolean isShowsProgress()
+    {
+        return showsProgress;
+    }
+
+    public void setShowsProgress(boolean showsProgress)
+    {
+        this.showsProgress = showsProgress;
+    }
+
+    public boolean isShouldTintImages()
+    {
+        return shouldTintImages;
+    }
+
+    public void setShouldTintImages(boolean shouldTintImages)
+    {
+        this.shouldTintImages = shouldTintImages;
+    }
+
+    public abstract Class getStepFragment();
 
     @Override
     public void writeToParcel(Parcel dest, int flags)
@@ -101,18 +144,10 @@ public class Step implements Parcelable
         dest.writeString(title);
         dest.writeString(text);
         dest.writeParcelable(task, 0);
+        dest.writeInt(shouldTintImages ? 1 : 0);
+        dest.writeInt(showsProgress ? 1 : 0);
+        dest.writeInt(allowsBackNavigation ? 1 : 0);
+        dest.writeInt(useSurveyMode ? 1 : 0);
     }
 
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
-    {
-        public Step createFromParcel(Parcel in)
-        {
-            return new Step(in);
-        }
-
-        public Step[] newArray(int size)
-        {
-            return new Step[size];
-        }
-    };
 }

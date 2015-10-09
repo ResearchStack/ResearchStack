@@ -2,6 +2,8 @@ package co.touchlab.touchkit.rk.common.step;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import co.touchlab.touchkit.rk.dev.DevUtils;
+
 public class InstructionStep extends Step implements Parcelable
 {
 
@@ -9,9 +11,10 @@ public class InstructionStep extends Step implements Parcelable
 
     private int imageResourceId;
 
-    public InstructionStep(String identifier)
+    public InstructionStep(String identifier, String title, String detailText)
     {
-        super(identifier);
+        super(identifier, title);
+        this.detailText = detailText;
     }
 
     public InstructionStep(Parcel in)
@@ -19,6 +22,13 @@ public class InstructionStep extends Step implements Parcelable
         super(in);
         this.detailText = in.readString();
         this.imageResourceId = in.readInt();
+    }
+
+    @Override
+    public Class getStepFragment()
+    {
+        DevUtils.throwUnsupportedOpException();
+        return null;
     }
 
     public int getImageResourceId()

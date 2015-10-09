@@ -1,6 +1,18 @@
 package co.touchlab.touchkit.rk.common.answerformat;
-public class AnswerFormat
+
+import android.os.Parcelable;
+
+import co.touchlab.touchkit.rk.common.helpers.TextChoice;
+import co.touchlab.touchkit.rk.dev.DevUtils;
+
+public abstract class AnswerFormat implements Parcelable
 {
+
+    public static AnswerFormat getChoiceAnswerFormatWithStyle(ChoiceAnswerStyle choiceAnswerStyle, TextChoice[] textChoices)
+    {
+        return null;
+    }
+
     public enum QuestionType
     {
         None,
@@ -20,25 +32,33 @@ public class AnswerFormat
     public enum ChoiceAnswerStyle
     {
         SingleChoice,
-        MultipleChoice
+        MultipleChoice;
     }
 
     public enum NumberFormattingStyle
     {
         Default,
-        Percent
+        Percent;
     }
 
-    private QuestionType questionType;
+    public AnswerFormat()
+    {
+    }
 
     public QuestionType getQuestionType()
     {
-        return questionType;
+        return QuestionType.None;
     }
 
-    public void setQuestionType(QuestionType questionType)
+    //TODO figure out if this makes sense
+    public Class getQuestionResultClass()
     {
-        this.questionType = questionType;
+        DevUtils.throwUnsupportedOpException();
+        return null;
+    }
+
+    public AnswerFormat getImpliedAnswerFormat() {
+        return this;
     }
 
 }
