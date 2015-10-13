@@ -26,4 +26,10 @@ public class StepViewPager extends ViewPager
     {
         return false;
     }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev)
+    {
+        return false;
+    }
 }
