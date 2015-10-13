@@ -1,11 +1,9 @@
 package co.touchlab.touchkit.rk.common.helpers;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
-public class TextChoice implements Parcelable
+public class TextChoice implements Serializable
 {
-
     private String text;
 
     private boolean value;
@@ -17,13 +15,6 @@ public class TextChoice implements Parcelable
         this.text = text;
         this.value = value;
         this.detailText = detailText;
-    }
-
-    public TextChoice(Parcel in)
-    {
-        text = in.readString();
-        value = in.readInt() == 1;
-        detailText = in.readString();
     }
 
     public String getText()
@@ -55,33 +46,4 @@ public class TextChoice implements Parcelable
     {
         this.detailText = detailText;
     }
-
-    @Override
-    public int describeContents()
-    {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeString(text);
-        dest.writeInt(value ? 1 : 0);
-        dest.writeString(detailText);
-    }
-
-    public static final Creator<TextChoice> CREATOR = new Creator<TextChoice>()
-    {
-        @Override
-        public TextChoice createFromParcel(Parcel in)
-        {
-            return new TextChoice(in);
-        }
-
-        @Override
-        public TextChoice[] newArray(int size)
-        {
-            return new TextChoice[size];
-        }
-    };
 }

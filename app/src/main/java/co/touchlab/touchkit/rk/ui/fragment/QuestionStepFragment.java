@@ -24,19 +24,19 @@ public class QuestionStepFragment extends StepFragment
     public static final String KEY_QUESTION_STEP = "KEY_STEP";
     public static final String KEY_STEP_RESULT = "KEY_STEP_RESULT";
     private QuestionStep step;
-    private StepResult stepResult;
+    private StepResult<QuestionResult<Boolean>> stepResult;
 
     public QuestionStepFragment()
     {
     }
 
-    public static Fragment newInstance(QuestionStep step, StepResult result)
+    public static Fragment newInstance(QuestionStep step, StepResult<QuestionResult<Boolean>> result)
     {
         QuestionStepFragment fragment = new QuestionStepFragment();
         Bundle args = new Bundle();
-        args.putParcelable(KEY_QUESTION_STEP,
+        args.putSerializable(KEY_QUESTION_STEP,
                 step);
-        args.putParcelable(KEY_STEP_RESULT,
+        args.putSerializable(KEY_STEP_RESULT,
                 result);
         fragment.setArguments(args);
         return fragment;
@@ -46,12 +46,12 @@ public class QuestionStepFragment extends StepFragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        step = getArguments().getParcelable(KEY_QUESTION_STEP);
-        stepResult = getArguments().getParcelable(KEY_STEP_RESULT);
+        step = (QuestionStep) getArguments().getSerializable(KEY_QUESTION_STEP);
+        stepResult = (StepResult<QuestionResult<Boolean>>) getArguments().getSerializable(KEY_STEP_RESULT);
 
         if (stepResult == null)
         {
-            stepResult = new StepResult(step.getIdentifier());
+            stepResult = new StepResult<QuestionResult<Boolean>>(step.getIdentifier());
         }
     }
 
@@ -79,11 +79,11 @@ public class QuestionStepFragment extends StepFragment
             public void onCheckedChanged(RadioGroup group, int checkedId)
             {
                 TextChoice textChoice = textChoices[checkedId];
-                QuestionResult questionResult = new QuestionResult(step.getIdentifier());
+                QuestionResult<Boolean> questionResult = new QuestionResult<Boolean>(step.getIdentifier());
                 questionResult.setAnswer(textChoice.getValue());
 
                 // TODO this is bad and we should feel bad
-                Map<String, QuestionResult> results = new HashMap<>();
+                Map<String, QuestionResult<Boolean>> results = new HashMap<>();
                 results.put(questionResult.getIdentifier(),
                         questionResult);
 

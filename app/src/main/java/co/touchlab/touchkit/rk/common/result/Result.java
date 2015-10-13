@@ -1,12 +1,10 @@
 package co.touchlab.touchkit.rk.common.result;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Result implements Parcelable
+public class Result implements Serializable
 {
 
     private String                  identifier;
@@ -20,14 +18,6 @@ public class Result implements Parcelable
         this.identifier = identifier;
         this.startDate = new Date();
         this.endDate = new Date();
-    }
-
-    protected Result(Parcel in)
-    {
-        identifier = in.readString();
-        startDate = new Date(in.readLong());
-        endDate = new Date(in.readLong());
-        saveable = in.readByte() != 0;
     }
 
     public String getIdentifier()
@@ -82,34 +72,4 @@ public class Result implements Parcelable
         }
         return false;
     }
-
-    @Override
-    public int describeContents()
-    {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeString(identifier);
-        dest.writeLong(startDate.getTime());
-        dest.writeLong(endDate.getTime());
-        dest.writeByte((byte) (saveable ? 1 : 0));
-    }
-
-    public static final Creator<Result> CREATOR = new Creator<Result>()
-    {
-        @Override
-        public Result createFromParcel(Parcel in)
-        {
-            return new Result(in);
-        }
-
-        @Override
-        public Result[] newArray(int size)
-        {
-            return new Result[size];
-        }
-    };
 }

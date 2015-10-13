@@ -1,8 +1,6 @@
 package co.touchlab.touchkit.rk.common.result;
 
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,18 +19,6 @@ public class TaskResult extends Result
         this.uuidTask = uuidTask;
         this.outputDirectory = outputDirectory;
         this.results = new HashMap<>();
-    }
-
-    public TaskResult(Parcel in)
-    {
-        super(in);
-        Bundle bundle = in.readBundle(StepResult.class.getClassLoader());
-        results = new HashMap<>();
-        for (String key : bundle.keySet())
-        {
-            results.put(key,
-                    (StepResult) bundle.getParcelable(key));
-        }
     }
 
     public UUID getUuidTask()
@@ -70,32 +56,4 @@ public class TaskResult extends Result
         results.put(identifier,
                 stepResult);
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        super.writeToParcel(dest,
-                flags);
-        Bundle bundle = new Bundle();
-        for(Map.Entry<String, StepResult> entry : results.entrySet())
-        {
-            bundle.putParcelable(entry.getKey(), entry.getValue());
-        }
-        dest.writeBundle(bundle);
-    }
-
-    public static final Creator<TaskResult> CREATOR = new Creator<TaskResult>()
-    {
-        @Override
-        public TaskResult createFromParcel(Parcel in)
-        {
-            return new TaskResult(in);
-        }
-
-        @Override
-        public TaskResult[] newArray(int size)
-        {
-            return new TaskResult[size];
-        }
-    };
 }

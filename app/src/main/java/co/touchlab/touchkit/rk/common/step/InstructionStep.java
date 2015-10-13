@@ -1,10 +1,8 @@
 package co.touchlab.touchkit.rk.common.step;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import co.touchlab.touchkit.rk.dev.DevUtils;
 
-public class InstructionStep extends Step implements Parcelable
+public class InstructionStep extends Step
 {
 
     private String detailText;
@@ -15,13 +13,6 @@ public class InstructionStep extends Step implements Parcelable
     {
         super(identifier, title);
         this.detailText = detailText;
-    }
-
-    public InstructionStep(Parcel in)
-    {
-        super(in);
-        this.detailText = in.readString();
-        this.imageResourceId = in.readInt();
     }
 
     @Override
@@ -50,31 +41,4 @@ public class InstructionStep extends Step implements Parcelable
     {
         this.detailText = detailText;
     }
-
-    @Override
-    public int describeContents()
-    {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        super.writeToParcel(dest, flags);
-        dest.writeString(getDetailText());
-        dest.writeInt(getImageResourceId());
-    }
-
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
-    {
-        public InstructionStep createFromParcel(Parcel in)
-        {
-            return new InstructionStep(in);
-        }
-
-        public InstructionStep[] newArray(int size)
-        {
-            return new InstructionStep[size];
-        }
-    };
 }

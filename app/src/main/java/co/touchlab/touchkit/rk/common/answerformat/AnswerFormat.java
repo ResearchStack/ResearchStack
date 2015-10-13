@@ -1,11 +1,11 @@
 package co.touchlab.touchkit.rk.common.answerformat;
 
-import android.os.Parcelable;
+import java.io.Serializable;
 
 import co.touchlab.touchkit.rk.common.helpers.TextChoice;
 import co.touchlab.touchkit.rk.dev.DevUtils;
 
-public abstract class AnswerFormat implements Parcelable
+public abstract class AnswerFormat implements Serializable
 {
 
     public static AnswerFormat getChoiceAnswerFormatWithStyle(ChoiceAnswerStyle choiceAnswerStyle, TextChoice[] textChoices)

@@ -1,11 +1,11 @@
 package co.touchlab.touchkit.rk.common.task;
 
-import android.os.Parcelable;
+import java.io.Serializable;
 
 import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.Step;
 
-public abstract class Task implements Parcelable
+public abstract class Task implements Serializable
 {
 
     private String identifier;

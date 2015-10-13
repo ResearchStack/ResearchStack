@@ -1,8 +1,5 @@
 package co.touchlab.touchkit.rk.common.result;
 
-import android.os.Bundle;
-import android.os.Parcel;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,18 +16,6 @@ public class CollectionResult extends Result
         this.results = new HashMap<>();
     }
 
-    public CollectionResult(Parcel in)
-    {
-        super(in);
-        Bundle bundle = in.readBundle();
-        results = new HashMap<>();
-        for (String key : bundle.keySet())
-        {
-            results.put(key,
-                    (Result) bundle.getParcelable(key));
-        }
-    }
-
     public Map<String, Result> getResults()
     {
         return results;
@@ -45,18 +30,5 @@ public class CollectionResult extends Result
     {
         DevUtils.throwUnsupportedOpException();
         return null;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        super.writeToParcel(dest,
-                flags);
-        Bundle bundle = new Bundle();
-        for(Map.Entry<String, Result> entry : results.entrySet())
-        {
-            bundle.putParcelable(entry.getKey(), entry.getValue());
-        }
-        dest.writeBundle(bundle);
     }
 }

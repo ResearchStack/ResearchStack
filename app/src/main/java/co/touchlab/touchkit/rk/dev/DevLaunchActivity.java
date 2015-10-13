@@ -39,9 +39,9 @@ public class DevLaunchActivity extends Activity
         {
             LogExt.d(getClass(),
                     "Got a result back from the ViewTaskActivity");
-            TaskResult taskResult = data.getParcelableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
-            StepResult stepResult1 = taskResult.getStepResultForStepIdentifier(questionStepOne.getIdentifier());
-            StepResult stepResult2 = taskResult.getStepResultForStepIdentifier(questionStepTwo.getIdentifier());
+            TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+            StepResult<QuestionResult<Boolean>> stepResult1 = taskResult.getStepResultForStepIdentifier(questionStepOne.getIdentifier());
+            StepResult<QuestionResult<Boolean>> stepResult2 = taskResult.getStepResultForStepIdentifier(questionStepTwo.getIdentifier());
             QuestionResult questionResult1 = stepResult1.getResultForIdentifier(questionStepOne.getIdentifier());
             QuestionResult questionResult2 = stepResult2.getResultForIdentifier(questionStepTwo.getIdentifier());
             LogExt.d(getClass(), questionResult1.getIdentifier() + " result: " + questionResult1.getAnswer());

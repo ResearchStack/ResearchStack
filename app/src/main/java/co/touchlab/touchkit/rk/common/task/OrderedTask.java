@@ -1,14 +1,13 @@
 package co.touchlab.touchkit.rk.common.task;
-import android.os.Parcel;
-import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.Step;
 
-public class OrderedTask extends Task implements Parcelable
+public class OrderedTask extends Task implements Serializable
 {
 
     private List<Step> steps;
@@ -23,13 +22,6 @@ public class OrderedTask extends Task implements Parcelable
     {
         super(identifier);
         this.steps = Arrays.asList(steps);
-    }
-
-    public OrderedTask(Parcel in)
-    {
-        super(in.readString());
-
-        steps = in.readArrayList(Step.class.getClassLoader());
     }
 
     @Override
@@ -77,31 +69,4 @@ public class OrderedTask extends Task implements Parcelable
         }
         return false;
     }
-
-    @Override
-    public int describeContents()
-    {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeString(getIdentifier());
-        dest.writeList(steps);
-    }
-
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
-    {
-        public OrderedTask createFromParcel(Parcel in)
-        {
-            return new OrderedTask(in);
-        }
-
-        public OrderedTask[] newArray(int size)
-        {
-            return new OrderedTask[size];
-        }
-    };
-
 }

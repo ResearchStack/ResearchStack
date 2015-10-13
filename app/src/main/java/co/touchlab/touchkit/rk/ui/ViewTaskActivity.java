@@ -45,7 +45,7 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         super.setContentView(R.layout.activity_fragment);
         super.setResult(RESULT_CANCELED);
 
-        task = getIntent().getParcelableExtra(EXTRA_TASK);
+        task = (OrderedTask) getIntent().getSerializableExtra(EXTRA_TASK);
         taskResult = new TaskResult(task.getIdentifier(), null, null);
 
         pager = (StepViewPager) findViewById(R.id.pager);
@@ -72,8 +72,10 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
     private void saveAndFinish()
     {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(EXTRA_TASK_RESULT, taskResult);
-        setResult(RESULT_OK, resultIntent);
+        resultIntent.putExtra(EXTRA_TASK_RESULT,
+                taskResult);
+        setResult(RESULT_OK,
+                resultIntent);
         finish();
     }
 
