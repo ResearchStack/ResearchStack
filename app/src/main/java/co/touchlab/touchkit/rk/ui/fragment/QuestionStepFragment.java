@@ -8,9 +8,13 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.answerformat.BooleanAnswerFormat;
 import co.touchlab.touchkit.rk.common.helpers.TextChoice;
+import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
 import co.touchlab.touchkit.rk.common.step.Step;
@@ -18,7 +22,9 @@ import co.touchlab.touchkit.rk.common.step.Step;
 public class QuestionStepFragment extends StepFragment
 {
     public static final String KEY_QUESTION_STEP = "KEY_STEP";
+    public static final String KEY_STEP_RESULT = "KEY_STEP_RESULT";
     private QuestionStep step;
+    private StepResult stepResult;
 
     public QuestionStepFragment()
     {
@@ -28,7 +34,10 @@ public class QuestionStepFragment extends StepFragment
     {
         QuestionStepFragment fragment = new QuestionStepFragment();
         Bundle args = new Bundle();
-        args.putParcelable(KEY_QUESTION_STEP, step);
+        args.putParcelable(KEY_QUESTION_STEP,
+                step);
+        args.putParcelable(KEY_STEP_RESULT,
+                result);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,6 +47,12 @@ public class QuestionStepFragment extends StepFragment
     {
         super.onCreate(savedInstanceState);
         step = getArguments().getParcelable(KEY_QUESTION_STEP);
+        stepResult = getArguments().getParcelable(KEY_STEP_RESULT);
+
+        if (stepResult == null)
+        {
+            stepResult = new StepResult(step.getIdentifier());
+        }
     }
 
     @Override
@@ -45,12 +60,36 @@ public class QuestionStepFragment extends StepFragment
     {
         BooleanAnswerFormat answerFormat = (BooleanAnswerFormat) step.getAnswerFormat();
         RadioGroup radioGroup = new RadioGroup(getContext());
-        for(TextChoice textChoice : answerFormat.getTextChoices())
+        final TextChoice[] textChoices = answerFormat.getTextChoices();
+
+        for (int i = 0; i < textChoices.length; i++)
         {
-            RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.item_checkbox, radioGroup, false);
+            TextChoice textChoice = textChoices[i];
+            RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.item_checkbox,
+                    radioGroup,
+                    false);
             radioButton.setText(textChoice.getText());
+            radioButton.setId(i);
             radioGroup.addView(radioButton);
         }
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                TextChoice textChoice = textChoices[checkedId];
+                QuestionResult questionResult = new QuestionResult(step.getIdentifier());
+                questionResult.setAnswer(textChoice.getValue());
+
+                // TODO this is bad and we should feel bad
+                Map<String, QuestionResult> results = new HashMap<>();
+                results.put(questionResult.getIdentifier(),
+                        questionResult);
+
+                stepResult.setResults(results);
+            }
+        });
 
         return radioGroup;
     }
@@ -59,5 +98,11 @@ public class QuestionStepFragment extends StepFragment
     public Step getStep()
     {
         return step;
+    }
+
+    @Override
+    protected StepResult getStepResult()
+    {
+        return stepResult;
     }
 }

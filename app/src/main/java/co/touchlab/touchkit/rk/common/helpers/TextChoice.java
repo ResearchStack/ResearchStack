@@ -36,7 +36,7 @@ public class TextChoice implements Parcelable
         this.text = text;
     }
 
-    public Object getValue()
+    public boolean getValue()
     {
         return value;
     }

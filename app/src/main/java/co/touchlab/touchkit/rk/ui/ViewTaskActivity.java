@@ -24,6 +24,7 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
 {
 
     public static final String EXTRA_TASK   = "ViewTaskActivity.ExtraTask";
+    public static final String EXTRA_TASK_RESULT   = "ViewTaskActivity.ExtraTaskResult";
     public static final int    REQUEST_CODE = 100;
     private OrderedTask task;
     private TaskResult taskResult;
@@ -32,7 +33,8 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
     public static Intent newIntent(Context context, Task task)
     {
         Intent intent = new Intent(context, ViewTaskActivity.class);
-        intent.putExtra(EXTRA_TASK, task);
+        intent.putExtra(EXTRA_TASK,
+                task);
         return intent;
     }
 
@@ -54,9 +56,25 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
     @Override
     public void onNextPressed(Step step, StepResult result)
     {
-        // TODO save result
+        taskResult.setStepResultForStepIdentifier(step.getIdentifier(), result);
         int next = pager.getCurrentItem() + 1;
-        pager.setCurrentItem(next);
+
+        if(next >= pager.getAdapter().getCount())
+        {
+            saveAndFinish();
+        }
+        else
+        {
+            pager.setCurrentItem(next);
+        }
+    }
+
+    private void saveAndFinish()
+    {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(EXTRA_TASK_RESULT, taskResult);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 
     private static class StepPagerAdapter extends FragmentPagerAdapter
@@ -76,7 +94,7 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         {
             Step step = steps.get(position);
             if (step instanceof QuestionStep){
-                return QuestionStepFragment.newInstance((QuestionStep) step, null);
+                return QuestionStepFragment.newInstance((QuestionStep) step, taskResult.getStepResultForStepIdentifier(step.getIdentifier()));
             } else {
                 DevUtils.throwUnsupportedOpException();
                 return null;

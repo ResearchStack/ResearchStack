@@ -13,7 +13,6 @@ import android.widget.TextView;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
-import co.touchlab.touchkit.rk.ui.ViewTaskActivity;
 
 public abstract class StepFragment extends Fragment
 {
@@ -52,14 +51,16 @@ public abstract class StepFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                // TODO send result
-                callbacks.onNextPressed(getStep(), null);
+                callbacks.onNextPressed(getStep(),
+                        getStepResult());
             }
         });
         TextView skip = (TextView) view.findViewById(R.id.skip);
 
         return view;
     }
+
+    protected abstract StepResult getStepResult();
 
     public abstract View getBodyView(LayoutInflater inflater);
 
