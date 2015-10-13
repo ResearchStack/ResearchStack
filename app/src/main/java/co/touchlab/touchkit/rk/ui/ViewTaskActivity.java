@@ -1,4 +1,5 @@
 package co.touchlab.touchkit.rk.ui;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.List;
 
 import co.touchlab.touchkit.rk.R;
+import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
@@ -17,8 +19,9 @@ import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.common.task.OrderedTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.dev.DevUtils;
-import co.touchlab.touchkit.rk.ui.fragment.QuestionStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.BooleanQuestionStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.StepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.TextQuestionStepFragment;
 
 public class ViewTaskActivity extends AppCompatActivity implements StepFragment.StepCallbacks
 {
@@ -96,7 +99,18 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         {
             Step step = steps.get(position);
             if (step instanceof QuestionStep){
-                return QuestionStepFragment.newInstance((QuestionStep) step, taskResult.getStepResultForStepIdentifier(step.getIdentifier()));
+                if(((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.SingleChoice)
+                {
+                    return BooleanQuestionStepFragment.newInstance((QuestionStep) step,
+                            taskResult.getStepResultForStepIdentifier(step.getIdentifier()));
+                }
+                else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Text)
+                {
+                    return TextQuestionStepFragment.newInstance((QuestionStep) step,
+                            taskResult.getStepResultForStepIdentifier(step.getIdentifier()));
+                }
+                DevUtils.throwUnsupportedOpException();
+                return null;
             } else {
                 DevUtils.throwUnsupportedOpException();
                 return null;

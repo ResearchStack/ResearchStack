@@ -8,6 +8,7 @@ import android.view.View;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
 import co.touchlab.touchkit.rk.common.answerformat.BooleanAnswerFormat;
+import co.touchlab.touchkit.rk.common.answerformat.TextAnswerFormat;
 import co.touchlab.touchkit.rk.common.helpers.LogExt;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
@@ -52,8 +53,11 @@ public class DevLaunchActivity extends Activity
     public void buttonClick(View view)
     {
         AnswerFormat answerFormat = new BooleanAnswerFormat();
+        AnswerFormat textFormat = new TextAnswerFormat();
         questionStepOne = new QuestionStep("intro", "What is the color blue?", answerFormat);
-        questionStepTwo = new QuestionStep("notIntro", "Why is the color blue?", answerFormat);
+//        questionStepTwo = new QuestionStep("notIntro", "Why is the color blue?", answerFormat);
+        questionStepTwo = new QuestionStep("text", "Is the color blue?", textFormat);
+
 
         OrderedTask task = new OrderedTask("task",
                 questionStepOne,
