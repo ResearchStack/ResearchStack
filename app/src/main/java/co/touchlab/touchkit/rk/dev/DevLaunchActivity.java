@@ -22,6 +22,9 @@ public class DevLaunchActivity extends Activity
 
     private QuestionStep questionStepOne;
     private QuestionStep questionStepTwo;
+    private QuestionStep questionStepThree;
+    private QuestionStep questionStepFour;
+    private QuestionStep questionStepFive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,30 +41,37 @@ public class DevLaunchActivity extends Activity
 
         if(requestCode == ViewTaskActivity.REQUEST_CODE && resultCode == RESULT_OK)
         {
-            LogExt.d(getClass(),
-                    "Got a result back from the ViewTaskActivity");
+            LogExt.d(getClass(), "Got a result back from the ViewTaskActivity");
+
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
-            StepResult<QuestionResult<Boolean>> stepResult1 = taskResult.getStepResultForStepIdentifier(questionStepOne.getIdentifier());
-            StepResult<QuestionResult<Boolean>> stepResult2 = taskResult.getStepResultForStepIdentifier(questionStepTwo.getIdentifier());
-            QuestionResult questionResult1 = stepResult1.getResultForIdentifier(questionStepOne.getIdentifier());
-            QuestionResult questionResult2 = stepResult2.getResultForIdentifier(questionStepTwo.getIdentifier());
-            LogExt.d(getClass(), questionResult1.getIdentifier() + " result: " + questionResult1.getAnswer());
-            LogExt.d(getClass(), questionResult2.getIdentifier() + " result: " + questionResult2.getAnswer());
+            dev_printResult(taskResult, questionStepOne.getIdentifier());
+            dev_printResult(taskResult, questionStepTwo.getIdentifier());
+            dev_printResult(taskResult, questionStepThree.getIdentifier());
+            dev_printResult(taskResult, questionStepFour.getIdentifier());
+            dev_printResult(taskResult, questionStepFive.getIdentifier());
         }
+    }
+
+    private void dev_printResult(TaskResult result, String id)
+    {
+        StepResult<QuestionResult<Boolean>> stepResult = result.getStepResultForStepIdentifier(id);
+        QuestionResult questionResult = stepResult.getResultForIdentifier(id);
+        LogExt.d(getClass(), questionResult.getIdentifier() + " result: " + questionResult.getAnswer());
     }
 
     public void buttonClick(View view)
     {
-        AnswerFormat answerFormat = new BooleanAnswerFormat();
+        AnswerFormat booleanFormat = new BooleanAnswerFormat();
         AnswerFormat textFormat = new TextAnswerFormat();
-        questionStepOne = new QuestionStep("intro", "What is the color blue?", answerFormat);
-//        questionStepTwo = new QuestionStep("notIntro", "Why is the color blue?", answerFormat);
+        questionStepOne = new QuestionStep("intro", "What is the color blue?", booleanFormat);
         questionStepTwo = new QuestionStep("text", "Is the color blue?", textFormat);
+        questionStepThree = new QuestionStep("red", "Truck Red?", booleanFormat);
+        questionStepFour = new QuestionStep("green", "Car Green?", booleanFormat);
+        questionStepFive = new QuestionStep("blue", "Plane Blue?", booleanFormat);
 
 
         OrderedTask task = new OrderedTask("task",
-                questionStepOne,
-                questionStepTwo);
+                questionStepOne, questionStepTwo, questionStepThree, questionStepFour, questionStepFive);
 
         Intent intent = ViewTaskActivity.newIntent(this, task);
         startActivityForResult(intent, ViewTaskActivity.REQUEST_CODE);

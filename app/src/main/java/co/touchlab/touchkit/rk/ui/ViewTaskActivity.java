@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.List;
 
@@ -52,24 +55,32 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         taskResult = new TaskResult(task.getIdentifier(), null, null);
 
         pager = (StepViewPager) findViewById(R.id.pager);
-        StepPagerAdapter adapter = new StepPagerAdapter(getSupportFragmentManager(), task.getSteps(), taskResult);
+        StepPagerAdapter adapter = new StepPagerAdapter(getSupportFragmentManager(), task.getSteps());
         pager.setAdapter(adapter);
+
+        ActionBar toolbar = getSupportActionBar();
+        toolbar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    public void onNextPressed(Step step, StepResult result)
+    public boolean onOptionsItemSelected(MenuItem item)
     {
-        taskResult.setStepResultForStepIdentifier(step.getIdentifier(), result);
-        int next = pager.getCurrentItem() + 1;
-
-        if(next >= pager.getAdapter().getCount())
+        if (item.getItemId() == android.R.id.home)
         {
-            saveAndFinish();
+            int prev = pager.getCurrentItem() - 1;
+            pager.setCurrentItem(prev);
+            return true;
         }
         else
         {
-            pager.setCurrentItem(next);
+            return false;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void saveAndFinish()
@@ -82,16 +93,48 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         finish();
     }
 
-    private static class StepPagerAdapter extends FragmentPagerAdapter
+    @Override
+    public void onNextPressed(Step step)
+    {
+        int next = pager.getCurrentItem() + 1;
+
+        if(next >= pager.getAdapter().getCount())
+        {
+            saveAndFinish();
+        }
+        else
+        {
+            pager.setCurrentItem(next);
+        }
+    }
+
+    @Override
+    public void onStepResultChanged(Step step, StepResult result)
+    {
+        taskResult.setStepResultForStepIdentifier(step.getIdentifier(), result);
+    }
+
+    @Override
+    public void onSkipStep(Step step)
+    {
+        onStepResultChanged(step, null);
+        onNextPressed(step);
+    }
+
+    @Override
+    public StepResult getResultStep(String stepId)
+    {
+        return taskResult.getStepResultForStepIdentifier(stepId);
+    }
+
+    private static class StepPagerAdapter extends FragmentStatePagerAdapter
     {
         private final List<Step> steps;
-        private final TaskResult taskResult;
 
-        public StepPagerAdapter(FragmentManager fragmentManager, List<Step> steps, TaskResult taskResult)
+        public StepPagerAdapter(FragmentManager fragmentManager, List<Step> steps)
         {
             super(fragmentManager);
             this.steps = steps;
-            this.taskResult = taskResult;
         }
 
         @Override
@@ -101,17 +144,16 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
             if (step instanceof QuestionStep){
                 if(((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.SingleChoice)
                 {
-                    return BooleanQuestionStepFragment.newInstance((QuestionStep) step,
-                            taskResult.getStepResultForStepIdentifier(step.getIdentifier()));
+                    return BooleanQuestionStepFragment.newInstance((QuestionStep) step);
                 }
                 else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Text)
                 {
-                    return TextQuestionStepFragment.newInstance((QuestionStep) step,
-                            taskResult.getStepResultForStepIdentifier(step.getIdentifier()));
+                    return TextQuestionStepFragment.newInstance((QuestionStep) step);
                 }
                 DevUtils.throwUnsupportedOpException();
                 return null;
-            } else {
+            }
+            else {
                 DevUtils.throwUnsupportedOpException();
                 return null;
             }
