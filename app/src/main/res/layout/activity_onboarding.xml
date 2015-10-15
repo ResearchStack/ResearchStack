@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="VIEWPAGER"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:background="@color/colorAccent"
+        />
+
+    <Button
+        android:id="@+id/intro_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/join_study"
+        android:onClick="onSignUpClicked"
+        />
+
+    <TextView
+        android:id="@+id/intro_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Already Participating?"
+        android:onClick="onSignInClicked"
+        />
+
+</LinearLayout>
