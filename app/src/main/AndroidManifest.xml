@@ -8,7 +8,8 @@
                android:theme="@style/AppTheme">
 
       <activity
-          android:name=".dev.DevLaunchActivity"
+          android:name=".ui.SplashActivity"
+          android:theme="@style/AppTheme.NoActionBar"
           android:label="@string/app_name">
           <intent-filter>
               <action android:name="android.intent.action.MAIN" />
@@ -16,9 +17,28 @@
           </intent-filter>
       </activity>
 
+      <activity
+          android:name=".dev.DevLaunchActivity"
+          android:label="@string/app_name">
+      </activity>
 
       <activity
           android:name=".ui.ViewTaskActivity"
+          android:label="@string/app_name"
+          />
+
+      <activity
+          android:name=".ui.UserPinActivity"
+          android:label="@string/app_name"
+          />
+
+      <activity
+          android:name=".ui.EmailVerificationActivity"
+          android:label="@string/app_name"
+          />
+
+      <activity
+          android:name=".ui.OnboardingActivity"
           android:label="@string/app_name"
           />
 
