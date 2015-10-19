@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import co.touchlab.touchkit.rk.common.task.Task;
 
-public abstract class Step implements Serializable
+public class Step implements Serializable
 {
 
     private String identifier;
@@ -26,6 +26,11 @@ public abstract class Step implements Serializable
     private boolean allowsBackNavigation;
 
     private boolean useSurveyMode;
+
+    public Step(String identifier)
+    {
+        this.identifier = identifier;
+    }
 
     public Step(String identifier, String title)
     {
@@ -118,5 +123,8 @@ public abstract class Step implements Serializable
         this.shouldTintImages = shouldTintImages;
     }
 
-    public abstract Class getStepFragment();
+    public Class getStepFragment()
+    {
+        throw new UnsupportedOperationException("Didn't specify a fragment for this step");
+    }
 }

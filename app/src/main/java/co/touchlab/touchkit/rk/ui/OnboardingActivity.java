@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import co.touchlab.touchkit.rk.R;
+import co.touchlab.touchkit.rk.common.task.SignUpTask;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
@@ -24,7 +25,9 @@ public class OnboardingActivity extends AppCompatActivity
 
     public void onSignUpClicked(View view)
     {
-        startActivity(new Intent(this, EligibilityActivity.class));
+        SignUpTask task = new SignUpTask();
+        startActivity(ViewTaskActivity.newIntent(this,
+                task));
     }
 
     public void onSignInClicked(View view)

@@ -11,34 +11,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
+import co.touchlab.touchkit.rk.common.helpers.LogExt;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
 import co.touchlab.touchkit.rk.common.step.Step;
-import co.touchlab.touchkit.rk.common.task.OrderedTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.dev.DevUtils;
 import co.touchlab.touchkit.rk.ui.fragment.BooleanQuestionStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.NotImplementedStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.StepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.TextQuestionStepFragment;
 
 public class ViewTaskActivity extends AppCompatActivity implements StepFragment.StepCallbacks
 {
 
-    public static final String EXTRA_TASK   = "ViewTaskActivity.ExtraTask";
-    public static final String EXTRA_TASK_RESULT   = "ViewTaskActivity.ExtraTaskResult";
-    public static final int    REQUEST_CODE = 100;
-    private OrderedTask task;
+    public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
+    public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
+    public static final int REQUEST_CODE = 100;
+    private Task task;
     private TaskResult taskResult;
     private StepViewPager pager;
 
     public static Intent newIntent(Context context, Task task)
     {
-        Intent intent = new Intent(context, ViewTaskActivity.class);
+        Intent intent = new Intent(context,
+                ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK,
                 task);
         return intent;
@@ -51,11 +54,11 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         super.setContentView(R.layout.activity_fragment);
         super.setResult(RESULT_CANCELED);
 
-        task = (OrderedTask) getIntent().getSerializableExtra(EXTRA_TASK);
+        task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
         taskResult = new TaskResult(task.getIdentifier(), null, null);
 
         pager = (StepViewPager) findViewById(R.id.pager);
-        StepPagerAdapter adapter = new StepPagerAdapter(getSupportFragmentManager(), task.getSteps());
+        StepPagerAdapter adapter = new StepPagerAdapter(getSupportFragmentManager(), task);
         pager.setAdapter(adapter);
 
         ActionBar toolbar = getSupportActionBar();
@@ -129,40 +132,62 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
 
     private static class StepPagerAdapter extends FragmentStatePagerAdapter
     {
+        private final Task task;
         private final List<Step> steps;
 
-        public StepPagerAdapter(FragmentManager fragmentManager, List<Step> steps)
+        public StepPagerAdapter(FragmentManager fragmentManager, Task task)
         {
             super(fragmentManager);
-            this.steps = steps;
+            this.task = task;
+            this.steps = new ArrayList<>();
         }
 
         @Override
         public Fragment getItem(int position)
         {
-            Step step = steps.get(position);
-            if (step instanceof QuestionStep){
-                if(((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.SingleChoice)
+            LogExt.d(getClass(),
+                    "Getting item for position: " + position);
+            Step previousStep = null;
+
+            if (position > 0)
+            {
+                previousStep = steps.get(position - 1);
+            }
+
+            Step step = task.getStepAfterStep(previousStep,
+                    null);
+            steps.add(position,
+                    step);
+
+            if (step instanceof QuestionStep)
+            {
+                if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.SingleChoice)
                 {
+                    LogExt.d(getClass(),
+                            "Single Choice Step");
                     return BooleanQuestionStepFragment.newInstance((QuestionStep) step);
                 }
                 else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Text)
                 {
+                    LogExt.d(getClass(),
+                            "Text Step");
                     return TextQuestionStepFragment.newInstance((QuestionStep) step);
                 }
                 DevUtils.throwUnsupportedOpException();
                 return null;
             }
-            else {
-                DevUtils.throwUnsupportedOpException();
-                return null;
+            else
+            {
+                LogExt.d(getClass(),
+                        "No implementation for this step " + step.getIdentifier());
+                return NotImplementedStepFragment.newInstance(step);
             }
         }
 
         @Override
         public int getCount()
         {
-            return steps.size();
+            return task.getNumberOfSteps();
         }
     }
 }

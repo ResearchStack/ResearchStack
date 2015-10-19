@@ -36,7 +36,7 @@ public class BooleanQuestionStepFragment extends StepFragment
     public View getBodyView(LayoutInflater inflater)
     {
 
-        BooleanAnswerFormat answerFormat = (BooleanAnswerFormat) step.getAnswerFormat();
+        BooleanAnswerFormat answerFormat = (BooleanAnswerFormat) ((QuestionStep) step).getAnswerFormat();
         RadioGroup radioGroup = new RadioGroup(getContext());
         final TextChoice[] textChoices = answerFormat.getTextChoices();
 

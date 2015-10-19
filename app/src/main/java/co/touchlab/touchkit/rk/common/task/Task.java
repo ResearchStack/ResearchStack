@@ -47,4 +47,5 @@ public abstract class Task implements Serializable
 
     }
 
+    public abstract int getNumberOfSteps();
 }

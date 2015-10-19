@@ -47,11 +47,6 @@
           android:label="@string/app_name"
           />
 
-      <activity
-          android:name=".ui.EligibilityActivity"
-          android:label="@string/app_name"
-          />
-
   </application>
 
 </manifest>

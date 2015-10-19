@@ -16,14 +16,13 @@ import java.util.Map;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.Result;
 import co.touchlab.touchkit.rk.common.result.StepResult;
-import co.touchlab.touchkit.rk.common.step.QuestionStep;
 import co.touchlab.touchkit.rk.common.step.Step;
 
 public abstract class StepFragment extends Fragment
 {
     public static final String KEY_QUESTION_STEP = "KEY_STEP";
 
-    protected QuestionStep step;
+    protected Step step;
     protected StepResult stepResult;
     private StepCallbacks callbacks;
 
@@ -42,7 +41,7 @@ public abstract class StepFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        step = (QuestionStep) getArguments().getSerializable(KEY_QUESTION_STEP);
+        step = (Step) getArguments().getSerializable(KEY_QUESTION_STEP);
 
         stepResult = callbacks.getResultStep(step.getIdentifier());
         if(stepResult == null)

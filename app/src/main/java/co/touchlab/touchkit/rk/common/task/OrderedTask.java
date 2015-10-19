@@ -27,18 +27,44 @@ public class OrderedTask extends Task implements Serializable
     @Override
     public Step getStepAfterStep(Step step, TaskResult result)
     {
+        if(step == null)
+        {
+            return steps.get(0);
+        }
+
+        int nextIndex = steps.indexOf(step) + 1;
+
+        if(nextIndex < steps.size())
+        {
+            return steps.get(nextIndex);
+        }
+
         return null;
     }
 
     @Override
     public Step getStepBeforeStep(Step step, TaskResult result)
     {
+        int nextIndex = steps.indexOf(step) - 1;
+
+        if(nextIndex >= 0)
+        {
+            return steps.get(nextIndex);
+        }
+
         return null;
     }
 
     @Override
     public Step getStepWithIdentifier(String identifier)
     {
+        for (Step step : steps)
+        {
+            if (identifier.equals(step.getIdentifier()))
+            {
+                return step;
+            }
+        }
         return null;
     }
 
@@ -68,5 +94,11 @@ public class OrderedTask extends Task implements Serializable
                     orderedTask.getSteps());
         }
         return false;
+    }
+
+    @Override
+    public int getNumberOfSteps()
+    {
+        return steps.size();
     }
 }
