@@ -1,7 +1,6 @@
 package co.touchlab.touchkit.rk.ui.views;
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.Button;
@@ -10,6 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.StudyOverviewModel;
 
@@ -53,11 +53,7 @@ public class StudyLandingLayout extends ScrollView
 
     public void setData(StudyOverviewModel.Question data)
     {
-        if (!TextUtils.isEmpty(data.getVideoName()))
-        {
-            int resID = getResources().getIdentifier(data.getVideoName(), "drawable", getContext().getPackageName());
-            logoView.setImageResource(resID);
-        }
+        logoView.setImageResource(AppDelegate.getInstance().getLargeLogoDiseaseIcon());
 
         titleView.setText(data.getTitle());
         subtitleView.setText(data.getDetails());

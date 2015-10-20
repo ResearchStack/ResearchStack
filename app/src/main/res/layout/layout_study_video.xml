@@ -30,9 +30,13 @@
             />
 
         <ImageButton
+            android:background="?android:attr/selectableItemBackground"
             android:id="@+id/layout_studyoverview_video_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:minHeight="118dp"
+            android:minWidth="118dp"
             tools:src="@mipmap/ic_launcher"
             android:layout_gravity="center_horizontal"
             />

@@ -15,12 +15,16 @@
             android:id="@+id/layout_studyoverview_landing_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:minHeight="72dp"
+            android:minWidth="72dp"
             tools:src="@mipmap/ic_launcher"
             />
 
         <TextView
             android:id="@+id/layout_studyoverview_landing_title"
             style="@style/TextAppearance.AppCompat.Headline"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/lorem_name"
