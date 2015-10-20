@@ -4,24 +4,23 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
+import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
 
-@Deprecated
-public class NotImplementedStepFragment extends StepFragment
+public class SignUpIneligibleStepFragment extends StepFragment
 {
 
-    public NotImplementedStepFragment()
+    public SignUpIneligibleStepFragment()
     {
         super();
     }
 
     public static Fragment newInstance(Step step)
     {
-        NotImplementedStepFragment fragment = new NotImplementedStepFragment();
+        SignUpIneligibleStepFragment fragment = new SignUpIneligibleStepFragment();
         Bundle args = new Bundle();
         args.putSerializable(KEY_QUESTION_STEP,
                 step);
@@ -32,15 +31,17 @@ public class NotImplementedStepFragment extends StepFragment
     @Override
     public View getBodyView(LayoutInflater inflater)
     {
+        View root = inflater.inflate(R.layout.item_ineligible,
+                null);
 
-        TextView textView = new TextView(getActivity());
-        textView.setText("Not Implemented: " + ((Step) getArguments().getSerializable(KEY_QUESTION_STEP)).getIdentifier());
-        return textView;
+        hideNextButtons();
+
+        return root;
     }
 
     @Override
     public StepResult createNewStepResult(String stepIdentifier)
     {
-        return new StepResult<QuestionResult<String>>(stepIdentifier);
+        return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
     }
 }

@@ -1,5 +1,7 @@
 package co.touchlab.touchkit.rk.common.task;
 
+import co.touchlab.touchkit.rk.common.result.QuestionResult;
+import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.Step;
 
@@ -60,14 +62,17 @@ public abstract class OnboardingTask extends Task
 
     }
 
-    public boolean isEligible()
+    public boolean isEligible(TaskResult result)
     {
-        return eligible;
-    }
+        StepResult stepResult = result.getStepResultForStepIdentifier(SignUpTask.SignUpInclusionCriteriaStepIdentifier);
 
-    public void setEligible(boolean eligible)
-    {
-        this.eligible = eligible;
+        if (stepResult != null)
+        {
+            QuestionResult<Boolean> questionResult = (QuestionResult<Boolean>) stepResult.getResultForIdentifier(SignUpTask.SignUpInclusionCriteriaStepIdentifier);
+            return questionResult.getAnswer();
+        }
+
+        return false;
     }
 
     public boolean isCustomStepIncluded()
@@ -92,7 +97,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getSignInStep()
     {
-        if(signInStep == null)
+        if (signInStep == null)
         {
             signInStep = new Step(SignInStepIdentifier);
         }
@@ -101,7 +106,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getThankyouStep()
     {
-        if(thankyouStep == null)
+        if (thankyouStep == null)
         {
             thankyouStep = new Step(SignUpThankYouStepIdentifier);
         }
@@ -110,7 +115,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getPermissionsStep()
     {
-        if(permissionsStep == null)
+        if (permissionsStep == null)
         {
             permissionsStep = new Step(SignUpPermissionsStepIdentifier);
         }
@@ -119,7 +124,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getPasscodeStep()
     {
-        if(passcodeStep == null)
+        if (passcodeStep == null)
         {
             passcodeStep = new Step(SignUpPasscodeStepIdentifier);
         }
@@ -128,7 +133,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getCustomInfoStep()
     {
-        if(customInfoStep == null)
+        if (customInfoStep == null)
         {
             customInfoStep = new Step(SignUpCustomInfoStepIdentifier);
         }
@@ -137,7 +142,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getMedicalInfoStep()
     {
-        if(medicalInfoStep == null)
+        if (medicalInfoStep == null)
         {
             medicalInfoStep = new Step(SignUpMedicalInfoStepIdentifier);
         }
@@ -146,7 +151,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getGeneralInfoStep()
     {
-        if(generalInfoStep == null)
+        if (generalInfoStep == null)
         {
             generalInfoStep = new Step(SignUpGeneralInfoStepIdentifier);
         }
@@ -155,7 +160,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getPermissionsPrimingStep()
     {
-        if(permissionsPrimingStep == null)
+        if (permissionsPrimingStep == null)
         {
             permissionsPrimingStep = new Step(SignUpPermissionsPrimingStepIdentifier);
         }
@@ -164,7 +169,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getIneligibleStep()
     {
-        if(ineligibleStep == null)
+        if (ineligibleStep == null)
         {
             ineligibleStep = new Step(SignUpIneligibleStepIdentifier);
         }
@@ -173,7 +178,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getEligibleStep()
     {
-        if(eligibleStep == null)
+        if (eligibleStep == null)
         {
             eligibleStep = new Step(SignUpEligibleStepIdentifier);
         }
@@ -182,7 +187,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getInclusionCriteriaStep()
     {
-        if(inclusionCriteriaStep == null)
+        if (inclusionCriteriaStep == null)
         {
             inclusionCriteriaStep = new Step(SignUpInclusionCriteriaStepIdentifier);
         }

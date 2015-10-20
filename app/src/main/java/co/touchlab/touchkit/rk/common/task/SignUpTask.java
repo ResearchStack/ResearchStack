@@ -28,7 +28,7 @@ public class SignUpTask extends OnboardingTask
         else if (step.getIdentifier()
                 .equals(SignUpInclusionCriteriaStepIdentifier))
         {
-            if (isEligible())
+            if (isEligible(result))
             {
                 nextStep = getEligibleStep();
             }

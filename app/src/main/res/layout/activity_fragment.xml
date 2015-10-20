@@ -6,8 +6,8 @@
 
     <!-- TODO TOOLBAR -->
 
-    <co.touchlab.touchkit.rk.ui.views.StepViewPager
-        android:id="@+id/pager"
+    <FrameLayout
+        android:id="@+id/placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

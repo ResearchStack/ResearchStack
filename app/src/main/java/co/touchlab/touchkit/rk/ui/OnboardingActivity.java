@@ -15,8 +15,8 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.StudyOverviewModel;
+import co.touchlab.touchkit.rk.common.task.SignUpTask;
 
 /**
  * Created by bradleymcdermott on 10/15/15.

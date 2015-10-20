@@ -24,7 +24,9 @@ public abstract class StepFragment extends Fragment
 
     protected Step step;
     protected StepResult stepResult;
-    private StepCallbacks callbacks;
+    protected StepCallbacks callbacks;
+    private TextView next;
+    private TextView skip;
 
     @Override
     public void onAttach(Context context)
@@ -60,12 +62,7 @@ public abstract class StepFragment extends Fragment
         TextView title = (TextView) view.findViewById(R.id.title);
         title.setText(step.getTitle());
 
-        LinearLayout stepViewContainer = (LinearLayout) view.findViewById(R.id.step_view_container);
-        int bodyIndex = stepViewContainer.indexOfChild(title) + 1;
-        View bodyView = getBodyView(inflater);
-        stepViewContainer.addView(bodyView, bodyIndex);
-
-        TextView next = (TextView) view.findViewById(R.id.next);
+        next = (TextView) view.findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -75,7 +72,7 @@ public abstract class StepFragment extends Fragment
             }
         });
 
-        TextView skip = (TextView) view.findViewById(R.id.skip);
+        skip = (TextView) view.findViewById(R.id.skip);
         skip.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -84,6 +81,12 @@ public abstract class StepFragment extends Fragment
                 callbacks.onSkipStep(getStep());
             }
         });
+
+        LinearLayout stepViewContainer = (LinearLayout) view.findViewById(R.id.step_view_container);
+        int bodyIndex = stepViewContainer.indexOfChild(title) + 1;
+        View bodyView = getBodyView(inflater);
+        stepViewContainer.addView(bodyView,
+                bodyIndex);
 
         return view;
     }
@@ -117,6 +120,12 @@ public abstract class StepFragment extends Fragment
         stepResult.setResults(results);
 
         callbacks.onStepResultChanged(step, stepResult);
+    }
+
+    protected void hideNextButtons()
+    {
+        next.setVisibility(View.GONE);
+        skip.setVisibility(View.GONE);
     }
 
     public interface StepCallbacks {

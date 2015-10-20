@@ -13,4 +13,15 @@
   <string name="send_email">Send Email</string>
   <string name="study_overview_email_subject">%1$s Consent Form</string>
   <string name="already_participating">Already Participating?</string>
+  <string name="you_are_eligible">You are eligible to join the study.</string>
+  <string name="tap_below">Tap the button below to begin the consent process</string>
+  <string name="you_are_ineligible">Unfortunately, you are ineligible to join this study.</string>
+  <string name="start_consent_button">Start</string>
+  <string name="what_to_expect">What to Expect</string>
+  <string name="name">Name</string>
+  <string name="email">Email</string>
+  <string name="disagree">Disagree</string>
+  <string name="agree">Agree</string>
+  <string name="consent">Consent</string>
+  <string name="sign_in">Sign In</string>
 </resources>
