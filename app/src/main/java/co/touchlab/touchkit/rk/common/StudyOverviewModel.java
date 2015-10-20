@@ -38,9 +38,11 @@ public class StudyOverviewModel
         @SerializedName("show_consent")
         String showConsent;
 
+        @Deprecated //TODO Figure out purpose, not used.
         @SerializedName("icon_image")
         String iconImage;
 
+        @Deprecated //TODO Figure out purpose, not used.
         @SerializedName("tint_color")
         String tintColor;
 
