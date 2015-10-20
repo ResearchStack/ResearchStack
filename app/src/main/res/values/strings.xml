@@ -7,4 +7,8 @@
   <string name="step_skip">Skip this question</string>
   <string name="next">next</string>
   <string name="join_study">Join Study</string>
+  <string name="read_consent_doc">Read consent document</string>
+  <string name="email_consent_doc">Email consent Document</string>
+  <string name="swipe_to_preview">Swipe to preview</string>
+  <string name="send_email">Send Email</string>
 </resources>

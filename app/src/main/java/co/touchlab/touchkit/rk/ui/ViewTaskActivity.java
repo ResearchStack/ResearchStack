@@ -27,6 +27,7 @@ import co.touchlab.touchkit.rk.ui.fragment.BooleanQuestionStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.NotImplementedStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.StepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.TextQuestionStepFragment;
+import co.touchlab.touchkit.rk.ui.views.StepViewPager;
 
 public class ViewTaskActivity extends AppCompatActivity implements StepFragment.StepCallbacks
 {

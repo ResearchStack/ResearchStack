@@ -7,14 +7,12 @@
     android:gravity="center_horizontal"
     >
 
-    <TextView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="VIEWPAGER"
-        android:gravity="center"
-        android:textSize="32sp"
-        android:background="@color/colorAccent"
+        android:background="@android:color/holo_red_dark"
         />
 
     <Button

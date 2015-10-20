@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+a  {
+	
+	color:#39F
+	
+}
+
+
+a:active {
+    color:#39F
+	background-color: #ffffff;
+}
+
+body {
+
+    font-size:16pt;
+    color:#000000;
+    line-height:normal;
+    font-weight:normal;
+    padding-top:0px;
+    padding-bottom:20px;
+}
+
+p,  h2 {
+    margin-top: 0;
+    padding-right: 0px;
+    padding-left: 0px;
+    
+}
+
+h1 {
+
+    font-size:19pt;
+    color:#000000;
+    line-height:normal;
+    font-weight:normal;
+    padding-top:0px;
+    padding-bottom:0px;
+    text-align:center;
+    
+}
+
+
+
+
+
+.footer {
+    background-color: #FFFFFF;
+    width: 20%;
+    margin: 0 auto;
+    
+    
+    
+}
+
+
+.content {
+    padding: 10px 10px 10px 10px;
+}
+
+
+.content ul, .content ol {
+    padding: 0 10px 15px 15px;
+}
+
+
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+
+
+
+boldie
+{
+
+    font-size:16pt;
+    color:#000000;
+    line-height:normal;
+    font-weight:normal;
+    padding-top:0px;
+    padding-bottom:0px;
+    
+}
+
+ul, ol {
+
+    font-size:16pt;
+    color:#000000;
+    list-style-type: square;
+    list-style-position: outside;
+    padding-left:23px;
+    line-height:115%;
+    
+}
+
+.ExternalClass * {line-height: 100%}
