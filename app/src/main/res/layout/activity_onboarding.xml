@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
     >
 
     <android.support.v4.view.ViewPager
@@ -12,6 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@android:color/white"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#1A000000"
         />
 
     <Button
@@ -19,19 +26,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/join_study"
         android:onClick="onSignUpClicked"
+        android:text="@string/join_study"
         />
 
     <TextView
         android:id="@+id/intro_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:text="Already Participating?"
         android:clickable="true"
+        android:layout_marginTop="8dp"
         android:onClick="onSignInClicked"
+        android:text="@string/already_participating"
         />
 
 </LinearLayout>

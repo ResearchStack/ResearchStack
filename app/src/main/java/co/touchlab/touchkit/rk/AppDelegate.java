@@ -31,4 +31,18 @@ public class AppDelegate
         return R.drawable.logo_disease_large;
     }
 
+    public int getConsentForm()
+    {
+        return R.raw.study_overview_consent_form;
+    }
+
+    public String getExternalSDAppFolder()
+    {
+        return "demo_touchkit";
+    }
+
+    public int getAppName()
+    {
+        return R.string.app_name;
+    }
 }

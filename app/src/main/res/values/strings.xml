@@ -11,4 +11,6 @@
   <string name="email_consent_doc">Email consent Document</string>
   <string name="swipe_to_preview">Swipe to preview</string>
   <string name="send_email">Send Email</string>
+  <string name="study_overview_email_subject">%1$s Consent Form</string>
+  <string name="already_participating">Already Participating?</string>
 </resources>
