@@ -103,6 +103,11 @@ public class StudyLandingLayout extends ScrollView
         });
     }
 
+    /**
+     * TODO Fix crash when file has been deleted
+     * TODO Check if SDCard is mounted
+     * @return Consent form pdf
+     */
     @NonNull
     private File getConsentFormFileFromExternalStorage()
     {

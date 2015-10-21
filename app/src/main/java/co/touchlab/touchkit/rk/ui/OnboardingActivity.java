@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.StudyOverviewModel;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
+import co.touchlab.touchkit.rk.ui.views.PageIndicator;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
@@ -36,9 +37,25 @@ public class OnboardingActivity extends AppCompatActivity
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(5);
         pager.setAdapter(adapter);
-
 //      TODO  pager.setPageTransformer();
 //      TODO  pager.setPageMargin();
+
+        final PageIndicator indicator = (PageIndicator) findViewById(R.id.pager_indicator);
+        indicator.removeAllMarkers(true);
+        indicator.addMarkers(adapter.getCount(),
+                             R.drawable.ic_pageindicator_current_dark,
+                             R.drawable.ic_pageindicator_default_dark,
+                             true);
+
+        pager.clearOnPageChangeListeners();
+        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+        {
+            @Override
+            public void onPageSelected(int position)
+            {
+                indicator.setActiveMarker(position);
+            }
+        });
     }
 
     //TODO Read on main thread for intense UI blockage.
