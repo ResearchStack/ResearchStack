@@ -24,4 +24,9 @@
   <string name="agree">Agree</string>
   <string name="consent">Consent</string>
   <string name="sign_in">Sign In</string>
+  <string name="add_password_hint">add password</string>
+  <string name="password">Password</string>
+  <string name="birthdate">Birthdate</string>
+  <string name="male">Male</string>
+  <string name="female">Female</string>
 </resources>
