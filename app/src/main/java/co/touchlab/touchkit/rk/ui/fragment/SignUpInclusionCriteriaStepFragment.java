@@ -5,12 +5,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
+
+import com.jakewharton.rxbinding.widget.RxCompoundButton;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
+import co.touchlab.touchkit.rk.ui.ViewTaskActivity;
 
 public class SignUpInclusionCriteriaStepFragment extends StepFragment
 {
@@ -37,19 +39,21 @@ public class SignUpInclusionCriteriaStepFragment extends StepFragment
         View root = inflater.inflate(R.layout.item_placeholder_inclusion_criteria,
                 null);
 
-        AppCompatCheckBox checkBox = (AppCompatCheckBox) root.findViewById(R.id.eligible_checkbox);
+        String identifier = getStep().getIdentifier();
+        StepResult resultStep = ((ViewTaskActivity) getActivity()).getResultStep(identifier);
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        AppCompatCheckBox checkBox = (AppCompatCheckBox) root.findViewById(R.id.eligible_checkbox);
+        if (resultStep != null)
         {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                QuestionResult<Boolean> questionResult = new QuestionResult<Boolean>(
-                        step.getIdentifier());
-                questionResult.setAnswer(isChecked);
-                setStepResult(questionResult);
-            }
-        });
+            checkBox.setChecked(((QuestionResult<Boolean>) resultStep.getResultForIdentifier(identifier)).getAnswer());
+        }
+
+        RxCompoundButton.checkedChanges(checkBox)
+                .subscribe((isChecked) -> {
+                    QuestionResult<Boolean> questionResult = new QuestionResult<>(step.getIdentifier());
+                    questionResult.setAnswer(isChecked);
+                    setStepResult(questionResult);
+                });
 
         return root;
     }
