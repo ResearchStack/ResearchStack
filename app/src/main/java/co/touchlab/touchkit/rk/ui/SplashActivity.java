@@ -7,8 +7,10 @@ import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
+import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.helpers.LogExt;
+import co.touchlab.touchkit.rk.common.model.User;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -55,11 +57,14 @@ public class SplashActivity extends AppCompatActivity
     private void launchActivity(Object item)
     {
         LogExt.d(getClass(), "Launching activity");
-        if(isUserSignedIn())
+
+        User user = AppDelegate.getInstance().getCurrentUser();
+
+        if(user.isSignedIn())
         {
             launchPinActivity();
         }
-        else if(isUserSignedUp())
+        else if(user.isSignedUp())
         {
             launchEmailVerificationActivity();
         }

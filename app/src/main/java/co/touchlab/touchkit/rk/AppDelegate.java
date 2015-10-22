@@ -1,8 +1,13 @@
 package co.touchlab.touchkit.rk;
+
+import co.touchlab.touchkit.rk.common.model.User;
+
 public class AppDelegate
 {
 
     public static AppDelegate instance;
+
+    private User currentUser;
 
     //TODO Thread safe
     public static AppDelegate getInstance()
@@ -13,6 +18,12 @@ public class AppDelegate
         }
 
         return instance;
+    }
+
+    private AppDelegate()
+    {
+        // TODO save and load user object
+        currentUser = new User();
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -44,5 +55,10 @@ public class AppDelegate
     public int getAppName()
     {
         return R.string.app_name;
+    }
+
+    public User getCurrentUser()
+    {
+        return currentUser;
     }
 }
