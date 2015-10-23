@@ -13,6 +13,9 @@ public class User
     private String  password;
     private String  sessionToken;
 
+    // TODO this shouldn't be here and shouldn't be a string
+    private String passcode;
+
 //    private APCUserConsentSharingScope sharingScope;      // NOT stored to CoreData, reflected in "sharedOptionSelection"
     private int sharedOptionSelection;
     private String profileImage;
@@ -92,6 +95,16 @@ public class User
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public String getPasscode()
+    {
+        return passcode;
+    }
+
+    public void setPasscode(String passcode)
+    {
+        this.passcode = passcode;
     }
 
     public String getSessionToken()

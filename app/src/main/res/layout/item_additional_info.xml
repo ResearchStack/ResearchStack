@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:gravity="center_horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+
+        <TextView
+            android:text="@string/height"
+            android:gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/height"
+            tools:text=""
+            android:textSize="18sp"
+            android:clickable="true"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+
+        <TextView
+            android:text="@string/weight"
+            android:gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/weight"
+            android:hint="@string/weight_hint"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</LinearLayout>

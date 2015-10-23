@@ -20,11 +20,14 @@ import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.ui.fragment.BooleanQuestionStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.NotImplementedStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.SignUpAdditionalInfoStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpEligibleStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpGeneralInfoStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpInclusionCriteriaStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpIneligibleStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.SignUpPasscodeStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpPermissionsPrimingStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.SignUpPermissionsStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.StepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.TextQuestionStepFragment;
 
@@ -145,6 +148,21 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
                     .equals(SignUpTask.SignUpGeneralInfoStepIdentifier))
             {
                 fragment = SignUpGeneralInfoStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpMedicalInfoStepIdentifier))
+            {
+                fragment = SignUpAdditionalInfoStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpPasscodeStepIdentifier))
+            {
+                fragment = SignUpPasscodeStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpPermissionsStepIdentifier))
+            {
+                fragment = SignUpPermissionsStepFragment.newInstance(step);
             }
             else
             {

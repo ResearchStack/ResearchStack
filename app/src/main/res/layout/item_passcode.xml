@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:gravity="center_horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/passcode_instructions"
+        android:text="@string/passcode_instructions"
+        android:gravity="center"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"/>
+
+    <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/passcode"
+            tools:hint="@string/enter_passcode"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content" />
+
+</LinearLayout>
