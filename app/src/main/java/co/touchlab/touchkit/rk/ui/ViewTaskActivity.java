@@ -20,6 +20,7 @@ import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.ui.fragment.BooleanQuestionStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.NotImplementedStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.SignInStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpAdditionalInfoStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpEligibleStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpGeneralInfoStepFragment;
@@ -163,6 +164,11 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
                     .equals(SignUpTask.SignUpPermissionsStepIdentifier))
             {
                 fragment = SignUpPermissionsStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignInStepIdentifier))
+            {
+                fragment = SignInStepFragment.newInstance(step);
             }
             else
             {

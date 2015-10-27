@@ -1,5 +1,6 @@
 package co.touchlab.touchkit.rk;
 
+import co.touchlab.touchkit.rk.common.Constants;
 import co.touchlab.touchkit.rk.common.model.User;
 
 public class AppDelegate
@@ -24,6 +25,11 @@ public class AppDelegate
     {
         // TODO save and load user object
         currentUser = new User();
+    }
+
+    public User getCurrentUser()
+    {
+        return currentUser;
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -57,8 +63,21 @@ public class AppDelegate
         return R.string.app_name;
     }
 
-    public User getCurrentUser()
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    // Other (unorganized)
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+    // TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
+    public Constants.UserInfoType[] getUserInfoTypes()
     {
-        return currentUser;
+        return new Constants.UserInfoType[] {
+                Constants.UserInfoType.Name,
+                Constants.UserInfoType.Email,
+                Constants.UserInfoType.DateOfBirth,
+                Constants.UserInfoType.Height,
+                Constants.UserInfoType.Weight
+        };
     }
+
 }

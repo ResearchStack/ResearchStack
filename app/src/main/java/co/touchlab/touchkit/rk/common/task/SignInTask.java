@@ -8,12 +8,12 @@ import co.touchlab.touchkit.rk.common.step.Step;
 /**
  * Created by bradleymcdermott on 10/16/15.
  */
-public class SignUpTask extends OnboardingTask
+public class SignInTask extends OnboardingTask
 {
 
     public static final int MINIMUM_STEPS = 7;
 
-    public SignUpTask()
+    public SignInTask()
     {
         super("SignUp");
     }
@@ -22,43 +22,32 @@ public class SignUpTask extends OnboardingTask
     public Step getStepAfterStep(Step step, TaskResult result)
     {
         Step nextStep = null;
-        User user = AppDelegate.getInstance().getCurrentUser();
+        User user = AppDelegate.getInstance()
+                .getCurrentUser();
 
         if (step == null)
         {
-            nextStep = getInclusionCriteriaStep();
+            nextStep = getSignInStep();
         }
         else if (step.getIdentifier()
-                .equals(SignUpInclusionCriteriaStepIdentifier))
-        {
-            if (isEligible(result))
-            {
-                nextStep = getEligibleStep();
-            }
-            else
-            {
-                nextStep = getIneligibleStep();
-            }
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpEligibleStepIdentifier))
+                .equals(SignInStepIdentifier))
         {
             currentStepNumber += 1;
             nextStep = getPermissionsPrimingStep();
-
         }
         else if (step.getIdentifier()
                 .equals(SignUpPermissionsPrimingStepIdentifier))
         {
-            currentStepNumber += 1;
-            nextStep = getGeneralInfoStep();
+            if (user.isSecondaryInfoSaved())
+            {
+                nextStep = getPasscodeStep();
+            }
+            else
+            {
+                currentStepNumber += 1;
+                nextStep = getMedicalInfoStep();
+            }
 
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpGeneralInfoStepIdentifier))
-        {
-            currentStepNumber += 1;
-            nextStep = getMedicalInfoStep();
 
         }
         else if (step.getIdentifier()
@@ -95,6 +84,17 @@ public class SignUpTask extends OnboardingTask
                 currentStepNumber += 1;
             }
         }
+        else if (step.getIdentifier()
+                .equals(SignUpPermissionsStepIdentifier))
+        {
+            nextStep = getThankyouStep();
+            currentStepNumber += 1;
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpThankYouStepIdentifier))
+        {
+            nextStep = null;
+        }
 
         return nextStep;
     }
@@ -105,39 +105,9 @@ public class SignUpTask extends OnboardingTask
         Step prevStep = null;
 
         if (step.getIdentifier()
-                .equals(SignUpInclusionCriteriaStepIdentifier))
-        {
-            prevStep = null;
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpEligibleStepIdentifier))
-        {
-            prevStep = getInclusionCriteriaStep();
-
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpIneligibleStepIdentifier))
-        {
-            prevStep = getInclusionCriteriaStep();
-
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpPermissionsPrimingStepIdentifier))
-        {
-            prevStep = getEligibleStep();
-
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpGeneralInfoStepIdentifier))
-        {
-            prevStep = getPermissionsPrimingStep();
-
-        }
-        else if (step.getIdentifier()
                 .equals(SignUpMedicalInfoStepIdentifier))
         {
-            prevStep = getGeneralInfoStep();
-            currentStepNumber -= 1;
+            prevStep = null;
         }
         else if (step.getIdentifier()
                 .equals(SignUpCustomInfoStepIdentifier))

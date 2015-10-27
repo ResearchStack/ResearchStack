@@ -1,6 +1,5 @@
 package co.touchlab.touchkit.rk.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.StudyOverviewModel;
+import co.touchlab.touchkit.rk.common.task.SignInTask;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.ui.views.PageIndicator;
 
@@ -86,6 +86,8 @@ public class OnboardingActivity extends AppCompatActivity
 
     public void onSignInClicked(View view)
     {
-        startActivity(new Intent(this, SignInActivity.class));
+        SignInTask task = new SignInTask();
+        startActivity(ViewTaskActivity.newIntent(this,
+                task));
     }
 }

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding.view.RxView;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,24 +65,10 @@ public abstract class StepFragment extends Fragment
         title.setText(step.getTitle());
 
         next = (TextView) view.findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                callbacks.onNextPressed(getStep());
-            }
-        });
+        RxView.clicks(next).subscribe(v -> onNextPressed());
 
         skip = (TextView) view.findViewById(R.id.skip);
-        skip.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                callbacks.onSkipStep(getStep());
-            }
-        });
+        RxView.clicks(skip).subscribe(v -> onSkipPressed());
 
         LinearLayout stepViewContainer = (LinearLayout) view.findViewById(R.id.step_view_container);
         int bodyIndex = stepViewContainer.indexOfChild(title) + 1;
@@ -89,6 +77,16 @@ public abstract class StepFragment extends Fragment
                 bodyIndex);
 
         return view;
+    }
+
+    protected void onSkipPressed()
+    {
+        callbacks.onSkipStep(getStep());
+    }
+
+    protected void onNextPressed()
+    {
+        callbacks.onNextPressed(getStep());
     }
 
     @Override

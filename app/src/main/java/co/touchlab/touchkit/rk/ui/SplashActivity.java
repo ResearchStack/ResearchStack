@@ -72,6 +72,8 @@ public class SplashActivity extends AppCompatActivity
         {
             launchOnboardingActivity();
         }
+
+        finish();
     }
 
     private void launchOnboardingActivity()

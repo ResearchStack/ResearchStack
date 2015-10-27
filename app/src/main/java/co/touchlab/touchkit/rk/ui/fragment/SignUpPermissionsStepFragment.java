@@ -1,6 +1,7 @@
 package co.touchlab.touchkit.rk.ui.fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import co.touchlab.touchkit.rk.common.helpers.LogExt;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
+import co.touchlab.touchkit.rk.ui.MainActivity;
 
 public class SignUpPermissionsStepFragment extends StepFragment
 {
@@ -94,5 +96,14 @@ public class SignUpPermissionsStepFragment extends StepFragment
     public StepResult createNewStepResult(String stepIdentifier)
     {
         return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
+    }
+
+    @Override
+    protected void onNextPressed()
+    {
+        Intent intent = new Intent(getActivity(),
+                MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

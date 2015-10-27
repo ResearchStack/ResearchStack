@@ -40,4 +40,5 @@
   <string name="location_services_description">Using your GPS will allow the app to advise you of air quality in your area. Your actual location will never be shared.</string>
   <string name="allow">Allow</string>
   <string name="granted">Granted</string>
+  <string name="forgot_password">Forgot your password?</string>
 </resources>
