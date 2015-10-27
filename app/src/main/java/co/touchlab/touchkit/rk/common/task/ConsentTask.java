@@ -12,7 +12,7 @@ import co.touchlab.touchkit.rk.common.model.ConsentSignature;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
 import co.touchlab.touchkit.rk.common.step.ConsentSharingStep;
-import co.touchlab.touchkit.rk.common.step.ConsentStep;
+import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
 import co.touchlab.touchkit.rk.common.step.Step;
 
 public class ConsentTask extends OrderedTask
@@ -35,7 +35,7 @@ public class ConsentTask extends OrderedTask
         consent.setSections(sections);
         consent.addSignature(signature);
 
-        ConsentStep visualStep = new ConsentStep("visual", consent);
+        ConsentVisualStep visualStep = new ConsentVisualStep("visual", consent);
         addStep(visualStep);
 
         ConsentSharingStep sharingStep = new ConsentSharingStep(r, "sharing", data.getDocumentProperties());

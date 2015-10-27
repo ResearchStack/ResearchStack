@@ -14,7 +14,9 @@ import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
 import co.touchlab.touchkit.rk.common.helpers.LogExt;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
-import co.touchlab.touchkit.rk.common.step.ConsentStep;
+import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
+import co.touchlab.touchkit.rk.common.step.ConsentSharingStep;
+import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
 import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
@@ -105,9 +107,10 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
             fragment = NotImplementedStepFragment.newInstance(new Step("NullStep"));
         }
 
-        if (step instanceof ConsentStep)
+        //TODO Implement Consent sharing & review fragments
+        if (step instanceof ConsentVisualStep || step instanceof ConsentSharingStep || step instanceof ConsentReviewStep)
         {
-            fragment = ConsentStepFragment.newInstance((ConsentStep) step);
+            fragment = ConsentStepFragment.newInstance((ConsentVisualStep) step);
         }
         else if (step instanceof QuestionStep)
         {

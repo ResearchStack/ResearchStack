@@ -11,13 +11,13 @@ import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.model.ConsentDocument;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
-import co.touchlab.touchkit.rk.common.step.ConsentStep;
+import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
 import co.touchlab.touchkit.rk.ui.views.ConsentSectionLayout;
 
 public class ConsentStepFragment extends StepFragment
 {
 
-    private ConsentStep step;
+    private ConsentVisualStep step;
     private ConsentDocument document;
     private boolean isAnimating;
 
@@ -26,7 +26,7 @@ public class ConsentStepFragment extends StepFragment
         super();
     }
 
-    public static Fragment newInstance(ConsentStep step)
+    public static Fragment newInstance(ConsentVisualStep step)
     {
         ConsentStepFragment fragment = new ConsentStepFragment();
         Bundle args = new Bundle();
@@ -46,7 +46,7 @@ public class ConsentStepFragment extends StepFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        step = (ConsentStep) getArguments().getSerializable(KEY_QUESTION_STEP);
+        step = (ConsentVisualStep) getArguments().getSerializable(KEY_QUESTION_STEP);
         document = step.getDocument();
 
         int currentSection = getCurrentSection();

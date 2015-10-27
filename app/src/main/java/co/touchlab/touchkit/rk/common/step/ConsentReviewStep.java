@@ -17,12 +17,6 @@ public class ConsentReviewStep extends Step
     }
 
     @Override
-    public boolean equals(Object o)
-    {
-        return document.equals(o);
-    }
-
-    @Override
     public boolean isShowsProgress()
     {
         return false;
