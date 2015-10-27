@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
+import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.model.StudyOverviewModel;
 
@@ -56,7 +57,7 @@ public class StudyOverviewLayout extends FrameLayout
 
     public void setData(StudyOverviewModel.Question data)
     {
-        String uri = "file:///android_res/raw/" + data.getDetails() + ".html";
+        String uri = AppDelegate.getInstance().getHTMLFilePath(data.getDetails());
         webView.loadUrl(uri);
     }
 }

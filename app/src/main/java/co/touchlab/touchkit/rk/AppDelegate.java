@@ -1,8 +1,4 @@
 package co.touchlab.touchkit.rk;
-
-import co.touchlab.touchkit.rk.common.Constants;
-import co.touchlab.touchkit.rk.common.model.User;
-
 import android.content.res.Resources;
 
 import com.google.gson.Gson;
@@ -22,8 +18,6 @@ public class AppDelegate
 
     public static AppDelegate instance;
 
-    private User currentUser;
-
     //TODO Thread safe
     public static AppDelegate getInstance()
     {
@@ -33,17 +27,6 @@ public class AppDelegate
         }
 
         return instance;
-    }
-
-    private AppDelegate()
-    {
-        // TODO save and load user object
-        currentUser = new User();
-    }
-
-    public User getCurrentUser()
-    {
-        return currentUser;
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -61,13 +44,13 @@ public class AppDelegate
     {
         return R.drawable.logo_disease_large;
     }
-    
-    public int getConsentSections()
+
+    public int getConsentForm()
     {
         return R.raw.study_overview_consent_form;
     }
 
-    public int getConsentForm()
+    public int getConsentSections()
     {
         return R.raw.study_overview_consent_form;
     }
@@ -102,6 +85,11 @@ public class AppDelegate
 
         return model.getSections();
 
+    }
+    
+    public String getHTMLFilePath(String docName)
+    {
+        return "file:///android_res/raw/" + docName + ".html";
     }
     
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

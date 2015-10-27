@@ -9,6 +9,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
 
 public class ViewWebDocumentActivity extends AppCompatActivity
@@ -42,7 +43,7 @@ public class ViewWebDocumentActivity extends AppCompatActivity
         setTitle(title);
 
         String documentName = getIntent().getStringExtra(KEY_DOC_NAME);
-        String path = "file:///android_res/raw/" + documentName + ".html";
+        String path = AppDelegate.getInstance().getHTMLFilePath(documentName);
 
         WebView webView = (WebView) findViewById(R.id.webview);
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
