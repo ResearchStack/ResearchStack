@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -38,6 +40,8 @@ public class StudyOverviewLayout extends FrameLayout
     {
         LayoutInflater.from(getContext()).inflate(R.layout.layout_study_overview, this, true);
         webView = (WebView) findViewById(R.id.webview);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         webView.setWebViewClient(new WebViewClient()
         {
             @Override

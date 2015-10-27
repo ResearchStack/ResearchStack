@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -43,6 +45,8 @@ public class ViewWebDocumentActivity extends AppCompatActivity
         String path = "file:///android_res/raw/" + documentName + ".html";
 
         WebView webView = (WebView) findViewById(R.id.webview);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         webView.setWebViewClient(new WebViewClient()
         {
             @Override
