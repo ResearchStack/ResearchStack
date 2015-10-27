@@ -16,4 +16,9 @@ public class ConsentSectionModel
     {
         return sections;
     }
+
+    public DocumentProperties getDocumentProperties()
+    {
+        return properties;
+    }
 }

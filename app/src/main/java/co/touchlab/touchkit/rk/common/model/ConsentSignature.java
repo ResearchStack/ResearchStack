@@ -122,6 +122,26 @@ public class ConsentSignature implements Serializable
         return identifier;
     }
 
+    public boolean isRequiresName()
+    {
+        return requiresName;
+    }
+
+    public void setRequiresName(boolean requiresName)
+    {
+        this.requiresName = requiresName;
+    }
+
+    public boolean isRequiresSignatureImage()
+    {
+        return requiresSignatureImage;
+    }
+
+    public void setRequiresSignatureImage(boolean requiresSignatureImage)
+    {
+        this.requiresSignatureImage = requiresSignatureImage;
+    }
+
     @Override
     public boolean equals(Object o)
     {

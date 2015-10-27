@@ -1,6 +1,7 @@
 package co.touchlab.touchkit.rk.common.task;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,10 +13,16 @@ public class OrderedTask extends Task implements Serializable
 
     private List<Step> steps;
 
+    public OrderedTask(String identifier)
+    {
+        super(identifier);
+        this.steps = new ArrayList<>();
+    }
+
     public OrderedTask(String identifier, List<Step> steps)
     {
         super(identifier);
-        this.steps = steps;
+        this.steps = new ArrayList<>(steps);
     }
 
     public OrderedTask(String identifier, Step ... steps)
@@ -23,6 +30,7 @@ public class OrderedTask extends Task implements Serializable
         super(identifier);
         this.steps = Arrays.asList(steps);
     }
+
 
     @Override
     public Step getStepAfterStep(Step step, TaskResult result)
@@ -41,6 +49,7 @@ public class OrderedTask extends Task implements Serializable
 
         return null;
     }
+
 
     @Override
     public Step getStepBeforeStep(Step step, TaskResult result)
@@ -77,6 +86,16 @@ public class OrderedTask extends Task implements Serializable
     @Override
     public void validateParameters()
     {
+    }
+
+    public void addStep(Step step)
+    {
+        if (steps == null)
+        {
+            steps = new ArrayList<>();
+        }
+
+        steps.add(step);
     }
 
     public List<Step> getSteps()

@@ -9,6 +9,11 @@ public class QuestionStep extends Step
 
     private String placeholder;
 
+    public QuestionStep(String identifier)
+    {
+        super(identifier);
+    }
+
     private QuestionStep(String identifier, String title)
     {
         super(identifier, title);
@@ -18,8 +23,7 @@ public class QuestionStep extends Step
 
     public QuestionStep(String identifier, String title, AnswerFormat format)
     {
-        super(identifier,
-                title);
+        super(identifier, title);
         this.answerFormat = format;
     }
 
@@ -47,5 +51,10 @@ public class QuestionStep extends Step
     public AnswerFormat.QuestionType getQuestionType()
     {
         return answerFormat.getQuestionType();
+    }
+
+    public void setAnswerFormat(AnswerFormat answerFormat)
+    {
+        this.answerFormat = answerFormat;
     }
 }

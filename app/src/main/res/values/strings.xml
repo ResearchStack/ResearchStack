@@ -66,4 +66,14 @@
   <string name="consent_section_more_info_study_tasks">Learn more about the tasks involved</string>
   <string name="consent_section_more_info_withdrawing">Learn more about withdrawing</string>
 
+  <!-- Consent sharing step -->
+  <string name="consent_share_title">Sharing Options</string>
+  <string name="consent_share_widely">Share my data with %1$s and qualified researchers worldwide</string>
+  <string name="consent_share_only">Only share my data with %1$s</string>
+  <string name="consent_share_description">%1$s will receive your study data from your participation in this study.\n\nSharing your coded study data more broadly (without information such as your name) may benefit this and future research.</string>
+  <string name="consent_share_more_info">Learn more about data sharing</string>
+
+  <!-- Consent Review step -->
+  <string name="consent_review_reason">By agreeing you confirm that you read the information and that you wish to take part in this research study.</string>
+
 </resources>

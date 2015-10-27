@@ -14,9 +14,9 @@ import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
 import co.touchlab.touchkit.rk.common.helpers.LogExt;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
+import co.touchlab.touchkit.rk.common.step.ConsentStep;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
 import co.touchlab.touchkit.rk.common.step.Step;
-import co.touchlab.touchkit.rk.common.step.ConsentStep;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.ui.fragment.BooleanQuestionStepFragment;
@@ -105,7 +105,11 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
             fragment = NotImplementedStepFragment.newInstance(new Step("NullStep"));
         }
 
-        if (step instanceof QuestionStep)
+        if (step instanceof ConsentStep)
+        {
+            fragment = ConsentStepFragment.newInstance((ConsentStep) step);
+        }
+        else if (step instanceof QuestionStep)
         {
             if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.SingleChoice)
             {
@@ -123,10 +127,6 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
             {
                 fragment = NotImplementedStepFragment.newInstance(step);
             }
-        }
-        else if (step instanceof ConsentStep)
-        {
-            fragment = ConsentStepFragment.newInstance((ConsentStep) step);
         }
         else
         {

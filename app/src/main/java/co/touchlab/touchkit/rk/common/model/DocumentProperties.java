@@ -4,14 +4,54 @@ import com.google.gson.annotations.SerializedName;
 public class DocumentProperties
 {
     @SerializedName("htmlDocument")
-    public String htmlDocument;
+    private String htmlDocument;
 
     @SerializedName("investigatorShortDescription")
-    public String investigatorShortDescription;
+    private String investigatorShortDescription;
 
     @SerializedName("investigatorLongDescription")
-    public String investigatorLongDescription;
+    private String investigatorLongDescription;
 
     @SerializedName("htmlContent")
-    public String htmlContent;
+    private String htmlContent;
+
+    public String getHtmlDocument()
+    {
+        return htmlDocument;
+    }
+
+    public void setHtmlDocument(String htmlDocument)
+    {
+        this.htmlDocument = htmlDocument;
+    }
+
+    public String getInvestigatorShortDescription()
+    {
+        return investigatorShortDescription;
+    }
+
+    public void setInvestigatorShortDescription(String investigatorShortDescription)
+    {
+        this.investigatorShortDescription = investigatorShortDescription;
+    }
+
+    public String getInvestigatorLongDescription()
+    {
+        return investigatorLongDescription;
+    }
+
+    public void setInvestigatorLongDescription(String investigatorLongDescription)
+    {
+        this.investigatorLongDescription = investigatorLongDescription;
+    }
+
+    public String getHtmlContent()
+    {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent)
+    {
+        this.htmlContent = htmlContent;
+    }
 }

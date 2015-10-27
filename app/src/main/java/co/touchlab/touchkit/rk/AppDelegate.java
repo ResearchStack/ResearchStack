@@ -8,9 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
-import co.touchlab.touchkit.rk.common.model.ConsentSection;
 import co.touchlab.touchkit.rk.common.model.ConsentSectionModel;
 
 public class AppDelegate
@@ -66,7 +64,7 @@ public class AppDelegate
     }
 
     //TODO Read on main thread for intense UI blockage.
-    public List<ConsentSection> getConsentSectionsAndHtmlContent(Resources r)
+    public ConsentSectionModel getConsentSectionsAndHtmlContent(Resources r)
     {
 
         Gson gson = new GsonBuilder().create();
@@ -81,15 +79,18 @@ public class AppDelegate
             throw  new RuntimeException(e);
         }
 
-        ConsentSectionModel model = gson.fromJson(reader, ConsentSectionModel.class);
-
-        return model.getSections();
+        return  gson.fromJson(reader, ConsentSectionModel.class);
 
     }
     
     public String getHTMLFilePath(String docName)
     {
         return "file:///android_res/raw/" + docName + ".html";
+    }
+
+    public boolean isSignatureEnabledInConsent()
+    {
+        return true;
     }
     
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

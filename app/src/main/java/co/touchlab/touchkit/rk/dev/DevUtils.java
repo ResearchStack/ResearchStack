@@ -7,4 +7,9 @@ public class DevUtils
         throw new UnsupportedOperationException("Method Not Implemented");
     }
 
+    public static void throwIllegalArgumentException()
+    {
+        throw new IllegalArgumentException("Invalid argument, cannot be null");
+    }
+
 }

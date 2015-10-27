@@ -11,6 +11,7 @@ import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.model.ConsentSection;
 import co.touchlab.touchkit.rk.ui.views.ConsentSectionLayout;
 
+@Deprecated
 public class ConsentPagerAdapter extends PagerAdapter
 {
     private final List<ConsentSection> items;
@@ -29,7 +30,7 @@ public class ConsentPagerAdapter extends PagerAdapter
 
         ConsentSectionLayout child = (ConsentSectionLayout) inflater.inflate(
                 R.layout.item_consent_section, container, false);
-        child.setData(item);
+        child.setData(item, null);
 
         container.addView(child);
         return child;
