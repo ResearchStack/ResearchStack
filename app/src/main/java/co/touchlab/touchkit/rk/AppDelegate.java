@@ -3,6 +3,20 @@ package co.touchlab.touchkit.rk;
 import co.touchlab.touchkit.rk.common.Constants;
 import co.touchlab.touchkit.rk.common.model.User;
 
+import android.content.res.Resources;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import co.touchlab.touchkit.rk.common.model.ConsentSection;
+import co.touchlab.touchkit.rk.common.model.ConsentSectionModel;
+
 public class AppDelegate
 {
 
@@ -47,6 +61,11 @@ public class AppDelegate
     {
         return R.drawable.logo_disease_large;
     }
+    
+    public int getConsentSections()
+    {
+        return R.raw.study_overview_consent_form;
+    }
 
     public int getConsentForm()
     {
@@ -63,11 +82,32 @@ public class AppDelegate
         return R.string.app_name;
     }
 
+    //TODO Read on main thread for intense UI blockage.
+    public List<ConsentSection> getConsentSectionsAndHtmlContent(Resources r)
+    {
+
+        Gson gson = new GsonBuilder().create();
+        InputStream stream = r.openRawResource(R.raw.consent_section);
+        Reader reader = null;
+        try
+        {
+            reader = new InputStreamReader(stream, "UTF-8");
+        }
+        catch(UnsupportedEncodingException e)
+        {
+            throw  new RuntimeException(e);
+        }
+
+        ConsentSectionModel model = gson.fromJson(reader, ConsentSectionModel.class);
+
+        return model.getSections();
+
+    }
+    
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Other (unorganized)
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-
+    
     // TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
     public Constants.UserInfoType[] getUserInfoTypes()
     {
@@ -79,5 +119,3 @@ public class AppDelegate
                 Constants.UserInfoType.Weight
         };
     }
-
-}

@@ -22,6 +22,7 @@ import co.touchlab.touchkit.rk.common.step.Step;
 
 public abstract class StepFragment extends Fragment
 {
+    //TODO We are now using this in multiple place (ie. see ConsentStepFragment). Rename to something more generic.
     public static final String KEY_QUESTION_STEP = "KEY_STEP";
 
     protected Step step;
@@ -98,6 +99,7 @@ public abstract class StepFragment extends Fragment
 
     public abstract StepResult createNewStepResult(String stepIdentifier);
 
+    //TODO add ViewGroup as second parameter
     public abstract View getBodyView(LayoutInflater inflater);
 
     public Step getStep()

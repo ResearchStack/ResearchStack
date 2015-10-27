@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.StudyOverviewModel;
+import co.touchlab.touchkit.rk.common.model.StudyOverviewModel;
 
 public class StudyOverviewLayout extends FrameLayout
 {

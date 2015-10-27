@@ -9,7 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.StudyOverviewModel;
+import co.touchlab.touchkit.rk.common.model.StudyOverviewModel;
 import co.touchlab.touchkit.rk.ui.ViewVideoActivity;
 
 public class StudyVideoLayout extends ScrollView

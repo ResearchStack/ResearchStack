@@ -16,9 +16,11 @@ import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
 import co.touchlab.touchkit.rk.common.step.Step;
+import co.touchlab.touchkit.rk.common.step.ConsentStep;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.ui.fragment.BooleanQuestionStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.ConsentStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.NotImplementedStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignInStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpAdditionalInfoStepFragment;
@@ -83,8 +85,7 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
 
     private void loadPreviousFragment()
     {
-        Step previousStep = task.getStepBeforeStep(currentStep,
-                taskResult);
+        Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
         if(previousStep == null)
         {
             onBackPressed();
@@ -122,6 +123,10 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
             {
                 fragment = NotImplementedStepFragment.newInstance(step);
             }
+        }
+        else if (step instanceof ConsentStep)
+        {
+            fragment = ConsentStepFragment.newInstance((ConsentStep) step);
         }
         else
         {

@@ -1,4 +1,4 @@
-package co.touchlab.touchkit.rk.ui;
+package co.touchlab.touchkit.rk.ui.adapter;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.text.TextUtils;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.StudyOverviewModel;
+import co.touchlab.touchkit.rk.common.model.StudyOverviewModel;
 import co.touchlab.touchkit.rk.ui.views.StudyLandingLayout;
 import co.touchlab.touchkit.rk.ui.views.StudyOverviewLayout;
 import co.touchlab.touchkit.rk.ui.views.StudyVideoLayout;
@@ -25,6 +25,19 @@ public class OnboardingPagerAdapter extends PagerAdapter
         this.inflater = LayoutInflater.from(context);
     }
 
+    /**
+     * TODO Clean this code up -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+     * Each case is the same block of code. Figure out what the layout-id needs to be, then upcast
+     * to the super class that the layouts each share. If the layouts cant extend from the same parent
+     * class, maybe have each implement an interface?
+     *
+     * interface {
+     *     public getView()
+     *     public setData(Data d)
+     * }
+     *
+     * To discuss.
+     */
     @Override
     public Object instantiateItem(ViewGroup container, int position)
     {

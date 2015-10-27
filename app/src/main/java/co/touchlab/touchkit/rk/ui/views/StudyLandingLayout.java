@@ -19,7 +19,7 @@ import java.io.InputStream;
 
 import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.StudyOverviewModel;
+import co.touchlab.touchkit.rk.common.model.StudyOverviewModel;
 import co.touchlab.touchkit.rk.common.helpers.LogExt;
 
 public class StudyLandingLayout extends ScrollView

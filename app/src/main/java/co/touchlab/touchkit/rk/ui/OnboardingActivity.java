@@ -14,9 +14,10 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.StudyOverviewModel;
 import co.touchlab.touchkit.rk.common.task.SignInTask;
+import co.touchlab.touchkit.rk.common.model.StudyOverviewModel;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
+import co.touchlab.touchkit.rk.ui.adapter.OnboardingPagerAdapter;
 import co.touchlab.touchkit.rk.ui.views.PageIndicator;
 
 /**
@@ -35,7 +36,7 @@ public class OnboardingActivity extends AppCompatActivity
         OnboardingPagerAdapter adapter = new OnboardingPagerAdapter(this, model.getQuestions());
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        pager.setOffscreenPageLimit(5);
+        pager.setOffscreenPageLimit(2);
         pager.setAdapter(adapter);
 //      TODO  pager.setPageTransformer();
 //      TODO  pager.setPageMargin();

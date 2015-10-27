@@ -1,4 +1,4 @@
-package co.touchlab.touchkit.rk.common;
+package co.touchlab.touchkit.rk.common.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;

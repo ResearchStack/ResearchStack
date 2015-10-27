@@ -52,13 +52,18 @@
 
         <activity
           android:name=".ui.ConsentActivity"
-          android:label="@string/consent"
+          android:label="@string/signature_page_title"
           />
 
       <activity
           android:name=".ui.ViewVideoActivity"
           android:label="@string/app_name"
           />
+
+    <activity
+        android:name=".ui.ViewWebDocumentActivity"
+        android:label="@string/app_name"
+        />
 
   </application>
 

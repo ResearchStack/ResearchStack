@@ -22,7 +22,7 @@
   <string name="email">Email</string>
   <string name="disagree">Disagree</string>
   <string name="agree">Agree</string>
-  <string name="consent">Consent</string>
+  <string name="signature_page_title">Consent</string>
   <string name="sign_in">Sign In</string>
   <string name="add_password_hint">add password</string>
   <string name="password">Password</string>
@@ -41,4 +41,29 @@
   <string name="allow">Allow</string>
   <string name="granted">Granted</string>
   <string name="forgot_password">Forgot your password?</string>
+  <string name="participant">Participant</string>
+  <string name="signature_page_content">I agree to participate in this research Study</string>
+
+  <!-- Consent Section -->
+  <string name="consent_section_welcome">Welcome</string>
+  <string name="consent_section_data_gathering">Data Gathering</string>
+  <string name="consent_section_privacy">Privacy</string>
+  <string name="consent_section_data_use">Data Use</string>
+  <string name="consent_section_time_commitment">Time Commitment</string>
+  <string name="consent_section_study_survey">Study Survey</string>
+  <string name="consent_section_study_tasks">Study Tasks</string>
+  <string name="consent_section_withdrawing">Withdrawing</string>
+  <string name="consent_learn_more">Learn More</string>
+
+  <!-- Consent section learn more -->
+  <string name="consent_section_more_info">Learn more</string>
+  <string name="consent_section_more_info_data_gathering">Learn more about how data is gathered</string>
+  <string name="consent_section_more_info_data_use">Learn more about how data is used</string>
+  <string name="consent_section_more_info_privacy">Learn more about how your privacy and identity are protected</string>
+  <string name="consent_section_more_info_welcome">Learn more about the study first</string>
+  <string name="consent_section_more_info_study_survey">Learn more about the study survey</string>
+  <string name="consent_section_more_info_time_commitment">Learn more about the study\'s impact on your time</string>
+  <string name="consent_section_more_info_study_tasks">Learn more about the tasks involved</string>
+  <string name="consent_section_more_info_withdrawing">Learn more about withdrawing</string>
+
 </resources>
