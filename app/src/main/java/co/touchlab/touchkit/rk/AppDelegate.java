@@ -9,12 +9,16 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
+import co.touchlab.touchkit.rk.common.Constants;
 import co.touchlab.touchkit.rk.common.model.ConsentSectionModel;
+import co.touchlab.touchkit.rk.common.model.User;
 
 public class AppDelegate
 {
 
     public static AppDelegate instance;
+
+    private User currentUser;
 
     //TODO Thread safe
     public static AppDelegate getInstance()
@@ -25,6 +29,12 @@ public class AppDelegate
         }
 
         return instance;
+    }
+
+    private AppDelegate()
+    {
+        // TODO save and load user object
+        currentUser = new User();
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -50,7 +60,7 @@ public class AppDelegate
 
     public int getConsentSections()
     {
-        return R.raw.study_overview_consent_form;
+        return R.raw.consent_section;
     }
 
     public String getExternalSDAppFolder()
@@ -76,13 +86,13 @@ public class AppDelegate
         }
         catch(UnsupportedEncodingException e)
         {
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
 
-        return  gson.fromJson(reader, ConsentSectionModel.class);
+        return gson.fromJson(reader, ConsentSectionModel.class);
 
     }
-    
+
     public String getHTMLFilePath(String docName)
     {
         return "file:///android_res/raw/" + docName + ".html";
@@ -92,19 +102,21 @@ public class AppDelegate
     {
         return true;
     }
-    
+
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Other (unorganized)
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    
+
     // TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
     public Constants.UserInfoType[] getUserInfoTypes()
     {
-        return new Constants.UserInfoType[] {
-                Constants.UserInfoType.Name,
-                Constants.UserInfoType.Email,
-                Constants.UserInfoType.DateOfBirth,
-                Constants.UserInfoType.Height,
-                Constants.UserInfoType.Weight
-        };
+        return new Constants.UserInfoType[] {Constants.UserInfoType.Name,
+                Constants.UserInfoType.Email, Constants.UserInfoType.DateOfBirth,
+                Constants.UserInfoType.Height, Constants.UserInfoType.Weight};
     }
+
+    public User getCurrentUser()
+    {
+        return currentUser;
+    }
+}
