@@ -11,17 +11,17 @@ import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.step.ConsentSharingStep;
 import co.touchlab.touchkit.rk.ui.ViewWebDocumentActivity;
 
-public class ConsentSharingFragment extends BooleanQuestionStepFragment
+public class ConsentSharingStepFragment extends BooleanQuestionStepFragment
 {
 
-    public ConsentSharingFragment()
+    public ConsentSharingStepFragment()
     {
         super();
     }
 
     public static Fragment newInstance(ConsentSharingStep step)
     {
-        ConsentSharingFragment fragment = new ConsentSharingFragment();
+        ConsentSharingStepFragment fragment = new ConsentSharingStepFragment();
         Bundle args = new Bundle();
         args.putSerializable(KEY_QUESTION_STEP, step);
         fragment.setArguments(args);
@@ -32,10 +32,10 @@ public class ConsentSharingFragment extends BooleanQuestionStepFragment
     protected void initMoreInfoView(TextView moreInfo)
     {
         moreInfo.setText(R.string.consent_share_more_info);
-        RxView.clicks(moreInfo).subscribe(v -> consentShareLearnMore());
+        RxView.clicks(moreInfo).subscribe(v -> learnMoreAboutSharing());
     }
 
-    private void consentShareLearnMore()
+    private void learnMoreAboutSharing()
     {
         ConsentSharingStep step = (ConsentSharingStep) getStep();
         String title = getString(R.string.consent_learn_more);

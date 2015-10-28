@@ -31,4 +31,9 @@ public class ConsentReviewStep extends Step
     {
         return signature;
     }
+
+    public String getReasonForConsent()
+    {
+        return reasonForConsent;
+    }
 }

@@ -1,52 +1,34 @@
 package co.touchlab.touchkit.rk.ui;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.support.v4.app.Fragment;
 
-import co.touchlab.touchkit.rk.R;
+import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
+import co.touchlab.touchkit.rk.common.step.ConsentSharingStep;
+import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
+import co.touchlab.touchkit.rk.common.step.Step;
+import co.touchlab.touchkit.rk.ui.fragment.ConsentReviewStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.ConsentSharingStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.ConsentVisualStepFragment;
 
-public class ConsentActivity extends AppCompatActivity
+public class ConsentActivity extends ViewTaskActivity
 {
-    public static final String CONSENT_RESULT = "CONSENT_RESULT";
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected Fragment getFragmentForStep(Step step)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consent);
-
-        findViewById(R.id.disagree).setOnClickListener(new View.OnClickListener()
+        if(step instanceof ConsentVisualStep)
         {
-            @Override
-            public void onClick(View v)
-            {
-                finish();
-            }
-        });
-
-        findViewById(R.id.agree).setOnClickListener(new View.OnClickListener()
+            return ConsentVisualStepFragment.newInstance((ConsentVisualStep) step);
+        }
+        else if(step instanceof ConsentSharingStep)
         {
-            @Override
-            public void onClick(View v)
-            {
-                onAgree();
-            }
-        });
-    }
-
-    private void onAgree()
-    {
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(CONSENT_RESULT, true);
-        setResult(RESULT_OK,
-                resultIntent);
-        finish();
-    }
-
-    public static Intent newIntent(Context context)
-    {
-        return new Intent(context, ConsentActivity.class);
+            return ConsentSharingStepFragment.newInstance((ConsentSharingStep) step);
+        }
+        else if(step instanceof ConsentReviewStep)
+        {
+            return ConsentReviewStepFragment.newInstance((ConsentReviewStep) step);
+        }
+        else
+        {
+            return super.getFragmentForStep(step);
+        }
     }
 }

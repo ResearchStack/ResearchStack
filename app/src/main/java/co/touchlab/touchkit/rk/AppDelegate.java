@@ -95,7 +95,18 @@ public class AppDelegate
 
     public String getHTMLFilePath(String docName)
     {
-        return "file:///android_res/raw/" + docName + ".html";
+        return getRawFilePath(docName, "html");
+    }
+
+    public String getPDFFilePath(String docName)
+    {
+        return getRawFilePath(docName, "pdf");
+    }
+
+
+    public String getRawFilePath(String docName, String postfix)
+    {
+        return "file:///android_res/raw/" + docName + "." + postfix;
     }
 
     public boolean isSignatureEnabledInConsent()

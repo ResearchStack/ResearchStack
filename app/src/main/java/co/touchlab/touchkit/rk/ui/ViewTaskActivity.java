@@ -22,8 +22,9 @@ import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.ui.fragment.BooleanQuestionStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.ConsentSharingFragment;
-import co.touchlab.touchkit.rk.ui.fragment.ConsentStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.ConsentReviewStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.ConsentSharingStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.ConsentVisualStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.NotImplementedStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignInStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpAdditionalInfoStepFragment;
@@ -101,95 +102,7 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
 
     private void showFragment(Step step)
     {
-        Fragment fragment;
-
-        if(step == null)
-        {
-            fragment = NotImplementedStepFragment.newInstance(new Step("NullStep"));
-        }
-
-        //TODO Implement Consent sharing & review fragments
-        if (step instanceof ConsentVisualStep || step instanceof ConsentReviewStep)
-        {
-            fragment = ConsentStepFragment.newInstance((ConsentVisualStep) step);
-        }
-        else if (step instanceof ConsentSharingStep)
-        {
-            fragment = ConsentSharingFragment.newInstance((ConsentSharingStep) step);
-        }
-        else if (step instanceof QuestionStep)
-        {
-            if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.SingleChoice)
-            {
-                LogExt.d(getClass(),
-                        "Single Choice Step");
-                fragment = BooleanQuestionStepFragment.newInstance((QuestionStep) step);
-            }
-            else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Text)
-            {
-                LogExt.d(getClass(),
-                        "Text Step");
-                fragment = TextQuestionStepFragment.newInstance((QuestionStep) step);
-            }
-            else
-            {
-                fragment = NotImplementedStepFragment.newInstance(step);
-            }
-        }
-        else
-        {
-            if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpInclusionCriteriaStepIdentifier))
-            {
-                fragment = SignUpInclusionCriteriaStepFragment.newInstance(step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpIneligibleStepIdentifier))
-            {
-                fragment = SignUpIneligibleStepFragment.newInstance(step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpEligibleStepIdentifier))
-            {
-                fragment = SignUpEligibleStepFragment.newInstance(step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpPermissionsPrimingStepIdentifier))
-            {
-                fragment = SignUpPermissionsPrimingStepFragment.newInstance(step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpGeneralInfoStepIdentifier))
-            {
-                fragment = SignUpGeneralInfoStepFragment.newInstance(step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpMedicalInfoStepIdentifier))
-            {
-                fragment = SignUpAdditionalInfoStepFragment.newInstance(step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpPasscodeStepIdentifier))
-            {
-                fragment = SignUpPasscodeStepFragment.newInstance(step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpPermissionsStepIdentifier))
-            {
-                fragment = SignUpPermissionsStepFragment.newInstance(step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignInStepIdentifier))
-            {
-                fragment = SignInStepFragment.newInstance(step);
-            }
-            else
-            {
-                LogExt.d(getClass(),
-                        "No implementation for this step " + step.getIdentifier());
-                fragment = NotImplementedStepFragment.newInstance(step);
-            }
-        }
+        Fragment fragment = getFragmentForStep(step);
 
         currentStep = step;
 
@@ -198,6 +111,98 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
                 .replace(R.id.placeholder,
                         fragment)
                 .commit();
+    }
+
+    protected Fragment getFragmentForStep(Step step)
+    {
+        if(step == null)
+        {
+            return NotImplementedStepFragment.newInstance(new Step("NullStep"));
+        }
+
+        //TODO Implement Consent sharing & review fragments
+        if (step instanceof ConsentVisualStep)
+        {
+            return ConsentVisualStepFragment.newInstance((ConsentVisualStep) step);
+        }
+        else if (step instanceof ConsentSharingStep)
+        {
+            return ConsentSharingStepFragment.newInstance((ConsentSharingStep) step);
+        }
+        else if (step instanceof ConsentReviewStep)
+        {
+            return ConsentReviewStepFragment.newInstance((ConsentReviewStep) step);
+        }
+        else if (step instanceof QuestionStep)
+        {
+            if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.SingleChoice)
+            {
+                LogExt.d(getClass(), "Single Choice Step");
+                return BooleanQuestionStepFragment.newInstance((QuestionStep) step);
+            }
+            else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Text)
+            {
+                LogExt.d(getClass(), "Text Step");
+                return TextQuestionStepFragment.newInstance((QuestionStep) step);
+            }
+            else
+            {
+                return NotImplementedStepFragment.newInstance(step);
+            }
+        }
+        else
+        {
+            if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpInclusionCriteriaStepIdentifier))
+            {
+                return SignUpInclusionCriteriaStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpIneligibleStepIdentifier))
+            {
+                return SignUpIneligibleStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpEligibleStepIdentifier))
+            {
+                return SignUpEligibleStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpPermissionsPrimingStepIdentifier))
+            {
+                return SignUpPermissionsPrimingStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpGeneralInfoStepIdentifier))
+            {
+                return SignUpGeneralInfoStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpMedicalInfoStepIdentifier))
+            {
+                return SignUpAdditionalInfoStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpPasscodeStepIdentifier))
+            {
+                return SignUpPasscodeStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignUpPermissionsStepIdentifier))
+            {
+                return SignUpPermissionsStepFragment.newInstance(step);
+            }
+            else if (step.getIdentifier()
+                    .equals(SignUpTask.SignInStepIdentifier))
+            {
+                return SignInStepFragment.newInstance(step);
+            }
+            else
+            {
+                LogExt.d(getClass(), "No implementation for this step " + step.getIdentifier());
+                return NotImplementedStepFragment.newInstance(step);
+            }
+        }
     }
 
     @Override

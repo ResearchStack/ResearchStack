@@ -14,21 +14,21 @@ import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
 import co.touchlab.touchkit.rk.ui.views.ConsentSectionLayout;
 
-public class ConsentStepFragment extends StepFragment
+public class ConsentVisualStepFragment extends StepFragment
 {
 
     private ConsentVisualStep step;
     private ConsentDocument document;
     private boolean isAnimating;
 
-    public ConsentStepFragment()
+    public ConsentVisualStepFragment()
     {
         super();
     }
 
     public static Fragment newInstance(ConsentVisualStep step)
     {
-        ConsentStepFragment fragment = new ConsentStepFragment();
+        ConsentVisualStepFragment fragment = new ConsentVisualStepFragment();
         Bundle args = new Bundle();
         args.putSerializable(KEY_QUESTION_STEP, step);
         fragment.setArguments(args);
