@@ -14,12 +14,33 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_medium"
-            android:textSize="20sp"
-            tools:text="@string/lorem_short" />
+            android:gravity="center"
+            tools:text="@string/lorem_name" />
+
+        <TextView
+            android:id="@+id/text"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            tools:text="@string/lorem_name"
+            />
+
+        <TextView
+            android:id="@+id/more_info"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:textColor="?attr/colorAccent"
+            tools:text="More Info"
+            />
 
         <Button
             android:id="@+id/next"

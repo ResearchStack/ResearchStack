@@ -22,6 +22,7 @@ import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.ui.fragment.BooleanQuestionStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.ConsentSharingFragment;
 import co.touchlab.touchkit.rk.ui.fragment.ConsentStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.NotImplementedStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignInStepFragment;
@@ -108,9 +109,13 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         }
 
         //TODO Implement Consent sharing & review fragments
-        if (step instanceof ConsentVisualStep || step instanceof ConsentSharingStep || step instanceof ConsentReviewStep)
+        if (step instanceof ConsentVisualStep || step instanceof ConsentReviewStep)
         {
             fragment = ConsentStepFragment.newInstance((ConsentVisualStep) step);
+        }
+        else if (step instanceof ConsentSharingStep)
+        {
+            fragment = ConsentSharingFragment.newInstance((ConsentSharingStep) step);
         }
         else if (step instanceof QuestionStep)
         {

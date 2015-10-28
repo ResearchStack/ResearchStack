@@ -8,7 +8,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.answerformat.BooleanAnswerFormat;
+import co.touchlab.touchkit.rk.common.answerformat.TextChoiceAnswerFormat;
 import co.touchlab.touchkit.rk.common.helpers.TextChoice;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
@@ -36,7 +36,7 @@ public class BooleanQuestionStepFragment extends StepFragment
     public View getBodyView(LayoutInflater inflater)
     {
 
-        BooleanAnswerFormat answerFormat = (BooleanAnswerFormat) ((QuestionStep) step).getAnswerFormat();
+        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) step).getAnswerFormat();
         RadioGroup radioGroup = new RadioGroup(getContext());
         final TextChoice[] textChoices = answerFormat.getTextChoices();
 
