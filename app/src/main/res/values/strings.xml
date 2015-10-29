@@ -79,5 +79,9 @@
   <string name="consent_review_reason">By agreeing you confirm that you read the information and that you wish to take part in this research study.</string>
   <string name="consent_review_instruction">Review the form below, and tap Agree if you\'re ready to continue.</string>
   <string name="cancel">Cancel</string>
+  <string name="activities">Activities</string>
+  <string name="dashboard">Dashboard</string>
+  <string name="learn">Learn</string>
+  <string name="profile">Profile</string>
 
 </resources>

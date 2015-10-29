@@ -88,16 +88,6 @@ public class SplashActivity extends AppCompatActivity
 
     private void launchPinActivity()
     {
-        startActivity(new Intent(this, UserPinActivity.class));
-    }
-
-    private boolean isUserSignedUp()
-    {
-        return false;
-    }
-
-    private boolean isUserSignedIn()
-    {
-        return false;
+        startActivity(new Intent(this, MainActivity.class));
     }
 }
