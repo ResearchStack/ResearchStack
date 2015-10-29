@@ -1,23 +1,25 @@
 package co.touchlab.touchkit.rk.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.jakewharton.rxbinding.view.RxView;
-import com.joanzapata.pdfview.PDFView;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
+import co.touchlab.touchkit.rk.ui.fragment.callbacks.ConsentReviewCallback;
+import co.touchlab.touchkit.rk.ui.views.ConsentReviewDocumentLayout;
 
-public class ConsentReviewStepFragment extends StepFragment
+public class ConsentReviewStepFragment extends MultiSectionStepFragment implements ConsentReviewCallback
 {
+
+    public static final int SECTION_DOCUMENT = 0;
+    public static final int SECTION_FORM = 1;
+    public static final int SECTION_SIGNATURE = 2;
+    public static final int SECTION_COUNT = 3;
 
 //    static NSString *const _NameFormIdentifier = @"nameForm";
 //    static NSString *const _GivenNameIdentifier = @"given";
@@ -41,40 +43,78 @@ public class ConsentReviewStepFragment extends StepFragment
         return fragment;
     }
 
-    @Nullable
+    //TODO Clear activity stack up until OnboardingActivity
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public void closeToWelcomeFlow()
     {
-        return inflater.inflate(R.layout.fragment_step_consent_review, container, false);
+        Toast.makeText(getContext(), "Close and show welcome screen", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    public void showConfirmationDialog()
     {
-        super.onViewCreated(view, savedInstanceState);
+        ConsentReviewStep step = (ConsentReviewStep) getStep();
 
-        //TODO Add Review title
-        //TODO Add Review intruction
-
-        PDFView pdfView = (PDFView) view.findViewById(R.id.pdfview);
-        pdfView.fromAsset("study_overview_consent_form.pdf").load();        //TODO Point pdf to App-delegate
-
-        View agree = view.findViewById(R.id.agree);
-        RxView.clicks(agree).subscribe(v -> showConfirmationDialog());
-
-        View disagree = view.findViewById(R.id.disagree);
-        RxView.clicks(disagree).subscribe(v -> closeToWelcomeFlow());
+        new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
+            .setTitle(R.string.consent_review_alert_title)
+            .setMessage(step.getReasonForConsent()).setCancelable(false)
+                .setPositiveButton(R.string.agree, (dialog, which) -> {
+                    showConsentSection(SECTION_FORM, true);
+            }).setNegativeButton(R.string.cancel, null)
+            .show();
     }
 
-//    - (BOOL)currentLocalePresentsFamilyNameFirst {
-//        NSString * language = [[[NSLocale preferredLanguages] firstObject] substringToIndex:2];
-//        static dispatch_once_t onceToken;
-//        static NSArray *familyNameFirstLangs = nil;
-//        dispatch_once(&onceToken, ^{
-//            familyNameFirstLangs = @[@"zh",@"ko",@"ja",@"vi"];
-//        });
-//        return (language != nil) && [familyNameFirstLangs containsObject:language];
-//    }
+    @Override
+    public View createSectionLayout(LayoutInflater inflater, int section)
+    {
+        if (section == SECTION_DOCUMENT)
+        {
+            ConsentReviewDocumentLayout layout = new ConsentReviewDocumentLayout(getContext());
+            layout.setCallback(this);
+            return layout;
+        }
+        else if (section == SECTION_FORM)
+        {
+            throw new RuntimeException("SECTION_FORM");
+        }
+        else if (section == SECTION_SIGNATURE)
+        {
+            throw new RuntimeException("SECTION_SIGNATURE");
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    @Override
+    public int getSectionCount()
+    {
+        return SECTION_COUNT;
+    }
+
+    @Override
+    public int getNextViewId()
+    {
+        return R.id.next;
+    }
+
+    @Override
+    public StepResult createNewStepResult(String stepIdentifier)
+    {
+        return null;
+    }
+
+
+    //    - (BOOL)currentLocalePresentsFamilyNameFirst {
+    //        NSString * language = [[[NSLocale preferredLanguages] firstObject] substringToIndex:2];
+    //        static dispatch_once_t onceToken;
+    //        static NSArray *familyNameFirstLangs = nil;
+    //        dispatch_once(&onceToken, ^{
+    //            familyNameFirstLangs = @[@"zh",@"ko",@"ja",@"vi"];
+    //        });
+    //        return (language != nil) && [familyNameFirstLangs containsObject:language];
+    //    }
 
 
     /*
@@ -154,36 +194,4 @@ public class ConsentReviewStepFragment extends StepFragment
     }
 
      */
-
-
-    //TODO Clear activity stack up until OnboardingActivity
-    private void closeToWelcomeFlow()
-    {
-        Toast.makeText(getContext(), "Close and show welcome screen", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showConfirmationDialog()
-    {
-        ConsentReviewStep step = (ConsentReviewStep) getStep();
-
-        new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
-            .setTitle(R.string.consent_review_alert_title)
-            .setMessage(step.getReasonForConsent()).setCancelable(false)
-                .setPositiveButton(R.string.agree, (dialog, which) -> {
-                    callbacks.onNextPressed(getStep());
-            }).setNegativeButton(R.string.cancel, null)
-            .show();
-    }
-
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return null;
-    }
-
-    @Override
-    public View getBodyView(LayoutInflater inflater)
-    {
-        return null;
-    }
 }

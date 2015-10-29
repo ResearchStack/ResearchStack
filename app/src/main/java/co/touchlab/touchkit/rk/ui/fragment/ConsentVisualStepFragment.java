@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.model.ConsentDocument;
@@ -57,8 +56,7 @@ public class ConsentVisualStepFragment extends MultiSectionStepFragment
     @Override
     public View createSectionLayout(LayoutInflater inflater, int section)
     {
-        ConsentVisualSectionLayout layout = (ConsentVisualSectionLayout) inflater
-                .inflate(R.layout.item_consent_section, (ViewGroup) getView(), false);
+        ConsentVisualSectionLayout layout = new ConsentVisualSectionLayout(getContext());
         layout.setData(document.getSections().get(section));
         return layout;
     }

@@ -58,6 +58,7 @@ public abstract class MultiSectionStepFragment extends StepFragment
 
     public abstract int getSectionCount();
 
+    //TODO this sucks
     public abstract int getNextViewId();
 
     public void showConsentSection(int section, boolean withAnimation)
@@ -71,20 +72,21 @@ public abstract class MultiSectionStepFragment extends StepFragment
 
         // Create the next session, set interpolater for animation
         View newSection = createSectionLayout(getLayoutInflater(null), section);
-        newSection.animate().setInterpolator(interpolator);
 
-        //If next is null, this will crash ... as it should.
         View next = newSection.findViewById(getNextViewId());
-        next.setOnClickListener(v -> {
-            if (section == getSectionCount() - 1)
-            {
-                callbacks.onNextPressed(step);
-            }
-            else
-            {
-                showConsentSection(section + 1, true);
-            }
-        });
+        if (next != null)
+        {
+            next.setOnClickListener(v -> {
+                if(section == getSectionCount() - 1)
+                {
+                    callbacks.onNextPressed(step);
+                }
+                else
+                {
+                    showConsentSection(section + 1, true);
+                }
+            });
+        }
 
         if (withAnimation && root.getChildCount() > 0)
         {
