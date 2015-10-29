@@ -30,7 +30,7 @@ public class ConsentPagerAdapter extends PagerAdapter
 
         ConsentSectionLayout child = (ConsentSectionLayout) inflater.inflate(
                 R.layout.item_consent_section, container, false);
-        child.setData(item, null);
+        child.setData(item);
 
         container.addView(child);
         return child;

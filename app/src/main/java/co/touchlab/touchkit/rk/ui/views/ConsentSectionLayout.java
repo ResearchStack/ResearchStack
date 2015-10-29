@@ -61,7 +61,7 @@ public class ConsentSectionLayout extends RelativeLayout
         next = (Button) findViewById(R.id.layout_consent_next);
     }
 
-    public void setData(ConsentSection data, OnClickListener onClickListener)
+    public void setData(ConsentSection data)
     {
 
         boolean isOverview = data.getType() == ConsentSection.Type.Overview;
@@ -99,9 +99,6 @@ public class ConsentSectionLayout extends RelativeLayout
             Intent webDoc = ViewWebDocumentActivity.newIntent(getContext(), webTitle, path);
             getContext().startActivity(webDoc);
         });
-
-        next.setOnClickListener(onClickListener);
-
 //        TODO self.continueSkipContainer.continueEnabled = YES;
 //        TODO [self.continueSkipContainer updateContinueAndSkipEnabled];
     }

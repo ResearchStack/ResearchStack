@@ -35,6 +35,10 @@ public class ConsentTask extends OrderedTask
         consent.setSections(sections);
         consent.addSignature(signature);
 
+        //TODO Add Quiz
+
+        //TODO Add Quiz Evaluation
+
         ConsentVisualStep visualStep = new ConsentVisualStep("visual", consent);
         addStep(visualStep);
 

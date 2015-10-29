@@ -14,12 +14,11 @@ import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
 import co.touchlab.touchkit.rk.ui.views.ConsentSectionLayout;
 
-public class ConsentVisualStepFragment extends StepFragment
+public class ConsentVisualStepFragment extends MultiSectionStepFragment
 {
 
     private ConsentVisualStep step;
     private ConsentDocument document;
-    private boolean isAnimating;
 
     public ConsentVisualStepFragment()
     {
@@ -35,101 +34,38 @@ public class ConsentVisualStepFragment extends StepFragment
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public void onCreate(@Nullable Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.fragment_step_consent, container, false);
+        super.onCreate(savedInstanceState);
+        step = (ConsentVisualStep) getArguments().getSerializable(KEY_QUESTION_STEP);
+        document = step.getDocument();
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    public int getSectionCount()
     {
-        super.onViewCreated(view, savedInstanceState);
-        step = (ConsentVisualStep) getArguments().getSerializable(KEY_QUESTION_STEP);
-        document = step.getDocument();
+        return document.getSections().size();
+    }
 
-        int currentSection = getCurrentSection();
-        showConsentSection(currentSection, false);
+    @Override
+    public int getNextViewId()
+    {
+        return R.id.layout_consent_next;
+    }
+
+    @Override
+    public View createSectionLayout(LayoutInflater inflater, int section)
+    {
+        ConsentSectionLayout layout = (ConsentSectionLayout) inflater
+                .inflate(R.layout.item_consent_section, (ViewGroup) getView(), false);
+        layout.setData(document.getSections().get(section));
+        return layout;
     }
 
     @Override
     public StepResult createNewStepResult(String stepIdentifier)
     {
         return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
-    }
-
-    @Override
-    public View getBodyView(LayoutInflater inflater)
-    {
-        return null;
-    }
-
-    public int getCurrentSection()
-    {
-        return getView().getTag() == null ? 0 : (int) getView().getTag();
-    }
-
-    public void showConsentSection(int section, boolean withAnimation)
-    {
-        if (isAnimating)
-        {
-            return;
-        }
-
-        ViewGroup root = (ViewGroup) getView();
-
-        ConsentSectionLayout newSection = createConsentSectionLayout();
-        View.OnClickListener onNextClicked = v ->
-        {
-            if (section == document.getSections().size() - 1)
-            {
-                callbacks.onNextPressed(step);
-            }
-            else
-            {
-                showConsentSection(section + 1, true);
-            }
-        };
-        newSection.setData(document.getSections().get(section), onNextClicked);
-
-        if (withAnimation && root.getChildCount() > 0)
-        {
-            isAnimating = true;
-
-            root.post(() -> {
-                boolean isNextStep = getCurrentSection() < section;
-
-                int newTranslationX = (isNextStep ? 1 : - 1) * root.getWidth();
-                newSection.setTranslationX(newTranslationX);
-                root.addView(newSection);
-                root.setTag(section);
-
-                newSection.animate().translationX(0);
-
-                View oldSection = root.getChildAt(0);
-                oldSection.animate().translationX(- 1 * newTranslationX).withEndAction(() -> {
-                    root.removeView(oldSection);
-                    isAnimating = false;
-                });
-            });
-        }
-        else
-        {
-            root.addView(newSection);
-            root.setTag(section);
-        }
-    }
-
-    public ConsentSectionLayout createConsentSectionLayout()
-    {
-        LayoutInflater inflater = getLayoutInflater(null);
-        ConsentSectionLayout layout = (ConsentSectionLayout) inflater.inflate(
-                R.layout.item_consent_section, (ViewGroup) getView(), false);
-        layout.animate().setInterpolator(t -> {
-            t -= 1.0f;
-            return t * t * t * t * t + 1.0f;
-        });
-        return layout;
     }
 }
