@@ -18,7 +18,7 @@ import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.model.ConsentSection;
 import co.touchlab.touchkit.rk.ui.ViewWebDocumentActivity;
 
-public class ConsentSectionLayout extends RelativeLayout
+public class ConsentVisualSectionLayout extends RelativeLayout
 {
     private ViewGroup infoContainer;
     private ImageView imageView;
@@ -27,19 +27,19 @@ public class ConsentSectionLayout extends RelativeLayout
     private TextView moreInfo;
     private Button next;
 
-    public ConsentSectionLayout(Context context)
+    public ConsentVisualSectionLayout(Context context)
     {
         super(context);
         init();
     }
 
-    public ConsentSectionLayout(Context context, AttributeSet attrs)
+    public ConsentVisualSectionLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init();
     }
 
-    public ConsentSectionLayout(Context context, AttributeSet attrs, int defStyleAttr)
+    public ConsentVisualSectionLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
         init();

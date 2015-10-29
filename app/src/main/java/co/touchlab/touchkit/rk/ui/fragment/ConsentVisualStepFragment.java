@@ -12,7 +12,7 @@ import co.touchlab.touchkit.rk.common.model.ConsentDocument;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
-import co.touchlab.touchkit.rk.ui.views.ConsentSectionLayout;
+import co.touchlab.touchkit.rk.ui.views.ConsentVisualSectionLayout;
 
 public class ConsentVisualStepFragment extends MultiSectionStepFragment
 {
@@ -57,7 +57,7 @@ public class ConsentVisualStepFragment extends MultiSectionStepFragment
     @Override
     public View createSectionLayout(LayoutInflater inflater, int section)
     {
-        ConsentSectionLayout layout = (ConsentSectionLayout) inflater
+        ConsentVisualSectionLayout layout = (ConsentVisualSectionLayout) inflater
                 .inflate(R.layout.item_consent_section, (ViewGroup) getView(), false);
         layout.setData(document.getSections().get(section));
         return layout;

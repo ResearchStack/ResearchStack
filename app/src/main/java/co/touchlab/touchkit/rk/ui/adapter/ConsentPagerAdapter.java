@@ -9,7 +9,7 @@ import java.util.List;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.model.ConsentSection;
-import co.touchlab.touchkit.rk.ui.views.ConsentSectionLayout;
+import co.touchlab.touchkit.rk.ui.views.ConsentVisualSectionLayout;
 
 @Deprecated
 public class ConsentPagerAdapter extends PagerAdapter
@@ -28,7 +28,7 @@ public class ConsentPagerAdapter extends PagerAdapter
     {
         ConsentSection item = items.get(position);
 
-        ConsentSectionLayout child = (ConsentSectionLayout) inflater.inflate(
+        ConsentVisualSectionLayout child = (ConsentVisualSectionLayout) inflater.inflate(
                 R.layout.item_consent_section, container, false);
         child.setData(item);
 
