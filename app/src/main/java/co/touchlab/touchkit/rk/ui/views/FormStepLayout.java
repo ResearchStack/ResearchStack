@@ -123,24 +123,24 @@ public class FormStepLayout extends RelativeLayout
 
         if (action != null)
         {
-            RxView.clicks(next).subscribe(action);
+            RxView.clicks(moreInfo).subscribe(action);
         }
     }
 
-    public void setNext(@StringRes int stringRes, Action1<? super Object> action)
-    {
-        if (next.getVisibility() != View.VISIBLE)
-        {
-            next.setVisibility(View.VISIBLE);
-        }
-
-        next.setText(stringRes);
-
-        if (action != null)
-        {
-            RxView.clicks(next).subscribe(action);
-        }
-    }
+//    public void setNext(@StringRes int stringRes, Action1<? super Object> action)
+//    {
+//        if (next.getVisibility() != View.VISIBLE)
+//        {
+//            next.setVisibility(View.VISIBLE);
+//        }
+//
+//        next.setText(stringRes);
+//
+//        if (action != null)
+//        {
+//            RxView.clicks(next).subscribe(action);
+//        }
+//    }
 
     public void setSkip(boolean isOptional, @StringRes int stringRes,  Action1<? super Object> action)
     {
