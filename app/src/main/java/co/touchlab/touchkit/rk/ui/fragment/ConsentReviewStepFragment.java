@@ -7,11 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
 import co.touchlab.touchkit.rk.ui.fragment.callbacks.ConsentReviewCallback;
 import co.touchlab.touchkit.rk.ui.views.ConsentReviewDocumentLayout;
+import co.touchlab.touchkit.rk.ui.views.FormStepLayout;
 
 public class ConsentReviewStepFragment extends MultiSectionStepFragment implements ConsentReviewCallback
 {
@@ -21,9 +26,9 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
     public static final int SECTION_SIGNATURE = 2;
     public static final int SECTION_COUNT = 3;
 
-//    static NSString *const _NameFormIdentifier = @"nameForm";
-//    static NSString *const _GivenNameIdentifier = @"given";
-//    static NSString *const _FamilyNameIdentifier = @"family";
+    private static final String NameFormIdentifier = "nameForm";
+    private static final String GivenNameIdentifier = "given";
+    private static final String FamilyNameIdentifier = "family";
 
     public ConsentReviewStepFragment()
     {
@@ -75,11 +80,42 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
         }
         else if (section == SECTION_FORM)
         {
-            throw new RuntimeException("SECTION_FORM");
+            //TODO Create TextAnswerFormat
+//            ORKTextAnswerFormat *nameAnswerFormat = [ORKTextAnswerFormat textAnswerFormat];
+//            nameAnswerFormat.multipleLines = NO;
+//            nameAnswerFormat.autocapitalizationType = UITextAutocapitalizationTypeWords;
+//            nameAnswerFormat.autocorrectionType = UITextAutocorrectionTypeNo;
+//            nameAnswerFormat.spellCheckingType = UITextSpellCheckingTypeNo;
+
+            String placeholder = getResources().getString(R.string.consent_name_placeholder);
+            List<FormStepLayout.FormItem> items = new ArrayList<>();
+
+            //TODO Pass in Answer format
+            String givenText = getResources().getString(R.string.consent_name_first);
+            FormStepLayout.FormItem givenName = new FormStepLayout.FormItem(
+                    GivenNameIdentifier, givenText, null, placeholder);
+            items.add(givenName);
+
+            //TODO Pass in Answer format
+            String familyText = getResources().getString(R.string.consent_name_last);
+            FormStepLayout.FormItem familyName = new FormStepLayout.FormItem(
+                    FamilyNameIdentifier, familyText, null, placeholder);
+            items.add(familyName);
+
+            if (getResources().getBoolean(R.bool.lang_display_last_name_first)) {
+                Collections.reverse(items);
+            }
+
+            FormStepLayout layout = new FormStepLayout(getContext());
+            layout.setTitle(R.string.consent_name_title);
+            layout.setSkip(false, 0, null);
+            layout.setFormItems(items);
+
+            return layout;
         }
         else if (section == SECTION_SIGNATURE)
         {
-            throw new RuntimeException("SECTION_SIGNATURE");
+            throw new RuntimeException("SECTION_SIGNATURE") ;
         }
         else
         {
@@ -105,19 +141,7 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
         return null;
     }
 
-
-    //    - (BOOL)currentLocalePresentsFamilyNameFirst {
-    //        NSString * language = [[[NSLocale preferredLanguages] firstObject] substringToIndex:2];
-    //        static dispatch_once_t onceToken;
-    //        static NSArray *familyNameFirstLangs = nil;
-    //        dispatch_once(&onceToken, ^{
-    //            familyNameFirstLangs = @[@"zh",@"ko",@"ja",@"vi"];
-    //        });
-    //        return (language != nil) && [familyNameFirstLangs containsObject:language];
-    //    }
-
-
-    /*
+        /*
 
      - (ORKFormStepViewController *)makeNameFormViewController {
         ORKFormStep *formStep = [[ORKFormStep alloc] initWithIdentifier:_NameFormIdentifier

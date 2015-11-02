@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="lang_display_last_name_first">false</bool>
+</resources>

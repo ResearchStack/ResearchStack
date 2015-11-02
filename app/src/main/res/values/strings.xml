@@ -43,6 +43,11 @@
   <string name="forgot_password">Forgot your password?</string>
   <string name="participant">Participant</string>
   <string name="signature_page_content">I agree to participate in this research Study</string>
+  <string name="cancel">Cancel</string>
+  <string name="activities">Activities</string>
+  <string name="dashboard">Dashboard</string>
+  <string name="learn">Learn</string>
+  <string name="profile">Profile</string>
 
   <!-- Consent Section -->
   <string name="consent_section_welcome">Welcome</string>
@@ -78,10 +83,9 @@
   <string name="consent_review_alert_title">Review</string>
   <string name="consent_review_reason">By agreeing you confirm that you read the information and that you wish to take part in this research study.</string>
   <string name="consent_review_instruction">Review the form below, and tap Agree if you\'re ready to continue.</string>
-  <string name="cancel">Cancel</string>
-  <string name="activities">Activities</string>
-  <string name="dashboard">Dashboard</string>
-  <string name="learn">Learn</string>
-  <string name="profile">Profile</string>
+  <string name="consent_name_title">Consent</string>
+  <string name="consent_name_first">First Name</string>
+  <string name="consent_name_last">Last Name</string>
+  <string name="consent_name_placeholder">Required</string>
 
 </resources>
