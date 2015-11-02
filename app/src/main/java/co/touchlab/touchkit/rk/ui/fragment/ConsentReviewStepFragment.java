@@ -1,6 +1,7 @@
 package co.touchlab.touchkit.rk.ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -21,14 +22,15 @@ import co.touchlab.touchkit.rk.ui.views.FormStepLayout;
 public class ConsentReviewStepFragment extends MultiSectionStepFragment implements ConsentReviewCallback
 {
 
-    public static final int SECTION_DOCUMENT = 0;
-    public static final int SECTION_FORM = 1;
-    public static final int SECTION_SIGNATURE = 2;
-    public static final int SECTION_COUNT = 3;
+    public static final int SECTION_REVIEW_DOCUMENT = 0;
+    public static final int SECTION_REVIEW_NAME = 1;
+    public static final int SECTION_REVIEW_SIGNATURE = 2;
 
     private static final String NameFormIdentifier = "nameForm";
     private static final String GivenNameIdentifier = "given";
     private static final String FamilyNameIdentifier = "family";
+
+    public List<Integer> sections;
 
     public ConsentReviewStepFragment()
     {
@@ -48,6 +50,28 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        ConsentReviewStep step = (ConsentReviewStep) getStep();
+
+        sections = new ArrayList<>();
+
+        if (step.getDocument() != null) {
+            sections.add(SECTION_REVIEW_DOCUMENT);
+        }
+
+        if (step.getSignature().isRequiresName()) {
+            sections.add(SECTION_REVIEW_NAME);
+        }
+
+        if (step.getSignature().isRequiresSignatureImage()) {
+            sections.add(SECTION_REVIEW_SIGNATURE);
+        }
+    }
+
     //TODO Clear activity stack up until OnboardingActivity
     @Override
     public void closeToWelcomeFlow()
@@ -64,21 +88,23 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
             .setTitle(R.string.consent_review_alert_title)
             .setMessage(step.getReasonForConsent()).setCancelable(false)
                 .setPositiveButton(R.string.agree, (dialog, which) -> {
-                    showConsentSection(SECTION_FORM, true);
+                    showConsentSection(SECTION_REVIEW_NAME, true);
             }).setNegativeButton(R.string.cancel, null)
             .show();
     }
 
     @Override
-    public View createSectionLayout(LayoutInflater inflater, int section)
+    public View createSectionLayout(LayoutInflater inflater, int position)
     {
-        if (section == SECTION_DOCUMENT)
+        int section = sections.get(position);
+
+        if (section == SECTION_REVIEW_DOCUMENT)
         {
             ConsentReviewDocumentLayout layout = new ConsentReviewDocumentLayout(getContext());
             layout.setCallback(this);
             return layout;
         }
-        else if (section == SECTION_FORM)
+        else if (section == SECTION_REVIEW_NAME)
         {
             //TODO Create TextAnswerFormat
 //            ORKTextAnswerFormat *nameAnswerFormat = [ORKTextAnswerFormat textAnswerFormat];
@@ -113,9 +139,9 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
 
             return layout;
         }
-        else if (section == SECTION_SIGNATURE)
+        else if (section == SECTION_REVIEW_SIGNATURE)
         {
-            throw new RuntimeException("SECTION_SIGNATURE") ;
+            throw new RuntimeException("SECTION_REVIEW_SIGNATURE") ;
         }
         else
         {
@@ -126,7 +152,7 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
     @Override
     public int getSectionCount()
     {
-        return SECTION_COUNT;
+        return sections.size();
     }
 
     @Override
@@ -138,6 +164,7 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
     @Override
     public StepResult createNewStepResult(String stepIdentifier)
     {
+        //TODO Implement consent result
         return null;
     }
 

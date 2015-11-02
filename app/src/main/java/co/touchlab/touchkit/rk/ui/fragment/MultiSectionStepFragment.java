@@ -61,29 +61,34 @@ public abstract class MultiSectionStepFragment extends StepFragment
     //TODO this sucks
     public abstract int getNextViewId();
 
-    public void showConsentSection(int section, boolean withAnimation)
+    public void showConsentSection(int position, boolean withAnimation)
     {
         if (isAnimating)
         {
             return;
         }
 
+        if (getSectionCount() == 0)
+        {
+            throw new IllegalStateException("Section count cannot be 0");
+        }
+
         ViewGroup root = (ViewGroup) getView();
 
         // Create the next session, set interpolater for animation
-        View newSection = createSectionLayout(getLayoutInflater(null), section);
+        View newSection = createSectionLayout(getLayoutInflater(null), position);
 
         View next = newSection.findViewById(getNextViewId());
         if (next != null)
         {
             next.setOnClickListener(v -> {
-                if(section == getSectionCount() - 1)
+                if(position == getSectionCount() - 1)
                 {
                     callbacks.onNextPressed(step);
                 }
                 else
                 {
-                    showConsentSection(section + 1, true);
+                    showConsentSection(position + 1, true);
                 }
             });
         }
@@ -93,12 +98,12 @@ public abstract class MultiSectionStepFragment extends StepFragment
             isAnimating = true;
 
             root.post(() -> {
-                boolean isNextStep = getCurrentSection() < section;
+                boolean isNextStep = getCurrentSection() < position;
 
                 int newTranslationX = (isNextStep ? 1 : - 1) * root.getWidth();
                 newSection.setTranslationX(newTranslationX);
                 root.addView(newSection);
-                root.setTag(section);
+                root.setTag(position);
 
                 newSection.animate().setInterpolator(interpolator).translationX(0);
 
@@ -113,7 +118,7 @@ public abstract class MultiSectionStepFragment extends StepFragment
         else
         {
             root.addView(newSection);
-            root.setTag(section);
+            root.setTag(position);
         }
     }
 
