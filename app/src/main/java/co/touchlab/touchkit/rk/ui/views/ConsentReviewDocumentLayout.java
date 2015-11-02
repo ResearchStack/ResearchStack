@@ -37,7 +37,7 @@ public class ConsentReviewDocumentLayout extends FrameLayout
     private void init()
     {
         LayoutInflater.from(getContext())
-                .inflate(R.layout.fragment_step_consent_review, this, true);
+                .inflate(R.layout.layout_section_consent_review_document, this, true);
 
         PDFView pdfView = (PDFView) findViewById(R.id.pdfview);
         //TODO Point pdf to App-delegate

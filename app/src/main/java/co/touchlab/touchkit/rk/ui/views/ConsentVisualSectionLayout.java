@@ -47,7 +47,7 @@ public class ConsentVisualSectionLayout extends RelativeLayout
 
     private void init()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.layout_consent_section, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.layout_section_consent_visual, this, true);
 
         int accentColor = fetchAccentColor(getContext());
 
