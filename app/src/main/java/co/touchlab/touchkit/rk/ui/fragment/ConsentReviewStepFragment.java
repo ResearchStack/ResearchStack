@@ -15,7 +15,7 @@ import java.util.List;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
-import co.touchlab.touchkit.rk.ui.fragment.callbacks.ConsentReviewCallback;
+import co.touchlab.touchkit.rk.ui.callbacks.ConsentReviewCallback;
 import co.touchlab.touchkit.rk.ui.views.ConsentReviewDocumentLayout;
 import co.touchlab.touchkit.rk.ui.views.FormStepLayout;
 

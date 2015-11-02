@@ -9,7 +9,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.joanzapata.pdfview.PDFView;
 
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.ui.fragment.callbacks.ConsentReviewCallback;
+import co.touchlab.touchkit.rk.ui.callbacks.ConsentReviewCallback;
 
 public class ConsentReviewDocumentLayout extends FrameLayout
 {
