@@ -34,8 +34,15 @@ public abstract class StepLayout extends RelativeLayout
 
     private void init()
     {
+        LayoutInflater.from(getContext())
+                .inflate(getLayoutResourceIdToAttachToRoot(), this, true);
 
+        onLayoutAttachedToRoot();
     }
+
+    protected abstract int getLayoutResourceIdToAttachToRoot();
+
+    protected abstract void onLayoutAttachedToRoot();
 
     protected abstract View getBodyView(LayoutInflater inflater, LinearLayout parent);
 

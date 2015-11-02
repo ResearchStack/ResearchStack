@@ -17,6 +17,7 @@ import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
 import co.touchlab.touchkit.rk.ui.callbacks.ConsentReviewCallback;
 import co.touchlab.touchkit.rk.ui.views.ConsentReviewDocumentLayout;
+import co.touchlab.touchkit.rk.ui.views.ConsentReviewSignatureLayout;
 import co.touchlab.touchkit.rk.ui.views.FormStepLayout;
 
 public class ConsentReviewStepFragment extends MultiSectionStepFragment implements ConsentReviewCallback
@@ -141,7 +142,9 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
         }
         else if (section == SECTION_REVIEW_SIGNATURE)
         {
-            throw new RuntimeException("SECTION_REVIEW_SIGNATURE") ;
+            ConsentReviewSignatureLayout layout = new ConsentReviewSignatureLayout(getContext());
+//            layout.setTitle(R.string.consent_name_title);
+            return layout;
         }
         else
         {

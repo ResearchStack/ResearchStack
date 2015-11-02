@@ -87,5 +87,6 @@
   <string name="consent_name_first">First Name</string>
   <string name="consent_name_last">Last Name</string>
   <string name="consent_name_placeholder">Required</string>
+  <string name="clear">Clear</string>
 
 </resources>
