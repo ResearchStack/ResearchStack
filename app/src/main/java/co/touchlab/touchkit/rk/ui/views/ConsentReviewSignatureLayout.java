@@ -38,8 +38,6 @@ public class ConsentReviewSignatureLayout extends StepLayout
     protected void onLayoutAttachedToRoot()
     {
         View clear = findViewById(R.id.layout_consent_review_signature_clear);
-        clear.setAlpha(0);
-        clear.setClickable(false);
 
         ConsentReviewSignatureView pdfView = (ConsentReviewSignatureView) findViewById(R.id.layout_consent_review_signature);
         pdfView.setCallbacks(new SignatureCallbacks()
@@ -58,6 +56,9 @@ public class ConsentReviewSignatureLayout extends StepLayout
                 clear.animate().alpha(0);
             }
         });
+
+        clear.setAlpha(pdfView.isSignatureDrawn() ? 1 : 0);
+        clear.setClickable(pdfView.isSignatureDrawn());
 
         RxView.clicks(clear).subscribe(v -> {
             pdfView.clearSignature();

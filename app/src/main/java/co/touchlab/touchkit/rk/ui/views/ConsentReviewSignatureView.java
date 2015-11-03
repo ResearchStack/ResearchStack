@@ -1,16 +1,28 @@
 package co.touchlab.touchkit.rk.ui.views;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import co.touchlab.touchkit.rk.R;
+
+/**
+ * Note: For save-state to work, the view MUST have an ID
+ */
 public class ConsentReviewSignatureView extends View
 {
 
@@ -21,6 +33,8 @@ public class ConsentReviewSignatureView extends View
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Paint
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    private List<LinePathPoint> sigPoints = new ArrayList<>();
+
     private Path sigPath = new Path();
     private Paint sigPaint = new Paint();
     private Paint hintPaint = new Paint();
@@ -32,48 +46,75 @@ public class ConsentReviewSignatureView extends View
     private String hintText;
     private int guidelineMargin;
     private int guidelineHeight;
+    private int hintTextColor;
+    private int guidelineColor;
 
     public ConsentReviewSignatureView(Context context)
     {
         super(context);
-        init(null);
+        init(context, null, 0);
     }
 
     public ConsentReviewSignatureView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        init(attrs);
+        init(context, attrs, 0);
     }
 
 
     public ConsentReviewSignatureView(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
-        init(attrs);
+        init(context, attrs, 0);
     }
 
     /**
      * Init all paint objects
      * TODO: Read attrs of signature paint and hint paint from attrs
      */
-    private void init(AttributeSet attrs)
+    private void init(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        hintText = "Sign Here";
-        guidelineHeight = (int) (getResources().getDisplayMetrics().density * 1);
-        guidelineMargin = (int) (getResources().getDisplayMetrics().density * 12);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ConsentReviewSignatureView,
+                                                      defStyleAttr,
+                                                      R.style.ConsentReviewSignatureView);
+
+        int signatureColor = a.getColor(R.styleable.ConsentReviewSignatureView_signatureColor, Color.BLACK);
+
+        int defSignatureStroke = (int) (getResources().getDisplayMetrics().density * 1);
+        int signatureStroke = a.getDimensionPixelSize(
+                R.styleable.ConsentReviewSignatureView_signatureStrokeSize, defSignatureStroke);
+
+        hintText = a.getString(R.styleable.ConsentReviewSignatureView_hintText);
+
+        hintTextColor = a.getColor(R.styleable.ConsentReviewSignatureView_hintTextColor,
+                                   Color.LTGRAY);
+
+        int defHintTextSize = (int) (getResources().getDisplayMetrics().density * 14);
+        int hintTextSize = a.getDimensionPixelSize(R.styleable.ConsentReviewSignatureView_hintTextSize, defHintTextSize);
+
+        guidelineColor = a.getColor(R.styleable.ConsentReviewSignatureView_guidelineColor,
+                                    hintTextColor);
+
+        int defGuidelineMargin = (int) (getResources().getDisplayMetrics().density * 12);
+        guidelineMargin = a.getDimensionPixelSize(R.styleable.ConsentReviewSignatureView_guidelineMargin, defGuidelineMargin);
+
+        int defGuidelineHeight = (int) (getResources().getDisplayMetrics().density * 1);
+        guidelineHeight = a.getDimensionPixelSize(R.styleable.ConsentReviewSignatureView_guidelineHeight, defGuidelineHeight);
+
+        a.recycle();
 
         sigPaint.setAntiAlias(true);
-        sigPaint.setColor(Color.BLACK);
+        sigPaint.setColor(signatureColor);
         sigPaint.setStyle(Paint.Style.STROKE);
         sigPaint.setStrokeJoin(Paint.Join.ROUND);
         sigPaint.setStrokeCap(Paint.Cap.ROUND);
         sigPaint.setPathEffect(new CornerPathEffect(20));
-        sigPaint.setStrokeWidth(5f);
+        sigPaint.setStrokeWidth(signatureStroke);
 
         hintPaint.setAntiAlias(true);
-        hintPaint.setColor(Color.LTGRAY);
+        hintPaint.setColor(hintTextColor);
         hintPaint.setStyle(Paint.Style.FILL);
-        hintPaint.setTextSize(42);
+        hintPaint.setTextSize(hintTextSize);
     }
 
     @Override
@@ -92,32 +133,18 @@ public class ConsentReviewSignatureView extends View
         super.onDraw(canvas);
 
         //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        // Debug
-        //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        if(DEBUG)
-        {
-            Paint debug = new Paint();
-
-            //Draw canvas
-            debug.setColor(Color.parseColor("#70f9fc"));
-            canvas.drawColor(debug.getColor());
-
-            //Draw drawing area
-            debug.setColor(Color.parseColor("#f9f9f9"));
-            canvas.drawRect(drawBounds, debug);
-        }
-
-        //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         // Draw Guide
         //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        canvas.drawRect(drawBounds.left, drawBounds.bottom - guidelineHeight,
-                        drawBounds.right, drawBounds.bottom, hintPaint);
+        hintPaint.setColor(guidelineColor);
+        canvas.drawRect(drawBounds.left, drawBounds.bottom - guidelineHeight, drawBounds.right,
+                        drawBounds.bottom, hintPaint);
 
         //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         // Draw signature or hint text
         //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         if(sigPath.isEmpty())
         {
+            hintPaint.setColor(hintTextColor);
             int baselineY = drawBounds.bottom - guidelineMargin - guidelineHeight;
             canvas.drawText(hintText, drawBounds.left, baselineY, hintPaint);
         }
@@ -130,31 +157,37 @@ public class ConsentReviewSignatureView extends View
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        float eX = event.getX();
-        float eY = event.getY();
+        int eX = (int) event.getX();
+        int eY = (int) event.getY();
 
         switch(event.getAction())
         {
             case MotionEvent.ACTION_DOWN:
+
                 if(sigPath.isEmpty())
                 {
                     callbacks.onSignatureDrawn();
                 }
 
                 sigPath.moveTo(eX, eY);
+                sigPoints.add(new LinePathPoint(eX, eY, LinePathPoint.TYPE_LINE_START));
 
                 return true;
             case MotionEvent.ACTION_MOVE:
             case MotionEvent.ACTION_UP:
+
                 int hSize = event.getHistorySize();
 
                 for (int i = 0; i < hSize; i++) {
-                    float hX = event.getHistoricalX(i);
-                    float hY = event.getHistoricalY(i);
+                    int hX = (int) event.getHistoricalX(i);
+                    int hY = (int) event.getHistoricalY(i);
                     sigPath.lineTo(hX, hY);
+                    sigPoints.add(new LinePathPoint(eX, eY, LinePathPoint.TYPE_LINE_POINT));
                 }
 
                 sigPath.lineTo(eX, eY);
+                sigPoints.add(new LinePathPoint(eX, eY, LinePathPoint.TYPE_LINE_POINT));
+
                 break;
             default:
                 break;
@@ -166,9 +199,44 @@ public class ConsentReviewSignatureView extends View
         return true;
     }
 
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SignatureSavedState ss = new SignatureSavedState(superState);
+        ss.points = sigPoints;
+        return ss;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if(!(state instanceof SignatureSavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SignatureSavedState ss = (SignatureSavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+
+        sigPoints = ss.points;
+        sigPath.rewind();
+
+        for(LinePathPoint point : sigPoints)
+        {
+            if (point.isStartPoint())
+            {
+                sigPath.moveTo(point.x, point.y);
+            }
+            else
+            {
+                sigPath.lineTo(point.x, point.y);
+            }
+        }
+    }
+
     public void clearSignature()
     {
         sigPath.rewind();
+        sigPoints.clear();
 
         ViewCompat.postInvalidateOnAnimation(this);
 
@@ -186,5 +254,95 @@ public class ConsentReviewSignatureView extends View
     public void setCallbacks(SignatureCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    private static class SignatureSavedState extends BaseSavedState {
+
+        List<LinePathPoint> points;
+
+        SignatureSavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SignatureSavedState(Parcel in) {
+            super(in);
+            this.points = new ArrayList<>();
+            in.readList(points, LinePathPoint.class.getClassLoader());
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeList(points);
+        }
+
+        //required field that makes Parcelables from a Parcel
+        public static final Parcelable.Creator<SignatureSavedState> CREATOR =
+                new Parcelable.Creator<SignatureSavedState>() {
+                    public SignatureSavedState createFromParcel(Parcel in) {
+                        return new SignatureSavedState(in);
+                    }
+                    public SignatureSavedState[] newArray(int size) {
+                        return new SignatureSavedState[size];
+                    }
+                };
+    }
+
+    public static class LinePathPoint extends Point {
+
+        public static final int TYPE_LINE_START = 0;
+
+        public static final int TYPE_LINE_POINT = 1;
+
+        private int type;
+
+        public LinePathPoint() {}
+
+        public LinePathPoint(int x, int y, int type) {
+            this.x = x;
+            this.y = y;
+            this.type = type;
+        }
+
+        public LinePathPoint(LinePathPoint src) {
+            this.x = src.x;
+            this.y = src.y;
+            this.type = src.type;
+        }
+
+        public boolean isStartPoint()
+        {
+            return type == TYPE_LINE_START;
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(type);
+        }
+
+        @Override
+        public void readFromParcel(Parcel in) {
+            super.readFromParcel(in);
+            type = in.readInt();
+        }
+
+        public static final Parcelable.Creator<LinePathPoint> CREATOR = new Parcelable.Creator<LinePathPoint>() {
+            /**
+             * Return a new point from the data in the specified parcel.
+             */
+            public LinePathPoint createFromParcel(Parcel in) {
+                LinePathPoint r = new LinePathPoint();
+                r.readFromParcel(in);
+                return r;
+            }
+
+            /**
+             * Return an array of rectangles of the specified size.
+             */
+            public LinePathPoint[] newArray(int size) {
+                return new LinePathPoint[size];
+            }
+        };
     }
 }

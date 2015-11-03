@@ -6,4 +6,15 @@
         <attr name="windowSize" format="integer"  />
     </declare-styleable>
 
+    <declare-styleable name="ConsentReviewSignatureView">
+        <attr name="signatureColor" format="color"  />
+        <attr name="signatureStrokeSize" format="dimension"  />
+        <attr name="hintText" format="string"  />
+        <attr name="hintTextColor" format="color"  />
+        <attr name="hintTextSize" format="dimension"  />
+        <attr name="guidelineColor" format="color"  />
+        <attr name="guidelineMargin" format="dimension"  />
+        <attr name="guidelineHeight" format="dimension"  />
+    </declare-styleable>
+
 </resources>
