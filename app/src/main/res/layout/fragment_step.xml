@@ -6,9 +6,9 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/step_view_container"
+        android:id="@+id/content_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:padding="@dimen/padding_medium"
         android:orientation="vertical">
@@ -46,6 +46,12 @@
             tools:text="More Info"
             />
 
+        <Space
+            android:id="@+id/filler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
         <Button
             android:id="@+id/next"
             android:layout_width="wrap_content"
@@ -56,6 +62,7 @@
             android:id="@+id/skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:text="@string/step_skip" />
 
     </LinearLayout>

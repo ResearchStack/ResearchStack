@@ -17,8 +17,8 @@ import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
 import co.touchlab.touchkit.rk.ui.callbacks.ConsentReviewCallback;
 import co.touchlab.touchkit.rk.ui.views.ConsentReviewDocumentLayout;
-import co.touchlab.touchkit.rk.ui.views.ConsentReviewSignatureLayout;
-import co.touchlab.touchkit.rk.ui.views.FormStepLayout;
+import co.touchlab.touchkit.rk.ui.scene.ConsentReviewSignatureScene;
+import co.touchlab.touchkit.rk.ui.scene.GenericFormScene;
 
 public class ConsentReviewStepFragment extends MultiSectionStepFragment implements ConsentReviewCallback
 {
@@ -115,17 +115,17 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
 //            nameAnswerFormat.spellCheckingType = UITextSpellCheckingTypeNo;
 
             String placeholder = getResources().getString(R.string.consent_name_placeholder);
-            List<FormStepLayout.FormItem> items = new ArrayList<>();
+            List<GenericFormScene.FormItem> items = new ArrayList<>();
 
             //TODO Pass in Answer format
             String givenText = getResources().getString(R.string.consent_name_first);
-            FormStepLayout.FormItem givenName = new FormStepLayout.FormItem(
+            GenericFormScene.FormItem givenName = new GenericFormScene.FormItem(
                     GivenNameIdentifier, givenText, null, placeholder);
             items.add(givenName);
 
             //TODO Pass in Answer format
             String familyText = getResources().getString(R.string.consent_name_last);
-            FormStepLayout.FormItem familyName = new FormStepLayout.FormItem(
+            GenericFormScene.FormItem familyName = new GenericFormScene.FormItem(
                     FamilyNameIdentifier, familyText, null, placeholder);
             items.add(familyName);
 
@@ -133,7 +133,7 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
                 Collections.reverse(items);
             }
 
-            FormStepLayout layout = new FormStepLayout(getContext());
+            GenericFormScene layout = new GenericFormScene(getContext());
             layout.setTitle(R.string.consent_name_title);
             layout.setSkip(false, 0, null);
             layout.setFormItems(items);
@@ -142,8 +142,10 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
         }
         else if (section == SECTION_REVIEW_SIGNATURE)
         {
-            ConsentReviewSignatureLayout layout = new ConsentReviewSignatureLayout(getContext());
-//            layout.setTitle(R.string.consent_name_title);
+            ConsentReviewSignatureScene layout = new ConsentReviewSignatureScene(getContext());
+            layout.setTitle(R.string.consent_signature_title);
+            layout.setSummary(R.string.consent_signature_instruction);
+            layout.setSkip(false, 0, null);
             return layout;
         }
         else

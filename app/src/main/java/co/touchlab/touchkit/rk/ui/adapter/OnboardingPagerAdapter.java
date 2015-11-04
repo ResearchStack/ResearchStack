@@ -33,7 +33,7 @@ public class OnboardingPagerAdapter extends PagerAdapter
      *
      * interface {
      *     public getView()
-     *     public setData(Data d)
+     *     public setFormItems(Data d)
      * }
      *
      * To discuss.

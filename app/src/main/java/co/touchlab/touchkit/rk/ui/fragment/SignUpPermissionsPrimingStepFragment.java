@@ -36,7 +36,7 @@ public class SignUpPermissionsPrimingStepFragment extends StepFragment
                 null);
 
         TextView body = (TextView) root.findViewById(R.id.priming_body);
-//        body.setText();
+//        body.setSummary();
 
         return root;
     }

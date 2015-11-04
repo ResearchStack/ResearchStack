@@ -1,37 +1,31 @@
-package co.touchlab.touchkit.rk.ui.views;
+package co.touchlab.touchkit.rk.ui.scene;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.StepResult;
+import co.touchlab.touchkit.rk.ui.views.ConsentReviewSignatureView;
+import co.touchlab.touchkit.rk.ui.views.SignatureCallbacks;
 
-public class ConsentReviewSignatureLayout extends StepLayout
+public class ConsentReviewSignatureScene extends Scene
 {
 
-    public ConsentReviewSignatureLayout(Context context)
+    public ConsentReviewSignatureScene(Context context)
     {
         super(context);
     }
 
-    public ConsentReviewSignatureLayout(Context context, AttributeSet attrs)
+    public ConsentReviewSignatureScene(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public ConsentReviewSignatureLayout(Context context, AttributeSet attrs, int defStyleAttr)
+    public ConsentReviewSignatureScene(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
-    }
-
-    @Override
-    public int getLayoutResourceIdToAttachToRoot()
-    {
-        return R.layout.layout_section_consent_review_signature;
     }
 
     @Override
@@ -66,11 +60,10 @@ public class ConsentReviewSignatureLayout extends StepLayout
     }
 
     @Override
-    protected View getBodyView(LayoutInflater inflater, LinearLayout parent)
+    protected int getBodyLayoutResourceId()
     {
-        return null;
+        return R.layout.scene_consent_review_signature;
     }
-
 
     @Override
     protected StepResult getResult()

@@ -80,7 +80,7 @@ public abstract class StepFragment extends Fragment
         skip.setVisibility(step.isOptional() ? View.VISIBLE : View.GONE);
         RxView.clicks(skip).subscribe(v -> onSkipPressed());
 
-        LinearLayout stepViewContainer = (LinearLayout) view.findViewById(R.id.step_view_container);
+        LinearLayout stepViewContainer = (LinearLayout) view.findViewById(R.id.content_container);
         View bodyView = getBodyView(inflater);
         stepViewContainer.addView(bodyView, getBodyIndex(stepViewContainer));
 
