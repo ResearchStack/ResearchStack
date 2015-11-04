@@ -3,6 +3,7 @@ package co.touchlab.touchkit.rk.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -31,6 +32,7 @@ public class ConsentSharingStepFragment extends SingleChoiceQuestionStepFragment
     @Override
     protected void initMoreInfoView(TextView moreInfo)
     {
+        moreInfo.setVisibility(View.VISIBLE);
         moreInfo.setText(R.string.consent_share_more_info);
         RxView.clicks(moreInfo).subscribe(v -> learnMoreAboutSharing());
     }
