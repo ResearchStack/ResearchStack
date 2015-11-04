@@ -135,9 +135,12 @@ public abstract class StepFragment extends Fragment
         skip.setVisibility(View.GONE);
     }
 
+    /**
+     * Default view visibility is set to GONE
+     * @param moreInfo
+     */
     protected void initMoreInfoView(TextView moreInfo)
     {
-        moreInfo.setVisibility(View.GONE);
     }
 
     //TODO Not sure how i feel about this method. Part of me says "OK", another says just return an

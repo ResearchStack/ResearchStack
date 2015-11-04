@@ -5,8 +5,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -18,7 +18,7 @@ import rx.functions.Action1;
 /**
  * TODO Create builder object to clean up setters for title, summary, etc..
  */
-public abstract class Scene extends ScrollView
+public abstract class Scene extends FrameLayout
 {
 
     public static final String TAG = Scene.class.getSimpleName();
@@ -33,27 +33,35 @@ public abstract class Scene extends ScrollView
     public Scene(Context context)
     {
         super(context);
-        init();
+        initScene();
     }
 
     public Scene(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        init();
+        initScene();
     }
 
     public Scene(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
-        init();
+        initScene();
     }
 
-    private void init()
+    protected void initScene()
     {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(getRootLayoutResourceId(), this, true);
+        View scene = onCreateScene(inflater, this);
+        onSceneCreated(scene);
+    }
 
+    public View onCreateScene(LayoutInflater inflater, ViewGroup parent)
+    {
+        return inflater.inflate(getRootLayoutResourceId(), parent, true);
+    }
 
+    public void onSceneCreated(View scene)
+    {
         View filler = findViewById(R.id.filler);
 
         container = (LinearLayout) findViewById(R.id.content_container);
@@ -70,23 +78,37 @@ public abstract class Scene extends ScrollView
             }
         });
 
-
         title = (TextView) findViewById(R.id.title);
         summary = (TextView) findViewById(R.id.text);
         moreInfo = (TextView) findViewById(R.id.more_info);
         next = (TextView) findViewById(R.id.next);
         skip = (TextView) findViewById(R.id.skip);
 
-        int bodyIndex = getPositionToInsertBody();
-        int bodyResId = getBodyLayoutResourceId();
-        if (bodyIndex >= 0 && bodyResId > 0)
-        {
-            View bodyView = inflater.inflate(bodyResId, container, false);
-            container.addView(bodyView, bodyIndex);
-        }
-
-        onLayoutAttachedToRoot();
+        initBody();
     }
+
+    private void initBody()
+    {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+
+        int bodyResId = getBodyLayoutResourceId();
+        if (bodyResId > 0)
+        {
+            View body = onCreateBody(inflater, bodyResId, container);
+
+            int bodyIndex = getPositionToInsertBody();
+            container.addView(body, bodyIndex);
+
+            onBodyCreated(body);
+        }
+    }
+
+    public View onCreateBody(LayoutInflater inflater, int bodyResId, ViewGroup parent)
+    {
+        return inflater.inflate(bodyResId, parent, false);
+    }
+
+    public void onBodyCreated(View body) { }
 
     protected int getRootLayoutResourceId()
     {
@@ -97,8 +119,6 @@ public abstract class Scene extends ScrollView
     {
         return -1;
     }
-
-    protected void onLayoutAttachedToRoot() { }
 
     //TODO Not sure how i feel about this method. Part of me says "OK", another says just return an
     //TODO integer (aka magic number).

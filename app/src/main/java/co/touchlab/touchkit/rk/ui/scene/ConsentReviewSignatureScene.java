@@ -29,12 +29,18 @@ public class ConsentReviewSignatureScene extends Scene
     }
 
     @Override
-    protected void onLayoutAttachedToRoot()
+    protected int getBodyLayoutResourceId()
     {
-        View clear = findViewById(R.id.layout_consent_review_signature_clear);
+        return R.layout.scene_consent_review_signature;
+    }
 
-        ConsentReviewSignatureView pdfView = (ConsentReviewSignatureView) findViewById(R.id.layout_consent_review_signature);
-        pdfView.setCallbacks(new SignatureCallbacks()
+    @Override
+    public void onBodyCreated(View body)
+    {
+        View clear = body.findViewById(R.id.layout_consent_review_signature_clear);
+
+        ConsentReviewSignatureView signatureView = (ConsentReviewSignatureView) body.findViewById(R.id.layout_consent_review_signature);
+        signatureView.setCallbacks(new SignatureCallbacks()
         {
             @Override
             public void onSignatureDrawn()
@@ -51,18 +57,12 @@ public class ConsentReviewSignatureScene extends Scene
             }
         });
 
-        clear.setAlpha(pdfView.isSignatureDrawn() ? 1 : 0);
-        clear.setClickable(pdfView.isSignatureDrawn());
+        clear.setAlpha(signatureView.isSignatureDrawn() ? 1 : 0);
+        clear.setClickable(signatureView.isSignatureDrawn());
 
         RxView.clicks(clear).subscribe(v -> {
-            pdfView.clearSignature();
+            signatureView.clearSignature();
         });
-    }
-
-    @Override
-    protected int getBodyLayoutResourceId()
-    {
-        return R.layout.scene_consent_review_signature;
     }
 
     @Override

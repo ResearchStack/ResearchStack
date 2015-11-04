@@ -16,7 +16,7 @@ import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
 import co.touchlab.touchkit.rk.ui.callbacks.ConsentReviewCallback;
-import co.touchlab.touchkit.rk.ui.views.ConsentReviewDocumentLayout;
+import co.touchlab.touchkit.rk.ui.scene.ConsentReviewDocumentScene;
 import co.touchlab.touchkit.rk.ui.scene.ConsentReviewSignatureScene;
 import co.touchlab.touchkit.rk.ui.scene.GenericFormScene;
 
@@ -101,7 +101,7 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
 
         if (section == SECTION_REVIEW_DOCUMENT)
         {
-            ConsentReviewDocumentLayout layout = new ConsentReviewDocumentLayout(getContext());
+            ConsentReviewDocumentScene layout = new ConsentReviewDocumentScene(getContext());
             layout.setCallback(this);
             return layout;
         }
