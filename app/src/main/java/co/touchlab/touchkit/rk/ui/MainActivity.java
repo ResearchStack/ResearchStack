@@ -7,7 +7,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -90,9 +90,9 @@ public class MainActivity extends AppCompatActivity
 
         View headerView = getLayoutInflater().inflate(R.layout.include_user_header, null);
 
-        AppCompatEditText name = (AppCompatEditText) headerView.findViewById(R.id.name);
+        AppCompatTextView name = (AppCompatTextView) headerView.findViewById(R.id.name);
         name.setText(AppDelegate.getInstance().getCurrentUser().getName());
-        AppCompatEditText email = (AppCompatEditText) headerView.findViewById(R.id.email);
+        AppCompatTextView email = (AppCompatTextView) headerView.findViewById(R.id.email);
         name.setText(AppDelegate.getInstance().getCurrentUser().getEmail());
 
         navigationView.addHeaderView(headerView);
