@@ -5,20 +5,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.task.SignInTask;
 import co.touchlab.touchkit.rk.common.model.StudyOverviewModel;
+import co.touchlab.touchkit.rk.common.task.SignInTask;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.ui.adapter.OnboardingPagerAdapter;
 import co.touchlab.touchkit.rk.ui.views.PageIndicator;
+import co.touchlab.touchkit.rk.utils.JsonUtils;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
@@ -62,20 +55,9 @@ public class OnboardingActivity extends AppCompatActivity
     //TODO Read on main thread for intense UI blockage.
     private StudyOverviewModel parseStudyOverviewModel()
     {
-
-        Gson gson = new GsonBuilder().setDateFormat("MMM yyyy").create();
-        InputStream stream = getResources().openRawResource(R.raw.study_overview);
-        Reader reader = null;
-        try
-        {
-            reader = new InputStreamReader(stream, "UTF-8");
-        }
-        catch(UnsupportedEncodingException e)
-        {
-            throw  new RuntimeException(e);
-        }
-
-        return gson.fromJson(reader, StudyOverviewModel.class);
+        return JsonUtils.loadClassFromJson(OnboardingActivity.this,
+                StudyOverviewModel.class,
+                R.raw.study_overview);
     }
 
     public void onSignUpClicked(View view)

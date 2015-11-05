@@ -15,7 +15,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class JsonUtils
 {
-    static Gson gson = new Gson();
+    static Gson gson = new GsonBuilder().setDateFormat("MMM yyyy").create();
 
     public static <T> T loadClassFromJson(Context context, Class<T> clazz, String filename)
     {
@@ -28,7 +28,6 @@ public class JsonUtils
 
     public static <T> T loadClassFromJson(Context context, Class<T> clazz, int id)
     {
-        Gson gson = new GsonBuilder().setDateFormat("MMM yyyy").create();
         InputStream stream = context.getResources().openRawResource(id);
         Reader reader = null;
         try
