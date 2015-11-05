@@ -4,16 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.model.ConsentDocument;
+import co.touchlab.touchkit.rk.common.model.ConsentSection;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
-import co.touchlab.touchkit.rk.ui.views.ConsentVisualSectionLayout;
+import co.touchlab.touchkit.rk.ui.scene.ConsentVisualScene;
+import co.touchlab.touchkit.rk.ui.scene.Scene;
 
-public class ConsentVisualStepFragment extends MultiSectionStepFragment
+public class ConsentVisualStepFragment extends MultiSceneStepFragment
 {
 
     private ConsentVisualStep step;
@@ -42,23 +43,34 @@ public class ConsentVisualStepFragment extends MultiSectionStepFragment
     }
 
     @Override
-    public int getSectionCount()
+    public int getSceneCount()
     {
         return document.getSections().size();
     }
 
     @Override
-    public int getNextViewId()
+    public Scene onCreateScene(LayoutInflater inflater, int scenePos)
     {
-        return R.id.layout_consent_next;
+        ConsentSection section = document.getSections().get(scenePos);
+        ConsentVisualScene scene = new ConsentVisualScene(getContext(), section);
+        String nextTitle = getString(R.string.next);
+        if (section.getType() == ConsentSection.Type.Overview)
+        {
+            nextTitle = getString(R.string.button_get_started);
+        }
+        else if (scenePos == getSceneCount() - 1)
+        {
+            nextTitle = getString(R.string.button_done);
+        }
+
+        scene.setNextButtonText(nextTitle);
+        return scene;
     }
 
     @Override
-    public View createSectionLayout(LayoutInflater inflater, int section)
+    public void scenePoppedOffViewStack(Scene scene)
     {
-        ConsentVisualSectionLayout layout = new ConsentVisualSectionLayout(getContext());
-        layout.setData(document.getSections().get(section));
-        return layout;
+        // Ignore, we don't need to save any data from the scenes
     }
 
     @Override

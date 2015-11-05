@@ -1,6 +1,7 @@
 package co.touchlab.touchkit.rk.ui.views;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
@@ -8,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.ViewCompat;
@@ -254,6 +256,22 @@ public class ConsentReviewSignatureView extends View
     public void setCallbacks(SignatureCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+
+    public Bitmap createSignatureBitmap()
+    {
+        RectF sigBounds = new RectF();
+        sigPath.computeBounds(sigBounds, true);
+
+        Bitmap returnedBitmap = Bitmap.createBitmap((int)sigBounds.width(), (int)sigBounds.height(),
+                                                    Bitmap.Config.ARGB_4444);
+
+        Canvas canvas = new Canvas(returnedBitmap);
+        //TODO translate bitmap by the distance of the left most point off the left edge(X) and
+        //TODO top most point off the top edge(Y)
+        canvas.drawPath(sigPath, sigPaint);
+        return returnedBitmap;
     }
 
     private static class SignatureSavedState extends BaseSavedState {

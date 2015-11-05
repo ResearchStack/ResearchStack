@@ -53,7 +53,7 @@ public class ConsentReviewDocumentScene extends Scene
     }
 
     @Override
-    protected StepResult getResult()
+    public StepResult getResult()
     {
         return null;
     }

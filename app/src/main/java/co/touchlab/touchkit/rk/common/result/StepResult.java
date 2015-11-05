@@ -30,4 +30,9 @@ public class StepResult<T> extends Result
     {
         return results.get(identifier);
     }
+
+    public T setResultForIdentifier(String identifier,  T result)
+    {
+        return results.put(identifier, result);
+    }
 }

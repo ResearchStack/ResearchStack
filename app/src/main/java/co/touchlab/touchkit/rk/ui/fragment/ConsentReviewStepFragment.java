@@ -1,27 +1,37 @@
 package co.touchlab.touchkit.rk.ui.fragment;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import co.touchlab.touchkit.rk.R;
+import co.touchlab.touchkit.rk.common.model.ConsentSignature;
+import co.touchlab.touchkit.rk.common.result.ConsentSignatureResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
+import co.touchlab.touchkit.rk.common.result.TextQuestionResult;
 import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
+import co.touchlab.touchkit.rk.common.step.FormStep;
+import co.touchlab.touchkit.rk.dev.DevUtils;
 import co.touchlab.touchkit.rk.ui.callbacks.ConsentReviewCallback;
 import co.touchlab.touchkit.rk.ui.scene.ConsentReviewDocumentScene;
 import co.touchlab.touchkit.rk.ui.scene.ConsentReviewSignatureScene;
 import co.touchlab.touchkit.rk.ui.scene.GenericFormScene;
+import co.touchlab.touchkit.rk.ui.scene.Scene;
 
-public class ConsentReviewStepFragment extends MultiSectionStepFragment implements ConsentReviewCallback
+public class ConsentReviewStepFragment extends MultiSceneStepFragment implements ConsentReviewCallback
 {
+    public static final String TAG = ConsentReviewStepFragment.class.getSimpleName();
 
     public static final int SECTION_REVIEW_DOCUMENT = 0;
     public static final int SECTION_REVIEW_NAME = 1;
@@ -37,10 +47,6 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
     {
         super();
     }
-
-    //TODO Add ConsentFormStep [First name, last name]
-
-    //TODO Add ConsentSignatureStep [Draw signature]
 
     public static Fragment newInstance(ConsentReviewStep step)
     {
@@ -73,31 +79,12 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
         }
     }
 
-    //TODO Clear activity stack up until OnboardingActivity
     @Override
-    public void closeToWelcomeFlow()
-    {
-        Toast.makeText(getContext(), "Close and show welcome screen", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showConfirmationDialog()
+    public Scene onCreateScene(LayoutInflater inflater, int scenePos)
     {
         ConsentReviewStep step = (ConsentReviewStep) getStep();
 
-        new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
-            .setTitle(R.string.consent_review_alert_title)
-            .setMessage(step.getReasonForConsent()).setCancelable(false)
-                .setPositiveButton(R.string.agree, (dialog, which) -> {
-                    showConsentSection(SECTION_REVIEW_NAME, true);
-            }).setNegativeButton(R.string.cancel, null)
-            .show();
-    }
-
-    @Override
-    public View createSectionLayout(LayoutInflater inflater, int position)
-    {
-        int section = sections.get(position);
+        int section = sections.get(scenePos);
 
         if (section == SECTION_REVIEW_DOCUMENT)
         {
@@ -107,15 +94,22 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
         }
         else if (section == SECTION_REVIEW_NAME)
         {
-            //TODO Create TextAnswerFormat
+
+            FormStep formStep = new FormStep(NameFormIdentifier,
+                                             getString(R.string.consent_name_title),
+                                             step.getText());
+            formStep.setUseSurveyMode(false);
+            formStep.setOptional(false);
+
+//            TODO Create TextAnswerFormat
 //            ORKTextAnswerFormat *nameAnswerFormat = [ORKTextAnswerFormat textAnswerFormat];
 //            nameAnswerFormat.multipleLines = NO;
 //            nameAnswerFormat.autocapitalizationType = UITextAutocapitalizationTypeWords;
 //            nameAnswerFormat.autocorrectionType = UITextAutocorrectionTypeNo;
 //            nameAnswerFormat.spellCheckingType = UITextSpellCheckingTypeNo;
 
-            String placeholder = getResources().getString(R.string.consent_name_placeholder);
             List<GenericFormScene.FormItem> items = new ArrayList<>();
+            String placeholder = getResources().getString(R.string.consent_name_placeholder);
 
             //TODO Pass in Answer format
             String givenText = getResources().getString(R.string.consent_name_first);
@@ -129,16 +123,13 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
                     FamilyNameIdentifier, familyText, null, placeholder);
             items.add(familyName);
 
+            formStep.setFormItems(items);
+
             if (getResources().getBoolean(R.bool.lang_display_last_name_first)) {
                 Collections.reverse(items);
             }
 
-            GenericFormScene layout = new GenericFormScene(getContext());
-            layout.setTitle(R.string.consent_name_title);
-            layout.setSkip(false, 0, null);
-            layout.setFormItems(items);
-
-            return layout;
+            return new GenericFormScene(getContext(), formStep);
         }
         else if (section == SECTION_REVIEW_SIGNATURE)
         {
@@ -150,28 +141,118 @@ public class ConsentReviewStepFragment extends MultiSectionStepFragment implemen
         }
         else
         {
+            DevUtils.throwUnsupportedOpException();
             return null;
         }
     }
 
     @Override
-    public int getSectionCount()
+    public int getSceneCount()
     {
         return sections.size();
     }
 
     @Override
-    public int getNextViewId()
+    public StepResult createNewStepResult(String stepIdentifier)
     {
-        return R.id.next;
+        StepResult<ConsentSignatureResult> parentResult = new StepResult<>(getStep().getIdentifier());
+
+        ConsentSignatureResult result = new ConsentSignatureResult(step.getIdentifier());
+        result.setStartDate(new Date());
+
+        ConsentSignature clone = ((ConsentReviewStep) getStep()).getSignature();
+        result.setSignature(clone);
+
+        parentResult.getResults()
+                .put(result.getIdentifier(), result);
+
+        return parentResult;
     }
 
     @Override
-    public StepResult createNewStepResult(String stepIdentifier)
+    public void scenePoppedOffViewStack(Scene scene)
     {
-        //TODO Implement consent result
-        return null;
+        Log.i(TAG, "scenePoppedOff " + scene.getClass().getSimpleName());
+
+        StepResult parentResult = getStepResult();
+        ConsentSignatureResult result = (ConsentSignatureResult) parentResult
+                .getResultForIdentifier(getStep().getIdentifier());
+
+        ConsentSignature signature = result.getSignature();
+
+//        TODO handle signature date-format string
+//        if (signature.getSignatureDateFormatString().length() > 0) {
+//            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//            [dateFormatter setDateFormat:_currentSignature.signatureDateFormatString];
+//            _currentSignature.signatureDate = [dateFormatter stringFromDate:[NSDate date]];
+//        } else {
+//            _currentSignature.signatureDate = ORKSignatureStringFromDate([NSDate date]);
+//        }
+
+        if (scene instanceof ConsentReviewDocumentScene)
+        {
+            result.setConsented(true);
+        }
+        else if (scene instanceof GenericFormScene)
+        {
+            StepResult formResult = scene.getResult();
+
+            TextQuestionResult firstNameResult = (TextQuestionResult) formResult
+                    .getResultForIdentifier(GivenNameIdentifier);
+            signature.setGivenName(firstNameResult.getTextAnswer());
+
+            TextQuestionResult lastNameResult = (TextQuestionResult) formResult
+                    .getResultForIdentifier(FamilyNameIdentifier);
+            signature.setFamilyName(lastNameResult.getTextAnswer());
+        }
+        else if (scene instanceof ConsentReviewSignatureScene)
+        {
+
+            ConsentReviewSignatureScene sigScene = (ConsentReviewSignatureScene) scene;
+
+            //TODO The follow is less than ideal
+            Bitmap bitmap = sigScene.getSignatureImage();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            signature.setSignatureImage(byteArray);
+
+            // If we get here, this means our last scene scene will trigger the step to finish. Its
+            // a good idea to set the end date now.
+            result.setEndDate(new Date());
+        }
+        else
+        {
+            String message = scene.getClass().getSimpleName() + " not supported";
+            DevUtils.throwUnsupportedOpException(message);
+        }
+
+        callbacks.onStepResultChanged(getStep(), result);
     }
+
+    @Override
+    public void showConfirmationDialog()
+    {
+        ConsentReviewStep step = (ConsentReviewStep) getStep();
+
+        new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
+                .setTitle(R.string.consent_review_alert_title)
+                .setMessage(step.getReasonForConsent()).setCancelable(false)
+                .setPositiveButton(R.string.agree, (dialog, which) -> {
+                    showScene(SECTION_REVIEW_NAME, true);
+                }).setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+
+    @Override
+    public void closeToWelcomeFlow()
+    {
+        //TODO Clear activity stack up until OnboardingActivity is visible
+        getActivity().setResult(Activity.RESULT_CANCELED);
+        getActivity().finish();
+    }
+
 
         /*
 

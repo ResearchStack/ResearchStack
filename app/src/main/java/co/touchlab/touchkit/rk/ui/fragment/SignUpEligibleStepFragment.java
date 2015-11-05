@@ -1,5 +1,6 @@
 package co.touchlab.touchkit.rk.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,7 @@ import co.touchlab.touchkit.rk.ui.ViewTaskActivity;
 public class SignUpEligibleStepFragment extends StepFragment
 {
 
-    private static final int CONSENT_REQUEST = 0;
+    private static final int CONSENT_REQUEST = 1001;
 
     public SignUpEligibleStepFragment()
     {
@@ -61,14 +62,22 @@ public class SignUpEligibleStepFragment extends StepFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        // TODO check for consent
-        if (requestCode == CONSENT_REQUEST)// && resultCode == Activity.RESULT_OK)
+        if (requestCode == CONSENT_REQUEST)
         {
+            if (resultCode == Activity.RESULT_CANCELED)
+            {
+                // Clear activity and show Welcome screen
+                getActivity().finish();
+            }
+            else
+            {
+                callbacks.onNextPressed(step);
+            }
 //            boolean eligible = data.getBooleanExtra(ConsentActivity.CONSENT_RESULT,
 //                    false);
 //            if (eligible)
 //            {
-                callbacks.onNextPressed(step);
+
 //            }
         }
         super.onActivityResult(requestCode,

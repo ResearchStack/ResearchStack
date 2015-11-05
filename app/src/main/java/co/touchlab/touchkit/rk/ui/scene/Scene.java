@@ -1,12 +1,14 @@
 package co.touchlab.touchkit.rk.ui.scene;
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -15,14 +17,12 @@ import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import rx.functions.Action1;
 
-/**
- * TODO Create builder object to clean up setters for title, summary, etc..
- */
-public abstract class Scene extends FrameLayout
+public abstract class Scene extends RelativeLayout
 {
 
     public static final String TAG = Scene.class.getSimpleName();
 
+    private ImageView image;
     private TextView title;
     private TextView summary;
     private TextView moreInfo;
@@ -78,6 +78,7 @@ public abstract class Scene extends FrameLayout
             }
         });
 
+        image = (ImageView) findViewById(R.id.image);
         title = (TextView) findViewById(R.id.title);
         summary = (TextView) findViewById(R.id.text);
         moreInfo = (TextView) findViewById(R.id.more_info);
@@ -129,26 +130,53 @@ public abstract class Scene extends FrameLayout
         return stepViewContainer.indexOfChild(moreInfo) + 1;
     }
 
-    protected abstract StepResult getResult();
+    public abstract StepResult getResult();
 
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Setters for UI TODO Create builder object to clean these methods up?
+    // Setters for UI
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+    public void setImage(@DrawableRes int drawableResid)
+    {
+        if (image.getVisibility() != View.VISIBLE)
+        {
+            image.setVisibility(View.VISIBLE);
+        }
+
+        image.setImageResource(drawableResid);
+    }
+
+    public ImageView getImageView()
+    {
+        return image;
+    }
 
     public void setTitle(@StringRes int stringRes)
     {
-        title.setText(stringRes);
+        String title = getResources().getString(stringRes);
+        setTitle(title);
+    }
+
+    public void setTitle(String string)
+    {
+        title.setText(string);
     }
 
     public void setSummary(@StringRes int stringRes)
+    {
+        String summary = getResources().getString(stringRes);
+        setSummary(summary);
+    }
+
+    public void setSummary(String string)
     {
         if (summary.getVisibility() != View.VISIBLE)
         {
             summary.setVisibility(View.VISIBLE);
         }
 
-        summary.setText(stringRes);
+        summary.setText(string);
     }
 
     public void setMoreInfo(@StringRes int stringRes, Action1<? super Object> action)
@@ -166,6 +194,16 @@ public abstract class Scene extends FrameLayout
         }
     }
 
+    public TextView getMoreInfo()
+    {
+        return moreInfo;
+    }
+
+    public void setSkip(boolean isOptional)
+    {
+        setSkip(isOptional, 0, null);
+    }
+
     public void setSkip(boolean isOptional, @StringRes int stringRes,  Action1<? super Object> action)
     {
         skip.setVisibility(isOptional ? View.VISIBLE : View.GONE);
@@ -180,6 +218,23 @@ public abstract class Scene extends FrameLayout
             RxView.clicks(skip).subscribe(action);
         }
     }
+
+    public void setNextButtonText(@StringRes int stringRes)
+    {
+        String string = getResources().getString(stringRes);
+        setNextButtonText(string);
+    }
+
+    public void setNextButtonText(String string)
+    {
+        next.setText(string);
+    }
+
+    public View getNextButton()
+    {
+        return next;
+    }
+
 
     public static class StepSceneBuilder
     {

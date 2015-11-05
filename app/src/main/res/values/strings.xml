@@ -99,5 +99,7 @@
   <string name="learn">Learn</string>
   <string name="profile">Profile</string>
   <string name="clear">Clear</string>
+  <string name="button_get_started">Get Started</string>
+  <string name="button_done">Done</string>
 
 </resources>

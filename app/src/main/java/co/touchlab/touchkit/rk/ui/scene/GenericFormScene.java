@@ -1,7 +1,6 @@
 package co.touchlab.touchkit.rk.ui.scene;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -13,9 +12,14 @@ import java.util.List;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
 import co.touchlab.touchkit.rk.common.result.StepResult;
+import co.touchlab.touchkit.rk.common.result.TextQuestionResult;
+import co.touchlab.touchkit.rk.common.step.FormStep;
+import co.touchlab.touchkit.rk.ui.views.TextWatcherAdapter;
 
 public class GenericFormScene extends Scene
 {
+
+    private StepResult<TextQuestionResult> stepResult;
 
     public GenericFormScene(Context context)
     {
@@ -32,13 +36,23 @@ public class GenericFormScene extends Scene
         super(context, attrs, defStyleAttr);
     }
 
-    public void setFormItems(List<FormItem> items)
+    public GenericFormScene(Context context, FormStep step)
     {
+        super(context);
+
+        setTitle(step.getTitle());
+        setSummary(step.getText());
+        setSkip(step.isOptional());
+
+        stepResult = new StepResult<>(step.getIdentifier());
+
         LinearLayout stepViewContainer = (LinearLayout) findViewById(R.id.content_container);
         int startIndex = getPositionToInsertBody();
-        for(int i = 0; i < items.size(); i++)
+        List<FormItem> items = step.getFormItems();
+        for(int i = 0, size = items.size(); i < size; i++)
         {
             FormItem item = items.get(i);
+            TextQuestionResult result = new TextQuestionResult(item.identifier);
 
             View formItem =  LayoutInflater.from(getContext())
                     .inflate(R.layout.fragment_step_form, this, false);
@@ -48,30 +62,37 @@ public class GenericFormScene extends Scene
 
             EditText value = (EditText) formItem.findViewById(R.id.value);
             value.setHint(item.placeholder);
+            value.addTextChangedListener(new TextWatcherAdapter()
+            {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count)
+                {
+                    result.setTextAnswer(s.toString());
+                }
+            });
 
             stepViewContainer.addView(formItem, startIndex + i);
-            Log.i(GenericFormScene.class.getSimpleName(), "added form item");
+            stepResult.setResultForIdentifier(result.getIdentifier(), result);
         }
     }
 
     @Override
-    protected StepResult getResult()
+    public StepResult getResult()
     {
-        //TODO Result
-        return null;
+        return stepResult;
     }
 
     public static class FormItem
     {
-        private final String givenNameIdentifier;
+        private final String identifier;
         private final String text;
         private final AnswerFormat format;
         private final String placeholder;
 
-        public FormItem(String givenNameIdentifier, String text, AnswerFormat format, String placeholder)
+        public FormItem(String identifier, String text, AnswerFormat format, String placeholder)
         {
 
-            this.givenNameIdentifier = givenNameIdentifier;
+            this.identifier = identifier;
             this.text = text;
             this.format = format;
             this.placeholder = placeholder;

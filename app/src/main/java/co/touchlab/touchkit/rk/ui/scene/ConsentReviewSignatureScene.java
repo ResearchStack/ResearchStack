@@ -1,5 +1,6 @@
 package co.touchlab.touchkit.rk.ui.scene;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -12,6 +13,8 @@ import co.touchlab.touchkit.rk.ui.views.SignatureCallbacks;
 
 public class ConsentReviewSignatureScene extends Scene
 {
+
+    private ConsentReviewSignatureView signatureView;
 
     public ConsentReviewSignatureScene(Context context)
     {
@@ -39,7 +42,8 @@ public class ConsentReviewSignatureScene extends Scene
     {
         View clear = body.findViewById(R.id.layout_consent_review_signature_clear);
 
-        ConsentReviewSignatureView signatureView = (ConsentReviewSignatureView) body.findViewById(R.id.layout_consent_review_signature);
+        signatureView = (ConsentReviewSignatureView) body.findViewById(
+                R.id.layout_consent_review_signature);
         signatureView.setCallbacks(new SignatureCallbacks()
         {
             @Override
@@ -66,8 +70,13 @@ public class ConsentReviewSignatureScene extends Scene
     }
 
     @Override
-    protected StepResult getResult()
+    public StepResult getResult()
     {
         return null;
+    }
+
+    public Bitmap getSignatureImage()
+    {
+        return signatureView.createSignatureBitmap();
     }
 }

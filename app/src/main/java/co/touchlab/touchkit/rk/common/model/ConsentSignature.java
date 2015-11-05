@@ -1,5 +1,4 @@
 package co.touchlab.touchkit.rk.common.model;
-import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -7,7 +6,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 //TODO Remove/Rewrite all documentation
-public class ConsentSignature implements Serializable
+public class ConsentSignature implements Serializable, Cloneable
 {
 
     /**
@@ -52,7 +51,7 @@ public class ConsentSignature implements Serializable
     /**
      * The image of the signature, if any.
      */
-    private Bitmap signatureImage;
+    private byte [] signatureImage;
 
     /**
      * The date associated with the signature.
@@ -85,16 +84,16 @@ public class ConsentSignature implements Serializable
      * @param signatureImage      An image of the signature.
      * @param signatureDate       The date on which the signature was obtained, represented as a string.
      */
-    public ConsentSignature(String title, String dateFormat, String identifier, @Nullable String givenName, @Nullable String familyName, @Nullable Bitmap signatureImage, @Nullable String signatureDate)
+    public ConsentSignature(String title, String dateFormat, String identifier, @Nullable String givenName, @Nullable String familyName, @Nullable byte [] signatureImage, @Nullable String signatureDate)
     {
         this();
         this.title = title;
+        this.signatureDateFormatString = dateFormat;
+        this.identifier = identifier;
         this.givenName = givenName;
         this.familyName = familyName;
         this.signatureImage = signatureImage;
         this.signatureDate = signatureDate;
-        this.identifier = identifier;
-        this.signatureDateFormatString = dateFormat;
     }
 
     /**
@@ -155,6 +154,51 @@ public class ConsentSignature implements Serializable
                 ((ConsentSignature) o).signatureDateFormatString.equals(signatureDateFormatString) &&
                 ((ConsentSignature) o).requiresName == requiresName &&
                 ((ConsentSignature) o).requiresSignatureImage == requiresSignatureImage;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public void setGivenName(String givenName)
+    {
+        this.givenName = givenName;
+    }
+
+    public String getGivenName()
+    {
+        return givenName;
+    }
+
+    public void setFamilyName(String familyName)
+    {
+        this.familyName = familyName;
+    }
+
+    public String getFamilyName()
+    {
+        return familyName;
+    }
+
+    public void setSignatureImage(byte [] signatureImage)
+    {
+        this.signatureImage = signatureImage;
+    }
+
+    public byte [] getSignatureImage()
+    {
+        return signatureImage;
+    }
+
+    public String getSignatureDate()
+    {
+        return signatureDate;
+    }
+
+    public String getSignatureDateFormatString()
+    {
+        return signatureDateFormatString;
     }
 
 }
