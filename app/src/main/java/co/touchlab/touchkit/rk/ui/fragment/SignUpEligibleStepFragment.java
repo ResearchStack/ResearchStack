@@ -47,7 +47,7 @@ public class SignUpEligibleStepFragment extends StepFragment
 
     private void startConsentActivity()
     {
-        ConsentTask task = new ConsentTask(getResources());
+        ConsentTask task = new ConsentTask(getContext());
         Intent intent = ViewTaskActivity.newIntent(getContext(), task);
         startActivityForResult(intent, CONSENT_REQUEST);
     }

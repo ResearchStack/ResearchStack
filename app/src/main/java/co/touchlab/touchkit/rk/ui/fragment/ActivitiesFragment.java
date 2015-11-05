@@ -46,7 +46,7 @@ public class ActivitiesFragment extends Fragment
 
     private ArrayList<SchedulesAndTasksModel.TaskModel> loadTasksAndSchedules()
     {
-        SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClassFromJson(getContext(),
+        SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClassFromRawJson(getContext(),
                 SchedulesAndTasksModel.class,
                 R.raw.tasks_and_schedules);
         ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();
@@ -96,7 +96,7 @@ public class ActivitiesFragment extends Fragment
                 // TODO to do something with the activity result later
                 LogExt.d(getClass(),
                         "Item clicked: " + task.taskID);
-                TaskModel taskModel = JsonUtils.loadClassFromJson(v.getContext(),
+                TaskModel taskModel = JsonUtils.loadClassFromRawJson(v.getContext(),
                         TaskModel.class,
                         task.taskFileName);
 

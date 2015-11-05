@@ -1,4 +1,5 @@
 package co.touchlab.touchkit.rk.common.task;
+import android.content.Context;
 import android.content.res.Resources;
 
 import java.util.List;
@@ -18,12 +19,13 @@ import co.touchlab.touchkit.rk.common.step.Step;
 public class ConsentTask extends OrderedTask
 {
 
-    public ConsentTask(Resources r)
+    public ConsentTask(Context context)
     {
         super("consent");
 
-        ConsentSectionModel data = AppDelegate.getInstance().getConsentSectionsAndHtmlContent(r);
+        ConsentSectionModel data = AppDelegate.getInstance().getConsentSectionsAndHtmlContent(context);
 
+        Resources r = context.getResources();
         List<ConsentSection> sections = data.getSections();
         ConsentSignature signature = new ConsentSignature(r.getString(R.string.participant), null, "participant");
         signature.setRequiresSignatureImage(AppDelegate.getInstance().isSignatureEnabledInConsent());

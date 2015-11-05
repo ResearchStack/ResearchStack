@@ -55,7 +55,7 @@ public class OnboardingActivity extends AppCompatActivity
     //TODO Read on main thread for intense UI blockage.
     private StudyOverviewModel parseStudyOverviewModel()
     {
-        return JsonUtils.loadClassFromJson(OnboardingActivity.this,
+        return JsonUtils.loadClassFromRawJson(OnboardingActivity.this,
                 StudyOverviewModel.class,
                 R.raw.study_overview);
     }

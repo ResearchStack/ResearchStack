@@ -70,7 +70,9 @@ public class AppDelegate
     //TODO Read on main thread for intense UI blockage.
     public ConsentSectionModel getConsentSectionsAndHtmlContent(Context context)
     {
-        return JsonUtils.loadClassFromJson(context, ConsentSectionModel.class, R.raw.consent_section);
+        return JsonUtils.loadClassFromRawJson(context,
+                ConsentSectionModel.class,
+                R.raw.consent_section);
 
     }
 
