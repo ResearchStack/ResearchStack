@@ -11,7 +11,7 @@ import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.step.ConsentSharingStep;
 import co.touchlab.touchkit.rk.ui.ViewWebDocumentActivity;
 
-public class ConsentSharingStepFragment extends BooleanQuestionStepFragment
+public class ConsentSharingStepFragment extends SingleChoiceQuestionStepFragment
 {
 
     public ConsentSharingStepFragment()

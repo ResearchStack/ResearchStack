@@ -59,8 +59,8 @@ public class User
     private int systolicBloodPressure;
 
     private boolean signedUp = false;
-    private boolean signedIn = false;
-    private boolean loggedOut = true;
+    private boolean signedIn = true;
+    private boolean loggedOut = false;
 
     public User()
     {

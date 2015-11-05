@@ -21,10 +21,11 @@ import co.touchlab.touchkit.rk.common.step.QuestionStep;
 import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.task.Task;
-import co.touchlab.touchkit.rk.ui.fragment.BooleanQuestionStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.ConsentReviewStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.ConsentSharingStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.ConsentVisualStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.IntegerQuestionStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.MultiChoiceQuestionStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.NotImplementedStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignInStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpAdditionalInfoStepFragment;
@@ -35,6 +36,7 @@ import co.touchlab.touchkit.rk.ui.fragment.SignUpIneligibleStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpPasscodeStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpPermissionsPrimingStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpPermissionsStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.SingleChoiceQuestionStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.StepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.TextQuestionStepFragment;
 
@@ -138,12 +140,23 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
             if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.SingleChoice)
             {
                 LogExt.d(getClass(), "Single Choice Step");
-                return BooleanQuestionStepFragment.newInstance((QuestionStep) step);
+                return SingleChoiceQuestionStepFragment.<Integer>newInstance((QuestionStep) step);
+            }
+            else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.MultipleChoice)
+            {
+                LogExt.d(getClass(), "Multi Choice Step");
+                return MultiChoiceQuestionStepFragment.<Integer>newInstance((QuestionStep) step);
             }
             else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Text)
             {
                 LogExt.d(getClass(), "Text Step");
                 return TextQuestionStepFragment.newInstance((QuestionStep) step);
+            }
+            else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Integer)
+            {
+                LogExt.d(getClass(),
+                        "Integer Step");
+                return IntegerQuestionStepFragment.newInstance((QuestionStep) step);
             }
             else
             {

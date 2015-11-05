@@ -6,7 +6,7 @@ public class TextChoiceAnswerFormat extends AnswerFormat
 {
 
     private AnswerFormat.ChoiceAnswerStyle answerStyle;
-    private TextChoice[]                   textChoices;
+    private TextChoice[] textChoices;
 
     public TextChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle answerStyle, TextChoice[] textChoices)
     {
@@ -17,10 +17,12 @@ public class TextChoiceAnswerFormat extends AnswerFormat
     @Override
     public QuestionType getQuestionType()
     {
-        return QuestionType.SingleChoice;
+        // TODO not sure what the point of question type is since answer style already has this distinction
+        return answerStyle == ChoiceAnswerStyle.MultipleChoice ? QuestionType.MultipleChoice : QuestionType.SingleChoice;
     }
 
-    public TextChoice[] getTextChoices() {
+    public TextChoice[] getTextChoices()
+    {
         return textChoices;
     }
 }

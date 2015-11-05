@@ -14,17 +14,17 @@ import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
 
-public class BooleanQuestionStepFragment extends StepFragment
+public class SingleChoiceQuestionStepFragment<T> extends StepFragment
 {
 
-    public BooleanQuestionStepFragment()
+    public SingleChoiceQuestionStepFragment()
     {
         super();
     }
 
-    public static Fragment newInstance(QuestionStep step)
+    public static <T> Fragment newInstance(QuestionStep step)
     {
-        BooleanQuestionStepFragment fragment = new BooleanQuestionStepFragment();
+        SingleChoiceQuestionStepFragment fragment = new SingleChoiceQuestionStepFragment<T>();
         Bundle args = new Bundle();
         args.putSerializable(KEY_QUESTION_STEP,
                 step);
@@ -38,7 +38,7 @@ public class BooleanQuestionStepFragment extends StepFragment
 
         TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) step).getAnswerFormat();
         RadioGroup radioGroup = new RadioGroup(getContext());
-        final TextChoice[] textChoices = answerFormat.getTextChoices();
+        final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
 
         QuestionResult<Boolean> questionResult = (QuestionResult<Boolean>)
                 stepResult.getResultForIdentifier(step.getIdentifier());
@@ -46,7 +46,7 @@ public class BooleanQuestionStepFragment extends StepFragment
         for (int i = 0; i < textChoices.length; i++)
         {
             TextChoice textChoice = textChoices[i];
-            RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.item_checkbox,
+            RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.item_radio,
                                                                      radioGroup, false);
             radioButton.setText(textChoice.getText());
             radioButton.setId(i);
@@ -58,17 +58,12 @@ public class BooleanQuestionStepFragment extends StepFragment
             }
         }
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                TextChoice textChoice = textChoices[checkedId];
-                QuestionResult<Boolean> questionResult = new QuestionResult<Boolean>(
-                        step.getIdentifier());
-                questionResult.setAnswer(textChoice.getValue());
-                setStepResult(questionResult);
-            }
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            TextChoice<T> textChoice = textChoices[checkedId];
+            QuestionResult<T> questionResult1 = new QuestionResult<T>(
+                    step.getIdentifier());
+            questionResult1.setAnswer(textChoice.getValue());
+            setStepResult(questionResult1);
         });
 
         return radioGroup;

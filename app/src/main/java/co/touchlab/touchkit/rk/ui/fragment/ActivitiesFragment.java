@@ -11,18 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import co.touchlab.touchkit.rk.R;
+import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
+import co.touchlab.touchkit.rk.common.helpers.LogExt;
 import co.touchlab.touchkit.rk.common.model.SchedulesAndTasksModel;
+import co.touchlab.touchkit.rk.common.model.TaskModel;
+import co.touchlab.touchkit.rk.common.step.QuestionStep;
+import co.touchlab.touchkit.rk.common.step.Step;
+import co.touchlab.touchkit.rk.common.task.OrderedTask;
+import co.touchlab.touchkit.rk.common.task.Task;
+import co.touchlab.touchkit.rk.ui.ViewTaskActivity;
+import co.touchlab.touchkit.rk.utils.JsonUtils;
 
 /**
  * Created by bradleymcdermott on 10/28/15.
@@ -33,7 +35,9 @@ public class ActivitiesFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_activities, container, false);
+        View view = inflater.inflate(R.layout.fragment_activities,
+                container,
+                false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new TaskAdapter(loadTasksAndSchedules()));
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
@@ -42,20 +46,9 @@ public class ActivitiesFragment extends Fragment
 
     private ArrayList<SchedulesAndTasksModel.TaskModel> loadTasksAndSchedules()
     {
-        Gson gson = new GsonBuilder().setDateFormat("MMM yyyy").create();
-        InputStream stream = getResources().openRawResource(R.raw.tasks_and_schedules);
-        Reader reader = null;
-        try
-        {
-            reader = new InputStreamReader(stream, "UTF-8");
-        }
-        catch(UnsupportedEncodingException e)
-        {
-            throw  new RuntimeException(e);
-        }
-
-        SchedulesAndTasksModel schedulesAndTasksModel = gson.fromJson(reader,
-                SchedulesAndTasksModel.class);
+        SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClassFromJson(getContext(),
+                SchedulesAndTasksModel.class,
+                R.raw.tasks_and_schedules);
         ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();
         for (SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)
         {
@@ -81,7 +74,10 @@ public class ActivitiesFragment extends Fragment
         @Override
         public TaskAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedule, parent, false);
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_schedule,
+                            parent,
+                            false);
             return new ViewHolder(view);
         }
 
@@ -94,6 +90,33 @@ public class ActivitiesFragment extends Fragment
 
             // TODO fix this, just for looks atm
             holder.dailyIndicator.setBackgroundResource(task.taskTitle.equals("Daily Survey") ? R.color.recurring_color : R.color.one_time_color);
+
+            holder.itemView.setOnClickListener(v -> {
+                // TODO this is just a simple implementation to get it working, we'll need
+                // TODO to do something with the activity result later
+                LogExt.d(getClass(),
+                        "Item clicked: " + task.taskID);
+                TaskModel taskModel = JsonUtils.loadClassFromJson(v.getContext(),
+                        TaskModel.class,
+                        task.taskFileName);
+
+                List<Step> steps = new ArrayList<Step>(taskModel.elements.size());
+                for (TaskModel.StepModel stepModel : taskModel.elements)
+                {
+                    AnswerFormat answerFormat = AnswerFormat.from(stepModel.constraints);
+
+                    steps.add(new QuestionStep(stepModel.identifier,
+                            stepModel.prompt,
+                            answerFormat));
+                }
+
+                Task newTask = new OrderedTask(taskModel.identifier,
+                        steps);
+
+                v.getContext()
+                        .startActivity(ViewTaskActivity.newIntent(v.getContext(),
+                                newTask));
+            });
         }
 
         @Override
