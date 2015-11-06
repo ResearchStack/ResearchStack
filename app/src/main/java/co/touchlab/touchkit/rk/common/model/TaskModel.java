@@ -2,6 +2,7 @@ package co.touchlab.touchkit.rk.common.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class TaskModel
@@ -86,7 +87,7 @@ public class TaskModel
         public String label;
     }
 
-    public static class RuleModel
+    public static class RuleModel implements Serializable
     {
         @SerializedName("operator")
         public String operator;

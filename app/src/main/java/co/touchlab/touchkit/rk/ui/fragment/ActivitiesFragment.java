@@ -15,14 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
 import co.touchlab.touchkit.rk.common.helpers.LogExt;
 import co.touchlab.touchkit.rk.common.model.SchedulesAndTasksModel;
 import co.touchlab.touchkit.rk.common.model.TaskModel;
-import co.touchlab.touchkit.rk.common.step.QuestionStep;
-import co.touchlab.touchkit.rk.common.step.Step;
-import co.touchlab.touchkit.rk.common.task.OrderedTask;
-import co.touchlab.touchkit.rk.common.task.Task;
+import co.touchlab.touchkit.rk.common.task.SmartSurveyTask;
 import co.touchlab.touchkit.rk.ui.ViewTaskActivity;
 import co.touchlab.touchkit.rk.utils.JsonUtils;
 
@@ -99,19 +95,7 @@ public class ActivitiesFragment extends Fragment
                 TaskModel taskModel = JsonUtils.loadClassFromRawJson(v.getContext(),
                         TaskModel.class,
                         task.taskFileName);
-
-                List<Step> steps = new ArrayList<Step>(taskModel.elements.size());
-                for (TaskModel.StepModel stepModel : taskModel.elements)
-                {
-                    AnswerFormat answerFormat = AnswerFormat.from(stepModel.constraints);
-
-                    steps.add(new QuestionStep(stepModel.identifier,
-                            stepModel.prompt,
-                            answerFormat));
-                }
-
-                Task newTask = new OrderedTask(taskModel.identifier,
-                        steps);
+                SmartSurveyTask newTask = new SmartSurveyTask(taskModel);
 
                 v.getContext()
                         .startActivity(ViewTaskActivity.newIntent(v.getContext(),
