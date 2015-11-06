@@ -7,14 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/placeholder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -24,7 +20,14 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/Theme.AppCompat.Light"
             />
-    </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation"
@@ -33,4 +36,5 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/main_navigation_items"/>
+
 </android.support.v4.widget.DrawerLayout>
