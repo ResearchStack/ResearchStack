@@ -115,7 +115,7 @@ public class LearnFragment extends Fragment
                 });
 
                 int imageResId = AppDelegate.getInstance().getDrawableResourceId(context, item.getIconImage());
-                Drawable icon = context.getResources().getDrawable(imageResId, null);
+                Drawable icon = context.getResources().getDrawable(imageResId);
                 int tintColor = ViewUtils.fetchAccentColor(context);
                 DrawableCompat.setTint(icon, tintColor);
                 holder.icon.setImageDrawable(icon);

@@ -29,6 +29,7 @@ public class ConsentReviewSignatureView extends View
 {
 
     private static final boolean DEBUG = false;
+    private static final String TAG = ConsentReviewSignatureView.class.getSimpleName();
 
     private SignatureCallbacks callbacks;
 
@@ -258,7 +259,13 @@ public class ConsentReviewSignatureView extends View
         this.callbacks = callbacks;
     }
 
-
+    /**
+     *  TODO Fix The Following -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+     *  1. Iterating over the path points, saving them in an array ... not bueno. Try to use
+     *  {@link android.graphics.PathMeasure} class and get minX and minY from that.
+     *
+     *  2. Scale bitmap down. Currently drawing at density of device.
+     */
     public Bitmap createSignatureBitmap()
     {
         RectF sigBounds = new RectF();
@@ -267,9 +274,18 @@ public class ConsentReviewSignatureView extends View
         Bitmap returnedBitmap = Bitmap.createBitmap((int)sigBounds.width(), (int)sigBounds.height(),
                                                     Bitmap.Config.ARGB_4444);
 
+        float minX = Integer.MAX_VALUE;
+        float minY = Integer.MAX_VALUE;
+
+        for(LinePathPoint point : sigPoints)
+        {
+            minX = Math.min(minX, point.x);
+            minY = Math.min(minY, point.y);
+        }
+
+        sigPath.offset(-minX, -minY);
+
         Canvas canvas = new Canvas(returnedBitmap);
-        //TODO translate bitmap by the distance of the left most point off the left edge(X) and
-        //TODO top most point off the top edge(Y)
         canvas.drawPath(sigPath, sigPaint);
         return returnedBitmap;
     }
