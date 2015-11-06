@@ -2,7 +2,8 @@
 
 a  {
 	
-	color:#39F
+    color:#39F
+	background-color: #ffffff;
 	
 }
 
@@ -13,7 +14,8 @@ a:active {
 }
 
 body {
-
+    font-family: sans-serif;
+    font-style: normal;
     font-size:16pt;
     color:#000000;
     line-height:normal;
@@ -30,7 +32,7 @@ p,  h2 {
 }
 
 h1 {
-
+    font-family: sans-serif-light;
     font-size:19pt;
     color:#000000;
     line-height:normal;
@@ -74,7 +76,7 @@ IMG.displayed {
 
 boldie
 {
-
+    font-family:sans-serif-medium;
     font-size:16pt;
     color:#000000;
     line-height:normal;
@@ -85,7 +87,8 @@ boldie
 }
 
 ul, ol {
-
+    font-family: sans-serif;
+    font-style: normal;
     font-size:16pt;
     color:#000000;
     list-style-type: square;
