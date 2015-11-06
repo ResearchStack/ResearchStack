@@ -1,16 +1,15 @@
 package co.touchlab.touchkit.rk.ui.scene;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.model.ConsentSection;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.ui.ViewWebDocumentActivity;
+import co.touchlab.touchkit.rk.utils.ViewUtils;
 
 public class ConsentVisualScene extends Scene
 {
@@ -34,7 +33,7 @@ public class ConsentVisualScene extends Scene
     {
         super(context);
 
-        int accentColor = fetchAccentColor(context);
+        int accentColor = ViewUtils.fetchAccentColor(context);
 
         String title = TextUtils.isEmpty(data.getTitle()) ?
                 getResources().getString(data.getType().getTitleResId()) : data.getTitle();
@@ -74,15 +73,6 @@ public class ConsentVisualScene extends Scene
     {
         // We can ignore this, as we don't return a result for a visual consent scenen
         return null;
-    }
-
-//    TODO Make into static helper method (ViewUtils?)
-    private int fetchAccentColor(Context context) {
-        TypedValue typedValue = new TypedValue();
-        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
-        int color = a.getColor(0, 0);
-        a.recycle();
-        return color;
     }
 
 }
