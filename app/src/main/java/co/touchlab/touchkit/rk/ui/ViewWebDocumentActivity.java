@@ -47,7 +47,7 @@ public class ViewWebDocumentActivity extends AppCompatActivity
 
         WebView webView = (WebView) findViewById(R.id.webview);
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         webView.setWebViewClient(new WebViewClient()
         {
             @Override
