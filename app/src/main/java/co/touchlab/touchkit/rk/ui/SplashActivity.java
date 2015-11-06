@@ -31,7 +31,8 @@ public class SplashActivity extends AppCompatActivity
             subscriber.onNext(true);
             subscriber.onCompleted();
         })
-                .throttleWithTimeout(1, TimeUnit.SECONDS)
+                .throttleWithTimeout(1,
+                        TimeUnit.SECONDS)
                 .observeOn(Schedulers.newThread())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -42,7 +43,10 @@ public class SplashActivity extends AppCompatActivity
     private void initialize()
     {
         // initialize stuff for the app
-        LogExt.d(getClass(), "initializing");
+        LogExt.d(getClass(),
+                "initializing");
+        AppDelegate.getInstance()
+                .loadUser(this);
     }
 
     private void showErrorScreen(Throwable error)
@@ -56,15 +60,17 @@ public class SplashActivity extends AppCompatActivity
 
     private void launchActivity(Object item)
     {
-        LogExt.d(getClass(), "Launching activity");
+        LogExt.d(getClass(),
+                "Launching activity");
 
-        User user = AppDelegate.getInstance().getCurrentUser();
+        User user = AppDelegate.getInstance()
+                .getCurrentUser();
 
-        if(user.isSignedIn())
+        if (user.isSignedIn())
         {
             launchPinActivity();
         }
-        else if(user.isSignedUp())
+        else if (user.isSignedUp())
         {
             launchEmailVerificationActivity();
         }
@@ -78,16 +84,19 @@ public class SplashActivity extends AppCompatActivity
 
     private void launchOnboardingActivity()
     {
-        startActivity(new Intent(this, OnboardingActivity.class));
+        startActivity(new Intent(this,
+                OnboardingActivity.class));
     }
 
     private void launchEmailVerificationActivity()
     {
-        startActivity(new Intent(this, EmailVerificationActivity.class));
+        startActivity(new Intent(this,
+                EmailVerificationActivity.class));
     }
 
     private void launchPinActivity()
     {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this,
+                MainActivity.class));
     }
 }

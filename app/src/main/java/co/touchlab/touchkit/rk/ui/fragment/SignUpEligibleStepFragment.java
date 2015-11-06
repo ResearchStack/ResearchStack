@@ -7,9 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
+import co.touchlab.touchkit.rk.common.model.ConsentSignature;
+import co.touchlab.touchkit.rk.common.model.User;
+import co.touchlab.touchkit.rk.common.result.ConsentSignatureResult;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
+import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.common.task.ConsentTask;
 import co.touchlab.touchkit.rk.ui.ViewTaskActivity;
@@ -28,7 +33,8 @@ public class SignUpEligibleStepFragment extends StepFragment
     {
         SignUpEligibleStepFragment fragment = new SignUpEligibleStepFragment();
         Bundle args = new Bundle();
-        args.putSerializable(KEY_QUESTION_STEP, step);
+        args.putSerializable(KEY_QUESTION_STEP,
+                step);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,7 +42,8 @@ public class SignUpEligibleStepFragment extends StepFragment
     @Override
     public View getBodyView(LayoutInflater inflater)
     {
-        View root = inflater.inflate(R.layout.item_eligible, null);
+        View root = inflater.inflate(R.layout.item_eligible,
+                null);
 
         root.findViewById(R.id.start_consent_button)
                 .setOnClickListener(v -> startConsentActivity());
@@ -49,8 +56,10 @@ public class SignUpEligibleStepFragment extends StepFragment
     private void startConsentActivity()
     {
         ConsentTask task = new ConsentTask(getContext());
-        Intent intent = ViewTaskActivity.newIntent(getContext(), task);
-        startActivityForResult(intent, CONSENT_REQUEST);
+        Intent intent = ViewTaskActivity.newIntent(getContext(),
+                task);
+        startActivityForResult(intent,
+                CONSENT_REQUEST);
     }
 
     @Override
@@ -62,23 +71,38 @@ public class SignUpEligibleStepFragment extends StepFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == CONSENT_REQUEST)
+        if (requestCode == CONSENT_REQUEST && resultCode == Activity.RESULT_OK)
         {
-            if (resultCode == Activity.RESULT_CANCELED)
+            TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+
+            boolean sharing = ((QuestionResult<Boolean>) result.getStepResultForStepIdentifier("sharing")
+                    .getResultForIdentifier("sharing")).getAnswer();
+
+            ConsentSignatureResult signatureResult = ((ConsentSignatureResult) result.getStepResultForStepIdentifier("reviewStep"));
+            ConsentSignature signature = signatureResult.getSignature();
+            boolean consented = signatureResult.isConsented();
+
+
+            User currentUser = AppDelegate.getInstance()
+                    .getCurrentUser();
+            // TODO check for valid signature/names
+            if (consented)
+            {
+                // TODO just use full name to begin with and don't concat names like this
+                // TODO get signature date
+                String fullName = signature.getGivenName() + " " + signature.getFamilyName();
+                currentUser.setName(fullName);
+                currentUser.setConsentSignatureName(fullName);
+                currentUser.setConsentSignatureImage(signature.getSignatureImage());
+                currentUser.setUserConsented(true);
+
+                callbacks.onNextPressed(step);
+            }
+            else
             {
                 // Clear activity and show Welcome screen
                 getActivity().finish();
             }
-            else
-            {
-                callbacks.onNextPressed(step);
-            }
-//            boolean eligible = data.getBooleanExtra(ConsentActivity.CONSENT_RESULT,
-//                    false);
-//            if (eligible)
-//            {
-
-//            }
         }
         super.onActivityResult(requestCode,
                 resultCode,

@@ -11,6 +11,7 @@
     <ImageView
         android:id="@+id/profile_image"
         android:src="@drawable/splash"
+        android:longClickable="true"
         android:padding="12dp"
         android:layout_width="100dp"
         android:layout_height="100dp"/>

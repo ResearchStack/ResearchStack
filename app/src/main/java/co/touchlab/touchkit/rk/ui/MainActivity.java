@@ -6,11 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
@@ -88,12 +90,37 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        View headerView = getLayoutInflater().inflate(R.layout.include_user_header, null);
+        View headerView = getLayoutInflater().inflate(R.layout.include_user_header,
+                null);
 
         AppCompatTextView name = (AppCompatTextView) headerView.findViewById(R.id.name);
-        name.setText(AppDelegate.getInstance().getCurrentUser().getName());
+        name.setText(AppDelegate.getInstance()
+                .getCurrentUser()
+                .getName());
         AppCompatTextView email = (AppCompatTextView) headerView.findViewById(R.id.email);
-        name.setText(AppDelegate.getInstance().getCurrentUser().getEmail());
+        email.setText(AppDelegate.getInstance()
+                .getCurrentUser()
+                .getEmail());
+
+        ImageView image = (ImageView) headerView.findViewById(R.id.profile_image);
+        image.setOnLongClickListener(v -> {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setMessage("Clear saved user data?")
+                    .setPositiveButton("Yes",
+                            (dialog, which) -> {
+                                AppDelegate.getInstance()
+                                        .clearUserData(MainActivity.this);
+                                dialog.dismiss();
+                                finish();
+                                System.exit(0);
+                            })
+                    .setNegativeButton("No",
+                            ((dialog1, which1) -> {
+                                dialog1.dismiss();
+                            }))
+                    .show();
+            return false;
+        });
 
         navigationView.addHeaderView(headerView);
 

@@ -51,7 +51,7 @@ public class MultiChoiceQuestionStepFragment<T> extends StepFragment
 
         results = new ArrayList<>();
 
-        if(questionResult != null)
+        if (questionResult != null)
         {
             results.addAll(Arrays.asList(questionResult.getAnswer()));
         }
@@ -61,7 +61,8 @@ public class MultiChoiceQuestionStepFragment<T> extends StepFragment
             int position = i;
             TextChoice<T> textChoice = textChoices[position];
             AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(R.layout.item_checkbox,
-                                                                     radioGroup, false);
+                    radioGroup,
+                    false);
             checkBox.setText(textChoice.getText());
             checkBox.setId(position);
             radioGroup.addView(checkBox);
@@ -75,7 +76,14 @@ public class MultiChoiceQuestionStepFragment<T> extends StepFragment
 
                 QuestionResult<T[]> questionResult1 = new QuestionResult<T[]>(
                         step.getIdentifier());
-                results.add(textChoice.getValue());
+                if (isChecked)
+                {
+                    results.add(textChoice.getValue());
+                }
+                else
+                {
+                    results.remove(textChoice.getValue());
+                }
 
 
                 questionResult1.setAnswer((T[]) results.toArray());

@@ -2,7 +2,18 @@ package co.touchlab.touchkit.rk;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
 import co.touchlab.touchkit.rk.common.Constants;
+import co.touchlab.touchkit.rk.common.helpers.LogExt;
 import co.touchlab.touchkit.rk.common.model.ConsentSectionModel;
 import co.touchlab.touchkit.rk.common.model.User;
 import co.touchlab.touchkit.rk.utils.JsonUtils;
@@ -10,6 +21,7 @@ import co.touchlab.touchkit.rk.utils.JsonUtils;
 public class AppDelegate
 {
 
+    private static final String TEMP_USER_JSON_FILE_NAME = "temp_user";
     public static AppDelegate instance;
 
     private User currentUser;
@@ -17,7 +29,7 @@ public class AppDelegate
     //TODO Thread safe
     public static AppDelegate getInstance()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = new AppDelegate();
         }
@@ -27,8 +39,6 @@ public class AppDelegate
 
     private AppDelegate()
     {
-        // TODO save and load user object
-        currentUser = new User();
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -78,12 +88,14 @@ public class AppDelegate
 
     public String getHTMLFilePath(String docName)
     {
-        return getRawFilePath(docName, "html");
+        return getRawFilePath(docName,
+                "html");
     }
 
     public String getPDFFilePath(String docName)
     {
-        return getRawFilePath(docName, "pdf");
+        return getRawFilePath(docName,
+                "pdf");
     }
 
 
@@ -104,7 +116,7 @@ public class AppDelegate
     // TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
     public Constants.UserInfoType[] getUserInfoTypes()
     {
-        return new Constants.UserInfoType[] {Constants.UserInfoType.Name,
+        return new Constants.UserInfoType[]{Constants.UserInfoType.Name,
                 Constants.UserInfoType.Email, Constants.UserInfoType.DateOfBirth,
                 Constants.UserInfoType.Height, Constants.UserInfoType.Weight};
     }
@@ -112,5 +124,77 @@ public class AppDelegate
     public User getCurrentUser()
     {
         return currentUser;
+    }
+
+    public void saveUser(Context context)
+    {
+        File userJsonFile = new File(context.getFilesDir(),
+                TEMP_USER_JSON_FILE_NAME);
+
+        Gson gson = new Gson();
+        String userJsonString = gson.toJson(getCurrentUser());
+
+        LogExt.d(getClass(),
+                "Writing user json:\n" + userJsonString);
+
+        try
+        {
+            FileOutputStream outputStream = new FileOutputStream(userJsonFile);
+            outputStream.write(userJsonString.getBytes());
+            outputStream.close();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadUser(Context context)
+    {
+        Gson gson = new Gson();
+        File userJsonFile = new File(context.getFilesDir(),
+                TEMP_USER_JSON_FILE_NAME);
+        if (userJsonFile.exists())
+        {
+            try
+            {
+                FileInputStream inputStream = new FileInputStream(userJsonFile);
+                Reader reader = new InputStreamReader(inputStream);
+                currentUser = gson.fromJson(reader,
+                        User.class);
+                LogExt.d(getClass(),
+                        "Loaded user json");
+            }
+            catch (FileNotFoundException e)
+            {
+                LogExt.e(getClass(),
+                        "Error loading user file");
+                e.printStackTrace();
+            }
+        }
+
+        if (currentUser == null)
+        {
+            LogExt.d(getClass(),
+                    "No user file found, creating new user");
+            currentUser = new User();
+        }
+    }
+
+    public void clearUserData(Context context)
+    {
+        File userJsonFile = new File(context.getFilesDir(),
+                TEMP_USER_JSON_FILE_NAME);
+        if (userJsonFile.exists())
+        {
+            boolean deleted = userJsonFile.delete();
+            LogExt.d(getClass(),
+                    "Deleted user data: " + deleted);
+
+        }
     }
 }

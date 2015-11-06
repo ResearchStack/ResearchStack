@@ -7,16 +7,16 @@ import java.util.Date;
  */
 public class User
 {
-    private String  name = "Name";
+    private String name;
 
-    private String  email = "Email";
-    private String  password;
-    private String  sessionToken;
+    private String email;
+    private String password;
+    private String sessionToken;
 
     // TODO this shouldn't be here and shouldn't be a string
     private String passcode;
 
-//    private APCUserConsentSharingScope sharingScope;      // NOT stored to CoreData, reflected in "sharedOptionSelection"
+    //    private APCUserConsentSharingScope sharingScope;      // NOT stored to CoreData, reflected in "sharedOptionSelection"
     private int sharedOptionSelection;
     private String profileImage;
 
@@ -29,8 +29,8 @@ public class User
     private String customSurveyQuestion;
     private String phoneNumber;
     private boolean allowContact;
-    private String  medicalConditions;
-    private String  medications;
+    private String medicalConditions;
+    private String medications;
     private String ethnicity;
 
     private Date sleepTime;
@@ -44,11 +44,11 @@ public class User
 
     private String consentSignatureName;
     private Date consentSignatureDate;
-    private String consentSignatureImage;
+    private byte[] consentSignatureImage;
 
     private boolean secondaryInfoSaved;
 
-    private Date  birthDate;
+    private Date birthDate;
 
     // TODO make classes for these?
     private String biologicalSex;
@@ -327,12 +327,12 @@ public class User
         this.consentSignatureDate = consentSignatureDate;
     }
 
-    public String getConsentSignatureImage()
+    public byte[] getConsentSignatureImage()
     {
         return consentSignatureImage;
     }
 
-    public void setConsentSignatureImage(String consentSignatureImage)
+    public void setConsentSignatureImage(byte[] consentSignatureImage)
     {
         this.consentSignatureImage = consentSignatureImage;
     }
@@ -425,6 +425,8 @@ public class User
     public void setSignedIn(boolean signedIn)
     {
         this.signedIn = signedIn;
+        // TODO no sure why there's a signedIn and a loggedOut
+        setLoggedOut(!signedIn);
     }
 
     public boolean isLoggedOut()

@@ -12,6 +12,7 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
+import co.touchlab.touchkit.rk.common.model.User;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
@@ -58,6 +59,8 @@ public class SignUpPasscodeStepFragment extends StepFragment
                 .filter(charSequence -> charSequence.length() == 4)
                 .subscribe(this::handlePasscode);
 
+        hideNextButtons();
+
         return root;
     }
 
@@ -71,9 +74,16 @@ public class SignUpPasscodeStepFragment extends StepFragment
         }
         else if (state == STATE_CONFIRM && enteredPasscode.equals(passcodeSequence.toString()))
         {
+            User currentUser = AppDelegate.getInstance()
+                    .getCurrentUser();
+
+            currentUser.setPasscode(enteredPasscode);
+            currentUser.setSignedUp(true);
+            currentUser.setSignedIn(true);
+
+
             AppDelegate.getInstance()
-                    .getCurrentUser()
-                    .setPasscode(enteredPasscode);
+                    .saveUser(getContext());
             callbacks.onNextPressed(step);
         }
         else
@@ -83,9 +93,9 @@ public class SignUpPasscodeStepFragment extends StepFragment
             state = STATE_ENTRY;
             updateViews();
             Toast.makeText(getActivity(),
-                R.string.passcode_mismatch,
-                Toast.LENGTH_SHORT)
-            .show();
+                    R.string.passcode_mismatch,
+                    Toast.LENGTH_SHORT)
+                    .show();
         }
 
     }
