@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -63,8 +64,12 @@ public class LearnFragment extends Fragment
         return section.getItems();
     }
 
-    public static class LearnAdapter extends RecyclerView.Adapter<LearnAdapter.ViewHolder>
+    public static class LearnAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     {
+
+        private static final int VIEW_TYPE_HEADER = 0;
+        private static final int VIEW_TYPE_ITEM = 1;
+
         private List<SectionModel.SectionRow> items;
         private LayoutInflater inflater;
 
@@ -76,38 +81,70 @@ public class LearnFragment extends Fragment
         }
 
         @Override
-        public LearnAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            View view = inflater.inflate(R.layout.item_row_section, parent, false);
-            return new ViewHolder(view);
+            if (viewType == VIEW_TYPE_HEADER)
+            {
+                View view = inflater.inflate(R.layout.header_learn, parent, false);
+                return new HeaderViewHolder(view);
+            }
+            else
+            {
+                View view = inflater.inflate(R.layout.item_row_section, parent, false);
+                return new ViewHolder(view);
+            }
         }
 
         @Override
-        public void onBindViewHolder(LearnAdapter.ViewHolder holder, int position)
+        public void onBindViewHolder(RecyclerView.ViewHolder hldr, int position)
         {
-            Context context = holder.itemView.getContext();
+            if (hldr instanceof ViewHolder)
+            {
+                ViewHolder holder = (ViewHolder) hldr;
+                Context context = holder.itemView.getContext();
 
-            SectionModel.SectionRow item = items.get(position);
+                //Offset for header
+                SectionModel.SectionRow item = items.get(position - 1);
 
-            holder.title.setText(item.getTitle());
+                holder.title.setText(item.getTitle());
 
-            holder.itemView.setOnClickListener(v -> {
-                Intent intent = ViewWebDocumentActivity
-                        .newIntent(v.getContext(), item.getTitle(), item.getDetails());
-                v.getContext().startActivity(intent);
-            });
+                holder.itemView.setOnClickListener(v -> {
+                    Intent intent = ViewWebDocumentActivity
+                            .newIntent(v.getContext(), item.getTitle(), item.getDetails());
+                    v.getContext().startActivity(intent);
+                });
 
-            int imageResId = AppDelegate.getInstance().getDrawableResourceId(context, item.getIconImage());
-            Drawable icon = context.getResources().getDrawable(imageResId, null);
-            int tintColor = ViewUtils.fetchAccentColor(context);
-            DrawableCompat.setTint(icon, tintColor);
-            holder.icon.setImageDrawable(icon);
+                int imageResId = AppDelegate.getInstance().getDrawableResourceId(context, item.getIconImage());
+                Drawable icon = context.getResources().getDrawable(imageResId, null);
+                int tintColor = ViewUtils.fetchAccentColor(context);
+                DrawableCompat.setTint(icon, tintColor);
+                holder.icon.setImageDrawable(icon);
+            }
+        }
+
+        @Override
+        public int getItemViewType(int position)
+        {
+            return position == 0 ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
         }
 
         @Override
         public int getItemCount()
         {
-            return items.size();
+            // Size of items + header
+            return items.size() + 1;
+        }
+
+        public static class HeaderViewHolder extends RecyclerView.ViewHolder
+        {
+
+            ImageView logo;
+
+            public HeaderViewHolder(View itemView)
+            {
+                super(itemView);
+                logo = (ImageView) itemView.findViewById(R.id.logo);
+            }
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder
