@@ -27,6 +27,9 @@ public class StudyOverviewModel
         return questions;
     }
 
+    /**
+     * TODO Extend from {@link co.touchlab.touchkit.rk.common.model.SectionModel.Section} class
+     */
     public static class Question
     {
         @SerializedName("title")

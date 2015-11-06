@@ -104,6 +104,11 @@ public class AppDelegate
         return "file:///android_res/raw/" + docName + "." + postfix;
     }
 
+    public int getDrawableResourceId(Context context, String name)
+    {
+        return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+    }
+
     public boolean isSignatureEnabledInConsent()
     {
         return true;
