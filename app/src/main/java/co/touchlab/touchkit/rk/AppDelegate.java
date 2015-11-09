@@ -121,9 +121,14 @@ public class AppDelegate
     // TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
     public Constants.UserInfoType[] getUserInfoTypes()
     {
-        return new Constants.UserInfoType[]{Constants.UserInfoType.Name,
-                Constants.UserInfoType.Email, Constants.UserInfoType.DateOfBirth,
-                Constants.UserInfoType.Height, Constants.UserInfoType.Weight};
+        return new Constants.UserInfoType[]{
+                Constants.UserInfoType.Name,
+                Constants.UserInfoType.Email,
+                Constants.UserInfoType.BiologicalSex,
+                Constants.UserInfoType.DateOfBirth,
+                Constants.UserInfoType.Height,
+                Constants.UserInfoType.Weight
+        };
     }
 
     public User getCurrentUser()

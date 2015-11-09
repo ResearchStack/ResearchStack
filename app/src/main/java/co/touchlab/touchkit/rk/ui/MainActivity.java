@@ -21,6 +21,7 @@ import co.touchlab.touchkit.rk.ui.fragment.ActivitiesFragment;
 import co.touchlab.touchkit.rk.ui.fragment.DashboardFragment;
 import co.touchlab.touchkit.rk.ui.fragment.LearnFragment;
 import co.touchlab.touchkit.rk.ui.fragment.ProfileFragment;
+import co.touchlab.touchkit.rk.ui.fragment.SettingsFragment;
 
 /**
  * Created by bradleymcdermott on 10/27/15.
@@ -72,6 +73,13 @@ public class MainActivity extends AppCompatActivity
                                 "Profile clicked");
                         toolbar.setTitle(R.string.profile);
                         fragment = new ProfileFragment();
+                        break;
+
+                    case R.id.settings:
+                        LogExt.d(getClass(),
+                                "Settings clicked");
+                        toolbar.setTitle(R.string.settings);
+                        fragment = new SettingsFragment();
                         break;
 
                     case R.id.activities:

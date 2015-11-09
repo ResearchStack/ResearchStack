@@ -29,7 +29,7 @@ public class Constants
         ReviewConsent,
         PrivacyPolicy,
         LicenseInformation,
-        SharingOptions,
+        SharingOptions
     }
 
 
@@ -46,7 +46,7 @@ public class Constants
         StudyDetails,
         OtherDetails,
         ReviewConsent,
-        Share,
+        Share
     }
 
     public enum Consented

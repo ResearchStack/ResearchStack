@@ -101,5 +101,8 @@
   <string name="clear">Clear</string>
   <string name="button_get_started">Get Started</string>
   <string name="button_done">Done</string>
+  <string name="settings">Settings</string>
+  <string name="medical_condition">Medical Conditions</string>
+  <string name="biological_sex">Biological Sex</string>
 
 </resources>
