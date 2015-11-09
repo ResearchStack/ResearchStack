@@ -78,6 +78,19 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
 
     private void loadNextFragment()
     {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.placeholder);
+        if (fragment instanceof MultiSceneStepFragment)
+        {
+            MultiSceneStepFragment multiSceneStepFragment = (MultiSceneStepFragment) fragment;
+            int current = multiSceneStepFragment.getCurrentScene();
+            int count = multiSceneStepFragment.getSceneCount();
+            if (current < count - 1)
+            {
+                multiSceneStepFragment.goForward();
+                return;
+            }
+        }
+
         Step nextStep = task.getStepAfterStep(currentStep, taskResult);
         if(nextStep == null)
         {

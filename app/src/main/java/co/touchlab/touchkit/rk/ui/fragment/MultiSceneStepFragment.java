@@ -85,31 +85,16 @@ public abstract class MultiSceneStepFragment extends StepFragment
             return;
         }
 
-
         ViewGroup root = (ViewGroup) getView();
-
         if (root.getChildCount() > 0)
         {
             View oldScene = root.getChildAt(0);
             scenePoppedOffViewStack((Scene) oldScene);
         }
 
-        if (position >= getSceneCount())
-        {
-            callbacks.onNextPressed(step);
-            return;
-        }
-
         // Create the next scene
         Scene newScene = onCreateScene(getLayoutInflater(null), position);
-
-        View next = newScene.getNextButton();
-        if(next != null)
-        {
-            next.setOnClickListener(v -> {
-                goForward();
-            });
-        }
+        newScene.setCallbacks(getStep(), callbacks);
 
         root.post(() -> {
             if(withAnimation)

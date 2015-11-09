@@ -160,6 +160,8 @@ public abstract class StepFragment extends Fragment
         void onNextPressed(Step step);
         void onStepResultChanged(Step step, StepResult result);
         void onSkipStep(Step step);
+//        void onError(String title, String message);
+
         StepResult getResultStep(String stepId);
     }
 }

@@ -6,47 +6,51 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
+import co.touchlab.touchkit.rk.common.answerformat.TextAnswerFormat;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TextQuestionResult;
 import co.touchlab.touchkit.rk.common.step.FormStep;
 import co.touchlab.touchkit.rk.ui.views.TextWatcherAdapter;
 
-public class GenericFormScene extends Scene
+public class FormScene extends Scene
 {
 
     private StepResult<TextQuestionResult> stepResult;
+    private FormStep step;
 
-    public GenericFormScene(Context context)
+    public FormScene(Context context)
     {
         super(context);
     }
 
-    public GenericFormScene(Context context, AttributeSet attrs)
+    public FormScene(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public GenericFormScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public FormScene(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }
 
-    public GenericFormScene(Context context, FormStep step)
+    public FormScene(Context context, FormStep step)
     {
         super(context);
+
+        this.step = step;
+        this.stepResult = new StepResult<>(step.getIdentifier());
 
         setTitle(step.getTitle());
         setSummary(step.getText());
         setSkip(step.isOptional());
 
-        stepResult = new StepResult<>(step.getIdentifier());
-
         LinearLayout stepViewContainer = (LinearLayout) findViewById(R.id.content_container);
+
         int startIndex = getPositionToInsertBody();
         List<FormItem> items = step.getFormItems();
         for(int i = 0, size = items.size(); i < size; i++)
@@ -62,12 +66,15 @@ public class GenericFormScene extends Scene
 
             EditText value = (EditText) formItem.findViewById(R.id.value);
             value.setHint(item.placeholder);
+            value.setSingleLine(! item.format.isMultipleLines());
+            value.setFilters(item.format.getInputFilters());
             value.addTextChangedListener(new TextWatcherAdapter()
             {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count)
                 {
-                    result.setTextAnswer(s.toString());
+                    String input = s == null ? "" : s.toString();
+                    result.setTextAnswer(input);
                 }
             });
 
@@ -77,7 +84,29 @@ public class GenericFormScene extends Scene
     }
 
     @Override
-    public StepResult getResult()
+    public boolean onNextClicked()
+    {
+        boolean isValid = true;
+
+        List<FormItem> items = step.getFormItems();
+        for(FormItem item : items)
+        {
+            TextQuestionResult result = stepResult.getResultForIdentifier(item.identifier);
+            String answer = result.getTextAnswer();
+            if (!item.format.isAnswerValidWithString(answer))
+            {
+                //TODO Move message into xml/strings.xml
+                //TODO Throw dialog instead of toast
+                Toast.makeText(getContext(), "Invalid answer, double check your answers!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+
+        return isValid && super.onNextClicked();
+    }
+
+    @Override
+    public StepResult<TextQuestionResult> getResult()
     {
         return stepResult;
     }
@@ -86,12 +115,11 @@ public class GenericFormScene extends Scene
     {
         private final String identifier;
         private final String text;
-        private final AnswerFormat format;
+        private final TextAnswerFormat format;
         private final String placeholder;
 
-        public FormItem(String identifier, String text, AnswerFormat format, String placeholder)
+        public FormItem(String identifier, String text, TextAnswerFormat format, String placeholder)
         {
-
             this.identifier = identifier;
             this.text = text;
             this.format = format;

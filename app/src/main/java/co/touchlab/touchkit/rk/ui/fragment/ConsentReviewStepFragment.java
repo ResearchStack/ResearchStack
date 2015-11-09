@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import co.touchlab.touchkit.rk.R;
+import co.touchlab.touchkit.rk.common.answerformat.TextAnswerFormat;
 import co.touchlab.touchkit.rk.common.model.ConsentSignature;
 import co.touchlab.touchkit.rk.common.result.ConsentSignatureResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
@@ -26,7 +27,7 @@ import co.touchlab.touchkit.rk.dev.DevUtils;
 import co.touchlab.touchkit.rk.ui.callbacks.ConsentReviewCallback;
 import co.touchlab.touchkit.rk.ui.scene.ConsentReviewDocumentScene;
 import co.touchlab.touchkit.rk.ui.scene.ConsentReviewSignatureScene;
-import co.touchlab.touchkit.rk.ui.scene.GenericFormScene;
+import co.touchlab.touchkit.rk.ui.scene.FormScene;
 import co.touchlab.touchkit.rk.ui.scene.Scene;
 
 public class ConsentReviewStepFragment extends MultiSceneStepFragment implements ConsentReviewCallback
@@ -101,26 +102,24 @@ public class ConsentReviewStepFragment extends MultiSceneStepFragment implements
             formStep.setUseSurveyMode(false);
             formStep.setOptional(false);
 
-//            TODO Create TextAnswerFormat
-//            ORKTextAnswerFormat *nameAnswerFormat = [ORKTextAnswerFormat textAnswerFormat];
-//            nameAnswerFormat.multipleLines = NO;
+            TextAnswerFormat format = new TextAnswerFormat();
+            format.setIsMultipleLines(false);
+//            TODO TODO set the following
 //            nameAnswerFormat.autocapitalizationType = UITextAutocapitalizationTypeWords;
 //            nameAnswerFormat.autocorrectionType = UITextAutocorrectionTypeNo;
 //            nameAnswerFormat.spellCheckingType = UITextSpellCheckingTypeNo;
 
-            List<GenericFormScene.FormItem> items = new ArrayList<>();
+            List<FormScene.FormItem> items = new ArrayList<>();
             String placeholder = getResources().getString(R.string.consent_name_placeholder);
 
-            //TODO Pass in Answer format
             String givenText = getResources().getString(R.string.consent_name_first);
-            GenericFormScene.FormItem givenName = new GenericFormScene.FormItem(
-                    GivenNameIdentifier, givenText, null, placeholder);
+            FormScene.FormItem givenName = new FormScene.FormItem(
+                    GivenNameIdentifier, givenText, format, placeholder);
             items.add(givenName);
 
-            //TODO Pass in Answer format
             String familyText = getResources().getString(R.string.consent_name_last);
-            GenericFormScene.FormItem familyName = new GenericFormScene.FormItem(
-                    FamilyNameIdentifier, familyText, null, placeholder);
+            FormScene.FormItem familyName = new FormScene.FormItem(
+                    FamilyNameIdentifier, familyText, format, placeholder);
             items.add(familyName);
 
             formStep.setFormItems(items);
@@ -129,7 +128,7 @@ public class ConsentReviewStepFragment extends MultiSceneStepFragment implements
                 Collections.reverse(items);
             }
 
-            return new GenericFormScene(getContext(), formStep);
+            return new FormScene(getContext(), formStep);
         }
         else if (section == SECTION_REVIEW_SIGNATURE)
         {
@@ -193,7 +192,7 @@ public class ConsentReviewStepFragment extends MultiSceneStepFragment implements
         {
             result.setConsented(true);
         }
-        else if (scene instanceof GenericFormScene)
+        else if (scene instanceof FormScene)
         {
             StepResult formResult = scene.getResult();
 

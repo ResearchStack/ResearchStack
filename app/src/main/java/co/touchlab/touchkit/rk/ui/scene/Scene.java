@@ -15,6 +15,8 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.StepResult;
+import co.touchlab.touchkit.rk.common.step.Step;
+import co.touchlab.touchkit.rk.ui.fragment.StepFragment;
 import rx.functions.Action1;
 
 public abstract class Scene extends RelativeLayout
@@ -29,6 +31,8 @@ public abstract class Scene extends RelativeLayout
     private TextView next;
     private TextView skip;
     private LinearLayout container;
+    private Step step;
+    private StepFragment.StepCallbacks callbacks;
 
     public Scene(Context context)
     {
@@ -83,6 +87,15 @@ public abstract class Scene extends RelativeLayout
         summary = (TextView) findViewById(R.id.text);
         moreInfo = (TextView) findViewById(R.id.more_info);
         next = (TextView) findViewById(R.id.next);
+        next.setOnClickListener(v -> {
+            if (onNextClicked())
+            {
+                if (callbacks != null && step != null)
+                {
+                    callbacks.onNextPressed(step);
+                }
+            }
+        });
         skip = (TextView) findViewById(R.id.skip);
 
         initBody();
@@ -230,11 +243,25 @@ public abstract class Scene extends RelativeLayout
         next.setText(string);
     }
 
-    public View getNextButton()
+    /**
+     * @return true to call through to Fragment and start next scene.
+     */
+    public boolean onNextClicked()
     {
-        return next;
+        return true;
     }
 
+
+    public StepFragment.StepCallbacks getCallbacks()
+    {
+        return callbacks;
+    }
+
+    public void setCallbacks(Step step, StepFragment.StepCallbacks callbacks)
+    {
+        this.step = step;
+        this.callbacks = callbacks;
+    }
 
     public static class StepSceneBuilder
     {

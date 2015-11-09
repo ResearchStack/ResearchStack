@@ -1,11 +1,11 @@
 package co.touchlab.touchkit.rk.common.step;
 import java.util.List;
 
-import co.touchlab.touchkit.rk.ui.scene.GenericFormScene;
+import co.touchlab.touchkit.rk.ui.scene.FormScene;
 
 public class FormStep extends Step
 {
-    private List<GenericFormScene.FormItem> formItems;
+    private List<FormScene.FormItem> formItems;
 
     public FormStep(String identifier)
     {
@@ -23,12 +23,12 @@ public class FormStep extends Step
         setText(text);
     }
 
-    public void setFormItems(List<GenericFormScene.FormItem> formItems)
+    public void setFormItems(List<FormScene.FormItem> formItems)
     {
         this.formItems = formItems;
     }
 
-    public List<GenericFormScene.FormItem> getFormItems()
+    public List<FormScene.FormItem> getFormItems()
     {
         return formItems;
     }
