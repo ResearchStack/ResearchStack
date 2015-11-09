@@ -98,7 +98,7 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         }
         else
         {
-            showFragment(nextStep);
+            showFragment(nextStep, true);
         }
     }
 
@@ -123,11 +123,11 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         }
         else
         {
-            showFragment(previousStep);
+            showFragment(previousStep, false);
         }
     }
 
-    private void showFragment(Step step)
+    private void showFragment(Step step, boolean forward)
     {
         Fragment fragment = getFragmentForStep(step);
 
@@ -135,8 +135,9 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.placeholder,
-                        fragment)
+                .setCustomAnimations(forward ? R.anim.slide_in_right : R.anim.slide_in_left,
+                                     forward ? R.anim.slide_out_left : R.anim.slide_out_right)
+                .replace(R.id.placeholder, fragment)
                 .commit();
     }
 
