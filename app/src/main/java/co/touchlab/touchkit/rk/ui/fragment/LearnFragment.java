@@ -57,7 +57,7 @@ public class LearnFragment extends Fragment
     private List<SectionModel.SectionRow> loadTasksAndSchedules()
     {
         SectionModel schedulesAndTasksModel = JsonUtils
-                .loadClassFromRawJson(getContext(), SectionModel.class, R.raw.learn);
+                .loadClassFromRawJson(getContext(), SectionModel.class, R.raw.learn_items);
 
         SectionModel.Section section = schedulesAndTasksModel.getSections().get(0);
 

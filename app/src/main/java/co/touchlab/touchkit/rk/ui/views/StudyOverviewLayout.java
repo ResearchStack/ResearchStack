@@ -14,6 +14,9 @@ import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.model.StudyOverviewModel;
 
+/**
+ * TODO Extend from {@link co.touchlab.touchkit.rk.ui.scene.Scene} and use in {@link co.touchlab.touchkit.rk.ui.ViewWebDocumentActivity}
+ */
 public class StudyOverviewLayout extends FrameLayout
 {
 
@@ -42,7 +45,7 @@ public class StudyOverviewLayout extends FrameLayout
         LayoutInflater.from(getContext()).inflate(R.layout.layout_study_overview, this, true);
         webView = (WebView) findViewById(R.id.webview);
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         webView.setWebViewClient(new WebViewClient()
         {
             @Override

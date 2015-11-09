@@ -36,7 +36,11 @@ public class ViewWebDocumentActivity extends AppCompatActivity
         }
 
         super.onCreate(savedInstanceState);
-        //TODO This layout is the same as layout_overview_content. Consolidate.
+
+        /**
+         * TODO use {@link co.touchlab.touchkit.rk.ui.views.StudyOverviewLayout}
+         * TODO This layout is the same as {@link co.touchlab.touchkit.rk.R.layout.layout_study_overview}. Consolidate.
+         */
         super.setContentView(R.layout.activity_web_document);
 
         String title = getIntent().getStringExtra(KEY_TITLE);
