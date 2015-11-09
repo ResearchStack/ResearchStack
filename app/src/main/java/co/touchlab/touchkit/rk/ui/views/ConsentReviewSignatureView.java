@@ -268,26 +268,33 @@ public class ConsentReviewSignatureView extends View
      */
     public Bitmap createSignatureBitmap()
     {
+
         RectF sigBounds = new RectF();
         sigPath.computeBounds(sigBounds, true);
 
-        Bitmap returnedBitmap = Bitmap.createBitmap((int)sigBounds.width(), (int)sigBounds.height(),
-                                                    Bitmap.Config.ARGB_4444);
-
-        float minX = Integer.MAX_VALUE;
-        float minY = Integer.MAX_VALUE;
-
-        for(LinePathPoint point : sigPoints)
+        if (sigBounds.width() != 0 && sigBounds.height() != 0)
         {
-            minX = Math.min(minX, point.x);
-            minY = Math.min(minY, point.y);
+            Bitmap returnedBitmap = Bitmap
+                    .createBitmap((int) sigBounds.width(), (int) sigBounds.height(),
+                                  Bitmap.Config.ARGB_4444);
+
+            float minX = Integer.MAX_VALUE;
+            float minY = Integer.MAX_VALUE;
+
+            for(LinePathPoint point : sigPoints)
+            {
+                minX = Math.min(minX, point.x);
+                minY = Math.min(minY, point.y);
+            }
+
+            sigPath.offset(- minX, - minY);
+
+            Canvas canvas = new Canvas(returnedBitmap);
+            canvas.drawPath(sigPath, sigPaint);
+            return returnedBitmap;
         }
 
-        sigPath.offset(-minX, -minY);
-
-        Canvas canvas = new Canvas(returnedBitmap);
-        canvas.drawPath(sigPath, sigPaint);
-        return returnedBitmap;
+        return null;
     }
 
     private static class SignatureSavedState extends BaseSavedState {

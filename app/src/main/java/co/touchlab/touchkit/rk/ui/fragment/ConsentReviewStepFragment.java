@@ -212,10 +212,13 @@ public class ConsentReviewStepFragment extends MultiSceneStepFragment implements
 
             //TODO The follow is less than ideal
             Bitmap bitmap = sigScene.getSignatureImage();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            signature.setSignatureImage(byteArray);
+            if (bitmap != null)
+            {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                signature.setSignatureImage(byteArray);
+            }
 
             // If we get here, this means our last scene scene will trigger the step to finish. Its
             // a good idea to set the end date now.

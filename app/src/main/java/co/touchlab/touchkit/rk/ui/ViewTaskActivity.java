@@ -26,6 +26,7 @@ import co.touchlab.touchkit.rk.ui.fragment.ConsentSharingStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.ConsentVisualStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.IntegerQuestionStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.MultiChoiceQuestionStepFragment;
+import co.touchlab.touchkit.rk.ui.fragment.MultiSceneStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.NotImplementedStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignInStepFragment;
 import co.touchlab.touchkit.rk.ui.fragment.SignUpAdditionalInfoStepFragment;
@@ -55,8 +56,7 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
     {
         Intent intent = new Intent(context,
                 ViewTaskActivity.class);
-        intent.putExtra(EXTRA_TASK,
-                task);
+        intent.putExtra(EXTRA_TASK, task);
         return intent;
     }
 
@@ -91,6 +91,18 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
 
     private void loadPreviousFragment()
     {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.placeholder);
+        if (fragment instanceof MultiSceneStepFragment)
+        {
+            MultiSceneStepFragment multiSceneStepFragment = (MultiSceneStepFragment) fragment;
+            int current = multiSceneStepFragment.getCurrentScene();
+            if (current > 0)
+            {
+                multiSceneStepFragment.goBack();
+                return;
+            }
+        }
+
         Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
         if(previousStep == null)
         {

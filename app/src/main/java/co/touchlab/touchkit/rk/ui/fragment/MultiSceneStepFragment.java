@@ -107,7 +107,7 @@ public abstract class MultiSceneStepFragment extends StepFragment
         if(next != null)
         {
             next.setOnClickListener(v -> {
-                showScene(position + 1, true);
+                goForward();
             });
         }
 
@@ -149,6 +149,18 @@ public abstract class MultiSceneStepFragment extends StepFragment
                 }
             }
         });
+    }
+
+    public void goForward()
+    {
+        int currentScene = getCurrentScene();
+        showScene(currentScene + 1 , true);
+    }
+
+    public void goBack()
+    {
+        int currentScene = getCurrentScene();
+        showScene(currentScene - 1 , true);
     }
 
 }
