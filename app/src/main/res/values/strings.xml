@@ -104,5 +104,18 @@
   <string name="settings">Settings</string>
   <string name="medical_condition">Medical Conditions</string>
   <string name="biological_sex">Biological Sex</string>
+  <string name="notifications">Notifications</string>
+  <string name="enable_reminders">Enable Reminders</string>
+  <string name="time">Time</string>
+  <string name="security">Security</string>
+  <string name="auto_lock">Auto-Lock</string>
+  <string name="change_passcode">Change Passcode</string>
+  <string name="sharing_options">Sharing Options</string>
+  <string name="consent">Consent</string>
+  <string name="permissions">Permissions</string>
+  <string name="review_consent">Review Consent</string>
+  <string name="legal">Legal</string>
+  <string name="privacy_policy">Privacy Policy</string>
+  <string name="license_information">License Information</string>
 
 </resources>
