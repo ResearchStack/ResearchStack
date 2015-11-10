@@ -69,17 +69,23 @@ public abstract class Scene extends RelativeLayout
         View filler = findViewById(R.id.filler);
 
         container = (LinearLayout) findViewById(R.id.content_container);
-        container.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+        container.getViewTreeObserver().addOnPreDrawListener(() -> {
             int sceneHeight = Scene.this.getHeight();
             int infoContainerHeight = container.getHeight();
 
             if(sceneHeight > 0 && infoContainerHeight > 0 && sceneHeight > infoContainerHeight)
             {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        sceneHeight - infoContainerHeight);
-                filler.setLayoutParams(params);
+                int fillerHeight = sceneHeight - infoContainerHeight;
+                if (fillerHeight >= 0 && fillerHeight != filler.getHeight())
+                {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fillerHeight);
+                    filler.setLayoutParams(params);
+                    return false;
+                }
             }
+
+            return true;
+
         });
 
         image = (ImageView) findViewById(R.id.image);
@@ -87,18 +93,21 @@ public abstract class Scene extends RelativeLayout
         summary = (TextView) findViewById(R.id.text);
         moreInfo = (TextView) findViewById(R.id.more_info);
         next = (TextView) findViewById(R.id.next);
-        next.setOnClickListener(v -> {
-            if (onNextClicked())
-            {
-                if (callbacks != null && step != null)
-                {
-                    callbacks.onNextPressed(step);
-                }
-            }
-        });
+        next.setOnClickListener(v -> onNextClicked());
         skip = (TextView) findViewById(R.id.skip);
 
         initBody();
+    }
+
+    public void onNextClicked()
+    {
+        if (isAnswerValid())
+        {
+            if (callbacks != null && step != null)
+            {
+                callbacks.onNextPressed(step);
+            }
+        }
     }
 
     private void initBody()
@@ -246,7 +255,7 @@ public abstract class Scene extends RelativeLayout
     /**
      * @return true to call through to Fragment and start next scene.
      */
-    public boolean onNextClicked()
+    public boolean isAnswerValid()
     {
         return true;
     }

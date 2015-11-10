@@ -1,6 +1,7 @@
 package co.touchlab.touchkit.rk.ui.scene;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -78,13 +79,26 @@ public class FormScene extends Scene
                 }
             });
 
+            if (i == size - 1)
+            {
+                value.setOnKeyListener((v, keyCode, event) -> {
+                    if (event != null && event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER)
+                    {
+                        onNextClicked();
+                        return true;
+                    }
+
+                    return false;
+                });
+            }
+
             stepViewContainer.addView(formItem, startIndex + i);
             stepResult.setResultForIdentifier(result.getIdentifier(), result);
         }
     }
 
     @Override
-    public boolean onNextClicked()
+    public boolean isAnswerValid()
     {
         boolean isValid = true;
 
@@ -102,7 +116,7 @@ public class FormScene extends Scene
             }
         }
 
-        return isValid && super.onNextClicked();
+        return isValid && super.isAnswerValid();
     }
 
     @Override
