@@ -29,9 +29,9 @@ a {
     margin-left: 1rem; }
 
 .btn:hover {
-  color: #0284b1;
+  color: #ffffff;
   text-decoration: none;
-  background-color: #ffffff;
+  background-color: #0284b1;
   border-color: rgba(255, 255, 255, 0.3); }
 
 @media screen and (min-width: 64em) {
