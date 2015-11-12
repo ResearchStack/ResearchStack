@@ -18,8 +18,8 @@ a {
 .btn {
   display: inline-block;
   margin-bottom: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  background-color: rgba(255, 255, 255, 1.0);
+  color: #0284b1;
+  background-color: #ffffff;
   border-color: rgba(255, 255, 255, 0.2);
   border-style: solid;
   border-width: 1px;
@@ -29,9 +29,9 @@ a {
     margin-left: 1rem; }
 
 .btn:hover {
-  color: rgba(255, 255, 255, 0.8);
+  color: #0284b1;
   text-decoration: none;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #ffffff;
   border-color: rgba(255, 255, 255, 0.3); }
 
 @media screen and (min-width: 64em) {
