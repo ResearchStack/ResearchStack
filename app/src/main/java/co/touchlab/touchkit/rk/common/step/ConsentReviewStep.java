@@ -1,6 +1,7 @@
 package co.touchlab.touchkit.rk.common.step;
 import co.touchlab.touchkit.rk.common.model.ConsentDocument;
 import co.touchlab.touchkit.rk.common.model.ConsentSignature;
+import co.touchlab.touchkit.rk.ui.scene.ConsentReviewScene;
 
 public class ConsentReviewStep extends Step
 {
@@ -36,4 +37,11 @@ public class ConsentReviewStep extends Step
     {
         return reasonForConsent;
     }
+
+    @Override
+    public Class getSceneClass()
+    {
+        return ConsentReviewScene.class;
+    }
+
 }

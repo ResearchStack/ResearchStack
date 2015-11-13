@@ -6,12 +6,13 @@ import android.view.View;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.step.ConsentSharingStep;
+import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.ui.ViewWebDocumentActivity;
 
 public class ConsentSharingScene extends SingleChoiceQuestionScene
 {
 
-    public ConsentSharingScene(Context context, ConsentSharingStep step)
+    public ConsentSharingScene(Context context, Step step)
     {
         super(context, step);
     }

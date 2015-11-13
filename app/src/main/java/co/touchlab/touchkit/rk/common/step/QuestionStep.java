@@ -1,7 +1,6 @@
 package co.touchlab.touchkit.rk.common.step;
 
 import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
-import co.touchlab.touchkit.rk.dev.DevUtils;
 
 public class QuestionStep extends Step
 {
@@ -28,10 +27,9 @@ public class QuestionStep extends Step
     }
 
     @Override
-    public Class getStepFragment()
+    public Class getSceneClass()
     {
-        DevUtils.throwUnsupportedOpException();
-        return null;
+        return getQuestionType().getSceneClass();
     }
 
     public AnswerFormat getAnswerFormat() {

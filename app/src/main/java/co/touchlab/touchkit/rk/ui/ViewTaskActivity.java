@@ -14,11 +14,9 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
-import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
 import co.touchlab.touchkit.rk.common.helpers.LogExt;
 import co.touchlab.touchkit.rk.common.model.ConsentSignature;
 import co.touchlab.touchkit.rk.common.model.User;
@@ -26,16 +24,17 @@ import co.touchlab.touchkit.rk.common.result.ConsentSignatureResult;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
-import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
-import co.touchlab.touchkit.rk.common.step.ConsentSharingStep;
-import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
-import co.touchlab.touchkit.rk.common.step.QuestionStep;
 import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.common.task.ConsentTask;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.ui.callbacks.ActivityCallback;
 import co.touchlab.touchkit.rk.ui.callbacks.StepCallbacks;
+import co.touchlab.touchkit.rk.ui.scene.MultiStateScene;
+import co.touchlab.touchkit.rk.ui.scene.NotImplementedScene;
+import co.touchlab.touchkit.rk.ui.scene.Scene;
+import co.touchlab.touchkit.rk.ui.scene.SceneAnimator;
+import co.touchlab.touchkit.rk.ui.scene.SignInScene;
 import co.touchlab.touchkit.rk.ui.scene.SignUpAdditionalInfoScene;
 import co.touchlab.touchkit.rk.ui.scene.SignUpEligibleScene;
 import co.touchlab.touchkit.rk.ui.scene.SignUpGeneralInfoScene;
@@ -44,18 +43,6 @@ import co.touchlab.touchkit.rk.ui.scene.SignUpIneligibleScene;
 import co.touchlab.touchkit.rk.ui.scene.SignUpPasscodeScene;
 import co.touchlab.touchkit.rk.ui.scene.SignUpPermissionsPrimingScene;
 import co.touchlab.touchkit.rk.ui.scene.SignUpPermissionsScene;
-import co.touchlab.touchkit.rk.ui.scene.ConsentReviewScene;
-import co.touchlab.touchkit.rk.ui.scene.ConsentSharingScene;
-import co.touchlab.touchkit.rk.ui.scene.ConsentVisualScene;
-import co.touchlab.touchkit.rk.ui.scene.IntegerQuestionScene;
-import co.touchlab.touchkit.rk.ui.scene.MultiChoiceQuestionScene;
-import co.touchlab.touchkit.rk.ui.scene.MultiStateScene;
-import co.touchlab.touchkit.rk.ui.scene.NotImplementedScene;
-import co.touchlab.touchkit.rk.ui.scene.Scene;
-import co.touchlab.touchkit.rk.ui.scene.SceneAnimator;
-import co.touchlab.touchkit.rk.ui.scene.SignInScene;
-import co.touchlab.touchkit.rk.ui.scene.SingleChoiceQuestionScene;
-import co.touchlab.touchkit.rk.ui.scene.TextQuestionScene;
 
 public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks, ActivityCallback
 {
@@ -172,132 +159,75 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
 
     protected Scene getSceneForStep(Step step)
     {
-        LogExt.d(getClass(), "getSceneForStep( "+ step +" )");
-        try
-        {
-            LogExt.d(getClass(), "Create with Class Name " + step.getSceneClass());
-            String path = "co.touchlab.touchkit.rk.ui.scene." + step.getSceneClass();
-
-            Class cls = Class.forName(path);
-            LogExt.d(getClass(), "Class found");
-
-            //TODO pass in result
-            Constructor constructor = cls.getConstructor(Context.class, Step.class);
-            LogExt.d(getClass(), "Constructor found w/ params[Context, Step]");
-
-            //TODO return scene object
-            Scene scene = (Scene) constructor.newInstance(getApplicationContext(), step);
-            scene.setCallbacks(this);
-            LogExt.d(getClass(), "Scene Created: " + scene.getClass().getSimpleName());
-
-            LogExt.d(getClass(), "Scene step: " + scene.getStep().toString());
-
-            LogExt.d(getClass(), "Scene result: " + scene.getStepResult().toString());
-        }
-        catch(ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
-        {
-            e.printStackTrace();
-        }
-
-        LogExt.d(getClass(), "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-
         if(step == null)
         {
             return new NotImplementedScene(this, new Step("NullStep"));
         }
 
-        //TODO Implement Consent sharing & review fragments
-        if (step instanceof ConsentVisualStep)
+        LogExt.d(getClass(), "getSceneForStep() - " + step);
+
+        try
         {
-            return new ConsentVisualScene(this, (ConsentVisualStep) step);
+            Class cls = step.getSceneClass();
+            Constructor constructor = cls.getConstructor(Context.class, Step.class);
+            Scene scene = (Scene) constructor.newInstance(this, step);
+            scene.setCallbacks(this);
+            return scene;
         }
-        else if (step instanceof ConsentSharingStep)
+        catch(Exception e)
         {
-            return new ConsentSharingScene(this, (ConsentSharingStep) step);
+            LogExt.e(getClass(), e);
         }
-        else if (step instanceof ConsentReviewStep)
+
+        if (step.getIdentifier()
+                .equals(SignUpTask.SignUpInclusionCriteriaStepIdentifier))
         {
-            return new ConsentReviewScene(this, (ConsentReviewStep) step);
+            return new SignUpInclusionCriteriaScene(this, step);
         }
-        else if (step instanceof QuestionStep)
+        else if (step.getIdentifier()
+                .equals(SignUpTask.SignUpIneligibleStepIdentifier))
         {
-            if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.SingleChoice)
-            {
-                LogExt.d(getClass(), "Single Choice Step");
-                return new SingleChoiceQuestionScene<Integer>(this, step);
-            }
-            else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.MultipleChoice)
-            {
-                LogExt.d(getClass(), "Multi Choice Step");
-                return new MultiChoiceQuestionScene<Integer>(this, step);
-            }
-            else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Text)
-            {
-                LogExt.d(getClass(), "Text Step");
-                return new TextQuestionScene(this, step);
-            }
-            else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Integer)
-            {
-                LogExt.d(getClass(), "Integer Step");
-                return new IntegerQuestionScene(this, step);
-            }
-            else
-            {
-                return new NotImplementedScene(this, step);
-            }
+            return new SignUpIneligibleScene(this, step);
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpTask.SignUpEligibleStepIdentifier))
+        {
+            return new SignUpEligibleScene(this, step);
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpTask.SignUpPermissionsPrimingStepIdentifier))
+        {
+            return new SignUpPermissionsPrimingScene(this, step);
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpTask.SignUpGeneralInfoStepIdentifier))
+        {
+            return new SignUpGeneralInfoScene(this, step);
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpTask.SignUpMedicalInfoStepIdentifier))
+        {
+            return new SignUpAdditionalInfoScene(this, step);
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpTask.SignUpPasscodeStepIdentifier))
+        {
+            return new SignUpPasscodeScene(this, step);
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpTask.SignUpPermissionsStepIdentifier))
+        {
+            return new SignUpPermissionsScene(this, step);
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpTask.SignInStepIdentifier))
+        {
+            return new SignInScene(this, step);
         }
         else
         {
-            if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpInclusionCriteriaStepIdentifier))
-            {
-                return new SignUpInclusionCriteriaScene(this, step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpIneligibleStepIdentifier))
-            {
-                return new SignUpIneligibleScene(this, step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpEligibleStepIdentifier))
-            {
-                return new SignUpEligibleScene(this, step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpPermissionsPrimingStepIdentifier))
-            {
-                return new SignUpPermissionsPrimingScene(this, step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpGeneralInfoStepIdentifier))
-            {
-                return new SignUpGeneralInfoScene(this, step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpMedicalInfoStepIdentifier))
-            {
-                return new SignUpAdditionalInfoScene(this, step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpPasscodeStepIdentifier))
-            {
-                return new SignUpPasscodeScene(this, step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignUpPermissionsStepIdentifier))
-            {
-                return new SignUpPermissionsScene(this, step);
-            }
-            else if (step.getIdentifier()
-                    .equals(SignUpTask.SignInStepIdentifier))
-            {
-                return new SignInScene(this, step);
-            }
-            else
-            {
-                LogExt.d(getClass(), "No implementation for this step " + step.getIdentifier());
-                return new NotImplementedScene(this, step);
-            }
+            LogExt.d(getClass(), "No implementation for this step " + step.getIdentifier());
+            return new NotImplementedScene(this, step);
         }
     }
 

@@ -8,6 +8,7 @@ import co.touchlab.touchkit.rk.common.answerformat.TextChoiceAnswerFormat;
 import co.touchlab.touchkit.rk.common.helpers.TextChoice;
 import co.touchlab.touchkit.rk.common.model.DocumentProperties;
 import co.touchlab.touchkit.rk.dev.DevUtils;
+import co.touchlab.touchkit.rk.ui.scene.ConsentSharingScene;
 
 public class ConsentSharingStep extends QuestionStep
 {
@@ -50,6 +51,12 @@ public class ConsentSharingStep extends QuestionStep
 
         super.setTitle(r.getString(R.string.consent_share_title));
         super.setText(r.getString(R.string.consent_share_description, investigatorLongDescription));
+    }
+
+    @Override
+    public Class getSceneClass()
+    {
+        return ConsentSharingScene.class;
     }
 
     public String getLocalizedLearnMoreHTMLContent()

@@ -1,5 +1,6 @@
 package co.touchlab.touchkit.rk.common.step;
 import co.touchlab.touchkit.rk.common.model.ConsentDocument;
+import co.touchlab.touchkit.rk.ui.scene.ConsentVisualScene;
 
 public class ConsentVisualStep extends Step
 {
@@ -14,6 +15,12 @@ public class ConsentVisualStep extends Step
     public ConsentDocument getDocument()
     {
         return document;
+    }
+
+    @Override
+    public Class getSceneClass()
+    {
+        return ConsentVisualScene.class;
     }
 
     @Override

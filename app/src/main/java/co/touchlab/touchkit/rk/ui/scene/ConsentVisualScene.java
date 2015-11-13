@@ -9,12 +9,13 @@ import co.touchlab.touchkit.rk.common.model.ConsentSection;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
+import co.touchlab.touchkit.rk.common.step.Step;
 
 public class ConsentVisualScene extends MultiStateScene
 {
     private ConsentDocument document;
 
-    public ConsentVisualScene(Context context, ConsentVisualStep step)
+    public ConsentVisualScene(Context context, Step step)
     {
         super(context, step);
     }

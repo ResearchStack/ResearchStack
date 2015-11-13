@@ -5,6 +5,11 @@ import java.io.Serializable;
 import co.touchlab.touchkit.rk.common.helpers.TextChoice;
 import co.touchlab.touchkit.rk.common.model.TaskModel;
 import co.touchlab.touchkit.rk.dev.DevUtils;
+import co.touchlab.touchkit.rk.ui.scene.IntegerQuestionScene;
+import co.touchlab.touchkit.rk.ui.scene.MultiChoiceQuestionScene;
+import co.touchlab.touchkit.rk.ui.scene.NotImplementedScene;
+import co.touchlab.touchkit.rk.ui.scene.SingleChoiceQuestionScene;
+import co.touchlab.touchkit.rk.ui.scene.TextQuestionScene;
 
 public abstract class AnswerFormat implements Serializable
 {
@@ -56,7 +61,34 @@ public abstract class AnswerFormat implements Serializable
         TimeOfDay,
         DateAndTime,
         Date,
-        TimeInterval
+        TimeInterval;
+
+        public Class<?> getSceneClass()
+        {
+            switch(this)
+            {
+                case SingleChoice:
+                    //TODO type <Integer>
+                    return SingleChoiceQuestionScene.class;
+                case MultipleChoice:
+                    //TODO type <Integer>
+                    return MultiChoiceQuestionScene.class;
+                case Text:
+                    return TextQuestionScene.class;
+                case Integer:
+                    return IntegerQuestionScene.class;
+                case DateAndTime:
+                case Date:
+                case Scale:
+                case Decimal:
+                case Boolean:
+                case TimeOfDay:
+                case TimeInterval:
+                default:
+                    return NotImplementedScene.class;
+            }
+        }
+
     }
 
     public enum ChoiceAnswerStyle

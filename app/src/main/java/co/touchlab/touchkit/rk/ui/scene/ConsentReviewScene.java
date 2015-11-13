@@ -20,6 +20,7 @@ import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TextQuestionResult;
 import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
 import co.touchlab.touchkit.rk.common.step.FormStep;
+import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.dev.DevUtils;
 import co.touchlab.touchkit.rk.ui.callbacks.ConsentReviewCallback;
 
@@ -37,7 +38,7 @@ public class ConsentReviewScene extends MultiStateScene implements ConsentReview
 
     public List<Integer> sections;
 
-    public ConsentReviewScene(Context context, ConsentReviewStep step)
+    public ConsentReviewScene(Context context, Step step)
     {
         super(context, step);
     }
