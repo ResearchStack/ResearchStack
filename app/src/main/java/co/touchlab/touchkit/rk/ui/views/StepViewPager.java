@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 /**
  * Created by bradleymcdermott on 10/9/15.
  */
+@Deprecated
 public class StepViewPager extends ViewPager
 {
     public StepViewPager(Context context)

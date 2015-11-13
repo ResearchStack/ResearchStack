@@ -1,17 +1,29 @@
 package co.touchlab.touchkit.rk.ui;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+import co.touchlab.touchkit.rk.AppDelegate;
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.answerformat.AnswerFormat;
 import co.touchlab.touchkit.rk.common.helpers.LogExt;
+import co.touchlab.touchkit.rk.common.model.ConsentSignature;
+import co.touchlab.touchkit.rk.common.model.User;
+import co.touchlab.touchkit.rk.common.result.ConsentSignatureResult;
+import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
@@ -19,38 +31,44 @@ import co.touchlab.touchkit.rk.common.step.ConsentSharingStep;
 import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
 import co.touchlab.touchkit.rk.common.step.Step;
+import co.touchlab.touchkit.rk.common.task.ConsentTask;
 import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.task.Task;
-import co.touchlab.touchkit.rk.ui.fragment.ConsentReviewStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.ConsentSharingStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.ConsentVisualStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.IntegerQuestionStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.MultiChoiceQuestionStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.MultiSceneStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.NotImplementedStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.SignInStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.SignUpAdditionalInfoStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.SignUpEligibleStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.SignUpGeneralInfoStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.SignUpInclusionCriteriaStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.SignUpIneligibleStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.SignUpPasscodeStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.SignUpPermissionsPrimingStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.SignUpPermissionsStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.SingleChoiceQuestionStepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.StepFragment;
-import co.touchlab.touchkit.rk.ui.fragment.TextQuestionStepFragment;
+import co.touchlab.touchkit.rk.ui.callbacks.ActivityCallback;
+import co.touchlab.touchkit.rk.ui.callbacks.StepCallbacks;
+import co.touchlab.touchkit.rk.ui.scene.SignUpAdditionalInfoScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpEligibleScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpGeneralInfoScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpInclusionCriteriaScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpIneligibleScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpPasscodeScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpPermissionsPrimingScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpPermissionsScene;
+import co.touchlab.touchkit.rk.ui.scene.ConsentReviewScene;
+import co.touchlab.touchkit.rk.ui.scene.ConsentSharingScene;
+import co.touchlab.touchkit.rk.ui.scene.ConsentVisualScene;
+import co.touchlab.touchkit.rk.ui.scene.IntegerQuestionScene;
+import co.touchlab.touchkit.rk.ui.scene.MultiChoiceQuestionScene;
+import co.touchlab.touchkit.rk.ui.scene.MultiStateScene;
+import co.touchlab.touchkit.rk.ui.scene.NotImplementedScene;
+import co.touchlab.touchkit.rk.ui.scene.Scene;
+import co.touchlab.touchkit.rk.ui.scene.SceneAnimator;
+import co.touchlab.touchkit.rk.ui.scene.SignInScene;
+import co.touchlab.touchkit.rk.ui.scene.SingleChoiceQuestionScene;
+import co.touchlab.touchkit.rk.ui.scene.TextQuestionScene;
 
-public class ViewTaskActivity extends AppCompatActivity implements StepFragment.StepCallbacks
+public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks, ActivityCallback
 {
 
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final int REQUEST_CODE = 100;
-    private Task task;
-    private TaskResult taskResult;
+
+    private SceneAnimator animator;
 
     private Step currentStep;
+    private Task task;
+    private TaskResult taskResult;
 
     public static Intent newIntent(Context context, Task task)
     {
@@ -67,26 +85,30 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         super.setContentView(R.layout.activity_fragment);
         super.setResult(RESULT_CANCELED);
 
+        ViewGroup root = (ViewGroup) findViewById(R.id.container);
+        animator = new SceneAnimator(root);
+
         task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
         taskResult = new TaskResult(task.getIdentifier(), null, null);
 
-        loadNextFragment();
+        loadNextScene();
 
         ActionBar toolbar = getSupportActionBar();
         toolbar.setDisplayHomeAsUpEnabled(true);
     }
 
-    private void loadNextFragment()
+    private void loadNextScene()
     {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.placeholder);
-        if (fragment instanceof MultiSceneStepFragment)
+        Scene scene = (Scene) findViewById(R.id.current_scene);
+
+        if (scene instanceof MultiStateScene)
         {
-            MultiSceneStepFragment multiSceneStepFragment = (MultiSceneStepFragment) fragment;
-            int current = multiSceneStepFragment.getCurrentScene();
-            int count = multiSceneStepFragment.getSceneCount();
+            MultiStateScene multiStateScene = (MultiStateScene) scene;
+            int current = multiStateScene.getCurrentPosition();
+            int count = multiStateScene.getSceneCount();
             if (current < count - 1)
             {
-                multiSceneStepFragment.goForward();
+                multiStateScene.loadNextScene();
                 return;
             }
         }
@@ -98,20 +120,21 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         }
         else
         {
-            showFragment(nextStep, true);
+            showScene(nextStep, SceneAnimator.SHIFT_LEFT);
         }
     }
 
-    private void loadPreviousFragment()
+    private void loadPreviousScene()
     {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.placeholder);
-        if (fragment instanceof MultiSceneStepFragment)
+        Scene scene = (Scene) findViewById(R.id.current_scene);
+
+        if (scene instanceof MultiStateScene)
         {
-            MultiSceneStepFragment multiSceneStepFragment = (MultiSceneStepFragment) fragment;
-            int current = multiSceneStepFragment.getCurrentScene();
+            MultiStateScene multiStateScene = (MultiStateScene) scene;
+            int current = multiStateScene.getCurrentPosition();
             if (current > 0)
             {
-                multiSceneStepFragment.goBack();
+                multiStateScene.loadPreviousScene();
                 return;
             }
         }
@@ -123,70 +146,104 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
         }
         else
         {
-            showFragment(previousStep, false);
+            showScene(previousStep, SceneAnimator.SHIFT_RIGHT);
         }
     }
 
-    private void showFragment(Step step, boolean forward)
+    private void showScene(Step step, int direction)
     {
-        Fragment fragment = getFragmentForStep(step);
+        Scene oldScene = (Scene) findViewById(R.id.current_scene);
+
+        Scene newScene = getSceneForStep(step);
+        newScene.setId(R.id.current_scene);
+
+        if (oldScene != null)
+        {
+            oldScene.setId(R.id.old_scene);
+            animator.animate(oldScene, newScene, direction);
+        }
+        else
+        {
+            animator.show(oldScene, newScene);
+        }
 
         currentStep = step;
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(forward ? R.anim.slide_in_right : R.anim.slide_in_left,
-                                     forward ? R.anim.slide_out_left : R.anim.slide_out_right)
-                .replace(R.id.placeholder, fragment)
-                .commit();
     }
 
-    protected Fragment getFragmentForStep(Step step)
+    protected Scene getSceneForStep(Step step)
     {
+        LogExt.d(getClass(), "getSceneForStep( "+ step +" )");
+        try
+        {
+            LogExt.d(getClass(), "Create with Class Name " + step.getSceneClass());
+            String path = "co.touchlab.touchkit.rk.ui.scene." + step.getSceneClass();
+
+            Class cls = Class.forName(path);
+            LogExt.d(getClass(), "Class found");
+
+            //TODO pass in result
+            Constructor constructor = cls.getConstructor(Context.class, Step.class);
+            LogExt.d(getClass(), "Constructor found w/ params[Context, Step]");
+
+            //TODO return scene object
+            Scene scene = (Scene) constructor.newInstance(getApplicationContext(), step);
+            scene.setCallbacks(this);
+            LogExt.d(getClass(), "Scene Created: " + scene.getClass().getSimpleName());
+
+            LogExt.d(getClass(), "Scene step: " + scene.getStep().toString());
+
+            LogExt.d(getClass(), "Scene result: " + scene.getStepResult().toString());
+        }
+        catch(ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+
+        LogExt.d(getClass(), "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+
         if(step == null)
         {
-            return NotImplementedStepFragment.newInstance(new Step("NullStep"));
+            return new NotImplementedScene(this, new Step("NullStep"));
         }
 
         //TODO Implement Consent sharing & review fragments
         if (step instanceof ConsentVisualStep)
         {
-            return ConsentVisualStepFragment.newInstance((ConsentVisualStep) step);
+            return new ConsentVisualScene(this, (ConsentVisualStep) step);
         }
         else if (step instanceof ConsentSharingStep)
         {
-            return ConsentSharingStepFragment.newInstance((ConsentSharingStep) step);
+            return new ConsentSharingScene(this, (ConsentSharingStep) step);
         }
         else if (step instanceof ConsentReviewStep)
         {
-            return ConsentReviewStepFragment.newInstance((ConsentReviewStep) step);
+            return new ConsentReviewScene(this, (ConsentReviewStep) step);
         }
         else if (step instanceof QuestionStep)
         {
             if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.SingleChoice)
             {
                 LogExt.d(getClass(), "Single Choice Step");
-                return SingleChoiceQuestionStepFragment.<Integer>newInstance((QuestionStep) step);
+                return new SingleChoiceQuestionScene<Integer>(this, step);
             }
             else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.MultipleChoice)
             {
                 LogExt.d(getClass(), "Multi Choice Step");
-                return MultiChoiceQuestionStepFragment.<Integer>newInstance((QuestionStep) step);
+                return new MultiChoiceQuestionScene<Integer>(this, step);
             }
             else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Text)
             {
                 LogExt.d(getClass(), "Text Step");
-                return TextQuestionStepFragment.newInstance((QuestionStep) step);
+                return new TextQuestionScene(this, step);
             }
             else if (((QuestionStep) step).getQuestionType() == AnswerFormat.QuestionType.Integer)
             {
-                LogExt.d(getClass(),
-                        "Integer Step");
-                return IntegerQuestionStepFragment.newInstance((QuestionStep) step);
+                LogExt.d(getClass(), "Integer Step");
+                return new IntegerQuestionScene(this, step);
             }
             else
             {
-                return NotImplementedStepFragment.newInstance(step);
+                return new NotImplementedScene(this, step);
             }
         }
         else
@@ -194,52 +251,52 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
             if (step.getIdentifier()
                     .equals(SignUpTask.SignUpInclusionCriteriaStepIdentifier))
             {
-                return SignUpInclusionCriteriaStepFragment.newInstance(step);
+                return new SignUpInclusionCriteriaScene(this, step);
             }
             else if (step.getIdentifier()
                     .equals(SignUpTask.SignUpIneligibleStepIdentifier))
             {
-                return SignUpIneligibleStepFragment.newInstance(step);
+                return new SignUpIneligibleScene(this, step);
             }
             else if (step.getIdentifier()
                     .equals(SignUpTask.SignUpEligibleStepIdentifier))
             {
-                return SignUpEligibleStepFragment.newInstance(step);
+                return new SignUpEligibleScene(this, step);
             }
             else if (step.getIdentifier()
                     .equals(SignUpTask.SignUpPermissionsPrimingStepIdentifier))
             {
-                return SignUpPermissionsPrimingStepFragment.newInstance(step);
+                return new SignUpPermissionsPrimingScene(this, step);
             }
             else if (step.getIdentifier()
                     .equals(SignUpTask.SignUpGeneralInfoStepIdentifier))
             {
-                return SignUpGeneralInfoStepFragment.newInstance(step);
+                return new SignUpGeneralInfoScene(this, step);
             }
             else if (step.getIdentifier()
                     .equals(SignUpTask.SignUpMedicalInfoStepIdentifier))
             {
-                return SignUpAdditionalInfoStepFragment.newInstance(step);
+                return new SignUpAdditionalInfoScene(this, step);
             }
             else if (step.getIdentifier()
                     .equals(SignUpTask.SignUpPasscodeStepIdentifier))
             {
-                return SignUpPasscodeStepFragment.newInstance(step);
+                return new SignUpPasscodeScene(this, step);
             }
             else if (step.getIdentifier()
                     .equals(SignUpTask.SignUpPermissionsStepIdentifier))
             {
-                return SignUpPermissionsStepFragment.newInstance(step);
+                return new SignUpPermissionsScene(this, step);
             }
             else if (step.getIdentifier()
                     .equals(SignUpTask.SignInStepIdentifier))
             {
-                return SignInStepFragment.newInstance(step);
+                return new SignInScene(this, step);
             }
             else
             {
                 LogExt.d(getClass(), "No implementation for this step " + step.getIdentifier());
-                return NotImplementedStepFragment.newInstance(step);
+                return new NotImplementedScene(this, step);
             }
         }
     }
@@ -249,7 +306,7 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
     {
         if (item.getItemId() == android.R.id.home)
         {
-            loadPreviousFragment();
+            loadPreviousScene();
             return true;
         }
         else
@@ -277,7 +334,7 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
     @Override
     public void onNextPressed(Step step)
     {
-        loadNextFragment();
+        loadNextScene();
     }
 
     @Override
@@ -294,8 +351,95 @@ public class ViewTaskActivity extends AppCompatActivity implements StepFragment.
     }
 
     @Override
+    public void onCancelStep()
+    {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
+    }
+
+    @Override
     public StepResult getResultStep(String stepId)
     {
         return taskResult.getStepResultForStepIdentifier(stepId);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void requestPermissions()
+    {
+        requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+                           SignUpPermissionsScene.LOCATION_PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void startConsentTask()
+    {
+        ConsentTask task = new ConsentTask(this);
+        Intent intent = ViewTaskActivity.newIntent(this, task);
+        startActivityForResult(intent, SignUpEligibleScene.CONSENT_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == SignUpEligibleScene.CONSENT_REQUEST && resultCode == Activity.RESULT_OK)
+        {
+            TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+
+            boolean sharing = ((QuestionResult<Boolean>) result.getStepResultForStepIdentifier("sharing")
+                    .getResultForIdentifier("sharing")).getAnswer();
+
+            ConsentSignatureResult signatureResult = ((ConsentSignatureResult) result.getStepResultForStepIdentifier("reviewStep"));
+            ConsentSignature signature = signatureResult.getSignature();
+            boolean consented = signatureResult.isConsented();
+
+            if (AppDelegate.getInstance().getCurrentUser() == null)
+            {
+                AppDelegate.getInstance().loadUser(this);
+            }
+
+            User currentUser = AppDelegate.getInstance()
+                    .getCurrentUser();
+
+            // TODO check for valid signature/names
+            if (consented)
+            {
+                // TODO just use full name to begin with and don't concat names like this
+                // TODO get signature date
+                String fullName = signature.getGivenName() + " " + signature.getFamilyName();
+                currentUser.setName(fullName);
+                currentUser.setConsentSignatureName(fullName);
+                currentUser.setConsentSignatureImage(signature.getSignatureImage());
+                currentUser.setUserConsented(true);
+
+                Scene scene = (Scene) findViewById(R.id.current_scene);
+                if (scene != null && scene instanceof SignUpEligibleScene)
+                {
+                    onNextPressed(scene.getStep());
+                }
+            }
+            else
+            {
+                // Clear activity and show Welcome screen
+               finish();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode ==  SignUpPermissionsScene.LOCATION_PERMISSION_REQUEST_CODE)
+        {
+            Scene scene = (Scene) findViewById(R.id.current_scene);
+            if(scene instanceof SignUpPermissionsScene)
+            {
+                ((SignUpPermissionsScene) scene)
+                        .onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        }
     }
 }

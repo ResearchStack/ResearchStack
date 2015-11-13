@@ -1,11 +1,11 @@
-package co.touchlab.touchkit.rk.ui.fragment;
+package co.touchlab.touchkit.rk.ui.scene;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -17,7 +17,7 @@ import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
 
-public class SignUpPasscodeStepFragment extends StepFragment
+public class SignUpPasscodeScene extends Scene
 {
     private static final int STATE_ENTRY = 0;
     private static final int STATE_CONFIRM = 1;
@@ -28,41 +28,34 @@ public class SignUpPasscodeStepFragment extends StepFragment
     private int state;
     private String enteredPasscode;
 
-    public SignUpPasscodeStepFragment()
-    {
-        super();
-    }
 
-    public static Fragment newInstance(Step step)
+    public SignUpPasscodeScene(Context context, Step step)
     {
-        SignUpPasscodeStepFragment fragment = new SignUpPasscodeStepFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_QUESTION_STEP,
-                step);
-        fragment.setArguments(args);
-        return fragment;
+        super(context, step);
     }
 
     @Override
-    public View getBodyView(LayoutInflater inflater)
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        View root = inflater.inflate(R.layout.item_passcode,
-                null);
+        return inflater.inflate(R.layout.item_passcode, parent, false);
+    }
 
-        instructions = (AppCompatTextView) root.findViewById(R.id.passcode_instructions);
-        passcode = (AppCompatEditText) root.findViewById(R.id.passcode);
+    @Override
+    public void onBodyCreated(View body)
+    {
+        instructions = (AppCompatTextView) body.findViewById(R.id.passcode_instructions);
+        passcode = (AppCompatEditText) body.findViewById(R.id.passcode);
 
         state = STATE_ENTRY;
         updateViews();
 
         RxTextView.textChanges(passcode)
                 .filter(charSequence -> charSequence.length() == 4)
-                .subscribe(this::handlePasscode);
+                .subscribe(this :: handlePasscode);
 
         hideNextButtons();
-
-        return root;
     }
+
 
     private void handlePasscode(CharSequence passcodeSequence)
     {
@@ -84,7 +77,7 @@ public class SignUpPasscodeStepFragment extends StepFragment
 
             AppDelegate.getInstance()
                     .saveUser(getContext());
-            callbacks.onNextPressed(step);
+            getCallbacks().onNextPressed(getStep());
         }
         else
         {
@@ -92,7 +85,7 @@ public class SignUpPasscodeStepFragment extends StepFragment
             enteredPasscode = null;
             state = STATE_ENTRY;
             updateViews();
-            Toast.makeText(getActivity(),
+            Toast.makeText(getContext(),
                     R.string.passcode_mismatch,
                     Toast.LENGTH_SHORT)
                     .show();

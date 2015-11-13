@@ -1,10 +1,10 @@
-package co.touchlab.touchkit.rk.ui.fragment;
+package co.touchlab.touchkit.rk.ui.scene;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import java.util.ArrayList;
@@ -17,37 +17,28 @@ import co.touchlab.touchkit.rk.common.helpers.TextChoice;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
+import co.touchlab.touchkit.rk.common.step.Step;
 
-public class MultiChoiceQuestionStepFragment<T> extends StepFragment
+public class MultiChoiceQuestionScene <T> extends Scene
 {
     private List<T> results;
 
-    public MultiChoiceQuestionStepFragment()
+    public MultiChoiceQuestionScene(Context context, Step step)
     {
-        super();
-    }
-
-    public static <T> Fragment newInstance(QuestionStep step)
-    {
-        MultiChoiceQuestionStepFragment fragment = new MultiChoiceQuestionStepFragment<T>();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_QUESTION_STEP,
-                step);
-        fragment.setArguments(args);
-        return fragment;
+        super(context, step);
     }
 
     @Override
-    public View getBodyView(LayoutInflater inflater)
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
         // TODO this whole thing needs a lot of refactoring, plus it could probably just be combined
         // TODO with single choice questions
-        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) step).getAnswerFormat();
+        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
         RadioGroup radioGroup = new RadioGroup(getContext());
         final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
 
         QuestionResult<T[]> questionResult = (QuestionResult<T[]>)
-                stepResult.getResultForIdentifier(step.getIdentifier());
+                getStepResult().getResultForIdentifier(getStep().getIdentifier());
 
         results = new ArrayList<>();
 
@@ -75,7 +66,7 @@ public class MultiChoiceQuestionStepFragment<T> extends StepFragment
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
                 QuestionResult<T[]> questionResult1 = new QuestionResult<T[]>(
-                        step.getIdentifier());
+                        getStep().getIdentifier());
                 if (isChecked)
                 {
                     results.add(textChoice.getValue());

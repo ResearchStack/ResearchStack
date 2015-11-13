@@ -1,8 +1,9 @@
 package co.touchlab.touchkit.rk.ui.scene;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -18,23 +19,13 @@ public class ConsentReviewSignatureScene extends Scene
 
     public ConsentReviewSignatureScene(Context context)
     {
-        super(context);
-    }
-
-    public ConsentReviewSignatureScene(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-    }
-
-    public ConsentReviewSignatureScene(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs, defStyleAttr);
+        super(context, null);
     }
 
     @Override
-    protected int getBodyLayoutResourceId()
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        return R.layout.scene_consent_review_signature;
+        return inflater.inflate( R.layout.scene_consent_review_signature, parent, false);
     }
 
     @Override
@@ -70,7 +61,7 @@ public class ConsentReviewSignatureScene extends Scene
     }
 
     @Override
-    public StepResult getResult()
+    public StepResult createNewStepResult(String id)
     {
         return null;
     }

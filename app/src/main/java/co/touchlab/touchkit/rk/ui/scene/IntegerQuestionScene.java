@@ -1,9 +1,9 @@
-package co.touchlab.touchkit.rk.ui.fragment;
+package co.touchlab.touchkit.rk.ui.scene;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.NumberPicker;
 
 import co.touchlab.touchkit.rk.R;
@@ -11,34 +11,24 @@ import co.touchlab.touchkit.rk.common.answerformat.IntegerAnswerFormat;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
+import co.touchlab.touchkit.rk.common.step.Step;
 
-public class IntegerQuestionStepFragment extends StepFragment
+public class IntegerQuestionScene extends Scene
 {
 
-    public IntegerQuestionStepFragment()
+    public IntegerQuestionScene(Context context, Step step)
     {
-        super();
-    }
-
-    public static Fragment newInstance(QuestionStep step)
-    {
-        IntegerQuestionStepFragment fragment = new IntegerQuestionStepFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_QUESTION_STEP,
-                step);
-        fragment.setArguments(args);
-        return fragment;
+        super(context, step);
     }
 
     @Override
-    public View getBodyView(LayoutInflater inflater)
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-
         QuestionResult<Integer> stringResult = (QuestionResult<Integer>)
-                stepResult.getResultForIdentifier(step.getIdentifier());;
+                getStepResult().getResultForIdentifier(getStep().getIdentifier());;
 
         NumberPicker numberPicker = (NumberPicker) inflater.inflate(R.layout.item_number_picker,
-                null);
+                                                                    null);
         IntegerAnswerFormat answerFormat = (IntegerAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
 
         numberPicker.setMinValue(answerFormat.getMinValue());
@@ -46,7 +36,7 @@ public class IntegerQuestionStepFragment extends StepFragment
 
         numberPicker.setOnValueChangedListener((picker, oldVal, newVal) -> {
             QuestionResult<Integer> questionResult = new QuestionResult<Integer>(
-                    step.getIdentifier());
+                    getStep().getIdentifier());
             questionResult.setAnswer(newVal);
             setStepResult(questionResult);
         });

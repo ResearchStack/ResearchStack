@@ -1,8 +1,10 @@
 package co.touchlab.touchkit.rk.ui.scene;
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
-import android.util.AttributeSet;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +15,40 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import co.touchlab.touchkit.rk.R;
+import co.touchlab.touchkit.rk.common.helpers.LogExt;
+import co.touchlab.touchkit.rk.common.result.Result;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
-import co.touchlab.touchkit.rk.ui.fragment.StepFragment;
+import co.touchlab.touchkit.rk.ui.callbacks.StepCallbacks;
 import rx.functions.Action1;
 
+/***************************************************************************************************
+ * TODO List
+ * - Remove initialize() from constructor. Make into a public facing method so that users can
+ *   define layout in XML.
+ ***************************************************************************************************/
 public abstract class Scene extends RelativeLayout
 {
-
     public static final String TAG = Scene.class.getSimpleName();
 
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    // Data used to initialize and return
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    private Step step;
+    private StepResult stepResult;
+
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    // Communicate w/ host (activity/fragment)
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    private StepCallbacks callbacks;
+
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    // Child Views
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private ImageView image;
     private TextView title;
     private TextView summary;
@@ -31,29 +56,37 @@ public abstract class Scene extends RelativeLayout
     private TextView next;
     private TextView skip;
     private LinearLayout container;
-    private Step step;
-    private StepFragment.StepCallbacks callbacks;
 
-    public Scene(Context context)
+    public Scene(Context context, Step step)
+    {
+        this(context, step, null);
+    }
+
+    public Scene(Context context, Step step, StepResult result)
     {
         super(context);
-        initScene();
+
+        this.step = step;
+        this.stepResult = result;
+
+        onPreInitialized();
+        initialize();
     }
 
-    public Scene(Context context, AttributeSet attrs)
+    public void onPreInitialized()
     {
-        super(context, attrs);
-        initScene();
+
     }
 
-    public Scene(Context context, AttributeSet attrs, int defStyleAttr)
+    public void initialize()
     {
-        super(context, attrs, defStyleAttr);
-        initScene();
-    }
+        LogExt.i(getClass(), "initialize()");
 
-    protected void initScene()
-    {
+        if (getContext() instanceof StepCallbacks)
+        {
+            setCallbacks((StepCallbacks) getContext());
+        }
+
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View scene = onCreateScene(inflater, this);
         onSceneCreated(scene);
@@ -61,11 +94,14 @@ public abstract class Scene extends RelativeLayout
 
     public View onCreateScene(LayoutInflater inflater, ViewGroup parent)
     {
+        LogExt.i(getClass(), "onCreateScene()");
         return inflater.inflate(getRootLayoutResourceId(), parent, true);
     }
 
     public void onSceneCreated(View scene)
     {
+        LogExt.i(getClass(), "onSceneCreated()");
+
         View filler = findViewById(R.id.filler);
 
         container = (LinearLayout) findViewById(R.id.content_container);
@@ -73,6 +109,7 @@ public abstract class Scene extends RelativeLayout
             int sceneHeight = Scene.this.getHeight();
             int infoContainerHeight = container.getHeight();
 
+            //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
             if(sceneHeight > 0 && infoContainerHeight > 0 && sceneHeight > infoContainerHeight)
             {
                 int fillerHeight = sceneHeight - infoContainerHeight;
@@ -93,32 +130,54 @@ public abstract class Scene extends RelativeLayout
         summary = (TextView) findViewById(R.id.text);
         moreInfo = (TextView) findViewById(R.id.more_info);
         next = (TextView) findViewById(R.id.next);
-        next.setOnClickListener(v -> onNextClicked());
+        RxView.clicks(next).subscribe(v -> onNextClicked());
+
         skip = (TextView) findViewById(R.id.skip);
+
+        if (step != null)
+        {
+            title.setText(step.getTitle());
+
+            if(! TextUtils.isEmpty(step.getText()))
+            {
+                setSummary(step.getText());
+            }
+
+            skip.setVisibility(step.isOptional() ? View.VISIBLE : View.GONE);
+            RxView.clicks(skip).subscribe(v -> onSkipClicked());
+        }
 
         initBody();
     }
 
     public void onNextClicked()
     {
-        if (isAnswerValid())
+        if (callbacks != null && isAnswerValid())
         {
-            if (callbacks != null && step != null)
-            {
-                callbacks.onNextPressed(step);
-            }
+            callbacks.onNextPressed(step);
+        }
+    }
+
+    public void onSkipClicked()
+    {
+        if (callbacks != null)
+        {
+            callbacks.onSkipStep(step);
         }
     }
 
     private void initBody()
     {
+        LogExt.i(getClass(), "initBody()");
+
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
-        int bodyResId = getBodyLayoutResourceId();
-        if (bodyResId > 0)
-        {
-            View body = onCreateBody(inflater, bodyResId, container);
+        LogExt.i(getClass(), "onCreateBody()");
+        View body = onCreateBody(inflater, container);
 
+        //TODO This stinks when you want to dynamically
+        if (body != null)
+        {
             int bodyIndex = getPositionToInsertBody();
             container.addView(body, bodyIndex);
 
@@ -126,21 +185,18 @@ public abstract class Scene extends RelativeLayout
         }
     }
 
-    public View onCreateBody(LayoutInflater inflater, int bodyResId, ViewGroup parent)
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        return inflater.inflate(bodyResId, parent, false);
+        return null;
     }
 
-    public void onBodyCreated(View body) { }
+    public void onBodyCreated(View body) {
+        LogExt.i(getClass(), "onBodyCreated()");
+    }
 
     protected int getRootLayoutResourceId()
     {
         return R.layout.fragment_step;
-    }
-
-    protected int getBodyLayoutResourceId()
-    {
-        return -1;
     }
 
     //TODO Not sure how i feel about this method. Part of me says "OK", another says just return an
@@ -152,7 +208,34 @@ public abstract class Scene extends RelativeLayout
         return stepViewContainer.indexOfChild(moreInfo) + 1;
     }
 
-    public abstract StepResult getResult();
+    public StepResult getStepResult()
+    {
+        if (stepResult == null)
+        {
+            // First, lets get it back from the activity
+            stepResult = callbacks.getResultStep(step.getIdentifier());
+
+            // Create a new result if the activity has no record of a result
+            if(stepResult == null)
+            {
+                stepResult = createNewStepResult(step.getIdentifier());
+            }
+        }
+
+        return stepResult;
+    }
+
+    public void setStepResult(Result result)
+    {
+        // TODO this is bad and we should feel bad
+        Map<String, Result> results = new HashMap<>();
+        results.put(result.getIdentifier(), result);
+        getStepResult().setResults(results);
+
+        callbacks.onStepResultChanged(step, stepResult);
+    }
+
+    public abstract StepResult createNewStepResult(String id);
 
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -201,7 +284,7 @@ public abstract class Scene extends RelativeLayout
         summary.setText(string);
     }
 
-    public void setMoreInfo(@StringRes int stringRes, Action1<? super Object> action)
+    public void setMoreInfo(@StringRes int stringRes, Action1< ? super Object> action)
     {
         if (moreInfo.getVisibility() != View.VISIBLE)
         {
@@ -252,26 +335,127 @@ public abstract class Scene extends RelativeLayout
         next.setText(string);
     }
 
+    protected void hideNextButtons()
+    {
+        next.setVisibility(View.GONE);
+        skip.setVisibility(View.GONE);
+    }
+
     /**
-     * @return true to call through to Fragment and start next scene.
+     * @return true to call through to host and start next scene.
      */
     public boolean isAnswerValid()
     {
         return true;
     }
 
-
-    public StepFragment.StepCallbacks getCallbacks()
+    public StepCallbacks getCallbacks()
     {
         return callbacks;
     }
 
-    public void setCallbacks(Step step, StepFragment.StepCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
-        this.step = step;
         this.callbacks = callbacks;
     }
 
+    @Override
+    public Parcelable onSaveInstanceState() {
+        LogExt.i(getClass(), "onSaveInstanceState()");
+
+        Parcelable superState = super.onSaveInstanceState();
+        SceneSavedState ss = new SceneSavedState(superState);
+
+        if (step != null)
+        {
+            LogExt.i(getClass(), "onSaveInstanceState() - " + step.toString());
+        }
+        ss.step = step;
+
+        if (stepResult != null)
+        {
+            LogExt.i(getClass(), "onSaveInstanceState() - " + stepResult.toString());
+        }
+        ss.result = stepResult;
+
+        return ss;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        LogExt.i(getClass(), "onRestoreInstanceState()");
+
+        if(!(state instanceof SceneSavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SceneSavedState ss = (SceneSavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+
+        this.step = ss.step;
+        if (step != null)
+        {
+            LogExt.i(getClass(), "onRestoreInstanceState() - " + step.toString());
+        }
+
+        this.stepResult = ss.result;
+        if (stepResult != null)
+        {
+            LogExt.i(getClass(), "onRestoreInstanceState() - " + stepResult.toString());
+        }
+
+        //TODO Make sure this works properly.
+        initialize();
+    }
+
+    public Step getStep()
+    {
+        return step;
+    }
+
+    public String getString(@StringRes int stringResId)
+    {
+        return getResources().getString(stringResId);
+    }
+
+    private static class SceneSavedState extends BaseSavedState {
+
+        Step step;
+        StepResult result;
+
+        SceneSavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SceneSavedState(Parcel in) {
+            super(in);
+            step = (Step) in.readSerializable();
+            result = (StepResult) in.readSerializable();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeSerializable(step);
+            out.writeSerializable(result);
+        }
+
+        //required field that makes Parcelables from a Parcel
+        public static final Parcelable.Creator<SceneSavedState> CREATOR =
+                new Parcelable.Creator<SceneSavedState>() {
+                    public SceneSavedState createFromParcel(Parcel in) {
+                        return new SceneSavedState(in);
+                    }
+                    public SceneSavedState[] newArray(int size) {
+                        return new SceneSavedState[size];
+                    }
+                };
+    }
+
+    /**
+     * TODO Implement
+     */
     public static class StepSceneBuilder
     {
         private String titleText;

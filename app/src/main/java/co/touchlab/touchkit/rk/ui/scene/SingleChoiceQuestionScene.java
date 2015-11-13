@@ -1,9 +1,9 @@
-package co.touchlab.touchkit.rk.ui.fragment;
+package co.touchlab.touchkit.rk.ui.scene;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -13,35 +13,25 @@ import co.touchlab.touchkit.rk.common.helpers.TextChoice;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.QuestionStep;
+import co.touchlab.touchkit.rk.common.step.Step;
 
-public class SingleChoiceQuestionStepFragment<T> extends StepFragment
+public class SingleChoiceQuestionScene<T> extends Scene
 {
 
-    public SingleChoiceQuestionStepFragment()
+    public SingleChoiceQuestionScene(Context context, Step step)
     {
-        super();
-    }
-
-    public static <T> Fragment newInstance(QuestionStep step)
-    {
-        SingleChoiceQuestionStepFragment fragment = new SingleChoiceQuestionStepFragment<T>();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_QUESTION_STEP,
-                step);
-        fragment.setArguments(args);
-        return fragment;
+        super(context, step);
     }
 
     @Override
-    public View getBodyView(LayoutInflater inflater)
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-
-        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) step).getAnswerFormat();
+        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
         RadioGroup radioGroup = new RadioGroup(getContext());
         final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
 
         QuestionResult<Boolean> questionResult = (QuestionResult<Boolean>)
-                stepResult.getResultForIdentifier(step.getIdentifier());
+                getStepResult().getResultForIdentifier(getStep().getIdentifier());
 
         for (int i = 0; i < textChoices.length; i++)
         {
@@ -61,7 +51,7 @@ public class SingleChoiceQuestionStepFragment<T> extends StepFragment
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             TextChoice<T> textChoice = textChoices[checkedId];
             QuestionResult<T> questionResult1 = new QuestionResult<T>(
-                    step.getIdentifier());
+                    getStep().getIdentifier());
             questionResult1.setAnswer(textChoice.getValue());
             setStepResult(questionResult1);
         });

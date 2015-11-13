@@ -1,10 +1,7 @@
-package co.touchlab.touchkit.rk.ui.fragment;
+package co.touchlab.touchkit.rk.ui.scene;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,14 +22,10 @@ import co.touchlab.touchkit.rk.common.step.ConsentReviewStep;
 import co.touchlab.touchkit.rk.common.step.FormStep;
 import co.touchlab.touchkit.rk.dev.DevUtils;
 import co.touchlab.touchkit.rk.ui.callbacks.ConsentReviewCallback;
-import co.touchlab.touchkit.rk.ui.scene.ConsentReviewDocumentScene;
-import co.touchlab.touchkit.rk.ui.scene.ConsentReviewSignatureScene;
-import co.touchlab.touchkit.rk.ui.scene.FormScene;
-import co.touchlab.touchkit.rk.ui.scene.Scene;
 
-public class ConsentReviewStepFragment extends MultiSceneStepFragment implements ConsentReviewCallback
+public class ConsentReviewScene extends MultiStateScene implements ConsentReviewCallback
 {
-    public static final String TAG = ConsentReviewStepFragment.class.getSimpleName();
+    public static final String TAG = ConsentReviewScene.class.getSimpleName();
 
     public static final int SECTION_REVIEW_DOCUMENT = 0;
     public static final int SECTION_REVIEW_NAME = 1;
@@ -44,28 +37,19 @@ public class ConsentReviewStepFragment extends MultiSceneStepFragment implements
 
     public List<Integer> sections;
 
-    public ConsentReviewStepFragment()
+    public ConsentReviewScene(Context context, ConsentReviewStep step)
     {
-        super();
-    }
-
-    public static Fragment newInstance(ConsentReviewStep step)
-    {
-        ConsentReviewStepFragment fragment = new ConsentReviewStepFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_QUESTION_STEP, step);
-        fragment.setArguments(args);
-        return fragment;
+        super(context, step);
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
+    public void onPreInitialized()
     {
-        super.onCreate(savedInstanceState);
-
-        ConsentReviewStep step = (ConsentReviewStep) getStep();
+        super.onPreInitialized();
 
         sections = new ArrayList<>();
+
+        ConsentReviewStep step = (ConsentReviewStep) getStep();
 
         if (step.getDocument() != null) {
             sections.add(SECTION_REVIEW_DOCUMENT);
@@ -156,7 +140,7 @@ public class ConsentReviewStepFragment extends MultiSceneStepFragment implements
     {
         StepResult<ConsentSignatureResult> parentResult = new StepResult<>(getStep().getIdentifier());
 
-        ConsentSignatureResult result = new ConsentSignatureResult(step.getIdentifier());
+        ConsentSignatureResult result = new ConsentSignatureResult(getStep().getIdentifier());
         result.setStartDate(new Date());
 
         ConsentSignature clone = ((ConsentReviewStep) getStep()).getSignature();
@@ -169,7 +153,7 @@ public class ConsentReviewStepFragment extends MultiSceneStepFragment implements
     }
 
     @Override
-    public void scenePoppedOffViewStack(Scene scene)
+    public void onSceneRemoved(Scene scene)
     {
         Log.i(TAG, "scenePoppedOff " + scene.getClass().getSimpleName());
 
@@ -194,7 +178,7 @@ public class ConsentReviewStepFragment extends MultiSceneStepFragment implements
         }
         else if (scene instanceof FormScene)
         {
-            StepResult formResult = scene.getResult();
+            StepResult formResult = scene.getStepResult();
 
             TextQuestionResult firstNameResult = (TextQuestionResult) formResult
                     .getResultForIdentifier(GivenNameIdentifier);
@@ -229,7 +213,7 @@ public class ConsentReviewStepFragment extends MultiSceneStepFragment implements
             DevUtils.throwUnsupportedOpException(message);
         }
 
-        callbacks.onStepResultChanged(getStep(), result);
+        getCallbacks().onStepResultChanged(getStep(), result);
     }
 
     @Override
@@ -250,9 +234,7 @@ public class ConsentReviewStepFragment extends MultiSceneStepFragment implements
     @Override
     public void closeToWelcomeFlow()
     {
-        //TODO Clear activity stack up until OnboardingActivity is visible
-        getActivity().setResult(Activity.RESULT_CANCELED);
-        getActivity().finish();
+        getCallbacks().onCancelStep();
     }
 
 

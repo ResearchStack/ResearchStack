@@ -2,5 +2,10 @@
 <resources>
 
     <item name="step_body" type="id"/>
+    <item name="current_scene" type="id"/>
+    <item name="old_scene" type="id"/>
+
+    <item name="current_child_scene" type="id"/>
+    <item name="old_child_scene" type="id"/>
 
 </resources>

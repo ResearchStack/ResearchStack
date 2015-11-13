@@ -1,11 +1,11 @@
-package co.touchlab.touchkit.rk.ui.fragment;
+package co.touchlab.touchkit.rk.ui.scene;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -18,47 +18,40 @@ import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
 
-public class SignUpAdditionalInfoStepFragment extends StepFragment
+public class SignUpAdditionalInfoScene extends Scene
 {
     private User user;
 
-    public SignUpAdditionalInfoStepFragment()
+    public SignUpAdditionalInfoScene(Context context, Step step)
     {
-        super();
-    }
-
-    public static Fragment newInstance(Step step)
-    {
-        SignUpAdditionalInfoStepFragment fragment = new SignUpAdditionalInfoStepFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_QUESTION_STEP,
-                step);
-        fragment.setArguments(args);
-        return fragment;
+        super(context, step);
     }
 
     @Override
-    public View getBodyView(LayoutInflater inflater)
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        View root = inflater.inflate(R.layout.item_additional_info,
-                null);
+        return inflater.inflate(R.layout.item_additional_info, parent, false);
+    }
+
+    @Override
+    public void onBodyCreated(View body)
+    {
+        super.onBodyCreated(body);
 
         user = AppDelegate.getInstance()
                 .getCurrentUser();
 
-        AppCompatTextView height = (AppCompatTextView) root.findViewById(R.id.height);
+        AppCompatTextView height = (AppCompatTextView) body.findViewById(R.id.height);
         height.setText(formatHeightString(user.getHeight()));
         RxView.clicks(height)
                 .subscribe(view -> showDatePicker());
 
-        AppCompatEditText weight = (AppCompatEditText) root.findViewById(R.id.weight);
+        AppCompatEditText weight = (AppCompatEditText) body.findViewById(R.id.weight);
         weight.setText(String.valueOf(user.getWeight()));
         RxTextView.textChanges(weight)
                 .filter(input -> input.length() > 0)
                 .map(charSequence -> Integer.valueOf(charSequence.toString()))
-                .subscribe(user::setWeight);
-
-        return root;
+                .subscribe(user:: setWeight);
     }
 
     private String formatHeightString(int height)
@@ -68,9 +61,12 @@ public class SignUpAdditionalInfoStepFragment extends StepFragment
         return String.format("%d\' %d\"", feet, inches);
     }
 
+    /**
+     * TODO Launch image picker
+     */
     private void showDatePicker()
     {
-        Toast.makeText(getActivity(),
+        Toast.makeText(getContext(),
                 "TODO: launch image picker",
                 Toast.LENGTH_SHORT)
                 .show();

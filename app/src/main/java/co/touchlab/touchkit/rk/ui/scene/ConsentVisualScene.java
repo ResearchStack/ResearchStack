@@ -1,78 +1,59 @@
 package co.touchlab.touchkit.rk.ui.scene;
+
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.text.TextUtils;
-import android.util.AttributeSet;
+import android.view.LayoutInflater;
 
 import co.touchlab.touchkit.rk.R;
+import co.touchlab.touchkit.rk.common.model.ConsentDocument;
 import co.touchlab.touchkit.rk.common.model.ConsentSection;
+import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
-import co.touchlab.touchkit.rk.ui.ViewWebDocumentActivity;
-import co.touchlab.touchkit.rk.utils.ViewUtils;
+import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
 
-public class ConsentVisualScene extends Scene
+public class ConsentVisualScene extends MultiStateScene
 {
+    private ConsentDocument document;
 
-    public ConsentVisualScene(Context context)
+    public ConsentVisualScene(Context context, ConsentVisualStep step)
     {
-        super(context);
+        super(context, step);
     }
-
-    public ConsentVisualScene(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-    }
-
-    public ConsentVisualScene(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs, defStyleAttr);
-    }
-
-    public ConsentVisualScene(Context context, ConsentSection data)
-    {
-        super(context);
-
-        int accentColor = ViewUtils.fetchAccentColor(context);
-
-        String title = TextUtils.isEmpty(data.getTitle()) ?
-                getResources().getString(data.getType().getTitleResId()) : data.getTitle();
-        setTitle(title);
-
-        if (!TextUtils.isEmpty(data.getSummary()))
-        {
-            setSummary(data.getSummary());
-        }
-
-        String imageName = !TextUtils.isEmpty(data.getCustomImageName()) ? data.getCustomImageName() :
-                data.getType().getImageName();
-        if (!TextUtils.isEmpty(imageName))
-        {
-            int imageResId = getResources().getIdentifier(imageName, "drawable", getContext().getPackageName());
-            setImage(imageResId);
-            getImageView().setColorFilter(accentColor, PorterDuff.Mode.ADD);
-        }
-
-        setMoreInfo(data.getType().getMoreInfoResId(), v -> {
-            String path = data.getHtmlContent();
-            String webTitle = getResources().getString(R.string.consent_section_more_info);
-            Intent webDoc = ViewWebDocumentActivity.newIntent(getContext(), webTitle, path);
-            getContext().startActivity(webDoc);
-        });
-        getMoreInfo().setTextColor(accentColor);
-
-        setSkip(false);
-
-//        TODO self.continueSkipContainer.continueEnabled = YES;
-//        TODO [self.continueSkipContainer updateContinueAndSkipEnabled];
-    }
-
 
     @Override
-    public StepResult getResult()
+    public void onPreInitialized()
     {
-        // We can ignore this, as we don't return a result for a visual consent scenen
-        return null;
+        super.onPreInitialized();
+        document = ((ConsentVisualStep) getStep()).getDocument();
     }
 
+    @Override
+    public int getSceneCount()
+    {
+        return document.getSections().size();
+    }
+
+    @Override
+    public Scene onCreateScene(LayoutInflater inflater, int scenePos)
+    {
+        ConsentSection section = document.getSections().get(scenePos);
+        Scene scene = new ConsentVisualSectionScene(getContext(), section);
+        String nextTitle = getString(R.string.next);
+        if (section.getType() == ConsentSection.Type.Overview)
+        {
+            nextTitle = getString(R.string.button_get_started);
+        }
+        else if (scenePos == getSceneCount() - 1)
+        {
+            nextTitle = getString(R.string.button_done);
+        }
+
+        scene.setNextButtonText(nextTitle);
+        return scene;
+    }
+
+    @Override
+    public StepResult createNewStepResult(String id)
+    {
+        return new StepResult<QuestionResult<Boolean>>(getStep().getIdentifier());
+    }
 }

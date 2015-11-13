@@ -3,6 +3,7 @@ package co.touchlab.touchkit.rk.common.step;
 import java.io.Serializable;
 
 import co.touchlab.touchkit.rk.common.task.Task;
+import co.touchlab.touchkit.rk.ui.scene.Scene;
 
 public class Step implements Serializable
 {
@@ -128,6 +129,12 @@ public class Step implements Serializable
         this.shouldTintImages = shouldTintImages;
     }
 
+    public Class getSceneClass()
+    {
+        return Scene.class;
+    }
+
+    @Deprecated
     public Class getStepFragment()
     {
         throw new UnsupportedOperationException("Didn't specify a fragment for this step");

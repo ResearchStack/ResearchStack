@@ -20,7 +20,9 @@ import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.Result;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
+import co.touchlab.touchkit.rk.ui.callbacks.StepCallbacks;
 
+@Deprecated
 public abstract class StepFragment extends Fragment
 {
     //TODO We are now using this in multiple place (ie. see ConsentStepFragment). Rename to something more generic.
@@ -94,7 +96,15 @@ public abstract class StepFragment extends Fragment
 
     protected void onNextPressed()
     {
-        callbacks.onNextPressed(getStep());
+        if (isAnswerValid())
+        {
+            callbacks.onNextPressed(getStep());
+        }
+    }
+
+    protected boolean isAnswerValid()
+    {
+        return true;
     }
 
     @Override
@@ -156,12 +166,4 @@ public abstract class StepFragment extends Fragment
         return container.indexOfChild(view) + 1;
     }
 
-    public interface StepCallbacks {
-        void onNextPressed(Step step);
-        void onStepResultChanged(Step step, StepResult result);
-        void onSkipStep(Step step);
-//        void onError(String title, String message);
-
-        StepResult getResultStep(String stepId);
-    }
 }

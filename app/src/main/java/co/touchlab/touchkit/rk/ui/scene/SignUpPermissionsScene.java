@@ -1,14 +1,14 @@
-package co.touchlab.touchkit.rk.ui.fragment;
+package co.touchlab.touchkit.rk.ui.scene;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -18,64 +18,55 @@ import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.ui.MainActivity;
+import co.touchlab.touchkit.rk.ui.callbacks.ActivityCallback;
 
-public class SignUpPermissionsStepFragment extends StepFragment
+public class SignUpPermissionsScene extends Scene
 {
 
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 142;
 
     private AppCompatButton permissionButton;
+    private ActivityCallback permissionCallback;
 
-    public SignUpPermissionsStepFragment()
+    public SignUpPermissionsScene(Context context, Step step)
     {
-        super();
-    }
+        super(context, step);
 
-    public static Fragment newInstance(Step step)
-    {
-        SignUpPermissionsStepFragment fragment = new SignUpPermissionsStepFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_QUESTION_STEP,
-                step);
-        fragment.setArguments(args);
-        return fragment;
+        //TODO Fix this, very disgusting
+        if (context instanceof ActivityCallback)
+        {
+            permissionCallback = (ActivityCallback) context;
+        }
     }
 
     @Override
-    public View getBodyView(LayoutInflater inflater)
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        View root = inflater.inflate(R.layout.item_permissions,
-                null);
+        return inflater.inflate(R.layout.item_permissions, parent, false);
+    }
 
-        permissionButton = (AppCompatButton) root.findViewById(R.id.permission_button);
+    @Override
+    public void onBodyCreated(View body)
+    {
+        super.onBodyCreated(body);
+
+        //TODO Handle permissions UI/Flow on NON-M devices
+        permissionButton = (AppCompatButton) body.findViewById(R.id.permission_button);
         RxView.clicks(permissionButton)
-                .subscribe(view -> askForPermission());
+                .subscribe(view -> permissionCallback.requestPermissions());
 
         updatePermissions();
-
-        return root;
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
-        LogExt.d(getClass(),
-                "Got permission result back in fragment");
-        super.onRequestPermissionsResult(requestCode,
-                permissions,
-                grantResults);
+        LogExt.d(getClass(), "Got permission result back in fragment");
         updatePermissions();
-    }
-
-    private void askForPermission()
-    {
-        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                LOCATION_PERMISSION_REQUEST_CODE);
     }
 
     private void updatePermissions()
     {
-        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+        int permissionCheck = ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
         if(permissionCheck == PackageManager.PERMISSION_GRANTED)
@@ -99,11 +90,10 @@ public class SignUpPermissionsStepFragment extends StepFragment
     }
 
     @Override
-    protected void onNextPressed()
+    public void onNextClicked()
     {
-        Intent intent = new Intent(getActivity(),
-                MainActivity.class);
+        Intent intent = new Intent(getContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        getContext().startActivity(intent);
     }
 }

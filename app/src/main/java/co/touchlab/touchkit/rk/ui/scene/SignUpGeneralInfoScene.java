@@ -1,13 +1,13 @@
-package co.touchlab.touchkit.rk.ui.fragment;
+package co.touchlab.touchkit.rk.ui.scene;
 
 import android.app.DatePickerDialog;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -28,57 +28,58 @@ import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
 
-public class SignUpGeneralInfoStepFragment extends StepFragment
+public class SignUpGeneralInfoScene extends Scene
 {
-    private Calendar birthdate = new GregorianCalendar(1985,
-            Calendar.OCTOBER,
-            15);
+    private Calendar birthdate;
     private AppCompatTextView birthdateTextView;
     private User user;
 
-    public SignUpGeneralInfoStepFragment()
+    public SignUpGeneralInfoScene(Context context, Step step)
     {
-        super();
-    }
-
-    public static Fragment newInstance(Step step)
-    {
-        SignUpGeneralInfoStepFragment fragment = new SignUpGeneralInfoStepFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_QUESTION_STEP,
-                step);
-        fragment.setArguments(args);
-        return fragment;
+        super(context, step);
     }
 
     @Override
-    public View getBodyView(LayoutInflater inflater)
+    public void onPreInitialized()
     {
-        View root = inflater.inflate(R.layout.item_general_info,
-                null);
+        super.onPreInitialized();
+        birthdate = new GregorianCalendar(1985,
+                                          Calendar.OCTOBER,
+                                          15);
+    }
 
+    @Override
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
+    {
+        return inflater.inflate(R.layout.item_general_info, parent, false);
+    }
+
+    @Override
+    public void onBodyCreated(View body)
+    {
+        super.onBodyCreated(body);
         user = AppDelegate.getInstance()
                 .getCurrentUser();
 
-        AppCompatEditText name = (AppCompatEditText) root.findViewById(R.id.name);
+        AppCompatEditText name = (AppCompatEditText) body.findViewById(R.id.name);
         name.setText(user.getName());
         RxTextView.textChanges(name)
                 .subscribe(charSequence -> user.setName(charSequence.toString()));
 
-        AppCompatEditText email = (AppCompatEditText) root.findViewById(R.id.email);
+        AppCompatEditText email = (AppCompatEditText) body.findViewById(R.id.email);
         email.setText(user.getEmail());
         RxTextView.textChanges(email)
                 .subscribe(charSequence -> user.setEmail(charSequence.toString()));
 
-        ImageView profileImage = (ImageView) root.findViewById(R.id.profile_image);
+        ImageView profileImage = (ImageView) body.findViewById(R.id.profile_image);
         RxView.clicks(profileImage)
                 .subscribe(view -> launchImagePicker());
 
-        AppCompatEditText password = (AppCompatEditText) root.findViewById(R.id.password);
+        AppCompatEditText password = (AppCompatEditText) body.findViewById(R.id.password);
         RxTextView.textChanges(password)
                 .subscribe(charSequence -> user.setPassword(charSequence.toString()));
 
-        birthdateTextView = (AppCompatTextView) root.findViewById(R.id.birthdate);
+        birthdateTextView = (AppCompatTextView) body.findViewById(R.id.birthdate);
         if (user.getBirthDate() != null)
         {
             birthdate.setTime(user.getBirthDate());
@@ -90,32 +91,29 @@ public class SignUpGeneralInfoStepFragment extends StepFragment
                 });
 
         // TODO shouldn't use strings like this, let's make a gender class or something
-        RadioGroup genderRadioGroup = (RadioGroup) root.findViewById(R.id.gender_radio_group);
+        RadioGroup genderRadioGroup = (RadioGroup) body.findViewById(R.id.gender_radio_group);
         String biologicalSex = user.getBiologicalSex();
         if (biologicalSex != null)
         {
             if (biologicalSex.equals("Male"))
             {
-                ((AppCompatRadioButton) root.findViewById(R.id.male_radio)).setChecked(true);
+                ((AppCompatRadioButton) body.findViewById(R.id.male_radio)).setChecked(true);
             }
             else if (biologicalSex.equals("Female"))
             {
-                ((AppCompatRadioButton) root.findViewById(R.id.female_radio)).setChecked(true);
+                ((AppCompatRadioButton) body.findViewById(R.id.female_radio)).setChecked(true);
             }
         }
 
         RxRadioGroup.checkedChanges(genderRadioGroup)
                 .subscribe((checkedId) -> user.setBiologicalSex(checkedId == R.id.male_radio ? "Male" : "Female"));
 
-        AppCompatTextView dataInstructions = (AppCompatTextView) root.findViewById(R.id.data_instructions);
-
-
-        return root;
+        AppCompatTextView dataInstructions = (AppCompatTextView) body.findViewById(R.id.data_instructions);
     }
 
     private void launchImagePicker()
     {
-        Toast.makeText(getActivity(),
+        Toast.makeText(getContext(),
                 "TODO: launch image picker",
                 Toast.LENGTH_SHORT)
                 .show();
@@ -123,7 +121,7 @@ public class SignUpGeneralInfoStepFragment extends StepFragment
 
     private void showDatePicker()
     {
-        new DatePickerDialog(getActivity(),
+        new DatePickerDialog(getContext(),
                 (datePickerView, year, monthOfYear, dayOfMonth) -> {
                     birthdate.set(year,
                             monthOfYear,

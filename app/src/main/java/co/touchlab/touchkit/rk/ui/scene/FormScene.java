@@ -1,6 +1,5 @@
 package co.touchlab.touchkit.rk.ui.scene;
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,39 +20,24 @@ import co.touchlab.touchkit.rk.ui.views.TextWatcherAdapter;
 public class FormScene extends Scene
 {
 
-    private StepResult<TextQuestionResult> stepResult;
-    private FormStep step;
-
-    public FormScene(Context context)
-    {
-        super(context);
-    }
-
-    public FormScene(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-    }
-
-    public FormScene(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs, defStyleAttr);
-    }
-
     public FormScene(Context context, FormStep step)
     {
-        super(context);
+        super(context, step);
 
-        this.step = step;
-        this.stepResult = new StepResult<>(step.getIdentifier());
+        setTitle(getStep().getTitle());
+        setSummary(getStep().getText());
+        setSkip(getStep().isOptional());
+    }
 
-        setTitle(step.getTitle());
-        setSummary(step.getText());
-        setSkip(step.isOptional());
+    @Override
+    public void onSceneCreated(View scene)
+    {
+        super.onSceneCreated(scene);
 
         LinearLayout stepViewContainer = (LinearLayout) findViewById(R.id.content_container);
 
         int startIndex = getPositionToInsertBody();
-        List<FormItem> items = step.getFormItems();
+        List<FormItem> items = ((FormStep) getStep()).getFormItems();
         for(int i = 0, size = items.size(); i < size; i++)
         {
             FormItem item = items.get(i);
@@ -93,7 +77,8 @@ public class FormScene extends Scene
             }
 
             stepViewContainer.addView(formItem, startIndex + i);
-            stepResult.setResultForIdentifier(result.getIdentifier(), result);
+            ((StepResult<TextQuestionResult>) getStepResult())
+                    .setResultForIdentifier(result.getIdentifier(), result);
         }
     }
 
@@ -102,10 +87,11 @@ public class FormScene extends Scene
     {
         boolean isValid = true;
 
-        List<FormItem> items = step.getFormItems();
+        List<FormItem> items = ((FormStep)getStep()).getFormItems();
         for(FormItem item : items)
         {
-            TextQuestionResult result = stepResult.getResultForIdentifier(item.identifier);
+            TextQuestionResult result =  ((StepResult<TextQuestionResult>) getStepResult())
+                    .getResultForIdentifier(item.identifier);
             String answer = result.getTextAnswer();
             if (!item.format.isAnswerValidWithString(answer))
             {
@@ -120,9 +106,9 @@ public class FormScene extends Scene
     }
 
     @Override
-    public StepResult<TextQuestionResult> getResult()
+    public StepResult createNewStepResult(String id)
     {
-        return stepResult;
+        return new StepResult<TextQuestionResult>(getStep().getIdentifier());
     }
 
     public static class FormItem

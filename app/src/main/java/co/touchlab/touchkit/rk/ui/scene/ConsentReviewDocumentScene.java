@@ -1,6 +1,5 @@
 package co.touchlab.touchkit.rk.ui.scene;
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +18,9 @@ public class ConsentReviewDocumentScene extends Scene
 
     public ConsentReviewDocumentScene(Context context)
     {
-        super(context);
+        super(context, null);
     }
-
-    public ConsentReviewDocumentScene(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-    }
-
-    public ConsentReviewDocumentScene(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs, defStyleAttr);
-    }
-
+    
     @Override
     public View onCreateScene(LayoutInflater inflater, ViewGroup parent)
     {
@@ -53,7 +42,7 @@ public class ConsentReviewDocumentScene extends Scene
     }
 
     @Override
-    public StepResult getResult()
+    public StepResult createNewStepResult(String id)
     {
         return null;
     }

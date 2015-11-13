@@ -1,41 +1,30 @@
-package co.touchlab.touchkit.rk.ui.fragment;
+package co.touchlab.touchkit.rk.ui.scene;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import co.touchlab.touchkit.rk.R;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
-import co.touchlab.touchkit.rk.common.step.QuestionStep;
+import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.ui.views.TextWatcherAdapter;
 
-public class TextQuestionStepFragment extends StepFragment
+public class TextQuestionScene extends Scene
 {
 
-    public TextQuestionStepFragment()
+    public TextQuestionScene(Context context, Step step)
     {
-        super();
-    }
-
-    public static Fragment newInstance(QuestionStep step)
-    {
-        TextQuestionStepFragment fragment = new TextQuestionStepFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_QUESTION_STEP,
-                step);
-        fragment.setArguments(args);
-        return fragment;
+        super(context, step);
     }
 
     @Override
-    public View getBodyView(LayoutInflater inflater)
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-
         QuestionResult<String> stringResult = (QuestionResult<String>)
-                stepResult.getResultForIdentifier(step.getIdentifier());;
+                getStepResult().getResultForIdentifier(getStep().getIdentifier());;
 
         EditText editText = (EditText) inflater.inflate(R.layout.item_edit_text, null);
         editText.addTextChangedListener(new TextWatcherAdapter()
@@ -43,8 +32,7 @@ public class TextQuestionStepFragment extends StepFragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                QuestionResult<String> questionResult = new QuestionResult<String>(
-                        step.getIdentifier());
+                QuestionResult<String> questionResult = new QuestionResult<>(getStep().getIdentifier());
                 questionResult.setAnswer(s.toString());
                 setStepResult(questionResult);
             }
