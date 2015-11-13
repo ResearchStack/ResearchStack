@@ -5,6 +5,7 @@ import java.io.Serializable;
 import co.touchlab.touchkit.rk.common.helpers.TextChoice;
 import co.touchlab.touchkit.rk.common.model.TaskModel;
 import co.touchlab.touchkit.rk.dev.DevUtils;
+import co.touchlab.touchkit.rk.ui.scene.DateQuestionScene;
 import co.touchlab.touchkit.rk.ui.scene.IntegerQuestionScene;
 import co.touchlab.touchkit.rk.ui.scene.MultiChoiceQuestionScene;
 import co.touchlab.touchkit.rk.ui.scene.NotImplementedScene;
@@ -40,6 +41,10 @@ public abstract class AnswerFormat implements Serializable
         else if (type.equals("TextConstraints"))
         {
             answerFormat = new TextAnswerFormat();
+        }
+        else if (type.equals("DateConstraints"))
+        {
+            answerFormat = new DateAnswerFormat(DateAnswerStyle.Date);
         }
         else
         {
@@ -77,12 +82,14 @@ public abstract class AnswerFormat implements Serializable
                     return TextQuestionScene.class;
                 case Integer:
                     return IntegerQuestionScene.class;
-                case DateAndTime:
-                case Date:
                 case Scale:
                 case Decimal:
                 case Boolean:
                 case TimeOfDay:
+                case DateAndTime:
+                    return NotImplementedScene.class;
+                case Date:
+                    return DateQuestionScene.class;
                 case TimeInterval:
                 default:
                     return NotImplementedScene.class;
@@ -101,6 +108,12 @@ public abstract class AnswerFormat implements Serializable
     {
         Default,
         Percent
+    }
+
+    public enum DateAnswerStyle
+    {
+        DateAndTime,
+        Date
     }
 
     public AnswerFormat()

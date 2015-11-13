@@ -70,9 +70,6 @@ public class TextAnswerFormat extends AnswerFormat
     }
 
 
-//    - (ORKQuestionType) questionType {
-//    return ORKQuestionTypeText;
-//}
 
 //    + (BOOL)supportsSecureCoding {
 //    return YES;

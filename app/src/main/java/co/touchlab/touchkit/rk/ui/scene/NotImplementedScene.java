@@ -9,7 +9,6 @@ import android.widget.TextView;
 import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.Step;
-import co.touchlab.touchkit.rk.ui.scene.Scene;
 
 @Deprecated
 public class NotImplementedScene extends Scene
@@ -26,6 +25,12 @@ public class NotImplementedScene extends Scene
         TextView textView = new TextView(getContext());
         textView.setText("Not Implemented: " + getStep().getIdentifier());
         return textView;
+    }
+
+    @Override
+    public void onSceneCreated(View scene)
+    {
+        //Do Nothing
     }
 
     @Override
