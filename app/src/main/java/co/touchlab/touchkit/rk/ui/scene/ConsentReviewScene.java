@@ -24,7 +24,7 @@ import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.dev.DevUtils;
 import co.touchlab.touchkit.rk.ui.callbacks.ConsentReviewCallback;
 
-public class ConsentReviewScene extends MultiStateScene implements ConsentReviewCallback
+public class ConsentReviewScene extends MultiSubSectionScene implements ConsentReviewCallback
 {
     public static final String TAG = ConsentReviewScene.class.getSimpleName();
 

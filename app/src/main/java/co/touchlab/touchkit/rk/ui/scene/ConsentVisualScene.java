@@ -11,7 +11,7 @@ import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.step.ConsentVisualStep;
 import co.touchlab.touchkit.rk.common.step.Step;
 
-public class ConsentVisualScene extends MultiStateScene
+public class ConsentVisualScene extends MultiSubSectionScene
 {
     private ConsentDocument document;
 

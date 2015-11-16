@@ -10,16 +10,16 @@ import co.touchlab.touchkit.rk.common.step.Step;
 
 /**
  * TODO Consume "onBackPressed" in activity. -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
- * Implement method on {@link MultiStateScene}. If current {@link Scene} is 0, and back is pressed,
- * allow activity to swap to previous step. Else, let {@link MultiStateScene} go back a {@link Scene}.
+ * Implement method on {@link MultiSubSectionScene}. If current {@link Scene} is 0, and back is pressed,
+ * allow activity to swap to previous step. Else, let {@link MultiSubSectionScene} go back a {@link Scene}.
  */
 
-public abstract class MultiStateScene extends Scene
+public abstract class MultiSubSectionScene extends Scene
 {
 
     private SceneAnimator animator;
 
-    public MultiStateScene(Context context, Step step)
+    public MultiSubSectionScene(Context context, Step step)
     {
         super(context, step);
     }
@@ -65,6 +65,7 @@ public abstract class MultiStateScene extends Scene
      */
     public void onSceneRemoved(Scene scene) { }
 
+    //TODO Queue transition to a handler instead of ignoring the request if already transitioning
     public void showScene(int position, boolean withAnimation)
     {
         // If the count is 0, crash!
@@ -108,7 +109,7 @@ public abstract class MultiStateScene extends Scene
         {
             onSceneRemoved(oldScene);
         }
-        
+
         // Save the current position
         setCurrentPosition(position);
     }
@@ -116,7 +117,7 @@ public abstract class MultiStateScene extends Scene
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         if (getChildCount() >= 2) {
-            throw new IllegalStateException("Can't add more than 2 views to a " + MultiStateScene.class.getSimpleName());
+            throw new IllegalStateException("Can't add more than 2 views to a " + MultiSubSectionScene.class.getSimpleName());
         }
         super.addView(child, index, params);
     }
