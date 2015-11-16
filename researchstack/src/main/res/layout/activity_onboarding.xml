@@ -23,7 +23,7 @@
         android:background="#1A000000"
         />
 
-    <co.touchlab.touchkit.rk.ui.views.PageIndicator
+    <co.touchlab.researchstack.ui.views.PageIndicator
         android:id="@+id/pager_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

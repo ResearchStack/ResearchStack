@@ -26,11 +26,11 @@ android {
 
 }
 
-group = 'co.touchlab.touchkit'
-version = '0.0.2'
+group = 'co.touchlab.researchstack'
+version = '0.0.3'
 install {
     repositories.mavenInstaller {
-        pom.artifactId = 'rk'
+        pom.artifactId = 'researchstack'
         pom.packaging = 'aar'
     }
 }

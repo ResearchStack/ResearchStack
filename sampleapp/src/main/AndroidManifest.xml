@@ -1,0 +1,65 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="co.touchlab.sampleapp">
+
+    <application
+        android:name="co.touchlab.researchstack.sampleapp.SampleApplication"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name="co.touchlab.researchstack.ui.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="co.touchlab.researchstack.ui.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/activities">
+        </activity>
+
+        <activity
+            android:name="co.touchlab.researchstack.ui.ViewTaskActivity"
+            android:label="@string/app_name"
+            />
+
+        <activity
+            android:name="co.touchlab.researchstack.ui.UserPinActivity"
+            android:label="@string/app_name"
+            />
+
+        <activity
+            android:name="co.touchlab.researchstack.ui.EmailVerificationActivity"
+            android:label="@string/app_name"
+            />
+
+        <activity
+            android:name="co.touchlab.researchstack.ui.OnboardingActivity"
+            android:label="@string/app_name"
+            />
+
+        <activity
+            android:name="co.touchlab.researchstack.ui.ConsentActivity"
+            android:label="@string/signature_page_title"
+            />
+
+        <activity
+            android:name="co.touchlab.researchstack.ui.ViewVideoActivity"
+            android:label="@string/app_name"
+            />
+
+        <activity
+            android:name="co.touchlab.researchstack.ui.ViewWebDocumentActivity"
+            android:label="@string/app_name"
+            />
+
+    </application>
+
+</manifest>

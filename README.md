@@ -27,7 +27,7 @@ Then add the following entry to your dependencies:
 ```
 dependencies {
     ...
-    compile 'co.touchlab.touchkit:rk:0.0.1'
+    compile 'co.touchlab.researchstack:researchstack:0.0.3'
     ...
 }
 ```

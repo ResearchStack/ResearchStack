@@ -1,0 +1,35 @@
+package co.touchlab.researchstack.ui.scene;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+
+import co.touchlab.researchstack.R;
+import co.touchlab.researchstack.common.step.ConsentSharingStep;
+import co.touchlab.researchstack.common.step.Step;
+import co.touchlab.researchstack.ui.ViewWebDocumentActivity;
+
+public class ConsentSharingScene extends SingleChoiceQuestionScene
+{
+
+    public ConsentSharingScene(Context context, Step step)
+    {
+        super(context, step);
+    }
+
+    @Override
+    public void onSceneCreated(View scene)
+    {
+        super.onSceneCreated(scene);
+        super.setMoreInfo(R.string.consent_share_more_info, o -> learnMoreAboutSharing());
+    }
+
+    private void learnMoreAboutSharing()
+    {
+        ConsentSharingStep step = (ConsentSharingStep) getStep();
+        String title = getString(R.string.consent_learn_more);
+        String docName = step.getLocalizedLearnMoreHTMLContent();
+        Intent launch = ViewWebDocumentActivity.newIntent(getContext(), title, docName);
+        getContext().startActivity(launch);
+    }
+}

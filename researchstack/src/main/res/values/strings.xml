@@ -1,7 +1,7 @@
 <resources>
 
   <!-- App -->
-  <string name="app_name">ResearchKit</string>
+  <string name="app_name">ResearchStack</string>
 
   <!-- Debug -->
   <string name="lorem_name">Lorem Ipsum</string>
