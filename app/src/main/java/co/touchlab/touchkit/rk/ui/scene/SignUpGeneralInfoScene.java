@@ -84,6 +84,10 @@ public class SignUpGeneralInfoScene extends Scene
         {
             birthdate.setTime(user.getBirthDate());
         }
+        else
+        {
+            user.setBirthDate(birthdate.getTime());
+        }
         updateBirthDate();
         RxView.clicks(birthdateTextView)
                 .subscribe(view -> {
