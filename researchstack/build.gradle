@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "0.0.1"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+group = 'co.touchlab.touchkit'
+version = '0.0.2'
+install {
+    repositories.mavenInstaller {
+        pom.artifactId = 'rk'
+        pom.packaging = 'aar'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar', '*.so'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0'
+    compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
+// Because RxAndroid releases are few and far between, it is recommended you also
+// explicitly depend on RxJava's latest version for bug fixes and new features.
+    compile 'io.reactivex:rxjava:1.0.14'
+}
