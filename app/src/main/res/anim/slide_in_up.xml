@@ -19,10 +19,10 @@
 -->
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:interpolator="@android:interpolator/decelerate_quint">
+    android:interpolator="@android:interpolator/decelerate_cubic">
 
     <translate android:fromYDelta="70%p" android:toYDelta="0"
-               android:duration="@android:integer/config_shortAnimTime"/>
+               android:duration="@integer/config_mediumAnimTime"/>
     <alpha android:fromAlpha="0.0" android:toAlpha="1.0"
-           android:duration="@android:integer/config_shortAnimTime" />
+           android:duration="@integer/config_mediumAnimTime" />
 </set>

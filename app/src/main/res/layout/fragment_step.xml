@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:padding="@dimen/padding_medium"
+        android:clipToPadding="false"
         android:orientation="vertical">
 
         <ImageView
