@@ -29,7 +29,7 @@ import co.touchlab.touchkit.rk.common.task.ConsentTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.ui.callbacks.ActivityCallback;
 import co.touchlab.touchkit.rk.ui.callbacks.StepCallbacks;
-import co.touchlab.touchkit.rk.ui.scene.MultiStateScene;
+import co.touchlab.touchkit.rk.ui.scene.MultiSubSectionScene;
 import co.touchlab.touchkit.rk.ui.scene.NotImplementedScene;
 import co.touchlab.touchkit.rk.ui.scene.Scene;
 import co.touchlab.touchkit.rk.ui.scene.SceneAnimator;
@@ -80,9 +80,9 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
     {
         Scene scene = (Scene) findViewById(R.id.current_scene);
 
-        if (scene instanceof MultiStateScene)
+        if (scene instanceof MultiSubSectionScene)
         {
-            MultiStateScene multiStateScene = (MultiStateScene) scene;
+            MultiSubSectionScene multiStateScene = (MultiSubSectionScene) scene;
             int current = multiStateScene.getCurrentPosition();
             int count = multiStateScene.getSceneCount();
             if (current < count - 1)
@@ -107,9 +107,9 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
     {
         Scene scene = (Scene) findViewById(R.id.current_scene);
 
-        if (scene instanceof MultiStateScene)
+        if (scene instanceof MultiSubSectionScene)
         {
-            MultiStateScene multiStateScene = (MultiStateScene) scene;
+            MultiSubSectionScene multiStateScene = (MultiSubSectionScene) scene;
             int current = multiStateScene.getCurrentPosition();
             if (current > 0)
             {
@@ -132,9 +132,15 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
     private void showScene(Step step, int direction)
     {
         Scene oldScene = (Scene) findViewById(R.id.current_scene);
-
         Scene newScene = getSceneForStep(step);
         newScene.setId(R.id.current_scene);
+
+        //If we are navigating back, we want to show the last sub-scene for the step.
+        if (newScene instanceof MultiSubSectionScene && direction == SceneAnimator.SHIFT_RIGHT)
+        {
+            int lastSubScene = ((MultiSubSectionScene) newScene).getSceneCount();
+            ((MultiSubSectionScene) newScene).showScene(lastSubScene - 1 , false);
+        }
 
         if (oldScene != null)
         {
