@@ -1,4 +1,4 @@
-# RK
+# ResearchStack
 
 ## Development Setup
 
