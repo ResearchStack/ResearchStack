@@ -4,6 +4,15 @@ import co.touchlab.touchkit.rk.common.result.QuestionResult;
 import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.Step;
+import co.touchlab.touchkit.rk.ui.scene.SignInScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpAdditionalInfoScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpEligibleScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpGeneralInfoScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpInclusionCriteriaScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpIneligibleScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpPasscodeScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpPermissionsPrimingScene;
+import co.touchlab.touchkit.rk.ui.scene.SignUpPermissionsScene;
 
 /**
  * Created by bradleymcdermott on 10/16/15.
@@ -100,6 +109,7 @@ public abstract class OnboardingTask extends Task
         if (signInStep == null)
         {
             signInStep = new Step(SignInStepIdentifier);
+            signInStep.setSceneClass(SignInScene.class);
         }
         return signInStep;
     }
@@ -109,6 +119,8 @@ public abstract class OnboardingTask extends Task
         if (thankyouStep == null)
         {
             thankyouStep = new Step(SignUpThankYouStepIdentifier);
+            //TODO Create SignUpThankYouScene
+//            thankyouStep.setSceneClass(SignUpThankYouScene.class);
         }
         return thankyouStep;
     }
@@ -118,6 +130,7 @@ public abstract class OnboardingTask extends Task
         if (permissionsStep == null)
         {
             permissionsStep = new Step(SignUpPermissionsStepIdentifier);
+            permissionsStep.setSceneClass(SignUpPermissionsScene.class);
         }
         return permissionsStep;
     }
@@ -127,6 +140,7 @@ public abstract class OnboardingTask extends Task
         if (passcodeStep == null)
         {
             passcodeStep = new Step(SignUpPasscodeStepIdentifier);
+            passcodeStep.setSceneClass(SignUpPasscodeScene.class);
         }
         return passcodeStep;
     }
@@ -145,6 +159,7 @@ public abstract class OnboardingTask extends Task
         if (medicalInfoStep == null)
         {
             medicalInfoStep = new Step(SignUpMedicalInfoStepIdentifier);
+            medicalInfoStep.setSceneClass(SignUpAdditionalInfoScene.class);
         }
         return medicalInfoStep;
     }
@@ -154,6 +169,7 @@ public abstract class OnboardingTask extends Task
         if (generalInfoStep == null)
         {
             generalInfoStep = new Step(SignUpGeneralInfoStepIdentifier);
+            generalInfoStep.setSceneClass(SignUpGeneralInfoScene.class);
         }
         return generalInfoStep;
     }
@@ -163,6 +179,7 @@ public abstract class OnboardingTask extends Task
         if (permissionsPrimingStep == null)
         {
             permissionsPrimingStep = new Step(SignUpPermissionsPrimingStepIdentifier);
+            permissionsPrimingStep.setSceneClass(SignUpPermissionsPrimingScene.class);
         }
         return permissionsPrimingStep;
     }
@@ -172,6 +189,7 @@ public abstract class OnboardingTask extends Task
         if (ineligibleStep == null)
         {
             ineligibleStep = new Step(SignUpIneligibleStepIdentifier);
+            ineligibleStep.setSceneClass(SignUpIneligibleScene.class);
         }
         return ineligibleStep;
     }
@@ -181,6 +199,7 @@ public abstract class OnboardingTask extends Task
         if (eligibleStep == null)
         {
             eligibleStep = new Step(SignUpEligibleStepIdentifier);
+            eligibleStep.setSceneClass(SignUpEligibleScene.class);
         }
         return eligibleStep;
     }
@@ -190,6 +209,7 @@ public abstract class OnboardingTask extends Task
         if (inclusionCriteriaStep == null)
         {
             inclusionCriteriaStep = new Step(SignUpInclusionCriteriaStepIdentifier);
+            inclusionCriteriaStep.setSceneClass(SignUpInclusionCriteriaScene.class);
         }
         return inclusionCriteriaStep;
     }

@@ -3,12 +3,13 @@ package co.touchlab.touchkit.rk.common.step;
 import java.io.Serializable;
 
 import co.touchlab.touchkit.rk.common.task.Task;
-import co.touchlab.touchkit.rk.ui.scene.Scene;
 
 public class Step implements Serializable
 {
 
     private String identifier;
+
+    private Class sceneClass;
 
     private boolean restorable;
 
@@ -131,7 +132,12 @@ public class Step implements Serializable
 
     public Class getSceneClass()
     {
-        return Scene.class;
+        return sceneClass;
+    }
+
+    public void setSceneClass(Class sceneClass)
+    {
+        this.sceneClass = sceneClass;
     }
 
     @Deprecated

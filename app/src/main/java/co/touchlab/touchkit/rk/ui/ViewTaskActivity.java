@@ -26,7 +26,6 @@ import co.touchlab.touchkit.rk.common.result.StepResult;
 import co.touchlab.touchkit.rk.common.result.TaskResult;
 import co.touchlab.touchkit.rk.common.step.Step;
 import co.touchlab.touchkit.rk.common.task.ConsentTask;
-import co.touchlab.touchkit.rk.common.task.SignUpTask;
 import co.touchlab.touchkit.rk.common.task.Task;
 import co.touchlab.touchkit.rk.ui.callbacks.ActivityCallback;
 import co.touchlab.touchkit.rk.ui.callbacks.StepCallbacks;
@@ -34,14 +33,7 @@ import co.touchlab.touchkit.rk.ui.scene.MultiStateScene;
 import co.touchlab.touchkit.rk.ui.scene.NotImplementedScene;
 import co.touchlab.touchkit.rk.ui.scene.Scene;
 import co.touchlab.touchkit.rk.ui.scene.SceneAnimator;
-import co.touchlab.touchkit.rk.ui.scene.SignInScene;
-import co.touchlab.touchkit.rk.ui.scene.SignUpAdditionalInfoScene;
 import co.touchlab.touchkit.rk.ui.scene.SignUpEligibleScene;
-import co.touchlab.touchkit.rk.ui.scene.SignUpGeneralInfoScene;
-import co.touchlab.touchkit.rk.ui.scene.SignUpInclusionCriteriaScene;
-import co.touchlab.touchkit.rk.ui.scene.SignUpIneligibleScene;
-import co.touchlab.touchkit.rk.ui.scene.SignUpPasscodeScene;
-import co.touchlab.touchkit.rk.ui.scene.SignUpPermissionsPrimingScene;
 import co.touchlab.touchkit.rk.ui.scene.SignUpPermissionsScene;
 
 public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks, ActivityCallback
@@ -159,13 +151,6 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
 
     protected Scene getSceneForStep(Step step)
     {
-        if(step == null)
-        {
-            return new NotImplementedScene(this, new Step("NullStep"));
-        }
-
-        LogExt.d(getClass(), "getSceneForStep() - " + step);
-
         try
         {
             Class cls = step.getSceneClass();
@@ -179,56 +164,8 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
             LogExt.e(getClass(), e);
         }
 
-        if (step.getIdentifier()
-                .equals(SignUpTask.SignUpInclusionCriteriaStepIdentifier))
-        {
-            return new SignUpInclusionCriteriaScene(this, step);
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpTask.SignUpIneligibleStepIdentifier))
-        {
-            return new SignUpIneligibleScene(this, step);
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpTask.SignUpEligibleStepIdentifier))
-        {
-            return new SignUpEligibleScene(this, step);
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpTask.SignUpPermissionsPrimingStepIdentifier))
-        {
-            return new SignUpPermissionsPrimingScene(this, step);
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpTask.SignUpGeneralInfoStepIdentifier))
-        {
-            return new SignUpGeneralInfoScene(this, step);
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpTask.SignUpMedicalInfoStepIdentifier))
-        {
-            return new SignUpAdditionalInfoScene(this, step);
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpTask.SignUpPasscodeStepIdentifier))
-        {
-            return new SignUpPasscodeScene(this, step);
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpTask.SignUpPermissionsStepIdentifier))
-        {
-            return new SignUpPermissionsScene(this, step);
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpTask.SignInStepIdentifier))
-        {
-            return new SignInScene(this, step);
-        }
-        else
-        {
-            LogExt.d(getClass(), "No implementation for this step " + step.getIdentifier());
-            return new NotImplementedScene(this, step);
-        }
+        LogExt.d(getClass(), "No implementation for this step " + step.getIdentifier());
+        return new NotImplementedScene(this, step == null ? new Step("NullStep") : step);
     }
 
     @Override
