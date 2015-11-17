@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import co.touchlab.researchstack.R;
+import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.model.StudyOverviewModel;
 import co.touchlab.researchstack.common.task.SignInTask;
 import co.touchlab.researchstack.common.task.SignUpTask;
@@ -55,9 +56,9 @@ public class OnboardingActivity extends AppCompatActivity
     //TODO Read on main thread for intense UI blockage.
     private StudyOverviewModel parseStudyOverviewModel()
     {
-        return JsonUtils.loadClassFromRawJson(OnboardingActivity.this,
-                StudyOverviewModel.class,
-                "study_overview");
+        int fileResId = ResearchStackApplication.getInstance().getStudyOverviewResourceId();
+        String formName = getResources().getResourceEntryName(fileResId);
+        return JsonUtils.loadClassFromRawJson(OnboardingActivity.this, StudyOverviewModel.class, formName);
     }
 
     public void onSignUpClicked(View view)
