@@ -34,4 +34,42 @@
         <item name="guidelineHeight">1dp</item>
     </style>
 
+    <!-- Settings -->
+
+    <style name="Divider">
+        <item name="android:background">@color/divider_settings</item>
+    </style>
+
+    <style name="Settings.Divider.Horizontal" parent="Divider">
+        <item name="android:layout_marginLeft">56dp</item>
+    </style>
+
+    <style name="Settings.Divider.Vertical" parent="Divider">
+        <item name="android:layout_marginTop">56dp</item>
+    </style>
+
+    <style name="Settings">
+        <item name="android:paddingLeft">56dp</item>
+    </style>
+
+    <style name="Settings.Header">
+        <item name="android:paddingTop">@dimen/padding_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+
+    <style name="Settings.Item">
+        <item name="android:minHeight">@dimen/item_size_default</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textSize">@dimen/text_size_default</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Settings.Footer">
+        <item name="android:minHeight">56dp</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+
 </resources>

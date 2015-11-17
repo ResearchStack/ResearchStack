@@ -1,11 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-    <TextView
-        android:text="Unimplemented settings fragment"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_small"
+        >
+
+        <TextView
+            style="@style/Settings.Header"
+            android:text="@string/settings_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/settings_reminders"
+            style="@style/Settings.Item"
+            android:text="@string/settings_reminders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/settings_auto_lock"
+            style="@style/Settings.Item"
+            android:text="@string/settings_auto_lock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/settings_passcode"
+            style="@style/Settings.Item"
+            android:text="@string/settings_passcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/settings_sharing"
+            style="@style/Settings.Item"
+            android:text="@string/settings_sharing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/settings_permissions"
+            style="@style/Settings.Item"
+            android:text="@string/settings_permissions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <View
+            style="@style/Settings.Divider.Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_size_divider"
+            />
+
+        <TextView
+            style="@style/Settings.Header"
+            android:text="@string/settings_user_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/settings_review_consent"
+            style="@style/Settings.Item"
+            android:text="@string/settings_review_consent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/settings_export_data"
+            style="@style/Settings.Item"
+            android:text="@string/settings_export_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <View
+            style="@style/Settings.Divider.Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_size_divider"
+            />
+
+        <TextView
+            style="@style/Settings.Header"
+            android:text="@string/settings_legal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/settings_privacy_policy"
+            style="@style/Settings.Item"
+            android:text="@string/settings_privacy_policy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/settings_license_info"
+            style="@style/Settings.Item"
+            android:text="@string/settings_license_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/settings_version"
+            style="@style/Settings.Footer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/settings_version"
+            />
+
+    </LinearLayout>
+
+</ScrollView>

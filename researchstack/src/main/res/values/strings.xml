@@ -53,6 +53,23 @@
   <string name="consent_signature_instruction">Please sign using your finger on the line below.</string>
   <string name="consent_signature_placeholder">Sign Here</string>
 
+  <!-- Settings -->
+  <string name="settings_app">APP BEHAVIOR</string>
+  <string name="settings_reminders">Activity Reminders</string>
+  <string name="settings_auto_lock">Auto-Lock</string>
+  <string name="settings_passcode">Change Passcode</string>
+  <string name="settings_sharing">Sharing Options</string>
+  <string name="settings_permissions">Permissions</string>
+
+  <string name="settings_user_data">USER DATA</string>
+  <string name="settings_review_consent">Review Consent</string>
+  <string name="settings_export_data">Export Data</string>
+
+  <string name="settings_legal">LEGAL</string>
+  <string name="settings_privacy_policy">Privacy Policy</string>
+  <string name="settings_license_info">License Information</string>
+
+  <string name="settings_version">Version %1$s (%2$s)</string>
 
   <!--Other -->
   <string name="step_skip">Skip this question</string>
