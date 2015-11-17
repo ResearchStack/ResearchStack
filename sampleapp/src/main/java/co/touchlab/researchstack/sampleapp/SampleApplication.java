@@ -6,7 +6,6 @@ import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.Constants;
 import co.touchlab.researchstack.common.model.ConsentSectionModel;
 import co.touchlab.researchstack.utils.JsonUtils;
-import co.touchlab.sampleapp.R;
 
 /**
  * Created by bradleymcdermott on 11/12/15.

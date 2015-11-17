@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="co.touchlab.sampleapp">
+          package="co.touchlab.researchstack.sampleapp">
 
     <application
         android:name="co.touchlab.researchstack.sampleapp.SampleApplication"
