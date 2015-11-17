@@ -88,7 +88,10 @@ public abstract class ResearchStackApplication extends Application
 
     public int getDrawableResourceId(Context context, String name)
     {
-        return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+        return context.getResources()
+                .getIdentifier(name,
+                        "drawable",
+                        context.getPackageName());
     }
 
     public abstract boolean isSignatureEnabledInConsent();
@@ -99,6 +102,8 @@ public abstract class ResearchStackApplication extends Application
 
     // TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
     public abstract Constants.UserInfoType[] getUserInfoTypes();
+
+    public abstract Class getInclusionCriteriaSceneClass();
 
     public User getCurrentUser()
     {

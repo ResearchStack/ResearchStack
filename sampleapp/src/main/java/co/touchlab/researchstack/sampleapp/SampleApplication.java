@@ -87,4 +87,10 @@ public class SampleApplication extends ResearchStackApplication
                 Constants.UserInfoType.Weight
         };
     }
+
+    @Override
+    public Class getInclusionCriteriaSceneClass()
+    {
+        return SignUpInclusionCriteriaScene.class;
+    }
 }

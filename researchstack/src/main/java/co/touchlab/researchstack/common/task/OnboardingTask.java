@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.common.task;
 
+import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.result.QuestionResult;
 import co.touchlab.researchstack.common.result.StepResult;
 import co.touchlab.researchstack.common.result.TaskResult;
@@ -8,7 +9,6 @@ import co.touchlab.researchstack.ui.scene.SignInScene;
 import co.touchlab.researchstack.ui.scene.SignUpAdditionalInfoScene;
 import co.touchlab.researchstack.ui.scene.SignUpEligibleScene;
 import co.touchlab.researchstack.ui.scene.SignUpGeneralInfoScene;
-import co.touchlab.researchstack.ui.scene.SignUpInclusionCriteriaScene;
 import co.touchlab.researchstack.ui.scene.SignUpIneligibleScene;
 import co.touchlab.researchstack.ui.scene.SignUpPasscodeScene;
 import co.touchlab.researchstack.ui.scene.SignUpPermissionsPrimingScene;
@@ -19,17 +19,17 @@ import co.touchlab.researchstack.ui.scene.SignUpPermissionsScene;
  */
 public abstract class OnboardingTask extends Task
 {
-    public static final String SignUpInclusionCriteriaStepIdentifier   = "InclusionCriteria";
-    public static final String SignUpEligibleStepIdentifier            = "Eligible";
-    public static final String SignUpIneligibleStepIdentifier          = "Ineligible";
-    public static final String SignUpGeneralInfoStepIdentifier         = "GeneralInfo";
-    public static final String SignUpMedicalInfoStepIdentifier         = "MedicalInfo";
-    public static final String SignUpCustomInfoStepIdentifier          = "CustomInfo";
-    public static final String SignUpPasscodeStepIdentifier            = "Passcode";
-    public static final String SignUpPermissionsStepIdentifier         = "Permissions";
-    public static final String SignUpThankYouStepIdentifier            = "ThankYou";
-    public static final String SignInStepIdentifier                    = "SignIn";
-    public static final String SignUpPermissionsPrimingStepIdentifier  = "PermissionsPriming";
+    public static final String SignUpInclusionCriteriaStepIdentifier = "InclusionCriteria";
+    public static final String SignUpEligibleStepIdentifier = "Eligible";
+    public static final String SignUpIneligibleStepIdentifier = "Ineligible";
+    public static final String SignUpGeneralInfoStepIdentifier = "GeneralInfo";
+    public static final String SignUpMedicalInfoStepIdentifier = "MedicalInfo";
+    public static final String SignUpCustomInfoStepIdentifier = "CustomInfo";
+    public static final String SignUpPasscodeStepIdentifier = "Passcode";
+    public static final String SignUpPermissionsStepIdentifier = "Permissions";
+    public static final String SignUpThankYouStepIdentifier = "ThankYou";
+    public static final String SignInStepIdentifier = "SignIn";
+    public static final String SignUpPermissionsPrimingStepIdentifier = "PermissionsPriming";
     private Step inclusionCriteriaStep;
     private Step eligibleStep;
     private Step ineligibleStep;
@@ -209,7 +209,8 @@ public abstract class OnboardingTask extends Task
         if (inclusionCriteriaStep == null)
         {
             inclusionCriteriaStep = new Step(SignUpInclusionCriteriaStepIdentifier);
-            inclusionCriteriaStep.setSceneClass(SignUpInclusionCriteriaScene.class);
+            inclusionCriteriaStep.setSceneClass(ResearchStackApplication.getInstance()
+                    .getInclusionCriteriaSceneClass());
         }
         return inclusionCriteriaStep;
     }
