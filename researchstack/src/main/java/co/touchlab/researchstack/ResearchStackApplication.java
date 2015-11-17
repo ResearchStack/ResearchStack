@@ -58,6 +58,8 @@ public abstract class ResearchStackApplication extends Application
 
     public abstract int getConsentSections();
 
+    public abstract int getPrivacyPolicy();
+
     public String getExternalSDAppFolder()
     {
         return "demo_researchstack";

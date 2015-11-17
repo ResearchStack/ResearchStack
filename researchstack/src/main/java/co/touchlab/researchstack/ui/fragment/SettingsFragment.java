@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -10,8 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jakewharton.rxbinding.view.RxView;
+
 import co.touchlab.researchstack.BuildConfig;
 import co.touchlab.researchstack.R;
+import co.touchlab.researchstack.ResearchStackApplication;
+import co.touchlab.researchstack.ui.ViewWebDocumentActivity;
+import rx.functions.Action1;
 
 /**
  * Created by bradleymcdermott on 10/28/15.
@@ -51,8 +57,7 @@ public class SettingsFragment extends Fragment
         //TODO Implement
         debug_initItem(R.id.settings_export_data);
 
-        //TODO Implement
-        debug_initItem(R.id.settings_privacy_policy);
+        initItem(R.id.settings_privacy_policy, v -> showPrivacyPolicy());
 
         //TODO Implement
         debug_initItem(R.id.settings_license_info);
@@ -71,6 +76,26 @@ public class SettingsFragment extends Fragment
         getView().findViewById(id).setOnClickListener(v -> Toast
                 .makeText(getContext(), ((TextView) v).getText().toString(), Toast.LENGTH_SHORT)
                 .show());
+    }
+
+    public void initItem(@IdRes int id, Action1<? super Object> action)
+    {
+        if(getView() != null)
+        {
+            View v = getView().findViewById(id);
+            RxView.clicks(v).subscribe(action);
+        }
+    }
+
+    private void showPrivacyPolicy()
+    {
+        ResearchStackApplication applicationContext = (ResearchStackApplication) getContext()
+                .getApplicationContext();
+        int resId = applicationContext.getPrivacyPolicy();
+        String docName = getResources().getResourceEntryName(resId);
+        Intent intent = ViewWebDocumentActivity
+                .newIntent(getContext(), getString(R.string.privacy_policy), docName);
+        startActivity(intent);
     }
 
 }

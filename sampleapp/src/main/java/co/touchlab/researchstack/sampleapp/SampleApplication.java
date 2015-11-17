@@ -43,6 +43,12 @@ public class SampleApplication extends ResearchStackApplication
     }
 
     @Override
+    public int getPrivacyPolicy()
+    {
+        return R.raw.app_privacy_policy;
+    }
+
+    @Override
     public String getExternalSDAppFolder()
     {
         return "demo_researchstack";
