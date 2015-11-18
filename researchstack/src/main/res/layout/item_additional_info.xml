@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:gravity="center_horizontal"
               android:layout_width="match_parent"
@@ -18,14 +17,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"/>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/height"
-            tools:text=""
-            android:textSize="18sp"
-            android:clickable="true"
-            style="@style/Widget.AppCompat.EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <include layout="@layout/view_height_picker" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
