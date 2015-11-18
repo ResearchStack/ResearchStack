@@ -82,10 +82,6 @@ public class MultiChoiceQuestionScene <T> extends Scene
             });
         }
 
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-
-        });
-
         return radioGroup;
     }
 
@@ -93,5 +89,11 @@ public class MultiChoiceQuestionScene <T> extends Scene
     public StepResult createNewStepResult(String stepIdentifier)
     {
         return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
+    }
+
+    @Override
+    public boolean isAnswerValid()
+    {
+        return results.size() > 0;
     }
 }

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -59,7 +60,9 @@ public abstract class Scene extends RelativeLayout
 
     public Scene(Context context, Step step)
     {
-        this(context, step, null);
+        this(context,
+                step,
+                null);
     }
 
     public Scene(Context context, Step step, StepResult result)
@@ -155,6 +158,13 @@ public abstract class Scene extends RelativeLayout
         if (callbacks != null && isAnswerValid())
         {
             callbacks.onNextPressed(step);
+        }
+        else if (!isAnswerValid())
+        {
+            Toast.makeText(getContext(),
+                    R.string.please_complete_step,
+                    Toast.LENGTH_SHORT)
+                    .show();
         }
     }
 

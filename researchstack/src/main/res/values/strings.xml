@@ -134,5 +134,6 @@
   <string name="legal">Legal</string>
   <string name="privacy_policy">Privacy Policy</string>
   <string name="license_information">License Information</string>
+  <string name="please_complete_step">Please complete this step before moving on</string>
 
 </resources>

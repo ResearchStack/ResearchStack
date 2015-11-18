@@ -16,6 +16,8 @@ import co.touchlab.researchstack.common.step.Step;
 public class IntegerQuestionScene extends Scene
 {
 
+    private IntegerAnswerFormat answerFormat;
+
     public IntegerQuestionScene(Context context, Step step)
     {
         super(context, step);
@@ -28,11 +30,16 @@ public class IntegerQuestionScene extends Scene
                 getStepResult().getResultForIdentifier(getStep().getIdentifier());;
 
         NumberPicker numberPicker = (NumberPicker) inflater.inflate(R.layout.item_number_picker,
-                                                                    null);
-        IntegerAnswerFormat answerFormat = (IntegerAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
+                null);
+        answerFormat = (IntegerAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
 
         numberPicker.setMinValue(answerFormat.getMinValue());
-        numberPicker.setMaxValue(answerFormat.getMaxValue());
+
+        // if max and min are equal, don't set a max (it's 0/0 if they don't set min/max)
+        if (answerFormat.getMaxValue() != answerFormat.getMinValue())
+        {
+            numberPicker.setMaxValue(answerFormat.getMaxValue());
+        }
 
         numberPicker.setOnValueChangedListener((picker, oldVal, newVal) -> {
             QuestionResult<Integer> questionResult = new QuestionResult<Integer>(
@@ -53,5 +60,12 @@ public class IntegerQuestionScene extends Scene
     public StepResult createNewStepResult(String stepIdentifier)
     {
         return new StepResult<QuestionResult<String>>(stepIdentifier);
+    }
+
+    @Override
+    public boolean isAnswerValid()
+    {
+        // max/min already ensures a valid number, this may change if we start with null
+        return true;
     }
 }

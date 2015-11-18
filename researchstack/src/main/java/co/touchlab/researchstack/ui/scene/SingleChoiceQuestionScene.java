@@ -18,6 +18,8 @@ import co.touchlab.researchstack.common.step.Step;
 public class SingleChoiceQuestionScene<T> extends Scene
 {
 
+    private RadioGroup radioGroup;
+
     public SingleChoiceQuestionScene(Context context, Step step)
     {
         super(context, step);
@@ -27,7 +29,7 @@ public class SingleChoiceQuestionScene<T> extends Scene
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
         TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
-        RadioGroup radioGroup = new RadioGroup(getContext());
+        radioGroup = new RadioGroup(getContext());
         final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
 
         QuestionResult<Boolean> questionResult = (QuestionResult<Boolean>)
@@ -37,7 +39,7 @@ public class SingleChoiceQuestionScene<T> extends Scene
         {
             TextChoice textChoice = textChoices[i];
             RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.item_radio,
-                                                                     radioGroup, false);
+                    radioGroup, false);
             radioButton.setText(textChoice.getText());
             radioButton.setId(i);
             radioGroup.addView(radioButton);
@@ -63,5 +65,11 @@ public class SingleChoiceQuestionScene<T> extends Scene
     public StepResult createNewStepResult(String stepIdentifier)
     {
         return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
+    }
+
+    @Override
+    public boolean isAnswerValid()
+    {
+        return radioGroup.getCheckedRadioButtonId() != -1;
     }
 }
