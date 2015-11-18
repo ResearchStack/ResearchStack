@@ -27,8 +27,7 @@ public class ConsentSignatureResult extends StepResult
                 signature.getTitle(),
                 signature.getSignatureDateFormatString(),
                 signature.getIdentifier(),
-                signature.getGivenName(),
-                signature.getFamilyName(),
+                signature.getFullName(),
                 signature.getSignatureImage(),
                 signature.getSignatureDate()
                 );

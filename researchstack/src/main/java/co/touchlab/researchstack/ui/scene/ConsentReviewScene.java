@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +32,7 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
     public static final int SECTION_REVIEW_SIGNATURE = 2;
 
     private static final String NameFormIdentifier = "nameForm";
-    private static final String GivenNameIdentifier = "given";
-    private static final String FamilyNameIdentifier = "family";
+    private static final String NameIdentifier = "name";
 
     public List<Integer> sections;
 
@@ -80,7 +78,7 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
         }
         else if (section == SECTION_REVIEW_NAME)
         {
-
+            // TODO now that it's the full name, it probably doesn't need to be a form step
             FormStep formStep = new FormStep(NameFormIdentifier,
                                              getString(R.string.consent_name_title),
                                              step.getText());
@@ -97,21 +95,12 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
             List<FormScene.FormItem> items = new ArrayList<>();
             String placeholder = getResources().getString(R.string.consent_name_placeholder);
 
-            String givenText = getResources().getString(R.string.consent_name_first);
+            String nameText = getResources().getString(R.string.consent_name_full);
             FormScene.FormItem givenName = new FormScene.FormItem(
-                    GivenNameIdentifier, givenText, format, placeholder);
+                    NameIdentifier, nameText, format, placeholder);
             items.add(givenName);
 
-            String familyText = getResources().getString(R.string.consent_name_last);
-            FormScene.FormItem familyName = new FormScene.FormItem(
-                    FamilyNameIdentifier, familyText, format, placeholder);
-            items.add(familyName);
-
             formStep.setFormItems(items);
-
-            if (getResources().getBoolean(R.bool.lang_display_last_name_first)) {
-                Collections.reverse(items);
-            }
 
             return new FormScene(getContext(), formStep);
         }
@@ -181,13 +170,9 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
         {
             StepResult formResult = scene.getStepResult();
 
-            TextQuestionResult firstNameResult = (TextQuestionResult) formResult
-                    .getResultForIdentifier(GivenNameIdentifier);
-            signature.setGivenName(firstNameResult.getTextAnswer());
-
-            TextQuestionResult lastNameResult = (TextQuestionResult) formResult
-                    .getResultForIdentifier(FamilyNameIdentifier);
-            signature.setFamilyName(lastNameResult.getTextAnswer());
+            TextQuestionResult nameResult = (TextQuestionResult) formResult
+                    .getResultForIdentifier(NameIdentifier);
+            signature.setFullName(nameResult.getTextAnswer());
         }
         else if (scene instanceof ConsentReviewSignatureScene)
         {

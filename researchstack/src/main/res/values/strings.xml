@@ -44,8 +44,7 @@
   <string name="consent_review_reason">By agreeing you confirm that you read the information and that you wish to take part in this research study.</string>
   <string name="consent_review_instruction">Review the form below, and tap Agree if you\'re ready to continue.</string>
   <string name="consent_name_title">Consent</string>
-  <string name="consent_name_first">First Name</string>
-  <string name="consent_name_last">Last Name</string>
+  <string name="consent_name_full">Full Name</string>
   <string name="consent_name_placeholder">Required</string>
 
   <string name="signature_page_title">Signature</string>

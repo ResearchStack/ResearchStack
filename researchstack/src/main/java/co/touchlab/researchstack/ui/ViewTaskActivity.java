@@ -279,9 +279,8 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
             {
                 // TODO just use full name to begin with and don't concat names like this
                 // TODO get signature date
-                String fullName = signature.getGivenName() + " " + signature.getFamilyName();
-                currentUser.setName(fullName);
-                currentUser.setConsentSignatureName(fullName);
+                currentUser.setName(signature.getFullName());
+                currentUser.setConsentSignatureName(signature.getFullName());
                 currentUser.setConsentSignatureImage(signature.getSignatureImage());
                 currentUser.setUserConsented(true);
 

@@ -39,14 +39,9 @@ public class ConsentSignature implements Serializable, Cloneable
     private String title;
 
     /**
-     * The given name (first name in Western languages)
+     * Full name
      */
-    private String givenName;
-
-    /**
-     * The family name (last name in Western languages)
-     */
-    private String familyName;
+    private String fullName;
 
     /**
      * The image of the signature, if any.
@@ -79,19 +74,17 @@ public class ConsentSignature implements Serializable, Cloneable
      * @param title               The title of the signatory.
      * @param dateFormat          The format string to use when formatting the date of signature.
      * @param identifier          The identifier of the signature, unique within this document.
-     * @param givenName           The given name of the signatory.
-     * @param familyName          The family name of the signatory.
+     * @param fullName           The given name of the signatory.
      * @param signatureImage      An image of the signature.
      * @param signatureDate       The date on which the signature was obtained, represented as a string.
      */
-    public ConsentSignature(String title, String dateFormat, String identifier, @Nullable String givenName, @Nullable String familyName, @Nullable byte [] signatureImage, @Nullable String signatureDate)
+    public ConsentSignature(String title, String dateFormat, String identifier, @Nullable String fullName, @Nullable byte [] signatureImage, @Nullable String signatureDate)
     {
         this();
         this.title = title;
         this.signatureDateFormatString = dateFormat;
         this.identifier = identifier;
-        this.givenName = givenName;
-        this.familyName = familyName;
+        this.fullName = fullName;
         this.signatureImage = signatureImage;
         this.signatureDate = signatureDate;
     }
@@ -103,7 +96,7 @@ public class ConsentSignature implements Serializable, Cloneable
      */
     public ConsentSignature(String title,  String dateFormat, String identifier)
     {
-        this(title, dateFormat, identifier, null, null, null, null);
+        this(title, dateFormat, identifier, null, null, null);
     }
 
     public void setIdentifier(String identifier)
@@ -147,8 +140,7 @@ public class ConsentSignature implements Serializable, Cloneable
         return o instanceof ConsentSignature &&
                 ((ConsentSignature) o).identifier.equals(identifier) &&
                 ((ConsentSignature) o).title.equals(title) &&
-                ((ConsentSignature) o).givenName.equals(givenName) &&
-                ((ConsentSignature) o).familyName.equals(familyName) &&
+                ((ConsentSignature) o).fullName.equals(fullName) &&
                 ((ConsentSignature) o).signatureDate.equals(signatureDate) &&
                 ((ConsentSignature) o).signatureImage.equals(signatureImage) &&
                 ((ConsentSignature) o).signatureDateFormatString.equals(signatureDateFormatString) &&
@@ -161,24 +153,14 @@ public class ConsentSignature implements Serializable, Cloneable
         return title;
     }
 
-    public void setGivenName(String givenName)
+    public void setFullName(String fullName)
     {
-        this.givenName = givenName;
+        this.fullName = fullName;
     }
 
-    public String getGivenName()
+    public String getFullName()
     {
-        return givenName;
-    }
-
-    public void setFamilyName(String familyName)
-    {
-        this.familyName = familyName;
-    }
-
-    public String getFamilyName()
-    {
-        return familyName;
+        return fullName;
     }
 
     public void setSignatureImage(byte [] signatureImage)
