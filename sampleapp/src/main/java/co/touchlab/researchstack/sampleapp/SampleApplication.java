@@ -1,11 +1,7 @@
 package co.touchlab.researchstack.sampleapp;
 
-import android.content.Context;
-
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.Constants;
-import co.touchlab.researchstack.common.model.ConsentSectionModel;
-import co.touchlab.researchstack.utils.JsonUtils;
 
 /**
  * Created by bradleymcdermott on 11/12/15.
@@ -43,9 +39,21 @@ public class SampleApplication extends ResearchStackApplication
     }
 
     @Override
+    public int getLearnSections()
+    {
+        return R.raw.learn_items;
+    }
+
+    @Override
     public int getPrivacyPolicy()
     {
         return R.raw.app_privacy_policy;
+    }
+
+    @Override
+    public int getLicenseSections()
+    {
+        return R.raw.license_items;
     }
 
     @Override
@@ -58,16 +66,6 @@ public class SampleApplication extends ResearchStackApplication
     public int getAppName()
     {
         return co.touchlab.researchstack.R.string.app_name;
-    }
-
-    //TODO Read on main thread for intense UI blockage.
-    @Override
-    public ConsentSectionModel getConsentSectionsAndHtmlContent(Context context)
-    {
-        return JsonUtils.loadClassFromRawJson(context,
-                ConsentSectionModel.class,
-                R.raw.consent_section);
-
     }
 
     @Override

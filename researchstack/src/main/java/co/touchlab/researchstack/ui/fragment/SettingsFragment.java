@@ -2,89 +2,62 @@ package co.touchlab.researchstack.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
-
-import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.BuildConfig;
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.ResearchStackApplication;
+import co.touchlab.researchstack.common.helpers.LogExt;
+import co.touchlab.researchstack.ui.ViewLicensesActivity;
 import co.touchlab.researchstack.ui.ViewWebDocumentActivity;
-import rx.functions.Action1;
 
 /**
- * Created by bradleymcdermott on 10/28/15.
+ * TODO Try and point to a single instance of a key instead of defining them in XML and in code.
+ * TODO Version text currently points to ResearchStack, implement a way of getting version of SampleApp
+ * TODO Implement screens for all items in {@link #onPreferenceTreeClick}
  */
-public class SettingsFragment extends Fragment
+public class SettingsFragment extends PreferenceFragmentCompat
 {
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        return inflater.inflate(R.layout.fragment_settings, container, false);
-    }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    public void onCreatePreferences(Bundle bundle, String s)
     {
-        super.onViewCreated(view, savedInstanceState);
+        super.addPreferencesFromResource(R.xml.settings);
 
-        //TODO Implement
-        debug_initItem(R.id.settings_reminders);
-
-        //TODO Implement
-        debug_initItem(R.id.settings_auto_lock);
-
-        //TODO Implement
-        debug_initItem(R.id.settings_passcode);
-
-        //TODO Implement
-        debug_initItem(R.id.settings_sharing);
-
-        //TODO Implement
-        debug_initItem(R.id.settings_permissions);
-
-        //TODO Implement
-        debug_initItem(R.id.settings_review_consent);
-
-        //TODO Implement
-        debug_initItem(R.id.settings_export_data);
-
-        initItem(R.id.settings_privacy_policy, v -> showPrivacyPolicy());
-
-        //TODO Implement
-        debug_initItem(R.id.settings_license_info);
-
-        String version = getString(R.string.settings_version, BuildConfig.VERSION_NAME,
-                                   BuildConfig.VERSION_CODE);
-        ((TextView) view.findViewById(R.id.settings_version)).setText(version);
-    }
-
-    /**
-     * TODO Debug helper method to init settings items.
-     */
-    @Deprecated
-    public void debug_initItem(@IdRes int id)
-    {
-        getView().findViewById(id).setOnClickListener(v -> Toast
-                .makeText(getContext(), ((TextView) v).getText().toString(), Toast.LENGTH_SHORT)
-                .show());
-    }
-
-    public void initItem(@IdRes int id, Action1<? super Object> action)
-    {
-        if(getView() != null)
+        Preference version = getPreferenceManager().findPreference("version");
+        if(version != null)
         {
-            View v = getView().findViewById(id);
-            RxView.clicks(v).subscribe(action);
+            String versionText = getString(R.string.settings_version, BuildConfig.VERSION_NAME,
+                                           BuildConfig.VERSION_CODE);
+            version.setSummary(versionText);
         }
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference)
+    {
+        LogExt.i(getClass(), preference.getTitle().toString());
+
+        if(preference.hasKey())
+        {
+            switch(preference.getKey())
+            {
+                case "privacy_policy":
+                    showPrivacyPolicy();
+                    return true;
+
+                case "license_information":
+                    showLicenseInformation();
+                    return true;
+            }
+        }
+
+        Toast.makeText(getActivity(), "TODO: " + preference.getTitle().toString(),
+                       Toast.LENGTH_SHORT).show();
+
+        return super.onPreferenceTreeClick(preference);
     }
 
     private void showPrivacyPolicy()
@@ -98,4 +71,9 @@ public class SettingsFragment extends Fragment
         startActivity(intent);
     }
 
+    private void showLicenseInformation()
+    {
+        Intent intent = ViewLicensesActivity.newIntent(getContext());
+        startActivity(intent);
+    }
 }

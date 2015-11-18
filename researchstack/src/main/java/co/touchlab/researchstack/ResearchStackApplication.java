@@ -15,7 +15,6 @@ import java.io.Reader;
 
 import co.touchlab.researchstack.common.Constants;
 import co.touchlab.researchstack.common.helpers.LogExt;
-import co.touchlab.researchstack.common.model.ConsentSectionModel;
 import co.touchlab.researchstack.common.model.User;
 
 public abstract class ResearchStackApplication extends Application
@@ -24,6 +23,7 @@ public abstract class ResearchStackApplication extends Application
     protected static ResearchStackApplication instance;
 
     private User currentUser;
+    private int learnSections;
 
     @Override
     public void onCreate()
@@ -58,7 +58,11 @@ public abstract class ResearchStackApplication extends Application
 
     public abstract int getConsentSections();
 
+    public abstract int getLearnSections();
+
     public abstract int getPrivacyPolicy();
+
+    public abstract int getLicenseSections();
 
     public String getExternalSDAppFolder()
     {
@@ -66,9 +70,6 @@ public abstract class ResearchStackApplication extends Application
     }
 
     public abstract int getAppName();
-
-    //TODO Read on main thread for intense UI blockage.
-    public abstract ConsentSectionModel getConsentSectionsAndHtmlContent(Context context);
 
     public String getHTMLFilePath(String docName)
     {

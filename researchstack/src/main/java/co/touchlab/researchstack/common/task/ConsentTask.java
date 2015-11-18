@@ -15,6 +15,7 @@ import co.touchlab.researchstack.common.step.ConsentReviewStep;
 import co.touchlab.researchstack.common.step.ConsentSharingStep;
 import co.touchlab.researchstack.common.step.ConsentVisualStep;
 import co.touchlab.researchstack.common.step.Step;
+import co.touchlab.researchstack.utils.JsonUtils;
 
 public class ConsentTask extends OrderedTask
 {
@@ -23,9 +24,14 @@ public class ConsentTask extends OrderedTask
     {
         super("consent");
 
-        ConsentSectionModel data = ResearchStackApplication.getInstance().getConsentSectionsAndHtmlContent(context);
-
         Resources r = context.getResources();
+
+        //TODO Read on main thread for intense UI blockage.
+        int consentResId =  ResearchStackApplication.getInstance().getConsentSections();
+        String fileName = r.getResourceEntryName(consentResId);
+        ConsentSectionModel data = JsonUtils.loadClassFromRawJson(context, ConsentSectionModel.class,
+                                                                fileName);
+
         List<ConsentSection> sections = data.getSections();
         ConsentSignature signature = new ConsentSignature(r.getString(R.string.participant), null, "participant");
         signature.setRequiresSignatureImage(ResearchStackApplication.getInstance().isSignatureEnabledInConsent());
