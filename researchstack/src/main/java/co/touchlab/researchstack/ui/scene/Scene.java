@@ -157,6 +157,10 @@ public abstract class Scene extends RelativeLayout
     {
         if (callbacks != null && isAnswerValid())
         {
+            if (getStep() != null){
+                callbacks.onStepResultChanged(getStep(), getStepResult());
+            }
+
             callbacks.onNextPressed(step);
         }
         else if (!isAnswerValid())
@@ -273,7 +277,7 @@ public abstract class Scene extends RelativeLayout
         setTitle(title);
     }
 
-    public void setTitle(String string)
+    public void setTitle(CharSequence string)
     {
         title.setText(string);
     }
@@ -367,6 +371,15 @@ public abstract class Scene extends RelativeLayout
     public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    /**
+     * Method allowing a scene to consume a back event.
+     * @return
+     */
+    public boolean isBackEventConsumed()
+    {
+        return false;
     }
 
     @Override

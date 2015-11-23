@@ -78,25 +78,26 @@ public class ConsentSignature implements Serializable, Cloneable
      * @param signatureImage      An image of the signature.
      * @param signatureDate       The date on which the signature was obtained, represented as a string.
      */
-    public ConsentSignature(String title, String dateFormat, String identifier, @Nullable String fullName, @Nullable byte [] signatureImage, @Nullable String signatureDate)
+    public ConsentSignature(String identifier, String title, String dateFormat, @Nullable String fullName, @Nullable byte [] signatureImage, @Nullable String signatureDate)
     {
         this();
+        this.identifier = identifier;
         this.title = title;
         this.signatureDateFormatString = dateFormat;
-        this.identifier = identifier;
         this.fullName = fullName;
         this.signatureImage = signatureImage;
         this.signatureDate = signatureDate;
     }
 
     /**
+     *
      * @param title               The title of the signatory.
      * @param dateFormat    The format string to use when formatting the date of signature.
      * @param identifier          The identifier of the signature, unique within this document.
      */
-    public ConsentSignature(String title,  String dateFormat, String identifier)
+    public ConsentSignature(String identifier, String title, String dateFormat)
     {
-        this(title, dateFormat, identifier, null, null, null);
+        this(identifier, title, dateFormat, null, null, null);
     }
 
     public void setIdentifier(String identifier)

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    android:gravity="center_horizontal"
+    android:padding="16dp">
+
+    <RadioGroup
+        android:id="@+id/rdio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        >
+
+        <RadioButton
+            android:id="@+id/btn_true"
+            android:text="@string/btn_true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:textColor="@drawable/text_color_accent"
+            android:minWidth="114dp"
+            android:minHeight="96dp"
+            android:padding="16dp"
+            android:gravity="center"
+            android:textSize="36sp"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="72dp"
+            android:background="@color/divider"/>
+
+        <RadioButton
+            android:id="@+id/btn_false"
+            android:text="@string/btn_false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:textColor="@drawable/text_color_accent"
+            android:minWidth="114dp"
+            android:minHeight="96dp"
+            android:padding="16dp"
+            android:gravity="center"
+            android:textSize="36sp"
+            />
+
+    </RadioGroup>
+
+    <ImageView
+        android:id="@+id/icon_answer_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:src="@drawable/valid_icon"
+        />
+
+    <TextView
+        android:id="@+id/txt_answer_explanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textSize="18sp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="@string/lorem_long"
+        />
+
+</LinearLayout>

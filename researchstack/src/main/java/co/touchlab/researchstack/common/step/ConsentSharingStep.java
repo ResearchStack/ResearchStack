@@ -15,7 +15,11 @@ public class ConsentSharingStep extends QuestionStep
 
     private final String localizedLearnMoreHTMLContent;
 
-    public ConsentSharingStep(Resources r, String identifier, DocumentProperties properties)
+    /**
+     *
+     * @param r TODO passing in resources makes me uneasy
+     */
+    public ConsentSharingStep(String identifier, Resources r, DocumentProperties properties)
     {
         super(identifier);
         super.setOptional(false);

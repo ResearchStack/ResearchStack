@@ -78,20 +78,6 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
 
     private void loadNextScene()
     {
-        Scene scene = (Scene) findViewById(R.id.current_scene);
-
-        if (scene instanceof MultiSubSectionScene)
-        {
-            MultiSubSectionScene multiStateScene = (MultiSubSectionScene) scene;
-            int current = multiStateScene.getCurrentPosition();
-            int count = multiStateScene.getSceneCount();
-            if (current < count - 1)
-            {
-                multiStateScene.loadNextScene();
-                return;
-            }
-        }
-
         Step nextStep = task.getStepAfterStep(currentStep, taskResult);
         if(nextStep == null)
         {
@@ -105,19 +91,6 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
 
     private void loadPreviousScene()
     {
-        Scene scene = (Scene) findViewById(R.id.current_scene);
-
-        if (scene instanceof MultiSubSectionScene)
-        {
-            MultiSubSectionScene multiStateScene = (MultiSubSectionScene) scene;
-            int current = multiStateScene.getCurrentPosition();
-            if (current > 0)
-            {
-                multiStateScene.loadPreviousScene();
-                return;
-            }
-        }
-
         Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
         if(previousStep == null)
         {
@@ -179,7 +152,11 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
     {
         if (item.getItemId() == android.R.id.home)
         {
-            loadPreviousScene();
+            Scene currentScene = (Scene) findViewById(R.id.current_scene);
+            if (!currentScene.isBackEventConsumed())
+            {
+                loadPreviousScene();
+            }
             return true;
         }
         else

@@ -58,6 +58,8 @@ public abstract class ResearchStackApplication extends Application
 
     public abstract int getConsentSections();
 
+    public abstract int getQuizSections();
+
     public abstract int getLearnSections();
 
     public abstract int getPrivacyPolicy();
@@ -91,10 +93,7 @@ public abstract class ResearchStackApplication extends Application
 
     public int getDrawableResourceId(Context context, String name)
     {
-        return context.getResources()
-                .getIdentifier(name,
-                        "drawable",
-                        context.getPackageName());
+        return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
     }
 
     public abstract boolean isSignatureEnabledInConsent();

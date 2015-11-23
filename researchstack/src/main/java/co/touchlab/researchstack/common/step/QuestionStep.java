@@ -13,7 +13,7 @@ public class QuestionStep extends Step
         super(identifier);
     }
 
-    private QuestionStep(String identifier, String title)
+    public QuestionStep(String identifier, String title)
     {
         super(identifier, title);
         setOptional(true);

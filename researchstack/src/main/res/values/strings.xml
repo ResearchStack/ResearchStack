@@ -134,5 +134,12 @@
   <string name="privacy_policy">Privacy Policy</string>
   <string name="license_information">License Information</string>
   <string name="please_complete_step">Please complete this step before moving on</string>
+  <string name="submit">Submit</string>
+  <string name="quiz_evaluation_try_again">Try Again</string>
+  <string name="quiz_evaluation_review_consent">Review Consent</string>
+  <string name="quiz_evaluation_retake">Retake Quiz</string>
+  <string name="quiz_evaluation_great_job">Great Job!</string>
+  <string name="btn_true">True</string>
+  <string name="btn_false">False</string>
 
 </resources>

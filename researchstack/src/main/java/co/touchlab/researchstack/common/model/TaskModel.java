@@ -33,7 +33,6 @@ public class TaskModel
         @SerializedName("uiHint")
         public String uiHint;
 
-
         @SerializedName("guid")
         public String guid;
 
@@ -44,7 +43,7 @@ public class TaskModel
         public ConstraintsModel constraints;
     }
 
-    public static class ConstraintsModel
+    public static class ConstraintsModel  implements Serializable
     {
 
         @SerializedName("dataType")
@@ -73,9 +72,12 @@ public class TaskModel
 
         @SerializedName("rules")
         public List<RuleModel> rules;
+
+        @SerializedName("validation")
+        public Validation validation;
     }
 
-    public static class EnumerationModel
+    public static class EnumerationModel  implements Serializable
     {
         @SerializedName("type")
         public String type;
@@ -102,4 +104,11 @@ public class TaskModel
         public int value;
 
     }
+
+    public static class Validation  implements Serializable
+    {
+        @SerializedName("answer")
+        public String answer;
+    }
+
 }

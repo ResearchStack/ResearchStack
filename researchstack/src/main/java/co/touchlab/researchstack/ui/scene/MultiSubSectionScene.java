@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import co.touchlab.researchstack.R;
+import co.touchlab.researchstack.common.result.StepResult;
 import co.touchlab.researchstack.common.step.Step;
+import co.touchlab.researchstack.ui.callbacks.StepCallbacks;
 
 /**
  * TODO Consume "onBackPressed" in activity. -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -14,7 +16,7 @@ import co.touchlab.researchstack.common.step.Step;
  * allow activity to swap to previous step. Else, let {@link MultiSubSectionScene} go back a {@link Scene}.
  */
 
-public abstract class MultiSubSectionScene extends Scene
+public abstract class MultiSubSectionScene extends Scene implements StepCallbacks
 {
 
     private SceneAnimator animator;
@@ -56,7 +58,7 @@ public abstract class MultiSubSectionScene extends Scene
 
     public abstract int getSceneCount();
 
-    public abstract Scene onCreateScene(LayoutInflater inflater, int scenePos);
+    public abstract Scene onCreateScene(LayoutInflater inflater, int position);
 
     /**
      * This method is responsible for telling any subclasses that this scene was just popped off
@@ -91,7 +93,7 @@ public abstract class MultiSubSectionScene extends Scene
 
         Scene newScene = onCreateScene(inflater, position);
         newScene.setId(R.id.current_child_scene);
-        newScene.setCallbacks(getCallbacks());
+        newScene.setCallbacks(this);
 
         if (withAnimation && oldScene != null)
         {
@@ -125,13 +127,68 @@ public abstract class MultiSubSectionScene extends Scene
     public void loadNextScene()
     {
         int currentScene = getCurrentPosition();
-        showScene(currentScene + 1 , true);
+        showScene(currentScene + 1, true);
     }
 
     public void loadPreviousScene()
     {
         int currentScene = getCurrentPosition();
         showScene(currentScene - 1 , true);
+    }
+
+    @Override
+    public boolean isBackEventConsumed()
+    {
+        if (getCurrentPosition() > 0)
+        {
+            loadPreviousScene();
+            return true;
+        }
+
+        return super.isBackEventConsumed();
+    }
+
+    @Override
+    public void onNextPressed(Step step)
+    {
+        if(getCurrentPosition() < getSceneCount() - 1)
+        {
+            loadNextScene();
+        }
+        else
+        {
+            getCallbacks().onNextPressed(getStep());
+        }
+    }
+
+    @Override
+    public void onStepResultChanged(Step step, StepResult result)
+    {
+//        TODO Implement
+    }
+
+    @Override
+    public void onSkipStep(Step step)
+    {
+//        TODO Implement
+//        onStepResultChanged(step, null);
+        getCallbacks().onNextPressed(getStep());
+    }
+
+    @Override
+    public void onCancelStep()
+    {
+//        TODO Implement
+//        setResult(Activity.RESULT_CANCELED);
+//        finish();
+    }
+
+    @Override
+    public StepResult getResultStep(String stepId)
+    {
+//        TODO Implement
+//        return taskResult.getStepResultForStepIdentifier(stepId);
+        return null;
     }
 
 }
