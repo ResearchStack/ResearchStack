@@ -39,6 +39,12 @@ public class SampleApplication extends ResearchStackApplication
     }
 
     @Override
+    public int getQuizSections()
+    {
+        return R.raw.quiz_section;
+    }
+
+    @Override
     public int getLearnSections()
     {
         return R.raw.learn_items;
