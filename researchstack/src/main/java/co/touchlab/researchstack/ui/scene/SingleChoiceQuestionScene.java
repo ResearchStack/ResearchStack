@@ -79,9 +79,4 @@ public class SingleChoiceQuestionScene<T> extends Scene
         return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
     }
 
-    @Override
-    public boolean isAnswerValid()
-    {
-        return radioGroup.getCheckedRadioButtonId() != -1;
-    }
 }
