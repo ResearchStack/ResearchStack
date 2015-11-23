@@ -57,12 +57,9 @@ public class LearnFragment extends Fragment
     private List<SectionModel.SectionRow> loadTasksAndSchedules()
     {
         int fileResId = ResearchStackApplication.getInstance().getLearnSections();
-        String formName = getResources().getResourceEntryName(fileResId);
         SectionModel schedulesAndTasksModel = JsonUtils
-                .loadClassFromRawJson(getContext(), SectionModel.class, formName);
-
+                .loadClassFromRawJson(getContext(), SectionModel.class, fileResId);
         SectionModel.Section section = schedulesAndTasksModel.getSections().get(0);
-
         return section.getItems();
     }
 
