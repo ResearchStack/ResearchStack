@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.common.task;
 
+import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.result.QuestionResult;
 import co.touchlab.researchstack.common.result.StepResult;
@@ -109,6 +110,7 @@ public abstract class OnboardingTask extends Task
         if (signInStep == null)
         {
             signInStep = new Step(SignInStepIdentifier);
+            signInStep.setSceneTitle(R.string.sign_in);
             signInStep.setSceneClass(SignInScene.class);
         }
         return signInStep;
@@ -119,6 +121,7 @@ public abstract class OnboardingTask extends Task
         if (thankyouStep == null)
         {
             thankyouStep = new Step(SignUpThankYouStepIdentifier);
+            thankyouStep.setSceneTitle(R.string.thank_you);
             //TODO Create SignUpThankYouScene
 //            thankyouStep.setSceneClass(SignUpThankYouScene.class);
         }
@@ -130,6 +133,7 @@ public abstract class OnboardingTask extends Task
         if (permissionsStep == null)
         {
             permissionsStep = new Step(SignUpPermissionsStepIdentifier);
+            permissionsStep.setSceneTitle(R.string.permissions);
             permissionsStep.setSceneClass(SignUpPermissionsScene.class);
         }
         return permissionsStep;
@@ -140,6 +144,7 @@ public abstract class OnboardingTask extends Task
         if (passcodeStep == null)
         {
             passcodeStep = new Step(SignUpPasscodeStepIdentifier);
+            passcodeStep.setSceneTitle(R.string.identification);
             passcodeStep.setSceneClass(SignUpPasscodeScene.class);
         }
         return passcodeStep;
@@ -159,6 +164,7 @@ public abstract class OnboardingTask extends Task
         if (medicalInfoStep == null)
         {
             medicalInfoStep = new Step(SignUpMedicalInfoStepIdentifier);
+            medicalInfoStep.setSceneTitle(R.string.additional_info);
             medicalInfoStep.setSceneClass(SignUpAdditionalInfoScene.class);
         }
         return medicalInfoStep;
@@ -169,6 +175,7 @@ public abstract class OnboardingTask extends Task
         if (generalInfoStep == null)
         {
             generalInfoStep = new Step(SignUpGeneralInfoStepIdentifier);
+            generalInfoStep.setSceneTitle(R.string.registration);
             generalInfoStep.setSceneClass(SignUpGeneralInfoScene.class);
         }
         return generalInfoStep;
@@ -179,6 +186,7 @@ public abstract class OnboardingTask extends Task
         if (permissionsPrimingStep == null)
         {
             permissionsPrimingStep = new Step(SignUpPermissionsPrimingStepIdentifier);
+            permissionsPrimingStep.setSceneTitle(R.string.consent);
             permissionsPrimingStep.setSceneClass(SignUpPermissionsPrimingScene.class);
         }
         return permissionsPrimingStep;
@@ -189,6 +197,7 @@ public abstract class OnboardingTask extends Task
         if (ineligibleStep == null)
         {
             ineligibleStep = new Step(SignUpIneligibleStepIdentifier);
+            ineligibleStep.setSceneTitle(R.string.ineligible);
             ineligibleStep.setSceneClass(SignUpIneligibleScene.class);
         }
         return ineligibleStep;
@@ -199,6 +208,7 @@ public abstract class OnboardingTask extends Task
         if (eligibleStep == null)
         {
             eligibleStep = new Step(SignUpEligibleStepIdentifier);
+            eligibleStep.setSceneTitle(R.string.sign_up);
             eligibleStep.setSceneClass(SignUpEligibleScene.class);
         }
         return eligibleStep;
@@ -209,6 +219,7 @@ public abstract class OnboardingTask extends Task
         if (inclusionCriteriaStep == null)
         {
             inclusionCriteriaStep = new Step(SignUpInclusionCriteriaStepIdentifier);
+            inclusionCriteriaStep.setSceneTitle(R.string.eligibility);
             inclusionCriteriaStep.setSceneClass(ResearchStackApplication.getInstance()
                     .getInclusionCriteriaSceneClass());
         }

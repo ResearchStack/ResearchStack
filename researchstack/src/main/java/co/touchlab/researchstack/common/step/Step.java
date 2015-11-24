@@ -11,6 +11,8 @@ public class Step implements Serializable
 
     private Class sceneClass;
 
+    private int sceneTitle;
+
     private boolean restorable;
 
     private boolean optional;
@@ -128,6 +130,16 @@ public class Step implements Serializable
     public void setShouldTintImages(boolean shouldTintImages)
     {
         this.shouldTintImages = shouldTintImages;
+    }
+
+    public int getSceneTitle()
+    {
+        return sceneTitle;
+    }
+
+    public void setSceneTitle(int sceneTitle)
+    {
+        this.sceneTitle = sceneTitle;
     }
 
     public Class getSceneClass()

@@ -76,6 +76,15 @@ public class ConsentQuizScene extends MultiSubSectionScene
     }
 
     @Override
+    public void onSceneChanged(Scene oldScene, Scene newScene)
+    {
+        String title = getString(newScene instanceof ConsentQuizEvaluationScene ?
+                                         R.string.quiz_evaluation : R.string.quiz);
+
+        getCallbacks().onChangeStepTitle(title);
+    }
+
+    @Override
     public void onStepResultChanged(Step step, StepResult result)
     {
         if (!step.getIdentifier().equals(ID_RESULT))

@@ -1,5 +1,7 @@
 package co.touchlab.researchstack.common.task;
 
+import android.content.Context;
+
 import java.io.Serializable;
 
 import co.touchlab.researchstack.common.result.TaskResult;
@@ -31,6 +33,11 @@ public abstract class Task implements Serializable
     public abstract Step getStepBeforeStep(Step step, TaskResult result);
 
     public abstract Step getStepWithIdentifier(String identifier);
+
+    public String getTitleForStep(Context context, Step step)
+    {
+        return step.getSceneTitle() != 0 ? context.getString(step.getSceneTitle()) : "";
+    }
 
     public abstract TaskProgress getProgressOfCurrentStep(Step step, TaskResult result);
 

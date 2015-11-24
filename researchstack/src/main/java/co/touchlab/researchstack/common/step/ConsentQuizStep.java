@@ -1,4 +1,5 @@
 package co.touchlab.researchstack.common.step;
+import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.common.model.ConsentQuizModel;
 import co.touchlab.researchstack.ui.scene.ConsentQuizScene;
 
@@ -21,5 +22,11 @@ public class ConsentQuizStep extends QuestionStep
     public Class getSceneClass()
     {
         return ConsentQuizScene.class;
+    }
+
+    @Override
+    public int getSceneTitle()
+    {
+        return R.string.consent;
     }
 }

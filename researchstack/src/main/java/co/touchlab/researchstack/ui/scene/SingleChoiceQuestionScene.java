@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.common.answerformat.TextChoiceAnswerFormat;
@@ -65,12 +64,7 @@ public class SingleChoiceQuestionScene<T> extends Scene
     @Override
     public boolean isAnswerValid()
     {
-        if (radioGroup.getCheckedRadioButtonId() == -1)
-        {
-            Toast.makeText(getContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return super.isAnswerValid();
+        return radioGroup.getCheckedRadioButtonId() != -1;
     }
 
     @Override

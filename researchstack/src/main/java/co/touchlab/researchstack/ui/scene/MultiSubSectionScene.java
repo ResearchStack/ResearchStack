@@ -63,9 +63,9 @@ public abstract class MultiSubSectionScene extends Scene implements StepCallback
     /**
      * This method is responsible for telling any subclasses that this scene was just popped off
      * the view stack and a new one is being added shorty. If you need to get the result and save
-     * it, do tha tnow.
+     * it, do that now.
      */
-    public void onSceneRemoved(Scene scene) { }
+    public void onSceneChanged(Scene scene, Scene newScene) { }
 
     //TODO Queue transition to a handler instead of ignoring the request if already transitioning
     public void showScene(int position, boolean withAnimation)
@@ -107,10 +107,7 @@ public abstract class MultiSubSectionScene extends Scene implements StepCallback
             addView(newScene);
         }
 
-        if (oldScene != null)
-        {
-            onSceneRemoved(oldScene);
-        }
+        onSceneChanged(oldScene, newScene);
 
         // Save the current position
         setCurrentPosition(position);
@@ -159,6 +156,16 @@ public abstract class MultiSubSectionScene extends Scene implements StepCallback
         {
             getCallbacks().onNextPressed(getStep());
         }
+    }
+
+    /**
+     * Pass the title through to the host (the activity).
+     * @param title
+     */
+    @Override
+    public void onChangeStepTitle(String title)
+    {
+        getCallbacks().onChangeStepTitle(title);
     }
 
     @Override

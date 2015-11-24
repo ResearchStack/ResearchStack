@@ -59,16 +59,21 @@
   <string name="settings_passcode">Change Passcode</string>
   <string name="settings_sharing">Sharing Options</string>
   <string name="settings_permissions">Permissions</string>
-
   <string name="settings_user_data">USER DATA</string>
   <string name="settings_review_consent">Review Consent</string>
   <string name="settings_export_data">Export Data</string>
-
   <string name="settings_legal">LEGAL</string>
   <string name="settings_privacy_policy">Privacy Policy</string>
   <string name="settings_license_info">License Information</string>
-
   <string name="settings_version">Version %1$s (%2$s)</string>
+
+  <!-- Quiz -->
+  <string name="quiz">Quiz</string>
+  <string name="quiz_evaluation">Quiz Evaluation</string>
+  <string name="quiz_evaluation_try_again">Try Again</string>
+  <string name="quiz_evaluation_review_consent">Review Consent</string>
+  <string name="quiz_evaluation_retake">Retake Quiz</string>
+  <string name="quiz_evaluation_great_job">Great Job!</string>
 
   <!--Other -->
   <string name="step_skip">Skip this question</string>
@@ -135,11 +140,15 @@
   <string name="license_information">License Information</string>
   <string name="please_complete_step">Please complete this step before moving on</string>
   <string name="submit">Submit</string>
-  <string name="quiz_evaluation_try_again">Try Again</string>
-  <string name="quiz_evaluation_review_consent">Review Consent</string>
-  <string name="quiz_evaluation_retake">Retake Quiz</string>
-  <string name="quiz_evaluation_great_job">Great Job!</string>
   <string name="btn_true">True</string>
   <string name="btn_false">False</string>
+  <string name="eligibility">Eligibility</string>
+  <string name="sign_up">Sign Up</string>
+  <string name="ineligible">Ineligible</string>
+  <string name="registration">Registration</string>
+  <string name="additional_info">Additional Information</string>
+  <string name="identification">Identification</string>
+  <string name="thank_you">Thank you</string>
+  <string name="format_step_title">Step %1$s of %2$s</string>
 
 </resources>

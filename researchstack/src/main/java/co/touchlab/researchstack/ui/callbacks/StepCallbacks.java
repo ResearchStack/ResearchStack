@@ -4,12 +4,10 @@ import co.touchlab.researchstack.common.step.Step;
 
 public interface StepCallbacks
 {
+    void onChangeStepTitle(String title);
     void onNextPressed(Step step);
-    void onStepResultChanged(Step step, StepResult result);
     void onSkipStep(Step step);
-//        void onError(String title, String message);
-
-    StepResult getResultStep(String stepId);
-
     void onCancelStep();
+    void onStepResultChanged(Step step, StepResult result);
+    StepResult getResultStep(String stepId);
 }

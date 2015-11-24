@@ -1,4 +1,5 @@
 package co.touchlab.researchstack.common.step;
+import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.common.model.ConsentDocument;
 import co.touchlab.researchstack.ui.scene.ConsentVisualScene;
 
@@ -15,6 +16,12 @@ public class ConsentVisualStep extends Step
     public ConsentDocument getDocument()
     {
         return document;
+    }
+
+    @Override
+    public int getSceneTitle()
+    {
+        return R.string.consent;
     }
 
     @Override

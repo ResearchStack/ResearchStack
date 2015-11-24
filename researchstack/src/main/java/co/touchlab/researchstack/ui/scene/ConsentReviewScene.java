@@ -143,10 +143,30 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
     }
 
     @Override
-    public void onSceneRemoved(Scene scene)
+    public void onSceneChanged(Scene oldScene, Scene newScene)
     {
-        Log.i(TAG, "scenePoppedOff " + scene.getClass().getSimpleName());
 
+        //Handle new scene, pass the title back up to the host
+        if (newScene instanceof ConsentReviewSignatureScene)
+        {
+            ConsentReviewStep step = (ConsentReviewStep) getStep();
+            int titleResId = step.getDocument().getSignaturePageTitle();
+            getCallbacks().onChangeStepTitle(getString(titleResId));
+        }
+        else
+        {
+            getCallbacks().onChangeStepTitle(getString(R.string.consent));
+        }
+
+        // Check if old scene is null
+        if (oldScene == null)
+        {
+            return;
+        }
+
+        Log.i(TAG, "scenePoppedOff " + oldScene.getClass().getSimpleName());
+
+        //Handle the result of the popped off scene
         StepResult parentResult = getStepResult();
         ConsentSignatureResult result = (ConsentSignatureResult) parentResult
                 .getResultForIdentifier(getStep().getIdentifier());
@@ -162,22 +182,21 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
 //            _currentSignature.signatureDate = ORKSignatureStringFromDate([NSDate date]);
 //        }
 
-        if (scene instanceof ConsentReviewDocumentScene)
+        if (oldScene instanceof ConsentReviewDocumentScene)
         {
             result.setConsented(true);
         }
-        else if (scene instanceof FormScene)
+        else if (oldScene instanceof FormScene)
         {
-            StepResult formResult = scene.getStepResult();
+            StepResult formResult = oldScene.getStepResult();
 
             TextQuestionResult nameResult = (TextQuestionResult) formResult
                     .getResultForIdentifier(NameIdentifier);
             signature.setFullName(nameResult.getTextAnswer());
         }
-        else if (scene instanceof ConsentReviewSignatureScene)
+        else if (oldScene instanceof ConsentReviewSignatureScene)
         {
-
-            ConsentReviewSignatureScene sigScene = (ConsentReviewSignatureScene) scene;
+            ConsentReviewSignatureScene sigScene = (ConsentReviewSignatureScene) oldScene;
 
             //TODO The follow is less than ideal
             Bitmap bitmap = sigScene.getSignatureImage();
@@ -189,13 +208,13 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
                 signature.setSignatureImage(byteArray);
             }
 
-            // If we get here, this means our last scene scene will trigger the step to finish. Its
+            // If we get here, this means our last oldScene oldScene will trigger the step to finish. Its
             // a good idea to set the end date now.
             result.setEndDate(new Date());
         }
         else
         {
-            String message = scene.getClass().getSimpleName() + " not supported";
+            String message = oldScene.getClass().getSimpleName() + " not supported";
             DevUtils.throwUnsupportedOpException(message);
         }
 

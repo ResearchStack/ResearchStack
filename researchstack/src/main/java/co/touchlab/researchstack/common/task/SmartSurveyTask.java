@@ -1,10 +1,13 @@
 package co.touchlab.researchstack.common.task;
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.common.answerformat.AnswerFormat;
 import co.touchlab.researchstack.common.helpers.LogExt;
 import co.touchlab.researchstack.common.model.TaskModel;
@@ -110,6 +113,13 @@ public class SmartSurveyTask extends Task implements Serializable
                 currentIdentifier);
 
         return nextStepIdentifier == null ? null : steps.get(nextStepIdentifier);
+    }
+
+    @Override
+    public String getTitleForStep(Context context, Step step)
+    {
+        int currentIndex = staticStepIdentifiers.indexOf(step.getIdentifier()) + 1;
+        return context.getString(R.string.format_step_title, currentIndex, staticStepIdentifiers.size());
     }
 
     @Override

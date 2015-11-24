@@ -58,6 +58,12 @@ public class ConsentSharingStep extends QuestionStep
     }
 
     @Override
+    public int getSceneTitle()
+    {
+        return R.string.consent;
+    }
+
+    @Override
     public Class getSceneClass()
     {
         return ConsentSharingScene.class;

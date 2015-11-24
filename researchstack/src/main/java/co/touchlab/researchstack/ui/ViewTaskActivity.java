@@ -132,12 +132,25 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
     {
         try
         {
+            if (step.getSceneTitle() <= 0)
+            {
+                LogExt.e(getClass(), "[" + step.getClass().getSimpleName() + ":"+step.getIdentifier()+"] No title set for step");
+            }
+
+            // Change the title on the activity
+            String title = task.getTitleForStep(this, step);
+            onChangeStepTitle(title);
+
+            // Return the View
             Class cls = step.getSceneClass();
             Constructor constructor = cls.getConstructor(Context.class, Step.class);
             Scene scene = (Scene) constructor.newInstance(this, step);
             scene.setCallbacks(this);
+
             return scene;
         }
+
+        //TODO Throw RuntimeException here .. eventually .. when stable enough
         catch(Exception e)
         {
             LogExt.e(getClass(), e);
@@ -198,6 +211,16 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
     {
         onStepResultChanged(step, null);
         onNextPressed(step);
+    }
+
+    @Override
+    public void onChangeStepTitle(String title)
+    {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+        {
+            actionBar.setTitle(title);
+        }
     }
 
     @Override

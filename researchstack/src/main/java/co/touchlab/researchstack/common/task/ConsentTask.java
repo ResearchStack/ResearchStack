@@ -41,7 +41,7 @@ public class ConsentTask extends OrderedTask
 
         ConsentDocument consent = new ConsentDocument();
         consent.setTitle(r.getString(R.string.signature_page_title));
-        consent.setSignaturePageTitle(r.getString(R.string.signature_page_title));
+        consent.setSignaturePageTitle(R.string.signature_page_title);
         consent.setSignaturePageContent(r.getString(R.string.signature_page_content));
         consent.setSections(data.getSections());
         consent.addSignature(signature);
