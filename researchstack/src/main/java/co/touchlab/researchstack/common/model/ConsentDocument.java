@@ -1,4 +1,6 @@
 package co.touchlab.researchstack.common.model;
+import android.support.annotation.StringRes;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public class ConsentDocument implements Serializable
      *
      * The title is ignored for visual consent. The title is also ignored if you supply a value for the `htmlReviewContent` property.
      */
-    private String signaturePageTitle;
+    private int signaturePageTitle;
 
     /**
      * The content to be rendered below the title on the signature page of the generated PDF in a localized string.
@@ -69,14 +71,20 @@ public class ConsentDocument implements Serializable
         this.title = title;
     }
 
-    public void setSignaturePageTitle(String signaturePageTitle)
+    public void setSignaturePageTitle(@StringRes int signaturePageTitle)
     {
         this.signaturePageTitle = signaturePageTitle;
     }
 
+    @StringRes
+    public int getSignaturePageTitle()
+    {
+        return signaturePageTitle;
+    }
+
     public void setSignaturePageContent(String signaturePageContent)
     {
-        this.signaturePageTitle = signaturePageContent;
+        this.signaturePageContent = signaturePageContent;
     }
 
     public void setSections(List<ConsentSection> sections)
