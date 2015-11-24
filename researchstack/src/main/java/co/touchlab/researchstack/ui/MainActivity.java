@@ -7,7 +7,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -26,7 +25,7 @@ import co.touchlab.researchstack.ui.fragment.SettingsFragment;
 /**
  * Created by bradleymcdermott on 10/27/15.
  */
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends PassCodeActivity
 {
 
     private DrawerLayout drawerLayout;

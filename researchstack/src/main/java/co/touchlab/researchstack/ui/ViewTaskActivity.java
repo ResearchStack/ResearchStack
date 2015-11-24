@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -36,7 +35,7 @@ import co.touchlab.researchstack.ui.scene.SceneAnimator;
 import co.touchlab.researchstack.ui.scene.SignUpEligibleScene;
 import co.touchlab.researchstack.ui.scene.SignUpPermissionsScene;
 
-public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks, ActivityCallback
+public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks, ActivityCallback
 {
 
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";

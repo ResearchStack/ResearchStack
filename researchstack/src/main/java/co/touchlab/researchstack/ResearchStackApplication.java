@@ -23,7 +23,6 @@ public abstract class ResearchStackApplication extends Application
     protected static ResearchStackApplication instance;
 
     private User currentUser;
-    private int learnSections;
 
     @Override
     public void onCreate()
@@ -42,7 +41,6 @@ public abstract class ResearchStackApplication extends Application
 
         return instance;
     }
-
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // File Names
