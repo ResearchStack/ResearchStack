@@ -7,10 +7,12 @@ import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
+import co.touchlab.researchstack.AppPrefs;
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.helpers.LogExt;
 import co.touchlab.researchstack.common.model.User;
+import co.touchlab.researchstack.common.secure.SecurityProfile;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -35,16 +37,13 @@ public class SplashActivity extends AppCompatActivity
                         TimeUnit.SECONDS)
                 .observeOn(Schedulers.newThread())
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        this::launchActivity,
-                        this::showErrorScreen);
+                .subscribe(this :: launchActivity, this :: showErrorScreen);
     }
 
     private void initialize()
     {
         // initialize stuff for the app
-        LogExt.d(getClass(),
-                "initializing");
+        LogExt.d(getClass(), "initializing");
         ResearchStackApplication.getInstance()
                 .loadUser(this);
     }
@@ -63,20 +62,25 @@ public class SplashActivity extends AppCompatActivity
         LogExt.d(getClass(),
                 "Launching activity");
 
-        User user = ResearchStackApplication.getInstance()
-                .getCurrentUser();
-
-        if (user.isSignedIn())
+        AppPrefs appPrefs = AppPrefs.getInstance(this);
+        SecurityProfile securityProfile = ResearchStackApplication.getInstance()
+                                                                  .getSecurityProfile();
+        if(appPrefs.isAppPinEncoded() && securityProfile.getEncryptionType() != SecurityProfile.EncryptionType.None)
         {
             launchPinActivity();
         }
-        else if (user.isSignedUp())
-        {
-            launchEmailVerificationActivity();
-        }
         else
         {
-            launchOnboardingActivity();
+            User user = ResearchStackApplication.getInstance().getCurrentUser();
+
+            if(user.isSignedUp())
+            {
+                launchEmailVerificationActivity();
+            }
+            else
+            {
+                launchOnboardingActivity();
+            }
         }
 
         finish();

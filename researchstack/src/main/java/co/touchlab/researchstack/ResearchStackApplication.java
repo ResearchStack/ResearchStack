@@ -16,6 +16,10 @@ import java.io.Reader;
 import co.touchlab.researchstack.common.Constants;
 import co.touchlab.researchstack.common.helpers.LogExt;
 import co.touchlab.researchstack.common.model.User;
+import co.touchlab.researchstack.common.secure.ClearFileAccess;
+import co.touchlab.researchstack.common.secure.FileAccess;
+import co.touchlab.researchstack.common.secure.SecurityProfile;
+import co.touchlab.researchstack.common.secure.aes.AesFileAccess;
 
 public abstract class ResearchStackApplication extends Application
 {
@@ -23,6 +27,8 @@ public abstract class ResearchStackApplication extends Application
     protected static ResearchStackApplication instance;
 
     private User currentUser;
+    private FileAccess fileAccess;
+    private String enteredPin;
 
     @Override
     public void onCreate()
@@ -70,6 +76,8 @@ public abstract class ResearchStackApplication extends Application
     }
 
     public abstract int getAppName();
+
+    public abstract SecurityProfile getSecurityProfile();
 
     public String getHTMLFilePath(String docName)
     {
@@ -180,5 +188,44 @@ public abstract class ResearchStackApplication extends Application
                     "Deleted user data: " + deleted);
 
         }
+    }
+
+    /**
+     * File access interface.  Should either be clear, or used with standard encryption.  If you
+     * need something funky, override.
+     * @return
+     */
+    public synchronized FileAccess getFileAccess()
+    {
+        if(fileAccess == null)
+        {
+            SecurityProfile securityProfile = getSecurityProfile();
+            if(securityProfile.getEncryptionType() == SecurityProfile.EncryptionType.None)
+                fileAccess = new ClearFileAccess();
+            else if(securityProfile.getEncryptionType() == SecurityProfile.EncryptionType.AES_256)
+            {
+                AesFileAccess aesFileAccess = new AesFileAccess();
+                aesFileAccess.init(this, enteredPin);
+                fileAccess = aesFileAccess;
+
+            }
+
+        }
+
+        return null;
+    }
+
+    public void setEnteredPin(String enteredPin)
+    {
+        AesFileAccess aesFileAccess = new AesFileAccess();
+        aesFileAccess.init(this, enteredPin);
+
+        this.enteredPin = enteredPin;
+    }
+
+    public synchronized void clearPinAndAccess()
+    {
+        fileAccess = null;
+        enteredPin = null;
     }
 }

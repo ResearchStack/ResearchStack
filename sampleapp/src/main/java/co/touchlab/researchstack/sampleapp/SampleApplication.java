@@ -2,12 +2,35 @@ package co.touchlab.researchstack.sampleapp;
 
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.Constants;
+import co.touchlab.researchstack.common.secure.SecurityProfile;
+import co.touchlab.researchstack.common.secure.aes.DataDecoder;
+import co.touchlab.researchstack.common.secure.aes.DataEncoder;
 
 /**
  * Created by bradleymcdermott on 11/12/15.
  */
 public class SampleApplication extends ResearchStackApplication
 {
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+        try
+        {
+            DataEncoder dataEncoder = new DataEncoder("1234".toCharArray());
+            DataDecoder dataDecoder = new DataDecoder("1234".toCharArray());
+            byte[] encrypted = dataEncoder.encrypt("Hello!".getBytes());
+            byte[] clear = dataDecoder.decrypt(encrypted);
+            String theThing = new String(clear);
+            theThing.equals("Hello!");
+        }
+        catch(Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // File Names
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -72,6 +95,12 @@ public class SampleApplication extends ResearchStackApplication
     public int getAppName()
     {
         return co.touchlab.researchstack.R.string.app_name;
+    }
+
+    @Override
+    public SecurityProfile getSecurityProfile()
+    {
+        return null;
     }
 
     @Override
