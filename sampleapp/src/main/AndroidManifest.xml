@@ -22,6 +22,7 @@
         <activity
             android:name="co.touchlab.researchstack.ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             android:label="@string/activities">
         </activity>
 

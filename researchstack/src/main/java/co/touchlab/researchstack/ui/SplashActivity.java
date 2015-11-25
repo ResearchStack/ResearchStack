@@ -32,40 +32,34 @@ public class SplashActivity extends AppCompatActivity
             initialize();
             subscriber.onNext(true);
             subscriber.onCompleted();
-        })
-                .throttleWithTimeout(1,
-                        TimeUnit.SECONDS)
-                .observeOn(Schedulers.newThread())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(this :: launchActivity, this :: showErrorScreen);
+        }).throttleWithTimeout(1, TimeUnit.SECONDS).observeOn(Schedulers.newThread())
+                  .subscribeOn(AndroidSchedulers.mainThread())
+                  .subscribe(this :: launchActivity, this :: showErrorScreen);
     }
 
     private void initialize()
     {
         // initialize stuff for the app
         LogExt.d(getClass(), "initializing");
-        ResearchStackApplication.getInstance()
-                .loadUser(this);
+        ResearchStackApplication.getInstance().loadUser(this);
     }
 
     private void showErrorScreen(Throwable error)
     {
         error.printStackTrace();
-        Toast.makeText(SplashActivity.this,
-                "Error when initializing app",
-                Toast.LENGTH_LONG)
-                .show();
+        Toast.makeText(SplashActivity.this, "Error when initializing app", Toast.LENGTH_LONG)
+             .show();
     }
 
     private void launchActivity(Object item)
     {
-        LogExt.d(getClass(),
-                "Launching activity");
+        LogExt.d(getClass(), "Launching activity");
 
         AppPrefs appPrefs = AppPrefs.getInstance(this);
         SecurityProfile securityProfile = ResearchStackApplication.getInstance()
                                                                   .getSecurityProfile();
-        if(appPrefs.isAppPinEncoded() && securityProfile.getEncryptionType() != SecurityProfile.EncryptionType.None)
+        if(appPrefs.isAppPinEncoded() && securityProfile
+                .getEncryptionType() != SecurityProfile.EncryptionType.None)
         {
             launchPinActivity();
         }
@@ -88,19 +82,16 @@ public class SplashActivity extends AppCompatActivity
 
     private void launchOnboardingActivity()
     {
-        startActivity(new Intent(this,
-                OnboardingActivity.class));
+        startActivity(new Intent(this, OnboardingActivity.class));
     }
 
     private void launchEmailVerificationActivity()
     {
-        startActivity(new Intent(this,
-                EmailVerificationActivity.class));
+        startActivity(new Intent(this, EmailVerificationActivity.class));
     }
 
     private void launchPinActivity()
     {
-        startActivity(new Intent(this,
-                MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

@@ -10,11 +10,13 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import co.touchlab.researchstack.AppPrefs;
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.model.User;
 import co.touchlab.researchstack.common.result.QuestionResult;
 import co.touchlab.researchstack.common.result.StepResult;
+import co.touchlab.researchstack.common.secure.SecurityProfile;
 import co.touchlab.researchstack.common.step.Step;
 
 public class SignUpPasscodeScene extends Scene
@@ -49,8 +51,11 @@ public class SignUpPasscodeScene extends Scene
         state = STATE_ENTRY;
         updateViews();
 
+        SecurityProfile securityProfile = ResearchStackApplication.getInstance()
+                                                                  .getSecurityProfile();
+
         RxTextView.textChanges(passcode)
-                .filter(charSequence -> charSequence.length() == 4)
+                .filter(charSequence -> charSequence.length() == securityProfile.getMinLength())
                 .subscribe(this :: handlePasscode);
 
         hideNextButtons();
@@ -67,7 +72,8 @@ public class SignUpPasscodeScene extends Scene
         }
         else if (state == STATE_CONFIRM && enteredPasscode.equals(passcodeSequence.toString()))
         {
-            User currentUser = ResearchStackApplication.getInstance()
+            ResearchStackApplication researchStackApplication = ResearchStackApplication.getInstance();
+            User currentUser = researchStackApplication
                     .getCurrentUser();
 
             currentUser.setPasscode(enteredPasscode);
@@ -75,8 +81,12 @@ public class SignUpPasscodeScene extends Scene
             currentUser.setSignedIn(true);
 
 
-            ResearchStackApplication.getInstance()
+            researchStackApplication
                     .saveUser(getContext());
+
+            researchStackApplication.setEnteredPin(enteredPasscode);
+            AppPrefs.getInstance(getContext()).setAppPinEncoded(true);
+
             getCallbacks().onNextPressed(getStep());
         }
         else

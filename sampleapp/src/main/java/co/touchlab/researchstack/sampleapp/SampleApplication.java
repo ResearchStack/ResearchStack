@@ -123,7 +123,7 @@ public class SampleApplication extends ResearchStackApplication
     @Override
     public SecurityProfile getSecurityProfile()
     {
-        return null;
+        return new SecurityProfile(SecurityProfile.EncryptionType.AES_256, false, 4, 4);
     }
 
     @Override
