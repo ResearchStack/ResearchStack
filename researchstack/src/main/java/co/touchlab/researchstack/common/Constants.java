@@ -5,6 +5,8 @@ package co.touchlab.researchstack.common;
  */
 public class Constants
 {
+    public static final String KEY_SETTINGS_AUTO_LOCK = "auto_lock_time";
+
     public enum UserInfoType
     {
         Name,

@@ -130,6 +130,8 @@
   <string name="time">Time</string>
   <string name="security">Security</string>
   <string name="auto_lock">Auto-Lock</string>
+  <string name="auto_lock_summary">The minimum amount of time it would take to see the pass-code screen when the app is paused.</string>
+  <string name="auto_lock_default">1</string>
   <string name="change_passcode">Change Passcode</string>
   <string name="sharing_options">Sharing Options</string>
   <string name="consent">Consent</string>

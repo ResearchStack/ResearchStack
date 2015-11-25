@@ -1,8 +1,11 @@
 package co.touchlab.researchstack.ui;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -11,8 +14,9 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.ResearchStackApplication;
+import co.touchlab.researchstack.common.Constants;
 
-public class PassCodeActivity extends AppCompatActivity
+public class PassCodeActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 
     /**
@@ -38,9 +42,8 @@ public class PassCodeActivity extends AppCompatActivity
 
     /**
      * The minimum time the activity needs to wait before showing the pass-code screen.
-     * TODO Read from Settings
      */
-    private long minTimeToIgnorePassCode = 5000;//DateUtils.MINUTE_IN_MILLIS * 5;
+    private long minTimeToIgnorePassCode;
 
 
     /**
@@ -60,6 +63,11 @@ public class PassCodeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.registerOnSharedPreferenceChangeListener(this);
+
+        minTimeToIgnorePassCode = getMinTimeToIgnorePassCode(preferences);
+
         if (getIntent() != null)
         {
             if (getIntent().hasExtra(KEY_PASSCODE_IGNORE_FIRST_RUN))
@@ -75,6 +83,15 @@ public class PassCodeActivity extends AppCompatActivity
 
         }
 
+    }
+
+    private long getMinTimeToIgnorePassCode(SharedPreferences preferences)
+    {
+        String defaultAutoLock = getString(R.string.auto_lock_default);
+        String stringValue = preferences.getString(Constants.KEY_SETTINGS_AUTO_LOCK,
+                                                   defaultAutoLock);
+        int minutes = Integer.parseInt(stringValue);
+        return minutes * DateUtils.MINUTE_IN_MILLIS;
     }
 
     /**
@@ -138,4 +155,12 @@ public class PassCodeActivity extends AppCompatActivity
         lastPauseTime = System.currentTimeMillis();
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences preferences, String key)
+    {
+        if(Constants.KEY_SETTINGS_AUTO_LOCK.equals(key))
+        {
+            minTimeToIgnorePassCode = getMinTimeToIgnorePassCode(preferences);
+        }
+    }
 }
