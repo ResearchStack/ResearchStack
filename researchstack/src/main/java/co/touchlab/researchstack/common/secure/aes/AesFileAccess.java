@@ -27,6 +27,7 @@ import co.touchlab.researchstack.utils.FileUtils;
 public class AesFileAccess implements FileAccess
 {
     public static final String CHARSET_NAME = "UTF8";
+    public static final String A_LITTLE_TEST = "ALittleTest";
     DataDecoder dataDecoder;
     DataEncoder dataEncoder;
 
@@ -34,16 +35,22 @@ public class AesFileAccess implements FileAccess
     {
         try
         {
-            File encrypted = createPassphraseFile(context);
+            File passphraseFile = createPassphraseFile(context);
+            File passphraseCheckFile = createPassphraseCheckFile(context);
             String uuid;
-            if(! encrypted.exists())
+            if(! passphraseFile.exists())
             {
                 uuid = UUID.randomUUID().toString();
-                writePasskey(passphrase, encrypted, uuid);
+                writePasskey(passphrase, passphraseFile, uuid);
+                writePasskey(passphrase, passphraseCheckFile, A_LITTLE_TEST);
             }
             else
             {
-                uuid = readPasskey(passphrase, encrypted);
+                String testString = readPasskey(passphrase, passphraseCheckFile);
+                if(!testString.equals(A_LITTLE_TEST))
+                    throw new FileAccessException("Not the correct passphrase");
+
+                uuid = readPasskey(passphrase, passphraseFile);
             }
 
             resetCodecs(uuid);
@@ -68,18 +75,29 @@ public class AesFileAccess implements FileAccess
     }
 
     @NonNull
+    private File createPassphraseCheckFile(Context context)
+    {
+        File secure = createSecureDirectory(context);
+        return new File(secure, "__encryptedcheck");
+    }
+
+    @NonNull
     private File createSecureDirectory(Context context)
     {
-        return new File(context.getFilesDir(), "secure");
+        File file = new File(context.getFilesDir(), "secure");
+        file.mkdirs();
+        return file;
     }
 
     public void updatePassphrase(Context context, String oldPassphrase, String newPassphrase)
     {
         try
         {
-            File encrypted = createPassphraseFile(context);
-            String passkey = readPasskey(oldPassphrase, encrypted);
-            writePasskey(newPassphrase, encrypted, passkey);
+            File passphraseFile = createPassphraseFile(context);
+            File passphraseCheckFile = createPassphraseCheckFile(context);
+            String passkey = readPasskey(oldPassphrase, passphraseFile);
+            writePasskey(newPassphrase, passphraseFile, passkey);
+            writePasskey(newPassphrase, passphraseCheckFile, A_LITTLE_TEST);
         }
         catch(InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | IOException e)
         {

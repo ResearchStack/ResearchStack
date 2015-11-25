@@ -20,7 +20,7 @@ public class KeyHelper
         final int iterations = 1000;
 
         // Generate a 256-bit key
-        final int outputKeyLength = 128;
+        final int outputKeyLength = 256;
 
         SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         KeySpec keySpec = new PBEKeySpec(passphraseOrPin, salt, iterations, outputKeyLength);

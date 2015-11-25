@@ -28,7 +28,6 @@ public abstract class ResearchStackApplication extends Application
 
     private User currentUser;
     private FileAccess fileAccess;
-    private String enteredPin;
 
     @Override
     public void onCreate()
@@ -197,35 +196,20 @@ public abstract class ResearchStackApplication extends Application
      */
     public synchronized FileAccess getFileAccess()
     {
-        if(fileAccess == null)
-        {
-            SecurityProfile securityProfile = getSecurityProfile();
-            if(securityProfile.getEncryptionType() == SecurityProfile.EncryptionType.None)
-                fileAccess = new ClearFileAccess();
-            else if(securityProfile.getEncryptionType() == SecurityProfile.EncryptionType.AES_256)
-            {
-                AesFileAccess aesFileAccess = new AesFileAccess();
-                aesFileAccess.init(this, enteredPin);
-                fileAccess = aesFileAccess;
-
-            }
-
-        }
-
-        return null;
+        return fileAccess;
     }
 
-    public void setEnteredPin(String enteredPin)
+    public synchronized void setEnteredPin(String enteredPin)
     {
         AesFileAccess aesFileAccess = new AesFileAccess();
         aesFileAccess.init(this, enteredPin);
 
-        this.enteredPin = enteredPin;
+
+        fileAccess = aesFileAccess;
     }
 
     public synchronized void clearPinAndAccess()
     {
         fileAccess = null;
-        enteredPin = null;
     }
 }

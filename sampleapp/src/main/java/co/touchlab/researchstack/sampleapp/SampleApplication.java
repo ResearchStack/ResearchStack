@@ -1,8 +1,11 @@
 package co.touchlab.researchstack.sampleapp;
 
+import junit.framework.Assert;
+
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.Constants;
 import co.touchlab.researchstack.common.secure.SecurityProfile;
+import co.touchlab.researchstack.common.secure.aes.AesFileAccess;
 import co.touchlab.researchstack.common.secure.aes.DataDecoder;
 import co.touchlab.researchstack.common.secure.aes.DataEncoder;
 
@@ -11,18 +14,38 @@ import co.touchlab.researchstack.common.secure.aes.DataEncoder;
  */
 public class SampleApplication extends ResearchStackApplication
 {
+    public static final String TEST_SOME_DATA = "Test some data";
+    public static final String SOMEDATA_TXT = "somedata.txt";
+
     @Override
     public void onCreate()
     {
         super.onCreate();
         try
         {
-            DataEncoder dataEncoder = new DataEncoder("1234".toCharArray());
+            /*DataEncoder dataEncoder = new DataEncoder("1234".toCharArray());
             DataDecoder dataDecoder = new DataDecoder("1234".toCharArray());
             byte[] encrypted = dataEncoder.encrypt("Hello!".getBytes());
             byte[] clear = dataDecoder.decrypt(encrypted);
             String theThing = new String(clear);
-            theThing.equals("Hello!");
+            theThing.equals("Hello!");*/
+
+//            setEnteredPin("1234");
+//            ((AesFileAccess)getFileAccess()).updatePassphrase(this, "1234", "4567");
+//
+//            String decryptedString = new String(getFileAccess().readData(this, SOMEDATA_TXT), "UTF8");
+//
+//            if(!TEST_SOME_DATA.equals(decryptedString))
+//                throw new RuntimeException("whoops");
+
+//            AesFileAccess aesFileAccess = new AesFileAccess();
+//            aesFileAccess.init(this, "1234");
+//            aesFileAccess.writeData(this, SOMEDATA_TXT,
+//                                    TEST_SOME_DATA.getBytes("UTF8"));
+//            String decryptedString = new String(
+//                    aesFileAccess.readData(this, SOMEDATA_TXT), "UTF8");
+
+
         }
         catch(Exception e)
         {
