@@ -20,7 +20,7 @@ import co.touchlab.researchstack.common.storage.FileAccess;
 
 public abstract class ResearchStackApplication extends Application
 {
-    public static final String TEMP_USER_JSON_FILE_NAME = "temp_user";
+    public static final String TEMP_USER_JSON_FILE_NAME = "/temp_user";
     protected static ResearchStackApplication instance;
 
     private User currentUser;
@@ -113,53 +113,25 @@ public abstract class ResearchStackApplication extends Application
 
     public void saveUser(Context context)
     {
-        File userJsonFile = new File(context.getFilesDir(),
-                TEMP_USER_JSON_FILE_NAME);
-
         Gson gson = new Gson();
         String userJsonString = gson.toJson(getCurrentUser());
 
         LogExt.d(getClass(),
                 "Writing user json:\n" + userJsonString);
 
-        try
-        {
-            FileOutputStream outputStream = new FileOutputStream(userJsonFile);
-            outputStream.write(userJsonString.getBytes());
-            outputStream.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        getFileAccess().writeString(this, TEMP_USER_JSON_FILE_NAME, userJsonString);
     }
 
     public void loadUser(Context context)
     {
         Gson gson = new Gson();
+        FileAccess fileAccess = getFileAccess();
         File userJsonFile = new File(context.getFilesDir(),
                 TEMP_USER_JSON_FILE_NAME);
-        if (userJsonFile.exists())
+        if (fileAccess.dataExists(this, TEMP_USER_JSON_FILE_NAME))
         {
-            try
-            {
-                FileInputStream inputStream = new FileInputStream(userJsonFile);
-                Reader reader = new InputStreamReader(inputStream);
-                currentUser = gson.fromJson(reader,
-                        User.class);
-                LogExt.d(getClass(),
-                        "Loaded user json");
-            }
-            catch (FileNotFoundException e)
-            {
-                LogExt.e(getClass(),
-                        "Error loading user file");
-                e.printStackTrace();
-            }
+            String jsonString = fileAccess.readString(this, TEMP_USER_JSON_FILE_NAME);
+            currentUser = gson.fromJson(jsonString, User.class);
         }
 
         if (currentUser == null)
@@ -172,14 +144,10 @@ public abstract class ResearchStackApplication extends Application
 
     public void clearUserData(Context context)
     {
-        File userJsonFile = new File(context.getFilesDir(),
-                TEMP_USER_JSON_FILE_NAME);
-        if (userJsonFile.exists())
+        FileAccess fileAccess = getFileAccess();
+        if(fileAccess.dataExists(context, TEMP_USER_JSON_FILE_NAME))
         {
-            boolean deleted = userJsonFile.delete();
-            LogExt.d(getClass(),
-                    "Deleted user data: " + deleted);
-
+            fileAccess.clearData(context, TEMP_USER_JSON_FILE_NAME);
         }
     }
 

@@ -240,7 +240,7 @@ public class AesFileAccess extends BaseFileAccess
     {
         try
         {
-            File file = new File(createSecureDirectory(context), path);
+            File file = findLocalFile(context, path);
             byte[] encrypted = dataEncoder.encrypt(data);
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             fileOutputStream.write(encrypted);
@@ -257,7 +257,7 @@ public class AesFileAccess extends BaseFileAccess
     {
         try
         {
-            File file = new File(createSecureDirectory(context), path);
+            File file = findLocalFile(context, path);
             if(!file.exists())
                 throw new FileAccessException("Can't find "+ file.getPath());
 
@@ -273,7 +273,21 @@ public class AesFileAccess extends BaseFileAccess
     @Override
     public boolean dataExists(Context context, String path)
     {
-        File file = new File(createSecureDirectory(context), path);
+        File file = findLocalFile(context, path);
         return file.exists();
+    }
+
+    @Override
+    public void clearData(Context context, String path)
+    {
+        File file = findLocalFile(context, path);
+        file.delete();
+    }
+
+    @NonNull
+    private File findLocalFile(Context context, String path)
+    {
+        checkPath(path);
+        return new File(createSecureDirectory(context), path.substring(1));
     }
 }

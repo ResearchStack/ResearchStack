@@ -61,6 +61,13 @@ public class ClearFileAccess extends BaseFileAccess
         return findLocalFile(context, path).exists();
     }
 
+    @Override
+    public void clearData(Context context, String path)
+    {
+        File localFile = findLocalFile(context, path);
+        localFile.delete();
+    }
+
     @NonNull
     private File makeTempFile(File localFile)
     {
