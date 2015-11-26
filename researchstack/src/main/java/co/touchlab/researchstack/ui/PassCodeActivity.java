@@ -29,10 +29,8 @@ public class PassCodeActivity extends AppCompatActivity
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    private void fileAccessRegister()
     {
-        super.onCreate(savedInstanceState);
         FileAccess fileAccess = ResearchStackApplication.getInstance().getFileAccess();
         fileAccess.register(fileAccessListener);
     }
@@ -41,6 +39,11 @@ public class PassCodeActivity extends AppCompatActivity
     protected void onDestroy()
     {
         super.onDestroy();
+        fileAccessUnregister();
+    }
+
+    private void fileAccessUnregister()
+    {
         FileAccess fileAccess = ResearchStackApplication.getInstance().getFileAccess();
         fileAccess.unregister(fileAccessListener);
     }
@@ -48,16 +51,17 @@ public class PassCodeActivity extends AppCompatActivity
     protected void initFileAccess()
     {
         FileAccess fileAccess = ResearchStackApplication.getInstance().getFileAccess();
+        fileAccessRegister();
         fileAccess.initFileAccess(this);
     }
 
     protected void onDataReady()
     {
-
+        fileAccessUnregister();
     }
 
     protected void onDataFailed()
     {
-
+        fileAccessUnregister();
     }
 }

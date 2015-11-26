@@ -5,14 +5,6 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
 import co.touchlab.researchstack.common.Constants;
 import co.touchlab.researchstack.common.helpers.LogExt;
 import co.touchlab.researchstack.common.model.User;
@@ -106,12 +98,19 @@ public abstract class ResearchStackApplication extends Application
 
     public abstract Class getInclusionCriteriaSceneClass();
 
+    //TODO: The whole user thing needs to change.  To discuss.
     public User getCurrentUser()
     {
+        loadUser();
         return currentUser;
     }
 
-    public void saveUser(Context context)
+    public boolean storedUserExists()
+    {
+        return getFileAccess().dataExists(this, TEMP_USER_JSON_FILE_NAME);
+    }
+
+    public void saveUser()
     {
         Gson gson = new Gson();
         String userJsonString = gson.toJson(getCurrentUser());
@@ -122,12 +121,11 @@ public abstract class ResearchStackApplication extends Application
         getFileAccess().writeString(this, TEMP_USER_JSON_FILE_NAME, userJsonString);
     }
 
-    public void loadUser(Context context)
+    public void loadUser()
     {
         Gson gson = new Gson();
         FileAccess fileAccess = getFileAccess();
-        File userJsonFile = new File(context.getFilesDir(),
-                TEMP_USER_JSON_FILE_NAME);
+
         if (fileAccess.dataExists(this, TEMP_USER_JSON_FILE_NAME))
         {
             String jsonString = fileAccess.readString(this, TEMP_USER_JSON_FILE_NAME);

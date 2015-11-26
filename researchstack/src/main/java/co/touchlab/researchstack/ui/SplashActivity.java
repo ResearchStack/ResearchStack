@@ -3,6 +3,7 @@ package co.touchlab.researchstack.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
@@ -34,7 +35,9 @@ public class SplashActivity extends PassCodeActivity
     @Override
     protected void onDataReady()
     {
-        User user = ResearchStackApplication.getInstance().getCurrentUser();
+        super.onDataReady();
+        Log.w("asdf", "onDataReady: "+ getClass().getSimpleName());
+        /*User user = ResearchStackApplication.getInstance().getCurrentUser();
 
         if(user != null && user.isSignedIn())
         {
@@ -47,6 +50,23 @@ public class SplashActivity extends PassCodeActivity
         else
         {
             launchOnboardingActivity();
+        }*/
+
+        //TODO: Fix routing
+        if(ResearchStackApplication.getInstance().storedUserExists())
+        {
+            new Handler().post(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    launchScheduleActivity();
+                }
+            });
+        }
+        else
+        {
+            launchOnboardingActivity();
         }
 
         finish();
@@ -55,6 +75,7 @@ public class SplashActivity extends PassCodeActivity
     @Override
     protected void onDataFailed()
     {
+        super.onDataFailed();
         finish();
     }
 

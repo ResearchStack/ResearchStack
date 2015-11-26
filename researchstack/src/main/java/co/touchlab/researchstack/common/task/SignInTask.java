@@ -81,6 +81,9 @@ public class SignInTask extends OnboardingTask
             nextStep = null;
         }
 
+        if(nextStep == null)
+            ResearchStackApplication.getInstance().saveUser();
+
         return nextStep;
     }
 

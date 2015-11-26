@@ -94,8 +94,11 @@ public class SignUpTask extends OnboardingTask
                 nextStep = getPermissionsStep();
                 currentStepNumber += 1;
             }
-            currentStepNumber += 1;
+
         }
+
+        if(nextStep == null)
+            ResearchStackApplication.getInstance().saveUser();
 
         return nextStep;
     }

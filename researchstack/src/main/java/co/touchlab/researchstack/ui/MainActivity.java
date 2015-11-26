@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -133,12 +134,15 @@ public class MainActivity extends PassCodeActivity
     @Override
     protected void onDataReady()
     {
+        super.onDataReady();
+        Log.w("asdf", "onDataReady: " + getClass().getSimpleName());
         showFragment(new ActivitiesFragment());
     }
 
     @Override
     protected void onDataFailed()
     {
+        super.onDataFailed();
         Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
         finish();
     }

@@ -29,9 +29,6 @@ public abstract class BaseFileAccess implements FileAccess
     @Override @MainThread
     public final void unregister(FileAccessListener fileAccessListener)
     {
-        if(!listeners.contains(fileAccessListener))
-            throw new FileAccessException("Listener not found");
-
         listeners.remove(fileAccessListener);
     }
 

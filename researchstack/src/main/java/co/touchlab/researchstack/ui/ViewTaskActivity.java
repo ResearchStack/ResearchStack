@@ -79,12 +79,14 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks,
     @Override
     protected void onDataReady()
     {
+        super.onDataReady();
         loadNextScene();
     }
 
     @Override
     protected void onDataFailed()
     {
+        super.onDataFailed();
         Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
         finish();
     }
@@ -281,7 +283,7 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks,
 
             if (ResearchStackApplication.getInstance().getCurrentUser() == null)
             {
-                ResearchStackApplication.getInstance().loadUser(this);
+                ResearchStackApplication.getInstance().loadUser();
             }
 
             User currentUser = ResearchStackApplication.getInstance()
