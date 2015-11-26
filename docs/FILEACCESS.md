@@ -23,3 +23,23 @@ more complicated than in other situations.
 If data is being stored remotely, any individual call has the potential to fail, so exception handling
 is going to be a critical issue.
 
+## FileAccess
+
+This interface handles file access.  It needs to deal with authentication as well as data reads and writes.
+There are a set of standard implementations.  If you need something custom, see code and javadocs.
+
+### ClearFileAccess
+
+Unencrypted local file storage.  This is simple, but obviously an issue if you need encrypted data.
+
+### AesFileAccess
+
+256 AES local encryption.  User is prompted with a passcode on first access.  This is used to generate
+encryption keys, etc.
+
+## Implementation
+
+ResearchStackApplication should return and implementation of FileAccess.  That defines the protocol used.
+
+To see the proper call sequence, see PassCodeActivity.  File interactions need to be delayed until
+initFileAccess is called on FileAccess, and the FileAccess implementation is successfully initialized.
