@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.common.secure;
+package co.touchlab.researchstack.common.storage;
 /**
  * Created by kgalligan on 11/24/15.
  */

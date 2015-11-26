@@ -16,7 +16,7 @@ import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.model.User;
 import co.touchlab.researchstack.common.result.QuestionResult;
 import co.touchlab.researchstack.common.result.StepResult;
-import co.touchlab.researchstack.common.secure.SecurityProfile;
+import co.touchlab.researchstack.common.storage.SecurityProfile;
 import co.touchlab.researchstack.common.step.Step;
 
 public class SignUpPasscodeScene extends Scene

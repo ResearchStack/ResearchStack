@@ -1,13 +1,8 @@
 package co.touchlab.researchstack.sampleapp;
 
-import junit.framework.Assert;
-
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.Constants;
-import co.touchlab.researchstack.common.secure.SecurityProfile;
-import co.touchlab.researchstack.common.secure.aes.AesFileAccess;
-import co.touchlab.researchstack.common.secure.aes.DataDecoder;
-import co.touchlab.researchstack.common.secure.aes.DataEncoder;
+import co.touchlab.researchstack.common.storage.SecurityProfile;
 
 /**
  * Created by bradleymcdermott on 11/12/15.

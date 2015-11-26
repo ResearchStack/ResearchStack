@@ -1,10 +1,16 @@
-package co.touchlab.researchstack.common.secure.aes;
+package co.touchlab.researchstack.common.storage.aes;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -16,29 +22,130 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import co.touchlab.researchstack.ResearchStackApplication;
-import co.touchlab.researchstack.common.secure.FileAccess;
-import co.touchlab.researchstack.common.secure.FileAccessException;
+import co.touchlab.researchstack.R;
+import co.touchlab.researchstack.common.storage.BaseFileAccess;
+import co.touchlab.researchstack.common.storage.FileAccess;
+import co.touchlab.researchstack.common.storage.FileAccessException;
 import co.touchlab.researchstack.utils.FileUtils;
 
 /**
  * Created by kgalligan on 11/24/15.
  */
-public class AesFileAccess implements FileAccess
+public class AesFileAccess extends BaseFileAccess
 {
     public static final String CHARSET_NAME = "UTF8";
     public static final String A_LITTLE_TEST = "ALittleTest";
     DataDecoder dataDecoder;
     DataEncoder dataEncoder;
 
-    public void init(Context context, String passphrase)
+    @Override
+    public void initFileAccess(Context context)
+    {
+        if(dataDecoder != null && dataEncoder != null)
+        {
+            new Handler().post(this :: notifyListenersReady);
+        }
+        else
+        {
+            if(passphraseExists(context))
+            {
+                runPinDialog(context, "You need to enter your passphrase.", new PinOnClickListener(context)
+                             {
+                                 @Override
+                                 void onPin(Context context, String pin)
+                                 {
+                                     try
+                                     {
+                                         startWithPassphrase(context, pin);
+                                     }
+                                     catch(Exception e)
+                                     {
+                                         initFileAccess(context);
+                                         Toast.makeText(context, "Wrong passphrase", Toast.LENGTH_LONG).show();
+                                     }
+                                 }
+                             });
+            }
+            else
+            {
+                runPinDialog(context, "Create a passphrase.", new PinOnClickListener(context)
+                {
+                    @Override
+                    void onPin(Context context, String pin)
+                    {
+                        try
+                        {
+                            startWithPassphrase(context, pin);
+                        }
+                        catch(Exception e)
+                        {
+                            initFileAccess(context);
+                            Toast.makeText(context, "Bad format", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    private void runPinDialog(Context context, String title, PinOnClickListener listener)
+    {
+        View customView = LayoutInflater.from(context).inflate(R.layout.dialog_pin_entry, null);
+        listener.setCustomView(customView);
+        AlertDialog alertDialog = new AlertDialog
+                .Builder(context)
+                .setView(customView)
+                .setOnCancelListener(dialog -> {
+                    Toast.makeText(context, title,
+                                   Toast.LENGTH_LONG).show();
+                    new Handler().post(AesFileAccess.this :: notifyListenersFailed);
+                })
+                .setPositiveButton("OK", listener)
+                .create();
+        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        alertDialog.show();
+    }
+
+    private abstract class PinOnClickListener implements DialogInterface.OnClickListener
+    {
+        private final Context context;
+        private View customView;
+
+        public PinOnClickListener(Context context)
+        {
+            this.context = context;
+        }
+
+        public void setCustomView(View customView)
+        {
+            this.customView = customView;
+        }
+
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+            String passcode = ((EditText) customView.findViewById(R.id.pinValue)).getText()
+                                                                                 .toString();
+            onPin(context, passcode);
+        }
+
+        abstract void onPin(Context context, String pin);
+    }
+
+    private boolean passphraseExists(Context context)
+    {
+        File passphraseFile = createPassphraseFile(context);
+        return passphraseFile.exists();
+    }
+
+    public void startWithPassphrase(Context context, String passphrase)
     {
         try
         {
             File passphraseFile = createPassphraseFile(context);
             File passphraseCheckFile = createPassphraseCheckFile(context);
             String uuid;
-            if(! passphraseFile.exists())
+            if(! passphraseExists(context))
             {
                 uuid = UUID.randomUUID().toString();
                 writePasskey(passphrase, passphraseFile, uuid);
@@ -157,5 +264,12 @@ public class AesFileAccess implements FileAccess
         {
             throw new FileAccessException(e);
         }
+    }
+
+    @Override
+    public boolean dataExists(Context context, String path)
+    {
+        File file = new File(createSecureDirectory(context), path);
+        return file.exists();
     }
 }

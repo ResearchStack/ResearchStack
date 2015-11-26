@@ -16,10 +16,9 @@ import java.io.Reader;
 import co.touchlab.researchstack.common.Constants;
 import co.touchlab.researchstack.common.helpers.LogExt;
 import co.touchlab.researchstack.common.model.User;
-import co.touchlab.researchstack.common.secure.ClearFileAccess;
-import co.touchlab.researchstack.common.secure.FileAccess;
-import co.touchlab.researchstack.common.secure.SecurityProfile;
-import co.touchlab.researchstack.common.secure.aes.AesFileAccess;
+import co.touchlab.researchstack.common.storage.FileAccess;
+import co.touchlab.researchstack.common.storage.SecurityProfile;
+import co.touchlab.researchstack.common.storage.aes.AesFileAccess;
 
 public abstract class ResearchStackApplication extends Application
 {
@@ -27,7 +26,6 @@ public abstract class ResearchStackApplication extends Application
     protected static ResearchStackApplication instance;
 
     private User currentUser;
-    private FileAccess fileAccess;
 
     @Override
     public void onCreate()
@@ -194,22 +192,5 @@ public abstract class ResearchStackApplication extends Application
      * need something funky, override.
      * @return
      */
-    public synchronized FileAccess getFileAccess()
-    {
-        return fileAccess;
-    }
-
-    public synchronized void setEnteredPin(String enteredPin)
-    {
-        AesFileAccess aesFileAccess = new AesFileAccess();
-        aesFileAccess.init(this, enteredPin);
-
-
-        fileAccess = aesFileAccess;
-    }
-
-    public synchronized void clearPinAndAccess()
-    {
-        fileAccess = null;
-    }
+    public abstract FileAccess getFileAccess();
 }
