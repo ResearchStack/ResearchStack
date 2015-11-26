@@ -32,11 +32,6 @@
             />
 
         <activity
-            android:name="co.touchlab.researchstack.ui.UserPinActivity"
-            android:label="@string/app_name"
-            />
-
-        <activity
             android:name="co.touchlab.researchstack.ui.EmailVerificationActivity"
             android:label="@string/app_name"
             />
@@ -44,11 +39,6 @@
         <activity
             android:name="co.touchlab.researchstack.ui.OnboardingActivity"
             android:label="@string/app_name"
-            />
-
-        <activity
-            android:name="co.touchlab.researchstack.ui.ConsentActivity"
-            android:label="@string/signature_page_title"
             />
 
         <activity

@@ -2,7 +2,9 @@ package co.touchlab.researchstack.common.storage.aes;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.WorkerThread;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,18 +40,18 @@ public class AesFileAccess extends BaseFileAccess
     DataDecoder dataDecoder;
     DataEncoder dataEncoder;
 
-    @Override
+    @Override @WorkerThread
     public void initFileAccess(Context context)
     {
         if(dataDecoder != null && dataEncoder != null)
         {
-            new Handler().post(this :: notifyListenersReady);
+            notifyReady();
         }
         else
         {
             if(passphraseExists(context))
             {
-                runPinDialog(context, "You need to enter your passphrase.", new PinOnClickListener(context)
+                runPinDialog(context, "Enter your passphrase.", new PinOnClickListener(context)
                              {
                                  @Override
                                  void onPin(Context context, String pin)
@@ -57,6 +59,7 @@ public class AesFileAccess extends BaseFileAccess
                                      try
                                      {
                                          startWithPassphrase(context, pin);
+                                         notifyReady();
                                      }
                                      catch(Exception e)
                                      {
@@ -76,6 +79,7 @@ public class AesFileAccess extends BaseFileAccess
                         try
                         {
                             startWithPassphrase(context, pin);
+                            notifyReady();
                         }
                         catch(Exception e)
                         {
@@ -95,9 +99,9 @@ public class AesFileAccess extends BaseFileAccess
         AlertDialog alertDialog = new AlertDialog
                 .Builder(context)
                 .setView(customView)
+                .setTitle(title)
                 .setOnCancelListener(dialog -> {
-                    Toast.makeText(context, title,
-                                   Toast.LENGTH_LONG).show();
+
                     new Handler().post(AesFileAccess.this :: notifyListenersFailed);
                 })
                 .setPositiveButton("OK", listener)
@@ -132,7 +136,7 @@ public class AesFileAccess extends BaseFileAccess
         abstract void onPin(Context context, String pin);
     }
 
-    private boolean passphraseExists(Context context)
+    public boolean passphraseExists(Context context)
     {
         File passphraseFile = createPassphraseFile(context);
         return passphraseFile.exists();
@@ -231,7 +235,7 @@ public class AesFileAccess extends BaseFileAccess
         fileOutputStream.close();
     }
 
-    @Override
+    @Override @WorkerThread
     public synchronized void writeData(Context context, String path, byte[] data)
     {
         try
@@ -248,7 +252,7 @@ public class AesFileAccess extends BaseFileAccess
         }
     }
 
-    @Override
+    @Override @WorkerThread
     public synchronized byte[] readData(Context context, String path)
     {
         try

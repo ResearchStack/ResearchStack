@@ -70,20 +70,20 @@ public class SignUpTask extends OnboardingTask
             }
             else
             {
-                nextStep = getPasscodeStep();
-                user.setSecondaryInfoSaved(true);
+                if (isPermissionScreenSkipped())
+                {
+                    nextStep = null;
+                }
+                else
+                {
+                    nextStep = getPermissionsStep();
+                    currentStepNumber += 1;
+                }
             }
             currentStepNumber += 1;
         }
         else if (step.getIdentifier()
                 .equals(SignUpCustomInfoStepIdentifier))
-        {
-            nextStep = getPasscodeStep();
-            user.setSecondaryInfoSaved(true);
-            currentStepNumber += 1;
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpPasscodeStepIdentifier))
         {
             if (isPermissionScreenSkipped())
             {
@@ -94,6 +94,7 @@ public class SignUpTask extends OnboardingTask
                 nextStep = getPermissionsStep();
                 currentStepNumber += 1;
             }
+            currentStepNumber += 1;
         }
 
         return nextStep;
@@ -146,7 +147,7 @@ public class SignUpTask extends OnboardingTask
             currentStepNumber -= 1;
         }
         else if (step.getIdentifier()
-                .equals(SignUpPasscodeStepIdentifier))
+                .equals(SignUpPermissionsStepIdentifier))
         {
             if (isCustomStepIncluded())
             {
@@ -156,12 +157,6 @@ public class SignUpTask extends OnboardingTask
             {
                 prevStep = getMedicalInfoStep();
             }
-            currentStepNumber -= 1;
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpPermissionsStepIdentifier))
-        {
-            prevStep = getPasscodeStep();
             currentStepNumber -= 1;
         }
 

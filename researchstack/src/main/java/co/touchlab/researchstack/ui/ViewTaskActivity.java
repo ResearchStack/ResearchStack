@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
 
@@ -69,10 +70,23 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks,
         task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
         taskResult = new TaskResult(task.getIdentifier(), null, null);
 
-        loadNextScene();
-
         ActionBar toolbar = getSupportActionBar();
         toolbar.setDisplayHomeAsUpEnabled(true);
+
+        initFileAccess();
+    }
+
+    @Override
+    protected void onDataReady()
+    {
+        loadNextScene();
+    }
+
+    @Override
+    protected void onDataFailed()
+    {
+        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     private void loadNextScene()

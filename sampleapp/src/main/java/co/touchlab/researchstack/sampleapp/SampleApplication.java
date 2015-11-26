@@ -2,7 +2,8 @@ package co.touchlab.researchstack.sampleapp;
 
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.Constants;
-import co.touchlab.researchstack.common.storage.SecurityProfile;
+import co.touchlab.researchstack.common.storage.FileAccess;
+import co.touchlab.researchstack.common.storage.aes.AesFileAccess;
 
 /**
  * Created by bradleymcdermott on 11/12/15.
@@ -11,6 +12,7 @@ public class SampleApplication extends ResearchStackApplication
 {
     public static final String TEST_SOME_DATA = "Test some data";
     public static final String SOMEDATA_TXT = "somedata.txt";
+    private AesFileAccess aesFileAccess = new AesFileAccess();
 
     @Override
     public void onCreate()
@@ -116,12 +118,6 @@ public class SampleApplication extends ResearchStackApplication
     }
 
     @Override
-    public SecurityProfile getSecurityProfile()
-    {
-        return new SecurityProfile(SecurityProfile.EncryptionType.AES_256, false, 4, 4);
-    }
-
-    @Override
     public boolean isSignatureEnabledInConsent()
     {
         return true;
@@ -149,5 +145,11 @@ public class SampleApplication extends ResearchStackApplication
     public Class getInclusionCriteriaSceneClass()
     {
         return SignUpInclusionCriteriaScene.class;
+    }
+
+    @Override
+    public FileAccess getFileAccess()
+    {
+        return aesFileAccess;
     }
 }

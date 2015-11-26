@@ -27,13 +27,5 @@ public class AppPrefs
         prefs = context.getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE);
     }
 
-    public boolean isAppPinEncoded()
-    {
-        return prefs.getBoolean(APP_PIN_ENCODED, false);
-    }
 
-    public void setAppPinEncoded(boolean b)
-    {
-        prefs.edit().putBoolean(APP_PIN_ENCODED, b).apply();
-    }
 }

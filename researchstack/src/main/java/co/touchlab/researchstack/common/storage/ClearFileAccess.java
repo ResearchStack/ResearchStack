@@ -20,7 +20,7 @@ public class ClearFileAccess extends BaseFileAccess
     public void initFileAccess(Context context)
     {
         //Local unencrypted files should always be ready
-        new Handler().post(this :: notifyListenersReady);
+        notifyReady();
     }
 
     @Override @WorkerThread

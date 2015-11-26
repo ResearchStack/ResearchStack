@@ -2,17 +2,17 @@ package co.touchlab.researchstack.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Handler;
 import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
-import co.touchlab.researchstack.AppPrefs;
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.helpers.LogExt;
 import co.touchlab.researchstack.common.model.User;
-import co.touchlab.researchstack.common.storage.SecurityProfile;
+import co.touchlab.researchstack.common.storage.FileAccess;
+import co.touchlab.researchstack.common.storage.aes.AesFileAccess;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -20,7 +20,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by bradleymcdermott on 10/15/15.
  */
-public class SplashActivity extends AppCompatActivity
+public class SplashActivity extends PassCodeActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,20 +28,34 @@ public class SplashActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Observable.create(subscriber -> {
-            initialize();
-            subscriber.onNext(true);
-            subscriber.onCompleted();
-        }).throttleWithTimeout(1, TimeUnit.SECONDS).observeOn(Schedulers.newThread())
-                  .subscribeOn(AndroidSchedulers.mainThread())
-                  .subscribe(this :: launchActivity, this :: showErrorScreen);
+        new Handler().postDelayed(() -> launchActivity(), 1000);
     }
 
-    private void initialize()
+    @Override
+    protected void onDataReady()
     {
-        // initialize stuff for the app
-        LogExt.d(getClass(), "initializing");
-        ResearchStackApplication.getInstance().loadUser(this);
+        User user = ResearchStackApplication.getInstance().getCurrentUser();
+
+        if(user != null && user.isSignedIn())
+        {
+            launchScheduleActivity();
+        }
+        else if(user != null && user.isSignedUp())
+        {
+            launchEmailVerificationActivity();
+        }
+        else
+        {
+            launchOnboardingActivity();
+        }
+
+        finish();
+    }
+
+    @Override
+    protected void onDataFailed()
+    {
+        finish();
     }
 
     private void showErrorScreen(Throwable error)
@@ -51,33 +65,20 @@ public class SplashActivity extends AppCompatActivity
              .show();
     }
 
-    private void launchActivity(Object item)
+    private void launchActivity()
     {
         LogExt.d(getClass(), "Launching activity");
 
-        AppPrefs appPrefs = AppPrefs.getInstance(this);
-        SecurityProfile securityProfile = ResearchStackApplication.getInstance()
-                                                                  .getSecurityProfile();
-        if(appPrefs.isAppPinEncoded() && securityProfile
-                .getEncryptionType() != SecurityProfile.EncryptionType.None)
+        FileAccess fileAccess = ResearchStackApplication.getInstance().getFileAccess();
+        if(((AesFileAccess)fileAccess).passphraseExists(this))
         {
-            launchPinActivity();
+            initFileAccess();
         }
         else
         {
-            User user = ResearchStackApplication.getInstance().getCurrentUser();
-
-            if(user.isSignedUp())
-            {
-                launchEmailVerificationActivity();
-            }
-            else
-            {
-                launchOnboardingActivity();
-            }
+            launchOnboardingActivity();
+            finish();
         }
-
-        finish();
     }
 
     private void launchOnboardingActivity()
@@ -90,7 +91,7 @@ public class SplashActivity extends AppCompatActivity
         startActivity(new Intent(this, EmailVerificationActivity.class));
     }
 
-    private void launchPinActivity()
+    private void launchScheduleActivity()
     {
         startActivity(new Intent(this, MainActivity.class));
     }

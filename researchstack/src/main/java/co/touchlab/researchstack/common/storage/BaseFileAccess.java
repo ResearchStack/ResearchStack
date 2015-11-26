@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.common.storage;
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.MainThread;
 import android.support.annotation.WorkerThread;
 
@@ -35,7 +36,7 @@ public abstract class BaseFileAccess implements FileAccess
     }
 
     @MainThread
-    protected void notifyListenersReady()
+    public void notifyListenersReady()
     {
         //TODO: replace with lambda. Hey, if we're using them...
         for(FileAccessListener listener : listeners)
@@ -45,7 +46,7 @@ public abstract class BaseFileAccess implements FileAccess
     }
 
     @MainThread
-    protected void notifyListenersFailed()
+    public void notifyListenersFailed()
     {
         //TODO: replace with lambda. Hey, if we're using them...
         for(FileAccessListener listener : listeners)
@@ -80,9 +81,14 @@ public abstract class BaseFileAccess implements FileAccess
         }
     }
 
-    protected void checkPath(String path)
+    public void checkPath(String path)
     {
         if(!path.startsWith("/"))
             throw new FileAccessException("Path must be absolute (ie start with '/')");
+    }
+
+    protected void notifyReady()
+    {
+        new Handler().post(this :: notifyListenersReady);
     }
 }

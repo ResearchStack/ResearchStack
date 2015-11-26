@@ -38,17 +38,8 @@ public class SignInTask extends OnboardingTask
         else if (step.getIdentifier()
                 .equals(SignUpPermissionsPrimingStepIdentifier))
         {
-            if (user.isSecondaryInfoSaved())
-            {
-                nextStep = getPasscodeStep();
-            }
-            else
-            {
-                currentStepNumber += 1;
-                nextStep = getMedicalInfoStep();
-            }
-
-
+            currentStepNumber += 1;
+            nextStep = getMedicalInfoStep();
         }
         else if (step.getIdentifier()
                 .equals(SignUpMedicalInfoStepIdentifier))
@@ -59,30 +50,24 @@ public class SignInTask extends OnboardingTask
             }
             else
             {
-                nextStep = getPasscodeStep();
-                user.setSecondaryInfoSaved(true);
+                if (isPermissionScreenSkipped())
+                {
+                    nextStep = null;
+                }
+                else
+                {
+                    nextStep = getPermissionsStep();
+                    currentStepNumber += 1;
+                }
             }
             currentStepNumber += 1;
         }
         else if (step.getIdentifier()
                 .equals(SignUpCustomInfoStepIdentifier))
         {
-            nextStep = getPasscodeStep();
+            nextStep = getPermissionsStep();
             user.setSecondaryInfoSaved(true);
             currentStepNumber += 1;
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpPasscodeStepIdentifier))
-        {
-            if (isPermissionScreenSkipped())
-            {
-                nextStep = null;
-            }
-            else
-            {
-                nextStep = getPermissionsStep();
-                currentStepNumber += 1;
-            }
         }
         else if (step.getIdentifier()
                 .equals(SignUpPermissionsStepIdentifier))
@@ -116,7 +101,7 @@ public class SignInTask extends OnboardingTask
             currentStepNumber -= 1;
         }
         else if (step.getIdentifier()
-                .equals(SignUpPasscodeStepIdentifier))
+                .equals(SignUpPermissionsStepIdentifier))
         {
             if (isCustomStepIncluded())
             {
@@ -126,12 +111,6 @@ public class SignInTask extends OnboardingTask
             {
                 prevStep = getMedicalInfoStep();
             }
-            currentStepNumber -= 1;
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpPermissionsStepIdentifier))
-        {
-            prevStep = getPasscodeStep();
             currentStepNumber -= 1;
         }
 

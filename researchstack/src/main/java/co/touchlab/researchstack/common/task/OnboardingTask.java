@@ -11,7 +11,6 @@ import co.touchlab.researchstack.ui.scene.SignUpAdditionalInfoScene;
 import co.touchlab.researchstack.ui.scene.SignUpEligibleScene;
 import co.touchlab.researchstack.ui.scene.SignUpGeneralInfoScene;
 import co.touchlab.researchstack.ui.scene.SignUpIneligibleScene;
-import co.touchlab.researchstack.ui.scene.SignUpPasscodeScene;
 import co.touchlab.researchstack.ui.scene.SignUpPermissionsPrimingScene;
 import co.touchlab.researchstack.ui.scene.SignUpPermissionsScene;
 
@@ -26,7 +25,6 @@ public abstract class OnboardingTask extends Task
     public static final String SignUpGeneralInfoStepIdentifier = "GeneralInfo";
     public static final String SignUpMedicalInfoStepIdentifier = "MedicalInfo";
     public static final String SignUpCustomInfoStepIdentifier = "CustomInfo";
-    public static final String SignUpPasscodeStepIdentifier = "Passcode";
     public static final String SignUpPermissionsStepIdentifier = "Permissions";
     public static final String SignUpThankYouStepIdentifier = "ThankYou";
     public static final String SignInStepIdentifier = "SignIn";
@@ -38,7 +36,6 @@ public abstract class OnboardingTask extends Task
     private Step generalInfoStep;
     private Step medicalInfoStep;
     private Step customInfoStep;
-    private Step passcodeStep;
     private Step permissionsStep;
     private Step thankyouStep;
     private Step signInStep;
@@ -137,17 +134,6 @@ public abstract class OnboardingTask extends Task
             permissionsStep.setSceneClass(SignUpPermissionsScene.class);
         }
         return permissionsStep;
-    }
-
-    public Step getPasscodeStep()
-    {
-        if (passcodeStep == null)
-        {
-            passcodeStep = new Step(SignUpPasscodeStepIdentifier);
-            passcodeStep.setSceneTitle(R.string.identification);
-            passcodeStep.setSceneClass(SignUpPasscodeScene.class);
-        }
-        return passcodeStep;
     }
 
     public Step getCustomInfoStep()

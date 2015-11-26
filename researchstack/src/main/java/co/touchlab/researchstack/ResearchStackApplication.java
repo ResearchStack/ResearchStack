@@ -17,8 +17,6 @@ import co.touchlab.researchstack.common.Constants;
 import co.touchlab.researchstack.common.helpers.LogExt;
 import co.touchlab.researchstack.common.model.User;
 import co.touchlab.researchstack.common.storage.FileAccess;
-import co.touchlab.researchstack.common.storage.SecurityProfile;
-import co.touchlab.researchstack.common.storage.aes.AesFileAccess;
 
 public abstract class ResearchStackApplication extends Application
 {
@@ -73,8 +71,6 @@ public abstract class ResearchStackApplication extends Application
     }
 
     public abstract int getAppName();
-
-    public abstract SecurityProfile getSecurityProfile();
 
     public String getHTMLFilePath(String docName)
     {
