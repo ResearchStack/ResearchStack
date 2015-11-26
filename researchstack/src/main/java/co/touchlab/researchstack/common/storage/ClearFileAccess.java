@@ -1,15 +1,13 @@
 package co.touchlab.researchstack.common.storage;
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
-
-import co.touchlab.researchstack.utils.FileUtils;
 
 /**
  * Created by kgalligan on 11/24/15.
@@ -26,19 +24,8 @@ public class ClearFileAccess extends BaseFileAccess
     @Override @WorkerThread
     public void writeData(Context context, String path, byte[] data)
     {
-        try
-        {
-            File localFile = findLocalFile(context, path);
-            File tempFile = makeTempFile(localFile);
-            FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
-            fileOutputStream.write(data);
-            fileOutputStream.close();
-            tempFile.renameTo(localFile);
-        }
-        catch(IOException e)
-        {
-            throw new FileAccessException(e);
-        }
+        File localFile = findLocalFile(context, path);
+        writeSafe(localFile, data);
     }
 
     @Override @WorkerThread
@@ -47,7 +34,7 @@ public class ClearFileAccess extends BaseFileAccess
         try
         {
             File localFile = findLocalFile(context, path);
-            return FileUtils.readAll(localFile);
+            return readAll(localFile);
         }
         catch(IOException e)
         {
@@ -68,11 +55,7 @@ public class ClearFileAccess extends BaseFileAccess
         localFile.delete();
     }
 
-    @NonNull
-    private File makeTempFile(File localFile)
-    {
-        return new File(localFile.getParentFile(), localFile.getName() + ".temp");
-    }
+
 
     @NonNull
     private File findLocalFile(Context context, String path)

@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -26,9 +25,7 @@ import javax.crypto.NoSuchPaddingException;
 
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.common.storage.BaseFileAccess;
-import co.touchlab.researchstack.common.storage.FileAccess;
 import co.touchlab.researchstack.common.storage.FileAccessException;
-import co.touchlab.researchstack.utils.FileUtils;
 
 /**
  * Created by kgalligan on 11/24/15.
@@ -220,7 +217,7 @@ public class AesFileAccess extends BaseFileAccess
     private String readPasskey(String passphrase, File encrypted) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException
     {
         String uuid;
-        byte[] bytes = FileUtils.readAll(encrypted);
+        byte[] bytes = readAll(encrypted);
         DataDecoder dataDecoder = new DataDecoder(passphrase.toCharArray());
         uuid = new String(dataDecoder.decrypt(bytes), CHARSET_NAME);
         return uuid;
@@ -230,9 +227,7 @@ public class AesFileAccess extends BaseFileAccess
     {
         DataEncoder dataEncoder = new DataEncoder(passphrase.toCharArray());
         byte[] encrypt = dataEncoder.encrypt(uuid.getBytes(CHARSET_NAME));
-        FileOutputStream fileOutputStream = new FileOutputStream(encrypted);
-        fileOutputStream.write(encrypt);
-        fileOutputStream.close();
+        writeSafe(encrypted, encrypt);
     }
 
     @Override @WorkerThread
@@ -242,11 +237,9 @@ public class AesFileAccess extends BaseFileAccess
         {
             File file = findLocalFile(context, path);
             byte[] encrypted = dataEncoder.encrypt(data);
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(encrypted);
-            fileOutputStream.close();
+            writeSafe(file, encrypted);
         }
-        catch(BadPaddingException | IllegalBlockSizeException | IOException e)
+        catch(BadPaddingException | IllegalBlockSizeException e)
         {
             throw new FileAccessException(e);
         }
@@ -261,7 +254,7 @@ public class AesFileAccess extends BaseFileAccess
             if(!file.exists())
                 throw new FileAccessException("Can't find "+ file.getPath());
 
-            byte[] encryptedData = FileUtils.readAll(file);
+            byte[] encryptedData = readAll(file);
             return dataDecoder.decrypt(encryptedData);
         }
         catch(IOException | BadPaddingException | IllegalBlockSizeException e)

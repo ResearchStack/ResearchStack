@@ -2,8 +2,14 @@ package co.touchlab.researchstack.common.storage;
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,5 +93,41 @@ public abstract class BaseFileAccess implements FileAccess
     protected void notifyReady()
     {
         new Handler().post(this :: notifyListenersReady);
+    }
+
+    protected void writeSafe(File file, byte[] data)
+    {
+        try
+        {
+            File tempFile = makeTempFile(file);
+            FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
+            fileOutputStream.write(data);
+            fileOutputStream.close();
+            tempFile.renameTo(file);
+        }
+        catch(IOException e)
+        {
+            throw new FileAccessException(e);
+        }
+    }
+
+    @NonNull
+    private File makeTempFile(File localFile)
+    {
+        return new File(localFile.getParentFile(), localFile.getName() + ".temp");
+    }
+
+    protected byte[] readAll(File file) throws IOException
+    {
+        FileInputStream fileInputStream = new FileInputStream(file);
+        byte[] buff = new byte[1024];
+        int read;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(2048);
+        while((read = fileInputStream.read(buff)) > 0)
+        {
+            byteArrayOutputStream.write(buff, 0, read);
+        }
+
+        return byteArrayOutputStream.toByteArray();
     }
 }
