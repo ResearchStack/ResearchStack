@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.jakewharton.rxbinding.widget.RxTextView;
+
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -29,6 +31,7 @@ import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.common.storage.BaseFileAccess;
 import co.touchlab.researchstack.common.storage.FileAccessException;
 import co.touchlab.researchstack.utils.UiThreadContext;
+import rx.functions.Action1;
 
 /**
  * Created by kgalligan on 11/24/15.
@@ -137,7 +140,9 @@ public class AesFileAccess extends BaseFileAccess
                 alphaNumeric ? R.layout.dialog_pin_entry_alphanumeric : R.layout.dialog_pin_entry
                 , null);
         EditText editText = (EditText) customView.findViewById(R.id.pinValue);
-        editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(length) });
+        editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(length)});
+
+
         listener.setCustomView(customView);
         AlertDialog alertDialog = new AlertDialog
                 .Builder(context)
@@ -147,8 +152,17 @@ public class AesFileAccess extends BaseFileAccess
 
                     new Handler().post(AesFileAccess.this :: notifyListenersFailed);
                 })
-                .setPositiveButton("OK", listener)
+//                .setPositiveButton("OK", listener)
                 .create();
+
+        RxTextView.textChanges(editText)
+                  .filter(charSequence -> charSequence.length() == length)
+                  .subscribe(charSequence -> {
+                      new Handler().postDelayed(() -> {
+                          listener.onPin(context, charSequence.toString());
+                          alertDialog.dismiss();
+                      }, 300);
+                  });
 
         //If not an Activity, need system alert. Not sure how it wouldn't be, but...
         if(!(context instanceof Activity))
