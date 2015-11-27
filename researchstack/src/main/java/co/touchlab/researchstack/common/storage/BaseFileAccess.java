@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import co.touchlab.researchstack.utils.UiThreadContext;
+
 /**
  * Created by kgalligan on 11/25/15.
  */
@@ -26,6 +28,7 @@ public abstract class BaseFileAccess implements FileAccess
     @Override @MainThread
     public final void register(FileAccessListener fileAccessListener)
     {
+        UiThreadContext.assertUiThread();
         if(listeners.contains(fileAccessListener))
             throw new FileAccessException("Listener already registered");
 
@@ -35,12 +38,14 @@ public abstract class BaseFileAccess implements FileAccess
     @Override @MainThread
     public final void unregister(FileAccessListener fileAccessListener)
     {
+        UiThreadContext.assertUiThread();
         listeners.remove(fileAccessListener);
     }
 
     @MainThread
     public void notifyListenersReady()
     {
+        UiThreadContext.assertUiThread();
         //TODO: replace with lambda. Hey, if we're using them...
         for(FileAccessListener listener : listeners)
         {
@@ -51,6 +56,7 @@ public abstract class BaseFileAccess implements FileAccess
     @MainThread
     public void notifyListenersFailed()
     {
+        UiThreadContext.assertUiThread();
         //TODO: replace with lambda. Hey, if we're using them...
         for(FileAccessListener listener : listeners)
         {
@@ -61,6 +67,7 @@ public abstract class BaseFileAccess implements FileAccess
     @Override @WorkerThread
     public void writeString(Context context, String path, String data)
     {
+        UiThreadContext.assertBackgroundThread();
         try
         {
             writeData(context, path, data.getBytes("UTF8"));
@@ -74,6 +81,7 @@ public abstract class BaseFileAccess implements FileAccess
     @Override @WorkerThread
     public String readString(Context context, String path)
     {
+        UiThreadContext.assertBackgroundThread();
         try
         {
             return new String(readData(context, path), "UTF8");

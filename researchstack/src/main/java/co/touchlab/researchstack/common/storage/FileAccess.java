@@ -1,5 +1,4 @@
 package co.touchlab.researchstack.common.storage;
-import android.app.Activity;
 import android.content.Context;
 
 /**

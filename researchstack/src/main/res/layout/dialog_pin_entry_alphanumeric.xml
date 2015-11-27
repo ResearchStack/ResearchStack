@@ -6,10 +6,11 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
         android:id="@+id/pinValue"
-        android:inputType="number"
+        android:padding="20dp"
         android:gravity="center"
+        android:inputType="textNoSuggestions|textVisiblePassword"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         android:singleLine="true"/>
 
 </LinearLayout>

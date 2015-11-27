@@ -4,10 +4,10 @@ import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+
+import co.touchlab.researchstack.utils.UiThreadContext;
 
 /**
  * Created by kgalligan on 11/24/15.
@@ -17,6 +17,7 @@ public class ClearFileAccess extends BaseFileAccess
     @Override @MainThread
     public void initFileAccess(Context context)
     {
+        UiThreadContext.assertUiThread();
         //Local unencrypted files should always be ready
         notifyReady();
     }

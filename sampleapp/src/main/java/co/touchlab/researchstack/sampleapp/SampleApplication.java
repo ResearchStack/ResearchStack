@@ -12,7 +12,7 @@ public class SampleApplication extends ResearchStackApplication
 {
     public static final String TEST_SOME_DATA = "Test some data";
     public static final String SOMEDATA_TXT = "somedata.txt";
-    private AesFileAccess aesFileAccess = new AesFileAccess();
+    private AesFileAccess aesFileAccess = new AesFileAccess(256, false, 6);
 
     @Override
     public void onCreate()

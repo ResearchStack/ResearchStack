@@ -1,4 +1,5 @@
 package co.touchlab.researchstack.common.storage.aes;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
@@ -6,6 +7,7 @@ import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,6 +28,7 @@ import javax.crypto.NoSuchPaddingException;
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.common.storage.BaseFileAccess;
 import co.touchlab.researchstack.common.storage.FileAccessException;
+import co.touchlab.researchstack.utils.UiThreadContext;
 
 /**
  * Created by kgalligan on 11/24/15.
@@ -36,10 +39,21 @@ public class AesFileAccess extends BaseFileAccess
     public static final String A_LITTLE_TEST = "ALittleTest";
     DataDecoder dataDecoder;
     DataEncoder dataEncoder;
+    private final int bitDepth;
+    private final boolean alphaNumeric;
+    private final int length;
 
-    @Override @WorkerThread
+    public AesFileAccess(int bitDepth, boolean alphaNumeric, int length)
+    {
+        this.bitDepth = bitDepth;
+        this.alphaNumeric = alphaNumeric;
+        this.length = length;
+    }
+
+    @Override @MainThread
     public void initFileAccess(Context context)
     {
+        UiThreadContext.assertUiThread();
         if(dataDecoder != null && dataEncoder != null)
         {
             notifyReady();
@@ -75,8 +89,7 @@ public class AesFileAccess extends BaseFileAccess
                     {
                         try
                         {
-                            startWithPassphrase(context, pin);
-                            notifyReady();
+                            confirmPin(context, pin);
                         }
                         catch(Exception e)
                         {
@@ -89,9 +102,42 @@ public class AesFileAccess extends BaseFileAccess
         }
     }
 
+    private void confirmPin(Context context, String firstPin)
+    {
+        runPinDialog(context, "Confirm passphrase.", new PinOnClickListener(context)
+        {
+            @Override
+            void onPin(Context context, String pin)
+            {
+                try
+                {
+                    if(!firstPin.equals(pin))
+                    {
+                        Toast.makeText(context, "Pins do not match", Toast.LENGTH_LONG).show();
+                        initFileAccess(context);
+                    }
+                    else
+                    {
+                        startWithPassphrase(context, pin);
+                        notifyReady();
+                    }
+                }
+                catch(Exception e)
+                {
+                    initFileAccess(context);
+                    Toast.makeText(context, "Bad format", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
     private void runPinDialog(Context context, String title, PinOnClickListener listener)
     {
-        View customView = LayoutInflater.from(context).inflate(R.layout.dialog_pin_entry, null);
+        View customView = LayoutInflater.from(context).inflate(
+                alphaNumeric ? R.layout.dialog_pin_entry_alphanumeric : R.layout.dialog_pin_entry
+                , null);
+        EditText editText = (EditText) customView.findViewById(R.id.pinValue);
+        editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(length) });
         listener.setCustomView(customView);
         AlertDialog alertDialog = new AlertDialog
                 .Builder(context)
@@ -103,7 +149,14 @@ public class AesFileAccess extends BaseFileAccess
                 })
                 .setPositiveButton("OK", listener)
                 .create();
-        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+
+        //If not an Activity, need system alert. Not sure how it wouldn't be, but...
+        if(!(context instanceof Activity))
+        {
+            alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        }
+
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         alertDialog.show();
     }
 
@@ -171,8 +224,8 @@ public class AesFileAccess extends BaseFileAccess
 
     private void resetCodecs(String uuid) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException
     {
-        dataDecoder = new DataDecoder(uuid.toCharArray());
-        dataEncoder = new DataEncoder(uuid.toCharArray());
+        dataDecoder = new DataDecoder(uuid.toCharArray(), bitDepth);
+        dataEncoder = new DataEncoder(uuid.toCharArray(), bitDepth);
     }
 
     @NonNull
@@ -218,14 +271,14 @@ public class AesFileAccess extends BaseFileAccess
     {
         String uuid;
         byte[] bytes = readAll(encrypted);
-        DataDecoder dataDecoder = new DataDecoder(passphrase.toCharArray());
+        DataDecoder dataDecoder = new DataDecoder(passphrase.toCharArray(), bitDepth);
         uuid = new String(dataDecoder.decrypt(bytes), CHARSET_NAME);
         return uuid;
     }
 
     private void writePasskey(String passphrase, File encrypted, String uuid) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException
     {
-        DataEncoder dataEncoder = new DataEncoder(passphrase.toCharArray());
+        DataEncoder dataEncoder = new DataEncoder(passphrase.toCharArray(), bitDepth);
         byte[] encrypt = dataEncoder.encrypt(uuid.getBytes(CHARSET_NAME));
         writeSafe(encrypted, encrypt);
     }

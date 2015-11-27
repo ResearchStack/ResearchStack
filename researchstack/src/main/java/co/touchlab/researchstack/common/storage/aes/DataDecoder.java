@@ -12,18 +12,17 @@ import javax.crypto.SecretKey;
 /**
  * Created by kgalligan on 11/24/15.
  */
-public class DataDecoder
+public class DataDecoder extends AbstractEncryptor
 {
-    private SecretKey key;
-
-    public static final String SALT = "you shouldn't do this";
-    private final Cipher cipher;
-
-    public DataDecoder(char[] passphrase) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException
+    public DataDecoder(char[] passphrase, int bitLength) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException
     {
-        key = KeyHelper.generateKey(passphrase, SALT.getBytes());
-        cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, key);
+        super(passphrase, bitLength);
+    }
+
+    @Override
+    public int getMode()
+    {
+        return Cipher.DECRYPT_MODE;
     }
 
     public byte[] decrypt(byte[] encrypted) throws BadPaddingException, IllegalBlockSizeException
