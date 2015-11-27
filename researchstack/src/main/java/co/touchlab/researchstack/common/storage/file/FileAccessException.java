@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.common.storage;
+package co.touchlab.researchstack.common.storage.file;
 /**
  * Created by kgalligan on 11/24/15.
  */

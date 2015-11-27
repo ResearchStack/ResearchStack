@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.common.storage;
+package co.touchlab.researchstack.common.storage.file;
 /**
  * Callback for data access.  This will change a lot soon.
  *

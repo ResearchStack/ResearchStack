@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.common.storage;
+package co.touchlab.researchstack.common.storage.file;
 import android.content.Context;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -55,8 +55,6 @@ public class ClearFileAccess extends BaseFileAccess
         File localFile = findLocalFile(context, path);
         localFile.delete();
     }
-
-
 
     @NonNull
     private File findLocalFile(Context context, String path)

@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.common.storage.aes;
+package co.touchlab.researchstack.common.storage.file.aes;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,10 +28,9 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import co.touchlab.researchstack.R;
-import co.touchlab.researchstack.common.storage.BaseFileAccess;
-import co.touchlab.researchstack.common.storage.FileAccessException;
+import co.touchlab.researchstack.common.storage.file.BaseFileAccess;
+import co.touchlab.researchstack.common.storage.file.FileAccessException;
 import co.touchlab.researchstack.utils.UiThreadContext;
-import rx.functions.Action1;
 
 /**
  * Created by kgalligan on 11/24/15.

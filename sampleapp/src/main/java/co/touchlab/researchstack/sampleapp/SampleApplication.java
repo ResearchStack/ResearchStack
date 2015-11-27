@@ -2,8 +2,8 @@ package co.touchlab.researchstack.sampleapp;
 
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.Constants;
-import co.touchlab.researchstack.common.storage.FileAccess;
-import co.touchlab.researchstack.common.storage.aes.AesFileAccess;
+import co.touchlab.researchstack.common.storage.file.FileAccess;
+import co.touchlab.researchstack.common.storage.file.aes.AesFileAccess;
 
 /**
  * Created by bradleymcdermott on 11/12/15.

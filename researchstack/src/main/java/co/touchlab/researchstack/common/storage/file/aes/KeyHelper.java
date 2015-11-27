@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.common.storage.aes;
+package co.touchlab.researchstack.common.storage.file.aes;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;

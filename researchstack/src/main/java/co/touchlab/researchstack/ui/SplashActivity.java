@@ -6,17 +6,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.concurrent.TimeUnit;
-
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.helpers.LogExt;
-import co.touchlab.researchstack.common.model.User;
-import co.touchlab.researchstack.common.storage.FileAccess;
-import co.touchlab.researchstack.common.storage.aes.AesFileAccess;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import co.touchlab.researchstack.common.storage.file.FileAccess;
+import co.touchlab.researchstack.common.storage.file.aes.AesFileAccess;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
@@ -36,7 +30,7 @@ public class SplashActivity extends PassCodeActivity
     protected void onDataReady()
     {
         super.onDataReady();
-        Log.w("asdf", "onDataReady: "+ getClass().getSimpleName());
+        Log.w("asdf", "onDataReady: " + getClass().getSimpleName());
         /*User user = ResearchStackApplication.getInstance().getCurrentUser();
 
         if(user != null && user.isSignedIn())

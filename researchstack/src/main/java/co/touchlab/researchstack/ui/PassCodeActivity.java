@@ -1,15 +1,9 @@
 package co.touchlab.researchstack.ui;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import java.util.concurrent.TimeUnit;
-
 import co.touchlab.researchstack.ResearchStackApplication;
-import co.touchlab.researchstack.common.storage.FileAccess;
-import co.touchlab.researchstack.common.storage.FileAccessListener;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import co.touchlab.researchstack.common.storage.file.FileAccess;
+import co.touchlab.researchstack.common.storage.file.FileAccessListener;
 
 public class PassCodeActivity extends AppCompatActivity
 {
