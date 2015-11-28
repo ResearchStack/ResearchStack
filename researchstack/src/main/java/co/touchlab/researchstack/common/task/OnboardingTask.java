@@ -46,9 +46,9 @@ public abstract class OnboardingTask extends Task
 
     protected int currentStepNumber;
 
-    public OnboardingTask(String identifier)
+    public OnboardingTask(String identifier, String scheduleId)
     {
-        super(identifier);
+        super(identifier, scheduleId);
     }
 
     @Override

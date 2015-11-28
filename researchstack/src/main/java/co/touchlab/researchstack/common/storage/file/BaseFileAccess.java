@@ -24,7 +24,7 @@ import co.touchlab.researchstack.utils.UiThreadContext;
 public abstract class BaseFileAccess implements FileAccess
 {
     protected List<FileAccessListener> listeners = Collections.synchronizedList(new ArrayList<>());
-    protected boolean checkThreads = true;
+    protected boolean checkThreads = false;
 
     @Override @MainThread
     public final void register(FileAccessListener fileAccessListener)

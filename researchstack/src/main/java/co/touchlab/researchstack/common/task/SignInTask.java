@@ -15,7 +15,7 @@ public class SignInTask extends OnboardingTask
 
     public SignInTask()
     {
-        super("SignUp");
+        super("SignUp", "SignUp");
     }
 
     @Override
@@ -47,6 +47,7 @@ public class SignInTask extends OnboardingTask
             if (isCustomStepIncluded())
             {
                 nextStep = getCustomInfoStep();
+                currentStepNumber += 1;
             }
             else
             {
@@ -60,7 +61,7 @@ public class SignInTask extends OnboardingTask
                     currentStepNumber += 1;
                 }
             }
-            currentStepNumber += 1;
+
         }
         else if (step.getIdentifier()
                 .equals(SignUpCustomInfoStepIdentifier))

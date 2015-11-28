@@ -11,13 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import co.touchlab.researchstack.R;
+import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.helpers.LogExt;
 import co.touchlab.researchstack.common.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.common.model.TaskModel;
+import co.touchlab.researchstack.common.schedule.ScheduleHelper;
+import co.touchlab.researchstack.common.storage.database.TaskRecord;
 import co.touchlab.researchstack.common.task.SmartSurveyTask;
 import co.touchlab.researchstack.ui.ViewTaskActivity;
 import co.touchlab.researchstack.utils.JsonUtils;
@@ -45,12 +52,29 @@ public class ActivitiesFragment extends Fragment
         SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClassFromRawJson(getContext(),
                 SchedulesAndTasksModel.class,
                 "tasks_and_schedules");
+        Map<String, TaskRecord> latestForAllTypes = ResearchStackApplication.getInstance()
+                                                                            .getAppDatabase()
+                                                                            .findLatestForAllTypes();
+
         ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();
         for (SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)
         {
             for (SchedulesAndTasksModel.TaskModel task : schedule.tasks)
             {
-                tasks.add(task);
+                TaskRecord taskRecord = latestForAllTypes.get(task.taskID);
+                if(taskRecord == null)
+                {
+                    tasks.add(task);
+                }
+                else if(StringUtils.isNotEmpty(schedule.scheduleString))
+                {
+                    Date date = ScheduleHelper
+                            .nextSchedule(schedule.scheduleString, taskRecord.completed);
+                    if(date.before(new Date()))
+                    {
+                        tasks.add(task);
+                    }
+                }
             }
         }
 
@@ -95,7 +119,7 @@ public class ActivitiesFragment extends Fragment
                 TaskModel taskModel = JsonUtils.loadClassFromRawJson(v.getContext(),
                         TaskModel.class,
                         task.taskFileName);
-                SmartSurveyTask newTask = new SmartSurveyTask(taskModel);
+                SmartSurveyTask newTask = new SmartSurveyTask(taskModel, task.taskID);
 
                 v.getContext()
                         .startActivity(ViewTaskActivity.newIntent(v.getContext(),

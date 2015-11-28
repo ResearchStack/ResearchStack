@@ -37,13 +37,14 @@ import co.touchlab.researchstack.utils.UiThreadContext;
  */
 public class AesFileAccess extends BaseFileAccess
 {
-    public static final String CHARSET_NAME = "UTF8";
+    public static final String CHARSET_NAME  = "UTF8";
     public static final String A_LITTLE_TEST = "ALittleTest";
     DataDecoder dataDecoder;
     DataEncoder dataEncoder;
-    private final int bitDepth;
+    String      key;
+    private final int     bitDepth;
     private final boolean alphaNumeric;
-    private final int length;
+    private final int     length;
 
     public AesFileAccess(int bitDepth, boolean alphaNumeric, int length)
     {
@@ -52,7 +53,8 @@ public class AesFileAccess extends BaseFileAccess
         this.length = length;
     }
 
-    @Override @MainThread
+    @Override
+    @MainThread
     public void initFileAccess(Context context)
     {
         UiThreadContext.assertUiThread();
@@ -65,22 +67,22 @@ public class AesFileAccess extends BaseFileAccess
             if(passphraseExists(context))
             {
                 runPinDialog(context, "Enter your passphrase.", new PinOnClickListener(context)
-                             {
-                                 @Override
-                                 void onPin(Context context, String pin)
-                                 {
-                                     try
-                                     {
-                                         startWithPassphrase(context, pin);
-                                         notifyReady();
-                                     }
-                                     catch(Exception e)
-                                     {
-                                         initFileAccess(context);
-                                         Toast.makeText(context, "Wrong passphrase", Toast.LENGTH_LONG).show();
-                                     }
-                                 }
-                             });
+                {
+                    @Override
+                    void onPin(Context context, String pin)
+                    {
+                        try
+                        {
+                            startWithPassphrase(context, pin);
+                            notifyReady();
+                        }
+                        catch(Exception e)
+                        {
+                            initFileAccess(context);
+                            Toast.makeText(context, "Wrong passphrase", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
             else
             {
@@ -227,7 +229,7 @@ public class AesFileAccess extends BaseFileAccess
                 uuid = readPasskey(passphrase, passphraseFile);
             }
 
-            resetCodecs(uuid);
+            resetCodecs(context, uuid);
         }
         catch(InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | IOException e)
         {
@@ -235,10 +237,16 @@ public class AesFileAccess extends BaseFileAccess
         }
     }
 
-    private void resetCodecs(String uuid) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException
+    private void resetCodecs(Context context, String uuid) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException
     {
         dataDecoder = new DataDecoder(uuid.toCharArray(), bitDepth);
         dataEncoder = new DataEncoder(uuid.toCharArray(), bitDepth);
+        this.key = uuid;
+    }
+
+    public String getKey()
+    {
+        return key;
     }
 
     @NonNull

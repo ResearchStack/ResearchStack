@@ -1,7 +1,20 @@
 package co.touchlab.researchstack.sampleapp;
 
+import android.os.Environment;
+import android.util.Log;
+
+import com.joanzapata.pdfview.util.FileUtils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.Constants;
+import co.touchlab.researchstack.common.storage.database.AppDatabase;
+import co.touchlab.researchstack.common.storage.database.TaskRecord;
+import co.touchlab.researchstack.common.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.common.storage.file.FileAccess;
 import co.touchlab.researchstack.common.storage.file.aes.AesFileAccess;
 
@@ -18,6 +31,11 @@ public class SampleApplication extends ResearchStackApplication
     public void onCreate()
     {
         super.onCreate();
+
+        if(BuildConfig.DEBUG)
+            copyDbFile();
+
+        //        SQLiteDatabase.loadLibs(this);
         try
         {
             /*DataEncoder dataEncoder = new DataEncoder("1234".toCharArray());
@@ -49,6 +67,24 @@ public class SampleApplication extends ResearchStackApplication
             throw new RuntimeException(e);
         }
 
+    }
+
+    private void copyDbFile()
+    {
+        try
+        {
+            File folder = new File(Environment.getExternalStorageDirectory(), "researchstack");
+            folder.mkdirs();
+            File databasePath = getDatabasePath(DatabaseHelper.DB_NAME);
+            File outFile = new File(folder, databasePath.getName());
+            FileInputStream input = new FileInputStream(databasePath);
+            FileUtils.copy(input, outFile);
+            input.close();
+        }
+        catch(IOException e)
+        {
+            Log.e("asdf", "", e);
+        }
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -115,6 +151,11 @@ public class SampleApplication extends ResearchStackApplication
     public int getAppName()
     {
         return co.touchlab.researchstack.R.string.app_name;
+    }
+
+    public AppDatabase getAppDatabase()
+    {
+        return DatabaseHelper.getInstance(this);
     }
 
     @Override

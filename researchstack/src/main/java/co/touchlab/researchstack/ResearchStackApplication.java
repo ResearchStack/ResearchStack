@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import co.touchlab.researchstack.common.Constants;
 import co.touchlab.researchstack.common.helpers.LogExt;
 import co.touchlab.researchstack.common.model.User;
+import co.touchlab.researchstack.common.storage.database.AppDatabase;
+import co.touchlab.researchstack.common.storage.database.TaskRecord;
 import co.touchlab.researchstack.common.storage.file.FileAccess;
 
 public abstract class ResearchStackApplication extends Application
@@ -63,6 +65,8 @@ public abstract class ResearchStackApplication extends Application
     }
 
     public abstract int getAppName();
+
+    public abstract AppDatabase getAppDatabase();
 
     public String getHTMLFilePath(String docName)
     {
