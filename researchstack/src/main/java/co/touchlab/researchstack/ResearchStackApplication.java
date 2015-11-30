@@ -5,21 +5,16 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
 import co.touchlab.researchstack.common.Constants;
 import co.touchlab.researchstack.common.helpers.LogExt;
 import co.touchlab.researchstack.common.model.User;
+import co.touchlab.researchstack.common.storage.database.AppDatabase;
+import co.touchlab.researchstack.common.storage.database.TaskRecord;
+import co.touchlab.researchstack.common.storage.file.FileAccess;
 
 public abstract class ResearchStackApplication extends Application
 {
-    public static final String TEMP_USER_JSON_FILE_NAME = "temp_user";
+    public static final String TEMP_USER_JSON_FILE_NAME = "/temp_user";
     protected static ResearchStackApplication instance;
 
     private User currentUser;
@@ -71,6 +66,8 @@ public abstract class ResearchStackApplication extends Application
 
     public abstract int getAppName();
 
+    public abstract AppDatabase getAppDatabase();
+
     public String getHTMLFilePath(String docName)
     {
         return getRawFilePath(docName,
@@ -105,60 +102,38 @@ public abstract class ResearchStackApplication extends Application
 
     public abstract Class getInclusionCriteriaSceneClass();
 
+    //TODO: The whole user thing needs to change.  To discuss.
     public User getCurrentUser()
     {
+        loadUser();
         return currentUser;
     }
 
-    public void saveUser(Context context)
+    public boolean storedUserExists()
     {
-        File userJsonFile = new File(context.getFilesDir(),
-                TEMP_USER_JSON_FILE_NAME);
+        return getFileAccess().dataExists(this, TEMP_USER_JSON_FILE_NAME);
+    }
 
+    public void saveUser()
+    {
         Gson gson = new Gson();
         String userJsonString = gson.toJson(getCurrentUser());
 
         LogExt.d(getClass(),
                 "Writing user json:\n" + userJsonString);
 
-        try
-        {
-            FileOutputStream outputStream = new FileOutputStream(userJsonFile);
-            outputStream.write(userJsonString.getBytes());
-            outputStream.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        getFileAccess().writeString(this, TEMP_USER_JSON_FILE_NAME, userJsonString);
     }
 
-    public void loadUser(Context context)
+    public void loadUser()
     {
         Gson gson = new Gson();
-        File userJsonFile = new File(context.getFilesDir(),
-                TEMP_USER_JSON_FILE_NAME);
-        if (userJsonFile.exists())
+        FileAccess fileAccess = getFileAccess();
+
+        if (fileAccess.dataExists(this, TEMP_USER_JSON_FILE_NAME))
         {
-            try
-            {
-                FileInputStream inputStream = new FileInputStream(userJsonFile);
-                Reader reader = new InputStreamReader(inputStream);
-                currentUser = gson.fromJson(reader,
-                        User.class);
-                LogExt.d(getClass(),
-                        "Loaded user json");
-            }
-            catch (FileNotFoundException e)
-            {
-                LogExt.e(getClass(),
-                        "Error loading user file");
-                e.printStackTrace();
-            }
+            String jsonString = fileAccess.readString(this, TEMP_USER_JSON_FILE_NAME);
+            currentUser = gson.fromJson(jsonString, User.class);
         }
 
         if (currentUser == null)
@@ -171,14 +146,17 @@ public abstract class ResearchStackApplication extends Application
 
     public void clearUserData(Context context)
     {
-        File userJsonFile = new File(context.getFilesDir(),
-                TEMP_USER_JSON_FILE_NAME);
-        if (userJsonFile.exists())
+        FileAccess fileAccess = getFileAccess();
+        if(fileAccess.dataExists(context, TEMP_USER_JSON_FILE_NAME))
         {
-            boolean deleted = userJsonFile.delete();
-            LogExt.d(getClass(),
-                    "Deleted user data: " + deleted);
-
+            fileAccess.clearData(context, TEMP_USER_JSON_FILE_NAME);
         }
     }
+
+    /**
+     * File access interface.  Should either be clear, or used with standard encryption.  If you
+     * need something funky, override.
+     * @return
+     */
+    public abstract FileAccess getFileAccess();
 }

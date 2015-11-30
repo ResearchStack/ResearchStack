@@ -24,7 +24,7 @@ public class ConsentTask extends OrderedTask
 
     public ConsentTask(Context context)
     {
-        super("consent");
+        super("consent", "consent");
 
         ResearchStackApplication application = ResearchStackApplication.getInstance();
         Resources r = context.getResources();

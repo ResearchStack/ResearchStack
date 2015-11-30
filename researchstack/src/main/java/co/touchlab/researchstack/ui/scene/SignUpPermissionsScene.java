@@ -88,12 +88,4 @@ public class SignUpPermissionsScene extends Scene
     {
         return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
     }
-
-    @Override
-    public void onNextClicked()
-    {
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        getContext().startActivity(intent);
-    }
 }

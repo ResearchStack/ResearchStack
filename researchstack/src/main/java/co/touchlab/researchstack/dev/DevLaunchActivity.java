@@ -70,7 +70,7 @@ public class DevLaunchActivity extends Activity
         questionStepFive = new QuestionStep("blue", "Plane Blue?", booleanFormat);
 
 
-        OrderedTask task = new OrderedTask("task",
+        OrderedTask task = new OrderedTask("task", "task",
                 questionStepOne, questionStepTwo, questionStepThree, questionStepFour, questionStepFive);
 
         Intent intent = ViewTaskActivity.newIntent(this, task);

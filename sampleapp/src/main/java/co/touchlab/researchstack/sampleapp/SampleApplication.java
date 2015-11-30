@@ -1,13 +1,92 @@
 package co.touchlab.researchstack.sampleapp;
 
+import android.os.Environment;
+import android.util.Log;
+
+import com.joanzapata.pdfview.util.FileUtils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.Constants;
+import co.touchlab.researchstack.common.storage.database.AppDatabase;
+import co.touchlab.researchstack.common.storage.database.TaskRecord;
+import co.touchlab.researchstack.common.storage.database.sqlite.DatabaseHelper;
+import co.touchlab.researchstack.common.storage.file.FileAccess;
+import co.touchlab.researchstack.common.storage.file.aes.AesFileAccess;
 
 /**
  * Created by bradleymcdermott on 11/12/15.
  */
 public class SampleApplication extends ResearchStackApplication
 {
+    public static final String TEST_SOME_DATA = "Test some data";
+    public static final String SOMEDATA_TXT = "somedata.txt";
+    private AesFileAccess aesFileAccess = new AesFileAccess(256, false, 6);
+
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+
+        if(BuildConfig.DEBUG)
+            copyDbFile();
+
+        //        SQLiteDatabase.loadLibs(this);
+        try
+        {
+            /*DataEncoder dataEncoder = new DataEncoder("1234".toCharArray());
+            DataDecoder dataDecoder = new DataDecoder("1234".toCharArray());
+            byte[] encrypted = dataEncoder.encrypt("Hello!".getBytes());
+            byte[] clear = dataDecoder.decrypt(encrypted);
+            String theThing = new String(clear);
+            theThing.equals("Hello!");*/
+
+//            setEnteredPin("1234");
+//            ((AesFileAccess)getFileAccess()).updatePassphrase(this, "1234", "4567");
+//
+//            String decryptedString = new String(getFileAccess().readData(this, SOMEDATA_TXT), "UTF8");
+//
+//            if(!TEST_SOME_DATA.equals(decryptedString))
+//                throw new RuntimeException("whoops");
+
+//            AesFileAccess aesFileAccess = new AesFileAccess();
+//            aesFileAccess.init(this, "1234");
+//            aesFileAccess.writeData(this, SOMEDATA_TXT,
+//                                    TEST_SOME_DATA.getBytes("UTF8"));
+//            String decryptedString = new String(
+//                    aesFileAccess.readData(this, SOMEDATA_TXT), "UTF8");
+
+
+        }
+        catch(Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private void copyDbFile()
+    {
+        try
+        {
+            File folder = new File(Environment.getExternalStorageDirectory(), "researchstack");
+            folder.mkdirs();
+            File databasePath = getDatabasePath(DatabaseHelper.DB_NAME);
+            File outFile = new File(folder, databasePath.getName());
+            FileInputStream input = new FileInputStream(databasePath);
+            FileUtils.copy(input, outFile);
+            input.close();
+        }
+        catch(IOException e)
+        {
+            Log.e("asdf", "", e);
+        }
+    }
+
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // File Names
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -74,6 +153,11 @@ public class SampleApplication extends ResearchStackApplication
         return co.touchlab.researchstack.R.string.app_name;
     }
 
+    public AppDatabase getAppDatabase()
+    {
+        return DatabaseHelper.getInstance(this);
+    }
+
     @Override
     public boolean isSignatureEnabledInConsent()
     {
@@ -102,5 +186,11 @@ public class SampleApplication extends ResearchStackApplication
     public Class getInclusionCriteriaSceneClass()
     {
         return SignUpInclusionCriteriaScene.class;
+    }
+
+    @Override
+    public FileAccess getFileAccess()
+    {
+        return aesFileAccess;
     }
 }

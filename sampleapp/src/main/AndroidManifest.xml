@@ -22,16 +22,12 @@
         <activity
             android:name="co.touchlab.researchstack.ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             android:label="@string/activities">
         </activity>
 
         <activity
             android:name="co.touchlab.researchstack.ui.ViewTaskActivity"
-            android:label="@string/app_name"
-            />
-
-        <activity
-            android:name="co.touchlab.researchstack.ui.UserPinActivity"
             android:label="@string/app_name"
             />
 
@@ -43,11 +39,6 @@
         <activity
             android:name="co.touchlab.researchstack.ui.OnboardingActivity"
             android:label="@string/app_name"
-            />
-
-        <activity
-            android:name="co.touchlab.researchstack.ui.ConsentActivity"
-            android:label="@string/signature_page_title"
             />
 
         <activity

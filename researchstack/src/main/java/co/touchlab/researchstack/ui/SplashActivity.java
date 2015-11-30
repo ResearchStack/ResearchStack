@@ -2,23 +2,20 @@ package co.touchlab.researchstack.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
-
-import java.util.concurrent.TimeUnit;
 
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.ResearchStackApplication;
 import co.touchlab.researchstack.common.helpers.LogExt;
-import co.touchlab.researchstack.common.model.User;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import co.touchlab.researchstack.common.storage.file.FileAccess;
+import co.touchlab.researchstack.common.storage.file.aes.AesFileAccess;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
  */
-public class SplashActivity extends AppCompatActivity
+public class SplashActivity extends PassCodeActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -26,53 +23,40 @@ public class SplashActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Observable.create(subscriber -> {
-            initialize();
-            subscriber.onNext(true);
-            subscriber.onCompleted();
-        })
-                .throttleWithTimeout(1,
-                        TimeUnit.SECONDS)
-                .observeOn(Schedulers.newThread())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        this::launchActivity,
-                        this::showErrorScreen);
+        new Handler().postDelayed(() -> launchActivity(), 1000);
     }
 
-    private void initialize()
+    @Override
+    protected void onDataReady()
     {
-        // initialize stuff for the app
-        LogExt.d(getClass(),
-                "initializing");
-        ResearchStackApplication.getInstance()
-                .loadUser(this);
-    }
+        super.onDataReady();
+        Log.w("asdf", "onDataReady: " + getClass().getSimpleName());
+        /*User user = ResearchStackApplication.getInstance().getCurrentUser();
 
-    private void showErrorScreen(Throwable error)
-    {
-        error.printStackTrace();
-        Toast.makeText(SplashActivity.this,
-                "Error when initializing app",
-                Toast.LENGTH_LONG)
-                .show();
-    }
-
-    private void launchActivity(Object item)
-    {
-        LogExt.d(getClass(),
-                "Launching activity");
-
-        User user = ResearchStackApplication.getInstance()
-                .getCurrentUser();
-
-        if (user.isSignedIn())
+        if(user != null && user.isSignedIn())
         {
-            launchPinActivity();
+            launchScheduleActivity();
         }
-        else if (user.isSignedUp())
+        else if(user != null && user.isSignedUp())
         {
             launchEmailVerificationActivity();
+        }
+        else
+        {
+            launchOnboardingActivity();
+        }*/
+
+        //TODO: Fix routing
+        if(ResearchStackApplication.getInstance().storedUserExists())
+        {
+            new Handler().post(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    launchScheduleActivity();
+                }
+            });
         }
         else
         {
@@ -82,21 +66,48 @@ public class SplashActivity extends AppCompatActivity
         finish();
     }
 
+    @Override
+    protected void onDataFailed()
+    {
+        super.onDataFailed();
+        finish();
+    }
+
+    private void showErrorScreen(Throwable error)
+    {
+        error.printStackTrace();
+        Toast.makeText(SplashActivity.this, "Error when initializing app", Toast.LENGTH_LONG)
+             .show();
+    }
+
+    private void launchActivity()
+    {
+        LogExt.d(getClass(), "Launching activity");
+
+        FileAccess fileAccess = ResearchStackApplication.getInstance().getFileAccess();
+        if(((AesFileAccess)fileAccess).passphraseExists(this))
+        {
+            initFileAccess();
+        }
+        else
+        {
+            launchOnboardingActivity();
+            finish();
+        }
+    }
+
     private void launchOnboardingActivity()
     {
-        startActivity(new Intent(this,
-                OnboardingActivity.class));
+        startActivity(new Intent(this, OnboardingActivity.class));
     }
 
     private void launchEmailVerificationActivity()
     {
-        startActivity(new Intent(this,
-                EmailVerificationActivity.class));
+        startActivity(new Intent(this, EmailVerificationActivity.class));
     }
 
-    private void launchPinActivity()
+    private void launchScheduleActivity()
     {
-        startActivity(new Intent(this,
-                MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
     }
 }
