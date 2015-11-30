@@ -15,7 +15,7 @@ public class SignUpTask extends OnboardingTask
 
     public SignUpTask()
     {
-        super("SignUp");
+        super("SignUp", "SignUp");
     }
 
     @Override
@@ -67,23 +67,24 @@ public class SignUpTask extends OnboardingTask
             if (isCustomStepIncluded())
             {
                 nextStep = getCustomInfoStep();
+                currentStepNumber += 1;
             }
             else
             {
-                nextStep = getPasscodeStep();
-                user.setSecondaryInfoSaved(true);
+                if (isPermissionScreenSkipped())
+                {
+                    nextStep = null;
+                }
+                else
+                {
+                    nextStep = getPermissionsStep();
+                    currentStepNumber += 1;
+                }
             }
-            currentStepNumber += 1;
+
         }
         else if (step.getIdentifier()
                 .equals(SignUpCustomInfoStepIdentifier))
-        {
-            nextStep = getPasscodeStep();
-            user.setSecondaryInfoSaved(true);
-            currentStepNumber += 1;
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpPasscodeStepIdentifier))
         {
             if (isPermissionScreenSkipped())
             {
@@ -94,7 +95,11 @@ public class SignUpTask extends OnboardingTask
                 nextStep = getPermissionsStep();
                 currentStepNumber += 1;
             }
+
         }
+
+        if(nextStep == null)
+            ResearchStackApplication.getInstance().saveUser();
 
         return nextStep;
     }
@@ -146,7 +151,7 @@ public class SignUpTask extends OnboardingTask
             currentStepNumber -= 1;
         }
         else if (step.getIdentifier()
-                .equals(SignUpPasscodeStepIdentifier))
+                .equals(SignUpPermissionsStepIdentifier))
         {
             if (isCustomStepIncluded())
             {
@@ -156,12 +161,6 @@ public class SignUpTask extends OnboardingTask
             {
                 prevStep = getMedicalInfoStep();
             }
-            currentStepNumber -= 1;
-        }
-        else if (step.getIdentifier()
-                .equals(SignUpPermissionsStepIdentifier))
-        {
-            prevStep = getPasscodeStep();
             currentStepNumber -= 1;
         }
 

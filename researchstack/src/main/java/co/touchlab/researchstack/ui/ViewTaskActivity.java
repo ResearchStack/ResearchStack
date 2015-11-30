@@ -11,8 +11,13 @@ import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Constructor;
+import java.util.Date;
 
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.ResearchStackApplication;
@@ -24,6 +29,7 @@ import co.touchlab.researchstack.common.result.QuestionResult;
 import co.touchlab.researchstack.common.result.StepResult;
 import co.touchlab.researchstack.common.result.TaskResult;
 import co.touchlab.researchstack.common.step.Step;
+import co.touchlab.researchstack.common.storage.database.TaskRecord;
 import co.touchlab.researchstack.common.task.ConsentTask;
 import co.touchlab.researchstack.common.task.Task;
 import co.touchlab.researchstack.ui.callbacks.ActivityCallback;
@@ -69,10 +75,25 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks,
         task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
         taskResult = new TaskResult(task.getIdentifier(), null, null);
 
-        loadNextScene();
-
         ActionBar toolbar = getSupportActionBar();
         toolbar.setDisplayHomeAsUpEnabled(true);
+
+        initFileAccess();
+    }
+
+    @Override
+    protected void onDataReady()
+    {
+        super.onDataReady();
+        loadNextScene();
+    }
+
+    @Override
+    protected void onDataFailed()
+    {
+        super.onDataFailed();
+        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     private void loadNextScene()
@@ -186,10 +207,17 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks,
     private void saveAndFinish()
     {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(EXTRA_TASK_RESULT,
-                taskResult);
-        setResult(RESULT_OK,
-                resultIntent);
+        resultIntent.putExtra(EXTRA_TASK_RESULT, taskResult);
+
+        TaskRecord taskRecord = new TaskRecord();
+        taskRecord.started = new Date();
+        taskRecord.completed = new Date();
+        taskRecord.taskId = task.getScheduleId();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+        taskRecord.result = gson.toJson(taskResult);
+        ResearchStackApplication.getInstance().getAppDatabase().saveTaskRecord(taskRecord);
+
+        setResult(RESULT_OK, resultIntent);
         finish();
     }
 
@@ -267,7 +295,7 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks,
 
             if (ResearchStackApplication.getInstance().getCurrentUser() == null)
             {
-                ResearchStackApplication.getInstance().loadUser(this);
+                ResearchStackApplication.getInstance().loadUser();
             }
 
             User currentUser = ResearchStackApplication.getInstance()

@@ -11,21 +11,27 @@ public abstract class Task implements Serializable
 {
 
     private String identifier;
+    private String scheduleId;
 
     public Task()
     {
     }
 
-    public Task(String identifier)
+    public Task(String identifier, String scheduleId)
     {
         this.identifier = identifier;
+        this.scheduleId = scheduleId;
     }
-
 
 
     public String getIdentifier()
     {
         return identifier;
+    }
+
+    public String getScheduleId()
+    {
+        return scheduleId;
     }
 
     public abstract Step getStepAfterStep(Step step, TaskResult result);

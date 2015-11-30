@@ -8,16 +8,17 @@ public class Result implements Serializable
 {
 
     private String                  identifier;
+
+    //TODO: these should probably go?  Steps don't need this.
     private Date                    startDate;
     private Date                    endDate;
+
     private HashMap<String, Object> userInfo; //TODO Implement
     private boolean                 saveable; //TODO Implement
 
     public Result(String identifier)
     {
         this.identifier = identifier;
-        this.startDate = new Date();
-        this.endDate = new Date();
     }
 
     public String getIdentifier()
@@ -58,18 +59,5 @@ public class Result implements Serializable
     public boolean isSaveable()
     {
         return saveable;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if(o instanceof Result)
-        {
-            Result result = (Result) o;
-            return identifier.equals(result.getIdentifier()) &&
-                    startDate.equals(result.getStartDate()) &&
-                    endDate.equals(result.getEndDate());
-        }
-        return false;
     }
 }

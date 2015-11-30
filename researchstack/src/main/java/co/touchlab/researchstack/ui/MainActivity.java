@@ -9,9 +9,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import co.touchlab.researchstack.R;
 import co.touchlab.researchstack.ResearchStackApplication;
@@ -44,59 +46,55 @@ public class MainActivity extends PassCodeActivity
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
-        {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item)
-            {
-                int id = item.getItemId();
-                Fragment fragment;
-                if (id == R.id.dashboard)
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener()
                 {
-                    LogExt.d(getClass(),
-                            "Dashboard clicked");
-                    toolbar.setTitle(R.string.dashboard);
-                    fragment = new DashboardFragment();
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem item)
+                    {
+                        int id = item.getItemId();
+                        Fragment fragment;
+                        if(id == R.id.dashboard)
+                        {
+                            LogExt.d(getClass(), "Dashboard clicked");
+                            toolbar.setTitle(R.string.dashboard);
+                            fragment = new DashboardFragment();
 
-                }
-                else if (id == R.id.learn)
-                {
-                    LogExt.d(getClass(),
-                            "Learn clicked");
-                    toolbar.setTitle(R.string.learn);
-                    fragment = new LearnFragment();
+                        }
+                        else if(id == R.id.learn)
+                        {
+                            LogExt.d(getClass(), "Learn clicked");
+                            toolbar.setTitle(R.string.learn);
+                            fragment = new LearnFragment();
 
-                }
-                else if (id == R.id.profile)
-                {
-                    LogExt.d(getClass(),
-                            "Profile clicked");
-                    toolbar.setTitle(R.string.profile);
-                    fragment = new ProfileFragment();
+                        }
+                        else if(id == R.id.profile)
+                        {
+                            LogExt.d(getClass(), "Profile clicked");
+                            toolbar.setTitle(R.string.profile);
+                            fragment = new ProfileFragment();
 
-                }
-                else if (id == R.id.settings)
-                {
-                    LogExt.d(getClass(),
-                            "Settings clicked");
-                    toolbar.setTitle(R.string.settings);
-                    fragment = new SettingsFragment();
+                        }
+                        else if(id == R.id.settings)
+                        {
+                            LogExt.d(getClass(), "Settings clicked");
+                            toolbar.setTitle(R.string.settings);
+                            fragment = new SettingsFragment();
 
-                }
-                else
-                {
-                    LogExt.d(getClass(),
-                            "Activities/Default clicked");
-                    toolbar.setTitle(R.string.activities);
-                    fragment = new ActivitiesFragment();
+                        }
+                        else
+                        {
+                            LogExt.d(getClass(), "Activities/Default clicked");
+                            toolbar.setTitle(R.string.activities);
+                            fragment = new ActivitiesFragment();
 
-                }
-                showFragment(fragment);
-                navigationView.setCheckedItem(id);
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
+                        }
+                        showFragment(fragment);
+                        navigationView.setCheckedItem(id);
+                        drawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
 
         View headerView = getLayoutInflater().inflate(R.layout.include_user_header,
                 null);
@@ -106,9 +104,7 @@ public class MainActivity extends PassCodeActivity
                 .getCurrentUser()
                 .getName());
         AppCompatTextView email = (AppCompatTextView) headerView.findViewById(R.id.email);
-        email.setText(ResearchStackApplication.getInstance()
-                .getCurrentUser()
-                .getEmail());
+        email.setText(ResearchStackApplication.getInstance().getCurrentUser().getEmail());
 
         ImageView image = (ImageView) headerView.findViewById(R.id.profile_image);
         image.setOnLongClickListener(v -> {
@@ -132,7 +128,23 @@ public class MainActivity extends PassCodeActivity
 
         navigationView.addHeaderView(headerView);
 
+        initFileAccess();
+    }
+
+    @Override
+    protected void onDataReady()
+    {
+        super.onDataReady();
+        Log.w("asdf", "onDataReady: " + getClass().getSimpleName());
         showFragment(new ActivitiesFragment());
+    }
+
+    @Override
+    protected void onDataFailed()
+    {
+        super.onDataFailed();
+        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     // TODO better fragment loading/switching logic, use tags
