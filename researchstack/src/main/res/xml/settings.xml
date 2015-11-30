@@ -13,7 +13,11 @@
     <PreferenceCategory android:title="@string/security">
         <ListPreference
             android:key="auto_lock_time"
-            android:title="@string/auto_lock" />
+            android:title="@string/auto_lock"
+            android:summary="@string/auto_lock_summary"
+            android:entries="@array/array_auto_lock_times"
+            android:entryValues="@array/array_auto_lock_times_values"
+            android:defaultValue="@string/auto_lock_default"/>
         <Preference
             android:key="change_passcode"
             android:title="@string/change_passcode" />
