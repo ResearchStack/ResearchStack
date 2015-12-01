@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.jakewharton.rxbinding.widget.RxTextView;
+
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -154,14 +156,14 @@ public class AesFileAccess extends BaseFileAccess
 //                .setPositiveButton("OK", listener)
                 .create();
 
-//        RxTextView.textChanges(editText)
-//                  .filter(charSequence -> charSequence.length() == length)
-//                  .subscribe(charSequence -> {
-//                      new Handler().postDelayed(() -> {
-//                          listener.onPin(context, charSequence.toString());
-//                          alertDialog.dismiss();
-//                      }, 300);
-//                  });
+        RxTextView.textChanges(editText)
+                  .filter(charSequence -> charSequence.length() == length)
+                  .subscribe(charSequence -> {
+                      new Handler().postDelayed(() -> {
+                          listener.onPin(context, charSequence.toString());
+                          alertDialog.dismiss();
+                      }, 300);
+                  });
 
         //If not an Activity, need system alert. Not sure how it wouldn't be, but...
         if(!(context instanceof Activity))
