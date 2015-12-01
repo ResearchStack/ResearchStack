@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.glue.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,6 @@ import co.touchlab.researchstack.glue.ResearchStackApplication;
 import co.touchlab.researchstack.glue.common.model.StudyOverviewModel;
 import co.touchlab.researchstack.glue.common.task.SignInTask;
 import co.touchlab.researchstack.glue.common.task.SignUpTask;
-import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.ui.adapter.OnboardingPagerAdapter;
 import co.touchlab.researchstack.glue.ui.views.PageIndicator;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
@@ -20,6 +20,8 @@ import co.touchlab.researchstack.glue.utils.JsonUtils;
  */
 public class OnboardingActivity extends AppCompatActivity
 {
+    public static final int REQUEST_CODE_SIGN_UP = 21473;
+    public static final int REQUEST_CODE_SIGN_IN = 31473;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,13 +66,27 @@ public class OnboardingActivity extends AppCompatActivity
     public void onSignUpClicked(View view)
     {
         SignUpTask task = new SignUpTask();
-        startActivity(ViewTaskActivity.newIntent(this, task));
+        startActivityForResult(SignUpTaskActivity.newIntent(this, task), REQUEST_CODE_SIGN_UP);
     }
 
     public void onSignInClicked(View view)
     {
         SignInTask task = new SignInTask();
-        startActivity(ViewTaskActivity.newIntent(this,
-                task));
+        startActivityForResult(SignUpTaskActivity.newIntent(this, task), REQUEST_CODE_SIGN_IN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if ((requestCode == REQUEST_CODE_SIGN_IN || requestCode == REQUEST_CODE_SIGN_UP) && resultCode == RESULT_OK)
+        {
+            finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        else
+        {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

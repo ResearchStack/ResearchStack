@@ -32,6 +32,11 @@
             />
 
         <activity
+            android:name="co.touchlab.researchstack.glue.ui.SignUpTaskActivity"
+            android:label="@string/app_name"
+            />
+
+        <activity
             android:name="co.touchlab.researchstack.glue.ui.EmailVerificationActivity"
             android:label="@string/app_name"
             />
