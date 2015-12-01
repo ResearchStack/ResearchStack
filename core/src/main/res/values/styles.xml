@@ -1,0 +1,37 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/abc_primary_text_material_light</item>
+        <!-- Used for the background -->
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ConsentReviewSignatureView">
+        <item name="signatureColor">?android:attr/textColorPrimary</item>
+        <item name="signatureStrokeSize">1dp</item>
+        <item name="hintText">@string/consent_signature_placeholder</item>
+        <item name="hintTextColor">#ccc</item>
+        <item name="hintTextSize">16sp</item>
+        <item name="guidelineColor">#ccc</item>
+        <item name="guidelineMargin">12dp</item>
+        <item name="guidelineHeight">1dp</item>
+    </style>
+
+</resources>

@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.common.storage;
+package co.touchlab.researchstack.glue.common.storage;
 
 /**
  * Robolectric and my mac don't like encryption tests.  Works on device, though.

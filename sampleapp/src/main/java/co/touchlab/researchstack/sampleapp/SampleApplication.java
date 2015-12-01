@@ -8,15 +8,13 @@ import com.joanzapata.pdfview.util.FileUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 
-import co.touchlab.researchstack.ResearchStackApplication;
-import co.touchlab.researchstack.common.Constants;
-import co.touchlab.researchstack.common.storage.database.AppDatabase;
-import co.touchlab.researchstack.common.storage.database.TaskRecord;
-import co.touchlab.researchstack.common.storage.database.sqlite.DatabaseHelper;
-import co.touchlab.researchstack.common.storage.file.FileAccess;
-import co.touchlab.researchstack.common.storage.file.aes.AesFileAccess;
+import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.common.Constants;
+import co.touchlab.researchstack.core.storage.database.AppDatabase;
+import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
+import co.touchlab.researchstack.core.storage.file.FileAccess;
+import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
 
 /**
  * Created by bradleymcdermott on 11/12/15.
@@ -150,7 +148,7 @@ public class SampleApplication extends ResearchStackApplication
     @Override
     public int getAppName()
     {
-        return co.touchlab.researchstack.R.string.app_name;
+        return R.string.app_name;
     }
 
     public AppDatabase getAppDatabase()

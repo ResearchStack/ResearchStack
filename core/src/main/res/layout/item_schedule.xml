@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:gravity="center_vertical"
+              android:background="?attr/selectableItemBackground"
+              android:layout_width="match_parent"
+              android:layout_height="56dp">
+    <View
+        android:id="@+id/daily_indicator"
+        android:background="@color/one_time_color"
+        android:layout_width="4dp"
+        android:layout_height="match_parent" />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/completed"
+        android:clickable="false"
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/task_title"
+            tools:text="Survey Title"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/task_completion_time"
+            tools:text="5 Questions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

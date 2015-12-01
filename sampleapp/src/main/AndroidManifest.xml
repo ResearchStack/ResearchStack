@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="co.touchlab.researchstack.ui.SplashActivity"
+            android:name="co.touchlab.researchstack.glue.ui.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name">
             <intent-filter>
@@ -20,39 +20,39 @@
         </activity>
 
         <activity
-            android:name="co.touchlab.researchstack.ui.MainActivity"
+            android:name="co.touchlab.researchstack.glue.ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:label="@string/activities">
         </activity>
 
         <activity
-            android:name="co.touchlab.researchstack.ui.ViewTaskActivity"
+            android:name="co.touchlab.researchstack.core.ui.ViewTaskActivity"
             android:label="@string/app_name"
             />
 
         <activity
-            android:name="co.touchlab.researchstack.ui.EmailVerificationActivity"
+            android:name="co.touchlab.researchstack.glue.ui.EmailVerificationActivity"
             android:label="@string/app_name"
             />
 
         <activity
-            android:name="co.touchlab.researchstack.ui.OnboardingActivity"
+            android:name="co.touchlab.researchstack.glue.ui.OnboardingActivity"
             android:label="@string/app_name"
             />
 
         <activity
-            android:name="co.touchlab.researchstack.ui.ViewVideoActivity"
+            android:name="co.touchlab.researchstack.glue.ui.ViewVideoActivity"
             android:label="@string/app_name"
             />
 
         <activity
-            android:name="co.touchlab.researchstack.ui.ViewWebDocumentActivity"
+            android:name="co.touchlab.researchstack.core.ui.ViewWebDocumentActivity"
             android:label="@string/app_name"
             />
 
         <activity
-            android:name="co.touchlab.researchstack.ui.ViewLicensesActivity"
+            android:name="co.touchlab.researchstack.glue.ui.ViewLicensesActivity"
             android:label="@string/app_name"
             />
 

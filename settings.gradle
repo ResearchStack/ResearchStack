@@ -1,1 +1,1 @@
-include ':researchstack', ':sampleapp'
+include ':core', ':researchstack', ':sampleapp'

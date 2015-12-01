@@ -1,11 +1,9 @@
-package co.touchlab.researchstack.common.schedule;
+package co.touchlab.researchstack.glue.common.schedule;
 import com.cronutils.model.Cron;
 import com.cronutils.model.CronType;
 import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.model.time.ExecutionTime;
 import com.cronutils.parser.CronParser;
-
-import junit.framework.Assert;
 
 import org.joda.time.DateTime;
 import org.junit.Test;

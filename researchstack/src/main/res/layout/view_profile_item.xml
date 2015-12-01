@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<co.touchlab.researchstack.ui.views.ProfileItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<co.touchlab.researchstack.glue.ui.views.ProfileItemView xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:paddingLeft="12dp"
               android:paddingRight="12dp"
@@ -28,4 +28,4 @@
         android:gravity="right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</co.touchlab.researchstack.ui.views.ProfileItemView>
+</co.touchlab.researchstack.glue.ui.views.ProfileItemView>

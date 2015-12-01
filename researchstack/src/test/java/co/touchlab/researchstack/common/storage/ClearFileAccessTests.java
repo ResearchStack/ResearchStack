@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.common.storage;
+package co.touchlab.researchstack.glue.common.storage;
 
 import junit.framework.Assert;
 
@@ -10,8 +10,8 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import co.touchlab.researchstack.BuildConfig;
-import co.touchlab.researchstack.common.storage.file.ClearFileAccess;
-import co.touchlab.researchstack.common.storage.file.FileAccessListener;
+import co.touchlab.researchstack.glue.common.storage.file.ClearFileAccess;
+import co.touchlab.researchstack.glue.common.storage.file.FileAccessListener;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)

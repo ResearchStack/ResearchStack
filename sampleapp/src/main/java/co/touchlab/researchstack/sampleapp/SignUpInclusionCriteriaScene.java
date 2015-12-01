@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.RadioGroup;
 
-import co.touchlab.researchstack.common.step.Step;
-import co.touchlab.researchstack.ui.scene.AbstractSignUpInclusionCriteriaScene;
+import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.glue.ui.scene.AbstractSignUpInclusionCriteriaScene;
 
 /**
  * Created by bradleymcdermott on 11/17/15.
