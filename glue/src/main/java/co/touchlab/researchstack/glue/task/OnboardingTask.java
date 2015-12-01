@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.glue.common.task;
+package co.touchlab.researchstack.glue.task;
 
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;

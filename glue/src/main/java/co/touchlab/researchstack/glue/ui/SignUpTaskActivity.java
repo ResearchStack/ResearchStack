@@ -17,8 +17,8 @@ import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.scene.Scene;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
-import co.touchlab.researchstack.glue.common.model.User;
-import co.touchlab.researchstack.glue.common.task.ConsentTask;
+import co.touchlab.researchstack.glue.model.User;
+import co.touchlab.researchstack.glue.task.ConsentTask;
 import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleScene;
 import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsScene;
 

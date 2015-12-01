@@ -1,7 +1,7 @@
-package co.touchlab.researchstack.glue.common.task;
+package co.touchlab.researchstack.glue.task;
 
 import co.touchlab.researchstack.glue.ResearchStackApplication;
-import co.touchlab.researchstack.glue.common.model.User;
+import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
 

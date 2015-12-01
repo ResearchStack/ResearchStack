@@ -4,8 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
-import co.touchlab.researchstack.glue.common.Constants;
-import co.touchlab.researchstack.glue.common.model.User;
+import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.core.ResearchStackCoreApplication;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
@@ -94,7 +93,7 @@ public abstract class ResearchStackApplication extends ResearchStackCoreApplicat
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     // TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
-    public abstract Constants.UserInfoType[] getUserInfoTypes();
+    public abstract User.UserInfoType[] getUserInfoTypes();
 
     public abstract Class getInclusionCriteriaSceneClass();
 

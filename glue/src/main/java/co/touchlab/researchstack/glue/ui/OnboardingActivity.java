@@ -8,9 +8,9 @@ import android.view.View;
 
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
-import co.touchlab.researchstack.glue.common.model.StudyOverviewModel;
-import co.touchlab.researchstack.glue.common.task.SignInTask;
-import co.touchlab.researchstack.glue.common.task.SignUpTask;
+import co.touchlab.researchstack.glue.model.StudyOverviewModel;
+import co.touchlab.researchstack.glue.task.SignInTask;
+import co.touchlab.researchstack.glue.task.SignUpTask;
 import co.touchlab.researchstack.glue.ui.adapter.OnboardingPagerAdapter;
 import co.touchlab.researchstack.glue.ui.views.PageIndicator;
 import co.touchlab.researchstack.glue.utils.JsonUtils;

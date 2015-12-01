@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.glue.common.model;
+package co.touchlab.researchstack.glue.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -28,7 +28,7 @@ public class StudyOverviewModel
     }
 
     /**
-     * TODO Extend from {@link co.touchlab.researchstack.glue.common.model.SectionModel.Section} class
+     * TODO Extend from {@link co.touchlab.researchstack.glue.model.SectionModel.Section} class
      */
     public static class Question
     {

@@ -21,8 +21,7 @@ import java.util.Locale;
 
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
-import co.touchlab.researchstack.glue.common.Constants;
-import co.touchlab.researchstack.glue.common.model.User;
+import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.glue.ui.views.ProfileItemView;
 
 /**
@@ -54,10 +53,10 @@ public class ProfileFragment extends Fragment
         RxView.clicks(profileImage)
                 .subscribe(clickedView -> showUnimplementedToast());
 
-        Constants.UserInfoType[] userInfoTypes = ResearchStackApplication.getInstance()
+        User.UserInfoType[] userInfoTypes = ResearchStackApplication.getInstance()
                 .getUserInfoTypes();
 
-        for (Constants.UserInfoType userInfoType : userInfoTypes)
+        for (User.UserInfoType userInfoType : userInfoTypes)
         {
             View.OnClickListener clickListener = null;
             int labelId;

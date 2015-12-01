@@ -1,7 +1,7 @@
-package co.touchlab.researchstack.glue.common.step;
+package co.touchlab.researchstack.glue.step;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.common.model.ConsentQuizModel;
+import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.glue.ui.scene.ConsentQuizScene;
 

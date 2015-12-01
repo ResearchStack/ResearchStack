@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.glue.common.schedule;
+package co.touchlab.researchstack.glue.schedule;
 import com.cronutils.model.Cron;
 import com.cronutils.model.CronType;
 import com.cronutils.model.definition.CronDefinitionBuilder;

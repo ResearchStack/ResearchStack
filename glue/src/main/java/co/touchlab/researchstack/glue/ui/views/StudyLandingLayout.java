@@ -21,7 +21,7 @@ import java.io.InputStream;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.glue.common.model.StudyOverviewModel;
+import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 
 public class StudyLandingLayout extends ScrollView
 {

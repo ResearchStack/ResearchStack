@@ -7,10 +7,10 @@ import java.util.HashMap;
 
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.glue.common.model.ConsentQuizModel;
+import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.glue.common.step.ConsentQuizStep;
+import co.touchlab.researchstack.glue.step.ConsentQuizStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.MultiSubSectionScene;

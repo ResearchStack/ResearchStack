@@ -22,10 +22,10 @@ import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.glue.common.model.SchedulesAndTasksModel;
-import co.touchlab.researchstack.glue.common.model.TaskModel;
-import co.touchlab.researchstack.glue.common.schedule.ScheduleHelper;
-import co.touchlab.researchstack.glue.common.task.SmartSurveyTask;
+import co.touchlab.researchstack.glue.model.SchedulesAndTasksModel;
+import co.touchlab.researchstack.glue.model.TaskModel;
+import co.touchlab.researchstack.glue.schedule.ScheduleHelper;
+import co.touchlab.researchstack.glue.task.SmartSurveyTask;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 

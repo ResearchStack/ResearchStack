@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.glue.common.model;
+package co.touchlab.researchstack.glue.model;
 
 import java.util.Date;
 
@@ -437,5 +437,32 @@ public class User
     public void setLoggedOut(boolean loggedOut)
     {
         this.loggedOut = loggedOut;
+    }
+
+    public enum UserInfoType
+    {
+        Name,
+        Email,
+        Password,
+        DateOfBirth,
+        MedicalCondition,
+        Medication,
+        BloodType,
+        Weight,
+        Height,
+        BiologicalSex,
+        SleepTime,
+        WakeUpTime,
+        GlucoseLevel,
+        CustomSurvey,
+        AutoLock,
+        Passcode,
+        ReminderOnOff,
+        ReminderTime,
+        Permissions,
+        ReviewConsent,
+        PrivacyPolicy,
+        LicenseInformation,
+        SharingOptions
     }
 }

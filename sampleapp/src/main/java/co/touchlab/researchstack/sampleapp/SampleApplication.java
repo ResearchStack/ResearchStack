@@ -10,11 +10,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import co.touchlab.researchstack.glue.ResearchStackApplication;
-import co.touchlab.researchstack.glue.common.Constants;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
+import co.touchlab.researchstack.glue.model.User;
 
 /**
  * Created by bradleymcdermott on 11/12/15.
@@ -168,15 +168,15 @@ public class SampleApplication extends ResearchStackApplication
 
     // TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
     @Override
-    public Constants.UserInfoType[] getUserInfoTypes()
+    public User.UserInfoType[] getUserInfoTypes()
     {
-        return new Constants.UserInfoType[]{
-                Constants.UserInfoType.Name,
-                Constants.UserInfoType.Email,
-                Constants.UserInfoType.BiologicalSex,
-                Constants.UserInfoType.DateOfBirth,
-                Constants.UserInfoType.Height,
-                Constants.UserInfoType.Weight
+        return new User.UserInfoType[]{
+                User.UserInfoType.Name,
+                User.UserInfoType.Email,
+                User.UserInfoType.BiologicalSex,
+                User.UserInfoType.DateOfBirth,
+                User.UserInfoType.Height,
+                User.UserInfoType.Weight
         };
     }
 

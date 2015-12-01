@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.glue.common.model;
+package co.touchlab.researchstack.glue.model;
 
 import com.google.gson.annotations.SerializedName;
 

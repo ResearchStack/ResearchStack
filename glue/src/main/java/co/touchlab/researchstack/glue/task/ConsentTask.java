@@ -1,11 +1,11 @@
-package co.touchlab.researchstack.glue.common.task;
+package co.touchlab.researchstack.glue.task;
 import android.content.Context;
 import android.content.res.Resources;
 
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
-import co.touchlab.researchstack.glue.common.model.ConsentQuizModel;
-import co.touchlab.researchstack.glue.common.step.ConsentQuizStep;
+import co.touchlab.researchstack.glue.model.ConsentQuizModel;
+import co.touchlab.researchstack.glue.step.ConsentQuizStep;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSectionModel;

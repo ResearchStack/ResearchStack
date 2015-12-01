@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.common.model.StudyOverviewModel;
+import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 import co.touchlab.researchstack.glue.ui.views.StudyLandingLayout;
 import co.touchlab.researchstack.glue.ui.views.StudyOverviewLayout;
 import co.touchlab.researchstack.glue.ui.views.StudyVideoLayout;

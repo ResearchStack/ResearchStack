@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.glue.common.task;
+package co.touchlab.researchstack.glue.task;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.common.model.TaskModel;
+import co.touchlab.researchstack.glue.model.TaskModel;
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;

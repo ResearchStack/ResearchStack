@@ -9,7 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.common.model.StudyOverviewModel;
+import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 import co.touchlab.researchstack.glue.ui.ViewVideoActivity;
 
 public class StudyVideoLayout extends ScrollView
