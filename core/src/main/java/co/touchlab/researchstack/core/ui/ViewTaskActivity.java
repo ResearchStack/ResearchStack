@@ -1,11 +1,8 @@
 package co.touchlab.researchstack.core.ui;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
@@ -22,28 +19,22 @@ import java.util.Date;
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.ResearchStackCoreApplication;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.model.ConsentSignature;
-import co.touchlab.researchstack.core.result.ConsentSignatureResult;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
-import co.touchlab.researchstack.core.task.ConsentTask;
 import co.touchlab.researchstack.core.task.Task;
-import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.scene.MultiSubSectionScene;
 import co.touchlab.researchstack.core.ui.scene.NotImplementedScene;
 import co.touchlab.researchstack.core.ui.scene.Scene;
 import co.touchlab.researchstack.core.ui.scene.SceneAnimator;
 
-public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks, ActivityCallback
+public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
 {
 
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
-    public static final int REQUEST_CODE = 100;
 
     private SceneAnimator animator;
 
@@ -260,82 +251,4 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks,
         return taskResult.getStepResultForStepIdentifier(stepId);
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    public void requestPermissions()
-    {
-//        requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
-//                           SignUpPermissionsScene.LOCATION_PERMISSION_REQUEST_CODE);
-    }
-
-    @Override
-    public void startConsentTask()
-    {
-//        ConsentTask task = new ConsentTask(this);
-//        Intent intent = ViewTaskActivity.newIntent(this, task);
-//        startActivityForResult(intent, SignUpEligibleScene.CONSENT_REQUEST);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-//        if (requestCode == SignUpEligibleScene.CONSENT_REQUEST && resultCode == Activity.RESULT_OK)
-//        {
-//            TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
-//
-//            boolean sharing = ((QuestionResult<Boolean>) result.getStepResultForStepIdentifier("sharing")
-//                    .getResultForIdentifier("sharing")).getAnswer();
-//
-//            ConsentSignatureResult signatureResult = ((ConsentSignatureResult) result.getStepResultForStepIdentifier("reviewStep"));
-//            ConsentSignature signature = signatureResult.getSignature();
-//            boolean consented = signatureResult.isConsented();
-//
-//            if (ResearchStackCoreApplication.getInstance().getCurrentUser() == null)
-//            {
-//                ResearchStackCoreApplication.getInstance().loadUser();
-//            }
-//
-//            User currentUser = ResearchStackCoreApplication.getInstance()
-//                    .getCurrentUser();
-//
-//            // TODO check for valid signature/names
-//            if (consented)
-//            {
-//                // TODO just use full name to begin with and don't concat names like this
-//                // TODO get signature date
-//                currentUser.setName(signature.getFullName());
-//                currentUser.setConsentSignatureName(signature.getFullName());
-//                currentUser.setConsentSignatureImage(signature.getSignatureImage());
-//                currentUser.setUserConsented(true);
-//
-//                Scene scene = (Scene) findViewById(R.id.current_scene);
-//                if (scene != null && scene instanceof SignUpEligibleScene)
-//                {
-//                    onNextPressed(scene.getStep());
-//                }
-//            }
-//            else
-//            {
-//                // Clear activity and show Welcome screen
-//               finish();
-//            }
-//        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-    {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-//        if (requestCode ==  SignUpPermissionsScene.LOCATION_PERMISSION_REQUEST_CODE)
-//        {
-//            Scene scene = (Scene) findViewById(R.id.current_scene);
-//            if(scene instanceof SignUpPermissionsScene)
-//            {
-//                ((SignUpPermissionsScene) scene)
-//                        .onRequestPermissionsResult(requestCode, permissions, grantResults);
-//            }
-//        }
-    }
 }
