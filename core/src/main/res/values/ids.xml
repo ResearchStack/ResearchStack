@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <item name="step_body" type="id"/>
+    <!--
+    These ID's are used when adding and removing child scenes in ViewTaskActivity.
+    -->
     <item name="current_scene" type="id"/>
     <item name="old_scene" type="id"/>
 
+    <!--
+    These ID's are used when adding and removing child scenes in the MultiSubSectionScene class.
+    -->
     <item name="current_child_scene" type="id"/>
     <item name="old_child_scene" type="id"/>
 
