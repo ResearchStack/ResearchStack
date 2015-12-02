@@ -1,6 +1,6 @@
 package co.touchlab.researchstack.glue.task;
 
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
@@ -22,7 +22,7 @@ public class SignInTask extends OnboardingTask
     public Step getStepAfterStep(Step step, TaskResult result)
     {
         Step nextStep = null;
-        User user = ResearchStackApplication.getInstance()
+        User user = ResearchStack.getInstance()
                 .getCurrentUser();
 
         if (step == null)
@@ -83,7 +83,7 @@ public class SignInTask extends OnboardingTask
         }
 
         if(nextStep == null)
-            ResearchStackApplication.getInstance().saveUser();
+            ResearchStack.getInstance().saveUser();
 
         return nextStep;
     }

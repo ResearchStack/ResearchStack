@@ -16,7 +16,7 @@ import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.scene.Scene;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.glue.task.ConsentTask;
 import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleScene;
@@ -63,12 +63,12 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             ConsentSignature signature = signatureResult.getSignature();
             boolean consented = signatureResult.isConsented();
 
-            if (ResearchStackApplication.getInstance().getCurrentUser() == null)
+            if (ResearchStack.getInstance().getCurrentUser() == null)
             {
-                ResearchStackApplication.getInstance().loadUser();
+                ResearchStack.getInstance().loadUser();
             }
 
-            User currentUser = ResearchStackApplication.getInstance().getCurrentUser();
+            User currentUser = ResearchStack.getInstance().getCurrentUser();
 
             // TODO check for valid signature/names
             if (consented)

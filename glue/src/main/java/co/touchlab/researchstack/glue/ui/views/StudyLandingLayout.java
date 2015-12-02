@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 
@@ -63,7 +63,7 @@ public class StudyLandingLayout extends ScrollView
 
     public void setData(StudyOverviewModel.Question data)
     {
-        logoView.setImageResource(ResearchStackApplication.getInstance().getLargeLogoDiseaseIcon());
+        logoView.setImageResource(ResearchStack.getInstance().getLargeLogoDiseaseIcon());
 
         titleView.setText(data.getTitle());
         subtitleView.setText(data.getDetails());
@@ -90,7 +90,7 @@ public class StudyLandingLayout extends ScrollView
 
             //TODO Clean this up, should no write/read on main thread
             File consentFile = getConsentFormFileFromExternalStorage();
-            String appName = getResources().getString(ResearchStackApplication.getInstance().getAppName());
+            String appName = getResources().getString(ResearchStack.getInstance().getAppName());
             String emailSubject = getResources()
                     .getString(R.string.study_overview_email_subject, appName);
 
@@ -114,10 +114,10 @@ public class StudyLandingLayout extends ScrollView
     {
         LogExt.d(getClass(), "getConsentFormFileFromExternalStorage() - - - - - - ");
         String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-        String basepath = extStorageDirectory + "/" + ResearchStackApplication.getInstance()
+        String basepath = extStorageDirectory + "/" + ResearchStack.getInstance()
                 .getExternalSDAppFolder();
 
-        int fileResId = ResearchStackApplication.getInstance().getConsentForm();
+        int fileResId = ResearchStack.getInstance().getConsentForm();
         String formName = getResources().getResourceEntryName(fileResId);
         String fileName = formName + ".pdf";
 

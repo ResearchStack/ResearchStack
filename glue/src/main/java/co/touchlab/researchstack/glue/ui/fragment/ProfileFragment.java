@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.glue.ui.views.ProfileItemView;
 
@@ -39,7 +39,7 @@ public class ProfileFragment extends Fragment
 
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.linear_layout);
 
-        User user = ResearchStackApplication.getInstance()
+        User user = ResearchStack.getInstance()
                 .getCurrentUser();
 
         // TODO header should be a custom view?
@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment
         RxView.clicks(profileImage)
                 .subscribe(clickedView -> showUnimplementedToast());
 
-        User.UserInfoType[] userInfoTypes = ResearchStackApplication.getInstance()
+        User.UserInfoType[] userInfoTypes = ResearchStack.getInstance()
                 .getUserInfoTypes();
 
         for (User.UserInfoType userInfoType : userInfoTypes)

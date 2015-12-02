@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
@@ -37,7 +37,7 @@ public class SignUpAdditionalInfoScene extends Scene
     {
         super.onBodyCreated(body);
 
-        user = ResearchStackApplication.getInstance()
+        user = ResearchStack.getInstance()
                 .getCurrentUser();
 
         HeightPicker height = (HeightPicker) body.findViewById(R.id.height);

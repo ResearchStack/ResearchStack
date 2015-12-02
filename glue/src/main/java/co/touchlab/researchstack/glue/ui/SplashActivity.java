@@ -9,7 +9,7 @@ import android.widget.Toast;
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
@@ -49,7 +49,7 @@ public class SplashActivity extends PassCodeActivity
         }*/
 
         //TODO: Fix routing
-        if(ResearchStackApplication.getInstance().storedUserExists())
+        if(ResearchStack.getInstance().storedUserExists())
         {
             new Handler().post(new Runnable()
             {
@@ -84,7 +84,8 @@ public class SplashActivity extends PassCodeActivity
 
     private void launchActivity()
     {
-        LogExt.d(getClass(), "Launching activity");
+        LogExt.d(getClass(),
+                "Launching activity");
 
         FileAccess fileAccess = StorageManager.getFileAccess();
         if(((AesFileAccess)fileAccess).passphraseExists(this))

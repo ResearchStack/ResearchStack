@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.glue.ui.fragment.ActivitiesFragment;
@@ -101,11 +101,11 @@ public class MainActivity extends PassCodeActivity
                 null);
 
         AppCompatTextView name = (AppCompatTextView) headerView.findViewById(R.id.name);
-        name.setText(ResearchStackApplication.getInstance()
+        name.setText(ResearchStack.getInstance()
                 .getCurrentUser()
                 .getName());
         AppCompatTextView email = (AppCompatTextView) headerView.findViewById(R.id.email);
-        email.setText(ResearchStackApplication.getInstance().getCurrentUser().getEmail());
+        email.setText(ResearchStack.getInstance().getCurrentUser().getEmail());
 
         ImageView image = (ImageView) headerView.findViewById(R.id.profile_image);
         image.setOnLongClickListener(v -> {
@@ -113,7 +113,7 @@ public class MainActivity extends PassCodeActivity
                     .setMessage("Clear saved user data?")
                     .setPositiveButton("Yes",
                             (dialog, which) -> {
-                                ResearchStackApplication.getInstance()
+                                ResearchStack.getInstance()
                                         .clearUserData(MainActivity.this);
                                 dialog.dismiss();
                                 finish();

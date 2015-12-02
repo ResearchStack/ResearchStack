@@ -2,7 +2,7 @@
           package="co.touchlab.researchstack.sampleapp">
 
     <application
-        android:name="co.touchlab.researchstack.sampleapp.SampleApplication"
+        android:name=".SampleApplication"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"

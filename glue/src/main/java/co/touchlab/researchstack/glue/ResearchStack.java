@@ -1,39 +1,52 @@
 package co.touchlab.researchstack.glue;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.google.gson.Gson;
 
+import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 
-public abstract class ResearchStackApplication extends Application
+public abstract class ResearchStack
 {
     public static final String TEMP_USER_JSON_FILE_NAME = "/temp_user";
-    protected static ResearchStackApplication instance;
+    protected static ResearchStack instance;
 
     private User currentUser;
 
-    @Override
-    public void onCreate()
+    protected Context context;
+
+    public ResearchStack(Context context)
     {
-        super.onCreate();
-        instance = this;
+        this.context = context;
     }
 
-    //TODO Thread safe
-    public static ResearchStackApplication getInstance()
+    public static void init(ResearchStack concreteResearchStack)
+    {
+        instance = concreteResearchStack;
+
+        StorageManager.init(concreteResearchStack.createFileAccessImplementation(), concreteResearchStack.createAppDatabaseImplementation());
+    }
+
+    public synchronized static ResearchStack getInstance()
     {
         if (instance == null)
         {
-            throw new RuntimeException("Accessing instance of application before onCreate");
+            throw new RuntimeException("Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
 
         return instance;
     }
+
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    // Concrete Implementations
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    protected abstract AppDatabase createAppDatabaseImplementation();
+
+    protected abstract FileAccess createFileAccessImplementation();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // File Names
@@ -107,7 +120,7 @@ public abstract class ResearchStackApplication extends Application
 
     public boolean storedUserExists()
     {
-        return StorageManager.getFileAccess().dataExists(this, TEMP_USER_JSON_FILE_NAME);
+        return StorageManager.getFileAccess().dataExists(context, TEMP_USER_JSON_FILE_NAME);
     }
 
     public void saveUser()
@@ -118,7 +131,7 @@ public abstract class ResearchStackApplication extends Application
         LogExt.d(getClass(),
                 "Writing user json:\n" + userJsonString);
 
-        StorageManager.getFileAccess().writeString(this, TEMP_USER_JSON_FILE_NAME, userJsonString);
+        StorageManager.getFileAccess().writeString(context, TEMP_USER_JSON_FILE_NAME, userJsonString);
     }
 
     public void loadUser()
@@ -126,9 +139,9 @@ public abstract class ResearchStackApplication extends Application
         Gson gson = new Gson();
         FileAccess fileAccess = StorageManager.getFileAccess();
 
-        if (fileAccess.dataExists(this, TEMP_USER_JSON_FILE_NAME))
+        if (fileAccess.dataExists(context, TEMP_USER_JSON_FILE_NAME))
         {
-            String jsonString = fileAccess.readString(this, TEMP_USER_JSON_FILE_NAME);
+            String jsonString = fileAccess.readString(context, TEMP_USER_JSON_FILE_NAME);
             currentUser = gson.fromJson(jsonString, User.class);
         }
 

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.io.InputStream;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 
@@ -84,7 +84,7 @@ public class ViewLicensesActivity extends AppCompatActivity
     //TODO Read on main thread for intense UI blockage.
     private StudyOverviewModel parseSectionModel()
     {
-        int fileResId = ResearchStackApplication.getInstance().getLicenseSections();
+        int fileResId = ResearchStack.getInstance().getLicenseSections();
         return JsonUtils.loadClassFromRawJson(this, StudyOverviewModel.class, fileResId);
     }
 }

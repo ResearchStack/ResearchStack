@@ -1,7 +1,7 @@
 package co.touchlab.researchstack.glue.task;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
@@ -207,7 +207,7 @@ public abstract class OnboardingTask extends Task
         {
             inclusionCriteriaStep = new Step(SignUpInclusionCriteriaStepIdentifier);
             inclusionCriteriaStep.setSceneTitle(R.string.eligibility);
-            inclusionCriteriaStep.setSceneClass(ResearchStackApplication.getInstance()
+            inclusionCriteriaStep.setSceneClass(ResearchStack.getInstance()
                     .getInclusionCriteriaSceneClass());
         }
         return inclusionCriteriaStep;

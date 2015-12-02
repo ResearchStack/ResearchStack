@@ -22,7 +22,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
@@ -59,7 +59,7 @@ public class SignUpGeneralInfoScene extends Scene
     public void onBodyCreated(View body)
     {
         super.onBodyCreated(body);
-        user = ResearchStackApplication.getInstance()
+        user = ResearchStack.getInstance()
                 .getCurrentUser();
 
         AppCompatEditText name = (AppCompatEditText) body.findViewById(R.id.name);

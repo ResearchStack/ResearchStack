@@ -11,7 +11,7 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 import co.touchlab.researchstack.core.ui.scene.Scene;
@@ -62,7 +62,7 @@ public class StudyOverviewLayout extends FrameLayout
 
     public void setData(StudyOverviewModel.Question data)
     {
-        String uri = ResearchStackApplication.getInstance().getHTMLFilePath(data.getDetails());
+        String uri = ResearchStack.getInstance().getHTMLFilePath(data.getDetails());
         webView.loadUrl(uri);
     }
 }

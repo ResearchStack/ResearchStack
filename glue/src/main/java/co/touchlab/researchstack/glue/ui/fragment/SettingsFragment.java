@@ -10,7 +10,7 @@ import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 import co.touchlab.researchstack.glue.BuildConfig;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.ui.ViewLicensesActivity;
 
 /**
@@ -62,9 +62,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
     private void showPrivacyPolicy()
     {
-        ResearchStackApplication applicationContext = (ResearchStackApplication) getContext()
-                .getApplicationContext();
-        int resId = applicationContext.getPrivacyPolicy();
+
+        int resId = ResearchStack.getInstance().getPrivacyPolicy();
         String docName = getResources().getResourceEntryName(resId);
         Intent intent = ViewWebDocumentActivity
                 .newIntent(getContext(), getString(R.string.privacy_policy), docName);

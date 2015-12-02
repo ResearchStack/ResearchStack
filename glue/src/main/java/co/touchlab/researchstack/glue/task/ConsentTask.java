@@ -4,7 +4,7 @@ import android.content.res.Resources;
 
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.glue.step.ConsentQuizStep;
 import co.touchlab.researchstack.core.helpers.LogExt;
@@ -27,18 +27,19 @@ public class ConsentTask extends OrderedTask
     {
         super("consent", "consent");
 
-        ResearchStackApplication application = ResearchStackApplication.getInstance();
+        ResearchStack researchStack = ResearchStack.getInstance();
         Resources r = context.getResources();
 
         //TODO Read on main thread for intense UI blockage.
         ConsentSectionModel data = JsonUtils
-                .loadClassFromRawJson(context, ConsentSectionModel.class,
-                                      application.getConsentSections());
+                .loadClassFromRawJson(context,
+                        ConsentSectionModel.class,
+                        researchStack.getConsentSections());
 
         ConsentSignature signature = new ConsentSignature("participant",
                                                           r.getString(R.string.participant), null);
         signature.setRequiresSignatureImage(
-                ResearchStackApplication.getInstance().isSignatureEnabledInConsent());
+                ResearchStack.getInstance().isSignatureEnabledInConsent());
 
         ConsentDocument consent = new ConsentDocument();
         consent.setTitle(r.getString(R.string.signature_page_title));
@@ -54,8 +55,9 @@ public class ConsentTask extends OrderedTask
                                                                 data.getDocumentProperties());
         addStep(sharingStep);
 
-        ConsentQuizModel quizModel = JsonUtils.loadClassFromRawJson(context, ConsentQuizModel.class,
-                                                                    application.getQuizSections());
+        ConsentQuizModel quizModel = JsonUtils.loadClassFromRawJson(context,
+                ConsentQuizModel.class,
+                researchStack.getQuizSections());
         ConsentQuizStep quizStep = new ConsentQuizStep("quiz", quizModel);
         addStep(quizStep);
 
