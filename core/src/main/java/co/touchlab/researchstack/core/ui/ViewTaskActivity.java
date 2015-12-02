@@ -17,7 +17,7 @@ import java.lang.reflect.Constructor;
 import java.util.Date;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.ResearchStackCoreApplication;
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
@@ -164,7 +164,8 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
             LogExt.e(getClass(), e);
         }
 
-        LogExt.d(getClass(), "No implementation for this step " + step.getIdentifier());
+        LogExt.d(getClass(),
+                "No implementation for this step " + step.getIdentifier());
         return new NotImplementedScene(this, step == null ? new Step("NullStep") : step);
     }
 
@@ -203,7 +204,7 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
         taskRecord.taskId = task.getScheduleId();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
         taskRecord.result = gson.toJson(taskResult);
-        ResearchStackCoreApplication.getInstance().getAppDatabase().saveTaskRecord(taskRecord);
+        StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
 
         setResult(RESULT_OK, resultIntent);
         finish();

@@ -1,7 +1,7 @@
 package co.touchlab.researchstack.core.ui;
 import android.support.v7.app.AppCompatActivity;
 
-import co.touchlab.researchstack.core.ResearchStackCoreApplication;
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.FileAccessListener;
 
@@ -25,7 +25,7 @@ public class PassCodeActivity extends AppCompatActivity
 
     private void fileAccessRegister()
     {
-        FileAccess fileAccess = ResearchStackCoreApplication.getInstance().getFileAccess();
+        FileAccess fileAccess = StorageManager.getFileAccess();
         fileAccess.register(fileAccessListener);
     }
 
@@ -38,13 +38,13 @@ public class PassCodeActivity extends AppCompatActivity
 
     private void fileAccessUnregister()
     {
-        FileAccess fileAccess = ResearchStackCoreApplication.getInstance().getFileAccess();
+        FileAccess fileAccess = StorageManager.getFileAccess();
         fileAccess.unregister(fileAccessListener);
     }
 
     protected void initFileAccess()
     {
-        FileAccess fileAccess = ResearchStackCoreApplication.getInstance().getFileAccess();
+        FileAccess fileAccess = StorageManager.getFileAccess();
         fileAccessRegister();
         fileAccess.initFileAccess(this);
     }

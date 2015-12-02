@@ -1,15 +1,16 @@
 package co.touchlab.researchstack.glue;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.google.gson.Gson;
 
 import co.touchlab.researchstack.glue.model.User;
-import co.touchlab.researchstack.core.ResearchStackCoreApplication;
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 
-public abstract class ResearchStackApplication extends ResearchStackCoreApplication
+public abstract class ResearchStackApplication extends Application
 {
     public static final String TEMP_USER_JSON_FILE_NAME = "/temp_user";
     protected static ResearchStackApplication instance;
@@ -106,7 +107,7 @@ public abstract class ResearchStackApplication extends ResearchStackCoreApplicat
 
     public boolean storedUserExists()
     {
-        return getFileAccess().dataExists(this, TEMP_USER_JSON_FILE_NAME);
+        return StorageManager.getFileAccess().dataExists(this, TEMP_USER_JSON_FILE_NAME);
     }
 
     public void saveUser()
@@ -117,13 +118,13 @@ public abstract class ResearchStackApplication extends ResearchStackCoreApplicat
         LogExt.d(getClass(),
                 "Writing user json:\n" + userJsonString);
 
-        getFileAccess().writeString(this, TEMP_USER_JSON_FILE_NAME, userJsonString);
+        StorageManager.getFileAccess().writeString(this, TEMP_USER_JSON_FILE_NAME, userJsonString);
     }
 
     public void loadUser()
     {
         Gson gson = new Gson();
-        FileAccess fileAccess = getFileAccess();
+        FileAccess fileAccess = StorageManager.getFileAccess();
 
         if (fileAccess.dataExists(this, TEMP_USER_JSON_FILE_NAME))
         {
@@ -141,7 +142,7 @@ public abstract class ResearchStackApplication extends ResearchStackCoreApplicat
 
     public void clearUserData(Context context)
     {
-        FileAccess fileAccess = getFileAccess();
+        FileAccess fileAccess = StorageManager.getFileAccess();
         if(fileAccess.dataExists(context, TEMP_USER_JSON_FILE_NAME))
         {
             fileAccess.clearData(context, TEMP_USER_JSON_FILE_NAME);

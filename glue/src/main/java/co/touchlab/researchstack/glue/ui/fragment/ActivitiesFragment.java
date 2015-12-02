@@ -18,15 +18,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import co.touchlab.researchstack.core.storage.database.TaskRecord;
-import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStackApplication;
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
+import co.touchlab.researchstack.core.storage.database.TaskRecord;
+import co.touchlab.researchstack.core.ui.ViewTaskActivity;
+import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.glue.model.TaskModel;
 import co.touchlab.researchstack.glue.schedule.ScheduleHelper;
 import co.touchlab.researchstack.glue.task.SmartSurveyTask;
-import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 
 /**
@@ -52,9 +52,9 @@ public class ActivitiesFragment extends Fragment
         SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClassFromRawJson(getContext(),
                 SchedulesAndTasksModel.class,
                 "tasks_and_schedules");
-        Map<String, TaskRecord> latestForAllTypes = ResearchStackApplication.getInstance()
-                                                                            .getAppDatabase()
-                                                                            .findLatestForAllTypes();
+        Map<String, TaskRecord> latestForAllTypes = StorageManager
+                .getAppDatabase()
+                .findLatestForAllTypes();
 
         ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();
         for (SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)

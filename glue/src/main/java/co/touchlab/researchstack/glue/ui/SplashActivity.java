@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
@@ -85,7 +86,7 @@ public class SplashActivity extends PassCodeActivity
     {
         LogExt.d(getClass(), "Launching activity");
 
-        FileAccess fileAccess = ResearchStackApplication.getInstance().getFileAccess();
+        FileAccess fileAccess = StorageManager.getFileAccess();
         if(((AesFileAccess)fileAccess).passphraseExists(this))
         {
             initFileAccess();

@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
@@ -23,12 +24,13 @@ public class SampleApplication extends ResearchStackApplication
 {
     public static final String TEST_SOME_DATA = "Test some data";
     public static final String SOMEDATA_TXT = "somedata.txt";
-    private AesFileAccess aesFileAccess = new AesFileAccess(256, false, 6);
 
     @Override
     public void onCreate()
     {
         super.onCreate();
+
+        StorageManager.init(new AesFileAccess(256, false, 6), DatabaseHelper.getInstance(this));
 
         if(BuildConfig.DEBUG)
             copyDbFile();
@@ -151,11 +153,6 @@ public class SampleApplication extends ResearchStackApplication
         return R.string.app_name;
     }
 
-    public AppDatabase getAppDatabase()
-    {
-        return DatabaseHelper.getInstance(this);
-    }
-
     @Override
     public boolean isSignatureEnabledInConsent()
     {
@@ -184,11 +181,5 @@ public class SampleApplication extends ResearchStackApplication
     public Class getInclusionCriteriaSceneClass()
     {
         return SignUpInclusionCriteriaScene.class;
-    }
-
-    @Override
-    public FileAccess getFileAccess()
-    {
-        return aesFileAccess;
     }
 }

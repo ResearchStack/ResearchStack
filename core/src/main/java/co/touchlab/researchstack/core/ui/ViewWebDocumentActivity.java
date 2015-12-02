@@ -10,7 +10,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.ResearchStackCoreApplication;
+import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.utils.ResUtils;
 
 public class ViewWebDocumentActivity extends AppCompatActivity
 {
@@ -47,7 +48,7 @@ public class ViewWebDocumentActivity extends AppCompatActivity
         setTitle(title);
 
         String documentName = getIntent().getStringExtra(KEY_DOC_NAME);
-        String path = ResearchStackCoreApplication.getInstance().getHTMLFilePath(documentName);
+        String path = ResUtils.getHTMLFilePath(documentName);
 
         WebView webView = (WebView) findViewById(R.id.webview);
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
