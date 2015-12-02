@@ -2,6 +2,7 @@ package co.touchlab.researchstack.glue.task;
 import android.content.Context;
 import android.content.res.Resources;
 
+import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
@@ -19,12 +20,12 @@ import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 
-public class ConsentTask extends co.touchlab.researchstack.core.task.ConsentTask
+public class ConsentTask extends OrderedTask
 {
 
     public ConsentTask(Context context)
     {
-        super(context);
+        super("consent", "consent");
 
         ResearchStackApplication application = ResearchStackApplication.getInstance();
         Resources r = context.getResources();
