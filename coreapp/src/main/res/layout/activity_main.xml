@@ -48,6 +48,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/survey_button"/>
+        <TextView
+            android:id="@+id/survey_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/survey_nutrition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/clear_button"
+        android:text="@string/clear_button"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

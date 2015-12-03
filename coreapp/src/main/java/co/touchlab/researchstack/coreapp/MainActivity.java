@@ -9,14 +9,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.ConsentSignatureResult;
+import co.touchlab.researchstack.core.result.QuestionResult;
+import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.ConsentReviewStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
+import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
@@ -30,6 +35,7 @@ public class MainActivity extends PassCodeActivity
     private static final int REQUEST_SURVEY = 1;
     private AppCompatButton consentButton;
     private AppCompatButton surveyButton;
+    private AppCompatButton clearButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -55,16 +61,45 @@ public class MainActivity extends PassCodeActivity
                 launchSurvey();
             }
         });
+        clearButton = (AppCompatButton) findViewById(R.id.clear_button);
+        clearButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                clearData();
+            }
+        });
 
         initFileAccess();
+    }
+
+    private void clearData()
+    {
+        FileAccess fileAccess = StorageManager.getFileAccess();
+        fileAccess.clearData(this, "/consented_name");
+        fileAccess.clearData(this, "/consented_signature");
+        fileAccess.clearData(this, "/survey_age");
+        fileAccess.clearData(this, "/survey_nutrition");
+
+        AppPrefs appPrefs = AppPrefs.getInstance(this);
+        appPrefs.setHasSurveyed(false);
+        appPrefs.setHasConsented(false);
+
+        finish();
     }
 
     @Override
     protected void onDataReady()
     {
         super.onDataReady();
+        initViews();
+    }
 
-        LogExt.d(getClass(), "onDataReady");
+    private void initViews()
+    {
+        LogExt.d(getClass(),
+                "onDataReady");
         AppPrefs prefs = AppPrefs.getInstance(this);
         if (prefs.hasConsented())
         {
@@ -74,7 +109,8 @@ public class MainActivity extends PassCodeActivity
             FileAccess fileAccess = StorageManager
                     .getFileAccess();
             printConsentInfo(fileAccess.readString(this,
-                            "/consented_name"), null);
+                    "/consented_name"),
+                    null);
 //                    fileAccess.readData(this,
 //                            "/consented_signature"));
         }
@@ -83,6 +119,12 @@ public class MainActivity extends PassCodeActivity
             consentButton.setEnabled(true);
             consentButton.setText(R.string.consent_button);
             surveyButton.setEnabled(false);
+        }
+
+        if (prefs.hasSurveyed())
+        {
+            surveyButton.setEnabled(false);
+            printSurveyInfo(StorageManager.getFileAccess().readString(this, "/survey_age"), StorageManager.getFileAccess().readString(this, "/survey_nutrition"));
         }
     }
 
@@ -99,7 +141,7 @@ public class MainActivity extends PassCodeActivity
         }
         else if (requestCode == REQUEST_SURVEY && resultCode == RESULT_OK)
         {
-
+            processSurveyResult((TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT));
         }
     }
 
@@ -161,8 +203,6 @@ public class MainActivity extends PassCodeActivity
 
             AppPrefs prefs = AppPrefs.getInstance(this);
             prefs.setHasConsented(true);
-            printConsentInfo(fullName,
-                    null);
 
             StorageManager
                     .getFileAccess()
@@ -172,6 +212,8 @@ public class MainActivity extends PassCodeActivity
 //            CoreApplication.getInstance().getFileAccess().writeData(this,
 //                    "/consented_signature",
 //                    signatureBytes);
+
+            initViews();
         }
     }
 
@@ -183,8 +225,89 @@ public class MainActivity extends PassCodeActivity
 //                signatureBytes.length));
     }
 
+    private void printSurveyInfo(String age, String nutrition)
+    {
+        ((TextView) findViewById(R.id.survey_age)).setText("Age: " + age);
+        ((TextView) findViewById(R.id.survey_nutrition)).setText("Takes nutrition supplements: " + nutrition);
+    }
+
     private void launchSurvey()
     {
+        // TODO fix instruction steps
+//        InstructionStep instructionStep = new InstructionStep("identifier", "Selection Survey", "This survey can help us understand your eligibility for the fitness study");
+        // TODO ios did not include title and text in the constructor, why?
+//        step.setTitle("Selection Survey");
+//        step.setText("This survey can help us understand your eligibility for the fitness study");
 
+        IntegerAnswerFormat format = new IntegerAnswerFormat(90,
+                18);
+        QuestionStep ageStep = new QuestionStep("age",
+                "How old are you?",
+                format);
+
+        // TODO fix form steps
+//        FormStep formStep = new FormStep("form_step", "Form", "Form groups multi-entry in one page");
+//        ArrayList<FormScene.FormItem> formItems = new ArrayList<>();
+//
+//        TextChoice[] textChoices = new TextChoice[2];
+//        textChoices[0] = new TextChoice<>("Male", "male", null);
+//        textChoices[0] = new TextChoice<>("Female", "female", null);
+//        AnswerFormat genderFormat = new TextChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice, textChoices);
+//        FormScene.FormItem genderFormItem = new FormScene.FormItem("Basic Information", "Gender", genderFormat, "Gender");
+//        formItems.add(genderFormItem);
+//
+//        AnswerFormat dateOfBirthFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
+//        FormScene.FormItem dateOfBirthFormItem = new FormScene.FormItem("date_of_birth", "DOB", dateOfBirthFormat, "DOB");
+//        formItems.add(dateOfBirthFormItem);
+//
+//        // ... And so on, adding additional items
+//        formStep.setFormItems(formItems);
+
+        // Create a Boolean step to include in the task.
+        QuestionStep booleanStep = new QuestionStep("nutrition");
+        booleanStep.setTitle("Do you take nutritional supplements?");
+        booleanStep.setAnswerFormat(new BooleanAnswerFormat());
+        booleanStep.setOptional(false);
+        // Create a task wrapping the boolean step.
+        OrderedTask task = new OrderedTask("ordered_task",
+                "schedule_id",
+//                instructionStep,
+                ageStep,
+//                formStep,
+                booleanStep);
+
+        // Create a task view controller using the task and set a delegate.
+        Intent intent = ViewTaskActivity.newIntent(this,
+                task);
+        startActivityForResult(intent,
+                REQUEST_SURVEY);
+    }
+
+    private void processSurveyResult(TaskResult result)
+    {
+        AppPrefs prefs = AppPrefs.getInstance(this);
+        prefs.setHasSurveyed(true);
+
+        StepResult<QuestionResult<Integer>> ageStep = result.getStepResultForStepIdentifier("age");
+        QuestionResult<Integer> age = ageStep.getResultForIdentifier("age");
+        String ageString = age.getAnswer().toString();
+
+        StepResult<QuestionResult<Integer>> nutritionStep = result.getStepResultForStepIdentifier("nutrition");
+        QuestionResult<Integer> nutrition = nutritionStep.getResultForIdentifier("nutrition");
+        String nutritionString = nutrition.getAnswer() == 0 ? "No" : "Yes";
+
+        printSurveyInfo(ageString, nutritionString);
+
+
+        StorageManager
+                .getFileAccess()
+                .writeString(this,
+                        "/survey_age",
+                        ageString);
+        StorageManager
+                .getFileAccess()
+                .writeString(this,
+                        "/survey_nutrition",
+                        nutritionString);
     }
 }
