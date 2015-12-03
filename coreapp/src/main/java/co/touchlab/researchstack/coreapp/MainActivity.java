@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSignature;
@@ -54,6 +55,8 @@ public class MainActivity extends PassCodeActivity
                 launchSurvey();
             }
         });
+
+        initFileAccess();
     }
 
     @Override
@@ -61,6 +64,7 @@ public class MainActivity extends PassCodeActivity
     {
         super.onDataReady();
 
+        LogExt.d(getClass(), "onDataReady");
         AppPrefs prefs = AppPrefs.getInstance(this);
         if (prefs.hasConsented())
         {
@@ -70,9 +74,9 @@ public class MainActivity extends PassCodeActivity
             FileAccess fileAccess = StorageManager
                     .getFileAccess();
             printConsentInfo(fileAccess.readString(this,
-                            "/consented_name"),
-                    fileAccess.readData(this,
-                            "/consented_signature"));
+                            "/consented_name"), null);
+//                    fileAccess.readData(this,
+//                            "/consented_signature"));
         }
         else
         {
