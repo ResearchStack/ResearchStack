@@ -9,12 +9,11 @@ import java.util.Calendar;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class DateQuestionScene extends Scene
+public class DateQuestionScene extends Scene<String>
 {
 
     public DateQuestionScene(Context context, Step step)
@@ -56,15 +55,14 @@ public class DateQuestionScene extends Scene
         }
 
         datePicker.init(initYear, initMonth, initDay, (view, year, monthOfYear, dayOfMonth) -> {
-            QuestionResult<String> questionResult = new QuestionResult<>(getStep().getIdentifier());
-
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, monthOfYear);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            questionResult.setAnswer(calendar.toString());
-            setStepResult(questionResult);
+            StepResult<String> result = getStepResult();
+            result.setResultForIdentifier(StepResult.DEFAULT_KEY, calendar.toString());
+            setStepResult(result);
         });
 
         return datePicker;
@@ -73,7 +71,7 @@ public class DateQuestionScene extends Scene
     @Override
     public StepResult createNewStepResult(String stepIdentifier)
     {
-        return new StepResult<QuestionResult<String>>(stepIdentifier);
+        return new StepResult<String>(stepIdentifier);
     }
 
 }

@@ -8,19 +8,18 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
 import co.touchlab.researchstack.core.model.TextChoice;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class MultiChoiceQuestionScene <T> extends Scene
+public class MultiChoiceQuestionScene<T> extends Scene<T[]>
 {
+
     private List<T> results;
 
     public MultiChoiceQuestionScene(Context context, Step step)
@@ -37,36 +36,30 @@ public class MultiChoiceQuestionScene <T> extends Scene
         RadioGroup radioGroup = new RadioGroup(getContext());
         final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
 
-        QuestionResult<T[]> questionResult = (QuestionResult<T[]>)
-                getStepResult().getResultForIdentifier(getStep().getIdentifier());
-
         results = new ArrayList<>();
 
-        if (questionResult != null)
-        {
-            results.addAll(Arrays.asList(questionResult.getAnswer()));
-        }
+        StepResult<T[]> result = getStepResult();
 
         for (int i = 0; i < textChoices.length; i++)
         {
             int position = i;
+
             TextChoice<T> textChoice = textChoices[position];
-            AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(R.layout.item_checkbox,
-                    radioGroup,
-                    false);
+            AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(
+                    R.layout.item_checkbox, radioGroup, false);
             checkBox.setText(textChoice.getText());
             checkBox.setId(position);
             radioGroup.addView(checkBox);
 
-            if (results.contains(textChoice.getValue()))
+            String valueString = String.valueOf(textChoice.getValue());
+
+            if (result.getResultForIdentifier(valueString) != null)
             {
                 checkBox.setChecked(true);
             }
 
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                QuestionResult<T[]> questionResult1 = new QuestionResult<T[]>(
-                        getStep().getIdentifier());
                 if (isChecked)
                 {
                     results.add(textChoice.getValue());
@@ -76,9 +69,8 @@ public class MultiChoiceQuestionScene <T> extends Scene
                     results.remove(textChoice.getValue());
                 }
 
-
-                questionResult1.setAnswer((T[]) results.toArray());
-                setStepResult(questionResult1);
+                result.setResultForIdentifier(StepResult.DEFAULT_KEY, (T[])results.toArray());
+                setStepResult(result);
             });
         }
 
@@ -86,14 +78,14 @@ public class MultiChoiceQuestionScene <T> extends Scene
     }
 
     @Override
-    public StepResult createNewStepResult(String stepIdentifier)
+    public StepResult<T[]> createNewStepResult(String stepIdentifier)
     {
-        return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
+        return new StepResult<>(stepIdentifier);
     }
 
     @Override
     public boolean isAnswerValid()
     {
-        return results.size() > 0;
+        return !getStepResult().isEmpty();
     }
 }

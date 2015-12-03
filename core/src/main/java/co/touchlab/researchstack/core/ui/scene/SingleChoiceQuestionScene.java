@@ -10,12 +10,11 @@ import android.widget.RadioGroup;
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
 import co.touchlab.researchstack.core.model.TextChoice;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class SingleChoiceQuestionScene<T> extends Scene
+public class SingleChoiceQuestionScene<T> extends Scene<T>
 {
 
     private RadioGroup radioGroup;
@@ -28,12 +27,12 @@ public class SingleChoiceQuestionScene<T> extends Scene
     @Override
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
         radioGroup = new RadioGroup(getContext());
-        final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
 
-        QuestionResult<Boolean> questionResult = (QuestionResult<Boolean>)
-                getStepResult().getResultForIdentifier(getStep().getIdentifier());
+        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
+        final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
+        StepResult<T> result = getStepResult();
+        T resultValue = result.getResultForIdentifier(StepResult.DEFAULT_KEY);
 
         for (int i = 0; i < textChoices.length; i++)
         {
@@ -44,22 +43,20 @@ public class SingleChoiceQuestionScene<T> extends Scene
             radioButton.setId(i);
             radioGroup.addView(radioButton);
 
-            if (questionResult != null)
+            if (resultValue != null)
             {
-                radioButton.setChecked(questionResult.getAnswer() == textChoice.getValue());
+                radioButton.setChecked(resultValue.equals(textChoice.getValue()));
             }
         }
 
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             TextChoice<T> textChoice = textChoices[checkedId];
-            QuestionResult<T> questionResult1 = new QuestionResult<T>(getStep().getIdentifier());
-            questionResult1.setAnswer(textChoice.getValue());
-            setStepResult(questionResult1);
+            result.setResultForIdentifier(StepResult.DEFAULT_KEY, textChoice.getValue());
+            setStepResult(result);
         });
 
         return radioGroup;
     }
-
 
     @Override
     public boolean isAnswerValid()
@@ -68,9 +65,9 @@ public class SingleChoiceQuestionScene<T> extends Scene
     }
 
     @Override
-    public StepResult createNewStepResult(String stepIdentifier)
+    public StepResult<T> createNewStepResult(String stepIdentifier)
     {
-        return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
+        return new StepResult<>(stepIdentifier);
     }
 
 }

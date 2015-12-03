@@ -64,6 +64,29 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
     }
 
     @Override
+    public void initialize()
+    {
+        super.initialize();
+        initStepResult();
+    }
+
+    private void initStepResult()
+    {
+        StepResult<ConsentSignatureResult> parentResult = new StepResult<>(getStep().getIdentifier());
+
+        ConsentSignatureResult result = new ConsentSignatureResult(getStep().getIdentifier());
+        result.setStartDate(new Date());
+
+        ConsentSignature clone = ((ConsentReviewStep) getStep()).getSignature();
+        result.setSignature(clone);
+
+        parentResult.getResults()
+                .put(result.getIdentifier(), result);
+
+        setStepResult(parentResult);
+    }
+
+    @Override
     public Scene onCreateScene(LayoutInflater inflater, int scenePos)
     {
         ConsentReviewStep step = (ConsentReviewStep) getStep();
@@ -128,18 +151,7 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
     @Override
     public StepResult createNewStepResult(String stepIdentifier)
     {
-        StepResult<ConsentSignatureResult> parentResult = new StepResult<>(getStep().getIdentifier());
-
-        ConsentSignatureResult result = new ConsentSignatureResult(getStep().getIdentifier());
-        result.setStartDate(new Date());
-
-        ConsentSignature clone = ((ConsentReviewStep) getStep()).getSignature();
-        result.setSignature(clone);
-
-        parentResult.getResults()
-                .put(result.getIdentifier(), result);
-
-        return parentResult;
+       return null;
     }
 
     @Override

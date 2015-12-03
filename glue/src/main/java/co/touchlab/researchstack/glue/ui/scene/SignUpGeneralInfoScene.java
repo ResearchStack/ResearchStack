@@ -150,6 +150,6 @@ public class SignUpGeneralInfoScene extends Scene
     @Override
     public StepResult createNewStepResult(String stepIdentifier)
     {
-        return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
+        return new StepResult<Boolean>(stepIdentifier);
     }
 }

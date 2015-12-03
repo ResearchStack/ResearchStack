@@ -8,15 +8,12 @@ import android.widget.NumberPicker;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class IntegerQuestionScene extends Scene
+public class IntegerQuestionScene extends Scene<Integer>
 {
-
-    private IntegerAnswerFormat answerFormat;
 
     public IntegerQuestionScene(Context context, Step step)
     {
@@ -26,12 +23,11 @@ public class IntegerQuestionScene extends Scene
     @Override
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        QuestionResult<Integer> stringResult = (QuestionResult<Integer>)
-                getStepResult().getResultForIdentifier(getStep().getIdentifier());;
 
         NumberPicker numberPicker = (NumberPicker) inflater.inflate(R.layout.item_number_picker,
                 null);
-        answerFormat = (IntegerAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
+        IntegerAnswerFormat answerFormat = (IntegerAnswerFormat) ((QuestionStep) getStep())
+                .getAnswerFormat();
 
         numberPicker.setMinValue(answerFormat.getMinValue());
 
@@ -42,24 +38,28 @@ public class IntegerQuestionScene extends Scene
         }
 
         numberPicker.setOnValueChangedListener((picker, oldVal, newVal) -> {
-            QuestionResult<Integer> questionResult = new QuestionResult<Integer>(
-                    getStep().getIdentifier());
-            questionResult.setAnswer(newVal);
-            setStepResult(questionResult);
+            StepResult<Integer> result = getStepResult();
+            result.setResultForIdentifier(StepResult.DEFAULT_KEY, newVal);
+            setStepResult(result);
         });
 
-        if (stringResult != null)
+        StepResult<Integer> result = getStepResult();
+        if (result != null)
         {
-            numberPicker.setValue(stringResult.getAnswer());
+            Integer answer = result.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            if (answer != null)
+            {
+                numberPicker.setValue(answer);
+            }
         }
 
         return numberPicker;
     }
 
     @Override
-    public StepResult createNewStepResult(String stepIdentifier)
+    public StepResult<Integer> createNewStepResult(String stepIdentifier)
     {
-        return new StepResult<QuestionResult<String>>(stepIdentifier);
+        return new StepResult<>(stepIdentifier);
     }
 
     @Override

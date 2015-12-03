@@ -19,7 +19,7 @@ import co.touchlab.researchstack.core.ui.scene.Scene;
 /**
  * TODO Save attempt in SaveState
  */
-public class ConsentQuizScene extends MultiSubSectionScene
+public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
 {
     private static final String ID_RESULT = "result";
 
@@ -82,7 +82,6 @@ public class ConsentQuizScene extends MultiSubSectionScene
     {
         String title = getString(newScene instanceof ConsentQuizEvaluationScene ?
                                          R.string.quiz_evaluation : R.string.quiz);
-
         getCallbacks().onChangeStepTitle(title);
     }
 
@@ -91,17 +90,7 @@ public class ConsentQuizScene extends MultiSubSectionScene
     {
         if (!step.getIdentifier().equals(ID_RESULT))
         {
-            for(ConsentQuizModel.QuizQuestion question : model.getQuestions())
-            {
-                if(result.getIdentifier().equals(question.id))
-                {
-                    boolean answer = question.constraints.validation.answer.equals("true");
-                    QuestionResult<Boolean> questionResult =  (QuestionResult<Boolean>) result
-                            .getResults().get(step.getIdentifier());
-                    results.put(step.getIdentifier(), questionResult.getAnswer().booleanValue() == answer);
-                    break;
-                }
-            }
+            results.put(step.getIdentifier(), (boolean) result.getResultForIdentifier(StepResult.DEFAULT_KEY));
         }
     }
 
@@ -121,10 +110,14 @@ public class ConsentQuizScene extends MultiSubSectionScene
     public int getCorrectAnswerCount()
     {
         int count = 0;
-        for(boolean result : results.values())
+
+        for(ConsentQuizModel.QuizQuestion question : model.getQuestions())
         {
-            count += result ? 1 : 0 ;
+            boolean result = results.get(question.id);
+            boolean correct = question.constraints.validation.answer.equals(Boolean.toString(result));
+            count += correct ? 1 : 0 ;
         }
+
         return count;
     }
 
@@ -147,22 +140,17 @@ public class ConsentQuizScene extends MultiSubSectionScene
         }
         else
         {
-            String id = getStep().getIdentifier();
+            StepResult<Boolean> result = getStepResult();
 
-            QuestionResult<Boolean> questionResult = new QuestionResult<>(id);
-            StepResult<QuestionResult<Boolean>> result = createNewStepResult(id);
-            result.setResultForIdentifier(id, questionResult);
-
-
-            //TODO Rename maxIncorrect variable.
-            // A comparison should in inclusive for this situation ..... since maxIncorrect is an
-            // upper limit.
+            // TODO Rename maxIncorrect variable.
+            // The operator should be inclusive for this situation ..... since maxIncorrect is an
+            // inclusive upper limit.
 
             // If we passed
             if (getIncorrectAnswerCount() < model.evalProperties.maxIncorrect)
             {
                 LogExt.i(getClass(), "Quiz Passed");
-                questionResult.setAnswer(true);
+                result.setResultForIdentifier(StepResult.DEFAULT_KEY, true);
 
                 getCallbacks().onStepResultChanged(getStep(), result);
                 getCallbacks().onNextPressed(getStep());
@@ -183,7 +171,7 @@ public class ConsentQuizScene extends MultiSubSectionScene
                 else
                 {
                     LogExt.i(getClass(), "Last attempt, go back to consent visual flow");
-                    questionResult.setAnswer(false);
+                    result.setResultForIdentifier(StepResult.DEFAULT_KEY, false);
 
                     getCallbacks().onStepResultChanged(getStep(), result);
                     getCallbacks().onNextPressed(getStep());
@@ -199,8 +187,8 @@ public class ConsentQuizScene extends MultiSubSectionScene
     }
 
     @Override
-    public StepResult createNewStepResult(String id)
+    public StepResult<Boolean> createNewStepResult(String id)
     {
-        return new StepResult<QuestionResult<Boolean>>(getStep().getIdentifier());
+        return new StepResult<>(getStep().getIdentifier());
     }
 }

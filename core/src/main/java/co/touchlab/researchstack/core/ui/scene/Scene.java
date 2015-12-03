@@ -16,12 +16,8 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.result.Result;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
@@ -32,7 +28,7 @@ import rx.functions.Action1;
  * - Remove initialize() from constructor. Make into a public facing method so that users can
  *   define layout in XML.
  ***************************************************************************************************/
-public abstract class Scene extends RelativeLayout
+public abstract class Scene<T> extends RelativeLayout
 {
     public static final String TAG = Scene.class.getSimpleName();
 
@@ -43,7 +39,7 @@ public abstract class Scene extends RelativeLayout
     private StepResult stepResult;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Communicate w/ host (activity/fragment)
+    // Communicate w/ host
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private StepCallbacks callbacks;
 
@@ -60,9 +56,7 @@ public abstract class Scene extends RelativeLayout
 
     public Scene(Context context, Step step)
     {
-        this(context,
-                step,
-                null);
+        this(context, step, null);
     }
 
     public Scene(Context context, Step step, StepResult result)
@@ -222,34 +216,33 @@ public abstract class Scene extends RelativeLayout
         return stepViewContainer.indexOfChild(moreInfo) + 1;
     }
 
-    public StepResult getStepResult()
+    public StepResult<T> getStepResult()
     {
         if (stepResult == null)
         {
-            // First, lets get it back from the activity
+            // First, lets check if the host has a result for us
             stepResult = callbacks.getResultStep(step.getIdentifier());
 
-            // Create a new result if the activity has no record of a result
-            if(stepResult == null)
+            // If not, create a new result
+            if (stepResult == null)
             {
-                stepResult = createNewStepResult(step.getIdentifier());
+                stepResult = new StepResult<T>(step.getIdentifier());
             }
         }
 
         return stepResult;
     }
 
-    public void setStepResult(Result result)
+    //TODO This seems strange, setter should just set the value
+    public void setStepResult(StepResult<T> result)
     {
-        // TODO this is bad and we should feel bad
-        Map<String, Result> results = new HashMap<>();
-        results.put(result.getIdentifier(), result);
-        getStepResult().setResults(results);
+        this.stepResult = result;
 
-        callbacks.onStepResultChanged(step, stepResult);
+        getCallbacks().onStepResultChanged(step, stepResult);
     }
 
-    public abstract StepResult createNewStepResult(String id);
+    @Deprecated
+    public abstract StepResult<T> createNewStepResult(String id);
 
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

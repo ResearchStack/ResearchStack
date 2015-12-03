@@ -20,7 +20,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.ui.scene.Scene;
 
-public class ConsentQuizQuestionScene extends Scene
+public class ConsentQuizQuestionScene extends Scene<Boolean>
 {
 
     private final ConsentQuizModel.QuestionProperties properties;
@@ -126,23 +126,16 @@ public class ConsentQuizQuestionScene extends Scene
     }
 
     @Override
-    public StepResult getStepResult()
+    public StepResult<Boolean> getStepResult()
     {
         boolean answer = radioGroup.getCheckedRadioButtonId() == R.id.btn_true;
-
-        String id = getStep().getIdentifier();
-
-        QuestionResult<Boolean> questionResult = new QuestionResult<>(id);
-        questionResult.setAnswer(answer);
-
-        StepResult<QuestionResult<Boolean>> result = createNewStepResult(id);
-        result.setResultForIdentifier(id, questionResult);
-
-        return result;
+        StepResult<Boolean> booleanStepResult = new StepResult<>(getStep().getIdentifier());
+        booleanStepResult.setResultForIdentifier(StepResult.DEFAULT_KEY, answer);
+        return booleanStepResult;
     }
 
     @Override
-    public StepResult<QuestionResult<Boolean>> createNewStepResult(String id)
+    public StepResult<Boolean> createNewStepResult(String id)
     {
         return new StepResult<>(id);
     }

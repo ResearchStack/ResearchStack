@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.Step;
@@ -53,8 +52,8 @@ public class ConsentVisualScene extends MultiSubSectionScene
     }
 
     @Override
-    public StepResult createNewStepResult(String id)
+    public StepResult<Boolean> createNewStepResult(String id)
     {
-        return new StepResult<QuestionResult<Boolean>>(getStep().getIdentifier());
+        return new StepResult<>(getStep().getIdentifier());
     }
 }

@@ -6,12 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 
 @Deprecated
-public class NotImplementedScene extends Scene
+public class NotImplementedScene extends Scene<String>
 {
 
     public NotImplementedScene(Context context, Step step)
@@ -34,8 +33,8 @@ public class NotImplementedScene extends Scene
     }
 
     @Override
-    public StepResult createNewStepResult(String stepIdentifier)
+    public StepResult<String> createNewStepResult(String stepIdentifier)
     {
-        return new StepResult<QuestionResult<String>>(stepIdentifier);
+        return new StepResult<>(stepIdentifier);
     }
 }
