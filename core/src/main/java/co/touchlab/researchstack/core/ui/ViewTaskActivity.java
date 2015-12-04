@@ -24,13 +24,14 @@ import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.core.task.Task;
-import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.scene.MultiSubSectionScene;
 import co.touchlab.researchstack.core.ui.scene.NotImplementedScene;
 import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.core.ui.scene.SceneAnimator;
 
-public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
+public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 {
 
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
@@ -114,7 +115,7 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
     {
         Scene oldScene = (Scene) findViewById(R.id.current_scene);
         Scene newScene = getSceneForStep(step);
-        newScene.setId(R.id.current_scene);
+        newScene.getView().setId(R.id.current_scene);
 
         //If we are navigating back, we want to show the last sub-scene for the step.
         if (newScene instanceof MultiSubSectionScene && direction == SceneAnimator.SHIFT_RIGHT)
@@ -125,7 +126,7 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
 
         if (oldScene != null)
         {
-            oldScene.setId(R.id.old_scene);
+            oldScene.getView().setId(R.id.old_scene);
             animator.animate(oldScene, newScene, direction);
         }
         else
@@ -173,7 +174,7 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
     {
         if (item.getItemId() == android.R.id.home)
         {
-            Scene currentScene = (Scene) findViewById(R.id.current_scene);
+            SceneImpl currentScene = (SceneImpl) findViewById(R.id.current_scene);
             if (!currentScene.isBackEventConsumed())
             {
                 loadPreviousScene();

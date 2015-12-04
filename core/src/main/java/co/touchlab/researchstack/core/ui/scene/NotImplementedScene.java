@@ -10,7 +10,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 
 @Deprecated
-public class NotImplementedScene extends Scene<String>
+public class NotImplementedScene extends SceneImpl<String>
 {
 
     public NotImplementedScene(Context context, Step step)

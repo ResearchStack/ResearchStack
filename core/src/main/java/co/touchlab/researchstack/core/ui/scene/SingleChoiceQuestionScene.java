@@ -14,7 +14,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class SingleChoiceQuestionScene<T> extends Scene<T>
+public class SingleChoiceQuestionScene<T> extends SceneImpl<T>
 {
 
     private RadioGroup radioGroup;

@@ -15,12 +15,11 @@ import android.widget.Toast;
 
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 
-public class ConsentQuizQuestionScene extends Scene<Boolean>
+public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
 {
 
     private final ConsentQuizModel.QuestionProperties properties;

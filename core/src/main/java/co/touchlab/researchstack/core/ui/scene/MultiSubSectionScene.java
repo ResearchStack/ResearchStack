@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
 /**
  * TODO Consume "onBackPressed" in activity. -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
- * Implement method on {@link MultiSubSectionScene}. If current {@link Scene} is 0, and back is pressed,
- * allow activity to swap to previous step. Else, let {@link MultiSubSectionScene} go back a {@link Scene}.
+ * Implement method on {@link MultiSubSectionScene}. If current {@link SceneImpl} is 0, and back is pressed,
+ * allow activity to swap to previous step. Else, let {@link MultiSubSectionScene} go back a {@link SceneImpl}.
  */
 
-public abstract class MultiSubSectionScene<T> extends Scene<T> implements StepCallbacks
+public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements SceneCallbacks
 {
 
     private SceneAnimator animator;
@@ -89,10 +89,10 @@ public abstract class MultiSubSectionScene<T> extends Scene<T> implements StepCa
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
         Scene oldScene = (Scene) findViewById(R.id.current_child_scene);
-        if (oldScene != null) { oldScene.setId(R.id.old_child_scene);}
+        if (oldScene != null) { oldScene.getView().setId(R.id.old_child_scene);}
 
         Scene newScene = onCreateScene(inflater, position);
-        newScene.setId(R.id.current_child_scene);
+        newScene.getView().setId(R.id.current_child_scene);
         newScene.setCallbacks(this);
 
         if (withAnimation && oldScene != null)
@@ -104,7 +104,7 @@ public abstract class MultiSubSectionScene<T> extends Scene<T> implements StepCa
             animator.setIsAnimating(false);
 
             removeAllViews();
-            addView(newScene);
+            addView(newScene.getView());
         }
 
         onSceneChanged(oldScene, newScene);

@@ -13,7 +13,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class DateQuestionScene extends Scene<String>
+public class DateQuestionScene extends SceneImpl<String>
 {
 
     public DateQuestionScene(Context context, Step step)

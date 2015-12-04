@@ -14,7 +14,7 @@ import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
 import co.touchlab.researchstack.glue.model.User;
@@ -80,7 +80,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 currentUser.setConsentSignatureImage(signature.getSignatureImage());
                 currentUser.setUserConsented(true);
 
-                Scene scene = (Scene) findViewById(R.id.current_scene);
+                SceneImpl scene = (SceneImpl) findViewById(R.id.current_scene);
                 if (scene != null && scene instanceof SignUpEligibleScene)
                 {
                     onNextPressed(scene.getStep());
@@ -102,7 +102,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
         if (requestCode ==  SignUpPermissionsScene.LOCATION_PERMISSION_REQUEST_CODE)
         {
-            Scene scene = (Scene) findViewById(R.id.current_scene);
+            SceneImpl scene = (SceneImpl) findViewById(R.id.current_scene);
             if(scene instanceof SignUpPermissionsScene)
             {
                 ((SignUpPermissionsScene) scene)

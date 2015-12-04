@@ -2,7 +2,7 @@ package co.touchlab.researchstack.core.ui.callbacks;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 
-public interface StepCallbacks
+public interface SceneCallbacks
 {
     void onChangeStepTitle(String title);
     void onNextPressed(Step step);

@@ -87,7 +87,7 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
     }
 
     @Override
-    public Scene onCreateScene(LayoutInflater inflater, int scenePos)
+    public SceneImpl onCreateScene(LayoutInflater inflater, int scenePos)
     {
         ConsentReviewStep step = (ConsentReviewStep) getStep();
 

@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
 import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.R;
@@ -14,7 +13,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.ui.callbacks.SignatureCallbacks;
 import co.touchlab.researchstack.core.ui.views.ConsentReviewSignatureView;
 
-public class ConsentReviewSignatureScene extends Scene
+public class ConsentReviewSignatureScene extends SceneImpl
 {
 
     private ConsentReviewSignatureView signatureView;

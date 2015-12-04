@@ -17,7 +17,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class MultiChoiceQuestionScene<T> extends Scene<T[]>
+public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
 {
 
     private List<T> results;

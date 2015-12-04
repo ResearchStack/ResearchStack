@@ -20,7 +20,7 @@ import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.core.result.Result;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
 @Deprecated
 public abstract class StepFragment extends Fragment
@@ -30,7 +30,7 @@ public abstract class StepFragment extends Fragment
 
     protected Step step;
     protected StepResult stepResult;
-    protected StepCallbacks callbacks;
+    protected SceneCallbacks callbacks;
     private TextView next;
     private TextView skip;
 
@@ -38,7 +38,7 @@ public abstract class StepFragment extends Fragment
     public void onAttach(Context context)
     {
         super.onAttach(context);
-        callbacks = ((StepCallbacks) context);
+        callbacks = ((SceneCallbacks) context);
     }
 
     public StepFragment()

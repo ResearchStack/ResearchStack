@@ -8,15 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 
 /**
  * TODO Implement
  */
-public class SignInScene extends Scene
+public class SignInScene extends SceneImpl
 {
 
     public SignInScene(Context context, Step step)

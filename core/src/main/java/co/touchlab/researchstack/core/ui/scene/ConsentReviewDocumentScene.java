@@ -11,7 +11,7 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.ui.callbacks.ConsentReviewCallback;
 
-public class ConsentReviewDocumentScene extends Scene
+public class ConsentReviewDocumentScene extends SceneImpl
 {
 
     private ConsentReviewCallback callback;

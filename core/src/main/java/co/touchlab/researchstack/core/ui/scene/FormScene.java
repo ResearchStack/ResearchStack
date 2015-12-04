@@ -18,7 +18,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.step.FormStep;
 
-public class FormScene extends Scene
+public class FormScene extends SceneImpl
 {
 
     public FormScene(Context context, FormStep step)

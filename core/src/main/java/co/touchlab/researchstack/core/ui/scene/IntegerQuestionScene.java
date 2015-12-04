@@ -12,7 +12,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class IntegerQuestionScene extends Scene<Integer>
+public class IntegerQuestionScene extends SceneImpl<Integer>
 {
 
     public IntegerQuestionScene(Context context, Step step)

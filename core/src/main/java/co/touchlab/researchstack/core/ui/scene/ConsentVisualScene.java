@@ -33,10 +33,10 @@ public class ConsentVisualScene extends MultiSubSectionScene
     }
 
     @Override
-    public Scene onCreateScene(LayoutInflater inflater, int scenePos)
+    public SceneImpl onCreateScene(LayoutInflater inflater, int scenePos)
     {
         ConsentSection section = document.getSections().get(scenePos);
-        Scene scene = new ConsentVisualSectionScene(getContext(), section);
+        SceneImpl scene = new ConsentVisualSectionScene(getContext(), section);
         String nextTitle = getString(R.string.next);
         if (section.getType() == ConsentSection.Type.Overview)
         {

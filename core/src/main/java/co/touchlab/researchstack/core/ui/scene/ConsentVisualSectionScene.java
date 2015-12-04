@@ -11,7 +11,7 @@ import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 
-public class ConsentVisualSectionScene extends Scene
+public class ConsentVisualSectionScene extends SceneImpl
 {
 
     public ConsentVisualSectionScene(Context context, ConsentSection data)

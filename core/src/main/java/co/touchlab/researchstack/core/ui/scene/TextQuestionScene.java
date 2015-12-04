@@ -13,7 +13,7 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 
-public class TextQuestionScene extends Scene<String>
+public class TextQuestionScene extends SceneImpl<String>
 {
 
     public TextQuestionScene(Context context, Step step)

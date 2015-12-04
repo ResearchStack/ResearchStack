@@ -6,9 +6,9 @@ import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 
-public class ConsentQuizEvaluationScene extends Scene
+public class ConsentQuizEvaluationScene extends SceneImpl
 {
     public ConsentQuizEvaluationScene(Context context, Step step, ConsentQuizModel.EvaluationProperties properties,
             int attempt, int incorrect)

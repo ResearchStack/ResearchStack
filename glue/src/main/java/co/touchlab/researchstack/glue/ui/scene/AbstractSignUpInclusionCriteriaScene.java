@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 
-public abstract class AbstractSignUpInclusionCriteriaScene extends Scene<Boolean>
+public abstract class AbstractSignUpInclusionCriteriaScene extends SceneImpl<Boolean>
 {
 
     public AbstractSignUpInclusionCriteriaScene(Context context, Step step)

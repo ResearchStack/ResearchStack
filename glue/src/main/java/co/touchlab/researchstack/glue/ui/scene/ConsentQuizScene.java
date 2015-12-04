@@ -5,16 +5,16 @@ import android.view.LayoutInflater;
 
 import java.util.HashMap;
 
+import co.touchlab.researchstack.core.ui.scene.Scene;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.glue.step.ConsentQuizStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.MultiSubSectionScene;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 
 /**
  * TODO Save attempt in SaveState
@@ -49,9 +49,9 @@ public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
     }
 
     @Override
-    public Scene onCreateScene(LayoutInflater inflater, int position)
+    public SceneImpl onCreateScene(LayoutInflater inflater, int position)
     {
-        Scene scene;
+        SceneImpl scene;
 
         if (position < getSceneCount() - 1)
         {
