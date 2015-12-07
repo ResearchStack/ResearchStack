@@ -56,9 +56,4 @@ public class TextQuestionScene extends SceneImpl<String>
         return editText;
     }
 
-    @Override
-    public StepResult<String> createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<>(stepIdentifier);
-    }
 }

@@ -118,12 +118,6 @@ public class FormScene extends SceneImpl
         return isValid && super.isAnswerValid();
     }
 
-    @Override
-    public StepResult createNewStepResult(String id)
-    {
-        return new StepResult<TextQuestionResult>(getStep().getIdentifier());
-    }
-
     public static class FormItem
     {
         private final String identifier;

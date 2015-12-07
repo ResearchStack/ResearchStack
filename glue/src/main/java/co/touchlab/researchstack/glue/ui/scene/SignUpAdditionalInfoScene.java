@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
 import co.touchlab.researchstack.glue.model.User;
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.ui.views.HeightPicker;
 
 public class SignUpAdditionalInfoScene extends SceneImpl
@@ -56,9 +55,4 @@ public class SignUpAdditionalInfoScene extends SceneImpl
                 .subscribe(user::setWeight);
     }
 
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<Boolean>(stepIdentifier);
-    }
 }

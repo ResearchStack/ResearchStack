@@ -5,10 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.glue.R;
 
 public class SignUpIneligibleScene extends SceneImpl
 {
@@ -30,9 +29,4 @@ public class SignUpIneligibleScene extends SceneImpl
         hideNextButtons();
     }
 
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<Boolean>(stepIdentifier);
-    }
 }

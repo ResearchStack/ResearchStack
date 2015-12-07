@@ -34,12 +34,6 @@ public abstract class AbstractSignUpInclusionCriteriaScene extends SceneImpl<Boo
         super.onNextClicked();
     }
 
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<Boolean>(stepIdentifier);
-    }
-
     public abstract int getLayoutId();
 
     public abstract boolean isEligible();

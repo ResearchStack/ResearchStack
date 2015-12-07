@@ -133,9 +133,4 @@ public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
         return booleanStepResult;
     }
 
-    @Override
-    public StepResult<Boolean> createNewStepResult(String id)
-    {
-        return new StepResult<>(id);
-    }
 }

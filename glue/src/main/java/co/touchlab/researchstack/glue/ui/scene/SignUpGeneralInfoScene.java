@@ -21,12 +21,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStackApplication;
 import co.touchlab.researchstack.glue.model.User;
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 
 public class SignUpGeneralInfoScene extends SceneImpl
 {
@@ -146,9 +145,4 @@ public class SignUpGeneralInfoScene extends SceneImpl
         birthdateTextView.setText(format.format(birthdate.getTime()));
     }
 
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<Boolean>(stepIdentifier);
-    }
 }

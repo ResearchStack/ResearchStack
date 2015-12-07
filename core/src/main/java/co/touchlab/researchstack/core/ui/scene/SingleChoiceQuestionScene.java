@@ -64,10 +64,4 @@ public class SingleChoiceQuestionScene<T> extends SceneImpl<T>
         return radioGroup.getCheckedRadioButtonId() != -1;
     }
 
-    @Override
-    public StepResult<T> createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<>(stepIdentifier);
-    }
-
 }

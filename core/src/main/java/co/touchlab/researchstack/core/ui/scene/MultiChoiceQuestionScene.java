@@ -78,12 +78,6 @@ public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
     }
 
     @Override
-    public StepResult<T[]> createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<>(stepIdentifier);
-    }
-
-    @Override
     public boolean isAnswerValid()
     {
         return !getStepResult().isEmpty();

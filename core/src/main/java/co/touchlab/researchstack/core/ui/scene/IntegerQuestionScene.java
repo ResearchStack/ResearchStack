@@ -57,12 +57,6 @@ public class IntegerQuestionScene extends SceneImpl<Integer>
     }
 
     @Override
-    public StepResult<Integer> createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<>(stepIdentifier);
-    }
-
-    @Override
     public boolean isAnswerValid()
     {
         // max/min already ensures a valid number, this may change if we start with null

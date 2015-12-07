@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 
 @Deprecated
@@ -32,9 +31,4 @@ public class NotImplementedScene extends SceneImpl<String>
         //Do Nothing
     }
 
-    @Override
-    public StepResult<String> createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<>(stepIdentifier);
-    }
 }

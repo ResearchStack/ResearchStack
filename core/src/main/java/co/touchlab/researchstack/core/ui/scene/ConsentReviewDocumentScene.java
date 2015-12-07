@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 
 public class ConsentReviewDocumentScene extends SceneImpl
 {
+    public static final String STEP_ID = "consent_review_doc";
 
     public ConsentReviewDocumentScene(Context context)
     {
-        super(context, new Step("consent_review_doc"));
+        super(context, new Step(STEP_ID));
     }
 
     @Override
@@ -32,17 +32,10 @@ public class ConsentReviewDocumentScene extends SceneImpl
 //        pdfView.fromAsset("study_overview_consent_form.pdf").load(); //TODO Point pdf to App-delegate
 
         View agree = findViewById(R.id.agree);
-        RxView.clicks(agree).subscribe(v -> getCallbacks().onNextPressed(getStep()));
+        RxView.clicks(agree).subscribe(v -> onNextClicked());
 
         View disagree = findViewById(R.id.disagree);
         RxView.clicks(disagree).subscribe(v -> getCallbacks().onCancelStep());
     }
-
-    @Override
-    public StepResult createNewStepResult(String id)
-    {
-        return null;
-    }
-
 
 }

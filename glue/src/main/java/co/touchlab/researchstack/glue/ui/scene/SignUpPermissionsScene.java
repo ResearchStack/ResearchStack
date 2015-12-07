@@ -9,15 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.jakewharton.rxbinding.view.RxView;
 
-import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.glue.R;
 
 public class SignUpPermissionsScene extends SceneImpl
 {
@@ -82,9 +80,4 @@ public class SignUpPermissionsScene extends SceneImpl
         }
     }
 
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<Boolean>(stepIdentifier);
-    }
 }

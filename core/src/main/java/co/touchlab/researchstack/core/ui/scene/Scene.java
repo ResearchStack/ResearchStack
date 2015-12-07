@@ -15,12 +15,12 @@ public interface Scene<T>
      */
     boolean isBackEventConsumed();
 
-    void onNextClicked();
+//    void onNextClicked();
 
 
     void setStepResult(StepResult<T> result);
 
-    StepResult getStepResult();
+    StepResult<T> getStepResult();
 
 
     void setCallbacks(SceneCallbacks callbacks);

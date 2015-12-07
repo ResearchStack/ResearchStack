@@ -8,7 +8,6 @@ import android.util.TypedValue;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.model.ConsentSection;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 
 public class ConsentVisualSectionScene extends SceneImpl
@@ -53,13 +52,6 @@ public class ConsentVisualSectionScene extends SceneImpl
 
         //        TODO self.continueSkipContainer.continueEnabled = YES;
         //        TODO [self.continueSkipContainer updateContinueAndSkipEnabled];
-    }
-
-    @Override
-    public StepResult createNewStepResult(String id)
-    {
-        // We can ignore this, as we don't return a result for a visual consent scene
-        return null;
     }
 
 }

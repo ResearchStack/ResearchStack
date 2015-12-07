@@ -68,10 +68,4 @@ public class DateQuestionScene extends SceneImpl<String>
         return datePicker;
     }
 
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<String>(stepIdentifier);
-    }
-
 }
