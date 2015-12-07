@@ -1,11 +1,9 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,8 +27,8 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
     public static final int SECTION_REVIEW_NAME = 1;
     public static final int SECTION_REVIEW_SIGNATURE = 2;
 
-    private static final String NameFormIdentifier = "nameForm";
-    private static final String NameIdentifier = "name";
+    private static final String STEP_ID_NAME_FORM = "nameForm";
+    private static final String RESULT_ID_NAME = "name";
 
     public List<Integer> sections;
 
@@ -62,13 +60,7 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
     }
 
     @Override
-    public void initialize()
-    {
-        super.initialize();
-        initStepResult();
-    }
-
-    private void initStepResult()
+    public StepResult initStepResult()
     {
         StepResult<ConsentSignatureResult> result = new StepResult<>(getStep().getIdentifier());
 
@@ -78,14 +70,13 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
         ConsentSignature clone = ((ConsentReviewStep) getStep()).getSignature();
         sigResult.setSignature(clone);
 
-        result.getResults()
-                .put(sigResult.getIdentifier(), sigResult);
+        result.setResultForIdentifier(StepResult.DEFAULT_KEY, sigResult);
 
-        setStepResult(result);
+        return result;
     }
 
     @Override
-    public SceneImpl onCreateScene(LayoutInflater inflater, int scenePos)
+    public Scene onCreateScene(LayoutInflater inflater, int scenePos)
     {
         ConsentReviewStep step = (ConsentReviewStep) getStep();
 
@@ -100,7 +91,7 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
         else if (section == SECTION_REVIEW_NAME)
         {
             // TODO now that it's the full name, it probably doesn't need to be a form step
-            FormStep formStep = new FormStep(NameFormIdentifier,
+            FormStep formStep = new FormStep(STEP_ID_NAME_FORM,
                                              getString(R.string.consent_name_title),
                                              step.getText());
             formStep.setUseSurveyMode(false);
@@ -117,8 +108,7 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
             String placeholder = getResources().getString(R.string.consent_name_placeholder);
 
             String nameText = getResources().getString(R.string.consent_name_full);
-            FormScene.FormItem givenName = new FormScene.FormItem(
-                    NameIdentifier, nameText, format, placeholder);
+            FormScene.FormItem givenName = new FormScene.FormItem(RESULT_ID_NAME, nameText, format, placeholder);
             items.add(givenName);
 
             formStep.setFormItems(items);
@@ -147,15 +137,8 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
     }
 
     @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-       return null;
-    }
-
-    @Override
     public void onSceneChanged(Scene oldScene, Scene newScene)
     {
-
         //Handle new scene, pass the title back up to the host
         if (newScene instanceof ConsentReviewSignatureScene)
         {
@@ -167,70 +150,57 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
         {
             getCallbacks().onStepTitleChanged(getString(R.string.consent));
         }
-
-        // Check if old scene is null
-        if (oldScene == null)
-        {
-            return;
-        }
-
-        //Handle the result of the popped off scene
-        StepResult parentResult = getStepResult();
-        ConsentSignatureResult result = (ConsentSignatureResult) parentResult
-                .getResultForIdentifier(getStep().getIdentifier());
-
-        ConsentSignature signature = result.getSignature();
-
-//        TODO handle signature date-format string
-//        if (signature.getSignatureDateFormatString().length() > 0) {
-//            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//            [dateFormatter setDateFormat:_currentSignature.signatureDateFormatString];
-//            _currentSignature.signatureDate = [dateFormatter stringFromDate:[NSDate date]];
-//        } else {
-//            _currentSignature.signatureDate = ORKSignatureStringFromDate([NSDate date]);
-//        }
-
-        if (oldScene instanceof ConsentReviewDocumentScene)
-        {
-            result.setConsented(true);
-        }
-        else if (oldScene instanceof FormScene)
-        {
-            StepResult formResult = oldScene.getStepResult();
-
-            TextQuestionResult nameResult = (TextQuestionResult) formResult
-                    .getResultForIdentifier(NameIdentifier);
-            signature.setFullName(nameResult.getTextAnswer());
-        }
-        else if (oldScene instanceof ConsentReviewSignatureScene)
-        {
-            ConsentReviewSignatureScene sigScene = (ConsentReviewSignatureScene) oldScene;
-
-            //TODO The follow is less than ideal
-            Bitmap bitmap = sigScene.getSignatureImage();
-            if (bitmap != null)
-            {
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                signature.setSignatureImage(byteArray);
-            }
-
-            // If we get here, this means our last oldScene oldScene will trigger the step to finish. Its
-            // a good idea to set the end date now.
-            result.setEndDate(new Date());
-        }
-        else
-        {
-            String message = oldScene.getClass().getSimpleName() + " not supported";
-            DevUtils.throwUnsupportedOpException(message);
-        }
-
-        getCallbacks().onStepResultChanged(getStep(), result);
     }
 
     @Override
-    public void onNextPressed(Step step)
+    public void setStepResultForHost(Step sceneStep, StepResult sceneResult)
+    {
+        //Handle the result of the popped off scene
+        StepResult<ConsentSignatureResult> result = getStepResult();
+        ConsentSignatureResult sigResult = result.getResultForIdentifier(StepResult.DEFAULT_KEY);
+
+        //        TODO handle signature date-format string
+        //        if (signature.getSignatureDateFormatString().length() > 0) {
+        //            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        //            [dateFormatter setDateFormat:_currentSignature.signatureDateFormatString];
+        //            _currentSignature.signatureDate = [dateFormatter stringFromDate:[NSDate date]];
+        //        } else {
+        //            _currentSignature.signatureDate = ORKSignatureStringFromDate([NSDate date]);
+        //        }
+
+        if (ConsentReviewDocumentScene.STEP_ID.equals(sceneStep.getIdentifier()))
+        {
+            sigResult.setConsented(true);
+        }
+        else if (STEP_ID_NAME_FORM.equals(sceneStep.getIdentifier()))
+        {
+            TextQuestionResult nameResult = (TextQuestionResult) sceneResult
+                    .getResultForIdentifier(RESULT_ID_NAME);
+            sigResult.getSignature().setFullName(nameResult.getTextAnswer());
+        }
+        else if (ConsentReviewSignatureScene.STEP_ID.equals(sceneStep.getIdentifier()))
+        {
+            StepResult<String> signatureResult = (StepResult<String>) sceneResult;
+            String base64StringImage = signatureResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            sigResult.getSignature().setSignatureImage(base64StringImage);
+            sigResult.setEndDate(new Date());
+        }
+        else
+        {
+            String message = "Result with ID:" + sceneStep.getIdentifier() + " not supported";
+            DevUtils.throwUnsupportedOpException(message);
+        }
+    }
+
+    @Override
+    public StepResult getStepResultFromHost(String stepId)
+    {
+        //TODO Implement code. Pass in proper result when creating scene in onCreateScene
+        return null;
+    }
+
+    @Override
+    public void onNextStep(Step step)
     {
         if (step != null && step.getIdentifier().equals("consent_review_doc"))
         {
@@ -240,13 +210,13 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
                     .setTitle(R.string.consent_review_alert_title)
                     .setMessage(parentStep.getReasonForConsent()).setCancelable(false)
                     .setPositiveButton(R.string.agree, (dialog, which) -> {
-                        loadNextScene();
+                        super.onNextStep(step);
                     }).setNegativeButton(R.string.cancel, null)
                     .show();
         }
         else
         {
-            super.onNextPressed(step);
+            super.onNextStep(step);
         }
     }
 

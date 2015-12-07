@@ -176,24 +176,18 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         LogExt.i(getClass(), "onBodyCreated()");
     }
 
-
-    @Override
-    public void onNextClicked()
+    protected void onNextClicked()
     {
-
         if (isAnswerValid())
         {
             if (callbacks != null)
             {
-                if (getStep() != null){
-                    callbacks.onStepResultChanged(getStep(), getStepResult());
-                }
-
-                callbacks.onNextPressed(step);
+                callbacks.setStepResultForHost(getStep(), getStepResult());
+                callbacks.onNextStep(step);
             }
             else
             {
-                //TODO Review weather we should force a crash or just log the message through Logcat.
+                //TODO Review whether we should force a crash or just log the message through Logcat.
                 throw new IllegalStateException("SceneCallbacks must be set on class");
             }
         }
@@ -236,15 +230,15 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
     public StepResult<T> getStepResult()
     {
-        if (stepResult == null)
+        if (stepResult == null && step != null)
         {
             // First, lets check if the host has a result for us
-            stepResult = callbacks.getResultStep(step.getIdentifier());
+            stepResult = callbacks.getStepResultFromHost(step.getIdentifier());
 
             // If not, create a new result
             if (stepResult == null)
             {
-                stepResult = new StepResult<T>(step.getIdentifier());
+                stepResult = initStepResult();
             }
         }
 
@@ -256,9 +250,10 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         this.stepResult = result;
     }
 
-    @Deprecated
-    public abstract StepResult<T> createNewStepResult(String id);
-
+    public StepResult initStepResult()
+    {
+        return new StepResult<T>(step.getIdentifier());
+    }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Setters for UI

@@ -210,13 +210,13 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     }
 
     @Override
-    public void onNextPressed(Step step)
+    public void onNextStep(Step step)
     {
         loadNextScene();
     }
 
     @Override
-    public void onStepResultChanged(Step step, StepResult result)
+    public void setStepResultForHost(Step step, StepResult result)
     {
         taskResult.setStepResultForStepIdentifier(step.getIdentifier(), result);
     }
@@ -224,8 +224,8 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     @Override
     public void onSkipStep(Step step)
     {
-        onStepResultChanged(step, null);
-        onNextPressed(step);
+        setStepResultForHost(step, null);
+        onNextStep(step);
     }
 
     @Override
@@ -246,7 +246,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     }
 
     @Override
-    public StepResult getResultStep(String stepId)
+    public StepResult getStepResultFromHost(String stepId)
     {
         return taskResult.getStepResultForStepIdentifier(stepId);
     }

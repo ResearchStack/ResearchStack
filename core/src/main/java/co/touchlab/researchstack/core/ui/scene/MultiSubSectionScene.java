@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.dev.DevUtils;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
@@ -25,6 +23,14 @@ public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements Sc
     public MultiSubSectionScene(Context context, Step step)
     {
         super(context, step);
+    }
+
+    @Override
+    public void addView(View child, int index, ViewGroup.LayoutParams params) {
+        if (getChildCount() >= 2) {
+            throw new IllegalStateException("Can't add more than 2 views to a " + MultiSubSectionScene.class.getSimpleName());
+        }
+        super.addView(child, index, params);
     }
 
     @Override
@@ -114,21 +120,13 @@ public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements Sc
         setCurrentPosition(position);
     }
 
-    @Override
-    public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        if (getChildCount() >= 2) {
-            throw new IllegalStateException("Can't add more than 2 views to a " + MultiSubSectionScene.class.getSimpleName());
-        }
-        super.addView(child, index, params);
-    }
-
-    public void loadNextScene()
+    public void showNextScene()
     {
         int currentScene = getCurrentPosition();
         showScene(currentScene + 1, true);
     }
 
-    public void loadPreviousScene()
+    public void showPreviousScene()
     {
         int currentScene = getCurrentPosition();
         showScene(currentScene - 1 , true);
@@ -139,7 +137,7 @@ public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements Sc
     {
         if (getCurrentPosition() > 0)
         {
-            loadPreviousScene();
+            showPreviousScene();
             return true;
         }
 
@@ -147,15 +145,15 @@ public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements Sc
     }
 
     @Override
-    public void onNextPressed(Step step)
+    public void onNextStep(Step step)
     {
         if(getCurrentPosition() < getSceneCount() - 1)
         {
-            loadNextScene();
+            showNextScene();
         }
         else
         {
-            getCallbacks().onNextPressed(getStep());
+            onNextClicked();
         }
     }
 
@@ -176,25 +174,10 @@ public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements Sc
     }
 
     @Override
-    public void onStepResultChanged(Step step, StepResult result)
-    {
-//        TODO Implement
-        DevUtils.throwUnsupportedOpException();
-    }
-
-    @Override
     public void onSkipStep(Step step)
     {
-//        TODO Implement
-        DevUtils.throwUnsupportedOpException();
-    }
-
-    @Override
-    public StepResult getResultStep(String stepId)
-    {
-//        TODO Implement
-        DevUtils.throwUnsupportedOpException();
-        return null;
+        //TODO This should load the next scene, not the next step.
+        getCallbacks().onSkipStep(step);
     }
 
 }
