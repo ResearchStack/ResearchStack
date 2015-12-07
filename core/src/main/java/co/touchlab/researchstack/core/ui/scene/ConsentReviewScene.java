@@ -3,7 +3,6 @@ package co.touchlab.researchstack.core.ui.scene;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import java.io.ByteArrayOutputStream;
@@ -21,9 +20,8 @@ import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.step.ConsentReviewStep;
 import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.ConsentReviewCallback;
 
-public class ConsentReviewScene extends MultiSubSectionScene implements ConsentReviewCallback
+public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureResult>
 {
     public static final String TAG = ConsentReviewScene.class.getSimpleName();
 
@@ -72,18 +70,18 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
 
     private void initStepResult()
     {
-        StepResult<ConsentSignatureResult> parentResult = new StepResult<>(getStep().getIdentifier());
+        StepResult<ConsentSignatureResult> result = new StepResult<>(getStep().getIdentifier());
 
-        ConsentSignatureResult result = new ConsentSignatureResult(getStep().getIdentifier());
-        result.setStartDate(new Date());
+        ConsentSignatureResult sigResult = new ConsentSignatureResult(getStep().getIdentifier());
+        sigResult.setStartDate(new Date());
 
         ConsentSignature clone = ((ConsentReviewStep) getStep()).getSignature();
-        result.setSignature(clone);
+        sigResult.setSignature(clone);
 
-        parentResult.getResults()
-                .put(result.getIdentifier(), result);
+        result.getResults()
+                .put(sigResult.getIdentifier(), sigResult);
 
-        setStepResult(parentResult);
+        setStepResult(result);
     }
 
     @Override
@@ -96,7 +94,7 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
         if (section == SECTION_REVIEW_DOCUMENT)
         {
             ConsentReviewDocumentScene layout = new ConsentReviewDocumentScene(getContext());
-            layout.setCallback(this);
+            layout.setCallbacks(this);
             return layout;
         }
         else if (section == SECTION_REVIEW_NAME)
@@ -163,11 +161,11 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
         {
             ConsentReviewStep step = (ConsentReviewStep) getStep();
             int titleResId = step.getDocument().getSignaturePageTitle();
-            getCallbacks().onChangeStepTitle(getString(titleResId));
+            getCallbacks().onStepTitleChanged(getString(titleResId));
         }
         else
         {
-            getCallbacks().onChangeStepTitle(getString(R.string.consent));
+            getCallbacks().onStepTitleChanged(getString(R.string.consent));
         }
 
         // Check if old scene is null
@@ -175,8 +173,6 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
         {
             return;
         }
-
-        Log.i(TAG, "scenePoppedOff " + oldScene.getClass().getSimpleName());
 
         //Handle the result of the popped off scene
         StepResult parentResult = getStepResult();
@@ -234,26 +230,25 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
     }
 
     @Override
-    public void showConfirmationDialog()
+    public void onNextPressed(Step step)
     {
-        ConsentReviewStep step = (ConsentReviewStep) getStep();
+        if (step != null && step.getIdentifier().equals("consent_review_doc"))
+        {
+            ConsentReviewStep parentStep = (ConsentReviewStep) getStep();
 
-        new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
-                .setTitle(R.string.consent_review_alert_title)
-                .setMessage(step.getReasonForConsent()).setCancelable(false)
-                .setPositiveButton(R.string.agree, (dialog, which) -> {
-                    showScene(SECTION_REVIEW_NAME, true);
-                }).setNegativeButton(R.string.cancel, null)
-                .show();
+            new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
+                    .setTitle(R.string.consent_review_alert_title)
+                    .setMessage(parentStep.getReasonForConsent()).setCancelable(false)
+                    .setPositiveButton(R.string.agree, (dialog, which) -> {
+                        loadNextScene();
+                    }).setNegativeButton(R.string.cancel, null)
+                    .show();
+        }
+        else
+        {
+            super.onNextPressed(step);
+        }
     }
-
-
-    @Override
-    public void closeToWelcomeFlow()
-    {
-        getCallbacks().onCancelStep();
-    }
-
 
         /*
 

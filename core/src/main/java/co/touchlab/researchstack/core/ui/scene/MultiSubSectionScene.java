@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import co.touchlab.researchstack.core.R;
+import co.touchlab.researchstack.core.dev.DevUtils;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
@@ -163,38 +164,36 @@ public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements Sc
      * @param title
      */
     @Override
-    public void onChangeStepTitle(String title)
+    public void onStepTitleChanged(String title)
     {
-        getCallbacks().onChangeStepTitle(title);
+        getCallbacks().onStepTitleChanged(title);
+    }
+
+    @Override
+    public void onCancelStep()
+    {
+        getCallbacks().onCancelStep();
     }
 
     @Override
     public void onStepResultChanged(Step step, StepResult result)
     {
 //        TODO Implement
+        DevUtils.throwUnsupportedOpException();
     }
 
     @Override
     public void onSkipStep(Step step)
     {
 //        TODO Implement
-//        onStepResultChanged(step, null);
-        getCallbacks().onNextPressed(getStep());
-    }
-
-    @Override
-    public void onCancelStep()
-    {
-//        TODO Implement
-//        setResult(Activity.RESULT_CANCELED);
-//        finish();
+        DevUtils.throwUnsupportedOpException();
     }
 
     @Override
     public StepResult getResultStep(String stepId)
     {
 //        TODO Implement
-//        return taskResult.getStepResultForStepIdentifier(stepId);
+        DevUtils.throwUnsupportedOpException();
         return null;
     }
 

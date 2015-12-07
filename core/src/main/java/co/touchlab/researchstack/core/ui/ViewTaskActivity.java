@@ -28,7 +28,6 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.scene.MultiSubSectionScene;
 import co.touchlab.researchstack.core.ui.scene.NotImplementedScene;
 import co.touchlab.researchstack.core.ui.scene.Scene;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.core.ui.scene.SceneAnimator;
 
 public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
@@ -148,7 +147,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 
             // Change the title on the activity
             String title = task.getTitleForStep(this, step);
-            onChangeStepTitle(title);
+            onStepTitleChanged(title);
 
             // Return the View
             Class cls = step.getSceneClass();
@@ -174,7 +173,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         if (item.getItemId() == android.R.id.home)
         {
-            SceneImpl currentScene = (SceneImpl) findViewById(R.id.current_scene);
+            Scene currentScene = (Scene) findViewById(R.id.current_scene);
             if (!currentScene.isBackEventConsumed())
             {
                 loadPreviousScene();
@@ -230,7 +229,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     }
 
     @Override
-    public void onChangeStepTitle(String title)
+    public void onStepTitleChanged(String title)
     {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
