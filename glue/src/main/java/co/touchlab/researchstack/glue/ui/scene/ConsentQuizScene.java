@@ -82,7 +82,7 @@ public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
     {
         String title = getString(newScene instanceof ConsentQuizEvaluationScene ?
                                          R.string.quiz_evaluation : R.string.quiz);
-        getCallbacks().onChangeStepTitle(title);
+        getCallbacks().onStepTitleChanged(title);
     }
 
     @Override

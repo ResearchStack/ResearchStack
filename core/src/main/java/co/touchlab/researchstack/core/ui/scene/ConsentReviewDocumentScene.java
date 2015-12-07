@@ -9,16 +9,14 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.ui.callbacks.ConsentReviewCallback;
+import co.touchlab.researchstack.core.step.Step;
 
 public class ConsentReviewDocumentScene extends SceneImpl
 {
 
-    private ConsentReviewCallback callback;
-
     public ConsentReviewDocumentScene(Context context)
     {
-        super(context, null);
+        super(context, new Step("consent_review_doc"));
     }
 
     @Override
@@ -31,14 +29,13 @@ public class ConsentReviewDocumentScene extends SceneImpl
     public void onSceneCreated(View scene)
     {
 //        PDFView pdfView = (PDFView) findViewById(R.id.pdfview);
-//        //TODO Point pdf to App-delegate
-//        pdfView.fromAsset("study_overview_consent_form.pdf").load();
+//        pdfView.fromAsset("study_overview_consent_form.pdf").load(); //TODO Point pdf to App-delegate
 
         View agree = findViewById(R.id.agree);
-        RxView.clicks(agree).subscribe(v -> callback.showConfirmationDialog());
+        RxView.clicks(agree).subscribe(v -> getCallbacks().onNextPressed(getStep()));
 
         View disagree = findViewById(R.id.disagree);
-        RxView.clicks(disagree).subscribe(v -> callback.closeToWelcomeFlow());
+        RxView.clicks(disagree).subscribe(v -> getCallbacks().onCancelStep());
     }
 
     @Override
@@ -47,9 +44,5 @@ public class ConsentReviewDocumentScene extends SceneImpl
         return null;
     }
 
-    public void setCallback(ConsentReviewCallback callback)
-    {
-        this.callback = callback;
-    }
 
 }
