@@ -180,15 +180,24 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
     @Override
     public void onNextClicked()
     {
-        if (callbacks != null && isAnswerValid())
-        {
-            if (getStep() != null){
-                callbacks.onStepResultChanged(getStep(), getStepResult());
-            }
 
-            callbacks.onNextPressed(step);
+        if (isAnswerValid())
+        {
+            if (callbacks != null)
+            {
+                if (getStep() != null){
+                    callbacks.onStepResultChanged(getStep(), getStepResult());
+                }
+
+                callbacks.onNextPressed(step);
+            }
+            else
+            {
+                //TODO Review weather we should force a crash or just log the message through Logcat.
+                throw new IllegalStateException("SceneCallbacks must be set on class");
+            }
         }
-        else if (!isAnswerValid())
+        else
         {
             Toast.makeText(getContext(),
                            R.string.please_complete_step,
@@ -242,12 +251,9 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         return stepResult;
     }
 
-    //TODO This seems strange, setter should just set the value
     public void setStepResult(StepResult<T> result)
     {
         this.stepResult = result;
-
-        getCallbacks().onStepResultChanged(step, stepResult);
     }
 
     @Deprecated
