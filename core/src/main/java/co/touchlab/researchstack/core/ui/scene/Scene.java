@@ -15,8 +15,6 @@ public interface Scene<T>
      */
     boolean isBackEventConsumed();
 
-//    void onNextClicked();
-
 
     void setStepResult(StepResult<T> result);
 
