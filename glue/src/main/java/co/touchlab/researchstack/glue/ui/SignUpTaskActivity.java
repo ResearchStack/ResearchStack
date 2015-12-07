@@ -59,7 +59,9 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             StepResult<Boolean> sharingResult = result.getStepResultForStepIdentifier("sharing");
             boolean sharing = sharingResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
 
-            ConsentSignatureResult signatureResult = ((ConsentSignatureResult) result.getStepResultForStepIdentifier("reviewStep"));
+            StepResult<ConsentSignatureResult> consentResult = result.getStepResultForStepIdentifier(
+                    "reviewStep");
+            ConsentSignatureResult signatureResult = consentResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
             ConsentSignature signature = signatureResult.getSignature();
             boolean consented = signatureResult.isConsented();
 
@@ -83,7 +85,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 SceneImpl scene = (SceneImpl) findViewById(R.id.current_scene);
                 if (scene != null && scene instanceof SignUpEligibleScene)
                 {
-                    onNextPressed(scene.getStep());
+                    onNextStep(scene.getStep());
                 }
             }
             else

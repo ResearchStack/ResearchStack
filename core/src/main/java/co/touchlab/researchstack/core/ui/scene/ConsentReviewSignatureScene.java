@@ -2,25 +2,30 @@ package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import java.io.ByteArrayOutputStream;
+
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SignatureCallbacks;
 import co.touchlab.researchstack.core.ui.views.ConsentReviewSignatureView;
 
 public class ConsentReviewSignatureScene extends SceneImpl
 {
+    public static final String STEP_ID = "consent_review_sig";
 
     private ConsentReviewSignatureView signatureView;
 
     public ConsentReviewSignatureScene(Context context)
     {
-        super(context, null);
+        super(context, new Step(STEP_ID));
     }
 
     @Override
@@ -64,13 +69,19 @@ public class ConsentReviewSignatureScene extends SceneImpl
     }
 
     @Override
-    public StepResult createNewStepResult(String id)
+    public StepResult<String> getStepResult()
     {
-        return null;
+        StepResult<String> stepResult = new StepResult<>(getStep().getIdentifier());
+        stepResult.setResultForIdentifier(StepResult.DEFAULT_KEY, getBase64EncodedImage());
+        return stepResult;
     }
 
-    public Bitmap getSignatureImage()
+    public String getBase64EncodedImage()
     {
-        return signatureView.createSignatureBitmap();
+        Bitmap bitmap = signatureView.createSignatureBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }

@@ -44,9 +44,9 @@ public class ConsentSignature implements Serializable, Cloneable
     private String fullName;
 
     /**
-     * The image of the signature, if any.
+     * The base64-encoded image of the signature, if any.
      */
-    private byte [] signatureImage;
+    private String signatureImage;
 
     /**
      * The date associated with the signature.
@@ -78,7 +78,7 @@ public class ConsentSignature implements Serializable, Cloneable
      * @param signatureImage      An image of the signature.
      * @param signatureDate       The date on which the signature was obtained, represented as a string.
      */
-    public ConsentSignature(String identifier, String title, String dateFormat, @Nullable String fullName, @Nullable byte [] signatureImage, @Nullable String signatureDate)
+    public ConsentSignature(String identifier, String title, String dateFormat, @Nullable String fullName, @Nullable String signatureImage, @Nullable String signatureDate)
     {
         this();
         this.identifier = identifier;
@@ -164,12 +164,12 @@ public class ConsentSignature implements Serializable, Cloneable
         return fullName;
     }
 
-    public void setSignatureImage(byte [] signatureImage)
+    public void setSignatureImage(String signatureImage)
     {
         this.signatureImage = signatureImage;
     }
 
-    public byte [] getSignatureImage()
+    public String getSignatureImage()
     {
         return signatureImage;
     }
