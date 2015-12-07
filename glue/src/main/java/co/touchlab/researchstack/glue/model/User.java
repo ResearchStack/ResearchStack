@@ -44,7 +44,7 @@ public class User
 
     private String consentSignatureName;
     private Date consentSignatureDate;
-    private byte[] consentSignatureImage;
+    private String consentSignatureImage;
 
     private boolean secondaryInfoSaved;
 
@@ -327,12 +327,12 @@ public class User
         this.consentSignatureDate = consentSignatureDate;
     }
 
-    public byte[] getConsentSignatureImage()
+    public String getConsentSignatureImage()
     {
         return consentSignatureImage;
     }
 
-    public void setConsentSignatureImage(byte[] consentSignatureImage)
+    public void setConsentSignatureImage(String consentSignatureImage)
     {
         this.consentSignatureImage = consentSignatureImage;
     }
