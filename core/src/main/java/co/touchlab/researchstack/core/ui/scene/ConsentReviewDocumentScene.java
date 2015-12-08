@@ -8,17 +8,15 @@ import android.view.ViewGroup;
 import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.ui.callbacks.ConsentReviewCallback;
+import co.touchlab.researchstack.core.step.Step;
 
-public class ConsentReviewDocumentScene extends Scene
+public class ConsentReviewDocumentScene extends SceneImpl
 {
-
-    private ConsentReviewCallback callback;
+    public static final String STEP_ID = "consent_review_doc";
 
     public ConsentReviewDocumentScene(Context context)
     {
-        super(context, null);
+        super(context, new Step(STEP_ID), null);
     }
 
     @Override
@@ -31,25 +29,13 @@ public class ConsentReviewDocumentScene extends Scene
     public void onSceneCreated(View scene)
     {
 //        PDFView pdfView = (PDFView) findViewById(R.id.pdfview);
-//        //TODO Point pdf to App-delegate
-//        pdfView.fromAsset("study_overview_consent_form.pdf").load();
+//        pdfView.fromAsset("study_overview_consent_form.pdf").load(); //TODO Point pdf to App-delegate
 
         View agree = findViewById(R.id.agree);
-        RxView.clicks(agree).subscribe(v -> callback.showConfirmationDialog());
+        RxView.clicks(agree).subscribe(v -> onNextClicked());
 
         View disagree = findViewById(R.id.disagree);
-        RxView.clicks(disagree).subscribe(v -> callback.closeToWelcomeFlow());
-    }
-
-    @Override
-    public StepResult createNewStepResult(String id)
-    {
-        return null;
-    }
-
-    public void setCallback(ConsentReviewCallback callback)
-    {
-        this.callback = callback;
+        RxView.clicks(disagree).subscribe(v -> getCallbacks().onCancelStep());
     }
 
 }

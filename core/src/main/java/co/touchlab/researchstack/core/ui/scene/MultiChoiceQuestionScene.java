@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import co.touchlab.researchstack.core.R;
@@ -17,70 +18,85 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class MultiChoiceQuestionScene<T> extends Scene<T[]>
+public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
 {
-
     private List<T> results;
 
-    public MultiChoiceQuestionScene(Context context, Step step)
+    public MultiChoiceQuestionScene(Context context, Step step, StepResult<T[]> result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
-    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
+    public void onPreInitialized()
     {
-        // TODO this whole thing needs a lot of refactoring, plus it could probably just be combined
-        // TODO with single choice questions
-        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
-        RadioGroup radioGroup = new RadioGroup(getContext());
-        final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
-
-        results = new ArrayList<>();
+        super.onPreInitialized();
 
         StepResult<T[]> result = getStepResult();
 
+        results = new ArrayList<>();
+
+        if (result != null)
+        {
+            T[] resultArray = result.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            if (resultArray != null && resultArray.length > 0)
+            {
+                results.addAll(Arrays.asList(resultArray));
+            }
+        }
+    }
+
+    /**
+     * TODO this whole thing needs a lot of refactoring -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+     * It could probably just be combined with single choice questions
+     */
+    @Override
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
+    {
+        RadioGroup radioGroup = new RadioGroup(getContext());
+        StepResult<T[]> result = getStepResult();
+
+        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
+        final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
+
         for (int i = 0; i < textChoices.length; i++)
         {
-            int position = i;
+            TextChoice<T> item = textChoices[i];
 
-            TextChoice<T> textChoice = textChoices[position];
+            // Create & add the View to our body-view
             AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(
                     R.layout.item_checkbox, radioGroup, false);
-            checkBox.setText(textChoice.getText());
-            checkBox.setId(position);
+            checkBox.setText(item.getText());
+            checkBox.setId(i);
             radioGroup.addView(checkBox);
 
-            String valueString = String.valueOf(textChoice.getValue());
-
-            if (result.getResultForIdentifier(valueString) != null)
+            // Set initial state
+            if (results.contains(item.getValue()))
             {
                 checkBox.setChecked(true);
             }
 
+            // Update result when value changes
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
                 if (isChecked)
                 {
-                    results.add(textChoice.getValue());
+                    results.add(item.getValue());
                 }
                 else
                 {
-                    results.remove(textChoice.getValue());
+                    results.remove(item.getValue());
                 }
 
+                // TODO Move the following out of here -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                // it should be set in a "finalizeStepResult" method that is called when
+                // onNextClicked is called.
                 result.setResultForIdentifier(StepResult.DEFAULT_KEY, (T[])results.toArray());
                 setStepResult(result);
             });
         }
 
         return radioGroup;
-    }
-
-    @Override
-    public StepResult<T[]> createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<>(stepIdentifier);
     }
 
     @Override

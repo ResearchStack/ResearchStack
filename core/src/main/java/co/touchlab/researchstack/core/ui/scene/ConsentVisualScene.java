@@ -14,9 +14,9 @@ public class ConsentVisualScene extends MultiSubSectionScene
 {
     private ConsentDocument document;
 
-    public ConsentVisualScene(Context context, Step step)
+    public ConsentVisualScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
@@ -33,10 +33,10 @@ public class ConsentVisualScene extends MultiSubSectionScene
     }
 
     @Override
-    public Scene onCreateScene(LayoutInflater inflater, int scenePos)
+    public SceneImpl onCreateScene(LayoutInflater inflater, int scenePos)
     {
         ConsentSection section = document.getSections().get(scenePos);
-        Scene scene = new ConsentVisualSectionScene(getContext(), section);
+        SceneImpl scene = new ConsentVisualSectionScene(getContext(), section);
         String nextTitle = getString(R.string.next);
         if (section.getType() == ConsentSection.Type.Overview)
         {
@@ -52,8 +52,9 @@ public class ConsentVisualScene extends MultiSubSectionScene
     }
 
     @Override
-    public StepResult<Boolean> createNewStepResult(String id)
+    public void notifyStepResultChanged(Step step, StepResult result)
     {
-        return new StepResult<>(getStep().getIdentifier());
+        // Ignore results generated from the sub-sections
     }
+
 }

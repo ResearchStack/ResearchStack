@@ -7,15 +7,14 @@ import android.view.ViewGroup;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 
-public abstract class AbstractSignUpInclusionCriteriaScene extends Scene<Boolean>
+public abstract class AbstractSignUpInclusionCriteriaScene extends SceneImpl<Boolean>
 {
 
-    public AbstractSignUpInclusionCriteriaScene(Context context, Step step)
+    public AbstractSignUpInclusionCriteriaScene(Context context, Step step, StepResult result)
     {
-        super(context,
-                step);
+        super(context, step, result);
     }
 
     @Override
@@ -32,12 +31,6 @@ public abstract class AbstractSignUpInclusionCriteriaScene extends Scene<Boolean
         StepResult<Boolean> result = getStepResult();
         result.setResultForIdentifier(StepResult.DEFAULT_KEY, isEligible());
         super.onNextClicked();
-    }
-
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<Boolean>(stepIdentifier);
     }
 
     public abstract int getLayoutId();

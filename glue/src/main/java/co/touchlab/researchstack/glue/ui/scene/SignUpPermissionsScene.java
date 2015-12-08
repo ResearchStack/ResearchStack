@@ -9,18 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.jakewharton.rxbinding.view.RxView;
 
-import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.Scene;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.glue.R;
 
-public class SignUpPermissionsScene extends Scene
+public class SignUpPermissionsScene extends SceneImpl
 {
 
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 142;
@@ -28,9 +26,9 @@ public class SignUpPermissionsScene extends Scene
     private AppCompatButton permissionButton;
     private ActivityCallback permissionCallback;
 
-    public SignUpPermissionsScene(Context context, Step step)
+    public SignUpPermissionsScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
 
         //TODO Fix this, very disgusting
         if (context instanceof ActivityCallback)
@@ -83,9 +81,4 @@ public class SignUpPermissionsScene extends Scene
         }
     }
 
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<Boolean>(stepIdentifier);
-    }
 }

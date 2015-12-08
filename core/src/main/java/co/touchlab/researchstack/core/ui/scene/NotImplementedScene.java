@@ -10,12 +10,12 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 
 @Deprecated
-public class NotImplementedScene extends Scene<String>
+public class NotImplementedScene extends SceneImpl<String>
 {
 
-    public NotImplementedScene(Context context, Step step)
+    public NotImplementedScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
@@ -32,9 +32,4 @@ public class NotImplementedScene extends Scene<String>
         //Do Nothing
     }
 
-    @Override
-    public StepResult<String> createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<>(stepIdentifier);
-    }
 }

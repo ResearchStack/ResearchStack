@@ -8,15 +8,14 @@ import android.util.TypedValue;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.model.ConsentSection;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 
-public class ConsentVisualSectionScene extends Scene
+public class ConsentVisualSectionScene extends SceneImpl
 {
 
     public ConsentVisualSectionScene(Context context, ConsentSection data)
     {
-        super(context, null);
+        super(context, null, null);
 
         TypedValue typedValue = new TypedValue();
         TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
@@ -53,13 +52,6 @@ public class ConsentVisualSectionScene extends Scene
 
         //        TODO self.continueSkipContainer.continueEnabled = YES;
         //        TODO [self.continueSkipContainer updateContinueAndSkipEnabled];
-    }
-
-    @Override
-    public StepResult createNewStepResult(String id)
-    {
-        // We can ignore this, as we don't return a result for a visual consent scene
-        return null;
     }
 
 }

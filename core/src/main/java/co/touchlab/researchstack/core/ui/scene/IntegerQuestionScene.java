@@ -12,12 +12,12 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class IntegerQuestionScene extends Scene<Integer>
+public class IntegerQuestionScene extends SceneImpl<Integer>
 {
 
-    public IntegerQuestionScene(Context context, Step step)
+    public IntegerQuestionScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
@@ -54,12 +54,6 @@ public class IntegerQuestionScene extends Scene<Integer>
         }
 
         return numberPicker;
-    }
-
-    @Override
-    public StepResult<Integer> createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<>(stepIdentifier);
     }
 
     @Override

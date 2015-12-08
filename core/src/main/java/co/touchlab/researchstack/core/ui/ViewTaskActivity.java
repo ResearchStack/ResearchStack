@@ -24,13 +24,13 @@ import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.core.task.Task;
-import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.scene.MultiSubSectionScene;
 import co.touchlab.researchstack.core.ui.scene.NotImplementedScene;
 import co.touchlab.researchstack.core.ui.scene.Scene;
 import co.touchlab.researchstack.core.ui.scene.SceneAnimator;
 
-public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
+public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 {
 
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
@@ -114,7 +114,7 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
     {
         Scene oldScene = (Scene) findViewById(R.id.current_scene);
         Scene newScene = getSceneForStep(step);
-        newScene.setId(R.id.current_scene);
+        newScene.getView().setId(R.id.current_scene);
 
         //If we are navigating back, we want to show the last sub-scene for the step.
         if (newScene instanceof MultiSubSectionScene && direction == SceneAnimator.SHIFT_RIGHT)
@@ -125,7 +125,7 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
 
         if (oldScene != null)
         {
-            oldScene.setId(R.id.old_scene);
+            oldScene.getView().setId(R.id.old_scene);
             animator.animate(oldScene, newScene, direction);
         }
         else
@@ -147,12 +147,15 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
 
             // Change the title on the activity
             String title = task.getTitleForStep(this, step);
-            onChangeStepTitle(title);
+            onStepTitleChanged(title);
+
+            // Get result from the TaskResult, can be null
+            StepResult result = taskResult.getStepResultForStepIdentifier(step.getIdentifier());
 
             // Return the View
             Class cls = step.getSceneClass();
-            Constructor constructor = cls.getConstructor(Context.class, Step.class);
-            Scene scene = (Scene) constructor.newInstance(this, step);
+            Constructor constructor = cls.getConstructor(Context.class, Step.class, StepResult.class);
+            Scene scene = (Scene) constructor.newInstance(this, step, result);
             scene.setCallbacks(this);
 
             return scene;
@@ -165,7 +168,7 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
         }
 
         LogExt.d(getClass(), "No implementation for this step " + step.getIdentifier());
-        return new NotImplementedScene(this, step == null ? new Step("NullStep") : step);
+        return new NotImplementedScene(this, step == null ? new Step("NullStep") : step, null);
     }
 
     @Override
@@ -201,7 +204,7 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
         taskRecord.started = new Date();
         taskRecord.completed = new Date();
         taskRecord.taskId = task.getScheduleId();
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+        Gson gson = new GsonBuilder().setDateFormat(ResearchStackCoreApplication.DATE_FORMAT_ISO_8601).create();
         taskRecord.result = gson.toJson(taskResult);
         ResearchStackCoreApplication.getInstance().getAppDatabase().saveTaskRecord(taskRecord);
 
@@ -210,13 +213,13 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
     }
 
     @Override
-    public void onNextPressed(Step step)
+    public void onNextStep(Step step)
     {
         loadNextScene();
     }
 
     @Override
-    public void onStepResultChanged(Step step, StepResult result)
+    public void notifyStepResultChanged(Step step, StepResult result)
     {
         taskResult.setStepResultForStepIdentifier(step.getIdentifier(), result);
     }
@@ -224,12 +227,12 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
     @Override
     public void onSkipStep(Step step)
     {
-        onStepResultChanged(step, null);
-        onNextPressed(step);
+        notifyStepResultChanged(step, null);
+        onNextStep(step);
     }
 
     @Override
-    public void onChangeStepTitle(String title)
+    public void onStepTitleChanged(String title)
     {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
@@ -243,12 +246,6 @@ public class ViewTaskActivity extends PassCodeActivity implements StepCallbacks
     {
         setResult(Activity.RESULT_CANCELED);
         finish();
-    }
-
-    @Override
-    public StepResult getResultStep(String stepId)
-    {
-        return taskResult.getStepResultForStepIdentifier(stepId);
     }
 
 }

@@ -2,30 +2,28 @@ package co.touchlab.researchstack.glue.ui.scene;
 import android.content.Context;
 import android.content.res.Resources;
 
+import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.Scene;
 
-public class ConsentQuizEvaluationScene extends Scene
+public class ConsentQuizEvaluationScene extends SceneImpl
 {
-    public ConsentQuizEvaluationScene(Context context, Step step, ConsentQuizModel.EvaluationProperties properties,
-            int attempt, int incorrect)
+    public ConsentQuizEvaluationScene(Context context, Step step, ConsentQuizModel.EvaluationProperties properties, int attempt, int incorrect)
     {
-        super(context, step);
+        super(context, step, null);
 
         Resources r = context.getResources();
 
         // We have failed
-        if (incorrect >= properties.maxIncorrect)
+        if(incorrect >= properties.maxIncorrect)
         {
             int iconResId = r.getIdentifier(properties.incorrectIcon, "drawable",
                                             getContext().getPackageName());
             setImage(iconResId);
             setTitle(R.string.quiz_evaluation_try_again);
 
-            if (attempt == 0)
+            if(attempt == 0)
             {
                 setSummary(properties.quizFailure1Text);
                 setNextButtonText(R.string.quiz_evaluation_retake);
@@ -46,7 +44,8 @@ public class ConsentQuizEvaluationScene extends Scene
             setImage(iconResId);
             setTitle(R.string.quiz_evaluation_great_job);
 
-            if (incorrect == 0) {
+            if(incorrect == 0)
+            {
                 setSummary(properties.quizAllCorrectText);
             }
             else
@@ -58,11 +57,4 @@ public class ConsentQuizEvaluationScene extends Scene
         }
     }
 
-
-
-    @Override
-    public StepResult createNewStepResult(String id)
-    {
-        return null;
-    }
 }

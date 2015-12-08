@@ -13,12 +13,12 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 
-public class TextQuestionScene extends Scene<String>
+public class TextQuestionScene extends SceneImpl<String>
 {
 
-    public TextQuestionScene(Context context, Step step)
+    public TextQuestionScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
@@ -56,9 +56,4 @@ public class TextQuestionScene extends Scene<String>
         return editText;
     }
 
-    @Override
-    public StepResult<String> createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<>(stepIdentifier);
-    }
 }

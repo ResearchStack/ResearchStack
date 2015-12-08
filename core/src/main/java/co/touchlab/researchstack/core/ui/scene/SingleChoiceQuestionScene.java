@@ -14,14 +14,14 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class SingleChoiceQuestionScene<T> extends Scene<T>
+public class SingleChoiceQuestionScene<T> extends SceneImpl<T>
 {
 
     private RadioGroup radioGroup;
 
-    public SingleChoiceQuestionScene(Context context, Step step)
+    public SingleChoiceQuestionScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
@@ -62,12 +62,6 @@ public class SingleChoiceQuestionScene<T> extends Scene<T>
     public boolean isAnswerValid()
     {
         return radioGroup.getCheckedRadioButtonId() != -1;
-    }
-
-    @Override
-    public StepResult<T> createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<>(stepIdentifier);
     }
 
 }
