@@ -204,7 +204,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         taskRecord.started = new Date();
         taskRecord.completed = new Date();
         taskRecord.taskId = task.getScheduleId();
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+        Gson gson = new GsonBuilder().setDateFormat(ResearchStackCoreApplication.DATE_FORMAT_ISO_8601).create();
         taskRecord.result = gson.toJson(taskResult);
         ResearchStackCoreApplication.getInstance().getAppDatabase().saveTaskRecord(taskRecord);
 

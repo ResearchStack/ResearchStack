@@ -8,6 +8,8 @@ import co.touchlab.researchstack.core.storage.file.FileAccess;
 
 public abstract class ResearchStackCoreApplication extends Application
 {
+
+    public static final String DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     protected static ResearchStackCoreApplication instance;
 
     @Override
