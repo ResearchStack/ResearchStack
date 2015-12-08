@@ -3,11 +3,23 @@ package co.touchlab.researchstack.core.result;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
- * Created by bradleymcdermott on 10/9/15.
+ * Where {@link T} is defined as the following:
+ * <ul>
+ *  <li>{@link String}</li>
+ *  <li>{@link Integer}</li>
+ *  <li>{@link Float}</li>
+ *  <li>{@link Boolean}</li>
+ * </ul>
  */
 public class StepResult<T> extends Result
 {
+    /**
+     * When StepREsult only has a single value, pair that value with the following key
+     */
+    public static final String DEFAULT_KEY = "answer";
+
     public Map<String, T> results;
 
     public StepResult(String identifier)
@@ -34,5 +46,15 @@ public class StepResult<T> extends Result
     public T setResultForIdentifier(String identifier,  T result)
     {
         return results.put(identifier, result);
+    }
+
+    public T removeResultForIdentifier(String identifier)
+    {
+        return results.remove(identifier);
+    }
+
+    public boolean isEmpty()
+    {
+        return results.isEmpty();
     }
 }

@@ -8,22 +8,30 @@ import android.view.ViewGroup;
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
 /**
  * TODO Consume "onBackPressed" in activity. -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
- * Implement method on {@link MultiSubSectionScene}. If current {@link Scene} is 0, and back is pressed,
- * allow activity to swap to previous step. Else, let {@link MultiSubSectionScene} go back a {@link Scene}.
+ * Implement method on {@link MultiSubSectionScene}. If current {@link SceneImpl} is 0, and back is pressed,
+ * allow activity to swap to previous step. Else, let {@link MultiSubSectionScene} go back a {@link SceneImpl}.
  */
 
-public abstract class MultiSubSectionScene extends Scene implements StepCallbacks
+public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements SceneCallbacks
 {
 
     private SceneAnimator animator;
 
-    public MultiSubSectionScene(Context context, Step step)
+    public MultiSubSectionScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
+    }
+
+    @Override
+    public void addView(View child, int index, ViewGroup.LayoutParams params) {
+        if (getChildCount() >= 2) {
+            throw new IllegalStateException("Can't add more than 2 views to a " + MultiSubSectionScene.class.getSimpleName());
+        }
+        super.addView(child, index, params);
     }
 
     @Override
@@ -89,10 +97,10 @@ public abstract class MultiSubSectionScene extends Scene implements StepCallback
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
         Scene oldScene = (Scene) findViewById(R.id.current_child_scene);
-        if (oldScene != null) { oldScene.setId(R.id.old_child_scene);}
+        if (oldScene != null) { oldScene.getView().setId(R.id.old_child_scene);}
 
         Scene newScene = onCreateScene(inflater, position);
-        newScene.setId(R.id.current_child_scene);
+        newScene.getView().setId(R.id.current_child_scene);
         newScene.setCallbacks(this);
 
         if (withAnimation && oldScene != null)
@@ -104,7 +112,7 @@ public abstract class MultiSubSectionScene extends Scene implements StepCallback
             animator.setIsAnimating(false);
 
             removeAllViews();
-            addView(newScene);
+            addView(newScene.getView());
         }
 
         onSceneChanged(oldScene, newScene);
@@ -113,21 +121,13 @@ public abstract class MultiSubSectionScene extends Scene implements StepCallback
         setCurrentPosition(position);
     }
 
-    @Override
-    public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        if (getChildCount() >= 2) {
-            throw new IllegalStateException("Can't add more than 2 views to a " + MultiSubSectionScene.class.getSimpleName());
-        }
-        super.addView(child, index, params);
-    }
-
-    public void loadNextScene()
+    public void showNextScene()
     {
         int currentScene = getCurrentPosition();
         showScene(currentScene + 1, true);
     }
 
-    public void loadPreviousScene()
+    public void showPreviousScene()
     {
         int currentScene = getCurrentPosition();
         showScene(currentScene - 1 , true);
@@ -138,7 +138,7 @@ public abstract class MultiSubSectionScene extends Scene implements StepCallback
     {
         if (getCurrentPosition() > 0)
         {
-            loadPreviousScene();
+            showPreviousScene();
             return true;
         }
 
@@ -146,15 +146,15 @@ public abstract class MultiSubSectionScene extends Scene implements StepCallback
     }
 
     @Override
-    public void onNextPressed(Step step)
+    public void onNextStep(Step step)
     {
         if(getCurrentPosition() < getSceneCount() - 1)
         {
-            loadNextScene();
+            showNextScene();
         }
         else
         {
-            getCallbacks().onNextPressed(getStep());
+            onNextClicked();
         }
     }
 
@@ -163,39 +163,22 @@ public abstract class MultiSubSectionScene extends Scene implements StepCallback
      * @param title
      */
     @Override
-    public void onChangeStepTitle(String title)
+    public void onStepTitleChanged(String title)
     {
-        getCallbacks().onChangeStepTitle(title);
-    }
-
-    @Override
-    public void onStepResultChanged(Step step, StepResult result)
-    {
-//        TODO Implement
-    }
-
-    @Override
-    public void onSkipStep(Step step)
-    {
-//        TODO Implement
-//        onStepResultChanged(step, null);
-        getCallbacks().onNextPressed(getStep());
+        getCallbacks().onStepTitleChanged(title);
     }
 
     @Override
     public void onCancelStep()
     {
-//        TODO Implement
-//        setResult(Activity.RESULT_CANCELED);
-//        finish();
+        getCallbacks().onCancelStep();
     }
 
     @Override
-    public StepResult getResultStep(String stepId)
+    public void onSkipStep(Step step)
     {
-//        TODO Implement
-//        return taskResult.getStepResultForStepIdentifier(stepId);
-        return null;
+        //TODO This should load the next scene, not the next step.
+        getCallbacks().onSkipStep(step);
     }
 
 }

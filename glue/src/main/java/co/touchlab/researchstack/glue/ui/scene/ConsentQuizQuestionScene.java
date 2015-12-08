@@ -15,12 +15,11 @@ import android.widget.Toast;
 
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 
-public class ConsentQuizQuestionScene extends Scene
+public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
 {
 
     private final ConsentQuizModel.QuestionProperties properties;
@@ -32,7 +31,7 @@ public class ConsentQuizQuestionScene extends Scene
 
     public ConsentQuizQuestionScene(Context context, QuestionStep step, ConsentQuizModel.QuestionProperties properties, ConsentQuizModel.QuizQuestion question)
     {
-        super(context, step);
+        super(context, step, null);
 
         this.properties = properties;
         this.question = question;
@@ -126,24 +125,12 @@ public class ConsentQuizQuestionScene extends Scene
     }
 
     @Override
-    public StepResult getStepResult()
+    public StepResult<Boolean> getStepResult()
     {
         boolean answer = radioGroup.getCheckedRadioButtonId() == R.id.btn_true;
-
-        String id = getStep().getIdentifier();
-
-        QuestionResult<Boolean> questionResult = new QuestionResult<>(id);
-        questionResult.setAnswer(answer);
-
-        StepResult<QuestionResult<Boolean>> result = createNewStepResult(id);
-        result.setResultForIdentifier(id, questionResult);
-
-        return result;
+        StepResult<Boolean> booleanStepResult = new StepResult<>(getStep().getIdentifier());
+        booleanStepResult.setResultForIdentifier(StepResult.DEFAULT_KEY, answer);
+        return booleanStepResult;
     }
 
-    @Override
-    public StepResult<QuestionResult<Boolean>> createNewStepResult(String id)
-    {
-        return new StepResult<>(id);
-    }
 }

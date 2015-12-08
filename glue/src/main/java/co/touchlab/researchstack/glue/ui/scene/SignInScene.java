@@ -7,21 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.glue.R;
 
 /**
  * TODO Implement
  */
-public class SignInScene extends Scene
+public class SignInScene extends SceneImpl
 {
 
-    public SignInScene(Context context, Step step)
+    public SignInScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
@@ -40,9 +39,4 @@ public class SignInScene extends Scene
         TextView forgotPassword = (TextView) body.findViewById(R.id.forgot_password);
     }
 
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
-    }
 }

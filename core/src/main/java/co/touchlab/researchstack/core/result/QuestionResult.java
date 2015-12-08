@@ -3,6 +3,7 @@ package co.touchlab.researchstack.core.result;
 /**
  * Created by bradleymcdermott on 10/9/15.
  */
+@Deprecated
 public class QuestionResult<T> extends Result
 {
     private T answer = null;

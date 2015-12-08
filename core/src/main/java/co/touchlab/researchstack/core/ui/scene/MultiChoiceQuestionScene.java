@@ -14,71 +14,85 @@ import java.util.List;
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
 import co.touchlab.researchstack.core.model.TextChoice;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 
-public class MultiChoiceQuestionScene <T> extends Scene
+public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
 {
     private List<T> results;
 
-    public MultiChoiceQuestionScene(Context context, Step step)
+    public MultiChoiceQuestionScene(Context context, Step step, StepResult<T[]> result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
-    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
+    public void onPreInitialized()
     {
-        // TODO this whole thing needs a lot of refactoring, plus it could probably just be combined
-        // TODO with single choice questions
-        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
-        RadioGroup radioGroup = new RadioGroup(getContext());
-        final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
+        super.onPreInitialized();
 
-        QuestionResult<T[]> questionResult = (QuestionResult<T[]>)
-                getStepResult().getResultForIdentifier(getStep().getIdentifier());
+        StepResult<T[]> result = getStepResult();
 
         results = new ArrayList<>();
 
-        if (questionResult != null)
+        if (result != null)
         {
-            results.addAll(Arrays.asList(questionResult.getAnswer()));
+            T[] resultArray = result.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            if (resultArray != null && resultArray.length > 0)
+            {
+                results.addAll(Arrays.asList(resultArray));
+            }
         }
+    }
+
+    /**
+     * TODO this whole thing needs a lot of refactoring -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+     * It could probably just be combined with single choice questions
+     */
+    @Override
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
+    {
+        RadioGroup radioGroup = new RadioGroup(getContext());
+        StepResult<T[]> result = getStepResult();
+
+        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
+        final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
 
         for (int i = 0; i < textChoices.length; i++)
         {
-            int position = i;
-            TextChoice<T> textChoice = textChoices[position];
-            AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(R.layout.item_checkbox,
-                    radioGroup,
-                    false);
-            checkBox.setText(textChoice.getText());
-            checkBox.setId(position);
+            TextChoice<T> item = textChoices[i];
+
+            // Create & add the View to our body-view
+            AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(
+                    R.layout.item_checkbox, radioGroup, false);
+            checkBox.setText(item.getText());
+            checkBox.setId(i);
             radioGroup.addView(checkBox);
 
-            if (results.contains(textChoice.getValue()))
+            // Set initial state
+            if (results.contains(item.getValue()))
             {
                 checkBox.setChecked(true);
             }
 
+            // Update result when value changes
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                QuestionResult<T[]> questionResult1 = new QuestionResult<T[]>(
-                        getStep().getIdentifier());
                 if (isChecked)
                 {
-                    results.add(textChoice.getValue());
+                    results.add(item.getValue());
                 }
                 else
                 {
-                    results.remove(textChoice.getValue());
+                    results.remove(item.getValue());
                 }
 
-
-                questionResult1.setAnswer((T[]) results.toArray());
-                setStepResult(questionResult1);
+                // TODO Move the following out of here -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                // it should be set in a "finalizeStepResult" method that is called when
+                // onNextClicked is called.
+                result.setResultForIdentifier(StepResult.DEFAULT_KEY, (T[])results.toArray());
+                setStepResult(result);
             });
         }
 
@@ -86,14 +100,8 @@ public class MultiChoiceQuestionScene <T> extends Scene
     }
 
     @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
-    }
-
-    @Override
     public boolean isAnswerValid()
     {
-        return results.size() > 0;
+        return !getStepResult().isEmpty();
     }
 }

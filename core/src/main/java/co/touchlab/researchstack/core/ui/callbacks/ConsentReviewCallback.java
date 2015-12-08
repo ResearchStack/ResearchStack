@@ -3,6 +3,7 @@ package co.touchlab.researchstack.core.ui.callbacks;
 /**
  * TODO Remove callback and implement boolean result for the ConsentDocumentReviewScene
  */
+@Deprecated
 public interface ConsentReviewCallback
 {
 

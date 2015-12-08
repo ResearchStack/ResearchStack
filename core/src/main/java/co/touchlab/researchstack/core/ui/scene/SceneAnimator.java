@@ -1,5 +1,4 @@
 package co.touchlab.researchstack.core.ui.scene;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 
@@ -40,19 +39,19 @@ public class SceneAnimator
     }
 
     @Deprecated
-    public void show(View oldScene, View newScene)
+    public void show(Scene oldScene, Scene newScene)
     {
         setIsAnimating(false);
 
         if (oldScene != null)
         {
-            root.removeView(oldScene);
+            root.removeView(oldScene.getView());
         }
 
-        root.addView(newScene);
+        root.addView(newScene.getView());
     }
 
-    public void animate(View oldScene, View newScene, int direction)
+    public void animate(Scene oldScene, Scene newScene, int direction)
     {
         if (direction != SHIFT_LEFT && direction != SHIFT_RIGHT)
         {
@@ -60,18 +59,18 @@ public class SceneAnimator
         }
 
         root.post(() -> {
-            root.addView(newScene);
+            root.addView(newScene.getView());
 
             int newTranslationX = direction * root.getWidth();
 
-            newScene.setTranslationX(newTranslationX);
-            newScene.animate().setDuration(animationTime).setInterpolator(interpolator)
+            newScene.getView().setTranslationX(newTranslationX);
+            newScene.getView().animate().setDuration(animationTime).setInterpolator(interpolator)
                     .translationX(0);
 
-            oldScene.animate().withStartAction(() -> setIsAnimating(true))
+            oldScene.getView().animate().withStartAction(() -> setIsAnimating(true))
                     .setInterpolator(interpolator).setDuration(animationTime).translationX(- 1 * newTranslationX).withEndAction(() -> {
                 setIsAnimating(false);
-                root.removeView(oldScene);
+                root.removeView(oldScene.getView());
             });
         });
     }

@@ -1,12 +1,9 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,9 +18,8 @@ import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.step.ConsentReviewStep;
 import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.ConsentReviewCallback;
 
-public class ConsentReviewScene extends MultiSubSectionScene implements ConsentReviewCallback
+public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureResult>
 {
     public static final String TAG = ConsentReviewScene.class.getSimpleName();
 
@@ -31,14 +27,14 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
     public static final int SECTION_REVIEW_NAME = 1;
     public static final int SECTION_REVIEW_SIGNATURE = 2;
 
-    private static final String NameFormIdentifier = "nameForm";
-    private static final String NameIdentifier = "name";
+    private static final String STEP_ID_NAME_FORM = "nameForm";
+    private static final String RESULT_ID_NAME = "name";
 
     public List<Integer> sections;
 
-    public ConsentReviewScene(Context context, Step step)
+    public ConsentReviewScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
@@ -64,6 +60,22 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
     }
 
     @Override
+    public StepResult initStepResult()
+    {
+        StepResult<ConsentSignatureResult> result = new StepResult<>(getStep().getIdentifier());
+
+        ConsentSignatureResult sigResult = new ConsentSignatureResult(getStep().getIdentifier());
+        sigResult.setStartDate(new Date());
+
+        ConsentSignature clone = ((ConsentReviewStep) getStep()).getSignature();
+        sigResult.setSignature(clone);
+
+        result.setResultForIdentifier(StepResult.DEFAULT_KEY, sigResult);
+
+        return result;
+    }
+
+    @Override
     public Scene onCreateScene(LayoutInflater inflater, int scenePos)
     {
         ConsentReviewStep step = (ConsentReviewStep) getStep();
@@ -73,13 +85,13 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
         if (section == SECTION_REVIEW_DOCUMENT)
         {
             ConsentReviewDocumentScene layout = new ConsentReviewDocumentScene(getContext());
-            layout.setCallback(this);
+            layout.setCallbacks(this);
             return layout;
         }
         else if (section == SECTION_REVIEW_NAME)
         {
             // TODO now that it's the full name, it probably doesn't need to be a form step
-            FormStep formStep = new FormStep(NameFormIdentifier,
+            FormStep formStep = new FormStep(STEP_ID_NAME_FORM,
                                              getString(R.string.consent_name_title),
                                              step.getText());
             formStep.setUseSurveyMode(false);
@@ -96,13 +108,12 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
             String placeholder = getResources().getString(R.string.consent_name_placeholder);
 
             String nameText = getResources().getString(R.string.consent_name_full);
-            FormScene.FormItem givenName = new FormScene.FormItem(
-                    NameIdentifier, nameText, format, placeholder);
+            FormScene.FormItem givenName = new FormScene.FormItem(RESULT_ID_NAME, nameText, format, placeholder);
             items.add(givenName);
 
             formStep.setFormItems(items);
 
-            return new FormScene(getContext(), formStep);
+            return new FormScene(getContext(), formStep, null);
         }
         else if (section == SECTION_REVIEW_SIGNATURE)
         {
@@ -126,122 +137,81 @@ public class ConsentReviewScene extends MultiSubSectionScene implements ConsentR
     }
 
     @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        StepResult<ConsentSignatureResult> parentResult = new StepResult<>(getStep().getIdentifier());
-
-        ConsentSignatureResult result = new ConsentSignatureResult(getStep().getIdentifier());
-        result.setStartDate(new Date());
-
-        ConsentSignature clone = ((ConsentReviewStep) getStep()).getSignature();
-        result.setSignature(clone);
-
-        parentResult.getResults()
-                .put(result.getIdentifier(), result);
-
-        return parentResult;
-    }
-
-    @Override
     public void onSceneChanged(Scene oldScene, Scene newScene)
     {
-
         //Handle new scene, pass the title back up to the host
         if (newScene instanceof ConsentReviewSignatureScene)
         {
             ConsentReviewStep step = (ConsentReviewStep) getStep();
             int titleResId = step.getDocument().getSignaturePageTitle();
-            getCallbacks().onChangeStepTitle(getString(titleResId));
+            getCallbacks().onStepTitleChanged(getString(titleResId));
         }
         else
         {
-            getCallbacks().onChangeStepTitle(getString(R.string.consent));
+            getCallbacks().onStepTitleChanged(getString(R.string.consent));
         }
+    }
 
-        // Check if old scene is null
-        if (oldScene == null)
-        {
-            return;
-        }
-
-        Log.i(TAG, "scenePoppedOff " + oldScene.getClass().getSimpleName());
-
+    @Override
+    public void notifyStepResultChanged(Step sceneStep, StepResult sceneResult)
+    {
         //Handle the result of the popped off scene
-        StepResult parentResult = getStepResult();
-        ConsentSignatureResult result = (ConsentSignatureResult) parentResult
-                .getResultForIdentifier(getStep().getIdentifier());
+        StepResult<ConsentSignatureResult> result = getStepResult();
+        ConsentSignatureResult sigResult = result.getResultForIdentifier(StepResult.DEFAULT_KEY);
 
-        ConsentSignature signature = result.getSignature();
+        //        TODO handle signature date-format string
+        //        if (signature.getSignatureDateFormatString().length() > 0) {
+        //            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        //            [dateFormatter setDateFormat:_currentSignature.signatureDateFormatString];
+        //            _currentSignature.signatureDate = [dateFormatter stringFromDate:[NSDate date]];
+        //        } else {
+        //            _currentSignature.signatureDate = ORKSignatureStringFromDate([NSDate date]);
+        //        }
 
-//        TODO handle signature date-format string
-//        if (signature.getSignatureDateFormatString().length() > 0) {
-//            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//            [dateFormatter setDateFormat:_currentSignature.signatureDateFormatString];
-//            _currentSignature.signatureDate = [dateFormatter stringFromDate:[NSDate date]];
-//        } else {
-//            _currentSignature.signatureDate = ORKSignatureStringFromDate([NSDate date]);
-//        }
-
-        if (oldScene instanceof ConsentReviewDocumentScene)
+        if (ConsentReviewDocumentScene.STEP_ID.equals(sceneStep.getIdentifier()))
         {
-            result.setConsented(true);
+            sigResult.setConsented(true);
         }
-        else if (oldScene instanceof FormScene)
+        else if (STEP_ID_NAME_FORM.equals(sceneStep.getIdentifier()))
         {
-            StepResult formResult = oldScene.getStepResult();
-
-            TextQuestionResult nameResult = (TextQuestionResult) formResult
-                    .getResultForIdentifier(NameIdentifier);
-            signature.setFullName(nameResult.getTextAnswer());
+            TextQuestionResult nameResult = (TextQuestionResult) sceneResult
+                    .getResultForIdentifier(RESULT_ID_NAME);
+            sigResult.getSignature().setFullName(nameResult.getTextAnswer());
         }
-        else if (oldScene instanceof ConsentReviewSignatureScene)
+        else if (ConsentReviewSignatureScene.STEP_ID.equals(sceneStep.getIdentifier()))
         {
-            ConsentReviewSignatureScene sigScene = (ConsentReviewSignatureScene) oldScene;
-
-            //TODO The follow is less than ideal
-            Bitmap bitmap = sigScene.getSignatureImage();
-            if (bitmap != null)
-            {
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                signature.setSignatureImage(byteArray);
-            }
-
-            // If we get here, this means our last oldScene oldScene will trigger the step to finish. Its
-            // a good idea to set the end date now.
-            result.setEndDate(new Date());
+            StepResult<String> signatureResult = (StepResult<String>) sceneResult;
+            String base64StringImage = signatureResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            sigResult.getSignature().setSignatureImage(base64StringImage);
+            sigResult.setEndDate(new Date());
         }
         else
         {
-            String message = oldScene.getClass().getSimpleName() + " not supported";
+            String message = "Result with ID:" + sceneStep.getIdentifier() + " not supported";
             DevUtils.throwUnsupportedOpException(message);
         }
-
-        getCallbacks().onStepResultChanged(getStep(), result);
     }
 
     @Override
-    public void showConfirmationDialog()
+    public void onNextStep(Step step)
     {
-        ConsentReviewStep step = (ConsentReviewStep) getStep();
+        if (step != null && step.getIdentifier().equals("consent_review_doc"))
+        {
+            ConsentReviewStep parentStep = (ConsentReviewStep) getStep();
 
-        new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
-                .setTitle(R.string.consent_review_alert_title)
-                .setMessage(step.getReasonForConsent()).setCancelable(false)
-                .setPositiveButton(R.string.agree, (dialog, which) -> {
-                    showScene(SECTION_REVIEW_NAME, true);
-                }).setNegativeButton(R.string.cancel, null)
-                .show();
+            new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
+                    .setTitle(R.string.consent_review_alert_title)
+                    .setMessage(parentStep.getReasonForConsent()).setCancelable(false)
+                    .setPositiveButton(R.string.agree, (dialog, which) -> {
+                        super.onNextStep(step);
+                    }).setNegativeButton(R.string.cancel, null)
+                    .show();
+        }
+        else
+        {
+            super.onNextStep(step);
+        }
     }
-
-
-    @Override
-    public void closeToWelcomeFlow()
-    {
-        getCallbacks().onCancelStep();
-    }
-
 
         /*
 

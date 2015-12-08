@@ -18,12 +18,12 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.step.FormStep;
 
-public class FormScene extends Scene
+public class FormScene extends SceneImpl
 {
 
-    public FormScene(Context context, FormStep step)
+    public FormScene(Context context, FormStep step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
 
         setTitle(getStep().getTitle());
         setSummary(getStep().getText());
@@ -116,12 +116,6 @@ public class FormScene extends Scene
         }
 
         return isValid && super.isAnswerValid();
-    }
-
-    @Override
-    public StepResult createNewStepResult(String id)
-    {
-        return new StepResult<TextQuestionResult>(getStep().getIdentifier());
     }
 
     public static class FormItem

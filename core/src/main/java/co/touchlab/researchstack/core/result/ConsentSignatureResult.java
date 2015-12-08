@@ -3,7 +3,7 @@ package co.touchlab.researchstack.core.result;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 
-public class ConsentSignatureResult extends StepResult
+public class ConsentSignatureResult extends Result
 {
 
     ConsentSignature signature;

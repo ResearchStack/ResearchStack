@@ -5,21 +5,20 @@ import android.view.LayoutInflater;
 
 import java.util.HashMap;
 
-import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.glue.model.ConsentQuizModel;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.glue.step.ConsentQuizStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.MultiSubSectionScene;
 import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.glue.model.ConsentQuizModel;
+import co.touchlab.researchstack.glue.step.ConsentQuizStep;
 
 /**
  * TODO Save attempt in SaveState
  */
-public class ConsentQuizScene extends MultiSubSectionScene
+public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
 {
     private static final String ID_RESULT = "result";
 
@@ -27,9 +26,9 @@ public class ConsentQuizScene extends MultiSubSectionScene
     private ConsentQuizModel model;
     private int attempt;
 
-    public ConsentQuizScene(Context context, Step step)
+    public ConsentQuizScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class ConsentQuizScene extends MultiSubSectionScene
     @Override
     public Scene onCreateScene(LayoutInflater inflater, int position)
     {
-        Scene scene;
+        SceneImpl scene;
 
         if (position < getSceneCount() - 1)
         {
@@ -80,28 +79,54 @@ public class ConsentQuizScene extends MultiSubSectionScene
     @Override
     public void onSceneChanged(Scene oldScene, Scene newScene)
     {
-        String title = getString(newScene instanceof ConsentQuizEvaluationScene ?
-                                         R.string.quiz_evaluation : R.string.quiz);
-
-        getCallbacks().onChangeStepTitle(title);
+        String title = getString(
+                newScene instanceof ConsentQuizEvaluationScene ? R.string.quiz_evaluation :
+                        R.string.quiz);
+        getCallbacks().onStepTitleChanged(title);
     }
 
     @Override
-    public void onStepResultChanged(Step step, StepResult result)
+    protected void onNextClicked()
     {
-        if (!step.getIdentifier().equals(ID_RESULT))
+        StepResult<Boolean> result = getStepResult();
+
+        // TODO Rename maxIncorrect variable.
+        // The operator should be inclusive for this situation ..... since maxIncorrect is an
+        // inclusive upper limit.
+
+        // If we passed
+        if (getIncorrectAnswerCount() < model.evalProperties.maxIncorrect)
         {
-            for(ConsentQuizModel.QuizQuestion question : model.getQuestions())
+            result.setResultForIdentifier(StepResult.DEFAULT_KEY, true);
+            super.onNextClicked();
+        }
+
+        // If we failed
+        else
+        {
+            // If first attempt at quiz, let user retry
+            if (attempt < 1)
             {
-                if(result.getIdentifier().equals(question.id))
-                {
-                    boolean answer = question.constraints.validation.answer.equals("true");
-                    QuestionResult<Boolean> questionResult =  (QuestionResult<Boolean>) result
-                            .getResults().get(step.getIdentifier());
-                    results.put(step.getIdentifier(), questionResult.getAnswer().booleanValue() == answer);
-                    break;
-                }
+                attempt = 1;
+                showScene(0, true);
             }
+
+            // Max attempts exhausted, go back to consent visual flow
+            else
+            {
+                result.setResultForIdentifier(StepResult.DEFAULT_KEY, false);
+                super.onNextClicked();
+            }
+        }
+    }
+
+    @Override
+    public void notifyStepResultChanged(Step step, StepResult result)
+    {
+        if (!ID_RESULT.equals(result.getIdentifier()))
+        {
+            boolean answer = (boolean) result.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            results.put(result.getIdentifier(), answer);
         }
     }
 
@@ -121,10 +146,14 @@ public class ConsentQuizScene extends MultiSubSectionScene
     public int getCorrectAnswerCount()
     {
         int count = 0;
-        for(boolean result : results.values())
+
+        for(ConsentQuizModel.QuizQuestion question : model.getQuestions())
         {
-            count += result ? 1 : 0 ;
+            boolean result = results.get(question.id);
+            boolean correct = question.constraints.validation.answer.equals(Boolean.toString(result));
+            count += correct ? 1 : 0 ;
         }
+
         return count;
     }
 
@@ -135,72 +164,4 @@ public class ConsentQuizScene extends MultiSubSectionScene
         return questions - correct;
     }
 
-    @Override
-    public void onNextPressed(Step step)
-    {
-        LogExt.i(getClass(), "onNextPressed");
-
-        if(getCurrentPosition() < model.getQuestions().size())
-        {
-            LogExt.i(getClass(), "Show next question");
-            loadNextScene();
-        }
-        else
-        {
-            String id = getStep().getIdentifier();
-
-            QuestionResult<Boolean> questionResult = new QuestionResult<>(id);
-            StepResult<QuestionResult<Boolean>> result = createNewStepResult(id);
-            result.setResultForIdentifier(id, questionResult);
-
-
-            //TODO Rename maxIncorrect variable.
-            // A comparison should in inclusive for this situation ..... since maxIncorrect is an
-            // upper limit.
-
-            // If we passed
-            if (getIncorrectAnswerCount() < model.evalProperties.maxIncorrect)
-            {
-                LogExt.i(getClass(), "Quiz Passed");
-                questionResult.setAnswer(true);
-
-                getCallbacks().onStepResultChanged(getStep(), result);
-                getCallbacks().onNextPressed(getStep());
-            }
-
-            // If we failed
-            else
-            {
-                LogExt.i(getClass(), "Quiz Failed");
-
-                if (attempt == 0)
-                {
-                    LogExt.i(getClass(), "First attempt, let them retry");
-
-                    attempt = 1;
-                    showScene(0, true);
-                }
-                else
-                {
-                    LogExt.i(getClass(), "Last attempt, go back to consent visual flow");
-                    questionResult.setAnswer(false);
-
-                    getCallbacks().onStepResultChanged(getStep(), result);
-                    getCallbacks().onNextPressed(getStep());
-                }
-            }
-        }
-    }
-
-    @Override
-    public StepResult getResultStep(String stepId)
-    {
-        return super.getResultStep(stepId);
-    }
-
-    @Override
-    public StepResult createNewStepResult(String id)
-    {
-        return new StepResult<QuestionResult<Boolean>>(getStep().getIdentifier());
-    }
 }

@@ -7,15 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.ConsentSignatureResult;
-import co.touchlab.researchstack.core.result.QuestionResult;
+import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.glue.task.ConsentTask;
@@ -56,10 +56,12 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
         {
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
 
-            boolean sharing = ((QuestionResult<Boolean>) result.getStepResultForStepIdentifier("sharing")
-                    .getResultForIdentifier("sharing")).getAnswer();
+            StepResult<Boolean> sharingResult = result.getStepResultForStepIdentifier("sharing");
+            boolean sharing = sharingResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
 
-            ConsentSignatureResult signatureResult = ((ConsentSignatureResult) result.getStepResultForStepIdentifier("reviewStep"));
+            StepResult<ConsentSignatureResult> consentResult = result.getStepResultForStepIdentifier(
+                    "reviewStep");
+            ConsentSignatureResult signatureResult = consentResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
             ConsentSignature signature = signatureResult.getSignature();
             boolean consented = signatureResult.isConsented();
 
@@ -80,10 +82,10 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 currentUser.setConsentSignatureImage(signature.getSignatureImage());
                 currentUser.setUserConsented(true);
 
-                Scene scene = (Scene) findViewById(R.id.current_scene);
+                SceneImpl scene = (SceneImpl) findViewById(R.id.current_scene);
                 if (scene != null && scene instanceof SignUpEligibleScene)
                 {
-                    onNextPressed(scene.getStep());
+                    onNextStep(scene.getStep());
                 }
             }
             else
@@ -102,7 +104,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
         if (requestCode ==  SignUpPermissionsScene.LOCATION_PERMISSION_REQUEST_CODE)
         {
-            Scene scene = (Scene) findViewById(R.id.current_scene);
+            SceneImpl scene = (SceneImpl) findViewById(R.id.current_scene);
             if(scene instanceof SignUpPermissionsScene)
             {
                 ((SignUpPermissionsScene) scene)

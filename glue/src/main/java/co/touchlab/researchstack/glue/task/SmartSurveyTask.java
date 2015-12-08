@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.model.TaskModel;
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
@@ -16,15 +14,16 @@ import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.UnknownAnswerFormat;
+import co.touchlab.researchstack.core.dev.DevUtils;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.TextChoice;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.Task;
-import co.touchlab.researchstack.core.dev.DevUtils;
+import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.glue.model.TaskModel;
 
 public class SmartSurveyTask extends Task implements Serializable
 {
@@ -135,15 +134,10 @@ public class SmartSurveyTask extends Task implements Serializable
             LogExt.d(getClass(),
                     "Rules exist for this step");
             StepResult stepResult = result.getStepResultForStepIdentifier(currentIdentifier);
-
-            // TODO need to make this a lot better, this is what ios does (grabs first result)
-            QuestionResult questionResult = (QuestionResult) stepResult.getResults()
-                    .values()
-                    .toArray()[0];
-            if (questionResult != null)
+            Object answer = stepResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            if (answer != null)
             {
-                skipToStep = processRules(stepRules,
-                        questionResult.getAnswer());
+                skipToStep = processRules(stepRules, answer);
             }
 
             if (skipToStep != null && skipToStep.equals(END_OF_SURVEY_MARKER))

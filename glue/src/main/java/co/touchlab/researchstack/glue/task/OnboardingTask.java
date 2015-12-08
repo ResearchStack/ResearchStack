@@ -7,6 +7,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.Task;
+import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ui.scene.SignInScene;
 import co.touchlab.researchstack.glue.ui.scene.SignUpAdditionalInfoScene;
 import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleScene;
@@ -72,12 +73,11 @@ public abstract class OnboardingTask extends Task
 
     public boolean isEligible(TaskResult result)
     {
-        StepResult stepResult = result.getStepResultForStepIdentifier(SignUpTask.SignUpInclusionCriteriaStepIdentifier);
+        StepResult<Boolean> stepResult = result.getStepResultForStepIdentifier(SignUpTask.SignUpInclusionCriteriaStepIdentifier);
 
         if (stepResult != null)
         {
-            QuestionResult<Boolean> questionResult = (QuestionResult<Boolean>) stepResult.getResultForIdentifier(SignUpTask.SignUpInclusionCriteriaStepIdentifier);
-            return questionResult.getAnswer();
+            return stepResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
         }
 
         return false;

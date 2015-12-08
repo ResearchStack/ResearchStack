@@ -6,21 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.glue.R;
 
 /**
  * TODO Implement Function
  */
-public class SignUpPermissionsPrimingScene extends Scene
+public class SignUpPermissionsPrimingScene extends SceneImpl
 {
 
-    public SignUpPermissionsPrimingScene(Context context, Step step)
+    public SignUpPermissionsPrimingScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
@@ -36,9 +35,4 @@ public class SignUpPermissionsPrimingScene extends Scene
 //        body.setSummary();
     }
 
-    @Override
-    public StepResult createNewStepResult(String stepIdentifier)
-    {
-        return new StepResult<QuestionResult<Boolean>>(stepIdentifier);
-    }
 }

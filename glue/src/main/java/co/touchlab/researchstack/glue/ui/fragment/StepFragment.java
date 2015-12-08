@@ -20,7 +20,7 @@ import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.core.result.Result;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
 @Deprecated
 public abstract class StepFragment extends Fragment
@@ -30,7 +30,7 @@ public abstract class StepFragment extends Fragment
 
     protected Step step;
     protected StepResult stepResult;
-    protected StepCallbacks callbacks;
+    protected SceneCallbacks callbacks;
     private TextView next;
     private TextView skip;
 
@@ -38,7 +38,7 @@ public abstract class StepFragment extends Fragment
     public void onAttach(Context context)
     {
         super.onAttach(context);
-        callbacks = ((StepCallbacks) context);
+        callbacks = ((SceneCallbacks) context);
     }
 
     public StepFragment()
@@ -51,7 +51,6 @@ public abstract class StepFragment extends Fragment
         super.onCreate(savedInstanceState);
         step = (Step) getArguments().getSerializable(KEY_QUESTION_STEP);
 
-        stepResult = callbacks.getResultStep(step.getIdentifier());
         if(stepResult == null)
         {
             stepResult = createNewStepResult(step.getIdentifier());
@@ -98,7 +97,7 @@ public abstract class StepFragment extends Fragment
     {
         if (isAnswerValid())
         {
-            callbacks.onNextPressed(getStep());
+            callbacks.onNextStep(getStep());
         }
     }
 
@@ -136,7 +135,7 @@ public abstract class StepFragment extends Fragment
         results.put(result.getIdentifier(), result);
         stepResult.setResults(results);
 
-        callbacks.onStepResultChanged(step, stepResult);
+        callbacks.notifyStepResultChanged(step, stepResult);
     }
 
     protected void hideNextButtons()
