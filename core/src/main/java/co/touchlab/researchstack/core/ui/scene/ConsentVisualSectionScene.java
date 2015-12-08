@@ -8,15 +8,15 @@ import android.util.TypedValue;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.model.ConsentSection;
+import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 
 public class ConsentVisualSectionScene extends SceneImpl
 {
 
-    public ConsentVisualSectionScene(Context context, ConsentSection data)
+    public ConsentVisualSectionScene(Context context, Step step, ConsentSection data)
     {
-        // TODO NPE here because of null step
-        super(context, null, null);
+        super(context, step, null);
 
         TypedValue typedValue = new TypedValue();
         TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
