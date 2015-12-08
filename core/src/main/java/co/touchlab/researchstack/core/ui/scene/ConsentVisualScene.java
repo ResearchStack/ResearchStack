@@ -53,14 +53,8 @@ public class ConsentVisualScene extends MultiSubSectionScene
 
     // Ignore results generated from the sub-sections
     @Override
-    public void setStepResultForHost(Step step, StepResult result)
+    public void notifyStepResultChanged(Step step, StepResult result)
     {
     }
 
-    // Ignore results generated from the sub-sections
-    @Override
-    public StepResult getStepResultFromHost(String stepId)
-    {
-        return null;
-    }
 }

@@ -9,14 +9,6 @@ public interface SceneCallbacks
     void onSkipStep(Step step);
     void onCancelStep();
 
-    void setStepResultForHost(Step step, StepResult result);
+    void notifyStepResultChanged(Step step, StepResult result);
 
-    /**
-     * TODO Remove
-     * The result object should be passed in when the scene is initially created. After that, the result
-     * object can only controlled within said class. The result object should then pass that up to
-     * the host via {@link #setStepResultForHost}
-     */
-    @Deprecated
-    StepResult getStepResultFromHost(String stepId);
 }

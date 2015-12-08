@@ -177,7 +177,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         {
             if (callbacks != null)
             {
-                callbacks.setStepResultForHost(getStep(), getStepResult());
+                callbacks.notifyStepResultChanged(getStep(), getStepResult());
                 callbacks.onNextStep(step);
             }
             else
@@ -225,16 +225,9 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
     public StepResult<T> getStepResult()
     {
-        if (stepResult == null && step != null)
+        if (stepResult == null)
         {
-            // First, lets check if the host has a result for us
-            stepResult = callbacks.getStepResultFromHost(step.getIdentifier());
-
-            // If not, create a new result
-            if (stepResult == null)
-            {
-                stepResult = initStepResult();
-            }
+            stepResult = initStepResult();
         }
 
         return stepResult;

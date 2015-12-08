@@ -51,7 +51,6 @@ public abstract class StepFragment extends Fragment
         super.onCreate(savedInstanceState);
         step = (Step) getArguments().getSerializable(KEY_QUESTION_STEP);
 
-        stepResult = callbacks.getStepResultFromHost(step.getIdentifier());
         if(stepResult == null)
         {
             stepResult = createNewStepResult(step.getIdentifier());
@@ -136,7 +135,7 @@ public abstract class StepFragment extends Fragment
         results.put(result.getIdentifier(), result);
         stepResult.setResults(results);
 
-        callbacks.setStepResultForHost(step, stepResult);
+        callbacks.notifyStepResultChanged(step, stepResult);
     }
 
     protected void hideNextButtons()

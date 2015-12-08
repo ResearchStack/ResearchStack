@@ -120,22 +120,14 @@ public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
         }
     }
 
-
     @Override
-    public void setStepResultForHost(Step step, StepResult result)
+    public void notifyStepResultChanged(Step step, StepResult result)
     {
         if (!ID_RESULT.equals(result.getIdentifier()))
         {
             boolean answer = (boolean) result.getResultForIdentifier(StepResult.DEFAULT_KEY);
             results.put(result.getIdentifier(), answer);
         }
-    }
-
-    @Override
-    public StepResult getStepResultFromHost(String stepId)
-    {
-        // TODO Discuss if user should see their result (not current impl. on IOS)
-        return null;
     }
 
     @Override

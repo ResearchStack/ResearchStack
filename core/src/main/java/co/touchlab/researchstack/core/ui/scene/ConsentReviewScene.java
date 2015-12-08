@@ -153,7 +153,7 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
     }
 
     @Override
-    public void setStepResultForHost(Step sceneStep, StepResult sceneResult)
+    public void notifyStepResultChanged(Step sceneStep, StepResult sceneResult)
     {
         //Handle the result of the popped off scene
         StepResult<ConsentSignatureResult> result = getStepResult();
@@ -190,13 +190,6 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
             String message = "Result with ID:" + sceneStep.getIdentifier() + " not supported";
             DevUtils.throwUnsupportedOpException(message);
         }
-    }
-
-    @Override
-    public StepResult getStepResultFromHost(String stepId)
-    {
-        //TODO Implement code. Pass in proper result when creating scene in onCreateScene
-        return null;
     }
 
     @Override
