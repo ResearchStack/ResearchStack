@@ -11,7 +11,7 @@ public class ConsentQuizEvaluationScene extends SceneImpl
 {
     public ConsentQuizEvaluationScene(Context context, Step step, ConsentQuizModel.EvaluationProperties properties, int attempt, int incorrect)
     {
-        super(context, step);
+        super(context, step, null);
 
         Resources r = context.getResources();
 

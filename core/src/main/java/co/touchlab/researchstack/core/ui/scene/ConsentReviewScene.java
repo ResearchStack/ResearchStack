@@ -32,9 +32,9 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
 
     public List<Integer> sections;
 
-    public ConsentReviewScene(Context context, Step step)
+    public ConsentReviewScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
 
             formStep.setFormItems(items);
 
-            return new FormScene(getContext(), formStep);
+            return new FormScene(getContext(), formStep, null);
         }
         else if (section == SECTION_REVIEW_SIGNATURE)
         {

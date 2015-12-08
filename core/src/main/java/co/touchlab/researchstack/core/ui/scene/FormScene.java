@@ -21,9 +21,9 @@ import co.touchlab.researchstack.core.step.FormStep;
 public class FormScene extends SceneImpl
 {
 
-    public FormScene(Context context, FormStep step)
+    public FormScene(Context context, FormStep step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
 
         setTitle(getStep().getTitle());
         setSummary(getStep().getText());

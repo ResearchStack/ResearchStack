@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
@@ -19,9 +20,9 @@ public class SignUpAdditionalInfoScene extends SceneImpl
 {
     private User user;
 
-    public SignUpAdditionalInfoScene(Context context, Step step)
+    public SignUpAdditionalInfoScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override

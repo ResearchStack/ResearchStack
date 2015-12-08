@@ -15,7 +15,7 @@ public class ConsentVisualSectionScene extends SceneImpl
 
     public ConsentVisualSectionScene(Context context, ConsentSection data)
     {
-        super(context, null);
+        super(context, null, null);
 
         TypedValue typedValue = new TypedValue();
         TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });

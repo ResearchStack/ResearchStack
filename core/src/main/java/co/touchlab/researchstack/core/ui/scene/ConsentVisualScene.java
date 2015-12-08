@@ -14,9 +14,9 @@ public class ConsentVisualScene extends MultiSubSectionScene
 {
     private ConsentDocument document;
 
-    public ConsentVisualScene(Context context, Step step)
+    public ConsentVisualScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override

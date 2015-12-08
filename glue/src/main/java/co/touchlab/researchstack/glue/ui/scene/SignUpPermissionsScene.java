@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.helpers.LogExt;
+import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
@@ -25,9 +26,9 @@ public class SignUpPermissionsScene extends SceneImpl
     private AppCompatButton permissionButton;
     private ActivityCallback permissionCallback;
 
-    public SignUpPermissionsScene(Context context, Step step)
+    public SignUpPermissionsScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
 
         //TODO Fix this, very disgusting
         if (context instanceof ActivityCallback)

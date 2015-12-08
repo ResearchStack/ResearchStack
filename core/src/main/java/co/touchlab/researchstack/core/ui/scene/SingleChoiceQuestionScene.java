@@ -19,9 +19,9 @@ public class SingleChoiceQuestionScene<T> extends SceneImpl<T>
 
     private RadioGroup radioGroup;
 
-    public SingleChoiceQuestionScene(Context context, Step step)
+    public SingleChoiceQuestionScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override

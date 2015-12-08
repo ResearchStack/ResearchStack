@@ -22,9 +22,9 @@ public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
 
     private List<T> results;
 
-    public MultiChoiceQuestionScene(Context context, Step step)
+    public MultiChoiceQuestionScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override

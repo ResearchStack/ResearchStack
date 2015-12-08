@@ -16,7 +16,7 @@ public class ConsentReviewDocumentScene extends SceneImpl
 
     public ConsentReviewDocumentScene(Context context)
     {
-        super(context, new Step(STEP_ID));
+        super(context, new Step(STEP_ID), null);
     }
 
     @Override

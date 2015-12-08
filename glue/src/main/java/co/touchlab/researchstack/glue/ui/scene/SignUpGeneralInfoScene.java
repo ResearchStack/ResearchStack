@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
@@ -33,9 +34,9 @@ public class SignUpGeneralInfoScene extends SceneImpl
     private AppCompatTextView birthdateTextView;
     private User user;
 
-    public SignUpGeneralInfoScene(Context context, Step step)
+    public SignUpGeneralInfoScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override

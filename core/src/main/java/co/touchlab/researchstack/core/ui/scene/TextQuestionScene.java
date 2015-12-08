@@ -16,9 +16,9 @@ import co.touchlab.researchstack.core.step.Step;
 public class TextQuestionScene extends SceneImpl<String>
 {
 
-    public TextQuestionScene(Context context, Step step)
+    public TextQuestionScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override

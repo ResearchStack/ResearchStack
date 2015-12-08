@@ -31,7 +31,7 @@ public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
 
     public ConsentQuizQuestionScene(Context context, QuestionStep step, ConsentQuizModel.QuestionProperties properties, ConsentQuizModel.QuizQuestion question)
     {
-        super(context, step);
+        super(context, step, null);
 
         this.properties = properties;
         this.question = question;

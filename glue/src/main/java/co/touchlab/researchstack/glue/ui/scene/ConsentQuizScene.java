@@ -26,9 +26,9 @@ public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
     private ConsentQuizModel model;
     private int attempt;
 
-    public ConsentQuizScene(Context context, Step step)
+    public ConsentQuizScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override

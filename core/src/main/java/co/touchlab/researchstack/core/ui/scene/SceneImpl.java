@@ -54,11 +54,6 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
     private TextView skip;
     private LinearLayout container;
 
-    public SceneImpl(Context context, Step step)
-    {
-        this(context, step, null);
-    }
-
     public SceneImpl(Context context, Step step, StepResult result)
     {
         super(context);

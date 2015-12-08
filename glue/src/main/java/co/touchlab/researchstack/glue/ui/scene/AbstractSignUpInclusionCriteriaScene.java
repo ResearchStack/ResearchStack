@@ -12,10 +12,9 @@ import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 public abstract class AbstractSignUpInclusionCriteriaScene extends SceneImpl<Boolean>
 {
 
-    public AbstractSignUpInclusionCriteriaScene(Context context, Step step)
+    public AbstractSignUpInclusionCriteriaScene(Context context, Step step, StepResult result)
     {
-        super(context,
-                step);
+        super(context, step, result);
     }
 
     @Override

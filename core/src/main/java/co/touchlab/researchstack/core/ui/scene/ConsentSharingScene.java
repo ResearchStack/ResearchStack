@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 
 import co.touchlab.researchstack.core.R;
+import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.ConsentSharingStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
@@ -12,9 +13,9 @@ import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 public class ConsentSharingScene extends SingleChoiceQuestionScene
 {
 
-    public ConsentSharingScene(Context context, Step step)
+    public ConsentSharingScene(Context context, Step step, StepResult result)
     {
-        super(context, step);
+        super(context, step, result);
     }
 
     @Override
