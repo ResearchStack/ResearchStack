@@ -51,10 +51,10 @@ public class ConsentVisualScene extends MultiSubSectionScene
         return scene;
     }
 
-    // Ignore results generated from the sub-sections
     @Override
     public void notifyStepResultChanged(Step step, StepResult result)
     {
+        // Ignore results generated from the sub-sections
     }
 
 }
