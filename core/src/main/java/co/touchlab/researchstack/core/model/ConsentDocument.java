@@ -9,6 +9,24 @@ import java.util.List;
 
 import co.touchlab.researchstack.core.R;
 
+/**
+ * Consent document that stores Signature images, titles, etc for rendering a consent document.
+ *
+ * The following methods are marked as deprecated due to be unfinished and not-fully implemented.
+ * This {@link #createHTMLWithTitle} method is meant to take the data (e.g. {@link ConsentSection}s'
+ * and generate a consent document for you. This method is available on iOS and means that the
+ * developer does not have to convert their consent-pdf file
+ * (e.g. assets/study_overview_consent_form.pdf) and generate a HTML document from it. We, however,
+ * will be requiring the researcher to do just.
+ *
+ * TODO Remove following methods
+ * {@link #createHTMLWithTitle}
+ * {@link #createHTML}
+ * {@link #wrapHTMLBody}
+ * {@link #getHTMLForSection}
+ * {@link #getHTMLForSignature}
+ * {@link #getCSSStyleSheet}
+ */
 public class ConsentDocument implements Serializable
 {
 
@@ -111,12 +129,13 @@ public class ConsentDocument implements Serializable
         return sections;
     }
 
-
+    @Deprecated
     public String createHTMLWithTitle(Resources r, String title, String detail)
     {
         return createHTML(r, true, title, detail).toString();
     }
 
+    @Deprecated
     public StringBuilder createHTML(Resources r, boolean isMobile,  String title, String detail)
     {
         StringBuilder body = new StringBuilder();
@@ -163,6 +182,7 @@ public class ConsentDocument implements Serializable
         return wrapHTMLBody(r, isMobile, body);
     }
 
+    @Deprecated
     public StringBuilder wrapHTMLBody(Resources r, boolean isMobile, StringBuilder body)
     {
         return new StringBuilder("<html><head><style>")
@@ -172,6 +192,7 @@ public class ConsentDocument implements Serializable
                 .append("</body></html>");
     }
 
+    @Deprecated
     private StringBuilder getHTMLForSection(ConsentSection section)
     {
         StringBuilder consent = new StringBuilder();
@@ -182,6 +203,7 @@ public class ConsentDocument implements Serializable
         return consent;
     }
 
+    @Deprecated
     private StringBuilder getHTMLForSignature(Resources r, ConsentSignature signature)
     {
         StringBuilder body = new StringBuilder();
@@ -240,6 +262,7 @@ public class ConsentDocument implements Serializable
         return body;
     }
 
+    @Deprecated
     private StringBuilder getCSSStyleSheet(Resources r, boolean isMobile)
     {
         StringBuilder css = new StringBuilder("@media print { .pagebreak { page-break-before: always; } }\n");
