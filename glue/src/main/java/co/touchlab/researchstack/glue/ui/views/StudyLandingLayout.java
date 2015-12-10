@@ -117,7 +117,7 @@ public class StudyLandingLayout extends ScrollView
         String basepath = extStorageDirectory + "/" + ResearchStack.getInstance()
                 .getExternalSDAppFolder();
 
-        int fileResId = ResearchStack.getInstance().getConsentForm();
+        int fileResId = ResearchStack.getInstance().getConsentPDF();
         String formName = getResources().getResourceEntryName(fileResId);
         String fileName = formName + ".pdf";
 

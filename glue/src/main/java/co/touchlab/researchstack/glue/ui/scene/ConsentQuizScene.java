@@ -149,9 +149,13 @@ public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
 
         for(ConsentQuizModel.QuizQuestion question : model.getQuestions())
         {
-            boolean result = results.get(question.id);
-            boolean correct = question.constraints.validation.answer.equals(Boolean.toString(result));
-            count += correct ? 1 : 0 ;
+            Boolean boolResult = results.get(question.id);
+            if (boolResult != null)
+            {
+                boolean correct = question.constraints.validation.answer
+                        .equals(Boolean.toString(boolResult));
+                count += correct ? 1 : 0;
+            }
         }
 
         return count;

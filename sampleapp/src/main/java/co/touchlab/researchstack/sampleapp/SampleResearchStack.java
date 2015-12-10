@@ -4,17 +4,19 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
-import com.joanzapata.pdfview.util.FileUtils;
+import com.google.common.io.Files;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
+import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
 import co.touchlab.researchstack.glue.ResearchStack;
-import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.glue.model.User;
 
 /**
@@ -69,13 +71,46 @@ public class SampleResearchStack extends ResearchStack
             folder.mkdirs();
             File databasePath = context.getDatabasePath(DatabaseHelper.DB_NAME);
             File outFile = new File(folder, databasePath.getName());
-            FileInputStream input = new FileInputStream(databasePath);
-            FileUtils.copy(input, outFile);
-            input.close();
+            FileOutputStream output = new FileOutputStream(outFile);
+            Files.copy(databasePath, output);
+            output.close();
         }
         catch(IOException e)
         {
             Log.e("asdf", "", e);
+        }
+    }
+
+    //TODO Replace method with something that exists
+    public void copy(InputStream inputStream, File output) throws IOException
+    {
+        OutputStream outputStream = null;
+        try
+        {
+            outputStream = new FileOutputStream(output);
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while((read = inputStream.read(bytes)) != - 1)
+            {
+                outputStream.write(bytes, 0, read);
+            }
+        }
+        finally
+        {
+            try
+            {
+                if(inputStream != null)
+                {
+                    inputStream.close();
+                }
+            }
+            finally
+            {
+                if(outputStream != null)
+                {
+                    outputStream.close();
+                }
+            }
         }
     }
 
@@ -113,7 +148,7 @@ public class SampleResearchStack extends ResearchStack
     }
 
     @Override
-    public int getConsentForm()
+    public int getConsentPDF()
     {
         return R.raw.study_overview_consent_form;
     }

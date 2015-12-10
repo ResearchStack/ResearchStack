@@ -84,8 +84,23 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
 
         if (section == SECTION_REVIEW_DOCUMENT)
         {
+            // TODO This is one way of doing it, which assumes that the researcher has provided a
+            // HTML-version of the PDF doc. This ConsentDocument class should also be able to
+            // generate a doc for user consumption. We should just force the researcher to create the
+            // necessary resource. Less headache, confirm w/ brad.
+            StringBuilder body = new StringBuilder("</br><div style=\"padding: 10px 10px 10px 10px;\" class='header'>");
+            String title = getResources().getString(R.string.consent_review_title);
+            body.append(String.format("<h1 style=\"text-align: center; font-family:sans-serif-light;\">%1$s</h1>", title));
+            String detail =  getResources().getString(R.string.consent_review_instruction);
+            body.append(String.format("<p style=\"text-align: center\">%1$s</p>", detail));
+            body.append("</div></br>");
+
+            body.append(step.getDocument().getHtmlReviewContent());
+
             ConsentReviewDocumentScene layout = new ConsentReviewDocumentScene(getContext());
             layout.setCallbacks(this);
+            layout.setHTML(body.toString());
+
             return layout;
         }
         else if (section == SECTION_REVIEW_NAME)

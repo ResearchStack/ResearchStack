@@ -49,8 +49,15 @@
 
     <string name="signature_page_title">Signature</string>
     <string name="consent_signature_title">Signature</string>
+    <string name="consent_signature_content">By agreeing you confirm that you read the consent and that you wish to take part in this research study.</string>
     <string name="consent_signature_instruction">Please sign using your finger on the line below.</string>
     <string name="consent_signature_placeholder">Sign Here</string>
+
+    <!-- Consent Doc -->
+    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
+    <string name="consent_doc_line_printed_name">%1$s\'s Name (printed)</string>
+    <string name="consent_doc_line_signature">%1$s\'s Signature</string>
+    <string name="consent_doc_line_date">Date</string>
 
     <!-- Settings -->
     <string name="settings_app">APP BEHAVIOR</string>
@@ -113,7 +120,7 @@
     <string name="granted">Granted</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="participant">Participant</string>
-    <string name="signature_page_content">I agree to participate in this research Study</string>
+
     <string name="cancel">Cancel</string>
     <string name="activities">Activities</string>
     <string name="dashboard">Dashboard</string>

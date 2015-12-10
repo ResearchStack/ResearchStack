@@ -177,8 +177,8 @@ public class ConsentSection implements Serializable
                     return R.string.consent_section_more_info;
             }
         }
-    }
 
+    }
     /**
      * The type of section. (read-only)
      * <p>
@@ -195,6 +195,7 @@ public class ConsentSection implements Serializable
      */
     @SerializedName("sectionTitle")
     private String title;
+
     /**
      * The formal title of the section in a localized string, for use in the legal document.
      * <p>
@@ -202,7 +203,6 @@ public class ConsentSection implements Serializable
      */
     @SerializedName("sectionFormalTitle")
     private String formalTitle;
-
     /**
      * A short summary of the content in a localized string.
      * <p>
@@ -290,6 +290,11 @@ public class ConsentSection implements Serializable
     public String getTitle()
     {
         return title;
+    }
+
+    public String getFormalTitle()
+    {
+        return formalTitle;
     }
 
     public Type getType()

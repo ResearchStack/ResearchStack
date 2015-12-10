@@ -1,6 +1,5 @@
 package co.touchlab.researchstack.core.result;
 
-import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 
 public class ConsentSignatureResult extends Result
@@ -9,8 +8,6 @@ public class ConsentSignatureResult extends Result
     ConsentSignature signature;
 
     boolean consented;
-
-    ConsentDocument document;
 
     public ConsentSignatureResult(String identifier)
     {
@@ -44,13 +41,4 @@ public class ConsentSignatureResult extends Result
         this.consented = consented;
     }
 
-    public ConsentDocument getDocument()
-    {
-        return document;
-    }
-
-    public void setDocument(ConsentDocument document)
-    {
-        this.document = document;
-    }
 }

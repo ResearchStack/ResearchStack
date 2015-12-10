@@ -58,7 +58,7 @@ public abstract class ResearchStack
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     public abstract int getLargeLogoDiseaseIcon();
 
-    public abstract int getConsentForm();
+    public abstract int getConsentPDF();
 
     public abstract int getConsentSections();
 

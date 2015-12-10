@@ -2,22 +2,26 @@ package co.touchlab.researchstack.glue.task;
 import android.content.Context;
 import android.content.res.Resources;
 
-import co.touchlab.researchstack.core.task.OrderedTask;
-import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
-import co.touchlab.researchstack.glue.model.ConsentQuizModel;
-import co.touchlab.researchstack.glue.step.ConsentQuizStep;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSectionModel;
 import co.touchlab.researchstack.core.model.ConsentSignature;
-import co.touchlab.researchstack.core.result.QuestionResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.ConsentReviewStep;
 import co.touchlab.researchstack.core.step.ConsentSharingStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.task.OrderedTask;
+import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.glue.model.ConsentQuizModel;
+import co.touchlab.researchstack.glue.step.ConsentQuizStep;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 
 public class ConsentTask extends OrderedTask
@@ -42,11 +46,15 @@ public class ConsentTask extends OrderedTask
                 ResearchStack.getInstance().isSignatureEnabledInConsent());
 
         ConsentDocument consent = new ConsentDocument();
-        consent.setTitle(r.getString(R.string.signature_page_title));
-        consent.setSignaturePageTitle(R.string.signature_page_title);
-        consent.setSignaturePageContent(r.getString(R.string.signature_page_content));
+        consent.setTitle(r.getString(R.string.consent_name_title));
+        consent.setSignaturePageTitle(R.string.consent_name_title);
+        consent.setSignaturePageContent(r.getString(R.string.consent_signature_content));
         consent.setSections(data.getSections());
         consent.addSignature(signature);
+
+        String htmlDocName = data.getDocumentProperties().getHtmlDocument();
+        int id = context.getResources().getIdentifier(htmlDocName, "raw", context.getPackageName());
+        consent.setHtmlReviewContent(getStringResource(context, id));
 
         ConsentVisualStep visualStep = new ConsentVisualStep("visual", consent);
         addStep(visualStep);
@@ -62,8 +70,7 @@ public class ConsentTask extends OrderedTask
         addStep(quizStep);
 
         String reasonForConsent = r.getString(R.string.consent_review_reason);
-        ConsentReviewStep reviewStep = new ConsentReviewStep("reviewStep", signature, consent,
-                                                             reasonForConsent);
+        ConsentReviewStep reviewStep = new ConsentReviewStep("reviewStep", signature, consent, reasonForConsent);
         addStep(reviewStep);
     }
 
@@ -99,6 +106,52 @@ public class ConsentTask extends OrderedTask
     public Step getStepBeforeStep(Step step, TaskResult result)
     {
         return super.getStepBeforeStep(step, result);
+    }
+
+    public String getStringResource(Context ctx, int id)
+    {
+        return new String(getResource(id, ctx), Charset.forName("UTF-8"));
+    }
+
+    public byte[] getResource(int id, Context context)
+    {
+        InputStream is =  context.getResources().openRawResource(id);
+        ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
+
+        byte[] readBuffer = new byte[4 * 1024];
+
+        try
+        {
+            int read;
+            do
+            {
+                read = is.read(readBuffer, 0, readBuffer.length);
+                if(read == - 1)
+                {
+                    break;
+                }
+                byteOutput.write(readBuffer, 0, read);
+            }
+            while(true);
+
+            return byteOutput.toByteArray();
+        }
+        catch(IOException e)
+        {
+            LogExt.e(getClass(), e);
+        }
+        finally
+        {
+            try
+            {
+                is.close();
+            }
+            catch(IOException e)
+            {
+                LogExt.e(getClass(), e);
+            }
+        }
+        return null;
     }
 
     //  -(ORKStep *)stepBeforeStep:(ORKStep *)__unused step withResult:(ORKTaskResult *)__unused result{
