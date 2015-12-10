@@ -292,6 +292,11 @@ public class ConsentSection implements Serializable
         return title;
     }
 
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
     public String getFormalTitle()
     {
         return formalTitle;
@@ -319,6 +324,11 @@ public class ConsentSection implements Serializable
     public String getSummary()
     {
         return summary;
+    }
+
+    public void setSummary(String summary)
+    {
+        this.summary = summary;
     }
 
     public void setContent(String content)

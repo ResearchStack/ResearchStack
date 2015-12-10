@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Core App</string>
+    <string name="consent_button">Consent</string>
+    <string name="survey_button">Take Survey</string>
+    <string name="consent_button_done">Consented</string>
+    <string name="clear_button">Clear</string>
+</resources>
