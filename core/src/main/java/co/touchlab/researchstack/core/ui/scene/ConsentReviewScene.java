@@ -34,7 +34,9 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
 
     public ConsentReviewScene(Context context, Step step, StepResult result)
     {
-        super(context, step, result);
+        super(context,
+                step,
+                result);
     }
 
     @Override
@@ -219,7 +221,7 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
                     .setMessage(parentStep.getReasonForConsent()).setCancelable(false)
                     .setPositiveButton(R.string.agree, (dialog, which) -> {
                         super.onNextStep(step);
-                    }).setNegativeButton(R.string.cancel, null)
+                    }).setNegativeButton(R.string.consent_review_cancel, null)
                     .show();
         }
         else
