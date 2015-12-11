@@ -13,7 +13,6 @@ public class Result implements Serializable
     private Date                    startDate;
     private Date                    endDate;
 
-    private HashMap<String, Object> userInfo; //TODO Implement
     private boolean                 saveable; //TODO Implement
 
     public Result(String identifier)
@@ -44,16 +43,6 @@ public class Result implements Serializable
     public void setEndDate(Date endDate)
     {
         this.endDate = endDate;
-    }
-
-    public HashMap<String, Object> getUserInfo()
-    {
-        return userInfo;
-    }
-
-    public void setUserInfo(HashMap<String, Object> userInfo)
-    {
-        this.userInfo = userInfo;
     }
 
     public boolean isSaveable()

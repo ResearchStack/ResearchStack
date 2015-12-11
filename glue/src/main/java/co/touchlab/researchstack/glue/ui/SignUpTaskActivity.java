@@ -9,7 +9,6 @@ import android.os.Build;
 
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.ConsentSignatureResult;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
@@ -56,12 +55,12 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
         {
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
 
-            StepResult<Boolean> sharingResult = result.getStepResultForStepIdentifier("sharing");
-            boolean sharing = sharingResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            boolean sharing = (boolean) result.getStepResult("sharing")
+                    .getResult();
 
-            StepResult<ConsentSignatureResult> consentResult = result.getStepResultForStepIdentifier(
-                    "reviewStep");
-            ConsentSignatureResult signatureResult = consentResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            ConsentSignatureResult signatureResult = (ConsentSignatureResult) result.getStepResult(
+                    "reviewStep")
+                    .getResult();
             ConsentSignature signature = signatureResult.getSignature();
             boolean consented = signatureResult.isConsented();
 

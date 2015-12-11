@@ -16,7 +16,7 @@ import java.util.Map;
 public class StepResult<T> extends Result
 {
     /**
-     * When StepREsult only has a single value, pair that value with the following key
+     * When StepResult only has a single value, pair that value with the following key
      */
     public static final String DEFAULT_KEY = "answer";
 
@@ -36,6 +36,11 @@ public class StepResult<T> extends Result
     public void setResults(Map<String, T> results)
     {
         this.results = results;
+    }
+
+    public T getResult()
+    {
+        return getResultForIdentifier(DEFAULT_KEY);
     }
 
     public T getResultForIdentifier(String identifier)

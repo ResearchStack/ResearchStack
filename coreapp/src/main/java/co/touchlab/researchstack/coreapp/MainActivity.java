@@ -19,11 +19,10 @@ import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.ConsentSignatureResult;
-import co.touchlab.researchstack.core.result.QuestionResult;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.ConsentReviewStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
+import co.touchlab.researchstack.core.step.InstructionStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.task.OrderedTask;
@@ -113,12 +112,8 @@ public class MainActivity extends PassCodeActivity
             consentButton.setEnabled(false);
             consentButton.setText(R.string.consent_button_done);
             surveyButton.setEnabled(true);
-            FileAccess fileAccess = StorageManager
-                    .getFileAccess();
-            printConsentInfo(fileAccess.readString(this,
-                            "/consented_name"),
-                    fileAccess.readString(this,
-                    "/consented_signature"));
+            printConsentInfo(loadString("/consented_name"),
+                    loadString("/consented_signature"));
         }
         else
         {
@@ -130,12 +125,8 @@ public class MainActivity extends PassCodeActivity
         if (prefs.hasSurveyed())
         {
             surveyButton.setEnabled(false);
-            printSurveyInfo(StorageManager.getFileAccess()
-                    .readString(this,
-                            "/survey_age"),
-                    StorageManager.getFileAccess()
-                            .readString(this,
-                                    "/survey_nutrition"));
+            printSurveyInfo(loadString("/survey_age"),
+                    loadString("/survey_nutrition"));
         }
     }
 
@@ -203,7 +194,8 @@ public class MainActivity extends PassCodeActivity
 
     private void processConsentResult(TaskResult result)
     {
-        ConsentSignatureResult signatureResult = ((StepResult<ConsentSignatureResult>) result.getStepResultForStepIdentifier("consent_review")).getResultForIdentifier(StepResult.DEFAULT_KEY);
+        ConsentSignatureResult signatureResult = (ConsentSignatureResult) result.getStepResult("consent_review")
+                .getResult();
         ConsentSignature signature = signatureResult.getSignature();
         boolean consented = signatureResult.isConsented();
 
@@ -216,17 +208,11 @@ public class MainActivity extends PassCodeActivity
             AppPrefs prefs = AppPrefs.getInstance(this);
             prefs.setHasConsented(true);
 
-            StorageManager
-                    .getFileAccess()
-                    .writeString(this,
-                            "/consented_name",
-                            fullName);
+            saveString("/consented_name",
+                    fullName);
 
-            StorageManager
-                    .getFileAccess()
-                    .writeString(this,
-                            "/consented_signature",
-                            signatureBase64);
+            saveString("/consented_signature",
+                    signatureBase64);
 
             initViews();
         }
@@ -250,11 +236,9 @@ public class MainActivity extends PassCodeActivity
 
     private void launchSurvey()
     {
-        // TODO fix instruction steps
-//        InstructionStep instructionStep = new InstructionStep("identifier", "Selection Survey", "This survey can help us understand your eligibility for the fitness study");
-        // TODO ios did not include title and text in the constructor, why?
-//        step.setTitle("Selection Survey");
-//        step.setText("This survey can help us understand your eligibility for the fitness study");
+        InstructionStep instructionStep = new InstructionStep("identifier",
+                "Selection Survey",
+                "This survey can help us understand your eligibility for the fitness study");
 
         IntegerAnswerFormat format = new IntegerAnswerFormat(90,
                 18);
@@ -276,8 +260,8 @@ public class MainActivity extends PassCodeActivity
 //        AnswerFormat dateOfBirthFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
 //        FormScene.FormItem dateOfBirthFormItem = new FormScene.FormItem("date_of_birth", "DOB", dateOfBirthFormat, "DOB");
 //        formItems.add(dateOfBirthFormItem);
-//
-//        // ... And so on, adding additional items
+
+        // ... And so on, adding additional items
 //        formStep.setFormItems(formItems);
 
         // Create a Boolean step to include in the task.
@@ -285,10 +269,11 @@ public class MainActivity extends PassCodeActivity
         booleanStep.setTitle("Do you take nutritional supplements?");
         booleanStep.setAnswerFormat(new BooleanAnswerFormat());
         booleanStep.setOptional(false);
-        // Create a task wrapping the boolean step.
+
+        // Create a task wrapping the steps.
         OrderedTask task = new OrderedTask("ordered_task",
                 "schedule_id",
-//                instructionStep,
+                instructionStep,
                 ageStep,
 //                formStep,
                 booleanStep);
@@ -305,27 +290,36 @@ public class MainActivity extends PassCodeActivity
         AppPrefs prefs = AppPrefs.getInstance(this);
         prefs.setHasSurveyed(true);
 
-        StepResult<Integer> ageStep = result.getStepResultForStepIdentifier("age");
-        int age = ageStep.getResultForIdentifier(StepResult.DEFAULT_KEY);
+        int age = (int) result.getStepResult("age")
+                .getResult();
         String ageString = String.valueOf(age);
 
-        StepResult<Integer> nutritionStep = result.getStepResultForStepIdentifier("nutrition");
-        int nutrition = nutritionStep.getResultForIdentifier(StepResult.DEFAULT_KEY);
+        int nutrition = (int) result.getStepResult("nutrition")
+                .getResult();
         String nutritionString = nutrition == 0 ? "No" : "Yes";
 
-        printSurveyInfo(ageString,
+        saveString("/survey_age",
+                ageString);
+        saveString("/survey_nutrition",
                 nutritionString);
 
+        initViews();
+    }
 
+    private String loadString(String path)
+    {
+        return StorageManager
+                .getFileAccess()
+                .readString(this,
+                        path);
+    }
+
+    private void saveString(String path, String ageString)
+    {
         StorageManager
                 .getFileAccess()
                 .writeString(this,
-                        "/survey_age",
+                        path,
                         ageString);
-        StorageManager
-                .getFileAccess()
-                .writeString(this,
-                        "/survey_nutrition",
-                        nutritionString);
     }
 }

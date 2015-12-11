@@ -133,8 +133,7 @@ public class SmartSurveyTask extends Task implements Serializable
         {
             LogExt.d(getClass(),
                     "Rules exist for this step");
-            StepResult stepResult = result.getStepResultForStepIdentifier(currentIdentifier);
-            Object answer = stepResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            Object answer = result.getStepResult(currentIdentifier).getResult();
             if (answer != null)
             {
                 skipToStep = processRules(stepRules, answer);
