@@ -1,9 +1,12 @@
 package co.touchlab.researchstack.coreapp;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Base64;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -77,10 +80,14 @@ public class MainActivity extends PassCodeActivity
     private void clearData()
     {
         FileAccess fileAccess = StorageManager.getFileAccess();
-        fileAccess.clearData(this, "/consented_name");
-        fileAccess.clearData(this, "/consented_signature");
-        fileAccess.clearData(this, "/survey_age");
-        fileAccess.clearData(this, "/survey_nutrition");
+        fileAccess.clearData(this,
+                "/consented_name");
+        fileAccess.clearData(this,
+                "/consented_signature");
+        fileAccess.clearData(this,
+                "/survey_age");
+        fileAccess.clearData(this,
+                "/survey_nutrition");
 
         AppPrefs appPrefs = AppPrefs.getInstance(this);
         appPrefs.setHasSurveyed(false);
@@ -109,10 +116,9 @@ public class MainActivity extends PassCodeActivity
             FileAccess fileAccess = StorageManager
                     .getFileAccess();
             printConsentInfo(fileAccess.readString(this,
-                    "/consented_name"),
-                    null);
-//                    fileAccess.readData(this,
-//                            "/consented_signature"));
+                            "/consented_name"),
+                    fileAccess.readString(this,
+                    "/consented_signature"));
         }
         else
         {
@@ -124,7 +130,12 @@ public class MainActivity extends PassCodeActivity
         if (prefs.hasSurveyed())
         {
             surveyButton.setEnabled(false);
-            printSurveyInfo(StorageManager.getFileAccess().readString(this, "/survey_age"), StorageManager.getFileAccess().readString(this, "/survey_nutrition"));
+            printSurveyInfo(StorageManager.getFileAccess()
+                    .readString(this,
+                            "/survey_age"),
+                    StorageManager.getFileAccess()
+                            .readString(this,
+                                    "/survey_nutrition"));
         }
     }
 
@@ -192,14 +203,15 @@ public class MainActivity extends PassCodeActivity
 
     private void processConsentResult(TaskResult result)
     {
-        ConsentSignatureResult signatureResult = ((ConsentSignatureResult) result.getStepResultForStepIdentifier("consent_review"));
+        ConsentSignatureResult signatureResult = ((StepResult<ConsentSignatureResult>) result.getStepResultForStepIdentifier("consent_review")).getResultForIdentifier(StepResult.DEFAULT_KEY);
         ConsentSignature signature = signatureResult.getSignature();
         boolean consented = signatureResult.isConsented();
 
-        if (consented)
+        // TODO consented was always false, so i made this always true, fix when consented is fixed
+        if (true || consented)
         {
             String fullName = signature.getFullName();
-//            byte[] signatureBytes = signature.getSignatureImage();
+            String signatureBase64 = signature.getSignatureImage();
 
             AppPrefs prefs = AppPrefs.getInstance(this);
             prefs.setHasConsented(true);
@@ -209,20 +221,25 @@ public class MainActivity extends PassCodeActivity
                     .writeString(this,
                             "/consented_name",
                             fullName);
-//            CoreApplication.getInstance().getFileAccess().writeData(this,
-//                    "/consented_signature",
-//                    signatureBytes);
+
+            StorageManager
+                    .getFileAccess()
+                    .writeString(this,
+                            "/consented_signature",
+                            signatureBase64);
 
             initViews();
         }
     }
 
-    private void printConsentInfo(String fullName, byte[] signatureBytes)
+    private void printConsentInfo(String fullName, String signatureBase64)
     {
         ((TextView) findViewById(R.id.consented_name)).setText(fullName);
-//        ((ImageView) findViewById(R.id.consented_signature)).setImageBitmap(BitmapFactory.decodeByteArray(signatureBytes,
-//                0,
-//                signatureBytes.length));
+        byte[] signatureBytes = Base64.decode(signatureBase64,
+                Base64.DEFAULT);
+        ((ImageView) findViewById(R.id.consented_signature)).setImageBitmap(BitmapFactory.decodeByteArray(signatureBytes,
+                0,
+                signatureBytes.length));
     }
 
     private void printSurveyInfo(String age, String nutrition)
@@ -288,15 +305,16 @@ public class MainActivity extends PassCodeActivity
         AppPrefs prefs = AppPrefs.getInstance(this);
         prefs.setHasSurveyed(true);
 
-        StepResult<QuestionResult<Integer>> ageStep = result.getStepResultForStepIdentifier("age");
-        QuestionResult<Integer> age = ageStep.getResultForIdentifier("age");
-        String ageString = age.getAnswer().toString();
+        StepResult<Integer> ageStep = result.getStepResultForStepIdentifier("age");
+        int age = ageStep.getResultForIdentifier(StepResult.DEFAULT_KEY);
+        String ageString = String.valueOf(age);
 
-        StepResult<QuestionResult<Integer>> nutritionStep = result.getStepResultForStepIdentifier("nutrition");
-        QuestionResult<Integer> nutrition = nutritionStep.getResultForIdentifier("nutrition");
-        String nutritionString = nutrition.getAnswer() == 0 ? "No" : "Yes";
+        StepResult<Integer> nutritionStep = result.getStepResultForStepIdentifier("nutrition");
+        int nutrition = nutritionStep.getResultForIdentifier(StepResult.DEFAULT_KEY);
+        String nutritionString = nutrition == 0 ? "No" : "Yes";
 
-        printSurveyInfo(ageString, nutritionString);
+        printSurveyInfo(ageString,
+                nutritionString);
 
 
         StorageManager
