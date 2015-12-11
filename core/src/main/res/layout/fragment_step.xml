@@ -23,7 +23,6 @@
             android:minWidth="72dp"
             android:visibility="gone"
             tools:visibility="visible"
-            tools:src="@mipmap/ic_launcher"
             />
 
         <TextView

@@ -45,9 +45,8 @@ public class TaskResult extends Result
         return false;
     }
 
-    public StepResult getStepResultForStepIdentifier(String identifier)
+    public StepResult getStepResult(String identifier)
     {
-        // TODO fix this casting
         return results.get(identifier);
     }
 

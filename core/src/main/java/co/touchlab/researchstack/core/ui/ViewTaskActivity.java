@@ -150,7 +150,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
             onStepTitleChanged(title);
 
             // Get result from the TaskResult, can be null
-            StepResult result = taskResult.getStepResultForStepIdentifier(step.getIdentifier());
+            StepResult result = taskResult.getStepResult(step.getIdentifier());
 
             // Return the Class & constructor
             Class cls = step.getSceneClass();

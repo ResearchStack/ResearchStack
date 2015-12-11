@@ -85,9 +85,8 @@ public class ConsentTask extends OrderedTask
             {
                 LogExt.i(getClass(), "step is ConsentQuizStep");
 
-                StepResult<Boolean> stepResult = (StepResult<Boolean>) result
-                        .getStepResultForStepIdentifier(step.getIdentifier());
-                boolean passed = stepResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
+                boolean passed = (boolean) result
+                        .getStepResult(step.getIdentifier()).getResult();
 
                 LogExt.i(getClass(), "ConsentQuizStep result is " + passed);
 
