@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.util.TypedValue;
 
 import co.touchlab.researchstack.core.R;
@@ -14,12 +15,28 @@ import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 public class ConsentVisualSectionScene extends SceneImpl
 {
 
-    public ConsentVisualSectionScene(Context context, Step step, ConsentSection data)
+    public ConsentVisualSectionScene(Context context)
     {
-        super(context, step, null);
+        super(context);
+    }
+
+    public ConsentVisualSectionScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public ConsentVisualSectionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public void initialize(Step step, ConsentSection data)
+    {
+        super.initialize(step);
 
         TypedValue typedValue = new TypedValue();
-        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
+        TypedArray a = getContext().obtainStyledAttributes(typedValue.data,
+                                                           new int[] {R.attr.colorAccent});
         int accentColor = a.getColor(0, 0);
         a.recycle();
 
@@ -51,8 +68,7 @@ public class ConsentVisualSectionScene extends SceneImpl
 
         setSkip(false);
 
-        //        TODO self.continueSkipContainer.continueEnabled = YES;
-        //        TODO [self.continueSkipContainer updateContinueAndSkipEnabled];
+//        TODO self.continueSkipContainer.continueEnabled = YES;
+//        TODO [self.continueSkipContainer updateContinueAndSkipEnabled];
     }
-
 }

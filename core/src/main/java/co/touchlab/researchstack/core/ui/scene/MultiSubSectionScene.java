@@ -1,12 +1,12 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
@@ -18,12 +18,21 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
 public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements SceneCallbacks
 {
-
     private SceneAnimator animator;
 
-    public MultiSubSectionScene(Context context, Step step, StepResult result)
+    public MultiSubSectionScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public MultiSubSectionScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public MultiSubSectionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
@@ -35,10 +44,11 @@ public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements Sc
     }
 
     @Override
-    public void onPreInitialized()
+    public void initializeScene()
     {
-        super.onPreInitialized();
         animator = new SceneAnimator(this);
+
+        super.initializeScene();
     }
 
     @Override
@@ -177,8 +187,7 @@ public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements Sc
     @Override
     public void onSkipStep(Step step)
     {
-        //TODO This should load the next scene, not the next step.
-        getCallbacks().onSkipStep(step);
+        onNextStep(step);
     }
 
 }

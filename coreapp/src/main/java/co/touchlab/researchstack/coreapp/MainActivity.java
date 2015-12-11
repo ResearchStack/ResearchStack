@@ -163,7 +163,7 @@ public class MainActivity extends PassCodeActivity
         document.setSignaturePageTitle(R.string.consent);
         ArrayList<ConsentSection> sections = new ArrayList<>();
 
-        // create consent visual sections
+        // Create consent visual sections
         ConsentSection section1 = new ConsentSection(ConsentSection.Type.DataGathering);
         section1.setTitle("The title of the section goes here ...");
         section1.setSummary("The summary about the section goes here ...");
@@ -181,7 +181,7 @@ public class MainActivity extends PassCodeActivity
         signature.setRequiresName(true);
         signature.setRequiresSignatureImage(true);
 
-        // create consent review step with signature and document
+        // Create consent review step with signature and document
         ConsentReviewStep reviewStep = new ConsentReviewStep("consent_review",
                 signature,
                 document,

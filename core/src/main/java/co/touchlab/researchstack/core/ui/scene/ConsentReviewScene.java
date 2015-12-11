@@ -1,7 +1,7 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
 import java.util.ArrayList;
@@ -32,18 +32,24 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
 
     public List<Integer> sections;
 
-    public ConsentReviewScene(Context context, Step step, StepResult result)
+    public ConsentReviewScene(Context context)
     {
-        super(context,
-                step,
-                result);
+        super(context);
+    }
+
+    public ConsentReviewScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public ConsentReviewScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void onPreInitialized()
+    public void initializeScene()
     {
-        super.onPreInitialized();
-
         sections = new ArrayList<>();
 
         ConsentReviewStep step = (ConsentReviewStep) getStep();
@@ -59,6 +65,8 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
         if (step.getSignature().isRequiresSignatureImage()) {
             sections.add(SECTION_REVIEW_SIGNATURE);
         }
+
+        super.initializeScene();
     }
 
     @Override
@@ -96,14 +104,16 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
             String detail =  getResources().getString(R.string.consent_review_instruction);
             body.append(String.format("<p style=\"text-align: center\">%1$s</p>", detail));
             body.append("</div></br>");
-
             body.append(step.getDocument().getHtmlReviewContent());
 
-            ConsentReviewDocumentScene layout = new ConsentReviewDocumentScene(getContext());
-            layout.setCallbacks(this);
-            layout.setHTML(body.toString());
+            Step reviewDocStep = new Step(ConsentReviewDocumentScene.STEP_ID);
 
-            return layout;
+            ConsentReviewDocumentScene scene = new ConsentReviewDocumentScene(getContext());
+            scene.initialize(reviewDocStep, null);
+            scene.displayHTML(body.toString());
+            scene.setConfirmationDialogBody(step.getReasonForConsent());
+            scene.setCallbacks(this);
+            return scene;
         }
         else if (section == SECTION_REVIEW_NAME)
         {
@@ -123,22 +133,24 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
 
             List<FormScene.FormItem> items = new ArrayList<>();
             String placeholder = getResources().getString(R.string.consent_name_placeholder);
-
             String nameText = getResources().getString(R.string.consent_name_full);
             FormScene.FormItem givenName = new FormScene.FormItem(RESULT_ID_NAME, nameText, format, placeholder);
             items.add(givenName);
 
             formStep.setFormItems(items);
 
-            return new FormScene(getContext(), formStep, null);
+            FormScene scene = new FormScene(getContext());
+            scene.initialize(formStep, null);
+            return scene;
         }
         else if (section == SECTION_REVIEW_SIGNATURE)
         {
-            ConsentReviewSignatureScene layout = new ConsentReviewSignatureScene(getContext());
-            layout.setTitle(R.string.consent_signature_title);
-            layout.setSummary(R.string.consent_signature_instruction);
-            layout.setSkip(false, 0, null);
-            return layout;
+            ConsentReviewSignatureScene scene = new ConsentReviewSignatureScene(getContext());
+            scene.initialize(new Step(ConsentReviewSignatureScene.STEP_ID));
+            scene.setTitle(R.string.consent_signature_title);
+            scene.setSummary(R.string.consent_signature_instruction);
+            scene.setSkip(false, 0, null);
+            return scene;
         }
         else
         {
@@ -187,7 +199,18 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
 
         if (ConsentReviewDocumentScene.STEP_ID.equals(sceneStep.getIdentifier()))
         {
-            sigResult.setConsented(true);
+            boolean consented = (Boolean) sceneResult.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            sigResult.setConsented(consented);
+
+            if (consented)
+            {
+                sigResult.setConsented(consented);
+            }
+            else
+            {
+                getCallbacks().onCancelStep();
+            }
+
         }
         else if (STEP_ID_NAME_FORM.equals(sceneStep.getIdentifier()))
         {
@@ -206,27 +229,6 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
         {
             String message = "Result with ID:" + sceneStep.getIdentifier() + " not supported";
             DevUtils.throwUnsupportedOpException(message);
-        }
-    }
-
-    @Override
-    public void onNextStep(Step step)
-    {
-        if (step != null && step.getIdentifier().equals("consent_review_doc"))
-        {
-            ConsentReviewStep parentStep = (ConsentReviewStep) getStep();
-
-            new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
-                    .setTitle(R.string.consent_review_alert_title)
-                    .setMessage(parentStep.getReasonForConsent()).setCancelable(false)
-                    .setPositiveButton(R.string.agree, (dialog, which) -> {
-                        super.onNextStep(step);
-                    }).setNegativeButton(R.string.consent_review_cancel, null)
-                    .show();
-        }
-        else
-        {
-            super.onNextStep(step);
         }
     }
 

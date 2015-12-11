@@ -2,13 +2,12 @@ package co.touchlab.researchstack.glue.ui.scene;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 
@@ -18,9 +17,19 @@ import co.touchlab.researchstack.glue.R;
 public class SignInScene extends SceneImpl
 {
 
-    public SignInScene(Context context, Step step, StepResult result)
+    public SignInScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public SignInScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public SignInScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override

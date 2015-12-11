@@ -1,6 +1,7 @@
 package co.touchlab.researchstack.glue.ui.scene;
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.AttributeSet;
 
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
@@ -9,11 +10,40 @@ import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 
 public class ConsentQuizEvaluationScene extends SceneImpl
 {
-    public ConsentQuizEvaluationScene(Context context, Step step, ConsentQuizModel.EvaluationProperties properties, int attempt, int incorrect)
-    {
-        super(context, step, null);
 
-        Resources r = context.getResources();
+    private ConsentQuizModel.EvaluationProperties properties;
+    private int attempt;
+    private int incorrect;
+
+    public ConsentQuizEvaluationScene(Context context)
+    {
+        super(context);
+    }
+
+    public ConsentQuizEvaluationScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public ConsentQuizEvaluationScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public void initialize(Step step, ConsentQuizModel.EvaluationProperties properties, int attempt, int incorrect)
+    {
+        this.properties = properties;
+        this.attempt = attempt;
+        this.incorrect = incorrect;
+        super.initialize(step);
+    }
+
+    @Override
+    public void initializeScene()
+    {
+        super.initializeScene();
+
+        Resources r = getContext().getResources();
 
         // We have failed
         if(incorrect >= properties.maxIncorrect)
@@ -56,5 +86,4 @@ public class ConsentQuizEvaluationScene extends SceneImpl
             setNextButtonText(R.string.next);
         }
     }
-
 }

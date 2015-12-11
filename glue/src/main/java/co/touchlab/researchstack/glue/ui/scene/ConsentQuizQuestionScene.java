@@ -5,6 +5,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,33 +14,53 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 
 public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
 {
 
-    private final ConsentQuizModel.QuestionProperties properties;
-    private final ConsentQuizModel.QuizQuestion question;
+    private ConsentQuizModel.QuestionProperties properties;
+    private ConsentQuizModel.QuizQuestion question;
 
     private TextView answerExplanation;
     private ImageView answerIcon;
     private RadioGroup radioGroup;
 
-    public ConsentQuizQuestionScene(Context context, QuestionStep step, ConsentQuizModel.QuestionProperties properties, ConsentQuizModel.QuizQuestion question)
+    public ConsentQuizQuestionScene(Context context)
     {
-        super(context, step, null);
+        super(context);
+    }
 
+    public ConsentQuizQuestionScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public ConsentQuizQuestionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public void initialize(Step step, ConsentQuizModel.QuestionProperties properties, ConsentQuizModel.QuizQuestion question)
+    {
         this.properties = properties;
         this.question = question;
 
+        super.initialize(step);
+    }
+
+    @Override
+    public void initializeScene()
+    {
+        super.initializeScene();
+
         final SpannableString boldSpan = new SpannableString(
                 properties.introText + "\n\n" + question.question);
-        boldSpan.setSpan(new RelativeSizeSpan(.6f), 0, properties.introText.length(),
-                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        boldSpan.setSpan(new RelativeSizeSpan(.6f), 0, properties.introText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         setTitle(boldSpan);
     }
 

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import rx.functions.Action1;
 
 /***************************************************************************************************
  * TODO List
- * - Remove initialize() from constructor. Make into a public facing method so that users can
+ * - Remove initializeScene() from constructor. Make into a public facing method so that users can
  *   define layout in XML.
  ***************************************************************************************************/
 public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
@@ -33,7 +34,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
     public static final String TAG = SceneImpl.class.getSimpleName();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Data used to initialize and return
+    // Data used to initializeScene and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private Step step;
     private StepResult stepResult;
@@ -54,25 +55,37 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
     private TextView skip;
     private LinearLayout container;
 
-    public SceneImpl(Context context, Step step, StepResult result)
+    public SceneImpl(Context context)
     {
         super(context);
+    }
 
+    public SceneImpl(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public SceneImpl(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public void initialize(Step step)
+    {
+        initialize(step, null);
+    }
+
+    public void initialize(Step step, StepResult result)
+    {
         this.step = step;
         this.stepResult = result;
 
-        onPreInitialized();
-        initialize();
+        initializeScene();
     }
 
-    public void onPreInitialized()
+    public void initializeScene()
     {
-
-    }
-
-    public void initialize()
-    {
-        LogExt.i(getClass(), "initialize()");
+        LogExt.i(getClass(), "initializeScene()");
 
         if (getContext() instanceof SceneCallbacks)
         {
@@ -80,20 +93,32 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         }
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
+
+        LogExt.i(getClass(), "onCreateScene()");
         View scene = onCreateScene(inflater, this);
+
+        LogExt.i(getClass(), "onSceneCreated()");
         onSceneCreated(scene);
+
+        LogExt.i(getClass(), "onCreateBody()");
+        View body = onCreateBody(inflater, container);
+        if (body != null)
+        {
+            int bodyIndex = getPositionToInsertBody();
+            container.addView(body, bodyIndex);
+
+            LogExt.i(getClass(), "onBodyCreated()");
+            onBodyCreated(body);
+        }
     }
 
     public View onCreateScene(LayoutInflater inflater, ViewGroup parent)
     {
-        LogExt.i(getClass(), "onCreateScene()");
         return inflater.inflate(getRootLayoutResourceId(), parent, true);
     }
 
     public void onSceneCreated(View scene)
     {
-        LogExt.i(getClass(), "onSceneCreated()");
-
         View filler = findViewById(R.id.filler);
 
         container = (LinearLayout) findViewById(R.id.content_container);
@@ -139,27 +164,20 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
             skip.setVisibility(step.isOptional() ? View.VISIBLE : View.GONE);
             RxView.clicks(skip).subscribe(v -> onSkipClicked());
         }
-
-        initBody();
     }
 
-    private void initBody()
+    protected int getRootLayoutResourceId()
     {
-        LogExt.i(getClass(), "initBody()");
+        return R.layout.fragment_step;
+    }
 
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-
-        LogExt.i(getClass(), "onCreateBody()");
-        View body = onCreateBody(inflater, container);
-
-        //TODO This stinks when you want to dynamically
-        if (body != null)
-        {
-            int bodyIndex = getPositionToInsertBody();
-            container.addView(body, bodyIndex);
-
-            onBodyCreated(body);
-        }
+    //TODO Not sure how i feel about this method. Part of me says "OK", another says just return an
+    //TODO integer (aka magic number).
+    //TODO Consult Brad.
+    protected int getPositionToInsertBody()
+    {
+        LinearLayout stepViewContainer = (LinearLayout) findViewById(R.id.content_container);
+        return stepViewContainer.indexOfChild(moreInfo) + 1;
     }
 
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
@@ -209,18 +227,34 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         return this;
     }
 
-    protected int getRootLayoutResourceId()
+    /**
+     * Method allowing a scene to consume a back event.
+     * @return
+     */
+    @Override
+    public boolean isBackEventConsumed()
     {
-        return R.layout.fragment_step;
+        return false;
     }
 
-    //TODO Not sure how i feel about this method. Part of me says "OK", another says just return an
-    //TODO integer (aka magic number).
-    //TODO Consult Brad.
-    protected int getPositionToInsertBody()
+    public Step getStep()
     {
-        LinearLayout stepViewContainer = (LinearLayout) findViewById(R.id.content_container);
-        return stepViewContainer.indexOfChild(moreInfo) + 1;
+        return step;
+    }
+
+    public String getString(@StringRes int stringResId)
+    {
+        return getResources().getString(stringResId);
+    }
+
+    public StepResult initStepResult()
+    {
+        return new StepResult<T>(step.getIdentifier());
+    }
+
+    public void setStepResult(StepResult<T> result)
+    {
+        this.stepResult = result;
     }
 
     public StepResult<T> getStepResult()
@@ -233,14 +267,24 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         return stepResult;
     }
 
-    public void setStepResult(StepResult<T> result)
+    /**
+     * @return true to call through to host and start next scene.
+     */
+    public boolean isAnswerValid()
     {
-        this.stepResult = result;
+        return true;
     }
 
-    public StepResult initStepResult()
+    @Override
+    public SceneCallbacks getCallbacks()
     {
-        return new StepResult<T>(step.getIdentifier());
+        return callbacks;
+    }
+
+    @Override
+    public void setCallbacks(SceneCallbacks callbacks)
+    {
+        this.callbacks = callbacks;
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -346,33 +390,6 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         skip.setVisibility(View.GONE);
     }
 
-    /**
-     * @return true to call through to host and start next scene.
-     */
-    public boolean isAnswerValid()
-    {
-        return true;
-    }
-
-    public SceneCallbacks getCallbacks()
-    {
-        return callbacks;
-    }
-
-    public void setCallbacks(SceneCallbacks callbacks)
-    {
-        this.callbacks = callbacks;
-    }
-
-    /**
-     * Method allowing a scene to consume a back event.
-     * @return
-     */
-    public boolean isBackEventConsumed()
-    {
-        return false;
-    }
-
     @Override
     public Parcelable onSaveInstanceState() {
         LogExt.i(getClass(), "onSaveInstanceState()");
@@ -420,17 +437,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         }
 
         //TODO Make sure this works properly.
-        initialize();
-    }
-
-    public Step getStep()
-    {
-        return step;
-    }
-
-    public String getString(@StringRes int stringResId)
-    {
-        return getResources().getString(stringResId);
+        initializeScene();
     }
 
     private static class SceneSavedState extends BaseSavedState {

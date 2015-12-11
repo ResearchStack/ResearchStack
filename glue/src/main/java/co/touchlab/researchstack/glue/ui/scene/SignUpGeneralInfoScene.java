@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
@@ -34,18 +33,28 @@ public class SignUpGeneralInfoScene extends SceneImpl
     private AppCompatTextView birthdateTextView;
     private User user;
 
-    public SignUpGeneralInfoScene(Context context, Step step, StepResult result)
+    public SignUpGeneralInfoScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public SignUpGeneralInfoScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public SignUpGeneralInfoScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void onPreInitialized()
+    public void initializeScene()
     {
-        super.onPreInitialized();
         birthdate = new GregorianCalendar(1985,
                                           Calendar.OCTOBER,
                                           15);
+        super.initializeScene();
     }
 
     @Override

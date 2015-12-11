@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,23 @@ import android.widget.EditText;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
 
 public class TextQuestionScene extends SceneImpl<String>
 {
 
-    public TextQuestionScene(Context context, Step step, StepResult result)
+    public TextQuestionScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public TextQuestionScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public TextQuestionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override

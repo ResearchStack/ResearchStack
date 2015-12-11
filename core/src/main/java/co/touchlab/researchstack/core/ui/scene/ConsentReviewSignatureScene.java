@@ -2,6 +2,7 @@ package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.AttributeSet;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import java.io.ByteArrayOutputStream;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SignatureCallbacks;
 import co.touchlab.researchstack.core.ui.views.ConsentReviewSignatureView;
 
@@ -25,7 +25,17 @@ public class ConsentReviewSignatureScene extends SceneImpl
 
     public ConsentReviewSignatureScene(Context context)
     {
-        super(context, new Step(STEP_ID), null);
+        super(context);
+    }
+
+    public ConsentReviewSignatureScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public ConsentReviewSignatureScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override

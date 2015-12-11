@@ -1,6 +1,7 @@
 package co.touchlab.researchstack.glue.ui.scene;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
 import java.util.HashMap;
@@ -10,7 +11,6 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.MultiSubSectionScene;
 import co.touchlab.researchstack.core.ui.scene.Scene;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.glue.step.ConsentQuizStep;
@@ -22,20 +22,32 @@ public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
 {
     private static final String ID_RESULT = "result";
 
-    private HashMap<String, Boolean> results = new HashMap<>();
     private ConsentQuizModel model;
+    private HashMap<String, Boolean> results;
     private int attempt;
 
-    public ConsentQuizScene(Context context, Step step, StepResult result)
+    public ConsentQuizScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public ConsentQuizScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public ConsentQuizScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void onPreInitialized()
+    public void initializeScene()
     {
-        super.onPreInitialized();
+        results = new HashMap<>();
         model = ((ConsentQuizStep) getStep()).getModel();
+
+        super.initializeScene();
     }
 
     /**
@@ -50,8 +62,6 @@ public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
     @Override
     public Scene onCreateScene(LayoutInflater inflater, int position)
     {
-        SceneImpl scene;
-
         if (position < getSceneCount() - 1)
         {
             ConsentQuizModel.QuestionProperties properties = model.getQuestionProperties();
@@ -60,8 +70,10 @@ public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
             QuestionStep step = new QuestionStep(question.id, question.question);
             step.setOptional(false);
 
-            scene = new ConsentQuizQuestionScene(getContext(), step, properties, question);
+            ConsentQuizQuestionScene scene = new ConsentQuizQuestionScene(getContext());
+            scene.initialize(step, properties, question);
             scene.setNextButtonText(R.string.submit);
+            return scene;
         }
         else
         {
@@ -70,10 +82,11 @@ public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
 
             int incorrect = getIncorrectAnswerCount();
             ConsentQuizModel.EvaluationProperties properties = model.getEvaluationProperties();
-            scene = new ConsentQuizEvaluationScene(getContext(), step, properties, attempt, incorrect);
-        }
 
-        return scene;
+            ConsentQuizEvaluationScene scene = new ConsentQuizEvaluationScene(getContext());
+            scene.initialize(step, properties, attempt, incorrect);
+            return scene;
+        }
     }
 
     @Override

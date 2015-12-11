@@ -1,6 +1,7 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +11,23 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.step.Step;
 
 public class IntegerQuestionScene extends SceneImpl<Integer>
 {
 
-    public IntegerQuestionScene(Context context, Step step, StepResult result)
+    public IntegerQuestionScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public IntegerQuestionScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public IntegerQuestionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override

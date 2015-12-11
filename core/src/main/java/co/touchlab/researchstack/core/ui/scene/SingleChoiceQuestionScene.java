@@ -1,6 +1,7 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +13,25 @@ import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
 import co.touchlab.researchstack.core.model.TextChoice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.step.Step;
 
 public class SingleChoiceQuestionScene<T> extends SceneImpl<T>
 {
 
     private RadioGroup radioGroup;
 
-    public SingleChoiceQuestionScene(Context context, Step step, StepResult result)
+    public SingleChoiceQuestionScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public SingleChoiceQuestionScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public SingleChoiceQuestionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override

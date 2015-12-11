@@ -2,6 +2,7 @@ package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +17,29 @@ import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
 import co.touchlab.researchstack.core.model.TextChoice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.step.Step;
 
 public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
 {
     private List<T> results;
 
-    public MultiChoiceQuestionScene(Context context, Step step, StepResult<T[]> result)
+    public MultiChoiceQuestionScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public MultiChoiceQuestionScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public MultiChoiceQuestionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void onPreInitialized()
+    public void initializeScene()
     {
-        super.onPreInitialized();
-
         StepResult<T[]> result = getStepResult();
 
         results = new ArrayList<>();
@@ -44,6 +52,8 @@ public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
                 results.addAll(Arrays.asList(resultArray));
             }
         }
+
+        super.initializeScene();
     }
 
     /**

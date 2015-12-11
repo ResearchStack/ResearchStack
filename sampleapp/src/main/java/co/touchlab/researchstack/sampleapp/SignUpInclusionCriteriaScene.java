@@ -1,11 +1,10 @@
 package co.touchlab.researchstack.sampleapp;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RadioGroup;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.glue.ui.scene.AbstractSignUpInclusionCriteriaScene;
 
 /**
@@ -15,9 +14,19 @@ public class SignUpInclusionCriteriaScene extends AbstractSignUpInclusionCriteri
 {
     private RadioGroup humanRadioGroup;
 
-    public SignUpInclusionCriteriaScene(Context context, Step step, StepResult result)
+    public SignUpInclusionCriteriaScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public SignUpInclusionCriteriaScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public SignUpInclusionCriteriaScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override

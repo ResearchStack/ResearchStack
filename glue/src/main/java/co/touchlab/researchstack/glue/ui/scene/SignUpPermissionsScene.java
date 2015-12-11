@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,6 @@ import android.view.ViewGroup;
 import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
@@ -26,15 +25,31 @@ public class SignUpPermissionsScene extends SceneImpl
     private AppCompatButton permissionButton;
     private ActivityCallback permissionCallback;
 
-    public SignUpPermissionsScene(Context context, Step step, StepResult result)
+    public SignUpPermissionsScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
 
+    public SignUpPermissionsScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public SignUpPermissionsScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    public void initializeScene()
+    {
         //TODO Fix this, very disgusting
-        if (context instanceof ActivityCallback)
+        if (getContext() instanceof ActivityCallback)
         {
-            permissionCallback = (ActivityCallback) context;
+            permissionCallback = (ActivityCallback) getContext();
         }
+
+        super.initializeScene();
     }
 
     @Override

@@ -2,6 +2,7 @@ package co.touchlab.researchstack.core.ui.scene;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +22,26 @@ import co.touchlab.researchstack.core.step.FormStep;
 public class FormScene extends SceneImpl
 {
 
-    public FormScene(Context context, FormStep step, StepResult result)
+
+    public FormScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public FormScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public FormScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    public void initializeScene()
+    {
+        super.initializeScene();
 
         setTitle(getStep().getTitle());
         setSummary(getStep().getText());

@@ -2,20 +2,29 @@ package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.AttributeSet;
 import android.view.View;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.ConsentSharingStep;
-import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 
 public class ConsentSharingScene extends SingleChoiceQuestionScene
 {
 
-    public ConsentSharingScene(Context context, Step step, StepResult result)
+    public ConsentSharingScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public ConsentSharingScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public ConsentSharingScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override

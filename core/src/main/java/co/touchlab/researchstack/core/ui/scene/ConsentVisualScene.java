@@ -1,6 +1,7 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
 import co.touchlab.researchstack.core.R;
@@ -14,16 +15,27 @@ public class ConsentVisualScene extends MultiSubSectionScene
 {
     private ConsentDocument document;
 
-    public ConsentVisualScene(Context context, Step step, StepResult result)
+    public ConsentVisualScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public ConsentVisualScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public ConsentVisualScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void onPreInitialized()
+    public void initializeScene()
     {
-        super.onPreInitialized();
         document = ((ConsentVisualStep) getStep()).getDocument();
+
+        super.initializeScene();
     }
 
     @Override
@@ -36,7 +48,9 @@ public class ConsentVisualScene extends MultiSubSectionScene
     public SceneImpl onCreateScene(LayoutInflater inflater, int scenePos)
     {
         ConsentSection section = document.getSections().get(scenePos);
-        SceneImpl scene = new ConsentVisualSectionScene(getContext(), new Step("consent_visual" + scenePos), section);
+        ConsentVisualSectionScene scene = new ConsentVisualSectionScene(getContext());
+        scene.initialize(new Step("consent_visual_" + scenePos), section);
+
         String nextTitle = getString(R.string.next);
         if (section.getType() == ConsentSection.Type.Overview)
         {

@@ -1,6 +1,7 @@
 package co.touchlab.researchstack.core.ui.scene;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +17,23 @@ import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.step.Step;
 
 public class DateQuestionScene extends SceneImpl<String>
 {
 
-    public DateQuestionScene(Context context, Step step, StepResult result)
+    public DateQuestionScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public DateQuestionScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public DateQuestionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override

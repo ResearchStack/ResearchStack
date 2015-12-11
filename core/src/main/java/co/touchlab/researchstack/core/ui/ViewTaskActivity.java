@@ -152,10 +152,13 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
             // Get result from the TaskResult, can be null
             StepResult result = taskResult.getStepResultForStepIdentifier(step.getIdentifier());
 
-            // Return the View
+            // Return the Class & constructor
             Class cls = step.getSceneClass();
-            Constructor constructor = cls.getConstructor(Context.class, Step.class, StepResult.class);
-            Scene scene = (Scene) constructor.newInstance(this, step, result);
+            Constructor constructor = cls.getConstructor(Context.class);
+
+            //Init constructor and init
+            Scene scene = (Scene) constructor.newInstance(this);
+            scene.initialize(step, result);
             scene.setCallbacks(this);
 
             return scene;
@@ -165,10 +168,13 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         catch(Exception e)
         {
             LogExt.e(getClass(), e);
+            //throw new RuntimeException(e);
         }
 
         LogExt.d(getClass(), "No implementation for this step " + step.getIdentifier());
-        return new NotImplementedScene(this, step == null ? new Step("NullStep") : step, null);
+        NotImplementedScene scene = new NotImplementedScene(this);
+        scene.initialize(step == null ? new Step("NullStep") : step);
+        return scene;
     }
 
     @Override

@@ -1,14 +1,13 @@
 package co.touchlab.researchstack.glue.ui.scene;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
@@ -20,15 +19,30 @@ public class SignUpEligibleScene extends SceneImpl
 
     private ActivityCallback permissionCallback;
 
-    public SignUpEligibleScene(Context context, Step step, StepResult result)
+    public SignUpEligibleScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
 
-        //TODO Fix this, very disgusting
-        if (context instanceof ActivityCallback)
+    public SignUpEligibleScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public SignUpEligibleScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    public void initializeScene()
+    {
+        if (getContext() instanceof ActivityCallback)
         {
-            permissionCallback = (ActivityCallback) context;
+            permissionCallback = (ActivityCallback) getContext();
         }
+
+        super.initializeScene();
     }
 
     @Override

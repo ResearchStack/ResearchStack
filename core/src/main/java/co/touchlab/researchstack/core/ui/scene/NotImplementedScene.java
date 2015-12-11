@@ -1,21 +1,29 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
-
 @Deprecated
 public class NotImplementedScene extends SceneImpl<String>
 {
 
-    public NotImplementedScene(Context context, Step step, StepResult result)
+    public NotImplementedScene(Context context)
     {
-        super(context, step, result);
+        super(context);
+    }
+
+    public NotImplementedScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public NotImplementedScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
