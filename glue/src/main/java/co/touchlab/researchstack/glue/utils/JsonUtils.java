@@ -17,18 +17,24 @@ public class JsonUtils
 {
     static Gson gson = new GsonBuilder().setDateFormat("MMM yyyy").create();
 
-    public static <T> T loadClassFromRawJson(Context context, Class<T> clazz, String filename)
+    /**
+     *
+     * @param context
+     * @param clazz
+     * @param filename
+     * @param <T>
+     * @return
+     */
+    public static <T> T loadClass(Context context, Class<T> clazz, String filename)
     {
         int rawFileId = context.getResources()
                 .getIdentifier("raw/" + filename,
                         "raw",
                         context.getPackageName());
-        return loadClassFromRawJson(context,
-                clazz,
-                rawFileId);
+        return loadClass(context, clazz, rawFileId);
     }
 
-    public static <T> T loadClassFromRawJson(Context context, Class<T> clazz, int id)
+    public static <T> T loadClass(Context context, Class<T> clazz, int id)
     {
         InputStream stream = context.getResources().openRawResource(id);
         Reader reader = null;

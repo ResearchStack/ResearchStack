@@ -16,6 +16,7 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
  * allow activity to swap to previous step. Else, let {@link MultiSubSectionScene} go back a {@link SceneImpl}.
  */
 
+@Deprecated
 public abstract class MultiSubSectionScene<T> extends SceneImpl<T> implements SceneCallbacks
 {
     private SceneAnimator animator;

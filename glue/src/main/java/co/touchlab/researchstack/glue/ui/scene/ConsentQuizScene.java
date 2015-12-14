@@ -18,6 +18,7 @@ import co.touchlab.researchstack.glue.step.ConsentQuizStep;
 /**
  * TODO Save attempt in SaveState
  */
+@Deprecated
 public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
 {
     private static final String ID_RESULT = "result";
@@ -77,7 +78,7 @@ public class ConsentQuizScene extends MultiSubSectionScene<Boolean>
         }
         else
         {
-            QuestionStep step = new QuestionStep(ID_RESULT);
+            Step step = new Step(ID_RESULT);
             step.setOptional(false);
 
             int incorrect = getIncorrectAnswerCount();

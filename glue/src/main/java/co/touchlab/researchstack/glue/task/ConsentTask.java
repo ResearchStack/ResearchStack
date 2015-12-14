@@ -2,11 +2,6 @@ package co.touchlab.researchstack.glue.task;
 import android.content.Context;
 import android.content.res.Resources;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSectionModel;
@@ -18,14 +13,20 @@ import co.touchlab.researchstack.core.step.ConsentSharingStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.OrderedTask;
+import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
-import co.touchlab.researchstack.glue.step.ConsentQuizStep;
+import co.touchlab.researchstack.glue.step.ConsentQuizEvaluationStep;
+import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
+import co.touchlab.researchstack.glue.ui.scene.ConsentQuizEvaluationScene;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 
 public class ConsentTask extends OrderedTask
 {
+    private static final String ID_FIRST_QUESTION = "FIRST_QUESTION";
+    private static final String ID_QUIZ_RESULT = "ID_QUIZ_RESULT";
+    private static final String ID_VISUAL = "ID_VISUAL";
 
     public ConsentTask(Context context)
     {
@@ -36,9 +37,7 @@ public class ConsentTask extends OrderedTask
 
         //TODO Read on main thread for intense UI blockage.
         ConsentSectionModel data = JsonUtils
-                .loadClassFromRawJson(context,
-                        ConsentSectionModel.class,
-                        researchStack.getConsentSections());
+                .loadClass(context, ConsentSectionModel.class, researchStack.getConsentSections());
 
         ConsentSignature signature = new ConsentSignature("participant",
                                                           r.getString(R.string.participant), null);
@@ -54,46 +53,107 @@ public class ConsentTask extends OrderedTask
 
         String htmlDocName = data.getDocumentProperties().getHtmlDocument();
         int id = context.getResources().getIdentifier(htmlDocName, "raw", context.getPackageName());
-        consent.setHtmlReviewContent(getStringResource(context, id));
+        consent.setHtmlReviewContent(ResUtils.getStringResource(context, id));
 
-        ConsentVisualStep visualStep = new ConsentVisualStep("visual", consent);
+
+        ConsentVisualStep visualStep = new ConsentVisualStep(ID_VISUAL, consent);
         addStep(visualStep);
 
-        ConsentSharingStep sharingStep = new ConsentSharingStep("sharing", r,
-                                                                data.getDocumentProperties());
+        ConsentSharingStep sharingStep = new ConsentSharingStep("sharing", r, data.getDocumentProperties());
         addStep(sharingStep);
 
-        ConsentQuizModel quizModel = JsonUtils.loadClassFromRawJson(context,
-                ConsentQuizModel.class,
-                researchStack.getQuizSections());
-        ConsentQuizStep quizStep = new ConsentQuizStep("quiz", quizModel);
-        addStep(quizStep);
+        initQuizSteps(context, researchStack);
 
         String reasonForConsent = r.getString(R.string.consent_review_reason);
         ConsentReviewStep reviewStep = new ConsentReviewStep("reviewStep", signature, consent, reasonForConsent);
         addStep(reviewStep);
     }
 
+    private void initQuizSteps(Context ctx, ResearchStack rs)
+    {
+        ConsentQuizModel model = JsonUtils.loadClass(ctx, ConsentQuizModel.class, rs.getQuizSections());
+
+        for(int i = 0; i < model.getQuestions().size(); i++)
+        {
+            ConsentQuizModel.QuizQuestion question = model.getQuestions().get(i);
+            if (i == 0)
+            {
+                question.id = ID_FIRST_QUESTION;
+            }
+            ConsentQuizQuestionStep quizStep = new ConsentQuizQuestionStep(
+                    question.id, model.getQuestionProperties(), question);
+            addStep(quizStep);
+        }
+
+        ConsentQuizEvaluationStep evaluationStep = new ConsentQuizEvaluationStep(
+                ID_QUIZ_RESULT, model.getEvaluationProperties());
+        addStep(evaluationStep);
+    }
+
+    /**
+     * TODO Fix multiple points of truth when figuring out the attempt & incorrect count.
+     *
+     * @param step
+     * @param result
+     * @return
+     */
     @Override
     public Step getStepAfterStep(Step step, TaskResult result)
     {
         if(step != null)
         {
-            LogExt.i(getClass(), "getStepAfterStep " + step.getIdentifier());
-
-            if(step instanceof ConsentQuizStep)
+            // First, we get the evaluation step and increase the amount of incorrect answers if
+            // needed
+            if (step instanceof ConsentQuizQuestionStep)
             {
-                LogExt.i(getClass(), "step is ConsentQuizStep");
+                ConsentQuizQuestionStep firstQuestion = (ConsentQuizQuestionStep)
+                        getStepWithIdentifier(ID_FIRST_QUESTION);
+                int incorrectAnswers = getQuestionIncorrectCount(result, firstQuestion, 0);
 
-                boolean passed = (boolean) result
-                        .getStepResult(step.getIdentifier()).getResult();
+                LogExt.i(getClass(), "Quiz question answered. Number of incorrect: " + incorrectAnswers);
 
-                LogExt.i(getClass(), "ConsentQuizStep result is " + passed);
+                ConsentQuizEvaluationStep evaluationStep = (ConsentQuizEvaluationStep)
+                        getStepWithIdentifier(ID_QUIZ_RESULT);
+                evaluationStep.setIncorrectCount(incorrectAnswers);
+            }
 
-                if(! passed)
+            // If this is the ConsentQuizEvaluationStep, we need to check if the user has passed
+            // or failed the quiz. If they have have failed, AND it was their first attempt, let the
+            // user retake the quiz. If attempts > 1, they must go through the visual consent steps
+            // another time
+            else if(step instanceof ConsentQuizEvaluationStep)
+            {
+                StepResult<Boolean> stepResult = result.getStepResult(step.getIdentifier());
+
+                boolean quizPassed = stepResult.getResultForIdentifier(
+                        ConsentQuizEvaluationScene.KEY_RESULT_PASS);
+
+                boolean exceedsAttempts = stepResult.getResultForIdentifier(
+                        ConsentQuizEvaluationScene.KEY_RESULT_EXCEED_ATTEMPS);
+
+                LogExt.i(getClass(), "Quiz has passed: " + quizPassed);
+
+                if(! quizPassed)
                 {
-                    LogExt.i(getClass(), "Quiz failed, going back to visual step");
-                    return getStepWithIdentifier("visual");
+                    // TODO Clearing incorrect count causes multiple sources of truth
+                    ConsentQuizEvaluationStep evaluationStep = (ConsentQuizEvaluationStep) step;
+                    evaluationStep.setIncorrectCount(0);
+
+                    Step firstQuestion = getStepWithIdentifier(ID_FIRST_QUESTION);
+                    clearQuestionIncorrectCount(result, firstQuestion);
+
+                    if (exceedsAttempts)
+                    {
+                        LogExt.i(getClass(), "Quiz attempts exceeded, starting visual");
+                        evaluationStep.setAttempt(0);
+                        return getStepWithIdentifier(ID_VISUAL);
+                    }
+                    else
+                    {
+                        LogExt.i(getClass(), "Restarting quiz");
+                        evaluationStep.setAttempt(1);
+                        return firstQuestion;
+                    }
                 }
             }
         }
@@ -101,56 +161,48 @@ public class ConsentTask extends OrderedTask
         return super.getStepAfterStep(step, result);
     }
 
+    private void clearQuestionIncorrectCount(TaskResult result, Step step)
+    {
+        if (step != null)
+        {
+            boolean isQuestion = step instanceof ConsentQuizQuestionStep;
+            boolean isEvaluation = step instanceof ConsentQuizEvaluationStep;
+
+            if (isQuestion || isEvaluation)
+            {
+                // Remove the result
+                result.setStepResultForStepIdentifier(step.getIdentifier(), null);
+
+                if (isQuestion)
+                {
+                    // Clear the next step
+                    Step next = super.getStepAfterStep(step, result);
+                    clearQuestionIncorrectCount(result, next);
+                }
+            }
+        }
+    }
+
+    private int getQuestionIncorrectCount(TaskResult result, Step step, int count)
+    {
+        if (step != null && step instanceof ConsentQuizQuestionStep)
+        {
+            StepResult stepResult = result.getStepResult(step.getIdentifier());
+            if (stepResult != null)
+            {
+                boolean correct = (boolean) stepResult.getResult();
+                Step next = super.getStepAfterStep(step, result);
+                return getQuestionIncorrectCount(result, next, count + (correct ? 0 : 1));
+            }
+        }
+
+        return count;
+    }
+
     @Override
     public Step getStepBeforeStep(Step step, TaskResult result)
     {
         return super.getStepBeforeStep(step, result);
-    }
-
-    public String getStringResource(Context ctx, int id)
-    {
-        return new String(getResource(id, ctx), Charset.forName("UTF-8"));
-    }
-
-    public byte[] getResource(int id, Context context)
-    {
-        InputStream is =  context.getResources().openRawResource(id);
-        ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
-
-        byte[] readBuffer = new byte[4 * 1024];
-
-        try
-        {
-            int read;
-            do
-            {
-                read = is.read(readBuffer, 0, readBuffer.length);
-                if(read == - 1)
-                {
-                    break;
-                }
-                byteOutput.write(readBuffer, 0, read);
-            }
-            while(true);
-
-            return byteOutput.toByteArray();
-        }
-        catch(IOException e)
-        {
-            LogExt.e(getClass(), e);
-        }
-        finally
-        {
-            try
-            {
-                is.close();
-            }
-            catch(IOException e)
-            {
-                LogExt.e(getClass(), e);
-            }
-        }
-        return null;
     }
 
     //  -(ORKStep *)stepBeforeStep:(ORKStep *)__unused step withResult:(ORKTaskResult *)__unused result{

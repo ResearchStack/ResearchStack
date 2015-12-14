@@ -85,6 +85,6 @@ public class ViewLicensesActivity extends AppCompatActivity
     private StudyOverviewModel parseSectionModel()
     {
         int fileResId = ResearchStack.getInstance().getLicenseSections();
-        return JsonUtils.loadClassFromRawJson(this, StudyOverviewModel.class, fileResId);
+        return JsonUtils.loadClass(this, StudyOverviewModel.class, fileResId);
     }
 }

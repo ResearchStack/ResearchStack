@@ -5,6 +5,7 @@ import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.glue.ui.scene.ConsentQuizScene;
 
+@Deprecated
 public class ConsentQuizStep extends QuestionStep
 {
     private ConsentQuizModel model;

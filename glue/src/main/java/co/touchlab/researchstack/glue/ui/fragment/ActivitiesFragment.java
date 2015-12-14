@@ -49,9 +49,9 @@ public class ActivitiesFragment extends Fragment
 
     private ArrayList<SchedulesAndTasksModel.TaskModel> loadTasksAndSchedules()
     {
-        SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClassFromRawJson(getContext(),
-                SchedulesAndTasksModel.class,
-                "tasks_and_schedules");
+        SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(getContext(),
+                                                                            SchedulesAndTasksModel.class,
+                                                                            "tasks_and_schedules");
         Map<String, TaskRecord> latestForAllTypes = StorageManager
                 .getAppDatabase()
                 .findLatestForAllTypes();
@@ -116,9 +116,8 @@ public class ActivitiesFragment extends Fragment
                 // TODO to do something with the activity result later
                 LogExt.d(getClass(),
                         "Item clicked: " + task.taskID);
-                TaskModel taskModel = JsonUtils.loadClassFromRawJson(v.getContext(),
-                        TaskModel.class,
-                        task.taskFileName);
+                TaskModel taskModel = JsonUtils.loadClass(v.getContext(), TaskModel.class,
+                                                          task.taskFileName);
                 SmartSurveyTask newTask = new SmartSurveyTask(taskModel, task.taskID);
 
                 v.getContext()

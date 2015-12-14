@@ -3,13 +3,18 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
 
+import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
+import co.touchlab.researchstack.glue.step.ConsentQuizEvaluationStep;
 
-public class ConsentQuizEvaluationScene extends SceneImpl
+public class ConsentQuizEvaluationScene extends SceneImpl<Boolean>
 {
+
+    public static final String KEY_RESULT_PASS = "KEY_RESULT_PASS";
+    public static final String KEY_RESULT_EXCEED_ATTEMPS = "KEY_RESULT_EXCEED_ATTEMPS";
 
     private ConsentQuizModel.EvaluationProperties properties;
     private int attempt;
@@ -30,6 +35,17 @@ public class ConsentQuizEvaluationScene extends SceneImpl
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    public void initialize(Step step, StepResult result)
+    {
+        this.properties = ((ConsentQuizEvaluationStep)step).getQuestionProperties();
+        this.attempt = ((ConsentQuizEvaluationStep)step).getAttempt();
+        this.incorrect = ((ConsentQuizEvaluationStep)step).getIncorrect();
+
+        super.initialize(step, result);
+    }
+
+    @Deprecated
     public void initialize(Step step, ConsentQuizModel.EvaluationProperties properties, int attempt, int incorrect)
     {
         this.properties = properties;
@@ -86,4 +102,14 @@ public class ConsentQuizEvaluationScene extends SceneImpl
             setNextButtonText(R.string.next);
         }
     }
+
+    @Override
+    public StepResult<Boolean> getStepResult()
+    {
+        StepResult<Boolean> result = super.getStepResult();
+        result.setResultForIdentifier(KEY_RESULT_PASS, incorrect < properties.maxIncorrect);
+        result.setResultForIdentifier(KEY_RESULT_EXCEED_ATTEMPS, attempt >= 1);
+        return result;
+    }
+
 }
