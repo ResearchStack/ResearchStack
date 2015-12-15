@@ -88,4 +88,9 @@ public class ResUtils
     {
         return new String(getResource(ctx, id), Charset.forName("UTF-8"));
     }
+
+    public static int getRawResourceId(Context context, String name)
+    {
+        return context.getResources().getIdentifier(name, "raw", context.getPackageName());
+    }
 }
