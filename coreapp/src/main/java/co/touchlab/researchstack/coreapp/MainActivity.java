@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
@@ -104,8 +102,7 @@ public class MainActivity extends PassCodeActivity
 
     private void initViews()
     {
-        LogExt.d(getClass(),
-                "onDataReady");
+        LogExt.d(getClass(), "onDataReady");
         AppPrefs prefs = AppPrefs.getInstance(this);
         if (prefs.hasConsented())
         {
@@ -133,9 +130,7 @@ public class MainActivity extends PassCodeActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode,
-                resultCode,
-                data);
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CONSENT && resultCode == RESULT_OK)
         {
@@ -152,20 +147,16 @@ public class MainActivity extends PassCodeActivity
         ConsentDocument document = new ConsentDocument();
         document.setTitle("Demo Consent");
         document.setSignaturePageTitle(R.string.consent);
-        ArrayList<ConsentSection> sections = new ArrayList<>();
 
         // Create consent visual sections
         ConsentSection section1 = new ConsentSection(ConsentSection.Type.DataGathering);
         section1.setTitle("The title of the section goes here ...");
         section1.setSummary("The summary about the section goes here ...");
         section1.setContent("The content to show in learn more ...");
-        sections.add(section1);
 
         // ...add more sections as needed, then create a visual consent step
-
-        document.setSections(sections);
-        ConsentVisualStep step = new ConsentVisualStep("visual_consent_identifier",
-                document);
+        ConsentVisualStep step = new ConsentVisualStep("visual_consent_identifier", section1);
+        step.setNextButtonString(getString(R.string.next));
 
         // Create consent signature object and set what info is required
         ConsentSignature signature = new ConsentSignature();

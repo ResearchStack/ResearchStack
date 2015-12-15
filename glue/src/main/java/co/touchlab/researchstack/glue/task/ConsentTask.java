@@ -4,6 +4,7 @@ import android.content.res.Resources;
 
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
+import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSectionModel;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.StepResult;
@@ -55,9 +56,7 @@ public class ConsentTask extends OrderedTask
         int id = context.getResources().getIdentifier(htmlDocName, "raw", context.getPackageName());
         consent.setHtmlReviewContent(ResUtils.getStringResource(context, id));
 
-
-        ConsentVisualStep visualStep = new ConsentVisualStep(ID_VISUAL, consent);
-        addStep(visualStep);
+        initVisualSteps(context, consent);
 
         ConsentSharingStep sharingStep = new ConsentSharingStep("sharing", r, data.getDocumentProperties());
         addStep(sharingStep);
@@ -67,6 +66,28 @@ public class ConsentTask extends OrderedTask
         String reasonForConsent = r.getString(R.string.consent_review_reason);
         ConsentReviewStep reviewStep = new ConsentReviewStep("reviewStep", signature, consent, reasonForConsent);
         addStep(reviewStep);
+    }
+
+    private void initVisualSteps(Context ctx, ConsentDocument doc)
+    {
+        for(int i = 0, size = doc.getSections().size(); i < size; i++)
+        {
+            ConsentSection section = doc.getSections().get(i);
+            ConsentVisualStep step = new ConsentVisualStep("consent_" + i, section);
+
+            String nextString = ctx.getString(R.string.next);
+            if(section.getType() == ConsentSection.Type.Overview)
+            {
+                nextString = ctx.getString(R.string.button_get_started);
+            }
+            else if(i == size - 1)
+            {
+                nextString = ctx.getString(R.string.button_done);
+            }
+            step.setNextButtonString(nextString);
+
+            addStep(step);
+        }
     }
 
     private void initQuizSteps(Context ctx, ResearchStack rs)
