@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.task.Task;
@@ -57,10 +56,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                     ViewTaskActivity.EXTRA_TASK_RESULT);
 
             boolean sharing = (boolean) result.getStepResult(ConsentTask.ID_SHARING).getResult();
-            LogExt.d(getClass(), "Consent: Share with Partners - " + sharing);
-
             boolean consented = (boolean) result.getStepResult(ConsentTask.ID_CONSENT_DOC).getResult();
-            LogExt.d(getClass(), "Consent: User Consented - " + consented);
 
             if (ResearchStack.getInstance().getCurrentUser() == null)
             {
@@ -75,10 +71,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 TextQuestionResult formResult = (TextQuestionResult) result
                         .getStepResult(ConsentTask.ID_FORM_NAME).getResult();
                 String fullName = formResult.getTextAnswer();
-                LogExt.d(getClass(), "Consent: User's name - " + fullName);
-
                 String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE).getResult();
-                LogExt.d(getClass(), "Consent: User's sig - " + base64Image);
 
                 // TODO get signature date
                 currentUser.setName(fullName);
