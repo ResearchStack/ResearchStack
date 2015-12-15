@@ -9,24 +9,31 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Collections;
+
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSignature;
-import co.touchlab.researchstack.core.result.ConsentSignatureResult;
 import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.step.ConsentReviewStep;
+import co.touchlab.researchstack.core.result.TextQuestionResult;
+import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
+import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.InstructionStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
+import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
+import co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene;
+import co.touchlab.researchstack.core.ui.scene.FormScene;
 
 public class MainActivity extends PassCodeActivity
 {
@@ -155,26 +162,53 @@ public class MainActivity extends PassCodeActivity
         section1.setContent("The content to show in learn more ...");
 
         // ...add more sections as needed, then create a visual consent step
-        ConsentVisualStep step = new ConsentVisualStep("visual_consent_identifier", section1);
-        step.setNextButtonString(getString(R.string.next));
+        ConsentVisualStep visualStep = new ConsentVisualStep("visual_consent_identifier", section1);
+        visualStep.setNextButtonString(getString(R.string.next));
 
         // Create consent signature object and set what info is required
         ConsentSignature signature = new ConsentSignature();
         signature.setRequiresName(true);
         signature.setRequiresSignatureImage(true);
 
-        // Create consent review step with signature and document
-        ConsentReviewStep reviewStep = new ConsentReviewStep("consent_review",
-                signature,
-                document,
-                "Reason for consent goes here");
-        reviewStep.setText("Review step title");
+        // Create our HTML to show the user and have them accept or decline.
+        StringBuilder docBuilder = new StringBuilder("</br><div style=\"padding: 10px 10px 10px 10px;\" class='header'>");
+        String title = getString(R.string.consent_review_title);
+        docBuilder.append(String.format(
+                "<h1 style=\"text-align: center; font-family:sans-serif-light;\">%1$s</h1>", title));
+        String detail =  getString(R.string.consent_review_instruction);
+        docBuilder.append(String.format("<p style=\"text-align: center\">%1$s</p>", detail));
+        docBuilder.append("</div></br>");
+        docBuilder.append("<div><h2> HTML Consent Doc goes here </h2></div>");
 
-        // Finally, create and present a task including this step.
-        Task consentTask = new OrderedTask("consent",
-                "consent",
-                step,
-                reviewStep);
+        // Create the Consent doc step, pass in our HTML doc
+        ConsentReviewDocumentStep documentStep = new ConsentReviewDocumentStep("consent_doc");
+        documentStep.setConsentHTML(docBuilder.toString());
+        documentStep.setConfirmMessage(getString(R.string.consent_review_reason));
+
+        // Create Consent form step, to get users first & last name
+        FormStep formStep = new FormStep("form_step", "Form Title", "Form step description");
+        formStep.setSceneTitle(R.string.consent);
+
+        TextAnswerFormat format = new TextAnswerFormat();
+        format.setIsMultipleLines(false);
+
+        FormScene.FormItem fullName = new FormScene.FormItem(
+                formStep.getIdentifier(), "Full name", format, "Required");
+        formStep.setFormItems(Collections.singletonList(fullName));
+
+        // Create Consent signature step, user can sign their name
+        Step signatureStep = new Step("signature");
+        signatureStep.setTitle(getString(R.string.consent_signature_title));
+        signatureStep.setText(getString(R.string.consent_signature_instruction));
+        signatureStep.setOptional(false);
+        signatureStep.setSceneClass(ConsentReviewSignatureScene.class);
+
+        // Finally, create and present a task including these steps.
+        Task consentTask = new OrderedTask("consent", "consent",
+                visualStep,
+                documentStep,
+                formStep,
+                signatureStep);
 
         // Launch using hte ViewTaskActivity and make sure to listen for the activity result
         Intent intent = ViewTaskActivity.newIntent(this,
@@ -185,25 +219,22 @@ public class MainActivity extends PassCodeActivity
 
     private void processConsentResult(TaskResult result)
     {
-        ConsentSignatureResult signatureResult = (ConsentSignatureResult) result.getStepResult("consent_review")
-                .getResult();
-        ConsentSignature signature = signatureResult.getSignature();
-        boolean consented = signatureResult.isConsented();
+        boolean consented = (boolean) result.getStepResult("consent_doc").getResult();
 
-        // TODO consented was always false, so i made this always true, fix when consented is fixed
-        if (true || consented)
+        if (consented)
         {
-            String fullName = signature.getFullName();
-            String signatureBase64 = signature.getSignatureImage();
+            TextQuestionResult formResult = (TextQuestionResult) result.getStepResult("form_step")
+                    .getResult();
+            String fullName = formResult.getTextAnswer();
+
+            String signatureBase64 = (String) result.getStepResult("signature").getResult();
 
             AppPrefs prefs = AppPrefs.getInstance(this);
             prefs.setHasConsented(true);
 
-            saveString("/consented_name",
-                    fullName);
+            saveString("/consented_name", fullName);
 
-            saveString("/consented_signature",
-                    signatureBase64);
+            saveString("/consented_signature", signatureBase64);
 
             initViews();
         }

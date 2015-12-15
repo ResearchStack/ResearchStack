@@ -2,6 +2,9 @@ package co.touchlab.researchstack.glue.task;
 import android.content.Context;
 import android.content.res.Resources;
 
+import java.util.Collections;
+
+import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
@@ -9,11 +12,14 @@ import co.touchlab.researchstack.core.model.ConsentSectionModel;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.step.ConsentReviewStep;
+import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
 import co.touchlab.researchstack.core.step.ConsentSharingStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
+import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.OrderedTask;
+import co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene;
+import co.touchlab.researchstack.core.ui.scene.FormScene;
 import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
@@ -25,13 +31,20 @@ import co.touchlab.researchstack.glue.utils.JsonUtils;
 
 public class ConsentTask extends OrderedTask
 {
-    private static final String ID_FIRST_QUESTION = "FIRST_QUESTION";
-    private static final String ID_QUIZ_RESULT = "ID_QUIZ_RESULT";
-    private static final String ID_VISUAL = "ID_VISUAL";
+    public static final String SCHEDULE_ID_CONSENT = "consent";
+
+    public static final String ID_CONSENT = "consent";
+    public static final String ID_VISUAL = "ID_VISUAL";
+    public static final String ID_FIRST_QUESTION = "FIRST_QUESTION";
+    public static final String ID_QUIZ_RESULT = "ID_QUIZ_RESULT";
+    public static final String ID_SHARING = "ID_SHARING";
+    public static final String ID_CONSENT_DOC = "consent_review_doc";
+    public static final String ID_FORM_NAME = "ID_FORM_NAME";
+    public static final String ID_SIGNATURE = "ID_SIGNATURE";
 
     public ConsentTask(Context context)
     {
-        super("consent", "consent");
+        super(ID_CONSENT, SCHEDULE_ID_CONSENT);
 
         ResearchStack researchStack = ResearchStack.getInstance();
         Resources r = context.getResources();
@@ -45,27 +58,24 @@ public class ConsentTask extends OrderedTask
         signature.setRequiresSignatureImage(
                 ResearchStack.getInstance().isSignatureEnabledInConsent());
 
-        ConsentDocument consent = new ConsentDocument();
-        consent.setTitle(r.getString(R.string.consent_name_title));
-        consent.setSignaturePageTitle(R.string.consent_name_title);
-        consent.setSignaturePageContent(r.getString(R.string.consent_signature_content));
-        consent.setSections(data.getSections());
-        consent.addSignature(signature);
+        ConsentDocument doc = new ConsentDocument();
+        doc.setTitle(r.getString(R.string.consent_name_title));
+        doc.setSignaturePageTitle(R.string.consent_name_title);
+        doc.setSignaturePageContent(r.getString(R.string.consent_signature_content));
+        doc.setSections(data.getSections());
+        doc.addSignature(signature);
 
         String htmlDocName = data.getDocumentProperties().getHtmlDocument();
-        int id = context.getResources().getIdentifier(htmlDocName, "raw", context.getPackageName());
-        consent.setHtmlReviewContent(ResUtils.getStringResource(context, id));
+        int id = ResUtils.getRawResourceId(context, htmlDocName);
+        doc.setHtmlReviewContent(ResUtils.getStringResource(context, id));
 
-        initVisualSteps(context, consent);
+        initVisualSteps(context, doc);
 
-        ConsentSharingStep sharingStep = new ConsentSharingStep("sharing", r, data.getDocumentProperties());
-        addStep(sharingStep);
+        addStep(new ConsentSharingStep(ID_SHARING, r, data.getDocumentProperties()));
 
         initQuizSteps(context, researchStack);
 
-        String reasonForConsent = r.getString(R.string.consent_review_reason);
-        ConsentReviewStep reviewStep = new ConsentReviewStep("reviewStep", signature, consent, reasonForConsent);
-        addStep(reviewStep);
+        initConsentReviewSteps(context, doc);
     }
 
     private void initVisualSteps(Context ctx, ConsentDocument doc)
@@ -109,6 +119,59 @@ public class ConsentTask extends OrderedTask
         ConsentQuizEvaluationStep evaluationStep = new ConsentQuizEvaluationStep(
                 ID_QUIZ_RESULT, model.getEvaluationProperties());
         addStep(evaluationStep);
+    }
+
+    private void initConsentReviewSteps(Context ctx, ConsentDocument doc)
+    {
+        // Add ConsentReviewDocumentStep (view html version of the PDF doc)
+        StringBuilder docBuilder = new StringBuilder("</br><div style=\"padding: 10px 10px 10px 10px;\" class='header'>");
+        String title = ctx.getString(R.string.consent_review_title);
+        docBuilder.append(String.format(
+                "<h1 style=\"text-align: center; font-family:sans-serif-light;\">%1$s</h1>", title));
+        String detail =  ctx.getString(R.string.consent_review_instruction);
+        docBuilder.append(String.format("<p style=\"text-align: center\">%1$s</p>", detail));
+        docBuilder.append("</div></br>");
+        docBuilder.append(doc.getHtmlReviewContent());
+
+        ConsentReviewDocumentStep step = new ConsentReviewDocumentStep(ID_CONSENT_DOC);
+        step.setConsentHTML(docBuilder.toString());
+        step.setConfirmMessage(ctx.getString(R.string.consent_review_reason));
+        addStep(step);
+
+        // Add full-name input
+        if (doc.getSignature(0).isRequiresName())
+        {
+            String formTitle = ctx.getString(R.string.consent_name_title);
+            FormStep formStep = new FormStep(ID_FORM_NAME, formTitle, step.getText());
+            formStep.setSceneTitle(R.string.consent);
+            formStep.setUseSurveyMode(false);
+            formStep.setOptional(false);
+
+            TextAnswerFormat format = new TextAnswerFormat();
+            format.setIsMultipleLines(false);
+            // TODO Implement the following -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            // TODO format.autocapitalizationType = UITextAutocapitalizationTypeWords;
+            // TODO format.autocorrectionType = UITextAutocorrectionTypeNo;
+            // TODO format.spellCheckingType = UITextSpellCheckingTypeNo;
+
+            String placeholder = ctx.getResources().getString(R.string.consent_name_placeholder);
+            String nameText = ctx.getResources().getString(R.string.consent_name_full);
+            FormScene.FormItem fullName = new FormScene.FormItem(formStep.getIdentifier(), nameText,
+                                                                 format, placeholder);
+            formStep.setFormItems(Collections.singletonList(fullName));
+            addStep(formStep);
+        }
+
+        // Add signature input
+        if (doc.getSignature(0).isRequiresSignatureImage())
+        {
+            Step signatureStep = new Step(ID_SIGNATURE);
+            signatureStep.setTitle(ctx.getString(R.string.consent_signature_title));
+            signatureStep.setText(ctx.getString(R.string.consent_signature_instruction));
+            signatureStep.setOptional(false);
+            signatureStep.setSceneClass(ConsentReviewSignatureScene.class);
+            addStep(signatureStep);
+        }
     }
 
     /**

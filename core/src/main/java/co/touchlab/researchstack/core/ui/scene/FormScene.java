@@ -11,18 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.List;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.step.FormStep;
 
-public class FormScene extends SceneImpl
+public class FormScene extends SceneImpl<TextQuestionResult>
 {
-
-
     public FormScene(Context context)
     {
         super(context);
@@ -78,7 +76,7 @@ public class FormScene extends SceneImpl
                 public void onTextChanged(CharSequence s, int start, int before, int count)
                 {
                     String input = s == null ? "" : s.toString();
-                    result.setTextAnswer(input);
+                    getStepResult().getResult().setTextAnswer(input);
                 }
 
                 @Override
@@ -108,8 +106,7 @@ public class FormScene extends SceneImpl
             }
 
             stepViewContainer.addView(formItem, startIndex + i);
-            ((StepResult<TextQuestionResult>) getStepResult())
-                    .setResultForIdentifier(result.getIdentifier(), result);
+            getStepResult().setResult(result);
         }
     }
 
@@ -121,8 +118,7 @@ public class FormScene extends SceneImpl
         List<FormItem> items = ((FormStep)getStep()).getFormItems();
         for(FormItem item : items)
         {
-            TextQuestionResult result =  ((StepResult<TextQuestionResult>) getStepResult())
-                    .getResultForIdentifier(item.identifier);
+            TextQuestionResult result =  getStepResult().getResult();
             String answer = result.getTextAnswer();
             if (!item.format.isAnswerValidWithString(answer))
             {
@@ -136,7 +132,7 @@ public class FormScene extends SceneImpl
         return isValid && super.isAnswerValid();
     }
 
-    public static class FormItem
+    public static class FormItem implements Serializable
     {
         private final String identifier;
         private final String text;
