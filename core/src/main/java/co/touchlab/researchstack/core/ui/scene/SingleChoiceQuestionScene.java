@@ -61,7 +61,7 @@ public class SingleChoiceQuestionScene<T> extends SceneImpl<T>
 
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             TextChoice<T> textChoice = textChoices[checkedId];
-            result.setResultForIdentifier(StepResult.DEFAULT_KEY, textChoice.getValue());
+            result.setResult(textChoice.getValue());
             setStepResult(result);
         });
 
