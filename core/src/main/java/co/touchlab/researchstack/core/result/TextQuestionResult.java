@@ -1,5 +1,5 @@
 package co.touchlab.researchstack.core.result;
-public class TextQuestionResult extends QuestionResult<String>
+public class TextQuestionResult extends FormResult<String>
 {
 
     private String textAnswer;

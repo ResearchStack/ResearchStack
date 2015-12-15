@@ -77,6 +77,8 @@
     <string name="disagree">Disagree</string>
     <string name="agree">Agree</string>
     <string name="please_complete_step">Please complete this step before moving on</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

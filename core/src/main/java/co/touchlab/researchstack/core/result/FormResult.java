@@ -3,12 +3,11 @@ package co.touchlab.researchstack.core.result;
 /**
  * Created by bradleymcdermott on 10/9/15.
  */
-@Deprecated
-public class QuestionResult<T> extends Result
+public class FormResult<T> extends Result
 {
     private T answer = null;
 
-    public QuestionResult(String identifier)
+    public FormResult(String identifier)
     {
         super(identifier);
     }

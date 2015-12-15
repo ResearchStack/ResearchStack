@@ -33,4 +33,10 @@ public class FormStep extends Step
     {
         return formItems;
     }
+
+    @Override
+    public Class getSceneClass()
+    {
+        return FormScene.class;
+    }
 }

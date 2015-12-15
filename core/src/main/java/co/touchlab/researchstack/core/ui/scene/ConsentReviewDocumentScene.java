@@ -85,7 +85,7 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<
                     callbacks.notifyStepResultChanged(step, stepResult);
                     callbacks.onNextStep(step);
                 })
-                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                .setNegativeButton(R.string.consent_review_cancel, (dialog, which) -> {
                     stepResult.setResultForIdentifier(StepResult.DEFAULT_KEY, false);
                     callbacks.notifyStepResultChanged(step, stepResult);
                 })

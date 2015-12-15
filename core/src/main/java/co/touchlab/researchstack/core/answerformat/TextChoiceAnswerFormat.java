@@ -26,4 +26,14 @@ public class TextChoiceAnswerFormat extends AnswerFormat
     {
         return textChoices;
     }
+
+    public String[] getTextChoiceNames()
+    {
+        String[] names = new String[textChoices.length];
+        for (int i = 0; i < textChoices.length; i++)
+        {
+            names[i] = textChoices[i].getText();
+        }
+        return names;
+    }
 }

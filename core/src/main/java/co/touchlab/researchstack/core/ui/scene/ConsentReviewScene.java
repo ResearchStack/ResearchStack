@@ -13,8 +13,8 @@ import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.dev.DevUtils;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.ConsentSignatureResult;
+import co.touchlab.researchstack.core.result.FormResult;
 import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.step.ConsentReviewStep;
 import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.Step;
@@ -134,7 +134,7 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
             List<FormScene.FormItem> items = new ArrayList<>();
             String placeholder = getResources().getString(R.string.consent_name_placeholder);
             String nameText = getResources().getString(R.string.consent_name_full);
-            FormScene.FormItem givenName = new FormScene.FormItem(RESULT_ID_NAME, nameText, format, placeholder);
+            FormScene.FormItem givenName = new FormScene.FormItem(RESULT_ID_NAME, nameText, format, placeholder, false);
             items.add(givenName);
 
             formStep.setFormItems(items);
@@ -214,9 +214,9 @@ public class ConsentReviewScene extends MultiSubSectionScene<ConsentSignatureRes
         }
         else if (STEP_ID_NAME_FORM.equals(sceneStep.getIdentifier()))
         {
-            TextQuestionResult nameResult = (TextQuestionResult) sceneResult
+            FormResult<String> nameResult = (FormResult<String>) sceneResult
                     .getResultForIdentifier(RESULT_ID_NAME);
-            sigResult.getSignature().setFullName(nameResult.getTextAnswer());
+            sigResult.getSignature().setFullName(nameResult.getAnswer());
         }
         else if (ConsentReviewSignatureScene.STEP_ID.equals(sceneStep.getIdentifier()))
         {
