@@ -58,7 +58,7 @@ public class LearnFragment extends Fragment
     {
         int fileResId = ResearchStack.getInstance().getLearnSections();
         SectionModel schedulesAndTasksModel = JsonUtils
-                .loadClassFromRawJson(getContext(), SectionModel.class, fileResId);
+                .loadClass(getContext(), SectionModel.class, fileResId);
         SectionModel.Section section = schedulesAndTasksModel.getSections().get(0);
         return section.getItems();
     }

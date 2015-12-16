@@ -24,6 +24,12 @@ public class FormStep extends Step
         setText(text);
     }
 
+    @Override
+    public Class getSceneClass()
+    {
+        return FormScene.class;
+    }
+
     public void setFormItems(List<FormScene.FormItem> formItems)
     {
         this.formItems = formItems;

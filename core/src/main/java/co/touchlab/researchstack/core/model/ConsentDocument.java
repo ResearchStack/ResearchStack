@@ -124,6 +124,11 @@ public class ConsentDocument implements Serializable
         signatures.add(signature);
     }
 
+    public ConsentSignature getSignature(int location)
+    {
+        return signatures.get(location);
+    }
+
     public List<ConsentSection> getSections()
     {
         return sections;
@@ -226,7 +231,8 @@ public class ConsentDocument implements Serializable
             }
 
             String formattedTitle = r.getString(R.string.consent_doc_line_printed_name, signature.getTitle());
-            signatureElements.add(String.format(signatureElementWrapper, nameStr, hr, formattedTitle));
+            signatureElements.add(
+                    String.format(signatureElementWrapper, nameStr, hr, formattedTitle));
         }
 
         boolean hasSigImage = !TextUtils.isEmpty(signature.getSignatureImage());

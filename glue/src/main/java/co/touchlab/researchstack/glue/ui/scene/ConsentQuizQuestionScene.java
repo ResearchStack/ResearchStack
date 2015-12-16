@@ -19,6 +19,7 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
+import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
 
 public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
 {
@@ -45,12 +46,21 @@ public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    public void initialize(Step step, StepResult result)
+    {
+        this.properties = ((ConsentQuizQuestionStep) step).getProperties();
+        this.question = ((ConsentQuizQuestionStep) step).getQuestion();
+        super.initialize(step, result);
+    }
+
+    @Deprecated
     public void initialize(Step step, ConsentQuizModel.QuestionProperties properties, ConsentQuizModel.QuizQuestion question)
     {
+        super.initialize(step);
+
         this.properties = properties;
         this.question = question;
-
-        super.initialize(step);
     }
 
     @Override
@@ -148,10 +158,13 @@ public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
     @Override
     public StepResult<Boolean> getStepResult()
     {
-        boolean answer = radioGroup.getCheckedRadioButtonId() == R.id.btn_true;
-        StepResult<Boolean> booleanStepResult = new StepResult<>(getStep().getIdentifier());
-        booleanStepResult.setResultForIdentifier(StepResult.DEFAULT_KEY, answer);
-        return booleanStepResult;
+        boolean answer = question.constraints.validation.answer.equals("true");
+        boolean selected = radioGroup.getCheckedRadioButtonId() == R.id.btn_true;
+        boolean answerCorrect = answer == selected;
+
+        StepResult<Boolean> result = new StepResult<>(getStep().getIdentifier());
+        result.setResult(answerCorrect);
+        return result;
     }
 
 }

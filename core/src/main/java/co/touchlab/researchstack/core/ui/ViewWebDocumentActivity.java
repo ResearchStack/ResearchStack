@@ -10,7 +10,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.utils.ResUtils;
 
 public class ViewWebDocumentActivity extends AppCompatActivity
@@ -31,11 +30,6 @@ public class ViewWebDocumentActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        if (savedInstanceState == null)
-        {
-            super.overridePendingTransition(R.anim.slide_in_up, R.anim.fade_out_50);
-        }
-
         super.onCreate(savedInstanceState);
 
         /**
@@ -65,12 +59,5 @@ public class ViewWebDocumentActivity extends AppCompatActivity
         });
 
         webView.loadUrl(path);
-    }
-
-    @Override
-    public void finish()
-    {
-        super.finish();
-        super.overridePendingTransition(R.anim.fade_in_50, R.anim.slide_out_down);
     }
 }

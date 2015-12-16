@@ -1,28 +1,22 @@
 package co.touchlab.researchstack.core.step;
-
-import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.model.ConsentDocument;
+import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.ui.scene.ConsentVisualScene;
 
 public class ConsentVisualStep extends Step
 {
-    private ConsentDocument document;
+    private ConsentSection section;
+    private String nextButtonString;
 
-    public ConsentVisualStep(String identifier, ConsentDocument document)
+    public ConsentVisualStep(String identifier, ConsentSection section)
     {
         super(identifier);
-        this.document = document;
-    }
-
-    public ConsentDocument getDocument()
-    {
-        return document;
+        this.section = section;
     }
 
     @Override
     public int getSceneTitle()
     {
-        return R.string.consent;
+        return co.touchlab.researchstack.core.R.string.consent;
     }
 
     @Override
@@ -35,5 +29,25 @@ public class ConsentVisualStep extends Step
     public boolean isShowsProgress()
     {
         return false;
+    }
+
+    public ConsentSection getSection()
+    {
+        return section;
+    }
+
+    public void setSection(ConsentSection section)
+    {
+        this.section = section;
+    }
+
+    public void setNextButtonString(String nextButtonString)
+    {
+        this.nextButtonString = nextButtonString;
+    }
+
+    public String getNextButtonString()
+    {
+        return nextButtonString;
     }
 }

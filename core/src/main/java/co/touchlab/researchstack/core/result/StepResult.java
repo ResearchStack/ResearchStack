@@ -43,6 +43,11 @@ public class StepResult<T> extends Result
         return getResultForIdentifier(DEFAULT_KEY);
     }
 
+    public void setResult(T result)
+    {
+        setResultForIdentifier(DEFAULT_KEY, result);
+    }
+
     public T getResultForIdentifier(String identifier)
     {
         return results.get(identifier);

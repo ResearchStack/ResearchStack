@@ -12,6 +12,7 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
@@ -23,13 +24,13 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
  */
 public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<Boolean>
 {
-    public static final String STEP_ID = "consent_review_doc";
-
-    private WebView pdfView;
     private SceneCallbacks callbacks;
-    private Step step;
-    private StepResult<Boolean> stepResult;
+
     private String confirmationDialogBody;
+    private String htmlContent;
+
+    private ConsentReviewDocumentStep step;
+    private StepResult<Boolean> stepResult;
 
     public ConsentReviewDocumentScene(Context context)
     {
@@ -49,7 +50,9 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<
     @Override
     public void initialize(Step step, StepResult<Boolean> result)
     {
-        this.step = step;
+        this.step = (ConsentReviewDocumentStep) step;
+        this.confirmationDialogBody = ((ConsentReviewDocumentStep) step).getConfirmMessage();
+        this.htmlContent = ((ConsentReviewDocumentStep) step).getConsentHTML();
         this.stepResult = result;
 
         if(stepResult == null)
@@ -65,7 +68,8 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<
         LayoutInflater.from(getContext()).inflate(
                 R.layout.layout_section_consent_review_document, this, true);
 
-        pdfView = (WebView) findViewById(R.id.webview);
+        WebView pdfView = (WebView) findViewById(R.id.webview);
+        pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
 
         View agree = findViewById(R.id.agree);
         RxView.clicks(agree).subscribe(v -> showDialog());
@@ -81,25 +85,15 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<
                 .setMessage(confirmationDialogBody)
                 .setCancelable(false)
                 .setPositiveButton(R.string.agree, (dialog, which) -> {
-                    stepResult.setResultForIdentifier(StepResult.DEFAULT_KEY, true);
+                    stepResult.setResult(true);
                     callbacks.notifyStepResultChanged(step, stepResult);
                     callbacks.onNextStep(step);
                 })
-                .setNegativeButton(R.string.cancel, (dialog, which) -> {
-                    stepResult.setResultForIdentifier(StepResult.DEFAULT_KEY, false);
+                .setNegativeButton(R.string.consent_review_cancel, (dialog, which) -> {
+                    stepResult.setResult(false);
                     callbacks.notifyStepResultChanged(step, stepResult);
                 })
                 .show();
-    }
-
-    public void displayHTML(String html)
-    {
-        pdfView.loadData(html, "text/html; charset=UTF-8", null);
-    }
-
-    public void setConfirmationDialogBody(String confirmationDialogBody)
-    {
-        this.confirmationDialogBody = confirmationDialogBody;
     }
 
     @Override

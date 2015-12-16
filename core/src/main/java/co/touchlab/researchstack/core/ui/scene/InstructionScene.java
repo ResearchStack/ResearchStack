@@ -1,16 +1,22 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
-
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
+import android.util.AttributeSet;
 
 public class InstructionScene extends SceneImpl<Void>
 {
-    public InstructionScene(Context context, Step step, StepResult result)
+    public InstructionScene(Context context)
     {
-        super(context,
-                step,
-                result);
+        super(context);
+    }
+
+    public InstructionScene(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public InstructionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
     }
 }
