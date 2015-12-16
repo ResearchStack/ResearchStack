@@ -21,7 +21,6 @@ import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
@@ -36,8 +35,6 @@ import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.InstructionStep;
-import co.touchlab.researchstack.core.step.FormStep;
-import co.touchlab.researchstack.core.step.InstructionStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
@@ -47,7 +44,6 @@ import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.scene.FormScene;
 import co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene;
-import co.touchlab.researchstack.core.ui.scene.FormScene;
 
 public class MainActivity extends PassCodeActivity
 {
@@ -216,7 +212,7 @@ public class MainActivity extends PassCodeActivity
         format.setIsMultipleLines(false);
 
         FormScene.FormItem fullName = new FormScene.FormItem(
-                formStep.getIdentifier(), "Full name", format, "Required");
+                formStep.getIdentifier(), "Full name", format, "Required", false);
         formStep.setFormItems(Collections.singletonList(fullName));
 
         // Create Consent signature step, user can sign their name
