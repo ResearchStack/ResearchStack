@@ -3,6 +3,7 @@ package co.touchlab.researchstack.coreapp;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Base64;
 import android.view.View;
@@ -18,12 +19,12 @@ import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSignature;
-import co.touchlab.researchstack.core.model.TextChoice;
+import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.ConsentSignatureResult;
 import co.touchlab.researchstack.core.result.FormResult;
 import co.touchlab.researchstack.core.result.StepResult;
@@ -279,40 +280,7 @@ public class MainActivity extends PassCodeActivity
                 "How old are you?",
                 format);
 
-        FormStep formStep = new FormStep(FORM_STEP, "Form", "Form groups multi-entry in one page");
-        ArrayList<FormScene.FormItem> formItems = new ArrayList<>();
-
-        FormScene.FormItem basicInfoHeader = new FormScene.FormItem(BASIC_INFO_HEADER, "Basic Information", null, null, true);
-        formItems.add(basicInfoHeader);
-
-        FormScene.FormItem nameItem = new FormScene.FormItem(FORM_NAME, "Name", new TextAnswerFormat(), "enter name", false);
-        formItems.add(nameItem);
-
-        FormScene.FormItem ageItem = new FormScene.FormItem(FORM_AGE, "Age", new IntegerAnswerFormat(90, 18), "age placeholder", false);
-        formItems.add(ageItem);
-
-        TextChoice[] textChoices = new TextChoice[2];
-        textChoices[0] = new TextChoice<>("Male", 0, null);
-        textChoices[1] = new TextChoice<>("Female", 1, null);
-        AnswerFormat genderFormat = new TextChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice, textChoices);
-        FormScene.FormItem genderFormItem = new FormScene.FormItem(FORM_GENDER, "Gender", genderFormat, "Gender", false);
-        formItems.add(genderFormItem);
-
-
-        TextChoice[] multiTextChoices = new TextChoice[3];
-        multiTextChoices[0] = new TextChoice<>("Zero", 0, null);
-        multiTextChoices[1] = new TextChoice<>("One", 1, null);
-        multiTextChoices[2] = new TextChoice<>("Two", 2, null);
-        AnswerFormat multiFormat = new TextChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.MultipleChoice, multiTextChoices);
-        FormScene.FormItem multiFormItem = new FormScene.FormItem(FORM_MULTI_CHOICE, "Test Multi", multiFormat, "Choose", false);
-        formItems.add(multiFormItem);
-
-        AnswerFormat dateOfBirthFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
-        FormScene.FormItem dateOfBirthFormItem = new FormScene.FormItem(FORM_DATE_OF_BIRTH, "Birthdate", dateOfBirthFormat, "date of birth", false);
-        formItems.add(dateOfBirthFormItem);
-
-        // ... And so on, adding additional items
-        formStep.setFormItems(formItems);
+        FormStep formStep = createFormStep();
 
         // Create a Boolean step to include in the task.
         QuestionStep booleanStep = new QuestionStep(NUTRITION);
@@ -333,6 +301,43 @@ public class MainActivity extends PassCodeActivity
                 task);
         startActivityForResult(intent,
                 REQUEST_SURVEY);
+    }
+
+    @NonNull
+    private FormStep createFormStep()
+    {
+        FormStep formStep = new FormStep(FORM_STEP, "Form", "Form groups multi-entry in one page");
+        ArrayList<FormScene.FormItem> formItems = new ArrayList<>();
+
+        FormScene.FormItem basicInfoHeader = new FormScene.FormItem(BASIC_INFO_HEADER, "Basic Information", null, null, true);
+        formItems.add(basicInfoHeader);
+
+        FormScene.FormItem nameItem = new FormScene.FormItem(FORM_NAME, "Name", new TextAnswerFormat(), "enter name", false);
+        formItems.add(nameItem);
+
+        FormScene.FormItem ageItem = new FormScene.FormItem(FORM_AGE, "Age", new IntegerAnswerFormat(90, 18), "age placeholder", false);
+        formItems.add(ageItem);
+
+        AnswerFormat genderFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
+                new Choice<>("Male", 0),
+                new Choice<>("Female", 1));
+        FormScene.FormItem genderFormItem = new FormScene.FormItem(FORM_GENDER, "Gender", genderFormat, "Gender", false);
+        formItems.add(genderFormItem);
+
+        AnswerFormat multiFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.MultipleChoice,
+                new Choice<>("Zero", 0),
+                new Choice<>("One", 1),
+                new Choice<>("Two", 2));
+        FormScene.FormItem multiFormItem = new FormScene.FormItem(FORM_MULTI_CHOICE, "Test Multi", multiFormat, "Choose", false);
+        formItems.add(multiFormItem);
+
+        AnswerFormat dateOfBirthFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
+        FormScene.FormItem dateOfBirthFormItem = new FormScene.FormItem(FORM_DATE_OF_BIRTH, "Birthdate", dateOfBirthFormat, "date of birth", false);
+        formItems.add(dateOfBirthFormItem);
+
+        // ... And so on, adding additional items
+        formStep.setFormItems(formItems);
+        return formStep;
     }
 
     private void processSurveyResult(TaskResult result)

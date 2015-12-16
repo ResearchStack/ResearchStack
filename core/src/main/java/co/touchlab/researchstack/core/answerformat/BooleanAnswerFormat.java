@@ -1,17 +1,15 @@
 package co.touchlab.researchstack.core.answerformat;
 
 
-import co.touchlab.researchstack.core.model.TextChoice;
+import co.touchlab.researchstack.core.model.Choice;
 
-public class BooleanAnswerFormat extends TextChoiceAnswerFormat
+public class BooleanAnswerFormat extends ChoiceAnswerFormat
 {
 
     //TODO Fetch strings from Resources
     public BooleanAnswerFormat() {
-        super(ChoiceAnswerStyle.SingleChoice, new TextChoice[] {
-                // using 1 and 0 to fit with skip rules in smart surveys
-                new TextChoice<>("Yes", 1, null), new TextChoice<>("No", 0, null)
-
-        });
+        super(ChoiceAnswerStyle.SingleChoice,
+                new Choice<>("Yes", 1),
+                new Choice<>("No", 0));
     }
 }

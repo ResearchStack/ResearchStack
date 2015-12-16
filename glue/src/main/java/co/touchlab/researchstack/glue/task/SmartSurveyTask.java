@@ -12,12 +12,11 @@ import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.UnknownAnswerFormat;
 import co.touchlab.researchstack.core.dev.DevUtils;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.model.TextChoice;
-import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
@@ -86,7 +85,7 @@ public class SmartSurveyTask extends Task implements Serializable
         else if (type.equals("MultiValueConstraints"))
         {
             AnswerFormat.ChoiceAnswerStyle answerStyle = constraints.allowMultiple ? AnswerFormat.ChoiceAnswerStyle.MultipleChoice : AnswerFormat.ChoiceAnswerStyle.SingleChoice;
-            answerFormat = new TextChoiceAnswerFormat(answerStyle, from(constraints.enumeration));
+            answerFormat = new ChoiceAnswerFormat(answerStyle, from(constraints.enumeration));
         }
         else if (type.equals("IntegerConstraints"))
         {
@@ -107,17 +106,17 @@ public class SmartSurveyTask extends Task implements Serializable
         return answerFormat;
     }
 
-    public static TextChoice[] from(List<TaskModel.EnumerationModel> enumeration)
+    public static Choice[] from(List<TaskModel.EnumerationModel> enumeration)
     {
-        TextChoice[] textChoices = new TextChoice[enumeration.size()];
+        Choice[] choices = new Choice[enumeration.size()];
 
         for (int i = 0; i < enumeration.size(); i++)
         {
             TaskModel.EnumerationModel choice = enumeration.get(i);
             // TODO none of the examples seem to have detail text, add that if we find it
-            textChoices[i] = new TextChoice(choice.label, choice.value, null);
+            choices[i] = new Choice<>(choice.label, choice.value);
         }
-        return textChoices;
+        return choices;
     }
 
     @Override

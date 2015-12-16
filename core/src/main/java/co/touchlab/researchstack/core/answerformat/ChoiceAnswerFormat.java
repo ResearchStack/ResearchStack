@@ -1,18 +1,18 @@
 package co.touchlab.researchstack.core.answerformat;
 
 
-import co.touchlab.researchstack.core.model.TextChoice;
+import co.touchlab.researchstack.core.model.Choice;
 
-public class TextChoiceAnswerFormat extends AnswerFormat
+public class ChoiceAnswerFormat extends AnswerFormat
 {
 
     private AnswerFormat.ChoiceAnswerStyle answerStyle;
-    private TextChoice[] textChoices;
+    private Choice[] choices;
 
-    public TextChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle answerStyle, TextChoice[] textChoices)
+    public ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle answerStyle, Choice... choices)
     {
         this.answerStyle = answerStyle;
-        this.textChoices = textChoices;
+        this.choices = choices;
     }
 
     @Override
@@ -22,17 +22,17 @@ public class TextChoiceAnswerFormat extends AnswerFormat
         return answerStyle == ChoiceAnswerStyle.MultipleChoice ? QuestionType.MultipleChoice : QuestionType.SingleChoice;
     }
 
-    public TextChoice[] getTextChoices()
+    public Choice[] getChoices()
     {
-        return textChoices;
+        return choices;
     }
 
     public String[] getTextChoiceNames()
     {
-        String[] names = new String[textChoices.length];
-        for (int i = 0; i < textChoices.length; i++)
+        String[] names = new String[choices.length];
+        for (int i = 0; i < choices.length; i++)
         {
-            names[i] = textChoices[i].getText();
+            names[i] = choices[i].getText();
         }
         return names;
     }

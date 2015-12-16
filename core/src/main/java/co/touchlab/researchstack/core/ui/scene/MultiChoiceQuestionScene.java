@@ -13,8 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
-import co.touchlab.researchstack.core.model.TextChoice;
+import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
+import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 
@@ -66,12 +66,12 @@ public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
         RadioGroup radioGroup = new RadioGroup(getContext());
         StepResult<T[]> result = getStepResult();
 
-        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
-        final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
+        ChoiceAnswerFormat answerFormat = (ChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
+        final Choice<T>[] choices = answerFormat.getChoices();
 
-        for (int i = 0; i < textChoices.length; i++)
+        for (int i = 0; i < choices.length; i++)
         {
-            TextChoice<T> item = textChoices[i];
+            Choice<T> item = choices[i];
 
             // Create & add the View to our body-view
             AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(

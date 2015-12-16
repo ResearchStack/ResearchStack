@@ -18,7 +18,6 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -28,7 +27,7 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.result.FormResult;
 import co.touchlab.researchstack.core.step.FormStep;
 import rx.Observable;
@@ -136,12 +135,12 @@ public class FormScene extends SceneImpl<FormResult>
                 break;
 
             case MultipleChoice:
-                TextChoiceAnswerFormat choiceFormat = (TextChoiceAnswerFormat) item.format;
+                ChoiceAnswerFormat choiceFormat = (ChoiceAnswerFormat) item.format;
                 result = new FormResult<Integer[]>(item.identifier);
                 editText.setFocusable(false);
                 editText.setHint(item.placeholder);
                 final FormResult<Integer[]> finalResult2 = result;
-                boolean[] checkedItems = new boolean[choiceFormat.getTextChoices().length];
+                boolean[] checkedItems = new boolean[choiceFormat.getChoices().length];
                 editTextClicks.subscribe(click -> {
                     new AlertDialog.Builder(getContext())
                             .setMultiChoiceItems(choiceFormat.getTextChoiceNames(),
@@ -169,7 +168,7 @@ public class FormScene extends SceneImpl<FormResult>
                 break;
 
             case SingleChoice:
-                TextChoiceAnswerFormat singleChoiceFormat = (TextChoiceAnswerFormat) item.format;
+                ChoiceAnswerFormat singleChoiceFormat = (ChoiceAnswerFormat) item.format;
                 result = new FormResult<Integer[]>(item.identifier);
                 editText.setFocusable(false);
                 editText.setHint(item.placeholder);
