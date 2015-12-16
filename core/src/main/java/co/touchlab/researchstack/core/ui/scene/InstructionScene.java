@@ -3,9 +3,6 @@ package co.touchlab.researchstack.core.ui.scene;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
-
 public class InstructionScene extends SceneImpl<Void>
 {
     public InstructionScene(Context context)

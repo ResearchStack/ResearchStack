@@ -10,6 +10,7 @@ import android.os.Build;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.ConsentSignatureResult;
 import co.touchlab.researchstack.core.result.TaskResult;
+import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
@@ -53,16 +54,11 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     {
         if (requestCode == SignUpEligibleScene.CONSENT_REQUEST && resultCode == Activity.RESULT_OK)
         {
-            TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+            TaskResult result = (TaskResult) data.getSerializableExtra(
+                    ViewTaskActivity.EXTRA_TASK_RESULT);
 
-            boolean sharing = (boolean) result.getStepResult("sharing")
-                    .getResult();
-
-            ConsentSignatureResult signatureResult = (ConsentSignatureResult) result.getStepResult(
-                    "reviewStep")
-                    .getResult();
-            ConsentSignature signature = signatureResult.getSignature();
-            boolean consented = signatureResult.isConsented();
+            boolean sharing = (boolean) result.getStepResult(ConsentTask.ID_SHARING).getResult();
+            boolean consented = (boolean) result.getStepResult(ConsentTask.ID_CONSENT_DOC).getResult();
 
             if (ResearchStack.getInstance().getCurrentUser() == null)
             {
@@ -74,11 +70,15 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             // TODO check for valid signature/names
             if (consented)
             {
-                // TODO just use full name to begin with and don't concat names like this
+                TextQuestionResult formResult = (TextQuestionResult) result
+                        .getStepResult(ConsentTask.ID_FORM_NAME).getResult();
+                String fullName = formResult.getTextAnswer();
+                String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE).getResult();
+
                 // TODO get signature date
-                currentUser.setName(signature.getFullName());
-                currentUser.setConsentSignatureName(signature.getFullName());
-                currentUser.setConsentSignatureImage(signature.getSignatureImage());
+                currentUser.setName(fullName);
+                currentUser.setConsentSignatureName(fullName);
+                currentUser.setConsentSignatureImage(base64Image);
                 currentUser.setUserConsented(true);
 
                 SceneImpl scene = (SceneImpl) findViewById(R.id.current_scene);

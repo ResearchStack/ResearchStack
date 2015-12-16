@@ -60,7 +60,7 @@ public class OnboardingActivity extends AppCompatActivity
     private StudyOverviewModel parseStudyOverviewModel()
     {
         int fileResId = ResearchStack.getInstance().getStudyOverviewResourceId();
-        return JsonUtils.loadClassFromRawJson(OnboardingActivity.this, StudyOverviewModel.class, fileResId);
+        return JsonUtils.loadClass(OnboardingActivity.this, StudyOverviewModel.class, fileResId);
     }
 
     public void onSignUpClicked(View view)

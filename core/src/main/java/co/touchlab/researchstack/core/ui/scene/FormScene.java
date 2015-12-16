@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.io.Serializable;
 import java.util.List;
 
 import co.touchlab.researchstack.core.R;
@@ -29,13 +30,12 @@ import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.result.FormResult;
+import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.step.FormStep;
 import rx.Observable;
 
 public class FormScene extends SceneImpl<FormResult>
 {
-
-
     public FormScene(Context context)
     {
         super(context);

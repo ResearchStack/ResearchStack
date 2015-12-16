@@ -25,7 +25,6 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
-import co.touchlab.researchstack.core.ui.scene.MultiSubSectionScene;
 import co.touchlab.researchstack.core.ui.scene.NotImplementedScene;
 import co.touchlab.researchstack.core.ui.scene.Scene;
 import co.touchlab.researchstack.core.ui.scene.SceneAnimator;
@@ -116,13 +115,6 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         Scene newScene = getSceneForStep(step);
         newScene.getView().setId(R.id.current_scene);
 
-        //If we are navigating back, we want to show the last sub-scene for the step.
-        if (newScene instanceof MultiSubSectionScene && direction == SceneAnimator.SHIFT_RIGHT)
-        {
-            int lastSubScene = ((MultiSubSectionScene) newScene).getSceneCount();
-            ((MultiSubSectionScene) newScene).showScene(lastSubScene - 1 , false);
-        }
-
         if (oldScene != null)
         {
             oldScene.getView().setId(R.id.old_scene);
@@ -130,7 +122,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         }
         else
         {
-            animator.show(oldScene, newScene);
+            animator.show(null, newScene);
         }
 
         currentStep = step;
@@ -156,7 +148,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
             Class cls = step.getSceneClass();
             Constructor constructor = cls.getConstructor(Context.class);
 
-            //Init constructor and init
+            //Init class
             Scene scene = (Scene) constructor.newInstance(this);
             scene.initialize(step, result);
             scene.setCallbacks(this);

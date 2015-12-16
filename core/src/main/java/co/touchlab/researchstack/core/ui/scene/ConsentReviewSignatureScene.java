@@ -19,8 +19,6 @@ import co.touchlab.researchstack.core.ui.views.ConsentReviewSignatureView;
 
 public class ConsentReviewSignatureScene extends SceneImpl
 {
-    public static final String STEP_ID = "consent_review_sig";
-
     private ConsentReviewSignatureView signatureView;
 
     public ConsentReviewSignatureScene(Context context)

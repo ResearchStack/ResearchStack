@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 
+import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
@@ -51,7 +52,7 @@ public class ViewLicensesActivity extends AppCompatActivity
                 Resources res = getResources();
 
                 //Read in the license
-                int imageResId = res.getIdentifier(question.getDetails(), "raw", getPackageName());
+                int imageResId = ResUtils.getRawResourceId(this, question.getDetails());
                 InputStream in_s = res.openRawResource(imageResId);
                 byte[] b = new byte[in_s.available()];
                 in_s.read(b);
@@ -85,6 +86,6 @@ public class ViewLicensesActivity extends AppCompatActivity
     private StudyOverviewModel parseSectionModel()
     {
         int fileResId = ResearchStack.getInstance().getLicenseSections();
-        return JsonUtils.loadClassFromRawJson(this, StudyOverviewModel.class, fileResId);
+        return JsonUtils.loadClass(this, StudyOverviewModel.class, fileResId);
     }
 }
