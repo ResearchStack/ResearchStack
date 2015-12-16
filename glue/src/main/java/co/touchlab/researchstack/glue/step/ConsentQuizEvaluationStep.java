@@ -54,4 +54,14 @@ public class ConsentQuizEvaluationStep extends Step
     {
         return questionProperties;
     }
+
+    public boolean isOverMaxAttempts()
+    {
+        return attempt >= 1;
+    }
+
+    public boolean isQuizPassed()
+    {
+        return questionProperties != null && incorrect < questionProperties.maxIncorrect;
+    }
 }

@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import java.util.Collections;
 
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
-import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSectionModel;
@@ -26,7 +25,6 @@ import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.glue.step.ConsentQuizEvaluationStep;
 import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
-import co.touchlab.researchstack.glue.ui.scene.ConsentQuizEvaluationScene;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 
 public class ConsentTask extends OrderedTask
@@ -107,6 +105,9 @@ public class ConsentTask extends OrderedTask
         for(int i = 0; i < model.getQuestions().size(); i++)
         {
             ConsentQuizModel.QuizQuestion question = model.getQuestions().get(i);
+
+            // We need to overwrite the id of the first question to later find it in our internal
+            // map later on. This is done to clear and attain the incorrect question count.
             if (i == 0)
             {
                 question.id = ID_FIRST_QUESTION;
@@ -186,55 +187,46 @@ public class ConsentTask extends OrderedTask
     {
         if(step != null)
         {
-            // First, we get the evaluation step and increase the amount of incorrect answers if
-            // needed
+            // If we are on a question step, and the next step is an ConsentQuizEvaluationStep,
+            // calculate and set the number of incorrect answers on ConsentQuizEvaluationStep.
             if (step instanceof ConsentQuizQuestionStep)
             {
-                ConsentQuizQuestionStep firstQuestion = (ConsentQuizQuestionStep)
-                        getStepWithIdentifier(ID_FIRST_QUESTION);
-                int incorrectAnswers = getQuestionIncorrectCount(result, firstQuestion, 0);
+                Step nextStep = super.getStepAfterStep(step, result);
 
-                LogExt.i(getClass(), "Quiz question answered. Number of incorrect: " + incorrectAnswers);
+                if (nextStep instanceof ConsentQuizEvaluationStep)
+                {
+                    ConsentQuizQuestionStep firstQuestion = (ConsentQuizQuestionStep)
+                            getStepWithIdentifier(ID_FIRST_QUESTION);
+                    int incorrectAnswers = getQuestionIncorrectCount(result, firstQuestion, 0);
 
-                ConsentQuizEvaluationStep evaluationStep = (ConsentQuizEvaluationStep)
-                        getStepWithIdentifier(ID_QUIZ_RESULT);
-                evaluationStep.setIncorrectCount(incorrectAnswers);
+                    ConsentQuizEvaluationStep evaluationStep = (ConsentQuizEvaluationStep) nextStep;
+                    evaluationStep.setIncorrectCount(incorrectAnswers);
+
+                    return evaluationStep;
+                }
             }
 
             // If this is the ConsentQuizEvaluationStep, we need to check if the user has passed
             // or failed the quiz. If they have have failed, AND it was their first attempt, let the
             // user retake the quiz. If attempts > 1, they must go through the visual consent steps
-            // another time
+            // another time.
             else if(step instanceof ConsentQuizEvaluationStep)
             {
-                StepResult<Boolean> stepResult = result.getStepResult(step.getIdentifier());
+                ConsentQuizEvaluationStep evaluationStep = (ConsentQuizEvaluationStep) step;
 
-                boolean quizPassed = stepResult.getResultForIdentifier(
-                        ConsentQuizEvaluationScene.KEY_RESULT_PASS);
-
-                boolean exceedsAttempts = stepResult.getResultForIdentifier(
-                        ConsentQuizEvaluationScene.KEY_RESULT_EXCEED_ATTEMPS);
-
-                LogExt.i(getClass(), "Quiz has passed: " + quizPassed);
-
-                if(! quizPassed)
+                if(! evaluationStep.isQuizPassed())
                 {
-                    // TODO Clearing incorrect count causes multiple sources of truth
-                    ConsentQuizEvaluationStep evaluationStep = (ConsentQuizEvaluationStep) step;
-                    evaluationStep.setIncorrectCount(0);
-
+                    // Reset incorrect count on the QuizQuestionSteps.
                     Step firstQuestion = getStepWithIdentifier(ID_FIRST_QUESTION);
                     clearQuestionIncorrectCount(result, firstQuestion);
 
-                    if (exceedsAttempts)
+                    if (evaluationStep.isOverMaxAttempts())
                     {
-                        LogExt.i(getClass(), "Quiz attempts exceeded, starting visual");
                         evaluationStep.setAttempt(0);
                         return getStepWithIdentifier(ID_VISUAL);
                     }
                     else
                     {
-                        LogExt.i(getClass(), "Restarting quiz");
                         evaluationStep.setAttempt(1);
                         return firstQuestion;
                     }
@@ -245,6 +237,11 @@ public class ConsentTask extends OrderedTask
         return super.getStepAfterStep(step, result);
     }
 
+    /**
+     * Recursive method to clear StepResults of type {@link ConsentQuizQuestionStep}
+     * @param result the result object where {@link ConsentQuizQuestionStep} are stored
+     * @param step the first ConsentQuizQuestionStep within the task
+     */
     private void clearQuestionIncorrectCount(TaskResult result, Step step)
     {
         if (step != null)
@@ -267,6 +264,13 @@ public class ConsentTask extends OrderedTask
         }
     }
 
+    /**
+     * Recursive method to get a count of how many incorrect answers there are in total
+     * @param result the result object where {@link ConsentQuizQuestionStep} are stored
+     * @param step the first ConsentQuizQuestionStep within the task
+     * @param count the initial count of the how many incorrect answers exist, default to 0
+     * @return integer representing how many incorrect answers currently exist
+     */
     private int getQuestionIncorrectCount(TaskResult result, Step step, int count)
     {
         if (step != null && step instanceof ConsentQuizQuestionStep)
@@ -282,66 +286,5 @@ public class ConsentTask extends OrderedTask
 
         return count;
     }
-
-    @Override
-    public Step getStepBeforeStep(Step step, TaskResult result)
-    {
-        return super.getStepBeforeStep(step, result);
-    }
-
-    //  -(ORKStep *)stepBeforeStep:(ORKStep *)__unused step withResult:(ORKTaskResult *)__unused result{
-    //      return nil;
-    //  }
-    //
-    //  -(ORKStep *)stepAfterStep:(ORKStep *)step withResult:(ORKTaskResult *)__unused result{
-    //
-    //      APCUser *user = ((APHAppDelegate *)[UIApplication sharedApplication].delegate ).dataSubstrate.currentUser;
-    //      ORKStep *nextStep;
-    //      if (user.isSignedIn) {
-    //          if (!step) {
-    //              nextStep = [self.steps objectAtIndex:0];
-    //          }else{
-    //              nextStep = nil;
-    //              [[NSNotificationCenter defaultCenter] postNotificationName:kReturnControlOfTaskDelegate object:nil];
-    //          }
-    //      }else if(user.isSignedUp){
-    //          if (!step) {
-    //              nextStep = [self.steps objectAtIndex:0];
-    //          }else{
-    //              nextStep = nil;
-    //              [[NSNotificationCenter defaultCenter] postNotificationName:kReturnControlOfTaskDelegate object:nil];
-    //          }
-    //      }else{
-    //
-    //          if (!step) {
-    //              nextStep = [self.steps objectAtIndex:0];
-    //          }else if ([step.identifier isEqualToString:@"consentStep"]) {
-    //              nextStep = [self.steps objectAtIndex:1];
-    //          }else if ([step.identifier isEqualToString:@"question1"]) {
-    //              nextStep = [self.steps objectAtIndex:2];
-    //          }else if ([step.identifier isEqualToString:@"question2"]) {
-    //              nextStep = [self.steps objectAtIndex:3];
-    //          }else if ([step.identifier isEqualToString:@"question3"]) {
-    //              nextStep = [self.steps objectAtIndex:4];
-    //          }else if ([step.identifier isEqualToString:@"quizEvaluation"]) {
-    //
-    //              if (self.passedQuiz) {
-    //                  nextStep = [self.steps objectAtIndex:5];//return to consent review step
-    //              }else if (self.failedAttempts == 1) {
-    //                  nextStep = [self.steps objectAtIndex:1];//return to quiz
-    //              }else {
-    //                  nextStep = [self.steps objectAtIndex:0];//reassurance steps
-    //              }
-    //
-    //          }else if ([step isKindOfClass:[ORKConsentReviewStep class]]) {
-    //              nextStep = step;
-    //          }else{
-    //              nextStep = nil;
-    //          }
-    //
-    //      }
-    //
-    //      return nextStep;
-    //  }
 
 }

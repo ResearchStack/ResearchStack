@@ -1,24 +1,14 @@
 package co.touchlab.researchstack.glue.ui.scene;
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.AttributeSet;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.glue.step.ConsentQuizEvaluationStep;
 
 public class ConsentQuizEvaluationScene extends SceneImpl<Boolean>
 {
-
-    public static final String KEY_RESULT_PASS = "KEY_RESULT_PASS";
-    public static final String KEY_RESULT_EXCEED_ATTEMPS = "KEY_RESULT_EXCEED_ATTEMPS";
-
-    private ConsentQuizModel.EvaluationProperties properties;
-    private int attempt;
-    private int incorrect;
 
     public ConsentQuizEvaluationScene(Context context)
     {
@@ -36,47 +26,29 @@ public class ConsentQuizEvaluationScene extends SceneImpl<Boolean>
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
-        this.properties = ((ConsentQuizEvaluationStep)step).getQuestionProperties();
-        this.attempt = ((ConsentQuizEvaluationStep)step).getAttempt();
-        this.incorrect = ((ConsentQuizEvaluationStep)step).getIncorrect();
-
-        super.initialize(step, result);
-    }
-
-    @Deprecated
-    public void initialize(Step step, ConsentQuizModel.EvaluationProperties properties, int attempt, int incorrect)
-    {
-        this.properties = properties;
-        this.attempt = attempt;
-        this.incorrect = incorrect;
-        super.initialize(step);
-    }
-
-    @Override
     public void initializeScene()
     {
         super.initializeScene();
 
-        Resources r = getContext().getResources();
+        ConsentQuizEvaluationStep step = (ConsentQuizEvaluationStep) getStep();
 
         // We have failed
-        if(incorrect >= properties.maxIncorrect)
+        if(!step.isQuizPassed())
         {
-            int iconResId = r.getIdentifier(properties.incorrectIcon, "drawable",
-                                            getContext().getPackageName());
+            int iconResId = ResUtils.getDrawableResourceId(
+                    getContext(), step.getQuestionProperties().incorrectIcon);
+
             setImage(iconResId);
             setTitle(R.string.quiz_evaluation_try_again);
 
-            if(attempt == 0)
+            if(!step.isOverMaxAttempts())
             {
-                setSummary(properties.quizFailure1Text);
+                setSummary(step.getQuestionProperties().quizFailure1Text);
                 setNextButtonText(R.string.quiz_evaluation_retake);
             }
             else
             {
-                setSummary(properties.quizFailure2Text);
+                setSummary(step.getQuestionProperties().quizFailure2Text);
                 setNextButtonText(R.string.quiz_evaluation_review_consent);
             }
         }
@@ -84,32 +56,23 @@ public class ConsentQuizEvaluationScene extends SceneImpl<Boolean>
         // We have passed
         else
         {
+            int iconResId = ResUtils.getDrawableResourceId(
+                    getContext(), step.getQuestionProperties().correctIcon);
 
-            int iconResId = r.getIdentifier(properties.correctIcon, "drawable",
-                                            getContext().getPackageName());
             setImage(iconResId);
             setTitle(R.string.quiz_evaluation_great_job);
 
-            if(incorrect == 0)
+            if(step.getIncorrect() == 0)
             {
-                setSummary(properties.quizAllCorrectText);
+                setSummary(step.getQuestionProperties().quizAllCorrectText);
             }
             else
             {
-                setSummary(properties.quizPassedText);
+                setSummary(step.getQuestionProperties().quizPassedText);
             }
 
             setNextButtonText(R.string.next);
         }
-    }
-
-    @Override
-    public StepResult<Boolean> getStepResult()
-    {
-        StepResult<Boolean> result = super.getStepResult();
-        result.setResultForIdentifier(KEY_RESULT_PASS, incorrect < properties.maxIncorrect);
-        result.setResultForIdentifier(KEY_RESULT_EXCEED_ATTEMPS, attempt >= 1);
-        return result;
     }
 
 }
