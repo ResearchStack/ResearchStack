@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import co.touchlab.researchstack.core.model.ConsentSignature;
+import co.touchlab.researchstack.core.result.ConsentSignatureResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.task.Task;
