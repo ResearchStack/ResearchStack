@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -18,24 +16,21 @@ import java.util.Date;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.StorageManager;
-import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
-import co.touchlab.researchstack.core.ui.scene.NotImplementedScene;
 import co.touchlab.researchstack.core.ui.scene.Scene;
-import co.touchlab.researchstack.core.ui.scene.SceneAnimator;
+import co.touchlab.researchstack.core.ui.views.SceneSwitcher;
 
 public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 {
-
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
 
-    private SceneAnimator animator;
+    private SceneSwitcher root;
 
     private Step currentStep;
     private Task task;
@@ -45,8 +40,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         Intent intent = new Intent(context,
                 ViewTaskActivity.class);
-        intent.putExtra(EXTRA_TASK,
-                task);
+        intent.putExtra(EXTRA_TASK, task);
         return intent;
     }
 
@@ -54,52 +48,37 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_fragment);
+        super.setContentView(R.layout.activity_scene_switcher);
         super.setResult(RESULT_CANCELED);
 
-        ViewGroup root = (ViewGroup) findViewById(R.id.container);
-        animator = new SceneAnimator(root);
+        root = (SceneSwitcher) findViewById(R.id.container);
 
         task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
         taskResult = new TaskResult(task.getIdentifier(), null, null);
 
-        ActionBar toolbar = getSupportActionBar();
-        toolbar.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+        {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         initFileAccess();
     }
 
-    @Override
-    protected void onDataReady()
+    private void showNextStep()
     {
-        super.onDataReady();
-        loadNextScene();
-    }
-
-    @Override
-    protected void onDataFailed()
-    {
-        super.onDataFailed();
-        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
-        finish();
-    }
-
-    private void loadNextScene()
-    {
-        Step nextStep = task.getStepAfterStep(currentStep,
-                taskResult);
+        Step nextStep = task.getStepAfterStep(currentStep, taskResult);
         if(nextStep == null)
         {
             saveAndFinish();
         }
         else
         {
-            showScene(nextStep,
-                    SceneAnimator.SHIFT_LEFT);
+            showStep(nextStep);
         }
     }
 
-    private void loadPreviousScene()
+    private void showPreviousStep()
     {
         Step previousStep = task.getStepBeforeStep(currentStep,
                 taskResult);
@@ -109,30 +88,18 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         }
         else
         {
-            showScene(previousStep,
-                    SceneAnimator.SHIFT_RIGHT);
+            showStep(previousStep);
         }
     }
 
-    private void showScene(Step step, int direction)
+    private void showStep(Step step)
     {
-        Scene oldScene = (Scene) findViewById(R.id.current_scene);
-        Scene newScene = getSceneForStep(step);
-        newScene.getView().setId(R.id.current_scene);
+        int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult).getCurrent();
+        int newStepPosition =  task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
-        if (oldScene != null)
-        {
-            oldScene.getView().setId(R.id.old_scene);
-            animator.animate(oldScene,
-                    newScene,
-                    direction);
-        }
-        else
-        {
-            animator.show(null,
-                    newScene);
-        }
-
+        Scene scene = getSceneForStep(step);
+        root.show(scene, newStepPosition >= currentStepPosition ? SceneSwitcher.SHIFT_LEFT :
+                SceneSwitcher.SHIFT_RIGHT);
         currentStep = step;
     }
 
@@ -140,11 +107,6 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         try
         {
-            if (step.getSceneTitle() <= 0)
-            {
-                LogExt.e(getClass(), "[" + step.getClass().getSimpleName() + ":"+step.getIdentifier()+"] No title set for step");
-            }
-
             // Change the title on the activity
             String title = task.getTitleForStep(this, step);
             onStepTitleChanged(title);
@@ -163,44 +125,10 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 
             return scene;
         }
-
-        //TODO Throw RuntimeException here .. eventually .. when stable enough
         catch(Exception e)
         {
-            LogExt.e(getClass(), e);
-            //throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
-
-        LogExt.d(getClass(),
-                "No implementation for this step " + step.getIdentifier());
-        NotImplementedScene scene = new NotImplementedScene(this);
-        scene.initialize(step == null ? new Step("NullStep") : step);
-        return scene;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if (item.getItemId() == android.R.id.home)
-        {
-            // TODO look at this again, isBackEventConsumed should call onPreviousStep most of the time
-            Scene currentScene = (Scene) findViewById(R.id.current_scene);
-            if (!currentScene.isBackEventConsumed())
-            {
-                loadPreviousScene();
-            }
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        return super.onCreateOptionsMenu(menu);
     }
 
     private void saveAndFinish()
@@ -222,11 +150,43 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (item.getItemId() == android.R.id.home)
+        {
+            Scene currentScene = (Scene) findViewById(R.id.current_scene);
+
+            // TODO look at this again, isBackEventConsumed should call onPreviousStep most of the time
+            if (!currentScene.isBackEventConsumed())
+            {
+                showPreviousStep();
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDataReady()
+    {
+        super.onDataReady();
+        showNextStep();
+    }
+
+    @Override
+    protected void onDataFailed()
+    {
+        super.onDataFailed();
+        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    @Override
     public void onNextStep(Step step, StepResult result)
     {
-        taskResult.setStepResultForStepIdentifier(step.getIdentifier(),
-                result);
-        loadNextScene();
+        taskResult.setStepResultForStepIdentifier(step.getIdentifier(), result);
+        showNextStep();
     }
 
     @Override
@@ -234,7 +194,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         taskResult.setStepResultForStepIdentifier(step.getIdentifier(),
                 result);
-        loadPreviousScene();
+        showPreviousStep();
     }
 
     @Override
@@ -253,5 +213,4 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         setResult(Activity.RESULT_CANCELED);
         finish();
     }
-
 }

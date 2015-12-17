@@ -175,13 +175,6 @@ public class ConsentTask extends OrderedTask
         }
     }
 
-    /**
-     * TODO Fix multiple points of truth when figuring out the attempt & incorrect count.
-     *
-     * @param step
-     * @param result
-     * @return
-     */
     @Override
     public Step getStepAfterStep(Step step, TaskResult result)
     {
@@ -223,7 +216,8 @@ public class ConsentTask extends OrderedTask
                     if (evaluationStep.isOverMaxAttempts())
                     {
                         evaluationStep.setAttempt(0);
-                        return getStepWithIdentifier(ID_VISUAL);
+                        //Return to first visual step
+                        return getSteps().get(0);
                     }
                     else
                     {

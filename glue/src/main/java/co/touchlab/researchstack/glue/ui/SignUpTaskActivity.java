@@ -7,13 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import co.touchlab.researchstack.core.model.ConsentSignature;
-import co.touchlab.researchstack.core.result.ConsentSignatureResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
+import co.touchlab.researchstack.core.ui.scene.Scene;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
@@ -104,7 +103,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
         if (requestCode ==  SignUpPermissionsScene.LOCATION_PERMISSION_REQUEST_CODE)
         {
-            SceneImpl scene = (SceneImpl) findViewById(R.id.current_scene);
+            Scene scene = (Scene) findViewById(R.id.current_scene);
             if(scene instanceof SignUpPermissionsScene)
             {
                 ((SignUpPermissionsScene) scene)

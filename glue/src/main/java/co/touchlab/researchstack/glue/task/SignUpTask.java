@@ -1,9 +1,9 @@
 package co.touchlab.researchstack.glue.task;
 
-import co.touchlab.researchstack.glue.ResearchStack;
-import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.glue.model.User;
 
 /**
  * Created by bradleymcdermott on 10/16/15.
@@ -171,5 +171,58 @@ public class SignUpTask extends OnboardingTask
     public int getNumberOfSteps()
     {
         return isCustomStepIncluded() ? MINIMUM_STEPS + 1 : MINIMUM_STEPS;
+    }
+
+    @Override
+    public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
+    {
+        int stepPosition = 0;
+
+        if (step == null || step.getIdentifier()
+                .equals(SignUpInclusionCriteriaStepIdentifier))
+        {
+            stepPosition = 0;
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpEligibleStepIdentifier))
+        {
+            stepPosition = 1;
+
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpIneligibleStepIdentifier))
+        {
+            stepPosition = 2;
+
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpPermissionsPrimingStepIdentifier))
+        {
+            stepPosition = 3;
+
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpGeneralInfoStepIdentifier))
+        {
+            stepPosition = 4;
+
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpMedicalInfoStepIdentifier))
+        {
+            stepPosition = 5;
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpCustomInfoStepIdentifier))
+        {
+            stepPosition = 6;
+        }
+        else if (step.getIdentifier()
+                .equals(SignUpPermissionsStepIdentifier))
+        {
+            stepPosition = 7;
+        }
+
+        return new TaskProgress(stepPosition, getNumberOfSteps());
     }
 }
