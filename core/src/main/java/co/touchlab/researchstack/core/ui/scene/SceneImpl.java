@@ -67,12 +67,15 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
     public SceneImpl(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        super(context, attrs, defStyleAttr);
+        super(context,
+                attrs,
+                defStyleAttr);
     }
 
     public void initialize(Step step)
     {
-        initialize(step, null);
+        initialize(step,
+                null);
     }
 
     public void initialize(Step step, StepResult result)
@@ -104,8 +107,11 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         View body = onCreateBody(inflater, container);
         if (body != null)
         {
-            int bodyIndex = getPositionToInsertBody();
+            View oldView = container.findViewById(R.id.scene_body);
+            int bodyIndex = container.indexOfChild(oldView);
+            container.removeView(oldView);
             container.addView(body, bodyIndex);
+            body.setId(R.id.scene_body);
 
             LogExt.i(getClass(), "onBodyCreated()");
             onBodyCreated(body);
@@ -169,15 +175,6 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
     protected int getRootLayoutResourceId()
     {
         return R.layout.fragment_step;
-    }
-
-    //TODO Not sure how i feel about this method. Part of me says "OK", another says just return an
-    //TODO integer (aka magic number).
-    //TODO Consult Brad.
-    protected int getPositionToInsertBody()
-    {
-        LinearLayout stepViewContainer = (LinearLayout) findViewById(R.id.content_container);
-        return stepViewContainer.indexOfChild(moreInfo) + 1;
     }
 
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
