@@ -18,14 +18,6 @@ public interface Scene<T>
      */
     boolean isBackEventConsumed();
 
-
-    void setStepResult(StepResult<T> result);
-
-    StepResult<T> getStepResult();
-
-
     void setCallbacks(SceneCallbacks callbacks);
-
-    SceneCallbacks getCallbacks();
 
 }

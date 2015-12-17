@@ -195,8 +195,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         {
             if (callbacks != null)
             {
-                callbacks.notifyStepResultChanged(getStep(), getStepResult());
-                callbacks.onNextStep(step);
+                callbacks.onNextStep(step, getStepResult());
             }
             else
             {
@@ -217,7 +216,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
     {
         if (callbacks != null)
         {
-            callbacks.onSkipStep(step);
+            callbacks.onNextStep(step, null);
         }
     }
 
@@ -273,12 +272,6 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
     public boolean isAnswerValid()
     {
         return true;
-    }
-
-    @Override
-    public SceneCallbacks getCallbacks()
-    {
-        return callbacks;
     }
 
     @Override

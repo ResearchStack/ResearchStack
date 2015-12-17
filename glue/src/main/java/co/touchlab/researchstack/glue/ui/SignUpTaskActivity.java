@@ -84,7 +84,8 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 SceneImpl scene = (SceneImpl) findViewById(R.id.current_scene);
                 if (scene != null && scene instanceof SignUpEligibleScene)
                 {
-                    onNextStep(scene.getStep());
+                    // TODO this is weird, activity calling a callback method itself
+                    onNextStep(scene.getStep(), null);
                 }
             }
             else

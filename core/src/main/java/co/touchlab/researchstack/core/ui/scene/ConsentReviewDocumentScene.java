@@ -75,7 +75,8 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<
         RxView.clicks(agree).subscribe(v -> showDialog());
 
         View disagree = findViewById(R.id.disagree);
-        RxView.clicks(disagree).subscribe(v -> getCallbacks().onCancelStep());
+        // TODO make this call onNextStep with false result
+        RxView.clicks(disagree).subscribe(v -> callbacks.onCancelStep());
     }
 
     private void showDialog()
@@ -86,12 +87,10 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<
                 .setCancelable(false)
                 .setPositiveButton(R.string.agree, (dialog, which) -> {
                     stepResult.setResult(true);
-                    callbacks.notifyStepResultChanged(step, stepResult);
-                    callbacks.onNextStep(step);
+                    callbacks.onNextStep(step, stepResult);
                 })
                 .setNegativeButton(R.string.consent_review_cancel, (dialog, which) -> {
-                    stepResult.setResult(false);
-                    callbacks.notifyStepResultChanged(step, stepResult);
+                    // Gives them a chance to read it again
                 })
                 .show();
     }
@@ -109,26 +108,8 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<
     }
 
     @Override
-    public void setStepResult(StepResult<Boolean> result)
-    {
-        stepResult = result;
-    }
-
-    @Override
-    public StepResult<Boolean> getStepResult()
-    {
-        return stepResult;
-    }
-
-    @Override
     public void setCallbacks(SceneCallbacks callbacks)
     {
         this.callbacks = callbacks;
-    }
-
-    @Override
-    public SceneCallbacks getCallbacks()
-    {
-        return callbacks;
     }
 }

@@ -5,10 +5,8 @@ import co.touchlab.researchstack.core.step.Step;
 public interface SceneCallbacks
 {
     void onStepTitleChanged(String title);
-    void onNextStep(Step step);
-    void onSkipStep(Step step);
-    void onCancelStep();
+    void onNextStep(Step step, StepResult result);
+    void onPreviousStep(Step step, StepResult result);
 
-    void notifyStepResultChanged(Step step, StepResult result);
-
+    @Deprecated void onCancelStep();
 }

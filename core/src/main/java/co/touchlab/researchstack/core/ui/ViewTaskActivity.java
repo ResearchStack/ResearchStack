@@ -45,7 +45,8 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         Intent intent = new Intent(context,
                 ViewTaskActivity.class);
-        intent.putExtra(EXTRA_TASK, task);
+        intent.putExtra(EXTRA_TASK,
+                task);
         return intent;
     }
 
@@ -85,27 +86,31 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 
     private void loadNextScene()
     {
-        Step nextStep = task.getStepAfterStep(currentStep, taskResult);
+        Step nextStep = task.getStepAfterStep(currentStep,
+                taskResult);
         if(nextStep == null)
         {
             saveAndFinish();
         }
         else
         {
-            showScene(nextStep, SceneAnimator.SHIFT_LEFT);
+            showScene(nextStep,
+                    SceneAnimator.SHIFT_LEFT);
         }
     }
 
     private void loadPreviousScene()
     {
-        Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
+        Step previousStep = task.getStepBeforeStep(currentStep,
+                taskResult);
         if(previousStep == null)
         {
             onBackPressed();
         }
         else
         {
-            showScene(previousStep, SceneAnimator.SHIFT_RIGHT);
+            showScene(previousStep,
+                    SceneAnimator.SHIFT_RIGHT);
         }
     }
 
@@ -118,11 +123,14 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         if (oldScene != null)
         {
             oldScene.getView().setId(R.id.old_scene);
-            animator.animate(oldScene, newScene, direction);
+            animator.animate(oldScene,
+                    newScene,
+                    direction);
         }
         else
         {
-            animator.show(null, newScene);
+            animator.show(null,
+                    newScene);
         }
 
         currentStep = step;
@@ -163,7 +171,8 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
             //throw new RuntimeException(e);
         }
 
-        LogExt.d(getClass(), "No implementation for this step " + step.getIdentifier());
+        LogExt.d(getClass(),
+                "No implementation for this step " + step.getIdentifier());
         NotImplementedScene scene = new NotImplementedScene(this);
         scene.initialize(step == null ? new Step("NullStep") : step);
         return scene;
@@ -174,6 +183,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         if (item.getItemId() == android.R.id.home)
         {
+            // TODO look at this again, isBackEventConsumed should call onPreviousStep most of the time
             Scene currentScene = (Scene) findViewById(R.id.current_scene);
             if (!currentScene.isBackEventConsumed())
             {
@@ -206,27 +216,25 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         taskRecord.result = gson.toJson(taskResult);
         StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
 
-        setResult(RESULT_OK, resultIntent);
+        setResult(RESULT_OK,
+                resultIntent);
         finish();
     }
 
     @Override
-    public void onNextStep(Step step)
+    public void onNextStep(Step step, StepResult result)
     {
+        taskResult.setStepResultForStepIdentifier(step.getIdentifier(),
+                result);
         loadNextScene();
     }
 
     @Override
-    public void notifyStepResultChanged(Step step, StepResult result)
+    public void onPreviousStep(Step step, StepResult result)
     {
-        taskResult.setStepResultForStepIdentifier(step.getIdentifier(), result);
-    }
-
-    @Override
-    public void onSkipStep(Step step)
-    {
-        notifyStepResultChanged(step, null);
-        onNextStep(step);
+        taskResult.setStepResultForStepIdentifier(step.getIdentifier(),
+                result);
+        loadPreviousScene();
     }
 
     @Override
