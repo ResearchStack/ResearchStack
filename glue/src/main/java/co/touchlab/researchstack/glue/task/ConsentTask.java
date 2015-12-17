@@ -128,7 +128,8 @@ public class ConsentTask extends OrderedTask
         for(int i = 0, size = doc.getSections().size(); i < size; i++)
         {
             ConsentSection section = doc.getSections().get(i);
-            ConsentVisualStep step = new ConsentVisualStep("consent_" + i, section);
+            ConsentVisualStep step = new ConsentVisualStep("consent_" + i);
+            step.setSection(section);
 
             String nextString = ctx.getString(R.string.next);
             if(section.getType() == ConsentSection.Type.Overview)

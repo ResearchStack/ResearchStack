@@ -2,6 +2,7 @@ package co.touchlab.researchstack.core.result;
 
 import co.touchlab.researchstack.core.model.ConsentSignature;
 
+@Deprecated
 public class ConsentSignatureResult extends StepResult
 {
 

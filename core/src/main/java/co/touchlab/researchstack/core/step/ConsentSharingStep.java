@@ -4,7 +4,6 @@ import co.touchlab.researchstack.core.ui.scene.ConsentSharingScene;
 
 public class ConsentSharingStep extends QuestionStep
 {
-
     private String localizedLearnMoreHTMLContent;
 
     public ConsentSharingStep(String identifier)
