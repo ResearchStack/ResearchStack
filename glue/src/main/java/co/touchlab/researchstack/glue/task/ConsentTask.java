@@ -1,14 +1,19 @@
 package co.touchlab.researchstack.glue.task;
 import android.content.Context;
 import android.content.res.Resources;
+import android.text.TextUtils;
 
 import java.util.Collections;
 
+import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
+import co.touchlab.researchstack.core.dev.DevUtils;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSectionModel;
 import co.touchlab.researchstack.core.model.ConsentSignature;
+import co.touchlab.researchstack.core.model.TextChoice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
@@ -51,8 +56,9 @@ public class ConsentTask extends OrderedTask
         ConsentSectionModel data = JsonUtils
                 .loadClass(context, ConsentSectionModel.class, researchStack.getConsentSections());
 
-        ConsentSignature signature = new ConsentSignature("participant",
-                                                          r.getString(R.string.participant), null);
+        String participant = r.getString(R.string.participant);
+        ConsentSignature signature = new ConsentSignature("participant", participant, null);
+
         signature.setRequiresSignatureImage(
                 ResearchStack.getInstance().isSignatureEnabledInConsent());
 
@@ -69,11 +75,52 @@ public class ConsentTask extends OrderedTask
 
         initVisualSteps(context, doc);
 
-        addStep(new ConsentSharingStep(ID_SHARING, r, data.getDocumentProperties()));
+        initConsentSharingStep(r, data);
 
         initQuizSteps(context, researchStack);
 
         initConsentReviewSteps(context, doc);
+    }
+
+    private void initConsentSharingStep(Resources r, ConsentSectionModel data)
+    {
+        ConsentSharingStep sharingStep = new ConsentSharingStep(ID_SHARING);
+        sharingStep.setOptional(false);
+        sharingStep.setShowsProgress(false);
+        sharingStep.setUseSurveyMode(false);
+
+        String investigatorShortDesc = data.getDocumentProperties().getInvestigatorShortDescription();
+        if (TextUtils.isEmpty(investigatorShortDesc)){
+            DevUtils.throwIllegalArgumentException();
+        }
+
+        String investigatorLongDesc = data.getDocumentProperties().getInvestigatorLongDescription();
+        if (TextUtils.isEmpty(investigatorLongDesc)){
+            DevUtils.throwIllegalArgumentException();
+        }
+
+        String localizedLearnMoreHTMLContent = data.getDocumentProperties().getHtmlContent();
+        if (TextUtils.isEmpty(localizedLearnMoreHTMLContent)){
+            DevUtils.throwIllegalArgumentException();
+        }
+
+        sharingStep.setLocalizedLearnMoreHTMLContent(localizedLearnMoreHTMLContent);
+
+        String shareWidely = r.getString(R.string.consent_share_widely, investigatorLongDesc);
+        TextChoice<Boolean> shareWidelyChoice = new TextChoice<>(shareWidely, true, null);
+
+        String shareRestricted = r.getString(R.string.consent_share_only, investigatorShortDesc);
+        TextChoice<Boolean> shareRestrictedChoice = new TextChoice<>(shareRestricted, false, null);
+
+        sharingStep.setAnswerFormat(
+                new TextChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
+                                           new TextChoice[] {shareWidelyChoice,
+                                                   shareRestrictedChoice}));
+
+        sharingStep.setTitle(r.getString(R.string.consent_share_title));
+        sharingStep.setText(r.getString(R.string.consent_share_description, investigatorLongDesc));
+
+        addStep(sharingStep);
     }
 
     private void initVisualSteps(Context ctx, ConsentDocument doc)
