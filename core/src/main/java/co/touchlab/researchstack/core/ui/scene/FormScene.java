@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +22,8 @@ import co.touchlab.researchstack.core.step.FormStep;
 
 public class FormScene extends SceneImpl<TextQuestionResult>
 {
+    private LinearLayout body;
+
     public FormScene(Context context)
     {
         super(context);
@@ -33,7 +36,9 @@ public class FormScene extends SceneImpl<TextQuestionResult>
 
     public FormScene(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        super(context, attrs, defStyleAttr);
+        super(context,
+                attrs,
+                defStyleAttr);
     }
 
     @Override
@@ -47,13 +52,10 @@ public class FormScene extends SceneImpl<TextQuestionResult>
     }
 
     @Override
-    public void onSceneCreated(View scene)
+    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        super.onSceneCreated(scene);
+        body = (LinearLayout) inflater.inflate(R.layout.scene_form, parent, false);
 
-        LinearLayout stepViewContainer = (LinearLayout) findViewById(R.id.content_container);
-
-        int startIndex = getPositionToInsertBody();
         List<FormItem> items = ((FormStep) getStep()).getFormItems();
         for(int i = 0, size = items.size(); i < size; i++)
         {
@@ -105,9 +107,11 @@ public class FormScene extends SceneImpl<TextQuestionResult>
                 });
             }
 
-            stepViewContainer.addView(formItem, startIndex + i);
+            body.addView(formItem);
             getStepResult().setResult(result);
         }
+
+        return body;
     }
 
     @Override
