@@ -317,7 +317,8 @@ public class SmartSurveyTask extends Task implements Serializable
     @Override
     public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
     {
-        return null;
+        int current = staticStepIdentifiers.indexOf(step == null ? -1 : step.getIdentifier());
+        return new TaskProgress(current, staticStepIdentifiers.size());
     }
 
     @Override

@@ -15,19 +15,14 @@ public class FormStep extends Step
 
     public FormStep(String identifier, String title)
     {
-        super(identifier, title);
+        super(identifier,
+                title);
     }
 
     public FormStep(String identifier, String title, String text)
     {
         super(identifier, title);
         setText(text);
-    }
-
-    @Override
-    public Class getSceneClass()
-    {
-        return FormScene.class;
     }
 
     public void setFormItems(List<FormScene.FormItem> formItems)

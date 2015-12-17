@@ -80,7 +80,8 @@ public class OrderedTask extends Task implements Serializable
     @Override
     public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
     {
-        return null;
+        int current = step == null ? -1 : steps.indexOf(step);
+        return new TaskProgress(current, steps.size());
     }
 
     @Override

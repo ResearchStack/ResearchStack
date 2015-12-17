@@ -54,10 +54,25 @@ public abstract class Task implements Serializable
 
     public static class TaskProgress {
 
-        public int current;
+        private int current;
 
-        public int total;
+        private int total;
 
+        public TaskProgress(int current, int total)
+        {
+            this.current = current;
+            this.total = total;
+        }
+
+        public int getCurrent()
+        {
+            return current;
+        }
+
+        public int getTotal()
+        {
+            return total;
+        }
     }
 
     public abstract int getNumberOfSteps();
