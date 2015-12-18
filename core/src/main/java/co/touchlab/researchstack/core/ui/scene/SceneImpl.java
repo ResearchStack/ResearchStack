@@ -230,6 +230,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
     @Override
     public boolean isBackEventConsumed()
     {
+        callbacks.onPreviousStep(getStep(), getStepResult());
         return false;
     }
 

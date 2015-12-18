@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -80,11 +81,10 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 
     private void showPreviousStep()
     {
-        Step previousStep = task.getStepBeforeStep(currentStep,
-                taskResult);
+        Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
         if(previousStep == null)
         {
-            onBackPressed();
+            finish();
         }
         else
         {
@@ -144,9 +144,15 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         taskRecord.result = gson.toJson(taskResult);
         StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
 
-        setResult(RESULT_OK,
-                resultIntent);
+        setResult(RESULT_OK, resultIntent);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_view_task, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -154,17 +160,27 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         if (item.getItemId() == android.R.id.home)
         {
-            Scene currentScene = (Scene) findViewById(R.id.current_scene);
-
-            // TODO look at this again, isBackEventConsumed should call onPreviousStep most of the time
-            if (!currentScene.isBackEventConsumed())
-            {
-                showPreviousStep();
-            }
+            notifySceneOfBackPress();
             return true;
+        }
+        else if (item.getItemId() == R.id.menu_cancel)
+        {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        notifySceneOfBackPress();
+    }
+
+    private void notifySceneOfBackPress()
+    {
+        Scene currentScene = (Scene) findViewById(R.id.current_scene);
+        currentScene.isBackEventConsumed();
     }
 
     @Override
