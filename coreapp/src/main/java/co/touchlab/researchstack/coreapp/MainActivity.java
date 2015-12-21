@@ -22,11 +22,13 @@ import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.helpers.LogExt;
+import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSignature;
+import co.touchlab.researchstack.core.result.FormResult;
+import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.FormStep;
@@ -50,13 +52,20 @@ public class MainActivity extends PassCodeActivity
     public static final String AGE = "age";
     public static final String INSTRUCTION = "identifier";
     public static final String BASIC_INFO_HEADER = "basic_info_header";
-    public static final String FORM_AGE = "age";
+    public static final String FORM_AGE = "form_age";
     public static final String FORM_GENDER = "gender";
     public static final String FORM_MULTI_CHOICE = "multi_choice";
     public static final String FORM_DATE_OF_BIRTH = "date_of_birth";
     private static final String FORM_NAME = "form_name";
     public static final String SURVEY_PATH = "/survey_";
+    public static final String CONSENT_PATH = "/consent_";
     public static final String NUTRITION = "nutrition";
+    public static final String SIGNATURE = "signature";
+    public static final String VISUAL_CONSENT_IDENTIFIER = "visual_consent_identifier";
+    public static final String CONSENT_DOC = "consent_doc";
+    public static final String SIGNATURE_FORM_STEP = "form_step";
+    public static final String NAME = "name";
+    public static final String CONSENT = "consent";
     private AppCompatButton consentButton;
     private AppCompatButton surveyButton;
     private AppCompatButton clearButton;
@@ -102,13 +111,9 @@ public class MainActivity extends PassCodeActivity
     {
         FileAccess fileAccess = StorageManager.getFileAccess();
         fileAccess.clearData(this,
-                "/consented_name");
+                CONSENT_PATH + NAME);
         fileAccess.clearData(this,
-                "/consented_signature");
-        fileAccess.clearData(this,
-                "/survey_age");
-        fileAccess.clearData(this,
-                "/survey_nutrition");
+                CONSENT_PATH + SIGNATURE);
 
         AppPrefs appPrefs = AppPrefs.getInstance(this);
         appPrefs.setHasSurveyed(false);
@@ -133,8 +138,8 @@ public class MainActivity extends PassCodeActivity
             consentButton.setEnabled(false);
             consentButton.setText(R.string.consent_button_done);
             surveyButton.setEnabled(true);
-            printConsentInfo(loadString("/consented_name"),
-                    loadString("/consented_signature"));
+            printConsentInfo(loadString(CONSENT_PATH + NAME),
+                    loadString(CONSENT_PATH + SIGNATURE));
         }
         else
         {
@@ -177,7 +182,7 @@ public class MainActivity extends PassCodeActivity
         section1.setContent("The content to show in learn more ...");
 
         // ...add more sections as needed, then create a visual consent step
-        ConsentVisualStep visualStep = new ConsentVisualStep("visual_consent_identifier");
+        ConsentVisualStep visualStep = new ConsentVisualStep(VISUAL_CONSENT_IDENTIFIER);
         visualStep.setSection(section1);
         visualStep.setNextButtonString(getString(R.string.next));
 
@@ -197,30 +202,30 @@ public class MainActivity extends PassCodeActivity
         docBuilder.append("<div><h2> HTML Consent Doc goes here </h2></div>");
 
         // Create the Consent doc step, pass in our HTML doc
-        ConsentReviewDocumentStep documentStep = new ConsentReviewDocumentStep("consent_doc");
+        ConsentReviewDocumentStep documentStep = new ConsentReviewDocumentStep(CONSENT_DOC);
         documentStep.setConsentHTML(docBuilder.toString());
         documentStep.setConfirmMessage(getString(R.string.consent_review_reason));
 
         // Create Consent form step, to get users first & last name
-        FormStep formStep = new FormStep("form_step", "Form Title", "Form step description");
+        FormStep formStep = new FormStep(SIGNATURE_FORM_STEP, "Form Title", "Form step description");
         formStep.setSceneTitle(R.string.consent);
 
         TextAnswerFormat format = new TextAnswerFormat();
         format.setIsMultipleLines(false);
 
         FormScene.FormItem fullName = new FormScene.FormItem(
-                formStep.getIdentifier(), "Full name", format, "Required", false);
+                NAME, "Full name", format, "Required", false);
         formStep.setFormItems(Collections.singletonList(fullName));
 
         // Create Consent signature step, user can sign their name
-        Step signatureStep = new Step("signature");
+        Step signatureStep = new Step(SIGNATURE);
         signatureStep.setTitle(getString(R.string.consent_signature_title));
         signatureStep.setText(getString(R.string.consent_signature_instruction));
         signatureStep.setOptional(false);
         signatureStep.setSceneClass(ConsentReviewSignatureScene.class);
 
         // Finally, create and present a task including these steps.
-        Task consentTask = new OrderedTask("consent", "consent",
+        Task consentTask = new OrderedTask(CONSENT, CONSENT,
                 visualStep,
                 documentStep,
                 formStep,
@@ -235,22 +240,21 @@ public class MainActivity extends PassCodeActivity
 
     private void processConsentResult(TaskResult result)
     {
-        boolean consented = (boolean) result.getStepResult("consent_doc").getResult();
+        boolean consented = (boolean) result.getStepResult(CONSENT_DOC).getResult();
 
         if (consented)
         {
-            TextQuestionResult formResult = (TextQuestionResult) result.getStepResult("form_step")
-                    .getResult();
-            String fullName = formResult.getTextAnswer();
+            String fullName = ((FormResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
+                    .getResultForIdentifier(NAME)).getAnswer();
 
-            String signatureBase64 = (String) result.getStepResult("signature").getResult();
+            String signatureBase64 = (String) result.getStepResult(SIGNATURE).getResult();
 
             AppPrefs prefs = AppPrefs.getInstance(this);
             prefs.setHasConsented(true);
 
-            saveString("/consented_name", fullName);
+            saveString(CONSENT_PATH + NAME, fullName);
 
-            saveString("/consented_signature", signatureBase64);
+            saveString(CONSENT_PATH + SIGNATURE, signatureBase64);
 
             initViews();
         }

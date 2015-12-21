@@ -6,14 +6,14 @@ import android.text.TextUtils;
 import java.util.Collections;
 
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
+import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
 import co.touchlab.researchstack.core.dev.DevUtils;
+import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSectionModel;
 import co.touchlab.researchstack.core.model.ConsentSignature;
-import co.touchlab.researchstack.core.model.TextChoice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
@@ -107,14 +107,14 @@ public class ConsentTask extends OrderedTask
         sharingStep.setLocalizedLearnMoreHTMLContent(localizedLearnMoreHTMLContent);
 
         String shareWidely = r.getString(R.string.consent_share_widely, investigatorLongDesc);
-        TextChoice<Boolean> shareWidelyChoice = new TextChoice<>(shareWidely, true, null);
+        Choice<Boolean> shareWidelyChoice = new Choice<>(shareWidely, true, null);
 
         String shareRestricted = r.getString(R.string.consent_share_only, investigatorShortDesc);
-        TextChoice<Boolean> shareRestrictedChoice = new TextChoice<>(shareRestricted, false, null);
+        Choice<Boolean> shareRestrictedChoice = new Choice<>(shareRestricted, false, null);
 
         sharingStep.setAnswerFormat(
-                new TextChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-                                           new TextChoice[] {shareWidelyChoice,
+                new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
+                                           new Choice[] {shareWidelyChoice,
                                                    shareRestrictedChoice}));
 
         sharingStep.setTitle(r.getString(R.string.consent_share_title));
@@ -206,7 +206,7 @@ public class ConsentTask extends OrderedTask
             String placeholder = ctx.getResources().getString(R.string.consent_name_placeholder);
             String nameText = ctx.getResources().getString(R.string.consent_name_full);
             FormScene.FormItem fullName = new FormScene.FormItem(formStep.getIdentifier(), nameText,
-                                                                 format, placeholder);
+                                                                 format, placeholder, false);
             formStep.setFormItems(Collections.singletonList(fullName));
             addStep(formStep);
         }
