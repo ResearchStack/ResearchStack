@@ -1,6 +1,5 @@
 package co.touchlab.researchstack.core.ui.scene;
 import android.content.Context;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
@@ -24,11 +23,6 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import rx.functions.Action1;
 
-/***************************************************************************************************
- * TODO List
- * - Remove initializeScene() from constructor. Make into a public facing method so that users can
- *   define layout in XML.
- ***************************************************************************************************/
 public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 {
     public static final String TAG = SceneImpl.class.getSimpleName();
@@ -67,9 +61,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
     public SceneImpl(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        super(context,
-                attrs,
-                defStyleAttr);
+        super(context, attrs, defStyleAttr);
     }
 
     public void initialize(Step step)
@@ -82,7 +74,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         this.step = step;
         this.stepResult = result;
 
-        if (this.stepResult == null)
+        if(this.stepResult == null)
         {
             this.stepResult = new StepResult<T>(step.getIdentifier());
         }
@@ -94,7 +86,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
     {
         LogExt.i(getClass(), "initializeScene()");
 
-        if (getContext() instanceof SceneCallbacks)
+        if(getContext() instanceof SceneCallbacks)
         {
             setCallbacks((SceneCallbacks) getContext());
         }
@@ -109,7 +101,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
         LogExt.i(getClass(), "onCreateBody()");
         View body = onCreateBody(inflater, container);
-        if (body != null)
+        if(body != null)
         {
             View oldView = container.findViewById(R.id.scene_body);
             int bodyIndex = container.indexOfChild(oldView);
@@ -140,7 +132,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
             if(sceneHeight > 0 && infoContainerHeight > 0 && sceneHeight > infoContainerHeight)
             {
                 int fillerHeight = sceneHeight - infoContainerHeight;
-                if (fillerHeight >= 0 && fillerHeight != filler.getHeight())
+                if(fillerHeight >= 0 && fillerHeight != filler.getHeight())
                 {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fillerHeight);
                     filler.setLayoutParams(params);
@@ -162,7 +154,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
         skip = (TextView) findViewById(R.id.skip);
 
-        if (step != null)
+        if(step != null)
         {
             title.setText(step.getTitle());
 
@@ -186,17 +178,24 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         return null;
     }
 
-    public void onBodyCreated(View body) {
+    public void onBodyCreated(View body)
+    {
         LogExt.i(getClass(), "onBodyCreated()");
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE, getStep(), getStepResult());
+        return super.onSaveInstanceState();
     }
 
     protected void onNextClicked()
     {
-        if (isAnswerValid())
+        if(isAnswerValid())
         {
-            if (callbacks != null)
+            if(callbacks != null)
             {
-                callbacks.onNextStep(step, getStepResult());
+                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, getStep(), getStepResult());
             }
             else
             {
@@ -206,18 +205,15 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         }
         else
         {
-            Toast.makeText(getContext(),
-                           R.string.please_complete_step,
-                           Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(getContext(), R.string.please_complete_step, Toast.LENGTH_SHORT).show();
         }
     }
 
     public void onSkipClicked()
     {
-        if (callbacks != null)
+        if(callbacks != null)
         {
-            callbacks.onNextStep(step, null);
+            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, getStep(), null);
         }
     }
 
@@ -229,12 +225,13 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
     /**
      * Method allowing a scene to consume a back event.
+     *
      * @return
      */
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onPreviousStep(getStep(), getStepResult());
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, getStep(), getStepResult());
         return false;
     }
 
@@ -278,7 +275,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
     public void setImage(@DrawableRes int drawableResid)
     {
-        if (image.getVisibility() != View.VISIBLE)
+        if(image.getVisibility() != View.VISIBLE)
         {
             image.setVisibility(View.VISIBLE);
         }
@@ -310,7 +307,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
     public void setSummary(String string)
     {
-        if (summary.getVisibility() != View.VISIBLE)
+        if(summary.getVisibility() != View.VISIBLE)
         {
             summary.setVisibility(View.VISIBLE);
         }
@@ -318,16 +315,16 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         summary.setText(string);
     }
 
-    public void setMoreInfo(@StringRes int stringRes, Action1< ? super Object> action)
+    public void setMoreInfo(@StringRes int stringRes, Action1<? super Object> action)
     {
-        if (moreInfo.getVisibility() != View.VISIBLE)
+        if(moreInfo.getVisibility() != View.VISIBLE)
         {
             moreInfo.setVisibility(View.VISIBLE);
         }
 
         moreInfo.setText(stringRes);
 
-        if (action != null)
+        if(action != null)
         {
             RxView.clicks(moreInfo).subscribe(action);
         }
@@ -343,16 +340,16 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         setSkip(isOptional, 0, null);
     }
 
-    public void setSkip(boolean isOptional, @StringRes int stringRes,  Action1<? super Object> action)
+    public void setSkip(boolean isOptional, @StringRes int stringRes, Action1<? super Object> action)
     {
         skip.setVisibility(isOptional ? View.VISIBLE : View.GONE);
 
-        if (stringRes != 0)
+        if(stringRes != 0)
         {
             skip.setText(stringRes);
         }
 
-        if (action != null)
+        if(action != null)
         {
             RxView.clicks(skip).subscribe(action);
         }
@@ -373,101 +370,6 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
     {
         next.setVisibility(View.GONE);
         skip.setVisibility(View.GONE);
-    }
-
-    @Override
-    public Parcelable onSaveInstanceState() {
-        LogExt.i(getClass(), "onSaveInstanceState()");
-
-        Parcelable superState = super.onSaveInstanceState();
-        SceneSavedState ss = new SceneSavedState(superState);
-
-        if (step != null)
-        {
-            LogExt.i(getClass(), "onSaveInstanceState() - " + step.toString());
-        }
-        ss.step = step;
-
-        if (stepResult != null)
-        {
-            LogExt.i(getClass(), "onSaveInstanceState() - " + stepResult.toString());
-        }
-        ss.result = stepResult;
-
-        return ss;
-    }
-
-    @Override
-    public void onRestoreInstanceState(Parcelable state) {
-        LogExt.i(getClass(), "onRestoreInstanceState()");
-
-        if(!(state instanceof SceneSavedState)) {
-            super.onRestoreInstanceState(state);
-            return;
-        }
-
-        SceneSavedState ss = (SceneSavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
-
-        this.step = ss.step;
-        if (step != null)
-        {
-            LogExt.i(getClass(), "onRestoreInstanceState() - " + step.toString());
-        }
-
-        this.stepResult = ss.result;
-        if (stepResult != null)
-        {
-            LogExt.i(getClass(), "onRestoreInstanceState() - " + stepResult.toString());
-        }
-
-        //TODO Make sure this works properly.
-        initializeScene();
-    }
-
-    private static class SceneSavedState extends BaseSavedState {
-
-        Step step;
-        StepResult result;
-
-        SceneSavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        private SceneSavedState(Parcel in) {
-            super(in);
-            step = (Step) in.readSerializable();
-            result = (StepResult) in.readSerializable();
-        }
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeSerializable(step);
-            out.writeSerializable(result);
-        }
-
-        //required field that makes Parcelables from a Parcel
-        public static final Parcelable.Creator<SceneSavedState> CREATOR =
-                new Parcelable.Creator<SceneSavedState>() {
-                    public SceneSavedState createFromParcel(Parcel in) {
-                        return new SceneSavedState(in);
-                    }
-                    public SceneSavedState[] newArray(int size) {
-                        return new SceneSavedState[size];
-                    }
-                };
-    }
-
-    /**
-     * TODO Implement
-     */
-    public static class StepSceneBuilder
-    {
-        private String titleText;
-        private String summaryText;
-        private String moreInfoText;
-        private Action1 moreInfoAction;
     }
 
 }
