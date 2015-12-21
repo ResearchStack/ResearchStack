@@ -30,11 +30,11 @@ import co.touchlab.researchstack.core.result.FormResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
+import co.touchlab.researchstack.core.step.ConsentSignatureStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.InstructionStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
@@ -61,6 +61,7 @@ public class MainActivity extends PassCodeActivity
     public static final String CONSENT_PATH = "/consent_";
     public static final String NUTRITION = "nutrition";
     public static final String SIGNATURE = "signature";
+    public static final String SIGNATURE_DATE = "signature_date";
     public static final String VISUAL_CONSENT_IDENTIFIER = "visual_consent_identifier";
     public static final String CONSENT_DOC = "consent_doc";
     public static final String SIGNATURE_FORM_STEP = "form_step";
@@ -114,6 +115,8 @@ public class MainActivity extends PassCodeActivity
                 CONSENT_PATH + NAME);
         fileAccess.clearData(this,
                 CONSENT_PATH + SIGNATURE);
+        fileAccess.clearData(this,
+                CONSENT_PATH + SIGNATURE_DATE);
 
         AppPrefs appPrefs = AppPrefs.getInstance(this);
         appPrefs.setHasSurveyed(false);
@@ -139,7 +142,8 @@ public class MainActivity extends PassCodeActivity
             consentButton.setText(R.string.consent_button_done);
             surveyButton.setEnabled(true);
             printConsentInfo(loadString(CONSENT_PATH + NAME),
-                    loadString(CONSENT_PATH + SIGNATURE));
+                    loadString(CONSENT_PATH + SIGNATURE),
+                    loadString(CONSENT_PATH + SIGNATURE_DATE));
         }
         else
         {
@@ -218,9 +222,10 @@ public class MainActivity extends PassCodeActivity
         formStep.setFormItems(Collections.singletonList(fullName));
 
         // Create Consent signature step, user can sign their name
-        Step signatureStep = new Step(SIGNATURE);
+        ConsentSignatureStep signatureStep = new ConsentSignatureStep(SIGNATURE);
         signatureStep.setTitle(getString(R.string.consent_signature_title));
         signatureStep.setText(getString(R.string.consent_signature_instruction));
+        signatureStep.setSignatureDateFormat(signature.getSignatureDateFormatString());
         signatureStep.setOptional(false);
         signatureStep.setSceneClass(ConsentReviewSignatureScene.class);
 
@@ -247,7 +252,11 @@ public class MainActivity extends PassCodeActivity
             String fullName = ((FormResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
                     .getResultForIdentifier(NAME)).getAnswer();
 
-            String signatureBase64 = (String) result.getStepResult(SIGNATURE).getResult();
+            String signatureBase64 = (String) result.getStepResult(SIGNATURE)
+                    .getResultForIdentifier(ConsentReviewSignatureScene.KEY_SIGNATURE);
+
+            String signatureDate = (String) result.getStepResult(SIGNATURE)
+                    .getResultForIdentifier(ConsentReviewSignatureScene.KEY_SIGNATURE_DATE);
 
             AppPrefs prefs = AppPrefs.getInstance(this);
             prefs.setHasConsented(true);
@@ -256,13 +265,16 @@ public class MainActivity extends PassCodeActivity
 
             saveString(CONSENT_PATH + SIGNATURE, signatureBase64);
 
+            saveString(CONSENT_PATH + SIGNATURE_DATE, signatureDate);
+
             initViews();
         }
     }
 
-    private void printConsentInfo(String fullName, String signatureBase64)
+    private void printConsentInfo(String fullName, String signatureBase64, String consentDate)
     {
         ((TextView) findViewById(R.id.consented_name)).setText(fullName);
+        ((TextView) findViewById(R.id.consented_date)).setText(consentDate);
         byte[] signatureBytes = Base64.decode(signatureBase64,
                 Base64.DEFAULT);
         ((ImageView) findViewById(R.id.consented_signature)).setImageBitmap(BitmapFactory.decodeByteArray(signatureBytes,

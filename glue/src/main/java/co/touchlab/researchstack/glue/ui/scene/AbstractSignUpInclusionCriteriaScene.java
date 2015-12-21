@@ -36,11 +36,11 @@ public abstract class AbstractSignUpInclusionCriteriaScene extends SceneImpl<Boo
     }
 
     @Override
-    public void onNextClicked()
+    public StepResult<Boolean> getStepResult()
     {
-        StepResult<Boolean> result = getStepResult();
-        result.setResultForIdentifier(StepResult.DEFAULT_KEY, isEligible());
-        super.onNextClicked();
+        StepResult<Boolean> result = super.getStepResult();
+        result.setResult(isEligible());
+        return result;
     }
 
     public abstract int getLayoutId();

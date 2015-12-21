@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.result.StepResult;
 
 public class TextQuestionScene extends SceneImpl<String>
 {
@@ -34,16 +33,13 @@ public class TextQuestionScene extends SceneImpl<String>
     @Override
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        StepResult<String> result = getStepResult();
-
         EditText editText = (EditText) inflater.inflate(R.layout.item_edit_text, null);
         editText.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                result.setResultForIdentifier(StepResult.DEFAULT_KEY, s.toString());
-                setStepResult(result);
+                getStepResult().setResult(s.toString());
             }
 
             @Override
@@ -57,7 +53,7 @@ public class TextQuestionScene extends SceneImpl<String>
             }
         });
 
-        String stringResult = result.getResultForIdentifier(StepResult.DEFAULT_KEY);
+        String stringResult = getStepResult().getResult();
         if (!TextUtils.isEmpty(stringResult))
         {
             editText.setText(stringResult);

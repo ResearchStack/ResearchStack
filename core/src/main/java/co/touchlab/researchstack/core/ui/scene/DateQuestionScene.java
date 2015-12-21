@@ -89,13 +89,8 @@ public class DateQuestionScene extends SceneImpl<String>
             resultCalendar.set(Calendar.MONTH, monthOfYear);
             resultCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            // TODO Move the following out of here -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-            // it should be set in a "finalizeStepResult" method that is called when
-            // onNextClicked is called.
-            StepResult<String> result = getStepResult();
             String resultFormattedDate = format.format(resultCalendar.getTime());
-            result.setResultForIdentifier(StepResult.DEFAULT_KEY, resultFormattedDate);
-            setStepResult(result);
+            getStepResult().setResult(resultFormattedDate);
         });
 
         return datePicker;

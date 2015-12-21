@@ -12,6 +12,7 @@ import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
+import co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene;
 import co.touchlab.researchstack.core.ui.scene.Scene;
 import co.touchlab.researchstack.core.ui.scene.SceneImpl;
 import co.touchlab.researchstack.glue.R;
@@ -72,11 +73,14 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 TextQuestionResult formResult = (TextQuestionResult) result
                         .getStepResult(ConsentTask.ID_FORM_NAME).getResult();
                 String fullName = formResult.getTextAnswer();
-                String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE).getResult();
+                String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
+                        .getResultForIdentifier(ConsentReviewSignatureScene.KEY_SIGNATURE);
+                String signatureDate = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
+                        .getResultForIdentifier(ConsentReviewSignatureScene.KEY_SIGNATURE_DATE);
 
-                // TODO get signature date
                 currentUser.setName(fullName);
                 currentUser.setConsentSignatureName(fullName);
+                currentUser.setConsentSignatureDate(signatureDate);
                 currentUser.setConsentSignatureImage(base64Image);
                 currentUser.setUserConsented(true);
 

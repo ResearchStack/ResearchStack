@@ -43,7 +43,7 @@ public class User
     private Number homeLocationLong;
 
     private String consentSignatureName;
-    private Date consentSignatureDate;
+    private String consentSignatureDate;
     private String consentSignatureImage;
 
     private boolean secondaryInfoSaved;
@@ -317,12 +317,12 @@ public class User
         this.consentSignatureName = consentSignatureName;
     }
 
-    public Date getConsentSignatureDate()
+    public String getConsentSignatureDate()
     {
         return consentSignatureDate;
     }
 
-    public void setConsentSignatureDate(Date consentSignatureDate)
+    public void setConsentSignatureDate(String consentSignatureDate)
     {
         this.consentSignatureDate = consentSignatureDate;
     }
