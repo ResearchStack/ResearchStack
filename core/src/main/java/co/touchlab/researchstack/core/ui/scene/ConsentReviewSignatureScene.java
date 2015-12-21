@@ -77,6 +77,12 @@ public class ConsentReviewSignatureScene extends SceneImpl
     }
 
     @Override
+    public boolean isAnswerValid()
+    {
+        return signatureView.isSignatureDrawn();
+    }
+
+    @Override
     public StepResult<String> getStepResult()
     {
         StepResult<String> stepResult = new StepResult<>(getStep().getIdentifier());

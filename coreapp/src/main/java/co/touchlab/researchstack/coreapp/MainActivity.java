@@ -25,10 +25,6 @@ import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSignature;
-import co.touchlab.researchstack.core.model.Choice;
-import co.touchlab.researchstack.core.result.ConsentSignatureResult;
-import co.touchlab.researchstack.core.result.FormResult;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.result.TextQuestionResult;
 import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
@@ -181,7 +177,8 @@ public class MainActivity extends PassCodeActivity
         section1.setContent("The content to show in learn more ...");
 
         // ...add more sections as needed, then create a visual consent step
-        ConsentVisualStep visualStep = new ConsentVisualStep("visual_consent_identifier", section1);
+        ConsentVisualStep visualStep = new ConsentVisualStep("visual_consent_identifier");
+        visualStep.setSection(section1);
         visualStep.setNextButtonString(getString(R.string.next));
 
         // Create consent signature object and set what info is required
@@ -238,10 +235,7 @@ public class MainActivity extends PassCodeActivity
 
     private void processConsentResult(TaskResult result)
     {
-        ConsentSignatureResult signatureResult = (ConsentSignatureResult) result.getStepResult("consent_doc")
-                .getResult();
-        ConsentSignature signature = signatureResult.getSignature();
-        boolean consented = signatureResult.isConsented();
+        boolean consented = (boolean) result.getStepResult("consent_doc").getResult();
 
         if (consented)
         {

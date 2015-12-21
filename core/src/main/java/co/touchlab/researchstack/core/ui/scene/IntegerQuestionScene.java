@@ -9,7 +9,6 @@ import android.widget.NumberPicker;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 
 public class IntegerQuestionScene extends SceneImpl<Integer>
@@ -33,9 +32,9 @@ public class IntegerQuestionScene extends SceneImpl<Integer>
     @Override
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
+        NumberPicker numberPicker = (NumberPicker) inflater
+                .inflate(R.layout.item_number_picker, parent, false);
 
-        NumberPicker numberPicker = (NumberPicker) inflater.inflate(R.layout.item_number_picker,
-                null);
         IntegerAnswerFormat answerFormat = (IntegerAnswerFormat) ((QuestionStep) getStep())
                 .getAnswerFormat();
 
@@ -47,20 +46,17 @@ public class IntegerQuestionScene extends SceneImpl<Integer>
             numberPicker.setMaxValue(answerFormat.getMaxValue());
         }
 
-        numberPicker.setOnValueChangedListener((picker, oldVal, newVal) -> {
-            StepResult<Integer> result = getStepResult();
-            result.setResultForIdentifier(StepResult.DEFAULT_KEY, newVal);
-            setStepResult(result);
-        });
+        numberPicker.setOnValueChangedListener(
+                (picker, oldVal, newVal) -> getStepResult().setResult(newVal));
 
-        StepResult<Integer> result = getStepResult();
-        if (result != null)
+        Integer answer = getStepResult().getResult();
+        if (answer != null)
         {
-            Integer answer = result.getResultForIdentifier(StepResult.DEFAULT_KEY);
-            if (answer != null)
-            {
-                numberPicker.setValue(answer);
-            }
+            numberPicker.setValue(answer);
+        }
+        else
+        {
+            getStepResult().setResult(numberPicker.getValue());
         }
 
         return numberPicker;

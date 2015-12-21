@@ -7,10 +7,9 @@ public class ConsentVisualStep extends Step
     private ConsentSection section;
     private String nextButtonString;
 
-    public ConsentVisualStep(String identifier, ConsentSection section)
+    public ConsentVisualStep(String identifier)
     {
         super(identifier);
-        this.section = section;
     }
 
     @Override

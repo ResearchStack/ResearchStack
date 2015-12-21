@@ -75,7 +75,7 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<
         RxView.clicks(agree).subscribe(v -> showDialog());
 
         View disagree = findViewById(R.id.disagree);
-        // TODO make this call onNextStep with false result
+        // TODO make this call onSaveStep with false result
         RxView.clicks(disagree).subscribe(v -> callbacks.onCancelStep());
     }
 
@@ -87,7 +87,7 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<
                 .setCancelable(false)
                 .setPositiveButton(R.string.agree, (dialog, which) -> {
                     stepResult.setResult(true);
-                    callbacks.onNextStep(step, stepResult);
+                    callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, stepResult);
                 })
                 .setNegativeButton(R.string.consent_review_cancel, (dialog, which) -> {
                     // Gives them a chance to read it again
