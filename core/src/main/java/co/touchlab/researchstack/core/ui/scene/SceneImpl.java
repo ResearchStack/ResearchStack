@@ -74,14 +74,18 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
     public void initialize(Step step)
     {
-        initialize(step,
-                null);
+        initialize(step, null);
     }
 
     public void initialize(Step step, StepResult result)
     {
         this.step = step;
         this.stepResult = result;
+
+        if (this.stepResult == null)
+        {
+            this.stepResult = new StepResult<T>(step.getIdentifier());
+        }
 
         initializeScene();
     }
@@ -244,11 +248,6 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
         return getResources().getString(stringResId);
     }
 
-    public StepResult initStepResult()
-    {
-        return new StepResult<T>(step.getIdentifier());
-    }
-
     public void setStepResult(StepResult<T> result)
     {
         this.stepResult = result;
@@ -256,11 +255,6 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene<T>
 
     public StepResult<T> getStepResult()
     {
-        if (stepResult == null)
-        {
-            stepResult = initStepResult();
-        }
-
         return stepResult;
     }
 
