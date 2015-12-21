@@ -64,7 +64,6 @@ public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
         RadioGroup radioGroup = new RadioGroup(getContext());
-        StepResult<T[]> result = getStepResult();
 
         TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
         final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
@@ -98,11 +97,7 @@ public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
                     results.remove(item.getValue());
                 }
 
-                // TODO Move the following out of here -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                // it should be set in a "finalizeStepResult" method that is called when
-                // onNextClicked is called.
-                result.setResultForIdentifier(StepResult.DEFAULT_KEY, (T[])results.toArray());
-                setStepResult(result);
+                getStepResult().setResult((T[])results.toArray());
             });
         }
 
