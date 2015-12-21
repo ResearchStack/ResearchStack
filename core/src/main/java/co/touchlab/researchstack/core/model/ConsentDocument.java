@@ -65,6 +65,7 @@ public class ConsentDocument implements Serializable
      *
      * The content is ignored for visual consent. The content is also ignored if you supply a value for the `htmlReviewContent` property.
      */
+    @Deprecated
     private String signaturePageContent;
 
     /**
@@ -105,6 +106,7 @@ public class ConsentDocument implements Serializable
         return signaturePageTitle;
     }
 
+    @Deprecated
     public void setSignaturePageContent(String signaturePageContent)
     {
         this.signaturePageContent = signaturePageContent;

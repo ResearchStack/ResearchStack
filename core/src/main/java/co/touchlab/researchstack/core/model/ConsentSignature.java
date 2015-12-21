@@ -1,11 +1,9 @@
 package co.touchlab.researchstack.core.model;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-//TODO Remove/Rewrite all documentation
 public class ConsentSignature implements Serializable, Cloneable
 {
 
@@ -22,7 +20,7 @@ public class ConsentSignature implements Serializable, Cloneable
      * The default value of this property is `YES`. In a consent review step, the signature entry
      * screen is not shown when this property is `NO`.
      */
-   private boolean requiresSignatureImage;
+    private boolean requiresSignatureImage;
 
     /**
      * The identifier for this signature.
@@ -31,7 +29,7 @@ public class ConsentSignature implements Serializable, Cloneable
      * replace a specific signature in an `ORKConsentDocument` object. The identifier is also reproduced in
      * the `ORKConsentSignatureResult` object produced by an `ORKConsentReviewStep` object.
      */
-   private String identifier;
+    private String identifier;
 
     /**
      * The title of the signatory.
@@ -54,11 +52,11 @@ public class ConsentSignature implements Serializable, Cloneable
     private String signatureDate;
 
     /**
-     The date format string to be used when producing a date string for the PDF
-     or consent review.
-
-     For example, @"yyyy-MM-dd 'at' HH:mm". When the value of this property is `nil`,
-     the current date and time for the current locale is used.
+     * The date format string to be used when producing a date string for the PDF
+     * or consent review.
+     *
+     * For example, @"yyyy-MM-dd 'at' HH:mm". When the value of this property is `nil`,
+     * the current date and time for the current locale is used.
      */
     private String signatureDateFormatString;
 
@@ -69,16 +67,15 @@ public class ConsentSignature implements Serializable, Cloneable
     }
 
     /**
-     * TODO Whats the point of marking params nullable even the first three params, specifically dateFormat, can be null as well
      *
+     * @param identifier          The identifier of the signature, unique within this document.
      * @param title               The title of the signatory.
      * @param dateFormat          The format string to use when formatting the date of signature.
-     * @param identifier          The identifier of the signature, unique within this document.
-     * @param fullName           The given name of the signatory.
+     * @param fullName            The given name of the signatory.
      * @param signatureImage      An image of the signature.
      * @param signatureDate       The date on which the signature was obtained, represented as a string.
      */
-    public ConsentSignature(String identifier, String title, String dateFormat, @Nullable String fullName, @Nullable String signatureImage, @Nullable String signatureDate)
+    public ConsentSignature(@NonNull String identifier, String title, String dateFormat, String fullName, String signatureImage, String signatureDate)
     {
         this();
         this.identifier = identifier;
@@ -95,18 +92,13 @@ public class ConsentSignature implements Serializable, Cloneable
      * @param dateFormat    The format string to use when formatting the date of signature.
      * @param identifier          The identifier of the signature, unique within this document.
      */
-    public ConsentSignature(String identifier, String title, String dateFormat)
+    public ConsentSignature(@NonNull String identifier, String title, String dateFormat)
     {
         this(identifier, title, dateFormat, null, null, null);
     }
 
-    public void setIdentifier(String identifier)
+    public void setIdentifier(@NonNull String identifier)
     {
-        if (TextUtils.isEmpty(identifier))
-        {
-            throw new IllegalStateException("Identifier cannot be null");
-        }
-
         this.identifier = identifier;
     }
 
@@ -133,20 +125,6 @@ public class ConsentSignature implements Serializable, Cloneable
     public void setRequiresSignatureImage(boolean requiresSignatureImage)
     {
         this.requiresSignatureImage = requiresSignatureImage;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        return o instanceof ConsentSignature &&
-                ((ConsentSignature) o).identifier.equals(identifier) &&
-                ((ConsentSignature) o).title.equals(title) &&
-                ((ConsentSignature) o).fullName.equals(fullName) &&
-                ((ConsentSignature) o).signatureDate.equals(signatureDate) &&
-                ((ConsentSignature) o).signatureImage.equals(signatureImage) &&
-                ((ConsentSignature) o).signatureDateFormatString.equals(signatureDateFormatString) &&
-                ((ConsentSignature) o).requiresName == requiresName &&
-                ((ConsentSignature) o).requiresSignatureImage == requiresSignatureImage;
     }
 
     public String getTitle()
