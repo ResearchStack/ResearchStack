@@ -2,6 +2,7 @@ package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -11,14 +12,21 @@ import android.view.ViewGroup;
 import com.jakewharton.rxbinding.view.RxView;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.step.ConsentSignatureStep;
 import co.touchlab.researchstack.core.ui.callbacks.SignatureCallbacks;
 import co.touchlab.researchstack.core.ui.views.ConsentReviewSignatureView;
+import co.touchlab.researchstack.core.utils.FormatUtils;
 
-public class ConsentReviewSignatureScene extends SceneImpl
+public class ConsentReviewSignatureScene extends SceneImpl<String>
 {
+    public static final String KEY_SIGNATURE = "ConsentReviewSignatureScene.Signature";
+    public static final String KEY_SIGNATURE_DATE = "ConsentReviewSignatureScene.Signature.Date";
+
     private ConsentReviewSignatureView signatureView;
 
     public ConsentReviewSignatureScene(Context context)
@@ -85,8 +93,20 @@ public class ConsentReviewSignatureScene extends SceneImpl
     @Override
     public StepResult<String> getStepResult()
     {
-        StepResult<String> stepResult = new StepResult<>(getStep().getIdentifier());
-        stepResult.setResultForIdentifier(StepResult.DEFAULT_KEY, getBase64EncodedImage());
+        ConsentSignatureStep step = (ConsentSignatureStep) getStep();
+        String format =  step.getSignatureDateFormat();
+        String formattedSignDate;
+
+        if (!TextUtils.isEmpty(format)) {
+            SimpleDateFormat formatter = new SimpleDateFormat(format);
+            formattedSignDate = formatter.format(new Date());
+        } else {
+            formattedSignDate = FormatUtils.formatSignature(new Date());
+        }
+
+        StepResult<String> stepResult = super.getStepResult();
+        stepResult.setResultForIdentifier(KEY_SIGNATURE, getBase64EncodedImage());
+        stepResult.setResultForIdentifier(KEY_SIGNATURE_DATE, formattedSignDate);
         return stepResult;
     }
 

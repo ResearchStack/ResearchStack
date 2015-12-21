@@ -18,6 +18,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
 import co.touchlab.researchstack.core.step.ConsentSharingStep;
+import co.touchlab.researchstack.core.step.ConsentSignatureStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.Step;
@@ -214,10 +215,11 @@ public class ConsentTask extends OrderedTask
         // Add signature input
         if (doc.getSignature(0).isRequiresSignatureImage())
         {
-            Step signatureStep = new Step(ID_SIGNATURE);
+            ConsentSignatureStep signatureStep = new ConsentSignatureStep(ID_SIGNATURE);
             signatureStep.setTitle(ctx.getString(R.string.consent_signature_title));
             signatureStep.setText(ctx.getString(R.string.consent_signature_instruction));
             signatureStep.setOptional(false);
+            signatureStep.setSignatureDateFormat(doc.getSignature(0).getSignatureDateFormatString());
             signatureStep.setSceneClass(ConsentReviewSignatureScene.class);
             addStep(signatureStep);
         }
