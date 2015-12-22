@@ -2,14 +2,18 @@ package co.touchlab.researchstack.core.ui.scene;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
+import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+
 @Deprecated
-public class NotImplementedScene extends SceneImpl<String>
+public class NotImplementedScene extends TextView implements Scene<Boolean>
 {
+
+    private SceneCallbacks callbacks;
 
     public NotImplementedScene(Context context)
     {
@@ -27,17 +31,30 @@ public class NotImplementedScene extends SceneImpl<String>
     }
 
     @Override
-    public View onCreateScene(LayoutInflater inflater, ViewGroup parent)
+    public void initialize(Step step, StepResult result)
     {
-        TextView textView = new TextView(getContext());
-        textView.setText("Not Implemented: " + getStep().getIdentifier());
-        return textView;
+        setText("Not Implemented: " + step.getIdentifier());
+
+        setOnClickListener(v -> {
+            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+        });
     }
 
     @Override
-    public void onSceneCreated(View scene)
+    public View getView()
     {
-        //Do Nothing
+        return this;
     }
 
+    @Override
+    public boolean isBackEventConsumed()
+    {
+        return false;
+    }
+
+    @Override
+    public void setCallbacks(SceneCallbacks callbacks)
+    {
+        this.callbacks = callbacks;
+    }
 }
