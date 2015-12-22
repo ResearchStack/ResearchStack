@@ -26,6 +26,7 @@ import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.scene.Scene;
 import co.touchlab.researchstack.core.ui.views.SceneSwitcher;
+import co.touchlab.researchstack.core.utils.FormatUtils;
 
 public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 {
@@ -164,7 +165,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         taskRecord.started = new Date();
         taskRecord.completed = new Date();
         taskRecord.taskId = task.getScheduleId();
-        Gson gson = new GsonBuilder().setDateFormat(StorageManager.DATE_FORMAT_ISO_8601).create();
+        Gson gson = new GsonBuilder().setDateFormat(FormatUtils.DATE_FORMAT_ISO_8601).create();
         taskRecord.result = gson.toJson(taskResult);
         StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
 

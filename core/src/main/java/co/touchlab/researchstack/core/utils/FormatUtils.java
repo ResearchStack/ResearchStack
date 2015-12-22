@@ -6,6 +6,9 @@ import java.util.Date;
 
 public class FormatUtils
 {
+    // TODO find a better place for this, maybe only use it for Bridge
+    public static final String DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+
     /**
      * This constant is meant for ignoring a specific portion of the format. Passing constant value
      * {@link #STYLE_NONE} through {@link #getDateStyle(int)} or {@link #getTimeStyle(int)} will

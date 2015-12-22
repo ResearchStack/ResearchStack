@@ -13,10 +13,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
+import co.touchlab.researchstack.core.utils.FormatUtils;
 
 public class DateQuestionScene extends SceneImpl<String>
 {
@@ -40,7 +40,7 @@ public class DateQuestionScene extends SceneImpl<String>
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
         SimpleDateFormat format = new SimpleDateFormat(
-                StorageManager.DATE_FORMAT_ISO_8601);
+                FormatUtils.DATE_FORMAT_ISO_8601);
 
         DatePicker datePicker = (DatePicker) inflater.inflate(R.layout.item_date_picker, parent, false);
         DateAnswerFormat answerFormat = (DateAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
