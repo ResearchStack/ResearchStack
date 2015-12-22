@@ -126,4 +126,10 @@ public class SignInTask extends OnboardingTask
     {
         return isCustomStepIncluded() ? MINIMUM_STEPS + 1 : MINIMUM_STEPS;
     }
+
+    @Override
+    public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
+    {
+        return new TaskProgress(0, getNumberOfSteps());
+    }
 }

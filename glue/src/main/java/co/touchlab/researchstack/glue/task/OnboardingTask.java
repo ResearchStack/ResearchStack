@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.glue.task;
 
+import co.touchlab.researchstack.core.ui.scene.NotImplementedScene;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.core.result.StepResult;
@@ -118,7 +119,8 @@ public abstract class OnboardingTask extends Task
         {
             thankyouStep = new Step(SignUpThankYouStepIdentifier);
             thankyouStep.setSceneTitle(R.string.thank_you);
-            //TODO Create SignUpThankYouScene
+            thankyouStep.setSceneClass(NotImplementedScene.class);
+//            TODO Create SignUpThankYouScene
 //            thankyouStep.setSceneClass(SignUpThankYouScene.class);
         }
         return thankyouStep;
