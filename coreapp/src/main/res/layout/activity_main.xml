@@ -53,11 +53,7 @@
             android:layout_height="wrap_content"
             android:text="@string/survey_button"/>
         <TextView
-            android:id="@+id/survey_age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/survey_nutrition"
+            android:id="@+id/survey_results"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

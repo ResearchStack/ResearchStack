@@ -3,7 +3,6 @@ package co.touchlab.researchstack.core.answerformat;
 import java.io.Serializable;
 
 import co.touchlab.researchstack.core.dev.DevUtils;
-import co.touchlab.researchstack.core.model.TextChoice;
 import co.touchlab.researchstack.core.ui.scene.DateQuestionScene;
 import co.touchlab.researchstack.core.ui.scene.IntegerQuestionScene;
 import co.touchlab.researchstack.core.ui.scene.MultiChoiceQuestionScene;
@@ -14,12 +13,6 @@ import co.touchlab.researchstack.core.ui.scene.TextQuestionScene;
 
 public abstract class AnswerFormat implements Serializable
 {
-
-    public static AnswerFormat getChoiceAnswerFormatWithStyle(ChoiceAnswerStyle choiceAnswerStyle, TextChoice[] textChoices)
-    {
-        return null;
-    }
-
     public enum QuestionType
     {
         None,
@@ -37,7 +30,7 @@ public abstract class AnswerFormat implements Serializable
 
         public Class<?> getSceneClass()
         {
-            switch(this)
+            switch (this)
             {
                 case SingleChoice:
                     //TODO type <Integer>
@@ -98,9 +91,4 @@ public abstract class AnswerFormat implements Serializable
         DevUtils.throwUnsupportedOpException();
         return null;
     }
-
-    public AnswerFormat getImpliedAnswerFormat() {
-        return this;
-    }
-
 }

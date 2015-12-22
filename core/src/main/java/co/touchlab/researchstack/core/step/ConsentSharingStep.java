@@ -1,5 +1,12 @@
 package co.touchlab.researchstack.core.step;
+import android.text.TextUtils;
+
 import co.touchlab.researchstack.core.R;
+import co.touchlab.researchstack.core.answerformat.AnswerFormat;
+import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
+import co.touchlab.researchstack.core.dev.DevUtils;
+import co.touchlab.researchstack.core.model.DocumentProperties;
+import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.ui.scene.ConsentSharingScene;
 
 public class ConsentSharingStep extends QuestionStep

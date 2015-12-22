@@ -9,8 +9,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.answerformat.TextChoiceAnswerFormat;
-import co.touchlab.researchstack.core.model.TextChoice;
+import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
+import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 
@@ -39,29 +39,29 @@ public class SingleChoiceQuestionScene<T> extends SceneImpl<T>
     {
         radioGroup = new RadioGroup(getContext());
 
-        TextChoiceAnswerFormat answerFormat = (TextChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
-        final TextChoice<T>[] textChoices = answerFormat.getTextChoices();
+        ChoiceAnswerFormat answerFormat = (ChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
+        final Choice<T>[] choices = answerFormat.getChoices();
         StepResult<T> result = getStepResult();
         T resultValue = result.getResultForIdentifier(StepResult.DEFAULT_KEY);
 
-        for (int i = 0; i < textChoices.length; i++)
+        for (int i = 0; i < choices.length; i++)
         {
-            TextChoice textChoice = textChoices[i];
+            Choice choice = choices[i];
             RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.item_radio,
                     radioGroup, false);
-            radioButton.setText(textChoice.getText());
+            radioButton.setText(choice.getText());
             radioButton.setId(i);
             radioGroup.addView(radioButton);
 
             if (resultValue != null)
             {
-                radioButton.setChecked(resultValue.equals(textChoice.getValue()));
+                radioButton.setChecked(resultValue.equals(choice.getValue()));
             }
         }
 
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            TextChoice<T> textChoice = textChoices[checkedId];
-            result.setResult(textChoice.getValue());
+            Choice<T> choice = choices[checkedId];
+            result.setResult(choice.getValue());
             setStepResult(result);
         });
 

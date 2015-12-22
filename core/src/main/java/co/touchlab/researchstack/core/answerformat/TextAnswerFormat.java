@@ -2,8 +2,6 @@ package co.touchlab.researchstack.core.answerformat;
 
 import android.text.InputFilter;
 
-import co.touchlab.researchstack.core.result.TextQuestionResult;
-
 /**
  * Created by bradleymcdermott on 10/13/15.
  */
@@ -55,12 +53,6 @@ public class TextAnswerFormat extends AnswerFormat
     public boolean isMultipleLines()
     {
         return isMultipleLines;
-    }
-
-    @Override
-    public Class getQuestionResultClass()
-    {
-        return TextQuestionResult.class;
     }
 
     public boolean isAnswerValidWithString(String text)

@@ -12,11 +12,14 @@ public class InstructionScene extends SceneImpl<Void>
 
     public InstructionScene(Context context, AttributeSet attrs)
     {
-        super(context, attrs);
+        super(context,
+                attrs);
     }
 
     public InstructionScene(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        super(context, attrs, defStyleAttr);
+        super(context,
+                attrs,
+                defStyleAttr);
     }
 }

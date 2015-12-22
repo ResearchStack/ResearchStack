@@ -3,7 +3,7 @@ package co.touchlab.researchstack.core.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class TextChoice<T> implements Serializable
+public class Choice<T> implements Serializable
 {
     private String text;
 
@@ -11,7 +11,12 @@ public class TextChoice<T> implements Serializable
 
     private String detailText;
 
-    public TextChoice(String text, T value, String detailText)
+    public Choice(String text, T value)
+    {
+        this(text, value, null);
+    }
+
+    public Choice(String text, T value, String detailText)
     {
         this.text = text;
         this.value = value;
