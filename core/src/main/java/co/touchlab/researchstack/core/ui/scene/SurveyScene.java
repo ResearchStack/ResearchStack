@@ -2,6 +2,7 @@ package co.touchlab.researchstack.core.ui.scene;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -16,22 +17,24 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import java.lang.reflect.Constructor;
+
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import rx.functions.Action1;
 
-@Deprecated
-public abstract class SceneImpl<T> extends RelativeLayout implements Scene
+public class SurveyScene extends RelativeLayout implements Scene
 {
-    public static final String TAG = SceneImpl.class.getSimpleName();
+    public static final String TAG = SurveyScene.class.getSimpleName();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Data used to initializeScene and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private Step step;
+    private QuestionStep step;
     private StepResult stepResult;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -49,36 +52,41 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
     private TextView next;
     private TextView skip;
     private LinearLayout container;
+    private StepBody stepBody;
 
-    public SceneImpl(Context context)
+    public SurveyScene(Context context)
     {
         super(context);
     }
 
-    public SceneImpl(Context context, AttributeSet attrs)
+    public SurveyScene(Context context, AttributeSet attrs)
     {
-        super(context, attrs);
+        super(context,
+                attrs);
     }
 
-    public SceneImpl(Context context, AttributeSet attrs, int defStyleAttr)
+    public SurveyScene(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        super(context, attrs, defStyleAttr);
+        super(context,
+                attrs,
+                defStyleAttr);
     }
 
     public void initialize(Step step)
     {
-        initialize(step, null);
+        initialize(step,
+                null);
     }
 
     public void initialize(Step step, StepResult result)
     {
-        this.step = step;
-        this.stepResult = result;
-
-        if(this.stepResult == null)
+        if (!(step instanceof QuestionStep))
         {
-            this.stepResult = new StepResult<T>(step.getIdentifier());
+            throw new RuntimeException("Step being used in SurveyScene is not a QuestionStep");
         }
+
+        this.step = (QuestionStep) step;
+        this.stepResult = result;
 
         initializeScene();
     }
@@ -94,14 +102,21 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
-        LogExt.i(getClass(), "onCreateScene()");
+        LogExt.i(getClass(),
+                "onCreateScene()");
         View scene = onCreateScene(inflater, this);
 
-        LogExt.i(getClass(), "onSceneCreated()");
+        LogExt.i(getClass(),
+                "onSceneCreated()");
         onSceneCreated(scene);
 
-        LogExt.i(getClass(), "onCreateBody()");
-        View body = onCreateBody(inflater, container);
+        LogExt.i(getClass(),
+                "onCreateBody()");
+        stepBody = createStepBody(step);
+        View body = stepBody.initialize(inflater,
+                this,
+                step,
+                stepResult);
         if(body != null)
         {
             View oldView = container.findViewById(R.id.scene_body);
@@ -112,6 +127,21 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
 
             LogExt.i(getClass(), "onBodyCreated()");
             onBodyCreated(body);
+        }
+    }
+
+    @NonNull
+    private StepBody createStepBody(Step step)
+    {
+        try
+        {
+            Class cls = step.getSceneClass();
+            Constructor constructor = cls.getConstructor();
+            return (StepBody) constructor.newInstance();
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
         }
     }
 
@@ -126,7 +156,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
 
         container = (LinearLayout) findViewById(R.id.content_container);
         container.getViewTreeObserver().addOnPreDrawListener(() -> {
-            int sceneHeight = SceneImpl.this.getHeight();
+            int sceneHeight = SurveyScene.this.getHeight();
             int infoContainerHeight = container.getHeight();
 
             //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
@@ -135,8 +165,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
                 int fillerHeight = sceneHeight - infoContainerHeight;
                 if(fillerHeight >= 0 && fillerHeight != filler.getHeight())
                 {
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fillerHeight);
-                    filler.setLayoutParams(params);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fillerHeight);                    filler.setLayoutParams(params);
                     LogExt.d(getClass(), "onPreDraw - Returning False, setting filler height");
                     return false;
                 }
@@ -181,22 +210,23 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
 
     public void onBodyCreated(View body)
     {
-        LogExt.i(getClass(), "onBodyCreated()");
+        LogExt.i(getClass(),
+                "onBodyCreated()");
     }
 
     @Override
     public Parcelable onSaveInstanceState() {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE, getStep(), getStepResult());
+        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult());
         return super.onSaveInstanceState();
     }
 
     protected void onNextClicked()
     {
-        if(isAnswerValid())
+        if(stepBody.isAnswerValid())
         {
             if(callbacks != null)
             {
-                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, getStep(), getStepResult());
+                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, getStep(), stepBody.getStepResult());
             }
             else
             {
@@ -232,7 +262,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, getStep(), getStepResult());
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, getStep(), stepBody.getStepResult());
         return false;
     }
 
@@ -244,24 +274,6 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
     public String getString(@StringRes int stringResId)
     {
         return getResources().getString(stringResId);
-    }
-
-    public void setStepResult(StepResult<T> result)
-    {
-        this.stepResult = result;
-    }
-
-    public StepResult<T> getStepResult()
-    {
-        return stepResult;
-    }
-
-    /**
-     * @return true to call through to host and start next scene.
-     */
-    public boolean isAnswerValid()
-    {
-        return true;
     }
 
     @Override

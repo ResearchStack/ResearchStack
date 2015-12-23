@@ -67,6 +67,7 @@ public class MainActivity extends PassCodeActivity
     public static final String SIGNATURE_FORM_STEP = "form_step";
     public static final String NAME = "name";
     public static final String CONSENT = "consent";
+    public static final String MULTI_STEP = "multi_step";
     private AppCompatButton consentButton;
     private AppCompatButton surveyButton;
     private AppCompatButton clearButton;
@@ -285,7 +286,7 @@ public class MainActivity extends PassCodeActivity
     private void printSurveyInfo()
     {
         String[] resultKeys = new String[] {
-                AGE,
+                NAME,
                 FORM_NAME,
                 FORM_AGE,
                 FORM_GENDER,
@@ -308,13 +309,12 @@ public class MainActivity extends PassCodeActivity
                 "Selection Survey",
                 "This survey can help us understand your eligibility for the fitness study");
 
-        IntegerAnswerFormat format = new IntegerAnswerFormat(90,
-                18);
-        QuestionStep ageStep = new QuestionStep(AGE,
+        TextAnswerFormat format = new TextAnswerFormat();
+        QuestionStep ageStep = new QuestionStep(NAME,
                 "How old are you?",
                 format);
 
-        FormStep formStep = createFormStep();
+//        FormStep formStep = createFormStep();
 
         // Create a Boolean step to include in the task.
         QuestionStep booleanStep = new QuestionStep(NUTRITION);
@@ -322,13 +322,23 @@ public class MainActivity extends PassCodeActivity
         booleanStep.setAnswerFormat(new BooleanAnswerFormat());
         booleanStep.setOptional(false);
 
+        QuestionStep multiStep = new QuestionStep(MULTI_STEP);
+        AnswerFormat multiFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.MultipleChoice,
+                new Choice<>("Zero", 0),
+                new Choice<>("One", 1),
+                new Choice<>("Two", 2));
+        multiStep.setTitle("Select multiple");
+        multiStep.setAnswerFormat(multiFormat);
+        multiStep.setOptional(false);
+
         // Create a task wrapping the steps.
         OrderedTask task = new OrderedTask("ordered_task",
                 "schedule_id",
                 instructionStep,
                 ageStep,
-                formStep,
-                booleanStep);
+//                formStep,
+                booleanStep,
+                multiStep);
 
         // Create a task view controller using the task and set a delegate.
         Intent intent = ViewTaskActivity.newIntent(this,
@@ -377,10 +387,10 @@ public class MainActivity extends PassCodeActivity
     private void processSurveyResult(TaskResult result)
     {
 
-        Integer age = (Integer) result.getStepResult(AGE)
+        String name = (String) result.getStepResult(NAME)
                 .getResult();
-        saveString(SURVEY_PATH + AGE,
-                String.valueOf(age));
+        saveString(SURVEY_PATH + NAME,
+                name);
 
         Integer nutrition = (Integer) result.getStepResult(NUTRITION)
                 .getResult();
@@ -388,22 +398,22 @@ public class MainActivity extends PassCodeActivity
         saveString(SURVEY_PATH + NUTRITION,
                 nutritionString);
 
-        StepResult<FormResult> formStep = result.getStepResult(FORM_STEP);
-
-        String name = (String) formStep.getResultForIdentifier(FORM_NAME).getAnswer();
-        saveString(SURVEY_PATH + FORM_NAME, name);
-
-        Integer formAge = (Integer) formStep.getResultForIdentifier(FORM_AGE).getAnswer();
-        saveString(SURVEY_PATH + FORM_AGE, String.valueOf(formAge));
-
-        Integer gender = (Integer) formStep.getResultForIdentifier(FORM_GENDER).getAnswer();
-        saveString(SURVEY_PATH + FORM_GENDER, gender == 0 ? "Male" : "Female");
-
-        Integer[] multiChoice = (Integer[]) formStep.getResultForIdentifier(FORM_MULTI_CHOICE).getAnswer();
-        saveString(SURVEY_PATH + FORM_MULTI_CHOICE, String.valueOf(multiChoice));
-
-        Date date = (Date) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH).getAnswer();
-        saveString(SURVEY_PATH + FORM_DATE_OF_BIRTH, date.toString());
+//        StepResult<FormResult> formStep = result.getStepResult(FORM_STEP);
+//
+//        String formName = (String) formStep.getResultForIdentifier(FORM_NAME).getAnswer();
+//        saveString(SURVEY_PATH + FORM_NAME, formName);
+//
+//        Integer formAge = (Integer) formStep.getResultForIdentifier(FORM_AGE).getAnswer();
+//        saveString(SURVEY_PATH + FORM_AGE, String.valueOf(formAge));
+//
+//        Integer gender = (Integer) formStep.getResultForIdentifier(FORM_GENDER).getAnswer();
+//        saveString(SURVEY_PATH + FORM_GENDER, gender == 0 ? "Male" : "Female");
+//
+//        Integer[] multiChoice = (Integer[]) formStep.getResultForIdentifier(FORM_MULTI_CHOICE).getAnswer();
+//        saveString(SURVEY_PATH + FORM_MULTI_CHOICE, String.valueOf(multiChoice));
+//
+//        Date date = (Date) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH).getAnswer();
+//        saveString(SURVEY_PATH + FORM_DATE_OF_BIRTH, date.toString());
 
         AppPrefs prefs = AppPrefs.getInstance(this);
         prefs.setHasSurveyed(true);

@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 import co.touchlab.researchstack.core.dev.DevUtils;
 import co.touchlab.researchstack.core.ui.scene.DateQuestionScene;
-import co.touchlab.researchstack.core.ui.scene.IntegerQuestionScene;
-import co.touchlab.researchstack.core.ui.scene.MultiChoiceQuestionScene;
+import co.touchlab.researchstack.core.ui.scene.IntegerQuestionBody;
+import co.touchlab.researchstack.core.ui.scene.MultiChoiceQuestionBody;
 import co.touchlab.researchstack.core.ui.scene.NotImplementedScene;
-import co.touchlab.researchstack.core.ui.scene.SingleChoiceQuestionScene;
-import co.touchlab.researchstack.core.ui.scene.TextQuestionScene;
+import co.touchlab.researchstack.core.ui.scene.SingleChoiceQuestionBody;
+import co.touchlab.researchstack.core.ui.scene.TextQuestionBody;
 
 
 public abstract class AnswerFormat implements Serializable
@@ -34,14 +34,14 @@ public abstract class AnswerFormat implements Serializable
             {
                 case SingleChoice:
                     //TODO type <Integer>
-                    return SingleChoiceQuestionScene.class;
+                    return SingleChoiceQuestionBody.class;
                 case MultipleChoice:
                     //TODO type <Integer>
-                    return MultiChoiceQuestionScene.class;
+                    return MultiChoiceQuestionBody.class;
                 case Text:
-                    return TextQuestionScene.class;
+                    return TextQuestionBody.class;
                 case Integer:
-                    return IntegerQuestionScene.class;
+                    return IntegerQuestionBody.class;
                 case Scale:
                 case Decimal:
                 case Boolean:

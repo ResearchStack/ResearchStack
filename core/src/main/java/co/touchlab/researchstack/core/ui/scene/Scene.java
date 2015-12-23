@@ -5,10 +5,9 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
-public interface Scene<T>
+public interface Scene
 {
-
-    void initialize(Step step, StepResult<T> result);
+    void initialize(Step step, StepResult result);
 
     View getView();
 
