@@ -18,13 +18,16 @@ import java.util.Date;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
+import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.scene.SurveyScene;
 import co.touchlab.researchstack.core.ui.views.SceneSwitcher;
 import co.touchlab.researchstack.core.utils.FormatUtils;
 
@@ -144,6 +147,13 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     @NonNull
     private Scene createSceneFromStep(Step step)
     {
+        // TODO figure out how to best create scenes (maybe method on the Step)
+        if (step instanceof QuestionStep)
+        {
+            LogExt.d(getClass(), "Making new SurveyStep");
+            return new SurveyScene(ViewTaskActivity.this);
+        }
+
         try
         {
             Class cls = step.getSceneClass();
@@ -169,7 +179,8 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         taskRecord.result = gson.toJson(taskResult);
         StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
 
-        setResult(RESULT_OK, resultIntent);
+        setResult(RESULT_OK,
+                resultIntent);
         finish();
     }
 

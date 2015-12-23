@@ -22,7 +22,7 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
  * {@link #stepResult}
  * {@link #confirmationDialogBody}
  */
-public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<Boolean>
+public class ConsentReviewDocumentScene extends RelativeLayout implements Scene
 {
     private SceneCallbacks callbacks;
 
@@ -48,7 +48,7 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene<
     }
 
     @Override
-    public void initialize(Step step, StepResult<Boolean> result)
+    public void initialize(Step step, StepResult result)
     {
         this.step = (ConsentReviewDocumentStep) step;
         this.confirmationDialogBody = ((ConsentReviewDocumentStep) step).getConfirmMessage();

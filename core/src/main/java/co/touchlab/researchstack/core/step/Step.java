@@ -152,10 +152,4 @@ public class Step implements Serializable
     {
         this.sceneClass = sceneClass;
     }
-
-    @Deprecated
-    public Class getStepFragment()
-    {
-        throw new UnsupportedOperationException("Didn't specify a fragment for this step");
-    }
 }

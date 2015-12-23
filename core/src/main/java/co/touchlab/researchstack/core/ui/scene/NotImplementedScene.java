@@ -10,7 +10,7 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
 @Deprecated
-public class NotImplementedScene extends TextView implements Scene<Boolean>
+public class NotImplementedScene extends TextView implements Scene
 {
 
     private SceneCallbacks callbacks;

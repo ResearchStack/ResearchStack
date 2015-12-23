@@ -1,8 +1,6 @@
 package co.touchlab.researchstack.core.ui.scene;
 
-import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,54 +16,37 @@ import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 
-public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
+public class MultiChoiceQuestionBody<T> implements StepBody
 {
     private List<T> results;
 
-    public MultiChoiceQuestionScene(Context context)
-    {
-        super(context);
-    }
+    private StepResult<T[]> stepResult;
 
-    public MultiChoiceQuestionScene(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-    }
-
-    public MultiChoiceQuestionScene(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs, defStyleAttr);
-    }
+    private RadioGroup radioGroup;
 
     @Override
-    public void initializeScene()
+    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, StepResult result)
     {
-        StepResult<T[]> result = getStepResult();
 
         results = new ArrayList<>();
-
-        if (result != null)
+        if (result == null)
         {
-            T[] resultArray = result.getResultForIdentifier(StepResult.DEFAULT_KEY);
+            result = createStepResult(step.getIdentifier());
+        }
+        else
+        {
+            T[] resultArray = (T[]) result.getResult();
             if (resultArray != null && resultArray.length > 0)
             {
                 results.addAll(Arrays.asList(resultArray));
             }
         }
+        stepResult = result;
 
-        super.initializeScene();
-    }
+        // TODO inflate this?
+        radioGroup = new RadioGroup(inflater.getContext());
 
-    /**
-     * TODO this whole thing needs a lot of refactoring -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-     * It could probably just be combined with single choice questions
-     */
-    @Override
-    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
-    {
-        RadioGroup radioGroup = new RadioGroup(getContext());
-
-        ChoiceAnswerFormat answerFormat = (ChoiceAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
+        ChoiceAnswerFormat answerFormat = (ChoiceAnswerFormat) step.getAnswerFormat();
         final Choice<T>[] choices = answerFormat.getChoices();
 
         for (int i = 0; i < choices.length; i++)
@@ -74,7 +55,9 @@ public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
 
             // Create & add the View to our body-view
             AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(
-                    R.layout.item_checkbox, radioGroup, false);
+                    R.layout.item_checkbox,
+                    radioGroup,
+                    false);
             checkBox.setText(item.getText());
             checkBox.setId(i);
             radioGroup.addView(checkBox);
@@ -97,11 +80,22 @@ public class MultiChoiceQuestionScene<T> extends SceneImpl<T[]>
                     results.remove(item.getValue());
                 }
 
-                getStepResult().setResult((T[])results.toArray());
+                stepResult.setResult((T[]) results.toArray());
             });
         }
 
         return radioGroup;
+    }
+
+    private StepResult<T[]> createStepResult(String identifier)
+    {
+        return new StepResult<>(identifier);
+    }
+
+    @Override
+    public StepResult getStepResult()
+    {
+        return stepResult;
     }
 
     @Override
