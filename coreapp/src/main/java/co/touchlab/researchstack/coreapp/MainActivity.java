@@ -18,6 +18,7 @@ import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.DecimalAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
@@ -68,6 +69,8 @@ public class MainActivity extends PassCodeActivity
     public static final String NAME = "name";
     public static final String CONSENT = "consent";
     public static final String MULTI_STEP = "multi_step";
+    public static final String DATE = "date";
+    public static final String DECIMAL = "decimal";
     private AppCompatButton consentButton;
     private AppCompatButton surveyButton;
     private AppCompatButton clearButton;
@@ -287,6 +290,7 @@ public class MainActivity extends PassCodeActivity
     {
         String[] resultKeys = new String[] {
                 NAME,
+                DATE,
                 FORM_NAME,
                 FORM_AGE,
                 FORM_GENDER,
@@ -314,6 +318,13 @@ public class MainActivity extends PassCodeActivity
                 "How old are you?",
                 format);
 
+        DateAnswerFormat dateFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
+        QuestionStep dateStep = new QuestionStep(DATE, "Enter a date", dateFormat);
+
+        // unimplemented
+        DecimalAnswerFormat decimalAnswerFormat = new DecimalAnswerFormat(0f, 1f);
+        QuestionStep decimalStep = new QuestionStep(DECIMAL, "Decimal step", decimalAnswerFormat);
+
 //        FormStep formStep = createFormStep();
 
         // Create a Boolean step to include in the task.
@@ -336,6 +347,8 @@ public class MainActivity extends PassCodeActivity
                 "schedule_id",
                 instructionStep,
                 ageStep,
+                dateStep,
+                decimalStep,
 //                formStep,
                 booleanStep,
                 multiStep);
@@ -392,6 +405,11 @@ public class MainActivity extends PassCodeActivity
         saveString(SURVEY_PATH + NAME,
                 name);
 
+        String date = (String) result.getStepResult(DATE)
+                .getResult();
+        saveString(SURVEY_PATH + DATE,
+                date);
+
         Integer nutrition = (Integer) result.getStepResult(NUTRITION)
                 .getResult();
         String nutritionString = nutrition == 0 ? "No" : "Yes";
@@ -422,10 +440,17 @@ public class MainActivity extends PassCodeActivity
 
     private String loadString(String path)
     {
-        return StorageManager
-                .getFileAccess()
-                .readString(this,
-                        path);
+        try
+        {
+            return StorageManager
+                    .getFileAccess()
+                    .readString(this,
+                            path);
+        }
+        catch (Exception e)
+        {
+            return "";
+        }
     }
 
     private void saveString(String path, String string)

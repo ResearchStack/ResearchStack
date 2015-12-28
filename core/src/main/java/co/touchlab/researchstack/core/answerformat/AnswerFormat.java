@@ -3,10 +3,10 @@ package co.touchlab.researchstack.core.answerformat;
 import java.io.Serializable;
 
 import co.touchlab.researchstack.core.dev.DevUtils;
-import co.touchlab.researchstack.core.ui.scene.DateQuestionScene;
+import co.touchlab.researchstack.core.ui.scene.DateQuestionBody;
 import co.touchlab.researchstack.core.ui.scene.IntegerQuestionBody;
 import co.touchlab.researchstack.core.ui.scene.MultiChoiceQuestionBody;
-import co.touchlab.researchstack.core.ui.scene.NotImplementedScene;
+import co.touchlab.researchstack.core.ui.scene.NotImplementedStepBody;
 import co.touchlab.researchstack.core.ui.scene.SingleChoiceQuestionBody;
 import co.touchlab.researchstack.core.ui.scene.TextQuestionBody;
 
@@ -42,17 +42,16 @@ public abstract class AnswerFormat implements Serializable
                     return TextQuestionBody.class;
                 case Integer:
                     return IntegerQuestionBody.class;
+                case Date:
+                    return DateQuestionBody.class;
                 case Scale:
                 case Decimal:
                 case Boolean:
                 case TimeOfDay:
                 case DateAndTime:
-                    return NotImplementedScene.class;
-                case Date:
-                    return DateQuestionScene.class;
                 case TimeInterval:
                 default:
-                    return NotImplementedScene.class;
+                    return NotImplementedStepBody.class;
             }
         }
 

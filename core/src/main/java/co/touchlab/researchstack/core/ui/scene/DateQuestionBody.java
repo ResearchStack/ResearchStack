@@ -18,32 +18,32 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.utils.FormatUtils;
 
-public class DateQuestionScene extends SceneImpl<String>
+public class DateQuestionBody implements StepBody
 {
+    private StepResult<String> stepResult;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(FormatUtils.DATE_FORMAT_ISO_8601);
 
-    public DateQuestionScene(Context context)
+    public DateQuestionBody()
     {
-        super(context);
     }
 
-    public DateQuestionScene(Context context, AttributeSet attrs)
+    private StepResult<String> createStepResult(String identifier)
     {
-        super(context, attrs);
-    }
-
-    public DateQuestionScene(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs, defStyleAttr);
+        return new StepResult<>(identifier);
     }
 
     @Override
-    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
+    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, StepResult result)
     {
-        SimpleDateFormat format = new SimpleDateFormat(
-                FormatUtils.DATE_FORMAT_ISO_8601);
+        if (result == null)
+        {
+            result = createStepResult(StepResult.DEFAULT_KEY);
+        }
+
+        stepResult = (StepResult<String>) result;
 
         DatePicker datePicker = (DatePicker) inflater.inflate(R.layout.item_date_picker, parent, false);
-        DateAnswerFormat answerFormat = (DateAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();
+        DateAnswerFormat answerFormat = (DateAnswerFormat) step.getAnswerFormat();
 
         datePicker.setCalendarViewShown(false);
 
@@ -60,18 +60,11 @@ public class DateQuestionScene extends SceneImpl<String>
         Calendar calendar = Calendar.getInstance();
 
         //Set initial state
-        String savedFrmtdDate = getStepResult().getResultForIdentifier(StepResult.DEFAULT_KEY);
+        String savedFrmtdDate = stepResult.getResult();
         if (!TextUtils.isEmpty(savedFrmtdDate))
         {
-            try
-            {
-                Date savedDate = format.parse(savedFrmtdDate);
-                calendar.setTime(savedDate);
-            }
-            catch(ParseException e)
-            {
-                throw new RuntimeException(e);
-            }
+            Date savedDate = getDateFromString(savedFrmtdDate);
+            calendar.setTime(savedDate);
         }
         else if (answerFormat.getDefaultDate() != null)
         {
@@ -89,11 +82,36 @@ public class DateQuestionScene extends SceneImpl<String>
             resultCalendar.set(Calendar.MONTH, monthOfYear);
             resultCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            String resultFormattedDate = format.format(resultCalendar.getTime());
-            getStepResult().setResult(resultFormattedDate);
+            String resultFormattedDate = dateFormat.format(resultCalendar.getTime());
+            stepResult.setResult(resultFormattedDate);
         });
 
         return datePicker;
     }
 
+    private Date getDateFromString(String savedFrmtdDate)
+    {
+        try
+        {
+            return dateFormat.parse(savedFrmtdDate);
+        }
+        catch(ParseException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public StepResult getStepResult()
+    {
+        return stepResult;
+    }
+
+    @Override
+    public boolean isAnswerValid()
+    {
+        // TODO validate actual date with answer format
+//        Date date = getDateFromString(stepResult.getResult());
+        return stepResult.getResult() != null;
+    }
 }
