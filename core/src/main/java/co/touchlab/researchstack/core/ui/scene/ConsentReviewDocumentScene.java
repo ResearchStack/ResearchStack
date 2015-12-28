@@ -66,7 +66,7 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene
     public void initializeScene()
     {
         LayoutInflater.from(getContext()).inflate(
-                R.layout.layout_section_consent_review_document, this, true);
+                R.layout.scene_consent_doc, this, true);
 
         WebView pdfView = (WebView) findViewById(R.id.webview);
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);

@@ -200,7 +200,7 @@ public class SurveyScene extends RelativeLayout implements Scene
 
     protected int getRootLayoutResourceId()
     {
-        return R.layout.fragment_step;
+        return R.layout.scene;
     }
 
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)

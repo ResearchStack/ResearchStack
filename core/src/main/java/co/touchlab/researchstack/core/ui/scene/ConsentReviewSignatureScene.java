@@ -47,7 +47,7 @@ public class ConsentReviewSignatureScene extends SceneImpl<String>
     @Override
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        return inflater.inflate( R.layout.scene_consent_review_signature, parent, false);
+        return inflater.inflate( R.layout.scene_consent_signature, parent, false);
     }
 
     @Override

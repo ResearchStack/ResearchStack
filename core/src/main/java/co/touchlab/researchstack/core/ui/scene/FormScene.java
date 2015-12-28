@@ -68,7 +68,7 @@ public class FormScene extends SceneImpl<FormResult>
     @Override
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        body = (LinearLayout) inflater.inflate(R.layout.scene_form, parent, false);
+        body = (LinearLayout) inflater.inflate(R.layout.scene_form_body, parent, false);
 
         List<FormItem> items = ((FormStep) getStep()).getFormItems();
         for (int i = 0, size = items.size(); i < size; i++)
@@ -76,7 +76,7 @@ public class FormScene extends SceneImpl<FormResult>
             FormItem item = items.get(i);
 
             View formItem = LayoutInflater.from(getContext())
-                    .inflate(R.layout.fragment_step_form,
+                    .inflate(R.layout.scene_form_item,
                             this,
                             false);
 
