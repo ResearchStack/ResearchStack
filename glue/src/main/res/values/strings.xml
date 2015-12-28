@@ -6,6 +6,10 @@
   <!-- Settings -->
   <string name="settings_version">Version %1$s (%2$s)</string>
 
+  <!-- Study Overview -->
+  <string name="send_email">Send Email</string>
+  <string name="study_overview_email_subject">%1$s Consent Form</string>
+
   <!-- Quiz -->
   <string name="quiz">Quiz</string>
   <string name="quiz_evaluation">Quiz Evaluation</string>

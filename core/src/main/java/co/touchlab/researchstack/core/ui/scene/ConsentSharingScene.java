@@ -9,6 +9,8 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.step.ConsentSharingStep;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 
+// No longer used, replaced by SurveyScene
+@Deprecated
 public class ConsentSharingScene extends SingleChoiceQuestionScene
 {
 

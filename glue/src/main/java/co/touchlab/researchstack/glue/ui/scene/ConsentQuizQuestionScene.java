@@ -21,6 +21,8 @@ import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
 
+// No longer used, replaced by SurveyScene
+@Deprecated
 public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
 {
 

@@ -1,7 +1,7 @@
 package co.touchlab.researchstack.core.step;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.ui.scene.ConsentSharingScene;
+import co.touchlab.researchstack.core.ui.scene.SingleChoiceQuestionBody;
 
 public class ConsentSharingStep extends QuestionStep
 {
@@ -21,7 +21,7 @@ public class ConsentSharingStep extends QuestionStep
     @Override
     public Class getSceneClass()
     {
-        return ConsentSharingScene.class;
+        return SingleChoiceQuestionBody.class;
     }
 
     public String getLocalizedLearnMoreHTMLContent()

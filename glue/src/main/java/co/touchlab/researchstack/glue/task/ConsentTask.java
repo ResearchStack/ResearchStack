@@ -39,7 +39,7 @@ public class ConsentTask extends OrderedTask
 
     public static final String ID_CONSENT = "consent";
     public static final String ID_VISUAL = "ID_VISUAL";
-    public static final String ID_FIRST_QUESTION = "FIRST_QUESTION";
+    public static final String ID_FIRST_QUESTION = "question_1";
     public static final String ID_QUIZ_RESULT = "ID_QUIZ_RESULT";
     public static final String ID_SHARING = "ID_SHARING";
     public static final String ID_CONSENT_DOC = "consent_review_doc";
@@ -85,11 +85,6 @@ public class ConsentTask extends OrderedTask
 
     private void initConsentSharingStep(Resources r, ConsentSectionModel data)
     {
-        ConsentSharingStep sharingStep = new ConsentSharingStep(ID_SHARING);
-        sharingStep.setOptional(false);
-        sharingStep.setShowsProgress(false);
-        sharingStep.setUseSurveyMode(false);
-
         String investigatorShortDesc = data.getDocumentProperties().getInvestigatorShortDescription();
         if (TextUtils.isEmpty(investigatorShortDesc)){
             DevUtils.throwIllegalArgumentException();
@@ -105,6 +100,10 @@ public class ConsentTask extends OrderedTask
             DevUtils.throwIllegalArgumentException();
         }
 
+        ConsentSharingStep sharingStep = new ConsentSharingStep(ID_SHARING);
+        sharingStep.setOptional(false);
+        sharingStep.setShowsProgress(false);
+        sharingStep.setUseSurveyMode(false);
         sharingStep.setLocalizedLearnMoreHTMLContent(localizedLearnMoreHTMLContent);
 
         String shareWidely = r.getString(R.string.rsc_consent_share_widely, investigatorLongDesc);
@@ -114,9 +113,9 @@ public class ConsentTask extends OrderedTask
         Choice<Boolean> shareRestrictedChoice = new Choice<>(shareRestricted, false, null);
 
         sharingStep.setAnswerFormat(
-                new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-                                           new Choice[] {shareWidelyChoice,
-                                                   shareRestrictedChoice}));
+                new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice, new Choice[] {
+                        shareWidelyChoice, shareRestrictedChoice
+                }));
 
         sharingStep.setTitle(r.getString(R.string.rsc_consent_share_title));
         sharingStep.setText(r.getString(R.string.rsc_consent_share_description, investigatorLongDesc));
@@ -151,6 +150,12 @@ public class ConsentTask extends OrderedTask
     {
         ConsentQuizModel model = JsonUtils.loadClass(ctx, ConsentQuizModel.class, rs.getQuizSections());
 
+        String trueString = ctx.getString(R.string.btn_true);
+        Choice<Boolean> trueChoice = new Choice<>(trueString, true, null);
+
+        String falseString = ctx.getString(R.string.btn_false);
+        Choice<Boolean> falseChoice = new Choice<>(falseString, false, null);
+
         for(int i = 0; i < model.getQuestions().size(); i++)
         {
             ConsentQuizModel.QuizQuestion question = model.getQuestions().get(i);
@@ -161,8 +166,14 @@ public class ConsentTask extends OrderedTask
             {
                 question.id = ID_FIRST_QUESTION;
             }
+
             ConsentQuizQuestionStep quizStep = new ConsentQuizQuestionStep(
                     question.id, model.getQuestionProperties(), question);
+            quizStep.setTitle(question.question);
+            quizStep.setText(model.getQuestionProperties().introText);
+            quizStep.setAnswerFormat(
+                    new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
+                                           new Choice[] {trueChoice, falseChoice}));
             addStep(quizStep);
         }
 
