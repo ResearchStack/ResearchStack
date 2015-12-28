@@ -81,7 +81,7 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene
 
     private void showDialog()
     {
-        new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
+        new AlertDialog.Builder(getContext())
                 .setTitle(R.string.consent_review_alert_title)
                 .setMessage(confirmationDialogBody)
                 .setCancelable(false)
