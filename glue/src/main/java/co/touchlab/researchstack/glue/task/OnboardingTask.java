@@ -131,7 +131,7 @@ public abstract class OnboardingTask extends Task
         if (permissionsStep == null)
         {
             permissionsStep = new Step(SignUpPermissionsStepIdentifier);
-            permissionsStep.setSceneTitle(R.string.permissions);
+            permissionsStep.setSceneTitle(R.string.settings_permissions);
             permissionsStep.setSceneClass(SignUpPermissionsScene.class);
         }
         return permissionsStep;
