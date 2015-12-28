@@ -110,21 +110,21 @@ public class ConsentSection implements Serializable
             switch(this)
             {
                 case Overview:
-                    return R.string.consent_section_welcome;
+                    return R.string.rsc_consent_section_welcome;
                 case DataGathering:
-                    return R.string.consent_section_data_gathering;
+                    return R.string.rsc_consent_section_data_gathering;
                 case Privacy:
-                    return R.string.consent_section_privacy;
+                    return R.string.rsc_consent_section_privacy;
                 case DataUse:
-                    return R.string.consent_section_data_use;
+                    return R.string.rsc_consent_section_data_use;
                 case TimeCommitment:
-                    return R.string.consent_section_time_commitment;
+                    return R.string.rsc_consent_section_time_commitment;
                 case StudySurvey:
-                    return R.string.consent_section_study_survey;
+                    return R.string.rsc_consent_section_study_survey;
                 case StudyTasks:
-                    return R.string.consent_section_study_tasks;
+                    return R.string.rsc_consent_section_study_tasks;
                 case Withdrawing:
-                    return R.string.consent_section_study_survey;
+                    return R.string.rsc_consent_section_study_survey;
                 default:
                     return - 1;
             }
@@ -158,23 +158,23 @@ public class ConsentSection implements Serializable
             switch(this)
             {
                 case Overview:
-                    return R.string.consent_section_more_info_welcome;
+                    return R.string.rsc_consent_section_more_info_welcome;
                 case DataGathering:
-                    return R.string.consent_section_more_info_data_gathering;
+                    return R.string.rsc_consent_section_more_info_data_gathering;
                 case Privacy:
-                    return R.string.consent_section_more_info_privacy;
+                    return R.string.rsc_consent_section_more_info_privacy;
                 case DataUse:
-                    return R.string.consent_section_more_info_data_use;
+                    return R.string.rsc_consent_section_more_info_data_use;
                 case TimeCommitment:
-                    return R.string.consent_section_more_info_time_commitment;
+                    return R.string.rsc_consent_section_more_info_time_commitment;
                 case StudySurvey:
-                    return R.string.consent_section_more_info_study_survey;
+                    return R.string.rsc_consent_section_more_info_study_survey;
                 case StudyTasks:
-                    return R.string.consent_section_more_info_study_tasks;
+                    return R.string.rsc_consent_section_more_info_study_tasks;
                 case Withdrawing:
-                    return R.string.consent_section_more_info_withdrawing;
+                    return R.string.rsc_consent_section_more_info_withdrawing;
                 default:
-                    return R.string.consent_section_more_info;
+                    return R.string.rsc_consent_section_more_info;
             }
         }
 

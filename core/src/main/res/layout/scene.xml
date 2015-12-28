@@ -74,14 +74,14 @@
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next"/>
+            android:text="@string/rsc_next"/>
 
         <TextView
             android:id="@+id/skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@string/step_skip" />
+            android:text="@string/rsc_step_skip" />
 
     </LinearLayout>
 

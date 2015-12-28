@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?attr/colorAccent"
-            android:text="@string/disagree"
+            android:text="@string/rsc_disagree"
             />
 
         <Button
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?attr/colorAccent"
-            android:text="@string/agree"
+            android:text="@string/rsc_agree"
             android:layout_gravity="right"
             />
 

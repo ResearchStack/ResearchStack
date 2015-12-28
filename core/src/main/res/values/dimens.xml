@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- TextSizes -->
-    <dimen name="text_size_xxsmall">8sp</dimen> <!-- H6 -->
-    <dimen name="text_size_xsmall">10sp</dimen> <!-- H5 -->
-    <dimen name="text_size_small">12sp</dimen> <!-- H4 -->
-    <dimen name="text_size_medium">16sp</dimen> <!-- H3 -->
-    <dimen name="text_size_large">20sp</dimen> <!-- H2 -->
-    <dimen name="text_size_xlarge">24sp</dimen> <!-- H1 -->
-
-    <dimen name="text_size_default">@dimen/text_size_medium</dimen>
-
     <!-- Padding -->
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">16dp</dimen>

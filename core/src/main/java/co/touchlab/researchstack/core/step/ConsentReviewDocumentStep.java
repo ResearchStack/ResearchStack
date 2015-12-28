@@ -16,7 +16,7 @@ public class ConsentReviewDocumentStep extends Step
     @Override
     public int getSceneTitle()
     {
-        return R.string.consent;
+        return R.string.rsc_consent;
     }
 
     @Override

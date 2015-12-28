@@ -64,9 +64,9 @@ public class ConsentTask extends OrderedTask
                 ResearchStack.getInstance().isSignatureEnabledInConsent());
 
         ConsentDocument doc = new ConsentDocument();
-        doc.setTitle(r.getString(R.string.consent_name_title));
-        doc.setSignaturePageTitle(R.string.consent_name_title);
-        doc.setSignaturePageContent(r.getString(R.string.consent_signature_content));
+        doc.setTitle(r.getString(R.string.rsc_consent_name_title));
+        doc.setSignaturePageTitle(R.string.rsc_consent_name_title);
+        doc.setSignaturePageContent(r.getString(R.string.rsc_consent_signature_content));
         doc.setSections(data.getSections());
         doc.addSignature(signature);
 
@@ -107,10 +107,10 @@ public class ConsentTask extends OrderedTask
 
         sharingStep.setLocalizedLearnMoreHTMLContent(localizedLearnMoreHTMLContent);
 
-        String shareWidely = r.getString(R.string.consent_share_widely, investigatorLongDesc);
+        String shareWidely = r.getString(R.string.rsc_consent_share_widely, investigatorLongDesc);
         Choice<Boolean> shareWidelyChoice = new Choice<>(shareWidely, true, null);
 
-        String shareRestricted = r.getString(R.string.consent_share_only, investigatorShortDesc);
+        String shareRestricted = r.getString(R.string.rsc_consent_share_only, investigatorShortDesc);
         Choice<Boolean> shareRestrictedChoice = new Choice<>(shareRestricted, false, null);
 
         sharingStep.setAnswerFormat(
@@ -118,8 +118,8 @@ public class ConsentTask extends OrderedTask
                                            new Choice[] {shareWidelyChoice,
                                                    shareRestrictedChoice}));
 
-        sharingStep.setTitle(r.getString(R.string.consent_share_title));
-        sharingStep.setText(r.getString(R.string.consent_share_description, investigatorLongDesc));
+        sharingStep.setTitle(r.getString(R.string.rsc_consent_share_title));
+        sharingStep.setText(r.getString(R.string.rsc_consent_share_description, investigatorLongDesc));
 
         addStep(sharingStep);
     }
@@ -132,14 +132,14 @@ public class ConsentTask extends OrderedTask
             ConsentVisualStep step = new ConsentVisualStep("consent_" + i);
             step.setSection(section);
 
-            String nextString = ctx.getString(R.string.next);
+            String nextString = ctx.getString(R.string.rsc_next);
             if(section.getType() == ConsentSection.Type.Overview)
             {
-                nextString = ctx.getString(R.string.button_get_started);
+                nextString = ctx.getString(R.string.rsc_get_started);
             }
             else if(i == size - 1)
             {
-                nextString = ctx.getString(R.string.button_done);
+                nextString = ctx.getString(R.string.rsc_done);
             }
             step.setNextButtonString(nextString);
 
@@ -175,25 +175,25 @@ public class ConsentTask extends OrderedTask
     {
         // Add ConsentReviewDocumentStep (view html version of the PDF doc)
         StringBuilder docBuilder = new StringBuilder("</br><div style=\"padding: 10px 10px 10px 10px;\" class='header'>");
-        String title = ctx.getString(R.string.consent_review_title);
+        String title = ctx.getString(R.string.rsc_consent_review_title);
         docBuilder.append(String.format(
                 "<h1 style=\"text-align: center; font-family:sans-serif-light;\">%1$s</h1>", title));
-        String detail =  ctx.getString(R.string.consent_review_instruction);
+        String detail =  ctx.getString(R.string.rsc_consent_review_instruction);
         docBuilder.append(String.format("<p style=\"text-align: center\">%1$s</p>", detail));
         docBuilder.append("</div></br>");
         docBuilder.append(doc.getHtmlReviewContent());
 
         ConsentReviewDocumentStep step = new ConsentReviewDocumentStep(ID_CONSENT_DOC);
         step.setConsentHTML(docBuilder.toString());
-        step.setConfirmMessage(ctx.getString(R.string.consent_review_reason));
+        step.setConfirmMessage(ctx.getString(R.string.rsc_consent_review_reason));
         addStep(step);
 
         // Add full-name input
         if (doc.getSignature(0).isRequiresName())
         {
-            String formTitle = ctx.getString(R.string.consent_name_title);
+            String formTitle = ctx.getString(R.string.rsc_consent_name_title);
             FormStep formStep = new FormStep(ID_FORM_NAME, formTitle, step.getText());
-            formStep.setSceneTitle(R.string.consent);
+            formStep.setSceneTitle(R.string.rsc_consent);
             formStep.setUseSurveyMode(false);
             formStep.setOptional(false);
 
@@ -204,8 +204,8 @@ public class ConsentTask extends OrderedTask
             // TODO format.autocorrectionType = UITextAutocorrectionTypeNo;
             // TODO format.spellCheckingType = UITextSpellCheckingTypeNo;
 
-            String placeholder = ctx.getResources().getString(R.string.consent_name_placeholder);
-            String nameText = ctx.getResources().getString(R.string.consent_name_full);
+            String placeholder = ctx.getResources().getString(R.string.rsc_consent_name_placeholder);
+            String nameText = ctx.getResources().getString(R.string.rsc_consent_name_full);
             FormScene.FormItem fullName = new FormScene.FormItem(formStep.getIdentifier(), nameText,
                                                                  format, placeholder, false);
             formStep.setFormItems(Collections.singletonList(fullName));
@@ -216,8 +216,8 @@ public class ConsentTask extends OrderedTask
         if (doc.getSignature(0).isRequiresSignatureImage())
         {
             ConsentSignatureStep signatureStep = new ConsentSignatureStep(ID_SIGNATURE);
-            signatureStep.setTitle(ctx.getString(R.string.consent_signature_title));
-            signatureStep.setText(ctx.getString(R.string.consent_signature_instruction));
+            signatureStep.setTitle(ctx.getString(R.string.rsc_consent_signature_title));
+            signatureStep.setText(ctx.getString(R.string.rsc_consent_signature_instruction));
             signatureStep.setOptional(false);
             signatureStep.setSignatureDateFormat(doc.getSignature(0).getSignatureDateFormatString());
             signatureStep.setSceneClass(ConsentReviewSignatureScene.class);

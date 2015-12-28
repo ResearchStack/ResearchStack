@@ -18,7 +18,7 @@
 -->
 
 <translate xmlns:android="http://schemas.android.com/apk/res/android"
-           android:duration="@integer/config_mediumAnimTime"
+           android:duration="@integer/rsc_config_mediumAnimTime"
            android:fromXDelta="100%p"
-           android:interpolator="@anim/interpolator_pager"
+           android:interpolator="@anim/interpolator_scene"
            android:toXDelta="0" />

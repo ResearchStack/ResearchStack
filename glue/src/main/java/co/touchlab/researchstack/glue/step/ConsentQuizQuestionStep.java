@@ -26,7 +26,7 @@ public class ConsentQuizQuestionStep extends QuestionStep
     @Override
     public int getSceneTitle()
     {
-        return R.string.quiz;
+        return R.string.rsc_quiz;
     }
 
     public ConsentQuizModel.QuestionProperties getProperties()

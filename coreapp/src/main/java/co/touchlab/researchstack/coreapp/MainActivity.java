@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Collections;
 
 import co.touchlab.researchstack.core.StorageManager;
@@ -27,7 +26,6 @@ import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.FormResult;
-import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
 import co.touchlab.researchstack.core.step.ConsentSignatureStep;
@@ -178,7 +176,7 @@ public class MainActivity extends PassCodeActivity
     {
         ConsentDocument document = new ConsentDocument();
         document.setTitle("Demo Consent");
-        document.setSignaturePageTitle(R.string.consent);
+        document.setSignaturePageTitle(R.string.rsc_consent);
 
         // Create consent visual sections
         ConsentSection section1 = new ConsentSection(ConsentSection.Type.DataGathering);
@@ -189,7 +187,7 @@ public class MainActivity extends PassCodeActivity
         // ...add more sections as needed, then create a visual consent step
         ConsentVisualStep visualStep = new ConsentVisualStep(VISUAL_CONSENT_IDENTIFIER);
         visualStep.setSection(section1);
-        visualStep.setNextButtonString(getString(R.string.next));
+        visualStep.setNextButtonString(getString(R.string.rsc_next));
 
         // Create consent signature object and set what info is required
         ConsentSignature signature = new ConsentSignature();
@@ -198,10 +196,10 @@ public class MainActivity extends PassCodeActivity
 
         // Create our HTML to show the user and have them accept or decline.
         StringBuilder docBuilder = new StringBuilder("</br><div style=\"padding: 10px 10px 10px 10px;\" class='header'>");
-        String title = getString(R.string.consent_review_title);
+        String title = getString(R.string.rsc_consent_review_title);
         docBuilder.append(String.format(
                 "<h1 style=\"text-align: center; font-family:sans-serif-light;\">%1$s</h1>", title));
-        String detail =  getString(R.string.consent_review_instruction);
+        String detail =  getString(R.string.rsc_consent_review_instruction);
         docBuilder.append(String.format("<p style=\"text-align: center\">%1$s</p>", detail));
         docBuilder.append("</div></br>");
         docBuilder.append("<div><h2> HTML Consent Doc goes here </h2></div>");
@@ -209,11 +207,11 @@ public class MainActivity extends PassCodeActivity
         // Create the Consent doc step, pass in our HTML doc
         ConsentReviewDocumentStep documentStep = new ConsentReviewDocumentStep(CONSENT_DOC);
         documentStep.setConsentHTML(docBuilder.toString());
-        documentStep.setConfirmMessage(getString(R.string.consent_review_reason));
+        documentStep.setConfirmMessage(getString(R.string.rsc_consent_review_reason));
 
         // Create Consent form step, to get users first & last name
         FormStep formStep = new FormStep(SIGNATURE_FORM_STEP, "Form Title", "Form step description");
-        formStep.setSceneTitle(R.string.consent);
+        formStep.setSceneTitle(R.string.rsc_consent);
 
         TextAnswerFormat format = new TextAnswerFormat();
         format.setIsMultipleLines(false);
@@ -224,8 +222,8 @@ public class MainActivity extends PassCodeActivity
 
         // Create Consent signature step, user can sign their name
         ConsentSignatureStep signatureStep = new ConsentSignatureStep(SIGNATURE);
-        signatureStep.setTitle(getString(R.string.consent_signature_title));
-        signatureStep.setText(getString(R.string.consent_signature_instruction));
+        signatureStep.setTitle(getString(R.string.rsc_consent_signature_title));
+        signatureStep.setText(getString(R.string.rsc_consent_signature_instruction));
         signatureStep.setSignatureDateFormat(signature.getSignatureDateFormatString());
         signatureStep.setOptional(false);
         signatureStep.setSceneClass(ConsentReviewSignatureScene.class);

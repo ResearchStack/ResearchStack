@@ -22,7 +22,7 @@
     android:interpolator="@android:interpolator/decelerate_cubic">
 
     <translate android:fromYDelta="70%p" android:toYDelta="0"
-               android:duration="@integer/config_mediumAnimTime"/>
+               android:duration="@integer/rsc_config_mediumAnimTime"/>
     <alpha android:fromAlpha="0.0" android:toAlpha="1.0"
-           android:duration="@integer/config_mediumAnimTime" />
+           android:duration="@integer/rsc_config_mediumAnimTime" />
 </set>

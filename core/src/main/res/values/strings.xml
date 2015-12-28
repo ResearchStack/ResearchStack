@@ -6,79 +6,75 @@
     <string name="lorem_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 
     <!-- Consent Section -->
-    <string name="consent">Consent</string>
-    <string name="consent_section_welcome">Welcome</string>
-    <string name="consent_section_data_gathering">Data Gathering</string>
-    <string name="consent_section_privacy">Privacy</string>
-    <string name="consent_section_data_use">Data Use</string>
-    <string name="consent_section_time_commitment">Time Commitment</string>
-    <string name="consent_section_study_survey">Study Survey</string>
-    <string name="consent_section_study_tasks">Study Tasks</string>
-    <string name="consent_section_withdrawing">Withdrawing</string>
-    <string name="consent_learn_more">Learn More</string>
+    <string name="rsc_consent">Consent</string>
+    <string name="rsc_consent_section_welcome">Welcome</string>
+    <string name="rsc_consent_section_data_gathering">Data Gathering</string>
+    <string name="rsc_consent_section_privacy">Privacy</string>
+    <string name="rsc_consent_section_data_use">Data Use</string>
+    <string name="rsc_consent_section_time_commitment">Time Commitment</string>
+    <string name="rsc_consent_section_study_survey">Study Survey</string>
+    <string name="rsc_consent_section_study_tasks">Study Tasks</string>
+    <string name="rsc_consent_section_withdrawing">Withdrawing</string>
+    <string name="rsc_consent_learn_more">Learn More</string>
 
     <!-- Consent section learn more -->
-    <string name="consent_section_more_info">Learn more</string>
-    <string name="consent_section_more_info_data_gathering">Learn more about how data is gathered</string>
-    <string name="consent_section_more_info_data_use">Learn more about how data is used</string>
-    <string name="consent_section_more_info_privacy">Learn more about how your privacy and identity are protected</string>
-    <string name="consent_section_more_info_welcome">Learn more about the study first</string>
-    <string name="consent_section_more_info_study_survey">Learn more about the study survey</string>
-    <string name="consent_section_more_info_time_commitment">Learn more about the study\'s impact on your time</string>
-    <string name="consent_section_more_info_study_tasks">Learn more about the tasks involved</string>
-    <string name="consent_section_more_info_withdrawing">Learn more about withdrawing</string>
+    <string name="rsc_consent_section_more_info">Learn more</string>
+    <string name="rsc_consent_section_more_info_data_gathering">Learn more about how data is gathered</string>
+    <string name="rsc_consent_section_more_info_data_use">Learn more about how data is used</string>
+    <string name="rsc_consent_section_more_info_privacy">Learn more about how your privacy and identity are protected</string>
+    <string name="rsc_consent_section_more_info_welcome">Learn more about the study first</string>
+    <string name="rsc_consent_section_more_info_study_survey">Learn more about the study survey</string>
+    <string name="rsc_consent_section_more_info_time_commitment">Learn more about the study\'s impact on your time</string>
+    <string name="rsc_consent_section_more_info_study_tasks">Learn more about the tasks involved</string>
+    <string name="rsc_consent_section_more_info_withdrawing">Learn more about withdrawing</string>
 
     <!-- Consent sharing step -->
-    <string name="consent_share_title">Sharing Options</string>
-    <string name="consent_share_widely">Share my data with %1$s and qualified researchers worldwide</string>
-    <string name="consent_share_only">Only share my data with %1$s</string>
-    <string name="consent_share_description">%1$s will receive your study data from your participation in this study.\n\nSharing your coded study data more broadly (without information such as your name) may benefit this and future research.</string>
-    <string name="consent_share_more_info">Learn more about data sharing</string>
+    <string name="rsc_consent_share_title">Sharing Options</string>
+    <string name="rsc_consent_share_widely">Share my data with %1$s and qualified researchers worldwide</string>
+    <string name="rsc_consent_share_only">Only share my data with %1$s</string>
+    <string name="rsc_consent_share_description">%1$s will receive your study data from your participation in this study.\n\nSharing your coded study data more broadly (without information such as your name) may benefit this and future research.</string>
+    <string name="rsc_consent_share_more_info">Learn more about data sharing</string>
 
-    <!-- Consent Review step -->
-    <string name="consent_review_title">Review</string>
-    <string name="consent_review_alert_title">Review</string>
-    <string name="consent_review_reason">By agreeing you confirm that you read the information and that you wish to take part in this research study.</string>
-    <string name="consent_review_instruction">Review the form below, and tap Agree if you\'re ready to continue.</string>
-    <string name="consent_name_title">Consent</string>
-    <string name="consent_name_full">Full Name</string>
-    <string name="consent_name_placeholder">Required</string>
-    <string name="consent_review_cancel">Cancel</string>
-    <string name="button_get_started">Get Started</string>
-    <string name="button_done">Done</string>
+    <!-- Consent doc step -->
+    <string name="rsc_consent_review_title">Review</string>
+    <string name="rsc_consent_review_alert_title">Review</string>
+    <string name="rsc_consent_review_reason">By agreeing you confirm that you read the information and that you wish to take part in this research study.</string>
+    <string name="rsc_consent_review_instruction">Review the form below, and tap Agree if you\'re ready to continue.</string>
+    <string name="rsc_consent_review_cancel">Cancel</string>
 
-    <string name="signature_page_title">Signature</string>
-    <string name="consent_signature_title">Signature</string>
-    <string name="consent_signature_content">By agreeing you confirm that you read the consent and that you wish to take part in this research study.</string>
-    <string name="consent_signature_instruction">Please sign using your finger on the line below.</string>
-    <string name="consent_signature_placeholder">Sign Here</string>
-    <string name="consent_signature_clear">Clear</string>
+    <!-- Consent name step -->
+    <string name="rsc_consent_name_title">Consent</string>
+    <string name="rsc_consent_name_full">Full Name</string>
+    <string name="rsc_consent_name_placeholder">Required</string>
 
-    <!-- Consent Doc -->
-    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
-    <string name="consent_doc_line_printed_name">%1$s\'s Name (printed)</string>
-    <string name="consent_doc_line_signature">%1$s\'s Signature</string>
-    <string name="consent_doc_line_date">Date</string>
+    <!-- Consent sig step -->
+    <string name="rsc_consent_signature_title">Signature</string>
+    <string name="rsc_consent_signature_content">By agreeing you confirm that you read the consent and that you wish to take part in this research study.</string>
+    <string name="rsc_consent_signature_instruction">Please sign using your finger on the line below.</string>
+    <string name="rsc_consent_signature_placeholder">Sign Here</string>
+    <string name="rsc_consent_signature_clear">Clear</string>
 
     <!-- Quiz -->
-    <string name="quiz">Quiz</string>
-    <string name="quiz_evaluation">Quiz Evaluation</string>
-    <string name="quiz_evaluation_try_again">Try Again</string>
-    <string name="quiz_evaluation_review_consent">Review Consent</string>
-    <string name="quiz_evaluation_retake">Retake Quiz</string>
-    <string name="quiz_evaluation_great_job">Great Job!</string>
+    <string name="rsc_quiz">Quiz</string>
+    <string name="rsc_quiz_evaluation">Quiz Evaluation</string>
+    <string name="rsc_quiz_evaluation_try_again">Try Again</string>
+    <string name="rsc_quiz_evaluation_review_consent">Review Consent</string>
+    <string name="rsc_quiz_evaluation_retake">Retake Quiz</string>
+    <string name="rsc_quiz_evaluation_great_job">Great Job!</string>
 
     <!--Other -->
-    <string name="step_skip">Skip this question</string>
-    <string name="next">next</string>
-    <string name="what_to_expect">What to Expect</string>
-    <string name="name">Name</string>
-    <string name="email">Email</string>
-    <string name="disagree">Disagree</string>
-    <string name="agree">Agree</string>
-    <string name="please_complete_step">Please complete this step before moving on</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
+    <string name="rsc_get_started">Get Started</string>
+    <string name="rsc_done">Done</string>
+    <string name="rsc_step_skip">Skip this question</string>
+    <string name="rsc_next">next</string>
+    <string name="rsc_what_to_expect">What to Expect</string>
+    <string name="rsc_name">Name</string>
+    <string name="rsc_email">Email</string>
+    <string name="rsc_disagree">Disagree</string>
+    <string name="rsc_agree">Agree</string>
+    <string name="rsc_please_complete_step">Please complete this step before moving on</string>
+    <string name="src_ok">OK</string>
+    <string name="src_cancel">Cancel</string>
 
 
 </resources>

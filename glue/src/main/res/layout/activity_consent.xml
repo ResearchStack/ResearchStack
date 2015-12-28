@@ -6,13 +6,13 @@
               android:layout_height="match_parent">
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/disagree"
-        android:text="@string/disagree"
+        android:text="@string/rsc_disagree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/agree"
-        android:text="@string/agree"
+        android:text="@string/rsc_agree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />

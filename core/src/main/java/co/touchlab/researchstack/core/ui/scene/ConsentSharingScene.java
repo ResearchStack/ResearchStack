@@ -31,13 +31,13 @@ public class ConsentSharingScene extends SingleChoiceQuestionScene
     public void onSceneCreated(View scene)
     {
         super.onSceneCreated(scene);
-        super.setMoreInfo(R.string.consent_share_more_info, o -> learnMoreAboutSharing());
+        super.setMoreInfo(R.string.rsc_consent_share_more_info, o -> learnMoreAboutSharing());
     }
 
     private void learnMoreAboutSharing()
     {
         ConsentSharingStep step = (ConsentSharingStep) getStep();
-        String title = getString(R.string.consent_learn_more);
+        String title = getString(R.string.rsc_consent_learn_more);
         String docName = step.getLocalizedLearnMoreHTMLContent();
         Intent launch = ViewWebDocumentActivity.newIntent(getContext(), title, docName);
         getContext().startActivity(launch);

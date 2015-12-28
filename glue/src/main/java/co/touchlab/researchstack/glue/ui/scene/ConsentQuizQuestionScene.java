@@ -146,7 +146,7 @@ public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
                                 SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
             answerExplanation.setText(explanation);
 
-            setNextButtonText(R.string.next);
+            setNextButtonText(R.string.rsc_next);
         }
         else
         {
