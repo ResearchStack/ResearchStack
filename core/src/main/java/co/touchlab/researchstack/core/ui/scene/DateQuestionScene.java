@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
@@ -40,7 +41,7 @@ public class DateQuestionScene extends SceneImpl<String>
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
         SimpleDateFormat format = new SimpleDateFormat(
-                FormatUtils.DATE_FORMAT_ISO_8601);
+                FormatUtils.DATE_FORMAT_ISO_8601, Locale.getDefault());
 
         DatePicker datePicker = (DatePicker) inflater.inflate(R.layout.item_date_picker, parent, false);
         DateAnswerFormat answerFormat = (DateAnswerFormat) ((QuestionStep) getStep()).getAnswerFormat();

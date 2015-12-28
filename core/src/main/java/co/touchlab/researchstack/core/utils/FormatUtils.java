@@ -1,48 +1,13 @@
 package co.touchlab.researchstack.core.utils;
-import org.apache.commons.lang3.StringUtils;
-
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Date;
 
 public class FormatUtils
 {
+    public static final int NONE = -1;
+
     // TODO find a better place for this, maybe only use it for Bridge
     public static final String DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-
-    /**
-     * This constant is meant for ignoring a specific portion of the format. Passing constant value
-     * {@link #STYLE_NONE} through {@link #getDateStyle(int)} or {@link #getTimeStyle(int)} will
-     * return null
-     */
-    public static final int STYLE_NONE = 0;
-
-    /**
-     * Medium style format. Results should look like the following (using Locale.US)
-     * Date Example: 11/23/37
-     * Time Example: 3:30 PM
-     */
-    public static final int STYLE_SHORT = 1;
-
-    /**
-     * Medium style format. Results should look like the following (using Locale.US)
-     * Date Example: Nov 23, 1937
-     * Time Example: 3:30:32 PM
-     */
-    public static final int STYLE_MEDIUM = 2;
-
-    /**
-     * Medium style format. Results should look like the following (using Locale.US)
-     * Date Example: November 23, 1937
-     * Time Example: 3:30:32 PM PST
-     */
-    public static final int STYLE_LONG = 3;
-
-    /**
-     * Medium style format. Results should look like the following (using Locale.US)
-     * Date Example: Tuesday, April 12, 1952 AD
-     * Time Example: 3:30:42 PM Pacific Standard Time
-     */
-    public static final int STYLE_FULL = 4;
 
     /**
      * Helper method to help format {@link Date} objects used in
@@ -53,77 +18,48 @@ public class FormatUtils
      */
     public static String formatSignature(Date date)
     {
-        return format(date, STYLE_SHORT, STYLE_NONE);
+        return format(date, DateFormat.SHORT, NONE);
     }
 
     /**
      * Formats a {@link Date} object based on style params. This method can return an empty
-     * string if both styles params have a value {@link #STYLE_NONE}
+     * string if both styles params have a value {@link #NONE}
      *
      * @param date Date object to be formatted
-     * @param dateStyle style for the date defined by static constants within {@link FormatUtils}
-     * @param timeStyle style for the time defined by static constants within {@link FormatUtils}
+     * @param dateStyle style for the date defined by static constants within {@link DateFormat}
+     * @param timeStyle style for the time defined by static constants within {@link DateFormat}
      * @return formatted string, delimited by a space if date and time formats are not null
      */
     public static String format(Date date, int dateStyle, int timeStyle)
     {
-        String [] parts = new String[] {
-                getDateStyle(dateStyle),
-                getTimeStyle(timeStyle)
-        };
-
-        String dateTimeFormat = StringUtils.join(parts, " ").trim();
-
-        return new SimpleDateFormat(dateTimeFormat).format(date);
-    }
-
-    /**
-     * Returns a date pattern
-     *
-     * @param style a static constants defined within {@link FormatUtils}
-     * @return date pattern
-     */
-    public static String getDateStyle(int style)
-    {
-        switch(style)
+        // Date & Time format
+        if (isStyle(dateStyle) && isStyle(timeStyle))
         {
-            case STYLE_NONE:
-                return null;
-            case STYLE_SHORT:
-                return "M/d/yyyy";
-            case STYLE_MEDIUM:
-                return "MMM d, yyyy";
-            case STYLE_LONG:
-                return "MMMMM d, yyyy";
-            case STYLE_FULL:
-                return "EEEEE, MMMMM d, yyyy GG";
-            default:
-                throw new UnsupportedOperationException();
+            return DateFormat.getDateTimeInstance(dateStyle, timeStyle).format(date);
+        }
+
+        // Date format
+        else if (isStyle(dateStyle) && !isStyle(timeStyle))
+        {
+            return DateFormat.getDateInstance(dateStyle).format(date);
+        }
+
+        // Time format
+        else if (!isStyle(dateStyle) && isStyle(timeStyle))
+        {
+            return DateFormat.getTimeInstance(timeStyle).format(date);
+        }
+
+        // Else crash since the styles are invalid
+        else
+        {
+            throw new IllegalArgumentException("dateStyle and timeStyle cannot both be ");
         }
     }
 
-    /**
-     * Returns a time pattern
-     *
-     * @param style a static constant defined within {@link FormatUtils}
-     * @return time pattern
-     */
-    public static String getTimeStyle(int style)
+    public static boolean isStyle(int style)
     {
-        switch(style)
-        {
-            case STYLE_NONE:
-                return null;
-            case STYLE_SHORT:
-                return "h:mm aaa";
-            case STYLE_MEDIUM:
-                return "h:mm:ss aaa";
-            case STYLE_LONG:
-                return "h:mm:ss aaa zzz";
-            case STYLE_FULL:
-                return "h:mm:ss aaa zzzz";
-            default:
-                throw new UnsupportedOperationException();
-        }
+        return style >= DateFormat.FULL && style <= DateFormat.SHORT;
     }
+
 }

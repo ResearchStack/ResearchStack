@@ -98,8 +98,8 @@ public class ConsentReviewSignatureScene extends SceneImpl<String>
         String formattedSignDate;
 
         if (!TextUtils.isEmpty(format)) {
-            SimpleDateFormat formatter = new SimpleDateFormat(format);
-            formattedSignDate = formatter.format(new Date());
+            formattedSignDate = SimpleDateFormat.getDateInstance()
+                                                .format(new Date());
         } else {
             formattedSignDate = FormatUtils.formatSignature(new Date());
         }
