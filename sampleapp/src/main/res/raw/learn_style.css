@@ -1,11 +1,8 @@
 @charset "UTF-8";
 
-a  {
-	
+a {
 	color:#39F
-	
 }
-
 
 a:active {
     color:#39F
@@ -27,7 +24,6 @@ p,  h2 {
     margin-top: 0;
     padding-right: 0px;
     padding-left: 0px;
-    
 }
 
 h1 {
@@ -39,42 +35,29 @@ h1 {
     padding-top:0px;
     padding-bottom:0px;
     text-align:center;
-    
 }
-
-
-
-
 
 .footer {
     background-color: #FFFFFF;
     width: 20%;
     margin: 0 auto;
-    
-    
-    
 }
-
 
 .content {
     padding: 10px 10px 10px 15px;
 }
 
-
 .content ul, .content ol {
     padding: 0 15px 15px 15px;
 }
 
-
 IMG.displayed {
     display: block;
     margin-left: auto;
-    margin-right: auto }
+    margin-right: auto
+}
 
-
-
-boldie
-{
+bold {
     font-family:sans-serif-medium;
     font-size:16pt;
     color:#000000;
@@ -96,4 +79,6 @@ ul, ol {
     
 }
 
-.ExternalClass * {line-height: 100%}
+.ExternalClass * {
+    line-height: 100%
+}
