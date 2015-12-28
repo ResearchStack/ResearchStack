@@ -20,6 +20,7 @@ import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.DecimalAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.helpers.LogExt;
@@ -69,6 +70,8 @@ public class MainActivity extends PassCodeActivity
     public static final String NAME = "name";
     public static final String CONSENT = "consent";
     public static final String MULTI_STEP = "multi_step";
+    public static final String DATE = "date";
+    public static final String DECIMAL = "decimal";
     private AppCompatButton consentButton;
     private AppCompatButton surveyButton;
     private AppCompatButton clearButton;
@@ -287,6 +290,8 @@ public class MainActivity extends PassCodeActivity
     private void printSurveyInfo()
     {
         String[] resultKeys = new String[] {
+                NAME,
+                DATE,
                 FORM_NAME,
                 FORM_AGE,
                 FORM_GENDER,
@@ -310,7 +315,19 @@ public class MainActivity extends PassCodeActivity
                 "Selection Survey",
                 "This survey can help us understand your eligibility for the fitness study");
 
-        FormStep formStep = createFormStep();
+        TextAnswerFormat format = new TextAnswerFormat();
+        QuestionStep ageStep = new QuestionStep(NAME,
+                "How old are you?",
+                format);
+
+        DateAnswerFormat dateFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
+        QuestionStep dateStep = new QuestionStep(DATE, "Enter a date", dateFormat);
+
+        // unimplemented
+        DecimalAnswerFormat decimalAnswerFormat = new DecimalAnswerFormat(0f, 1f);
+        QuestionStep decimalStep = new QuestionStep(DECIMAL, "Decimal step", decimalAnswerFormat);
+
+//        FormStep formStep = createFormStep();
 
         // Create a Boolean step to include in the task.
         QuestionStep booleanStep = new QuestionStep(NUTRITION);
@@ -331,7 +348,10 @@ public class MainActivity extends PassCodeActivity
         OrderedTask task = new OrderedTask("ordered_task",
                 "schedule_id",
                 instructionStep,
-                formStep,
+                ageStep,
+                dateStep,
+                decimalStep,
+//                formStep,
                 booleanStep,
                 multiStep);
 
@@ -387,6 +407,9 @@ public class MainActivity extends PassCodeActivity
         Integer formAge = (Integer) formStep.getResultForIdentifier(FORM_AGE).getAnswer();
         saveString(SURVEY_PATH + FORM_AGE, String.valueOf(formAge));
 
+        String date = (String) result.getStepResult(DATE).getResult();
+        saveString(SURVEY_PATH + DATE, date);
+
         Integer gender = (Integer) formStep.getResultForIdentifier(FORM_GENDER).getAnswer();
         saveString(SURVEY_PATH + FORM_GENDER, gender == 0 ? "Male" : "Female");
 
@@ -394,8 +417,8 @@ public class MainActivity extends PassCodeActivity
                 FORM_MULTI_CHOICE).getAnswer();
         saveString(SURVEY_PATH + FORM_MULTI_CHOICE, Arrays.toString(multiChoice));
 
-        Date date = (Date) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH).getAnswer();
-        saveString(SURVEY_PATH + FORM_DATE_OF_BIRTH, date.toString());
+        Date dateofBirth = (Date) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH).getAnswer();
+        saveString(SURVEY_PATH + FORM_DATE_OF_BIRTH, dateofBirth.toString());
 
         Integer nutrition = (Integer) result.getStepResult(NUTRITION).getResult();
         String nutritionString = nutrition == 0 ? "No" : "Yes";
@@ -411,12 +434,24 @@ public class MainActivity extends PassCodeActivity
 
     private String loadString(String path)
     {
-        return StorageManager.getFileAccess().readString(this, path);
+        try
+        {
+            return StorageManager
+                    .getFileAccess()
+                    .readString(this,
+                            path);
+        }
+        catch (Exception e)
+        {
+            return "";
+        }
     }
 
     private void saveString(String path, String string)
     {
         string = string == null ? "" : string;
-        StorageManager.getFileAccess().writeString(this, path, string);
+        StorageManager.getFileAccess().writeString(this,
+                path,
+                string);
     }
 }
