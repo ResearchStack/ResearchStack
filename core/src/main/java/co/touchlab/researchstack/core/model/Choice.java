@@ -1,7 +1,6 @@
 package co.touchlab.researchstack.core.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Choice<T> implements Serializable
 {

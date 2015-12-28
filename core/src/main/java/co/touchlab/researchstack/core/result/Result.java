@@ -2,7 +2,6 @@ package co.touchlab.researchstack.core.result;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 
 public class Result implements Serializable
 {

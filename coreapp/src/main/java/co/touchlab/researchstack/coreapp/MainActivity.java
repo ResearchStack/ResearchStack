@@ -11,21 +11,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.FormResult;
+import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
 import co.touchlab.researchstack.core.step.ConsentSignatureStep;
@@ -38,8 +41,8 @@ import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
-import co.touchlab.researchstack.core.ui.scene.FormScene;
 import co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene;
+import co.touchlab.researchstack.core.ui.scene.FormScene;
 
 public class MainActivity extends PassCodeActivity
 {
@@ -284,13 +287,13 @@ public class MainActivity extends PassCodeActivity
     private void printSurveyInfo()
     {
         String[] resultKeys = new String[] {
-                NAME,
                 FORM_NAME,
                 FORM_AGE,
                 FORM_GENDER,
                 FORM_MULTI_CHOICE,
                 FORM_DATE_OF_BIRTH,
-                NUTRITION
+                NUTRITION,
+                MULTI_STEP
         };
 
         String results = "";
@@ -307,12 +310,7 @@ public class MainActivity extends PassCodeActivity
                 "Selection Survey",
                 "This survey can help us understand your eligibility for the fitness study");
 
-        TextAnswerFormat format = new TextAnswerFormat();
-        QuestionStep ageStep = new QuestionStep(NAME,
-                "How old are you?",
-                format);
-
-//        FormStep formStep = createFormStep();
+        FormStep formStep = createFormStep();
 
         // Create a Boolean step to include in the task.
         QuestionStep booleanStep = new QuestionStep(NUTRITION);
@@ -333,16 +331,13 @@ public class MainActivity extends PassCodeActivity
         OrderedTask task = new OrderedTask("ordered_task",
                 "schedule_id",
                 instructionStep,
-                ageStep,
-//                formStep,
+                formStep,
                 booleanStep,
                 multiStep);
 
         // Create a task view controller using the task and set a delegate.
-        Intent intent = ViewTaskActivity.newIntent(this,
-                task);
-        startActivityForResult(intent,
-                REQUEST_SURVEY);
+        Intent intent = ViewTaskActivity.newIntent(this, task);
+        startActivityForResult(intent, REQUEST_SURVEY);
     }
 
     @NonNull
@@ -384,34 +379,30 @@ public class MainActivity extends PassCodeActivity
 
     private void processSurveyResult(TaskResult result)
     {
+        StepResult<FormResult> formStep = result.getStepResult(FORM_STEP);
 
-        String name = (String) result.getStepResult(NAME)
-                .getResult();
-        saveString(SURVEY_PATH + NAME,
-                name);
+        String formName = (String) formStep.getResultForIdentifier(FORM_NAME).getAnswer();
+        saveString(SURVEY_PATH + FORM_NAME, formName);
 
-        Integer nutrition = (Integer) result.getStepResult(NUTRITION)
-                .getResult();
+        Integer formAge = (Integer) formStep.getResultForIdentifier(FORM_AGE).getAnswer();
+        saveString(SURVEY_PATH + FORM_AGE, String.valueOf(formAge));
+
+        Integer gender = (Integer) formStep.getResultForIdentifier(FORM_GENDER).getAnswer();
+        saveString(SURVEY_PATH + FORM_GENDER, gender == 0 ? "Male" : "Female");
+
+        Integer[] multiChoice = (Integer[]) formStep.getResultForIdentifier(
+                FORM_MULTI_CHOICE).getAnswer();
+        saveString(SURVEY_PATH + FORM_MULTI_CHOICE, Arrays.toString(multiChoice));
+
+        Date date = (Date) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH).getAnswer();
+        saveString(SURVEY_PATH + FORM_DATE_OF_BIRTH, date.toString());
+
+        Integer nutrition = (Integer) result.getStepResult(NUTRITION).getResult();
         String nutritionString = nutrition == 0 ? "No" : "Yes";
-        saveString(SURVEY_PATH + NUTRITION,
-                nutritionString);
+        saveString(SURVEY_PATH + NUTRITION, nutritionString);
 
-//        StepResult<FormResult> formStep = result.getStepResult(FORM_STEP);
-//
-//        String formName = (String) formStep.getResultForIdentifier(FORM_NAME).getAnswer();
-//        saveString(SURVEY_PATH + FORM_NAME, formName);
-//
-//        Integer formAge = (Integer) formStep.getResultForIdentifier(FORM_AGE).getAnswer();
-//        saveString(SURVEY_PATH + FORM_AGE, String.valueOf(formAge));
-//
-//        Integer gender = (Integer) formStep.getResultForIdentifier(FORM_GENDER).getAnswer();
-//        saveString(SURVEY_PATH + FORM_GENDER, gender == 0 ? "Male" : "Female");
-//
-//        Integer[] multiChoice = (Integer[]) formStep.getResultForIdentifier(FORM_MULTI_CHOICE).getAnswer();
-//        saveString(SURVEY_PATH + FORM_MULTI_CHOICE, String.valueOf(multiChoice));
-//
-//        Date date = (Date) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH).getAnswer();
-//        saveString(SURVEY_PATH + FORM_DATE_OF_BIRTH, date.toString());
+        Object[] multiStep = (Object[]) result.getStepResult(MULTI_STEP).getResult();
+        saveString(SURVEY_PATH + MULTI_STEP, Arrays.toString(multiStep));
 
         AppPrefs prefs = AppPrefs.getInstance(this);
         prefs.setHasSurveyed(true);
@@ -420,19 +411,12 @@ public class MainActivity extends PassCodeActivity
 
     private String loadString(String path)
     {
-        return StorageManager
-                .getFileAccess()
-                .readString(this,
-                        path);
+        return StorageManager.getFileAccess().readString(this, path);
     }
 
     private void saveString(String path, String string)
     {
         string = string == null ? "" : string;
-        StorageManager
-                .getFileAccess()
-                .writeString(this,
-                        path,
-                        string);
+        StorageManager.getFileAccess().writeString(this, path, string);
     }
 }

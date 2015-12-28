@@ -2,9 +2,6 @@ package co.touchlab.researchstack.sampleapp;
 
 import android.app.Application;
 
-import co.touchlab.researchstack.core.StorageManager;
-import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
-import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
 import co.touchlab.researchstack.glue.ResearchStack;
 
 /**
