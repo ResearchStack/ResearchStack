@@ -86,7 +86,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 currentUser.setConsentSignatureImage(base64Image);
                 currentUser.setUserConsented(true);
 
-                SceneImpl scene = (SceneImpl) findViewById(R.id.current_scene);
+                SceneImpl scene = (SceneImpl) findViewById(R.id.rsc_current_scene);
                 if (scene != null && scene instanceof SignUpEligibleScene)
                 {
                     // TODO this is weird, activity calling a callback method itself
@@ -109,7 +109,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
         if (requestCode ==  SignUpPermissionsScene.LOCATION_PERMISSION_REQUEST_CODE)
         {
-            Scene scene = (Scene) findViewById(R.id.current_scene);
+            Scene scene = (Scene) findViewById(R.id.rsc_current_scene);
             if(scene instanceof SignUpPermissionsScene)
             {
                 ((SignUpPermissionsScene) scene)

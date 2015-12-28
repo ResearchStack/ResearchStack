@@ -215,7 +215,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 
     private void notifySceneOfBackPress()
     {
-        Scene currentScene = (Scene) findViewById(R.id.current_scene);
+        Scene currentScene = (Scene) findViewById(R.id.rsc_current_scene);
         currentScene.isBackEventConsumed();
     }
 

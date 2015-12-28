@@ -34,7 +34,7 @@ public class ViewLicensesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
 
-        int padding = getResources().getDimensionPixelSize(R.dimen.padding_medium);
+        int padding = getResources().getDimensionPixelSize(R.dimen.rsc_padding_medium);
         //TODO Find a better way of presenting the data. Right now, the TV only scrolls manually. No fling.
         //TODO Probably best to just use a recycler view for this.
         TextView tv = new TextView(this);

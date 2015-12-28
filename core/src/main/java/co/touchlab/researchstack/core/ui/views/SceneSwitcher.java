@@ -108,7 +108,7 @@ public class SceneSwitcher extends FrameLayout
 
         post(() -> {
             // Get the current scene, set the id as something other than R.id.current_scene
-            View currentScene = findViewById(R.id.current_scene);
+            View currentScene = findViewById(R.id.rsc_current_scene);
             int currentIndex = 0;
             if (currentScene != null)
             {
@@ -120,7 +120,7 @@ public class SceneSwitcher extends FrameLayout
             // in the view hierarchy as the same as the current scene on-screen
             LayoutParams lp = getLayoutParams(scene);
             addView(scene.getView(), currentIndex, lp);
-            scene.getView().setId(R.id.current_scene);
+            scene.getView().setId(R.id.rsc_current_scene);
 
             // If the old scene is gone, we can go ahead and ignore the following animation code.
             // This will usually happen on start-up of the host (e.g. activity)

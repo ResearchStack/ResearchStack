@@ -2,7 +2,7 @@
 <resources>
 
     <!-- These ID's are used when adding and removing child scenes in ViewTaskActivity -->
-    <item name="current_scene" type="id"/>
-    <item name="old_scene" type="id"/>
+    <item name="rsc_current_scene" type="id"/>
+    <item name="rsc_old_scene" type="id"/>
 
 </resources>
