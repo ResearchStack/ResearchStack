@@ -23,13 +23,13 @@
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/name"
-            android:hint="@string/name"
+            android:hint="@string/rsc_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/email"
-            android:hint="@string/email"
+            android:hint="@string/rsc_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

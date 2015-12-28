@@ -66,7 +66,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
         int resId = ResearchStack.getInstance().getPrivacyPolicy();
         String docName = getResources().getResourceEntryName(resId);
         Intent intent = ViewWebDocumentActivity
-                .newIntent(getContext(), getString(R.string.privacy_policy), docName);
+                .newIntent(getContext(), getString(R.string.settings_privacy_policy), docName);
         startActivity(intent);
     }
 

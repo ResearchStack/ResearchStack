@@ -86,7 +86,7 @@ public class SceneSwitcher extends FrameLayout
 
     private void init()
     {
-        animationTime = getResources().getInteger(R.integer.config_mediumAnimTime);
+        animationTime = getResources().getInteger(R.integer.rsc_config_mediumAnimTime);
     }
 
     /**

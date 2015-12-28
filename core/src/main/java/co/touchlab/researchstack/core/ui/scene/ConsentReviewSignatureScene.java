@@ -47,7 +47,7 @@ public class ConsentReviewSignatureScene extends SceneImpl<String>
     @Override
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        return inflater.inflate( R.layout.scene_consent_review_signature, parent, false);
+        return inflater.inflate( R.layout.scene_consent_signature, parent, false);
     }
 
     @Override
@@ -98,8 +98,8 @@ public class ConsentReviewSignatureScene extends SceneImpl<String>
         String formattedSignDate;
 
         if (!TextUtils.isEmpty(format)) {
-            SimpleDateFormat formatter = new SimpleDateFormat(format);
-            formattedSignDate = formatter.format(new Date());
+            formattedSignDate = SimpleDateFormat.getDateInstance()
+                                                .format(new Date());
         } else {
             formattedSignDate = FormatUtils.formatSignature(new Date());
         }

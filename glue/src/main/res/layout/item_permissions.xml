@@ -10,7 +10,7 @@
         android:id="@+id/permission_title"
         android:text="@string/location_services"
         android:gravity="center"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:layout_width="280dp"
         android:layout_height="wrap_content"/>
 

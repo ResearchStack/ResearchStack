@@ -200,7 +200,7 @@ public class SurveyScene extends RelativeLayout implements Scene
 
     protected int getRootLayoutResourceId()
     {
-        return R.layout.fragment_step;
+        return R.layout.scene;
     }
 
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
@@ -236,7 +236,7 @@ public class SurveyScene extends RelativeLayout implements Scene
         }
         else
         {
-            Toast.makeText(getContext(), R.string.please_complete_step, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.rsc_please_complete_step, Toast.LENGTH_SHORT).show();
         }
     }
 

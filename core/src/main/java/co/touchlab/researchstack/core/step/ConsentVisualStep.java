@@ -15,7 +15,7 @@ public class ConsentVisualStep extends Step
     @Override
     public int getSceneTitle()
     {
-        return co.touchlab.researchstack.core.R.string.consent;
+        return co.touchlab.researchstack.core.R.string.rsc_consent;
     }
 
     @Override

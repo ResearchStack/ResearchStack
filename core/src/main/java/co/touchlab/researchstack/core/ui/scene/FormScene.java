@@ -68,7 +68,7 @@ public class FormScene extends SceneImpl<FormResult>
     @Override
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        body = (LinearLayout) inflater.inflate(R.layout.scene_form, parent, false);
+        body = (LinearLayout) inflater.inflate(R.layout.scene_form_body, parent, false);
 
         List<FormItem> items = ((FormStep) getStep()).getFormItems();
         for (int i = 0, size = items.size(); i < size; i++)
@@ -76,7 +76,7 @@ public class FormScene extends SceneImpl<FormResult>
             FormItem item = items.get(i);
 
             View formItem = LayoutInflater.from(getContext())
-                    .inflate(R.layout.fragment_step_form,
+                    .inflate(R.layout.scene_form_item,
                             this,
                             false);
 
@@ -148,7 +148,7 @@ public class FormScene extends SceneImpl<FormResult>
                                         checkedItems[which] = isChecked;
                                     })
                             .setTitle(item.text)
-                            .setPositiveButton(R.string.ok,
+                            .setPositiveButton(R.string.src_ok,
                                     (dialog, which) -> {
                                         ArrayList<Integer> checkedValues = new ArrayList<Integer>();
                                         for (int i = 0; i < checkedItems.length; i++)
@@ -160,7 +160,7 @@ public class FormScene extends SceneImpl<FormResult>
                                         }
                                         finalResult2.setAnswer(checkedValues.toArray(new Integer[checkedValues.size()]));
                                     })
-                            .setNegativeButton(R.string.cancel,
+                            .setNegativeButton(R.string.src_cancel,
                                     null)
                             .show();
                 });
@@ -181,11 +181,11 @@ public class FormScene extends SceneImpl<FormResult>
                                         checked[0] = which;
                                     })
                             .setTitle(item.text)
-                            .setPositiveButton(R.string.ok,
+                            .setPositiveButton(R.string.src_ok,
                                     (dialog, which) -> {
                                         finalResult3.setAnswer(checked[0]);
                                     })
-                            .setNegativeButton(R.string.cancel,
+                            .setNegativeButton(R.string.src_cancel,
                                     null)
                             .show();
                 });

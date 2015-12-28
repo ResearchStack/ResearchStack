@@ -1,13 +1,7 @@
 package co.touchlab.researchstack.core.step;
-import android.text.TextUtils;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.answerformat.AnswerFormat;
-import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
-import co.touchlab.researchstack.core.dev.DevUtils;
-import co.touchlab.researchstack.core.model.DocumentProperties;
-import co.touchlab.researchstack.core.model.Choice;
-import co.touchlab.researchstack.core.ui.scene.ConsentSharingScene;
+import co.touchlab.researchstack.core.ui.scene.SingleChoiceQuestionBody;
 
 public class ConsentSharingStep extends QuestionStep
 {
@@ -21,13 +15,13 @@ public class ConsentSharingStep extends QuestionStep
     @Override
     public int getSceneTitle()
     {
-        return R.string.consent;
+        return R.string.rsc_consent;
     }
 
     @Override
     public Class getSceneClass()
     {
-        return ConsentSharingScene.class;
+        return SingleChoiceQuestionBody.class;
     }
 
     public String getLocalizedLearnMoreHTMLContent()

@@ -66,7 +66,7 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene
     public void initializeScene()
     {
         LayoutInflater.from(getContext()).inflate(
-                R.layout.layout_section_consent_review_document, this, true);
+                R.layout.scene_consent_doc, this, true);
 
         WebView pdfView = (WebView) findViewById(R.id.webview);
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
@@ -81,15 +81,15 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene
 
     private void showDialog()
     {
-        new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
-                .setTitle(R.string.consent_review_alert_title)
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.rsc_consent_review_alert_title)
                 .setMessage(confirmationDialogBody)
                 .setCancelable(false)
-                .setPositiveButton(R.string.agree, (dialog, which) -> {
+                .setPositiveButton(R.string.rsc_agree, (dialog, which) -> {
                     stepResult.setResult(true);
                     callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, stepResult);
                 })
-                .setNegativeButton(R.string.consent_review_cancel, (dialog, which) -> {
+                .setNegativeButton(R.string.rsc_consent_review_cancel, (dialog, which) -> {
                     // Gives them a chance to read it again
                 })
                 .show();

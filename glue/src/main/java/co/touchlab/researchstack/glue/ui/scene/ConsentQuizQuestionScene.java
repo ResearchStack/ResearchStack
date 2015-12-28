@@ -21,6 +21,8 @@ import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
 
+// No longer used, replaced by SurveyScene
+@Deprecated
 public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
 {
 
@@ -146,7 +148,7 @@ public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
                                 SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
             answerExplanation.setText(explanation);
 
-            setNextButtonText(R.string.next);
+            setNextButtonText(R.string.rsc_next);
         }
         else
         {

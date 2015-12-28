@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/clear"
+        android:text="@string/rsc_consent_signature_clear"
         android:padding="16dp"
         android:gravity="center"
         android:minWidth="124dp"

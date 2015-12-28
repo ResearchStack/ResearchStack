@@ -11,17 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DecimalAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.model.ConsentDocument;
@@ -41,8 +42,8 @@ import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
-import co.touchlab.researchstack.core.ui.scene.FormScene;
 import co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene;
+import co.touchlab.researchstack.core.ui.scene.FormScene;
 
 public class MainActivity extends PassCodeActivity
 {
@@ -181,7 +182,7 @@ public class MainActivity extends PassCodeActivity
     {
         ConsentDocument document = new ConsentDocument();
         document.setTitle("Demo Consent");
-        document.setSignaturePageTitle(R.string.consent);
+        document.setSignaturePageTitle(R.string.rsc_consent);
 
         // Create consent visual sections
         ConsentSection section1 = new ConsentSection(ConsentSection.Type.DataGathering);
@@ -192,7 +193,7 @@ public class MainActivity extends PassCodeActivity
         // ...add more sections as needed, then create a visual consent step
         ConsentVisualStep visualStep = new ConsentVisualStep(VISUAL_CONSENT_IDENTIFIER);
         visualStep.setSection(section1);
-        visualStep.setNextButtonString(getString(R.string.next));
+        visualStep.setNextButtonString(getString(R.string.rsc_next));
 
         // Create consent signature object and set what info is required
         ConsentSignature signature = new ConsentSignature();
@@ -201,10 +202,10 @@ public class MainActivity extends PassCodeActivity
 
         // Create our HTML to show the user and have them accept or decline.
         StringBuilder docBuilder = new StringBuilder("</br><div style=\"padding: 10px 10px 10px 10px;\" class='header'>");
-        String title = getString(R.string.consent_review_title);
+        String title = getString(R.string.rsc_consent_review_title);
         docBuilder.append(String.format(
                 "<h1 style=\"text-align: center; font-family:sans-serif-light;\">%1$s</h1>", title));
-        String detail =  getString(R.string.consent_review_instruction);
+        String detail =  getString(R.string.rsc_consent_review_instruction);
         docBuilder.append(String.format("<p style=\"text-align: center\">%1$s</p>", detail));
         docBuilder.append("</div></br>");
         docBuilder.append("<div><h2> HTML Consent Doc goes here </h2></div>");
@@ -212,11 +213,11 @@ public class MainActivity extends PassCodeActivity
         // Create the Consent doc step, pass in our HTML doc
         ConsentReviewDocumentStep documentStep = new ConsentReviewDocumentStep(CONSENT_DOC);
         documentStep.setConsentHTML(docBuilder.toString());
-        documentStep.setConfirmMessage(getString(R.string.consent_review_reason));
+        documentStep.setConfirmMessage(getString(R.string.rsc_consent_review_reason));
 
         // Create Consent form step, to get users first & last name
         FormStep formStep = new FormStep(SIGNATURE_FORM_STEP, "Form Title", "Form step description");
-        formStep.setSceneTitle(R.string.consent);
+        formStep.setSceneTitle(R.string.rsc_consent);
 
         TextAnswerFormat format = new TextAnswerFormat();
         format.setIsMultipleLines(false);
@@ -227,8 +228,8 @@ public class MainActivity extends PassCodeActivity
 
         // Create Consent signature step, user can sign their name
         ConsentSignatureStep signatureStep = new ConsentSignatureStep(SIGNATURE);
-        signatureStep.setTitle(getString(R.string.consent_signature_title));
-        signatureStep.setText(getString(R.string.consent_signature_instruction));
+        signatureStep.setTitle(getString(R.string.rsc_consent_signature_title));
+        signatureStep.setText(getString(R.string.rsc_consent_signature_instruction));
         signatureStep.setSignatureDateFormat(signature.getSignatureDateFormatString());
         signatureStep.setOptional(false);
         signatureStep.setSceneClass(ConsentReviewSignatureScene.class);
@@ -296,7 +297,8 @@ public class MainActivity extends PassCodeActivity
                 FORM_GENDER,
                 FORM_MULTI_CHOICE,
                 FORM_DATE_OF_BIRTH,
-                NUTRITION
+                NUTRITION,
+                MULTI_STEP
         };
 
         String results = "";
@@ -354,10 +356,8 @@ public class MainActivity extends PassCodeActivity
                 multiStep);
 
         // Create a task view controller using the task and set a delegate.
-        Intent intent = ViewTaskActivity.newIntent(this,
-                task);
-        startActivityForResult(intent,
-                REQUEST_SURVEY);
+        Intent intent = ViewTaskActivity.newIntent(this, task);
+        startActivityForResult(intent, REQUEST_SURVEY);
     }
 
     @NonNull
@@ -399,39 +399,33 @@ public class MainActivity extends PassCodeActivity
 
     private void processSurveyResult(TaskResult result)
     {
+        StepResult<FormResult> formStep = result.getStepResult(FORM_STEP);
 
-        String name = (String) result.getStepResult(NAME)
-                .getResult();
-        saveString(SURVEY_PATH + NAME,
-                name);
+        String formName = (String) formStep.getResultForIdentifier(FORM_NAME).getAnswer();
+        saveString(SURVEY_PATH + FORM_NAME, formName);
 
-        String date = (String) result.getStepResult(DATE)
-                .getResult();
-        saveString(SURVEY_PATH + DATE,
-                date);
+        Integer formAge = (Integer) formStep.getResultForIdentifier(FORM_AGE).getAnswer();
+        saveString(SURVEY_PATH + FORM_AGE, String.valueOf(formAge));
 
-        Integer nutrition = (Integer) result.getStepResult(NUTRITION)
-                .getResult();
+        String date = (String) result.getStepResult(DATE).getResult();
+        saveString(SURVEY_PATH + DATE, date);
+
+        Integer gender = (Integer) formStep.getResultForIdentifier(FORM_GENDER).getAnswer();
+        saveString(SURVEY_PATH + FORM_GENDER, gender == 0 ? "Male" : "Female");
+
+        Integer[] multiChoice = (Integer[]) formStep.getResultForIdentifier(
+                FORM_MULTI_CHOICE).getAnswer();
+        saveString(SURVEY_PATH + FORM_MULTI_CHOICE, Arrays.toString(multiChoice));
+
+        Date dateofBirth = (Date) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH).getAnswer();
+        saveString(SURVEY_PATH + FORM_DATE_OF_BIRTH, dateofBirth.toString());
+
+        Integer nutrition = (Integer) result.getStepResult(NUTRITION).getResult();
         String nutritionString = nutrition == 0 ? "No" : "Yes";
-        saveString(SURVEY_PATH + NUTRITION,
-                nutritionString);
+        saveString(SURVEY_PATH + NUTRITION, nutritionString);
 
-//        StepResult<FormResult> formStep = result.getStepResult(FORM_STEP);
-//
-//        String formName = (String) formStep.getResultForIdentifier(FORM_NAME).getAnswer();
-//        saveString(SURVEY_PATH + FORM_NAME, formName);
-//
-//        Integer formAge = (Integer) formStep.getResultForIdentifier(FORM_AGE).getAnswer();
-//        saveString(SURVEY_PATH + FORM_AGE, String.valueOf(formAge));
-//
-//        Integer gender = (Integer) formStep.getResultForIdentifier(FORM_GENDER).getAnswer();
-//        saveString(SURVEY_PATH + FORM_GENDER, gender == 0 ? "Male" : "Female");
-//
-//        Integer[] multiChoice = (Integer[]) formStep.getResultForIdentifier(FORM_MULTI_CHOICE).getAnswer();
-//        saveString(SURVEY_PATH + FORM_MULTI_CHOICE, String.valueOf(multiChoice));
-//
-//        Date date = (Date) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH).getAnswer();
-//        saveString(SURVEY_PATH + FORM_DATE_OF_BIRTH, date.toString());
+        Object[] multiStep = (Object[]) result.getStepResult(MULTI_STEP).getResult();
+        saveString(SURVEY_PATH + MULTI_STEP, Arrays.toString(multiStep));
 
         AppPrefs prefs = AppPrefs.getInstance(this);
         prefs.setHasSurveyed(true);
@@ -456,10 +450,8 @@ public class MainActivity extends PassCodeActivity
     private void saveString(String path, String string)
     {
         string = string == null ? "" : string;
-        StorageManager
-                .getFileAccess()
-                .writeString(this,
-                        path,
-                        string);
+        StorageManager.getFileAccess().writeString(this,
+                path,
+                string);
     }
 }

@@ -39,17 +39,17 @@ public class ConsentQuizEvaluationScene extends SceneImpl<Boolean>
                     getContext(), step.getQuestionProperties().incorrectIcon);
 
             setImage(iconResId);
-            setTitle(R.string.quiz_evaluation_try_again);
+            setTitle(R.string.rsc_quiz_evaluation_try_again);
 
             if(!step.isOverMaxAttempts())
             {
                 setSummary(step.getQuestionProperties().quizFailure1Text);
-                setNextButtonText(R.string.quiz_evaluation_retake);
+                setNextButtonText(R.string.rsc_quiz_evaluation_retake);
             }
             else
             {
                 setSummary(step.getQuestionProperties().quizFailure2Text);
-                setNextButtonText(R.string.quiz_evaluation_review_consent);
+                setNextButtonText(R.string.rsc_quiz_evaluation_review_consent);
             }
         }
 
@@ -60,7 +60,7 @@ public class ConsentQuizEvaluationScene extends SceneImpl<Boolean>
                     getContext(), step.getQuestionProperties().correctIcon);
 
             setImage(iconResId);
-            setTitle(R.string.quiz_evaluation_great_job);
+            setTitle(R.string.rsc_quiz_evaluation_great_job);
 
             if(step.getIncorrect() == 0)
             {
@@ -71,7 +71,7 @@ public class ConsentQuizEvaluationScene extends SceneImpl<Boolean>
                 setSummary(step.getQuestionProperties().quizPassedText);
             }
 
-            setNextButtonText(R.string.next);
+            setNextButtonText(R.string.rsc_next);
         }
     }
 

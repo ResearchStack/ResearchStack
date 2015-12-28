@@ -27,7 +27,7 @@ public class ConsentQuizEvaluationStep extends Step
     @Override
     public int getSceneTitle()
     {
-        return R.string.quiz_evaluation;
+        return R.string.rsc_quiz_evaluation;
     }
 
     public void setAttempt(int attempt)

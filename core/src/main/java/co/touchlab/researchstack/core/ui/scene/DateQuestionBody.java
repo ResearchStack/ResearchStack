@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
@@ -21,7 +22,7 @@ import co.touchlab.researchstack.core.utils.FormatUtils;
 public class DateQuestionBody implements StepBody
 {
     private StepResult<String> stepResult;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat(FormatUtils.DATE_FORMAT_ISO_8601);
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(FormatUtils.DATE_FORMAT_ISO_8601, Locale.getDefault());
 
     public DateQuestionBody()
     {
