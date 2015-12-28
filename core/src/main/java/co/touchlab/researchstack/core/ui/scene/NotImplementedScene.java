@@ -31,6 +31,7 @@ public class NotImplementedScene extends TextView implements Scene
     }
 
     @Override
+    @SuppressWarnings("all")
     public void initialize(Step step, StepResult result)
     {
         setText("Not Implemented: " + step.getIdentifier());
