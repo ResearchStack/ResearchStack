@@ -1,11 +1,13 @@
 package co.touchlab.researchstack.core.ui.scene;
 
+import android.support.annotation.Nullable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
@@ -16,8 +18,9 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 
 public class TextQuestionBody implements StepBody
 {
-    private QuestionStep       step;
+    private QuestionStep step;
     private StepResult<String> stepResult;
+    private TextAnswerFormat format;
 
     public TextQuestionBody()
     {
@@ -35,58 +38,93 @@ public class TextQuestionBody implements StepBody
     }
 
     @Override
-    public boolean isAnswerValid()
+    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
     {
-        TextAnswerFormat answerFormat = (TextAnswerFormat) step.getAnswerFormat();
-        String result = stepResult.getResult();
-        return answerFormat.isAnswerValidWithString(result);
+        EditText editText = (EditText) inflater.inflate(R.layout.item_edit_text,
+                parent,
+                false);
+
+        setUpEditText(result,
+                identifier,
+                editText,
+                step);
+
+        return editText;
     }
 
-    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, StepResult result)
+    @Override
+    public View initializeCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    {
+        View formItemView = inflater.inflate(R.layout.scene_form_item_editable,
+                parent,
+                false);
+
+        TextView label = (TextView) formItemView.findViewById(R.id.text);
+
+        label.setText(step.getTitle());
+
+        EditText editText = (EditText) formItemView.findViewById(R.id.value);
+
+        setUpEditText(result,
+                identifier,
+                editText,
+                step);
+
+        return formItemView;
+    }
+
+    private void setUpEditText(@Nullable StepResult result, @Nullable String identifier, EditText editText, QuestionStep step)
     {
         if (result == null)
         {
-            result = createStepResult(StepResult.DEFAULT_KEY);
+            result = createStepResult(identifier);
         }
 
+        // TODO do we need both Step and AnswerFormat?
         this.step = step;
         stepResult = (StepResult<String>) result;
+        format = (TextAnswerFormat) step.getAnswerFormat();
 
-        TextAnswerFormat answerFormat = (TextAnswerFormat) step.getAnswerFormat();
-
-        EditText editText = (EditText) inflater.inflate(R.layout.item_edit_text, parent, false);
-        editText.setSingleLine(! answerFormat.isMultipleLines());
+        editText.setSingleLine(!format.isMultipleLines());
 
         InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(
-                answerFormat.getMaximumLength());
-        InputFilter filters[] = insertFilter(editText.getFilters(), maxLengthFilter);
+                format.getMaximumLength());
+        InputFilter filters[] = insertFilter(editText.getFilters(),
+                maxLengthFilter);
         editText.setFilters(filters);
 
-        String stringResult = (String) result.getResult();
+        String stringResult = stepResult.getResult();
         if (!TextUtils.isEmpty(stringResult))
         {
             editText.setText(stringResult);
         }
 
-        RxTextView.textChanges(editText).subscribe(s -> {
-            stepResult.setResult(s.toString());
-        });
+        RxTextView.textChanges(editText)
+                .subscribe(s -> {
+                    stepResult.setResult(s.toString());
+                });
+    }
 
-        return editText;
+    @Override
+    public boolean isAnswerValid()
+    {
+        String result = stepResult.getResult();
+        return format.isAnswerValidWithString(result);
     }
 
     private InputFilter[] insertFilter(InputFilter[] filters, InputFilter filter)
     {
-        if(filters == null || filters.length == 0)
+        if (filters == null || filters.length == 0)
         {
-            return new InputFilter[] {filter};
+            return new InputFilter[]{filter};
         }
         else
         {
             // Overwrite value if the filter to be inserted already exists in the filters array
-            for(int i = 0, size = filters.length; i < size; i++)
+            for (int i = 0, size = filters.length; i < size; i++)
             {
-                if(filters[i].getClass().isInstance(filter))
+                if (filters[i].getClass()
+                        .isInstance(filter))
                 {
                     filters[i] = filter;
                     return filters;
@@ -97,7 +135,11 @@ public class TextQuestionBody implements StepBody
             // filter at the end of the array.
             int newSize = filters.length + 1;
             InputFilter newFilters[] = new InputFilter[newSize];
-            System.arraycopy(filters, 0, newFilters, 0, filters.length);
+            System.arraycopy(filters,
+                    0,
+                    newFilters,
+                    0,
+                    filters.length);
             newFilters[newSize - 1] = filter;
 
             return newFilters;

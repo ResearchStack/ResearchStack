@@ -116,7 +116,8 @@ public class SurveyScene extends RelativeLayout implements Scene
         View body = stepBody.initialize(inflater,
                 this,
                 step,
-                stepResult);
+                stepResult,
+                StepResult.DEFAULT_KEY);
         if(body != null)
         {
             View oldView = container.findViewById(R.id.scene_body);

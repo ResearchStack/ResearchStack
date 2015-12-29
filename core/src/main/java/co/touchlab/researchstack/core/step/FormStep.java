@@ -1,43 +1,35 @@
 package co.touchlab.researchstack.core.step;
 import java.util.List;
 
-import co.touchlab.researchstack.core.ui.scene.FormScene;
+import co.touchlab.researchstack.core.answerformat.FormAnswerFormat;
+import co.touchlab.researchstack.core.ui.scene.FormBody;
 
 
-public class FormStep extends Step
+public class FormStep extends QuestionStep
 {
-    private List<FormScene.FormItem> formItems;
-
-    public FormStep(String identifier)
-    {
-        super(identifier);
-    }
-
-    public FormStep(String identifier, String title)
-    {
-        super(identifier,
-                title);
-    }
+    private List<QuestionStep> formSteps;
 
     public FormStep(String identifier, String title, String text)
     {
-        super(identifier, title);
+        super(identifier,
+                title,
+                new FormAnswerFormat());
         setText(text);
     }
 
-    public void setFormItems(List<FormScene.FormItem> formItems)
+    public void setFormSteps(List<QuestionStep> formSteps)
     {
-        this.formItems = formItems;
+        this.formSteps = formSteps;
     }
 
-    public List<FormScene.FormItem> getFormItems()
+    public List<QuestionStep> getFormSteps()
     {
-        return formItems;
+        return formSteps;
     }
 
     @Override
     public Class getSceneClass()
     {
-        return FormScene.class;
+        return FormBody.class;
     }
 }

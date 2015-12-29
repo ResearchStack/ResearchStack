@@ -23,6 +23,7 @@ import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DecimalAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.UnknownAnswerFormat;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.model.ConsentDocument;
@@ -43,7 +44,7 @@ import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene;
-import co.touchlab.researchstack.core.ui.scene.FormScene;
+import co.touchlab.researchstack.core.ui.scene.FormBody;
 
 public class MainActivity extends PassCodeActivity
 {
@@ -222,9 +223,8 @@ public class MainActivity extends PassCodeActivity
         TextAnswerFormat format = new TextAnswerFormat();
         format.setIsMultipleLines(false);
 
-        FormScene.FormItem fullName = new FormScene.FormItem(
-                NAME, "Full name", format, "Required", false);
-        formStep.setFormItems(Collections.singletonList(fullName));
+        QuestionStep fullName = new QuestionStep(NAME, "Full name", format);
+        formStep.setFormSteps(Collections.singletonList(fullName));
 
         // Create Consent signature step, user can sign their name
         ConsentSignatureStep signatureStep = new ConsentSignatureStep(SIGNATURE);
@@ -254,8 +254,8 @@ public class MainActivity extends PassCodeActivity
 
         if (consented)
         {
-            String fullName = ((FormResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
-                    .getResultForIdentifier(NAME)).getAnswer();
+            String fullName = ((StepResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
+                    .getResultForIdentifier(NAME)).getResult();
 
             String signatureBase64 = (String) result.getStepResult(SIGNATURE)
                     .getResultForIdentifier(ConsentReviewSignatureScene.KEY_SIGNATURE);
@@ -327,7 +327,7 @@ public class MainActivity extends PassCodeActivity
         DecimalAnswerFormat decimalAnswerFormat = new DecimalAnswerFormat(0f, 1f);
         QuestionStep decimalStep = new QuestionStep(DECIMAL, "Decimal step", decimalAnswerFormat);
 
-//        FormStep formStep = createFormStep();
+        FormStep formStep = createFormStep();
 
         // Create a Boolean step to include in the task.
         QuestionStep booleanStep = new QuestionStep(NUTRITION);
@@ -351,7 +351,7 @@ public class MainActivity extends PassCodeActivity
                 ageStep,
                 dateStep,
                 decimalStep,
-//                formStep,
+                formStep,
                 booleanStep,
                 multiStep);
 
@@ -364,60 +364,60 @@ public class MainActivity extends PassCodeActivity
     private FormStep createFormStep()
     {
         FormStep formStep = new FormStep(FORM_STEP, "Form", "Form groups multi-entry in one page");
-        ArrayList<FormScene.FormItem> formItems = new ArrayList<>();
+        ArrayList<QuestionStep> formItems = new ArrayList<>();
 
-        FormScene.FormItem basicInfoHeader = new FormScene.FormItem(BASIC_INFO_HEADER, "Basic Information", null, null, true);
+        QuestionStep basicInfoHeader = new QuestionStep(BASIC_INFO_HEADER, "Basic Information", new UnknownAnswerFormat());
         formItems.add(basicInfoHeader);
 
-        FormScene.FormItem nameItem = new FormScene.FormItem(FORM_NAME, "Name", new TextAnswerFormat(), "enter name", false);
+        QuestionStep nameItem = new QuestionStep(FORM_NAME, "Name", new TextAnswerFormat());
         formItems.add(nameItem);
 
-        FormScene.FormItem ageItem = new FormScene.FormItem(FORM_AGE, "Age", new IntegerAnswerFormat(90, 18), "age placeholder", false);
+        QuestionStep ageItem = new QuestionStep(FORM_AGE, "Age", new IntegerAnswerFormat(90, 18));
         formItems.add(ageItem);
 
         AnswerFormat genderFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
                 new Choice<>("Male", 0),
                 new Choice<>("Female", 1));
-        FormScene.FormItem genderFormItem = new FormScene.FormItem(FORM_GENDER, "Gender", genderFormat, "Gender", false);
+        QuestionStep genderFormItem = new QuestionStep(FORM_GENDER, "Gender", genderFormat);
         formItems.add(genderFormItem);
 
         AnswerFormat multiFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.MultipleChoice,
                 new Choice<>("Zero", 0),
                 new Choice<>("One", 1),
                 new Choice<>("Two", 2));
-        FormScene.FormItem multiFormItem = new FormScene.FormItem(FORM_MULTI_CHOICE, "Test Multi", multiFormat, "Choose", false);
+        QuestionStep multiFormItem = new QuestionStep(FORM_MULTI_CHOICE, "Test Multi", multiFormat);
         formItems.add(multiFormItem);
 
         AnswerFormat dateOfBirthFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
-        FormScene.FormItem dateOfBirthFormItem = new FormScene.FormItem(FORM_DATE_OF_BIRTH, "Birthdate", dateOfBirthFormat, "date of birth", false);
+        QuestionStep dateOfBirthFormItem = new QuestionStep(FORM_DATE_OF_BIRTH, "Birthdate", dateOfBirthFormat);
         formItems.add(dateOfBirthFormItem);
 
         // ... And so on, adding additional items
-        formStep.setFormItems(formItems);
+        formStep.setFormSteps(formItems);
         return formStep;
     }
 
     private void processSurveyResult(TaskResult result)
     {
-        StepResult<FormResult> formStep = result.getStepResult(FORM_STEP);
+        StepResult<StepResult> formStep = result.getStepResult(FORM_STEP);
 
-        String formName = (String) formStep.getResultForIdentifier(FORM_NAME).getAnswer();
+        String formName = (String) formStep.getResultForIdentifier(FORM_NAME).getResult();
         saveString(SURVEY_PATH + FORM_NAME, formName);
 
-        Integer formAge = (Integer) formStep.getResultForIdentifier(FORM_AGE).getAnswer();
+        Integer formAge = (Integer) formStep.getResultForIdentifier(FORM_AGE).getResult();
         saveString(SURVEY_PATH + FORM_AGE, String.valueOf(formAge));
 
         String date = (String) result.getStepResult(DATE).getResult();
         saveString(SURVEY_PATH + DATE, date);
 
-        Integer gender = (Integer) formStep.getResultForIdentifier(FORM_GENDER).getAnswer();
+        Integer gender = (Integer) formStep.getResultForIdentifier(FORM_GENDER).getResult();
         saveString(SURVEY_PATH + FORM_GENDER, gender == 0 ? "Male" : "Female");
 
-        Integer[] multiChoice = (Integer[]) formStep.getResultForIdentifier(
-                FORM_MULTI_CHOICE).getAnswer();
+        Object[] multiChoice = (Object[]) formStep.getResultForIdentifier(
+                FORM_MULTI_CHOICE).getResult();
         saveString(SURVEY_PATH + FORM_MULTI_CHOICE, Arrays.toString(multiChoice));
 
-        Date dateofBirth = (Date) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH).getAnswer();
+        String dateofBirth = (String) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH).getResult();
         saveString(SURVEY_PATH + FORM_DATE_OF_BIRTH, dateofBirth.toString());
 
         Integer nutrition = (Integer) result.getStepResult(NUTRITION).getResult();

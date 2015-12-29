@@ -1,10 +1,15 @@
 package co.touchlab.researchstack.core.ui.scene;
 
+import android.app.AlertDialog;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,15 +28,16 @@ public class MultiChoiceQuestionBody<T> implements StepBody
     private StepResult<T[]> stepResult;
 
     private RadioGroup radioGroup;
+    private ChoiceAnswerFormat format;
+    private Choice<T>[] choices;
 
     @Override
-    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, StepResult result)
+    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
     {
-
         results = new ArrayList<>();
         if (result == null)
         {
-            result = createStepResult(step.getIdentifier());
+            result = createStepResult(identifier);
         }
         else
         {
@@ -42,12 +48,11 @@ public class MultiChoiceQuestionBody<T> implements StepBody
             }
         }
         stepResult = result;
+        format = (ChoiceAnswerFormat) step.getAnswerFormat();
+        choices = format.getChoices();
 
         // TODO inflate this?
         radioGroup = new RadioGroup(inflater.getContext());
-
-        ChoiceAnswerFormat answerFormat = (ChoiceAnswerFormat) step.getAnswerFormat();
-        final Choice<T>[] choices = answerFormat.getChoices();
 
         for (int i = 0; i < choices.length; i++)
         {
@@ -87,6 +92,70 @@ public class MultiChoiceQuestionBody<T> implements StepBody
         return radioGroup;
     }
 
+    @Override
+    public View initializeCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    {
+        View formItemView = inflater.inflate(R.layout.scene_form_item,
+                parent,
+                false);
+
+        TextView label = (TextView) formItemView.findViewById(R.id.text);
+
+        label.setText(step.getTitle());
+
+        TextView textView = (TextView) formItemView.findViewById(R.id.value);
+
+        if (result == null)
+        {
+            result = createStepResult(identifier);
+        }
+
+        stepResult = (StepResult<T[]>) result;
+        format = (ChoiceAnswerFormat) step.getAnswerFormat();
+        choices = format.getChoices();
+
+        if (stepResult.getResult() != null)
+        {
+            // TODO what should placeholder be?
+//            textView.setText(choiceText);
+        }
+
+        RxView.clicks(textView)
+                .subscribe(o -> {
+                    showDialog(textView, step.getTitle());
+                });
+
+        return formItemView;
+    }
+
+    private void showDialog(TextView textView, String title)
+    {
+        boolean[] checkedItems = new boolean[format.getChoices().length];
+        new AlertDialog.Builder(textView.getContext())
+                .setMultiChoiceItems(format.getTextChoiceNames(),
+                        checkedItems,
+                        (dialog, which, isChecked) -> {
+                            checkedItems[which] = isChecked;
+                        })
+                .setTitle(title)
+                .setPositiveButton(R.string.src_ok,
+                        (dialog, which) -> {
+                            ArrayList<Integer> checkedValues = new ArrayList<Integer>();
+                            for (int i = 0; i < checkedItems.length; i++)
+                            {
+                                if (checkedItems[i])
+                                {
+                                    checkedValues.add(i);
+                                }
+                            }
+                            stepResult.setResult((T[]) checkedValues.toArray());
+                            textView.setText("chosen");
+                        })
+                .setNegativeButton(R.string.src_cancel,
+                        null)
+                .show();
+    }
+
     private StepResult<T[]> createStepResult(String identifier)
     {
         return new StepResult<>(identifier);
@@ -101,6 +170,7 @@ public class MultiChoiceQuestionBody<T> implements StepBody
     @Override
     public boolean isAnswerValid()
     {
+        // TODO revisit validation here
         return !getStepResult().isEmpty();
     }
 }

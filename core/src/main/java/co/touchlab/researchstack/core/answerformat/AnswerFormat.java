@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import co.touchlab.researchstack.core.dev.DevUtils;
 import co.touchlab.researchstack.core.ui.scene.DateQuestionBody;
+import co.touchlab.researchstack.core.ui.scene.FormBody;
 import co.touchlab.researchstack.core.ui.scene.IntegerQuestionBody;
 import co.touchlab.researchstack.core.ui.scene.MultiChoiceQuestionBody;
 import co.touchlab.researchstack.core.ui.scene.NotImplementedStepBody;
@@ -16,6 +17,7 @@ public abstract class AnswerFormat implements Serializable
     public enum QuestionType
     {
         None,
+        Form,
         Scale,
         SingleChoice,
         MultipleChoice,
@@ -44,6 +46,8 @@ public abstract class AnswerFormat implements Serializable
                     return IntegerQuestionBody.class;
                 case Date:
                     return DateQuestionBody.class;
+                case Form:
+                    return FormBody.class;
                 case Scale:
                 case Decimal:
                 case Boolean:

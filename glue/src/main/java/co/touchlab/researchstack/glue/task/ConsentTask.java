@@ -21,10 +21,11 @@ import co.touchlab.researchstack.core.step.ConsentSharingStep;
 import co.touchlab.researchstack.core.step.ConsentSignatureStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.FormStep;
+import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene;
-import co.touchlab.researchstack.core.ui.scene.FormScene;
+import co.touchlab.researchstack.core.ui.scene.FormBody;
 import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
@@ -217,9 +218,9 @@ public class ConsentTask extends OrderedTask
 
             String placeholder = ctx.getResources().getString(R.string.rsc_consent_name_placeholder);
             String nameText = ctx.getResources().getString(R.string.rsc_consent_name_full);
-            FormScene.FormItem fullName = new FormScene.FormItem(formStep.getIdentifier(), nameText,
-                                                                 format, placeholder, false);
-            formStep.setFormItems(Collections.singletonList(fullName));
+            QuestionStep fullName = new QuestionStep(formStep.getIdentifier(), nameText,
+                                                                 format);
+            formStep.setFormSteps(Collections.singletonList(fullName));
             addStep(formStep);
         }
 

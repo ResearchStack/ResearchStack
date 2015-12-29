@@ -14,11 +14,12 @@
         tools:text="Username"
         />
 
-    <TextView
+    <EditText
         android:id="@+id/value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
+        android:inputType="text"
         android:background="@android:color/transparent"
         android:minHeight="48dp"
         android:gravity="center_vertical|right"
