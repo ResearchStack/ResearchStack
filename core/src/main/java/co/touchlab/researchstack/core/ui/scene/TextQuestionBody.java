@@ -87,11 +87,13 @@ public class TextQuestionBody implements StepBody
 
         editText.setSingleLine(!format.isMultipleLines());
 
-        InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(
-                format.getMaximumLength());
-        InputFilter filters[] = insertFilter(editText.getFilters(),
-                maxLengthFilter);
-        editText.setFilters(filters);
+        if (format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH)
+        {
+            InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(
+                    format.getMaximumLength());
+            InputFilter filters[] = insertFilter(editText.getFilters(), maxLengthFilter);
+            editText.setFilters(filters);
+        }
 
         String stringResult = stepResult.getResult();
         if (!TextUtils.isEmpty(stringResult))
