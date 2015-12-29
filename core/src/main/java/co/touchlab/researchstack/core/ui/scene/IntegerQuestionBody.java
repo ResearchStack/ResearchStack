@@ -12,6 +12,7 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 
 public class IntegerQuestionBody implements StepBody
 {
+    private QuestionStep        step;
     private StepResult<Integer> stepResult;
 
     public IntegerQuestionBody()
@@ -29,14 +30,6 @@ public class IntegerQuestionBody implements StepBody
         return stepResult;
     }
 
-    @Override
-    public boolean isAnswerValid()
-    {
-        // TODO add validation
-        Integer result = stepResult.getResult();
-        return result != null;
-    }
-
     public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, StepResult result)
     {
         if (result == null)
@@ -44,6 +37,7 @@ public class IntegerQuestionBody implements StepBody
             result = createStepResult(StepResult.DEFAULT_KEY);
         }
 
+        this.step = step;
         stepResult = (StepResult<Integer>) result;
 
         NumberPicker numberPicker = (NumberPicker) inflater
@@ -65,5 +59,19 @@ public class IntegerQuestionBody implements StepBody
                 (picker, oldVal, newVal) -> stepResult.setResult(newVal));
 
         return numberPicker;
+    }
+
+    @Override
+    public boolean isAnswerValid()
+    {
+        Integer result = stepResult.getResult();
+
+        if (result == null)
+        {
+            return false;
+        }
+
+        IntegerAnswerFormat answerFormat = (IntegerAnswerFormat) step.getAnswerFormat();
+        return result >= answerFormat.getMinValue() && result <= answerFormat.getMaxValue();
     }
 }
