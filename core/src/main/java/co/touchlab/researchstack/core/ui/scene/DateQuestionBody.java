@@ -1,7 +1,5 @@
 package co.touchlab.researchstack.core.ui.scene;
-import android.content.Context;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +19,7 @@ import co.touchlab.researchstack.core.utils.FormatUtils;
 
 public class DateQuestionBody implements StepBody
 {
+    private QuestionStep step;
     private StepResult<String> stepResult;
     private SimpleDateFormat dateFormat = new SimpleDateFormat(FormatUtils.DATE_FORMAT_ISO_8601, Locale.getDefault());
 
@@ -41,6 +40,7 @@ public class DateQuestionBody implements StepBody
             result = createStepResult(StepResult.DEFAULT_KEY);
         }
 
+        this.step = step;
         stepResult = (StepResult<String>) result;
 
         DatePicker datePicker = (DatePicker) inflater.inflate(R.layout.item_date_picker, parent, false);
@@ -108,11 +108,26 @@ public class DateQuestionBody implements StepBody
         return stepResult;
     }
 
+    /**
+     * @return true if result date is >= min and <= max date set within the Step.AnswerFormat
+     */
     @Override
     public boolean isAnswerValid()
     {
-        // TODO validate actual date with answer format
-//        Date date = getDateFromString(stepResult.getResult());
-        return stepResult.getResult() != null;
+        // Make sure we have a result
+        String formattedDate = stepResult.getResult();
+        if (TextUtils.isEmpty(formattedDate))
+        {
+            return false;
+        }
+
+        DateAnswerFormat answerFormat = (DateAnswerFormat) step.getAnswerFormat();
+        Date minDate = answerFormat.getMinimumDate();
+        Date maxDate = answerFormat.getMaximumDate();
+
+        Date resultDate = getDateFromString(formattedDate);
+
+        return resultDate.getTime() >= minDate.getTime() &&
+                resultDate.getTime() <= maxDate.getTime();
     }
 }
