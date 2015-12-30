@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    >
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Title"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        tools:text="TITLE"
+        />
+
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        tools:text="TEXT"
+        />
 
     <co.touchlab.researchstack.core.ui.views.ConsentReviewSignatureView
         android:id="@+id/layout_consent_review_signature"
         android:layout_width="match_parent"
         android:layout_height="144dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/text"
+        android:layout_marginTop="32dp"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="10dp"
         android:paddingTop="10dp"
         />
 
@@ -20,12 +48,24 @@
         android:id="@+id/layout_consent_review_signature_clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rsc_consent_signature_clear"
-        android:padding="16dp"
+        android:layout_below="@+id/layout_consent_review_signature"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:minWidth="124dp"
+        android:padding="16dp"
+        android:text="@string/rsc_consent_signature_clear"
         />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="@string/rsc_next"
+        />
+
+</RelativeLayout>
 
 
