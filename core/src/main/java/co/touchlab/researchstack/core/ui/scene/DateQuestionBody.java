@@ -1,8 +1,6 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.app.DatePickerDialog;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +20,16 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.utils.FormatUtils;
+import co.touchlab.researchstack.core.utils.FormatHelper;
 
 public class DateQuestionBody implements StepBody
 {
     private QuestionStep step;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat(FormatUtils.DATE_FORMAT_ISO_8601,
-            Locale.getDefault());
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(FormatHelper.DATE_FORMAT_ISO_8601,
+                                                               Locale.getDefault());
     private DateAnswerFormat format;
-    private Calendar calendar;
-    private DatePicker datePicker;
+    private Calendar         calendar;
+    private DatePicker       datePicker;
     private String identifier = StepResult.DEFAULT_KEY;
 
     public DateQuestionBody()
@@ -41,9 +39,7 @@ public class DateQuestionBody implements StepBody
     @Override
     public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        datePicker = (DatePicker) inflater.inflate(R.layout.item_date_picker,
-                parent,
-                false);
+        datePicker = (DatePicker) inflater.inflate(R.layout.item_date_picker, parent, false);
 
         // TODO do we need both Step and AnswerFormat?
         this.step = step;
@@ -51,16 +47,14 @@ public class DateQuestionBody implements StepBody
 
         datePicker.setCalendarViewShown(false);
 
-        if (format.getMinimumDate() != null)
+        if(format.getMinimumDate() != null)
         {
-            datePicker.setMinDate(format.getMinimumDate()
-                    .getTime());
+            datePicker.setMinDate(format.getMinimumDate().getTime());
         }
 
-        if (format.getMaximumDate() != null)
+        if(format.getMaximumDate() != null)
         {
-            datePicker.setMaxDate(format.getMaximumDate()
-                    .getTime());
+            datePicker.setMaxDate(format.getMaximumDate().getTime());
         }
 
         initCalendar();
