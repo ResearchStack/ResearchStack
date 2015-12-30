@@ -369,7 +369,10 @@ public class MainActivity extends PassCodeActivity
         QuestionStep basicInfoHeader = new QuestionStep(BASIC_INFO_HEADER, "Basic Information", new UnknownAnswerFormat());
         formItems.add(basicInfoHeader);
 
-        QuestionStep nameItem = new QuestionStep(FORM_NAME, "Name", new TextAnswerFormat());
+        TextAnswerFormat format = new TextAnswerFormat();
+        format.setIsMultipleLines(false);
+        QuestionStep nameItem = new QuestionStep(FORM_NAME, "Name",
+                format);
         formItems.add(nameItem);
 
         QuestionStep ageItem = new QuestionStep(FORM_AGE, "Age", new IntegerAnswerFormat(90, 18));
