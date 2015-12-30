@@ -25,7 +25,7 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.callbacks.SignatureCallbacks;
 import co.touchlab.researchstack.core.ui.views.ConsentReviewSignatureView;
-import co.touchlab.researchstack.core.utils.FormatUtils;
+import co.touchlab.researchstack.core.utils.FormatHelper;
 
 public class ConsentSignatureScene extends RelativeLayout implements Scene
 {
@@ -116,7 +116,7 @@ public class ConsentSignatureScene extends RelativeLayout implements Scene
     {
         String format =  ((ConsentSignatureStep) step).getSignatureDateFormat();
         DateFormat signatureDateFormat = ! TextUtils.isEmpty(format) ?
-                new SimpleDateFormat(format) : FormatUtils.getSignatureFormat();
+                new SimpleDateFormat(format) : FormatHelper.getSignatureFormat();
         String formattedSignDate = signatureDateFormat.format(new Date());
 
         result.setResultForIdentifier(KEY_SIGNATURE, getBase64EncodedImage());

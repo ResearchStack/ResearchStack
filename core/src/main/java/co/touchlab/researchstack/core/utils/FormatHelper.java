@@ -1,53 +1,48 @@
 package co.touchlab.researchstack.core.utils;
 import java.text.DateFormat;
-import java.util.Date;
 
-public class FormatUtils
+public class FormatHelper
 {
-    public static final int NONE = -1;
+    public static final int NONE = - 1;
 
     // TODO find a better place for this, maybe only use it for Bridge
     public static final String DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
     /**
-     * Helper method to help format {@link Date} objects used in
-     * {@link co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene}
-     *
-     * @param date Date object to be formatted
-     * @return Returns a string representing the date passed in formatted as "M/d/yyyy"
+     * Helper method to return a formatter suitable for
+     * {@link co.touchlab.researchstack.core.ui.scene.ConsentSignatureScene}
+     * @return DateFormat that is a DateInstance (only formats y, m, and d attributes)
      */
-    public static String formatSignature(Date date)
+    public static DateFormat getSignatureFormat()
     {
-        return format(date, DateFormat.SHORT, NONE);
+        return getFormat(DateFormat.SHORT, NONE);
     }
 
     /**
-     * Formats a {@link Date} object based on style params. This method can return an empty
-     * string if both styles params have a value {@link #NONE}
+     * Returns a DateFormat object based on the dateStyle and timeStyle params
      *
-     * @param date Date object to be formatted
      * @param dateStyle style for the date defined by static constants within {@link DateFormat}
      * @param timeStyle style for the time defined by static constants within {@link DateFormat}
-     * @return formatted string, delimited by a space if date and time formats are not null
+     * @return DateFormat object
      */
-    public static String format(Date date, int dateStyle, int timeStyle)
+    public static DateFormat getFormat(int dateStyle, int timeStyle)
     {
         // Date & Time format
         if (isStyle(dateStyle) && isStyle(timeStyle))
         {
-            return DateFormat.getDateTimeInstance(dateStyle, timeStyle).format(date);
+            return DateFormat.getDateTimeInstance(dateStyle, timeStyle);
         }
 
         // Date format
         else if (isStyle(dateStyle) && !isStyle(timeStyle))
         {
-            return DateFormat.getDateInstance(dateStyle).format(date);
+            return DateFormat.getDateInstance(dateStyle);
         }
 
         // Time format
         else if (!isStyle(dateStyle) && isStyle(timeStyle))
         {
-            return DateFormat.getTimeInstance(timeStyle).format(date);
+            return DateFormat.getTimeInstance(timeStyle);
         }
 
         // Else crash since the styles are invalid
