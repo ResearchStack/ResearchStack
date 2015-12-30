@@ -6,15 +6,28 @@ import android.graphics.PorterDuff;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.model.ConsentSection;
+import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
+import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.utils.ResUtils;
 
-public class ConsentVisualScene extends SceneImpl
+public class ConsentVisualScene extends RelativeLayout implements Scene
 {
+
+    private SceneCallbacks callbacks;
+    private ConsentVisualStep step;
 
     public ConsentVisualScene(Context context)
     {
@@ -31,54 +44,81 @@ public class ConsentVisualScene extends SceneImpl
         super(context, attrs, defStyleAttr);
     }
 
+
     @Override
-    public void initializeScene()
+    public void initialize(Step step, StepResult result)
     {
-        super.initializeScene();
+        this.step = (ConsentVisualStep) step;
+        initializeScene();
+    }
 
-        ConsentVisualStep visualStep = (ConsentVisualStep) getStep();
-        ConsentSection data = visualStep.getSection();
+    private void initializeScene()
+    {
+        LayoutInflater.from(getContext()).inflate(R.layout.scene_consent_visual, this, true);
 
-        TypedValue typedValue = new TypedValue();
-        TypedArray a = getContext().obtainStyledAttributes(typedValue.data,
-                                                           new int[] {R.attr.colorAccent});
-        int accentColor = a.getColor(0, 0);
-        a.recycle();
+        ConsentSection data = step.getSection();
 
-        String title = TextUtils.isEmpty(data.getTitle()) ?
-                getResources().getString(data.getType().getTitleResId()) : data.getTitle();
-        setTitle(title);
-
-        if (!TextUtils.isEmpty(data.getSummary()))
-        {
-            setSummary(data.getSummary());
-        }
-
+        // Set Image
         String imageName = !TextUtils.isEmpty(data.getCustomImageName()) ? data.getCustomImageName() :
                 data.getType().getImageName();
         if (!TextUtils.isEmpty(imageName))
         {
-            int imageResId = getResources().getIdentifier(imageName, "drawable", getContext().getPackageName());
-            setImage(imageResId);
-            getImageView().setColorFilter(accentColor, PorterDuff.Mode.ADD);
+            TypedValue typedValue = new TypedValue();
+            TypedArray a = getContext().obtainStyledAttributes(typedValue.data,
+                                                               new int[] {R.attr.colorAccent});
+            int accentColor = a.getColor(0, 0);
+            a.recycle();
+
+            int imageResId = ResUtils.getDrawableResourceId(getContext(), imageName);
+            ImageView imageView = (ImageView) findViewById(R.id.image);
+            imageView.setImageResource(imageResId);
+            imageView.setColorFilter(accentColor, PorterDuff.Mode.ADD);
         }
 
-        setMoreInfo(data.getType().getMoreInfoResId(), v -> {
+        // Set Title
+        TextView titleView = (TextView) findViewById(R.id.title);
+        String title = TextUtils.isEmpty(data.getTitle()) ?
+                getResources().getString(data.getType().getTitleResId()) : data.getTitle();
+        titleView.setText(title);
+
+        // Set Summary
+        TextView summaryView = (TextView) findViewById(R.id.summary);
+        summaryView.setText(data.getSummary());
+
+        // Set more info
+        TextView moreInfoView = (TextView) findViewById(R.id.more_info);
+        moreInfoView.setText(data.getType().getMoreInfoResId());
+        RxView.clicks(moreInfoView).subscribe(v -> {
             String path = data.getHtmlContent();
             String webTitle = getResources().getString(R.string.rsc_consent_section_more_info);
             Intent webDoc = ViewWebDocumentActivity.newIntent(getContext(), webTitle, path);
             getContext().startActivity(webDoc);
         });
-        getMoreInfo().setTextColor(accentColor);
 
-        setSkip(false);
-
-        setNextButtonText(visualStep.getNextButtonString());
+        // Set Next
+        TextView next = (TextView) findViewById(R.id.next);
+        next.setText(step.getNextButtonString());
+        RxView.clicks(next).subscribe(v -> {
+            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
+        });
     }
 
-    @Deprecated
-    public void initialize(Step step, ConsentSection data)
+    @Override
+    public View getView()
     {
-        super.initialize(step);
+        return this;
+    }
+
+    @Override
+    public boolean isBackEventConsumed()
+    {
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, null);
+        return false;
+    }
+
+    @Override
+    public void setCallbacks(SceneCallbacks callbacks)
+    {
+        this.callbacks = callbacks;
     }
 }
