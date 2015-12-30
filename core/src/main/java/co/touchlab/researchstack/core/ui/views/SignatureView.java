@@ -26,11 +26,11 @@ import co.touchlab.researchstack.core.ui.callbacks.SignatureCallbacks;
 /**
  * Note: For save-state to work, the view MUST have an ID
  */
-public class ConsentReviewSignatureView extends View
+public class SignatureView extends View
 {
 
     private static final boolean DEBUG = false;
-    private static final String TAG = ConsentReviewSignatureView.class.getSimpleName();
+    private static final String  TAG   = SignatureView.class.getSimpleName();
 
     private SignatureCallbacks callbacks;
 
@@ -39,34 +39,34 @@ public class ConsentReviewSignatureView extends View
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private List<LinePathPoint> sigPoints = new ArrayList<>();
 
-    private Path sigPath = new Path();
-    private Paint sigPaint = new Paint();
-    private Paint hintPaint = new Paint();
-    private Rect drawBounds = new Rect();
+    private Path  sigPath    = new Path();
+    private Paint sigPaint   = new Paint();
+    private Paint hintPaint  = new Paint();
+    private Rect  drawBounds = new Rect();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Properties
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private String hintText;
-    private int guidelineMargin;
-    private int guidelineHeight;
-    private int hintTextColor;
-    private int guidelineColor;
+    private int    guidelineMargin;
+    private int    guidelineHeight;
+    private int    hintTextColor;
+    private int    guidelineColor;
 
-    public ConsentReviewSignatureView(Context context)
+    public SignatureView(Context context)
     {
         super(context);
         init(context, null, 0);
     }
 
-    public ConsentReviewSignatureView(Context context, AttributeSet attrs)
+    public SignatureView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init(context, attrs, 0);
     }
 
 
-    public ConsentReviewSignatureView(Context context, AttributeSet attrs, int defStyleAttr)
+    public SignatureView(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
         init(context, attrs, 0);
@@ -78,32 +78,32 @@ public class ConsentReviewSignatureView extends View
      */
     private void init(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ConsentReviewSignatureView,
-                                                      defStyleAttr,
-                                                      R.style.ConsentReviewSignatureView);
+        TypedArray a = context
+                .obtainStyledAttributes(attrs, R.styleable.SignatureView, defStyleAttr,
+                                        R.style.ConsentReviewSignatureView);
 
-        int signatureColor = a.getColor(R.styleable.ConsentReviewSignatureView_signatureColor, Color.BLACK);
+        int signatureColor = a.getColor(R.styleable.SignatureView_signatureColor, Color.BLACK);
 
         int defSignatureStroke = (int) (getResources().getDisplayMetrics().density * 1);
         int signatureStroke = a.getDimensionPixelSize(
-                R.styleable.ConsentReviewSignatureView_signatureStrokeSize, defSignatureStroke);
+                R.styleable.SignatureView_signatureStrokeSize, defSignatureStroke);
 
-        hintText = a.getString(R.styleable.ConsentReviewSignatureView_hintText);
+        hintText = a.getString(R.styleable.SignatureView_hintText);
 
-        hintTextColor = a.getColor(R.styleable.ConsentReviewSignatureView_hintTextColor,
+        hintTextColor = a.getColor(R.styleable.SignatureView_hintTextColor,
                                    Color.LTGRAY);
 
         int defHintTextSize = (int) (getResources().getDisplayMetrics().density * 14);
-        int hintTextSize = a.getDimensionPixelSize(R.styleable.ConsentReviewSignatureView_hintTextSize, defHintTextSize);
+        int hintTextSize = a.getDimensionPixelSize(R.styleable.SignatureView_hintTextSize, defHintTextSize);
 
-        guidelineColor = a.getColor(R.styleable.ConsentReviewSignatureView_guidelineColor,
+        guidelineColor = a.getColor(R.styleable.SignatureView_guidelineColor,
                                     hintTextColor);
 
         int defGuidelineMargin = (int) (getResources().getDisplayMetrics().density * 12);
-        guidelineMargin = a.getDimensionPixelSize(R.styleable.ConsentReviewSignatureView_guidelineMargin, defGuidelineMargin);
+        guidelineMargin = a.getDimensionPixelSize(R.styleable.SignatureView_guidelineMargin, defGuidelineMargin);
 
         int defGuidelineHeight = (int) (getResources().getDisplayMetrics().density * 1);
-        guidelineHeight = a.getDimensionPixelSize(R.styleable.ConsentReviewSignatureView_guidelineHeight, defGuidelineHeight);
+        guidelineHeight = a.getDimensionPixelSize(R.styleable.SignatureView_guidelineHeight, defGuidelineHeight);
 
         a.recycle();
 
@@ -170,7 +170,7 @@ public class ConsentReviewSignatureView extends View
 
                 if(sigPath.isEmpty())
                 {
-                    callbacks.onSignatureDrawn();
+                    callbacks.onSignatureStarted();
                 }
 
                 sigPath.moveTo(eX, eY);

@@ -24,7 +24,7 @@ import co.touchlab.researchstack.core.step.ConsentSignatureStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.callbacks.SignatureCallbacks;
-import co.touchlab.researchstack.core.ui.views.ConsentReviewSignatureView;
+import co.touchlab.researchstack.core.ui.views.SignatureView;
 import co.touchlab.researchstack.core.utils.FormatHelper;
 
 public class ConsentSignatureScene extends RelativeLayout implements Scene
@@ -32,10 +32,10 @@ public class ConsentSignatureScene extends RelativeLayout implements Scene
     public static final String KEY_SIGNATURE      = "ConsentSignatureScene.Signature";
     public static final String KEY_SIGNATURE_DATE = "ConsentSignatureScene.Signature.Date";
 
-    private ConsentReviewSignatureView signatureView;
-    private SceneCallbacks             callbacks;
-    private Step                       step;
-    private StepResult<String>         result;
+    private SignatureView      signatureView;
+    private SceneCallbacks     callbacks;
+    private Step               step;
+    private StepResult<String> result;
 
     public ConsentSignatureScene(Context context)
     {
@@ -56,7 +56,7 @@ public class ConsentSignatureScene extends RelativeLayout implements Scene
     public void initialize(Step step, StepResult result)
     {
         this.step = step;
-        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result ;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
 
         initializeScene();
     }
@@ -73,7 +73,7 @@ public class ConsentSignatureScene extends RelativeLayout implements Scene
 
         View clear = findViewById(R.id.layout_consent_review_signature_clear);
 
-        signatureView = (ConsentReviewSignatureView) findViewById(R.id.layout_consent_review_signature);
+        signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
         signatureView.setCallbacks(new SignatureCallbacks()
         {
             @Override

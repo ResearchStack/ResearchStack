@@ -30,7 +30,7 @@
         tools:text="TEXT"
         />
 
-    <co.touchlab.researchstack.core.ui.views.ConsentReviewSignatureView
+    <co.touchlab.researchstack.core.ui.views.SignatureView
         android:id="@+id/layout_consent_review_signature"
         android:layout_width="match_parent"
         android:layout_height="144dp"

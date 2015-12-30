@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="ConsentReviewSignatureView">
+    <declare-styleable name="SignatureView">
         <attr name="signatureColor" format="color"  />
         <attr name="signatureStrokeSize" format="dimension"  />
         <attr name="hintText" format="string"  />
