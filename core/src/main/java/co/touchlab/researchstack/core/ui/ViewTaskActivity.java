@@ -131,7 +131,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         // Change the title on the activity
         String title = task.getTitleForStep(this, step);
-        onStepTitleChanged(title);
+        setActionBarTitle(title);
 
         // Get result from the TaskResult, can be null
         StepResult result = taskResult.getStepResult(step.getIdentifier());
@@ -179,8 +179,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         taskRecord.result = gson.toJson(taskResult);
         StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
 
-        setResult(RESULT_OK,
-                resultIntent);
+        setResult(RESULT_OK, resultIntent);
         finish();
     }
 
@@ -264,8 +263,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         }
     }
 
-    @Override
-    public void onStepTitleChanged(String title)
+    public void setActionBarTitle(String title)
     {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)

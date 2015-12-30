@@ -8,8 +8,6 @@ public interface SceneCallbacks
     int ACTION_NONE = 0;
     int ACTION_NEXT = 1;
 
-    void onStepTitleChanged(String title);
-
     void onSaveStep(int action, Step step, StepResult result);
 
     @Deprecated void onCancelStep();
