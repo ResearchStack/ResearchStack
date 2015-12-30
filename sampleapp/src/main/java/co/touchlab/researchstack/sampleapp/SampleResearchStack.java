@@ -222,6 +222,6 @@ public class SampleResearchStack extends ResearchStack
     @Override
     public Class getInclusionCriteriaSceneClass()
     {
-        return SignUpInclusionCriteriaScene.class;
+        return SignUpInclusionCriteriaStepLayout.class;
     }
 }

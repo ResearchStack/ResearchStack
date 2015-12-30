@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.core.ui.scene;
+package co.touchlab.researchstack.core.ui.step.layout;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -23,23 +23,23 @@ import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.utils.ResUtils;
 
-public class ConsentVisualScene extends RelativeLayout implements Scene
+public class ConsentVisualStepLayout extends RelativeLayout implements StepLayout
 {
 
     private SceneCallbacks callbacks;
     private ConsentVisualStep step;
 
-    public ConsentVisualScene(Context context)
+    public ConsentVisualStepLayout(Context context)
     {
         super(context);
     }
 
-    public ConsentVisualScene(Context context, AttributeSet attrs)
+    public ConsentVisualStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public ConsentVisualScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public ConsentVisualStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }
@@ -104,7 +104,7 @@ public class ConsentVisualScene extends RelativeLayout implements Scene
     }
 
     @Override
-    public View getView()
+    public View getLayout()
     {
         return this;
     }

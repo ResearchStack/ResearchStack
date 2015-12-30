@@ -7,22 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 
-public abstract class AbstractSignUpInclusionCriteriaScene extends SceneImpl<Boolean>
+public abstract class AbstractSignUpInclusionCriteriaStepLayout extends StepLayoutImpl<Boolean>
 {
 
-    public AbstractSignUpInclusionCriteriaScene(Context context)
+    public AbstractSignUpInclusionCriteriaStepLayout(Context context)
     {
         super(context);
     }
 
-    public AbstractSignUpInclusionCriteriaScene(Context context, AttributeSet attrs)
+    public AbstractSignUpInclusionCriteriaStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public AbstractSignUpInclusionCriteriaScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public AbstractSignUpInclusionCriteriaStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

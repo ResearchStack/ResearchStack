@@ -1,6 +1,6 @@
 package co.touchlab.researchstack.core.step;
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.ui.scene.ConsentDocumentScene;
+import co.touchlab.researchstack.core.ui.step.layout.ConsentDocumentStepLayout;
 
 public class ConsentDocumentStep extends Step
 {
@@ -22,7 +22,7 @@ public class ConsentDocumentStep extends Step
     @Override
     public Class getSceneClass()
     {
-        return ConsentDocumentScene.class;
+        return ConsentDocumentStepLayout.class;
     }
 
     public void setConsentHTML(String html)

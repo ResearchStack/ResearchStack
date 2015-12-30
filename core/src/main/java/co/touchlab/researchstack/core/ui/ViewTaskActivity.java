@@ -26,8 +26,8 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
-import co.touchlab.researchstack.core.ui.scene.Scene;
-import co.touchlab.researchstack.core.ui.scene.SurveyScene;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.core.ui.step.layout.SurveyStepLayout;
 import co.touchlab.researchstack.core.ui.views.SceneSwitcher;
 import co.touchlab.researchstack.core.utils.FormatHelper;
 
@@ -121,13 +121,13 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult).getCurrent();
         int newStepPosition =  task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
-        Scene scene = getSceneForStep(step);
-        root.show(scene, newStepPosition >= currentStepPosition ? SceneSwitcher.SHIFT_LEFT :
+        StepLayout stepLayout = getSceneForStep(step);
+        root.show(stepLayout, newStepPosition >= currentStepPosition ? SceneSwitcher.SHIFT_LEFT :
                 SceneSwitcher.SHIFT_RIGHT);
         currentStep = step;
     }
 
-    protected Scene getSceneForStep(Step step)
+    protected StepLayout getSceneForStep(Step step)
     {
         // Change the title on the activity
         String title = task.getTitleForStep(this, step);
@@ -137,28 +137,28 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         StepResult result = taskResult.getStepResult(step.getIdentifier());
 
         // Return the Class & constructor
-        Scene scene = createSceneFromStep(step);
-        scene.initialize(step, result);
-        scene.setCallbacks(this);
+        StepLayout stepLayout = createSceneFromStep(step);
+        stepLayout.initialize(step, result);
+        stepLayout.setCallbacks(this);
 
-        return scene;
+        return stepLayout;
     }
 
     @NonNull
-    private Scene createSceneFromStep(Step step)
+    private StepLayout createSceneFromStep(Step step)
     {
         // TODO figure out how to best create scenes (maybe method on the Step)
         if (step instanceof QuestionStep)
         {
             LogExt.d(getClass(), "Making new SurveyStep");
-            return new SurveyScene(ViewTaskActivity.this);
+            return new SurveyStepLayout(ViewTaskActivity.this);
         }
 
         try
         {
             Class cls = step.getSceneClass();
             Constructor constructor = cls.getConstructor(Context.class);
-            return (Scene) constructor.newInstance(this);
+            return (StepLayout) constructor.newInstance(this);
         }
         catch(Exception e)
         {
@@ -214,8 +214,8 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 
     private void notifySceneOfBackPress()
     {
-        Scene currentScene = (Scene) findViewById(R.id.rsc_current_scene);
-        currentScene.isBackEventConsumed();
+        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsc_current_scene);
+        currentStepLayout.isBackEventConsumed();
     }
 
     @Override

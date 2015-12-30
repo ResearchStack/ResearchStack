@@ -14,10 +14,10 @@ import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 
 /**
- * TODO Extend from {@link SceneImpl} and use in {@link ViewWebDocumentActivity}
+ * TODO Extend from {@link StepLayoutImpl} and use in {@link ViewWebDocumentActivity}
  */
 public class StudyOverviewLayout extends FrameLayout
 {

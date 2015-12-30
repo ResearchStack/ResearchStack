@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.core.ui.scene;
+package co.touchlab.researchstack.core.ui.step.layout;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
@@ -22,7 +22,7 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
  * {@link #stepResult}
  * {@link #confirmationDialogBody}
  */
-public class ConsentDocumentScene extends RelativeLayout implements Scene
+public class ConsentDocumentStepLayout extends RelativeLayout implements StepLayout
 {
     private SceneCallbacks callbacks;
 
@@ -32,17 +32,17 @@ public class ConsentDocumentScene extends RelativeLayout implements Scene
     private ConsentDocumentStep step;
     private StepResult<Boolean> stepResult;
 
-    public ConsentDocumentScene(Context context)
+    public ConsentDocumentStepLayout(Context context)
     {
         super(context);
     }
 
-    public ConsentDocumentScene(Context context, AttributeSet attrs)
+    public ConsentDocumentStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public ConsentDocumentScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public ConsentDocumentStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }
@@ -95,7 +95,7 @@ public class ConsentDocumentScene extends RelativeLayout implements Scene
     }
 
     @Override
-    public View getView()
+    public View getLayout()
     {
         return this;
     }

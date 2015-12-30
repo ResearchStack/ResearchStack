@@ -1,7 +1,7 @@
 package co.touchlab.researchstack.glue.step;
 
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.ui.scene.SingleChoiceQuestionBody;
+import co.touchlab.researchstack.core.ui.step.body.SingleChoiceQuestionBody;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 

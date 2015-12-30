@@ -28,7 +28,7 @@ import android.widget.FrameLayout;
 import java.security.InvalidParameterException;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.ui.scene.Scene;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 
 /**
  * Base class for a {@link FrameLayout} container that will perform animations
@@ -93,11 +93,11 @@ public class SceneSwitcher extends FrameLayout
      * Adds a new scene to the view hierarchy. If a scene is currently showing, the direction
      * parameter is used to indicate which direction(x-axis) that the views should animate to.
      *
-     * @param scene the scene you want to switch to
+     * @param stepLayout the scene you want to switch to
      * @param direction the direction of the animation in the x direction. This values can either be
      *                  {@link SceneSwitcher#SHIFT_LEFT} or {@link SceneSwitcher#SHIFT_RIGHT}
      */
-    public void show(Scene scene, int direction)
+    public void show(StepLayout stepLayout, int direction)
     {
         // Force crash when invalid direction is passed in. The values of the constants are used
         // when calculating the x-traversal distance
@@ -118,9 +118,9 @@ public class SceneSwitcher extends FrameLayout
 
             // Add the new scene to the view stack & set the id as the current scene. Set the index
             // in the view hierarchy as the same as the current scene on-screen
-            LayoutParams lp = getLayoutParams(scene);
-            addView(scene.getView(), currentIndex, lp);
-            scene.getView().setId(R.id.rsc_current_scene);
+            LayoutParams lp = getLayoutParams(stepLayout);
+            addView(stepLayout.getLayout(), currentIndex, lp);
+            stepLayout.getLayout().setId(R.id.rsc_current_scene);
 
             // If the old scene is gone, we can go ahead and ignore the following animation code.
             // This will usually happen on start-up of the host (e.g. activity)
@@ -128,8 +128,8 @@ public class SceneSwitcher extends FrameLayout
             {
                 int newTranslationX = direction * getWidth();
 
-                scene.getView().setTranslationX(newTranslationX);
-                scene.getView().animate().setDuration(animationTime).setInterpolator(interpolator)
+                stepLayout.getLayout().setTranslationX(newTranslationX);
+                stepLayout.getLayout().animate().setDuration(animationTime).setInterpolator(interpolator)
                         .translationX(0);
 
                 currentScene.animate().setInterpolator(interpolator)
@@ -139,9 +139,9 @@ public class SceneSwitcher extends FrameLayout
         });
     }
 
-    private LayoutParams getLayoutParams(Scene scene)
+    private LayoutParams getLayoutParams(StepLayout stepLayout)
     {
-        LayoutParams lp = (LayoutParams) scene.getView().getLayoutParams();
+        LayoutParams lp = (LayoutParams) stepLayout.getLayout().getLayoutParams();
         if (lp == null) {
             lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         }

@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.core.ui.scene;
+package co.touchlab.researchstack.core.ui.step.layout;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -27,7 +27,7 @@ import co.touchlab.researchstack.core.ui.callbacks.SignatureCallbacks;
 import co.touchlab.researchstack.core.ui.views.SignatureView;
 import co.touchlab.researchstack.core.utils.FormatHelper;
 
-public class ConsentSignatureScene extends RelativeLayout implements Scene
+public class ConsentSignatureStepLayout extends RelativeLayout implements StepLayout
 {
     public static final String KEY_SIGNATURE      = "ConsentSignatureScene.Signature";
     public static final String KEY_SIGNATURE_DATE = "ConsentSignatureScene.Signature.Date";
@@ -37,17 +37,17 @@ public class ConsentSignatureScene extends RelativeLayout implements Scene
     private Step               step;
     private StepResult<String> result;
 
-    public ConsentSignatureScene(Context context)
+    public ConsentSignatureStepLayout(Context context)
     {
         super(context);
     }
 
-    public ConsentSignatureScene(Context context, AttributeSet attrs)
+    public ConsentSignatureStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public ConsentSignatureScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public ConsentSignatureStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }
@@ -124,7 +124,7 @@ public class ConsentSignatureScene extends RelativeLayout implements Scene
     }
 
     @Override
-    public View getView()
+    public View getLayout()
     {
         return this;
     }

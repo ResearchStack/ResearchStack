@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.core.ui.scene;
+package co.touchlab.researchstack.core.ui.step.body;
 
 import android.app.DatePickerDialog;
 import android.text.TextUtils;

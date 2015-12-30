@@ -1,15 +1,15 @@
-package co.touchlab.researchstack.core.ui.scene;
+package co.touchlab.researchstack.core.ui.step.layout;
 import android.view.View;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
-public interface Scene
+public interface StepLayout
 {
     void initialize(Step step, StepResult result);
 
-    View getView();
+    View getLayout();
 
     /**
      * Method allowing a scene to consume a back event.

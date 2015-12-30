@@ -16,14 +16,14 @@ import android.widget.Toast;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
 
 // No longer used, replaced by SurveyScene
 @Deprecated
-public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
+public class ConsentQuizQuestionStepLayout extends StepLayoutImpl<Boolean>
 {
 
     private ConsentQuizModel.QuestionProperties properties;
@@ -33,17 +33,17 @@ public class ConsentQuizQuestionScene extends SceneImpl<Boolean>
     private ImageView answerIcon;
     private RadioGroup radioGroup;
 
-    public ConsentQuizQuestionScene(Context context)
+    public ConsentQuizQuestionStepLayout(Context context)
     {
         super(context);
     }
 
-    public ConsentQuizQuestionScene(Context context, AttributeSet attrs)
+    public ConsentQuizQuestionStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public ConsentQuizQuestionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public ConsentQuizQuestionStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

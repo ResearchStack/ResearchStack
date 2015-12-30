@@ -6,23 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 
-public class SignUpIneligibleScene extends SceneImpl
+public class SignUpIneligibleStepLayout extends StepLayoutImpl
 {
 
-    public SignUpIneligibleScene(Context context)
+    public SignUpIneligibleStepLayout(Context context)
     {
         super(context);
     }
 
-    public SignUpIneligibleScene(Context context, AttributeSet attrs)
+    public SignUpIneligibleStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public SignUpIneligibleScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public SignUpIneligibleStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

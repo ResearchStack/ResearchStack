@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.core.ui.scene;
+package co.touchlab.researchstack.core.ui.step.layout;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
@@ -25,11 +25,12 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.step.body.StepBody;
 import rx.functions.Action1;
 
-public class SurveyScene extends RelativeLayout implements Scene
+public class SurveyStepLayout extends RelativeLayout implements StepLayout
 {
-    public static final String TAG = SurveyScene.class.getSimpleName();
+    public static final String TAG = SurveyStepLayout.class.getSimpleName();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Data used to initializeScene and return
@@ -54,18 +55,18 @@ public class SurveyScene extends RelativeLayout implements Scene
     private LinearLayout container;
     private StepBody stepBody;
 
-    public SurveyScene(Context context)
+    public SurveyStepLayout(Context context)
     {
         super(context);
     }
 
-    public SurveyScene(Context context, AttributeSet attrs)
+    public SurveyStepLayout(Context context, AttributeSet attrs)
     {
         super(context,
                 attrs);
     }
 
-    public SurveyScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public SurveyStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context,
                 attrs,
@@ -160,7 +161,7 @@ public class SurveyScene extends RelativeLayout implements Scene
 
         container = (LinearLayout) findViewById(R.id.content_container);
         container.getViewTreeObserver().addOnPreDrawListener(() -> {
-            int sceneHeight = SurveyScene.this.getHeight();
+            int sceneHeight = SurveyStepLayout.this.getHeight();
             int infoContainerHeight = container.getHeight();
 
             //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
@@ -253,7 +254,7 @@ public class SurveyScene extends RelativeLayout implements Scene
     }
 
     @Override
-    public View getView()
+    public View getLayout()
     {
         return this;
     }

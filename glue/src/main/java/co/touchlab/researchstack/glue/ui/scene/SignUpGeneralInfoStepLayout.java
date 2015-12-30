@@ -22,28 +22,28 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 
-public class SignUpGeneralInfoScene extends SceneImpl
+public class SignUpGeneralInfoStepLayout extends StepLayoutImpl
 {
     private Calendar birthdate;
     private AppCompatTextView birthdateTextView;
     private User user;
 
-    public SignUpGeneralInfoScene(Context context)
+    public SignUpGeneralInfoStepLayout(Context context)
     {
         super(context);
     }
 
-    public SignUpGeneralInfoScene(Context context, AttributeSet attrs)
+    public SignUpGeneralInfoStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public SignUpGeneralInfoScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public SignUpGeneralInfoStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

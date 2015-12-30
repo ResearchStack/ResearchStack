@@ -1,7 +1,7 @@
 package co.touchlab.researchstack.core.step;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.ui.scene.SingleChoiceQuestionBody;
+import co.touchlab.researchstack.core.ui.step.body.SingleChoiceQuestionBody;
 
 public class ConsentSharingStep extends QuestionStep
 {

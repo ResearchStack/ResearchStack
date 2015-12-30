@@ -1,9 +1,7 @@
-package co.touchlab.researchstack.core.ui.scene;
+package co.touchlab.researchstack.core.ui.step.body;
 
 import android.app.AlertDialog;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +10,8 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import co.touchlab.researchstack.core.R;

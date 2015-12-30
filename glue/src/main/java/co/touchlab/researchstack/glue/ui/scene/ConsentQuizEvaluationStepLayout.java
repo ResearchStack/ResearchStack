@@ -2,25 +2,25 @@ package co.touchlab.researchstack.glue.ui.scene;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.step.ConsentQuizEvaluationStep;
 
-public class ConsentQuizEvaluationScene extends SceneImpl<Boolean>
+public class ConsentQuizEvaluationStepLayout extends StepLayoutImpl<Boolean>
 {
 
-    public ConsentQuizEvaluationScene(Context context)
+    public ConsentQuizEvaluationStepLayout(Context context)
     {
         super(context);
     }
 
-    public ConsentQuizEvaluationScene(Context context, AttributeSet attrs)
+    public ConsentQuizEvaluationStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public ConsentQuizEvaluationScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public ConsentQuizEvaluationStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

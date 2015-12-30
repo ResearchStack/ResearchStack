@@ -1,6 +1,6 @@
 package co.touchlab.researchstack.core.step;
 import co.touchlab.researchstack.core.model.ConsentSection;
-import co.touchlab.researchstack.core.ui.scene.ConsentVisualScene;
+import co.touchlab.researchstack.core.ui.step.layout.ConsentVisualStepLayout;
 
 public class ConsentVisualStep extends Step
 {
@@ -21,7 +21,7 @@ public class ConsentVisualStep extends Step
     @Override
     public Class getSceneClass()
     {
-        return ConsentVisualScene.class;
+        return ConsentVisualStepLayout.class;
     }
 
     @Override

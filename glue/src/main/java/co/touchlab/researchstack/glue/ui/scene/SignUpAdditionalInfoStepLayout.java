@@ -9,27 +9,27 @@ import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.glue.ui.views.HeightPicker;
 
-public class SignUpAdditionalInfoScene extends SceneImpl
+public class SignUpAdditionalInfoStepLayout extends StepLayoutImpl
 {
     private User user;
 
-    public SignUpAdditionalInfoScene(Context context)
+    public SignUpAdditionalInfoStepLayout(Context context)
     {
         super(context);
     }
 
-    public SignUpAdditionalInfoScene(Context context, AttributeSet attrs)
+    public SignUpAdditionalInfoStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public SignUpAdditionalInfoScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public SignUpAdditionalInfoStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

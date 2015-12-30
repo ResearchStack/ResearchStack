@@ -3,7 +3,7 @@ package co.touchlab.researchstack.glue.step;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
-import co.touchlab.researchstack.glue.ui.scene.ConsentQuizEvaluationScene;
+import co.touchlab.researchstack.glue.ui.scene.ConsentQuizEvaluationStepLayout;
 
 public class ConsentQuizEvaluationStep extends Step
 {
@@ -21,7 +21,7 @@ public class ConsentQuizEvaluationStep extends Step
     @Override
     public Class getSceneClass()
     {
-        return ConsentQuizEvaluationScene.class;
+        return ConsentQuizEvaluationStepLayout.class;
     }
 
     @Override

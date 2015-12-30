@@ -9,27 +9,27 @@ import android.view.ViewGroup;
 import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 
-public class SignUpEligibleScene extends SceneImpl
+public class SignUpEligibleStepLayout extends StepLayoutImpl
 {
 
     public static final int CONSENT_REQUEST = 1001;
 
     private ActivityCallback permissionCallback;
 
-    public SignUpEligibleScene(Context context)
+    public SignUpEligibleStepLayout(Context context)
     {
         super(context);
     }
 
-    public SignUpEligibleScene(Context context, AttributeSet attrs)
+    public SignUpEligibleStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public SignUpEligibleScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public SignUpEligibleStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.core.ui.scene;
+package co.touchlab.researchstack.core.ui.step.body;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;

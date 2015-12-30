@@ -3,13 +3,13 @@ package co.touchlab.researchstack.core.answerformat;
 import java.io.Serializable;
 
 import co.touchlab.researchstack.core.dev.DevUtils;
-import co.touchlab.researchstack.core.ui.scene.DateQuestionBody;
-import co.touchlab.researchstack.core.ui.scene.FormBody;
-import co.touchlab.researchstack.core.ui.scene.IntegerQuestionBody;
-import co.touchlab.researchstack.core.ui.scene.MultiChoiceQuestionBody;
-import co.touchlab.researchstack.core.ui.scene.NotImplementedStepBody;
-import co.touchlab.researchstack.core.ui.scene.SingleChoiceQuestionBody;
-import co.touchlab.researchstack.core.ui.scene.TextQuestionBody;
+import co.touchlab.researchstack.core.ui.step.body.DateQuestionBody;
+import co.touchlab.researchstack.core.ui.step.body.FormBody;
+import co.touchlab.researchstack.core.ui.step.body.IntegerQuestionBody;
+import co.touchlab.researchstack.core.ui.step.body.MultiChoiceQuestionBody;
+import co.touchlab.researchstack.core.ui.step.body.NotImplementedStepBody;
+import co.touchlab.researchstack.core.ui.step.body.SingleChoiceQuestionBody;
+import co.touchlab.researchstack.core.ui.step.body.TextQuestionBody;
 
 
 public abstract class AnswerFormat implements Serializable

@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.core.ui.scene;
+package co.touchlab.researchstack.core.ui.step.layout;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -14,22 +14,22 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
-public class InstructionScene extends RelativeLayout implements Scene
+public class InstructionStepLayout extends RelativeLayout implements StepLayout
 {
     private SceneCallbacks  callbacks;
     private Step step;
 
-    public InstructionScene(Context context)
+    public InstructionStepLayout(Context context)
     {
         super(context);
     }
 
-    public InstructionScene(Context context, AttributeSet attrs)
+    public InstructionStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public InstructionScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public InstructionStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }
@@ -61,7 +61,7 @@ public class InstructionScene extends RelativeLayout implements Scene
     }
 
     @Override
-    public View getView()
+    public View getLayout()
     {
         return this;
     }
@@ -69,7 +69,9 @@ public class InstructionScene extends RelativeLayout implements Scene
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, null);
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV,
+                step,
+                null);
         return false;
     }
 

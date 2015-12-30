@@ -1,19 +1,19 @@
 package co.touchlab.researchstack.glue.task;
 
-import co.touchlab.researchstack.core.ui.scene.NotImplementedStepBody;
+import co.touchlab.researchstack.core.ui.step.body.NotImplementedStepBody;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.Task;
-import co.touchlab.researchstack.glue.ui.scene.SignInScene;
-import co.touchlab.researchstack.glue.ui.scene.SignUpAdditionalInfoScene;
-import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleScene;
-import co.touchlab.researchstack.glue.ui.scene.SignUpGeneralInfoScene;
-import co.touchlab.researchstack.glue.ui.scene.SignUpIneligibleScene;
-import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsPrimingScene;
-import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsScene;
+import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
+import co.touchlab.researchstack.glue.ui.scene.SignUpAdditionalInfoStepLayout;
+import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleStepLayout;
+import co.touchlab.researchstack.glue.ui.scene.SignUpGeneralInfoStepLayout;
+import co.touchlab.researchstack.glue.ui.scene.SignUpIneligibleStepLayout;
+import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsPrimingStepLayout;
+import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsStepLayout;
 
 /**
  * Created by bradleymcdermott on 10/16/15.
@@ -108,7 +108,7 @@ public abstract class OnboardingTask extends Task
         {
             signInStep = new Step(SignInStepIdentifier);
             signInStep.setSceneTitle(R.string.sign_in);
-            signInStep.setSceneClass(SignInScene.class);
+            signInStep.setSceneClass(SignInStepLayout.class);
         }
         return signInStep;
     }
@@ -132,7 +132,7 @@ public abstract class OnboardingTask extends Task
         {
             permissionsStep = new Step(SignUpPermissionsStepIdentifier);
             permissionsStep.setSceneTitle(R.string.settings_permissions);
-            permissionsStep.setSceneClass(SignUpPermissionsScene.class);
+            permissionsStep.setSceneClass(SignUpPermissionsStepLayout.class);
         }
         return permissionsStep;
     }
@@ -152,7 +152,7 @@ public abstract class OnboardingTask extends Task
         {
             medicalInfoStep = new Step(SignUpMedicalInfoStepIdentifier);
             medicalInfoStep.setSceneTitle(R.string.additional_info);
-            medicalInfoStep.setSceneClass(SignUpAdditionalInfoScene.class);
+            medicalInfoStep.setSceneClass(SignUpAdditionalInfoStepLayout.class);
         }
         return medicalInfoStep;
     }
@@ -163,7 +163,7 @@ public abstract class OnboardingTask extends Task
         {
             generalInfoStep = new Step(SignUpGeneralInfoStepIdentifier);
             generalInfoStep.setSceneTitle(R.string.registration);
-            generalInfoStep.setSceneClass(SignUpGeneralInfoScene.class);
+            generalInfoStep.setSceneClass(SignUpGeneralInfoStepLayout.class);
         }
         return generalInfoStep;
     }
@@ -174,7 +174,7 @@ public abstract class OnboardingTask extends Task
         {
             permissionsPrimingStep = new Step(SignUpPermissionsPrimingStepIdentifier);
             permissionsPrimingStep.setSceneTitle(R.string.rsc_consent);
-            permissionsPrimingStep.setSceneClass(SignUpPermissionsPrimingScene.class);
+            permissionsPrimingStep.setSceneClass(SignUpPermissionsPrimingStepLayout.class);
         }
         return permissionsPrimingStep;
     }
@@ -185,7 +185,7 @@ public abstract class OnboardingTask extends Task
         {
             ineligibleStep = new Step(SignUpIneligibleStepIdentifier);
             ineligibleStep.setSceneTitle(R.string.ineligible);
-            ineligibleStep.setSceneClass(SignUpIneligibleScene.class);
+            ineligibleStep.setSceneClass(SignUpIneligibleStepLayout.class);
         }
         return ineligibleStep;
     }
@@ -196,7 +196,7 @@ public abstract class OnboardingTask extends Task
         {
             eligibleStep = new Step(SignUpEligibleStepIdentifier);
             eligibleStep.setSceneTitle(R.string.sign_up);
-            eligibleStep.setSceneClass(SignUpEligibleScene.class);
+            eligibleStep.setSceneClass(SignUpEligibleStepLayout.class);
         }
         return eligibleStep;
     }

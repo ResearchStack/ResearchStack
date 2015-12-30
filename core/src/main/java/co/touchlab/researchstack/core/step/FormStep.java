@@ -2,7 +2,7 @@ package co.touchlab.researchstack.core.step;
 import java.util.List;
 
 import co.touchlab.researchstack.core.answerformat.FormAnswerFormat;
-import co.touchlab.researchstack.core.ui.scene.FormBody;
+import co.touchlab.researchstack.core.ui.step.body.FormBody;
 
 
 public class FormStep extends QuestionStep

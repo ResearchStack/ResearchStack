@@ -7,26 +7,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 
 /**
  * TODO Implement Function
  */
-public class SignUpPermissionsPrimingScene extends SceneImpl
+public class SignUpPermissionsPrimingStepLayout extends StepLayoutImpl
 {
 
-    public SignUpPermissionsPrimingScene(Context context)
+    public SignUpPermissionsPrimingStepLayout(Context context)
     {
         super(context);
     }
 
-    public SignUpPermissionsPrimingScene(Context context, AttributeSet attrs)
+    public SignUpPermissionsPrimingStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public SignUpPermissionsPrimingScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public SignUpPermissionsPrimingStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

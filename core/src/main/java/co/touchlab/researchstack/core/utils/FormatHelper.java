@@ -1,6 +1,8 @@
 package co.touchlab.researchstack.core.utils;
 import java.text.DateFormat;
 
+import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
+
 public class FormatHelper
 {
     public static final int NONE = - 1;
@@ -10,7 +12,7 @@ public class FormatHelper
 
     /**
      * Helper method to return a formatter suitable for
-     * {@link co.touchlab.researchstack.core.ui.scene.ConsentSignatureScene}
+     * {@link ConsentSignatureStepLayout}
      * @return DateFormat that is a DateInstance (only formats y, m, and d attributes)
      */
     public static DateFormat getSignatureFormat()

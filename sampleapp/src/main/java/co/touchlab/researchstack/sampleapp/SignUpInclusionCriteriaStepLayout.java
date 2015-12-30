@@ -5,26 +5,26 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RadioGroup;
 
-import co.touchlab.researchstack.glue.ui.scene.AbstractSignUpInclusionCriteriaScene;
+import co.touchlab.researchstack.glue.ui.scene.AbstractSignUpInclusionCriteriaStepLayout;
 
 /**
  * Created by bradleymcdermott on 11/17/15.
  */
-public class SignUpInclusionCriteriaScene extends AbstractSignUpInclusionCriteriaScene
+public class SignUpInclusionCriteriaStepLayout extends AbstractSignUpInclusionCriteriaStepLayout
 {
     private RadioGroup humanRadioGroup;
 
-    public SignUpInclusionCriteriaScene(Context context)
+    public SignUpInclusionCriteriaStepLayout(Context context)
     {
         super(context);
     }
 
-    public SignUpInclusionCriteriaScene(Context context, AttributeSet attrs)
+    public SignUpInclusionCriteriaStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public SignUpInclusionCriteriaScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public SignUpInclusionCriteriaStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

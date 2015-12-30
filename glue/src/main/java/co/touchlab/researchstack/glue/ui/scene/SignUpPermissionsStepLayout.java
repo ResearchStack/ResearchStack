@@ -14,10 +14,10 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 
-public class SignUpPermissionsScene extends SceneImpl
+public class SignUpPermissionsStepLayout extends StepLayoutImpl
 {
 
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 142;
@@ -25,17 +25,17 @@ public class SignUpPermissionsScene extends SceneImpl
     private AppCompatButton permissionButton;
     private ActivityCallback permissionCallback;
 
-    public SignUpPermissionsScene(Context context)
+    public SignUpPermissionsStepLayout(Context context)
     {
         super(context);
     }
 
-    public SignUpPermissionsScene(Context context, AttributeSet attrs)
+    public SignUpPermissionsStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public SignUpPermissionsScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public SignUpPermissionsStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

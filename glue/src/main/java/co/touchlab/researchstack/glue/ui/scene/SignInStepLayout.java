@@ -8,26 +8,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 
 /**
  * TODO Implement
  */
-public class SignInScene extends SceneImpl
+public class SignInStepLayout extends StepLayoutImpl
 {
 
-    public SignInScene(Context context)
+    public SignInStepLayout(Context context)
     {
         super(context);
     }
 
-    public SignInScene(Context context, AttributeSet attrs)
+    public SignInStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public SignInScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public SignInStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }

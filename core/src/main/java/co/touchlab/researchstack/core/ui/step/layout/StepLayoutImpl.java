@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.core.ui.scene;
+package co.touchlab.researchstack.core.ui.step.layout;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
@@ -24,9 +24,9 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import rx.functions.Action1;
 
 @Deprecated
-public abstract class SceneImpl<T> extends RelativeLayout implements Scene
+public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLayout
 {
-    public static final String TAG = SceneImpl.class.getSimpleName();
+    public static final String TAG = StepLayoutImpl.class.getSimpleName();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Data used to initializeScene and return
@@ -50,17 +50,17 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
     private TextView skip;
     private LinearLayout container;
 
-    public SceneImpl(Context context)
+    public StepLayoutImpl(Context context)
     {
         super(context);
     }
 
-    public SceneImpl(Context context, AttributeSet attrs)
+    public StepLayoutImpl(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public SceneImpl(Context context, AttributeSet attrs, int defStyleAttr)
+    public StepLayoutImpl(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }
@@ -126,7 +126,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
 
         container = (LinearLayout) findViewById(R.id.content_container);
         container.getViewTreeObserver().addOnPreDrawListener(() -> {
-            int sceneHeight = SceneImpl.this.getHeight();
+            int sceneHeight = StepLayoutImpl.this.getHeight();
             int infoContainerHeight = container.getHeight();
 
             //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
@@ -219,7 +219,7 @@ public abstract class SceneImpl<T> extends RelativeLayout implements Scene
     }
 
     @Override
-    public View getView()
+    public View getLayout()
     {
         return this;
     }

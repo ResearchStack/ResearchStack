@@ -13,15 +13,15 @@ import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
-import co.touchlab.researchstack.core.ui.scene.ConsentSignatureScene;
-import co.touchlab.researchstack.core.ui.scene.Scene;
-import co.touchlab.researchstack.core.ui.scene.SceneImpl;
+import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.glue.task.ConsentTask;
-import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleScene;
-import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsScene;
+import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleStepLayout;
+import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsStepLayout;
 
 public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCallback
 {
@@ -39,7 +39,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     public void requestPermissions()
     {
         requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
-                           SignUpPermissionsScene.LOCATION_PERMISSION_REQUEST_CODE);
+                           SignUpPermissionsStepLayout.LOCATION_PERMISSION_REQUEST_CODE);
     }
 
     @Override
@@ -47,13 +47,13 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     {
         ConsentTask task = new ConsentTask(this);
         Intent intent = ViewTaskActivity.newIntent(this, task);
-        startActivityForResult(intent, SignUpEligibleScene.CONSENT_REQUEST);
+        startActivityForResult(intent, SignUpEligibleStepLayout.CONSENT_REQUEST);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == SignUpEligibleScene.CONSENT_REQUEST && resultCode == Activity.RESULT_OK)
+        if (requestCode == SignUpEligibleStepLayout.CONSENT_REQUEST && resultCode == Activity.RESULT_OK)
         {
             TaskResult result = (TaskResult) data.getSerializableExtra(
                     ViewTaskActivity.EXTRA_TASK_RESULT);
@@ -76,9 +76,9 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 FormResult<String> nameFormResult = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME);
                 String fullName = nameFormResult.getAnswer();
                 String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
-                        .getResultForIdentifier(ConsentSignatureScene.KEY_SIGNATURE);
+                        .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
                 String signatureDate = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
-                        .getResultForIdentifier(ConsentSignatureScene.KEY_SIGNATURE_DATE);
+                        .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
 
                 currentUser.setName(fullName);
                 currentUser.setConsentSignatureName(fullName);
@@ -86,8 +86,8 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 currentUser.setConsentSignatureImage(base64Image);
                 currentUser.setUserConsented(true);
 
-                SceneImpl scene = (SceneImpl) findViewById(R.id.rsc_current_scene);
-                if (scene != null && scene instanceof SignUpEligibleScene)
+                StepLayoutImpl scene = (StepLayoutImpl) findViewById(R.id.rsc_current_scene);
+                if (scene != null && scene instanceof SignUpEligibleStepLayout)
                 {
                     // TODO this is weird, activity calling a callback method itself
                     onSaveStep(ACTION_NEXT, scene.getStep(), null);
@@ -107,12 +107,12 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode ==  SignUpPermissionsScene.LOCATION_PERMISSION_REQUEST_CODE)
+        if (requestCode ==  SignUpPermissionsStepLayout.LOCATION_PERMISSION_REQUEST_CODE)
         {
-            Scene scene = (Scene) findViewById(R.id.rsc_current_scene);
-            if(scene instanceof SignUpPermissionsScene)
+            StepLayout stepLayout = (StepLayout) findViewById(R.id.rsc_current_scene);
+            if(stepLayout instanceof SignUpPermissionsStepLayout)
             {
-                ((SignUpPermissionsScene) scene)
+                ((SignUpPermissionsStepLayout) stepLayout)
                         .onRequestPermissionsResult(requestCode, permissions, grantResults);
             }
         }

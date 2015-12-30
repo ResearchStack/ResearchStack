@@ -24,7 +24,7 @@ import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.OrderedTask;
-import co.touchlab.researchstack.core.ui.scene.ConsentSignatureScene;
+import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
@@ -231,7 +231,7 @@ public class ConsentTask extends OrderedTask
             signatureStep.setText(ctx.getString(R.string.rsc_consent_signature_instruction));
             signatureStep.setOptional(false);
             signatureStep.setSignatureDateFormat(doc.getSignature(0).getSignatureDateFormatString());
-            signatureStep.setSceneClass(ConsentSignatureScene.class);
+            signatureStep.setSceneClass(ConsentSignatureStepLayout.class);
             addStep(signatureStep);
         }
     }

@@ -1,7 +1,7 @@
 package co.touchlab.researchstack.core.step;
 
 
-import co.touchlab.researchstack.core.ui.scene.InstructionScene;
+import co.touchlab.researchstack.core.ui.step.layout.InstructionStepLayout;
 
 public class InstructionStep extends Step
 {
@@ -14,6 +14,6 @@ public class InstructionStep extends Step
     @Override
     public Class getSceneClass()
     {
-        return InstructionScene.class;
+        return InstructionStepLayout.class;
     }
 }

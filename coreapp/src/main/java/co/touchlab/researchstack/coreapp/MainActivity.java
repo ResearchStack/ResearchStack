@@ -41,7 +41,7 @@ import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
-import co.touchlab.researchstack.core.ui.scene.ConsentSignatureScene;
+import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 
 public class MainActivity extends PassCodeActivity
 {
@@ -229,7 +229,7 @@ public class MainActivity extends PassCodeActivity
         signatureStep.setText(getString(R.string.rsc_consent_signature_instruction));
         signatureStep.setSignatureDateFormat(signature.getSignatureDateFormatString());
         signatureStep.setOptional(false);
-        signatureStep.setSceneClass(ConsentSignatureScene.class);
+        signatureStep.setSceneClass(ConsentSignatureStepLayout.class);
 
         // Finally, create and present a task including these steps.
         Task consentTask = new OrderedTask(CONSENT, CONSENT,
@@ -255,10 +255,10 @@ public class MainActivity extends PassCodeActivity
                     .getResultForIdentifier(NAME)).getResult();
 
             String signatureBase64 = (String) result.getStepResult(SIGNATURE)
-                    .getResultForIdentifier(ConsentSignatureScene.KEY_SIGNATURE);
+                    .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
 
             String signatureDate = (String) result.getStepResult(SIGNATURE)
-                    .getResultForIdentifier(ConsentSignatureScene.KEY_SIGNATURE_DATE);
+                    .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
 
             AppPrefs prefs = AppPrefs.getInstance(this);
             prefs.setHasConsented(true);
