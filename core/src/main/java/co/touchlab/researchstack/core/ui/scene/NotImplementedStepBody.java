@@ -17,7 +17,7 @@ public class NotImplementedStepBody implements StepBody
     }
 
     @Override
-    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         TextView textView = new TextView(inflater.getContext());
         textView.setText("Not implemented: " + step.getQuestionType().toString());
@@ -25,7 +25,7 @@ public class NotImplementedStepBody implements StepBody
     }
 
     @Override
-    public View initializeCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         TextView textView = new TextView(inflater.getContext());
         textView.setText("Form not implemented: " + step.getQuestionType().toString());
@@ -39,8 +39,26 @@ public class NotImplementedStepBody implements StepBody
     }
 
     @Override
+    public void prefillResult(StepResult result)
+    {
+
+    }
+
+    @Override
     public boolean isAnswerValid()
     {
         return true;
+    }
+
+    @Override
+    public String getIdentifier()
+    {
+        return StepResult.DEFAULT_KEY;
+    }
+
+    @Override
+    public void setIdentifier(String identifier)
+    {
+
     }
 }

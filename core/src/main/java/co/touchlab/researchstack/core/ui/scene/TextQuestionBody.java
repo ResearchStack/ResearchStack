@@ -1,6 +1,5 @@
 package co.touchlab.researchstack.core.ui.scene;
 
-import android.support.annotation.Nullable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -8,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.jakewharton.rxbinding.widget.RxTextView;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
@@ -19,41 +16,29 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 public class TextQuestionBody implements StepBody
 {
     private QuestionStep step;
-    private StepResult<String> stepResult;
-    private TextAnswerFormat format;
+    private EditText editText;
+
+    // TODO why does the result need to know its own identifier, is there a better way
+    private String identifier = StepResult.DEFAULT_KEY;
 
     public TextQuestionBody()
     {
     }
 
-    private StepResult<String> createStepResult(String identifier)
-    {
-        return new StepResult<>(identifier);
-    }
-
     @Override
-    public StepResult getStepResult()
+    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        return stepResult;
-    }
-
-    @Override
-    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
-    {
-        EditText editText = (EditText) inflater.inflate(R.layout.item_edit_text,
+        editText = (EditText) inflater.inflate(R.layout.item_edit_text,
                 parent,
                 false);
 
-        setUpEditText(result,
-                identifier,
-                editText,
-                step);
+        setUpEditText(step);
 
         return editText;
     }
 
     @Override
-    public View initializeCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         View formItemView = inflater.inflate(R.layout.scene_form_item_editable,
                 parent,
@@ -63,27 +48,17 @@ public class TextQuestionBody implements StepBody
 
         label.setText(step.getTitle());
 
-        EditText editText = (EditText) formItemView.findViewById(R.id.value);
+        editText = (EditText) formItemView.findViewById(R.id.value);
 
-        setUpEditText(result,
-                identifier,
-                editText,
-                step);
+        setUpEditText(step);
 
         return formItemView;
     }
 
-    private void setUpEditText(@Nullable StepResult result, @Nullable String identifier, EditText editText, QuestionStep step)
+    private void setUpEditText(QuestionStep step)
     {
-        if (result == null)
-        {
-            result = createStepResult(identifier);
-        }
-
-        // TODO do we need both Step and AnswerFormat?
         this.step = step;
-        stepResult = (StepResult<String>) result;
-        format = (TextAnswerFormat) step.getAnswerFormat();
+        TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
 
         editText.setSingleLine(!format.isMultipleLines());
 
@@ -91,27 +66,10 @@ public class TextQuestionBody implements StepBody
         {
             InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(
                     format.getMaximumLength());
-            InputFilter filters[] = insertFilter(editText.getFilters(), maxLengthFilter);
+            InputFilter[] filters = insertFilter(editText.getFilters(),
+                    maxLengthFilter);
             editText.setFilters(filters);
         }
-
-        String stringResult = stepResult.getResult();
-        if (!TextUtils.isEmpty(stringResult))
-        {
-            editText.setText(stringResult);
-        }
-
-        RxTextView.textChanges(editText)
-                .subscribe(s -> {
-                    stepResult.setResult(s.toString());
-                });
-    }
-
-    @Override
-    public boolean isAnswerValid()
-    {
-        String result = stepResult.getResult();
-        return format.isAnswerValidWithString(result);
     }
 
     private InputFilter[] insertFilter(InputFilter[] filters, InputFilter filter)
@@ -146,5 +104,42 @@ public class TextQuestionBody implements StepBody
 
             return newFilters;
         }
+    }
+
+    @Override
+    public StepResult getStepResult()
+    {
+        StepResult<String> result = new StepResult<>(identifier);
+        result.setResult(editText.getText()
+                .toString());
+        return result;
+    }
+
+    @Override
+    public void prefillResult(StepResult result)
+    {
+        String stringResult = (String) result.getResult();
+        if (!TextUtils.isEmpty(stringResult))
+        {
+            editText.setText(stringResult);
+        }
+    }
+
+    @Override
+    public boolean isAnswerValid()
+    {
+        return ((TextAnswerFormat) step.getAnswerFormat()).isAnswerValid(editText.getText().toString());
+    }
+
+    @Override
+    public void setIdentifier(String identifier)
+    {
+        this.identifier = identifier;
+    }
+
+    @Override
+    public String getIdentifier()
+    {
+        return identifier;
     }
 }

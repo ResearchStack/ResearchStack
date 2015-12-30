@@ -27,36 +27,26 @@ import co.touchlab.researchstack.core.utils.FormatUtils;
 public class DateQuestionBody implements StepBody
 {
     private QuestionStep step;
-    private StepResult<String> stepResult;
     private SimpleDateFormat dateFormat = new SimpleDateFormat(FormatUtils.DATE_FORMAT_ISO_8601,
             Locale.getDefault());
     private DateAnswerFormat format;
     private Calendar calendar;
+    private DatePicker datePicker;
+    private String identifier = StepResult.DEFAULT_KEY;
 
     public DateQuestionBody()
     {
     }
 
-    private StepResult<String> createStepResult(String identifier)
-    {
-        return new StepResult<>(identifier);
-    }
-
     @Override
-    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        DatePicker datePicker = (DatePicker) inflater.inflate(R.layout.item_date_picker,
+        datePicker = (DatePicker) inflater.inflate(R.layout.item_date_picker,
                 parent,
                 false);
 
-        if (result == null)
-        {
-            result = createStepResult(identifier);
-        }
-
         // TODO do we need both Step and AnswerFormat?
         this.step = step;
-        stepResult = (StepResult<String>) result;
         format = (DateAnswerFormat) step.getAnswerFormat();
 
         datePicker.setCalendarViewShown(false);
@@ -86,39 +76,13 @@ public class DateQuestionBody implements StepBody
                     calendar.set(year,
                             monthOfYear,
                             dayOfMonth);
-                    String resultFormattedDate = createFormattedResult();
-                    stepResult.setResult(resultFormattedDate);
                 });
 
         return datePicker;
     }
 
-    @NonNull
-    private String createFormattedResult()
-    {
-        return dateFormat.format(calendar.getTime());
-    }
-
-    private void initCalendar()
-    {
-        calendar = Calendar.getInstance();
-
-        //Set initial state
-        String savedFrmtdDate = stepResult.getResult();
-        if (!TextUtils.isEmpty(savedFrmtdDate))
-        {
-            Date savedDate = getDateFromString(savedFrmtdDate);
-            calendar.setTime(savedDate);
-        }
-        else if (format.getDefaultDate() != null)
-        {
-            Date dfltDate = format.getDefaultDate();
-            calendar.setTime(dfltDate);
-        }
-    }
-
     @Override
-    public View initializeCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         View formItemView = inflater.inflate(R.layout.scene_form_item,
                 parent,
@@ -130,22 +94,11 @@ public class DateQuestionBody implements StepBody
 
         TextView textView = (TextView) formItemView.findViewById(R.id.value);
 
-        if (result == null)
-        {
-            result = createStepResult(identifier);
-        }
-
         // TODO do we need both Step and AnswerFormat?
         this.step = step;
-        stepResult = (StepResult<String>) result;
         format = (DateAnswerFormat) step.getAnswerFormat();
 
         initCalendar();
-
-        if (stepResult.getResult() != null)
-        {
-            textView.setText(stepResult.getResult());
-        }
 
         RxView.clicks(textView)
                 .subscribe(o -> {
@@ -157,13 +110,13 @@ public class DateQuestionBody implements StepBody
 
     private void showDialog(TextView textView)
     {
+        // TODO use same view as initView() and just set the dialog's view to it?
         new DatePickerDialog(textView.getContext(),
                 (view, year, monthOfYear, dayOfMonth) -> {
                     calendar.set(year,
                             monthOfYear,
                             dayOfMonth);
                     String formattedResult = createFormattedResult();
-                    stepResult.setResult(formattedResult);
                     textView.setText(formattedResult);
                 },
                 calendar.get(Calendar.YEAR),
@@ -183,10 +136,46 @@ public class DateQuestionBody implements StepBody
         }
     }
 
+    private String createFormattedResult()
+    {
+        return dateFormat.format(calendar.getTime());
+    }
+
+    private void initCalendar()
+    {
+        calendar = Calendar.getInstance();
+
+        if (format.getDefaultDate() != null)
+        {
+            Date dfltDate = format.getDefaultDate();
+            calendar.setTime(dfltDate);
+        }
+    }
+
     @Override
     public StepResult getStepResult()
     {
-        return stepResult;
+        StepResult<String> result = new StepResult<>(identifier);
+        result.setResult(createFormattedResult());
+        return result;
+    }
+
+    @Override
+    public void prefillResult(StepResult result)
+    {
+        //Set initial state
+        String savedFrmtdDate = (String) result.getResult();
+        if (!TextUtils.isEmpty(savedFrmtdDate))
+        {
+            Date savedDate = getDateFromString(savedFrmtdDate);
+            calendar.setTime(savedDate);
+            if (datePicker != null)
+            {
+                datePicker.updateDate(calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
+            }
+        }
     }
 
     /**
@@ -195,19 +184,34 @@ public class DateQuestionBody implements StepBody
     @Override
     public boolean isAnswerValid()
     {
-        // Make sure we have a result
-        String formattedDate = stepResult.getResult();
-        if (TextUtils.isEmpty(formattedDate))
+        // TODO possible to start with no selection?
+        Date minDate = format.getMinimumDate();
+        Date maxDate = format.getMaximumDate();
+
+        Date resultDate = calendar.getTime();
+
+        if (minDate != null && resultDate.getTime() < minDate.getTime())
         {
             return false;
         }
 
-        Date minDate = format.getMinimumDate();
-        Date maxDate = format.getMaximumDate();
+        if (maxDate != null && resultDate.getTime() > maxDate.getTime())
+        {
+            return false;
+        }
 
-        Date resultDate = getDateFromString(formattedDate);
+        return true;
+    }
 
-        return resultDate.getTime() >= minDate.getTime() &&
-                resultDate.getTime() <= maxDate.getTime();
+    @Override
+    public String getIdentifier()
+    {
+        return identifier;
+    }
+
+    @Override
+    public void setIdentifier(String identifier)
+    {
+        this.identifier = identifier;
     }
 }

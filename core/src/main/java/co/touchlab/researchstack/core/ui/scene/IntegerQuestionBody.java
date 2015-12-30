@@ -19,43 +19,24 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 public class IntegerQuestionBody implements StepBody
 {
     private QuestionStep step;
-    private StepResult<Integer> stepResult;
     private IntegerAnswerFormat format;
+    private String identifier = StepResult.DEFAULT_KEY;
+    private NumberPicker numberPicker;
+    private EditText editText;
 
     public IntegerQuestionBody()
     {
     }
 
-    private StepResult<Integer> createStepResult(String identifier)
-    {
-        return new StepResult<>(identifier);
-    }
-
     @Override
-    public StepResult getStepResult()
+    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        return stepResult;
-    }
-
-    @Override
-    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
-    {
-
-        stepResult = (StepResult<Integer>) result;
-
-        NumberPicker numberPicker = (NumberPicker) inflater
+        numberPicker = (NumberPicker) inflater
                 .inflate(R.layout.item_number_picker,
                         parent,
                         false);
-
-        if (result == null)
-        {
-            result = createStepResult(identifier);
-        }
-
         // TODO do we need both Step and AnswerFormat?
         this.step = step;
-        stepResult = (StepResult<Integer>) result;
         format = (IntegerAnswerFormat) step.getAnswerFormat();
 
         IntegerAnswerFormat answerFormat = (IntegerAnswerFormat) step.getAnswerFormat();
@@ -68,19 +49,11 @@ public class IntegerQuestionBody implements StepBody
             numberPicker.setMaxValue(answerFormat.getMaxValue());
         }
 
-        if (stepResult.getResult() != null)
-        {
-            numberPicker.setValue(stepResult.getResult());
-        }
-
-        numberPicker.setOnValueChangedListener(
-                (picker, oldVal, newVal) -> stepResult.setResult(newVal));
-
         return numberPicker;
     }
 
     @Override
-    public View initializeCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         View formItemView = inflater.inflate(R.layout.scene_form_item_editable,
                 parent,
@@ -90,40 +63,65 @@ public class IntegerQuestionBody implements StepBody
 
         label.setText(step.getTitle());
 
-        EditText editText = (EditText) formItemView.findViewById(R.id.value);
-
-        if (result == null)
-        {
-            result = createStepResult(identifier);
-        }
+        editText = (EditText) formItemView.findViewById(R.id.value);
 
         // TODO do we need both Step and AnswerFormat?
         this.step = step;
-        stepResult = (StepResult<Integer>) result;
         format = (IntegerAnswerFormat) step.getAnswerFormat();
-
-        Integer stringResult = stepResult.getResult();
-        if (stringResult != null)
-        {
-            editText.setText(String.valueOf(stringResult));
-        }
 
         editText.setSingleLine(true);
         editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-
-        RxTextView.textChanges(editText)
-                .filter(charSequence -> charSequence.length() > 0)
-                .subscribe(s -> {
-                    stepResult.setResult(Integer.valueOf(s.toString()));
-                });
 
         return formItemView;
     }
 
     @Override
+    public StepResult getStepResult()
+    {
+        StepResult<Object> stepResult = new StepResult<>(identifier);
+        if (editText != null)
+        {
+            stepResult.setResult(Integer.valueOf(editText.getText()
+                    .toString()));
+        }
+        else
+        {
+            stepResult.setResult(numberPicker.getValue());
+        }
+        return stepResult;
+    }
+
+    @Override
+    public void prefillResult(StepResult result)
+    {
+        if (result.getResult() == null)
+        {
+            return;
+        }
+
+        if (numberPicker != null)
+        {
+            numberPicker.setValue((Integer) result.getResult());
+        }
+        else
+        {
+            editText.setText(String.valueOf(result.getResult()));
+        }
+    }
+
+    @Override
     public boolean isAnswerValid()
     {
-        Integer result = stepResult.getResult();
+        Integer result = null;
+
+        if (numberPicker != null)
+        {
+            result = numberPicker.getValue();
+        }
+        else if (editText != null && editText.getText().length() > 0)
+        {
+            result = Integer.valueOf(editText.getText().toString());
+        }
 
         if (result == null)
         {
@@ -131,5 +129,17 @@ public class IntegerQuestionBody implements StepBody
         }
 
         return result >= format.getMinValue() && result <= format.getMaxValue();
+    }
+
+    @Override
+    public String getIdentifier()
+    {
+        return identifier;
+    }
+
+    @Override
+    public void setIdentifier(String identifier)
+    {
+        this.identifier = identifier;
     }
 }
