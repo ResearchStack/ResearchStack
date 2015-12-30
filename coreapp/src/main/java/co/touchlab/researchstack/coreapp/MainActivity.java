@@ -13,7 +13,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
@@ -29,10 +28,9 @@ import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
 import co.touchlab.researchstack.core.model.ConsentSignature;
-import co.touchlab.researchstack.core.result.FormResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
+import co.touchlab.researchstack.core.step.ConsentDocumentStep;
 import co.touchlab.researchstack.core.step.ConsentSignatureStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.FormStep;
@@ -43,8 +41,7 @@ import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
-import co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene;
-import co.touchlab.researchstack.core.ui.scene.FormBody;
+import co.touchlab.researchstack.core.ui.scene.ConsentSignatureScene;
 
 public class MainActivity extends PassCodeActivity
 {
@@ -212,7 +209,7 @@ public class MainActivity extends PassCodeActivity
         docBuilder.append("<div><h2> HTML Consent Doc goes here </h2></div>");
 
         // Create the Consent doc step, pass in our HTML doc
-        ConsentReviewDocumentStep documentStep = new ConsentReviewDocumentStep(CONSENT_DOC);
+        ConsentDocumentStep documentStep = new ConsentDocumentStep(CONSENT_DOC);
         documentStep.setConsentHTML(docBuilder.toString());
         documentStep.setConfirmMessage(getString(R.string.rsc_consent_review_reason));
 
@@ -232,7 +229,7 @@ public class MainActivity extends PassCodeActivity
         signatureStep.setText(getString(R.string.rsc_consent_signature_instruction));
         signatureStep.setSignatureDateFormat(signature.getSignatureDateFormatString());
         signatureStep.setOptional(false);
-        signatureStep.setSceneClass(ConsentReviewSignatureScene.class);
+        signatureStep.setSceneClass(ConsentSignatureScene.class);
 
         // Finally, create and present a task including these steps.
         Task consentTask = new OrderedTask(CONSENT, CONSENT,
@@ -258,10 +255,10 @@ public class MainActivity extends PassCodeActivity
                     .getResultForIdentifier(NAME)).getResult();
 
             String signatureBase64 = (String) result.getStepResult(SIGNATURE)
-                    .getResultForIdentifier(ConsentReviewSignatureScene.KEY_SIGNATURE);
+                    .getResultForIdentifier(ConsentSignatureScene.KEY_SIGNATURE);
 
             String signatureDate = (String) result.getStepResult(SIGNATURE)
-                    .getResultForIdentifier(ConsentReviewSignatureScene.KEY_SIGNATURE_DATE);
+                    .getResultForIdentifier(ConsentSignatureScene.KEY_SIGNATURE_DATE);
 
             AppPrefs prefs = AppPrefs.getInstance(this);
             prefs.setHasConsented(true);

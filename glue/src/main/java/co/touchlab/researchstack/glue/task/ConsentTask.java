@@ -16,7 +16,7 @@ import co.touchlab.researchstack.core.model.ConsentSectionModel;
 import co.touchlab.researchstack.core.model.ConsentSignature;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
+import co.touchlab.researchstack.core.step.ConsentDocumentStep;
 import co.touchlab.researchstack.core.step.ConsentSharingStep;
 import co.touchlab.researchstack.core.step.ConsentSignatureStep;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
@@ -24,8 +24,7 @@ import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.OrderedTask;
-import co.touchlab.researchstack.core.ui.scene.ConsentReviewSignatureScene;
-import co.touchlab.researchstack.core.ui.scene.FormBody;
+import co.touchlab.researchstack.core.ui.scene.ConsentSignatureScene;
 import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
@@ -195,7 +194,7 @@ public class ConsentTask extends OrderedTask
         docBuilder.append("</div></br>");
         docBuilder.append(doc.getHtmlReviewContent());
 
-        ConsentReviewDocumentStep step = new ConsentReviewDocumentStep(ID_CONSENT_DOC);
+        ConsentDocumentStep step = new ConsentDocumentStep(ID_CONSENT_DOC);
         step.setConsentHTML(docBuilder.toString());
         step.setConfirmMessage(ctx.getString(R.string.rsc_consent_review_reason));
         addStep(step);
@@ -232,7 +231,7 @@ public class ConsentTask extends OrderedTask
             signatureStep.setText(ctx.getString(R.string.rsc_consent_signature_instruction));
             signatureStep.setOptional(false);
             signatureStep.setSignatureDateFormat(doc.getSignature(0).getSignatureDateFormatString());
-            signatureStep.setSceneClass(ConsentReviewSignatureScene.class);
+            signatureStep.setSceneClass(ConsentSignatureScene.class);
             addStep(signatureStep);
         }
     }

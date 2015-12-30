@@ -12,7 +12,7 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.ConsentReviewDocumentStep;
+import co.touchlab.researchstack.core.step.ConsentDocumentStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
@@ -22,27 +22,27 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
  * {@link #stepResult}
  * {@link #confirmationDialogBody}
  */
-public class ConsentReviewDocumentScene extends RelativeLayout implements Scene
+public class ConsentDocumentScene extends RelativeLayout implements Scene
 {
     private SceneCallbacks callbacks;
 
     private String confirmationDialogBody;
     private String htmlContent;
 
-    private ConsentReviewDocumentStep step;
+    private ConsentDocumentStep step;
     private StepResult<Boolean> stepResult;
 
-    public ConsentReviewDocumentScene(Context context)
+    public ConsentDocumentScene(Context context)
     {
         super(context);
     }
 
-    public ConsentReviewDocumentScene(Context context, AttributeSet attrs)
+    public ConsentDocumentScene(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public ConsentReviewDocumentScene(Context context, AttributeSet attrs, int defStyleAttr)
+    public ConsentDocumentScene(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }
@@ -50,9 +50,9 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene
     @Override
     public void initialize(Step step, StepResult result)
     {
-        this.step = (ConsentReviewDocumentStep) step;
-        this.confirmationDialogBody = ((ConsentReviewDocumentStep) step).getConfirmMessage();
-        this.htmlContent = ((ConsentReviewDocumentStep) step).getConsentHTML();
+        this.step = (ConsentDocumentStep) step;
+        this.confirmationDialogBody = ((ConsentDocumentStep) step).getConfirmMessage();
+        this.htmlContent = ((ConsentDocumentStep) step).getConsentHTML();
         this.stepResult = result;
 
         if(stepResult == null)
@@ -63,10 +63,9 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene
         initializeScene();
     }
 
-    public void initializeScene()
+    private void initializeScene()
     {
-        LayoutInflater.from(getContext()).inflate(
-                R.layout.scene_consent_doc, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.scene_consent_doc, this, true);
 
         WebView pdfView = (WebView) findViewById(R.id.webview);
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
@@ -104,6 +103,8 @@ public class ConsentReviewDocumentScene extends RelativeLayout implements Scene
     @Override
     public boolean isBackEventConsumed()
     {
+        stepResult.setResult(false);
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, stepResult);
         return false;
     }
 
