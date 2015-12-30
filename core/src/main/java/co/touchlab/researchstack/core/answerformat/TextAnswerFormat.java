@@ -55,7 +55,7 @@ public class TextAnswerFormat extends AnswerFormat
         return isMultipleLines;
     }
 
-    public boolean isAnswerValidWithString(String text)
+    public boolean isAnswerValid(String text)
     {
         return text != null && text.length() > 0 &&
                 (maximumLength == UNLIMITED_LENGTH || text.length() <= maximumLength);

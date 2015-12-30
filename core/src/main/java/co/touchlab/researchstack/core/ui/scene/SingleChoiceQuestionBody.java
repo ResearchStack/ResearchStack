@@ -1,7 +1,6 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.app.AlertDialog;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,37 +18,25 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 
 public class SingleChoiceQuestionBody<T> implements StepBody
 {
-    private StepResult<T> stepResult;
-
     private RadioGroup radioGroup;
     private ChoiceAnswerFormat format;
     private Choice<T>[] choices;
+    private String identifier = StepResult.DEFAULT_KEY;
+    private T currentSelection;
+    private TextView formLabel;
 
     public SingleChoiceQuestionBody()
     {
     }
 
-    private StepResult<T> createStepResult(String identifier)
-    {
-        return new StepResult<>(identifier);
-    }
-
     @Override
-    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        if (result == null)
-        {
-            result = createStepResult(identifier);
-        }
-
-        stepResult = (StepResult<T>) result;
         format = (ChoiceAnswerFormat) step.getAnswerFormat();
         choices = format.getChoices();
 
         // TODO inflate this?
         radioGroup = new RadioGroup(inflater.getContext());
-
-        T resultValue = stepResult.getResult();
 
         for (int i = 0; i < choices.length; i++)
         {
@@ -60,23 +47,18 @@ public class SingleChoiceQuestionBody<T> implements StepBody
             radioButton.setText(choice.getText());
             radioButton.setId(i);
             radioGroup.addView(radioButton);
-
-            if (resultValue != null)
-            {
-                radioButton.setChecked(resultValue.equals(choice.getValue()));
-            }
         }
 
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             Choice<T> choice = choices[checkedId];
-            stepResult.setResult(choice.getValue());
+            currentSelection = choice.getValue();
         });
 
         return radioGroup;
     }
 
     @Override
-    public View initializeCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         View formItemView = inflater.inflate(R.layout.scene_form_item,
                 parent,
@@ -86,34 +68,14 @@ public class SingleChoiceQuestionBody<T> implements StepBody
 
         label.setText(step.getTitle());
 
-        TextView textView = (TextView) formItemView.findViewById(R.id.value);
+        formLabel = (TextView) formItemView.findViewById(R.id.value);
 
-        if (result == null)
-        {
-            result = createStepResult(identifier);
-        }
-
-        stepResult = (StepResult<T>) result;
         format = (ChoiceAnswerFormat) step.getAnswerFormat();
         choices = format.getChoices();
 
-        if (stepResult.getResult() != null)
-        {
-            String choiceText = "";
-            for (Choice<T> choice : choices)
-            {
-                if (choice.getValue()
-                        .equals(stepResult.getResult()))
-                {
-                    choiceText = choice.getText();
-                }
-            }
-            textView.setText(choiceText);
-        }
-
-        RxView.clicks(textView)
+        RxView.clicks(formLabel)
                 .subscribe(o -> {
-                    showDialog(textView,
+                    showDialog(formLabel,
                             step.getTitle());
                 });
 
@@ -122,6 +84,7 @@ public class SingleChoiceQuestionBody<T> implements StepBody
 
     private void showDialog(TextView textView, String title)
     {
+        // TODO use same view as initView() and just set the dialog's view to it?
         int[] checked = new int[1];
         new AlertDialog.Builder(textView.getContext())
                 .setSingleChoiceItems(format.getTextChoiceNames(),
@@ -134,7 +97,7 @@ public class SingleChoiceQuestionBody<T> implements StepBody
                         (dialog, which) -> {
                             // TODO this array of one this is weird, revisit
                             Choice<T> choice = choices[checked[0]];
-                            stepResult.setResult(choice.getValue());
+                            currentSelection = choice.getValue();
                             textView.setText(choice.getText());
                         })
                 .setNegativeButton(R.string.src_cancel,
@@ -146,13 +109,57 @@ public class SingleChoiceQuestionBody<T> implements StepBody
     @Override
     public StepResult getStepResult()
     {
-        return stepResult;
+        StepResult<T> result = new StepResult<>(identifier);
+        result.setResult(currentSelection);
+        return result;
+    }
+
+    @Override
+    public void prefillResult(StepResult result)
+    {
+        T resultValue = (T) result.getResult();
+
+        if (resultValue == null)
+        {
+            return;
+        }
+
+
+        if (radioGroup != null)
+        {
+            // Full body view
+            // TODO precheck current choice
+//            radioButton.setChecked(resultValue.equals(choice.getValue()));
+        }
+        else
+        {
+            // Compact form view
+            for (Choice<T> choice : choices)
+            {
+                if (choice.getValue().equals(resultValue))
+                {
+                    currentSelection = choice.getValue();
+                    formLabel.setText(choice.getText());
+                }
+            }
+        }
     }
 
     @Override
     public boolean isAnswerValid()
     {
-        // TODO relook at validation here
-        return stepResult.getResult() != null;
+        return currentSelection != null;
+    }
+
+    @Override
+    public void setIdentifier(String identifier)
+    {
+        this.identifier = identifier;
+    }
+
+    @Override
+    public String getIdentifier()
+    {
+        return identifier;
     }
 }

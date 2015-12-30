@@ -13,11 +13,19 @@ import co.touchlab.researchstack.core.step.QuestionStep;
  */
 public interface StepBody
 {
-    View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier);
+    View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step);
 
-    View initializeCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier);
+    View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step);
 
     StepResult getStepResult();
 
+    void prefillResult(StepResult result);
+
     boolean isAnswerValid();
+
+    // TODO how do we make this better? the step body needs the identifier for its StepResult
+    // TODO in form steps and uses StepResult.DEFAULT_KEY in normal question steps
+    String getIdentifier();
+
+    void setIdentifier(String identifier);
 }

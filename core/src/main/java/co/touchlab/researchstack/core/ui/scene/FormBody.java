@@ -1,7 +1,6 @@
 package co.touchlab.researchstack.core.ui.scene;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,25 +20,13 @@ public class FormBody implements StepBody
 {
     private LinearLayout body;
     private FormStep formStep;
-    private StepResult<StepResult> stepResult;
     private List<StepBody> formStepBodies;
-
-    private StepResult<StepResult> createStepResult(String identifier)
-    {
-        return new StepResult<>(identifier);
-    }
+    private String identifier;
 
     @Override
-    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         this.formStep = (FormStep) step;
-
-        if (result == null)
-        {
-            result = createStepResult(StepResult.DEFAULT_KEY);
-        }
-
-        stepResult = result;
 
         body = (LinearLayout) inflater.inflate(R.layout.scene_form_body,
                 parent,
@@ -47,17 +34,14 @@ public class FormBody implements StepBody
 
         List<QuestionStep> items = formStep.getFormSteps();
         formStepBodies = new ArrayList<>(items.size());
-        for (int i = 0, size = items.size(); i < size; i++)
+        for (QuestionStep item : items)
         {
-            QuestionStep item = items.get(i);
-            StepResult formStepResult = stepResult.getResultForIdentifier(item.getIdentifier());
-
             StepBody stepBody = createStepBody(item);
-            View bodyView = stepBody.initializeCompact(inflater,
+            View bodyView = stepBody.initViewCompact(inflater,
                     body,
-                    item,
-                    formStepResult,
-                    item.getIdentifier());
+                    item);
+            // TODO this is a little weird, but normal question steps use default, forms use ids
+            stepBody.setIdentifier(item.getIdentifier());
 
             formStepBodies.add(stepBody);
             body.addView(bodyView);
@@ -67,7 +51,7 @@ public class FormBody implements StepBody
     }
 
     @Override
-    public View initializeCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         throw new RuntimeException("No compact view for this type of step");
     }
@@ -91,17 +75,32 @@ public class FormBody implements StepBody
     @Override
     public StepResult getStepResult()
     {
+        StepResult<StepResult> stepResult = new StepResult<>(identifier);
+
         for (StepBody formStepBody : formStepBodies)
         {
             StepResult result = formStepBody.getStepResult();
             if (result != null)
             {
-                this.stepResult.setResultForIdentifier(result.getIdentifier(),
+                stepResult.setResultForIdentifier(formStepBody.getIdentifier(),
                         result);
             }
         }
 
         return stepResult;
+    }
+
+    @Override
+    public void prefillResult(StepResult result)
+    {
+        for (StepBody formStepBody : formStepBodies)
+        {
+            StepResult formStepResult = (StepResult) result.getResultForIdentifier(formStepBody.getIdentifier());
+            if (formStepResult != null)
+            {
+                formStepBody.prefillResult(formStepResult);
+            }
+        }
     }
 
     @Override
@@ -116,5 +115,17 @@ public class FormBody implements StepBody
             }
         }
         return true;
+    }
+
+    @Override
+    public String getIdentifier()
+    {
+        return identifier;
+    }
+
+    @Override
+    public void setIdentifier(String identifier)
+    {
+        this.identifier = identifier;
     }
 }

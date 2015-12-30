@@ -113,11 +113,14 @@ public class SurveyScene extends RelativeLayout implements Scene
         LogExt.i(getClass(),
                 "onCreateBody()");
         stepBody = createStepBody(step);
-        View body = stepBody.initialize(inflater,
+        View body = stepBody.initView(inflater,
                 this,
-                step,
-                stepResult,
-                StepResult.DEFAULT_KEY);
+                step);
+        if (stepResult != null)
+        {
+            stepBody.prefillResult(stepResult);
+        }
+
         if(body != null)
         {
             View oldView = container.findViewById(R.id.scene_body);

@@ -3,6 +3,7 @@ package co.touchlab.researchstack.core.ui.scene;
 import android.app.AlertDialog;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
@@ -23,31 +26,17 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 
 public class MultiChoiceQuestionBody<T> implements StepBody
 {
-    private List<T> results;
-
-    private StepResult<T[]> stepResult;
+    private Set<T> results;
 
     private RadioGroup radioGroup;
     private ChoiceAnswerFormat format;
     private Choice<T>[] choices;
+    private String identifier = StepResult.DEFAULT_KEY;
 
     @Override
-    public View initialize(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        results = new ArrayList<>();
-        if (result == null)
-        {
-            result = createStepResult(identifier);
-        }
-        else
-        {
-            T[] resultArray = (T[]) result.getResult();
-            if (resultArray != null && resultArray.length > 0)
-            {
-                results.addAll(Arrays.asList(resultArray));
-            }
-        }
-        stepResult = result;
+        results = new HashSet<>();
         format = (ChoiceAnswerFormat) step.getAnswerFormat();
         choices = format.getChoices();
 
@@ -84,8 +73,6 @@ public class MultiChoiceQuestionBody<T> implements StepBody
                 {
                     results.remove(item.getValue());
                 }
-
-                stepResult.setResult((T[]) results.toArray());
             });
         }
 
@@ -93,8 +80,9 @@ public class MultiChoiceQuestionBody<T> implements StepBody
     }
 
     @Override
-    public View initializeCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step, @Nullable StepResult result, @Nullable String identifier)
+    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
+        results = new HashSet<>();
         View formItemView = inflater.inflate(R.layout.scene_form_item,
                 parent,
                 false);
@@ -105,24 +93,13 @@ public class MultiChoiceQuestionBody<T> implements StepBody
 
         TextView textView = (TextView) formItemView.findViewById(R.id.value);
 
-        if (result == null)
-        {
-            result = createStepResult(identifier);
-        }
-
-        stepResult = (StepResult<T[]>) result;
         format = (ChoiceAnswerFormat) step.getAnswerFormat();
         choices = format.getChoices();
 
-        if (stepResult.getResult() != null)
-        {
-            // TODO what should placeholder be?
-//            textView.setText(choiceText);
-        }
-
         RxView.clicks(textView)
                 .subscribe(o -> {
-                    showDialog(textView, step.getTitle());
+                    showDialog(textView,
+                            step.getTitle());
                 });
 
         return formItemView;
@@ -130,6 +107,9 @@ public class MultiChoiceQuestionBody<T> implements StepBody
 
     private void showDialog(TextView textView, String title)
     {
+        // TODO use same view as initView() and just set the dialog's view to it?
+        // TODO use current result to precheck items
+        // TODO improve this whole result/dialog logic
         boolean[] checkedItems = new boolean[format.getChoices().length];
         new AlertDialog.Builder(textView.getContext())
                 .setMultiChoiceItems(format.getTextChoiceNames(),
@@ -140,15 +120,15 @@ public class MultiChoiceQuestionBody<T> implements StepBody
                 .setTitle(title)
                 .setPositiveButton(R.string.src_ok,
                         (dialog, which) -> {
-                            ArrayList<Integer> checkedValues = new ArrayList<Integer>();
+                            results.clear();
                             for (int i = 0; i < checkedItems.length; i++)
                             {
                                 if (checkedItems[i])
                                 {
-                                    checkedValues.add(i);
+                                    Choice<T> choice = choices[i];
+                                    results.add(choice.getValue());
                                 }
                             }
-                            stepResult.setResult((T[]) checkedValues.toArray());
                             textView.setText("chosen");
                         })
                 .setNegativeButton(R.string.src_cancel,
@@ -156,21 +136,39 @@ public class MultiChoiceQuestionBody<T> implements StepBody
                 .show();
     }
 
-    private StepResult<T[]> createStepResult(String identifier)
-    {
-        return new StepResult<>(identifier);
-    }
-
     @Override
     public StepResult getStepResult()
     {
-        return stepResult;
+        StepResult<T[]> result = new StepResult<>(identifier);
+        result.setResult((T[]) results.toArray());
+        return result;
+    }
+
+    @Override
+    public void prefillResult(StepResult result)
+    {
+        T[] resultArray = (T[]) result.getResult();
+        if (resultArray != null && resultArray.length > 0)
+        {
+            results.addAll(Arrays.asList(resultArray));
+        }
     }
 
     @Override
     public boolean isAnswerValid()
     {
-        // TODO revisit validation here
-        return !getStepResult().isEmpty();
+        return !results.isEmpty();
+    }
+
+    @Override
+    public String getIdentifier()
+    {
+        return identifier;
+    }
+
+    @Override
+    public void setIdentifier(String identifier)
+    {
+        this.identifier = identifier;
     }
 }
