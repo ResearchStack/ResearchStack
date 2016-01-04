@@ -38,7 +38,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
     @Override
     public boolean onPreferenceTreeClick(Preference preference)
     {
-        LogExt.i(getClass(), preference.getTitle().toString());
+        LogExt.i(getClass(), preference.getTitle()
+                                       .toString());
 
         if(preference.hasKey())
         {
@@ -54,8 +55,9 @@ public class SettingsFragment extends PreferenceFragmentCompat
             }
         }
 
-        Toast.makeText(getActivity(), "TODO: " + preference.getTitle().toString(),
-                       Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "TODO: " + preference.getTitle()
+                                                           .toString(), Toast.LENGTH_SHORT)
+             .show();
 
         return super.onPreferenceTreeClick(preference);
     }
@@ -63,10 +65,11 @@ public class SettingsFragment extends PreferenceFragmentCompat
     private void showPrivacyPolicy()
     {
 
-        int resId = ResearchStack.getInstance().getPrivacyPolicy();
+        int resId = ResearchStack.getInstance()
+                                 .getPrivacyPolicy();
         String docName = getResources().getResourceEntryName(resId);
-        Intent intent = ViewWebDocumentActivity
-                .newIntent(getContext(), getString(R.string.settings_privacy_policy), docName);
+        Intent intent = ViewWebDocumentActivity.newIntent(getContext(), getString(
+                R.string.settings_privacy_policy), docName);
         startActivity(intent);
     }
 

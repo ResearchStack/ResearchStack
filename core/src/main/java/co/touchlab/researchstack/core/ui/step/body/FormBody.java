@@ -18,28 +18,24 @@ import co.touchlab.researchstack.core.step.Step;
 
 public class FormBody implements StepBody
 {
-    private LinearLayout body;
-    private FormStep formStep;
+    private LinearLayout   body;
+    private FormStep       formStep;
     private List<StepBody> formStepBodies;
-    private String identifier;
+    private String         identifier;
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         this.formStep = (FormStep) step;
 
-        body = (LinearLayout) inflater.inflate(R.layout.scene_form_body,
-                parent,
-                false);
+        body = (LinearLayout) inflater.inflate(R.layout.scene_form_body, parent, false);
 
         List<QuestionStep> items = formStep.getFormSteps();
         formStepBodies = new ArrayList<>(items.size());
-        for (QuestionStep item : items)
+        for(QuestionStep item : items)
         {
             StepBody stepBody = createStepBody(item);
-            View bodyView = stepBody.initViewCompact(inflater,
-                    body,
-                    item);
+            View bodyView = stepBody.initViewCompact(inflater, body, item);
             // TODO this is a little weird, but normal question steps use default, forms use ids
             stepBody.setIdentifier(item.getIdentifier());
 
@@ -56,34 +52,17 @@ public class FormBody implements StepBody
         throw new RuntimeException("No compact view for this type of step");
     }
 
-
-    @NonNull
-    private StepBody createStepBody(Step step)
-    {
-        try
-        {
-            Class cls = step.getSceneClass();
-            Constructor constructor = cls.getConstructor();
-            return (StepBody) constructor.newInstance();
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public StepResult getStepResult()
     {
         StepResult<StepResult> stepResult = new StepResult<>(identifier);
 
-        for (StepBody formStepBody : formStepBodies)
+        for(StepBody formStepBody : formStepBodies)
         {
             StepResult result = formStepBody.getStepResult();
-            if (result != null)
+            if(result != null)
             {
-                stepResult.setResultForIdentifier(formStepBody.getIdentifier(),
-                        result);
+                stepResult.setResultForIdentifier(formStepBody.getIdentifier(), result);
             }
         }
 
@@ -93,10 +72,11 @@ public class FormBody implements StepBody
     @Override
     public void prefillResult(StepResult result)
     {
-        for (StepBody formStepBody : formStepBodies)
+        for(StepBody formStepBody : formStepBodies)
         {
-            StepResult formStepResult = (StepResult) result.getResultForIdentifier(formStepBody.getIdentifier());
-            if (formStepResult != null)
+            StepResult formStepResult = (StepResult) result.getResultForIdentifier(
+                    formStepBody.getIdentifier());
+            if(formStepResult != null)
             {
                 formStepBody.prefillResult(formStepResult);
             }
@@ -106,10 +86,10 @@ public class FormBody implements StepBody
     @Override
     public boolean isAnswerValid()
     {
-        for (StepBody formStepBody : formStepBodies)
+        for(StepBody formStepBody : formStepBodies)
         {
             // TODO show better invalid feedback
-            if (!formStepBody.isAnswerValid())
+            if(! formStepBody.isAnswerValid())
             {
                 return false;
             }
@@ -127,5 +107,20 @@ public class FormBody implements StepBody
     public void setIdentifier(String identifier)
     {
         this.identifier = identifier;
+    }
+
+    @NonNull
+    private StepBody createStepBody(Step step)
+    {
+        try
+        {
+            Class cls = step.getSceneClass();
+            Constructor constructor = cls.getConstructor();
+            return (StepBody) constructor.newInstance();
+        }
+        catch(Exception e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }

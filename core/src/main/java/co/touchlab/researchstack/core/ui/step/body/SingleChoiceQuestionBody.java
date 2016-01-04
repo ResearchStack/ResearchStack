@@ -16,13 +16,13 @@ import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 
-public class SingleChoiceQuestionBody<T> implements StepBody
+public class SingleChoiceQuestionBody <T> implements StepBody
 {
-    private RadioGroup radioGroup;
+    private RadioGroup         radioGroup;
     private ChoiceAnswerFormat format;
-    private Choice<T>[] choices;
+    private Choice<T>[]        choices;
     private String identifier = StepResult.DEFAULT_KEY;
-    private T currentSelection;
+    private T        currentSelection;
     private TextView formLabel;
 
     public SingleChoiceQuestionBody()
@@ -38,12 +38,11 @@ public class SingleChoiceQuestionBody<T> implements StepBody
         // TODO inflate this?
         radioGroup = new RadioGroup(inflater.getContext());
 
-        for (int i = 0; i < choices.length; i++)
+        for(int i = 0; i < choices.length; i++)
         {
             Choice choice = choices[i];
             RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.item_radio,
-                    radioGroup,
-                    false);
+                                                                     radioGroup, false);
             radioButton.setText(choice.getText());
             radioButton.setId(i);
             radioGroup.addView(radioButton);
@@ -60,9 +59,7 @@ public class SingleChoiceQuestionBody<T> implements StepBody
     @Override
     public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        View formItemView = inflater.inflate(R.layout.scene_form_item,
-                parent,
-                false);
+        View formItemView = inflater.inflate(R.layout.scene_form_item, parent, false);
 
         TextView label = (TextView) formItemView.findViewById(R.id.text);
 
@@ -74,37 +71,12 @@ public class SingleChoiceQuestionBody<T> implements StepBody
         choices = format.getChoices();
 
         RxView.clicks(formLabel)
-                .subscribe(o -> {
-                    showDialog(formLabel,
-                            step.getTitle());
-                });
+              .subscribe(o -> {
+                  showDialog(formLabel, step.getTitle());
+              });
 
         return formItemView;
     }
-
-    private void showDialog(TextView textView, String title)
-    {
-        // TODO use same view as initView() and just set the dialog's view to it?
-        int[] checked = new int[1];
-        new AlertDialog.Builder(textView.getContext())
-                .setSingleChoiceItems(format.getTextChoiceNames(),
-                        0,
-                        (dialog, which) -> {
-                            checked[0] = which;
-                        })
-                .setTitle(title)
-                .setPositiveButton(R.string.src_ok,
-                        (dialog, which) -> {
-                            // TODO this array of one this is weird, revisit
-                            Choice<T> choice = choices[checked[0]];
-                            currentSelection = choice.getValue();
-                            textView.setText(choice.getText());
-                        })
-                .setNegativeButton(R.string.src_cancel,
-                        null)
-                .show();
-    }
-
 
     @Override
     public StepResult getStepResult()
@@ -119,24 +91,25 @@ public class SingleChoiceQuestionBody<T> implements StepBody
     {
         T resultValue = (T) result.getResult();
 
-        if (resultValue == null)
+        if(resultValue == null)
         {
             return;
         }
 
 
-        if (radioGroup != null)
+        if(radioGroup != null)
         {
             // Full body view
             // TODO precheck current choice
-//            radioButton.setChecked(resultValue.equals(choice.getValue()));
+            //            radioButton.setChecked(resultValue.equals(choice.getValue()));
         }
         else
         {
             // Compact form view
-            for (Choice<T> choice : choices)
+            for(Choice<T> choice : choices)
             {
-                if (choice.getValue().equals(resultValue))
+                if(choice.getValue()
+                         .equals(resultValue))
                 {
                     currentSelection = choice.getValue();
                     formLabel.setText(choice.getText());
@@ -152,14 +125,35 @@ public class SingleChoiceQuestionBody<T> implements StepBody
     }
 
     @Override
+    public String getIdentifier()
+    {
+        return identifier;
+    }
+
+    @Override
     public void setIdentifier(String identifier)
     {
         this.identifier = identifier;
     }
 
-    @Override
-    public String getIdentifier()
+    private void showDialog(TextView textView, String title)
     {
-        return identifier;
+        // TODO use same view as initView() and just set the dialog's view to it?
+        int[] checked = new int[1];
+        new AlertDialog.Builder(textView.getContext()).setSingleChoiceItems(
+                format.getTextChoiceNames(), 0, (dialog, which) -> {
+                    checked[0] = which;
+                })
+                                                      .setTitle(title)
+                                                      .setPositiveButton(R.string.src_ok,
+                                                                         (dialog, which) -> {
+                                                                             // TODO this array of one this is weird, revisit
+                                                                             Choice<T> choice = choices[checked[0]];
+                                                                             currentSelection = choice.getValue();
+                                                                             textView.setText(
+                                                                                     choice.getText());
+                                                                         })
+                                                      .setNegativeButton(R.string.src_cancel, null)
+                                                      .show();
     }
 }

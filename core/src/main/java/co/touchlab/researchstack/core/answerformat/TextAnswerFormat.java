@@ -33,15 +33,15 @@ public class TextAnswerFormat extends AnswerFormat
         this.isMultipleLines = isMultipleLines;
     }
 
-    public InputFilter [] getInputFilters()
+    public InputFilter[] getInputFilters()
     {
-        if (maximumLength > UNLIMITED_LENGTH)
+        if(maximumLength > UNLIMITED_LENGTH)
         {
             return new InputFilter[] {new InputFilter.LengthFilter(maximumLength)};
         }
         else
         {
-           return new InputFilter[0];
+            return new InputFilter[0];
         }
     }
 
@@ -62,25 +62,24 @@ public class TextAnswerFormat extends AnswerFormat
     }
 
 
+    //    + (BOOL)supportsSecureCoding {
+    //    return YES;
+    //}
 
-//    + (BOOL)supportsSecureCoding {
-//    return YES;
-//}
+    //    - (BOOL)isEqual:(id)object {
+    //    BOOL isParentSame = [super isEqual:object];
+    //
+    //    __typeof(self) castObject = object;
+    //    return (isParentSame &&
+    //            (self.maximumLength == castObject.maximumLength &&
+    //                    self.autocapitalizationType == castObject.autocapitalizationType &&
+    //                    self.autocorrectionType == castObject.autocorrectionType &&
+    //                    self.spellCheckingType == castObject.spellCheckingType &&
+    //                    self.multipleLines == castObject.multipleLines));
+    //}
 
-//    - (BOOL)isEqual:(id)object {
-//    BOOL isParentSame = [super isEqual:object];
-//
-//    __typeof(self) castObject = object;
-//    return (isParentSame &&
-//            (self.maximumLength == castObject.maximumLength &&
-//                    self.autocapitalizationType == castObject.autocapitalizationType &&
-//                    self.autocorrectionType == castObject.autocorrectionType &&
-//                    self.spellCheckingType == castObject.spellCheckingType &&
-//                    self.multipleLines == castObject.multipleLines));
-//}
-
-//    - (BOOL)isAnswerValidWithString:(NSString *)text {
-//    return (_maximumLength == 0 || [text length] <= _maximumLength);
-//}
+    //    - (BOOL)isAnswerValidWithString:(NSString *)text {
+    //    return (_maximumLength == 0 || [text length] <= _maximumLength);
+    //}
 
 }

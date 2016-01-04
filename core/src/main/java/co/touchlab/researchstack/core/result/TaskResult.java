@@ -52,7 +52,6 @@ public class TaskResult extends Result
 
     public void setStepResultForStepIdentifier(String identifier, StepResult stepResult)
     {
-        results.put(identifier,
-                stepResult);
+        results.put(identifier, stepResult);
     }
 }

@@ -1,42 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:gravity="center_horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+    >
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="52dp">
+        android:layout_height="52dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
 
         <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/height"
-            android:gravity="center"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"/>
+            />
 
-        <include layout="@layout/view_height_picker" />
+        <include layout="@layout/view_height_picker"/>
     </LinearLayout>
+
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="52dp">
+        android:layout_height="52dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
 
         <TextView
-            android:text="@string/weight"
-            android:gravity="center"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/weight"
+            />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="@string/weight_hint"
             android:inputType="number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            />
     </LinearLayout>
 
 

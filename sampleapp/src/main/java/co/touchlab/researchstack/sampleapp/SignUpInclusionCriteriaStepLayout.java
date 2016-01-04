@@ -30,6 +30,19 @@ public class SignUpInclusionCriteriaStepLayout extends AbstractSignUpInclusionCr
     }
 
     @Override
+    public void onBodyCreated(View body)
+    {
+        humanRadioGroup = (RadioGroup) body.findViewById(R.id.human_radio_group);
+    }
+
+    @Override
+    public boolean isAnswerValid()
+    {
+        // make sure the user has answered all the eligibility questions
+        return humanRadioGroup.getCheckedRadioButtonId() != - 1;
+    }
+
+    @Override
     public int getLayoutId()
     {
         return R.layout.item_inclusion_criteria;
@@ -39,18 +52,5 @@ public class SignUpInclusionCriteriaStepLayout extends AbstractSignUpInclusionCr
     public boolean isEligible()
     {
         return humanRadioGroup.getCheckedRadioButtonId() == R.id.human_radio_yes;
-    }
-
-    @Override
-    public boolean isAnswerValid()
-    {
-        // make sure the user has answered all the eligibility questions
-        return humanRadioGroup.getCheckedRadioButtonId() != -1;
-    }
-
-    @Override
-    public void onBodyCreated(View body)
-    {
-        humanRadioGroup = (RadioGroup) body.findViewById(R.id.human_radio_group);
     }
 }

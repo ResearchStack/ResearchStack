@@ -2,37 +2,42 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:showIn="@layout/item_general_info">
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    tools:showIn="@layout/item_general_info"
+    >
 
     <ImageView
         android:id="@+id/profile_image"
-        android:src="@drawable/splash"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:longClickable="true"
         android:padding="12dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:src="@drawable/splash"
+        />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        >
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/name"
-            android:hint="@string/rsc_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:hint="@string/rsc_name"
+            />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/email"
-            android:hint="@string/rsc_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:hint="@string/rsc_email"
+            />
 
     </LinearLayout>
 </LinearLayout>

@@ -7,7 +7,7 @@ public class ChoiceAnswerFormat extends AnswerFormat
 {
 
     private AnswerFormat.ChoiceAnswerStyle answerStyle;
-    private Choice[] choices;
+    private Choice[]                       choices;
 
     public ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle answerStyle, Choice... choices)
     {
@@ -19,7 +19,8 @@ public class ChoiceAnswerFormat extends AnswerFormat
     public QuestionType getQuestionType()
     {
         // TODO not sure what the point of question type is since answer style already has this distinction
-        return answerStyle == ChoiceAnswerStyle.MultipleChoice ? QuestionType.MultipleChoice : QuestionType.SingleChoice;
+        return answerStyle == ChoiceAnswerStyle.MultipleChoice ? QuestionType.MultipleChoice
+                : QuestionType.SingleChoice;
     }
 
     public Choice[] getChoices()
@@ -30,7 +31,7 @@ public class ChoiceAnswerFormat extends AnswerFormat
     public String[] getTextChoiceNames()
     {
         String[] names = new String[choices.length];
-        for (int i = 0; i < choices.length; i++)
+        for(int i = 0; i < choices.length; i++)
         {
             names[i] = choices[i].getText();
         }

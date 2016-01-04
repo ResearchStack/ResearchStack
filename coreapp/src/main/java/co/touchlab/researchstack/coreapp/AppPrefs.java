@@ -8,33 +8,34 @@ import android.preference.PreferenceManager;
  */
 public class AppPrefs
 {
-    public static final String HAS_CONSENTED = "HAS_CONSENTED";
-    public static final String CONSENT_NAME = "CONSENT_NAME";
+    public static final String HAS_CONSENTED     = "HAS_CONSENTED";
+    public static final String CONSENT_NAME      = "CONSENT_NAME";
     public static final String CONSENT_SIGNATURE = "CONSENT_SIGNATURE";
-    public static final String HAS_SURVEYED = "HAS_SURVEYED";
-    public static final String SURVEY_RESULT = "SURVEY_RESULT";
+    public static final String HAS_SURVEYED      = "HAS_SURVEYED";
+    public static final String SURVEY_RESULT     = "SURVEY_RESULT";
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Statics
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private static AppPrefs          instance;
+    private static AppPrefs instance;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Field Vars
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private final  SharedPreferences prefs;
+    private final SharedPreferences prefs;
+
+    AppPrefs(Context context)
+    {
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    }
 
     public static synchronized AppPrefs getInstance(Context context)
     {
         if(instance == null)
         {
             instance = new AppPrefs(context);
-        } return instance;
-    }
-
-    AppPrefs(Context context)
-    {
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        }
+        return instance;
     }
 
     public boolean hasConsented()
@@ -44,7 +45,9 @@ public class AppPrefs
 
     public void setHasConsented(boolean consented)
     {
-        prefs.edit().putBoolean(HAS_CONSENTED, consented).apply();
+        prefs.edit()
+             .putBoolean(HAS_CONSENTED, consented)
+             .apply();
     }
 
     public boolean hasSurveyed()
@@ -54,6 +57,8 @@ public class AppPrefs
 
     public void setHasSurveyed(boolean surveyed)
     {
-        prefs.edit().putBoolean(HAS_SURVEYED, surveyed).apply();
+        prefs.edit()
+             .putBoolean(HAS_SURVEYED, surveyed)
+             .apply();
     }
 }

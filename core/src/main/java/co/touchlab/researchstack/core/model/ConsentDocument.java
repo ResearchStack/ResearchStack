@@ -7,33 +7,32 @@ import java.util.List;
 
 /**
  * TODO Implement method / ability -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
- *
+ * <p>
  * Initializer with ORKHTMLPDFWriter parameter. Allows for injecting mock dependency for the
  * purposes of isolated unit testing.
  *
- * @param writer              The instance of the ORKHTMLPDFWriter upon which the class depends.
- * @param sectionFormatter    An instance of ORKConsentSectionFormatter
- * @param signatureFormatter  An instance of ORKConsentSignatureFormatter
- *
- * public void initWithHTMLPDFWriter(HTMLPDFWriter writer, ConsentSectionFormatter sectionFormatter,
- *                            SignatureFormatter signatureFormatter) { }
- *
- * TODO Implement method / ability -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
- *
- * The PDF is generated in a form suitable for printing. This is done asynchronously,
- * so the PDF data is returned through a completion block.
- *
- * @param handler     The handler block for generated PDF data. When successful, the returned
- *                    data represents a complete PDF document that represents the consent.
- *
- * - (void)makePDFWithCompletionHandler:(void (^)(NSData * __nullable PDFData, NSError * __nullable error))handler;
+ * @param writer             The instance of the ORKHTMLPDFWriter upon which the class depends.
+ * @param sectionFormatter   An instance of ORKConsentSectionFormatter
+ * @param signatureFormatter An instance of ORKConsentSignatureFormatter
+ *                           <p>
+ *                           public void initWithHTMLPDFWriter(HTMLPDFWriter writer, ConsentSectionFormatter sectionFormatter,
+ *                           SignatureFormatter signatureFormatter) { }
+ *                           <p>
+ *                           TODO Implement method / ability -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ *                           <p>
+ *                           The PDF is generated in a form suitable for printing. This is done asynchronously,
+ *                           so the PDF data is returned through a completion block.
+ * @param handler            The handler block for generated PDF data. When successful, the returned
+ *                           data represents a complete PDF document that represents the consent.
+ *                           <p>
+ *                           - (void)makePDFWithCompletionHandler:(void (^)(NSData * __nullable PDFData, NSError * __nullable error))handler;
  */
 public class ConsentDocument implements Serializable
 {
 
     /**
      * The document's title in a localized string.
-     *
+     * <p>
      * The title appears only in the generated PDF for review; it is not used in the
      * visual consent process.
      */
@@ -42,27 +41,27 @@ public class ConsentDocument implements Serializable
     /**
      * The sections to be in printed in the PDF file and or presented in the
      * visual consent sequence.
-     *
+     * <p>
      * All sections appear in the animated process, except for those sections of the
      * type `ORKConsentSectionTypeOnlyInDocument`.
-     *
+     * <p>
      * If the `htmlReviewContent` property is not set, this content is also used to
      * populate the document for review in the consent review step.
-     *
+     * <p>
      * The PDF file contains all sections.
      */
-    private List <ConsentSection> sections;
+    private List<ConsentSection> sections;
 
     /**
      * The title to be rendered on the signature page of the generated PDF in a localized string.
-     *
+     * <p>
      * The title is ignored for visual consent. The title is also ignored if you supply a value for the `htmlReviewContent` property.
      */
     private int signaturePageTitle;
 
     /**
      * The content to be rendered below the title on the signature page of the generated PDF in a localized string.
-     *
+     * <p>
      * The content is ignored for visual consent. The content is also ignored if you supply a value for the `htmlReviewContent` property.
      */
     @Deprecated
@@ -70,7 +69,7 @@ public class ConsentDocument implements Serializable
 
     /**
      * The set of signatures that are required or prepopulated in the document.
-     *
+     * <p>
      * To add a signature to the document after consent review, the `signatures` array
      * needs to be modified to incorporate the new signature content prior to PDF
      * generation. For more information, see `[ORKConsentSignatureResult applyToDocument:]`.
@@ -79,10 +78,10 @@ public class ConsentDocument implements Serializable
 
     /**
      * Override HTML content for review.
-     *
+     * <p>
      * Typically, the review content is generated from the values of the `sections` and `signatures`
      * properties.
-     *
+     * <p>
      * When this property is set, the review content is reproduced exactly as provided in the property
      * in the consent review step, and the `sections` and `signatures` properties
      * are ignored.
@@ -95,15 +94,15 @@ public class ConsentDocument implements Serializable
         this.title = title;
     }
 
-    public void setSignaturePageTitle(@StringRes int signaturePageTitle)
-    {
-        this.signaturePageTitle = signaturePageTitle;
-    }
-
     @StringRes
     public int getSignaturePageTitle()
     {
         return signaturePageTitle;
+    }
+
+    public void setSignaturePageTitle(@StringRes int signaturePageTitle)
+    {
+        this.signaturePageTitle = signaturePageTitle;
     }
 
     @Deprecated
@@ -112,15 +111,10 @@ public class ConsentDocument implements Serializable
         this.signaturePageContent = signaturePageContent;
     }
 
-    public void setSections(List<ConsentSection> sections)
-    {
-        this.sections = sections;
-    }
-
     /**
      * Adds a signature to the array of signatures.
      *
-     * @param signature    The signature object to add to the document.
+     * @param signature The signature object to add to the document.
      */
     public void addSignature(ConsentSignature signature)
     {
@@ -137,14 +131,19 @@ public class ConsentDocument implements Serializable
         return sections;
     }
 
-    public void setHtmlReviewContent(String htmlReviewContent)
+    public void setSections(List<ConsentSection> sections)
     {
-        this.htmlReviewContent = htmlReviewContent;
+        this.sections = sections;
     }
 
     public String getHtmlReviewContent()
     {
         return htmlReviewContent;
+    }
+
+    public void setHtmlReviewContent(String htmlReviewContent)
+    {
+        this.htmlReviewContent = htmlReviewContent;
     }
 
 }

@@ -6,38 +6,38 @@ public class DateAnswerFormat extends AnswerFormat
 {
 
     /**
-     The style of date entry.
+     * The style of date entry.
      */
     private DateAnswerStyle style;
 
     /**
-     The date to use as the default.
-
-     The date is displayed in the user's time zone.
-     When the value of this property is `nil`, the current time is used as the default.
+     * The date to use as the default.
+     * <p>
+     * The date is displayed in the user's time zone.
+     * When the value of this property is `nil`, the current time is used as the default.
      */
     private Date defaultDate;
 
     /**
-     The minimum allowed date.
-
-     When the value of this property is `nil`, there is no minimum.
+     * The minimum allowed date.
+     * <p>
+     * When the value of this property is `nil`, there is no minimum.
      */
     private Date minimumDate;
 
     /**
-     The maximum allowed date.
-
-     When the value of this property is `nil`, there is no maximum.
+     * The maximum allowed date.
+     * <p>
+     * When the value of this property is `nil`, there is no maximum.
      */
     private Date maximumDate;
 
     /**
-     The calendar to use in the picker.
-
-     When the value of this property is `nil`, the picker uses the default calendar for the current locale.
+     * The calendar to use in the picker.
+     * <p>
+     * When the value of this property is `nil`, the picker uses the default calendar for the current locale.
      */
-    private Calendar  calendar;
+    private Calendar calendar;
 
     public DateAnswerFormat(DateAnswerStyle style)
     {
@@ -87,63 +87,63 @@ public class DateAnswerFormat extends AnswerFormat
     }
 
     //    - (BOOL)isEqual:(id)object {
-//      BOOL isParentSame = [super isEqual:object];
-//
-//      __typeof(self) castObject = object;
-//      return (isParentSame &&
-//            ORKEqualObjects(self.defaultDate, castObject.defaultDate) &&
-//            ORKEqualObjects(self.minimumDate, castObject.minimumDate) &&
-//            ORKEqualObjects(self.maximumDate, castObject.maximumDate) &&
-//            ORKEqualObjects(self.calendar, castObject.calendar) &&
-//            (_style == castObject.style));
-//    }
+    //      BOOL isParentSame = [super isEqual:object];
+    //
+    //      __typeof(self) castObject = object;
+    //      return (isParentSame &&
+    //            ORKEqualObjects(self.defaultDate, castObject.defaultDate) &&
+    //            ORKEqualObjects(self.minimumDate, castObject.minimumDate) &&
+    //            ORKEqualObjects(self.maximumDate, castObject.maximumDate) &&
+    //            ORKEqualObjects(self.calendar, castObject.calendar) &&
+    //            (_style == castObject.style));
+    //    }
 
-//    - (NSUInteger)hash {
-//        // Don't bother including everything - style is the main item.
-//        return [super hash] & [self.defaultDate hash] ^ _style;
-//    }
+    //    - (NSUInteger)hash {
+    //        // Don't bother including everything - style is the main item.
+    //        return [super hash] & [self.defaultDate hash] ^ _style;
+    //    }
 
-//    - (NSDateFormatter *)resultDateFormatter {
-//        NSDateFormatter *dfm = nil;
-//        switch (self.questionType) {
-//            case ORKQuestionTypeDate: {
-//                dfm = ORKResultDateFormatter();
-//                break;
-//            }
-//            case ORKQuestionTypeTimeOfDay: {
-//                dfm = ORKResultTimeFormatter();
-//                break;
-//            }
-//            case ORKQuestionTypeDateAndTime: {
-//                dfm = ORKResultDateTimeFormatter();
-//                break;
-//            }
-//            default:
-//                break;
-//        }
-//
-//        dfm = [dfm copy];
-//        dfm.calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-//        return dfm;
-//    }
+    //    - (NSDateFormatter *)resultDateFormatter {
+    //        NSDateFormatter *dfm = nil;
+    //        switch (self.questionType) {
+    //            case ORKQuestionTypeDate: {
+    //                dfm = ORKResultDateFormatter();
+    //                break;
+    //            }
+    //            case ORKQuestionTypeTimeOfDay: {
+    //                dfm = ORKResultTimeFormatter();
+    //                break;
+    //            }
+    //            case ORKQuestionTypeDateAndTime: {
+    //                dfm = ORKResultDateTimeFormatter();
+    //                break;
+    //            }
+    //            default:
+    //                break;
+    //        }
+    //
+    //        dfm = [dfm copy];
+    //        dfm.calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    //        return dfm;
+    //    }
 
-//    - (NSString *)stringFromDate:(NSDate *)date {
-//        NSDateFormatter *dfm = [self resultDateFormatter];
-//        return [dfm stringFromDate:date];
-//    }
+    //    - (NSString *)stringFromDate:(NSDate *)date {
+    //        NSDateFormatter *dfm = [self resultDateFormatter];
+    //        return [dfm stringFromDate:date];
+    //    }
 
-//    - (NSDate *)dateFromString:(NSString *)string {
-//        NSDateFormatter *dfm = [self resultDateFormatter];
-//        return [dfm dateFromString:string];
-//    }
+    //    - (NSDate *)dateFromString:(NSString *)string {
+    //        NSDateFormatter *dfm = [self resultDateFormatter];
+    //        return [dfm dateFromString:string];
+    //    }
 
-//    - (ORKQuestionType) questionType {
-//        return ORKQuestionTypeDateAndTime + _style;
-//    }
+    //    - (ORKQuestionType) questionType {
+    //        return ORKQuestionTypeDateAndTime + _style;
+    //    }
 
-//    + (BOOL)supportsSecureCoding {
-//        return YES;
-//    }
+    //    + (BOOL)supportsSecureCoding {
+    //        return YES;
+    //    }
 
 
 }

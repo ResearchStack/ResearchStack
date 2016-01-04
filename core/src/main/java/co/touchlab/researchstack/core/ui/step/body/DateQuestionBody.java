@@ -49,12 +49,14 @@ public class DateQuestionBody implements StepBody
 
         if(format.getMinimumDate() != null)
         {
-            datePicker.setMinDate(format.getMinimumDate().getTime());
+            datePicker.setMinDate(format.getMinimumDate()
+                                        .getTime());
         }
 
         if(format.getMaximumDate() != null)
         {
-            datePicker.setMaxDate(format.getMaximumDate().getTime());
+            datePicker.setMaxDate(format.getMaximumDate()
+                                        .getTime());
         }
 
         initCalendar();
@@ -63,14 +65,9 @@ public class DateQuestionBody implements StepBody
         int initMonth = calendar.get(Calendar.MONTH);
         int initDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        datePicker.init(initYear,
-                initMonth,
-                initDay,
-                (view, year, monthOfYear, dayOfMonth) -> {
-                    calendar.set(year,
-                            monthOfYear,
-                            dayOfMonth);
-                });
+        datePicker.init(initYear, initMonth, initDay, (view, year, monthOfYear, dayOfMonth) -> {
+                            calendar.set(year, monthOfYear, dayOfMonth);
+                        });
 
         return datePicker;
     }
@@ -78,9 +75,7 @@ public class DateQuestionBody implements StepBody
     @Override
     public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        View formItemView = inflater.inflate(R.layout.scene_form_item,
-                parent,
-                false);
+        View formItemView = inflater.inflate(R.layout.scene_form_item, parent, false);
 
         TextView label = (TextView) formItemView.findViewById(R.id.text);
 
@@ -95,55 +90,11 @@ public class DateQuestionBody implements StepBody
         initCalendar();
 
         RxView.clicks(textView)
-                .subscribe(o -> {
-                    showDialog(textView);
-                });
+              .subscribe(o -> {
+                  showDialog(textView);
+              });
 
         return formItemView;
-    }
-
-    private void showDialog(TextView textView)
-    {
-        // TODO use same view as initView() and just set the dialog's view to it?
-        new DatePickerDialog(textView.getContext(),
-                (view, year, monthOfYear, dayOfMonth) -> {
-                    calendar.set(year,
-                            monthOfYear,
-                            dayOfMonth);
-                    String formattedResult = createFormattedResult();
-                    textView.setText(formattedResult);
-                },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    private Date getDateFromString(String savedFrmtdDate)
-    {
-        try
-        {
-            return dateFormat.parse(savedFrmtdDate);
-        }
-        catch (ParseException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private String createFormattedResult()
-    {
-        return dateFormat.format(calendar.getTime());
-    }
-
-    private void initCalendar()
-    {
-        calendar = Calendar.getInstance();
-
-        if (format.getDefaultDate() != null)
-        {
-            Date dfltDate = format.getDefaultDate();
-            calendar.setTime(dfltDate);
-        }
     }
 
     @Override
@@ -159,15 +110,14 @@ public class DateQuestionBody implements StepBody
     {
         //Set initial state
         String savedFrmtdDate = (String) result.getResult();
-        if (!TextUtils.isEmpty(savedFrmtdDate))
+        if(! TextUtils.isEmpty(savedFrmtdDate))
         {
             Date savedDate = getDateFromString(savedFrmtdDate);
             calendar.setTime(savedDate);
-            if (datePicker != null)
+            if(datePicker != null)
             {
-                datePicker.updateDate(calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH));
+                datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                                      calendar.get(Calendar.DAY_OF_MONTH));
             }
         }
     }
@@ -184,12 +134,12 @@ public class DateQuestionBody implements StepBody
 
         Date resultDate = calendar.getTime();
 
-        if (minDate != null && resultDate.getTime() < minDate.getTime())
+        if(minDate != null && resultDate.getTime() < minDate.getTime())
         {
             return false;
         }
 
-        if (maxDate != null && resultDate.getTime() > maxDate.getTime())
+        if(maxDate != null && resultDate.getTime() > maxDate.getTime())
         {
             return false;
         }
@@ -207,5 +157,44 @@ public class DateQuestionBody implements StepBody
     public void setIdentifier(String identifier)
     {
         this.identifier = identifier;
+    }
+
+    private void showDialog(TextView textView)
+    {
+        // TODO use same view as initView() and just set the dialog's view to it?
+        new DatePickerDialog(textView.getContext(), (view, year, monthOfYear, dayOfMonth) -> {
+            calendar.set(year, monthOfYear, dayOfMonth);
+            String formattedResult = createFormattedResult();
+            textView.setText(formattedResult);
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                             calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private Date getDateFromString(String savedFrmtdDate)
+    {
+        try
+        {
+            return dateFormat.parse(savedFrmtdDate);
+        }
+        catch(ParseException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String createFormattedResult()
+    {
+        return dateFormat.format(calendar.getTime());
+    }
+
+    private void initCalendar()
+    {
+        calendar = Calendar.getInstance();
+
+        if(format.getDefaultDate() != null)
+        {
+            Date dfltDate = format.getDefaultDate();
+            calendar.setTime(dfltDate);
+        }
     }
 }

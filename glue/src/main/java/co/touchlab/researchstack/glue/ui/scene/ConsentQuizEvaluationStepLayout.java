@@ -33,15 +33,15 @@ public class ConsentQuizEvaluationStepLayout extends StepLayoutImpl<Boolean>
         ConsentQuizEvaluationStep step = (ConsentQuizEvaluationStep) getStep();
 
         // We have failed
-        if(!step.isQuizPassed())
+        if(! step.isQuizPassed())
         {
-            int iconResId = ResUtils.getDrawableResourceId(
-                    getContext(), step.getQuestionProperties().incorrectIcon);
+            int iconResId = ResUtils.getDrawableResourceId(getContext(),
+                                                           step.getQuestionProperties().incorrectIcon);
 
             setImage(iconResId);
             setTitle(R.string.rsc_quiz_evaluation_try_again);
 
-            if(!step.isOverMaxAttempts())
+            if(! step.isOverMaxAttempts())
             {
                 setSummary(step.getQuestionProperties().quizFailure1Text);
                 setNextButtonText(R.string.rsc_quiz_evaluation_retake);
@@ -56,8 +56,8 @@ public class ConsentQuizEvaluationStepLayout extends StepLayoutImpl<Boolean>
         // We have passed
         else
         {
-            int iconResId = ResUtils.getDrawableResourceId(
-                    getContext(), step.getQuestionProperties().correctIcon);
+            int iconResId = ResUtils.getDrawableResourceId(getContext(),
+                                                           step.getQuestionProperties().correctIcon);
 
             setImage(iconResId);
             setTitle(R.string.rsc_quiz_evaluation_great_job);

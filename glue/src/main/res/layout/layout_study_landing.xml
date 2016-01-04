@@ -3,30 +3,32 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <ImageView
             android:id="@+id/layout_studyoverview_landing_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="center"
             android:minHeight="72dp"
             android:minWidth="72dp"
+            android:scaleType="center"
             tools:src="@mipmap/ic_launcher"
             />
 
         <TextView
             android:id="@+id/layout_studyoverview_landing_title"
             style="@style/TextAppearance.AppCompat.Headline"
-            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             tools:text="@string/lorem_name"
             />
 

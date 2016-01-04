@@ -16,7 +16,7 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 public class TextQuestionBody implements StepBody
 {
     private QuestionStep step;
-    private EditText editText;
+    private EditText     editText;
 
     // TODO why does the result need to know its own identifier, is there a better way
     private String identifier = StepResult.DEFAULT_KEY;
@@ -28,9 +28,7 @@ public class TextQuestionBody implements StepBody
     @Override
     public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        editText = (EditText) inflater.inflate(R.layout.item_edit_text,
-                parent,
-                false);
+        editText = (EditText) inflater.inflate(R.layout.item_edit_text, parent, false);
 
         setUpEditText(step);
 
@@ -40,9 +38,7 @@ public class TextQuestionBody implements StepBody
     @Override
     public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        View formItemView = inflater.inflate(R.layout.scene_form_item_editable,
-                parent,
-                false);
+        View formItemView = inflater.inflate(R.layout.scene_form_item_editable, parent, false);
 
         TextView label = (TextView) formItemView.findViewById(R.id.text);
 
@@ -55,36 +51,73 @@ public class TextQuestionBody implements StepBody
         return formItemView;
     }
 
+    @Override
+    public StepResult getStepResult()
+    {
+        StepResult<String> result = new StepResult<>(identifier);
+        result.setResult(editText.getText()
+                                 .toString());
+        return result;
+    }
+
+    @Override
+    public void prefillResult(StepResult result)
+    {
+        String stringResult = (String) result.getResult();
+        if(! TextUtils.isEmpty(stringResult))
+        {
+            editText.setText(stringResult);
+        }
+    }
+
+    @Override
+    public boolean isAnswerValid()
+    {
+        return ((TextAnswerFormat) step.getAnswerFormat()).isAnswerValid(editText.getText()
+                                                                                 .toString());
+    }
+
+    @Override
+    public String getIdentifier()
+    {
+        return identifier;
+    }
+
+    @Override
+    public void setIdentifier(String identifier)
+    {
+        this.identifier = identifier;
+    }
+
     private void setUpEditText(QuestionStep step)
     {
         this.step = step;
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
 
-        editText.setSingleLine(!format.isMultipleLines());
+        editText.setSingleLine(! format.isMultipleLines());
 
-        if (format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH)
+        if(format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH)
         {
             InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(
                     format.getMaximumLength());
-            InputFilter[] filters = insertFilter(editText.getFilters(),
-                    maxLengthFilter);
+            InputFilter[] filters = insertFilter(editText.getFilters(), maxLengthFilter);
             editText.setFilters(filters);
         }
     }
 
     private InputFilter[] insertFilter(InputFilter[] filters, InputFilter filter)
     {
-        if (filters == null || filters.length == 0)
+        if(filters == null || filters.length == 0)
         {
-            return new InputFilter[]{filter};
+            return new InputFilter[] {filter};
         }
         else
         {
             // Overwrite value if the filter to be inserted already exists in the filters array
-            for (int i = 0, size = filters.length; i < size; i++)
+            for(int i = 0, size = filters.length; i < size; i++)
             {
-                if (filters[i].getClass()
-                        .isInstance(filter))
+                if(filters[i].getClass()
+                             .isInstance(filter))
                 {
                     filters[i] = filter;
                     return filters;
@@ -95,51 +128,10 @@ public class TextQuestionBody implements StepBody
             // filter at the end of the array.
             int newSize = filters.length + 1;
             InputFilter newFilters[] = new InputFilter[newSize];
-            System.arraycopy(filters,
-                    0,
-                    newFilters,
-                    0,
-                    filters.length);
+            System.arraycopy(filters, 0, newFilters, 0, filters.length);
             newFilters[newSize - 1] = filter;
 
             return newFilters;
         }
-    }
-
-    @Override
-    public StepResult getStepResult()
-    {
-        StepResult<String> result = new StepResult<>(identifier);
-        result.setResult(editText.getText()
-                .toString());
-        return result;
-    }
-
-    @Override
-    public void prefillResult(StepResult result)
-    {
-        String stringResult = (String) result.getResult();
-        if (!TextUtils.isEmpty(stringResult))
-        {
-            editText.setText(stringResult);
-        }
-    }
-
-    @Override
-    public boolean isAnswerValid()
-    {
-        return ((TextAnswerFormat) step.getAnswerFormat()).isAnswerValid(editText.getText().toString());
-    }
-
-    @Override
-    public void setIdentifier(String identifier)
-    {
-        this.identifier = identifier;
-    }
-
-    @Override
-    public String getIdentifier()
-    {
-        return identifier;
     }
 }

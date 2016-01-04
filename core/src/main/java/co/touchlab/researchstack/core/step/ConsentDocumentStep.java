@@ -25,23 +25,23 @@ public class ConsentDocumentStep extends Step
         return ConsentDocumentStepLayout.class;
     }
 
-    public void setConsentHTML(String html)
-    {
-        this.html = html;
-    }
-
     public String getConsentHTML()
     {
         return html;
     }
 
-    public void setConfirmMessage(String confirmMessage)
+    public void setConsentHTML(String html)
     {
-        this.confirmMessage = confirmMessage;
+        this.html = html;
     }
 
     public String getConfirmMessage()
     {
         return confirmMessage;
+    }
+
+    public void setConfirmMessage(String confirmMessage)
+    {
+        this.confirmMessage = confirmMessage;
     }
 }

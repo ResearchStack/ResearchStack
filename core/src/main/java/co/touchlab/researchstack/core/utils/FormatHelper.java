@@ -13,6 +13,7 @@ public class FormatHelper
     /**
      * Helper method to return a formatter suitable for
      * {@link ConsentSignatureStepLayout}
+     *
      * @return DateFormat that is a DateInstance (only formats y, m, and d attributes)
      */
     public static DateFormat getSignatureFormat()
@@ -30,19 +31,19 @@ public class FormatHelper
     public static DateFormat getFormat(int dateStyle, int timeStyle)
     {
         // Date & Time format
-        if (isStyle(dateStyle) && isStyle(timeStyle))
+        if(isStyle(dateStyle) && isStyle(timeStyle))
         {
             return DateFormat.getDateTimeInstance(dateStyle, timeStyle);
         }
 
         // Date format
-        else if (isStyle(dateStyle) && !isStyle(timeStyle))
+        else if(isStyle(dateStyle) && ! isStyle(timeStyle))
         {
             return DateFormat.getDateInstance(dateStyle);
         }
 
         // Time format
-        else if (!isStyle(dateStyle) && isStyle(timeStyle))
+        else if(! isStyle(dateStyle) && isStyle(timeStyle))
         {
             return DateFormat.getTimeInstance(timeStyle);
         }

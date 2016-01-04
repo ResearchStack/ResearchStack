@@ -18,20 +18,12 @@ import co.touchlab.squeaky.table.TableUtils;
  */
 public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
 {
-    private static      int    DB_VERSION = 1;
-    public static String DB_NAME = "appdb";
+    public static  String DB_NAME    = "appdb";
+    private static int    DB_VERSION = 1;
     private static DatabaseHelper sInstance;
 
-    public static DatabaseHelper getInstance(Context context)
+    private DatabaseHelper(Context context)
     {
-        if(sInstance == null)
-        {
-            sInstance = new DatabaseHelper(context);
-        }
-        return sInstance;
-    }
-
-    private DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION/*, new PassphraseProvider()
         {
             @Override
@@ -40,6 +32,15 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
                 return secret;
             }
         }*/);
+    }
+
+    public static DatabaseHelper getInstance(Context context)
+    {
+        if(sInstance == null)
+        {
+            sInstance = new DatabaseHelper(context);
+        }
+        return sInstance;
     }
 
     @Override
@@ -87,7 +88,9 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
         try
         {
             Where<TaskRecord> where = new Where<>(getDao(TaskRecord.class));
-            List<TaskRecord> taskRecords = where.eq("taskId", taskId).query().list();
+            List<TaskRecord> taskRecords = where.eq("taskId", taskId)
+                                                .query()
+                                                .list();
             return taskRecords;
         }
         catch(SQLException e)
@@ -102,12 +105,15 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
         try
         {
             Map<String, TaskRecord> byTaskId = new HashMap<>();
-            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForAll().list();
+            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForAll()
+                                                                   .list();
             for(TaskRecord taskRecord : taskRecords)
             {
                 TaskRecord check = byTaskId.get(taskRecord.taskId);
                 if(check == null || check.completed.before(taskRecord.completed))
+                {
                     byTaskId.put(taskRecord.taskId, taskRecord);
+                }
             }
             return byTaskId;
         }

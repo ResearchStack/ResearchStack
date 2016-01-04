@@ -1,5 +1,4 @@
 {
-
   "evaluation_properties": {
     "incorrectIcon": "consent_quiz_retry",
     "correctIcon": "valid_icon",
@@ -26,34 +25,34 @@
       "constraints": {
         "dataType": "boolean",
         "type": "BooleanConstraints",
-        "validation":{
-          "answer":"true"
+        "validation": {
+          "answer": "true"
         }
       }
     },
     {
-      "identifier":"question2",
+      "identifier": "question2",
       "prompt": "Once I start participating in the study, I am free to withdraw at any time but the data I contributed will not be deleted.",
       "positiveFeedback": "You are free to withdraw at any time from the study. To withdraw, choose “Leave Study” on the app's “Profile” page, delete the app from your phone, or contact the researchers. Data you have contributed up until you withdraw will stay in the study but no further data will be gathered.",
       "negativeFeedback": "You are free to withdraw at any time from the study. To withdraw, choose “Leave Study” on the app's “Profile” page, delete the app from your phone, or contact the researchers. Data you have contributed up until you withdraw will stay in the study but no further data will be gathered.",
       "constraints": {
         "dataType": "boolean",
         "type": "BooleanConstraints",
-        "validation":{
-          "answer":"true"
+        "validation": {
+          "answer": "true"
         }
       }
     },
     {
-      "identifier":"question3",
+      "identifier": "question3",
       "prompt": "This app is a research study and not a commercial application.",
       "positiveFeedback": "This is a research study and not a commercial application.",
       "negativeFeedback": "This is a research study and not a commercial application.",
       "constraints": {
         "dataType": "boolean",
         "type": "BooleanConstraints",
-        "validation":{
-          "answer":"true"
+        "validation": {
+          "answer": "true"
         }
       }
     }

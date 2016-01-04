@@ -7,13 +7,13 @@ import java.util.Map;
 /**
  * Where {@link T} is defined as the following:
  * <ul>
- *  <li>{@link String}</li>
- *  <li>{@link Integer}</li>
- *  <li>{@link Float}</li>
- *  <li>{@link Boolean}</li>
+ * <li>{@link String}</li>
+ * <li>{@link Integer}</li>
+ * <li>{@link Float}</li>
+ * <li>{@link Boolean}</li>
  * </ul>
  */
-public class StepResult<T> extends Result
+public class StepResult <T> extends Result
 {
     /**
      * When StepResult only has a single value, pair that value with the following key
@@ -53,7 +53,7 @@ public class StepResult<T> extends Result
         return results.get(identifier);
     }
 
-    public T setResultForIdentifier(String identifier,  T result)
+    public T setResultForIdentifier(String identifier, T result)
     {
         return results.put(identifier, result);
     }

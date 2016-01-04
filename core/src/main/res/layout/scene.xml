@@ -3,36 +3,39 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
         android:id="@+id/content_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:padding="@dimen/rsc_padding_medium"
         android:clipToPadding="false"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/rsc_padding_medium"
+        >
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="center"
             android:minHeight="72dp"
             android:minWidth="72dp"
+            android:scaleType="center"
             android:visibility="gone"
             tools:visibility="visible"
             />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Headline"
             android:id="@+id/title"
+            style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/rsc_padding_medium"
             android:gravity="center"
-            tools:text="@string/lorem_name" />
+            android:padding="@dimen/rsc_padding_medium"
+            tools:text="@string/lorem_name"
+            />
 
         <TextView
             android:id="@+id/text"
@@ -41,8 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:visibility="gone"
-            tools:visibility="visible"
             tools:text="@string/lorem_name"
+            tools:visibility="visible"
             />
 
         <TextView
@@ -54,8 +57,8 @@
             android:layout_margin="8dp"
             android:textColor="?attr/colorAccent"
             android:visibility="gone"
-            tools:visibility="visible"
             tools:text="More Info"
+            tools:visibility="visible"
             />
 
         <Space
@@ -74,14 +77,16 @@
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rsc_next"/>
+            android:text="@string/rsc_next"
+            />
 
         <TextView
             android:id="@+id/skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@string/rsc_step_skip" />
+            android:text="@string/rsc_step_skip"
+            />
 
     </LinearLayout>
 

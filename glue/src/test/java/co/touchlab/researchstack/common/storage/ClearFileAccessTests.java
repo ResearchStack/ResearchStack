@@ -13,9 +13,7 @@ import co.touchlab.researchstack.BuildConfig;
 import co.touchlab.researchstack.glue.common.storage.file.ClearFileAccess;
 import co.touchlab.researchstack.glue.common.storage.file.FileAccessListener;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
-public class ClearFileAccessTests
+@RunWith(RobolectricGradleTestRunner.class) @Config(constants = BuildConfig.class, sdk = 21) public class ClearFileAccessTests
 {
     private TestClearFileAccess clearFileAccess;
 

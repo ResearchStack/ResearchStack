@@ -11,6 +11,7 @@ public abstract class StorageManager
     /**
      * File access interface.  Should either be clear, or used with standard encryption.  If you
      * need something funky, override.
+     *
      * @return
      */
     protected static FileAccess fileAccess;
@@ -25,6 +26,7 @@ public abstract class StorageManager
     {
         return appDatabase;
     }
+
     public static FileAccess getFileAccess()
     {
         return fileAccess;

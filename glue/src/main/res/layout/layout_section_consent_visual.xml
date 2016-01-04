@@ -4,32 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="32dp">
+    android:padding="32dp"
+    >
 
     <LinearLayout
         android:id="@+id/layout_consent_info_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
 
         <ImageView
             android:id="@+id/layout_consent_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="center"
             android:minHeight="72dp"
             android:minWidth="72dp"
+            android:scaleType="center"
             tools:src="@mipmap/ic_launcher"
             />
 
         <TextView
             android:id="@+id/layout_consent_title"
             style="@style/TextAppearance.AppCompat.Headline"
-            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             tools:text="@string/lorem_name"
             />
 
@@ -57,9 +59,9 @@
         android:id="@+id/layout_consent_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Next"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        tools:text="Next"
         />
 
 </RelativeLayout>

@@ -19,24 +19,25 @@ public class AppPrefs
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Statics
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private static AppPrefs          instance;
+    private static AppPrefs instance;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Field Vars
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private final  SharedPreferences prefs;
+    private final SharedPreferences prefs;
+
+    AppPrefs(Context context)
+    {
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    }
 
     public static synchronized AppPrefs getInstance(Context context)
     {
         if(instance == null)
         {
             instance = new AppPrefs(context);
-        } return instance;
-    }
-
-    AppPrefs(Context context)
-    {
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        }
+        return instance;
     }
 
 }

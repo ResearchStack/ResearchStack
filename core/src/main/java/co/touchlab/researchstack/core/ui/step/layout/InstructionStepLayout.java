@@ -16,8 +16,8 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 
 public class InstructionStepLayout extends RelativeLayout implements StepLayout
 {
-    private SceneCallbacks  callbacks;
-    private Step step;
+    private SceneCallbacks callbacks;
+    private Step           step;
 
     public InstructionStepLayout(Context context)
     {
@@ -41,9 +41,29 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
         initializeScene();
     }
 
+    @Override
+    public View getLayout()
+    {
+        return this;
+    }
+
+    @Override
+    public boolean isBackEventConsumed()
+    {
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, null);
+        return false;
+    }
+
+    @Override
+    public void setCallbacks(SceneCallbacks callbacks)
+    {
+        this.callbacks = callbacks;
+    }
+
     private void initializeScene()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.scene_instruction, this, true);
+        LayoutInflater.from(getContext())
+                      .inflate(R.layout.scene_instruction, this, true);
 
         // Set Title
         TextView titleView = (TextView) findViewById(R.id.title);
@@ -55,29 +75,9 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
 
         // Set Next
         TextView next = (TextView) findViewById(R.id.next);
-        RxView.clicks(next).subscribe(v -> {
-            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
-        });
-    }
-
-    @Override
-    public View getLayout()
-    {
-        return this;
-    }
-
-    @Override
-    public boolean isBackEventConsumed()
-    {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV,
-                step,
-                null);
-        return false;
-    }
-
-    @Override
-    public void setCallbacks(SceneCallbacks callbacks)
-    {
-        this.callbacks = callbacks;
+        RxView.clicks(next)
+              .subscribe(v -> {
+                  callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
+              });
     }
 }

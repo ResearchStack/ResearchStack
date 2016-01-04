@@ -17,21 +17,21 @@ public class User
     private String passcode;
 
     //    private APCUserConsentSharingScope sharingScope;      // NOT stored to CoreData, reflected in "sharedOptionSelection"
-    private int sharedOptionSelection;
+    private int    sharedOptionSelection;
     private String profileImage;
 
     private boolean consented; //Confirmation that server is consented. Should be used in the app to test for user consent.
     private boolean userConsented; //User has consented though not communicated to the server.
 
-    private Date taskCompletion;
-    private int hasHeartDisease;
-    private int dailyScalesCompletionCounter;
-    private String customSurveyQuestion;
-    private String phoneNumber;
+    private Date    taskCompletion;
+    private int     hasHeartDisease;
+    private int     dailyScalesCompletionCounter;
+    private String  customSurveyQuestion;
+    private String  phoneNumber;
     private boolean allowContact;
-    private String medicalConditions;
-    private String medications;
-    private String ethnicity;
+    private String  medicalConditions;
+    private String  medications;
+    private String  ethnicity;
 
     private Date sleepTime;
     private Date wakeUpTime;
@@ -58,8 +58,8 @@ public class User
     private int weight;
     private int systolicBloodPressure;
 
-    private boolean signedUp = false;
-    private boolean signedIn = false;
+    private boolean signedUp  = false;
+    private boolean signedIn  = false;
     private boolean loggedOut = true;
 
     public User()
@@ -426,7 +426,7 @@ public class User
     {
         this.signedIn = signedIn;
         // TODO no sure why there's a signedIn and a loggedOut
-        setLoggedOut(!signedIn);
+        setLoggedOut(! signedIn);
     }
 
     public boolean isLoggedOut()

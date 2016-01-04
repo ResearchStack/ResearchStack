@@ -6,13 +6,13 @@ import java.util.Date;
 public class Result implements Serializable
 {
 
-    private String                  identifier;
+    private String identifier;
 
     //TODO: these should probably go?  Steps don't need this.
-    private Date                    startDate;
-    private Date                    endDate;
+    private Date startDate;
+    private Date endDate;
 
-    private boolean                 saveable; //TODO Implement
+    private boolean saveable; //TODO Implement
 
     public Result(String identifier)
     {

@@ -6,7 +6,8 @@ public class LogExt
 {
     private static String tagMe(Class c)
     {
-        long threadId = Thread.currentThread().getId();
+        long threadId = Thread.currentThread()
+                              .getId();
         String simpleName = c.getSimpleName();
 
         return simpleName + ":[" + threadId + "]";
@@ -79,10 +80,10 @@ public class LogExt
 
     public static void crashlytics(int priority, String tag, String msg)
     {
-//        if (! BuildConfig.DEBUG)
-//        {
-//            Crashlytics.log(priority, tag, msg);
-//        }
+        //        if (! BuildConfig.DEBUG)
+        //        {
+        //            Crashlytics.log(priority, tag, msg);
+        //        }
     }
 
 }

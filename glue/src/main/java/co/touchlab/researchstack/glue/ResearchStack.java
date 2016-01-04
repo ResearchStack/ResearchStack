@@ -4,20 +4,18 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
-import co.touchlab.researchstack.core.storage.database.AppDatabase;
-import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
+import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
+import co.touchlab.researchstack.glue.model.User;
 
 public abstract class ResearchStack
 {
     public static final String TEMP_USER_JSON_FILE_NAME = "/temp_user";
     protected static ResearchStack instance;
-
-    private User currentUser;
-
     protected Context context;
+    private User currentUser;
 
     public ResearchStack(Context context)
     {
@@ -28,14 +26,16 @@ public abstract class ResearchStack
     {
         instance = concreteResearchStack;
 
-        StorageManager.init(concreteResearchStack.createFileAccessImplementation(), concreteResearchStack.createAppDatabaseImplementation());
+        StorageManager.init(concreteResearchStack.createFileAccessImplementation(),
+                            concreteResearchStack.createAppDatabaseImplementation());
     }
 
     public synchronized static ResearchStack getInstance()
     {
-        if (instance == null)
+        if(instance == null)
         {
-            throw new RuntimeException("Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
+            throw new RuntimeException(
+                    "Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
 
         return instance;
@@ -79,14 +79,12 @@ public abstract class ResearchStack
 
     public String getHTMLFilePath(String docName)
     {
-        return getRawFilePath(docName,
-                "html");
+        return getRawFilePath(docName, "html");
     }
 
     public String getPDFFilePath(String docName)
     {
-        return getRawFilePath(docName,
-                "pdf");
+        return getRawFilePath(docName, "pdf");
     }
 
 
@@ -97,7 +95,8 @@ public abstract class ResearchStack
 
     public int getDrawableResourceId(Context context, String name)
     {
-        return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+        return context.getResources()
+                      .getIdentifier(name, "drawable", context.getPackageName());
     }
 
     public abstract boolean isSignatureEnabledInConsent();
@@ -120,7 +119,8 @@ public abstract class ResearchStack
 
     public boolean storedUserExists()
     {
-        return StorageManager.getFileAccess().dataExists(context, TEMP_USER_JSON_FILE_NAME);
+        return StorageManager.getFileAccess()
+                             .dataExists(context, TEMP_USER_JSON_FILE_NAME);
     }
 
     public void saveUser()
@@ -128,10 +128,10 @@ public abstract class ResearchStack
         Gson gson = new Gson();
         String userJsonString = gson.toJson(getCurrentUser());
 
-        LogExt.d(getClass(),
-                "Writing user json:\n" + userJsonString);
+        LogExt.d(getClass(), "Writing user json:\n" + userJsonString);
 
-        StorageManager.getFileAccess().writeString(context, TEMP_USER_JSON_FILE_NAME, userJsonString);
+        StorageManager.getFileAccess()
+                      .writeString(context, TEMP_USER_JSON_FILE_NAME, userJsonString);
     }
 
     public void loadUser()
@@ -139,16 +139,15 @@ public abstract class ResearchStack
         Gson gson = new Gson();
         FileAccess fileAccess = StorageManager.getFileAccess();
 
-        if (fileAccess.dataExists(context, TEMP_USER_JSON_FILE_NAME))
+        if(fileAccess.dataExists(context, TEMP_USER_JSON_FILE_NAME))
         {
             String jsonString = fileAccess.readString(context, TEMP_USER_JSON_FILE_NAME);
             currentUser = gson.fromJson(jsonString, User.class);
         }
 
-        if (currentUser == null)
+        if(currentUser == null)
         {
-            LogExt.d(getClass(),
-                    "No user file found, creating new user");
+            LogExt.d(getClass(), "No user file found, creating new user");
             currentUser = new User();
         }
     }

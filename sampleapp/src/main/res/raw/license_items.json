@@ -1,17 +1,16 @@
 {
- "questions":
- [
-     {
-     "title":"Bridge SDK",
-     "details":"license_bridgesdk"
-     },
-     {
-      "title":"Open SSL",
-      "details":"license_openssl"
-     },
-     {
-      "title":"ZipZap",
-      "details":"license_zipzap"
-     }
- ]
+  "questions": [
+    {
+      "title": "Bridge SDK",
+      "details": "license_bridgesdk"
+    },
+    {
+      "title": "Open SSL",
+      "details": "license_openssl"
+    },
+    {
+      "title": "ZipZap",
+      "details": "license_zipzap"
+    }
+  ]
 }

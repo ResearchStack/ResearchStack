@@ -23,15 +23,14 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import rx.functions.Action1;
 
-@Deprecated
-public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLayout
+@Deprecated public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepLayout
 {
     public static final String TAG = StepLayoutImpl.class.getSimpleName();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Data used to initializeScene and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private Step step;
+    private Step       step;
     private StepResult stepResult;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -42,12 +41,12 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Child Views
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private ImageView image;
-    private TextView title;
-    private TextView summary;
-    private TextView moreInfo;
-    private TextView next;
-    private TextView skip;
+    private ImageView    image;
+    private TextView     title;
+    private TextView     summary;
+    private TextView     moreInfo;
+    private TextView     next;
+    private TextView     skip;
     private LinearLayout container;
 
     public StepLayoutImpl(Context context)
@@ -81,6 +80,30 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
         }
 
         initializeScene();
+    }
+
+    @Override
+    public View getLayout()
+    {
+        return this;
+    }
+
+    /**
+     * Method allowing a scene to consume a back event.
+     *
+     * @return
+     */
+    @Override
+    public boolean isBackEventConsumed()
+    {
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, getStep(), getStepResult());
+        return false;
+    }
+
+    @Override
+    public void setCallbacks(SceneCallbacks callbacks)
+    {
+        this.callbacks = callbacks;
     }
 
     public void initializeScene()
@@ -125,33 +148,37 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
         View filler = findViewById(R.id.filler);
 
         container = (LinearLayout) findViewById(R.id.content_container);
-        container.getViewTreeObserver().addOnPreDrawListener(() -> {
-            int sceneHeight = StepLayoutImpl.this.getHeight();
-            int infoContainerHeight = container.getHeight();
+        container.getViewTreeObserver()
+                 .addOnPreDrawListener(() -> {
+                     int sceneHeight = StepLayoutImpl.this.getHeight();
+                     int infoContainerHeight = container.getHeight();
 
-            //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
-            if(sceneHeight > 0 && infoContainerHeight > 0 && sceneHeight > infoContainerHeight)
-            {
-                int fillerHeight = sceneHeight - infoContainerHeight;
-                if(fillerHeight >= 0 && fillerHeight != filler.getHeight())
-                {
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, fillerHeight);
-                    filler.setLayoutParams(params);
-                    LogExt.d(getClass(), "onPreDraw - Returning False, setting filler height");
-                    return false;
-                }
-            }
+                     //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
+                     if(sceneHeight > 0 && infoContainerHeight > 0 && sceneHeight > infoContainerHeight)
+                     {
+                         int fillerHeight = sceneHeight - infoContainerHeight;
+                         if(fillerHeight >= 0 && fillerHeight != filler.getHeight())
+                         {
+                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                     ViewGroup.LayoutParams.MATCH_PARENT, fillerHeight);
+                             filler.setLayoutParams(params);
+                             LogExt.d(getClass(),
+                                      "onPreDraw - Returning False, setting filler height");
+                             return false;
+                         }
+                     }
 
-            return true;
+                     return true;
 
-        });
+                 });
 
         image = (ImageView) findViewById(R.id.image);
         title = (TextView) findViewById(R.id.title);
         summary = (TextView) findViewById(R.id.text);
         moreInfo = (TextView) findViewById(R.id.more_info);
         next = (TextView) findViewById(R.id.next);
-        RxView.clicks(next).subscribe(v -> onNextClicked());
+        RxView.clicks(next)
+              .subscribe(v -> onNextClicked());
 
         skip = (TextView) findViewById(R.id.skip);
 
@@ -165,7 +192,8 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
             }
 
             skip.setVisibility(step.isOptional() ? View.VISIBLE : View.GONE);
-            RxView.clicks(skip).subscribe(v -> onSkipClicked());
+            RxView.clicks(skip)
+                  .subscribe(v -> onSkipClicked());
         }
     }
 
@@ -185,7 +213,8 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
     }
 
     @Override
-    public Parcelable onSaveInstanceState() {
+    public Parcelable onSaveInstanceState()
+    {
         callbacks.onSaveStep(SceneCallbacks.ACTION_NONE, getStep(), getStepResult());
         return super.onSaveInstanceState();
     }
@@ -206,7 +235,8 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
         }
         else
         {
-            Toast.makeText(getContext(), R.string.rsc_please_complete_step, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.rsc_please_complete_step, Toast.LENGTH_SHORT)
+                 .show();
         }
     }
 
@@ -216,24 +246,6 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
         {
             callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, getStep(), null);
         }
-    }
-
-    @Override
-    public View getLayout()
-    {
-        return this;
-    }
-
-    /**
-     * Method allowing a scene to consume a back event.
-     *
-     * @return
-     */
-    @Override
-    public boolean isBackEventConsumed()
-    {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, getStep(), getStepResult());
-        return false;
     }
 
     public Step getStep()
@@ -246,14 +258,14 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
         return getResources().getString(stringResId);
     }
 
-    public void setStepResult(StepResult<T> result)
-    {
-        this.stepResult = result;
-    }
-
     public StepResult<T> getStepResult()
     {
         return stepResult;
+    }
+
+    public void setStepResult(StepResult<T> result)
+    {
+        this.stepResult = result;
     }
 
     /**
@@ -262,12 +274,6 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
     public boolean isAnswerValid()
     {
         return true;
-    }
-
-    @Override
-    public void setCallbacks(SceneCallbacks callbacks)
-    {
-        this.callbacks = callbacks;
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -327,7 +333,8 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
 
         if(action != null)
         {
-            RxView.clicks(moreInfo).subscribe(action);
+            RxView.clicks(moreInfo)
+                  .subscribe(action);
         }
     }
 
@@ -352,7 +359,8 @@ public abstract class StepLayoutImpl<T> extends RelativeLayout implements StepLa
 
         if(action != null)
         {
-            RxView.clicks(skip).subscribe(action);
+            RxView.clicks(skip)
+                  .subscribe(action);
         }
     }
 

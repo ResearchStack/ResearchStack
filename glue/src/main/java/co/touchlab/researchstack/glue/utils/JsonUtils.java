@@ -17,7 +17,8 @@ import co.touchlab.researchstack.core.utils.ResUtils;
  */
 public class JsonUtils
 {
-    static Gson gson = new GsonBuilder().setDateFormat("MMM yyyy").create();
+    static Gson gson = new GsonBuilder().setDateFormat("MMM yyyy")
+                                        .create();
 
     public static <T> T loadClass(Context context, Class<T> clazz, String filename)
     {
@@ -28,7 +29,8 @@ public class JsonUtils
 
     public static <T> T loadClass(Context context, Class<T> clazz, int id)
     {
-        InputStream stream = context.getResources().openRawResource(id);
+        InputStream stream = context.getResources()
+                                    .openRawResource(id);
         Reader reader = null;
         try
         {
@@ -36,10 +38,9 @@ public class JsonUtils
         }
         catch(UnsupportedEncodingException e)
         {
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
 
-        return gson.fromJson(reader,
-                clazz);
+        return gson.fromJson(reader, clazz);
     }
 }

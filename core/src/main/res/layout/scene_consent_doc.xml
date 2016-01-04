@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+    >
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/button_container"/>
+        android:layout_above="@+id/button_container"
+        />
 
     <FrameLayout
         android:id="@+id/button_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        >
 
         <Button
             android:id="@+id/disagree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorAccent"
             android:text="@string/rsc_disagree"
+            android:textColor="?attr/colorAccent"
             />
 
         <Button
             android:id="@+id/agree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorAccent"
-            android:text="@string/rsc_agree"
             android:layout_gravity="right"
+            android:text="@string/rsc_agree"
+            android:textColor="?attr/colorAccent"
             />
 
     </FrameLayout>

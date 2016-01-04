@@ -13,6 +13,7 @@ public interface StepLayout
 
     /**
      * Method allowing a scene to consume a back event.
+     *
      * @return
      */
     boolean isBackEventConsumed();

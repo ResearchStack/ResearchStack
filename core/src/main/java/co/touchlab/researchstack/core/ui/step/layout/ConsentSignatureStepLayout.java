@@ -61,68 +61,6 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         initializeScene();
     }
 
-    private void initializeScene()
-    {
-        LayoutInflater.from(getContext()).inflate(R.layout.scene_consent_signature, this, true);
-
-        TextView title = (TextView) findViewById(R.id.title);
-        title.setText(step.getTitle());
-
-        TextView text = (TextView) findViewById(R.id.text);
-        text.setText(step.getText());
-
-        View clear = findViewById(R.id.layout_consent_review_signature_clear);
-
-        signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
-        signatureView.setCallbacks(new SignatureCallbacks()
-        {
-            @Override
-            public void onSignatureStarted()
-            {
-                clear.setClickable(true);
-                clear.animate().alpha(1);
-            }
-
-            @Override
-            public void onSignatureCleared()
-            {
-                clear.setClickable(false);
-                clear.animate().alpha(0);
-            }
-        });
-
-        clear.setClickable(signatureView.isSignatureDrawn());
-        clear.setAlpha(signatureView.isSignatureDrawn() ? 1 : 0);
-
-        RxView.clicks(clear).subscribe(v -> {
-            signatureView.clearSignature();
-        });
-
-        View next = findViewById(R.id.next);
-        RxView.clicks(next).subscribe(v -> {
-            if(signatureView.isSignatureDrawn())
-            {
-                setDataToResult();
-                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
-            }
-            else
-            {
-                Toast.makeText(getContext(), "Signature Invalid", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void setDataToResult()
-    {
-        String format =  ((ConsentSignatureStep) step).getSignatureDateFormat();
-        DateFormat signatureDateFormat = ! TextUtils.isEmpty(format) ?
-                new SimpleDateFormat(format) : FormatHelper.getSignatureFormat();
-        String formattedSignDate = signatureDateFormat.format(new Date());
-
-        result.setResultForIdentifier(KEY_SIGNATURE, getBase64EncodedImage());
-        result.setResultForIdentifier(KEY_SIGNATURE_DATE, formattedSignDate);
-    }
-
     @Override
     public View getLayout()
     {
@@ -141,6 +79,74 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     public void setCallbacks(SceneCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    private void initializeScene()
+    {
+        LayoutInflater.from(getContext())
+                      .inflate(R.layout.scene_consent_signature, this, true);
+
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setText(step.getTitle());
+
+        TextView text = (TextView) findViewById(R.id.text);
+        text.setText(step.getText());
+
+        View clear = findViewById(R.id.layout_consent_review_signature_clear);
+
+        signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
+        signatureView.setCallbacks(new SignatureCallbacks()
+        {
+            @Override
+            public void onSignatureStarted()
+            {
+                clear.setClickable(true);
+                clear.animate()
+                     .alpha(1);
+            }
+
+            @Override
+            public void onSignatureCleared()
+            {
+                clear.setClickable(false);
+                clear.animate()
+                     .alpha(0);
+            }
+        });
+
+        clear.setClickable(signatureView.isSignatureDrawn());
+        clear.setAlpha(signatureView.isSignatureDrawn() ? 1 : 0);
+
+        RxView.clicks(clear)
+              .subscribe(v -> {
+                  signatureView.clearSignature();
+              });
+
+        View next = findViewById(R.id.next);
+        RxView.clicks(next)
+              .subscribe(v -> {
+                  if(signatureView.isSignatureDrawn())
+                  {
+                      setDataToResult();
+                      callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+                  }
+                  else
+                  {
+                      Toast.makeText(getContext(), "Signature Invalid", Toast.LENGTH_SHORT)
+                           .show();
+                  }
+              });
+    }
+
+    private void setDataToResult()
+    {
+        String format = ((ConsentSignatureStep) step).getSignatureDateFormat();
+        DateFormat signatureDateFormat = ! TextUtils.isEmpty(format) ? new SimpleDateFormat(format)
+                : FormatHelper.getSignatureFormat();
+        String formattedSignDate = signatureDateFormat.format(new Date());
+
+        result.setResultForIdentifier(KEY_SIGNATURE, getBase64EncodedImage());
+        result.setResultForIdentifier(KEY_SIGNATURE_DATE, formattedSignDate);
     }
 
     private String getBase64EncodedImage()

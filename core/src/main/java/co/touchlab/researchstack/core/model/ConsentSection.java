@@ -10,7 +10,172 @@ import co.touchlab.researchstack.core.R;
 public class ConsentSection implements Serializable
 {
 
-    public enum Type implements Serializable{
+    /**
+     * The type of section. (read-only)
+     * <p>
+     * The value of this property indicates whether a predefined image, title, and animation are present.
+     */
+    @SerializedName("sectionType")
+    private Type type;
+    /**
+     * The title of the consent section in a localized string.
+     * <p>
+     * The title is displayed as a scene title in the animated consent sequence and is also included in the PDF file, but it can be overridden by setting `formalTitle`.
+     * The title is prefilled unless the type is `ORKConsentSectionTypeCustom` or `ORKConsentSectionTypeOnlyInDocument`.
+     */
+    @SerializedName("sectionTitle")
+    private String title;
+    /**
+     * The formal title of the section in a localized string, for use in the legal document.
+     * <p>
+     * If the value of this property is `nil`, the value of `title` is used in the legal document instead.
+     */
+    @SerializedName("sectionFormalTitle")
+    private String formalTitle;
+    /**
+     * A short summary of the content in a localized string.
+     * <p>
+     * The summary is displayed as description text in the animated consent sequence.
+     * The summary should be limited in length, so that the consent can be reliably
+     * displayed on smaller screens.
+     */
+    @SerializedName("sectionSummary")
+    private String summary;
+    /**
+     * The content of the section in a localized string.
+     * <p>
+     * In a consent review step or in PDF file generation, the string is printed as the section's
+     * content. The string is also displayed as Learn More content in a visual consent step.
+     * <p>
+     * This property is never prepopulated based on the value of `type`. If both `content` and `htmlContent` are non-nil, the value of the `htmlContent` property is used.
+     */
+    @SerializedName("sectionContent")
+    private String content;
+    private String escapedContent;
+    /**
+     * The HTML content used to override the `content` property if additional formatting is needed. The content should be localized.
+     * <p>
+     * In cases where plain text content is not sufficient to convey important details
+     * during the consent process, you can provide HTML content in this property. When you do this, the `htmlContent` property takes precedence over the `content` property.
+     * <p>
+     * In a consent review step or in PDF file generation, the value of this property is printed as the section's
+     * content; in a visual consent step, the content is displayed as Learn More content.
+     */
+    @SerializedName("sectionHtmlContent")
+    private String htmlContent;
+    /**
+     * A custom illustration for the consent.
+     * <p>
+     * The custom image can override the image associated with any of the predefined
+     * section types for an `ORKVisualConsentStep` object. It is ignored for a consent review step and
+     * for PDF generation.
+     * <p>
+     * The image is used in template rendering mode, and is tinted using the tint color.
+     */
+    @SerializedName("sectionImage")
+    private String customImageName;
+    /**
+     * A custom Learn More button title in a localized string.
+     * <p>
+     * The predefined section types have localized descriptive Learn More button
+     * titles for a visual consent step. When this property is not `nil`, it overrides that
+     * default text.
+     */
+    private String customLearnMoreButtonTitle;
+    /**
+     * A file URL that specifies a custom transition animation video.
+     * <p>
+     * Animations of the illustration between one screen and the next are provided
+     * by default for transitions between consecutive section `type` codes. Custom
+     * sections and out-of-order transitions may require custom animations.
+     * <p>
+     * The animation loaded from the file URL is played aspect fill in the
+     * illustration area for forward transitions only. The video is rendered in
+     * template mode, with white treated as if it were transparent.
+     */
+    @SerializedName("sectionAnimationUrl")
+    private String customAnimationURL;
+
+    /**
+     * Returns an initialized consent section using the specified type.
+     * <p>
+     * This method populates the title and summary for all types except for
+     * `ORKConsentSectionTypeCustom` and `ORKConsentSectionTypeOnlyInDocument`.
+     *
+     * @param type The consent section type.
+     */
+    public ConsentSection(Type type)
+    {
+        this.type = type;
+        this.summary = null;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    public String getFormalTitle()
+    {
+        return formalTitle;
+    }
+
+    public Type getType()
+    {
+        return type;
+    }
+
+    public String getHtmlContent()
+    {
+        return htmlContent;
+    }
+
+    public String getCustomImageName()
+    {
+        return customImageName;
+    }
+
+    public String getContent()
+    {
+        return content;
+    }
+
+    public void setContent(String content)
+    {
+        this.content = content;
+        this.escapedContent = null;
+    }
+
+    public String getSummary()
+    {
+        return summary;
+    }
+
+    public void setSummary(String summary)
+    {
+        this.summary = summary;
+    }
+
+    public String getEscapedContent()
+    {
+        // If its null, return that. If not, escape/replace chars in var content
+        if(TextUtils.isEmpty(content))
+        {
+            return content;
+        }
+
+        //TODO In XCODE project, they want to escape the strings, they also want to use <br/> to replace "\n". Find out why.
+
+        return escapedContent;
+    }
+
+    public enum Type implements Serializable
+    {
         /**
          * Overview of the informed consent process.
          * <p>
@@ -178,175 +343,6 @@ public class ConsentSection implements Serializable
             }
         }
 
-    }
-    /**
-     * The type of section. (read-only)
-     * <p>
-     * The value of this property indicates whether a predefined image, title, and animation are present.
-     */
-    @SerializedName("sectionType")
-    private Type type;
-
-    /**
-     * The title of the consent section in a localized string.
-     * <p>
-     * The title is displayed as a scene title in the animated consent sequence and is also included in the PDF file, but it can be overridden by setting `formalTitle`.
-     * The title is prefilled unless the type is `ORKConsentSectionTypeCustom` or `ORKConsentSectionTypeOnlyInDocument`.
-     */
-    @SerializedName("sectionTitle")
-    private String title;
-
-    /**
-     * The formal title of the section in a localized string, for use in the legal document.
-     * <p>
-     * If the value of this property is `nil`, the value of `title` is used in the legal document instead.
-     */
-    @SerializedName("sectionFormalTitle")
-    private String formalTitle;
-    /**
-     * A short summary of the content in a localized string.
-     * <p>
-     * The summary is displayed as description text in the animated consent sequence.
-     * The summary should be limited in length, so that the consent can be reliably
-     * displayed on smaller screens.
-     */
-    @SerializedName("sectionSummary")
-    private String summary;
-
-    /**
-     * The content of the section in a localized string.
-     * <p>
-     * In a consent review step or in PDF file generation, the string is printed as the section's
-     * content. The string is also displayed as Learn More content in a visual consent step.
-     * <p>
-     * This property is never prepopulated based on the value of `type`. If both `content` and `htmlContent` are non-nil, the value of the `htmlContent` property is used.
-     */
-    @SerializedName("sectionContent")
-    private String content;
-
-    private String escapedContent;
-
-    /**
-     * The HTML content used to override the `content` property if additional formatting is needed. The content should be localized.
-     * <p>
-     * In cases where plain text content is not sufficient to convey important details
-     * during the consent process, you can provide HTML content in this property. When you do this, the `htmlContent` property takes precedence over the `content` property.
-     * <p>
-     * In a consent review step or in PDF file generation, the value of this property is printed as the section's
-     * content; in a visual consent step, the content is displayed as Learn More content.
-     */
-    @SerializedName("sectionHtmlContent")
-    private String htmlContent;
-
-    /**
-     * A custom illustration for the consent.
-     * <p>
-     * The custom image can override the image associated with any of the predefined
-     * section types for an `ORKVisualConsentStep` object. It is ignored for a consent review step and
-     * for PDF generation.
-     * <p>
-     * The image is used in template rendering mode, and is tinted using the tint color.
-     */
-    @SerializedName("sectionImage")
-    private String customImageName;
-
-    /**
-     * A custom Learn More button title in a localized string.
-     * <p>
-     * The predefined section types have localized descriptive Learn More button
-     * titles for a visual consent step. When this property is not `nil`, it overrides that
-     * default text.
-     */
-    private String customLearnMoreButtonTitle;
-
-    /**
-     * A file URL that specifies a custom transition animation video.
-     * <p>
-     * Animations of the illustration between one screen and the next are provided
-     * by default for transitions between consecutive section `type` codes. Custom
-     * sections and out-of-order transitions may require custom animations.
-     * <p>
-     * The animation loaded from the file URL is played aspect fill in the
-     * illustration area for forward transitions only. The video is rendered in
-     * template mode, with white treated as if it were transparent.
-     */
-    @SerializedName("sectionAnimationUrl")
-    private String customAnimationURL;
-
-    /**
-     Returns an initialized consent section using the specified type.
-
-     This method populates the title and summary for all types except for
-     `ORKConsentSectionTypeCustom` and `ORKConsentSectionTypeOnlyInDocument`.
-
-     @param type     The consent section type.
-     */
-    public ConsentSection(Type type)
-    {
-        this.type = type;
-        this.summary = null;
-    }
-
-    public String getTitle()
-    {
-        return title;
-    }
-
-    public void setTitle(String title)
-    {
-        this.title = title;
-    }
-
-    public String getFormalTitle()
-    {
-        return formalTitle;
-    }
-
-    public Type getType()
-    {
-        return type;
-    }
-
-    public String getHtmlContent()
-    {
-        return htmlContent;
-    }
-
-    public String getCustomImageName(){
-        return customImageName;
-    }
-
-    public String getContent()
-    {
-        return content;
-    }
-
-    public String getSummary()
-    {
-        return summary;
-    }
-
-    public void setSummary(String summary)
-    {
-        this.summary = summary;
-    }
-
-    public void setContent(String content)
-    {
-        this.content = content;
-        this.escapedContent = null;
-    }
-
-    public String getEscapedContent()
-    {
-        // If its null, return that. If not, escape/replace chars in var content
-        if (TextUtils.isEmpty(content)){
-            return content;
-        }
-
-        //TODO In XCODE project, they want to escape the strings, they also want to use <br/> to replace "\n". Find out why.
-
-        return escapedContent;
     }
 
 }

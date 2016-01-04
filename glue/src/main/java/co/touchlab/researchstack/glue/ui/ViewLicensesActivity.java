@@ -25,7 +25,7 @@ public class ViewLicensesActivity extends AppCompatActivity
 
     public static Intent newIntent(Context context)
     {
-        return  new Intent(context, ViewLicensesActivity.class);
+        return new Intent(context, ViewLicensesActivity.class);
     }
 
     @Override
@@ -40,15 +40,18 @@ public class ViewLicensesActivity extends AppCompatActivity
         TextView tv = new TextView(this);
         tv.setVerticalScrollBarEnabled(true);
         tv.setMovementMethod(new ScrollingMovementMethod());
-        tv.setPadding(padding,padding,padding,padding);
+        tv.setPadding(padding, padding, padding, padding);
 
         StudyOverviewModel model = parseSectionModel();
 
-        for(int i = 0; i < model.getQuestions().size(); i++)
+        for(int i = 0; i < model.getQuestions()
+                                .size(); i++)
         {
-            StudyOverviewModel.Question question = model.getQuestions().get(i);
+            StudyOverviewModel.Question question = model.getQuestions()
+                                                        .get(i);
 
-            try {
+            try
+            {
                 Resources res = getResources();
 
                 //Read in the license
@@ -58,15 +61,17 @@ public class ViewLicensesActivity extends AppCompatActivity
                 in_s.read(b);
 
                 //Add some space between licenses
-                if (i > 0)
+                if(i > 0)
                 {
                     tv.append("\n\n\n\n");
                 }
 
                 //Create title w/ bold typeface
                 final SpannableString boldSpan = new SpannableString(question.getTitle());
-                boldSpan.setSpan(new ForegroundColorSpan(Color.BLACK), 0, boldSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                boldSpan.setSpan(new RelativeSizeSpan(1.5f), 0, boldSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                boldSpan.setSpan(new ForegroundColorSpan(Color.BLACK), 0, boldSpan.length(),
+                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                boldSpan.setSpan(new RelativeSizeSpan(1.5f), 0, boldSpan.length(),
+                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tv.append(boldSpan);
 
                 //Append the license text
@@ -74,7 +79,9 @@ public class ViewLicensesActivity extends AppCompatActivity
                 tv.append(new String(b));
 
                 in_s.close();
-            } catch (Exception e) {
+            }
+            catch(Exception e)
+            {
                 throw new RuntimeException(e);
             }
         }
@@ -85,7 +92,8 @@ public class ViewLicensesActivity extends AppCompatActivity
     //TODO Read on main thread for intense UI blockage.
     private StudyOverviewModel parseSectionModel()
     {
-        int fileResId = ResearchStack.getInstance().getLicenseSections();
+        int fileResId = ResearchStack.getInstance()
+                                     .getLicenseSections();
         return JsonUtils.loadClass(this, StudyOverviewModel.class, fileResId);
     }
 }

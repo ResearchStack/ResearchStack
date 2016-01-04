@@ -39,12 +39,12 @@ public class AesFileAccess extends BaseFileAccess
 {
     public static final String CHARSET_NAME  = "UTF8";
     public static final String A_LITTLE_TEST = "ALittleTest";
-    DataDecoder dataDecoder;
-    DataEncoder dataEncoder;
-    String      key;
     private final int     bitDepth;
     private final boolean alphaNumeric;
     private final int     length;
+    DataDecoder dataDecoder;
+    DataEncoder dataEncoder;
+    String      key;
 
     public AesFileAccess(int bitDepth, boolean alphaNumeric, int length)
     {
@@ -79,7 +79,8 @@ public class AesFileAccess extends BaseFileAccess
                         catch(Exception e)
                         {
                             initFileAccess(context);
-                            Toast.makeText(context, "Wrong passphrase", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Wrong passphrase", Toast.LENGTH_LONG)
+                                 .show();
                         }
                     }
                 });
@@ -98,12 +99,64 @@ public class AesFileAccess extends BaseFileAccess
                         catch(Exception e)
                         {
                             initFileAccess(context);
-                            Toast.makeText(context, "Bad format", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Bad format", Toast.LENGTH_LONG)
+                                 .show();
                         }
                     }
                 });
             }
         }
+    }
+
+    @Override
+    @WorkerThread
+    public synchronized void writeData(Context context, String path, byte[] data)
+    {
+        try
+        {
+            File file = findLocalFile(context, path);
+            byte[] encrypted = dataEncoder.encrypt(data);
+            writeSafe(file, encrypted);
+        }
+        catch(BadPaddingException | IllegalBlockSizeException e)
+        {
+            throw new FileAccessException(e);
+        }
+    }
+
+    @Override
+    @WorkerThread
+    public synchronized byte[] readData(Context context, String path)
+    {
+        try
+        {
+            File file = findLocalFile(context, path);
+            if(! file.exists())
+            {
+                throw new FileAccessException("Can't find " + file.getPath());
+            }
+
+            byte[] encryptedData = readAll(file);
+            return dataDecoder.decrypt(encryptedData);
+        }
+        catch(IOException | BadPaddingException | IllegalBlockSizeException e)
+        {
+            throw new FileAccessException(e);
+        }
+    }
+
+    @Override
+    public boolean dataExists(Context context, String path)
+    {
+        File file = findLocalFile(context, path);
+        return file.exists();
+    }
+
+    @Override
+    public void clearData(Context context, String path)
+    {
+        File file = findLocalFile(context, path);
+        file.delete();
     }
 
     private void confirmPin(Context context, String firstPin)
@@ -115,9 +168,10 @@ public class AesFileAccess extends BaseFileAccess
             {
                 try
                 {
-                    if(!firstPin.equals(pin))
+                    if(! firstPin.equals(pin))
                     {
-                        Toast.makeText(context, "Pins do not match", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Pins do not match", Toast.LENGTH_LONG)
+                             .show();
                         initFileAccess(context);
                     }
                     else
@@ -129,7 +183,8 @@ public class AesFileAccess extends BaseFileAccess
                 catch(Exception e)
                 {
                     initFileAccess(context);
-                    Toast.makeText(context, "Bad format", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Bad format", Toast.LENGTH_LONG)
+                         .show();
                 }
             }
         });
@@ -137,23 +192,23 @@ public class AesFileAccess extends BaseFileAccess
 
     private void runPinDialog(Context context, String title, PinOnClickListener listener)
     {
-        View customView = LayoutInflater.from(context).inflate(
-                alphaNumeric ? R.layout.dialog_pin_entry_alphanumeric : R.layout.dialog_pin_entry
-                , null);
+        View customView = LayoutInflater.from(context)
+                                        .inflate(alphaNumeric
+                                                         ? R.layout.dialog_pin_entry_alphanumeric
+                                                         : R.layout.dialog_pin_entry, null);
         EditText editText = (EditText) customView.findViewById(R.id.pinValue);
         editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(length)});
 
 
         listener.setCustomView(customView);
-        AlertDialog alertDialog = new AlertDialog
-                .Builder(context)
-                .setView(customView)
-                .setTitle(title)
-                .setOnCancelListener(dialog -> {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).setView(customView)
+                                                                  .setTitle(
+                                                                          title).setOnCancelListener(
+                        dialog -> {
 
-                    new Handler().post(AesFileAccess.this :: notifyListenersFailed);
-                })
-//                .setPositiveButton("OK", listener)
+                            new Handler().post(AesFileAccess.this :: notifyListenersFailed);
+                        })
+                        //                .setPositiveButton("OK", listener)
                 .create();
 
         RxTextView.textChanges(editText)
@@ -166,39 +221,15 @@ public class AesFileAccess extends BaseFileAccess
                   });
 
         //If not an Activity, need system alert. Not sure how it wouldn't be, but...
-        if(!(context instanceof Activity))
+        if(! (context instanceof Activity))
         {
-            alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            alertDialog.getWindow()
+                       .setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         }
 
-        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        alertDialog.getWindow()
+                   .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         alertDialog.show();
-    }
-
-    private abstract class PinOnClickListener implements DialogInterface.OnClickListener
-    {
-        private final Context context;
-        private View customView;
-
-        public PinOnClickListener(Context context)
-        {
-            this.context = context;
-        }
-
-        public void setCustomView(View customView)
-        {
-            this.customView = customView;
-        }
-
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-            String passcode = ((EditText) customView.findViewById(R.id.pinValue)).getText()
-                                                                                 .toString();
-            onPin(context, passcode);
-        }
-
-        abstract void onPin(Context context, String pin);
     }
 
     public boolean passphraseExists(Context context)
@@ -216,15 +247,18 @@ public class AesFileAccess extends BaseFileAccess
             String uuid;
             if(! passphraseExists(context))
             {
-                uuid = UUID.randomUUID().toString();
+                uuid = UUID.randomUUID()
+                           .toString();
                 writePasskey(passphrase, passphraseFile, uuid);
                 writePasskey(passphrase, passphraseCheckFile, A_LITTLE_TEST);
             }
             else
             {
                 String testString = readPasskey(passphrase, passphraseCheckFile);
-                if(!testString.equals(A_LITTLE_TEST))
+                if(! testString.equals(A_LITTLE_TEST))
+                {
                     throw new FileAccessException("Not the correct passphrase");
+                }
 
                 uuid = readPasskey(passphrase, passphraseFile);
             }
@@ -304,57 +338,36 @@ public class AesFileAccess extends BaseFileAccess
         writeSafe(encrypted, encrypt);
     }
 
-    @Override @WorkerThread
-    public synchronized void writeData(Context context, String path, byte[] data)
-    {
-        try
-        {
-            File file = findLocalFile(context, path);
-            byte[] encrypted = dataEncoder.encrypt(data);
-            writeSafe(file, encrypted);
-        }
-        catch(BadPaddingException | IllegalBlockSizeException e)
-        {
-            throw new FileAccessException(e);
-        }
-    }
-
-    @Override @WorkerThread
-    public synchronized byte[] readData(Context context, String path)
-    {
-        try
-        {
-            File file = findLocalFile(context, path);
-            if(!file.exists())
-                throw new FileAccessException("Can't find "+ file.getPath());
-
-            byte[] encryptedData = readAll(file);
-            return dataDecoder.decrypt(encryptedData);
-        }
-        catch(IOException | BadPaddingException | IllegalBlockSizeException e)
-        {
-            throw new FileAccessException(e);
-        }
-    }
-
-    @Override
-    public boolean dataExists(Context context, String path)
-    {
-        File file = findLocalFile(context, path);
-        return file.exists();
-    }
-
-    @Override
-    public void clearData(Context context, String path)
-    {
-        File file = findLocalFile(context, path);
-        file.delete();
-    }
-
     @NonNull
     private File findLocalFile(Context context, String path)
     {
         checkPath(path);
         return new File(createSecureDirectory(context), path.substring(1));
+    }
+
+    private abstract class PinOnClickListener implements DialogInterface.OnClickListener
+    {
+        private final Context context;
+        private       View    customView;
+
+        public PinOnClickListener(Context context)
+        {
+            this.context = context;
+        }
+
+        public void setCustomView(View customView)
+        {
+            this.customView = customView;
+        }
+
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+            String passcode = ((EditText) customView.findViewById(R.id.pinValue)).getText()
+                                                                                 .toString();
+            onPin(context, passcode);
+        }
+
+        abstract void onPin(Context context, String pin);
     }
 }

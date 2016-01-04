@@ -25,13 +25,13 @@ import co.touchlab.researchstack.glue.model.User;
 public class SampleResearchStack extends ResearchStack
 {
     public static final String TEST_SOME_DATA = "Test some data";
-    public static final String SOMEDATA_TXT = "somedata.txt";
+    public static final String SOMEDATA_TXT   = "somedata.txt";
 
     public SampleResearchStack(Context context)
     {
         super(context);
-//        try
-//        {
+        //        try
+        //        {
             /*DataEncoder dataEncoder = new DataEncoder("1234".toCharArray());
             DataDecoder dataDecoder = new DataDecoder("1234".toCharArray());
             byte[] encrypted = dataEncoder.encrypt("Hello!".getBytes());
@@ -39,27 +39,27 @@ public class SampleResearchStack extends ResearchStack
             String theThing = new String(clear);
             theThing.equals("Hello!");*/
 
-//            setEnteredPin("1234");
-//            ((AesFileAccess)getFileAccess()).updatePassphrase(this, "1234", "4567");
-//
-//            String decryptedString = new String(getFileAccess().readData(this, SOMEDATA_TXT), "UTF8");
-//
-//            if(!TEST_SOME_DATA.equals(decryptedString))
-//                throw new RuntimeException("whoops");
-//
-//            AesFileAccess aesFileAccess = new AesFileAccess();
-//            aesFileAccess.init(this, "1234");
-//            aesFileAccess.writeData(this, SOMEDATA_TXT,
-//                                    TEST_SOME_DATA.getBytes("UTF8"));
-//            String decryptedString = new String(
-//                    aesFileAccess.readData(this, SOMEDATA_TXT), "UTF8");
-//
-//
-//        }
-//        catch(Exception e)
-//        {
-//            throw new RuntimeException(e);
-//        }
+        //            setEnteredPin("1234");
+        //            ((AesFileAccess)getFileAccess()).updatePassphrase(this, "1234", "4567");
+        //
+        //            String decryptedString = new String(getFileAccess().readData(this, SOMEDATA_TXT), "UTF8");
+        //
+        //            if(!TEST_SOME_DATA.equals(decryptedString))
+        //                throw new RuntimeException("whoops");
+        //
+        //            AesFileAccess aesFileAccess = new AesFileAccess();
+        //            aesFileAccess.init(this, "1234");
+        //            aesFileAccess.writeData(this, SOMEDATA_TXT,
+        //                                    TEST_SOME_DATA.getBytes("UTF8"));
+        //            String decryptedString = new String(
+        //                    aesFileAccess.readData(this, SOMEDATA_TXT), "UTF8");
+        //
+        //
+        //        }
+        //        catch(Exception e)
+        //        {
+        //            throw new RuntimeException(e);
+        //        }
 
     }
 
@@ -209,13 +209,8 @@ public class SampleResearchStack extends ResearchStack
     @Override
     public User.UserInfoType[] getUserInfoTypes()
     {
-        return new User.UserInfoType[]{
-                User.UserInfoType.Name,
-                User.UserInfoType.Email,
-                User.UserInfoType.BiologicalSex,
-                User.UserInfoType.DateOfBirth,
-                User.UserInfoType.Height,
-                User.UserInfoType.Weight
+        return new User.UserInfoType[] {
+                User.UserInfoType.Name, User.UserInfoType.Email, User.UserInfoType.BiologicalSex, User.UserInfoType.DateOfBirth, User.UserInfoType.Height, User.UserInfoType.Weight
         };
     }
 

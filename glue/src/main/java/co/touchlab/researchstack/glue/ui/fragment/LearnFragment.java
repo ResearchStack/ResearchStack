@@ -20,9 +20,9 @@ import android.widget.ImageView;
 import java.util.List;
 
 import co.touchlab.researchstack.core.model.SectionModel;
+import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
-import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 import co.touchlab.researchstack.glue.ui.views.DividerItemDecoration;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 import co.touchlab.researchstack.glue.utils.ViewUtils;
@@ -49,17 +49,20 @@ public class LearnFragment extends Fragment
 
         //TODO Implement compat method to get RTL on API < 17
         boolean isRTL = config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
-        DividerItemDecoration decoration = new DividerItemDecoration(
-                getContext(), DividerItemDecoration.VERTICAL_LIST, 0, isRTL);
+        DividerItemDecoration decoration = new DividerItemDecoration(getContext(),
+                                                                     DividerItemDecoration.VERTICAL_LIST,
+                                                                     0, isRTL);
         recyclerView.addItemDecoration(decoration);
     }
 
     private List<SectionModel.SectionRow> loadTasksAndSchedules()
     {
-        int fileResId = ResearchStack.getInstance().getLearnSections();
-        SectionModel schedulesAndTasksModel = JsonUtils
-                .loadClass(getContext(), SectionModel.class, fileResId);
-        SectionModel.Section section = schedulesAndTasksModel.getSections().get(0);
+        int fileResId = ResearchStack.getInstance()
+                                     .getLearnSections();
+        SectionModel schedulesAndTasksModel = JsonUtils.loadClass(getContext(), SectionModel.class,
+                                                                  fileResId);
+        SectionModel.Section section = schedulesAndTasksModel.getSections()
+                                                             .get(0);
         return section.getItems();
     }
 
@@ -67,10 +70,10 @@ public class LearnFragment extends Fragment
     {
 
         private static final int VIEW_TYPE_HEADER = 0;
-        private static final int VIEW_TYPE_ITEM = 1;
+        private static final int VIEW_TYPE_ITEM   = 1;
 
         private List<SectionModel.SectionRow> items;
-        private LayoutInflater inflater;
+        private LayoutInflater                inflater;
 
         public LearnAdapter(Context context, List<SectionModel.SectionRow> items)
         {
@@ -82,7 +85,7 @@ public class LearnFragment extends Fragment
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            if (viewType == VIEW_TYPE_HEADER)
+            if(viewType == VIEW_TYPE_HEADER)
             {
                 View view = inflater.inflate(R.layout.header_learn, parent, false);
                 return new HeaderViewHolder(view);
@@ -97,7 +100,7 @@ public class LearnFragment extends Fragment
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder hldr, int position)
         {
-            if (hldr instanceof ViewHolder)
+            if(hldr instanceof ViewHolder)
             {
                 ViewHolder holder = (ViewHolder) hldr;
                 Context context = holder.itemView.getContext();
@@ -108,13 +111,17 @@ public class LearnFragment extends Fragment
                 holder.title.setText(item.getTitle());
 
                 holder.itemView.setOnClickListener(v -> {
-                    Intent intent = ViewWebDocumentActivity
-                            .newIntent(v.getContext(), item.getTitle(), item.getDetails());
-                    v.getContext().startActivity(intent);
+                    Intent intent = ViewWebDocumentActivity.newIntent(v.getContext(),
+                                                                      item.getTitle(),
+                                                                      item.getDetails());
+                    v.getContext()
+                     .startActivity(intent);
                 });
 
-                int imageResId = ResearchStack.getInstance().getDrawableResourceId(context, item.getIconImage());
-                Drawable icon = context.getResources().getDrawable(imageResId);
+                int imageResId = ResearchStack.getInstance()
+                                              .getDrawableResourceId(context, item.getIconImage());
+                Drawable icon = context.getResources()
+                                       .getDrawable(imageResId);
                 int tintColor = ViewUtils.fetchAccentColor(context);
                 DrawableCompat.setTint(icon, tintColor);
                 holder.icon.setImageDrawable(icon);
@@ -148,7 +155,7 @@ public class LearnFragment extends Fragment
 
         public static class ViewHolder extends RecyclerView.ViewHolder
         {
-            AppCompatTextView title;
+            AppCompatTextView  title;
             AppCompatImageView icon;
 
             public ViewHolder(View itemView)

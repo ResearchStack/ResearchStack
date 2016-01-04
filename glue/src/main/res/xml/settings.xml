@@ -2,43 +2,43 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/settings_notifications">
         <CheckBoxPreference
+            android:defaultValue="false"
             android:key="enable_reminders"
-            android:title="@string/settings_enable_reminders"
-            android:defaultValue="false" />
+            android:title="@string/settings_enable_reminders"/>
         <Preference
             android:key="reminders_time"
-            android:title="@string/settings_time" />
+            android:title="@string/settings_time"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_security">
         <ListPreference
-            android:key="auto_lock_time"
-            android:title="@string/settings_auto_lock"
-            android:summary="@string/settings_auto_lock_summary"
+            android:defaultValue="@string/settings_auto_lock_default"
             android:entries="@array/settings_array_auto_lock_times"
             android:entryValues="@array/settings_array_auto_lock_times_values"
-            android:defaultValue="@string/settings_auto_lock_default"/>
+            android:key="auto_lock_time"
+            android:summary="@string/settings_auto_lock_summary"
+            android:title="@string/settings_auto_lock"/>
         <Preference
             android:key="change_passcode"
-            android:title="@string/settings_change_passcode" />
+            android:title="@string/settings_change_passcode"/>
         <Preference
             android:key="sharing_options"
-            android:title="@string/settings_sharing_options" />
+            android:title="@string/settings_sharing_options"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/rsc_consent">
         <Preference
             android:key="permissions"
-            android:title="@string/settings_permissions" />
+            android:title="@string/settings_permissions"/>
         <Preference
             android:key="review_consent"
-            android:title="@string/settings_review_consent" />
+            android:title="@string/settings_review_consent"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_legal">
         <Preference
             android:key="privacy_policy"
-            android:title="@string/settings_privacy_policy" />
+            android:title="@string/settings_privacy_policy"/>
         <Preference
             android:key="license_information"
             android:title="@string/settings_license_information">
@@ -47,6 +47,6 @@
 
     <Preference
         android:key="version"
-        android:summary="@string/settings_version" />
+        android:summary="@string/settings_version"/>
 
 </PreferenceScreen>

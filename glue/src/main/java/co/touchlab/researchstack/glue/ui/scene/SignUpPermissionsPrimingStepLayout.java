@@ -41,7 +41,7 @@ public class SignUpPermissionsPrimingStepLayout extends StepLayoutImpl
     public void onBodyCreated(View body)
     {
         TextView priming = (TextView) body.findViewById(R.id.priming_body);
-//        body.setSummary();
+        //        body.setSummary();
     }
 
 }

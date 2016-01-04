@@ -1,4 +1,5 @@
-<manifest package="co.touchlab.researchstack.core"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    package="co.touchlab.researchstack.core"
+    >
 
 </manifest>

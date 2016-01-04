@@ -8,13 +8,13 @@ public class ConsentSignatureStep extends Step
         super(identifier);
     }
 
-    public void setSignatureDateFormat(String signatureDateFormat)
-    {
-        this.signatureDateFormat = signatureDateFormat;
-    }
-
     public String getSignatureDateFormat()
     {
         return signatureDateFormat;
+    }
+
+    public void setSignatureDateFormat(String signatureDateFormat)
+    {
+        this.signatureDateFormat = signatureDateFormat;
     }
 }

@@ -1,42 +1,38 @@
 {
-    "disease_name":"Asthma",
-    "from_date":"December 2014",
-    "to_date":"January 2015",
-    "logo_name": "logo_research_institute",
-    "questions":
-    [
-     {
-     "title":"Welcome to Our Asthma Research Study",
-     "details":"",
-     "show_consent": "yes"
-     },
-     {
-     "title":"About This Study",
-     "details":"study_overview_about",
-     "icon_image":"paperplus_icon",
-     "tint_color" : "blue"
-     },
-     
-     {
-     "title":"How This Study Works",
-      "details":"study_overview_howstudyworks",
-     "icon_image":"rulerpencil_icon",
-     "tint_color" : "yellow"
-     },
-     
-     {
-     "title":"Who is Running This Study",
-     "details":"study_overview_whoisrunning",
-     "icon_image":"stethescope_icon",
-     "tint_color" : "red"
-     },
-     
-     {
-     "title":"About the App",
-     "details":"Please tap on the image below to watch a short video about the Asthma Study and this app.",
-     "icon_image":"paperplus_icon",
-     "tint_color" : "blue",
-     "video_name" : "study_overview_video"
-     }
-     ]
+  "disease_name": "Asthma",
+  "from_date": "December 2014",
+  "to_date": "January 2015",
+  "logo_name": "logo_research_institute",
+  "questions": [
+    {
+      "title": "Welcome to Our Asthma Research Study",
+      "details": "",
+      "show_consent": "yes"
+    },
+    {
+      "title": "About This Study",
+      "details": "study_overview_about",
+      "icon_image": "paperplus_icon",
+      "tint_color": "blue"
+    },
+    {
+      "title": "How This Study Works",
+      "details": "study_overview_howstudyworks",
+      "icon_image": "rulerpencil_icon",
+      "tint_color": "yellow"
+    },
+    {
+      "title": "Who is Running This Study",
+      "details": "study_overview_whoisrunning",
+      "icon_image": "stethescope_icon",
+      "tint_color": "red"
+    },
+    {
+      "title": "About the App",
+      "details": "Please tap on the image below to watch a short video about the Asthma Study and this app.",
+      "icon_image": "paperplus_icon",
+      "tint_color": "blue",
+      "video_name": "study_overview_video"
+    }
+  ]
 }

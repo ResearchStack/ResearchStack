@@ -8,17 +8,17 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import co.touchlab.researchstack.core.ui.views.LocalWebView;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 import co.touchlab.researchstack.glue.ui.views.StudyLandingLayout;
-import co.touchlab.researchstack.core.ui.views.LocalWebView;
 import co.touchlab.researchstack.glue.ui.views.StudyVideoLayout;
 
 public class OnboardingPagerAdapter extends PagerAdapter
 {
     private final List<StudyOverviewModel.Question> items;
-    private final LayoutInflater     inflater;
+    private final LayoutInflater                    inflater;
 
     public OnboardingPagerAdapter(Context context, List<StudyOverviewModel.Question> items)
     {
@@ -26,17 +26,23 @@ public class OnboardingPagerAdapter extends PagerAdapter
         this.inflater = LayoutInflater.from(context);
     }
 
+    @Override
+    public int getCount()
+    {
+        return items.size();
+    }
+
     /**
      * TODO Clean this code up -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
      * Each case is the same block of code. Figure out what the layout-id needs to be, then upcast
      * to the super class that the layouts each share. If the layouts cant extend from the same parent
      * class, maybe have each implement an interface?
-     *
+     * <p>
      * interface {
-     *     public getView()
-     *     public setFormSteps(Data d)
+     * public getView()
+     * public setFormSteps(Data d)
      * }
-     *
+     * <p>
      * To discuss.
      */
     @Override
@@ -45,26 +51,26 @@ public class OnboardingPagerAdapter extends PagerAdapter
         StudyOverviewModel.Question item = items.get(position);
         View child;
 
-        if (position == 0)
+        if(position == 0)
         {
-//            APCStudyLandingCollectionViewCell *landingCell = (APCStudyLandingCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kAPCStudyLandingCollectionViewCellIdentifier forIndexPath:indexPath];
-//            landingCell.delegate = self;
-//            landingCell.titleLabel.text = studyDetails.caption;
-//            landingCell.subTitleLabel.text = studyDetails.detailText;
-//            landingCell.readConsentButton.hidden = YES;
-//            landingCell.emailConsentButton.hidden = [((APCAppDelegate *)[UIApplication sharedApplication].delegate) hideEmailOnWelcomeScreen];
-//
-//            if ([MFMailComposeViewController canSendMail]) {
-//            [landingCell.emailConsentButton setTitleColor:[UIColor appPrimaryColor] forState:UIControlStateNormal];
-//            [landingCell.emailConsentButton setUserInteractionEnabled:YES];
-//        }else{
-//            [landingCell.emailConsentButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//            [landingCell.emailConsentButton setUserInteractionEnabled:NO];
-//        }
-//
-//        if (studyDetails.showsConsent) {
-//            landingCell.readConsentButton.hidden = NO;
-//        }
+            //            APCStudyLandingCollectionViewCell *landingCell = (APCStudyLandingCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kAPCStudyLandingCollectionViewCellIdentifier forIndexPath:indexPath];
+            //            landingCell.delegate = self;
+            //            landingCell.titleLabel.text = studyDetails.caption;
+            //            landingCell.subTitleLabel.text = studyDetails.detailText;
+            //            landingCell.readConsentButton.hidden = YES;
+            //            landingCell.emailConsentButton.hidden = [((APCAppDelegate *)[UIApplication sharedApplication].delegate) hideEmailOnWelcomeScreen];
+            //
+            //            if ([MFMailComposeViewController canSendMail]) {
+            //            [landingCell.emailConsentButton setTitleColor:[UIColor appPrimaryColor] forState:UIControlStateNormal];
+            //            [landingCell.emailConsentButton setUserInteractionEnabled:YES];
+            //        }else{
+            //            [landingCell.emailConsentButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            //            [landingCell.emailConsentButton setUserInteractionEnabled:NO];
+            //        }
+            //
+            //        if (studyDetails.showsConsent) {
+            //            landingCell.readConsentButton.hidden = NO;
+            //        }
 
             StudyLandingLayout layout = (StudyLandingLayout) inflater.inflate(
                     R.layout.item_study_landing, container, false);
@@ -73,33 +79,34 @@ public class OnboardingPagerAdapter extends PagerAdapter
             child = layout;
 
         }
-        else if (!TextUtils.isEmpty(item.getVideoName()))
+        else if(! TextUtils.isEmpty(item.getVideoName()))
         {
-            StudyVideoLayout layout = (StudyVideoLayout) inflater.inflate(
-                    R.layout.item_study_video, container, false);
+            StudyVideoLayout layout = (StudyVideoLayout) inflater.inflate(R.layout.item_study_video,
+                                                                          container, false);
             layout.setData(item);
 
             child = layout;
 
 
-//            APCStudyVideoCollectionViewCell *videoCell = (APCStudyVideoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kAPCStudyVideoCollectionViewCellIdentifier forIndexPath:indexPath];
-//            videoCell.delegate = self;
-//            videoCell.titleLabel.text = studyDetails.caption;
-//            videoCell.videoMessageLabel.text = studyDetails.detailText;
+            //            APCStudyVideoCollectionViewCell *videoCell = (APCStudyVideoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kAPCStudyVideoCollectionViewCellIdentifier forIndexPath:indexPath];
+            //            videoCell.delegate = self;
+            //            videoCell.titleLabel.text = studyDetails.caption;
+            //            videoCell.videoMessageLabel.text = studyDetails.detailText;
 
         }
         else
         {
-            String url = ResearchStack.getInstance().getHTMLFilePath(item.getDetails());
+            String url = ResearchStack.getInstance()
+                                      .getHTMLFilePath(item.getDetails());
             LocalWebView layout = new LocalWebView(container.getContext());
             layout.loadUrl(url);
 
             child = layout;
 
-//            NSString *filePath = [[NSBundle mainBundle] pathForResource: studyDetails.detailText ofType:@"html" inDirectory:@"HTMLContent"];
-//            NSURL *targetURL = [NSURL URLWithString:filePath];
-//            NSURLRequest *request = [NSURLRequest requestWithURL:targetURL];
-//            [webViewCell.webView loadRequest:request];
+            //            NSString *filePath = [[NSBundle mainBundle] pathForResource: studyDetails.detailText ofType:@"html" inDirectory:@"HTMLContent"];
+            //            NSURL *targetURL = [NSURL URLWithString:filePath];
+            //            NSURLRequest *request = [NSURLRequest requestWithURL:targetURL];
+            //            [webViewCell.webView loadRequest:request];
 
         }
 
@@ -117,12 +124,6 @@ public class OnboardingPagerAdapter extends PagerAdapter
     public boolean isViewFromObject(View view, Object object)
     {
         return view == object;
-    }
-
-    @Override
-    public int getCount()
-    {
-        return items.size();
     }
 
 }

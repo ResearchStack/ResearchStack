@@ -3,7 +3,8 @@
 
     <declare-styleable name="PageIndicator">
         <!-- Used to identify how to draw the cling bg -->
-        <attr name="windowSize" format="integer"  />
+        <attr name="windowSize"
+              format="integer"/>
     </declare-styleable>
 
 </resources>

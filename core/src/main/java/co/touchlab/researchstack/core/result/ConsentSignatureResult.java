@@ -2,8 +2,7 @@ package co.touchlab.researchstack.core.result;
 
 import co.touchlab.researchstack.core.model.ConsentSignature;
 
-@Deprecated
-public class ConsentSignatureResult extends StepResult
+@Deprecated public class ConsentSignatureResult extends StepResult
 {
 
     ConsentSignature signature;
@@ -22,14 +21,11 @@ public class ConsentSignatureResult extends StepResult
 
     public void setSignature(ConsentSignature signature)
     {
-        this.signature = new ConsentSignature(
-                signature.getTitle(),
-                signature.getSignatureDateFormatString(),
-                signature.getIdentifier(),
-                signature.getFullName(),
-                signature.getSignatureImage(),
-                signature.getSignatureDate()
-                );
+        this.signature = new ConsentSignature(signature.getTitle(),
+                                              signature.getSignatureDateFormatString(),
+                                              signature.getIdentifier(), signature.getFullName(),
+                                              signature.getSignatureImage(),
+                                              signature.getSignatureDate());
     }
 
     public boolean isConsented()

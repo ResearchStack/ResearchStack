@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:gravity="center_horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+    >
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/permission_title"
-        android:text="@string/location_services"
-        android:gravity="center"
-        android:textSize="24sp"
         android:layout_width="280dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/location_services"
+        android:textSize="24sp"
+        />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/permission_description"
-        android:text="@string/location_services_description"
-        android:gravity="center"
         android:layout_width="280dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/location_services_description"
+        />
 
     <android.support.v7.widget.AppCompatButton
-            android:id="@+id/permission_button"
-            tools:hint="@string/allow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:id="@+id/permission_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:hint="@string/allow"
+        />
 
 </LinearLayout>

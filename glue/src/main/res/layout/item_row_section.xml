@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
     android:background="?android:selectableItemBackground"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:padding="16dp"
+    >
 
     <!-- TODO can probably refactor this into a single textView and set setCompoundDrawable -->
 
@@ -22,8 +23,8 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:textColor="@android:color/black"
+        android:textSize="16sp"
         tools:text="text"
         />
 

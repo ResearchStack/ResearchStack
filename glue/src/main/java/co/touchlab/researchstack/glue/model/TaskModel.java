@@ -43,7 +43,7 @@ public class TaskModel
         public ConstraintsModel constraints;
     }
 
-    public static class ConstraintsModel  implements Serializable
+    public static class ConstraintsModel implements Serializable
     {
 
         @SerializedName("dataType")
@@ -77,7 +77,7 @@ public class TaskModel
         public Validation validation;
     }
 
-    public static class EnumerationModel  implements Serializable
+    public static class EnumerationModel implements Serializable
     {
         @SerializedName("type")
         public String type;
@@ -105,7 +105,7 @@ public class TaskModel
 
     }
 
-    public static class Validation  implements Serializable
+    public static class Validation implements Serializable
     {
         @SerializedName("answer")
         public String answer;

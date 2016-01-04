@@ -20,13 +20,13 @@ import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 
-public class MultiChoiceQuestionBody<T> implements StepBody
+public class MultiChoiceQuestionBody <T> implements StepBody
 {
     private Set<T> results;
 
-    private RadioGroup radioGroup;
+    private RadioGroup         radioGroup;
     private ChoiceAnswerFormat format;
-    private Choice<T>[] choices;
+    private Choice<T>[]        choices;
     private String identifier = StepResult.DEFAULT_KEY;
 
     @Override
@@ -39,21 +39,19 @@ public class MultiChoiceQuestionBody<T> implements StepBody
         // TODO inflate this?
         radioGroup = new RadioGroup(inflater.getContext());
 
-        for (int i = 0; i < choices.length; i++)
+        for(int i = 0; i < choices.length; i++)
         {
             Choice<T> item = choices[i];
 
             // Create & add the View to our body-view
             AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(
-                    R.layout.item_checkbox,
-                    radioGroup,
-                    false);
+                    R.layout.item_checkbox, radioGroup, false);
             checkBox.setText(item.getText());
             checkBox.setId(i);
             radioGroup.addView(checkBox);
 
             // Set initial state
-            if (results.contains(item.getValue()))
+            if(results.contains(item.getValue()))
             {
                 checkBox.setChecked(true);
             }
@@ -61,7 +59,7 @@ public class MultiChoiceQuestionBody<T> implements StepBody
             // Update result when value changes
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (isChecked)
+                if(isChecked)
                 {
                     results.add(item.getValue());
                 }
@@ -79,9 +77,7 @@ public class MultiChoiceQuestionBody<T> implements StepBody
     public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         results = new HashSet<>();
-        View formItemView = inflater.inflate(R.layout.scene_form_item,
-                parent,
-                false);
+        View formItemView = inflater.inflate(R.layout.scene_form_item, parent, false);
 
         TextView label = (TextView) formItemView.findViewById(R.id.text);
 
@@ -93,43 +89,11 @@ public class MultiChoiceQuestionBody<T> implements StepBody
         choices = format.getChoices();
 
         RxView.clicks(textView)
-                .subscribe(o -> {
-                    showDialog(textView,
-                            step.getTitle());
-                });
+              .subscribe(o -> {
+                  showDialog(textView, step.getTitle());
+              });
 
         return formItemView;
-    }
-
-    private void showDialog(TextView textView, String title)
-    {
-        // TODO use same view as initView() and just set the dialog's view to it?
-        // TODO use current result to precheck items
-        // TODO improve this whole result/dialog logic
-        boolean[] checkedItems = new boolean[format.getChoices().length];
-        new AlertDialog.Builder(textView.getContext())
-                .setMultiChoiceItems(format.getTextChoiceNames(),
-                        checkedItems,
-                        (dialog, which, isChecked) -> {
-                            checkedItems[which] = isChecked;
-                        })
-                .setTitle(title)
-                .setPositiveButton(R.string.src_ok,
-                        (dialog, which) -> {
-                            results.clear();
-                            for (int i = 0; i < checkedItems.length; i++)
-                            {
-                                if (checkedItems[i])
-                                {
-                                    Choice<T> choice = choices[i];
-                                    results.add(choice.getValue());
-                                }
-                            }
-                            textView.setText("chosen");
-                        })
-                .setNegativeButton(R.string.src_cancel,
-                        null)
-                .show();
     }
 
     @Override
@@ -144,7 +108,7 @@ public class MultiChoiceQuestionBody<T> implements StepBody
     public void prefillResult(StepResult result)
     {
         T[] resultArray = (T[]) result.getResult();
-        if (resultArray != null && resultArray.length > 0)
+        if(resultArray != null && resultArray.length > 0)
         {
             results.addAll(Arrays.asList(resultArray));
         }
@@ -153,7 +117,7 @@ public class MultiChoiceQuestionBody<T> implements StepBody
     @Override
     public boolean isAnswerValid()
     {
-        return !results.isEmpty();
+        return ! results.isEmpty();
     }
 
     @Override
@@ -166,5 +130,35 @@ public class MultiChoiceQuestionBody<T> implements StepBody
     public void setIdentifier(String identifier)
     {
         this.identifier = identifier;
+    }
+
+    private void showDialog(TextView textView, String title)
+    {
+        // TODO use same view as initView() and just set the dialog's view to it?
+        // TODO use current result to precheck items
+        // TODO improve this whole result/dialog logic
+        boolean[] checkedItems = new boolean[format.getChoices().length];
+        new AlertDialog.Builder(textView.getContext()).setMultiChoiceItems(
+                format.getTextChoiceNames(), checkedItems, (dialog, which, isChecked) -> {
+                    checkedItems[which] = isChecked;
+                })
+                                                      .setTitle(title)
+                                                      .setPositiveButton(R.string.src_ok,
+                                                                         (dialog, which) -> {
+                                                                             results.clear();
+                                                                             for(int i = 0; i < checkedItems.length; i++)
+                                                                             {
+                                                                                 if(checkedItems[i])
+                                                                                 {
+                                                                                     Choice<T> choice = choices[i];
+                                                                                     results.add(
+                                                                                             choice.getValue());
+                                                                                 }
+                                                                             }
+                                                                             textView.setText(
+                                                                                     "chosen");
+                                                                         })
+                                                      .setNegativeButton(R.string.src_cancel, null)
+                                                      .show();
     }
 }

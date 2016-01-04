@@ -15,7 +15,8 @@ import co.touchlab.researchstack.core.utils.UiThreadContext;
  */
 public class ClearFileAccess extends BaseFileAccess
 {
-    @Override @MainThread
+    @Override
+    @MainThread
     public void initFileAccess(Context context)
     {
         UiThreadContext.assertUiThread();
@@ -23,14 +24,16 @@ public class ClearFileAccess extends BaseFileAccess
         notifyReady();
     }
 
-    @Override @WorkerThread
+    @Override
+    @WorkerThread
     public void writeData(Context context, String path, byte[] data)
     {
         File localFile = findLocalFile(context, path);
         writeSafe(localFile, data);
     }
 
-    @Override @WorkerThread
+    @Override
+    @WorkerThread
     public byte[] readData(Context context, String path)
     {
         try
@@ -44,7 +47,8 @@ public class ClearFileAccess extends BaseFileAccess
         }
     }
 
-    @Override @WorkerThread
+    @Override
+    @WorkerThread
     public boolean dataExists(Context context, String path)
     {
         return findLocalFile(context, path).exists();

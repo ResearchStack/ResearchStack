@@ -52,7 +52,10 @@ public abstract class Task implements Serializable
      */
     public abstract void validateParameters();
 
-    public static class TaskProgress {
+    public abstract int getNumberOfSteps();
+
+    public static class TaskProgress
+    {
 
         private int current;
 
@@ -74,6 +77,4 @@ public abstract class Task implements Serializable
             return total;
         }
     }
-
-    public abstract int getNumberOfSteps();
 }

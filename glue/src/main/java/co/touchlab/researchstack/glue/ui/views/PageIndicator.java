@@ -31,7 +31,7 @@ import co.touchlab.researchstack.glue.R;
 public class PageIndicator extends LinearLayout
 {
     @SuppressWarnings("unused")
-    private static final String TAG = "PageIndicator";
+    private static final String  TAG                    = "PageIndicator";
     // Want this to look good? Keep it odd
     private static final boolean MODULATE_ALPHA_ENABLED = false;
     private LayoutInflater mLayoutInflater;
@@ -39,24 +39,6 @@ public class PageIndicator extends LinearLayout
     private int mMaxWindowSize;
     private ArrayList<PageIndicatorMarker> mMarkers = new ArrayList<>();
     private int mActiveMarkerIndex;
-
-    public static class PageMarkerResources
-    {
-        int activeId;
-        int inactiveId;
-
-        public PageMarkerResources()
-        {
-            activeId = R.drawable.ic_pageindicator_current_dark;
-            inactiveId = R.drawable.ic_pageindicator_default_dark;
-        }
-
-        public PageMarkerResources(int aId, int iaId)
-        {
-            activeId = aId;
-            inactiveId = iaId;
-        }
-    }
 
     public PageIndicator(Context context)
     {
@@ -71,8 +53,8 @@ public class PageIndicator extends LinearLayout
     public PageIndicator(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
-        TypedArray a = context
-                .obtainStyledAttributes(attrs, R.styleable.PageIndicator, defStyle, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PageIndicator, defStyle,
+                                                      0);
         mMaxWindowSize = a.getInteger(R.styleable.PageIndicator_windowSize, 15);
         mWindowRange[0] = 0;
         mWindowRange[1] = 0;
@@ -170,7 +152,10 @@ public class PageIndicator extends LinearLayout
                         alpha = 1f - Math.abs((i - windowMid) / hfWindowSize);
                     }
                 }
-                marker.animate().alpha(alpha).setDuration(500).start();
+                marker.animate()
+                      .alpha(alpha)
+                      .setDuration(500)
+                      .start();
             }
         }
         if(! allowAnimations)
@@ -184,8 +169,8 @@ public class PageIndicator extends LinearLayout
     public void addMarker(int index, PageMarkerResources marker, boolean allowAnimations)
     {
         index = Math.max(0, Math.min(index, mMarkers.size()));
-        PageIndicatorMarker m = (PageIndicatorMarker) mLayoutInflater
-                .inflate(R.layout.layout_page_indicator_marker, this, false);
+        PageIndicatorMarker m = (PageIndicatorMarker) mLayoutInflater.inflate(
+                R.layout.layout_page_indicator_marker, this, false);
         m.setMarkerDrawables(marker.activeId, marker.inactiveId);
         mMarkers.add(index, m);
         offsetWindowCenterTo(mActiveMarkerIndex, allowAnimations);
@@ -262,5 +247,23 @@ public class PageIndicator extends LinearLayout
             System.out.println("\t\t(" + i + ") " + m);
         }
         System.out.println("\tactive: " + mActiveMarkerIndex);
+    }
+
+    public static class PageMarkerResources
+    {
+        int activeId;
+        int inactiveId;
+
+        public PageMarkerResources()
+        {
+            activeId = R.drawable.ic_pageindicator_current_dark;
+            inactiveId = R.drawable.ic_pageindicator_default_dark;
+        }
+
+        public PageMarkerResources(int aId, int iaId)
+        {
+            activeId = aId;
+            inactiveId = iaId;
+        }
     }
 }

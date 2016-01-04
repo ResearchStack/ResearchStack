@@ -25,7 +25,7 @@ public class OrderedTask extends Task implements Serializable
         this.steps = new ArrayList<>(steps);
     }
 
-    public OrderedTask(String identifier, String scheduleId, Step ... steps)
+    public OrderedTask(String identifier, String scheduleId, Step... steps)
     {
         super(identifier, scheduleId);
         this.steps = Arrays.asList(steps);
@@ -67,9 +67,9 @@ public class OrderedTask extends Task implements Serializable
     @Override
     public Step getStepWithIdentifier(String identifier)
     {
-        for (Step step : steps)
+        for(Step step : steps)
         {
-            if (identifier.equals(step.getIdentifier()))
+            if(identifier.equals(step.getIdentifier()))
             {
                 return step;
             }
@@ -80,7 +80,7 @@ public class OrderedTask extends Task implements Serializable
     @Override
     public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
     {
-        int current = step == null ? -1 : steps.indexOf(step);
+        int current = step == null ? - 1 : steps.indexOf(step);
         return new TaskProgress(current, steps.size());
     }
 
@@ -89,9 +89,15 @@ public class OrderedTask extends Task implements Serializable
     {
     }
 
+    @Override
+    public int getNumberOfSteps()
+    {
+        return steps.size();
+    }
+
     public void addStep(Step step)
     {
-        if (steps == null)
+        if(steps == null)
         {
             steps = new ArrayList<>();
         }
@@ -107,18 +113,12 @@ public class OrderedTask extends Task implements Serializable
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof OrderedTask)
+        if(o instanceof OrderedTask)
         {
             OrderedTask orderedTask = (OrderedTask) o;
             return getIdentifier().equals(orderedTask.getIdentifier()) && steps.equals(
                     orderedTask.getSteps());
         }
         return false;
-    }
-
-    @Override
-    public int getNumberOfSteps()
-    {
-        return steps.size();
     }
 }

@@ -16,8 +16,8 @@ import rx.Observable;
  */
 public class HeightPicker extends LinearLayout
 {
-    private AppCompatEditText feet;
-    private AppCompatEditText inches;
+    private AppCompatEditText   feet;
+    private AppCompatEditText   inches;
     private Observable<Integer> changes;
 
     public HeightPicker(Context context)
@@ -27,24 +27,18 @@ public class HeightPicker extends LinearLayout
 
     public HeightPicker(Context context, AttributeSet attrs)
     {
-        super(context,
-                attrs);
+        super(context, attrs);
     }
 
     public HeightPicker(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        super(context,
-                attrs,
-                defStyleAttr);
+        super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(21)
     public HeightPicker(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
-        super(context,
-                attrs,
-                defStyleAttr,
-                defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
@@ -55,38 +49,36 @@ public class HeightPicker extends LinearLayout
         feet = (AppCompatEditText) findViewById(R.id.height_feet);
         inches = (AppCompatEditText) findViewById(R.id.height_inches);
 
-        changes = Observable.merge(RxTextView.textChanges(feet),
-                RxTextView.textChanges(inches))
-                .map(charSequence -> getUserHeight())
-                .filter(totalInches -> totalInches > 0);
-    }
-
-    public void setUserHeight(int totalInches)
-    {
-        if (totalInches <= 0)
-        {
-            return;
-        }
-
-        feet.setText(String.valueOf(totalInches / 12));
-        inches.setText(String.valueOf(totalInches % 12));
+        changes = Observable.merge(RxTextView.textChanges(feet), RxTextView.textChanges(inches))
+                            .map(charSequence -> getUserHeight())
+                            .filter(totalInches -> totalInches > 0);
     }
 
     public int getUserHeight()
     {
 
         String feetString = feet.getText()
-                .toString();
+                                .toString();
         String inchesString = inches.getText()
-                .toString();
+                                    .toString();
 
-        if (feetString.isEmpty() || inchesString.isEmpty())
+        if(feetString.isEmpty() || inchesString.isEmpty())
         {
             return 0;
         }
 
-        return Integer.valueOf(feetString) * 12 +
-                Integer.valueOf(inchesString);
+        return Integer.valueOf(feetString) * 12 + Integer.valueOf(inchesString);
+    }
+
+    public void setUserHeight(int totalInches)
+    {
+        if(totalInches <= 0)
+        {
+            return;
+        }
+
+        feet.setText(String.valueOf(totalInches / 12));
+        inches.setText(String.valueOf(totalInches % 12));
     }
 
     public Observable<Integer> getObservable()

@@ -15,10 +15,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
+import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.ui.fragment.ActivitiesFragment;
 import co.touchlab.researchstack.glue.ui.fragment.DashboardFragment;
 import co.touchlab.researchstack.glue.ui.fragment.LearnFragment;
@@ -97,33 +97,33 @@ public class MainActivity extends PassCodeActivity
                     }
                 });
 
-        View headerView = getLayoutInflater().inflate(R.layout.include_user_header,
-                null);
+        View headerView = getLayoutInflater().inflate(R.layout.include_user_header, null);
 
         AppCompatTextView name = (AppCompatTextView) headerView.findViewById(R.id.name);
         name.setText(ResearchStack.getInstance()
-                .getCurrentUser()
-                .getName());
+                                  .getCurrentUser()
+                                  .getName());
         AppCompatTextView email = (AppCompatTextView) headerView.findViewById(R.id.email);
-        email.setText(ResearchStack.getInstance().getCurrentUser().getEmail());
+        email.setText(ResearchStack.getInstance()
+                                   .getCurrentUser()
+                                   .getEmail());
 
         ImageView image = (ImageView) headerView.findViewById(R.id.profile_image);
         image.setOnLongClickListener(v -> {
-            new AlertDialog.Builder(MainActivity.this)
-                    .setMessage("Clear saved user data?")
-                    .setPositiveButton("Yes",
-                            (dialog, which) -> {
-                                ResearchStack.getInstance()
-                                        .clearUserData(MainActivity.this);
-                                dialog.dismiss();
-                                finish();
-                                System.exit(0);
-                            })
-                    .setNegativeButton("No",
-                            ((dialog1, which1) -> {
-                                dialog1.dismiss();
-                            }))
-                    .show();
+            new AlertDialog.Builder(MainActivity.this).setMessage("Clear saved user data?")
+                                                      .setPositiveButton("Yes", (dialog, which) -> {
+                                                                             ResearchStack.getInstance()
+                                                                                          .clearUserData(
+                                                                                                  MainActivity.this);
+                                                                             dialog.dismiss();
+                                                                             finish();
+                                                                             System.exit(0);
+                                                                         })
+                                                      .setNegativeButton("No",
+                                                                         ((dialog1, which1) -> {
+                                                                             dialog1.dismiss();
+                                                                         }))
+                                                      .show();
             return false;
         });
 
@@ -144,24 +144,23 @@ public class MainActivity extends PassCodeActivity
     protected void onDataFailed()
     {
         super.onDataFailed();
-        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG)
+             .show();
         finish();
     }
 
     // TODO better fragment loading/switching logic, use tags
     private void showFragment(Fragment fragment)
     {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.placeholder,
-                        fragment)
-                .commit();
+        getSupportFragmentManager().beginTransaction()
+                                   .replace(R.id.placeholder, fragment)
+                                   .commit();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if (item.getItemId() == android.R.id.home)
+        if(item.getItemId() == android.R.id.home)
         {
             drawerLayout.openDrawer(GravityCompat.START);
             return true;

@@ -8,9 +8,9 @@ import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 public class ConsentQuizQuestionStep extends QuestionStep
 {
     private ConsentQuizModel.QuestionProperties properties;
-    private ConsentQuizModel.QuizQuestion question;
+    private ConsentQuizModel.QuizQuestion       question;
 
-    public ConsentQuizQuestionStep(String identifier, ConsentQuizModel.QuestionProperties properties,  ConsentQuizModel.QuizQuestion question)
+    public ConsentQuizQuestionStep(String identifier, ConsentQuizModel.QuestionProperties properties, ConsentQuizModel.QuizQuestion question)
     {
         super(identifier);
         this.properties = properties;

@@ -5,11 +5,17 @@ import co.touchlab.researchstack.core.ui.step.layout.ConsentVisualStepLayout;
 public class ConsentVisualStep extends Step
 {
     private ConsentSection section;
-    private String nextButtonString;
+    private String         nextButtonString;
 
     public ConsentVisualStep(String identifier)
     {
         super(identifier);
+    }
+
+    @Override
+    public boolean isShowsProgress()
+    {
+        return false;
     }
 
     @Override
@@ -24,12 +30,6 @@ public class ConsentVisualStep extends Step
         return ConsentVisualStepLayout.class;
     }
 
-    @Override
-    public boolean isShowsProgress()
-    {
-        return false;
-    }
-
     public ConsentSection getSection()
     {
         return section;
@@ -40,13 +40,13 @@ public class ConsentVisualStep extends Step
         this.section = section;
     }
 
-    public void setNextButtonString(String nextButtonString)
-    {
-        this.nextButtonString = nextButtonString;
-    }
-
     public String getNextButtonString()
     {
         return nextButtonString;
+    }
+
+    public void setNextButtonString(String nextButtonString)
+    {
+        this.nextButtonString = nextButtonString;
     }
 }

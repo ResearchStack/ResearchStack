@@ -15,11 +15,11 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 
 public class IntegerQuestionBody implements StepBody
 {
-    private QuestionStep step;
+    private QuestionStep        step;
     private IntegerAnswerFormat format;
     private String identifier = StepResult.DEFAULT_KEY;
     private NumberPicker numberPicker;
-    private EditText editText;
+    private EditText     editText;
 
     public IntegerQuestionBody()
     {
@@ -28,10 +28,7 @@ public class IntegerQuestionBody implements StepBody
     @Override
     public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        numberPicker = (NumberPicker) inflater
-                .inflate(R.layout.item_number_picker,
-                        parent,
-                        false);
+        numberPicker = (NumberPicker) inflater.inflate(R.layout.item_number_picker, parent, false);
         // TODO do we need both Step and AnswerFormat?
         this.step = step;
         format = (IntegerAnswerFormat) step.getAnswerFormat();
@@ -41,7 +38,7 @@ public class IntegerQuestionBody implements StepBody
         numberPicker.setMinValue(answerFormat.getMinValue());
 
         // if max and min are equal, don't set a max (it's 0/0 if they don't set min/max)
-        if (answerFormat.getMaxValue() != answerFormat.getMinValue())
+        if(answerFormat.getMaxValue() != answerFormat.getMinValue())
         {
             numberPicker.setMaxValue(answerFormat.getMaxValue());
         }
@@ -52,9 +49,7 @@ public class IntegerQuestionBody implements StepBody
     @Override
     public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        View formItemView = inflater.inflate(R.layout.scene_form_item_editable,
-                parent,
-                false);
+        View formItemView = inflater.inflate(R.layout.scene_form_item_editable, parent, false);
 
         TextView label = (TextView) formItemView.findViewById(R.id.text);
 
@@ -76,10 +71,10 @@ public class IntegerQuestionBody implements StepBody
     public StepResult getStepResult()
     {
         StepResult<Object> stepResult = new StepResult<>(identifier);
-        if (editText != null)
+        if(editText != null)
         {
             stepResult.setResult(Integer.valueOf(editText.getText()
-                    .toString()));
+                                                         .toString()));
         }
         else
         {
@@ -91,12 +86,12 @@ public class IntegerQuestionBody implements StepBody
     @Override
     public void prefillResult(StepResult result)
     {
-        if (result.getResult() == null)
+        if(result.getResult() == null)
         {
             return;
         }
 
-        if (numberPicker != null)
+        if(numberPicker != null)
         {
             numberPicker.setValue((Integer) result.getResult());
         }
@@ -111,16 +106,18 @@ public class IntegerQuestionBody implements StepBody
     {
         Integer result = null;
 
-        if (numberPicker != null)
+        if(numberPicker != null)
         {
             result = numberPicker.getValue();
         }
-        else if (editText != null && editText.getText().length() > 0)
+        else if(editText != null && editText.getText()
+                                            .length() > 0)
         {
-            result = Integer.valueOf(editText.getText().toString());
+            result = Integer.valueOf(editText.getText()
+                                             .toString());
         }
 
-        if (result == null)
+        if(result == null)
         {
             return false;
         }

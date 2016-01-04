@@ -21,4 +21,4 @@
            android:duration="@integer/rsc_config_mediumAnimTime"
            android:fromXDelta="0"
            android:interpolator="@anim/interpolator_scene"
-           android:toXDelta="-100%p" />
+           android:toXDelta="-100%p"/>

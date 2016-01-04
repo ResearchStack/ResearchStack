@@ -33,20 +33,19 @@ import co.touchlab.researchstack.core.utils.FormatHelper;
 
 public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 {
-    public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
+    public static final String EXTRA_TASK        = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
-    public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
+    public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
 
     private SceneSwitcher root;
 
-    private Step currentStep;
-    private Task task;
+    private Step       currentStep;
+    private Task       task;
     private TaskResult taskResult;
 
     public static Intent newIntent(Context context, Task task)
     {
-        Intent intent = new Intent(context,
-                ViewTaskActivity.class);
+        Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         return intent;
     }
@@ -60,7 +59,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 
         root = (SceneSwitcher) findViewById(R.id.container);
 
-        if (savedInstanceState == null)
+        if(savedInstanceState == null)
         {
             task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
             taskResult = new TaskResult(task.getIdentifier(), null, null);
@@ -73,21 +72,12 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         }
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if(actionBar != null)
         {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         initFileAccess();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable(EXTRA_TASK, task);
-        outState.putSerializable(EXTRA_TASK_RESULT, taskResult);
-        outState.putSerializable(EXTRA_STEP, currentStep);
     }
 
     private void showNextStep()
@@ -118,12 +108,14 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 
     private void showStep(Step step)
     {
-        int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult).getCurrent();
-        int newStepPosition =  task.getProgressOfCurrentStep(step, taskResult).getCurrent();
+        int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult)
+                                      .getCurrent();
+        int newStepPosition = task.getProgressOfCurrentStep(step, taskResult)
+                                  .getCurrent();
 
         StepLayout stepLayout = getSceneForStep(step);
-        root.show(stepLayout, newStepPosition >= currentStepPosition ? SceneSwitcher.SHIFT_LEFT :
-                SceneSwitcher.SHIFT_RIGHT);
+        root.show(stepLayout, newStepPosition >= currentStepPosition ? SceneSwitcher.SHIFT_LEFT
+                : SceneSwitcher.SHIFT_RIGHT);
         currentStep = step;
     }
 
@@ -148,7 +140,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     private StepLayout createSceneFromStep(Step step)
     {
         // TODO figure out how to best create scenes (maybe method on the Step)
-        if (step instanceof QuestionStep)
+        if(step instanceof QuestionStep)
         {
             LogExt.d(getClass(), "Making new SurveyStep");
             return new SurveyStepLayout(ViewTaskActivity.this);
@@ -175,9 +167,11 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         taskRecord.started = new Date();
         taskRecord.completed = new Date();
         taskRecord.taskId = task.getScheduleId();
-        Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601).create();
+        Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601)
+                                     .create();
         taskRecord.result = gson.toJson(taskResult);
-        StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
+        StorageManager.getAppDatabase()
+                      .saveTaskRecord(taskRecord);
 
         setResult(RESULT_OK, resultIntent);
         finish();
@@ -193,12 +187,12 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if (item.getItemId() == android.R.id.home)
+        if(item.getItemId() == android.R.id.home)
         {
             notifySceneOfBackPress();
             return true;
         }
-        else if (item.getItemId() == R.id.menu_cancel)
+        else if(item.getItemId() == R.id.menu_cancel)
         {
             finish();
         }
@@ -212,6 +206,15 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         notifySceneOfBackPress();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(EXTRA_TASK, task);
+        outState.putSerializable(EXTRA_TASK_RESULT, taskResult);
+        outState.putSerializable(EXTRA_STEP, currentStep);
+    }
+
     private void notifySceneOfBackPress()
     {
         StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsc_current_scene);
@@ -223,7 +226,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         super.onDataReady();
 
-        if (currentStep == null)
+        if(currentStep == null)
         {
             currentStep = task.getStepAfterStep(null, taskResult);
         }
@@ -235,7 +238,8 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     protected void onDataFailed()
     {
         super.onDataFailed();
-        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG)
+             .show();
         finish();
     }
 
@@ -244,31 +248,22 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         taskResult.setStepResultForStepIdentifier(step.getIdentifier(), result);
 
-        if (action == SceneCallbacks.ACTION_NEXT)
+        if(action == SceneCallbacks.ACTION_NEXT)
         {
             showNextStep();
         }
-        else if (action == SceneCallbacks.ACTION_PREV)
+        else if(action == SceneCallbacks.ACTION_PREV)
         {
             showPreviousStep();
         }
-        else if (action == SceneCallbacks.ACTION_NONE)
+        else if(action == SceneCallbacks.ACTION_NONE)
         {
             // Used when onSaveInstanceState is called of a view. No action is taken.
         }
         else
         {
             throw new IllegalArgumentException("Action with value " + action + " is invalid. " +
-                                               "See SceneCallbacks for allowable arguments");
-        }
-    }
-
-    public void setActionBarTitle(String title)
-    {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-        {
-            actionBar.setTitle(title);
+                                                       "See SceneCallbacks for allowable arguments");
         }
     }
 
@@ -277,5 +272,14 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     {
         setResult(Activity.RESULT_CANCELED);
         finish();
+    }
+
+    public void setActionBarTitle(String title)
+    {
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null)
+        {
+            actionBar.setTitle(title);
+        }
     }
 }

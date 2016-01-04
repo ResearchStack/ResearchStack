@@ -14,6 +14,22 @@ import co.touchlab.researchstack.core.ui.step.body.TextQuestionBody;
 
 public abstract class AnswerFormat implements Serializable
 {
+    public AnswerFormat()
+    {
+    }
+
+    public QuestionType getQuestionType()
+    {
+        return QuestionType.None;
+    }
+
+    //TODO figure out if this makes sense
+    public Class getQuestionResultClass()
+    {
+        DevUtils.throwUnsupportedOpException();
+        return null;
+    }
+
     public enum QuestionType
     {
         None,
@@ -32,7 +48,7 @@ public abstract class AnswerFormat implements Serializable
 
         public Class<?> getSceneClass()
         {
-            switch (this)
+            switch(this)
             {
                 case SingleChoice:
                     //TODO type <Integer>
@@ -77,21 +93,5 @@ public abstract class AnswerFormat implements Serializable
     {
         DateAndTime,
         Date
-    }
-
-    public AnswerFormat()
-    {
-    }
-
-    public QuestionType getQuestionType()
-    {
-        return QuestionType.None;
-    }
-
-    //TODO figure out if this makes sense
-    public Class getQuestionResultClass()
-    {
-        DevUtils.throwUnsupportedOpException();
-        return null;
     }
 }

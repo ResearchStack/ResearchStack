@@ -8,8 +8,7 @@ import android.widget.TextView;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 
-@Deprecated
-public class NotImplementedStepBody implements StepBody
+@Deprecated public class NotImplementedStepBody implements StepBody
 {
     public NotImplementedStepBody()
     {
@@ -19,7 +18,8 @@ public class NotImplementedStepBody implements StepBody
     public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         TextView textView = new TextView(inflater.getContext());
-        textView.setText("Not implemented: " + step.getQuestionType().toString());
+        textView.setText("Not implemented: " + step.getQuestionType()
+                                                   .toString());
         return textView;
     }
 
@@ -27,7 +27,8 @@ public class NotImplementedStepBody implements StepBody
     public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
         TextView textView = new TextView(inflater.getContext());
-        textView.setText("Form not implemented: " + step.getQuestionType().toString());
+        textView.setText("Form not implemented: " + step.getQuestionType()
+                                                        .toString());
         return textView;
     }
 

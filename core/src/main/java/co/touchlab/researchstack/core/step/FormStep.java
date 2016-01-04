@@ -11,20 +11,18 @@ public class FormStep extends QuestionStep
 
     public FormStep(String identifier, String title, String text)
     {
-        super(identifier,
-                title,
-                new FormAnswerFormat());
+        super(identifier, title, new FormAnswerFormat());
         setText(text);
-    }
-
-    public void setFormSteps(List<QuestionStep> formSteps)
-    {
-        this.formSteps = formSteps;
     }
 
     public List<QuestionStep> getFormSteps()
     {
         return formSteps;
+    }
+
+    public void setFormSteps(List<QuestionStep> formSteps)
+    {
+        this.formSteps = formSteps;
     }
 
     @Override

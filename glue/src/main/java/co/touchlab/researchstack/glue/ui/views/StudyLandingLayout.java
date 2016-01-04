@@ -18,19 +18,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
-import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 
 public class StudyLandingLayout extends ScrollView
 {
 
-    private TextView titleView;
-    private TextView subtitleView;
+    private TextView  titleView;
+    private TextView  subtitleView;
     private ImageView logoView;
-    private Button readConsent;
-    private Button emailConsent;
+    private Button    readConsent;
+    private Button    emailConsent;
 
     public StudyLandingLayout(Context context)
     {
@@ -52,7 +52,8 @@ public class StudyLandingLayout extends ScrollView
 
     private void init()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.layout_study_landing, this, true);
+        LayoutInflater.from(getContext())
+                      .inflate(R.layout.layout_study_landing, this, true);
 
         logoView = (ImageView) findViewById(R.id.layout_studyoverview_landing_logo);
         titleView = (TextView) findViewById(R.id.layout_studyoverview_landing_title);
@@ -63,7 +64,8 @@ public class StudyLandingLayout extends ScrollView
 
     public void setData(StudyOverviewModel.Question data)
     {
-        logoView.setImageResource(ResearchStack.getInstance().getLargeLogoDiseaseIcon());
+        logoView.setImageResource(ResearchStack.getInstance()
+                                               .getLargeLogoDiseaseIcon());
 
         titleView.setText(data.getTitle());
         subtitleView.setText(data.getDetails());
@@ -78,7 +80,8 @@ public class StudyLandingLayout extends ScrollView
                 //TODO This may fail and throw an ActivityNotFoundException for type "application/pdf"
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.fromFile(consentFile), "application/pdf");
-                v.getContext().startActivity(intent);
+                v.getContext()
+                 .startActivity(intent);
             });
         }
         else
@@ -90,9 +93,10 @@ public class StudyLandingLayout extends ScrollView
 
             //TODO Clean this up, should no write/read on main thread
             File consentFile = getConsentFormFileFromExternalStorage();
-            String appName = getResources().getString(ResearchStack.getInstance().getAppName());
-            String emailSubject = getResources()
-                    .getString(R.string.study_overview_email_subject, appName);
+            String appName = getResources().getString(ResearchStack.getInstance()
+                                                                   .getAppName());
+            String emailSubject = getResources().getString(R.string.study_overview_email_subject,
+                                                           appName);
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("message/rfc822");
@@ -107,17 +111,20 @@ public class StudyLandingLayout extends ScrollView
     /**
      * TODO Fix crash when file has been deleted
      * TODO Check if SDCard is mounted
+     *
      * @return Consent form pdf
      */
     @NonNull
     private File getConsentFormFileFromExternalStorage()
     {
         LogExt.d(getClass(), "getConsentFormFileFromExternalStorage() - - - - - - ");
-        String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+        String extStorageDirectory = Environment.getExternalStorageDirectory()
+                                                .toString();
         String basepath = extStorageDirectory + "/" + ResearchStack.getInstance()
-                .getExternalSDAppFolder();
+                                                                   .getExternalSDAppFolder();
 
-        int fileResId = ResearchStack.getInstance().getConsentPDF();
+        int fileResId = ResearchStack.getInstance()
+                                     .getConsentPDF();
         String formName = getResources().getResourceEntryName(fileResId);
         String fileName = formName + ".pdf";
 
@@ -128,7 +135,8 @@ public class StudyLandingLayout extends ScrollView
         {
             LogExt.d(getClass(), "File does not exist");
 
-            consentFile.getParentFile().mkdirs();
+            consentFile.getParentFile()
+                       .mkdirs();
             LogExt.d(getClass(), "Created file directory on external storage");
 
             try

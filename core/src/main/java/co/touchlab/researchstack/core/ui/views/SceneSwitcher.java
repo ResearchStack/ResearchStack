@@ -39,8 +39,8 @@ public class SceneSwitcher extends FrameLayout
 {
     public static final DecelerateInterpolator interpolator = new DecelerateInterpolator(2);
 
-    public static final int SHIFT_LEFT = 1;
-    public static final int SHIFT_RIGHT = -1;
+    public static final int SHIFT_LEFT  = 1;
+    public static final int SHIFT_RIGHT = - 1;
 
     private int animationTime;
 
@@ -60,7 +60,7 @@ public class SceneSwitcher extends FrameLayout
      * specified set attributes.
      *
      * @param context the application environment
-     * @param attrs a collection of attributes
+     * @param attrs   a collection of attributes
      */
     public SceneSwitcher(Context context, AttributeSet attrs)
     {
@@ -72,8 +72,8 @@ public class SceneSwitcher extends FrameLayout
      * Creates a new empty SceneSwitcher for the given context and with the
      * specified set attributes.
      *
-     * @param context the application environment
-     * @param attrs a collection of attributes
+     * @param context      the application environment
+     * @param attrs        a collection of attributes
      * @param defStyleAttr An attribute in the current theme that contains a reference to a style
      *                     resource that supplies defaults values for the TypedArray.  Can be 0 to
      *                     not look for defaults.
@@ -94,23 +94,24 @@ public class SceneSwitcher extends FrameLayout
      * parameter is used to indicate which direction(x-axis) that the views should animate to.
      *
      * @param stepLayout the scene you want to switch to
-     * @param direction the direction of the animation in the x direction. This values can either be
-     *                  {@link SceneSwitcher#SHIFT_LEFT} or {@link SceneSwitcher#SHIFT_RIGHT}
+     * @param direction  the direction of the animation in the x direction. This values can either be
+     *                   {@link SceneSwitcher#SHIFT_LEFT} or {@link SceneSwitcher#SHIFT_RIGHT}
      */
     public void show(StepLayout stepLayout, int direction)
     {
         // Force crash when invalid direction is passed in. The values of the constants are used
         // when calculating the x-traversal distance
-        if (direction != SceneSwitcher.SHIFT_LEFT && direction != SceneSwitcher.SHIFT_RIGHT)
+        if(direction != SceneSwitcher.SHIFT_LEFT && direction != SceneSwitcher.SHIFT_RIGHT)
         {
-            throw new InvalidParameterException("Direction with value: " + direction + " is not supported.");
+            throw new InvalidParameterException(
+                    "Direction with value: " + direction + " is not supported.");
         }
 
         post(() -> {
             // Get the current scene, set the id as something other than R.id.current_scene
             View currentScene = findViewById(R.id.rsc_current_scene);
             int currentIndex = 0;
-            if (currentScene != null)
+            if(currentScene != null)
             {
                 currentScene.setId(0);
                 currentIndex = indexOfChild(currentScene);
@@ -120,36 +121,46 @@ public class SceneSwitcher extends FrameLayout
             // in the view hierarchy as the same as the current scene on-screen
             LayoutParams lp = getLayoutParams(stepLayout);
             addView(stepLayout.getLayout(), currentIndex, lp);
-            stepLayout.getLayout().setId(R.id.rsc_current_scene);
+            stepLayout.getLayout()
+                      .setId(R.id.rsc_current_scene);
 
             // If the old scene is gone, we can go ahead and ignore the following animation code.
             // This will usually happen on start-up of the host (e.g. activity)
-            if (currentScene != null)
+            if(currentScene != null)
             {
                 int newTranslationX = direction * getWidth();
 
-                stepLayout.getLayout().setTranslationX(newTranslationX);
-                stepLayout.getLayout().animate().setDuration(animationTime).setInterpolator(interpolator)
-                        .translationX(0);
+                stepLayout.getLayout()
+                          .setTranslationX(newTranslationX);
+                stepLayout.getLayout()
+                          .animate()
+                          .setDuration(animationTime)
+                          .setInterpolator(interpolator)
+                          .translationX(0);
 
-                currentScene.animate().setInterpolator(interpolator)
-                        .setDuration(animationTime).translationX(- 1 * newTranslationX)
-                        .withEndAction(() -> removeView(currentScene));
+                currentScene.animate()
+                            .setInterpolator(interpolator)
+                            .setDuration(animationTime)
+                            .translationX(- 1 * newTranslationX)
+                            .withEndAction(() -> removeView(currentScene));
             }
         });
     }
 
     private LayoutParams getLayoutParams(StepLayout stepLayout)
     {
-        LayoutParams lp = (LayoutParams) stepLayout.getLayout().getLayoutParams();
-        if (lp == null) {
+        LayoutParams lp = (LayoutParams) stepLayout.getLayout()
+                                                   .getLayoutParams();
+        if(lp == null)
+        {
             lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         }
         return lp;
     }
 
     @Override
-    public CharSequence getAccessibilityClassName() {
+    public CharSequence getAccessibilityClassName()
+    {
         return SceneSwitcher.class.getName();
     }
 

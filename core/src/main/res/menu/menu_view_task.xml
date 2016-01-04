@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/menu_cancel"
-        android:title="@string/src_cancel"
         android:icon="@drawable/ic_window_close"
+        android:title="@string/src_cancel"
         app:showAsAction="ifRoom"/>
 
 </menu>

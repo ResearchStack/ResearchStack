@@ -20,8 +20,12 @@
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
      android:interpolator="@android:interpolator/accelerate_cubic">
-    <translate android:fromYDelta="0" android:toYDelta="50%p"
-               android:duration="@android:integer/config_mediumAnimTime"/>
-    <alpha android:fromAlpha="1.0" android:toAlpha="0.0"
-           android:duration="@android:integer/config_mediumAnimTime" />
+    <translate
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromYDelta="0"
+        android:toYDelta="50%p"/>
+    <alpha
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromAlpha="1.0"
+        android:toAlpha="0.0"/>
 </set>

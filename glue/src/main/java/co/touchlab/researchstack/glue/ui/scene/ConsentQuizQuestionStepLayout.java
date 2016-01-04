@@ -22,15 +22,14 @@ import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
 
 // No longer used, replaced by SurveyScene
-@Deprecated
-public class ConsentQuizQuestionStepLayout extends StepLayoutImpl<Boolean>
+@Deprecated public class ConsentQuizQuestionStepLayout extends StepLayoutImpl<Boolean>
 {
 
     private ConsentQuizModel.QuestionProperties properties;
-    private ConsentQuizModel.QuizQuestion question;
+    private ConsentQuizModel.QuizQuestion       question;
 
-    private TextView answerExplanation;
-    private ImageView answerIcon;
+    private TextView   answerExplanation;
+    private ImageView  answerIcon;
     private RadioGroup radioGroup;
 
     public ConsentQuizQuestionStepLayout(Context context)
@@ -56,15 +55,6 @@ public class ConsentQuizQuestionStepLayout extends StepLayoutImpl<Boolean>
         super.initialize(step, result);
     }
 
-    @Deprecated
-    public void initialize(Step step, ConsentQuizModel.QuestionProperties properties, ConsentQuizModel.QuizQuestion question)
-    {
-        super.initialize(step);
-
-        this.properties = properties;
-        this.question = question;
-    }
-
     @Override
     public void initializeScene()
     {
@@ -72,7 +62,8 @@ public class ConsentQuizQuestionStepLayout extends StepLayoutImpl<Boolean>
 
         final SpannableString boldSpan = new SpannableString(
                 properties.introText + "\n\n" + question.question);
-        boldSpan.setSpan(new RelativeSizeSpan(.6f), 0, properties.introText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        boldSpan.setSpan(new RelativeSizeSpan(.6f), 0, properties.introText.length(),
+                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         setTitle(boldSpan);
     }
 
@@ -91,20 +82,9 @@ public class ConsentQuizQuestionStepLayout extends StepLayoutImpl<Boolean>
     }
 
     @Override
-    public boolean isAnswerValid()
-    {
-        if (radioGroup.getCheckedRadioButtonId() == -1)
-        {
-            Toast.makeText(getContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return super.isAnswerValid();
-    }
-
-    @Override
     public void onNextClicked()
     {
-        if (!isAnswerValid())
+        if(! isAnswerValid())
         {
             return;
         }
@@ -118,8 +98,8 @@ public class ConsentQuizQuestionStepLayout extends StepLayoutImpl<Boolean>
             radioGroup.setEnabled(false);
 
             String iconName = answerCorrect ? properties.correctBadge : properties.incorrectBadge;
-            int iconResId = getResources()
-                    .getIdentifier(iconName, "drawable", getContext().getPackageName());
+            int iconResId = getResources().getIdentifier(iconName, "drawable",
+                                                         getContext().getPackageName());
             answerIcon.setVisibility(View.VISIBLE);
             answerIcon.setImageResource(iconResId);
 
@@ -167,6 +147,27 @@ public class ConsentQuizQuestionStepLayout extends StepLayoutImpl<Boolean>
         StepResult<Boolean> result = new StepResult<>(getStep().getIdentifier());
         result.setResult(answerCorrect);
         return result;
+    }
+
+    @Override
+    public boolean isAnswerValid()
+    {
+        if(radioGroup.getCheckedRadioButtonId() == - 1)
+        {
+            Toast.makeText(getContext(), "Please select an answer", Toast.LENGTH_SHORT)
+                 .show();
+            return false;
+        }
+        return super.isAnswerValid();
+    }
+
+    @Deprecated
+    public void initialize(Step step, ConsentQuizModel.QuestionProperties properties, ConsentQuizModel.QuizQuestion question)
+    {
+        super.initialize(step);
+
+        this.properties = properties;
+        this.question = question;
     }
 
 }

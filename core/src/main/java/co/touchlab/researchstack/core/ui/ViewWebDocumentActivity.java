@@ -10,9 +10,9 @@ import co.touchlab.researchstack.core.utils.ResUtils;
 public class ViewWebDocumentActivity extends AppCompatActivity
 {
 
-    public static final String TAG = ViewWebDocumentActivity.class.getSimpleName();
+    public static final String TAG          = ViewWebDocumentActivity.class.getSimpleName();
     public static final String KEY_DOC_NAME = TAG + ".DOC_NAME";
-    public static final String KEY_TITLE = TAG + ".TITLE";
+    public static final String KEY_TITLE    = TAG + ".TITLE";
 
     public static Intent newIntent(Context context, String title, String docName)
     {

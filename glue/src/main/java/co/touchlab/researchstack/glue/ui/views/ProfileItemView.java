@@ -24,24 +24,18 @@ public class ProfileItemView extends LinearLayout
 
     public ProfileItemView(Context context, AttributeSet attrs)
     {
-        super(context,
-                attrs);
+        super(context, attrs);
     }
 
     public ProfileItemView(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        super(context,
-                attrs,
-                defStyleAttr);
+        super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(21)
     public ProfileItemView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
-        super(context,
-                attrs,
-                defStyleAttr,
-                defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override

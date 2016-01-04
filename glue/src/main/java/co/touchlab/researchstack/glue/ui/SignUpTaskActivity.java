@@ -27,8 +27,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
     public static Intent newIntent(Context context, Task task)
     {
-        Intent intent = new Intent(context,
-                SignUpTaskActivity.class);
+        Intent intent = new Intent(context, SignUpTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         return intent;
     }
@@ -52,32 +51,40 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == SignUpEligibleStepLayout.CONSENT_REQUEST && resultCode == Activity.RESULT_OK)
+        if(requestCode == SignUpEligibleStepLayout.CONSENT_REQUEST && resultCode == Activity.RESULT_OK)
         {
             TaskResult result = (TaskResult) data.getSerializableExtra(
                     ViewTaskActivity.EXTRA_TASK_RESULT);
 
-            boolean sharing = (boolean) result.getStepResult(ConsentTask.ID_SHARING).getResult();
-            boolean consented = (boolean) result.getStepResult(ConsentTask.ID_CONSENT_DOC).getResult();
+            boolean sharing = (boolean) result.getStepResult(ConsentTask.ID_SHARING)
+                                              .getResult();
+            boolean consented = (boolean) result.getStepResult(ConsentTask.ID_CONSENT_DOC)
+                                                .getResult();
 
-            if (ResearchStack.getInstance().getCurrentUser() == null)
+            if(ResearchStack.getInstance()
+                            .getCurrentUser() == null)
             {
-                ResearchStack.getInstance().loadUser();
+                ResearchStack.getInstance()
+                             .loadUser();
             }
 
-            User currentUser = ResearchStack.getInstance().getCurrentUser();
+            User currentUser = ResearchStack.getInstance()
+                                            .getCurrentUser();
 
             // TODO check for valid signature/names
-            if (consented)
+            if(consented)
             {
-                StepResult<StepResult<String>> formResult = (StepResult<StepResult<String>>) result
-                        .getStepResult(ConsentTask.ID_FORM_NAME);
-                StepResult<String> nameFormResult = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME);
+                StepResult<StepResult<String>> formResult = (StepResult<StepResult<String>>) result.getStepResult(
+                        ConsentTask.ID_FORM_NAME);
+                StepResult<String> nameFormResult = formResult.getResultForIdentifier(
+                        ConsentTask.ID_FORM_NAME);
                 String fullName = nameFormResult.getResult();
                 String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
-                        .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
+                                                    .getResultForIdentifier(
+                                                            ConsentSignatureStepLayout.KEY_SIGNATURE);
                 String signatureDate = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
-                        .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
+                                                      .getResultForIdentifier(
+                                                              ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
 
                 currentUser.setName(fullName);
                 currentUser.setConsentSignatureName(fullName);
@@ -86,7 +93,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 currentUser.setUserConsented(true);
 
                 StepLayoutImpl scene = (StepLayoutImpl) findViewById(R.id.rsc_current_scene);
-                if (scene != null && scene instanceof SignUpEligibleStepLayout)
+                if(scene != null && scene instanceof SignUpEligibleStepLayout)
                 {
                     // TODO this is weird, activity calling a callback method itself
                     onSaveStep(ACTION_NEXT, scene.getStep(), null);
@@ -95,7 +102,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             else
             {
                 // Clear activity and show Welcome screen
-               finish();
+                finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -106,13 +113,14 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode ==  SignUpPermissionsStepLayout.LOCATION_PERMISSION_REQUEST_CODE)
+        if(requestCode == SignUpPermissionsStepLayout.LOCATION_PERMISSION_REQUEST_CODE)
         {
             StepLayout stepLayout = (StepLayout) findViewById(R.id.rsc_current_scene);
             if(stepLayout instanceof SignUpPermissionsStepLayout)
             {
-                ((SignUpPermissionsStepLayout) stepLayout)
-                        .onRequestPermissionsResult(requestCode, permissions, grantResults);
+                ((SignUpPermissionsStepLayout) stepLayout).onRequestPermissionsResult(requestCode,
+                                                                                      permissions,
+                                                                                      grantResults);
             }
         }
     }

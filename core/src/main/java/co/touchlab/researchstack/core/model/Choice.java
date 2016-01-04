@@ -2,7 +2,7 @@ package co.touchlab.researchstack.core.model;
 
 import java.io.Serializable;
 
-public class Choice<T> implements Serializable
+public class Choice <T> implements Serializable
 {
     private String text;
 

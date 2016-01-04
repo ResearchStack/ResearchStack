@@ -19,7 +19,8 @@ public class UiThreadContext
 
     public static boolean isInUiThread()
     {
-        Thread uiThread = Looper.getMainLooper().getThread();
+        Thread uiThread = Looper.getMainLooper()
+                                .getThread();
         Thread currentThread = Thread.currentThread();
 
         return uiThread == currentThread;

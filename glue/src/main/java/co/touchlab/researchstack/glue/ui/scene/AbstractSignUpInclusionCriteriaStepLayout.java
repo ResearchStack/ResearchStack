@@ -30,10 +30,10 @@ public abstract class AbstractSignUpInclusionCriteriaStepLayout extends StepLayo
     @Override
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        return inflater.inflate(getLayoutId(),
-                parent,
-                false);
+        return inflater.inflate(getLayoutId(), parent, false);
     }
+
+    public abstract void onBodyCreated(View body);
 
     @Override
     public StepResult<Boolean> getStepResult()
@@ -43,11 +43,9 @@ public abstract class AbstractSignUpInclusionCriteriaStepLayout extends StepLayo
         return result;
     }
 
+    public abstract boolean isAnswerValid();
+
     public abstract int getLayoutId();
 
     public abstract boolean isEligible();
-
-    public abstract boolean isAnswerValid();
-
-    public abstract void onBodyCreated(View body);
 }

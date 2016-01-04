@@ -1,58 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:orientation="vertical"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-
+    >
 
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="52dp">
+        android:layout_height="52dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
 
         <TextView
-            android:text="@string/rsc_email"
-            android:gravity="center"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/rsc_email"
+            />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/email"
-            android:inputType="textVisiblePassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textVisiblePassword"
+            />
     </LinearLayout>
-
 
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="52dp">
+        android:layout_height="52dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
 
         <TextView
-            android:text="@string/password"
-            android:gravity="center"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/password"
+            />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/password"
-            android:inputType="textVisiblePassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textVisiblePassword"
+            />
     </LinearLayout>
 
     <TextView
-        android:padding="16dp"
         android:id="@+id/forgot_password"
-        android:text="@string/forgot_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:padding="16dp"
+        android:text="@string/forgot_password"
+        />
 
 </LinearLayout>

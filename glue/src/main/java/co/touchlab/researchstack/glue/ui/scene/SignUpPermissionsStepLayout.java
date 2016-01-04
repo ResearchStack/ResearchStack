@@ -22,7 +22,7 @@ public class SignUpPermissionsStepLayout extends StepLayoutImpl
 
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 142;
 
-    private AppCompatButton permissionButton;
+    private AppCompatButton  permissionButton;
     private ActivityCallback permissionCallback;
 
     public SignUpPermissionsStepLayout(Context context)
@@ -44,7 +44,7 @@ public class SignUpPermissionsStepLayout extends StepLayoutImpl
     public void initializeScene()
     {
         //TODO Fix this, very disgusting
-        if (getContext() instanceof ActivityCallback)
+        if(getContext() instanceof ActivityCallback)
         {
             permissionCallback = (ActivityCallback) getContext();
         }
@@ -66,7 +66,7 @@ public class SignUpPermissionsStepLayout extends StepLayoutImpl
         //TODO Handle permissions UI/Flow on NON-M devices
         permissionButton = (AppCompatButton) body.findViewById(R.id.permission_button);
         RxView.clicks(permissionButton)
-                .subscribe(view -> permissionCallback.requestPermissions());
+              .subscribe(view -> permissionCallback.requestPermissions());
 
         updatePermissions();
     }
@@ -80,7 +80,7 @@ public class SignUpPermissionsStepLayout extends StepLayoutImpl
     private void updatePermissions()
     {
         int permissionCheck = ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION);
+                                                                Manifest.permission.ACCESS_FINE_LOCATION);
 
         if(permissionCheck == PackageManager.PERMISSION_GRANTED)
         {

@@ -24,33 +24,80 @@ import co.touchlab.researchstack.core.utils.UiThreadContext;
 
 public abstract class BaseFileAccess implements FileAccess
 {
-    protected List<FileAccessListener> listeners = Collections.synchronizedList(new ArrayList<>());
-    protected boolean checkThreads = false;
+    protected List<FileAccessListener> listeners    = Collections.synchronizedList(
+            new ArrayList<>());
+    protected boolean                  checkThreads = false;
 
-    @Override @MainThread
+    @Override
+    @MainThread
     public final void register(FileAccessListener fileAccessListener)
     {
         if(checkThreads)
+        {
             UiThreadContext.assertUiThread();
+        }
         if(listeners.contains(fileAccessListener))
+        {
             throw new FileAccessException("Listener already registered");
+        }
 
         listeners.add(fileAccessListener);
     }
 
-    @Override @MainThread
+    @Override
+    @MainThread
     public final void unregister(FileAccessListener fileAccessListener)
     {
         if(checkThreads)
+        {
             UiThreadContext.assertUiThread();
+        }
         listeners.remove(fileAccessListener);
+    }
+
+    @Override
+    @WorkerThread
+    public void writeString(Context context, String path, String data)
+    {
+        if(checkThreads)
+        {
+            UiThreadContext.assertBackgroundThread();
+        }
+        try
+        {
+            writeData(context, path, data.getBytes("UTF8"));
+        }
+        catch(UnsupportedEncodingException e)
+        {
+            throw new FileAccessException(e);
+        }
+    }
+
+    @Override
+    @WorkerThread
+    public String readString(Context context, String path)
+    {
+        if(checkThreads)
+        {
+            UiThreadContext.assertBackgroundThread();
+        }
+        try
+        {
+            return new String(readData(context, path), "UTF8");
+        }
+        catch(UnsupportedEncodingException e)
+        {
+            throw new FileAccessException(e);
+        }
     }
 
     @MainThread
     public void notifyListenersReady()
     {
         if(checkThreads)
+        {
             UiThreadContext.assertUiThread();
+        }
         //TODO: replace with lambda. Hey, if we're using them...
         for(FileAccessListener listener : listeners)
         {
@@ -62,7 +109,9 @@ public abstract class BaseFileAccess implements FileAccess
     public void notifyListenersFailed()
     {
         if(checkThreads)
+        {
             UiThreadContext.assertUiThread();
+        }
         //TODO: replace with lambda. Hey, if we're using them...
         for(FileAccessListener listener : listeners)
         {
@@ -70,40 +119,12 @@ public abstract class BaseFileAccess implements FileAccess
         }
     }
 
-    @Override @WorkerThread
-    public void writeString(Context context, String path, String data)
-    {
-        if(checkThreads)
-            UiThreadContext.assertBackgroundThread();
-        try
-        {
-            writeData(context, path, data.getBytes("UTF8"));
-        }
-        catch(UnsupportedEncodingException e)
-        {
-            throw new FileAccessException(e);
-        }
-    }
-
-    @Override @WorkerThread
-    public String readString(Context context, String path)
-    {
-        if(checkThreads)
-            UiThreadContext.assertBackgroundThread();
-        try
-        {
-            return new String(readData(context, path), "UTF8");
-        }
-        catch(UnsupportedEncodingException e)
-        {
-            throw new FileAccessException(e);
-        }
-    }
-
     public void checkPath(String path)
     {
-        if(!path.startsWith("/"))
+        if(! path.startsWith("/"))
+        {
             throw new FileAccessException("Path must be absolute (ie start with '/')");
+        }
     }
 
     protected void notifyReady()

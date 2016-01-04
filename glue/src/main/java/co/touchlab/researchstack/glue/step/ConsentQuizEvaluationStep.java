@@ -19,25 +19,25 @@ public class ConsentQuizEvaluationStep extends Step
     }
 
     @Override
-    public Class getSceneClass()
-    {
-        return ConsentQuizEvaluationStepLayout.class;
-    }
-
-    @Override
     public int getSceneTitle()
     {
         return R.string.rsc_quiz_evaluation;
     }
 
-    public void setAttempt(int attempt)
+    @Override
+    public Class getSceneClass()
     {
-        this.attempt = attempt;
+        return ConsentQuizEvaluationStepLayout.class;
     }
 
     public int getAttempt()
     {
         return attempt;
+    }
+
+    public void setAttempt(int attempt)
+    {
+        this.attempt = attempt;
     }
 
     public void setIncorrectCount(int incorrect)

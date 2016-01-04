@@ -4,7 +4,7 @@ import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 
 public class QuestionStep extends Step
 {
-    private AnswerFormat              answerFormat;
+    private AnswerFormat answerFormat;
 
     private String placeholder;
 
@@ -32,8 +32,14 @@ public class QuestionStep extends Step
         return getQuestionType().getSceneClass();
     }
 
-    public AnswerFormat getAnswerFormat() {
+    public AnswerFormat getAnswerFormat()
+    {
         return answerFormat;
+    }
+
+    public void setAnswerFormat(AnswerFormat answerFormat)
+    {
+        this.answerFormat = answerFormat;
     }
 
     public String getPlaceholder()
@@ -49,10 +55,5 @@ public class QuestionStep extends Step
     public AnswerFormat.QuestionType getQuestionType()
     {
         return answerFormat.getQuestionType();
-    }
-
-    public void setAnswerFormat(AnswerFormat answerFormat)
-    {
-        this.answerFormat = answerFormat;
     }
 }

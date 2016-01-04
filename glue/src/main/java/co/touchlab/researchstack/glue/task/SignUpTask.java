@@ -22,16 +22,17 @@ public class SignUpTask extends OnboardingTask
     public Step getStepAfterStep(Step step, TaskResult result)
     {
         Step nextStep = null;
-        User user = ResearchStack.getInstance().getCurrentUser();
+        User user = ResearchStack.getInstance()
+                                 .getCurrentUser();
 
-        if (step == null)
+        if(step == null)
         {
             nextStep = getInclusionCriteriaStep();
         }
-        else if (step.getIdentifier()
-                .equals(SignUpInclusionCriteriaStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpInclusionCriteriaStepIdentifier))
         {
-            if (isEligible(result))
+            if(isEligible(result))
             {
                 nextStep = getEligibleStep();
             }
@@ -40,38 +41,38 @@ public class SignUpTask extends OnboardingTask
                 nextStep = getIneligibleStep();
             }
         }
-        else if (step.getIdentifier()
-                .equals(SignUpEligibleStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpEligibleStepIdentifier))
         {
             currentStepNumber += 1;
             nextStep = getPermissionsPrimingStep();
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpPermissionsPrimingStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpPermissionsPrimingStepIdentifier))
         {
             currentStepNumber += 1;
             nextStep = getGeneralInfoStep();
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpGeneralInfoStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpGeneralInfoStepIdentifier))
         {
             currentStepNumber += 1;
             nextStep = getMedicalInfoStep();
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpMedicalInfoStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpMedicalInfoStepIdentifier))
         {
-            if (isCustomStepIncluded())
+            if(isCustomStepIncluded())
             {
                 nextStep = getCustomInfoStep();
                 currentStepNumber += 1;
             }
             else
             {
-                if (isPermissionScreenSkipped())
+                if(isPermissionScreenSkipped())
                 {
                     nextStep = null;
                 }
@@ -83,10 +84,10 @@ public class SignUpTask extends OnboardingTask
             }
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpCustomInfoStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpCustomInfoStepIdentifier))
         {
-            if (isPermissionScreenSkipped())
+            if(isPermissionScreenSkipped())
             {
                 nextStep = null;
             }
@@ -99,7 +100,10 @@ public class SignUpTask extends OnboardingTask
         }
 
         if(nextStep == null)
-            ResearchStack.getInstance().saveUser();
+        {
+            ResearchStack.getInstance()
+                         .saveUser();
+        }
 
         return nextStep;
     }
@@ -109,51 +113,51 @@ public class SignUpTask extends OnboardingTask
     {
         Step prevStep = null;
 
-        if (step.getIdentifier()
-                .equals(SignUpInclusionCriteriaStepIdentifier))
+        if(step.getIdentifier()
+               .equals(SignUpInclusionCriteriaStepIdentifier))
         {
             prevStep = null;
         }
-        else if (step.getIdentifier()
-                .equals(SignUpEligibleStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpEligibleStepIdentifier))
         {
             prevStep = getInclusionCriteriaStep();
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpIneligibleStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpIneligibleStepIdentifier))
         {
             prevStep = getInclusionCriteriaStep();
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpPermissionsPrimingStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpPermissionsPrimingStepIdentifier))
         {
             prevStep = getEligibleStep();
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpGeneralInfoStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpGeneralInfoStepIdentifier))
         {
             prevStep = getPermissionsPrimingStep();
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpMedicalInfoStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpMedicalInfoStepIdentifier))
         {
             prevStep = getGeneralInfoStep();
             currentStepNumber -= 1;
         }
-        else if (step.getIdentifier()
-                .equals(SignUpCustomInfoStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpCustomInfoStepIdentifier))
         {
             prevStep = getMedicalInfoStep();
             currentStepNumber -= 1;
         }
-        else if (step.getIdentifier()
-                .equals(SignUpPermissionsStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpPermissionsStepIdentifier))
         {
-            if (isCustomStepIncluded())
+            if(isCustomStepIncluded())
             {
                 prevStep = getCustomInfoStep();
             }
@@ -178,47 +182,47 @@ public class SignUpTask extends OnboardingTask
     {
         int stepPosition = 0;
 
-        if (step == null || step.getIdentifier()
-                .equals(SignUpInclusionCriteriaStepIdentifier))
+        if(step == null || step.getIdentifier()
+                               .equals(SignUpInclusionCriteriaStepIdentifier))
         {
             stepPosition = 0;
         }
-        else if (step.getIdentifier()
-                .equals(SignUpEligibleStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpEligibleStepIdentifier))
         {
             stepPosition = 1;
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpIneligibleStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpIneligibleStepIdentifier))
         {
             stepPosition = 2;
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpPermissionsPrimingStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpPermissionsPrimingStepIdentifier))
         {
             stepPosition = 3;
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpGeneralInfoStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpGeneralInfoStepIdentifier))
         {
             stepPosition = 4;
 
         }
-        else if (step.getIdentifier()
-                .equals(SignUpMedicalInfoStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpMedicalInfoStepIdentifier))
         {
             stepPosition = 5;
         }
-        else if (step.getIdentifier()
-                .equals(SignUpCustomInfoStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpCustomInfoStepIdentifier))
         {
             stepPosition = 6;
         }
-        else if (step.getIdentifier()
-                .equals(SignUpPermissionsStepIdentifier))
+        else if(step.getIdentifier()
+                    .equals(SignUpPermissionsStepIdentifier))
         {
             stepPosition = 7;
         }

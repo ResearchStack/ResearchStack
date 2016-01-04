@@ -1,12 +1,12 @@
 package co.touchlab.researchstack.glue.task;
 
-import co.touchlab.researchstack.core.ui.step.body.NotImplementedStepBody;
-import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.Task;
+import co.touchlab.researchstack.core.ui.step.body.NotImplementedStepBody;
+import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
 import co.touchlab.researchstack.glue.ui.scene.SignUpAdditionalInfoStepLayout;
 import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleStepLayout;
@@ -20,16 +20,17 @@ import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsStepLayout;
  */
 public abstract class OnboardingTask extends Task
 {
-    public static final String SignUpInclusionCriteriaStepIdentifier = "InclusionCriteria";
-    public static final String SignUpEligibleStepIdentifier = "Eligible";
-    public static final String SignUpIneligibleStepIdentifier = "Ineligible";
-    public static final String SignUpGeneralInfoStepIdentifier = "GeneralInfo";
-    public static final String SignUpMedicalInfoStepIdentifier = "MedicalInfo";
-    public static final String SignUpCustomInfoStepIdentifier = "CustomInfo";
-    public static final String SignUpPermissionsStepIdentifier = "Permissions";
-    public static final String SignUpThankYouStepIdentifier = "ThankYou";
-    public static final String SignInStepIdentifier = "SignIn";
+    public static final String SignUpInclusionCriteriaStepIdentifier  = "InclusionCriteria";
+    public static final String SignUpEligibleStepIdentifier           = "Eligible";
+    public static final String SignUpIneligibleStepIdentifier         = "Ineligible";
+    public static final String SignUpGeneralInfoStepIdentifier        = "GeneralInfo";
+    public static final String SignUpMedicalInfoStepIdentifier        = "MedicalInfo";
+    public static final String SignUpCustomInfoStepIdentifier         = "CustomInfo";
+    public static final String SignUpPermissionsStepIdentifier        = "Permissions";
+    public static final String SignUpThankYouStepIdentifier           = "ThankYou";
+    public static final String SignInStepIdentifier                   = "SignIn";
     public static final String SignUpPermissionsPrimingStepIdentifier = "PermissionsPriming";
+    protected int currentStepNumber;
     private Step inclusionCriteriaStep;
     private Step eligibleStep;
     private Step ineligibleStep;
@@ -40,12 +41,9 @@ public abstract class OnboardingTask extends Task
     private Step permissionsStep;
     private Step thankyouStep;
     private Step signInStep;
-
-    private boolean eligible = true;
-    private boolean customStepIncluded = false;
+    private boolean eligible                = true;
+    private boolean customStepIncluded      = false;
     private boolean permissionScreenSkipped = false;
-
-    protected int currentStepNumber;
 
     public OnboardingTask(String identifier, String scheduleId)
     {
@@ -72,9 +70,10 @@ public abstract class OnboardingTask extends Task
 
     public boolean isEligible(TaskResult result)
     {
-        StepResult<Boolean> stepResult = (StepResult<Boolean>) result.getStepResult(SignUpTask.SignUpInclusionCriteriaStepIdentifier);
+        StepResult<Boolean> stepResult = (StepResult<Boolean>) result.getStepResult(
+                SignUpTask.SignUpInclusionCriteriaStepIdentifier);
 
-        if (stepResult != null)
+        if(stepResult != null)
         {
             return stepResult.getResult();
         }
@@ -104,7 +103,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getSignInStep()
     {
-        if (signInStep == null)
+        if(signInStep == null)
         {
             signInStep = new Step(SignInStepIdentifier);
             signInStep.setSceneTitle(R.string.sign_in);
@@ -115,20 +114,20 @@ public abstract class OnboardingTask extends Task
 
     public Step getThankyouStep()
     {
-        if (thankyouStep == null)
+        if(thankyouStep == null)
         {
             thankyouStep = new Step(SignUpThankYouStepIdentifier);
             thankyouStep.setSceneTitle(R.string.thank_you);
             thankyouStep.setSceneClass(NotImplementedStepBody.class);
-//            TODO Create SignUpThankYouScene
-//            thankyouStep.setSceneClass(SignUpThankYouScene.class);
+            //            TODO Create SignUpThankYouScene
+            //            thankyouStep.setSceneClass(SignUpThankYouScene.class);
         }
         return thankyouStep;
     }
 
     public Step getPermissionsStep()
     {
-        if (permissionsStep == null)
+        if(permissionsStep == null)
         {
             permissionsStep = new Step(SignUpPermissionsStepIdentifier);
             permissionsStep.setSceneTitle(R.string.settings_permissions);
@@ -139,7 +138,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getCustomInfoStep()
     {
-        if (customInfoStep == null)
+        if(customInfoStep == null)
         {
             customInfoStep = new Step(SignUpCustomInfoStepIdentifier);
         }
@@ -148,7 +147,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getMedicalInfoStep()
     {
-        if (medicalInfoStep == null)
+        if(medicalInfoStep == null)
         {
             medicalInfoStep = new Step(SignUpMedicalInfoStepIdentifier);
             medicalInfoStep.setSceneTitle(R.string.additional_info);
@@ -159,7 +158,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getGeneralInfoStep()
     {
-        if (generalInfoStep == null)
+        if(generalInfoStep == null)
         {
             generalInfoStep = new Step(SignUpGeneralInfoStepIdentifier);
             generalInfoStep.setSceneTitle(R.string.registration);
@@ -170,7 +169,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getPermissionsPrimingStep()
     {
-        if (permissionsPrimingStep == null)
+        if(permissionsPrimingStep == null)
         {
             permissionsPrimingStep = new Step(SignUpPermissionsPrimingStepIdentifier);
             permissionsPrimingStep.setSceneTitle(R.string.rsc_consent);
@@ -181,7 +180,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getIneligibleStep()
     {
-        if (ineligibleStep == null)
+        if(ineligibleStep == null)
         {
             ineligibleStep = new Step(SignUpIneligibleStepIdentifier);
             ineligibleStep.setSceneTitle(R.string.ineligible);
@@ -192,7 +191,7 @@ public abstract class OnboardingTask extends Task
 
     public Step getEligibleStep()
     {
-        if (eligibleStep == null)
+        if(eligibleStep == null)
         {
             eligibleStep = new Step(SignUpEligibleStepIdentifier);
             eligibleStep.setSceneTitle(R.string.sign_up);
@@ -203,12 +202,12 @@ public abstract class OnboardingTask extends Task
 
     public Step getInclusionCriteriaStep()
     {
-        if (inclusionCriteriaStep == null)
+        if(inclusionCriteriaStep == null)
         {
             inclusionCriteriaStep = new Step(SignUpInclusionCriteriaStepIdentifier);
             inclusionCriteriaStep.setSceneTitle(R.string.eligibility);
             inclusionCriteriaStep.setSceneClass(ResearchStack.getInstance()
-                    .getInclusionCriteriaSceneClass());
+                                                             .getInclusionCriteriaSceneClass());
         }
         return inclusionCriteriaStep;
     }

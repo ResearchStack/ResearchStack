@@ -9,14 +9,14 @@ public class ConsentSignature implements Serializable, Cloneable
 
     /**
      * A Boolean value indicating whether the user needs to enter their name during consent review.
-     *
+     * <p>
      * The default value of this property is `YES`. In a consent review step, the name entry screen is not displayed when the value of this property is `NO`.
      */
     private boolean requiresName;
 
     /**
      * A Boolean value indicating whether the user needs to draw a signature during consent review.
-     *
+     * <p>
      * The default value of this property is `YES`. In a consent review step, the signature entry
      * screen is not shown when this property is `NO`.
      */
@@ -24,7 +24,7 @@ public class ConsentSignature implements Serializable, Cloneable
 
     /**
      * The identifier for this signature.
-     *
+     * <p>
      * The identifier should be unique in the document. It can be used to find or
      * replace a specific signature in an `ORKConsentDocument` object. The identifier is also reproduced in
      * the `ORKConsentSignatureResult` object produced by an `ORKConsentReviewStep` object.
@@ -54,26 +54,27 @@ public class ConsentSignature implements Serializable, Cloneable
     /**
      * The date format string to be used when producing a date string for the PDF
      * or consent review.
-     *
+     * <p>
      * For example, @"yyyy-MM-dd 'at' HH:mm". When the value of this property is `nil`,
      * the current date and time for the current locale is used.
      */
     private String signatureDateFormatString;
 
-    public ConsentSignature(){
+    public ConsentSignature()
+    {
         this.requiresName = true;
         this.requiresSignatureImage = true;
-        this.identifier = UUID.randomUUID().toString();
+        this.identifier = UUID.randomUUID()
+                              .toString();
     }
 
     /**
-     *
-     * @param identifier          The identifier of the signature, unique within this document.
-     * @param title               The title of the signatory.
-     * @param dateFormat          The format string to use when formatting the date of signature.
-     * @param fullName            The given name of the signatory.
-     * @param signatureImage      An image of the signature.
-     * @param signatureDate       The date on which the signature was obtained, represented as a string.
+     * @param identifier     The identifier of the signature, unique within this document.
+     * @param title          The title of the signatory.
+     * @param dateFormat     The format string to use when formatting the date of signature.
+     * @param fullName       The given name of the signatory.
+     * @param signatureImage An image of the signature.
+     * @param signatureDate  The date on which the signature was obtained, represented as a string.
      */
     public ConsentSignature(@NonNull String identifier, String title, String dateFormat, String fullName, String signatureImage, String signatureDate)
     {
@@ -87,24 +88,23 @@ public class ConsentSignature implements Serializable, Cloneable
     }
 
     /**
-     *
-     * @param title               The title of the signatory.
-     * @param dateFormat    The format string to use when formatting the date of signature.
-     * @param identifier          The identifier of the signature, unique within this document.
+     * @param title      The title of the signatory.
+     * @param dateFormat The format string to use when formatting the date of signature.
+     * @param identifier The identifier of the signature, unique within this document.
      */
     public ConsentSignature(@NonNull String identifier, String title, String dateFormat)
     {
         this(identifier, title, dateFormat, null, null, null);
     }
 
-    public void setIdentifier(@NonNull String identifier)
-    {
-        this.identifier = identifier;
-    }
-
     public String getIdentifier()
     {
         return identifier;
+    }
+
+    public void setIdentifier(@NonNull String identifier)
+    {
+        this.identifier = identifier;
     }
 
     public boolean isRequiresName()
@@ -132,24 +132,24 @@ public class ConsentSignature implements Serializable, Cloneable
         return title;
     }
 
-    public void setFullName(String fullName)
-    {
-        this.fullName = fullName;
-    }
-
     public String getFullName()
     {
         return fullName;
     }
 
-    public void setSignatureImage(String signatureImage)
+    public void setFullName(String fullName)
     {
-        this.signatureImage = signatureImage;
+        this.fullName = fullName;
     }
 
     public String getSignatureImage()
     {
         return signatureImage;
+    }
+
+    public void setSignatureImage(String signatureImage)
+    {
+        this.signatureImage = signatureImage;
     }
 
     public String getSignatureDate()
