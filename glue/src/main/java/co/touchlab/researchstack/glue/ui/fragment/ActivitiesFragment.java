@@ -48,10 +48,10 @@ public class ActivitiesFragment extends Fragment
     private ArrayList<SchedulesAndTasksModel.TaskModel> loadTasksAndSchedules()
     {
         SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(getContext(),
-                                                                            SchedulesAndTasksModel.class,
-                                                                            "tasks_and_schedules");
+                SchedulesAndTasksModel.class,
+                "tasks_and_schedules");
         Map<String, TaskRecord> latestForAllTypes = StorageManager.getAppDatabase()
-                                                                  .findLatestForAllTypes();
+                .findLatestForAllTypes();
 
         ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();
         for(SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)
@@ -66,7 +66,7 @@ public class ActivitiesFragment extends Fragment
                 else if(StringUtils.isNotEmpty(schedule.scheduleString))
                 {
                     Date date = ScheduleHelper.nextSchedule(schedule.scheduleString,
-                                                            taskRecord.completed);
+                            taskRecord.completed);
                     if(date.before(new Date()))
                     {
                         tasks.add(task);
@@ -92,7 +92,7 @@ public class ActivitiesFragment extends Fragment
         public TaskAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             View view = LayoutInflater.from(parent.getContext())
-                                      .inflate(R.layout.item_schedule, parent, false);
+                    .inflate(R.layout.item_schedule, parent, false);
             return new ViewHolder(view);
         }
 
@@ -104,20 +104,20 @@ public class ActivitiesFragment extends Fragment
             holder.completionTime.setText(task.taskCompletionTime);
 
             // TODO fix this, just for looks atm
-            holder.dailyIndicator.setBackgroundResource(
-                    task.taskTitle.equals("Daily Survey") ? R.color.recurring_color
+            holder.dailyIndicator.setBackgroundResource(task.taskTitle.equals("Daily Survey")
+                            ? R.color.recurring_color
                             : R.color.one_time_color);
 
             holder.itemView.setOnClickListener(v -> {
                 // TODO this is just a simple implementation to get it working, we'll need
                 // TODO to do something with the activity result later
                 LogExt.d(getClass(), "Item clicked: " + task.taskID);
-                TaskModel taskModel = JsonUtils.loadClass(v.getContext(), TaskModel.class,
-                                                          task.taskFileName);
+                TaskModel taskModel = JsonUtils.loadClass(v.getContext(),
+                        TaskModel.class,
+                        task.taskFileName);
                 SmartSurveyTask newTask = new SmartSurveyTask(taskModel, task.taskID);
 
-                v.getContext()
-                 .startActivity(ViewTaskActivity.newIntent(v.getContext(), newTask));
+                v.getContext().startActivity(ViewTaskActivity.newIntent(v.getContext(), newTask));
             });
         }
 
@@ -140,8 +140,7 @@ public class ActivitiesFragment extends Fragment
                 dailyIndicator = itemView.findViewById(R.id.daily_indicator);
                 completed = (AppCompatCheckBox) itemView.findViewById(R.id.completed);
                 title = (AppCompatTextView) itemView.findViewById(R.id.task_title);
-                completionTime = (AppCompatTextView) itemView.findViewById(
-                        R.id.task_completion_time);
+                completionTime = (AppCompatTextView) itemView.findViewById(R.id.task_completion_time);
             }
         }
     }

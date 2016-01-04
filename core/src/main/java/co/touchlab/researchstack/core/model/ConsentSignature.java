@@ -64,8 +64,7 @@ public class ConsentSignature implements Serializable, Cloneable
     {
         this.requiresName = true;
         this.requiresSignatureImage = true;
-        this.identifier = UUID.randomUUID()
-                              .toString();
+        this.identifier = UUID.randomUUID().toString();
     }
 
     /**

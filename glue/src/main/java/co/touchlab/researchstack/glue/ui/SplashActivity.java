@@ -49,8 +49,7 @@ public class SplashActivity extends PassCodeActivity
         }*/
 
         //TODO: Fix routing
-        if(ResearchStack.getInstance()
-                        .storedUserExists())
+        if(ResearchStack.getInstance().storedUserExists())
         {
             new Handler().post(new Runnable()
             {
@@ -80,7 +79,7 @@ public class SplashActivity extends PassCodeActivity
     {
         error.printStackTrace();
         Toast.makeText(SplashActivity.this, "Error when initializing app", Toast.LENGTH_LONG)
-             .show();
+                .show();
     }
 
     private void launchActivity()

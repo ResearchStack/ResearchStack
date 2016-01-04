@@ -7,7 +7,8 @@ import co.touchlab.squeaky.table.DatabaseTable;
 /**
  * Created by kgalligan on 11/27/15.
  */
-@DatabaseTable public class TaskRecord
+@DatabaseTable
+public class TaskRecord
 {
     @DatabaseField(generatedId = true)
     public int id;

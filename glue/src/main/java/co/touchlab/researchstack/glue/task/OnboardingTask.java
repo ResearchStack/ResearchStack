@@ -30,17 +30,17 @@ public abstract class OnboardingTask extends Task
     public static final String SignUpThankYouStepIdentifier           = "ThankYou";
     public static final String SignInStepIdentifier                   = "SignIn";
     public static final String SignUpPermissionsPrimingStepIdentifier = "PermissionsPriming";
-    protected int currentStepNumber;
-    private Step inclusionCriteriaStep;
-    private Step eligibleStep;
-    private Step ineligibleStep;
-    private Step permissionsPrimingStep;
-    private Step generalInfoStep;
-    private Step medicalInfoStep;
-    private Step customInfoStep;
-    private Step permissionsStep;
-    private Step thankyouStep;
-    private Step signInStep;
+    protected int  currentStepNumber;
+    private   Step inclusionCriteriaStep;
+    private   Step eligibleStep;
+    private   Step ineligibleStep;
+    private   Step permissionsPrimingStep;
+    private   Step generalInfoStep;
+    private   Step medicalInfoStep;
+    private   Step customInfoStep;
+    private   Step permissionsStep;
+    private   Step thankyouStep;
+    private   Step signInStep;
     private boolean eligible                = true;
     private boolean customStepIncluded      = false;
     private boolean permissionScreenSkipped = false;
@@ -70,8 +70,7 @@ public abstract class OnboardingTask extends Task
 
     public boolean isEligible(TaskResult result)
     {
-        StepResult<Boolean> stepResult = (StepResult<Boolean>) result.getStepResult(
-                SignUpTask.SignUpInclusionCriteriaStepIdentifier);
+        StepResult<Boolean> stepResult = (StepResult<Boolean>) result.getStepResult(SignUpTask.SignUpInclusionCriteriaStepIdentifier);
 
         if(stepResult != null)
         {
@@ -207,7 +206,7 @@ public abstract class OnboardingTask extends Task
             inclusionCriteriaStep = new Step(SignUpInclusionCriteriaStepIdentifier);
             inclusionCriteriaStep.setSceneTitle(R.string.eligibility);
             inclusionCriteriaStep.setSceneClass(ResearchStack.getInstance()
-                                                             .getInclusionCriteriaSceneClass());
+                    .getInclusionCriteriaSceneClass());
         }
         return inclusionCriteriaStep;
     }

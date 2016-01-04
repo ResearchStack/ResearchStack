@@ -85,38 +85,31 @@ public class ConsentDocumentStepLayout extends RelativeLayout implements StepLay
 
     private void initializeScene()
     {
-        LayoutInflater.from(getContext())
-                      .inflate(R.layout.scene_consent_doc, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.scene_consent_doc, this, true);
 
         WebView pdfView = (WebView) findViewById(R.id.webview);
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
 
         View agree = findViewById(R.id.agree);
-        RxView.clicks(agree)
-              .subscribe(v -> showDialog());
+        RxView.clicks(agree).subscribe(v -> showDialog());
 
         View disagree = findViewById(R.id.disagree);
         // TODO make this call onSaveStep with false result
-        RxView.clicks(disagree)
-              .subscribe(v -> callbacks.onCancelStep());
+        RxView.clicks(disagree).subscribe(v -> callbacks.onCancelStep());
     }
 
     private void showDialog()
     {
         new AlertDialog.Builder(getContext()).setTitle(R.string.rsc_consent_review_alert_title)
-                                             .setMessage(confirmationDialogBody)
-                                             .setCancelable(false)
-                                             .setPositiveButton(R.string.rsc_agree,
-                                                                (dialog, which) -> {
-                                                                    stepResult.setResult(true);
-                                                                    callbacks.onSaveStep(
-                                                                            SceneCallbacks.ACTION_NEXT,
-                                                                            step, stepResult);
-                                                                })
-                                             .setNegativeButton(R.string.rsc_consent_review_cancel,
-                                                                (dialog, which) -> {
-                                                                    // Gives them a chance to read it again
-                                                                })
-                                             .show();
+                .setMessage(confirmationDialogBody)
+                .setCancelable(false)
+                .setPositiveButton(R.string.rsc_agree, (dialog, which) -> {
+                    stepResult.setResult(true);
+                    callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, stepResult);
+                })
+                .setNegativeButton(R.string.rsc_consent_review_cancel, (dialog, which) -> {
+                    // Gives them a chance to read it again
+                })
+                .show();
     }
 }

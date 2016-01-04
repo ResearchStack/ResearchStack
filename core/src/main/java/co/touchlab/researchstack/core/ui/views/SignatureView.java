@@ -78,15 +78,16 @@ public class SignatureView extends View
      */
     private void init(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SignatureView,
-                                                      defStyleAttr,
-                                                      R.style.ConsentReviewSignatureView);
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.SignatureView,
+                defStyleAttr,
+                R.style.ConsentReviewSignatureView);
 
         int signatureColor = a.getColor(R.styleable.SignatureView_signatureColor, Color.BLACK);
 
         int defSignatureStroke = (int) (getResources().getDisplayMetrics().density * 1);
         int signatureStroke = a.getDimensionPixelSize(R.styleable.SignatureView_signatureStrokeSize,
-                                                      defSignatureStroke);
+                defSignatureStroke);
 
         hintText = a.getString(R.styleable.SignatureView_hintText);
 
@@ -94,17 +95,17 @@ public class SignatureView extends View
 
         int defHintTextSize = (int) (getResources().getDisplayMetrics().density * 14);
         int hintTextSize = a.getDimensionPixelSize(R.styleable.SignatureView_hintTextSize,
-                                                   defHintTextSize);
+                defHintTextSize);
 
         guidelineColor = a.getColor(R.styleable.SignatureView_guidelineColor, hintTextColor);
 
         int defGuidelineMargin = (int) (getResources().getDisplayMetrics().density * 12);
         guidelineMargin = a.getDimensionPixelSize(R.styleable.SignatureView_guidelineMargin,
-                                                  defGuidelineMargin);
+                defGuidelineMargin);
 
         int defGuidelineHeight = (int) (getResources().getDisplayMetrics().density * 1);
         guidelineHeight = a.getDimensionPixelSize(R.styleable.SignatureView_guidelineHeight,
-                                                  defGuidelineHeight);
+                defGuidelineHeight);
 
         a.recycle();
 
@@ -187,8 +188,11 @@ public class SignatureView extends View
         // Draw Guide
         //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         hintPaint.setColor(guidelineColor);
-        canvas.drawRect(drawBounds.left, drawBounds.bottom - guidelineHeight, drawBounds.right,
-                        drawBounds.bottom, hintPaint);
+        canvas.drawRect(drawBounds.left,
+                drawBounds.bottom - guidelineHeight,
+                drawBounds.right,
+                drawBounds.bottom,
+                hintPaint);
 
         //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         // Draw signature or hint text
@@ -281,8 +285,8 @@ public class SignatureView extends View
         if(sigBounds.width() != 0 && sigBounds.height() != 0)
         {
             Bitmap returnedBitmap = Bitmap.createBitmap((int) sigBounds.width(),
-                                                        (int) sigBounds.height(),
-                                                        Bitmap.Config.ARGB_4444);
+                    (int) sigBounds.height(),
+                    Bitmap.Config.ARGB_4444);
 
             float minX = Integer.MAX_VALUE;
             float minY = Integer.MAX_VALUE;

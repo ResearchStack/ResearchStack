@@ -39,8 +39,7 @@ public class StudyVideoLayout extends ScrollView
 
     private void init()
     {
-        LayoutInflater.from(getContext())
-                      .inflate(R.layout.layout_study_video, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.layout_study_video, this, true);
 
         titleView = (TextView) findViewById(R.id.layout_studyoverview_video_title);
         subtitleView = (TextView) findViewById(R.id.layout_studyoverview_video_subtitle);

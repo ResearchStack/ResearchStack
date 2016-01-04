@@ -21,7 +21,9 @@ import co.touchlab.researchstack.BuildConfig;
 /**
  * Created by kgalligan on 11/27/15.
  */
-@RunWith(RobolectricGradleTestRunner.class) @Config(constants = BuildConfig.class, sdk = 21) public class ScheduleHelperTest
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = 21)
+public class ScheduleHelperTest
 {
     DateFormat dfSimple = new SimpleDateFormat("hh:mm:ss MM/dd/yyyy a");
     DateFormat df       = new SimpleDateFormat("hh:mm:ss EEE, MMM dd yyyy a");
@@ -29,8 +31,7 @@ import co.touchlab.researchstack.BuildConfig;
     public static Date nextSchedule(String cronString, Date lastExecution)
     {
         DateTime now = new DateTime(lastExecution);
-        CronParser cronParser = new CronParser(
-                CronDefinitionBuilder.instanceDefinitionFor(CronType.UNIX));
+        CronParser cronParser = new CronParser(CronDefinitionBuilder.instanceDefinitionFor(CronType.UNIX));
         Cron cron = cronParser.parse(cronString);
 
         ExecutionTime executionTime = ExecutionTime.forCron(cron);

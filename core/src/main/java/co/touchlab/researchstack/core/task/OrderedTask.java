@@ -116,8 +116,8 @@ public class OrderedTask extends Task implements Serializable
         if(o instanceof OrderedTask)
         {
             OrderedTask orderedTask = (OrderedTask) o;
-            return getIdentifier().equals(orderedTask.getIdentifier()) && steps.equals(
-                    orderedTask.getSteps());
+            return getIdentifier().equals(orderedTask.getIdentifier()) &&
+                    steps.equals(orderedTask.getSteps());
         }
         return false;
     }

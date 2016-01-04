@@ -50,19 +50,19 @@ public class LearnFragment extends Fragment
         //TODO Implement compat method to get RTL on API < 17
         boolean isRTL = config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
         DividerItemDecoration decoration = new DividerItemDecoration(getContext(),
-                                                                     DividerItemDecoration.VERTICAL_LIST,
-                                                                     0, isRTL);
+                DividerItemDecoration.VERTICAL_LIST,
+                0,
+                isRTL);
         recyclerView.addItemDecoration(decoration);
     }
 
     private List<SectionModel.SectionRow> loadTasksAndSchedules()
     {
-        int fileResId = ResearchStack.getInstance()
-                                     .getLearnSections();
-        SectionModel schedulesAndTasksModel = JsonUtils.loadClass(getContext(), SectionModel.class,
-                                                                  fileResId);
-        SectionModel.Section section = schedulesAndTasksModel.getSections()
-                                                             .get(0);
+        int fileResId = ResearchStack.getInstance().getLearnSections();
+        SectionModel schedulesAndTasksModel = JsonUtils.loadClass(getContext(),
+                SectionModel.class,
+                fileResId);
+        SectionModel.Section section = schedulesAndTasksModel.getSections().get(0);
         return section.getItems();
     }
 
@@ -112,16 +112,14 @@ public class LearnFragment extends Fragment
 
                 holder.itemView.setOnClickListener(v -> {
                     Intent intent = ViewWebDocumentActivity.newIntent(v.getContext(),
-                                                                      item.getTitle(),
-                                                                      item.getDetails());
-                    v.getContext()
-                     .startActivity(intent);
+                            item.getTitle(),
+                            item.getDetails());
+                    v.getContext().startActivity(intent);
                 });
 
                 int imageResId = ResearchStack.getInstance()
-                                              .getDrawableResourceId(context, item.getIconImage());
-                Drawable icon = context.getResources()
-                                       .getDrawable(imageResId);
+                        .getDrawableResourceId(context, item.getIconImage());
+                Drawable icon = context.getResources().getDrawable(imageResId);
                 int tintColor = ViewUtils.fetchAccentColor(context);
                 DrawableCompat.setTint(icon, tintColor);
                 holder.icon.setImageDrawable(icon);

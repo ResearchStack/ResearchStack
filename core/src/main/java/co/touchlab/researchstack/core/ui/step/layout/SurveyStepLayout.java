@@ -175,37 +175,35 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         View filler = findViewById(R.id.filler);
 
         container = (LinearLayout) findViewById(R.id.content_container);
-        container.getViewTreeObserver()
-                 .addOnPreDrawListener(() -> {
-                     int sceneHeight = SurveyStepLayout.this.getHeight();
-                     int infoContainerHeight = container.getHeight();
+        container.getViewTreeObserver().addOnPreDrawListener(() -> {
+            int sceneHeight = SurveyStepLayout.this.getHeight();
+            int infoContainerHeight = container.getHeight();
 
-                     //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
-                     if(sceneHeight > 0 && infoContainerHeight > 0 && sceneHeight > infoContainerHeight)
-                     {
-                         int fillerHeight = sceneHeight - infoContainerHeight;
-                         if(fillerHeight >= 0 && fillerHeight != filler.getHeight())
-                         {
-                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                     ViewGroup.LayoutParams.MATCH_PARENT, fillerHeight);
-                             filler.setLayoutParams(params);
-                             LogExt.d(getClass(),
-                                      "onPreDraw - Returning False, setting filler height");
-                             return false;
-                         }
-                     }
+            //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
+            if(sceneHeight > 0 && infoContainerHeight > 0 &&
+                    sceneHeight > infoContainerHeight)
+            {
+                int fillerHeight = sceneHeight - infoContainerHeight;
+                if(fillerHeight >= 0 && fillerHeight != filler.getHeight())
+                {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            fillerHeight);
+                    filler.setLayoutParams(params);
+                    LogExt.d(getClass(), "onPreDraw - Returning False, setting filler height");
+                    return false;
+                }
+            }
 
-                     return true;
+            return true;
 
-                 });
+        });
 
         image = (ImageView) findViewById(R.id.image);
         title = (TextView) findViewById(R.id.title);
         summary = (TextView) findViewById(R.id.text);
         moreInfo = (TextView) findViewById(R.id.more_info);
         next = (TextView) findViewById(R.id.next);
-        RxView.clicks(next)
-              .subscribe(v -> onNextClicked());
+        RxView.clicks(next).subscribe(v -> onNextClicked());
 
         skip = (TextView) findViewById(R.id.skip);
 
@@ -219,8 +217,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
             }
 
             skip.setVisibility(step.isOptional() ? View.VISIBLE : View.GONE);
-            RxView.clicks(skip)
-                  .subscribe(v -> onSkipClicked());
+            RxView.clicks(skip).subscribe(v -> onSkipClicked());
         }
     }
 
@@ -252,8 +249,9 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         {
             if(callbacks != null)
             {
-                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, getStep(),
-                                     stepBody.getStepResult());
+                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT,
+                        getStep(),
+                        stepBody.getStepResult());
             }
             else
             {
@@ -264,7 +262,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         else
         {
             Toast.makeText(getContext(), R.string.rsc_please_complete_step, Toast.LENGTH_SHORT)
-                 .show();
+                    .show();
         }
     }
 
@@ -343,8 +341,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
         if(action != null)
         {
-            RxView.clicks(moreInfo)
-                  .subscribe(action);
+            RxView.clicks(moreInfo).subscribe(action);
         }
     }
 
@@ -369,8 +366,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
         if(action != null)
         {
-            RxView.clicks(skip)
-                  .subscribe(action);
+            RxView.clicks(skip).subscribe(action);
         }
     }
 

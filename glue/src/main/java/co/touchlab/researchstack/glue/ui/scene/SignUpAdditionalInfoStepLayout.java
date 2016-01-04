@@ -45,13 +45,11 @@ public class SignUpAdditionalInfoStepLayout extends StepLayoutImpl
     {
         super.onBodyCreated(body);
 
-        user = ResearchStack.getInstance()
-                            .getCurrentUser();
+        user = ResearchStack.getInstance().getCurrentUser();
 
         HeightPicker height = (HeightPicker) body.findViewById(R.id.height);
         height.setUserHeight(user.getHeight());
-        height.getObservable()
-              .subscribe(user:: setHeight);
+        height.getObservable().subscribe(user:: setHeight);
 
         AppCompatEditText weight = (AppCompatEditText) body.findViewById(R.id.weight);
         int userWeight = user.getWeight();
@@ -60,9 +58,9 @@ public class SignUpAdditionalInfoStepLayout extends StepLayoutImpl
             weight.setText(String.valueOf(userWeight));
         }
         RxTextView.textChanges(weight)
-                  .filter(input -> input.length() > 0)
-                  .map(charSequence -> Integer.valueOf(charSequence.toString()))
-                  .subscribe(user:: setWeight);
+                .filter(input -> input.length() > 0)
+                .map(charSequence -> Integer.valueOf(charSequence.toString()))
+                .subscribe(user:: setWeight);
     }
 
 }

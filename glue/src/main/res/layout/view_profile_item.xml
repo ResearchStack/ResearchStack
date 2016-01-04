@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<co.touchlab.researchstack.glue.ui.views.ProfileItemView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                         xmlns:tools="http://schemas.android.com/tools"
-                                                         android:layout_width="match_parent"
-                                                         android:layout_height="52dp"
-                                                         android:gravity="center_vertical"
-                                                         android:orientation="horizontal"
-                                                         android:paddingLeft="12dp"
-                                                         android:paddingRight="12dp"
+<co.touchlab.researchstack.glue.ui.views.ProfileItemView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
     >
 
     <android.support.v7.widget.AppCompatTextView

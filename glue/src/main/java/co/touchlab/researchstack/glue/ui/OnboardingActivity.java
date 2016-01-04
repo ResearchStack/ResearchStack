@@ -40,8 +40,10 @@ public class OnboardingActivity extends AppCompatActivity
 
         final PageIndicator indicator = (PageIndicator) findViewById(R.id.pager_indicator);
         indicator.removeAllMarkers(true);
-        indicator.addMarkers(adapter.getCount(), R.drawable.ic_pageindicator_current_dark,
-                             R.drawable.ic_pageindicator_default_dark, true);
+        indicator.addMarkers(adapter.getCount(),
+                R.drawable.ic_pageindicator_current_dark,
+                R.drawable.ic_pageindicator_default_dark,
+                true);
 
         pager.clearOnPageChangeListeners();
         pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
@@ -57,8 +59,7 @@ public class OnboardingActivity extends AppCompatActivity
     //TODO Read on main thread for intense UI blockage.
     private StudyOverviewModel parseStudyOverviewModel()
     {
-        int fileResId = ResearchStack.getInstance()
-                                     .getStudyOverviewResourceId();
+        int fileResId = ResearchStack.getInstance().getStudyOverviewResourceId();
         return JsonUtils.loadClass(OnboardingActivity.this, StudyOverviewModel.class, fileResId);
     }
 
@@ -77,7 +78,8 @@ public class OnboardingActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if((requestCode == REQUEST_CODE_SIGN_IN || requestCode == REQUEST_CODE_SIGN_UP) && resultCode == RESULT_OK)
+        if((requestCode == REQUEST_CODE_SIGN_IN || requestCode == REQUEST_CODE_SIGN_UP) &&
+                resultCode == RESULT_OK)
         {
             finish();
             Intent intent = new Intent(this, MainActivity.class);

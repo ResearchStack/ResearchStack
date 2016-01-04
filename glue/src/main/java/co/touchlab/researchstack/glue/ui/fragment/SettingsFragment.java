@@ -29,8 +29,9 @@ public class SettingsFragment extends PreferenceFragmentCompat
         Preference version = getPreferenceManager().findPreference("version");
         if(version != null)
         {
-            String versionText = getString(R.string.settings_version, BuildConfig.VERSION_NAME,
-                                           BuildConfig.VERSION_CODE);
+            String versionText = getString(R.string.settings_version,
+                    BuildConfig.VERSION_NAME,
+                    BuildConfig.VERSION_CODE);
             version.setSummary(versionText);
         }
     }
@@ -38,8 +39,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
     @Override
     public boolean onPreferenceTreeClick(Preference preference)
     {
-        LogExt.i(getClass(), preference.getTitle()
-                                       .toString());
+        LogExt.i(getClass(), preference.getTitle().toString());
 
         if(preference.hasKey())
         {
@@ -55,9 +55,9 @@ public class SettingsFragment extends PreferenceFragmentCompat
             }
         }
 
-        Toast.makeText(getActivity(), "TODO: " + preference.getTitle()
-                                                           .toString(), Toast.LENGTH_SHORT)
-             .show();
+        Toast.makeText(getActivity(),
+                "TODO: " + preference.getTitle().toString(),
+                Toast.LENGTH_SHORT).show();
 
         return super.onPreferenceTreeClick(preference);
     }
@@ -65,11 +65,11 @@ public class SettingsFragment extends PreferenceFragmentCompat
     private void showPrivacyPolicy()
     {
 
-        int resId = ResearchStack.getInstance()
-                                 .getPrivacyPolicy();
+        int resId = ResearchStack.getInstance().getPrivacyPolicy();
         String docName = getResources().getResourceEntryName(resId);
-        Intent intent = ViewWebDocumentActivity.newIntent(getContext(), getString(
-                R.string.settings_privacy_policy), docName);
+        Intent intent = ViewWebDocumentActivity.newIntent(getContext(),
+                getString(R.string.settings_privacy_policy),
+                docName);
         startActivity(intent);
     }
 

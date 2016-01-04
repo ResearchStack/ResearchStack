@@ -83,8 +83,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
 
     private void initializeScene()
     {
-        LayoutInflater.from(getContext())
-                      .inflate(R.layout.scene_consent_signature, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.scene_consent_signature, this, true);
 
         TextView title = (TextView) findViewById(R.id.title);
         title.setText(step.getTitle());
@@ -101,47 +100,43 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
             public void onSignatureStarted()
             {
                 clear.setClickable(true);
-                clear.animate()
-                     .alpha(1);
+                clear.animate().alpha(1);
             }
 
             @Override
             public void onSignatureCleared()
             {
                 clear.setClickable(false);
-                clear.animate()
-                     .alpha(0);
+                clear.animate().alpha(0);
             }
         });
 
         clear.setClickable(signatureView.isSignatureDrawn());
         clear.setAlpha(signatureView.isSignatureDrawn() ? 1 : 0);
 
-        RxView.clicks(clear)
-              .subscribe(v -> {
-                  signatureView.clearSignature();
-              });
+        RxView.clicks(clear).subscribe(v -> {
+            signatureView.clearSignature();
+        });
 
         View next = findViewById(R.id.next);
-        RxView.clicks(next)
-              .subscribe(v -> {
-                  if(signatureView.isSignatureDrawn())
-                  {
-                      setDataToResult();
-                      callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
-                  }
-                  else
-                  {
-                      Toast.makeText(getContext(), "Signature Invalid", Toast.LENGTH_SHORT)
-                           .show();
-                  }
-              });
+        RxView.clicks(next).subscribe(v -> {
+            if(signatureView.isSignatureDrawn())
+            {
+                setDataToResult();
+                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+            }
+            else
+            {
+                Toast.makeText(getContext(), "Signature Invalid", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setDataToResult()
     {
         String format = ((ConsentSignatureStep) step).getSignatureDateFormat();
-        DateFormat signatureDateFormat = ! TextUtils.isEmpty(format) ? new SimpleDateFormat(format)
+        DateFormat signatureDateFormat = ! TextUtils.isEmpty(format)
+                ? new SimpleDateFormat(format)
                 : FormatHelper.getSignatureFormat();
         String formattedSignDate = signatureDateFormat.format(new Date());
 

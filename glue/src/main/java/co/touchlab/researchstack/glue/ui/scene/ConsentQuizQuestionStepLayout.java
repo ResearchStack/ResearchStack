@@ -22,7 +22,8 @@ import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
 
 // No longer used, replaced by SurveyScene
-@Deprecated public class ConsentQuizQuestionStepLayout extends StepLayoutImpl<Boolean>
+@Deprecated
+public class ConsentQuizQuestionStepLayout extends StepLayoutImpl<Boolean>
 {
 
     private ConsentQuizModel.QuestionProperties properties;
@@ -62,8 +63,10 @@ import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
 
         final SpannableString boldSpan = new SpannableString(
                 properties.introText + "\n\n" + question.question);
-        boldSpan.setSpan(new RelativeSizeSpan(.6f), 0, properties.introText.length(),
-                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        boldSpan.setSpan(new RelativeSizeSpan(.6f),
+                0,
+                properties.introText.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         setTitle(boldSpan);
     }
 
@@ -98,8 +101,9 @@ import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
             radioGroup.setEnabled(false);
 
             String iconName = answerCorrect ? properties.correctBadge : properties.incorrectBadge;
-            int iconResId = getResources().getIdentifier(iconName, "drawable",
-                                                         getContext().getPackageName());
+            int iconResId = getResources().getIdentifier(iconName,
+                    "drawable",
+                    getContext().getPackageName());
             answerIcon.setVisibility(View.VISIBLE);
             answerIcon.setImageResource(iconResId);
 
@@ -123,9 +127,10 @@ import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
             }
 
             SpannableString explanation = new SpannableString(part1 + part2 + part3);
-            explanation.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), part1.length(),
-                                part1.length() + part2.length(),
-                                SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
+            explanation.setSpan(new StyleSpan(Typeface.BOLD_ITALIC),
+                    part1.length(),
+                    part1.length() + part2.length(),
+                    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
             answerExplanation.setText(explanation);
 
             setNextButtonText(R.string.rsc_next);
@@ -154,8 +159,7 @@ import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
     {
         if(radioGroup.getCheckedRadioButtonId() == - 1)
         {
-            Toast.makeText(getContext(), "Please select an answer", Toast.LENGTH_SHORT)
-                 .show();
+            Toast.makeText(getContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
             return false;
         }
         return super.isAnswerValid();

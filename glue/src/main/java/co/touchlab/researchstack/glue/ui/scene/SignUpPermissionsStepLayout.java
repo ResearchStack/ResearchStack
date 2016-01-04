@@ -65,8 +65,7 @@ public class SignUpPermissionsStepLayout extends StepLayoutImpl
 
         //TODO Handle permissions UI/Flow on NON-M devices
         permissionButton = (AppCompatButton) body.findViewById(R.id.permission_button);
-        RxView.clicks(permissionButton)
-              .subscribe(view -> permissionCallback.requestPermissions());
+        RxView.clicks(permissionButton).subscribe(view -> permissionCallback.requestPermissions());
 
         updatePermissions();
     }
@@ -80,7 +79,7 @@ public class SignUpPermissionsStepLayout extends StepLayoutImpl
     private void updatePermissions()
     {
         int permissionCheck = ContextCompat.checkSelfPermission(getContext(),
-                                                                Manifest.permission.ACCESS_FINE_LOCATION);
+                Manifest.permission.ACCESS_FINE_LOCATION);
 
         if(permissionCheck == PackageManager.PERMISSION_GRANTED)
         {

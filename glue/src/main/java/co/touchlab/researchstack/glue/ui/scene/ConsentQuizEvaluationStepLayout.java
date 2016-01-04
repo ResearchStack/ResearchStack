@@ -36,7 +36,7 @@ public class ConsentQuizEvaluationStepLayout extends StepLayoutImpl<Boolean>
         if(! step.isQuizPassed())
         {
             int iconResId = ResUtils.getDrawableResourceId(getContext(),
-                                                           step.getQuestionProperties().incorrectIcon);
+                    step.getQuestionProperties().incorrectIcon);
 
             setImage(iconResId);
             setTitle(R.string.rsc_quiz_evaluation_try_again);
@@ -57,7 +57,7 @@ public class ConsentQuizEvaluationStepLayout extends StepLayoutImpl<Boolean>
         else
         {
             int iconResId = ResUtils.getDrawableResourceId(getContext(),
-                                                           step.getQuestionProperties().correctIcon);
+                    step.getQuestionProperties().correctIcon);
 
             setImage(iconResId);
             setTitle(R.string.rsc_quiz_evaluation_great_job);

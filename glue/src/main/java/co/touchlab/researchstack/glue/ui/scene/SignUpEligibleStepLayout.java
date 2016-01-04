@@ -57,7 +57,7 @@ public class SignUpEligibleStepLayout extends StepLayoutImpl
         super.onBodyCreated(body);
 
         RxView.clicks(body.findViewById(R.id.start_consent_button))
-              .subscribe(v -> startConsentActivity());
+                .subscribe(v -> startConsentActivity());
 
         hideNextButtons();
     }

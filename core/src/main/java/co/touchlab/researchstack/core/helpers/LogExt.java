@@ -6,8 +6,7 @@ public class LogExt
 {
     private static String tagMe(Class c)
     {
-        long threadId = Thread.currentThread()
-                              .getId();
+        long threadId = Thread.currentThread().getId();
         String simpleName = c.getSimpleName();
 
         return simpleName + ":[" + threadId + "]";

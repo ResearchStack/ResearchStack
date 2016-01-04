@@ -16,7 +16,7 @@ public class ConsentSection implements Serializable
      * The value of this property indicates whether a predefined image, title, and animation are present.
      */
     @SerializedName("sectionType")
-    private Type type;
+    private Type   type;
     /**
      * The title of the consent section in a localized string.
      * <p>

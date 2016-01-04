@@ -73,8 +73,7 @@ public class IntegerQuestionBody implements StepBody
         StepResult<Object> stepResult = new StepResult<>(identifier);
         if(editText != null)
         {
-            stepResult.setResult(Integer.valueOf(editText.getText()
-                                                         .toString()));
+            stepResult.setResult(Integer.valueOf(editText.getText().toString()));
         }
         else
         {
@@ -110,11 +109,9 @@ public class IntegerQuestionBody implements StepBody
         {
             result = numberPicker.getValue();
         }
-        else if(editText != null && editText.getText()
-                                            .length() > 0)
+        else if(editText != null && editText.getText().length() > 0)
         {
-            result = Integer.valueOf(editText.getText()
-                                             .toString());
+            result = Integer.valueOf(editText.getText().toString());
         }
 
         if(result == null)

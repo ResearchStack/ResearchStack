@@ -65,26 +65,24 @@ public class SignUpGeneralInfoStepLayout extends StepLayoutImpl
     public void onBodyCreated(View body)
     {
         super.onBodyCreated(body);
-        user = ResearchStack.getInstance()
-                            .getCurrentUser();
+        user = ResearchStack.getInstance().getCurrentUser();
 
         AppCompatEditText name = (AppCompatEditText) body.findViewById(R.id.name);
         name.setText(user.getName());
         RxTextView.textChanges(name)
-                  .subscribe(charSequence -> user.setName(charSequence.toString()));
+                .subscribe(charSequence -> user.setName(charSequence.toString()));
 
         AppCompatEditText email = (AppCompatEditText) body.findViewById(R.id.email);
         email.setText(user.getEmail());
         RxTextView.textChanges(email)
-                  .subscribe(charSequence -> user.setEmail(charSequence.toString()));
+                .subscribe(charSequence -> user.setEmail(charSequence.toString()));
 
         ImageView profileImage = (ImageView) body.findViewById(R.id.profile_image);
-        RxView.clicks(profileImage)
-              .subscribe(view -> launchImagePicker());
+        RxView.clicks(profileImage).subscribe(view -> launchImagePicker());
 
         AppCompatEditText password = (AppCompatEditText) body.findViewById(R.id.password);
         RxTextView.textChanges(password)
-                  .subscribe(charSequence -> user.setPassword(charSequence.toString()));
+                .subscribe(charSequence -> user.setPassword(charSequence.toString()));
 
         birthdateTextView = (AppCompatTextView) body.findViewById(R.id.birthdate);
         if(user.getBirthDate() != null)
@@ -96,10 +94,9 @@ public class SignUpGeneralInfoStepLayout extends StepLayoutImpl
             user.setBirthDate(birthdate.getTime());
         }
         updateBirthDate();
-        RxView.clicks(birthdateTextView)
-              .subscribe(view -> {
-                  showDatePicker();
-              });
+        RxView.clicks(birthdateTextView).subscribe(view -> {
+            showDatePicker();
+        });
 
         // TODO shouldn't use strings like this, let's make a gender class or something
         RadioGroup genderRadioGroup = (RadioGroup) body.findViewById(R.id.gender_radio_group);
@@ -117,27 +114,28 @@ public class SignUpGeneralInfoStepLayout extends StepLayoutImpl
         }
 
         RxRadioGroup.checkedChanges(genderRadioGroup)
-                    .subscribe((checkedId) -> user.setBiologicalSex(
-                            checkedId == R.id.male_radio ? "Male" : "Female"));
+                .subscribe((checkedId) -> user.setBiologicalSex(
+                        checkedId == R.id.male_radio ? "Male" : "Female"));
 
-        AppCompatTextView dataInstructions = (AppCompatTextView) body.findViewById(
-                R.id.data_instructions);
+        AppCompatTextView dataInstructions = (AppCompatTextView) body.findViewById(R.id.data_instructions);
     }
 
     private void launchImagePicker()
     {
-        Toast.makeText(getContext(), "TODO: launch image picker", Toast.LENGTH_SHORT)
-             .show();
+        Toast.makeText(getContext(), "TODO: launch image picker", Toast.LENGTH_SHORT).show();
     }
 
     private void showDatePicker()
     {
-        new DatePickerDialog(getContext(), (datePickerView, year, monthOfYear, dayOfMonth) -> {
-            birthdate.set(year, monthOfYear, dayOfMonth);
-            user.setBirthDate(birthdate.getTime());
-            updateBirthDate();
-        }, birthdate.get(Calendar.YEAR), birthdate.get(Calendar.MONTH),
-                             birthdate.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(getContext(),
+                (datePickerView, year, monthOfYear, dayOfMonth) -> {
+                    birthdate.set(year, monthOfYear, dayOfMonth);
+                    user.setBirthDate(birthdate.getTime());
+                    updateBirthDate();
+                },
+                birthdate.get(Calendar.YEAR),
+                birthdate.get(Calendar.MONTH),
+                birthdate.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void updateBirthDate()

@@ -53,8 +53,10 @@ public class PageIndicator extends LinearLayout
     public PageIndicator(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PageIndicator, defStyle,
-                                                      0);
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.PageIndicator,
+                defStyle,
+                0);
         mMaxWindowSize = a.getInteger(R.styleable.PageIndicator_windowSize, 15);
         mWindowRange[0] = 0;
         mWindowRange[1] = 0;
@@ -152,10 +154,7 @@ public class PageIndicator extends LinearLayout
                         alpha = 1f - Math.abs((i - windowMid) / hfWindowSize);
                     }
                 }
-                marker.animate()
-                      .alpha(alpha)
-                      .setDuration(500)
-                      .start();
+                marker.animate().alpha(alpha).setDuration(500).start();
             }
         }
         if(! allowAnimations)
@@ -169,8 +168,9 @@ public class PageIndicator extends LinearLayout
     public void addMarker(int index, PageMarkerResources marker, boolean allowAnimations)
     {
         index = Math.max(0, Math.min(index, mMarkers.size()));
-        PageIndicatorMarker m = (PageIndicatorMarker) mLayoutInflater.inflate(
-                R.layout.layout_page_indicator_marker, this, false);
+        PageIndicatorMarker m = (PageIndicatorMarker) mLayoutInflater.inflate(R.layout.layout_page_indicator_marker,
+                this,
+                false);
         m.setMarkerDrawables(marker.activeId, marker.inactiveId);
         mMarkers.add(index, m);
         offsetWindowCenterTo(mActiveMarkerIndex, allowAnimations);
@@ -186,16 +186,19 @@ public class PageIndicator extends LinearLayout
 
     public void addMarkers(int count, boolean allowAnimations)
     {
-        addMarkers(count, R.drawable.ic_pageindicator_current_dark,
-                   R.drawable.ic_pageindicator_default_dark, allowAnimations);
+        addMarkers(count,
+                R.drawable.ic_pageindicator_current_dark,
+                R.drawable.ic_pageindicator_default_dark,
+                allowAnimations);
     }
 
     public void addMarkers(int count, int active, int inactive, boolean allowAnimations)
     {
         for(int i = 0; i < count; ++ i)
         {
-            addMarker(Integer.MAX_VALUE, new PageMarkerResources(active, inactive),
-                      allowAnimations);
+            addMarker(Integer.MAX_VALUE,
+                    new PageMarkerResources(active, inactive),
+                    allowAnimations);
         }
     }
 

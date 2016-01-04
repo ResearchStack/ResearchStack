@@ -11,7 +11,7 @@ public class ViewUtils
     {
         TypedValue typedValue = new TypedValue();
         TypedArray a = context.obtainStyledAttributes(typedValue.data,
-                                                      new int[] {R.attr.colorAccent});
+                new int[] {R.attr.colorAccent});
         int color = a.getColor(0, 0);
         a.recycle();
         return color;

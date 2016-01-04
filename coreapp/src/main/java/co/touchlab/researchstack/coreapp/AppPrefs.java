@@ -45,9 +45,7 @@ public class AppPrefs
 
     public void setHasConsented(boolean consented)
     {
-        prefs.edit()
-             .putBoolean(HAS_CONSENTED, consented)
-             .apply();
+        prefs.edit().putBoolean(HAS_CONSENTED, consented).apply();
     }
 
     public boolean hasSurveyed()
@@ -57,8 +55,6 @@ public class AppPrefs
 
     public void setHasSurveyed(boolean surveyed)
     {
-        prefs.edit()
-             .putBoolean(HAS_SURVEYED, surveyed)
-             .apply();
+        prefs.edit().putBoolean(HAS_SURVEYED, surveyed).apply();
     }
 }

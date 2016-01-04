@@ -73,21 +73,19 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
 
     private void initializeScene()
     {
-        LayoutInflater.from(getContext())
-                      .inflate(R.layout.scene_consent_visual, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.scene_consent_visual, this, true);
 
         ConsentSection data = step.getSection();
 
         // Set Image
-        String imageName =
-                ! TextUtils.isEmpty(data.getCustomImageName()) ? data.getCustomImageName()
-                        : data.getType()
-                              .getImageName();
+        String imageName = ! TextUtils.isEmpty(data.getCustomImageName())
+                ? data.getCustomImageName()
+                : data.getType().getImageName();
         if(! TextUtils.isEmpty(imageName))
         {
             TypedValue typedValue = new TypedValue();
             TypedArray a = getContext().obtainStyledAttributes(typedValue.data,
-                                                               new int[] {R.attr.colorAccent});
+                    new int[] {R.attr.colorAccent});
             int accentColor = a.getColor(0, 0);
             a.recycle();
 
@@ -100,8 +98,7 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
         // Set Title
         TextView titleView = (TextView) findViewById(R.id.title);
         String title = TextUtils.isEmpty(data.getTitle()) ? getResources().getString(data.getType()
-                                                                                         .getTitleResId())
-                : data.getTitle();
+                .getTitleResId()) : data.getTitle();
         titleView.setText(title);
 
         // Set Summary
@@ -110,23 +107,19 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
 
         // Set more info
         TextView moreInfoView = (TextView) findViewById(R.id.more_info);
-        moreInfoView.setText(data.getType()
-                                 .getMoreInfoResId());
-        RxView.clicks(moreInfoView)
-              .subscribe(v -> {
-                  String path = data.getHtmlContent();
-                  String webTitle = getResources().getString(
-                          R.string.rsc_consent_section_more_info);
-                  Intent webDoc = ViewWebDocumentActivity.newIntent(getContext(), webTitle, path);
-                  getContext().startActivity(webDoc);
-              });
+        moreInfoView.setText(data.getType().getMoreInfoResId());
+        RxView.clicks(moreInfoView).subscribe(v -> {
+            String path = data.getHtmlContent();
+            String webTitle = getResources().getString(R.string.rsc_consent_section_more_info);
+            Intent webDoc = ViewWebDocumentActivity.newIntent(getContext(), webTitle, path);
+            getContext().startActivity(webDoc);
+        });
 
         // Set Next
         TextView next = (TextView) findViewById(R.id.next);
         next.setText(step.getNextButtonString());
-        RxView.clicks(next)
-              .subscribe(v -> {
-                  callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
-              });
+        RxView.clicks(next).subscribe(v -> {
+            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
+        });
     }
 }

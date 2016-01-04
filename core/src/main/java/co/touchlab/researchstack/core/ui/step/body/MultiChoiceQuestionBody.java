@@ -44,8 +44,9 @@ public class MultiChoiceQuestionBody <T> implements StepBody
             Choice<T> item = choices[i];
 
             // Create & add the View to our body-view
-            AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(
-                    R.layout.item_checkbox, radioGroup, false);
+            AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(R.layout.item_checkbox,
+                    radioGroup,
+                    false);
             checkBox.setText(item.getText());
             checkBox.setId(i);
             radioGroup.addView(checkBox);
@@ -88,10 +89,9 @@ public class MultiChoiceQuestionBody <T> implements StepBody
         format = (ChoiceAnswerFormat) step.getAnswerFormat();
         choices = format.getChoices();
 
-        RxView.clicks(textView)
-              .subscribe(o -> {
-                  showDialog(textView, step.getTitle());
-              });
+        RxView.clicks(textView).subscribe(o -> {
+            showDialog(textView, step.getTitle());
+        });
 
         return formItemView;
     }
@@ -138,27 +138,21 @@ public class MultiChoiceQuestionBody <T> implements StepBody
         // TODO use current result to precheck items
         // TODO improve this whole result/dialog logic
         boolean[] checkedItems = new boolean[format.getChoices().length];
-        new AlertDialog.Builder(textView.getContext()).setMultiChoiceItems(
-                format.getTextChoiceNames(), checkedItems, (dialog, which, isChecked) -> {
+        new AlertDialog.Builder(textView.getContext()).setMultiChoiceItems(format.getTextChoiceNames(),
+                checkedItems,
+                (dialog, which, isChecked) -> {
                     checkedItems[which] = isChecked;
-                })
-                                                      .setTitle(title)
-                                                      .setPositiveButton(R.string.src_ok,
-                                                                         (dialog, which) -> {
-                                                                             results.clear();
-                                                                             for(int i = 0; i < checkedItems.length; i++)
-                                                                             {
-                                                                                 if(checkedItems[i])
-                                                                                 {
-                                                                                     Choice<T> choice = choices[i];
-                                                                                     results.add(
-                                                                                             choice.getValue());
-                                                                                 }
-                                                                             }
-                                                                             textView.setText(
-                                                                                     "chosen");
-                                                                         })
-                                                      .setNegativeButton(R.string.src_cancel, null)
-                                                      .show();
+                }).setTitle(title).setPositiveButton(R.string.src_ok, (dialog, which) -> {
+            results.clear();
+            for(int i = 0; i < checkedItems.length; i++)
+            {
+                if(checkedItems[i])
+                {
+                    Choice<T> choice = choices[i];
+                    results.add(choice.getValue());
+                }
+            }
+            textView.setText("chosen");
+        }).setNegativeButton(R.string.src_cancel, null).show();
     }
 }

@@ -42,7 +42,8 @@ public class SingleChoiceQuestionBody <T> implements StepBody
         {
             Choice choice = choices[i];
             RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.item_radio,
-                                                                     radioGroup, false);
+                    radioGroup,
+                    false);
             radioButton.setText(choice.getText());
             radioButton.setId(i);
             radioGroup.addView(radioButton);
@@ -70,10 +71,9 @@ public class SingleChoiceQuestionBody <T> implements StepBody
         format = (ChoiceAnswerFormat) step.getAnswerFormat();
         choices = format.getChoices();
 
-        RxView.clicks(formLabel)
-              .subscribe(o -> {
-                  showDialog(formLabel, step.getTitle());
-              });
+        RxView.clicks(formLabel).subscribe(o -> {
+            showDialog(formLabel, step.getTitle());
+        });
 
         return formItemView;
     }
@@ -108,8 +108,7 @@ public class SingleChoiceQuestionBody <T> implements StepBody
             // Compact form view
             for(Choice<T> choice : choices)
             {
-                if(choice.getValue()
-                         .equals(resultValue))
+                if(choice.getValue().equals(resultValue))
                 {
                     currentSelection = choice.getValue();
                     formLabel.setText(choice.getText());
@@ -140,20 +139,15 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     {
         // TODO use same view as initView() and just set the dialog's view to it?
         int[] checked = new int[1];
-        new AlertDialog.Builder(textView.getContext()).setSingleChoiceItems(
-                format.getTextChoiceNames(), 0, (dialog, which) -> {
+        new AlertDialog.Builder(textView.getContext()).setSingleChoiceItems(format.getTextChoiceNames(),
+                0,
+                (dialog, which) -> {
                     checked[0] = which;
-                })
-                                                      .setTitle(title)
-                                                      .setPositiveButton(R.string.src_ok,
-                                                                         (dialog, which) -> {
-                                                                             // TODO this array of one this is weird, revisit
-                                                                             Choice<T> choice = choices[checked[0]];
-                                                                             currentSelection = choice.getValue();
-                                                                             textView.setText(
-                                                                                     choice.getText());
-                                                                         })
-                                                      .setNegativeButton(R.string.src_cancel, null)
-                                                      .show();
+                }).setTitle(title).setPositiveButton(R.string.src_ok, (dialog, which) -> {
+            // TODO this array of one this is weird, revisit
+            Choice<T> choice = choices[checked[0]];
+            currentSelection = choice.getValue();
+            textView.setText(choice.getText());
+        }).setNegativeButton(R.string.src_cancel, null).show();
     }
 }

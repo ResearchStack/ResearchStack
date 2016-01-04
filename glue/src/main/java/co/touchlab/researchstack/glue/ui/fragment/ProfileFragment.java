@@ -37,8 +37,7 @@ public class ProfileFragment extends Fragment
 
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.linear_layout);
 
-        User user = ResearchStack.getInstance()
-                                 .getCurrentUser();
+        User user = ResearchStack.getInstance().getCurrentUser();
 
         // TODO header should be a custom view?
         AppCompatTextView name = (AppCompatTextView) view.findViewById(R.id.name);
@@ -48,11 +47,9 @@ public class ProfileFragment extends Fragment
         email.setText(user.getEmail());
 
         ImageView profileImage = (ImageView) view.findViewById(R.id.profile_image);
-        RxView.clicks(profileImage)
-              .subscribe(clickedView -> showUnimplementedToast());
+        RxView.clicks(profileImage).subscribe(clickedView -> showUnimplementedToast());
 
-        User.UserInfoType[] userInfoTypes = ResearchStack.getInstance()
-                                                         .getUserInfoTypes();
+        User.UserInfoType[] userInfoTypes = ResearchStack.getInstance().getUserInfoTypes();
 
         for(User.UserInfoType userInfoType : userInfoTypes)
         {
@@ -65,24 +62,20 @@ public class ProfileFragment extends Fragment
                     Calendar birthdate = new GregorianCalendar();
                     birthdate.setTime(user.getBirthDate());
                     DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM,
-                                                                   Locale.getDefault());
+                            Locale.getDefault());
 
                     labelId = R.string.birthdate;
                     value = format.format(birthdate.getTime());
 
                     clickListener = v -> new DatePickerDialog(getActivity(),
-                                                              (datePickerView, year, monthOfYear, dayOfMonth) -> {
-                                                                  birthdate.set(year, monthOfYear,
-                                                                                dayOfMonth);
-                                                                  user.setBirthDate(
-                                                                          birthdate.getTime());
-                                                                  ((ProfileItemView) v).setValue(
-                                                                          format.format(
-                                                                                  birthdate.getTime()));
-                                                              }, birthdate.get(Calendar.YEAR),
-                                                              birthdate.get(Calendar.MONTH),
-                                                              birthdate.get(
-                                                                      Calendar.DAY_OF_MONTH)).show();
+                            (datePickerView, year, monthOfYear, dayOfMonth) -> {
+                                birthdate.set(year, monthOfYear, dayOfMonth);
+                                user.setBirthDate(birthdate.getTime());
+                                ((ProfileItemView) v).setValue(format.format(birthdate.getTime()));
+                            },
+                            birthdate.get(Calendar.YEAR),
+                            birthdate.get(Calendar.MONTH),
+                            birthdate.get(Calendar.DAY_OF_MONTH)).show();
                     break;
                 case Weight:
                     labelId = R.string.weight;
@@ -99,8 +92,9 @@ public class ProfileFragment extends Fragment
                 default:
                     continue;
             }
-            ProfileItemView itemView = (ProfileItemView) inflater.inflate(
-                    R.layout.view_profile_item, linearLayout, false);
+            ProfileItemView itemView = (ProfileItemView) inflater.inflate(R.layout.view_profile_item,
+                    linearLayout,
+                    false);
             itemView.setLabel(labelId);
             itemView.setValue(value);
             itemView.setOnClickListener(clickListener);
@@ -111,8 +105,7 @@ public class ProfileFragment extends Fragment
 
     private void showUnimplementedToast()
     {
-        Toast.makeText(getActivity(), "TODO: show appropriate dialog", Toast.LENGTH_SHORT)
-             .show();
+        Toast.makeText(getActivity(), "TODO: show appropriate dialog", Toast.LENGTH_SHORT).show();
     }
 
     private String formatHeightString(int height)

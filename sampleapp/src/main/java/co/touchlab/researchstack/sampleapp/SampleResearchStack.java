@@ -210,7 +210,12 @@ public class SampleResearchStack extends ResearchStack
     public User.UserInfoType[] getUserInfoTypes()
     {
         return new User.UserInfoType[] {
-                User.UserInfoType.Name, User.UserInfoType.Email, User.UserInfoType.BiologicalSex, User.UserInfoType.DateOfBirth, User.UserInfoType.Height, User.UserInfoType.Weight
+                User.UserInfoType.Name,
+                User.UserInfoType.Email,
+                User.UserInfoType.BiologicalSex,
+                User.UserInfoType.DateOfBirth,
+                User.UserInfoType.Height,
+                User.UserInfoType.Weight
         };
     }
 

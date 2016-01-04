@@ -79,8 +79,7 @@ public class AesFileAccess extends BaseFileAccess
                         catch(Exception e)
                         {
                             initFileAccess(context);
-                            Toast.makeText(context, "Wrong passphrase", Toast.LENGTH_LONG)
-                                 .show();
+                            Toast.makeText(context, "Wrong passphrase", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -99,8 +98,7 @@ public class AesFileAccess extends BaseFileAccess
                         catch(Exception e)
                         {
                             initFileAccess(context);
-                            Toast.makeText(context, "Bad format", Toast.LENGTH_LONG)
-                                 .show();
+                            Toast.makeText(context, "Bad format", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -170,8 +168,7 @@ public class AesFileAccess extends BaseFileAccess
                 {
                     if(! firstPin.equals(pin))
                     {
-                        Toast.makeText(context, "Pins do not match", Toast.LENGTH_LONG)
-                             .show();
+                        Toast.makeText(context, "Pins do not match", Toast.LENGTH_LONG).show();
                         initFileAccess(context);
                     }
                     else
@@ -183,8 +180,7 @@ public class AesFileAccess extends BaseFileAccess
                 catch(Exception e)
                 {
                     initFileAccess(context);
-                    Toast.makeText(context, "Bad format", Toast.LENGTH_LONG)
-                         .show();
+                    Toast.makeText(context, "Bad format", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -193,42 +189,39 @@ public class AesFileAccess extends BaseFileAccess
     private void runPinDialog(Context context, String title, PinOnClickListener listener)
     {
         View customView = LayoutInflater.from(context)
-                                        .inflate(alphaNumeric
-                                                         ? R.layout.dialog_pin_entry_alphanumeric
-                                                         : R.layout.dialog_pin_entry, null);
+                .inflate(alphaNumeric
+                        ? R.layout.dialog_pin_entry_alphanumeric
+                        : R.layout.dialog_pin_entry, null);
         EditText editText = (EditText) customView.findViewById(R.id.pinValue);
         editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(length)});
 
 
         listener.setCustomView(customView);
         AlertDialog alertDialog = new AlertDialog.Builder(context).setView(customView)
-                                                                  .setTitle(
-                                                                          title).setOnCancelListener(
-                        dialog -> {
+                .setTitle(title).setOnCancelListener(dialog -> {
 
-                            new Handler().post(AesFileAccess.this :: notifyListenersFailed);
-                        })
+                    new Handler().post(AesFileAccess.this :: notifyListenersFailed);
+                })
                         //                .setPositiveButton("OK", listener)
                 .create();
 
         RxTextView.textChanges(editText)
-                  .filter(charSequence -> charSequence.length() == length)
-                  .subscribe(charSequence -> {
-                      new Handler().postDelayed(() -> {
-                          listener.onPin(context, charSequence.toString());
-                          alertDialog.dismiss();
-                      }, 300);
-                  });
+                .filter(charSequence -> charSequence.length() == length)
+                .subscribe(charSequence -> {
+                    new Handler().postDelayed(() -> {
+                        listener.onPin(context, charSequence.toString());
+                        alertDialog.dismiss();
+                    }, 300);
+                });
 
         //If not an Activity, need system alert. Not sure how it wouldn't be, but...
         if(! (context instanceof Activity))
         {
-            alertDialog.getWindow()
-                       .setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         }
 
         alertDialog.getWindow()
-                   .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         alertDialog.show();
     }
 
@@ -247,8 +240,7 @@ public class AesFileAccess extends BaseFileAccess
             String uuid;
             if(! passphraseExists(context))
             {
-                uuid = UUID.randomUUID()
-                           .toString();
+                uuid = UUID.randomUUID().toString();
                 writePasskey(passphrase, passphraseFile, uuid);
                 writePasskey(passphrase, passphraseCheckFile, A_LITTLE_TEST);
             }
@@ -364,7 +356,7 @@ public class AesFileAccess extends BaseFileAccess
         public void onClick(DialogInterface dialog, int which)
         {
             String passcode = ((EditText) customView.findViewById(R.id.pinValue)).getText()
-                                                                                 .toString();
+                    .toString();
             onPin(context, passcode);
         }
 

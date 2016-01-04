@@ -88,9 +88,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
         try
         {
             Where<TaskRecord> where = new Where<>(getDao(TaskRecord.class));
-            List<TaskRecord> taskRecords = where.eq("taskId", taskId)
-                                                .query()
-                                                .list();
+            List<TaskRecord> taskRecords = where.eq("taskId", taskId).query().list();
             return taskRecords;
         }
         catch(SQLException e)
@@ -105,8 +103,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
         try
         {
             Map<String, TaskRecord> byTaskId = new HashMap<>();
-            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForAll()
-                                                                   .list();
+            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForAll().list();
             for(TaskRecord taskRecord : taskRecords)
             {
                 TaskRecord check = byTaskId.get(taskRecord.taskId);

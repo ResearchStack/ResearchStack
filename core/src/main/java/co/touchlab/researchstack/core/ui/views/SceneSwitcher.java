@@ -121,8 +121,7 @@ public class SceneSwitcher extends FrameLayout
             // in the view hierarchy as the same as the current scene on-screen
             LayoutParams lp = getLayoutParams(stepLayout);
             addView(stepLayout.getLayout(), currentIndex, lp);
-            stepLayout.getLayout()
-                      .setId(R.id.rsc_current_scene);
+            stepLayout.getLayout().setId(R.id.rsc_current_scene);
 
             // If the old scene is gone, we can go ahead and ignore the following animation code.
             // This will usually happen on start-up of the host (e.g. activity)
@@ -130,27 +129,25 @@ public class SceneSwitcher extends FrameLayout
             {
                 int newTranslationX = direction * getWidth();
 
+                stepLayout.getLayout().setTranslationX(newTranslationX);
                 stepLayout.getLayout()
-                          .setTranslationX(newTranslationX);
-                stepLayout.getLayout()
-                          .animate()
-                          .setDuration(animationTime)
-                          .setInterpolator(interpolator)
-                          .translationX(0);
+                        .animate()
+                        .setDuration(animationTime)
+                        .setInterpolator(interpolator)
+                        .translationX(0);
 
                 currentScene.animate()
-                            .setInterpolator(interpolator)
-                            .setDuration(animationTime)
-                            .translationX(- 1 * newTranslationX)
-                            .withEndAction(() -> removeView(currentScene));
+                        .setInterpolator(interpolator)
+                        .setDuration(animationTime)
+                        .translationX(- 1 * newTranslationX)
+                        .withEndAction(() -> removeView(currentScene));
             }
         });
     }
 
     private LayoutParams getLayoutParams(StepLayout stepLayout)
     {
-        LayoutParams lp = (LayoutParams) stepLayout.getLayout()
-                                                   .getLayoutParams();
+        LayoutParams lp = (LayoutParams) stepLayout.getLayout().getLayoutParams();
         if(lp == null)
         {
             lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);

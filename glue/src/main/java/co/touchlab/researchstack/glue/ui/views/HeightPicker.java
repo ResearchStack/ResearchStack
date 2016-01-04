@@ -50,17 +50,15 @@ public class HeightPicker extends LinearLayout
         inches = (AppCompatEditText) findViewById(R.id.height_inches);
 
         changes = Observable.merge(RxTextView.textChanges(feet), RxTextView.textChanges(inches))
-                            .map(charSequence -> getUserHeight())
-                            .filter(totalInches -> totalInches > 0);
+                .map(charSequence -> getUserHeight())
+                .filter(totalInches -> totalInches > 0);
     }
 
     public int getUserHeight()
     {
 
-        String feetString = feet.getText()
-                                .toString();
-        String inchesString = inches.getText()
-                                    .toString();
+        String feetString = feet.getText().toString();
+        String inchesString = inches.getText().toString();
 
         if(feetString.isEmpty() || inchesString.isEmpty())
         {

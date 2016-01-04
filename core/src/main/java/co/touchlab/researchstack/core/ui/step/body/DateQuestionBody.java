@@ -26,7 +26,7 @@ public class DateQuestionBody implements StepBody
 {
     private QuestionStep step;
     private SimpleDateFormat dateFormat = new SimpleDateFormat(FormatHelper.DATE_FORMAT_ISO_8601,
-                                                               Locale.getDefault());
+            Locale.getDefault());
     private DateAnswerFormat format;
     private Calendar         calendar;
     private DatePicker       datePicker;
@@ -49,14 +49,12 @@ public class DateQuestionBody implements StepBody
 
         if(format.getMinimumDate() != null)
         {
-            datePicker.setMinDate(format.getMinimumDate()
-                                        .getTime());
+            datePicker.setMinDate(format.getMinimumDate().getTime());
         }
 
         if(format.getMaximumDate() != null)
         {
-            datePicker.setMaxDate(format.getMaximumDate()
-                                        .getTime());
+            datePicker.setMaxDate(format.getMaximumDate().getTime());
         }
 
         initCalendar();
@@ -66,8 +64,8 @@ public class DateQuestionBody implements StepBody
         int initDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         datePicker.init(initYear, initMonth, initDay, (view, year, monthOfYear, dayOfMonth) -> {
-                            calendar.set(year, monthOfYear, dayOfMonth);
-                        });
+            calendar.set(year, monthOfYear, dayOfMonth);
+        });
 
         return datePicker;
     }
@@ -89,10 +87,9 @@ public class DateQuestionBody implements StepBody
 
         initCalendar();
 
-        RxView.clicks(textView)
-              .subscribe(o -> {
-                  showDialog(textView);
-              });
+        RxView.clicks(textView).subscribe(o -> {
+            showDialog(textView);
+        });
 
         return formItemView;
     }
@@ -116,8 +113,9 @@ public class DateQuestionBody implements StepBody
             calendar.setTime(savedDate);
             if(datePicker != null)
             {
-                datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                                      calendar.get(Calendar.DAY_OF_MONTH));
+                datePicker.updateDate(calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
             }
         }
     }
@@ -162,12 +160,15 @@ public class DateQuestionBody implements StepBody
     private void showDialog(TextView textView)
     {
         // TODO use same view as initView() and just set the dialog's view to it?
-        new DatePickerDialog(textView.getContext(), (view, year, monthOfYear, dayOfMonth) -> {
-            calendar.set(year, monthOfYear, dayOfMonth);
-            String formattedResult = createFormattedResult();
-            textView.setText(formattedResult);
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                             calendar.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(textView.getContext(),
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    calendar.set(year, monthOfYear, dayOfMonth);
+                    String formattedResult = createFormattedResult();
+                    textView.setText(formattedResult);
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private Date getDateFromString(String savedFrmtdDate)

@@ -74,8 +74,7 @@ public class FormBody implements StepBody
     {
         for(StepBody formStepBody : formStepBodies)
         {
-            StepResult formStepResult = (StepResult) result.getResultForIdentifier(
-                    formStepBody.getIdentifier());
+            StepResult formStepResult = (StepResult) result.getResultForIdentifier(formStepBody.getIdentifier());
             if(formStepResult != null)
             {
                 formStepBody.prefillResult(formStepResult);

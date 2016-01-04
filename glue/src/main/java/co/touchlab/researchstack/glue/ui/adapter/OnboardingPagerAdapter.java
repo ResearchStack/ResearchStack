@@ -72,8 +72,9 @@ public class OnboardingPagerAdapter extends PagerAdapter
             //            landingCell.readConsentButton.hidden = NO;
             //        }
 
-            StudyLandingLayout layout = (StudyLandingLayout) inflater.inflate(
-                    R.layout.item_study_landing, container, false);
+            StudyLandingLayout layout = (StudyLandingLayout) inflater.inflate(R.layout.item_study_landing,
+                    container,
+                    false);
             layout.setData(item);
 
             child = layout;
@@ -82,7 +83,8 @@ public class OnboardingPagerAdapter extends PagerAdapter
         else if(! TextUtils.isEmpty(item.getVideoName()))
         {
             StudyVideoLayout layout = (StudyVideoLayout) inflater.inflate(R.layout.item_study_video,
-                                                                          container, false);
+                    container,
+                    false);
             layout.setData(item);
 
             child = layout;
@@ -96,8 +98,7 @@ public class OnboardingPagerAdapter extends PagerAdapter
         }
         else
         {
-            String url = ResearchStack.getInstance()
-                                      .getHTMLFilePath(item.getDetails());
+            String url = ResearchStack.getInstance().getHTMLFilePath(item.getDetails());
             LocalWebView layout = new LocalWebView(container.getContext());
             layout.loadUrl(url);
 

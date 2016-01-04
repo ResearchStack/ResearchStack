@@ -47,8 +47,7 @@ public class MainActivity extends PassCodeActivity
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener()
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
                 {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem item)
@@ -100,30 +99,23 @@ public class MainActivity extends PassCodeActivity
         View headerView = getLayoutInflater().inflate(R.layout.include_user_header, null);
 
         AppCompatTextView name = (AppCompatTextView) headerView.findViewById(R.id.name);
-        name.setText(ResearchStack.getInstance()
-                                  .getCurrentUser()
-                                  .getName());
+        name.setText(ResearchStack.getInstance().getCurrentUser().getName());
         AppCompatTextView email = (AppCompatTextView) headerView.findViewById(R.id.email);
-        email.setText(ResearchStack.getInstance()
-                                   .getCurrentUser()
-                                   .getEmail());
+        email.setText(ResearchStack.getInstance().getCurrentUser().getEmail());
 
         ImageView image = (ImageView) headerView.findViewById(R.id.profile_image);
         image.setOnLongClickListener(v -> {
             new AlertDialog.Builder(MainActivity.this).setMessage("Clear saved user data?")
-                                                      .setPositiveButton("Yes", (dialog, which) -> {
-                                                                             ResearchStack.getInstance()
-                                                                                          .clearUserData(
-                                                                                                  MainActivity.this);
-                                                                             dialog.dismiss();
-                                                                             finish();
-                                                                             System.exit(0);
-                                                                         })
-                                                      .setNegativeButton("No",
-                                                                         ((dialog1, which1) -> {
-                                                                             dialog1.dismiss();
-                                                                         }))
-                                                      .show();
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        ResearchStack.getInstance().clearUserData(MainActivity.this);
+                        dialog.dismiss();
+                        finish();
+                        System.exit(0);
+                    })
+                    .setNegativeButton("No", ((dialog1, which1) -> {
+                        dialog1.dismiss();
+                    }))
+                    .show();
             return false;
         });
 
@@ -144,17 +136,14 @@ public class MainActivity extends PassCodeActivity
     protected void onDataFailed()
     {
         super.onDataFailed();
-        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG)
-             .show();
+        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
         finish();
     }
 
     // TODO better fragment loading/switching logic, use tags
     private void showFragment(Fragment fragment)
     {
-        getSupportFragmentManager().beginTransaction()
-                                   .replace(R.id.placeholder, fragment)
-                                   .commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.placeholder, fragment).commit();
     }
 
     @Override

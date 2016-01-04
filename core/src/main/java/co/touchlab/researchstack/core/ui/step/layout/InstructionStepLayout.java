@@ -62,8 +62,7 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
 
     private void initializeScene()
     {
-        LayoutInflater.from(getContext())
-                      .inflate(R.layout.scene_instruction, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.scene_instruction, this, true);
 
         // Set Title
         TextView titleView = (TextView) findViewById(R.id.title);
@@ -75,9 +74,8 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
 
         // Set Next
         TextView next = (TextView) findViewById(R.id.next);
-        RxView.clicks(next)
-              .subscribe(v -> {
-                  callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
-              });
+        RxView.clicks(next).subscribe(v -> {
+            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
+        });
     }
 }

@@ -40,14 +40,12 @@ public class ResUtils
 
     public static int getDrawableResourceId(Context context, String name)
     {
-        return context.getResources()
-                      .getIdentifier(name, "drawable", context.getPackageName());
+        return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
     }
 
     public static byte[] getResource(Context context, int id)
     {
-        InputStream is = context.getResources()
-                                .openRawResource(id);
+        InputStream is = context.getResources().openRawResource(id);
         ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
 
         byte[] readBuffer = new byte[4 * 1024];
@@ -93,7 +91,6 @@ public class ResUtils
 
     public static int getRawResourceId(Context context, String name)
     {
-        return context.getResources()
-                      .getIdentifier(name, "raw", context.getPackageName());
+        return context.getResources().getIdentifier(name, "raw", context.getPackageName());
     }
 }

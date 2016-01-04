@@ -109,13 +109,14 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     private void showStep(Step step)
     {
         int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult)
-                                      .getCurrent();
-        int newStepPosition = task.getProgressOfCurrentStep(step, taskResult)
-                                  .getCurrent();
+                .getCurrent();
+        int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
         StepLayout stepLayout = getSceneForStep(step);
-        root.show(stepLayout, newStepPosition >= currentStepPosition ? SceneSwitcher.SHIFT_LEFT
-                : SceneSwitcher.SHIFT_RIGHT);
+        root.show(stepLayout,
+                newStepPosition >= currentStepPosition
+                        ? SceneSwitcher.SHIFT_LEFT
+                        : SceneSwitcher.SHIFT_RIGHT);
         currentStep = step;
     }
 
@@ -167,11 +168,9 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         taskRecord.started = new Date();
         taskRecord.completed = new Date();
         taskRecord.taskId = task.getScheduleId();
-        Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601)
-                                     .create();
+        Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601).create();
         taskRecord.result = gson.toJson(taskResult);
-        StorageManager.getAppDatabase()
-                      .saveTaskRecord(taskRecord);
+        StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
 
         setResult(RESULT_OK, resultIntent);
         finish();
@@ -238,8 +237,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     protected void onDataFailed()
     {
         super.onDataFailed();
-        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG)
-             .show();
+        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
         finish();
     }
 
@@ -263,7 +261,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         else
         {
             throw new IllegalArgumentException("Action with value " + action + " is invalid. " +
-                                                       "See SceneCallbacks for allowable arguments");
+                    "See SceneCallbacks for allowable arguments");
         }
     }
 

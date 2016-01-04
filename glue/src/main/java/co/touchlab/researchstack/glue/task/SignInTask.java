@@ -22,27 +22,23 @@ public class SignInTask extends OnboardingTask
     public Step getStepAfterStep(Step step, TaskResult result)
     {
         Step nextStep = null;
-        User user = ResearchStack.getInstance()
-                                 .getCurrentUser();
+        User user = ResearchStack.getInstance().getCurrentUser();
 
         if(step == null)
         {
             nextStep = getSignInStep();
         }
-        else if(step.getIdentifier()
-                    .equals(SignInStepIdentifier))
+        else if(step.getIdentifier().equals(SignInStepIdentifier))
         {
             currentStepNumber += 1;
             nextStep = getPermissionsPrimingStep();
         }
-        else if(step.getIdentifier()
-                    .equals(SignUpPermissionsPrimingStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpPermissionsPrimingStepIdentifier))
         {
             currentStepNumber += 1;
             nextStep = getMedicalInfoStep();
         }
-        else if(step.getIdentifier()
-                    .equals(SignUpMedicalInfoStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpMedicalInfoStepIdentifier))
         {
             if(isCustomStepIncluded())
             {
@@ -63,29 +59,25 @@ public class SignInTask extends OnboardingTask
             }
 
         }
-        else if(step.getIdentifier()
-                    .equals(SignUpCustomInfoStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpCustomInfoStepIdentifier))
         {
             nextStep = getPermissionsStep();
             user.setSecondaryInfoSaved(true);
             currentStepNumber += 1;
         }
-        else if(step.getIdentifier()
-                    .equals(SignUpPermissionsStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
         {
             nextStep = getThankyouStep();
             currentStepNumber += 1;
         }
-        else if(step.getIdentifier()
-                    .equals(SignUpThankYouStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpThankYouStepIdentifier))
         {
             nextStep = null;
         }
 
         if(nextStep == null)
         {
-            ResearchStack.getInstance()
-                         .saveUser();
+            ResearchStack.getInstance().saveUser();
         }
 
         return nextStep;
@@ -96,19 +88,16 @@ public class SignInTask extends OnboardingTask
     {
         Step prevStep = null;
 
-        if(step.getIdentifier()
-               .equals(SignUpMedicalInfoStepIdentifier))
+        if(step.getIdentifier().equals(SignUpMedicalInfoStepIdentifier))
         {
             prevStep = null;
         }
-        else if(step.getIdentifier()
-                    .equals(SignUpCustomInfoStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpCustomInfoStepIdentifier))
         {
             prevStep = getMedicalInfoStep();
             currentStepNumber -= 1;
         }
-        else if(step.getIdentifier()
-                    .equals(SignUpPermissionsStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
         {
             if(isCustomStepIncluded())
             {

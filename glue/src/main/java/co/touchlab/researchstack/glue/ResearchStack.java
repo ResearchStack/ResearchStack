@@ -14,8 +14,8 @@ public abstract class ResearchStack
 {
     public static final String TEMP_USER_JSON_FILE_NAME = "/temp_user";
     protected static ResearchStack instance;
-    protected Context context;
-    private User currentUser;
+    protected        Context       context;
+    private          User          currentUser;
 
     public ResearchStack(Context context)
     {
@@ -27,7 +27,7 @@ public abstract class ResearchStack
         instance = concreteResearchStack;
 
         StorageManager.init(concreteResearchStack.createFileAccessImplementation(),
-                            concreteResearchStack.createAppDatabaseImplementation());
+                concreteResearchStack.createAppDatabaseImplementation());
     }
 
     public synchronized static ResearchStack getInstance()
@@ -95,8 +95,7 @@ public abstract class ResearchStack
 
     public int getDrawableResourceId(Context context, String name)
     {
-        return context.getResources()
-                      .getIdentifier(name, "drawable", context.getPackageName());
+        return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
     }
 
     public abstract boolean isSignatureEnabledInConsent();
@@ -119,8 +118,7 @@ public abstract class ResearchStack
 
     public boolean storedUserExists()
     {
-        return StorageManager.getFileAccess()
-                             .dataExists(context, TEMP_USER_JSON_FILE_NAME);
+        return StorageManager.getFileAccess().dataExists(context, TEMP_USER_JSON_FILE_NAME);
     }
 
     public void saveUser()
@@ -131,7 +129,7 @@ public abstract class ResearchStack
         LogExt.d(getClass(), "Writing user json:\n" + userJsonString);
 
         StorageManager.getFileAccess()
-                      .writeString(context, TEMP_USER_JSON_FILE_NAME, userJsonString);
+                .writeString(context, TEMP_USER_JSON_FILE_NAME, userJsonString);
     }
 
     public void loadUser()

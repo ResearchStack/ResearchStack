@@ -55,8 +55,7 @@ public class TextQuestionBody implements StepBody
     public StepResult getStepResult()
     {
         StepResult<String> result = new StepResult<>(identifier);
-        result.setResult(editText.getText()
-                                 .toString());
+        result.setResult(editText.getText().toString());
         return result;
     }
 
@@ -74,7 +73,7 @@ public class TextQuestionBody implements StepBody
     public boolean isAnswerValid()
     {
         return ((TextAnswerFormat) step.getAnswerFormat()).isAnswerValid(editText.getText()
-                                                                                 .toString());
+                .toString());
     }
 
     @Override
@@ -98,8 +97,7 @@ public class TextQuestionBody implements StepBody
 
         if(format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH)
         {
-            InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(
-                    format.getMaximumLength());
+            InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(format.getMaximumLength());
             InputFilter[] filters = insertFilter(editText.getFilters(), maxLengthFilter);
             editText.setFilters(filters);
         }
@@ -116,8 +114,7 @@ public class TextQuestionBody implements StepBody
             // Overwrite value if the filter to be inserted already exists in the filters array
             for(int i = 0, size = filters.length; i < size; i++)
             {
-                if(filters[i].getClass()
-                             .isInstance(filter))
+                if(filters[i].getClass().isInstance(filter))
                 {
                     filters[i] = filter;
                     return filters;

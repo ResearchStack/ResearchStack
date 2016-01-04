@@ -23,7 +23,8 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import rx.functions.Action1;
 
-@Deprecated public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepLayout
+@Deprecated
+public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepLayout
 {
     public static final String TAG = StepLayoutImpl.class.getSimpleName();
 
@@ -148,37 +149,35 @@ import rx.functions.Action1;
         View filler = findViewById(R.id.filler);
 
         container = (LinearLayout) findViewById(R.id.content_container);
-        container.getViewTreeObserver()
-                 .addOnPreDrawListener(() -> {
-                     int sceneHeight = StepLayoutImpl.this.getHeight();
-                     int infoContainerHeight = container.getHeight();
+        container.getViewTreeObserver().addOnPreDrawListener(() -> {
+            int sceneHeight = StepLayoutImpl.this.getHeight();
+            int infoContainerHeight = container.getHeight();
 
-                     //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
-                     if(sceneHeight > 0 && infoContainerHeight > 0 && sceneHeight > infoContainerHeight)
-                     {
-                         int fillerHeight = sceneHeight - infoContainerHeight;
-                         if(fillerHeight >= 0 && fillerHeight != filler.getHeight())
-                         {
-                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                     ViewGroup.LayoutParams.MATCH_PARENT, fillerHeight);
-                             filler.setLayoutParams(params);
-                             LogExt.d(getClass(),
-                                      "onPreDraw - Returning False, setting filler height");
-                             return false;
-                         }
-                     }
+            //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
+            if(sceneHeight > 0 && infoContainerHeight > 0 &&
+                    sceneHeight > infoContainerHeight)
+            {
+                int fillerHeight = sceneHeight - infoContainerHeight;
+                if(fillerHeight >= 0 && fillerHeight != filler.getHeight())
+                {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            fillerHeight);
+                    filler.setLayoutParams(params);
+                    LogExt.d(getClass(), "onPreDraw - Returning False, setting filler height");
+                    return false;
+                }
+            }
 
-                     return true;
+            return true;
 
-                 });
+        });
 
         image = (ImageView) findViewById(R.id.image);
         title = (TextView) findViewById(R.id.title);
         summary = (TextView) findViewById(R.id.text);
         moreInfo = (TextView) findViewById(R.id.more_info);
         next = (TextView) findViewById(R.id.next);
-        RxView.clicks(next)
-              .subscribe(v -> onNextClicked());
+        RxView.clicks(next).subscribe(v -> onNextClicked());
 
         skip = (TextView) findViewById(R.id.skip);
 
@@ -192,8 +191,7 @@ import rx.functions.Action1;
             }
 
             skip.setVisibility(step.isOptional() ? View.VISIBLE : View.GONE);
-            RxView.clicks(skip)
-                  .subscribe(v -> onSkipClicked());
+            RxView.clicks(skip).subscribe(v -> onSkipClicked());
         }
     }
 
@@ -236,7 +234,7 @@ import rx.functions.Action1;
         else
         {
             Toast.makeText(getContext(), R.string.rsc_please_complete_step, Toast.LENGTH_SHORT)
-                 .show();
+                    .show();
         }
     }
 
@@ -333,8 +331,7 @@ import rx.functions.Action1;
 
         if(action != null)
         {
-            RxView.clicks(moreInfo)
-                  .subscribe(action);
+            RxView.clicks(moreInfo).subscribe(action);
         }
     }
 
@@ -359,8 +356,7 @@ import rx.functions.Action1;
 
         if(action != null)
         {
-            RxView.clicks(skip)
-                  .subscribe(action);
+            RxView.clicks(skip).subscribe(action);
         }
     }
 

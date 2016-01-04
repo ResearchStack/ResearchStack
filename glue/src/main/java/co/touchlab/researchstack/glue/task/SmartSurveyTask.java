@@ -57,7 +57,7 @@ public class SmartSurveyTask extends Task implements Serializable
                 AnswerFormat answerFormat = from(stepModel.constraints);
 
                 steps.put(stepModel.identifier,
-                          new QuestionStep(stepModel.identifier, stepModel.prompt, answerFormat));
+                        new QuestionStep(stepModel.identifier, stepModel.prompt, answerFormat));
                 staticStepIdentifiers.add(stepModel.identifier);
                 rules.put(stepModel.identifier, stepModel.constraints.rules);
             }
@@ -81,9 +81,9 @@ public class SmartSurveyTask extends Task implements Serializable
         }
         else if(type.equals("MultiValueConstraints"))
         {
-            AnswerFormat.ChoiceAnswerStyle answerStyle =
-                    constraints.allowMultiple ? AnswerFormat.ChoiceAnswerStyle.MultipleChoice
-                            : AnswerFormat.ChoiceAnswerStyle.SingleChoice;
+            AnswerFormat.ChoiceAnswerStyle answerStyle = constraints.allowMultiple
+                    ? AnswerFormat.ChoiceAnswerStyle.MultipleChoice
+                    : AnswerFormat.ChoiceAnswerStyle.SingleChoice;
             answerFormat = new ChoiceAnswerFormat(answerStyle, from(constraints.enumeration));
         }
         else if(type.equals("IntegerConstraints"))
@@ -130,8 +130,7 @@ public class SmartSurveyTask extends Task implements Serializable
         if(stepRules != null && stepRules.size() > 0)
         {
             LogExt.d(getClass(), "Rules exist for this step");
-            Object answer = result.getStepResult(currentIdentifier)
-                                  .getResult();
+            Object answer = result.getStepResult(currentIdentifier).getResult();
             if(answer != null)
             {
                 skipToStep = processRules(stepRules, answer);
@@ -176,8 +175,9 @@ public class SmartSurveyTask extends Task implements Serializable
     public String getTitleForStep(Context context, Step step)
     {
         int currentIndex = staticStepIdentifiers.indexOf(step.getIdentifier()) + 1;
-        return context.getString(R.string.format_step_title, currentIndex,
-                                 staticStepIdentifiers.size());
+        return context.getString(R.string.format_step_title,
+                currentIndex,
+                staticStepIdentifiers.size());
     }
 
     @Override
@@ -237,8 +237,8 @@ public class SmartSurveyTask extends Task implements Serializable
         int currentIndexInStatic = staticStepIdentifiers.indexOf(currentIdentifier);
         currentIndexInStatic = currentIndexInStatic == - 1 ? 0 : currentIndexInStatic;
 
-        dynamicStepIdentifiers.addAll(
-                staticStepIdentifiers.subList(currentIndexInStatic, staticStepIdentifiers.size()));
+        dynamicStepIdentifiers.addAll(staticStepIdentifiers.subList(currentIndexInStatic,
+                staticStepIdentifiers.size()));
     }
 
     private void adjustDynamicStepIdentifiers(String skipToIdentifier, String currentIdentifier)
@@ -253,8 +253,7 @@ public class SmartSurveyTask extends Task implements Serializable
 
         if(skipToIndex > currentIndex)
         {
-            while(! dynamicStepIdentifiers.get(currentIndex + 1)
-                                          .equals(skipToIdentifier))
+            while(! dynamicStepIdentifiers.get(currentIndex + 1).equals(skipToIdentifier))
             {
                 dynamicStepIdentifiers.remove(currentIndex + 1);
             }

@@ -28,9 +28,9 @@ import android.view.View;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration
 {
-    public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
-    public static final int VERTICAL_LIST   = LinearLayoutManager.VERTICAL;
-    private static final int[] ATTRS = new int[] {
+    public static final  int   HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
+    public static final  int   VERTICAL_LIST   = LinearLayoutManager.VERTICAL;
+    private static final int[] ATTRS           = new int[] {
             android.R.attr.listDivider
     };
     private final boolean  rtl;
@@ -97,8 +97,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
     public void drawVertical(Canvas c, RecyclerView parent)
     {
         final int left = (int) (parent.getPaddingLeft() + (rtl ? 0 : paddingStart));
-        final int right = (int) (parent.getWidth() - parent.getPaddingRight() + (rtl ? paddingStart
-                : 0));
+        final int right = (int) (parent.getWidth() - parent.getPaddingRight() +
+                (rtl ? paddingStart : 0));
 
         final int childCount = parent.getChildCount();
         for(int i = 0; i < childCount; i++)

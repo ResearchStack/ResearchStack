@@ -39,8 +39,7 @@ public class LocalWebView extends WebView
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                view.getContext()
-                    .startActivity(intent);
+                view.getContext().startActivity(intent);
                 return true;
             }
         });

@@ -44,11 +44,9 @@ public class ViewLicensesActivity extends AppCompatActivity
 
         StudyOverviewModel model = parseSectionModel();
 
-        for(int i = 0; i < model.getQuestions()
-                                .size(); i++)
+        for(int i = 0; i < model.getQuestions().size(); i++)
         {
-            StudyOverviewModel.Question question = model.getQuestions()
-                                                        .get(i);
+            StudyOverviewModel.Question question = model.getQuestions().get(i);
 
             try
             {
@@ -68,10 +66,14 @@ public class ViewLicensesActivity extends AppCompatActivity
 
                 //Create title w/ bold typeface
                 final SpannableString boldSpan = new SpannableString(question.getTitle());
-                boldSpan.setSpan(new ForegroundColorSpan(Color.BLACK), 0, boldSpan.length(),
-                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                boldSpan.setSpan(new RelativeSizeSpan(1.5f), 0, boldSpan.length(),
-                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                boldSpan.setSpan(new ForegroundColorSpan(Color.BLACK),
+                        0,
+                        boldSpan.length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                boldSpan.setSpan(new RelativeSizeSpan(1.5f),
+                        0,
+                        boldSpan.length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tv.append(boldSpan);
 
                 //Append the license text
@@ -92,8 +94,7 @@ public class ViewLicensesActivity extends AppCompatActivity
     //TODO Read on main thread for intense UI blockage.
     private StudyOverviewModel parseSectionModel()
     {
-        int fileResId = ResearchStack.getInstance()
-                                     .getLicenseSections();
+        int fileResId = ResearchStack.getInstance().getLicenseSections();
         return JsonUtils.loadClass(this, StudyOverviewModel.class, fileResId);
     }
 }
