@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import co.touchlab.researchstack.core.result.FormResult;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.task.Task;
@@ -71,10 +70,10 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             // TODO check for valid signature/names
             if (consented)
             {
-                StepResult<FormResult<String>> formResult = (StepResult<FormResult<String>>) result
+                StepResult<StepResult<String>> formResult = (StepResult<StepResult<String>>) result
                         .getStepResult(ConsentTask.ID_FORM_NAME);
-                FormResult<String> nameFormResult = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME);
-                String fullName = nameFormResult.getAnswer();
+                StepResult<String> nameFormResult = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME);
+                String fullName = nameFormResult.getResult();
                 String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
                         .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
                 String signatureDate = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
