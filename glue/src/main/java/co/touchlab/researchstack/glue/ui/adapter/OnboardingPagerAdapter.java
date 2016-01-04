@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 import co.touchlab.researchstack.glue.ui.views.StudyLandingLayout;
-import co.touchlab.researchstack.glue.ui.views.StudyOverviewLayout;
+import co.touchlab.researchstack.core.ui.views.LocalWebView;
 import co.touchlab.researchstack.glue.ui.views.StudyVideoLayout;
 
 public class OnboardingPagerAdapter extends PagerAdapter
@@ -89,9 +90,9 @@ public class OnboardingPagerAdapter extends PagerAdapter
         }
         else
         {
-            StudyOverviewLayout layout = (StudyOverviewLayout) inflater.inflate(
-                    R.layout.item_study_overview, container, false);
-            layout.setData(item);
+            String url = ResearchStack.getInstance().getHTMLFilePath(item.getDetails());
+            LocalWebView layout = new LocalWebView(container.getContext());
+            layout.loadUrl(url);
 
             child = layout;
 
