@@ -4,11 +4,19 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.glue.model.User;
+import co.touchlab.researchstack.glue.ui.fragment.ActivitiesFragment;
+import co.touchlab.researchstack.glue.ui.fragment.DashboardFragment;
+import co.touchlab.researchstack.glue.ui.fragment.LearnFragment;
+import co.touchlab.researchstack.glue.ui.fragment.ProfileFragment;
+import co.touchlab.researchstack.glue.ui.fragment.SettingsFragment;
 
 public abstract class ResearchStack
 {
@@ -39,6 +47,53 @@ public abstract class ResearchStack
         }
 
         return instance;
+    }
+
+    /**
+     * TODO Clean up implementation -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+     * Not too happy about returning a list of objects. Could we / should we use XML impl?
+     * @return List of NavigationItems
+     */
+    public List<NavigationItem> getNavigationItems()
+    {
+        List<NavigationItem> navItems = new ArrayList<>();
+
+        NavigationItem activities = new NavigationItem().setId(R.id.nav_activities)
+                .setGroupId(R.id.nav_group)
+                .setTitle(R.string.activities)
+                .setIcon(R.drawable.ic_nav_activities)
+                .setClass(ActivitiesFragment.class);
+        navItems.add(activities);
+
+        NavigationItem dashboard = new NavigationItem().setId(R.id.nav_dashboard)
+                .setGroupId(R.id.nav_group)
+                .setTitle(R.string.dashboard)
+                .setIcon(R.drawable.ic_nav_dashboard)
+                .setClass(DashboardFragment.class);
+        navItems.add(dashboard);
+
+        NavigationItem learn = new NavigationItem().setId(R.id.nav_learn)
+                .setGroupId(R.id.nav_group)
+                .setTitle(R.string.learn)
+                .setIcon(R.drawable.ic_nav_learn)
+                .setClass(LearnFragment.class);
+        navItems.add(learn);
+
+        NavigationItem profile = new NavigationItem().setId(R.id.nav_profile)
+                .setGroupId(R.id.nav_group)
+                .setTitle(R.string.profile)
+                .setIcon(R.drawable.ic_nav_profile)
+                .setClass(ProfileFragment.class);
+        navItems.add(profile);
+
+        NavigationItem settings = new NavigationItem().setId(R.id.nav_settings)
+                .setGroupId(R.id.nav_group)
+                .setTitle(R.string.settings)
+                .setIcon(R.drawable.ic_nav_settings)
+                .setClass(SettingsFragment.class);
+        navItems.add(settings);
+
+        return navItems;
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

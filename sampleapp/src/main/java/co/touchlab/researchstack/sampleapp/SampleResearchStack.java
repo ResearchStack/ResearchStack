@@ -11,11 +11,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
+import co.touchlab.researchstack.glue.NavigationItem;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 
@@ -112,6 +114,21 @@ public class SampleResearchStack extends ResearchStack
                 }
             }
         }
+    }
+
+    @Override
+    public List<NavigationItem> getNavigationItems()
+    {
+        List<NavigationItem> navItems = super.getNavigationItems();
+
+        // Add our custom fragment
+        navItems.add(new NavigationItem().setId(R.id.nav_custom)
+                .setGroupId(R.id.nav_group)
+                .setTitle(R.string.custom)
+                .setIcon(R.drawable.ic_nav_custom)
+                .setClass(SampleCustomFragment.class));
+
+        return navItems;
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

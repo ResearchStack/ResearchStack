@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.glue.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,21 +10,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.lang.reflect.Constructor;
+
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
+import co.touchlab.researchstack.glue.NavigationItem;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
-import co.touchlab.researchstack.glue.ui.fragment.ActivitiesFragment;
-import co.touchlab.researchstack.glue.ui.fragment.DashboardFragment;
-import co.touchlab.researchstack.glue.ui.fragment.LearnFragment;
-import co.touchlab.researchstack.glue.ui.fragment.ProfileFragment;
-import co.touchlab.researchstack.glue.ui.fragment.SettingsFragment;
 
 /**
  * Created by bradleymcdermott on 10/27/15.
@@ -31,7 +29,8 @@ import co.touchlab.researchstack.glue.ui.fragment.SettingsFragment;
 public class MainActivity extends PassCodeActivity
 {
 
-    private DrawerLayout drawerLayout;
+    private DrawerLayout   drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,60 +40,28 @@ public class MainActivity extends PassCodeActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
-                {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem item)
-                    {
-                        int id = item.getItemId();
-                        Fragment fragment;
-                        if(id == R.id.dashboard)
-                        {
-                            LogExt.d(getClass(), "Dashboard clicked");
-                            toolbar.setTitle(R.string.dashboard);
-                            fragment = new DashboardFragment();
+        navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if(item.getIntent() != null)
+            {
+                String className = item.getIntent().getComponent().getClassName();
+                showFragment(className);
 
-                        }
-                        else if(id == R.id.learn)
-                        {
-                            LogExt.d(getClass(), "Learn clicked");
-                            toolbar.setTitle(R.string.learn);
-                            fragment = new LearnFragment();
+                //TODO remove delay call once I/O is offloaded onto separate thread w/in fragments
+                navigationView.postDelayed(drawerLayout:: closeDrawers, 100);
+            }
 
-                        }
-                        else if(id == R.id.profile)
-                        {
-                            LogExt.d(getClass(), "Profile clicked");
-                            toolbar.setTitle(R.string.profile);
-                            fragment = new ProfileFragment();
+            actionBar.setTitle(item.getTitle());
 
-                        }
-                        else if(id == R.id.settings)
-                        {
-                            LogExt.d(getClass(), "Settings clicked");
-                            toolbar.setTitle(R.string.settings);
-                            fragment = new SettingsFragment();
-
-                        }
-                        else
-                        {
-                            LogExt.d(getClass(), "Activities/Default clicked");
-                            toolbar.setTitle(R.string.activities);
-                            fragment = new ActivitiesFragment();
-
-                        }
-                        showFragment(fragment);
-                        navigationView.setCheckedItem(id);
-                        drawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
+            return true;
+        });
+        initNavigationMenu(navigationView);
 
         View headerView = getLayoutInflater().inflate(R.layout.include_user_header, null);
 
@@ -124,20 +91,23 @@ public class MainActivity extends PassCodeActivity
         initFileAccess();
     }
 
-    @Override
-    protected void onDataReady()
+    private void showFragment(String className)
     {
-        super.onDataReady();
-        Log.w("asdf", "onDataReady: " + getClass().getSimpleName());
-        showFragment(new ActivitiesFragment());
-    }
+        try
+        {
+            Class<?> fragmentClass = Class.forName(className);
+            Constructor<?> fragConstructor = fragmentClass.getConstructor();
+            Object fragment = fragConstructor.newInstance();
 
-    @Override
-    protected void onDataFailed()
-    {
-        super.onDataFailed();
-        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
-        finish();
+            if(fragment instanceof Fragment)
+            {
+                showFragment((Fragment) fragment);
+            }
+        }
+        catch(Throwable e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     // TODO better fragment loading/switching logic, use tags
@@ -156,4 +126,44 @@ public class MainActivity extends PassCodeActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void initNavigationMenu(NavigationView view)
+    {
+        for(NavigationItem item : ResearchStack.getInstance().getNavigationItems())
+        {
+            MenuItem menuItem = view.getMenu()
+                    .add(item.getGroupId(), item.getId(), item.getOrder(), item.getTitle());
+            menuItem.setIcon(item.getIcon());
+            menuItem.setIntent(new Intent(this, item.getClazz()));
+            menuItem.setCheckable(true);
+        }
+
+        view.getMenu().setGroupCheckable(R.id.nav_group, true, true);
+    }
+
+    @Override
+    protected void onDataReady()
+    {
+        super.onDataReady();
+        LogExt.w(getClass(), "onDataReady");
+
+        MenuItem item = navigationView.getMenu().getItem(0);
+        item.setChecked(true);
+
+        String className = item.getIntent().getComponent().getClassName();
+        showFragment(className);
+
+        getSupportActionBar().setTitle(item.getTitle());
+    }
+
+    @Override
+    protected void onDataFailed()
+    {
+        super.onDataFailed();
+        LogExt.e(getClass(), "onDataFailed");
+
+        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
+        finish();
+    }
+
 }
