@@ -1,4 +1,5 @@
 package co.touchlab.researchstack.core.step;
+import java.util.Arrays;
 import java.util.List;
 
 import co.touchlab.researchstack.core.answerformat.FormAnswerFormat;
@@ -23,6 +24,11 @@ public class FormStep extends QuestionStep
     public void setFormSteps(List<QuestionStep> formSteps)
     {
         this.formSteps = formSteps;
+    }
+
+    public void setFormSteps(QuestionStep... formSteps)
+    {
+        setFormSteps(Arrays.asList(formSteps));
     }
 
     @Override

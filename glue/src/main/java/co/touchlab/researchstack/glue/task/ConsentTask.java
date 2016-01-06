@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
+import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.dev.DevUtils;
 import co.touchlab.researchstack.core.model.Choice;
@@ -43,7 +44,9 @@ public class ConsentTask extends OrderedTask
     public static final String ID_QUIZ_RESULT    = "ID_QUIZ_RESULT";
     public static final String ID_SHARING        = "ID_SHARING";
     public static final String ID_CONSENT_DOC    = "consent_review_doc";
+    public static final String ID_FORM      = "ID_FORM";
     public static final String ID_FORM_NAME      = "ID_FORM_NAME";
+    public static final String ID_FORM_DOB      = "ID_FORM_DOB";
     public static final String ID_SIGNATURE      = "ID_SIGNATURE";
 
     public ConsentTask(Context context)
@@ -65,8 +68,8 @@ public class ConsentTask extends OrderedTask
                 .isSignatureEnabledInConsent());
 
         ConsentDocument doc = new ConsentDocument();
-        doc.setTitle(r.getString(R.string.rsc_consent_name_title));
-        doc.setSignaturePageTitle(R.string.rsc_consent_name_title);
+        doc.setTitle(r.getString(R.string.rsc_consent_form_title));
+        doc.setSignaturePageTitle(R.string.rsc_consent_form_title);
         doc.setSignaturePageContent(r.getString(R.string.rsc_consent_signature_content));
         doc.setSections(data.getSections());
         doc.addSignature(signature);
@@ -213,8 +216,8 @@ public class ConsentTask extends OrderedTask
         // Add full-name input
         if(doc.getSignature(0).isRequiresName())
         {
-            String formTitle = ctx.getString(R.string.rsc_consent_name_title);
-            FormStep formStep = new FormStep(ID_FORM_NAME, formTitle, step.getText());
+            String formTitle = ctx.getString(R.string.rsc_consent_form_title);
+            FormStep formStep = new FormStep(ID_FORM, formTitle, step.getText());
             formStep.setSceneTitle(R.string.rsc_consent);
             formStep.setUseSurveyMode(false);
             formStep.setOptional(false);
@@ -229,8 +232,13 @@ public class ConsentTask extends OrderedTask
             String placeholder = ctx.getResources()
                     .getString(R.string.rsc_consent_name_placeholder);
             String nameText = ctx.getResources().getString(R.string.rsc_consent_name_full);
-            QuestionStep fullName = new QuestionStep(formStep.getIdentifier(), nameText, format);
-            formStep.setFormSteps(Collections.singletonList(fullName));
+            QuestionStep fullName = new QuestionStep(ID_FORM_NAME, nameText, format);
+
+            DateAnswerFormat dobFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
+            String dobText = ctx.getResources().getString(R.string.rsc_consent_dob_full);
+            QuestionStep dobStep = new QuestionStep(ID_FORM_DOB, dobText, dobFormat);
+
+            formStep.setFormSteps(fullName, dobStep);
             addStep(formStep);
         }
 

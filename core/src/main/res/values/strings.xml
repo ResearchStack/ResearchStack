@@ -67,9 +67,10 @@
     </string>
     <string name="rsc_consent_review_cancel">Cancel</string>
 
-    <!-- Consent name step -->
-    <string name="rsc_consent_name_title">Consent</string>
+    <!-- Consent form step -->
+    <string name="rsc_consent_form_title">Consent</string>
     <string name="rsc_consent_name_full">Full Name</string>
+    <string name="rsc_consent_dob_full">Date of Birth</string>
     <string name="rsc_consent_name_placeholder">Required</string>
 
     <!-- Consent sig step -->

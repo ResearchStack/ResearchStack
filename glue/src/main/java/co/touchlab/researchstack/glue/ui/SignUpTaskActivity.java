@@ -56,7 +56,6 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
         {
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
 
-            boolean sharing = (boolean) result.getStepResult(ConsentTask.ID_SHARING).getResult();
             boolean consented = (boolean) result.getStepResult(ConsentTask.ID_CONSENT_DOC)
                     .getResult();
 
@@ -71,17 +70,21 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             if(consented)
             {
                 StepResult<StepResult<String>> formResult = (StepResult<StepResult<String>>) result.getStepResult(
-                        ConsentTask.ID_FORM_NAME);
-                StepResult<String> nameFormResult = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME);
-                String fullName = nameFormResult.getResult();
+                        ConsentTask.ID_FORM);
+                String fullName = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
+                        .getResult();
+                String birthDate = formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
+                        .getResult();
                 String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
                         .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
                 String signatureDate = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
                         .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
+                boolean sharing = (boolean) result.getStepResult(ConsentTask.ID_SHARING).getResult();
 
                 currentUser.setName(fullName);
                 currentUser.setConsentSignatureName(fullName);
                 currentUser.setConsentSignatureDate(signatureDate);
+                currentUser.setConsentSignatureBirthDate(birthDate);
                 currentUser.setConsentSignatureImage(base64Image);
                 currentUser.setUserConsented(true);
 

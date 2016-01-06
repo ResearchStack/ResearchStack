@@ -327,6 +327,16 @@ public class User
         this.consentSignatureDate = consentSignatureDate;
     }
 
+    public String getConsentSignatureBirthDate()
+    {
+        return consentSignatureDate;
+    }
+
+    public void setConsentSignatureBirthDate(String consentSignatureDate)
+    {
+        this.consentSignatureDate = consentSignatureDate;
+    }
+
     public String getConsentSignatureImage()
     {
         return consentSignatureImage;
