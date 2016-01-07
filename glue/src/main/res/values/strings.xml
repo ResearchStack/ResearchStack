@@ -93,6 +93,13 @@
     <string name="registration">Registration</string>
     <string name="additional_info">Additional Information</string>
     <string name="thank_you">Thank you</string>
+    <string name="study_registration">Study Registration</string>
+    <string name="study_registration_desc">We will send an email to the address below to confirm
+        your registration in the research study.
+    </string>
+    <string name="study_registration_password">Create your study login password</string>
+    <string name="email_hint">name@example.com</string>
+    <string name="study_registration_password_hint">Enter a password</string>
 
 
 </resources>

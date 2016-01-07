@@ -8,32 +8,31 @@ import co.touchlab.researchstack.core.ui.step.body.NotImplementedStepBody;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
-import co.touchlab.researchstack.glue.ui.scene.SignUpAdditionalInfoStepLayout;
 import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleStepLayout;
-import co.touchlab.researchstack.glue.ui.scene.SignUpGeneralInfoStepLayout;
 import co.touchlab.researchstack.glue.ui.scene.SignUpIneligibleStepLayout;
-import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsPrimingStepLayout;
-import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsStepLayout;
+import co.touchlab.researchstack.glue.ui.scene.SignUpStepLayout;
 
 /**
  * Created by bradleymcdermott on 10/16/15.
  */
 public abstract class OnboardingTask extends Task
 {
-    public static final String SignUpInclusionCriteriaStepIdentifier  = "InclusionCriteria";
-    public static final String SignUpEligibleStepIdentifier           = "Eligible";
-    public static final String SignUpIneligibleStepIdentifier         = "Ineligible";
-    public static final String SignUpGeneralInfoStepIdentifier        = "GeneralInfo";
-    public static final String SignUpMedicalInfoStepIdentifier        = "MedicalInfo";
-    public static final String SignUpCustomInfoStepIdentifier         = "CustomInfo";
-    public static final String SignUpPermissionsStepIdentifier        = "Permissions";
-    public static final String SignUpThankYouStepIdentifier           = "ThankYou";
-    public static final String SignInStepIdentifier                   = "SignIn";
-    public static final String SignUpPermissionsPrimingStepIdentifier = "PermissionsPriming";
+    public static final String SignUpInclusionCriteriaStepIdentifier = "InclusionCriteria";
+    public static final String SignUpEligibleStepIdentifier          = "Eligible";
+    public static final String SignUpIneligibleStepIdentifier        = "Ineligible";
+    public static final String SignUpThankYouStepIdentifier          = "ThankYou";
+    public static final String SignInStepIdentifier                  = "SignIn";
+    public static final String SignUpStepIdentifier                  = "SignUp";
+    //    public static final String SignUpGeneralInfoStepIdentifier        = "GeneralInfo";
+    //    public static final String SignUpMedicalInfoStepIdentifier        = "MedicalInfo";
+    //    public static final String SignUpCustomInfoStepIdentifier         = "CustomInfo";
+    //    public static final String SignUpPermissionsStepIdentifier        = "Permissions";
+    //    public static final String SignUpPermissionsPrimingStepIdentifier = "PermissionsPriming";
     protected int  currentStepNumber;
     private   Step inclusionCriteriaStep;
     private   Step eligibleStep;
     private   Step ineligibleStep;
+    private   Step signUpStep;
     private   Step permissionsPrimingStep;
     private   Step generalInfoStep;
     private   Step medicalInfoStep;
@@ -80,26 +79,6 @@ public abstract class OnboardingTask extends Task
         return false;
     }
 
-    public boolean isCustomStepIncluded()
-    {
-        return customStepIncluded;
-    }
-
-    public void setCustomStepIncluded(boolean customStepIncluded)
-    {
-        this.customStepIncluded = customStepIncluded;
-    }
-
-    public boolean isPermissionScreenSkipped()
-    {
-        return permissionScreenSkipped;
-    }
-
-    public void setPermissionScreenSkipped(boolean permissionScreenSkipped)
-    {
-        this.permissionScreenSkipped = permissionScreenSkipped;
-    }
-
     public Step getSignInStep()
     {
         if(signInStep == null)
@@ -122,59 +101,6 @@ public abstract class OnboardingTask extends Task
             //            thankyouStep.setSceneClass(SignUpThankYouScene.class);
         }
         return thankyouStep;
-    }
-
-    public Step getPermissionsStep()
-    {
-        if(permissionsStep == null)
-        {
-            permissionsStep = new Step(SignUpPermissionsStepIdentifier);
-            permissionsStep.setSceneTitle(R.string.settings_permissions);
-            permissionsStep.setSceneClass(SignUpPermissionsStepLayout.class);
-        }
-        return permissionsStep;
-    }
-
-    public Step getCustomInfoStep()
-    {
-        if(customInfoStep == null)
-        {
-            customInfoStep = new Step(SignUpCustomInfoStepIdentifier);
-        }
-        return customInfoStep;
-    }
-
-    public Step getMedicalInfoStep()
-    {
-        if(medicalInfoStep == null)
-        {
-            medicalInfoStep = new Step(SignUpMedicalInfoStepIdentifier);
-            medicalInfoStep.setSceneTitle(R.string.additional_info);
-            medicalInfoStep.setSceneClass(SignUpAdditionalInfoStepLayout.class);
-        }
-        return medicalInfoStep;
-    }
-
-    public Step getGeneralInfoStep()
-    {
-        if(generalInfoStep == null)
-        {
-            generalInfoStep = new Step(SignUpGeneralInfoStepIdentifier);
-            generalInfoStep.setSceneTitle(R.string.registration);
-            generalInfoStep.setSceneClass(SignUpGeneralInfoStepLayout.class);
-        }
-        return generalInfoStep;
-    }
-
-    public Step getPermissionsPrimingStep()
-    {
-        if(permissionsPrimingStep == null)
-        {
-            permissionsPrimingStep = new Step(SignUpPermissionsPrimingStepIdentifier);
-            permissionsPrimingStep.setSceneTitle(R.string.rsc_consent);
-            permissionsPrimingStep.setSceneClass(SignUpPermissionsPrimingStepLayout.class);
-        }
-        return permissionsPrimingStep;
     }
 
     public Step getIneligibleStep()
@@ -209,5 +135,16 @@ public abstract class OnboardingTask extends Task
                     .getInclusionCriteriaSceneClass());
         }
         return inclusionCriteriaStep;
+    }
+
+    public Step getSignUpStep()
+    {
+        if(signUpStep == null)
+        {
+            signUpStep = new Step(SignUpStepIdentifier);
+            signUpStep.setSceneTitle(R.string.study_registration);
+            signUpStep.setSceneClass(SignUpStepLayout.class);
+        }
+        return signUpStep;
     }
 }

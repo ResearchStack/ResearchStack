@@ -11,7 +11,7 @@ import co.touchlab.researchstack.glue.model.User;
 public class SignUpTask extends OnboardingTask
 {
 
-    public static final int MINIMUM_STEPS = 7;
+    public static final int MINIMUM_STEPS = 2;
 
     public SignUpTask()
     {
@@ -42,56 +42,10 @@ public class SignUpTask extends OnboardingTask
         else if(step.getIdentifier().equals(SignUpEligibleStepIdentifier))
         {
             currentStepNumber += 1;
-            nextStep = getPermissionsPrimingStep();
-
-        }
-        else if(step.getIdentifier().equals(SignUpPermissionsPrimingStepIdentifier))
-        {
-            currentStepNumber += 1;
-            nextStep = getGeneralInfoStep();
-
-        }
-        else if(step.getIdentifier().equals(SignUpGeneralInfoStepIdentifier))
-        {
-            currentStepNumber += 1;
-            nextStep = getMedicalInfoStep();
-
-        }
-        else if(step.getIdentifier().equals(SignUpMedicalInfoStepIdentifier))
-        {
-            if(isCustomStepIncluded())
-            {
-                nextStep = getCustomInfoStep();
-                currentStepNumber += 1;
-            }
-            else
-            {
-                if(isPermissionScreenSkipped())
-                {
-                    nextStep = null;
-                }
-                else
-                {
-                    nextStep = getPermissionsStep();
-                    currentStepNumber += 1;
-                }
-            }
-
-        }
-        else if(step.getIdentifier().equals(SignUpCustomInfoStepIdentifier))
-        {
-            if(isPermissionScreenSkipped())
-            {
-                nextStep = null;
-            }
-            else
-            {
-                nextStep = getPermissionsStep();
-                currentStepNumber += 1;
-            }
-
+            nextStep = getSignUpStep();
         }
 
+        // TODO get rid of this
         if(nextStep == null)
         {
             ResearchStack.getInstance().saveUser();
@@ -119,37 +73,10 @@ public class SignUpTask extends OnboardingTask
             prevStep = getInclusionCriteriaStep();
 
         }
-        else if(step.getIdentifier().equals(SignUpPermissionsPrimingStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpStepIdentifier))
         {
             prevStep = getEligibleStep();
 
-        }
-        else if(step.getIdentifier().equals(SignUpGeneralInfoStepIdentifier))
-        {
-            prevStep = getPermissionsPrimingStep();
-
-        }
-        else if(step.getIdentifier().equals(SignUpMedicalInfoStepIdentifier))
-        {
-            prevStep = getGeneralInfoStep();
-            currentStepNumber -= 1;
-        }
-        else if(step.getIdentifier().equals(SignUpCustomInfoStepIdentifier))
-        {
-            prevStep = getMedicalInfoStep();
-            currentStepNumber -= 1;
-        }
-        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
-        {
-            if(isCustomStepIncluded())
-            {
-                prevStep = getCustomInfoStep();
-            }
-            else
-            {
-                prevStep = getMedicalInfoStep();
-            }
-            currentStepNumber -= 1;
         }
 
         return prevStep;
@@ -158,7 +85,7 @@ public class SignUpTask extends OnboardingTask
     @Override
     public int getNumberOfSteps()
     {
-        return isCustomStepIncluded() ? MINIMUM_STEPS + 1 : MINIMUM_STEPS;
+        return MINIMUM_STEPS;
     }
 
     @Override
@@ -177,30 +104,13 @@ public class SignUpTask extends OnboardingTask
         }
         else if(step.getIdentifier().equals(SignUpIneligibleStepIdentifier))
         {
+            stepPosition = 1;
+
+        }
+        else if(step.getIdentifier().equals(SignUpStepIdentifier))
+        {
             stepPosition = 2;
 
-        }
-        else if(step.getIdentifier().equals(SignUpPermissionsPrimingStepIdentifier))
-        {
-            stepPosition = 3;
-
-        }
-        else if(step.getIdentifier().equals(SignUpGeneralInfoStepIdentifier))
-        {
-            stepPosition = 4;
-
-        }
-        else if(step.getIdentifier().equals(SignUpMedicalInfoStepIdentifier))
-        {
-            stepPosition = 5;
-        }
-        else if(step.getIdentifier().equals(SignUpCustomInfoStepIdentifier))
-        {
-            stepPosition = 6;
-        }
-        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
-        {
-            stepPosition = 7;
         }
 
         return new TaskProgress(stepPosition, getNumberOfSteps());
