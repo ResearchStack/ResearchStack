@@ -1,4 +1,8 @@
 package co.touchlab.researchstack.glue;
+import android.content.Context;
+
+import java.util.Date;
+
 import rx.Observable;
 
 public interface DataProvider
@@ -15,7 +19,7 @@ public interface DataProvider
 
     boolean isConsented();
 
-//  TODO  void saveConsent(TODO);
+    void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope);
 
 //  TODO  void getUserProfile(TODO);
 

@@ -2,10 +2,19 @@ package co.touchlab.researchstack.glue;
 
 public class DataResponse
 {
+    public String message;
+
     public boolean success;
 
-    public String message;
-    private int messages;
+    public String getMessage()
+    {
+        return message;
+    }
+
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
 
     public boolean isSuccess()
     {
@@ -17,13 +26,4 @@ public class DataResponse
         this.success = success;
     }
 
-    public int getMessages()
-    {
-        return messages;
-    }
-
-    public void setMessages(int messages)
-    {
-        this.messages = messages;
-    }
 }

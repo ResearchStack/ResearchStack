@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.glue.network.body;
+package co.touchlab.researchstack.sampleapp.network.body;
 public class EmailBody
 {
 

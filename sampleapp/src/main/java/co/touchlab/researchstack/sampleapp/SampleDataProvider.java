@@ -1,12 +1,20 @@
 package co.touchlab.researchstack.sampleapp;
+import android.content.Context;
+
+import com.google.gson.Gson;
+
+import java.util.Date;
+
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.DataResponse;
-import co.touchlab.researchstack.glue.network.UserSessionInfo;
-import co.touchlab.researchstack.glue.network.body.EmailBody;
-import co.touchlab.researchstack.glue.network.body.SignInBody;
-import co.touchlab.researchstack.glue.network.body.SignUpBody;
 import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
+import co.touchlab.researchstack.sampleapp.bridge.ConsentSignature;
+import co.touchlab.researchstack.sampleapp.network.UserSessionInfo;
+import co.touchlab.researchstack.sampleapp.network.body.EmailBody;
+import co.touchlab.researchstack.sampleapp.network.body.SignInBody;
+import co.touchlab.researchstack.sampleapp.network.body.SignUpBody;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
@@ -20,6 +28,8 @@ import rx.Observable;
 
 public class SampleDataProvider implements DataProvider
 {
+    public static final String TEMP_CONSENT_JSON_FILE_NAME = "/consent_sig";
+
     //TODO Add build flavors, add var to BuildConfig for STUDY_ID
     String STUDY_ID = "ohsu-molemapper";
 
@@ -88,6 +98,24 @@ public class SampleDataProvider implements DataProvider
     public boolean isConsented()
     {
         return false;
+    }
+
+    @Override
+    public void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope)
+    {
+        ConsentSignature signature = new ConsentSignature(name,
+                birthDate,
+                imageData,
+                "image/png",
+                scope);
+
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(signature);
+
+        LogExt.d(getClass(), "Writing user json:\n" + signature);
+
+        StorageManager.getFileAccess()
+                .writeString(context, TEMP_CONSENT_JSON_FILE_NAME, jsonString);
     }
 
 

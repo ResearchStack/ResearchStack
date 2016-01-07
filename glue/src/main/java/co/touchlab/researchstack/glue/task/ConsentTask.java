@@ -47,6 +47,7 @@ public class ConsentTask extends OrderedTask
     public static final String ID_FORM      = "ID_FORM";
     public static final String ID_FORM_NAME      = "ID_FORM_NAME";
     public static final String ID_FORM_DOB      = "ID_FORM_DOB";
+    public static final String ID_FORM_BIRTHDATE = "ID_FORM_BIRTHDATE";
     public static final String ID_SIGNATURE      = "ID_SIGNATURE";
 
     public ConsentTask(Context context)
@@ -115,16 +116,17 @@ public class ConsentTask extends OrderedTask
         sharingStep.setLocalizedLearnMoreHTMLContent(localizedLearnMoreHTMLContent);
 
         String shareWidely = r.getString(R.string.rsc_consent_share_widely, investigatorLongDesc);
-        Choice<Boolean> shareWidelyChoice = new Choice<>(shareWidely, true, null);
+        Choice<String> shareWidelyChoice = new Choice<>(shareWidely, "sponsors_and_partners", null);
 
         String shareRestricted = r.getString(R.string.rsc_consent_share_only,
                 investigatorShortDesc);
-        Choice<Boolean> shareRestrictedChoice = new Choice<>(shareRestricted, false, null);
+        Choice<String> shareRestrictedChoice = new Choice<>(shareRestricted,
+                "all_qualified_researchers",
+                null);
 
         sharingStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-                        new Choice[] {
-                                shareWidelyChoice, shareRestrictedChoice
-                        }));
+                shareWidelyChoice,
+                shareRestrictedChoice));
 
         sharingStep.setTitle(r.getString(R.string.rsc_consent_share_title));
         sharingStep.setText(r.getString(R.string.rsc_consent_share_description,

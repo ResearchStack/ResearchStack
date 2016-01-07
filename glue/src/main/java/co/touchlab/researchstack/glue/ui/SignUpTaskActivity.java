@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import java.util.Date;
+
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.task.Task;
@@ -73,20 +75,30 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                         ConsentTask.ID_FORM);
                 String fullName = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
                         .getResult();
+
+//                TODO Change birthdate to Date object
+                Date birthdate = new Date();
                 String birthDate = formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
                         .getResult();
+
+                String sharingScope = (String) result.getStepResult(ConsentTask.ID_SHARING).getResult();
+
                 String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
                         .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
+
                 String signatureDate = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
                         .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
                 boolean sharing = (boolean) result.getStepResult(ConsentTask.ID_SHARING).getResult();
 
-                currentUser.setName(fullName);
-                currentUser.setConsentSignatureName(fullName);
-                currentUser.setConsentSignatureDate(signatureDate);
-                currentUser.setConsentSignatureBirthDate(birthDate);
-                currentUser.setConsentSignatureImage(base64Image);
-                currentUser.setUserConsented(true);
+
+                ResearchStack.getInstance()
+                        .getDataProvider()
+                        .saveConsent(this,
+                                fullName,
+                                birthdate,
+                                base64Image,
+                                signatureDate,
+                                sharingScope);
 
                 StepLayoutImpl scene = (StepLayoutImpl) findViewById(R.id.rsc_current_scene);
                 if(scene != null && scene instanceof SignUpEligibleStepLayout)

@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.glue.network;
+package co.touchlab.researchstack.sampleapp.network;
 import java.util.Map;
 
 public class UserSessionInfo
