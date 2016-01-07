@@ -100,6 +100,8 @@
     <string name="study_registration_password">Create your study login password</string>
     <string name="email_hint">name@example.com</string>
     <string name="study_registration_password_hint">Enter a password</string>
+    <string name="error_invalid_password">Invalid Password</string>
+    <string name="error_invalid_email">Invalid Email</string>
 
 
 </resources>

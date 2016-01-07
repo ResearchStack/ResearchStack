@@ -13,6 +13,9 @@ public class SampleApplication extends Application
     public void onCreate()
     {
         super.onCreate();
-        ResearchStack.init(new SampleResearchStack(this));
+
+        SampleResearchStack srs = new SampleResearchStack(this);
+        srs.setDataProvider(new SampleDataProvider());
+        ResearchStack.init(srs);
     }
 }

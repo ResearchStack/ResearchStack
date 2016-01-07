@@ -24,6 +24,7 @@ public abstract class ResearchStack
     protected static ResearchStack instance;
     protected        Context       context;
     private          User          currentUser;
+    private          DataProvider  dataProvider;
 
     public ResearchStack(Context context)
     {
@@ -52,6 +53,7 @@ public abstract class ResearchStack
     /**
      * TODO Clean up implementation -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
      * Not too happy about returning a list of objects. Could we / should we use XML impl?
+     *
      * @return List of NavigationItems
      */
     public List<NavigationItem> getNavigationItems()
@@ -213,4 +215,15 @@ public abstract class ResearchStack
             fileAccess.clearData(context, TEMP_USER_JSON_FILE_NAME);
         }
     }
+
+    public void setDataProvider(DataProvider dataProvider)
+    {
+        this.dataProvider = dataProvider;
+    }
+
+    public DataProvider getDataProvider()
+    {
+        return dataProvider;
+    }
+
 }

@@ -107,6 +107,11 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
         this.callbacks = callbacks;
     }
 
+    public SceneCallbacks getCallbacks()
+    {
+        return callbacks;
+    }
+
     public void initializeScene()
     {
         LogExt.i(getClass(), "initializeScene()");
