@@ -11,6 +11,7 @@ import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
+import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 
@@ -33,32 +34,15 @@ public class SplashActivity extends PassCodeActivity
     {
         super.onDataReady();
         Log.w("asdf", "onDataReady: " + getClass().getSimpleName());
-        /*User user = ResearchStackApplication.getInstance().getCurrentUser();
+        DataProvider dataProvider = ResearchStack.getInstance().getDataProvider();
 
-        if(user != null && user.isSignedIn())
+        if(dataProvider.isSignedIn())
         {
-            launchScheduleActivity();
+            launchMainActivity();
         }
-        else if(user != null && user.isSignedUp())
+        else if(dataProvider.isSignedUp())
         {
             launchEmailVerificationActivity();
-        }
-        else
-        {
-            launchOnboardingActivity();
-        }*/
-
-        //TODO: Fix routing
-        if(ResearchStack.getInstance().storedUserExists())
-        {
-            new Handler().post(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    launchScheduleActivity();
-                }
-            });
         }
         else
         {
@@ -108,7 +92,7 @@ public class SplashActivity extends PassCodeActivity
         startActivity(new Intent(this, EmailVerificationActivity.class));
     }
 
-    private void launchScheduleActivity()
+    private void launchMainActivity()
     {
         startActivity(new Intent(this, MainActivity.class));
     }

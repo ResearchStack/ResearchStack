@@ -78,11 +78,18 @@ public class OnboardingActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if((requestCode == REQUEST_CODE_SIGN_IN || requestCode == REQUEST_CODE_SIGN_UP) &&
+        if(requestCode == REQUEST_CODE_SIGN_IN &&
                 resultCode == RESULT_OK)
         {
             finish();
             Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        else if (requestCode == REQUEST_CODE_SIGN_UP && resultCode == RESULT_OK)
+        {
+            // TODO do we need to check the result for sign up success or something?
+            finish();
+            Intent intent = new Intent(this, EmailVerificationActivity.class);
             startActivity(intent);
         }
         else
