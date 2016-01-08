@@ -112,32 +112,36 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
             final String username = TextUtils.isEmpty(rawUsername) ? email : rawUsername;
             final String password = this.password.getText().toString();
 
-            progress.animate().alpha(1).withStartAction(() -> {
-                progress.setVisibility(View.VISIBLE);
-                progress.setAlpha(0);
-            }).withEndAction(() -> ResearchStack.getInstance()
-                    .getDataProvider()
-                    .signUp(email, username, password)
-                    .compose(ObservableUtils.applyDefault())
-                    .subscribe(dataResponse -> {
-                        // Save Email, Username, and Password in memory
-                        result.setResultForIdentifier(SignUpTask.ID_EMAIL, email);
-                        result.setResultForIdentifier(SignUpTask.ID_USERNAME, username);
-                        result.setResultForIdentifier(SignUpTask.ID_PASSWORD, password);
+            progress.animate()
+                    .alpha(1)
+                    .withStartAction(() -> {
+                        progress.setVisibility(View.VISIBLE);
+                        progress.setAlpha(0);
+                    })
+                    .withEndAction(() -> ResearchStack.getInstance()
+                            .getDataProvider()
+                            .signUp(email, username, password)
+                            .compose(ObservableUtils.applyDefault())
+                            .subscribe(dataResponse -> {
+                                // Save Email, Username, and Password in memory
+                                result.setResultForIdentifier(SignUpTask.ID_EMAIL, email);
+                                result.setResultForIdentifier(SignUpTask.ID_USERNAME, username);
+                                result.setResultForIdentifier(SignUpTask.ID_PASSWORD, password);
 
-                        callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
-                    }, throwable -> {
-                        progress.animate()
-                                .alpha(0)
-                                .withEndAction(() -> progress.setVisibility(View.GONE));
+                                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+                            }, throwable -> {
+                                progress.animate()
+                                        .alpha(0)
+                                        .withEndAction(() -> progress.setVisibility(View.GONE));
 
-                        // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                        // Convert errorBody to JSON-String, convert json-string to object
-                        // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
-                        // toast
-                        Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT)
-                                .show();
-                    }));
+                                // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                // Convert errorBody to JSON-String, convert json-string to object
+                                // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
+                                // toast
+                                Toast.makeText(getContext(),
+                                        throwable.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+                            }));
 
 
         }

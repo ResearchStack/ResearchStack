@@ -7,27 +7,31 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jakewharton.rxbinding.view.RxView;
+
+import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
-import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.glue.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.ui.adapter.TextWatcherAdapter;
 
-/**
- * TODO Implement
- */
-public class SignInStepLayout extends StepLayoutImpl<Boolean>
+public class SignInStepLayout extends RelativeLayout implements StepLayout
 {
-
-    private AppCompatEditText username;
-    private AppCompatEditText password;
-    private TextView          forgotPassword;
+    private View                progress;
+    private AppCompatEditText   username;
+    private AppCompatEditText   password;
+    private TextView            forgotPassword;
+    private Step                step;
+    private StepResult<Boolean> result;
+    private SceneCallbacks callbacks;
 
     public SignInStepLayout(Context context)
     {
@@ -45,17 +49,16 @@ public class SignInStepLayout extends StepLayoutImpl<Boolean>
     }
 
     @Override
-    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
+    public void initialize(Step step, StepResult result)
     {
-        return inflater.inflate(R.layout.item_sign_in, parent, false);
-    }
+        this.step = step;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
 
-    @Override
-    public void onBodyCreated(View body)
-    {
-        super.onBodyCreated(body);
+        View layout = LayoutInflater.from(getContext()).inflate(R.layout.item_sign_in, this, true);
 
-        username = (AppCompatEditText) body.findViewById(R.id.email);
+        progress = layout.findViewById(R.id.progress);
+
+        username = (AppCompatEditText) layout.findViewById(R.id.username);
         username.setText("walter@touchlab.co");
         username.addTextChangedListener(new TextWatcherAdapter()
         {
@@ -69,7 +72,7 @@ public class SignInStepLayout extends StepLayoutImpl<Boolean>
             }
         });
 
-        password = (AppCompatEditText) body.findViewById(R.id.password);
+        password = (AppCompatEditText) layout.findViewById(R.id.password);
         password.setText("password");
         password.addTextChangedListener(new TextWatcherAdapter()
         {
@@ -86,47 +89,71 @@ public class SignInStepLayout extends StepLayoutImpl<Boolean>
             if((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
                     (actionId == EditorInfo.IME_ACTION_DONE))
             {
-                onNextClicked();
+                signIn();
                 return true;
             }
             return false;
         });
 
-        forgotPassword = (TextView) body.findViewById(R.id.forgot_password);
+        forgotPassword = (TextView) layout.findViewById(R.id.forgot_password);
+        RxView.clicks(forgotPassword).subscribe(v -> {
+            //TODO implement call on data provider
+            Toast.makeText(getContext(), "TODO RESET PASSWORD", Toast.LENGTH_SHORT).show();
+        });
+
+        RxView.clicks(layout.findViewById(R.id.next)).subscribe(v -> {
+            signIn();
+        });
     }
 
-    @Override
-    protected void onNextClicked()
+    private void signIn()
     {
         if(isAnswerValid())
         {
-            ResearchStack.getInstance()
-                    .getDataProvider()
-                    .signIn(username.getText().toString(), password.getText().toString())
-                    .compose(ObservableUtils.applyDefault())
-                    .subscribe(dataResponse -> {
-                        getStepResult().setResult(true);
-                        getCallbacks().onSaveStep(SceneCallbacks.ACTION_NEXT,
-                                getStep(),
-                                getStepResult());
-                    }, throwable -> {
-                        Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT)
-                                .show();
-                    });
+            final String username =  this.username.getText().toString();
+            final String password = this.password.getText().toString();
+
+            progress.animate()
+                    .alpha(1)
+                    .withStartAction(() -> {
+                        progress.setVisibility(View.VISIBLE);
+                        progress.setAlpha(0);
+                    })
+                    .withEndAction(() -> ResearchStack.getInstance()
+                                    .getDataProvider()
+                                    .signIn(username, password)
+                                    .compose(ObservableUtils.applyDefault())
+                                    .subscribe(dataResponse -> {
+                                        result.setResult(true);
+                                        callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT,
+                                                step,
+                                                result);
+                                    }, throwable -> {
+                                        progress.animate()
+                                                .alpha(0)
+                                                .withEndAction(() -> progress.setVisibility(View.GONE));
+
+                                        // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                        // Convert errorBody to JSON-String, convert json-string to object
+                                        // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
+                                        // toast
+                                        Toast.makeText(getContext(),
+                                                throwable.getMessage(),
+                                                Toast.LENGTH_SHORT).show();
+                                    }));
         }
     }
 
-    @Override
     public boolean isAnswerValid()
     {
         if(! isEmailValid())
         {
-            username.setError(getString(R.string.error_invalid_email));
+            username.setError(getResources().getString(R.string.error_invalid_email));
         }
 
         if(! isPasswordValid())
         {
-            password.setError(getString(R.string.error_invalid_password));
+            password.setError(getResources().getString(R.string.error_invalid_password));
         }
 
         return TextUtils.isEmpty(username.getError()) && TextUtils.isEmpty(password.getError());
@@ -143,6 +170,24 @@ public class SignInStepLayout extends StepLayoutImpl<Boolean>
     {
         CharSequence target = password.getText();
         return ! TextUtils.isEmpty(target);
+    }
+
+    @Override
+    public View getLayout()
+    {
+        return this;
+    }
+
+    @Override
+    public boolean isBackEventConsumed()
+    {
+        return false;
+    }
+
+    @Override
+    public void setCallbacks(SceneCallbacks callbacks)
+    {
+        this.callbacks = callbacks;
     }
 
 }
