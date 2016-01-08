@@ -2,9 +2,7 @@ package co.touchlab.researchstack.glue.ui.scene;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,10 +14,10 @@ import android.widget.Toast;
 
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
+import co.touchlab.researchstack.glue.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import co.touchlab.researchstack.glue.ui.adapter.TextWatcherAdapter;
 
 /**
  * TODO Implement
@@ -72,7 +70,7 @@ public class SignInStepLayout extends StepLayoutImpl<Boolean>
         });
 
         password = (AppCompatEditText) body.findViewById(R.id.password);
-        password.setText("pasksword");
+        password.setText("password");
         password.addTextChangedListener(new TextWatcherAdapter()
         {
             @Override
@@ -105,8 +103,7 @@ public class SignInStepLayout extends StepLayoutImpl<Boolean>
             ResearchStack.getInstance()
                     .getDataProvider()
                     .signIn(username.getText().toString(), password.getText().toString())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+                    .compose(ObservableUtils.applyDefault())
                     .subscribe(dataResponse -> {
                         getStepResult().setResult(true);
                         getCallbacks().onSaveStep(SceneCallbacks.ACTION_NEXT,
@@ -148,25 +145,4 @@ public class SignInStepLayout extends StepLayoutImpl<Boolean>
         return ! TextUtils.isEmpty(target);
     }
 
-    public static class TextWatcherAdapter implements TextWatcher
-    {
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after)
-        {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count)
-        {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s)
-        {
-
-        }
-    }
 }

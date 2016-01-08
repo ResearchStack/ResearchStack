@@ -13,6 +13,11 @@ public class SignUpTask extends OnboardingTask
 
     public static final int MINIMUM_STEPS = 2;
 
+    public static final String ID_EMAIL    = "ID_EMAIL";
+    public static final String ID_USERNAME    = "ID_EMAIL";
+    public static final String ID_PASSWORD = "ID_PASSWORD";
+
+
     public SignUpTask()
     {
         super("SignUp", "SignUp");

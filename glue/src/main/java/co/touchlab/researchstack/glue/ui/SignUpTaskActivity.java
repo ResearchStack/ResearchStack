@@ -88,8 +88,6 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
                 String signatureDate = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
                         .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
-                boolean sharing = (boolean) result.getStepResult(ConsentTask.ID_SHARING).getResult();
-
 
                 ResearchStack.getInstance()
                         .getDataProvider()

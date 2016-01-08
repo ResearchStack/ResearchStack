@@ -10,4 +10,5 @@
     <color name="one_time_color">#9240d3</color>
     <color name="recurring_color">#32d471</color>
     <color name="black">#000</color>
+    <color name="white_60">#CCFFFFFF</color>
 </resources>

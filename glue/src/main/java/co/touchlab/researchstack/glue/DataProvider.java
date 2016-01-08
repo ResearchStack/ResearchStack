@@ -7,7 +7,7 @@ import rx.Observable;
 
 public interface DataProvider
 {
-    Observable<DataResponse> signUp(String username, String password);
+    Observable<DataResponse> signUp(String email, String username, String password);
 
     Observable<DataResponse> signIn(String username, String password);
 

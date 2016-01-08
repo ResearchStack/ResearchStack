@@ -1,85 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center_horizontal"
-              android:orientation="vertical">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/rsc_padding_medium"
+    >
+
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/study_registration"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        />
 
     <TextView
+        android:id="@+id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="12dp"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="@dimen/rsc_padding_medium"
         android:text="@string/study_registration_desc"
-        android:textSize="18sp"/>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/rsc_email"
-            android:textColor="@color/black"
-            />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/email_hint"
-            android:inputType="textEmailAddress"
-            />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/study_registration_password"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/password"
-            android:textColor="@color/black"
-            />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/study_registration_password_hint"
-            android:inputType="textVisiblePassword"
-            />
-    </LinearLayout>
-
-    <Space android:layout_width="match_parent" android:layout_height="0dp"
-           android:layout_weight="1"/>
-
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rsc_next"
+        android:textSize="18sp"
         />
 
 
-</LinearLayout>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/summary"
+        android:layout_marginTop="@dimen/rsc_padding_medium"
+        >
+
+        <TextView
+            android:id="@+id/hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:text="@string/study_registration_password"
+            />
+
+        <TableRow
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/rsc_item_size_default"
+            android:layout_marginTop="@dimen/rsc_padding_medium"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/rsc_padding_medium"
+                android:gravity="right"
+                android:text="@string/rsc_email"
+                android:textColor="@color/black"
+                />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:hint="@string/email_hint"
+                android:inputType="textEmailAddress"
+                />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/rsc_item_size_default"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/rsc_padding_medium"
+                android:gravity="right"
+                android:text="@string/rsc_username"
+                android:textColor="@color/black"
+                />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:hint="@string/optional"
+                android:textColorHint="#33000000"
+                android:inputType="textEmailAddress"
+                />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/rsc_item_size_default"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/rsc_padding_medium"
+                android:gravity="right"
+                android:text="@string/password"
+                android:textColor="@color/black"
+                />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:hint="@string/study_registration_password_hint"
+                android:inputType="textVisiblePassword"
+                />
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/rsc_next"
+        android:textAllCaps="true"
+        android:minHeight="48dp"
+        android:minWidth="96dp"
+        android:gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        />
+
+    <include
+        android:id="@+id/progress"
+        android:visibility="gone"
+        tools:visibility="gone"
+        layout="@layout/progress"
+        />
+
+</RelativeLayout>

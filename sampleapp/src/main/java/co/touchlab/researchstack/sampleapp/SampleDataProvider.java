@@ -10,6 +10,7 @@ import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.DataResponse;
 import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
+import co.touchlab.researchstack.sampleapp.bridge.BridgeMessageResponse;
 import co.touchlab.researchstack.sampleapp.bridge.ConsentSignature;
 import co.touchlab.researchstack.sampleapp.network.UserSessionInfo;
 import co.touchlab.researchstack.sampleapp.network.body.EmailBody;
@@ -58,9 +59,15 @@ public class SampleDataProvider implements DataProvider
     }
 
     @Override
-    public Observable<DataResponse> signUp(String username, String password)
+    public Observable<DataResponse> signUp(String email, String username, String password)
     {
-        return null;
+        //TODO Pass in a username, pass in data groups
+        SignUpBody body = new SignUpBody(STUDY_ID, email, username, password, null, null);
+        return service.signUp(body).map(message -> {
+            DataResponse response = new DataResponse();
+            response.success = true;
+            return response;
+        });
     }
 
     @Override
@@ -136,7 +143,7 @@ public class SampleDataProvider implements DataProvider
          * </ul>
          */
         @POST("auth/signUp")
-        Observable<Response> signUp(@Body SignUpBody body);
+        Observable<BridgeMessageResponse> signUp(@Body SignUpBody body);
 
         /**
          * @return One of the following responses
