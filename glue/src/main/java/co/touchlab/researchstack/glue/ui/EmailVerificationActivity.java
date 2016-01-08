@@ -1,7 +1,6 @@
 package co.touchlab.researchstack.glue.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.widget.Toast;
@@ -9,6 +8,7 @@ import android.widget.Toast;
 import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
+import co.touchlab.researchstack.glue.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 
@@ -20,6 +20,7 @@ public class EmailVerificationActivity extends PassCodeActivity
     public static final String EXTRA_PASSWORD = "EXTRA_PASSWORD";
 
     private String password;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,14 +35,14 @@ public class EmailVerificationActivity extends PassCodeActivity
     {
         super.onDataReady();
 
-        password = getIntent().getStringExtra(EXTRA_PASSWORD);
-
         ResearchStack researchStack = ResearchStack.getInstance();
+
+        this.password = getIntent().getStringExtra(EXTRA_PASSWORD);
+        this.email =  researchStack.getDataProvider().getUserEmail(this);
 
         ((AppCompatImageView) findViewById(R.id.study_logo)).setImageResource(researchStack.getLargeLogoDiseaseIcon());
         ((AppCompatTextView) findViewById(R.id.email_verification_body)).setText(getString(R.string.email_verification_body,
-                getString(researchStack.getAppName()),
-                researchStack.getDataProvider().getUserEmail(EmailVerificationActivity.this)));
+                getString(researchStack.getAppName()), email));
 
         RxView.clicks(findViewById(R.id.email_verification_wrong_email))
                 .subscribe(v -> changeEmail());
@@ -61,9 +62,18 @@ public class EmailVerificationActivity extends PassCodeActivity
 
     private void resendVerificationEmail()
     {
-        Toast.makeText(EmailVerificationActivity.this,
-                "TODO resend verification email",
-                Toast.LENGTH_SHORT).show();
+        ResearchStack.getInstance()
+                .getDataProvider().resendEmailVerification(email)
+                .compose(ObservableUtils.applyDefault())
+                .subscribe(dataResponse -> {
+                    Toast.makeText(this, dataResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }, throwable -> {
+                    // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                    // Convert errorBody to JSON-String, convert json-string to object
+                    // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
+                    // toast
+                    Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void attemptSignIn()

@@ -17,14 +17,15 @@ import co.touchlab.researchstack.sampleapp.network.UserSessionInfo;
 import co.touchlab.researchstack.sampleapp.network.body.EmailBody;
 import co.touchlab.researchstack.sampleapp.network.body.SignInBody;
 import co.touchlab.researchstack.sampleapp.network.body.SignUpBody;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.RxJavaCallAdapterFactory;
 import retrofit2.http.Body;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -49,26 +50,38 @@ public class SampleDataProvider implements DataProvider
                 message));
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        Interceptor headerInterceptor = chain -> {
+            Request original = chain.request();
+
+            //TODO Get proper app-name and version name
+            Request request = original.newBuilder()
+                    .header("User-Agent", " Mole Mapper/1")
+                    .header("Content-Type", "application/json")
+                    .method(original.method(), original.body()).build();
+
+            return chain.proceed(request);
+        };
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(headerInterceptor).addInterceptor(interceptor).build();
 
         Retrofit retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(BASE_URL)
                 .client(client)
                 .build();
-
         service = retrofit.create(BridgeService.class);
     }
 
     @Override
     public Observable<DataResponse> signUp(Context context, String email, String username, String password)
     {
-        //TODO Pass in a username, pass in data groups
+        //TODO pass in data groups, remove roles
         SignUpBody body = new SignUpBody(STUDY_ID, email, username, password, null, null);
         saveUserEmail(context, email);
         return service.signUp(body).map(message -> {
             DataResponse response = new DataResponse();
-            response.success = true;
+            response.setSuccess(true);
             return response;
         });
     }
@@ -81,7 +94,7 @@ public class SampleDataProvider implements DataProvider
             this.userSessionInfo = userSessionInfo;
 
             DataResponse response = new DataResponse();
-            response.success = true;
+            response.setSuccess(true);
             return response;
         });
     }
@@ -90,6 +103,13 @@ public class SampleDataProvider implements DataProvider
     public Observable<DataResponse> signOut()
     {
         return null;
+    }
+
+    @Override
+    public Observable<DataResponse> resendEmailVerification(String email)
+    {
+        EmailBody body = new EmailBody(STUDY_ID, email);
+        return service.resendEmailVerification(body);
     }
 
     @Override
@@ -171,10 +191,6 @@ public class SampleDataProvider implements DataProvider
          *     <li><b>412</b> error - "User has not consented to research"</li>
          * </ul>
          */
-        @Headers({
-                "Content-Type: application/json",
-                "User-Agent: Mole Mapper/1"
-        })
         @POST("auth/signIn")
         Observable<UserSessionInfo> signIn(@Body SignInBody body);
 
@@ -184,6 +200,13 @@ public class SampleDataProvider implements DataProvider
          */
         @POST("auth/requestResetPassword")
         Observable<Response> requestResetPassword(@Body EmailBody body);
+
+        /**
+         * @return Response code <b>200</b> w/ message explaining instructions on how the user should
+         * proceed
+         */
+        @POST("auth/resendEmailVerification")
+        Observable<DataResponse> resendEmailVerification(@Body EmailBody body);
 
         /**
          *

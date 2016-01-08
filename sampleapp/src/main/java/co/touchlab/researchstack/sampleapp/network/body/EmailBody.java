@@ -12,7 +12,7 @@ public class EmailBody
      */
     private String email;
 
-    private EmailBody(String study, String email)
+    public EmailBody(String study, String email)
     {
         this.study = study;
         this.email = email;

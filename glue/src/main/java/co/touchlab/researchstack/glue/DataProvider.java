@@ -13,6 +13,8 @@ public interface DataProvider
 
     Observable<DataResponse> signOut();
 
+    Observable<DataResponse> resendEmailVerification(String email);
+
     boolean isSignedUp();
 
     boolean isSignedIn();

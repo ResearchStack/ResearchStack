@@ -2,9 +2,9 @@ package co.touchlab.researchstack.glue;
 
 public class DataResponse
 {
-    public String message;
+    private String message;
 
-    public boolean success;
+    private boolean success;
 
     public String getMessage()
     {
