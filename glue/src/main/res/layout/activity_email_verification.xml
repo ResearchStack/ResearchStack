@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent" android:layout_height="match_parent"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Email Verification Screen"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/study_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            tools:src="@drawable/logo_disease_information_top"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/email_verification_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="App Name has sent you a verification email at email@example.com"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/email_verification_wrong_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/wrong_email"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/email_verification_once_verified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/once_verified"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/continue_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rs_continue"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/black"
+            />
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/email_verification_consent_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="A full copy of the consent agreement..."/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/email_verification_resend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/resend_email"/>
+
+
+    </LinearLayout>
 
 </FrameLayout>

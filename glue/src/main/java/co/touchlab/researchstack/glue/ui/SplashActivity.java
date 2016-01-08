@@ -40,7 +40,7 @@ public class SplashActivity extends PassCodeActivity
         {
             launchMainActivity();
         }
-        else if(dataProvider.isSignedUp())
+        else if(true || dataProvider.isSignedUp())
         {
             launchEmailVerificationActivity();
         }

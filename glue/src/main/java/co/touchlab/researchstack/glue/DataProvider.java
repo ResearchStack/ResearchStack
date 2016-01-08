@@ -21,6 +21,8 @@ public interface DataProvider
 
     void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope);
 
+    String getUserEmail();
+
 //  TODO  void getUserProfile(TODO);
 
 //  TODO  void updateUserProfile(TODO);

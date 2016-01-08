@@ -118,6 +118,12 @@ public class SampleDataProvider implements DataProvider
                 .writeString(context, TEMP_CONSENT_JSON_FILE_NAME, jsonString);
     }
 
+    @Override
+    public String getUserEmail()
+    {
+        return null;
+    }
+
 
     public interface BridgeService
     {

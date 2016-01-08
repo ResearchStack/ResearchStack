@@ -102,6 +102,11 @@
     <string name="study_registration_password_hint">Enter a password</string>
     <string name="error_invalid_password">Invalid Password</string>
     <string name="error_invalid_email">Invalid Email</string>
+    <string name="wrong_email">Wrong email address? Tap here.</string>
+    <string name="once_verified">Once verified, tap below</string>
+    <string name="rs_continue">Continue</string>
+    <string name="resend_email">Resend Verification Email</string>
+    <string name="email_verification_body">%1$s has send you a verification email at %2$s</string>
 
 
 </resources>
