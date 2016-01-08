@@ -7,7 +7,7 @@ import rx.Observable;
 
 public interface DataProvider
 {
-    Observable<DataResponse> signUp(String email, String username, String password);
+    Observable<DataResponse> signUp(Context context, String email, String username, String password);
 
     Observable<DataResponse> signIn(String username, String password);
 
@@ -21,7 +21,7 @@ public interface DataProvider
 
     void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope);
 
-    String getUserEmail();
+    String getUserEmail(Context context);
 
 //  TODO  void getUserProfile(TODO);
 

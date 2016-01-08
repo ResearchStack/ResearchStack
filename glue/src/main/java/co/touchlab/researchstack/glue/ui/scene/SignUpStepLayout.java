@@ -120,7 +120,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
                     })
                     .withEndAction(() -> ResearchStack.getInstance()
                             .getDataProvider()
-                            .signUp(email, username, password)
+                            .signUp(getContext(), email, username, password)
                             .compose(ObservableUtils.applyDefault())
                             .subscribe(dataResponse -> {
                                 // Save Email, Username, and Password in memory

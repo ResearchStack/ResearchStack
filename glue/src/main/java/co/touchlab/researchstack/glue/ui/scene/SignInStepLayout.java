@@ -25,13 +25,14 @@ import co.touchlab.researchstack.glue.ui.adapter.TextWatcherAdapter;
 
 public class SignInStepLayout extends RelativeLayout implements StepLayout
 {
-    private View                progress;
-    private AppCompatEditText   username;
-    private AppCompatEditText   password;
-    private TextView            forgotPassword;
-    private Step                step;
-    private StepResult<Boolean> result;
-    private SceneCallbacks callbacks;
+    public static final String SIGNED_IN = "signedIn";
+    private View progress;
+    private AppCompatEditText  username;
+    private AppCompatEditText  password;
+    private TextView           forgotPassword;
+    private Step               step;
+    private StepResult<String> result;
+    private SceneCallbacks     callbacks;
 
     public SignInStepLayout(Context context)
     {
@@ -110,37 +111,45 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     {
         if(isAnswerValid())
         {
-            final String username =  this.username.getText().toString();
+            final String username = this.username.getText().toString();
             final String password = this.password.getText().toString();
 
-            progress.animate()
-                    .alpha(1)
-                    .withStartAction(() -> {
-                        progress.setVisibility(View.VISIBLE);
-                        progress.setAlpha(0);
-                    })
-                    .withEndAction(() -> ResearchStack.getInstance()
-                                    .getDataProvider()
-                                    .signIn(username, password)
-                                    .compose(ObservableUtils.applyDefault())
-                                    .subscribe(dataResponse -> {
-                                        result.setResult(true);
-                                        callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT,
-                                                step,
-                                                result);
-                                    }, throwable -> {
-                                        progress.animate()
-                                                .alpha(0)
-                                                .withEndAction(() -> progress.setVisibility(View.GONE));
+            progress.animate().alpha(1).withStartAction(() -> {
+                progress.setVisibility(View.VISIBLE);
+                progress.setAlpha(0);
+            }).withEndAction(() -> {
+                ResearchStack.getInstance()
+                        .getDataProvider()
+                        .signIn(username, password)
+                        .compose(ObservableUtils.applyDefault())
+                        .subscribe(dataResponse -> {
+                            // TODO figure out a better way to return the password if necessary
+                            result.setResult(SIGNED_IN);
+                            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+                        }, throwable -> {
+                            progress.animate()
+                                    .alpha(0)
+                                    .withEndAction(() -> progress.setVisibility(View.GONE));
 
-                                        // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                                        // Convert errorBody to JSON-String, convert json-string to object
-                                        // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
-                                        // toast
-                                        Toast.makeText(getContext(),
-                                                throwable.getMessage(),
-                                                Toast.LENGTH_SHORT).show();
-                                    }));
+                            if(username.equals(ResearchStack.getInstance()
+                                    .getDataProvider()
+                                    .getUserEmail(getContext())))
+                            {
+                                // Sign in returns 404 if they haven't verified email. If the email
+                                // matches the one they used to sign up, go to verification activity
+                                // TODO figure out a better way to return the password if necessary
+                                result.setResult(password);
+                                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+                            }
+
+                            // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                            // Convert errorBody to JSON-String, convert json-string to object
+                            // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
+                            // toast
+                            Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT)
+                                    .show();
+                        });
+            });
         }
     }
 

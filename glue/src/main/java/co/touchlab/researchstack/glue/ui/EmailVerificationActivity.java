@@ -8,13 +8,14 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
  */
-public class EmailVerificationActivity extends AppCompatActivity
+public class EmailVerificationActivity extends PassCodeActivity
 {
     public static final String EXTRA_PASSWORD = "EXTRA_PASSWORD";
 
@@ -25,15 +26,22 @@ public class EmailVerificationActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_verification);
+        initFileAccess();
+    }
 
-        this.password = getIntent().getStringExtra(EXTRA_PASSWORD);
+    @Override
+    protected void onDataReady()
+    {
+        super.onDataReady();
+
+        password = getIntent().getStringExtra(EXTRA_PASSWORD);
 
         ResearchStack researchStack = ResearchStack.getInstance();
 
         ((AppCompatImageView) findViewById(R.id.study_logo)).setImageResource(researchStack.getLargeLogoDiseaseIcon());
         ((AppCompatTextView) findViewById(R.id.email_verification_body)).setText(getString(R.string.email_verification_body,
                 getString(researchStack.getAppName()),
-                researchStack.getDataProvider().getUserEmail()));
+                researchStack.getDataProvider().getUserEmail(EmailVerificationActivity.this)));
 
         RxView.clicks(findViewById(R.id.email_verification_wrong_email))
                 .subscribe(v -> changeEmail());

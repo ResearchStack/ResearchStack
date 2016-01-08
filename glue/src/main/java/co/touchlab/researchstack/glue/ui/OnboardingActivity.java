@@ -6,12 +6,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import co.touchlab.researchstack.core.result.TaskResult;
+import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
+import co.touchlab.researchstack.glue.task.OnboardingTask;
 import co.touchlab.researchstack.glue.task.SignInTask;
 import co.touchlab.researchstack.glue.task.SignUpTask;
 import co.touchlab.researchstack.glue.ui.adapter.OnboardingPagerAdapter;
+import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
 import co.touchlab.researchstack.glue.ui.views.PageIndicator;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 
@@ -78,18 +82,38 @@ public class OnboardingActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == REQUEST_CODE_SIGN_IN &&
-                resultCode == RESULT_OK)
+        if(requestCode == REQUEST_CODE_SIGN_IN && resultCode == RESULT_OK)
         {
             finish();
-            Intent intent = new Intent(this, MainActivity.class);
+            TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+            String signInResult = (String) result.getStepResult(OnboardingTask.SignInStepIdentifier)
+                    .getResult();
+            Intent intent;
+
+            // TODO figure out a better way to return the password only when necessary
+            if (signInResult.equals(SignInStepLayout.SIGNED_IN))
+            {
+
+                intent = new Intent(this, MainActivity.class);
+            }
+            else
+            {
+                intent = new Intent(this, EmailVerificationActivity.class);
+                intent.putExtra(EmailVerificationActivity.EXTRA_PASSWORD, signInResult);
+            }
+
             startActivity(intent);
         }
-        else if (requestCode == REQUEST_CODE_SIGN_UP && resultCode == RESULT_OK)
+        else if(requestCode == REQUEST_CODE_SIGN_UP && resultCode == RESULT_OK)
         {
-            // TODO do we need to check the result for sign up success or something?
+
             finish();
+
+            TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+            String password = (String) result.getStepResult(OnboardingTask.SignUpStepIdentifier)
+                    .getResultForIdentifier(SignUpTask.ID_PASSWORD);
             Intent intent = new Intent(this, EmailVerificationActivity.class);
+            intent.putExtra(EmailVerificationActivity.EXTRA_PASSWORD, password);
             startActivity(intent);
         }
         else

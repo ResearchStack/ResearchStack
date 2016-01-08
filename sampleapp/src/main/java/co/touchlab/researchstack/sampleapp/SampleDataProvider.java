@@ -7,6 +7,7 @@ import java.util.Date;
 
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
+import co.touchlab.researchstack.core.storage.file.FileAccessException;
 import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.DataResponse;
 import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
@@ -30,6 +31,7 @@ import rx.Observable;
 public class SampleDataProvider implements DataProvider
 {
     public static final String TEMP_CONSENT_JSON_FILE_NAME = "/consent_sig";
+    public static final String TEMP_USER_EMAIL = "/user_email";
 
     //TODO Add build flavors, add var to BuildConfig for STUDY_ID
     String STUDY_ID = "ohsu-molemapper";
@@ -59,10 +61,11 @@ public class SampleDataProvider implements DataProvider
     }
 
     @Override
-    public Observable<DataResponse> signUp(String email, String username, String password)
+    public Observable<DataResponse> signUp(Context context, String email, String username, String password)
     {
         //TODO Pass in a username, pass in data groups
         SignUpBody body = new SignUpBody(STUDY_ID, email, username, password, null, null);
+        saveUserEmail(context, email);
         return service.signUp(body).map(message -> {
             DataResponse response = new DataResponse();
             response.success = true;
@@ -126,9 +129,24 @@ public class SampleDataProvider implements DataProvider
     }
 
     @Override
-    public String getUserEmail()
+    public String getUserEmail(Context context)
     {
-        return null;
+        try
+        {
+            return StorageManager.getFileAccess().readString(context, TEMP_USER_EMAIL);
+        }
+        catch(FileAccessException e)
+        {
+            LogExt.w(getClass(), "TEMP USER EMAIL not readable");
+            return null;
+        }
+    }
+
+    // TODO this is a temporary solution
+    private void saveUserEmail(Context context, String email)
+    {
+        StorageManager.getFileAccess()
+                .writeString(context, TEMP_USER_EMAIL, email);
     }
 
 
