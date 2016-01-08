@@ -16,11 +16,17 @@ import co.touchlab.researchstack.glue.ResearchStack;
  */
 public class EmailVerificationActivity extends AppCompatActivity
 {
+    public static final String EXTRA_PASSWORD = "EXTRA_PASSWORD";
+
+    private String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_verification);
+
+        this.password = getIntent().getStringExtra(EXTRA_PASSWORD);
 
         ResearchStack researchStack = ResearchStack.getInstance();
 
