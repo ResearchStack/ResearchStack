@@ -1,8 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme"
-           parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -10,6 +9,9 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="alertDialogTheme">@style/AppTheme.Dialog</item>
+        <item name="android:actionBarStyle">@style/AppTheme.ActionBarStyle</item>
+        <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
+
     </style>
 
     <style name="AppTheme.Dialog"
@@ -25,6 +27,24 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Onboarding" parent="@style/AppTheme.NoActionBar">
+        <item name="android:windowBackground">@color/gray</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/dark_gray</item>
+    </style>
+
+    <style name="AppTheme.Onboarding.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="android:textColorPrimary">@color/warm_grey</item>
+        <item name="colorControlNormal">#FF0000</item>
     </style>
 
 </resources>

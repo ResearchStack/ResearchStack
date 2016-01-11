@@ -3,8 +3,10 @@ package co.touchlab.researchstack.core.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +32,7 @@ import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.SurveyStepLayout;
 import co.touchlab.researchstack.core.ui.views.SceneSwitcher;
 import co.touchlab.researchstack.core.utils.FormatHelper;
+import co.touchlab.researchstack.core.utils.ThemeUtils;
 
 public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 {
@@ -180,6 +183,18 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_view_task, menu);
+
+        for(int i = 0; i < menu.size(); i++)
+        {
+            MenuItem item = menu.getItem(i);
+            Drawable icon = item.getIcon();
+            icon = DrawableCompat.wrap(icon);
+            int color = ThemeUtils.getTextColorPrimary(this);
+            DrawableCompat.setTint(icon, color);
+            item.setIcon(icon);
+        }
+
+
         return super.onCreateOptionsMenu(menu);
     }
 

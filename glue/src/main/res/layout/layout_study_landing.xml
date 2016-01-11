@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
         >
 
@@ -17,48 +16,56 @@
             android:id="@+id/layout_studyoverview_landing_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="72dp"
-            android:minWidth="72dp"
+            android:minHeight="80dp"
+            android:minWidth="80dp"
             android:scaleType="center"
             tools:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
             />
 
         <TextView
             android:id="@+id/layout_studyoverview_landing_title"
             style="@style/TextAppearance.AppCompat.Headline"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
             tools:text="@string/lorem_name"
             />
 
-        <TextView
-            android:id="@+id/layout_studyoverview_landing_subtitle"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/lorem_name"
-            />
-
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/layout_studyoverview_landing_read"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:textAllCaps="false"
             android:text="@string/read_consent_doc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:gravity="center_vertical"
             />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/layout_studyoverview_landing_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:textAllCaps="false"
             android:text="@string/email_consent_doc"
-            />
-
-        <TextView
-            style="@style/TextAppearance.AppCompat.Small"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/swipe_to_preview"
+            android:textColor="@color/colorAccent"
+            android:minHeight="48dp"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:gravity="center_vertical"
             />
 
     </LinearLayout>

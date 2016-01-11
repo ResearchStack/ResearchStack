@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".glue.ui.OnboardingActivity"
+    tools:context=".ui.OnboardingActivity"
     >
 
     <android.support.v4.view.ViewPager
@@ -17,25 +17,21 @@
         android:background="@android:color/white"
         />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#1A000000"
-        />
+    <!--<co.touchlab.researchstack.glue.ui.views.PageIndicator-->
+        <!--android:id="@+id/pager_indicator"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:animateLayoutChanges="true"-->
+        <!--/>-->
 
-    <co.touchlab.researchstack.glue.ui.views.PageIndicator
-        android:id="@+id/pager_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:animateLayoutChanges="true"
-        />
-
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/intro_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:paddingLeft="36dp"
+        android:paddingRight="36dp"
+        android:textColor="@android:color/white"
         android:onClick="onSignUpClicked"
         android:text="@string/join_study"
         />
@@ -44,11 +40,13 @@
         android:id="@+id/intro_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="8dp"
+        android:padding="16dp"
+        android:layout_marginBottom="4dp"
         android:clickable="true"
         android:onClick="onSignInClicked"
         android:text="@string/already_participating"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
         />
 
 </LinearLayout>

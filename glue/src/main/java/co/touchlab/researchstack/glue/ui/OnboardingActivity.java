@@ -16,7 +16,6 @@ import co.touchlab.researchstack.glue.task.SignInTask;
 import co.touchlab.researchstack.glue.task.SignUpTask;
 import co.touchlab.researchstack.glue.ui.adapter.OnboardingPagerAdapter;
 import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
-import co.touchlab.researchstack.glue.ui.views.PageIndicator;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 
 /**
@@ -39,25 +38,25 @@ public class OnboardingActivity extends AppCompatActivity
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(2);
         pager.setAdapter(adapter);
-        //      TODO  pager.setPageTransformer();
-        //      TODO  pager.setPageMargin();
+//      TODO  pager.setPageTransformer();
+//      TODO  pager.setPageMargin();
 
-        final PageIndicator indicator = (PageIndicator) findViewById(R.id.pager_indicator);
-        indicator.removeAllMarkers(true);
-        indicator.addMarkers(adapter.getCount(),
-                R.drawable.ic_pageindicator_current_dark,
-                R.drawable.ic_pageindicator_default_dark,
-                true);
+//        final PageIndicator indicator = (PageIndicator) findViewById(R.id.pager_indicator);
+//        indicator.removeAllMarkers(true);
+//        indicator.addMarkers(adapter.getCount(),
+//                R.drawable.ic_pageindicator_current_dark,
+//                R.drawable.ic_pageindicator_default_dark,
+//                true);
 
-        pager.clearOnPageChangeListeners();
-        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
-        {
-            @Override
-            public void onPageSelected(int position)
-            {
-                indicator.setActiveMarker(position);
-            }
-        });
+//        pager.clearOnPageChangeListeners();
+//        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+//        {
+//            @Override
+//            public void onPageSelected(int position)
+//            {
+//                indicator.setActiveMarker(position);
+//            }
+//        });
     }
 
     //TODO Read on main thread for intense UI blockage.
@@ -91,7 +90,7 @@ public class OnboardingActivity extends AppCompatActivity
             Intent intent;
 
             // TODO figure out a better way to return the password only when necessary
-            if (signInResult.equals(SignInStepLayout.SIGNED_IN))
+            if(signInResult.equals(SignInStepLayout.SIGNED_IN))
             {
 
                 intent = new Intent(this, MainActivity.class);

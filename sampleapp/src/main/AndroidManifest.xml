@@ -46,6 +46,7 @@
         <activity
             android:name="co.touchlab.researchstack.glue.ui.OnboardingActivity"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.Onboarding"
             />
 
         <activity
