@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -83,7 +84,12 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         initFileAccess();
     }
 
-    private void showNextStep()
+    protected Step getCurrentStep()
+    {
+        return currentStep;
+    }
+
+    protected void showNextStep()
     {
         Step nextStep = task.getStepAfterStep(currentStep, taskResult);
         if(nextStep == null)
@@ -96,7 +102,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         }
     }
 
-    private void showPreviousStep()
+    protected void showPreviousStep()
     {
         Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
         if(previousStep == null)
@@ -208,7 +214,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         }
         else if(item.getItemId() == R.id.menu_cancel)
         {
-            finish();
+            showConfirmExitDialog();
         }
 
         return super.onOptionsItemSelected(item);
@@ -269,6 +275,10 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         {
             showPreviousStep();
         }
+        else if(action == SceneCallbacks.ACTION_END)
+        {
+            showConfirmExitDialog();
+        }
         else if(action == SceneCallbacks.ACTION_NONE)
         {
             // Used when onSaveInstanceState is called of a view. No action is taken.
@@ -278,6 +288,19 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
             throw new IllegalArgumentException("Action with value " + action + " is invalid. " +
                     "See SceneCallbacks for allowable arguments");
         }
+    }
+
+    private void showConfirmExitDialog()
+    {
+        //TODO Implement custom bottom sheet (to make it look purty)
+        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
+                "Are you sure you want to exit?")
+                .setMessage(R.string.lorem_medium)
+                .setPositiveButton("End Task", (dialog, which) -> {
+                    finish();
+                }).setNegativeButton("Cancel", (dialog, which) -> {})
+                .create();
+        alertDialog.show();
     }
 
     @Override

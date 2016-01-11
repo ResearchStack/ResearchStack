@@ -4,20 +4,27 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
-import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
+import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.glue.ui.views.SubmitBar;
 
-public class SignUpEligibleStepLayout extends StepLayoutImpl
+public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayout
 {
 
     public static final int CONSENT_REQUEST = 1001;
 
     private ActivityCallback permissionCallback;
+    private Step             step;
+    private StepResult       result;
+    private SceneCallbacks   callbacks;
 
     public SignUpEligibleStepLayout(Context context)
     {
@@ -35,40 +42,35 @@ public class SignUpEligibleStepLayout extends StepLayoutImpl
     }
 
     @Override
-    public void initializeScene()
+    public void initialize(Step step, StepResult result)
     {
+        this.step = step;
+        this.result = result;
+
         if(getContext() instanceof ActivityCallback)
         {
             permissionCallback = (ActivityCallback) getContext();
         }
 
-        super.initializeScene();
+        initializeScene();
     }
 
-    @Override
-    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
+    private void initializeScene()
     {
-        return inflater.inflate(R.layout.item_eligible, parent, false);
-    }
-
-    @Override
-    public void onBodyCreated(View body)
-    {
-        super.onBodyCreated(body);
-
-        RxView.clicks(body.findViewById(R.id.start_consent_button))
-                .subscribe(v -> startConsentActivity());
+        LayoutInflater.from(getContext()).inflate(R.layout.item_eligible, this, true);
 
         // TODO only for testing
-        RxView.longClicks(body.findViewById(R.id.start_consent_button))
+        RxView.clicks(findViewById(R.id.DEBUG_skip_consent))
                 .subscribe(v -> skipConsentActivity());
 
-        hideNextButtons();
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        submitBar.setSubmitAction((v) -> startConsentActivity());
+        submitBar.setExitAction((v) -> exitSignUpActivity());
     }
 
     private void skipConsentActivity()
     {
-        onNextClicked();
+        callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
     }
 
     private void startConsentActivity()
@@ -76,4 +78,27 @@ public class SignUpEligibleStepLayout extends StepLayoutImpl
         permissionCallback.startConsentTask();
     }
 
+    private void exitSignUpActivity()
+    {
+        callbacks.onSaveStep(SceneCallbacks.ACTION_END, step, null);
+    }
+
+    @Override
+    public View getLayout()
+    {
+        return this;
+    }
+
+    @Override
+    public boolean isBackEventConsumed()
+    {
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, null);
+        return false;
+    }
+
+    @Override
+    public void setCallbacks(SceneCallbacks callbacks)
+    {
+        this.callbacks = callbacks;
+    }
 }

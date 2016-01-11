@@ -68,8 +68,8 @@
     <string name="please_complete_step">Please complete this step before moving on</string>
 
     <!--Other -->
-    <string name="you_are_eligible">You are eligible to join the study.</string>
-    <string name="tap_below">Tap the button below to begin the consent process</string>
+    <string name="you_are_eligible">You are eligible to join the study!</string>
+    <string name="tap_below">Touch “NEXT” below to get started with the consent process.</string>
     <string name="you_are_ineligible">Unfortunately, you are ineligible to join this study.</string>
     <string name="sign_in">Sign In</string>
     <string name="add_password_hint">add password</string>

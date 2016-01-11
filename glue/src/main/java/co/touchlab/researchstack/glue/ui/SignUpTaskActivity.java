@@ -16,11 +16,11 @@ import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
-import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.glue.task.ConsentTask;
+import co.touchlab.researchstack.glue.task.OnboardingTask;
 import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleStepLayout;
 import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsStepLayout;
 
@@ -98,12 +98,11 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                                 signatureDate,
                                 sharingScope);
 
-                StepLayoutImpl scene = (StepLayoutImpl) findViewById(R.id.rsc_current_scene);
-                if(scene != null && scene instanceof SignUpEligibleStepLayout)
+                if(getCurrentStep().getIdentifier().equals(OnboardingTask.SignUpEligibleStepIdentifier))
                 {
-                    // TODO this is weird, activity calling a callback method itself
-                    onSaveStep(ACTION_NEXT, scene.getStep(), null);
+                    showNextStep();
                 }
+
             }
             else
             {

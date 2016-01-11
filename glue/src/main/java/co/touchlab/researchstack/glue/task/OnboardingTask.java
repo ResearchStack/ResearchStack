@@ -119,7 +119,7 @@ public abstract class OnboardingTask extends Task
         if(eligibleStep == null)
         {
             eligibleStep = new Step(SignUpEligibleStepIdentifier);
-            eligibleStep.setSceneTitle(R.string.sign_up);
+            eligibleStep.setSceneTitle(R.string.eligibility);
             eligibleStep.setSceneClass(SignUpEligibleStepLayout.class);
         }
         return eligibleStep;

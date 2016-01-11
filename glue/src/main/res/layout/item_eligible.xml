@@ -1,34 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_horizontal"
               android:orientation="vertical"
     >
 
-    <ImageView
-        android:id="@+id/eligible_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/you_are_eligible"
+        android:textSize="20sp"
+        android:textColor="?attr/colorAccent"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginTop="28dp"
+        android:id="@+id/textView"
         />
 
     <TextView
+        android:id="@+id/eligible_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tap_below"
+        android:layout_below="@+id/textView"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginTop="24dp"
         />
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/start_consent_button"
+    <!-- TODO Debug view, remove for production -->
+    <TextView
+        android:id="@+id/DEBUG_skip_consent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start_consent_button"
+        android:text="Debug Option: Skip Consent"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_below="@+id/eligible_desc"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
         />
 
-</LinearLayout>
+    <co.touchlab.researchstack.glue.ui.views.SubmitBar
+        android:id="@+id/submit_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>
