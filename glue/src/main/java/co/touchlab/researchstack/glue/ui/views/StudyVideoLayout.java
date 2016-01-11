@@ -12,6 +12,7 @@ import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 import co.touchlab.researchstack.glue.ui.ViewVideoActivity;
 
+@Deprecated
 public class StudyVideoLayout extends ScrollView
 {
 
@@ -48,12 +49,18 @@ public class StudyVideoLayout extends ScrollView
 
     public void setData(StudyOverviewModel.Question data)
     {
+        StringBuilder builder = new StringBuilder("<h1>" + data.getTitle() + "</h1>");
+        builder.append("<p>" + data.getDetails() + "</p>");
+
+
+
         titleView.setText(data.getTitle());
         subtitleView.setText(data.getDetails());
         videoButton.setOnClickListener(v -> {
             Intent intent = ViewVideoActivity.newIntent(getContext(), data.getVideoName());
             getContext().startActivity(intent);
         });
+
 
         int color = Color.parseColor(data.getTintColor());
         videoButton.setColorFilter(color);

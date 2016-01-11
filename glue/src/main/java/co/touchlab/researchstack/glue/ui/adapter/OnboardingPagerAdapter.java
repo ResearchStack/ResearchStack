@@ -1,19 +1,30 @@
 package co.touchlab.researchstack.glue.ui.adapter;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
-import co.touchlab.researchstack.core.ui.views.LocalWebView;
+import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
+import co.touchlab.researchstack.glue.ui.ViewVideoActivity;
 import co.touchlab.researchstack.glue.ui.views.StudyLandingLayout;
-import co.touchlab.researchstack.glue.ui.views.StudyVideoLayout;
+
 
 public class OnboardingPagerAdapter extends PagerAdapter
 {
@@ -49,7 +60,6 @@ public class OnboardingPagerAdapter extends PagerAdapter
     public Object instantiateItem(ViewGroup container, int position)
     {
         StudyOverviewModel.Question item = items.get(position);
-        View child;
 
         if(position == 0)
         {
@@ -72,22 +82,29 @@ public class OnboardingPagerAdapter extends PagerAdapter
             //            landingCell.readConsentButton.hidden = NO;
             //        }
 
-            StudyLandingLayout layout = (StudyLandingLayout) inflater.inflate(R.layout.item_study_landing,
-                    container,
-                    false);
+            StudyLandingLayout layout = new StudyLandingLayout(container.getContext());
             layout.setData(item);
-
-            child = layout;
+            container.addView(layout);
+            return layout;
 
         }
         else if(! TextUtils.isEmpty(item.getVideoName()))
         {
-            StudyVideoLayout layout = (StudyVideoLayout) inflater.inflate(R.layout.item_study_video,
-                    container,
-                    false);
-            layout.setData(item);
+            View layout = inflater.inflate(R.layout.layout_study_html, container, false);
+            container.addView(layout);
 
-            child = layout;
+            StringBuilder builder = new StringBuilder("<h1>" + item.getTitle() + "</h1>");
+            builder.append("<p>" + item.getDetails() + "</p>");
+
+            TextView simpleView = (TextView) layout.findViewById(R.id.text);
+            simpleView.setText(Html.fromHtml(builder.toString()));
+            simpleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.video_icon);
+            simpleView.setOnClickListener(v -> {
+                Intent intent = ViewVideoActivity.newIntent(container.getContext(), item.getVideoName());
+                container.getContext().startActivity(intent);
+            });
+
+            return layout;
 
 
             //            APCStudyVideoCollectionViewCell *videoCell = (APCStudyVideoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kAPCStudyVideoCollectionViewCellIdentifier forIndexPath:indexPath];
@@ -98,11 +115,17 @@ public class OnboardingPagerAdapter extends PagerAdapter
         }
         else
         {
-            String url = ResearchStack.getInstance().getHTMLFilePath(item.getDetails());
-            LocalWebView layout = new LocalWebView(container.getContext());
-            layout.loadUrl(url);
+            View layout = inflater.inflate(R.layout.layout_study_html, container, false);
+            container.addView(layout);
 
-            child = layout;
+            TextView simpleView = (TextView) layout.findViewById(R.id.text);
+            simpleView.setMovementMethod(LinkMovementMethod.getInstance());
+            int id =  ResUtils.getRawResourceId(container.getContext(), item.getDetails());
+            String html = getHtmlText(container.getContext(), id);
+            LocalImageGetter imageGetter = new LocalImageGetter(simpleView);
+            simpleView.setText(Html.fromHtml(html, imageGetter, null));
+
+            return layout;
 
             //            NSString *filePath = [[NSBundle mainBundle] pathForResource: studyDetails.detailText ofType:@"html" inDirectory:@"HTMLContent"];
             //            NSURL *targetURL = [NSURL URLWithString:filePath];
@@ -110,9 +133,80 @@ public class OnboardingPagerAdapter extends PagerAdapter
             //            [webViewCell.webView loadRequest:request];
 
         }
+    }
 
-        container.addView(child);
-        return child;
+    private String getHtmlText(Context context, int id)
+    {
+        InputStream inputStream = context.getResources().openRawResource(id);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i;
+        try
+        {
+            i = inputStream.read();
+            while(i != - 1)
+            {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
+            }
+            inputStream.close();
+        }
+        catch(IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return byteArrayOutputStream.toString();
+    }
+
+    private class LocalImageGetter implements Html.ImageGetter {
+
+        private Context context;
+        private int screenWidth;
+
+        public LocalImageGetter(TextView host)
+        {
+            this.context = host.getContext();
+
+            int tvWidth = host.getWidth();
+
+            if (tvWidth == 0)
+            {
+                host.measure(0,0);
+            }
+
+            // TODO finding the measurements of screen width instead of the tv host is hacky. Find
+            // a better way
+            WindowManager manager = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE));
+            Point size = new Point();
+            manager.getDefaultDisplay().getSize(size);
+            screenWidth = size.x - host.getPaddingLeft() - host.getPaddingRight();
+        }
+
+        @Override
+        public Drawable getDrawable(String source)
+        {
+            Resources res = context.getResources();
+            int drawableId = res.getIdentifier(source, "drawable", context.getPackageName());
+            Drawable drawable = res.getDrawable(drawableId);
+
+            int [] dimens = getDrawableDimensForScreen(drawable);
+            drawable.setBounds(0, 0, dimens[0], dimens[1]);
+
+            return drawable;
+        }
+
+        private int[] getDrawableDimensForScreen(Drawable drawable)
+        {
+            int width = drawable.getIntrinsicWidth();
+            int height = drawable.getIntrinsicHeight();
+
+            if (width > screenWidth)
+            {
+                height = (height * screenWidth) / width;
+                width = screenWidth;
+            }
+
+            return new int[] {width, height};
+        }
     }
 
     @Override
