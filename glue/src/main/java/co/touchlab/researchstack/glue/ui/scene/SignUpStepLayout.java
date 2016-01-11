@@ -198,6 +198,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
     @Override
     public boolean isBackEventConsumed()
     {
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
