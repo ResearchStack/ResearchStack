@@ -2,7 +2,9 @@ package co.touchlab.researchstack.core.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import co.touchlab.researchstack.core.ui.views.LocalWebView;
 import co.touchlab.researchstack.core.utils.ResUtils;
@@ -35,6 +37,24 @@ public class ViewWebDocumentActivity extends AppCompatActivity
         setContentView(webView);
 
         String title = getIntent().getStringExtra(KEY_TITLE);
-        setTitle(title);
+
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null)
+        {
+            actionBar.setTitle(title);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if(item.getItemId() == android.R.id.home)
+        {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
