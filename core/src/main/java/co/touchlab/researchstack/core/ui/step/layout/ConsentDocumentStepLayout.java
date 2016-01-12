@@ -91,7 +91,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction(v -> showDialog());
-        submitBar.setExitAction(v -> callbacks.onCancelStep());
+        submitBar.setNegativeAction(v -> callbacks.onCancelStep());
     }
 
     private void showDialog()

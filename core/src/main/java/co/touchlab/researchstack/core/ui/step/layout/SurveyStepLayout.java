@@ -221,11 +221,12 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
             if (step.isOptional())
             {
-                submitBar.setExitAction(R.string.rsc_step_skip, v -> onSkipClicked());
+                submitBar.setNegativeTitle(R.string.rsc_step_skip)
+                        .setNegativeAction(v -> onSkipClicked());
             }
             else
             {
-                submitBar.hideExitAction();
+                submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
         }
     }

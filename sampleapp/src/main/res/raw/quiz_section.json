@@ -2,8 +2,8 @@
   "evaluation_properties": {
     "incorrectIcon": "consent_quiz_retry",
     "correctIcon": "valid_icon",
-    "quizAllCorrectText": "You answered all of the questions correctly.\nTap Next to continue.",
-    "quizPassedText": "You passed the quiz.\nTap Next to continue.",
+    "quizAllCorrectText": "You answered all of the questions correctly. Tap Next to continue.",
+    "quizPassedText": "You passed the quiz. Tap Next to continue.",
     "quizFailure1Text": "Unfortunately, you answered one or more questions incorrectly on the quiz. We need you to repeat the quiz to make sure you understand what you need to know about the study.",
     "quizFailure2Text": "Unfortunately, you answered one or more questions incorrectly on the quiz. We need you to repeat the quiz to make sure you understand what you need to know about the study. Please read the consent information and take the quiz again.",
     "maxIncorrect": 2

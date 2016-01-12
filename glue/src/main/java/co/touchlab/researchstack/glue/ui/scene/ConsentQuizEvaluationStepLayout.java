@@ -1,14 +1,27 @@
 package co.touchlab.researchstack.glue.ui.scene;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
+import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.step.ConsentQuizEvaluationStep;
 
-public class ConsentQuizEvaluationStepLayout extends StepLayoutImpl<Boolean>
+public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements StepLayout
 {
+
+    private ConsentQuizEvaluationStep step;
+    private StepResult<Boolean>       result;
+    private SceneCallbacks            callbacks;
 
     public ConsentQuizEvaluationStepLayout(Context context)
     {
@@ -26,11 +39,26 @@ public class ConsentQuizEvaluationStepLayout extends StepLayoutImpl<Boolean>
     }
 
     @Override
-    public void initializeScene()
+    public void initialize(Step step, StepResult result)
     {
-        super.initializeScene();
+        this.step = (ConsentQuizEvaluationStep) step;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
 
-        ConsentQuizEvaluationStep step = (ConsentQuizEvaluationStep) getStep();
+        initializeScene();
+    }
+
+    private void initializeScene()
+    {
+        LayoutInflater.from(getContext())
+                .inflate(R.layout.step_layout_consent_evaluation, this, true);
+
+        ImageView image = (ImageView) findViewById(R.id.image);
+        TextView title = (TextView) findViewById(R.id.title);
+        TextView summary = (TextView) findViewById(R.id.summary);
+
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        submitBar.getNegativeActionView().setVisibility(View.GONE);
+        submitBar.setPositiveAction(v ->  callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result));
 
         // We have failed
         if(! step.isQuizPassed())
@@ -38,18 +66,18 @@ public class ConsentQuizEvaluationStepLayout extends StepLayoutImpl<Boolean>
             int iconResId = ResUtils.getDrawableResourceId(getContext(),
                     step.getQuestionProperties().incorrectIcon);
 
-            setImage(iconResId);
-            setTitle(R.string.rsc_quiz_evaluation_try_again);
+            image.setImageResource(iconResId);
+            title.setText(R.string.rsc_quiz_evaluation_try_again);
 
             if(! step.isOverMaxAttempts())
             {
-                setSummary(step.getQuestionProperties().quizFailure1Text);
-                setNextButtonText(R.string.rsc_quiz_evaluation_retake);
+                summary.setText(step.getQuestionProperties().quizFailure1Text);
+                submitBar.setPositiveTitle(R.string.rsc_quiz_evaluation_retake);
             }
             else
             {
-                setSummary(step.getQuestionProperties().quizFailure2Text);
-                setNextButtonText(R.string.rsc_quiz_evaluation_review_consent);
+                summary.setText(step.getQuestionProperties().quizFailure2Text);
+                submitBar.setPositiveTitle(R.string.rsc_quiz_evaluation_review_consent);
             }
         }
 
@@ -59,20 +87,38 @@ public class ConsentQuizEvaluationStepLayout extends StepLayoutImpl<Boolean>
             int iconResId = ResUtils.getDrawableResourceId(getContext(),
                     step.getQuestionProperties().correctIcon);
 
-            setImage(iconResId);
-            setTitle(R.string.rsc_quiz_evaluation_great_job);
+            image.setImageResource(iconResId);
+            title.setText(R.string.rsc_quiz_evaluation_great_job);
 
             if(step.getIncorrect() == 0)
             {
-                setSummary(step.getQuestionProperties().quizAllCorrectText);
+                summary.setText(step.getQuestionProperties().quizAllCorrectText);
             }
             else
             {
-                setSummary(step.getQuestionProperties().quizPassedText);
+                summary.setText(step.getQuestionProperties().quizPassedText);
             }
 
-            setNextButtonText(R.string.rsc_next);
+            submitBar.setPositiveTitle(R.string.rsc_next);
         }
     }
 
+    @Override
+    public View getLayout()
+    {
+        return this;
+    }
+
+    @Override
+    public boolean isBackEventConsumed()
+    {
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, result);
+        return false;
+    }
+
+    @Override
+    public void setCallbacks(SceneCallbacks callbacks)
+    {
+        this.callbacks = callbacks;
+    }
 }

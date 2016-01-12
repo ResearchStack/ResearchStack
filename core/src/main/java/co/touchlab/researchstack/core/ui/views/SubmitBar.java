@@ -1,7 +1,6 @@
 package co.touchlab.researchstack.core.ui.views;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,75 +44,68 @@ public class SubmitBar extends LinearLayout
                 defStyleAttr,
                 R.style.SubmitBar);
 
-        String positiveText = a.getString(R.styleable.SubmitBar_positiveActionTitle);
         positiveView = (TextView) findViewById(R.id.bar_submit_postitive);
-        positiveView.setText(positiveText);
+        setPositiveTitle(a.getString(R.styleable.SubmitBar_positiveActionTitle));
 
-        String negativeText = a.getString(R.styleable.SubmitBar_negativeActionTitle);
         negativeView = (TextView) findViewById(R.id.bar_submit_negative);
-        negativeView.setText(negativeText);
+        setNegativeTitle(a.getString(R.styleable.SubmitBar_negativeActionTitle));
 
         a.recycle();
     }
 
-    public void setPositiveAction(Action1 submit)
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    // Positive Action Helper Methods
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+    public SubmitBar setPositiveTitle(int title)
     {
-        setPositiveAction(null, submit);
+        setPositiveTitle(getResources().getString(title));
+        return this;
     }
 
-    public void setPositiveAction(int title, Action1 submit)
+    public SubmitBar setPositiveTitle(String title)
     {
-        setPositiveAction(getResources().getString(title), submit);
+        positiveView.setText(title);
+        return this;
     }
 
-    public void setPositiveAction(String title, Action1 submit)
+    public SubmitBar setPositiveAction(Action1 submit)
     {
-        if (this.positiveView.getVisibility() != View.VISIBLE)
-        {
-            this.positiveView.setVisibility(View.VISIBLE);
-        }
-
-        if (!TextUtils.isEmpty(title))
-        {
-            this.positiveView.setText(title);
-        }
-
         RxView.clicks(this.positiveView).subscribe(submit);
+        return this;
     }
 
-    public void hideSubmitAction()
+    public View getPositiveActionView()
     {
-        this.positiveView.setVisibility(View.GONE);
+        return positiveView;
     }
 
-    public void setExitAction(Action1 submit)
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    // Negative Action Helper Methods
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+    public SubmitBar setNegativeTitle(int title)
     {
-        setExitAction(null, submit);
+        setNegativeTitle(getResources().getString(title));
+        return this;
     }
 
-    public void setExitAction(int title, Action1 exit)
+    public SubmitBar setNegativeTitle(String title)
     {
-        setExitAction(getResources().getString(title), exit);
+        negativeView.setText(title);
+        return this;
     }
 
-    public void setExitAction(String title, Action1 exit)
+    public SubmitBar setNegativeAction(Action1 submit)
     {
-        if (this.negativeView.getVisibility() != View.VISIBLE)
-        {
-            this.negativeView.setVisibility(View.VISIBLE);
-        }
-
-        if (!TextUtils.isEmpty(title))
-        {
-            this.negativeView.setText(title);
-        }
-
-        RxView.clicks(this.negativeView).subscribe(exit);
+        RxView.clicks(this.negativeView).subscribe(submit);
+        return this;
     }
 
-    public void hideExitAction()
+    public View getNegativeActionView()
     {
-        this.negativeView.setVisibility(View.GONE);
+        return negativeView;
     }
 
 }
