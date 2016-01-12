@@ -226,6 +226,7 @@ public class MainActivity extends PassCodeActivity
 
         // Create Consent signature step, user can sign their name
         ConsentSignatureStep signatureStep = new ConsentSignatureStep(SIGNATURE);
+        signatureStep.setSceneTitle(R.string.rsc_consent);
         signatureStep.setTitle(getString(R.string.rsc_consent_signature_title));
         signatureStep.setText(getString(R.string.rsc_consent_signature_instruction));
         signatureStep.setSignatureDateFormat(signature.getSignatureDateFormatString());

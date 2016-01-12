@@ -246,6 +246,7 @@ public class ConsentTask extends OrderedTask
         if(doc.getSignature(0).isRequiresSignatureImage())
         {
             ConsentSignatureStep signatureStep = new ConsentSignatureStep(ID_SIGNATURE);
+            signatureStep.setSceneTitle(R.string.rsc_consent);
             signatureStep.setTitle(ctx.getString(R.string.rsc_consent_signature_title));
             signatureStep.setText(ctx.getString(R.string.rsc_consent_signature_instruction));
             signatureStep.setOptional(false);

@@ -25,6 +25,7 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.callbacks.SignatureCallbacks;
 import co.touchlab.researchstack.core.ui.views.SignatureView;
+import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.core.utils.FormatHelper;
 
 public class ConsentSignatureStepLayout extends RelativeLayout implements StepLayout
@@ -88,7 +89,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         TextView title = (TextView) findViewById(R.id.title);
         title.setText(step.getTitle());
 
-        TextView text = (TextView) findViewById(R.id.text);
+        TextView text = (TextView) findViewById(R.id.summary);
         text.setText(step.getText());
 
         View clear = findViewById(R.id.layout_consent_review_signature_clear);
@@ -111,15 +112,18 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
             }
         });
 
-        clear.setClickable(signatureView.isSignatureDrawn());
-        clear.setAlpha(signatureView.isSignatureDrawn() ? 1 : 0);
-
         RxView.clicks(clear).subscribe(v -> {
             signatureView.clearSignature();
         });
 
-        View next = findViewById(R.id.next);
-        RxView.clicks(next).subscribe(v -> {
+        clear.setClickable(signatureView.isSignatureDrawn());
+
+        //TODO call view.setAlpha() is not working, investigate
+        clear.animate().alpha(signatureView.isSignatureDrawn() ? 1 : 0);
+
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        submitBar.getNegativeActionView().setVisibility(View.GONE);
+        submitBar.setPositiveAction(v -> {
             if(signatureView.isSignatureDrawn())
             {
                 setDataToResult();
@@ -147,10 +151,18 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     private String getBase64EncodedImage()
     {
         Bitmap bitmap = signatureView.createSignatureBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        if (bitmap != null)
+        {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        }
+        else
+        {
+            return null;
+        }
     }
 
 }
