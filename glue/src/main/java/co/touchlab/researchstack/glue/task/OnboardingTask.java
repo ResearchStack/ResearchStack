@@ -1,7 +1,11 @@
 package co.touchlab.researchstack.glue.task;
 
+import co.touchlab.researchstack.core.answerformat.AnswerFormat;
+import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
+import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
+import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.step.body.NotImplementedStepBody;
@@ -29,7 +33,7 @@ public abstract class OnboardingTask extends Task
     //    public static final String SignUpPermissionsStepIdentifier        = "Permissions";
     //    public static final String SignUpPermissionsPrimingStepIdentifier = "PermissionsPriming";
     protected int  currentStepNumber;
-    private   Step inclusionCriteriaStep;
+    private   QuestionStep inclusionCriteriaStep;
     private   Step eligibleStep;
     private   Step ineligibleStep;
     private   Step signUpStep;
@@ -69,7 +73,8 @@ public abstract class OnboardingTask extends Task
 
     public boolean isEligible(TaskResult result)
     {
-        StepResult<Boolean> stepResult = (StepResult<Boolean>) result.getStepResult(SignUpTask.SignUpInclusionCriteriaStepIdentifier);
+        StepResult<Boolean> stepResult = (StepResult<Boolean>)
+                result.getStepResult(SignUpTask.SignUpInclusionCriteriaStepIdentifier);
 
         if(stepResult != null)
         {
@@ -129,10 +134,20 @@ public abstract class OnboardingTask extends Task
     {
         if(inclusionCriteriaStep == null)
         {
-            inclusionCriteriaStep = new Step(SignUpInclusionCriteriaStepIdentifier);
+            Choice<Boolean> human = new Choice<>("Yes, I am a human.", true, null);
+            Choice<Boolean> robot = new Choice<>("No, I am a robot but I am sentient and concerned about my health.", true, null);
+            Choice<Boolean> alien = new Choice<>("No, I’m an alien.", false, null);
+
+            inclusionCriteriaStep = new QuestionStep(SignUpInclusionCriteriaStepIdentifier);
             inclusionCriteriaStep.setSceneTitle(R.string.eligibility);
             inclusionCriteriaStep.setSceneClass(ResearchStack.getInstance()
                     .getInclusionCriteriaSceneClass());
+            inclusionCriteriaStep.setTitle(
+                    "Were you born somewhere on planet earth and are you a human?");
+            inclusionCriteriaStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
+                    human,
+                    robot,
+                    alien));
         }
         return inclusionCriteriaStep;
     }

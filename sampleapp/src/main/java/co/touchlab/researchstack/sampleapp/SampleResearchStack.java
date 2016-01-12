@@ -17,6 +17,7 @@ import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
+import co.touchlab.researchstack.core.ui.step.body.SingleChoiceQuestionBody;
 import co.touchlab.researchstack.glue.NavigationItem;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
@@ -239,6 +240,6 @@ public class SampleResearchStack extends ResearchStack
     @Override
     public Class getInclusionCriteriaSceneClass()
     {
-        return SignUpInclusionCriteriaStepLayout.class;
+        return SingleChoiceQuestionBody.class;
     }
 }
