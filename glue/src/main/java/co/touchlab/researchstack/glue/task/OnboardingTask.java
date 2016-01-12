@@ -130,6 +130,9 @@ public abstract class OnboardingTask extends Task
         return eligibleStep;
     }
 
+    /**
+     * TODO Question is currently a placeholder. Implement unique UI for step.
+     */
     public Step getInclusionCriteriaStep()
     {
         if(inclusionCriteriaStep == null)
@@ -143,7 +146,7 @@ public abstract class OnboardingTask extends Task
             inclusionCriteriaStep.setSceneClass(ResearchStack.getInstance()
                     .getInclusionCriteriaSceneClass());
             inclusionCriteriaStep.setTitle(
-                    "Were you born somewhere on planet earth and are you a human?");
+                    "Were you born somewhere on planet earth and are you a human-ish?");
             inclusionCriteriaStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
                     human,
                     robot,
