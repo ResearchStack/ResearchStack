@@ -70,4 +70,10 @@
 
     </LinearLayout>
 
+    <include
+        android:id="@+id/progress"
+        android:visibility="gone"
+        tools:visibility="gone"
+        layout="@layout/progress"
+        />
 </FrameLayout>

@@ -123,35 +123,47 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
                         .signIn(getContext(), username, password)
                         .compose(ObservableUtils.applyDefault())
                         .subscribe(dataResponse -> {
-                            // TODO figure out a better way to return the password if necessary
-                            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
-                        }, throwable -> {
-                            progress.animate()
-                                    .alpha(0)
-                                    .withEndAction(() -> progress.setVisibility(View.GONE));
-
-                            if(username.equals(ResearchStack.getInstance()
-                                    .getDataProvider()
-                                    .getUserEmail(getContext())))
+                            if(dataResponse.isSuccess())
                             {
-                                // Sign in returns 404 if they haven't verified email. If the email
-                                // matches the one they used to sign up, go to verification activity
                                 // TODO figure out a better way to return the password if necessary
-                                result.setResultForIdentifier(SignInTask.ID_EMAIL, username);
-                                result.setResultForIdentifier(SignInTask.ID_PASSWORD, password);
                                 callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
-                                return;
                             }
-
-                            // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                            // Convert errorBody to JSON-String, convert json-string to object
-                            // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
-                            // toast
-                            Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT)
-                                    .show();
+                            else
+                            {
+                                handleError(dataResponse.getMessage(), username, password);
+                            }
+                        }, throwable -> {
+                            handleError(throwable.getMessage(), username, password);
                         });
             });
         }
+    }
+
+    private void handleError(String message, String username, String password)
+    {
+        progress.animate()
+                .alpha(0)
+                .withEndAction(() -> progress.setVisibility(View.GONE));
+
+        if(username.equals(ResearchStack.getInstance()
+                .getDataProvider()
+                .getUserEmail(getContext())))
+        {
+            // Sign in returns 404 if they haven't verified email. If the email
+            // matches the one they used to sign up, go to verification activity
+            // TODO figure out a better way to return the password if necessary
+            result.setResultForIdentifier(SignInTask.ID_EMAIL, username);
+            result.setResultForIdentifier(SignInTask.ID_PASSWORD, password);
+            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+            return;
+        }
+
+        // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        // Convert errorBody to JSON-String, convert json-string to object
+        // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
+        // toast
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT)
+                .show();
     }
 
     public boolean isAnswerValid()

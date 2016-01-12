@@ -114,6 +114,7 @@
     <string name="email_not_verified">Please check your email to verify your account before
         continuing
     </string>
+    <string name="change_email">Change Email</string>
 
 
 </resources>
