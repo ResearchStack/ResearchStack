@@ -2,13 +2,10 @@ package co.touchlab.researchstack.glue;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import co.touchlab.researchstack.core.StorageManager;
-import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.glue.model.User;
@@ -165,47 +162,6 @@ public abstract class ResearchStack
     public abstract User.UserInfoType[] getUserInfoTypes();
 
     public abstract Class getInclusionCriteriaSceneClass();
-
-    //TODO: The whole user thing needs to change.  To discuss.
-    public User getCurrentUser()
-    {
-        loadUser();
-        return currentUser;
-    }
-
-    public boolean storedUserExists()
-    {
-        return StorageManager.getFileAccess().dataExists(context, TEMP_USER_JSON_FILE_NAME);
-    }
-
-    public void saveUser()
-    {
-        Gson gson = new Gson();
-        String userJsonString = gson.toJson(getCurrentUser());
-
-        LogExt.d(getClass(), "Writing user json:\n" + userJsonString);
-
-        StorageManager.getFileAccess()
-                .writeString(context, TEMP_USER_JSON_FILE_NAME, userJsonString);
-    }
-
-    public void loadUser()
-    {
-        Gson gson = new Gson();
-        FileAccess fileAccess = StorageManager.getFileAccess();
-
-        if(fileAccess.dataExists(context, TEMP_USER_JSON_FILE_NAME))
-        {
-            String jsonString = fileAccess.readString(context, TEMP_USER_JSON_FILE_NAME);
-            currentUser = gson.fromJson(jsonString, User.class);
-        }
-
-        if(currentUser == null)
-        {
-            LogExt.d(getClass(), "No user file found, creating new user");
-            currentUser = new User();
-        }
-    }
 
     public void clearUserData(Context context)
     {

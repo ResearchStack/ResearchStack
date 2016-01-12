@@ -6,6 +6,16 @@ public class DataResponse
 
     private boolean success;
 
+    public DataResponse()
+    {
+    }
+
+    public DataResponse(boolean success, String message)
+    {
+        this.message = message;
+        this.success = success;
+    }
+
     public String getMessage()
     {
         return message;

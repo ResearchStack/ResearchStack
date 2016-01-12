@@ -18,7 +18,6 @@ import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
-import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.glue.task.ConsentTask;
 import co.touchlab.researchstack.glue.task.OnboardingTask;
 import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleStepLayout;
@@ -61,13 +60,6 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             boolean consented = (boolean) result.getStepResult(ConsentTask.ID_CONSENT_DOC)
                     .getResult();
 
-            if(ResearchStack.getInstance().getCurrentUser() == null)
-            {
-                ResearchStack.getInstance().loadUser();
-            }
-
-            User currentUser = ResearchStack.getInstance().getCurrentUser();
-
             // TODO check for valid signature/names
             if(consented)
             {
@@ -76,12 +68,13 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 String fullName = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
                         .getResult();
 
-//                TODO Change birthdate to Date object
+                //                TODO Change birthdate to Date object
                 Date birthdate = new Date();
                 String birthDate = formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
                         .getResult();
 
-                String sharingScope = (String) result.getStepResult(ConsentTask.ID_SHARING).getResult();
+                String sharingScope = (String) result.getStepResult(ConsentTask.ID_SHARING)
+                        .getResult();
 
                 String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
                         .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
@@ -98,7 +91,8 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                                 signatureDate,
                                 sharingScope);
 
-                if(getCurrentStep().getIdentifier().equals(OnboardingTask.SignUpEligibleStepIdentifier))
+                if(getCurrentStep().getIdentifier()
+                        .equals(OnboardingTask.SignUpEligibleStepIdentifier))
                 {
                     showNextStep();
                 }

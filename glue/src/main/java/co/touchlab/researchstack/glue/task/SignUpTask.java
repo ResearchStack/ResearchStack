@@ -2,8 +2,6 @@ package co.touchlab.researchstack.glue.task;
 
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.glue.ResearchStack;
-import co.touchlab.researchstack.glue.model.User;
 
 /**
  * Created by bradleymcdermott on 10/16/15.
@@ -14,7 +12,7 @@ public class SignUpTask extends OnboardingTask
     public static final int MINIMUM_STEPS = 2;
 
     public static final String ID_EMAIL    = "ID_EMAIL";
-    public static final String ID_USERNAME    = "ID_EMAIL";
+    public static final String ID_USERNAME = "ID_EMAIL";
     public static final String ID_PASSWORD = "ID_PASSWORD";
 
 
@@ -27,7 +25,6 @@ public class SignUpTask extends OnboardingTask
     public Step getStepAfterStep(Step step, TaskResult result)
     {
         Step nextStep = null;
-        User user = ResearchStack.getInstance().getCurrentUser();
 
         if(step == null)
         {
@@ -48,12 +45,6 @@ public class SignUpTask extends OnboardingTask
         {
             currentStepNumber += 1;
             nextStep = getSignUpStep();
-        }
-
-        // TODO get rid of this
-        if(nextStep == null)
-        {
-            ResearchStack.getInstance().saveUser();
         }
 
         return nextStep;

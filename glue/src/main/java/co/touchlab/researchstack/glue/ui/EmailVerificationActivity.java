@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.glue.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -17,10 +18,11 @@ import co.touchlab.researchstack.glue.ResearchStack;
  */
 public class EmailVerificationActivity extends PassCodeActivity
 {
+    public static final String EXTRA_EMAIL    = "EXTRA_EMAIL";
     public static final String EXTRA_PASSWORD = "EXTRA_PASSWORD";
 
-    private String password;
     private String email;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,12 +39,13 @@ public class EmailVerificationActivity extends PassCodeActivity
 
         ResearchStack researchStack = ResearchStack.getInstance();
 
+        this.email = getIntent().getStringExtra(EXTRA_EMAIL);
         this.password = getIntent().getStringExtra(EXTRA_PASSWORD);
-        this.email =  researchStack.getDataProvider().getUserEmail(this);
 
         ((AppCompatImageView) findViewById(R.id.study_logo)).setImageResource(researchStack.getLargeLogoDiseaseIcon());
         ((AppCompatTextView) findViewById(R.id.email_verification_body)).setText(getString(R.string.email_verification_body,
-                getString(researchStack.getAppName()), email));
+                getString(researchStack.getAppName()),
+                email));
 
         RxView.clicks(findViewById(R.id.email_verification_wrong_email))
                 .subscribe(v -> changeEmail());
@@ -63,7 +66,8 @@ public class EmailVerificationActivity extends PassCodeActivity
     private void resendVerificationEmail()
     {
         ResearchStack.getInstance()
-                .getDataProvider().resendEmailVerification(email)
+                .getDataProvider()
+                .resendEmailVerification(this, email)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(dataResponse -> {
                     Toast.makeText(this, dataResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -78,7 +82,26 @@ public class EmailVerificationActivity extends PassCodeActivity
 
     private void attemptSignIn()
     {
-        Toast.makeText(EmailVerificationActivity.this, "TODO attempt sign in", Toast.LENGTH_SHORT)
-                .show();
+        ResearchStack.getInstance()
+                .getDataProvider()
+                .signIn(this, email, password)
+                .compose(ObservableUtils.applyDefault())
+                .subscribe(dataResponse -> {
+                    if(dataResponse.isSuccess())
+                    {
+                        startActivity(new Intent(this, MainActivity.class));
+                        finish();
+                    }
+                    else
+                    {
+                        Toast.makeText(EmailVerificationActivity.this,
+                                dataResponse.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }, error -> {
+                    Toast.makeText(EmailVerificationActivity.this,
+                            R.string.email_not_verified,
+                            Toast.LENGTH_SHORT).show();
+                });
     }
 }

@@ -111,6 +111,9 @@
     <string name="rsc_username">Username</string>
     <string name="username_hint">username_123</string>
     <string name="optional">Optional</string>
+    <string name="email_not_verified">Please check your email to verify your account before
+        continuing
+    </string>
 
 
 </resources>

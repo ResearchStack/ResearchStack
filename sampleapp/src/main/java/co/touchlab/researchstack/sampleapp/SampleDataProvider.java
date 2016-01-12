@@ -1,8 +1,11 @@
 package co.touchlab.researchstack.sampleapp;
+
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.Date;
 
 import co.touchlab.researchstack.core.StorageManager;
@@ -12,8 +15,8 @@ import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.DataResponse;
 import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
 import co.touchlab.researchstack.sampleapp.bridge.BridgeMessageResponse;
-import co.touchlab.researchstack.sampleapp.bridge.ConsentSignature;
 import co.touchlab.researchstack.sampleapp.network.UserSessionInfo;
+import co.touchlab.researchstack.sampleapp.network.body.ConsentSignatureBody;
 import co.touchlab.researchstack.sampleapp.network.body.EmailBody;
 import co.touchlab.researchstack.sampleapp.network.body.SignInBody;
 import co.touchlab.researchstack.sampleapp.network.body.SignUpBody;
@@ -32,23 +35,42 @@ import rx.Observable;
 public class SampleDataProvider implements DataProvider
 {
     public static final String TEMP_CONSENT_JSON_FILE_NAME = "/consent_sig";
-    public static final String TEMP_USER_EMAIL = "/user_email";
+    public static final String TEMP_USER_EMAIL             = "/user_email";
+    public static final String USER_SESSION_PATH           = "/user_session";
 
     //TODO Add build flavors, add var to BuildConfig for STUDY_ID
-    String STUDY_ID = "ohsu-molemapper";
+    public static final String STUDY_ID = "ohsu-molemapper";
 
     //TODO Add build flavors, add var to BuildConfig for BASE_URL
     String BASE_URL = "https://webservices-staging.sagebridge.org/v3/";
 
     private BridgeService   service;
     private UserSessionInfo userSessionInfo;
+    private Gson    gson     = new Gson();
+    private boolean signedIn = false;
+    private String userEmail;
 
     public SampleDataProvider()
+    {
+        buildRetrofitService(null);
+    }
+
+    private void buildRetrofitService(UserSessionInfo userSessionInfo)
     {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> LogExt.i(
                 SignInStepLayout.class,
                 message));
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        final String sessionToken;
+        if(userSessionInfo != null)
+        {
+            sessionToken = userSessionInfo.getSessionToken();
+        }
+        else
+        {
+            sessionToken = "";
+        }
 
         Interceptor headerInterceptor = chain -> {
             Request original = chain.request();
@@ -57,13 +79,16 @@ public class SampleDataProvider implements DataProvider
             Request request = original.newBuilder()
                     .header("User-Agent", " Mole Mapper/1")
                     .header("Content-Type", "application/json")
-                    .method(original.method(), original.body()).build();
+                    .header("Bridge-Session", sessionToken)
+                    .method(original.method(), original.body())
+                    .build();
 
             return chain.proceed(request);
         };
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(headerInterceptor).addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(headerInterceptor)
+                .addInterceptor(interceptor)
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -71,6 +96,32 @@ public class SampleDataProvider implements DataProvider
                 .client(client)
                 .build();
         service = retrofit.create(BridgeService.class);
+    }
+
+    @Override
+    public Observable<DataResponse> initialize(Context context)
+    {
+        return Observable.create(subscriber -> {
+            UserSessionInfo userSessionInfo = loadUserSession(context);
+            signedIn = userSessionInfo != null;
+            userEmail = loadUserEmail(context);
+
+            buildRetrofitService(userSessionInfo);
+            subscriber.onNext(new DataResponse(true, null));
+
+            if(userSessionInfo != null && ! userSessionInfo.isConsented())
+            {
+                try
+                {
+                    ConsentSignatureBody consent = loadConsentSignatureBody(context);
+                    uploadConsent(consent);
+                }
+                catch(Exception e)
+                {
+                    throw new RuntimeException("Error loading consent", e);
+                }
+            }
+        });
     }
 
     @Override
@@ -87,88 +138,153 @@ public class SampleDataProvider implements DataProvider
     }
 
     @Override
-    public Observable<DataResponse> signIn(String username, String password)
+    public Observable<DataResponse> signIn(Context context, String username, String password)
     {
         SignInBody body = new SignInBody(STUDY_ID, username, password);
-        return service.signIn(body).map(userSessionInfo -> {
-            this.userSessionInfo = userSessionInfo;
 
-            DataResponse response = new DataResponse();
-            response.setSuccess(true);
-            return response;
+        // response 412 still has a response body, so catch all http errors here
+        return service.signIn(body).doOnNext(response -> {
+
+            if(response.code() == 200)
+            {
+                userSessionInfo = response.body();
+            }
+            else if(response.code() == 412)
+            {
+                try
+                {
+                    String errorBody = response.errorBody().string();
+                    userSessionInfo = gson.fromJson(errorBody, UserSessionInfo.class);
+                }
+                catch(IOException e)
+                {
+                    throw new RuntimeException("Error deserializing server sign in response");
+                }
+
+            }
+            if(userSessionInfo != null)
+            {
+                saveUserSession(context, userSessionInfo);
+                buildRetrofitService(userSessionInfo);
+            }
+        }).map(response -> {
+            boolean success = response.isSuccess() || response.code() == 412;
+            return new DataResponse(success, response.message());
         });
     }
 
     @Override
-    public Observable<DataResponse> signOut()
+    public Observable<DataResponse> signOut(Context context)
     {
-        return null;
+        return service.signOut().map(response -> new DataResponse(response.isSuccess(), null));
     }
 
     @Override
-    public Observable<DataResponse> resendEmailVerification(String email)
+    public Observable<DataResponse> resendEmailVerification(Context context, String email)
     {
         EmailBody body = new EmailBody(STUDY_ID, email);
         return service.resendEmailVerification(body);
     }
 
     @Override
-    public boolean isSignedUp()
+    public boolean isSignedUp(Context context)
     {
-        return false;
+        return userEmail != null;
     }
 
     @Override
-    public boolean isSignedIn()
+    public boolean isSignedIn(Context context)
     {
-        return false;
-    }
-
-    @Override
-    public boolean isConsented()
-    {
-        return false;
+        return signedIn;
     }
 
     @Override
     public void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope)
     {
-        ConsentSignature signature = new ConsentSignature(name,
+        // User is not signed in yet, so we need to save consent info to disk for later upload
+        ConsentSignatureBody signature = new ConsentSignatureBody(STUDY_ID,
+                name,
                 birthDate,
                 imageData,
                 "image/png",
                 scope);
 
-        Gson gson = new Gson();
         String jsonString = gson.toJson(signature);
 
         LogExt.d(getClass(), "Writing user json:\n" + signature);
 
-        StorageManager.getFileAccess()
-                .writeString(context, TEMP_CONSENT_JSON_FILE_NAME, jsonString);
+        writeJsonString(context, jsonString, TEMP_CONSENT_JSON_FILE_NAME);
+    }
+
+    private ConsentSignatureBody loadConsentSignatureBody(Context context)
+    {
+        String consentJson = loadJsonString(context, TEMP_CONSENT_JSON_FILE_NAME);
+        return gson.fromJson(consentJson, ConsentSignatureBody.class);
+    }
+
+    private void uploadConsent(ConsentSignatureBody consent)
+    {
+        service.consentSignature(consent).subscribe(response -> {
+            LogExt.d(getClass(),
+                    "Response: " + response.code() + ", message: " + response.body().getMessage());
+        });
     }
 
     @Override
     public String getUserEmail(Context context)
     {
-        try
-        {
-            return StorageManager.getFileAccess().readString(context, TEMP_USER_EMAIL);
-        }
-        catch(FileAccessException e)
-        {
-            LogExt.w(getClass(), "TEMP USER EMAIL not readable");
-            return null;
-        }
+        return userEmail;
     }
 
     // TODO this is a temporary solution
     private void saveUserEmail(Context context, String email)
     {
-        StorageManager.getFileAccess()
-                .writeString(context, TEMP_USER_EMAIL, email);
+        writeJsonString(context, email, TEMP_USER_EMAIL);
     }
 
+    @Nullable
+    private String loadUserEmail(Context context)
+    {
+        String email = null;
+        try
+        {
+            email = loadJsonString(context, TEMP_USER_EMAIL);
+        }
+        catch(FileAccessException e)
+        {
+            LogExt.w(getClass(), "TEMP USER EMAIL not readable");
+        }
+        return email;
+    }
+
+    private void saveUserSession(Context context, UserSessionInfo userInfo)
+    {
+        String userSessionJson = gson.toJson(userInfo);
+        writeJsonString(context, userSessionJson, USER_SESSION_PATH);
+    }
+
+    private void writeJsonString(Context context, String userSessionJson, String userSessionPath)
+    {
+        StorageManager.getFileAccess().writeString(context, userSessionPath, userSessionJson);
+    }
+
+    private UserSessionInfo loadUserSession(Context context)
+    {
+        try
+        {
+            String userSessionJson = loadJsonString(context, USER_SESSION_PATH);
+            return gson.fromJson(userSessionJson, UserSessionInfo.class);
+        }
+        catch(FileAccessException e)
+        {
+            return null;
+        }
+    }
+
+    private String loadJsonString(Context context, String path)
+    {
+        return StorageManager.getFileAccess().readString(context, path);
+    }
 
     public interface BridgeService
     {
@@ -176,8 +292,8 @@ public class SampleDataProvider implements DataProvider
         /**
          * @return One of the following responses
          * <ul>
-         *     <li><b>201</b> returns message that user has been signed up</li>
-         *     <li><b>473</b> error - returns message that study is full</li>
+         * <li><b>201</b> returns message that user has been signed up</li>
+         * <li><b>473</b> error - returns message that study is full</li>
          * </ul>
          */
         @POST("auth/signUp")
@@ -186,13 +302,16 @@ public class SampleDataProvider implements DataProvider
         /**
          * @return One of the following responses
          * <ul>
-         *     <li><b>200</b> returns UserSessionInfo Object</li>
-         *     <li><b>404</b> error - "Credentials incorrect or missing"</li>
-         *     <li><b>412</b> error - "User has not consented to research"</li>
+         * <li><b>200</b> returns UserSessionInfo Object</li>
+         * <li><b>404</b> error - "Credentials incorrect or missing"</li>
+         * <li><b>412</b> error - "User has not consented to research"</li>
          * </ul>
          */
         @POST("auth/signIn")
-        Observable<UserSessionInfo> signIn(@Body SignInBody body);
+        Observable<Response<UserSessionInfo>> signIn(@Body SignInBody body);
+
+        @POST("subpopulations/" + STUDY_ID + "/consents/signature")
+        Observable<Response<BridgeMessageResponse>> consentSignature(@Body ConsentSignatureBody body);
 
         /**
          * @return Response code <b>200</b> w/ message explaining instructions on how the user should
@@ -209,7 +328,6 @@ public class SampleDataProvider implements DataProvider
         Observable<DataResponse> resendEmailVerification(@Body EmailBody body);
 
         /**
-         *
          * @return Response code 200 w/ message telling user has been signed out
          */
         @POST("auth/signOut")

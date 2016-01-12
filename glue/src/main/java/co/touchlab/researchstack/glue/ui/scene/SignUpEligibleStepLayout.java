@@ -8,12 +8,15 @@ import android.widget.RelativeLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import java.util.Date;
+
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.ui.views.SubmitBar;
 
 public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayout
@@ -60,8 +63,7 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
         LayoutInflater.from(getContext()).inflate(R.layout.item_eligible, this, true);
 
         // TODO only for testing
-        RxView.clicks(findViewById(R.id.DEBUG_skip_consent))
-                .subscribe(v -> skipConsentActivity());
+        RxView.clicks(findViewById(R.id.DEBUG_skip_consent)).subscribe(v -> skipConsentActivity());
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setSubmitAction((v) -> startConsentActivity());
@@ -70,6 +72,14 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
 
     private void skipConsentActivity()
     {
+        ResearchStack.getInstance()
+                .getDataProvider()
+                .saveConsent(getContext(),
+                        "test name",
+                        new Date(662748042000l),
+                        "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu",
+                        "",
+                        "all_qualified_researchers");
         callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
     }
 

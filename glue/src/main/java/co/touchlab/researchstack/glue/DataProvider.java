@@ -9,25 +9,25 @@ public interface DataProvider
 {
     Observable<DataResponse> signUp(Context context, String email, String username, String password);
 
-    Observable<DataResponse> signIn(String username, String password);
+    Observable<DataResponse> signIn(Context context, String username, String password);
 
-    Observable<DataResponse> signOut();
+    Observable<DataResponse> signOut(Context context);
 
-    Observable<DataResponse> resendEmailVerification(String email);
+    Observable<DataResponse> resendEmailVerification(Context context, String email);
 
-    boolean isSignedUp();
+    boolean isSignedUp(Context context);
 
-    boolean isSignedIn();
-
-    boolean isConsented();
+    boolean isSignedIn(Context context);
 
     void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope);
 
     String getUserEmail(Context context);
 
-//  TODO  void getUserProfile(TODO);
+    Observable<DataResponse> initialize(Context context);
 
-//  TODO  void updateUserProfile(TODO);
+    //  TODO  void getUserProfile(TODO);
 
-//  TODO  void saveSurveyResult(TODO);
+    //  TODO  void updateUserProfile(TODO);
+
+    //  TODO  void saveSurveyResult(TODO);
 }

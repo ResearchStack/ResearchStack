@@ -21,12 +21,12 @@ import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.glue.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.glue.task.SignInTask;
 import co.touchlab.researchstack.glue.ui.adapter.TextWatcherAdapter;
 
 public class SignInStepLayout extends RelativeLayout implements StepLayout
 {
-    public static final String SIGNED_IN = "signedIn";
-    private View progress;
+    private View               progress;
     private AppCompatEditText  username;
     private AppCompatEditText  password;
     private TextView           forgotPassword;
@@ -120,11 +120,10 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
             }).withEndAction(() -> {
                 ResearchStack.getInstance()
                         .getDataProvider()
-                        .signIn(username, password)
+                        .signIn(getContext(), username, password)
                         .compose(ObservableUtils.applyDefault())
                         .subscribe(dataResponse -> {
                             // TODO figure out a better way to return the password if necessary
-                            result.setResult(SIGNED_IN);
                             callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
                         }, throwable -> {
                             progress.animate()
@@ -138,8 +137,10 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
                                 // Sign in returns 404 if they haven't verified email. If the email
                                 // matches the one they used to sign up, go to verification activity
                                 // TODO figure out a better way to return the password if necessary
-                                result.setResult(password);
+                                result.setResultForIdentifier(SignInTask.ID_EMAIL, username);
+                                result.setResultForIdentifier(SignInTask.ID_PASSWORD, password);
                                 callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+                                return;
                             }
 
                             // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

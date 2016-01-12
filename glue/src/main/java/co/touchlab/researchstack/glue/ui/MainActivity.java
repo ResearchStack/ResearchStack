@@ -65,10 +65,9 @@ public class MainActivity extends PassCodeActivity
 
         View headerView = getLayoutInflater().inflate(R.layout.include_user_header, null);
 
+        // TODO set header from user data
         AppCompatTextView name = (AppCompatTextView) headerView.findViewById(R.id.name);
-        name.setText(ResearchStack.getInstance().getCurrentUser().getName());
         AppCompatTextView email = (AppCompatTextView) headerView.findViewById(R.id.email);
-        email.setText(ResearchStack.getInstance().getCurrentUser().getEmail());
 
         ImageView image = (ImageView) headerView.findViewById(R.id.profile_image);
         image.setOnLongClickListener(v -> {

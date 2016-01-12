@@ -12,6 +12,7 @@ import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.glue.DataProvider;
+import co.touchlab.researchstack.glue.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 
@@ -29,6 +30,7 @@ public class SplashActivity extends PassCodeActivity
         new Handler().postDelayed(() -> launchActivity(), 1000);
     }
 
+
     @Override
     protected void onDataReady()
     {
@@ -36,20 +38,22 @@ public class SplashActivity extends PassCodeActivity
         Log.w("asdf", "onDataReady: " + getClass().getSimpleName());
         DataProvider dataProvider = ResearchStack.getInstance().getDataProvider();
 
-        if(dataProvider.isSignedIn())
-        {
-            launchMainActivity();
-        }
-        else if(dataProvider.isSignedUp())
-        {
-            launchEmailVerificationActivity();
-        }
-        else
-        {
-            launchOnboardingActivity();
-        }
+        dataProvider.initialize(this)
+                .compose(ObservableUtils.applyDefault())
+                .subscribe(response -> {
+                    if(dataProvider.isSignedIn(SplashActivity.this))
+                    {
+                        launchMainActivity();
+                    }
+                    else
+                    {
+                        launchOnboardingActivity();
+                    }
 
-        finish();
+                    finish();
+                });
+
+
     }
 
     @Override
@@ -85,11 +89,6 @@ public class SplashActivity extends PassCodeActivity
     private void launchOnboardingActivity()
     {
         startActivity(new Intent(this, OnboardingActivity.class));
-    }
-
-    private void launchEmailVerificationActivity()
-    {
-        startActivity(new Intent(this, EmailVerificationActivity.class));
     }
 
     private void launchMainActivity()
