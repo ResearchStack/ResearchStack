@@ -3,6 +3,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -47,8 +48,18 @@ public class SubmitBar extends LinearLayout
         setSubmitAction(null, submit);
     }
 
+    public void setSubmitAction(int title, Action1 submit)
+    {
+        setSubmitAction(getResources().getString(title), submit);
+    }
+
     public void setSubmitAction(String title, Action1 submit)
     {
+        if (this.submit.getVisibility() != View.VISIBLE)
+        {
+            this.submit.setVisibility(View.VISIBLE);
+        }
+
         if (!TextUtils.isEmpty(title))
         {
             this.submit.setText(title);
@@ -57,19 +68,39 @@ public class SubmitBar extends LinearLayout
         RxView.clicks(this.submit).subscribe(submit);
     }
 
+    public void hideSubmitAction()
+    {
+        this.submit.setVisibility(View.GONE);
+    }
+
     public void setExitAction(Action1 submit)
     {
         setExitAction(null, submit);
     }
 
+    public void setExitAction(int title, Action1 exit)
+    {
+        setExitAction(getResources().getString(title), exit);
+    }
+
     public void setExitAction(String title, Action1 exit)
     {
+        if (this.exit.getVisibility() != View.VISIBLE)
+        {
+            this.exit.setVisibility(View.VISIBLE);
+        }
+
         if (!TextUtils.isEmpty(title))
         {
             this.exit.setText(title);
         }
 
         RxView.clicks(this.exit).subscribe(exit);
+    }
+
+    public void hideExitAction()
+    {
+        this.exit.setVisibility(View.GONE);
     }
 
 }

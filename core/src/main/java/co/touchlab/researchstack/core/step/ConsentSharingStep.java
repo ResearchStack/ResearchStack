@@ -5,7 +5,6 @@ import co.touchlab.researchstack.core.ui.step.body.SingleChoiceQuestionBody;
 
 public class ConsentSharingStep extends QuestionStep
 {
-    private String localizedLearnMoreHTMLContent;
 
     public ConsentSharingStep(String identifier)
     {
@@ -22,15 +21,5 @@ public class ConsentSharingStep extends QuestionStep
     public Class getSceneClass()
     {
         return SingleChoiceQuestionBody.class;
-    }
-
-    public String getLocalizedLearnMoreHTMLContent()
-    {
-        return localizedLearnMoreHTMLContent;
-    }
-
-    public void setLocalizedLearnMoreHTMLContent(String localizedLearnMoreHTMLContent)
-    {
-        this.localizedLearnMoreHTMLContent = localizedLearnMoreHTMLContent;
     }
 }

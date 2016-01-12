@@ -36,7 +36,7 @@ public class SingleChoiceQuestionBody <T> implements StepBody
         choices = format.getChoices();
 
         // TODO inflate this?
-        radioGroup = new RadioGroup(inflater.getContext());
+        radioGroup = new RadioGroup(parent.getContext());
 
         for(int i = 0; i < choices.length; i++)
         {

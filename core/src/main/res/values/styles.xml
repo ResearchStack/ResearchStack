@@ -1,5 +1,7 @@
 <resources>
 
+    <style name="Core"/>
+
     <style name="ConsentReviewSignatureView">
         <item name="signatureColor">?android:attr/textColorPrimary</item>
         <item name="signatureStrokeSize">1dp</item>
@@ -9,6 +11,41 @@
         <item name="guidelineColor">#ccc</item>
         <item name="guidelineMargin">12dp</item>
         <item name="guidelineHeight">1dp</item>
+    </style>
+
+    <style name="Core.TextAppearance.Title" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/preference_fallback_accent_color</item>
+    </style>
+
+    <style name="Core.Survey"/>
+
+    <style name="Core.Survey.Title">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:minHeight">@dimen/rsc_item_size_default</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">@dimen/rsc_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsc_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsc_padding_medium</item>
+        <item name="android:paddingBottom">@dimen/rsc_padding_medium</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textSize">@dimen/rsc_text_size_title</item>
+    </style>
+
+    <style name="Core.Survey.Summary">
+        <item name="android:layout_marginTop">@dimen/rsc_padding_wedge</item>
+        <item name="android:layout_marginBottom">@dimen/rsc_padding_small</item>
+        <item name="android:paddingLeft">@dimen/rsc_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsc_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsc_padding_wedge</item>
+        <item name="android:paddingBottom">@dimen/rsc_padding_small</item>
+    </style>
+
+    <style name="Core.Survey.Summary.Link">
+        <item name="android:layout_marginTop">@dimen/rsc_padding_wedge</item>
+        <item name="android:paddingLeft">@dimen/rsc_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsc_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsc_padding_wedge</item>
+        <item name="android:paddingBottom">@dimen/rsc_padding_small</item>
     </style>
 
 </resources>

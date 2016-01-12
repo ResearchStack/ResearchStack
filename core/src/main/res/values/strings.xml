@@ -50,10 +50,14 @@
         worldwide
     </string>
     <string name="rsc_consent_share_only">Only share my data with %1$s</string>
-    <string name="rsc_consent_share_description">%1$s will receive your study data from your
-        participation in this study.\n\nSharing your coded study data more broadly (without
-        information such as your name) may benefit this and future research.
+    <string name="rsc_consent_share_description"><![CDATA[%1$s will receive your study data from your
+        participation in this study. \n\nSharing your coded study data more broadly (without
+        information such as your name) may benefit this and future research.<br/><br/><a href="%2$s">
+        Learn more about data sharing</a>]]>
     </string>
+
+
+
     <string name="rsc_consent_share_more_info">Learn more about data sharing</string>
 
     <!-- Consent doc step -->

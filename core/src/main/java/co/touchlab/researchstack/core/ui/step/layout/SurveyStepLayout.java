@@ -1,21 +1,19 @@
 package co.touchlab.researchstack.core.ui.step.layout;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Parcelable;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.jakewharton.rxbinding.view.RxView;
 
 import java.lang.reflect.Constructor;
 
@@ -24,9 +22,10 @@ import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.body.StepBody;
-import rx.functions.Action1;
+import co.touchlab.researchstack.core.ui.views.SubmitBar;
 
 public class SurveyStepLayout extends RelativeLayout implements StepLayout
 {
@@ -46,13 +45,10 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Child Views
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private ImageView    image;
+    private LinearLayout container;
     private TextView     title;
     private TextView     summary;
-    private TextView     moreInfo;
-    private TextView     next;
-    private TextView     skip;
-    private LinearLayout container;
+    private SubmitBar    submitBar;
     private StepBody     stepBody;
 
     public SurveyStepLayout(Context context)
@@ -198,14 +194,11 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
         });
 
-        image = (ImageView) findViewById(R.id.image);
         title = (TextView) findViewById(R.id.title);
         summary = (TextView) findViewById(R.id.text);
-        moreInfo = (TextView) findViewById(R.id.more_info);
-        next = (TextView) findViewById(R.id.next);
-        RxView.clicks(next).subscribe(v -> onNextClicked());
+        submitBar = (SubmitBar) findViewById(R.id.submit_bar);
 
-        skip = (TextView) findViewById(R.id.skip);
+        submitBar.setSubmitAction(v -> onNextClicked());
 
         if(step != null)
         {
@@ -213,17 +206,33 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
             if(! TextUtils.isEmpty(step.getText()))
             {
-                setSummary(step.getText());
+                summary.setVisibility(View.VISIBLE);
+                summary.setText(Html.fromHtml(step.getText()));
+                summary.setMovementMethod(new TextViewLinkHandler(){
+                    @Override
+                    public void onLinkClick(String url)
+                    {
+                        Intent intent = ViewWebDocumentActivity.newIntent(
+                                getContext(), step.getTitle(), url);
+                        getContext().startActivity(intent);
+                    }
+                });
             }
 
-            skip.setVisibility(step.isOptional() ? View.VISIBLE : View.GONE);
-            RxView.clicks(skip).subscribe(v -> onSkipClicked());
+            if (step.isOptional())
+            {
+                submitBar.setExitAction(R.string.rsc_step_skip, v -> onSkipClicked());
+            }
+            else
+            {
+                submitBar.hideExitAction();
+            }
         }
     }
 
     protected int getRootLayoutResourceId()
     {
-        return R.layout.scene;
+        return R.layout.step_layout;
     }
 
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
@@ -282,109 +291,6 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     public String getString(@StringRes int stringResId)
     {
         return getResources().getString(stringResId);
-    }
-
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Setters for UI
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-    public void setImage(@DrawableRes int drawableResid)
-    {
-        if(image.getVisibility() != View.VISIBLE)
-        {
-            image.setVisibility(View.VISIBLE);
-        }
-
-        image.setImageResource(drawableResid);
-    }
-
-    public ImageView getImageView()
-    {
-        return image;
-    }
-
-    public void setTitle(@StringRes int stringRes)
-    {
-        String title = getResources().getString(stringRes);
-        setTitle(title);
-    }
-
-    public void setTitle(CharSequence string)
-    {
-        title.setText(string);
-    }
-
-    public void setSummary(@StringRes int stringRes)
-    {
-        String summary = getResources().getString(stringRes);
-        setSummary(summary);
-    }
-
-    public void setSummary(String string)
-    {
-        if(summary.getVisibility() != View.VISIBLE)
-        {
-            summary.setVisibility(View.VISIBLE);
-        }
-
-        summary.setText(string);
-    }
-
-    public void setMoreInfo(@StringRes int stringRes, Action1<? super Object> action)
-    {
-        if(moreInfo.getVisibility() != View.VISIBLE)
-        {
-            moreInfo.setVisibility(View.VISIBLE);
-        }
-
-        moreInfo.setText(stringRes);
-
-        if(action != null)
-        {
-            RxView.clicks(moreInfo).subscribe(action);
-        }
-    }
-
-    public TextView getMoreInfo()
-    {
-        return moreInfo;
-    }
-
-    public void setSkip(boolean isOptional)
-    {
-        setSkip(isOptional, 0, null);
-    }
-
-    public void setSkip(boolean isOptional, @StringRes int stringRes, Action1<? super Object> action)
-    {
-        skip.setVisibility(isOptional ? View.VISIBLE : View.GONE);
-
-        if(stringRes != 0)
-        {
-            skip.setText(stringRes);
-        }
-
-        if(action != null)
-        {
-            RxView.clicks(skip).subscribe(action);
-        }
-    }
-
-    public void setNextButtonText(@StringRes int stringRes)
-    {
-        String string = getResources().getString(stringRes);
-        setNextButtonText(string);
-    }
-
-    public void setNextButtonText(String string)
-    {
-        next.setText(string);
-    }
-
-    protected void hideNextButtons()
-    {
-        next.setVisibility(View.GONE);
-        skip.setVisibility(View.GONE);
     }
 
 }

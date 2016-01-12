@@ -3,8 +3,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
 
-import java.util.Collections;
-
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
@@ -113,7 +111,7 @@ public class ConsentTask extends OrderedTask
         sharingStep.setOptional(false);
         sharingStep.setShowsProgress(false);
         sharingStep.setUseSurveyMode(false);
-        sharingStep.setLocalizedLearnMoreHTMLContent(localizedLearnMoreHTMLContent);
+//        sharingStep.setLocalizedLearnMoreHTMLContent(localizedLearnMoreHTMLContent);
 
         String shareWidely = r.getString(R.string.rsc_consent_share_widely, investigatorLongDesc);
         Choice<String> shareWidelyChoice = new Choice<>(shareWidely, "sponsors_and_partners", null);
@@ -130,7 +128,7 @@ public class ConsentTask extends OrderedTask
 
         sharingStep.setTitle(r.getString(R.string.rsc_consent_share_title));
         sharingStep.setText(r.getString(R.string.rsc_consent_share_description,
-                investigatorLongDesc));
+                investigatorLongDesc, localizedLearnMoreHTMLContent));
 
         addStep(sharingStep);
     }
