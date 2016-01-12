@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.core.ui.views;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -14,63 +15,75 @@ import rx.functions.Action1;
 
 public class SubmitBar extends LinearLayout
 {
-    private TextView submit;
-    private TextView exit;
+    private TextView positiveView;
+    private TextView negativeView;
 
     public SubmitBar(Context context)
     {
         super(context);
-        init();
+        init(context, null, 0);
     }
 
     public SubmitBar(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        init();
+        init(context, attrs, 0);
     }
 
     public SubmitBar(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context, attrs, 0);
     }
 
-    private void init()
+    private void init(Context context, AttributeSet attrs, int defStyleAttr)
     {
         LayoutInflater.from(getContext()).inflate(R.layout.bar_submit, this, true);
 
-        submit = (TextView) findViewById(R.id.bar_submit_postitive);
-        exit = (TextView) findViewById(R.id.bar_submit_negative);
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.SubmitBar,
+                defStyleAttr,
+                R.style.SubmitBar);
+
+        String positiveText = a.getString(R.styleable.SubmitBar_positiveActionTitle);
+        positiveView = (TextView) findViewById(R.id.bar_submit_postitive);
+        positiveView.setText(positiveText);
+
+        String negativeText = a.getString(R.styleable.SubmitBar_negativeActionTitle);
+        negativeView = (TextView) findViewById(R.id.bar_submit_negative);
+        negativeView.setText(negativeText);
+
+        a.recycle();
     }
 
-    public void setSubmitAction(Action1 submit)
+    public void setPositiveAction(Action1 submit)
     {
-        setSubmitAction(null, submit);
+        setPositiveAction(null, submit);
     }
 
-    public void setSubmitAction(int title, Action1 submit)
+    public void setPositiveAction(int title, Action1 submit)
     {
-        setSubmitAction(getResources().getString(title), submit);
+        setPositiveAction(getResources().getString(title), submit);
     }
 
-    public void setSubmitAction(String title, Action1 submit)
+    public void setPositiveAction(String title, Action1 submit)
     {
-        if (this.submit.getVisibility() != View.VISIBLE)
+        if (this.positiveView.getVisibility() != View.VISIBLE)
         {
-            this.submit.setVisibility(View.VISIBLE);
+            this.positiveView.setVisibility(View.VISIBLE);
         }
 
         if (!TextUtils.isEmpty(title))
         {
-            this.submit.setText(title);
+            this.positiveView.setText(title);
         }
 
-        RxView.clicks(this.submit).subscribe(submit);
+        RxView.clicks(this.positiveView).subscribe(submit);
     }
 
     public void hideSubmitAction()
     {
-        this.submit.setVisibility(View.GONE);
+        this.positiveView.setVisibility(View.GONE);
     }
 
     public void setExitAction(Action1 submit)
@@ -85,22 +98,22 @@ public class SubmitBar extends LinearLayout
 
     public void setExitAction(String title, Action1 exit)
     {
-        if (this.exit.getVisibility() != View.VISIBLE)
+        if (this.negativeView.getVisibility() != View.VISIBLE)
         {
-            this.exit.setVisibility(View.VISIBLE);
+            this.negativeView.setVisibility(View.VISIBLE);
         }
 
         if (!TextUtils.isEmpty(title))
         {
-            this.exit.setText(title);
+            this.negativeView.setText(title);
         }
 
-        RxView.clicks(this.exit).subscribe(exit);
+        RxView.clicks(this.negativeView).subscribe(exit);
     }
 
     public void hideExitAction()
     {
-        this.exit.setVisibility(View.GONE);
+        this.negativeView.setVisibility(View.GONE);
     }
 
 }

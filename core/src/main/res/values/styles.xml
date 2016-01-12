@@ -1,6 +1,9 @@
 <resources>
 
-    <style name="Core"/>
+    <style name="SubmitBar">
+        <item name="positiveActionTitle">@string/rsc_next</item>
+        <item name="negativeActionTitle">@string/rsc_step_skip</item>
+    </style>
 
     <style name="ConsentReviewSignatureView">
         <item name="signatureColor">?android:attr/textColorPrimary</item>
@@ -11,6 +14,14 @@
         <item name="guidelineColor">#ccc</item>
         <item name="guidelineMargin">12dp</item>
         <item name="guidelineHeight">1dp</item>
+    </style>
+
+    <style name="Core"/>
+
+    <style name="Core.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#5fa3d0</item>
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:background">@android:color/white</item>
     </style>
 
     <style name="Core.TextAppearance.Title" parent="TextAppearance.AppCompat.Title">

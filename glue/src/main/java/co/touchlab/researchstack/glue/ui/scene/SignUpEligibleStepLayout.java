@@ -66,7 +66,7 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
         RxView.clicks(findViewById(R.id.DEBUG_skip_consent)).subscribe(v -> skipConsentActivity());
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
-        submitBar.setSubmitAction((v) -> startConsentActivity());
+        submitBar.setPositiveAction((v) -> startConsentActivity());
         submitBar.setExitAction((v) -> exitSignUpActivity());
     }
 

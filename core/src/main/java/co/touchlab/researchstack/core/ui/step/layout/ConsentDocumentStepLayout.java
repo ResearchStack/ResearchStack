@@ -1,20 +1,19 @@
 package co.touchlab.researchstack.core.ui.step.layout;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.RelativeLayout;
-
-import com.jakewharton.rxbinding.view.RxView;
+import android.widget.LinearLayout;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.ConsentDocumentStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.views.SubmitBar;
 
 /**
  * Implement saved state for the following objects:
@@ -22,7 +21,7 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
  * {@link #stepResult}
  * {@link #confirmationDialogBody}
  */
-public class ConsentDocumentStepLayout extends RelativeLayout implements StepLayout
+public class ConsentDocumentStepLayout extends LinearLayout implements StepLayout
 {
     private SceneCallbacks callbacks;
 
@@ -90,17 +89,15 @@ public class ConsentDocumentStepLayout extends RelativeLayout implements StepLay
         WebView pdfView = (WebView) findViewById(R.id.webview);
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
 
-        View agree = findViewById(R.id.agree);
-        RxView.clicks(agree).subscribe(v -> showDialog());
-
-        View disagree = findViewById(R.id.disagree);
-        // TODO make this call onSaveStep with false result
-        RxView.clicks(disagree).subscribe(v -> callbacks.onCancelStep());
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        submitBar.setPositiveAction(v -> showDialog());
+        submitBar.setExitAction(v -> callbacks.onCancelStep());
     }
 
     private void showDialog()
     {
-        new AlertDialog.Builder(getContext()).setTitle(R.string.rsc_consent_review_alert_title)
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.rsc_consent_review_alert_title)
                 .setMessage(confirmationDialogBody)
                 .setCancelable(false)
                 .setPositiveButton(R.string.rsc_agree, (dialog, which) -> {

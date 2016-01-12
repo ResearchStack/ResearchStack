@@ -1,40 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     >
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/button_container"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         />
 
-    <FrameLayout
-        android:id="@+id/button_container"
+    <co.touchlab.researchstack.core.ui.views.SubmitBar
+        android:id="@+id/submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        >
+        app:positiveActionTitle="@string/rsc_agree"
+        app:negativeActionTitle="@string/rsc_disagree"
+        />
 
-        <Button
-            android:id="@+id/disagree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rsc_disagree"
-            android:textColor="?attr/colorAccent"
-            />
-
-        <Button
-            android:id="@+id/agree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="@string/rsc_agree"
-            android:textColor="?attr/colorAccent"
-            />
-
-    </FrameLayout>
-
-</RelativeLayout>
+</LinearLayout>

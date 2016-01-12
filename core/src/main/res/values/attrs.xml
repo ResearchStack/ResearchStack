@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="SubmitBar">
+        <attr name="positiveActionTitle"
+              format="string"/>
+        <attr name="negativeActionTitle"
+              format="string"/>
+    </declare-styleable>
+
     <declare-styleable name="SignatureView">
         <attr name="signatureColor"
               format="color"/>

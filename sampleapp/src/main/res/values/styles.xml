@@ -12,6 +12,7 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="alertDialogTheme">@style/AppTheme.Dialog</item>
+        <item name="android:alertDialogTheme">@style/AppTheme.Dialog</item>
         <item name="android:actionBarStyle">@style/AppTheme.ActionBarStyle</item>
         <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
         <item name="submitBackground">@color/gray</item>
@@ -23,7 +24,7 @@
         <!-- Used for the buttons -->
         <item name="colorAccent">@color/colorAccent</item>
         <!-- Used for the title and text -->
-        <item name="android:textColorPrimary">@color/abc_primary_text_material_light</item>
+        <item name="android:textColorPrimary">@color/warm_grey</item>
         <!-- Used for the background -->
         <item name="android:background">@android:color/white</item>
     </style>

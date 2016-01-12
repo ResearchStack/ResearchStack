@@ -99,7 +99,7 @@
     <!--Other -->
     <string name="rsc_get_started">Get Started</string>
     <string name="rsc_done">Done</string>
-    <string name="rsc_step_skip">Skip this question</string>
+    <string name="rsc_step_skip">Skip</string>
     <string name="rsc_next">next</string>
     <string name="rsc_what_to_expect">What to Expect</string>
     <string name="rsc_name">Name</string>

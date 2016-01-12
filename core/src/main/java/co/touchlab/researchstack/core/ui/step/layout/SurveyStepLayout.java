@@ -198,7 +198,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         summary = (TextView) findViewById(R.id.text);
         submitBar = (SubmitBar) findViewById(R.id.submit_bar);
 
-        submitBar.setSubmitAction(v -> onNextClicked());
+        submitBar.setPositiveAction(v -> onNextClicked());
 
         if(step != null)
         {
