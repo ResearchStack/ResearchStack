@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/rsc_margin_left"
+    android:layout_marginRight="@dimen/rsc_margin_right"
     android:gravity="center_vertical"
-    android:minHeight="48dp"
+    android:minHeight="@dimen/rsc_item_size_default"
+    android:padding="8dp"
     tools:text="@string/lorem_name"
     />
