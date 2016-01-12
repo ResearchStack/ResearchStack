@@ -4,29 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/rsc_padding_medium"
     >
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
         android:layout_centerHorizontal="true"
-        android:minHeight="72dp"
-        android:minWidth="72dp"
-        android:scaleType="center"
-        tools:src="@android:drawable/sym_action_call"
+        android:scaleType="centerInside"
+        tools:src="@drawable/debug_gray"
         />
 
     <TextView
         android:id="@+id/title"
-        style="@style/TextAppearance.AppCompat.Headline"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/image"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:padding="@dimen/rsc_padding_medium"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/rsc_margin_left"
+        android:layout_marginRight="@dimen/rsc_margin_right"
+
+        android:textSize="20sp"
+        android:textColor="?attr/colorAccent"
+
         tools:text="@string/lorem_name"
         />
 
@@ -36,9 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        tools:text="@string/lorem_name"
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="@dimen/rsc_margin_left"
+        android:layout_marginRight="@dimen/rsc_margin_right"
+        tools:text="@string/lorem_medium"
         />
 
     <TextView
@@ -47,21 +48,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/summary"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:padding="16dp"
+        android:layout_marginLeft="48dp"
+        android:paddingTop="@dimen/rsc_padding_medium"
+        android:paddingBottom="@dimen/rsc_padding_medium"
+        android:paddingRight="@dimen/rsc_padding_medium"
+
         android:textColor="?attr/colorAccent"
+
         tools:text="More Info"
         />
 
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
+    <co.touchlab.researchstack.core.ui.views.SubmitBar
+        android:id="@+id/submit_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/skip"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/rsc_next"
-        />
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

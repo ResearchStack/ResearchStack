@@ -1,5 +1,6 @@
-package co.touchlab.researchstack.glue.ui.views;
+package co.touchlab.researchstack.core.ui.views;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -7,7 +8,7 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.core.R;
 import rx.functions.Action1;
 
 public class SubmitBar extends LinearLayout
@@ -43,11 +44,31 @@ public class SubmitBar extends LinearLayout
 
     public void setSubmitAction(Action1 submit)
     {
+        setSubmitAction(null, submit);
+    }
+
+    public void setSubmitAction(String title, Action1 submit)
+    {
+        if (!TextUtils.isEmpty(title))
+        {
+            this.submit.setText(title);
+        }
+
         RxView.clicks(this.submit).subscribe(submit);
     }
 
-    public void setExitAction(Action1 exit)
+    public void setExitAction(Action1 submit)
     {
+        setExitAction(null, submit);
+    }
+
+    public void setExitAction(String title, Action1 exit)
+    {
+        if (!TextUtils.isEmpty(title))
+        {
+            this.exit.setText(title);
+        }
+
         RxView.clicks(this.exit).subscribe(exit);
     }
 

@@ -21,6 +21,7 @@ import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.core.utils.ResUtils;
 
 public class ConsentVisualStepLayout extends RelativeLayout implements StepLayout
@@ -78,21 +79,28 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
         ConsentSection data = step.getSection();
 
         // Set Image
+        TypedValue typedValue = new TypedValue();
+        TypedArray a = getContext().obtainStyledAttributes(typedValue.data,
+                new int[] {R.attr.colorAccent});
+        int accentColor = a.getColor(0, 0);
+        a.recycle();
+
+        ImageView imageView = (ImageView) findViewById(R.id.image);
+        imageView.setColorFilter(accentColor, PorterDuff.Mode.ADD);
+
         String imageName = ! TextUtils.isEmpty(data.getCustomImageName())
                 ? data.getCustomImageName()
                 : data.getType().getImageName();
+
         if(! TextUtils.isEmpty(imageName))
         {
-            TypedValue typedValue = new TypedValue();
-            TypedArray a = getContext().obtainStyledAttributes(typedValue.data,
-                    new int[] {R.attr.colorAccent});
-            int accentColor = a.getColor(0, 0);
-            a.recycle();
-
             int imageResId = ResUtils.getDrawableResourceId(getContext(), imageName);
-            ImageView imageView = (ImageView) findViewById(R.id.image);
             imageView.setImageResource(imageResId);
-            imageView.setColorFilter(accentColor, PorterDuff.Mode.ADD);
+            imageView.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            imageView.setVisibility(View.GONE);
         }
 
         // Set Title
@@ -115,11 +123,9 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
             getContext().startActivity(webDoc);
         });
 
-        // Set Next
-        TextView next = (TextView) findViewById(R.id.next);
-        next.setText(step.getNextButtonString());
-        RxView.clicks(next).subscribe(v -> {
-            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
-        });
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        submitBar.setSubmitAction(step.getNextButtonString(),
+                (v -> callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null)));
+        submitBar.setExitAction((v -> callbacks.onSaveStep(SceneCallbacks.ACTION_END, step, null)));
     }
 }
