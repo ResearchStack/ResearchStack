@@ -50,11 +50,11 @@ public class ConsentQuizModel implements Serializable
 
     public class QuestionProperties implements Serializable
     {
-        @SerializedName("correctBadge")
-        public String correctBadge;
+        @SerializedName("correctTitle")
+        public String correctTitle;
 
-        @SerializedName("incorrectBadge")
-        public String incorrectBadge;
+        @SerializedName("incorrectTitle")
+        public String incorrectTitle;
 
         @SerializedName("correctCliffhanger")
         public String correctCliffhanger;

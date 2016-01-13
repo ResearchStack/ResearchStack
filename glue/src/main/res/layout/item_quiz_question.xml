@@ -1,79 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
-    android:gravity="center_horizontal"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     >
 
-    <RadioGroup
-        android:id="@+id/rdio_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:orientation="horizontal"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         >
 
-        <RadioButton
-            android:id="@+id/btn_true"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:button="@null"
-            android:gravity="center"
-            android:minHeight="96dp"
-            android:minWidth="114dp"
-            android:padding="16dp"
-            android:text="@string/btn_true"
-            android:textColor="@drawable/text_color_accent"
-            android:textSize="36sp"
-            />
+            android:animateLayoutChanges="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="72dp"
-            android:background="@color/divider"
-            />
+            <TextView
+                android:id="@+id/text"
+                style="@style/Core.Survey.Summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:paddingBottom="@dimen/rsc_padding_wedge"
+                android:text="@string/quiz_question_disclamer"
+                android:visibility="visible"
+                />
 
-        <RadioButton
-            android:id="@+id/btn_false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:gravity="center"
-            android:minHeight="96dp"
-            android:minWidth="114dp"
-            android:padding="16dp"
-            android:text="@string/btn_false"
-            android:textColor="@drawable/text_color_accent"
-            android:textSize="36sp"
-            />
+            <!-- TODO get divider background for theme attr -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e5e5e5"
+                />
 
-    </RadioGroup>
+            <TextView
+                android:id="@+id/title"
+                style="@style/Core.Survey.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/rsc_padding_wedge"
+                android:paddingTop="@dimen/rsc_padding_wedge"
+                tools:text="@string/lorem_short"
+                />
 
-    <ImageView
-        android:id="@+id/icon_answer_result"
-        android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/rdio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <include
+                    android:id="@+id/btn_true"
+                    layout="@layout/item_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/rsc_margin_left"
+                    android:layout_marginRight="@dimen/rsc_margin_right"
+                    />
+
+                <include
+                    android:id="@+id/btn_false"
+                    layout="@layout/item_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/rsc_margin_left"
+                    android:layout_marginRight="@dimen/rsc_margin_right"
+                    />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/quiz_result_title"
+                style="@style/Core.Survey.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/rsc_padding_wedge"
+                android:paddingTop="@dimen/rsc_padding_wedge"
+                android:visibility="gone"
+                tools:text="@string/lorem_name"
+                tools:visibility="visible"
+                />
+
+            <TextView
+                android:id="@+id/quiz_result_summary"
+                style="@style/Core.Survey.Summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:paddingBottom="@dimen/rsc_padding_medium"
+                android:paddingTop="@dimen/rsc_padding_small"
+                android:text="@string/lorem_long"
+                android:visibility="gone"
+                tools:visibility="visible"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <co.touchlab.researchstack.core.ui.views.SubmitBar
+        android:id="@+id/submit_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
-        tools:src="@drawable/valid_icon"
-        tools:visibility="visible"
-        />
+        app:positiveActionTitle="@string/rsc_submit"
+        app:negativeActionTitle="@string/rsc_exit"
 
-    <TextView
-        android:id="@+id/txt_answer_explanation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textSize="18sp"
-        android:visibility="gone"
-        tools:text="@string/lorem_long"
-        tools:visibility="visible"
         />
 
 </LinearLayout>

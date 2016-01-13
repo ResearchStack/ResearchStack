@@ -162,11 +162,11 @@ public class ConsentTask extends OrderedTask
                 ConsentQuizModel.class,
                 rs.getQuizSections());
 
-        String trueString = ctx.getString(R.string.btn_true);
-        Choice<Boolean> trueChoice = new Choice<>(trueString, true, null);
+//        String trueString = ctx.getString(R.string.btn_true);
+//        Choice<Boolean> trueChoice = new Choice<>(trueString, true, null);
 
-        String falseString = ctx.getString(R.string.btn_false);
-        Choice<Boolean> falseChoice = new Choice<>(falseString, false, null);
+//        String falseString = ctx.getString(R.string.btn_false);
+//        Choice<Boolean> falseChoice = new Choice<>(falseString, false, null);
 
         for(int i = 0; i < model.getQuestions().size(); i++)
         {
@@ -184,8 +184,8 @@ public class ConsentTask extends OrderedTask
                     question);
             quizStep.setTitle(question.question);
             quizStep.setText(model.getQuestionProperties().introText);
-            quizStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-                            new Choice[] {trueChoice, falseChoice}));
+//            quizStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
+//                            new Choice[] {trueChoice, falseChoice}));
             addStep(quizStep);
         }
 

@@ -9,8 +9,8 @@
     "maxIncorrect": 2
   },
   "question_properties": {
-    "correctBadge": "valid_icon",
-    "incorrectBadge": "incorrect_icon",
+    "correctTitle": "That\'s Correct!",
+    "incorrectTitle": "That\'s Incorrect!",
     "incorrectCliffhanger": "The correct answer is ",
     "correctCliffhanger": "You are ",
     "correct": "correct. ",

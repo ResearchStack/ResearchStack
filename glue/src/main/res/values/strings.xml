@@ -116,6 +116,7 @@
         continuing
     </string>
     <string name="change_email">Change Email</string>
+    <string name="quiz_question_disclamer">Please answer a few questions to ensure that you understand the consent form.</string>
 
 
 </resources>

@@ -1,11 +1,11 @@
 package co.touchlab.researchstack.glue.step;
 
-import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.ui.step.body.SingleChoiceQuestionBody;
+import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
+import co.touchlab.researchstack.glue.ui.scene.ConsentQuizQuestionStepLayout;
 
-public class ConsentQuizQuestionStep extends QuestionStep
+public class ConsentQuizQuestionStep extends Step
 {
     private ConsentQuizModel.QuestionProperties properties;
     private ConsentQuizModel.QuizQuestion       question;
@@ -20,7 +20,7 @@ public class ConsentQuizQuestionStep extends QuestionStep
     @Override
     public Class getSceneClass()
     {
-        return SingleChoiceQuestionBody.class;
+        return ConsentQuizQuestionStepLayout.class;
     }
 
     @Override

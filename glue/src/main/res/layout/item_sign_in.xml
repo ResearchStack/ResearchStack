@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     >
 
     <TextView
-        style="@style/Core.Survey.Title"
         android:id="@+id/title"
+        style="@style/Core.Survey.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Credentials"
@@ -22,9 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:layout_marginTop="@dimen/rsc_padding_wedge"
         android:layout_marginLeft="@dimen/rsc_margin_left"
         android:layout_marginRight="@dimen/rsc_margin_right"
+        android:layout_marginTop="@dimen/rsc_padding_wedge"
         android:stretchColumns="1"
         >
 
@@ -37,8 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/rsc_padding_small"
-                android:gravity="right"
                 android:fontFamily="sans-serif-medium"
+                android:gravity="right"
                 android:text="@string/rsc_username"
                 />
 
@@ -48,8 +48,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:hint="@string/study_registration_username_hint"
-                android:textSize="14sp"
                 android:inputType="textEmailAddress"
+                android:textSize="14sp"
                 />
 
         </TableRow>
@@ -62,22 +62,22 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/rsc_padding_small"
-                android:gravity="right"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/password"
                 android:layout_column="0"
+                android:layout_marginRight="@dimen/rsc_padding_small"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="right"
+                android:text="@string/password"
                 />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_column="1"
                 android:gravity="center_vertical"
-                android:textSize="14sp"
                 android:hint="@string/study_registration_password_hint"
                 android:inputType="textVisiblePassword"
-                android:layout_column="1"
+                android:textSize="14sp"
                 />
 
         </TableRow>
@@ -89,21 +89,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:positiveActionTitle="@string/rsc_submit"
         app:negativeActionTitle="@string/rsc_exit"
+        app:positiveActionTitle="@string/rsc_submit"
         />
 
     <android.support.v7.widget.AppCompatTextView
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:id="@+id/forgot_password"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/submit_bar_negative"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/submit_bar"
         android:text="@string/forgot_password"
+        android:textColor="@color/submit_bar_negative"
         />
 
     <include
