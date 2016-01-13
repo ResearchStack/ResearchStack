@@ -18,6 +18,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.glue.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
@@ -102,9 +103,9 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
             Toast.makeText(getContext(), "TODO RESET PASSWORD", Toast.LENGTH_SHORT).show();
         });
 
-        RxView.clicks(layout.findViewById(R.id.next)).subscribe(v -> {
-            signIn();
-        });
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        submitBar.setPositiveAction(v -> signIn());
+        submitBar.setNegativeAction(v -> isBackEventConsumed());
     }
 
     private void signIn()

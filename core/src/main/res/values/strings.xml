@@ -97,6 +97,8 @@
     <string name="rsc_quiz_evaluation_great_job">Great Job!</string>
 
     <!--Other -->
+    <string name="rsc_submit">Submit</string>
+    <string name="rsc_exit">Exit</string>
     <string name="rsc_get_started">Get Started</string>
     <string name="rsc_done">Done</string>
     <string name="rsc_step_skip">Skip</string>
