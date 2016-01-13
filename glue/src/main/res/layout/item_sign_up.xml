@@ -7,57 +7,50 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="@dimen/rsc_padding_medium"
     >
 
     <TextView
+        style="@style/Core.Survey.Title"
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/study_registration"
-        android:textSize="24sp"
+        android:text="Registration"
         />
 
     <TextView
-        android:id="@+id/summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="@dimen/rsc_padding_medium"
-        android:text="@string/study_registration_desc"
-        android:textSize="18sp"
-        />
-
-
-    <TableLayout
+        style="@style/Core.Survey.Summary"
+        android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/summary"
-        android:layout_marginTop="@dimen/rsc_padding_medium"
+        android:visibility="gone"
+        android:textColorLink="?attr/colorAccent"
+        android:layout_below="@+id/title"
+        tools:visibility="visible"
+        tools:text="@string/lorem_long"
+        />
+
+    <TableLayout
+        android:id="@+id/credentials"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_marginLeft="@dimen/rsc_margin_left"
+        android:layout_marginRight="@dimen/rsc_margin_right"
+        android:stretchColumns="1"
         >
-
-        <TextView
-            android:id="@+id/hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:gravity="center"
-            android:text="@string/study_registration_password"
-            />
 
         <TableRow
             android:gravity="center_vertical"
             android:minHeight="@dimen/rsc_item_size_default"
-            android:layout_marginTop="@dimen/rsc_padding_medium"
             >
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/rsc_padding_medium"
+                android:layout_marginRight="@dimen/rsc_padding_small"
                 android:gravity="right"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/rsc_email"
-                android:textColor="@color/black"
                 />
 
             <android.support.v7.widget.AppCompatEditText
@@ -66,8 +59,39 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:hint="@string/email_hint"
+                android:textSize="14sp"
                 android:inputType="textEmailAddress"
                 />
+
+        </TableRow>
+
+
+        <TableRow
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/rsc_item_size_default"
+            >
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/rsc_padding_small"
+                android:gravity="right"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/password"
+                android:layout_column="0"
+                />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="14sp"
+                android:hint="@string/study_registration_password_hint"
+                android:inputType="textVisiblePassword"
+                android:layout_column="1"
+                />
+
         </TableRow>
 
         <TableRow
@@ -75,13 +99,13 @@
             android:minHeight="@dimen/rsc_item_size_default"
             >
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/rsc_padding_medium"
+                android:layout_marginRight="@dimen/rsc_padding_small"
                 android:gravity="right"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/rsc_username"
-                android:textColor="@color/black"
                 />
 
             <android.support.v7.widget.AppCompatEditText
@@ -91,48 +115,21 @@
                 android:gravity="center_vertical"
                 android:hint="@string/optional"
                 android:textColorHint="#33000000"
+                android:textSize="14sp"
                 android:inputType="textEmailAddress"
                 />
-        </TableRow>
 
-        <TableRow
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/rsc_item_size_default"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/rsc_padding_medium"
-                android:gravity="right"
-                android:text="@string/password"
-                android:textColor="@color/black"
-                />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:hint="@string/study_registration_password_hint"
-                android:inputType="textVisiblePassword"
-                />
         </TableRow>
 
     </TableLayout>
 
-    <TextView
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
+    <co.touchlab.researchstack.core.ui.views.SubmitBar
+        android:id="@+id/submit_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/rsc_next"
-        android:textAllCaps="true"
-        android:minHeight="48dp"
-        android:minWidth="96dp"
-        android:gravity="center"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        app:positiveActionTitle="@string/rsc_submit"
+        app:negativeActionTitle="@string/rsc_exit"
         />
 
     <include

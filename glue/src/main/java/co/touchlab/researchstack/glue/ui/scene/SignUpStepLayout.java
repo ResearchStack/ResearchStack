@@ -11,12 +11,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.jakewharton.rxbinding.view.RxView;
-
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.glue.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
@@ -98,9 +97,11 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
         });
         password.setText("password");
 
-        RxView.clicks(layout.findViewById(R.id.next)).subscribe(v -> {
-            signUp();
-        });
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        submitBar.setPositiveAction(v -> signUp());
+        submitBar.setNegativeAction(v -> callbacks.onSaveStep(SceneCallbacks.ACTION_END,
+                this.step,
+                this.result));
     }
 
     private void signUp()
