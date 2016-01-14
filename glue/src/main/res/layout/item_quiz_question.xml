@@ -9,37 +9,37 @@
     android:orientation="vertical"
     >
 
+    <TextView
+        android:id="@+id/text"
+        style="@style/Core.Survey.Summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:paddingBottom="@dimen/rsc_padding_wedge"
+        android:text="@string/quiz_question_disclamer"
+        android:visibility="visible"
+        />
+
+    <!-- TODO get divider background for theme attr -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e5e5e5"
+        />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             >
-
-            <TextView
-                android:id="@+id/text"
-                style="@style/Core.Survey.Summary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:paddingBottom="@dimen/rsc_padding_wedge"
-                android:text="@string/quiz_question_disclamer"
-                android:visibility="visible"
-                />
-
-            <!-- TODO get divider background for theme attr -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#e5e5e5"
-                />
 
             <TextView
                 android:id="@+id/title"
@@ -51,10 +51,21 @@
                 tools:text="@string/lorem_short"
                 />
 
+            <View
+                android:id="@+id/quiz_result_item_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/rsc_item_size_default"
+                android:background="@android:color/holo_red_light"
+                android:layout_alignTop="@+id/rdio_group"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
             <RadioGroup
                 android:id="@+id/rdio_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
                 >
 
                 <include
@@ -84,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/rsc_padding_wedge"
                 android:paddingTop="@dimen/rsc_padding_wedge"
+                android:layout_below="@+id/rdio_group"
                 android:visibility="gone"
                 tools:text="@string/lorem_name"
                 tools:visibility="visible"
@@ -94,6 +106,7 @@
                 style="@style/Core.Survey.Summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/quiz_result_title"
                 android:layout_marginTop="0dp"
                 android:paddingBottom="@dimen/rsc_padding_medium"
                 android:paddingTop="@dimen/rsc_padding_small"
@@ -102,7 +115,7 @@
                 tools:visibility="visible"
                 />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </ScrollView>
 

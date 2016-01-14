@@ -35,6 +35,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
     private SubmitBar   submitBar;
     private RadioButton radioFalse;
     private RadioButton radioTrue;
+    private View        radioItemBackground;
 
     public ConsentQuizQuestionStepLayout(Context context)
     {
@@ -83,6 +84,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
         resultTitle = (TextView) findViewById(R.id.quiz_result_title);
         resultSummary = (TextView) findViewById(R.id.quiz_result_summary);
 
+        radioItemBackground = findViewById(R.id.quiz_result_item_background);
     }
 
     public void onSubmit()
@@ -103,22 +105,37 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                         Color.green(resultTextColor),
                         Color.blue(resultTextColor));
 
+                // Disable both buttons to prevent further action
                 radioFalse.setEnabled(false);
-
                 radioTrue.setEnabled(false);
 
+                // Set the drawable of the current checked button, with correct color tint
                 Drawable drawable = getContext().getDrawable(answerCorrect
                         ? R.drawable.ic_check
                         : R.drawable.ic_window_close);
                 drawable = DrawableCompat.wrap(drawable);
                 DrawableCompat.setTint(drawable, resultTextColor);
                 RadioButton checkedRadioButton = (RadioButton) radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
-                checkedRadioButton.setBackgroundColor(radioBackground);
                 checkedRadioButton.setCompoundDrawablesWithIntrinsicBounds(null,
                         null,
                         drawable,
                         null);
 
+                // This is a work around for phones with api > 17 (but applies to all api versions).
+                // The horizontal offset of a radioButton cannot be set but we need our RadioButtons
+                // to have an offset of 48dp (to align w/ ToolBar title). Padding can be set but
+                // that will only push the text, not button-drawable. To solve this issue, we have a
+                // view that is floating behind out RadioGroup and position and height is set
+                // dynamically
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)
+                        radioItemBackground.getLayoutParams();
+                params.addRule(ALIGN_TOP, radioTrue.isChecked() ? R.id.rdio_group : 0);
+                params.addRule(ALIGN_BOTTOM, radioTrue.isChecked() ? 0 : R.id.rdio_group);
+                params.height = checkedRadioButton.getHeight();
+                radioItemBackground.setBackgroundColor(radioBackground);
+                radioItemBackground.setVisibility(View.VISIBLE);
+
+                //Set our Result-title
                 String resultTitle = answerCorrect
                         ? step.getProperties().correctTitle
                         : step.getProperties().incorrectTitle;
@@ -127,8 +144,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                 this.resultTitle.setText(resultTitle);
                 this.resultTitle.setTextColor(resultTextColor);
 
-                resultSummary.setVisibility(View.VISIBLE);
-
+                //Build and set our result-summary
                 String part1;
                 String part2;
                 String part3;
@@ -152,11 +168,14 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                         part1.length() + part2.length(),
                         SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
                 resultSummary.setText(explanation);
+                resultSummary.setVisibility(View.VISIBLE);
 
+                // Change the submit bar positive-title to "next"
                 submitBar.setPositiveTitle(R.string.rsc_next);
             }
             else
             {
+                // Save the result and go to the next question
                 result.setResult(answerCorrect);
                 callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
             }
