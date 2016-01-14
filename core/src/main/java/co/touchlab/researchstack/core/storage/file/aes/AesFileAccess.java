@@ -1,20 +1,13 @@
 package co.touchlab.researchstack.core.storage.file.aes;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Handler;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.support.v7.app.AlertDialog;
-import android.text.InputFilter;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.text.TextUtils;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.Toast;
-
-import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,9 +32,12 @@ public class AesFileAccess extends BaseFileAccess
 {
     public static final String CHARSET_NAME  = "UTF8";
     public static final String A_LITTLE_TEST = "ALittleTest";
-    private final int     bitDepth;
-    private final boolean alphaNumeric;
-    private final int     length;
+    private final int         bitDepth;
+    private final boolean     alphaNumeric;
+    private final int         length;
+    private       String      newPassCode;
+    private       AlertDialog passcodeDialog;
+
     DataDecoder dataDecoder;
     DataEncoder dataEncoder;
     String      key;
@@ -64,46 +60,82 @@ public class AesFileAccess extends BaseFileAccess
         }
         else
         {
-            if(passphraseExists(context))
+            initDialog(context);
+        }
+    }
+
+    // This is a bit iffy. But it works :D
+    private void initDialog(Context context)
+    {
+        PassCodeDialogBuilder.PassCodeStateListener listener = new PassCodeDialogBuilder.PassCodeStateListener()
+        {
+            @Override
+            public boolean isPassCodeAlphaNumeric()
             {
-                runPinDialog(context, "Enter your passphrase.", new PinOnClickListener(context)
-                {
-                    @Override
-                    void onPin(Context context, String pin)
-                    {
-                        try
-                        {
-                            startWithPassphrase(context, pin);
-                            notifyReady();
-                        }
-                        catch(Exception e)
-                        {
-                            initFileAccess(context);
-                            Toast.makeText(context, "Wrong passphrase", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                return alphaNumeric;
+            }
+
+            @Override
+            public boolean isPassCodeExists()
+            {
+                return passphraseExists(context);
+            }
+
+            @Override
+            public boolean isNewPassCodeCreated()
+            {
+                return ! TextUtils.isEmpty(newPassCode);
+            }
+
+            @Override
+            public int getPassCodeLength()
+            {
+                return length;
+            }
+        };
+
+        PassCodeDialogBuilder builder = new PassCodeDialogBuilder(context, R.style.Core_Dialog);
+        builder.setPassCodeStateListener(listener);
+
+        // When you have already created a passcode
+        builder.setExistingState(new PassCodeState("Enter your passphrase", (pin) -> {
+            startWithPassphrase(context, pin);
+            notifyReady();
+            passcodeDialog.dismiss();
+            return false;
+        }, (pin, e) -> Toast.makeText(context, "Incorrect Passcode", Toast.LENGTH_LONG).show()));
+
+        // When you need to create a passcode yo
+        builder.setCreationState(new PassCodeState("Create a passphrase", pin -> {
+            newPassCode = pin;
+            return true;
+        }, (pin, e) -> Toast.makeText(context, "Wrong format", Toast.LENGTH_LONG).show()));
+
+        // Reconfirm the passcode that you just entered
+        builder.setConfirmState(new PassCodeState("Confirm passphrase", passcode -> {
+            if(newPassCode.equals(passcode))
+            {
+                startWithPassphrase(context, passcode);
+                notifyReady();
+                passcodeDialog.dismiss();
+                return false;
             }
             else
             {
-                runPinDialog(context, "Create a passphrase.", new PinOnClickListener(context)
-                {
-                    @Override
-                    void onPin(Context context, String pin)
-                    {
-                        try
-                        {
-                            confirmPin(context, pin);
-                        }
-                        catch(Exception e)
-                        {
-                            initFileAccess(context);
-                            Toast.makeText(context, "Bad format", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                newPassCode = null;
+                throw new IllegalStateException();
             }
+        }, (pin, e) -> Toast.makeText(context, "Pins do not match", Toast.LENGTH_LONG).show()));
+
+        passcodeDialog = builder.create();
+
+        //If not an Activity, need system alert. Not sure how it wouldn't be, but...
+        if(! (context instanceof Activity))
+        {
+            passcodeDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         }
+
+        passcodeDialog.show();
     }
 
     @Override
@@ -155,74 +187,6 @@ public class AesFileAccess extends BaseFileAccess
     {
         File file = findLocalFile(context, path);
         file.delete();
-    }
-
-    private void confirmPin(Context context, String firstPin)
-    {
-        runPinDialog(context, "Confirm passphrase.", new PinOnClickListener(context)
-        {
-            @Override
-            void onPin(Context context, String pin)
-            {
-                try
-                {
-                    if(! firstPin.equals(pin))
-                    {
-                        Toast.makeText(context, "Pins do not match", Toast.LENGTH_LONG).show();
-                        initFileAccess(context);
-                    }
-                    else
-                    {
-                        startWithPassphrase(context, pin);
-                        notifyReady();
-                    }
-                }
-                catch(Exception e)
-                {
-                    initFileAccess(context);
-                    Toast.makeText(context, "Bad format", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-    private void runPinDialog(Context context, String title, PinOnClickListener listener)
-    {
-        View customView = LayoutInflater.from(context)
-                .inflate(alphaNumeric
-                        ? R.layout.dialog_pin_entry_alphanumeric
-                        : R.layout.dialog_pin_entry, null);
-        EditText editText = (EditText) customView.findViewById(R.id.pinValue);
-        editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(length)});
-
-
-        listener.setCustomView(customView);
-        AlertDialog alertDialog = new AlertDialog.Builder(context).setView(customView)
-                .setTitle(title).setOnCancelListener(dialog -> {
-
-                    new Handler().post(AesFileAccess.this :: notifyListenersFailed);
-                })
-                        //                .setPositiveButton("OK", listener)
-                .create();
-
-        RxTextView.textChanges(editText)
-                .filter(charSequence -> charSequence.length() == length)
-                .subscribe(charSequence -> {
-                    new Handler().postDelayed(() -> {
-                        listener.onPin(context, charSequence.toString());
-                        alertDialog.dismiss();
-                    }, 300);
-                });
-
-        //If not an Activity, need system alert. Not sure how it wouldn't be, but...
-        if(! (context instanceof Activity))
-        {
-            alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        }
-
-        alertDialog.getWindow()
-                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        alertDialog.show();
     }
 
     public boolean passphraseExists(Context context)
@@ -337,29 +301,4 @@ public class AesFileAccess extends BaseFileAccess
         return new File(createSecureDirectory(context), path.substring(1));
     }
 
-    private abstract class PinOnClickListener implements DialogInterface.OnClickListener
-    {
-        private final Context context;
-        private       View    customView;
-
-        public PinOnClickListener(Context context)
-        {
-            this.context = context;
-        }
-
-        public void setCustomView(View customView)
-        {
-            this.customView = customView;
-        }
-
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-            String passcode = ((EditText) customView.findViewById(R.id.pinValue)).getText()
-                    .toString();
-            onPin(context, passcode);
-        }
-
-        abstract void onPin(Context context, String pin);
-    }
 }
