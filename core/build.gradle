@@ -44,6 +44,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0'
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.2.0'
     compile 'org.apache.commons:commons-lang3:3.0'
+    compile 'com.scottyab:aes-crypto:0.0.3'
     compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
     apt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
     testCompile 'junit:junit:4.12'
