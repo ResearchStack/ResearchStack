@@ -303,4 +303,24 @@ public class AesFileAccess extends BaseFileAccess
         return new File(createSecureDirectory(context), path.substring(1));
     }
 
+    private long minTimeToIgnorePassCode = 5000;
+
+    private static long lastPauseTime;
+
+    public void logPauseTime()
+    {
+        lastPauseTime = System.currentTimeMillis();
+    }
+
+    public void checkTimeOut(Context context)
+    {
+        long now = System.currentTimeMillis();
+
+        boolean isPastMinIgnoreTime = now - lastPauseTime > minTimeToIgnorePassCode;
+
+        if(isPastMinIgnoreTime && passphraseExists(context))
+        {
+            initDialog(context);
+        }
+    }
 }
