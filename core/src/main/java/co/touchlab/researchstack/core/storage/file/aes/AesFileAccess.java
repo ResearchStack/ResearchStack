@@ -178,6 +178,12 @@ public class AesFileAccess extends BaseFileAccess
         file.delete();
     }
 
+    @Override
+    public DataAccessAuthenticator getDataAccessAuthenticator()
+    {
+        return authenticator;
+    }
+
     public void startWithPassphrase(Context context, String passphrase)
     {
         try
@@ -303,24 +309,30 @@ public class AesFileAccess extends BaseFileAccess
         return new File(createSecureDirectory(context), path.substring(1));
     }
 
-    private long minTimeToIgnorePassCode = 5000;
-
-    private static long lastPauseTime;
-
-    public void logPauseTime()
+    DataAccessAuthenticator authenticator = new DataAccessAuthenticator()
     {
-        lastPauseTime = System.currentTimeMillis();
-    }
+        private long minTimeToIgnorePassCode = 5000;
 
-    public void checkTimeOut(Context context)
-    {
-        long now = System.currentTimeMillis();
+        private long lastPauseTime;
 
-        boolean isPastMinIgnoreTime = now - lastPauseTime > minTimeToIgnorePassCode;
-
-        if(isPastMinIgnoreTime && passphraseExists(context))
+        @Override
+        public void logDataAccessTime()
         {
-            initDialog(context);
+            lastPauseTime = System.currentTimeMillis();
         }
-    }
+
+        @Override
+        public void runCheckForDataAccess(Context context)
+        {
+            long now = System.currentTimeMillis();
+
+            boolean isPastMinIgnoreTime = now - lastPauseTime > minTimeToIgnorePassCode;
+
+            if(isPastMinIgnoreTime && passphraseExists(context))
+            {
+                initDialog(context);
+            }
+        }
+    };
+
 }

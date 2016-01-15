@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.FileAccessListener;
-import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
 
 public class PassCodeActivity extends AppCompatActivity
 {
@@ -34,16 +33,20 @@ public class PassCodeActivity extends AppCompatActivity
     protected void onPause()
     {
         super.onPause();
-        ((AesFileAccess) StorageManager.getFileAccess())
-                .logPauseTime();
+        if (StorageManager.getFileAccess().getDataAccessAuthenticator() != null)
+        {
+            StorageManager.getFileAccess().getDataAccessAuthenticator().logDataAccessTime();
+        }
     }
 
     @Override
     protected void onResume()
     {
         super.onResume();
-        ((AesFileAccess) StorageManager.getFileAccess())
-                .checkTimeOut(this);
+        if (StorageManager.getFileAccess().getDataAccessAuthenticator() != null)
+        {
+            StorageManager.getFileAccess().getDataAccessAuthenticator().runCheckForDataAccess(this);
+        }
     }
 
     @Override
