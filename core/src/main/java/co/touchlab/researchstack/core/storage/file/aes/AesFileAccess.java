@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.jakewharton.rxbinding.widget.RxTextView;
 import com.tozny.crypto.android.AesCbcWithIntegrity;
 
 import java.io.File;
@@ -177,12 +176,6 @@ public class AesFileAccess extends BaseFileAccess
     {
         File file = findLocalFile(context, path);
         file.delete();
-    }
-
-    public boolean passphraseExists(Context context)
-    {
-        File passphraseFile = createPassphraseFile(context);
-        return passphraseFile.exists();
     }
 
     public void startWithPassphrase(Context context, String passphrase)
