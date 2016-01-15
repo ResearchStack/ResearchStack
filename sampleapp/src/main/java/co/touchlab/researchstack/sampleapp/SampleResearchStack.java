@@ -144,7 +144,7 @@ public class SampleResearchStack extends ResearchStack
     @Override
     protected FileAccess createFileAccessImplementation()
     {
-        return new AesFileAccess(256, false, 6);
+        return new AesFileAccess(false, 6);
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

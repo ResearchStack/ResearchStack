@@ -15,17 +15,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
+import com.tozny.crypto.android.AesCbcWithIntegrity;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.util.UUID;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.storage.file.BaseFileAccess;
@@ -37,18 +32,13 @@ import co.touchlab.researchstack.core.utils.UiThreadContext;
  */
 public class AesFileAccess extends BaseFileAccess
 {
-    public static final String CHARSET_NAME  = "UTF8";
-    public static final String A_LITTLE_TEST = "ALittleTest";
-    private final int     bitDepth;
+    public static final String CHARSET_NAME = "UTF8";
     private final boolean alphaNumeric;
     private final int     length;
-    DataDecoder dataDecoder;
-    DataEncoder dataEncoder;
-    String      key;
+    AesCbcWithIntegrity.SecretKeys key;
 
-    public AesFileAccess(int bitDepth, boolean alphaNumeric, int length)
+    public AesFileAccess(boolean alphaNumeric, int length)
     {
-        this.bitDepth = bitDepth;
         this.alphaNumeric = alphaNumeric;
         this.length = length;
     }
@@ -58,7 +48,7 @@ public class AesFileAccess extends BaseFileAccess
     public void initFileAccess(Context context)
     {
         UiThreadContext.assertUiThread();
-        if(dataDecoder != null && dataEncoder != null)
+        if(key != null)
         {
             notifyReady();
         }
@@ -113,10 +103,9 @@ public class AesFileAccess extends BaseFileAccess
         try
         {
             File file = findLocalFile(context, path);
-            byte[] encrypted = dataEncoder.encrypt(data);
-            writeSafe(file, encrypted);
+            writeSafe(file, encrypt(data, key));
         }
-        catch(BadPaddingException | IllegalBlockSizeException e)
+        catch(UnsupportedEncodingException | GeneralSecurityException e)
         {
             throw new FileAccessException(e);
         }
@@ -134,10 +123,9 @@ public class AesFileAccess extends BaseFileAccess
                 throw new FileAccessException("Can't find " + file.getPath());
             }
 
-            byte[] encryptedData = readAll(file);
-            return dataDecoder.decrypt(encryptedData);
+            return decryptFile(file, key);
         }
-        catch(IOException | BadPaddingException | IllegalBlockSizeException e)
+        catch(IOException | GeneralSecurityException e)
         {
             throw new FileAccessException(e);
         }
@@ -225,68 +213,51 @@ public class AesFileAccess extends BaseFileAccess
         alertDialog.show();
     }
 
-    public boolean passphraseExists(Context context)
-    {
-        File passphraseFile = createPassphraseFile(context);
-        return passphraseFile.exists();
-    }
-
     public void startWithPassphrase(Context context, String passphrase)
     {
         try
         {
-            File passphraseFile = createPassphraseFile(context);
-            File passphraseCheckFile = createPassphraseCheckFile(context);
-            String uuid;
+            File masterKeyFile = createMasterKeyFile(context);
+            AesCbcWithIntegrity.SecretKeys masterKey;
             if(! passphraseExists(context))
             {
-                uuid = UUID.randomUUID().toString();
-                writePasskey(passphrase, passphraseFile, uuid);
-                writePasskey(passphrase, passphraseCheckFile, A_LITTLE_TEST);
+                // first time, generate master key and encrypt with key created from passphrase
+                masterKey = AesCbcWithIntegrity.generateKey();
+                writeMasterKey(context, masterKeyFile, masterKey, passphrase);
             }
             else
             {
-                String testString = readPasskey(passphrase, passphraseCheckFile);
-                if(! testString.equals(A_LITTLE_TEST))
-                {
-                    throw new FileAccessException("Not the correct passphrase");
-                }
-
-                uuid = readPasskey(passphrase, passphraseFile);
+                // decrypt master key with key created from passphrase
+                String masterKeyString = readMasterKey(context, masterKeyFile, passphrase);
+                masterKey = AesCbcWithIntegrity.keys(masterKeyString);
             }
 
-            resetCodecs(context, uuid);
+            key = masterKey;
         }
-        catch(InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | IOException e)
+        catch(IOException | GeneralSecurityException e)
         {
             throw new FileAccessException(e);
         }
     }
 
-    private void resetCodecs(Context context, String uuid) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException
+    public boolean passphraseExists(Context context)
     {
-        dataDecoder = new DataDecoder(uuid.toCharArray(), bitDepth);
-        dataEncoder = new DataEncoder(uuid.toCharArray(), bitDepth);
-        this.key = uuid;
-    }
-
-    public String getKey()
-    {
-        return key;
+        File masterKeyFile = createMasterKeyFile(context);
+        return masterKeyFile.exists();
     }
 
     @NonNull
-    private File createPassphraseFile(Context context)
+    private File createMasterKeyFile(Context context)
     {
         File secure = createSecureDirectory(context);
         return new File(secure, "__encrypted");
     }
 
     @NonNull
-    private File createPassphraseCheckFile(Context context)
+    private File createSaltFile(Context context)
     {
         File secure = createSecureDirectory(context);
-        return new File(secure, "__encryptedcheck");
+        return new File(secure, "__sodium");
     }
 
     @NonNull
@@ -301,33 +272,63 @@ public class AesFileAccess extends BaseFileAccess
     {
         try
         {
-            File passphraseFile = createPassphraseFile(context);
-            File passphraseCheckFile = createPassphraseCheckFile(context);
-            String passkey = readPasskey(oldPassphrase, passphraseFile);
-            writePasskey(newPassphrase, passphraseFile, passkey);
-            writePasskey(newPassphrase, passphraseCheckFile, A_LITTLE_TEST);
+            File passphraseFile = createMasterKeyFile(context);
+            String masterKeys = readMasterKey(context, passphraseFile, oldPassphrase);
+            writeMasterKey(context,
+                    passphraseFile,
+                    AesCbcWithIntegrity.keys(masterKeys),
+                    newPassphrase);
         }
-        catch(InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | IOException e)
+        catch(IOException | GeneralSecurityException e)
         {
             throw new FileAccessException(e);
         }
     }
 
     @NonNull
-    private String readPasskey(String passphrase, File encrypted) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException
+    private String readMasterKey(Context context, File file, String passphrase) throws IOException, GeneralSecurityException
     {
-        String uuid;
-        byte[] bytes = readAll(encrypted);
-        DataDecoder dataDecoder = new DataDecoder(passphrase.toCharArray(), bitDepth);
-        uuid = new String(dataDecoder.decrypt(bytes), CHARSET_NAME);
-        return uuid;
+        byte[] decrypted = decryptFile(file, generatePassphraseKey(context, passphrase));
+        return new String(decrypted);
     }
 
-    private void writePasskey(String passphrase, File encrypted, String uuid) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException
+    private void writeMasterKey(Context context, File file, AesCbcWithIntegrity.SecretKeys masterKey, String passphrase) throws GeneralSecurityException, IOException
     {
-        DataEncoder dataEncoder = new DataEncoder(passphrase.toCharArray(), bitDepth);
-        byte[] encrypt = dataEncoder.encrypt(uuid.getBytes(CHARSET_NAME));
-        writeSafe(encrypted, encrypt);
+        byte[] encrypted = encrypt(masterKey.toString().getBytes(),
+                generatePassphraseKey(context, passphrase));
+        writeSafe(file, encrypted);
+    }
+
+    @NonNull
+    private byte[] decryptFile(File file, AesCbcWithIntegrity.SecretKeys secretKeys) throws IOException, GeneralSecurityException
+    {
+        String encrypted = new String(readAll(file));
+        AesCbcWithIntegrity.CipherTextIvMac cipherText = new AesCbcWithIntegrity.CipherTextIvMac(
+                encrypted);
+        return AesCbcWithIntegrity.decrypt(cipherText, secretKeys);
+    }
+
+    private byte[] encrypt(byte[] data, AesCbcWithIntegrity.SecretKeys secretKeys) throws UnsupportedEncodingException, GeneralSecurityException
+    {
+        return AesCbcWithIntegrity.encrypt(data, secretKeys).toString().getBytes();
+    }
+
+    @NonNull
+    private AesCbcWithIntegrity.SecretKeys generatePassphraseKey(Context context, String passphrase) throws GeneralSecurityException, IOException
+    {
+        return AesCbcWithIntegrity.generateKeyFromPassword(passphrase, getSalt(context));
+    }
+
+    private byte[] getSalt(Context context) throws GeneralSecurityException, IOException
+    {
+        File salt = createSaltFile(context);
+        if(! salt.exists())
+        {
+            byte[] saltBytes = AesCbcWithIntegrity.generateSalt();
+            writeSafe(salt, saltBytes);
+        }
+
+        return readAll(salt);
     }
 
     @NonNull
