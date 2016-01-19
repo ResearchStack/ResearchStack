@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
 
-import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.glue.NavigationItem;
 import co.touchlab.researchstack.glue.R;
@@ -86,8 +85,6 @@ public class MainActivity extends PassCodeActivity
         });
 
         navigationView.addHeaderView(headerView);
-
-        initFileAccess();
     }
 
     private void showFragment(String className)
@@ -144,22 +141,23 @@ public class MainActivity extends PassCodeActivity
     protected void onDataReady()
     {
         super.onDataReady();
-        LogExt.w(getClass(), "onDataReady");
 
-        MenuItem item = navigationView.getMenu().getItem(0);
-        item.setChecked(true);
+        if (getSupportFragmentManager().findFragmentById(R.id.placeholder) == null)
+        {
+            MenuItem item = navigationView.getMenu().getItem(0);
+            item.setChecked(true);
 
-        String className = item.getIntent().getComponent().getClassName();
-        showFragment(className);
+            String className = item.getIntent().getComponent().getClassName();
+            showFragment(className);
 
-        getSupportActionBar().setTitle(item.getTitle());
+            getSupportActionBar().setTitle(item.getTitle());
+        }
     }
 
     @Override
     protected void onDataFailed()
     {
         super.onDataFailed();
-        LogExt.e(getClass(), "onDataFailed");
 
         Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
         finish();

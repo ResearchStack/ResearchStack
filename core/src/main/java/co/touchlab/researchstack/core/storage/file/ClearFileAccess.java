@@ -61,12 +61,6 @@ public class ClearFileAccess extends BaseFileAccess
         localFile.delete();
     }
 
-    @Override
-    public DataAccessAuthenticator getDataAccessAuthenticator()
-    {
-        return null;
-    }
-
     @NonNull
     private File findLocalFile(Context context, String path)
     {

@@ -2,7 +2,6 @@ package co.touchlab.researchstack.sampleapp;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 import com.google.common.io.Files;
 
@@ -13,11 +12,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
+import co.touchlab.researchstack.core.storage.file.auth.PassCodeConfig;
 import co.touchlab.researchstack.core.ui.step.body.SingleChoiceQuestionBody;
+import co.touchlab.researchstack.glue.AppPrefs;
 import co.touchlab.researchstack.glue.NavigationItem;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.model.User;
@@ -80,7 +82,7 @@ public class SampleResearchStack extends ResearchStack
         }
         catch(IOException e)
         {
-            Log.e("asdf", "", e);
+            LogExt.e(getClass(), e);
         }
     }
 
@@ -144,7 +146,8 @@ public class SampleResearchStack extends ResearchStack
     @Override
     protected FileAccess createFileAccessImplementation()
     {
-        return new AesFileAccess(false, 6);
+        long autoLockTime = AppPrefs.getInstance(context).getAutoLockTime();
+        return new AesFileAccess(new PassCodeConfig(false, 4, autoLockTime));
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

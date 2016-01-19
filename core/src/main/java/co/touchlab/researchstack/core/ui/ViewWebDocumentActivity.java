@@ -43,8 +43,6 @@ public class ViewWebDocumentActivity extends PassCodeActivity
             actionBar.setTitle(title);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        initFileAccess();
     }
 
     @Override

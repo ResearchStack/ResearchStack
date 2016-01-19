@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.storage.file.FileAccess;
-import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
+import co.touchlab.researchstack.core.storage.file.auth.PassCodeConfig;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.R;
@@ -61,11 +59,19 @@ public class OnboardingActivity extends PassCodeActivity
         //        });
 
         // let them view this page without making passcode, but call onDataReady if they have
-        FileAccess fileAccess = StorageManager.getFileAccess();
-        if(((AesFileAccess) fileAccess).passphraseExists(this))
-        {
-            initFileAccess();
-        }
+//        FileAccess fileAccess = StorageManager.getFileAccess();
+//        if(((AesFileAccess) fileAccess).passphraseExists(this))
+//        {
+//            initFileAccess();
+//        }
+    }
+
+    @Override
+    protected void onDataAuth(PassCodeConfig config)
+    {
+        super.onDataReady();
+//        Allow no pass-code
+//        super.onDataAuth(config);
     }
 
     @Override

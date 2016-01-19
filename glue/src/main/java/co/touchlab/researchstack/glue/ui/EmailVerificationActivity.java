@@ -42,7 +42,6 @@ public class EmailVerificationActivity extends PassCodeActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_verification);
         progress = findViewById(R.id.progress);
-        initFileAccess();
     }
 
     @Override

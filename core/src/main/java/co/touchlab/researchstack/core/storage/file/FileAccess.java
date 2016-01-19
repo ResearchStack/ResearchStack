@@ -106,11 +106,4 @@ public interface FileAccess
 
     void clearData(Context context, String path);
 
-    DataAccessAuthenticator getDataAccessAuthenticator();
-
-    interface DataAccessAuthenticator
-    {
-       void logDataAccessTime();
-       void runCheckForDataAccess(Context context);
-    }
 }

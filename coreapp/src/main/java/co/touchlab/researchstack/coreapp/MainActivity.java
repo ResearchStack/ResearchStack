@@ -23,7 +23,6 @@ import co.touchlab.researchstack.core.answerformat.DecimalAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.UnknownAnswerFormat;
-import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.model.ConsentDocument;
 import co.touchlab.researchstack.core.model.ConsentSection;
@@ -134,7 +133,6 @@ public class MainActivity extends PassCodeActivity
 
     private void initViews()
     {
-        LogExt.d(getClass(), "onDataReady");
         AppPrefs prefs = AppPrefs.getInstance(this);
         if(prefs.hasConsented())
         {
