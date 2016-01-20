@@ -7,14 +7,14 @@ import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
-import co.touchlab.researchstack.core.storage.file.auth.PassCodeConfig;
-import co.touchlab.researchstack.core.storage.file.auth.PassCodeDialog;
 import co.touchlab.researchstack.core.storage.file.auth.AuthFileAccessListener;
+import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
+import co.touchlab.researchstack.core.storage.file.auth.PassCodeDialog;
 
 public class PassCodeActivity extends AppCompatActivity
 {
 
-    AuthFileAccessListener fileAccessListener = new AuthFileAccessListener<PassCodeConfig>()
+    AuthFileAccessListener fileAccessListener = new AuthFileAccessListener<PinCodeConfig>()
     {
         @Override
         public void dataReady()
@@ -29,7 +29,7 @@ public class PassCodeActivity extends AppCompatActivity
         }
 
         @Override
-        public void dataAuth(PassCodeConfig config)
+        public void dataAuth(PinCodeConfig config)
         {
             onDataAuth(config);
         }
@@ -49,8 +49,7 @@ public class PassCodeActivity extends AppCompatActivity
         if(StorageManager.getFileAccess() instanceof AuthDataAccess)
         {
             LogExt.i(getClass(), "logAccessTime()");
-            ((AuthDataAccess) StorageManager.getFileAccess())
-                    .logAccessTime();
+            ((AuthDataAccess) StorageManager.getFileAccess()).logAccessTime();
         }
     }
 
@@ -61,9 +60,9 @@ public class PassCodeActivity extends AppCompatActivity
 
         initFileAccess();
 
-//        if(StorageManager.getFileAccess() instanceof AuthDataAccess)
-//        {
-//            LogExt.i(getClass(), "checkAutoLock()");
+        //        if(StorageManager.getFileAccess() instanceof AuthDataAccess)
+        //        {
+        //            LogExt.i(getClass(), "checkAutoLock()");
 //            ((AuthDataAccess) StorageManager.getFileAccess())
 //                    .checkAutoLock(this);
 //        }
@@ -102,19 +101,25 @@ public class PassCodeActivity extends AppCompatActivity
         fileAccessUnregister();
     }
 
-    protected void onDataAuth(PassCodeConfig config)
+    protected void onDataAuth(PinCodeConfig config)
     {
         LogExt.e(getClass(), "onDataAuth()");
 
-        PassCodeDialog dialog = new PassCodeDialog(this, config, R.style.Core_Dialog);
-        dialog.setTitle("Enter your passphrase");
-        dialog.setAuthAction((pin) -> {
-            if(StorageManager.getFileAccess() instanceof AuthDataAccess)
-            {
-                ((AuthDataAccess) StorageManager.getFileAccess()).authenticate(this, pin);
-            }
-        });
-        dialog.setFailAction((e) -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
-        dialog.show();
+        if(StorageManager.getFileAccess() instanceof AuthDataAccess &&
+                !((AuthDataAccess)StorageManager.getFileAccess()).hasPinCode(this))
+        {
+            PassCodeDialog dialog = new PassCodeDialog(this, config, R.style.Core_Dialog);
+            dialog.setTitle("Enter your passphrase");
+            dialog.setAuthAction((pin) -> ((AuthDataAccess) StorageManager.getFileAccess()).authenticate(
+                    this,
+                    pin));
+            dialog.setFailAction((e) -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT)
+                    .show());
+            dialog.show();
+        }
+        else
+        {
+            onDataReady();
+        }
     }
 }

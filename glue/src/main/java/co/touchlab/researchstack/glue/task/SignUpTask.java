@@ -4,10 +4,12 @@ import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
 
 /**
+ * TODO Needs Refactor
  * Created by bradleymcdermott on 10/16/15.
  */
 public class SignUpTask extends OnboardingTask
 {
+    private boolean hasAuth;
 
     public static final int MINIMUM_STEPS = 2;
 
@@ -43,7 +45,24 @@ public class SignUpTask extends OnboardingTask
         }
         else if(step.getIdentifier().equals(SignUpEligibleStepIdentifier))
         {
-            currentStepNumber += 1;
+            if(hasAuth)
+            {
+                nextStep = getPassCodeCreationStep();
+            }
+            else
+            {
+                nextStep = getSignUpStep();
+            }
+        }
+        else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
+        {
+            String pin = (String) result.getStepResult(SignUpPassCodeCreationStepIdentifier)
+                    .getResult();
+
+            nextStep =  getPassCodeConfirmationStep(pin);
+        }
+        else if(step.getIdentifier().equals(SignUpPassCodeConfirmationStepIdentifier))
+        {
             nextStep = getSignUpStep();
         }
 
@@ -69,10 +88,25 @@ public class SignUpTask extends OnboardingTask
             prevStep = getInclusionCriteriaStep();
 
         }
-        else if(step.getIdentifier().equals(SignUpStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
         {
             prevStep = getEligibleStep();
-
+        }
+        else if(step.getIdentifier().equals(SignUpPassCodeConfirmationStepIdentifier))
+        {
+            prevStep = getPassCodeCreationStep();
+        }
+        else if(step.getIdentifier().equals(SignUpStepIdentifier))
+        {
+            if(hasAuth)
+            {
+                // Force user to create a new pin
+                prevStep = getPassCodeCreationStep();
+            }
+            else
+            {
+                prevStep = getEligibleStep();
+            }
         }
 
         return prevStep;
@@ -103,12 +137,27 @@ public class SignUpTask extends OnboardingTask
             stepPosition = 1;
 
         }
-        else if(step.getIdentifier().equals(SignUpStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
         {
             stepPosition = 2;
 
         }
+        else if(step.getIdentifier().equals(SignUpPassCodeConfirmationStepIdentifier))
+        {
+            stepPosition = 3;
+
+        }
+        else if(step.getIdentifier().equals(SignUpStepIdentifier))
+        {
+            stepPosition = 4;
+
+        }
 
         return new TaskProgress(stepPosition, getNumberOfSteps());
+    }
+
+    public void setHasAuth(boolean hasAuth)
+    {
+        this.hasAuth = hasAuth;
     }
 }

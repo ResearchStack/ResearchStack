@@ -37,7 +37,7 @@
     <style name="Core.Survey"/>
 
     <style name="Core.Survey.Title">
-        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginTop">16dp</item>
         <item name="android:minHeight">@dimen/rsc_item_size_default</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">@dimen/rsc_margin_left</item>

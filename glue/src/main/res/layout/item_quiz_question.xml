@@ -119,14 +119,6 @@
 
     </ScrollView>
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New RadioButton"
-        android:id="@+id/radioButton"
-        android:layout_gravity="right"
-        />
-
     <co.touchlab.researchstack.core.ui.views.SubmitBar
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"

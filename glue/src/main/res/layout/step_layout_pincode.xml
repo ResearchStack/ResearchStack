@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/Core.Survey.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/passcode_create_title"
+        />
+
+    <TextView
+        android:id="@+id/text"
+        style="@style/Core.Survey.Summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:paddingTop="@dimen/rsc_padding_small"
+        android:text="@string/passcode_create_summary"
+        android:textColorLink="?attr/colorAccent"
+        android:minHeight="52dp"
+        />
+
+    <co.touchlab.researchstack.core.ui.views.PassCodeView
+        android:id="@+id/passcode"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/text"
+        android:inputType="number"
+        android:background="#EEE"
+        tools:text="1234"
+        android:gravity="center"/>
+
+</RelativeLayout>

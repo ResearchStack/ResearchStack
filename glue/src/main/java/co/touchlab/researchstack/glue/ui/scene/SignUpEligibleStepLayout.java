@@ -8,8 +8,6 @@ import android.widget.RelativeLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import java.util.Date;
-
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
@@ -17,7 +15,6 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
 
 public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayout
 {
@@ -70,16 +67,52 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
         submitBar.setNegativeAction((v) -> exitSignUpActivity());
     }
 
+//    ResearchStack.getInstance()
+//            .getDataProvider()
+//    .saveConsent(getContext(),
+//    "test name",
+//            new Date(662748042000l),
+//    "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu",
+//            "",
+//            "all_qualified_researchers");
+
+
     private void skipConsentActivity()
     {
-        ResearchStack.getInstance()
-                .getDataProvider()
-                .saveConsent(getContext(),
-                        "test name",
-                        new Date(662748042000l),
-                        "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu",
-                        "",
-                        "all_qualified_researchers");
+
+//        TODO Add fake data to result object and save to TaskResult
+//        StepResult<StepResult<String>> formResult = (StepResult<StepResult<String>>) result.getStepResult(
+//                ConsentTask.ID_FORM);
+//        String fullName = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
+//                .getResult();
+//
+//        Date birthdate = new Date(662748042000l);
+//        String birthDate = formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
+//                .getResult();
+//
+//        // Save a scope
+//        String sharingScope = (String) result.getStepResult(ConsentTask.ID_SHARING)
+//                .getResult();
+//
+//        StepResult<String> sharingScope = new StepResult<>(ConsentTask.ID_SHARING);
+//        sharingScope.setResult("all_qualified_researchers");
+//
+//        // Save a fake image
+//        StepResult<String> base64Image = new StepResult<>(ConsentTask.ID_SIGNATURE);
+//        base64Image.setResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE,
+//                "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu");
+//        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE,
+//                new Step(ConsentTask.ID_SIGNATURE),
+//                base64Image);
+//
+//        // Save the Signature Date
+//        StepResult<String> signatureDate = new StepResult<>(ConsentTask.ID_SIGNATURE);
+//        signatureDate.setResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE,
+//                "10202011");
+//        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE,
+//                new Step(ConsentTask.ID_SIGNATURE), signatureDate);
+
+        // Go to the next step
         callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
     }
 

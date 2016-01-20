@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.storage.file.auth.PassCodeConfig;
+import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
+import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.R;
@@ -67,7 +69,7 @@ public class OnboardingActivity extends PassCodeActivity
     }
 
     @Override
-    protected void onDataAuth(PassCodeConfig config)
+    protected void onDataAuth(PinCodeConfig config)
     {
         super.onDataReady();
 //        Allow no pass-code
@@ -95,7 +97,11 @@ public class OnboardingActivity extends PassCodeActivity
 
     public void onSignUpClicked(View view)
     {
+        boolean hasAuth = StorageManager.getFileAccess() instanceof AuthDataAccess &&
+                ! ((AuthDataAccess) StorageManager.getFileAccess()).hasPinCode(this);
+
         SignUpTask task = new SignUpTask();
+        task.setHasAuth(hasAuth);
         startActivityForResult(SignUpTaskActivity.newIntent(this, task), REQUEST_CODE_SIGN_UP);
     }
 

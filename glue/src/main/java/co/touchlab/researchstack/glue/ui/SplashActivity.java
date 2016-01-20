@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import co.touchlab.researchstack.core.storage.file.auth.PassCodeConfig;
+import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.ObservableUtils;
@@ -22,7 +22,6 @@ public class SplashActivity extends PassCodeActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
     }
-
 
     @Override
     protected void onDataReady()
@@ -44,12 +43,10 @@ public class SplashActivity extends PassCodeActivity
 
                     finish();
                 });
-
-
     }
 
     @Override
-    protected void onDataAuth(PassCodeConfig config)
+    protected void onDataAuth(PinCodeConfig config)
     {
         super.onDataReady();
         launchOnboardingActivity();

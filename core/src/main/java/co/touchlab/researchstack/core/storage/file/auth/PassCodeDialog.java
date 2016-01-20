@@ -20,14 +20,14 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    private PassCodeConfig config;
+    private PinCodeConfig config;
 
     private TextView           titleView;
     private EditText           editText;
     private Action1<String>    authAction;
     private Action1<Throwable> failAction;
 
-    public PassCodeDialog(Context context, PassCodeConfig config, int themeResId)
+    public PassCodeDialog(Context context, PinCodeConfig config, int themeResId)
     {
         super(context, themeResId);
         this.config = config;
