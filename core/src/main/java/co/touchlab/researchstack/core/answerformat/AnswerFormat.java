@@ -46,6 +46,7 @@ public abstract class AnswerFormat implements Serializable
         Date,
         TimeInterval;
 
+        //TODO add constructor and pass in class as param
         public Class<?> getSceneClass()
         {
             switch(this)
