@@ -76,8 +76,6 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        initFileAccess();
     }
 
     protected Step getCurrentStep()

@@ -3,13 +3,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import co.touchlab.researchstack.core.ui.views.LocalWebView;
 import co.touchlab.researchstack.core.utils.ResUtils;
 
-public class ViewWebDocumentActivity extends AppCompatActivity
+public class ViewWebDocumentActivity extends PassCodeActivity
 {
 
     public static final String TAG          = ViewWebDocumentActivity.class.getSimpleName();

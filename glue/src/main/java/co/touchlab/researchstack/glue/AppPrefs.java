@@ -16,6 +16,9 @@ public class AppPrefs
     //Flag indicates user has entered a pin, and we can attempt to re-auth access
     public static final String APP_PIN_ENCODED = "APP_PIN_ENCODED";
 
+    //TODO Desc
+    public static final String AUTO_LOCK_TIME = "AUTO_LOCK_TIME";
+
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Statics
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -38,6 +41,15 @@ public class AppPrefs
             instance = new AppPrefs(context);
         }
         return instance;
+    }
+
+    /**
+     * @return time in milliseconds
+     */
+    public long getAutoLockTime()
+    {
+        int autoLockMins = prefs.getInt(AUTO_LOCK_TIME, 1);
+        return autoLockMins * 60 * 1000;
     }
 
 }

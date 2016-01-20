@@ -105,4 +105,5 @@ public interface FileAccess
     boolean dataExists(Context context, String path);
 
     void clearData(Context context, String path);
+
 }

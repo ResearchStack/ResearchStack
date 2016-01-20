@@ -1,19 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     >
 
-    <EditText
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/title"
+        style="@style/Core.Survey.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="0dp"
+        android:paddingLeft="@dimen/rsc_padding_medium"
+        android:paddingRight="@dimen/rsc_padding_medium"
+        tools:text="Enter your passphrase"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E5E5E5"
+        />
+
+    <android.support.v7.widget.AppCompatEditText
         android:id="@+id/pinValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        android:fontFamily="sans-serif-light"
         android:gravity="center"
+        android:hint="◦◦◦◦◦◦"
         android:inputType="textNoSuggestions|textVisiblePassword"
+        android:letterSpacing=".25"
+        android:minHeight="180dp"
         android:padding="20dp"
         android:singleLine="true"
+        android:textSize="40sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CFCFCF"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#E5E5E5"
         />
 
 </LinearLayout>

@@ -1,20 +1,10 @@
 package co.touchlab.researchstack.core.storage.file.aes;
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
-import android.support.v7.app.AlertDialog;
-import android.text.InputFilter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.jakewharton.rxbinding.widget.RxTextView;
 import com.tozny.crypto.android.AesCbcWithIntegrity;
 
 import java.io.File;
@@ -22,25 +12,33 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 
-import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.storage.file.BaseFileAccess;
 import co.touchlab.researchstack.core.storage.file.FileAccessException;
+import co.touchlab.researchstack.core.storage.file.FileAccessListener;
+import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
+import co.touchlab.researchstack.core.storage.file.auth.AuthFileAccessListener;
+import co.touchlab.researchstack.core.storage.file.auth.PassCodeConfig;
 import co.touchlab.researchstack.core.utils.UiThreadContext;
 
 /**
  * Created by kgalligan on 11/24/15.
  */
-public class AesFileAccess extends BaseFileAccess
+public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
 {
     public static final String CHARSET_NAME = "UTF8";
-    private final boolean alphaNumeric;
-    private final int     length;
-    AesCbcWithIntegrity.SecretKeys key;
 
-    public AesFileAccess(boolean alphaNumeric, int length)
+    private PassCodeConfig codeConfig;
+
+    private long minTimeToIgnorePassCode;
+
+    private long lastAuthTime;
+
+    private AesCbcWithIntegrity.SecretKeys key;
+
+    public AesFileAccess(PassCodeConfig codeConfig)
     {
-        this.alphaNumeric = alphaNumeric;
-        this.length = length;
+        this.codeConfig = codeConfig;
+        this.minTimeToIgnorePassCode = codeConfig.getAutoLockTime();
     }
 
     @Override
@@ -48,51 +46,16 @@ public class AesFileAccess extends BaseFileAccess
     public void initFileAccess(Context context)
     {
         UiThreadContext.assertUiThread();
+
+        validateKeyForTimeOut();
+
         if(key != null)
         {
             notifyReady();
         }
         else
         {
-            if(passphraseExists(context))
-            {
-                runPinDialog(context, "Enter your passphrase.", new PinOnClickListener(context)
-                {
-                    @Override
-                    void onPin(Context context, String pin)
-                    {
-                        try
-                        {
-                            startWithPassphrase(context, pin);
-                            notifyReady();
-                        }
-                        catch(Exception e)
-                        {
-                            initFileAccess(context);
-                            Toast.makeText(context, "Wrong passphrase", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            }
-            else
-            {
-                runPinDialog(context, "Create a passphrase.", new PinOnClickListener(context)
-                {
-                    @Override
-                    void onPin(Context context, String pin)
-                    {
-                        try
-                        {
-                            confirmPin(context, pin);
-                        }
-                        catch(Exception e)
-                        {
-                            initFileAccess(context);
-                            Toast.makeText(context, "Bad format", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            }
+            notifySoftFail();
         }
     }
 
@@ -145,74 +108,6 @@ public class AesFileAccess extends BaseFileAccess
         file.delete();
     }
 
-    private void confirmPin(Context context, String firstPin)
-    {
-        runPinDialog(context, "Confirm passphrase.", new PinOnClickListener(context)
-        {
-            @Override
-            void onPin(Context context, String pin)
-            {
-                try
-                {
-                    if(! firstPin.equals(pin))
-                    {
-                        Toast.makeText(context, "Pins do not match", Toast.LENGTH_LONG).show();
-                        initFileAccess(context);
-                    }
-                    else
-                    {
-                        startWithPassphrase(context, pin);
-                        notifyReady();
-                    }
-                }
-                catch(Exception e)
-                {
-                    initFileAccess(context);
-                    Toast.makeText(context, "Bad format", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-    private void runPinDialog(Context context, String title, PinOnClickListener listener)
-    {
-        View customView = LayoutInflater.from(context)
-                .inflate(alphaNumeric
-                        ? R.layout.dialog_pin_entry_alphanumeric
-                        : R.layout.dialog_pin_entry, null);
-        EditText editText = (EditText) customView.findViewById(R.id.pinValue);
-        editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(length)});
-
-
-        listener.setCustomView(customView);
-        AlertDialog alertDialog = new AlertDialog.Builder(context).setView(customView)
-                .setTitle(title).setOnCancelListener(dialog -> {
-
-                    new Handler().post(AesFileAccess.this :: notifyListenersFailed);
-                })
-                        //                .setPositiveButton("OK", listener)
-                .create();
-
-        RxTextView.textChanges(editText)
-                .filter(charSequence -> charSequence.length() == length)
-                .subscribe(charSequence -> {
-                    new Handler().postDelayed(() -> {
-                        listener.onPin(context, charSequence.toString());
-                        alertDialog.dismiss();
-                    }, 300);
-                });
-
-        //If not an Activity, need system alert. Not sure how it wouldn't be, but...
-        if(! (context instanceof Activity))
-        {
-            alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        }
-
-        alertDialog.getWindow()
-                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        alertDialog.show();
-    }
-
     public void startWithPassphrase(Context context, String passphrase)
     {
         try
@@ -221,6 +116,7 @@ public class AesFileAccess extends BaseFileAccess
             AesCbcWithIntegrity.SecretKeys masterKey;
             if(! passphraseExists(context))
             {
+                //TODO throw exception when pass-code creation is part of SignUp/SignIn task
                 // first time, generate master key and encrypt with key created from passphrase
                 masterKey = AesCbcWithIntegrity.generateKey();
                 writeMasterKey(context, masterKeyFile, masterKey, passphrase);
@@ -338,29 +234,63 @@ public class AesFileAccess extends BaseFileAccess
         return new File(createSecureDirectory(context), path.substring(1));
     }
 
-    private abstract class PinOnClickListener implements DialogInterface.OnClickListener
+    protected void notifySoftFail()
     {
-        private final Context context;
-        private       View    customView;
-
-        public PinOnClickListener(Context context)
-        {
-            this.context = context;
-        }
-
-        public void setCustomView(View customView)
-        {
-            this.customView = customView;
-        }
-
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-            String passcode = ((EditText) customView.findViewById(R.id.pinValue)).getText()
-                    .toString();
-            onPin(context, passcode);
-        }
-
-        abstract void onPin(Context context, String pin);
+        new Handler().post(this :: notifyListenersSoftFail);
     }
+
+    @MainThread
+    public void notifyListenersSoftFail()
+    {
+        if(checkThreads)
+        {
+            UiThreadContext.assertUiThread();
+        }
+
+        for(FileAccessListener listener : listeners)
+        {
+            if (listener instanceof AuthFileAccessListener)
+            {
+                ((AuthFileAccessListener) listener).dataAuth(codeConfig);
+            }
+        }
+    }
+
+    @Override
+    public void logAccessTime()
+    {
+        lastAuthTime = System.currentTimeMillis();
+    }
+
+//    @Override
+//
+//    public void checkAutoLock(Context context)
+//    {
+//        validateKeyForTimeOut();
+//
+//        if (key == null)
+//        {
+//            notifySoftFail();
+//        }
+//    }
+
+    private void validateKeyForTimeOut()
+    {
+        long now = System.currentTimeMillis();
+
+        boolean isPastMinIgnoreTime = now - lastAuthTime > minTimeToIgnorePassCode;
+
+        if(isPastMinIgnoreTime)
+        {
+            key = null;
+        }
+    }
+
+    @Override
+    public void authenticate(Context context, String pin)
+    {
+        startWithPassphrase(context, pin);
+        notifyReady();
+    }
+
 }

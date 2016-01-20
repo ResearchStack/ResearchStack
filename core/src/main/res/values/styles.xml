@@ -18,9 +18,15 @@
 
     <style name="Core"/>
 
-    <style name="Core.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">#5fa3d0</item>
-        <item name="android:textColorPrimary">#000000</item>
+    <style name="Core.Dialog" parent="Theme.AppCompat.Light">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowSoftInputMode">stateAlwaysVisible</item>
+    </style>
+
+    <style name="Core.Dialog.Fullscreen">
+        <item name="colorAccent">?attr/colorAccent</item>
+        <item name="android:textColorPrimary">#55F</item>
         <item name="android:background">@android:color/white</item>
     </style>
 
