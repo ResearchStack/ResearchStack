@@ -48,9 +48,7 @@ public class SplashActivity extends PassCodeActivity
     @Override
     protected void onDataAuth(PinCodeConfig config)
     {
-        super.onDataReady();
-        launchOnboardingActivity();
-        finish();
+        super.onDataAuth(config);
     }
 
     @Override

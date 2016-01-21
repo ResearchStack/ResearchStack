@@ -8,15 +8,18 @@ import android.widget.RelativeLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import java.util.Date;
+
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
-import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.task.ConsentTask;
+import co.touchlab.researchstack.glue.ResearchStack;
 
 public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayout
 {
@@ -71,49 +74,18 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
 
     private void skipConsentActivity()
     {
-        // Save user consented
-        StepResult<Boolean> consented = new StepResult<>(ConsentTask.ID_CONSENT_DOC);
-        consented.setResult(true);
-        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE,
-                new Step(ConsentTask.ID_CONSENT_DOC),
-                consented);
+        // Give the user a pin
+        ((AuthDataAccess) StorageManager.getFileAccess()).setPinCode(getContext(), "1111");
 
-        // Create formResult
-        StepResult<StepResult> formResult = new StepResult<>(ConsentTask.ID_FORM);
-
-        // Save user fullname to formResult
-        StepResult<String> fullname = new StepResult<>(ConsentTask.ID_FORM_NAME);
-        fullname.setResult("test name");
-        formResult.setResultForIdentifier(ConsentTask.ID_FORM_NAME, fullname);
-
-        // Save user Birthdate to formResult
-        StepResult<Long> birthdate = new StepResult<>(ConsentTask.ID_FORM_DOB);
-        birthdate.setResult(662748042000l);
-        formResult.setResultForIdentifier(ConsentTask.ID_FORM_DOB, birthdate);
-
-        // Save formResult to TaskResult
-        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE, new Step(ConsentTask.ID_FORM), formResult);
-
-        // Save a scope
-        StepResult<String> sharingScope = new StepResult<>(ConsentTask.ID_SHARING);
-        sharingScope.setResult("all_qualified_researchers");
-        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE,
-                new Step(ConsentTask.ID_SHARING),
-                sharingScope);
-
-        // Create Signature result
-        StepResult<String> signatureResult = new StepResult<>(ConsentTask.ID_SIGNATURE);
-
-        // Save a fake image to signatureResult
-        signatureResult.setResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE,
-                "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu");
-
-        // Save a signature date to signatureResult
-        signatureResult.setResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE,
-                "10202011");
-        // Save Signature result
-        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE,
-                new Step(ConsentTask.ID_SIGNATURE), signatureResult);
+        // Save fake consent stuff
+        ResearchStack.getInstance()
+                .getDataProvider()
+                .saveConsent(getContext(),
+                        "test name",
+                        new Date(662748042000l),
+                        "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu",
+                        "10202011",
+                        "all_qualified_researchers");
 
         // Go to the next step
         callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);

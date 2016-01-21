@@ -259,8 +259,18 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     @Override
     public void onSaveStep(int action, Step step, StepResult result)
     {
-        taskResult.setStepResultForStepIdentifier(step.getIdentifier(), result);
+        onSaveStepResult(step.getIdentifier(), result);
 
+        onExecuteStepAction(action);
+    }
+
+    protected void onSaveStepResult(String id, StepResult result)
+    {
+        taskResult.setStepResultForStepIdentifier(id, result);
+    }
+
+    protected void onExecuteStepAction(int action)
+    {
         if(action == SceneCallbacks.ACTION_NEXT)
         {
             showNextStep();

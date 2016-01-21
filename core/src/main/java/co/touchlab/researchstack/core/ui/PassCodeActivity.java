@@ -105,21 +105,14 @@ public class PassCodeActivity extends AppCompatActivity
     {
         LogExt.e(getClass(), "onDataAuth()");
 
-        if(StorageManager.getFileAccess() instanceof AuthDataAccess &&
-                !((AuthDataAccess)StorageManager.getFileAccess()).hasPinCode(this))
-        {
-            PassCodeDialog dialog = new PassCodeDialog(this, config, R.style.Core_Dialog);
-            dialog.setTitle("Enter your passphrase");
-            dialog.setAuthAction((pin) -> ((AuthDataAccess) StorageManager.getFileAccess()).authenticate(
-                    this,
-                    pin));
-            dialog.setFailAction((e) -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT)
-                    .show());
-            dialog.show();
-        }
-        else
-        {
-            onDataReady();
-        }
+        PassCodeDialog dialog = new PassCodeDialog(this, config, R.style.Core_Dialog);
+        dialog.setTitle("Enter your passphrase");
+        dialog.setAuthAction((pin) -> ((AuthDataAccess) StorageManager.getFileAccess()).authenticate(
+                this,
+                pin));
+        dialog.setFailAction((e) -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT)
+                .show());
+        dialog.setCancelable(false);
+        dialog.show();
     }
 }

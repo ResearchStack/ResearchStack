@@ -293,9 +293,9 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
         try
         {
             File masterKeyFile = createMasterKeyFile(context);
-            AesCbcWithIntegrity.SecretKeys masterKey;
-            masterKey = AesCbcWithIntegrity.generateKey();
+            AesCbcWithIntegrity.SecretKeys masterKey = AesCbcWithIntegrity.generateKey();
             writeMasterKey(context, masterKeyFile, masterKey, pin);
+            key = masterKey;
         }
         catch(IOException | GeneralSecurityException e)
         {

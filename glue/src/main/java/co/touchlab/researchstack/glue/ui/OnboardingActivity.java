@@ -8,7 +8,6 @@ import android.view.View;
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
-import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.ui.PassCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.R;
@@ -66,14 +65,6 @@ public class OnboardingActivity extends PassCodeActivity
 //        {
 //            initFileAccess();
 //        }
-    }
-
-    @Override
-    protected void onDataAuth(PinCodeConfig config)
-    {
-        super.onDataReady();
-//        Allow no pass-code
-//        super.onDataAuth(config);
     }
 
     @Override
