@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
@@ -17,6 +19,7 @@ import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.core.utils.ViewUtils;
 import co.touchlab.researchstack.glue.R;
 
 public class SignUpPinCodeStepLayout extends RelativeLayout implements StepLayout
@@ -51,7 +54,7 @@ public class SignUpPinCodeStepLayout extends RelativeLayout implements StepLayou
     {
         this.step = step;
         this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
-        this.config = ((AuthDataAccess) StorageManager.getFileAccess()).getPinCodeConfig(); //TODO get config from AesFileAccess
+        this.config = ((AuthDataAccess) StorageManager.getFileAccess()).getPinCodeConfig();
         this.imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         initializeLayout();
@@ -70,9 +73,19 @@ public class SignUpPinCodeStepLayout extends RelativeLayout implements StepLayou
 
         editText = (EditText) findViewById(R.id.passcode);
         editText.requestFocus();
-        //TODO Use config variable to set LengthFilter
-        //TODO Invalid way of setting input filter. This clears any filters set via XML
-        editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(4)});
+
+        PinCodeConfig.Type pinType = config.getPinType();
+        editText.setInputType(pinType.getInputType() | pinType.getVisibleVariationType(false));
+        editText.setKeyListener(pinType.getDigitsKeyListener());
+
+        char[] chars = new char[config.getPinLength()];
+        Arrays.fill(chars, '◦');
+        editText.setHint(new String(chars));
+
+        // Must come after pin-type code as calling setKeyListener(null) sets InputFilters to null
+        InputFilter[] filters = ViewUtils.addFilter(editText.getFilters(),
+                new InputFilter.LengthFilter(config.getPinLength()));
+        editText.setFilters(filters);
     }
 
     @Override

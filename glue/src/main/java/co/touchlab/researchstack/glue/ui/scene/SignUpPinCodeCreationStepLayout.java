@@ -32,7 +32,7 @@ public class SignUpPinCodeCreationStepLayout extends SignUpPinCodeStepLayout imp
         super.initializeLayout();
 
         RxTextView.textChanges(editText)
-                .filter(charSequence -> charSequence.length() == config.getLength())
+                .filter(charSequence -> charSequence.length() == config.getPinLength())
                 .subscribe(charSequence -> {
                     new Handler().postDelayed(() -> {
                         result.setResult(charSequence.toString());
@@ -44,4 +44,10 @@ public class SignUpPinCodeCreationStepLayout extends SignUpPinCodeStepLayout imp
                 InputMethodManager.HIDE_IMPLICIT_ONLY));
     }
 
+    @Override
+    public boolean isBackEventConsumed()
+    {
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        return super.isBackEventConsumed();
+    }
 }

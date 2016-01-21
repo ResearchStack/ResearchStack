@@ -29,11 +29,13 @@
     <co.touchlab.researchstack.core.ui.views.PassCodeView
         android:id="@+id/passcode"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/rsc_item_size_default"
+        android:singleLine="true"
         android:layout_below="@+id/text"
         android:inputType="number"
-        android:background="#EEE"
-        tools:text="1234"
+        android:textSize="20sp"
+        android:background="@null"
+        android:letterSpacing=".25"
         android:gravity="center"/>
 
 </RelativeLayout>

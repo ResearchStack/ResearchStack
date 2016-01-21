@@ -187,8 +187,10 @@ public abstract class OnboardingTask extends Task
             passcodeConfirmationStep = new PassCodeConfirmationStep(SignUpPassCodeConfirmationStepIdentifier);
             passcodeConfirmationStep.setTitle("Confirm your passcode");
             passcodeConfirmationStep.setText("Enter your code one more time to confirm.");
-            passcodeConfirmationStep.setPin(pin);
         }
+
+        passcodeConfirmationStep.setPin(pin);
+
         return passcodeConfirmationStep;
     }
 

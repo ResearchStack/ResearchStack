@@ -38,7 +38,7 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
     public AesFileAccess(PinCodeConfig codeConfig)
     {
         this.codeConfig = codeConfig;
-        this.minTimeToIgnorePassCode = codeConfig.getAutoLockTime();
+        this.minTimeToIgnorePassCode = codeConfig.getPinAutoLockTime();
     }
 
     @Override

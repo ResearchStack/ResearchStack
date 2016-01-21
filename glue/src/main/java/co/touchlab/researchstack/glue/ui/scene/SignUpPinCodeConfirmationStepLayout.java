@@ -44,7 +44,7 @@ public class SignUpPinCodeConfirmationStepLayout extends SignUpPinCodeStepLayout
                 summary.setText(R.string.passcode_confirm_summary);
             }
 
-            if(s != null && s.length() == config.getLength())
+            if(s != null && s.length() == config.getPinLength())
             {
                 PassCodeConfirmationStep step = (PassCodeConfirmationStep) this.step;
 

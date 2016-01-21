@@ -43,8 +43,8 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
 
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        int resId = config.isAlphaNumeric() ? R.layout.dialog_pin_entry_alphanumeric
-                : R.layout.dialog_pin_entry;
+        int resId = config.getPinType() == PinCodeConfig.Type.AlphaNumeric ?
+                R.layout.dialog_pin_entry_alphanumeric : R.layout.dialog_pin_entry;
 
         View view = inflater.inflate(resId, null);
 
@@ -52,7 +52,7 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
 
         editText = (EditText) view.findViewById(R.id.pinValue);
 
-        InputFilter.LengthFilter filter = new InputFilter.LengthFilter(config.getLength());
+        InputFilter.LengthFilter filter = new InputFilter.LengthFilter(config.getPinLength());
         editText.setFilters(new InputFilter[] {filter});
         editText.setText("");
 
@@ -62,7 +62,7 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                if(s != null && s.length() == config.getLength())
+                if(s != null && s.length() == config.getPinLength())
                 {
                     handler.postDelayed(() -> {
                         try

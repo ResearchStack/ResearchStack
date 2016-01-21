@@ -147,7 +147,7 @@ public class SampleResearchStack extends ResearchStack
     protected FileAccess createFileAccessImplementation()
     {
         long autoLockTime = AppPrefs.getInstance(context).getAutoLockTime();
-        return new AesFileAccess(new PinCodeConfig(false, 4, autoLockTime));
+        return new AesFileAccess(new PinCodeConfig(autoLockTime));
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
