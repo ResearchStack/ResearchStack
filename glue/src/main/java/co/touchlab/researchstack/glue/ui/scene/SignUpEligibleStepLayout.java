@@ -12,9 +12,11 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.glue.task.ConsentTask;
 
 public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayout
 {
@@ -67,50 +69,51 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
         submitBar.setNegativeAction((v) -> exitSignUpActivity());
     }
 
-//    ResearchStack.getInstance()
-//            .getDataProvider()
-//    .saveConsent(getContext(),
-//    "test name",
-//            new Date(662748042000l),
-//    "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu",
-//            "",
-//            "all_qualified_researchers");
-
-
     private void skipConsentActivity()
     {
+        // Save user consented
+        StepResult<Boolean> consented = new StepResult<>(ConsentTask.ID_CONSENT_DOC);
+        consented.setResult(true);
+        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE,
+                new Step(ConsentTask.ID_CONSENT_DOC),
+                consented);
 
-//        TODO Add fake data to result object and save to TaskResult
-//        StepResult<StepResult<String>> formResult = (StepResult<StepResult<String>>) result.getStepResult(
-//                ConsentTask.ID_FORM);
-//        String fullName = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
-//                .getResult();
-//
-//        Date birthdate = new Date(662748042000l);
-//        String birthDate = formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
-//                .getResult();
-//
-//        // Save a scope
-//        String sharingScope = (String) result.getStepResult(ConsentTask.ID_SHARING)
-//                .getResult();
-//
-//        StepResult<String> sharingScope = new StepResult<>(ConsentTask.ID_SHARING);
-//        sharingScope.setResult("all_qualified_researchers");
-//
-//        // Save a fake image
-//        StepResult<String> base64Image = new StepResult<>(ConsentTask.ID_SIGNATURE);
-//        base64Image.setResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE,
-//                "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu");
-//        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE,
-//                new Step(ConsentTask.ID_SIGNATURE),
-//                base64Image);
-//
-//        // Save the Signature Date
-//        StepResult<String> signatureDate = new StepResult<>(ConsentTask.ID_SIGNATURE);
-//        signatureDate.setResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE,
-//                "10202011");
-//        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE,
-//                new Step(ConsentTask.ID_SIGNATURE), signatureDate);
+        // Create formResult
+        StepResult<StepResult> formResult = new StepResult<>(ConsentTask.ID_FORM);
+
+        // Save user fullname to formResult
+        StepResult<String> fullname = new StepResult<>(ConsentTask.ID_FORM_NAME);
+        fullname.setResult("test name");
+        formResult.setResultForIdentifier(ConsentTask.ID_FORM_NAME, fullname);
+
+        // Save user Birthdate to formResult
+        StepResult<Long> birthdate = new StepResult<>(ConsentTask.ID_FORM_DOB);
+        birthdate.setResult(662748042000l);
+        formResult.setResultForIdentifier(ConsentTask.ID_FORM_DOB, birthdate);
+
+        // Save formResult to TaskResult
+        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE, new Step(ConsentTask.ID_FORM), formResult);
+
+        // Save a scope
+        StepResult<String> sharingScope = new StepResult<>(ConsentTask.ID_SHARING);
+        sharingScope.setResult("all_qualified_researchers");
+        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE,
+                new Step(ConsentTask.ID_SHARING),
+                sharingScope);
+
+        // Create Signature result
+        StepResult<String> signatureResult = new StepResult<>(ConsentTask.ID_SIGNATURE);
+
+        // Save a fake image to signatureResult
+        signatureResult.setResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE,
+                "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu");
+
+        // Save a signature date to signatureResult
+        signatureResult.setResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE,
+                "10202011");
+        // Save Signature result
+        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE,
+                new Step(ConsentTask.ID_SIGNATURE), signatureResult);
 
         // Go to the next step
         callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
