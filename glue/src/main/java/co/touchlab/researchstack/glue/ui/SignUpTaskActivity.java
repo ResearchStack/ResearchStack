@@ -63,14 +63,13 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             // TODO check for valid signature/names
             if(consented)
             {
-                StepResult<StepResult<String>> formResult = (StepResult<StepResult<String>>) result.getStepResult(
+                StepResult<StepResult> formResult = (StepResult<StepResult>) result.getStepResult(
                         ConsentTask.ID_FORM);
-                String fullName = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
+
+                String fullName = (String) formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
                         .getResult();
 
-                //                TODO Change birthdate to Date object
-                Date birthdate = new Date();
-                String birthDate = formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
+                Long birthdateInMillis = (Long) formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
                         .getResult();
 
                 String sharingScope = (String) result.getStepResult(ConsentTask.ID_SHARING)
@@ -86,7 +85,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                         .getDataProvider()
                         .saveConsent(this,
                                 fullName,
-                                birthdate,
+                                new Date(birthdateInMillis),
                                 base64Image,
                                 signatureDate,
                                 sharingScope);
