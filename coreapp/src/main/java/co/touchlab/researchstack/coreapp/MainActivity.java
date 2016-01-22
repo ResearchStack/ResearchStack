@@ -106,8 +106,6 @@ public class MainActivity extends PassCodeActivity
                 clearData();
             }
         });
-
-        initFileAccess();
     }
 
     private void clearData()
