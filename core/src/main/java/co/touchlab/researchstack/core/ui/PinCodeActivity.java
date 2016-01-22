@@ -183,6 +183,10 @@ public class PinCodeActivity extends AppCompatActivity
                     {
                         toggleKeyboardAction.call(true);
                     }
+                    else
+                    {
+                        pinCodeLayout.setVisibility(View.GONE);
+                    }
                 });
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
