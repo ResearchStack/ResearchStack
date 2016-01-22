@@ -10,30 +10,24 @@ import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.lang.reflect.Constructor;
-import java.util.Date;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.SurveyStepLayout;
 import co.touchlab.researchstack.core.ui.views.SceneSwitcher;
-import co.touchlab.researchstack.core.utils.FormatHelper;
 
 public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 {
     public static final String EXTRA_TASK        = "ViewTaskActivity.ExtraTask";
+    public static final String EXTRA_TASK_ID     = "ViewTaskActivity.ExtraTaskId";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
 
@@ -165,38 +159,30 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     private void saveAndFinish()
     {
         Intent resultIntent = new Intent();
+        resultIntent.putExtra(EXTRA_TASK_ID, task.getScheduleId());
         resultIntent.putExtra(EXTRA_TASK_RESULT, taskResult);
-
-        TaskRecord taskRecord = new TaskRecord();
-        taskRecord.started = new Date();
-        taskRecord.completed = new Date();
-        taskRecord.taskId = task.getScheduleId();
-        Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601).create();
-        taskRecord.result = gson.toJson(taskResult);
-        StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
-
         setResult(RESULT_OK, resultIntent);
         finish();
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu)
-//    {
-//        getMenuInflater().inflate(R.menu.menu_view_task, menu);
-//
-//        for(int i = 0; i < menu.size(); i++)
-//        {
-//            MenuItem item = menu.getItem(i);
-//            Drawable icon = item.getIcon();
-//            icon = DrawableCompat.wrap(icon);
-//            int color = ThemeUtils.getTextColorPrimary(this);
-//            DrawableCompat.setTint(icon, color);
-//            item.setIcon(icon);
-//        }
-//
-//
-//        return super.onCreateOptionsMenu(menu);
-//    }
+    //    @Override
+    //    public boolean onCreateOptionsMenu(Menu menu)
+    //    {
+    //        getMenuInflater().inflate(R.menu.menu_view_task, menu);
+    //
+    //        for(int i = 0; i < menu.size(); i++)
+    //        {
+    //            MenuItem item = menu.getItem(i);
+    //            Drawable icon = item.getIcon();
+    //            icon = DrawableCompat.wrap(icon);
+    //            int color = ThemeUtils.getTextColorPrimary(this);
+    //            DrawableCompat.setTint(icon, color);
+    //            item.setIcon(icon);
+    //        }
+    //
+    //
+    //        return super.onCreateOptionsMenu(menu);
+    //    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -206,10 +192,10 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
             notifySceneOfBackPress();
             return true;
         }
-//        else if(item.getItemId() == R.id.menu_cancel)
-//        {
-//            showConfirmExitDialog();
-//        }
+        //        else if(item.getItemId() == R.id.menu_cancel)
+        //        {
+        //            showConfirmExitDialog();
+        //        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -290,9 +276,8 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
                 "Are you sure you want to exit?")
                 .setMessage(R.string.lorem_medium)
-                .setPositiveButton("End Task", (dialog, which) -> {
-                    finish();
-                }).setNegativeButton("Cancel", (dialog, which) -> {})
+                .setPositiveButton("End Task", (dialog, which) -> finish())
+                .setNegativeButton("Cancel", null)
                 .create();
         alertDialog.show();
     }
