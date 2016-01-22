@@ -22,16 +22,18 @@ import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.SurveyStepLayout;
+import co.touchlab.researchstack.core.ui.views.StepSwitcher;
+import co.touchlab.researchstack.core.utils.FormatHelper;
 import co.touchlab.researchstack.core.ui.views.SceneSwitcher;
 
-public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
+public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
 {
     public static final String EXTRA_TASK        = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_ID     = "ViewTaskActivity.ExtraTaskId";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
 
-    private SceneSwitcher root;
+    private StepSwitcher root;
 
     private Step       currentStep;
     private Task       task;
@@ -51,7 +53,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         super.setResult(RESULT_CANCELED);
         super.setContentView(R.layout.activity_scene_switcher);
 
-        root = (SceneSwitcher) findViewById(R.id.container);
+        root = (StepSwitcher) findViewById(R.id.container);
 
         if(savedInstanceState == null)
         {
@@ -110,10 +112,11 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
         StepLayout stepLayout = getSceneForStep(step);
+        stepLayout.getLayout().setTag(R.id.rsc_step_layout_id, step.getIdentifier());
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
-                        ? SceneSwitcher.SHIFT_LEFT
-                        : SceneSwitcher.SHIFT_RIGHT);
+                        ? StepSwitcher.SHIFT_LEFT
+                        : StepSwitcher.SHIFT_RIGHT);
         currentStep = step;
     }
 
@@ -217,7 +220,7 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
 
     private void notifySceneOfBackPress()
     {
-        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsc_current_scene);
+        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsc_current_step);
         currentStepLayout.isBackEventConsumed();
     }
 
@@ -245,8 +248,18 @@ public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
     @Override
     public void onSaveStep(int action, Step step, StepResult result)
     {
-        taskResult.setStepResultForStepIdentifier(step.getIdentifier(), result);
+        onSaveStepResult(step.getIdentifier(), result);
 
+        onExecuteStepAction(action);
+    }
+
+    protected void onSaveStepResult(String id, StepResult result)
+    {
+        taskResult.setStepResultForStepIdentifier(id, result);
+    }
+
+    protected void onExecuteStepAction(int action)
+    {
         if(action == SceneCallbacks.ACTION_NEXT)
         {
             showNextStep();

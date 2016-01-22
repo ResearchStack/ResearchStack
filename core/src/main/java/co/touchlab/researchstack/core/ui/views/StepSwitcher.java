@@ -35,7 +35,7 @@ import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
  * when switching between two scenes. There will, at most, be two scenes when animating. The scene
  * going off screen will eventually be removed.
  */
-public class SceneSwitcher extends FrameLayout
+public class StepSwitcher extends FrameLayout
 {
     public static final DecelerateInterpolator interpolator = new DecelerateInterpolator(2);
 
@@ -49,7 +49,7 @@ public class SceneSwitcher extends FrameLayout
      *
      * @param context the application's environment
      */
-    public SceneSwitcher(Context context)
+    public StepSwitcher(Context context)
     {
         super(context);
         init();
@@ -62,7 +62,7 @@ public class SceneSwitcher extends FrameLayout
      * @param context the application environment
      * @param attrs   a collection of attributes
      */
-    public SceneSwitcher(Context context, AttributeSet attrs)
+    public StepSwitcher(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init();
@@ -78,7 +78,7 @@ public class SceneSwitcher extends FrameLayout
      *                     resource that supplies defaults values for the TypedArray.  Can be 0 to
      *                     not look for defaults.
      */
-    public SceneSwitcher(Context context, AttributeSet attrs, int defStyleAttr)
+    public StepSwitcher(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
         init();
@@ -95,21 +95,32 @@ public class SceneSwitcher extends FrameLayout
      *
      * @param stepLayout the scene you want to switch to
      * @param direction  the direction of the animation in the x direction. This values can either be
-     *                   {@link SceneSwitcher#SHIFT_LEFT} or {@link SceneSwitcher#SHIFT_RIGHT}
+     *                   {@link StepSwitcher#SHIFT_LEFT} or {@link StepSwitcher#SHIFT_RIGHT}
      */
     public void show(StepLayout stepLayout, int direction)
     {
+        // if layouts originate from the same step, ignore show
+        View currentScene = findViewById(R.id.rsc_current_step);
+        if (currentScene != null)
+        {
+            String currentStepId = (String) currentScene.getTag(R.id.rsc_step_layout_id);
+            String stepLayoutId = (String) stepLayout.getLayout().getTag(R.id.rsc_step_layout_id);
+            if(currentStepId.equals(stepLayoutId))
+            {
+                return;
+            }
+        }
+
         // Force crash when invalid direction is passed in. The values of the constants are used
         // when calculating the x-traversal distance
-        if(direction != SceneSwitcher.SHIFT_LEFT && direction != SceneSwitcher.SHIFT_RIGHT)
+        if(direction != StepSwitcher.SHIFT_LEFT && direction != StepSwitcher.SHIFT_RIGHT)
         {
             throw new InvalidParameterException(
                     "Direction with value: " + direction + " is not supported.");
         }
 
         post(() -> {
-            // Get the current scene, set the id as something other than R.id.current_scene
-            View currentScene = findViewById(R.id.rsc_current_scene);
+            // Set the id of current as something other than R.id.current_scene
             int currentIndex = 0;
             if(currentScene != null)
             {
@@ -121,7 +132,7 @@ public class SceneSwitcher extends FrameLayout
             // in the view hierarchy as the same as the current scene on-screen
             LayoutParams lp = getLayoutParams(stepLayout);
             addView(stepLayout.getLayout(), currentIndex, lp);
-            stepLayout.getLayout().setId(R.id.rsc_current_scene);
+            stepLayout.getLayout().setId(R.id.rsc_current_step);
 
             // If the old scene is gone, we can go ahead and ignore the following animation code.
             // This will usually happen on start-up of the host (e.g. activity)
@@ -158,7 +169,7 @@ public class SceneSwitcher extends FrameLayout
     @Override
     public CharSequence getAccessibilityClassName()
     {
-        return SceneSwitcher.class.getName();
+        return StepSwitcher.class.getName();
     }
 
 }

@@ -14,20 +14,21 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import rx.functions.Action1;
 
+@Deprecated
 public class PassCodeDialog extends android.support.v7.app.AlertDialog
 {
     private static final String TAG = PassCodeDialog.class.getSimpleName();
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    private PassCodeConfig config;
+    private PinCodeConfig config;
 
     private TextView           titleView;
     private EditText           editText;
     private Action1<String>    authAction;
     private Action1<Throwable> failAction;
 
-    public PassCodeDialog(Context context, PassCodeConfig config, int themeResId)
+    public PassCodeDialog(Context context, PinCodeConfig config, int themeResId)
     {
         super(context, themeResId);
         this.config = config;
@@ -43,8 +44,8 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
 
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        int resId = config.isAlphaNumeric() ? R.layout.dialog_pin_entry_alphanumeric
-                : R.layout.dialog_pin_entry;
+        int resId = config.getPinType() == PinCodeConfig.Type.AlphaNumeric ?
+                R.layout.dialog_pin_entry_alphanumeric : R.layout.dialog_pin_entry;
 
         View view = inflater.inflate(resId, null);
 
@@ -52,7 +53,7 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
 
         editText = (EditText) view.findViewById(R.id.pinValue);
 
-        InputFilter.LengthFilter filter = new InputFilter.LengthFilter(config.getLength());
+        InputFilter.LengthFilter filter = new InputFilter.LengthFilter(config.getPinLength());
         editText.setFilters(new InputFilter[] {filter});
         editText.setText("");
 
@@ -62,7 +63,7 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                if(s != null && s.length() == config.getLength())
+                if(s != null && s.length() == config.getPinLength())
                 {
                     handler.postDelayed(() -> {
                         try

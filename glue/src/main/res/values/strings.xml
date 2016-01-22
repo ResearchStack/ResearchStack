@@ -117,6 +117,12 @@
     </string>
     <string name="change_email">Change Email</string>
     <string name="quiz_question_disclamer">Please answer a few questions to ensure that you understand the consent form.</string>
+    <string name="passcode">Passcode</string>
+    <string name="passcode_create_title">Choose a passcode</string>
+    <string name="passcode_create_summary">Enter a secure code to protect your data and log in faster.</string>
+    <string name="passcode_confirm_title">Confirm your passcode</string>
+    <string name="passcode_confirm_summary">Enter your code one more time to confirm.</string>
+    <string name="passcode_confirm_error">That code doesn’t match the one you entered.  Try again or go back to choose a different code.</string>
 
 
 </resources>

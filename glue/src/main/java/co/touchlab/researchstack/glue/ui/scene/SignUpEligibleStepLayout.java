@@ -10,8 +10,10 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.Date;
 
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
@@ -72,14 +74,20 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
 
     private void skipConsentActivity()
     {
+        // Give the user a pin
+        ((AuthDataAccess) StorageManager.getFileAccess()).setPinCode(getContext(), "1111");
+
+        // Save fake consent stuff
         ResearchStack.getInstance()
                 .getDataProvider()
                 .saveConsent(getContext(),
                         "test name",
                         new Date(662748042000l),
                         "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu",
-                        "",
+                        "10202011",
                         "all_qualified_researchers");
+
+        // Go to the next step
         callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
     }
 

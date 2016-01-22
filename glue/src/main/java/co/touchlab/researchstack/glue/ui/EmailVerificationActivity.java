@@ -13,9 +13,9 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.OrderedTask;
-import co.touchlab.researchstack.core.ui.PassCodeActivity;
+import co.touchlab.researchstack.core.ui.PinCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
-import co.touchlab.researchstack.glue.ObservableUtils;
+import co.touchlab.researchstack.core.utils.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.task.OnboardingTask;
@@ -25,7 +25,7 @@ import co.touchlab.researchstack.glue.ui.scene.SignUpStepLayout;
 /**
  * Created by bradleymcdermott on 10/15/15.
  */
-public class EmailVerificationActivity extends PassCodeActivity
+public class EmailVerificationActivity extends PinCodeActivity
 {
     public static final  String EXTRA_EMAIL          = "EXTRA_EMAIL";
     public static final  String EXTRA_PASSWORD       = "EXTRA_PASSWORD";

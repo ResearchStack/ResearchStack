@@ -9,8 +9,11 @@ import android.os.Build;
 
 import java.util.Date;
 
+import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
+import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
@@ -26,11 +29,32 @@ import co.touchlab.researchstack.glue.ui.scene.SignUpPermissionsStepLayout;
 public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCallback
 {
 
+    TaskResult consentResult;
+
     public static Intent newIntent(Context context, Task task)
     {
         Intent intent = new Intent(context, SignUpTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         return intent;
+    }
+
+    @Override
+    public void onSaveStep(int action, Step step, StepResult result)
+    {
+        // Save result to task
+        onSaveStepResult(step.getIdentifier(), result);
+
+        // Save Pin to disk, then save our consent info
+        if (step.getIdentifier().equals(OnboardingTask.SignUpPassCodeConfirmationStepIdentifier))
+        {
+            String pin = (String) result.getResult();
+            ((AuthDataAccess) StorageManager.getFileAccess()).setPinCode(this, pin);
+
+            saveConsentResultInfo();
+        }
+
+        // Show next step
+        onExecuteStepAction(action);
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -52,59 +76,70 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == SignUpEligibleStepLayout.CONSENT_REQUEST &&
-                resultCode == Activity.RESULT_OK)
+        if(requestCode == SignUpEligibleStepLayout.CONSENT_REQUEST)
         {
-            TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
-
-            boolean consented = (boolean) result.getStepResult(ConsentTask.ID_CONSENT_DOC)
-                    .getResult();
-
-            // TODO check for valid signature/names
-            if(consented)
+            // User has passed through the entire consent flow
+            if (resultCode == Activity.RESULT_OK)
             {
-                StepResult<StepResult<String>> formResult = (StepResult<StepResult<String>>) result.getStepResult(
-                        ConsentTask.ID_FORM);
-                String fullName = formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
-                        .getResult();
+                consentResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
 
-                //                TODO Change birthdate to Date object
-                Date birthdate = new Date();
-                String birthDate = formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
-                        .getResult();
+                // (If we aren't using an AuthFileAccess) OR (if we are, and we have a pincode)
+                // THEN SaveConsentResultInfo. If we don't have a pincode then pincode-creation
+                // steps will appear when we call "showNextStep"
 
-                String sharingScope = (String) result.getStepResult(ConsentTask.ID_SHARING)
-                        .getResult();
+                boolean doesNotHaveAuth = !(StorageManager.getFileAccess() instanceof AuthDataAccess);
+                boolean hasPinCode = ((AuthDataAccess)StorageManager.getFileAccess()).hasPinCode(this);
 
-                String base64Image = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
-                        .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
-
-                String signatureDate = (String) result.getStepResult(ConsentTask.ID_SIGNATURE)
-                        .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
-
-                ResearchStack.getInstance()
-                        .getDataProvider()
-                        .saveConsent(this,
-                                fullName,
-                                birthdate,
-                                base64Image,
-                                signatureDate,
-                                sharingScope);
+                if (doesNotHaveAuth || hasPinCode)
+                {
+                    saveConsentResultInfo();
+                }
 
                 if(getCurrentStep().getIdentifier()
                         .equals(OnboardingTask.SignUpEligibleStepIdentifier))
                 {
                     showNextStep();
                 }
-
             }
+
+            // User has exited
             else
             {
-                // Clear activity and show Welcome screen
                 finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void saveConsentResultInfo()
+    {
+        StepResult<StepResult> formResult = (StepResult<StepResult>) consentResult.getStepResult(
+                ConsentTask.ID_FORM);
+
+        String fullName = (String) formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
+                .getResult();
+
+        Long birthdateInMillis = (Long) formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
+                .getResult();
+
+        String sharingScope = (String) consentResult.getStepResult(ConsentTask.ID_SHARING)
+                .getResult();
+
+        String base64Image = (String) consentResult.getStepResult(ConsentTask.ID_SIGNATURE)
+                .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
+
+        String signatureDate = (String) consentResult.getStepResult(ConsentTask.ID_SIGNATURE)
+                .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
+
+        // Save Consent Information
+        ResearchStack.getInstance()
+                .getDataProvider()
+                .saveConsent(this,
+                        fullName,
+                        new Date(birthdateInMillis),
+                        base64Image,
+                        signatureDate,
+                        sharingScope);
     }
 
     @Override
@@ -114,7 +149,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
         if(requestCode == SignUpPermissionsStepLayout.LOCATION_PERMISSION_REQUEST_CODE)
         {
-            StepLayout stepLayout = (StepLayout) findViewById(R.id.rsc_current_scene);
+            StepLayout stepLayout = (StepLayout) findViewById(R.id.rsc_current_step);
             if(stepLayout instanceof SignUpPermissionsStepLayout)
             {
                 ((SignUpPermissionsStepLayout) stepLayout).onRequestPermissionsResult(requestCode,

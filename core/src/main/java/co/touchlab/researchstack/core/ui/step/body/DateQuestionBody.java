@@ -1,7 +1,6 @@
 package co.touchlab.researchstack.core.ui.step.body;
 
 import android.app.DatePickerDialog;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,8 +96,8 @@ public class DateQuestionBody implements StepBody
     @Override
     public StepResult getStepResult()
     {
-        StepResult<String> result = new StepResult<>(identifier);
-        result.setResult(createFormattedResult());
+        StepResult<Long> result = new StepResult<>(identifier);
+        result.setResult(calendar.getTimeInMillis());
         return result;
     }
 
@@ -106,11 +105,10 @@ public class DateQuestionBody implements StepBody
     public void prefillResult(StepResult result)
     {
         //Set initial state
-        String savedFrmtdDate = (String) result.getResult();
-        if(! TextUtils.isEmpty(savedFrmtdDate))
+        Long savedTimeInMillis = (Long) result.getResult();
+        if(savedTimeInMillis != null)
         {
-            Date savedDate = getDateFromString(savedFrmtdDate);
-            calendar.setTime(savedDate);
+            calendar.setTimeInMillis(savedTimeInMillis);
             if(datePicker != null)
             {
                 datePicker.updateDate(calendar.get(Calendar.YEAR),

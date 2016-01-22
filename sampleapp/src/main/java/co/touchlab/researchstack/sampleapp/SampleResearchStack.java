@@ -17,7 +17,7 @@ import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
-import co.touchlab.researchstack.core.storage.file.auth.PassCodeConfig;
+import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.ui.step.body.SingleChoiceQuestionBody;
 import co.touchlab.researchstack.glue.AppPrefs;
 import co.touchlab.researchstack.glue.NavigationItem;
@@ -147,7 +147,7 @@ public class SampleResearchStack extends ResearchStack
     protected FileAccess createFileAccessImplementation()
     {
         long autoLockTime = AppPrefs.getInstance(context).getAutoLockTime();
-        return new AesFileAccess(new PassCodeConfig(false, 4, autoLockTime));
+        return new AesFileAccess(new PinCodeConfig(autoLockTime));
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

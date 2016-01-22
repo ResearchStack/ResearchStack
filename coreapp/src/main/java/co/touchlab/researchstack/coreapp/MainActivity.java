@@ -38,11 +38,11 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
-import co.touchlab.researchstack.core.ui.PassCodeActivity;
+import co.touchlab.researchstack.core.ui.PinCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 
-public class MainActivity extends PassCodeActivity
+public class MainActivity extends PinCodeActivity
 {
 
     public static final  String FORM_STEP                 = "form_step";
@@ -106,6 +106,7 @@ public class MainActivity extends PassCodeActivity
                 clearData();
             }
         });
+
     }
 
     private void clearData()

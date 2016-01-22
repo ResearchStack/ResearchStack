@@ -21,11 +21,11 @@ import java.util.List;
 
 import co.touchlab.researchstack.core.model.SectionModel;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
+import co.touchlab.researchstack.core.utils.ThemeUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.ui.views.DividerItemDecoration;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
-import co.touchlab.researchstack.glue.utils.ViewUtils;
 
 public class LearnFragment extends Fragment
 {
@@ -120,7 +120,7 @@ public class LearnFragment extends Fragment
                 int imageResId = ResearchStack.getInstance()
                         .getDrawableResourceId(context, item.getIconImage());
                 Drawable icon = context.getResources().getDrawable(imageResId);
-                int tintColor = ViewUtils.fetchAccentColor(context);
+                int tintColor = ThemeUtils.getAccentColor(context);
                 DrawableCompat.setTint(icon, tintColor);
                 holder.icon.setImageDrawable(icon);
             }

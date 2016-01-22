@@ -1,6 +1,7 @@
 package co.touchlab.researchstack.core.storage.file;
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
@@ -24,6 +25,8 @@ import co.touchlab.researchstack.core.utils.UiThreadContext;
 
 public abstract class BaseFileAccess implements FileAccess
 {
+
+    private   Handler                  handler      = new Handler(Looper.getMainLooper());
     protected List<FileAccessListener> listeners    = Collections.synchronizedList(new ArrayList<>());
     protected boolean                  checkThreads = false;
 
@@ -128,7 +131,7 @@ public abstract class BaseFileAccess implements FileAccess
 
     protected void notifyReady()
     {
-        new Handler().post(this :: notifyListenersReady);
+        handler.post(this :: notifyListenersReady);
     }
 
     protected void writeSafe(File file, byte[] data)
@@ -165,5 +168,10 @@ public abstract class BaseFileAccess implements FileAccess
         }
 
         return byteArrayOutputStream.toByteArray();
+    }
+
+    public Handler getMainHandler()
+    {
+        return handler;
     }
 }

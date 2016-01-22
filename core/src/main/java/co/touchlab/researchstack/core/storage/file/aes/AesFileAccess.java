@@ -1,6 +1,5 @@
 package co.touchlab.researchstack.core.storage.file.aes;
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
@@ -17,7 +16,7 @@ import co.touchlab.researchstack.core.storage.file.FileAccessException;
 import co.touchlab.researchstack.core.storage.file.FileAccessListener;
 import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.storage.file.auth.AuthFileAccessListener;
-import co.touchlab.researchstack.core.storage.file.auth.PassCodeConfig;
+import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.utils.UiThreadContext;
 
 /**
@@ -27,18 +26,18 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
 {
     public static final String CHARSET_NAME = "UTF8";
 
-    private PassCodeConfig codeConfig;
+    private PinCodeConfig codeConfig;
 
-    private long minTimeToIgnorePassCode;
+    private long minTimeToIgnorePinCode;
 
     private long lastAuthTime;
 
     private AesCbcWithIntegrity.SecretKeys key;
 
-    public AesFileAccess(PassCodeConfig codeConfig)
+    public AesFileAccess(PinCodeConfig codeConfig)
     {
         this.codeConfig = codeConfig;
-        this.minTimeToIgnorePassCode = codeConfig.getAutoLockTime();
+        this.minTimeToIgnorePinCode = codeConfig.getPinAutoLockTime();
     }
 
     @Override
@@ -49,7 +48,7 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
 
         validateKeyForTimeOut();
 
-        if(key != null)
+        if(key != null || ! hasPinCode(context))
         {
             notifyReady();
         }
@@ -113,24 +112,22 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
         try
         {
             File masterKeyFile = createMasterKeyFile(context);
+
+            if(!masterKeyFile.exists())
+            {
+                throw new IllegalAccessException("Master-key file does not exist. You should call" +
+                        "setPinCode(String pin) to create a Master-key file and encrypt w/ pin-code");
+            }
+
             AesCbcWithIntegrity.SecretKeys masterKey;
-            if(! passphraseExists(context))
-            {
-                //TODO throw exception when pass-code creation is part of SignUp/SignIn task
-                // first time, generate master key and encrypt with key created from passphrase
-                masterKey = AesCbcWithIntegrity.generateKey();
-                writeMasterKey(context, masterKeyFile, masterKey, passphrase);
-            }
-            else
-            {
-                // decrypt master key with key created from passphrase
-                String masterKeyString = readMasterKey(context, masterKeyFile, passphrase);
-                masterKey = AesCbcWithIntegrity.keys(masterKeyString);
-            }
+
+            // decrypt master key with key created from passphrase
+            String masterKeyString = readMasterKey(context, masterKeyFile, passphrase);
+            masterKey = AesCbcWithIntegrity.keys(masterKeyString);
 
             key = masterKey;
         }
-        catch(IOException | GeneralSecurityException e)
+        catch(IOException | IllegalAccessException | GeneralSecurityException e)
         {
             throw new FileAccessException(e);
         }
@@ -236,7 +233,7 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
 
     protected void notifySoftFail()
     {
-        new Handler().post(this :: notifyListenersSoftFail);
+        getMainHandler().post(this :: notifyListenersSoftFail);
     }
 
     @MainThread
@@ -256,29 +253,11 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
         }
     }
 
-    @Override
-    public void logAccessTime()
-    {
-        lastAuthTime = System.currentTimeMillis();
-    }
-
-//    @Override
-//
-//    public void checkAutoLock(Context context)
-//    {
-//        validateKeyForTimeOut();
-//
-//        if (key == null)
-//        {
-//            notifySoftFail();
-//        }
-//    }
-
     private void validateKeyForTimeOut()
     {
         long now = System.currentTimeMillis();
 
-        boolean isPastMinIgnoreTime = now - lastAuthTime > minTimeToIgnorePassCode;
+        boolean isPastMinIgnoreTime = now - lastAuthTime > minTimeToIgnorePinCode;
 
         if(isPastMinIgnoreTime)
         {
@@ -287,10 +266,45 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
     }
 
     @Override
+    public void logAccessTime()
+    {
+        lastAuthTime = System.currentTimeMillis();
+    }
+
+    // TODO Make pass-code auth more obvious that it throws an exception. Add throws list?
+    @Override
     public void authenticate(Context context, String pin)
     {
         startWithPassphrase(context, pin);
         notifyReady();
+    }
+
+    @Override
+    public boolean hasPinCode(Context context)
+    {
+        return passphraseExists(context);
+    }
+
+    @Override
+    public void setPinCode(Context context, String pin)
+    {
+        try
+        {
+            File masterKeyFile = createMasterKeyFile(context);
+            AesCbcWithIntegrity.SecretKeys masterKey = AesCbcWithIntegrity.generateKey();
+            writeMasterKey(context, masterKeyFile, masterKey, pin);
+            key = masterKey;
+        }
+        catch(IOException | GeneralSecurityException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public PinCodeConfig getPinCodeConfig()
+    {
+        return codeConfig;
     }
 
 }
