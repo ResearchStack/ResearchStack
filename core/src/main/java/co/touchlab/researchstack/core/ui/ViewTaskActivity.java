@@ -28,7 +28,7 @@ import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.SurveyStepLayout;
-import co.touchlab.researchstack.core.ui.views.SceneSwitcher;
+import co.touchlab.researchstack.core.ui.views.StepSwitcher;
 import co.touchlab.researchstack.core.utils.FormatHelper;
 
 public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
@@ -37,7 +37,7 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
 
-    private SceneSwitcher root;
+    private StepSwitcher root;
 
     private Step       currentStep;
     private Task       task;
@@ -57,7 +57,7 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
         super.setResult(RESULT_CANCELED);
         super.setContentView(R.layout.activity_scene_switcher);
 
-        root = (SceneSwitcher) findViewById(R.id.container);
+        root = (StepSwitcher) findViewById(R.id.container);
 
         if(savedInstanceState == null)
         {
@@ -116,10 +116,11 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
         StepLayout stepLayout = getSceneForStep(step);
+        stepLayout.getLayout().setTag(R.id.rsc_step_layout_id, step.getIdentifier());
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
-                        ? SceneSwitcher.SHIFT_LEFT
-                        : SceneSwitcher.SHIFT_RIGHT);
+                        ? StepSwitcher.SHIFT_LEFT
+                        : StepSwitcher.SHIFT_RIGHT);
         currentStep = step;
     }
 
@@ -231,7 +232,7 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
 
     private void notifySceneOfBackPress()
     {
-        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsc_current_scene);
+        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsc_current_step);
         currentStepLayout.isBackEventConsumed();
     }
 

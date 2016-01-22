@@ -149,7 +149,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
         if(requestCode == SignUpPermissionsStepLayout.LOCATION_PERMISSION_REQUEST_CODE)
         {
-            StepLayout stepLayout = (StepLayout) findViewById(R.id.rsc_current_scene);
+            StepLayout stepLayout = (StepLayout) findViewById(R.id.rsc_current_step);
             if(stepLayout instanceof SignUpPermissionsStepLayout)
             {
                 ((SignUpPermissionsStepLayout) stepLayout).onRequestPermissionsResult(requestCode,
