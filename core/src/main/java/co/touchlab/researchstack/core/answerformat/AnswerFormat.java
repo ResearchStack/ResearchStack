@@ -30,6 +30,7 @@ public abstract class AnswerFormat implements Serializable
         return null;
     }
 
+    // TODO do we need this at all? enum types + concrete implementations
     public enum QuestionType
     {
         None,
@@ -78,18 +79,21 @@ public abstract class AnswerFormat implements Serializable
 
     }
 
+    // TODO why here (or at all)?
     public enum ChoiceAnswerStyle
     {
         SingleChoice,
         MultipleChoice
     }
 
+    // TODO why here?
     public enum NumberFormattingStyle
     {
         Default,
         Percent
     }
 
+    // TODO why here?
     public enum DateAnswerStyle
     {
         DateAndTime,

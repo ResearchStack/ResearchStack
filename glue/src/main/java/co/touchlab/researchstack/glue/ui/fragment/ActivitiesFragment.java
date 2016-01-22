@@ -1,5 +1,7 @@
 package co.touchlab.researchstack.glue.ui.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -20,29 +25,98 @@ import java.util.Map;
 
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
+import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
+import co.touchlab.researchstack.core.utils.FormatHelper;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.glue.model.TaskModel;
 import co.touchlab.researchstack.glue.schedule.ScheduleHelper;
 import co.touchlab.researchstack.glue.task.SmartSurveyTask;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
+import rx.Subscription;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by bradleymcdermott on 10/28/15.
  */
 public class ActivitiesFragment extends Fragment
 {
+    private static final int REQUEST_TASK = 1492;
+    private TaskAdapter  adapter;
+    private RecyclerView recyclerView;
+    private Subscription subscription;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_activities, container, false);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new TaskAdapter(loadTasksAndSchedules()));
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        setUpAdapter();
+
         return view;
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+
+        unsubscribe();
+    }
+
+    private void unsubscribe()
+    {
+        if(subscription != null)
+        {
+            subscription.unsubscribe();
+        }
+    }
+
+    private void setUpAdapter()
+    {
+        // TODO make updating the list better, make sure not leaking memory with the rx subject
+        unsubscribe();
+
+        adapter = new TaskAdapter(loadTasksAndSchedules());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+
+        subscription = adapter.getPublishSubject().subscribe(task -> {
+
+            TaskModel taskModel = JsonUtils.loadClass(getContext(),
+                    TaskModel.class,
+                    task.taskFileName);
+            SmartSurveyTask newTask = new SmartSurveyTask(taskModel, task.taskID);
+
+            startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask), REQUEST_TASK);
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_TASK)
+        {
+            LogExt.d(getClass(), "Received task result from task activity");
+            String taskScheduleId = data.getStringExtra(ViewTaskActivity.EXTRA_TASK_ID);
+            TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+            TaskRecord taskRecord = new TaskRecord();
+            taskRecord.started = new Date();
+            taskRecord.completed = new Date();
+            taskRecord.taskId = taskScheduleId;
+            Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601).create();
+            taskRecord.result = gson.toJson(taskResult);
+            StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
+
+            setUpAdapter();
+        }
+        else
+        {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     private ArrayList<SchedulesAndTasksModel.TaskModel> loadTasksAndSchedules()
@@ -82,10 +156,17 @@ public class ActivitiesFragment extends Fragment
     {
         List<SchedulesAndTasksModel.TaskModel> tasks;
 
+        PublishSubject<SchedulesAndTasksModel.TaskModel> publishSubject = PublishSubject.create();
+
         public TaskAdapter(List<SchedulesAndTasksModel.TaskModel> tasks)
         {
             super();
             this.tasks = tasks;
+        }
+
+        public PublishSubject<SchedulesAndTasksModel.TaskModel> getPublishSubject()
+        {
+            return publishSubject;
         }
 
         @Override
@@ -105,19 +186,12 @@ public class ActivitiesFragment extends Fragment
 
             // TODO fix this, just for looks atm
             holder.dailyIndicator.setBackgroundResource(task.taskTitle.equals("Daily Survey")
-                            ? R.color.recurring_color
-                            : R.color.one_time_color);
+                    ? R.color.recurring_color
+                    : R.color.one_time_color);
 
             holder.itemView.setOnClickListener(v -> {
-                // TODO this is just a simple implementation to get it working, we'll need
-                // TODO to do something with the activity result later
                 LogExt.d(getClass(), "Item clicked: " + task.taskID);
-                TaskModel taskModel = JsonUtils.loadClass(v.getContext(),
-                        TaskModel.class,
-                        task.taskFileName);
-                SmartSurveyTask newTask = new SmartSurveyTask(taskModel, task.taskID);
-
-                v.getContext().startActivity(ViewTaskActivity.newIntent(v.getContext(), newTask));
+                publishSubject.onNext(task);
             });
         }
 
