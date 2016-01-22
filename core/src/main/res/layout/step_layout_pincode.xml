@@ -11,7 +11,7 @@
         style="@style/Core.Survey.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/passcode_create_title"
+        android:text="@string/rsc_pincode_enter_title"
         />
 
     <TextView
@@ -21,13 +21,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:paddingTop="@dimen/rsc_padding_small"
-        android:text="@string/passcode_create_summary"
+        android:text="@string/rsc_pincode_enter_summary"
         android:textColorLink="?attr/colorAccent"
         android:minHeight="52dp"
         />
 
     <co.touchlab.researchstack.core.ui.views.PassCodeView
-        android:id="@+id/passcode"
+        android:id="@+id/pincode"
         android:layout_width="match_parent"
         android:layout_height="@dimen/rsc_item_size_default"
         android:singleLine="true"

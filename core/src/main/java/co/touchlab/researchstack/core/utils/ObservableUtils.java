@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.glue;
+package co.touchlab.researchstack.core.utils;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

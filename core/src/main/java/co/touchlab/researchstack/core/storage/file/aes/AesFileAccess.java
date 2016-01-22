@@ -1,6 +1,5 @@
 package co.touchlab.researchstack.core.storage.file.aes;
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
@@ -29,7 +28,7 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
 
     private PinCodeConfig codeConfig;
 
-    private long minTimeToIgnorePassCode;
+    private long minTimeToIgnorePinCode;
 
     private long lastAuthTime;
 
@@ -38,7 +37,7 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
     public AesFileAccess(PinCodeConfig codeConfig)
     {
         this.codeConfig = codeConfig;
-        this.minTimeToIgnorePassCode = codeConfig.getPinAutoLockTime();
+        this.minTimeToIgnorePinCode = codeConfig.getPinAutoLockTime();
     }
 
     @Override
@@ -116,9 +115,8 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
 
             if(!masterKeyFile.exists())
             {
-                throw new IllegalAccessException("Attempting to access AesFileAccess without having a " +
-                        "pass-code. Implement DataAuthAccess interface on your FileAccess class " +
-                        "and call DataAuthAccess.setPinCode(Context, String).");
+                throw new IllegalAccessException("Master-key file does not exist. You should call" +
+                        "setPinCode(String pin) to create a Master-key file and encrypt w/ pin-code");
             }
 
             AesCbcWithIntegrity.SecretKeys masterKey;
@@ -235,7 +233,7 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
 
     protected void notifySoftFail()
     {
-        new Handler().post(this :: notifyListenersSoftFail);
+        getMainHandler().post(this :: notifyListenersSoftFail);
     }
 
     @MainThread
@@ -259,7 +257,7 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
     {
         long now = System.currentTimeMillis();
 
-        boolean isPastMinIgnoreTime = now - lastAuthTime > minTimeToIgnorePassCode;
+        boolean isPastMinIgnoreTime = now - lastAuthTime > minTimeToIgnorePinCode;
 
         if(isPastMinIgnoreTime)
         {

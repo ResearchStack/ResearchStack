@@ -5,16 +5,16 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
-import co.touchlab.researchstack.core.ui.PassCodeActivity;
+import co.touchlab.researchstack.core.ui.PinCodeActivity;
 import co.touchlab.researchstack.glue.DataProvider;
-import co.touchlab.researchstack.glue.ObservableUtils;
+import co.touchlab.researchstack.core.utils.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
  */
-public class SplashActivity extends PassCodeActivity
+public class SplashActivity extends PinCodeActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)

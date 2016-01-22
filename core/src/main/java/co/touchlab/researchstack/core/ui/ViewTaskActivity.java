@@ -31,7 +31,7 @@ import co.touchlab.researchstack.core.ui.step.layout.SurveyStepLayout;
 import co.touchlab.researchstack.core.ui.views.SceneSwitcher;
 import co.touchlab.researchstack.core.utils.FormatHelper;
 
-public class ViewTaskActivity extends PassCodeActivity implements SceneCallbacks
+public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
 {
     public static final String EXTRA_TASK        = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";

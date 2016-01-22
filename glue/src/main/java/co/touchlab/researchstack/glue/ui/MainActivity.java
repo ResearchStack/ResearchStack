@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
 
-import co.touchlab.researchstack.core.ui.PassCodeActivity;
+import co.touchlab.researchstack.core.ui.PinCodeActivity;
 import co.touchlab.researchstack.glue.NavigationItem;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
@@ -25,7 +25,7 @@ import co.touchlab.researchstack.glue.ResearchStack;
 /**
  * Created by bradleymcdermott on 10/27/15.
  */
-public class MainActivity extends PassCodeActivity
+public class MainActivity extends PinCodeActivity
 {
 
     private DrawerLayout   drawerLayout;

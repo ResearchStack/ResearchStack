@@ -14,6 +14,7 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import rx.functions.Action1;
 
+@Deprecated
 public class PassCodeDialog extends android.support.v7.app.AlertDialog
 {
     private static final String TAG = PassCodeDialog.class.getSimpleName();

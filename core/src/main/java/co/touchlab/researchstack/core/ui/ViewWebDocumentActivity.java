@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import co.touchlab.researchstack.core.ui.views.LocalWebView;
 import co.touchlab.researchstack.core.utils.ResUtils;
 
-public class ViewWebDocumentActivity extends PassCodeActivity
+public class ViewWebDocumentActivity extends PinCodeActivity
 {
 
     public static final String TAG          = ViewWebDocumentActivity.class.getSimpleName();

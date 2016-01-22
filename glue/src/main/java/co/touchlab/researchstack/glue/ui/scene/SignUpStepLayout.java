@@ -16,7 +16,7 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
-import co.touchlab.researchstack.glue.ObservableUtils;
+import co.touchlab.researchstack.core.utils.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.task.SignUpTask;

@@ -8,7 +8,7 @@ import android.view.View;
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
-import co.touchlab.researchstack.core.ui.PassCodeActivity;
+import co.touchlab.researchstack.core.ui.PinCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.ResearchStack;
@@ -22,7 +22,7 @@ import co.touchlab.researchstack.glue.utils.JsonUtils;
 /**
  * Created by bradleymcdermott on 10/15/15.
  */
-public class OnboardingActivity extends PassCodeActivity
+public class OnboardingActivity extends PinCodeActivity
 {
     public static final int REQUEST_CODE_SIGN_UP = 21473;
     public static final int REQUEST_CODE_SIGN_IN = 31473;
