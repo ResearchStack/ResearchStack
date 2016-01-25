@@ -19,8 +19,8 @@ import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.task.ConsentTask;
 import co.touchlab.researchstack.glue.task.OnboardingTask;
 import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleStepLayout;
@@ -132,8 +132,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
 
         // Save Consent Information
-        ResearchStack.getInstance()
-                .getDataProvider()
+        DataProvider.getInstance()
                 .saveConsent(this,
                         fullName,
                         new Date(birthdateInMillis),

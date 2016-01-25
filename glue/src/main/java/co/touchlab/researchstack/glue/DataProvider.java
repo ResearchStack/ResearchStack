@@ -3,31 +3,58 @@ import android.content.Context;
 
 import java.util.Date;
 
+import co.touchlab.researchstack.glue.model.User;
 import rx.Observable;
 
-public interface DataProvider
+public abstract class DataProvider
 {
-    Observable<DataResponse> signUp(Context context, String email, String username, String password);
+    private static DataProvider instance;
 
-    Observable<DataResponse> signIn(Context context, String username, String password);
+    public DataProvider()
+    {
+    }
 
-    Observable<DataResponse> signOut(Context context);
+    public static DataProvider getInstance()
+    {
+        if(instance == null)
+        {
+            throw new RuntimeException(
+                    "Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
+        }
 
-    Observable<DataResponse> resendEmailVerification(Context context, String email);
+        return instance;
+    }
 
-    boolean isSignedUp(Context context);
+    public static void init(DataProvider manager)
+    {
+        DataProvider.instance = manager;
+    }
 
-    boolean isSignedIn(Context context);
+    public abstract Observable<DataResponse> initialize(Context context);
 
-    void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope);
+    public abstract Observable<DataResponse> signUp(Context context, String email, String username, String password);
 
-    String getUserEmail(Context context);
+    public abstract Observable<DataResponse> signIn(Context context, String username, String password);
 
-    Observable<DataResponse> initialize(Context context);
+    public abstract Observable<DataResponse> signOut(Context context);
 
-    //  TODO  void getUserProfile(TODO);
+    public abstract Observable<DataResponse> resendEmailVerification(Context context, String email);
 
-    //  TODO  void updateUserProfile(TODO);
+    public abstract boolean isSignedUp(Context context);
 
-    //  TODO  void saveSurveyResult(TODO);
+    public abstract boolean isSignedIn(Context context);
+
+    public abstract void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope);
+
+    public abstract String getUserEmail(Context context);
+
+    public abstract User.UserInfoType[] getUserInfoTypes();
+
+    public abstract void clearUserData(Context context);
+
+    //TODO public abstract void getUserProfile(TODO);
+
+    //TODO public abstract void updateUserProfile(TODO);
+
+    //TODO public abstract void saveSurveyResult(TODO);
 }

@@ -10,8 +10,9 @@ import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.ui.PinCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
+import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.glue.ResourceManager;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 import co.touchlab.researchstack.glue.task.OnboardingTask;
 import co.touchlab.researchstack.glue.task.SignInTask;
@@ -73,7 +74,7 @@ public class OnboardingActivity extends PinCodeActivity
         super.onDataReady();
 
         // go straight to login screen if signed up but not verified
-        if(ResearchStack.getInstance().getDataProvider().isSignedUp(this))
+        if(DataProvider.getInstance().isSignedUp(this))
         {
             onSignInClicked(null);
         }
@@ -82,7 +83,7 @@ public class OnboardingActivity extends PinCodeActivity
     //TODO Read on main thread for intense UI blockage.
     private StudyOverviewModel parseStudyOverviewModel()
     {
-        int fileResId = ResearchStack.getInstance().getStudyOverviewResourceId();
+        int fileResId = ResourceManager.getInstance().getStudyOverviewSections();
         return JsonUtils.loadClass(OnboardingActivity.this, StudyOverviewModel.class, fileResId);
     }
 

@@ -21,9 +21,10 @@ import java.util.List;
 
 import co.touchlab.researchstack.core.model.SectionModel;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
+import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.core.utils.ThemeUtils;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.glue.ResourceManager;
 import co.touchlab.researchstack.glue.ui.views.DividerItemDecoration;
 import co.touchlab.researchstack.glue.utils.JsonUtils;
 
@@ -58,7 +59,7 @@ public class LearnFragment extends Fragment
 
     private List<SectionModel.SectionRow> loadTasksAndSchedules()
     {
-        int fileResId = ResearchStack.getInstance().getLearnSections();
+        int fileResId = ResourceManager.getInstance().getLearnSections();
         SectionModel schedulesAndTasksModel = JsonUtils.loadClass(getContext(),
                 SectionModel.class,
                 fileResId);
@@ -117,8 +118,7 @@ public class LearnFragment extends Fragment
                     v.getContext().startActivity(intent);
                 });
 
-                int imageResId = ResearchStack.getInstance()
-                        .getDrawableResourceId(context, item.getIconImage());
+                int imageResId = ResUtils.getDrawableResourceId(context, item.getIconImage());
                 Drawable icon = context.getResources().getDrawable(imageResId);
                 int tintColor = ThemeUtils.getAccentColor(context);
                 DrawableCompat.setTint(icon, tintColor);

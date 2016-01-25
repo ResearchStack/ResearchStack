@@ -20,8 +20,8 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.core.utils.ObservableUtils;
+import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.task.SignInTask;
 import co.touchlab.researchstack.glue.ui.adapter.TextWatcherAdapter;
 
@@ -119,8 +119,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
                 progress.setVisibility(View.VISIBLE);
                 progress.setAlpha(0);
             }).withEndAction(() -> {
-                ResearchStack.getInstance()
-                        .getDataProvider()
+                DataProvider.getInstance()
                         .signIn(getContext(), username, password)
                         .compose(ObservableUtils.applyDefault())
                         .subscribe(dataResponse -> {
@@ -146,8 +145,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
                 .alpha(0)
                 .withEndAction(() -> progress.setVisibility(View.GONE));
 
-        if(username.equals(ResearchStack.getInstance()
-                .getDataProvider()
+        if(username.equals(DataProvider.getInstance()
                 .getUserEmail(getContext())))
         {
             // Sign in returns 404 if they haven't verified email. If the email

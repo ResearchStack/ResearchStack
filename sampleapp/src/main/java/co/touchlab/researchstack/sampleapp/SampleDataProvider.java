@@ -10,9 +10,11 @@ import java.util.Date;
 
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.helpers.LogExt;
+import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.FileAccessException;
 import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.DataResponse;
+import co.touchlab.researchstack.glue.model.User;
 import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
 import co.touchlab.researchstack.sampleapp.bridge.BridgeMessageResponse;
 import co.touchlab.researchstack.sampleapp.network.UserSessionInfo;
@@ -32,8 +34,9 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
 
-public class SampleDataProvider implements DataProvider
+public class SampleDataProvider extends DataProvider
 {
+    public static final String TEMP_USER_JSON_FILE_NAME = "/temp_user";
     public static final String TEMP_CONSENT_JSON_FILE_NAME = "/consent_sig";
     public static final String TEMP_USER_EMAIL             = "/user_email";
     public static final String USER_SESSION_PATH           = "/user_session";
@@ -284,6 +287,32 @@ public class SampleDataProvider implements DataProvider
     private String loadJsonString(Context context, String path)
     {
         return StorageManager.getFileAccess().readString(context, path);
+    }
+
+    /**
+     * TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
+     */
+    @Override
+    public User.UserInfoType[] getUserInfoTypes()
+    {
+        return new User.UserInfoType[] {
+                User.UserInfoType.Name,
+                User.UserInfoType.Email,
+                User.UserInfoType.BiologicalSex,
+                User.UserInfoType.DateOfBirth,
+                User.UserInfoType.Height,
+                User.UserInfoType.Weight
+        };
+    }
+
+    @Deprecated
+    public void clearUserData(Context context)
+    {
+        FileAccess fileAccess = StorageManager.getFileAccess();
+        if(fileAccess.dataExists(context, TEMP_USER_JSON_FILE_NAME))
+        {
+            fileAccess.clearData(context, TEMP_USER_JSON_FILE_NAME);
+        }
     }
 
     public interface BridgeService

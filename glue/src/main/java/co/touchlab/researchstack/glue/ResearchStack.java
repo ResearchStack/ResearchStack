@@ -2,38 +2,16 @@ package co.touchlab.researchstack.glue;
 
 import android.content.Context;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import co.touchlab.researchstack.core.StorageManager;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
-import co.touchlab.researchstack.glue.model.User;
-import co.touchlab.researchstack.glue.ui.fragment.ActivitiesFragment;
-import co.touchlab.researchstack.glue.ui.fragment.DashboardFragment;
-import co.touchlab.researchstack.glue.ui.fragment.LearnFragment;
-import co.touchlab.researchstack.glue.ui.fragment.ProfileFragment;
-import co.touchlab.researchstack.glue.ui.fragment.SettingsFragment;
 
 public abstract class ResearchStack
 {
-    public static final String TEMP_USER_JSON_FILE_NAME = "/temp_user";
     protected static ResearchStack instance;
-    protected        Context       context;
-    private          User          currentUser;
-    private          DataProvider  dataProvider;
 
-    public ResearchStack(Context context)
+    public ResearchStack()
     {
-        this.context = context;
-    }
-
-    public static void init(ResearchStack concreteResearchStack)
-    {
-        instance = concreteResearchStack;
-
-        StorageManager.init(concreteResearchStack.createFileAccessImplementation(),
-                concreteResearchStack.createAppDatabaseImplementation());
     }
 
     public synchronized static ResearchStack getInstance()
@@ -47,139 +25,29 @@ public abstract class ResearchStack
         return instance;
     }
 
-    /**
-     * TODO Clean up implementation -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-     * Not too happy about returning a list of objects. Could we / should we use XML impl?
-     *
-     * @return List of NavigationItems
-     */
-    public List<NavigationItem> getNavigationItems()
+    public static void init(Context context, ResearchStack concreteResearchStack)
     {
-        List<NavigationItem> navItems = new ArrayList<>();
+        instance = concreteResearchStack;
 
-        NavigationItem activities = new NavigationItem().setId(R.id.nav_activities)
-                .setGroupId(R.id.nav_group)
-                .setTitle(R.string.activities)
-                .setIcon(R.drawable.ic_nav_activities)
-                .setClass(ActivitiesFragment.class);
-        navItems.add(activities);
+        StorageManager.init(concreteResearchStack.createFileAccessImplementation(context),
+                concreteResearchStack.createAppDatabaseImplementation(context));
 
-        NavigationItem dashboard = new NavigationItem().setId(R.id.nav_dashboard)
-                .setGroupId(R.id.nav_group)
-                .setTitle(R.string.dashboard)
-                .setIcon(R.drawable.ic_nav_dashboard)
-                .setClass(DashboardFragment.class);
-        navItems.add(dashboard);
+        ResourceManager.init(concreteResearchStack.createResourceManagerImplementation(context));
 
-        NavigationItem learn = new NavigationItem().setId(R.id.nav_learn)
-                .setGroupId(R.id.nav_group)
-                .setTitle(R.string.learn)
-                .setIcon(R.drawable.ic_nav_learn)
-                .setClass(LearnFragment.class);
-        navItems.add(learn);
+        UiManager.init(concreteResearchStack.createUiManagerImplementation(context));
 
-        NavigationItem profile = new NavigationItem().setId(R.id.nav_profile)
-                .setGroupId(R.id.nav_group)
-                .setTitle(R.string.profile)
-                .setIcon(R.drawable.ic_nav_profile)
-                .setClass(ProfileFragment.class);
-        navItems.add(profile);
+        DataProvider.init(concreteResearchStack.createDataProviderImplementation(context));
 
-        NavigationItem settings = new NavigationItem().setId(R.id.nav_settings)
-                .setGroupId(R.id.nav_group)
-                .setTitle(R.string.settings)
-                .setIcon(R.drawable.ic_nav_settings)
-                .setClass(SettingsFragment.class);
-        navItems.add(settings);
-
-        return navItems;
     }
 
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Concrete Implementations
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    protected abstract AppDatabase createAppDatabaseImplementation();
+    protected abstract AppDatabase createAppDatabaseImplementation(Context context);
 
-    protected abstract FileAccess createFileAccessImplementation();
+    protected abstract FileAccess createFileAccessImplementation(Context context);
 
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // File Names
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    public abstract int getStudyOverviewResourceId();
+    protected abstract ResourceManager createResourceManagerImplementation(Context context);
 
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Resource Names
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    public abstract int getLargeLogoDiseaseIcon();
+    protected abstract UiManager createUiManagerImplementation(Context context);
 
-    public abstract int getConsentPDF();
-
-    public abstract int getConsentSections();
-
-    public abstract int getQuizSections();
-
-    public abstract int getLearnSections();
-
-    public abstract int getPrivacyPolicy();
-
-    public abstract int getLicenseSections();
-
-    public String getExternalSDAppFolder()
-    {
-        return "demo_researchstack";
-    }
-
-    public abstract int getAppName();
-
-    public String getHTMLFilePath(String docName)
-    {
-        return getRawFilePath(docName, "html");
-    }
-
-    public String getPDFFilePath(String docName)
-    {
-        return getRawFilePath(docName, "pdf");
-    }
-
-
-    public String getRawFilePath(String docName, String postfix)
-    {
-        return "file:///android_res/raw/" + docName + "." + postfix;
-    }
-
-    public int getDrawableResourceId(Context context, String name)
-    {
-        return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
-    }
-
-    public abstract boolean isSignatureEnabledInConsent();
-
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Other (unorganized)
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-    // TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
-    public abstract User.UserInfoType[] getUserInfoTypes();
-
-    public abstract Class getInclusionCriteriaSceneClass();
-
-    public void clearUserData(Context context)
-    {
-        FileAccess fileAccess = StorageManager.getFileAccess();
-        if(fileAccess.dataExists(context, TEMP_USER_JSON_FILE_NAME))
-        {
-            fileAccess.clearData(context, TEMP_USER_JSON_FILE_NAME);
-        }
-    }
-
-    public void setDataProvider(DataProvider dataProvider)
-    {
-        this.dataProvider = dataProvider;
-    }
-
-    public DataProvider getDataProvider()
-    {
-        return dataProvider;
-    }
+    protected abstract DataProvider createDataProviderImplementation(Context context);
 
 }

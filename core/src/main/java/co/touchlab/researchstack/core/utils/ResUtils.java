@@ -18,6 +18,19 @@ public class ResUtils
     // Resource Names
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
+    public static String getApplicationName(Context context)
+    {
+        int stringId = context.getApplicationInfo().labelRes;
+        return context.getString(stringId);
+    }
+
+    /**
+     * TODO Determine if method should exists in class
+     * Should this be here or should {@link co.touchlab.researchstack.core.StorageManager} have the
+     * ability to write files to SDCard
+     *
+     * @return of SD-Card storage folder name (used to save and share consent-PDF)
+     */
     public static String getExternalSDAppFolder()
     {
         return "demo_researchstack";
@@ -41,6 +54,11 @@ public class ResUtils
     public static int getDrawableResourceId(Context context, String name)
     {
         return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+    }
+
+    public static int getRawResourceId(Context context, String name)
+    {
+        return context.getResources().getIdentifier(name, "raw", context.getPackageName());
     }
 
     public static byte[] getResource(Context context, int id)
@@ -87,10 +105,5 @@ public class ResUtils
     public static String getStringResource(Context ctx, int id)
     {
         return new String(getResource(ctx, id), Charset.forName("UTF-8"));
-    }
-
-    public static int getRawResourceId(Context context, String name)
-    {
-        return context.getResources().getIdentifier(name, "raw", context.getPackageName());
     }
 }

@@ -19,8 +19,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import co.touchlab.researchstack.core.helpers.LogExt;
+import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.glue.ResourceManager;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
 
 public class StudyLandingLayout extends ScrollView
@@ -63,7 +64,7 @@ public class StudyLandingLayout extends ScrollView
 
     public void setData(StudyOverviewModel.Question data)
     {
-        logoView.setImageResource(ResearchStack.getInstance().getLargeLogoDiseaseIcon());
+        logoView.setImageResource(ResourceManager.getInstance().getLargeLogoDiseaseIcon());
 
         titleView.setText(data.getTitle());
 //        subtitleView.setText(data.getDetails());
@@ -90,7 +91,7 @@ public class StudyLandingLayout extends ScrollView
 
             //TODO Clean this up, should no write/read on main thread
             File consentFile = getConsentFormFileFromExternalStorage();
-            String appName = getResources().getString(ResearchStack.getInstance().getAppName());
+            String appName = ResUtils.getApplicationName(getContext());
             String emailSubject = getResources().getString(R.string.study_overview_email_subject,
                     appName);
 
@@ -115,10 +116,9 @@ public class StudyLandingLayout extends ScrollView
     {
         LogExt.d(getClass(), "getConsentFormFileFromExternalStorage() - - - - - - ");
         String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-        String basepath =
-                extStorageDirectory + "/" + ResearchStack.getInstance().getExternalSDAppFolder();
+        String basepath = extStorageDirectory + "/" + ResUtils.getExternalSDAppFolder();
 
-        int fileResId = ResearchStack.getInstance().getConsentPDF();
+        int fileResId = ResourceManager.getInstance().getConsentPDF();
         String formName = getResources().getResourceEntryName(fileResId);
         String fileName = formName + ".pdf";
 

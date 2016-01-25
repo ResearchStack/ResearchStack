@@ -6,10 +6,9 @@ import android.widget.Toast;
 
 import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.ui.PinCodeActivity;
-import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.core.utils.ObservableUtils;
+import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
@@ -27,12 +26,11 @@ public class SplashActivity extends PinCodeActivity
     protected void onDataReady()
     {
         super.onDataReady();
-        DataProvider dataProvider = ResearchStack.getInstance().getDataProvider();
 
-        dataProvider.initialize(this)
+        DataProvider.getInstance().initialize(this)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(response -> {
-                    if(dataProvider.isSignedIn(SplashActivity.this))
+                    if(DataProvider.getInstance().isSignedIn(SplashActivity.this))
                     {
                         launchMainActivity();
                     }

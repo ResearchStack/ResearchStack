@@ -26,7 +26,8 @@ import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.glue.ResourceManager;
+import co.touchlab.researchstack.glue.UiManager;
 import co.touchlab.researchstack.glue.model.ConsentQuizModel;
 import co.touchlab.researchstack.glue.step.ConsentQuizEvaluationStep;
 import co.touchlab.researchstack.glue.step.ConsentQuizQuestionStep;
@@ -52,19 +53,16 @@ public class ConsentTask extends OrderedTask
     {
         super(ID_CONSENT, SCHEDULE_ID_CONSENT);
 
-        ResearchStack researchStack = ResearchStack.getInstance();
         Resources r = context.getResources();
 
         //TODO Read on main thread for intense UI blockage.
         ConsentSectionModel data = JsonUtils.loadClass(context,
-                ConsentSectionModel.class,
-                researchStack.getConsentSections());
+                ConsentSectionModel.class, ResourceManager.getInstance().getConsentSections());
 
         String participant = r.getString(R.string.participant);
         ConsentSignature signature = new ConsentSignature("participant", participant, null);
 
-        signature.setRequiresSignatureImage(ResearchStack.getInstance()
-                .isSignatureEnabledInConsent());
+        signature.setRequiresSignatureImage(UiManager.getInstance().isSignatureEnabledInConsent());
 
         ConsentDocument doc = new ConsentDocument();
         doc.setTitle(r.getString(R.string.rsc_consent_form_title));
@@ -81,7 +79,7 @@ public class ConsentTask extends OrderedTask
 
         initConsentSharingStep(r, data);
 
-        initQuizSteps(context, researchStack);
+        initQuizSteps(context);
 
         initConsentReviewSteps(context, doc);
     }
@@ -156,11 +154,10 @@ public class ConsentTask extends OrderedTask
         }
     }
 
-    private void initQuizSteps(Context ctx, ResearchStack rs)
+    private void initQuizSteps(Context ctx)
     {
         ConsentQuizModel model = JsonUtils.loadClass(ctx,
-                ConsentQuizModel.class,
-                rs.getQuizSections());
+                ConsentQuizModel.class, ResourceManager.getInstance().getQuizSections());
 
 //        String trueString = ctx.getString(R.string.btn_true);
 //        Choice<Boolean> trueChoice = new Choice<>(trueString, true, null);

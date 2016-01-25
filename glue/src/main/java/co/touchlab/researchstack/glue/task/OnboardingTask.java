@@ -10,7 +10,7 @@ import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.step.body.NotImplementedStepBody;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.glue.UiManager;
 import co.touchlab.researchstack.glue.step.PassCodeConfirmationStep;
 import co.touchlab.researchstack.glue.ui.scene.SignInStepLayout;
 import co.touchlab.researchstack.glue.ui.scene.SignUpEligibleStepLayout;
@@ -152,7 +152,7 @@ public abstract class OnboardingTask extends Task
 
             inclusionCriteriaStep = new QuestionStep(SignUpInclusionCriteriaStepIdentifier);
             inclusionCriteriaStep.setSceneTitle(R.string.eligibility);
-            inclusionCriteriaStep.setSceneClass(ResearchStack.getInstance()
+            inclusionCriteriaStep.setSceneClass(UiManager.getInstance()
                     .getInclusionCriteriaSceneClass());
             inclusionCriteriaStep.setTitle(
                     "Were you born somewhere on planet earth and are you a human-ish?");

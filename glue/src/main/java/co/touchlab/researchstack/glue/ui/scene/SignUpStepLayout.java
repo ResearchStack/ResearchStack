@@ -17,8 +17,8 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.core.utils.ObservableUtils;
+import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
 import co.touchlab.researchstack.glue.task.SignUpTask;
 import co.touchlab.researchstack.glue.ui.adapter.TextWatcherAdapter;
 
@@ -118,9 +118,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
                     .withStartAction(() -> {
                         progress.setVisibility(View.VISIBLE);
                         progress.setAlpha(0);
-                    })
-                    .withEndAction(() -> ResearchStack.getInstance()
-                            .getDataProvider()
+                    }).withEndAction(() -> DataProvider.getInstance()
                             .signUp(getContext(), email, username, password)
                             .compose(ObservableUtils.applyDefault())
                             .subscribe(dataResponse -> {

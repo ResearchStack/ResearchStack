@@ -16,8 +16,10 @@ import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.ui.PinCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.core.utils.ObservableUtils;
+import co.touchlab.researchstack.core.utils.ResUtils;
+import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.glue.ResourceManager;
 import co.touchlab.researchstack.glue.task.OnboardingTask;
 import co.touchlab.researchstack.glue.task.SignUpTask;
 import co.touchlab.researchstack.glue.ui.scene.SignUpStepLayout;
@@ -52,7 +54,7 @@ public class EmailVerificationActivity extends PinCodeActivity
         email = getIntent().getStringExtra(EXTRA_EMAIL);
         password = getIntent().getStringExtra(EXTRA_PASSWORD);
 
-        ((AppCompatImageView) findViewById(R.id.study_logo)).setImageResource(ResearchStack.getInstance()
+        ((AppCompatImageView) findViewById(R.id.study_logo)).setImageResource(ResourceManager.getInstance()
                 .getLargeLogoDiseaseIcon());
         updateEmailText();
 
@@ -68,7 +70,7 @@ public class EmailVerificationActivity extends PinCodeActivity
     private void updateEmailText()
     {
         ((AppCompatTextView) findViewById(R.id.email_verification_body)).setText(getString(R.string.email_verification_body,
-                getString(ResearchStack.getInstance().getAppName()),
+                ResUtils.getApplicationName(this),
                 email));
     }
 
@@ -111,8 +113,7 @@ public class EmailVerificationActivity extends PinCodeActivity
             progress.setAlpha(0);
         });
 
-        ResearchStack.getInstance()
-                .getDataProvider()
+        DataProvider.getInstance()
                 .resendEmailVerification(this, email)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(dataResponse -> {
@@ -139,8 +140,7 @@ public class EmailVerificationActivity extends PinCodeActivity
             progress.setAlpha(0);
         });
 
-        ResearchStack.getInstance()
-                .getDataProvider()
+        DataProvider.getInstance()
                 .signIn(this, email, password)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(dataResponse -> {

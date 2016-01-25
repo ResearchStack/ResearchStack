@@ -18,9 +18,10 @@ import android.widget.Toast;
 import java.lang.reflect.Constructor;
 
 import co.touchlab.researchstack.core.ui.PinCodeActivity;
+import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.NavigationItem;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.glue.UiManager;
 
 /**
  * Created by bradleymcdermott on 10/27/15.
@@ -72,7 +73,7 @@ public class MainActivity extends PinCodeActivity
         image.setOnLongClickListener(v -> {
             new AlertDialog.Builder(MainActivity.this).setMessage("Clear saved user data?")
                     .setPositiveButton("Yes", (dialog, which) -> {
-                        ResearchStack.getInstance().clearUserData(MainActivity.this);
+                        DataProvider.getInstance().clearUserData(MainActivity.this);
                         dialog.dismiss();
                         finish();
                         System.exit(0);
@@ -125,7 +126,7 @@ public class MainActivity extends PinCodeActivity
 
     private void initNavigationMenu(NavigationView view)
     {
-        for(NavigationItem item : ResearchStack.getInstance().getNavigationItems())
+        for(NavigationItem item : UiManager.getInstance().getNavigationItems())
         {
             MenuItem menuItem = view.getMenu()
                     .add(item.getGroupId(), item.getId(), item.getOrder(), item.getTitle());

@@ -18,8 +18,8 @@ import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
+import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.glue.ResearchStack;
 
 public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayout
 {
@@ -78,8 +78,7 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
         ((AuthDataAccess) StorageManager.getFileAccess()).setPinCode(getContext(), "1111");
 
         // Save fake consent stuff
-        ResearchStack.getInstance()
-                .getDataProvider()
+        DataProvider.getInstance()
                 .saveConsent(getContext(),
                         "test name",
                         new Date(662748042000l),
