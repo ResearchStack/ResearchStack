@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import co.touchlab.researchstack.core.result.StepResult;
+import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
@@ -118,5 +120,29 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
         {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void saveTaskResult(TaskResult result)
+    {
+
+    }
+
+    @Override
+    public TaskResult loadTaskResult(String taskResultId)
+    {
+        return null;
+    }
+
+    @Override
+    public List<TaskResult> loadTaskResults(String taskId)
+    {
+        return null;
+    }
+
+    @Override
+    public List<StepResult> loadStepResults(String stepId)
+    {
+        return null;
     }
 }
