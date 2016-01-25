@@ -101,7 +101,7 @@ public class StepSwitcher extends FrameLayout
     {
         // if layouts originate from the same step, ignore show
         View currentScene = findViewById(R.id.rsc_current_step);
-        if (currentScene != null)
+        if(currentScene != null)
         {
             String currentStepId = (String) currentScene.getTag(R.id.rsc_step_layout_id);
             String stepLayoutId = (String) stepLayout.getLayout().getTag(R.id.rsc_step_layout_id);

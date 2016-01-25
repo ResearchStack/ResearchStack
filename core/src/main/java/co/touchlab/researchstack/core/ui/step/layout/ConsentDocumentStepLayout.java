@@ -96,8 +96,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
 
     private void showDialog()
     {
-        new AlertDialog.Builder(getContext())
-                .setTitle(R.string.rsc_consent_review_alert_title)
+        new AlertDialog.Builder(getContext()).setTitle(R.string.rsc_consent_review_alert_title)
                 .setMessage(confirmationDialogBody)
                 .setCancelable(false)
                 .setPositiveButton(R.string.rsc_agree, (dialog, which) -> {

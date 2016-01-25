@@ -113,7 +113,7 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
         {
             File masterKeyFile = createMasterKeyFile(context);
 
-            if(!masterKeyFile.exists())
+            if(! masterKeyFile.exists())
             {
                 throw new IllegalAccessException("Master-key file does not exist. You should call" +
                         "setPinCode(String pin) to create a Master-key file and encrypt w/ pin-code");
@@ -246,7 +246,7 @@ public class AesFileAccess extends BaseFileAccess implements AuthDataAccess
 
         for(FileAccessListener listener : listeners)
         {
-            if (listener instanceof AuthFileAccessListener)
+            if(listener instanceof AuthFileAccessListener)
             {
                 ((AuthFileAccessListener) listener).dataAuth(codeConfig);
             }

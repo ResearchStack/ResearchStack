@@ -20,7 +20,7 @@ import co.touchlab.researchstack.core.utils.ViewUtils;
 public class PinCodeLayout extends RelativeLayout
 {
     protected InputMethodManager imm;
-    protected PinCodeConfig config;
+    protected PinCodeConfig      config;
 
     protected TextView summary;
     protected TextView title;

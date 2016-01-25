@@ -81,9 +81,9 @@ public class PinCodeActivity extends AppCompatActivity
         //        if(StorageManager.getFileAccess() instanceof AuthDataAccess)
         //        {
         //            LogExt.i(getClass(), "checkAutoLock()");
-//            ((AuthDataAccess) StorageManager.getFileAccess())
-//                    .checkAutoLock(this);
-//        }
+        //            ((AuthDataAccess) StorageManager.getFileAccess())
+        //                    .checkAutoLock(this);
+        //        }
     }
 
     @Override
@@ -142,7 +142,7 @@ public class PinCodeActivity extends AppCompatActivity
             pincode.setEnabled(enable);
             pincode.setText("");
             pincode.requestFocus();
-            if (enable)
+            if(enable)
             {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(pincode, InputMethodManager.SHOW_FORCED);
@@ -162,22 +162,19 @@ public class PinCodeActivity extends AppCompatActivity
                 })
                 .filter(pin -> pin != null && pin.length() == config.getPinLength())
                 .doOnNext(pin -> pincode.setEnabled(false))
-                .flatMap(pin -> {
-                    return Observable.create(subscriber -> {
-                        UiThreadContext.assertBackgroundThread();
+                .flatMap(pin -> Observable.create(subscriber -> {
+                    UiThreadContext.assertBackgroundThread();
 
-                        ((AuthDataAccess) StorageManager.getFileAccess()).authenticate(
-                                PinCodeActivity.this,
-                                pin);
-                        subscriber.onNext(true);
-                    }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
-                        toggleKeyboardAction.call(true);
-                        summary.setText(R.string.rsc_pincode_enter_error);
-                        summary.setTextColor(errorColor);
-                    }).onErrorResumeNext(throwable1 -> {
-                        return Observable.empty();
-                    });
-                })
+                    ((AuthDataAccess) StorageManager.getFileAccess()).authenticate(PinCodeActivity.this,
+                            pin);
+                    subscriber.onNext(true);
+                }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
+                    toggleKeyboardAction.call(true);
+                    summary.setText(R.string.rsc_pincode_enter_error);
+                    summary.setTextColor(errorColor);
+                }).onErrorResumeNext(throwable1 -> {
+                    return Observable.empty();
+                }))
                 .subscribe(success -> {
                     if(! (boolean) success)
                     {

@@ -24,6 +24,6 @@ public class OffsetRadioButtonCompat extends AppCompatRadioButton
     @TargetApi(17)
     public int getHorizontalOffsetForDrawables()
     {
-            return 144;
+        return 144;
     }
 }

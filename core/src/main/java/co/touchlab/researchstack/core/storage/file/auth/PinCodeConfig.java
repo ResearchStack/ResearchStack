@@ -6,8 +6,8 @@ import android.text.method.KeyListener;
 
 public class PinCodeConfig
 {
-    private static final String DIGITS_NUMERIC = "1234567890";
-    private static final String DIGITS_ALPHABETIC = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String DIGITS_NUMERIC      = "1234567890";
+    private static final String DIGITS_ALPHABETIC   = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String DIGITS_ALPHANUMERIC = DIGITS_ALPHABETIC + DIGITS_NUMERIC;
 
     public enum Type

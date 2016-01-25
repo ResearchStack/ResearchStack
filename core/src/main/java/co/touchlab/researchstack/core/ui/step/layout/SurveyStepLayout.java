@@ -208,18 +208,20 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
             {
                 summary.setVisibility(View.VISIBLE);
                 summary.setText(Html.fromHtml(step.getText()));
-                summary.setMovementMethod(new TextViewLinkHandler(){
+                summary.setMovementMethod(new TextViewLinkHandler()
+                {
                     @Override
                     public void onLinkClick(String url)
                     {
-                        Intent intent = ViewWebDocumentActivity.newIntent(
-                                getContext(), step.getTitle(), url);
+                        Intent intent = ViewWebDocumentActivity.newIntent(getContext(),
+                                step.getTitle(),
+                                url);
                         getContext().startActivity(intent);
                     }
                 });
             }
 
-            if (step.isOptional())
+            if(step.isOptional())
             {
                 submitBar.setNegativeTitle(R.string.rsc_step_skip)
                         .setNegativeAction(v -> onSkipClicked());

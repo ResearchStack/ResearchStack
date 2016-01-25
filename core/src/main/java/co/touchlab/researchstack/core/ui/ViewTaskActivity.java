@@ -23,8 +23,6 @@ import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.SurveyStepLayout;
 import co.touchlab.researchstack.core.ui.views.StepSwitcher;
-import co.touchlab.researchstack.core.utils.FormatHelper;
-import co.touchlab.researchstack.core.ui.views.SceneSwitcher;
 
 public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
 {

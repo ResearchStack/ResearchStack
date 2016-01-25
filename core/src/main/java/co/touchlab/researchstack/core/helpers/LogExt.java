@@ -140,11 +140,11 @@ public class LogExt
 
     public static void crashlytics(int priority, String tag, String msg)
     {
-//        TODO Enable Crash logging in crashlytics
-//        if (! BuildConfig.DEBUG)
-//        {
-//            Crashlytics.log(priority, tag, msg);
-//        }
+        //        TODO Enable Crash logging in crashlytics
+        //        if (! BuildConfig.DEBUG)
+        //        {
+        //            Crashlytics.log(priority, tag, msg);
+        //        }
     }
 
     private static String tagMe(Class c)

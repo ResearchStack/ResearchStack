@@ -44,8 +44,9 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
 
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        int resId = config.getPinType() == PinCodeConfig.Type.AlphaNumeric ?
-                R.layout.dialog_pin_entry_alphanumeric : R.layout.dialog_pin_entry;
+        int resId = config.getPinType() == PinCodeConfig.Type.AlphaNumeric
+                ? R.layout.dialog_pin_entry_alphanumeric
+                : R.layout.dialog_pin_entry;
 
         View view = inflater.inflate(resId, null);
 
@@ -85,10 +86,14 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+            }
 
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s)
+            {
+            }
         });
 
         setView(view);

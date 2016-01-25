@@ -152,7 +152,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     {
         Bitmap bitmap = signatureView.createSignatureBitmap();
 
-        if (bitmap != null)
+        if(bitmap != null)
         {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);

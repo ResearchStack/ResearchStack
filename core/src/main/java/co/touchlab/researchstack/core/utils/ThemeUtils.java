@@ -12,7 +12,7 @@ public class ThemeUtils
     public static int getTextColorPrimary(Context context)
     {
         TypedValue typedValue = new TypedValue();
-        int[] attribute = new int[] { android.R.attr.textColorPrimary };
+        int[] attribute = new int[] {android.R.attr.textColorPrimary};
         TypedArray array = context.obtainStyledAttributes(typedValue.resourceId, attribute);
         int color = array.getColor(0, Color.BLACK);
         array.recycle();

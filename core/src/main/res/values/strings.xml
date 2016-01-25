@@ -57,7 +57,6 @@
     </string>
 
 
-
     <string name="rsc_consent_share_more_info">Learn more about data sharing</string>
 
     <!-- Consent doc step -->
@@ -113,9 +112,13 @@
     <string name="src_cancel">Cancel</string>
 
 
-    <!-- TODO Confirm Copy --><string name="rsc_pincode_enter_title">Enter your passcode</string>
-    <!-- TODO Confirm Copy --><string name="rsc_pincode_enter_summary">Enter your code to confirm your identity.</string>
-    <!-- TODO Confirm Copy --><string name="rsc_pincode_enter_error">That code doesn’t match the one you entered, Try again!</string>
+    <!-- TODO Confirm Copy -->
+    <string name="rsc_pincode_enter_title">Enter your passcode</string>
+    <!-- TODO Confirm Copy -->
+    <string name="rsc_pincode_enter_summary">Enter your code to confirm your identity.</string>
+    <!-- TODO Confirm Copy -->
+    <string name="rsc_pincode_enter_error">That code doesn’t match the one you entered, Try again!
+    </string>
 
 
 </resources>
