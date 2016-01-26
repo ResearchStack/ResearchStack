@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
@@ -100,7 +100,7 @@ public class ActivitiesFragment extends Fragment
 
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             taskResult.setEndDate(new Date());
-            StorageManager.getAppDatabase().saveTaskResult(taskResult);
+            StorageAccess.getInstance().saveTaskResult(getActivity(), taskResult);
 
             setUpAdapter();
         }
@@ -115,7 +115,7 @@ public class ActivitiesFragment extends Fragment
         SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(getContext(),
                 SchedulesAndTasksModel.class,
                 "tasks_and_schedules");
-        Map<String, TaskRecord> latestForAllTypes = StorageManager.getAppDatabase()
+        Map<String, TaskRecord> latestForAllTypes = StorageAccess.getInstance()
                 .findLatestForAllTypes();
 
         ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();

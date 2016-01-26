@@ -4,7 +4,7 @@ package co.touchlab.researchstack.core.storage.file;
  * <p>
  * Created by kgalligan on 11/25/15.
  */
-public interface FileAccessListener
+public interface StorageAccessListener
 {
     /**
      * Data access is ready.  You should be able to read/write directly now.

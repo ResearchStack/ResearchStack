@@ -2,9 +2,10 @@ package co.touchlab.researchstack.glue;
 
 import android.content.Context;
 
-import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
+import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 
 public abstract class ResearchStack
 {
@@ -29,18 +30,21 @@ public abstract class ResearchStack
     {
         instance = concreteResearchStack;
 
-        StorageManager.init(concreteResearchStack.createFileAccessImplementation(context),
-                concreteResearchStack.createAppDatabaseImplementation(context));
-
         ResourceManager.init(concreteResearchStack.createResourceManagerImplementation(context));
 
         UiManager.init(concreteResearchStack.createUiManagerImplementation(context));
 
         DataProvider.init(concreteResearchStack.createDataProviderImplementation(context));
 
+        StorageAccess.getInstance()
+                .init(concreteResearchStack.getPinCodeConfig(context),
+                        concreteResearchStack.createFileAccessImplementation(context),
+                        concreteResearchStack.createAppDatabaseImplementation(context));
     }
 
     protected abstract AppDatabase createAppDatabaseImplementation(Context context);
+
+    protected abstract PinCodeConfig getPinCodeConfig(Context context);
 
     protected abstract FileAccess createFileAccessImplementation(Context context);
 

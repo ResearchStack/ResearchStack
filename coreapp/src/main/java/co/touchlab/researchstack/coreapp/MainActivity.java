@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.answerformat.AnswerFormat;
 import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
 import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
@@ -35,7 +35,6 @@ import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.InstructionStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.PinCodeActivity;
@@ -111,10 +110,10 @@ public class MainActivity extends PinCodeActivity
 
     private void clearData()
     {
-        FileAccess fileAccess = StorageManager.getFileAccess();
-        fileAccess.clearData(this, CONSENT_PATH + NAME);
-        fileAccess.clearData(this, CONSENT_PATH + SIGNATURE);
-        fileAccess.clearData(this, CONSENT_PATH + SIGNATURE_DATE);
+        StorageAccess storageAccess = StorageAccess.getInstance();
+        storageAccess.clearData(this, CONSENT_PATH + NAME);
+        storageAccess.clearData(this, CONSENT_PATH + SIGNATURE);
+        storageAccess.clearData(this, CONSENT_PATH + SIGNATURE_DATE);
 
         AppPrefs appPrefs = AppPrefs.getInstance(this);
         appPrefs.setHasSurveyed(false);
@@ -436,7 +435,7 @@ public class MainActivity extends PinCodeActivity
     {
         try
         {
-            return StorageManager.getFileAccess().readString(this, path);
+            return new String(StorageAccess.getInstance().loadFile(this, path));
         }
         catch(Exception e)
         {
@@ -447,6 +446,6 @@ public class MainActivity extends PinCodeActivity
     private void saveString(String path, String string)
     {
         string = string == null ? "" : string;
-        StorageManager.getFileAccess().writeString(this, path, string);
+        StorageAccess.getInstance().saveFile(this, path, string.getBytes());
     }
 }

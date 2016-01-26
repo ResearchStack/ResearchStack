@@ -4,8 +4,8 @@ import android.content.Context;
 
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
+import co.touchlab.researchstack.core.storage.file.BaseFileAccess;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
-import co.touchlab.researchstack.core.storage.file.aes.AesFileAccess;
 import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.glue.AppPrefs;
 import co.touchlab.researchstack.glue.DataProvider;
@@ -25,8 +25,14 @@ public class SampleResearchStack extends ResearchStack
     @Override
     protected FileAccess createFileAccessImplementation(Context context)
     {
+        return new BaseFileAccess();
+    }
+
+    @Override
+    protected PinCodeConfig getPinCodeConfig(Context context)
+    {
         long autoLockTime = AppPrefs.getInstance(context).getAutoLockTime();
-        return new AesFileAccess(new PinCodeConfig(autoLockTime));
+        return new PinCodeConfig(autoLockTime);
     }
 
     @Override

@@ -12,11 +12,10 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
-import co.touchlab.researchstack.core.storage.file.auth.AuthFileAccessListener;
+import co.touchlab.researchstack.core.storage.file.auth.AuthStorageAccessListener;
 import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.ui.views.PinCodeLayout;
 import co.touchlab.researchstack.core.utils.ObservableUtils;
@@ -32,7 +31,7 @@ public class PinCodeActivity extends AppCompatActivity
     private View             pinCodeLayout;
     private Action1<Boolean> toggleKeyboardAction;
 
-    AuthFileAccessListener fileAccessListener = new AuthFileAccessListener<PinCodeConfig>()
+    AuthStorageAccessListener fileAccessListener = new AuthStorageAccessListener<PinCodeConfig>()
     {
         @Override
         public void dataReady()
@@ -55,20 +54,16 @@ public class PinCodeActivity extends AppCompatActivity
 
     private void fileAccessRegister()
     {
-        FileAccess fileAccess = StorageManager.getFileAccess();
-        fileAccess.register(fileAccessListener);
+        StorageAccess storageAccess = StorageAccess.getInstance();
+        storageAccess.register(fileAccessListener);
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
-
-        if(StorageManager.getFileAccess() instanceof AuthDataAccess)
-        {
-            LogExt.i(getClass(), "logAccessTime()");
-            ((AuthDataAccess) StorageManager.getFileAccess()).logAccessTime();
-        }
+        LogExt.i(getClass(), "logAccessTime()");
+        StorageAccess.getInstance().logAccessTime();
     }
 
     @Override
@@ -78,10 +73,10 @@ public class PinCodeActivity extends AppCompatActivity
 
         initFileAccess();
 
-        //        if(StorageManager.getFileAccess() instanceof AuthDataAccess)
+        //        if(NewStorageManager.getInstance() instanceof AuthDataAccess)
         //        {
         //            LogExt.i(getClass(), "checkAutoLock()");
-        //            ((AuthDataAccess) StorageManager.getFileAccess())
+        //            ((AuthDataAccess) NewStorageManager.getInstance())
         //                    .checkAutoLock(this);
         //        }
     }
@@ -95,16 +90,16 @@ public class PinCodeActivity extends AppCompatActivity
 
     private void fileAccessUnregister()
     {
-        FileAccess fileAccess = StorageManager.getFileAccess();
-        fileAccess.unregister(fileAccessListener);
+        StorageAccess storageAccess = StorageAccess.getInstance();
+        storageAccess.unregister(fileAccessListener);
     }
 
     private void initFileAccess()
     {
         LogExt.i(getClass(), "initFileAccess()");
-        FileAccess fileAccess = StorageManager.getFileAccess();
+        StorageAccess storageAccess = StorageAccess.getInstance();
         fileAccessRegister();
-        fileAccess.initFileAccess(this);
+        storageAccess.initStorageAccess(this);
     }
 
     protected void onDataReady()
@@ -127,7 +122,7 @@ public class PinCodeActivity extends AppCompatActivity
     {
         super.onPostCreate(savedInstanceState);
 
-        PinCodeConfig config = ((AuthDataAccess) StorageManager.getFileAccess()).getPinCodeConfig();
+        PinCodeConfig config = StorageAccess.getInstance().getPinCodeConfig();
 
         pinCodeLayout = new PinCodeLayout(this);
         pinCodeLayout.setBackgroundColor(Color.WHITE);
@@ -161,20 +156,21 @@ public class PinCodeActivity extends AppCompatActivity
                     }
                 })
                 .filter(pin -> pin != null && pin.length() == config.getPinLength())
-                .doOnNext(pin -> pincode.setEnabled(false))
-                .flatMap(pin -> Observable.create(subscriber -> {
-                    UiThreadContext.assertBackgroundThread();
+                .doOnNext(pin -> pincode.setEnabled(false)).flatMap(pin -> {
+            return Observable.create(subscriber -> {
+                UiThreadContext.assertBackgroundThread();
 
-                    ((AuthDataAccess) StorageManager.getFileAccess()).authenticate(PinCodeActivity.this,
-                            pin);
-                    subscriber.onNext(true);
-                }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
-                    toggleKeyboardAction.call(true);
-                    summary.setText(R.string.rsc_pincode_enter_error);
-                    summary.setTextColor(errorColor);
-                }).onErrorResumeNext(throwable1 -> {
-                    return Observable.empty();
-                }))
+                ((AuthDataAccess) StorageAccess.getInstance()).authenticate(PinCodeActivity.this,
+                        pin);
+                subscriber.onNext(true);
+            }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
+                toggleKeyboardAction.call(true);
+                summary.setText(R.string.rsc_pincode_enter_error);
+                summary.setTextColor(errorColor);
+            }).onErrorResumeNext(throwable1 -> {
+                return Observable.empty();
+            });
+        })
                 .subscribe(success -> {
                     if(! (boolean) success)
                     {

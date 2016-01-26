@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.ui.PinCodeActivity;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.DataProvider;
@@ -61,7 +60,7 @@ public class OnboardingActivity extends PinCodeActivity
         //        });
 
         // let them view this page without making passcode, but call onDataReady if they have
-//        FileAccess fileAccess = StorageManager.getFileAccess();
+        //        NewStorageManager newStorageManager = NewStorageManager.getInstance();
 //        if(((AesFileAccess) fileAccess).passphraseExists(this))
 //        {
 //            initFileAccess();
@@ -89,8 +88,7 @@ public class OnboardingActivity extends PinCodeActivity
 
     public void onSignUpClicked(View view)
     {
-        boolean hasAuth = StorageManager.getFileAccess() instanceof AuthDataAccess &&
-                ! ((AuthDataAccess) StorageManager.getFileAccess()).hasPinCode(this);
+        boolean hasAuth = ! StorageAccess.getInstance().hasPinCode(this);
 
         SignUpTask task = new SignUpTask();
         task.setHasAuth(hasAuth);

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.Arrays;
 
 import co.touchlab.researchstack.core.R;
-import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.utils.ViewUtils;
@@ -47,7 +47,7 @@ public class PinCodeLayout extends RelativeLayout
     @CallSuper
     protected void init()
     {
-        config = ((AuthDataAccess) StorageManager.getFileAccess()).getPinCodeConfig();
+        config = ((AuthDataAccess) StorageAccess.getInstance()).getPinCodeConfig();
         imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         LayoutInflater.from(getContext()).inflate(R.layout.step_layout_pincode, this, true);

@@ -8,9 +8,8 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.Date;
 
-import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.FileAccessException;
 import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.DataResponse;
@@ -268,7 +267,7 @@ public class SampleDataProvider extends DataProvider
 
     private void writeJsonString(Context context, String userSessionJson, String userSessionPath)
     {
-        StorageManager.getFileAccess().writeString(context, userSessionPath, userSessionJson);
+        StorageAccess.getInstance().saveFile(context, userSessionPath, userSessionJson.getBytes());
     }
 
     private UserSessionInfo loadUserSession(Context context)
@@ -286,7 +285,7 @@ public class SampleDataProvider extends DataProvider
 
     private String loadJsonString(Context context, String path)
     {
-        return StorageManager.getFileAccess().readString(context, path);
+        return new String(StorageAccess.getInstance().loadFile(context, path));
     }
 
     /**
@@ -308,11 +307,7 @@ public class SampleDataProvider extends DataProvider
     @Deprecated
     public void clearUserData(Context context)
     {
-        FileAccess fileAccess = StorageManager.getFileAccess();
-        if(fileAccess.dataExists(context, TEMP_USER_JSON_FILE_NAME))
-        {
-            fileAccess.clearData(context, TEMP_USER_JSON_FILE_NAME);
-        }
+        // TODO make this work again
     }
 
     public interface BridgeService

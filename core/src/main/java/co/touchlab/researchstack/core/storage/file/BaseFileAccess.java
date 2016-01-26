@@ -1,75 +1,34 @@
 package co.touchlab.researchstack.core.storage.file;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.security.GeneralSecurityException;
 
-import co.touchlab.researchstack.core.utils.UiThreadContext;
+import co.touchlab.researchstack.core.storage.file.aes.Encrypter;
+import co.touchlab.researchstack.core.utils.FileUtils;
 
 
 /**
  * Created by kgalligan on 11/25/15.
  */
 
-public abstract class BaseFileAccess implements FileAccess
+public class BaseFileAccess implements FileAccess
 {
-
-    private   Handler                  handler      = new Handler(Looper.getMainLooper());
-    protected List<FileAccessListener> listeners    = Collections.synchronizedList(new ArrayList<>());
-    protected boolean                  checkThreads = false;
-
-    @Override
-    @MainThread
-    public final void register(FileAccessListener fileAccessListener)
-    {
-        if(checkThreads)
-        {
-            UiThreadContext.assertUiThread();
-        }
-        if(listeners.contains(fileAccessListener))
-        {
-            throw new FileAccessException("Listener already registered");
-        }
-
-        listeners.add(fileAccessListener);
-    }
-
-    @Override
-    @MainThread
-    public final void unregister(FileAccessListener fileAccessListener)
-    {
-        if(checkThreads)
-        {
-            UiThreadContext.assertUiThread();
-        }
-        listeners.remove(fileAccessListener);
-    }
+    private Encrypter encrypter;
 
     @Override
     @WorkerThread
-    public void writeString(Context context, String path, String data)
+    public void writeData(Context context, String path, byte[] data)
     {
-        if(checkThreads)
-        {
-            UiThreadContext.assertBackgroundThread();
-        }
         try
         {
-            writeData(context, path, data.getBytes("UTF8"));
+            File localFile = findLocalFile(context, path);
+            FileUtils.writeSafe(localFile, encrypter.encrypt(data));
         }
-        catch(UnsupportedEncodingException e)
+        catch(GeneralSecurityException e)
         {
             throw new FileAccessException(e);
         }
@@ -77,48 +36,44 @@ public abstract class BaseFileAccess implements FileAccess
 
     @Override
     @WorkerThread
-    public String readString(Context context, String path)
+    public byte[] readData(Context context, String path)
     {
-        if(checkThreads)
-        {
-            UiThreadContext.assertBackgroundThread();
-        }
         try
         {
-            return new String(readData(context, path), "UTF8");
+            File localFile = findLocalFile(context, path);
+            return encrypter.decrypt(FileUtils.readAll(localFile));
         }
-        catch(UnsupportedEncodingException e)
+        catch(IOException | GeneralSecurityException e)
         {
             throw new FileAccessException(e);
         }
     }
 
-    @MainThread
-    public void notifyListenersReady()
+    @NonNull
+    private File findLocalFile(Context context, String path)
     {
-        if(checkThreads)
-        {
-            UiThreadContext.assertUiThread();
-        }
-        //TODO: replace with lambda. Hey, if we're using them...
-        for(FileAccessListener listener : listeners)
-        {
-            listener.dataReady();
-        }
+        checkPath(path);
+        return new File(context.getFilesDir(), path.substring(1));
     }
 
-    @MainThread
-    public void notifyListenersFailed()
+    @Override
+    @WorkerThread
+    public boolean dataExists(Context context, String path)
     {
-        if(checkThreads)
-        {
-            UiThreadContext.assertUiThread();
-        }
-        //TODO: replace with lambda. Hey, if we're using them...
-        for(FileAccessListener listener : listeners)
-        {
-            listener.dataAccessError();
-        }
+        return findLocalFile(context, path).exists();
+    }
+
+    @Override
+    public void clearData(Context context, String path)
+    {
+        File localFile = findLocalFile(context, path);
+        localFile.delete();
+    }
+
+    @Override
+    public void setEncrypter(Encrypter encrypter)
+    {
+        this.encrypter = encrypter;
     }
 
     public void checkPath(String path)
@@ -127,51 +82,5 @@ public abstract class BaseFileAccess implements FileAccess
         {
             throw new FileAccessException("Path must be absolute (ie start with '/')");
         }
-    }
-
-    protected void notifyReady()
-    {
-        handler.post(this :: notifyListenersReady);
-    }
-
-    protected void writeSafe(File file, byte[] data)
-    {
-        try
-        {
-            File tempFile = makeTempFile(file);
-            FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
-            fileOutputStream.write(data);
-            fileOutputStream.close();
-            tempFile.renameTo(file);
-        }
-        catch(IOException e)
-        {
-            throw new FileAccessException(e);
-        }
-    }
-
-    @NonNull
-    private File makeTempFile(File localFile)
-    {
-        return new File(localFile.getParentFile(), localFile.getName() + ".temp");
-    }
-
-    protected byte[] readAll(File file) throws IOException
-    {
-        FileInputStream fileInputStream = new FileInputStream(file);
-        byte[] buff = new byte[1024];
-        int read;
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(2048);
-        while((read = fileInputStream.read(buff)) > 0)
-        {
-            byteArrayOutputStream.write(buff, 0, read);
-        }
-
-        return byteArrayOutputStream.toByteArray();
-    }
-
-    public Handler getMainHandler()
-    {
-        return handler;
     }
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
+import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.helpers.LogExt;
 
 /**
@@ -26,7 +27,7 @@ public class ResUtils
 
     /**
      * TODO Determine if method should exists in class
-     * Should this be here or should {@link co.touchlab.researchstack.core.StorageManager} have the
+     * Should this be here or should {@link StorageAccess} have the
      * ability to write files to SDCard
      *
      * @return of SD-Card storage folder name (used to save and share consent-PDF)

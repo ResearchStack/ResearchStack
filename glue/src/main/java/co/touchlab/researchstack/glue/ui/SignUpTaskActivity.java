@@ -9,7 +9,7 @@ import android.os.Build;
 
 import java.util.Date;
 
-import co.touchlab.researchstack.core.StorageManager;
+import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.Step;
@@ -48,7 +48,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
         if (step.getIdentifier().equals(OnboardingTask.SignUpPassCodeConfirmationStepIdentifier))
         {
             String pin = (String) result.getResult();
-            ((AuthDataAccess) StorageManager.getFileAccess()).setPinCode(this, pin);
+            ((AuthDataAccess) StorageAccess.getInstance()).setPinCode(this, pin);
 
             saveConsentResultInfo();
         }
@@ -87,8 +87,8 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 // THEN SaveConsentResultInfo. If we don't have a pincode then pincode-creation
                 // steps will appear when we call "showNextStep"
 
-                boolean doesNotHaveAuth = !(StorageManager.getFileAccess() instanceof AuthDataAccess);
-                boolean hasPinCode = ((AuthDataAccess)StorageManager.getFileAccess()).hasPinCode(this);
+                boolean doesNotHaveAuth = ! (StorageAccess.getInstance() instanceof AuthDataAccess);
+                boolean hasPinCode = ((AuthDataAccess) StorageAccess.getInstance()).hasPinCode(this);
 
                 if (doesNotHaveAuth || hasPinCode)
                 {
