@@ -1,48 +1,25 @@
 package co.touchlab.researchstack.core.result;
 
-import android.net.Uri;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class TaskResult extends Result
 {
-    public Map<String, StepResult> results;
+    private Map<String, StepResult> results;
 
-    private UUID uuidTask; //TODO Implement
-    private Uri  outputDirectory; //TODO Implement
+    // TODO Implement private UUID uuidTask;
 
-    public TaskResult(String identifier, UUID uuidTask, Uri outputDirectory)
+    // TODO Implement private Uri outputDirectory;
+
+    public TaskResult(String identifier)
     {
         super(identifier);
-        this.uuidTask = uuidTask;
-        this.outputDirectory = outputDirectory;
         this.results = new HashMap<>();
     }
 
-    public UUID getUuidTask()
+    public Map<String, StepResult> getResults()
     {
-        return uuidTask;
-    }
-
-    public Uri getOutputDirectory()
-    {
-        return outputDirectory;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if(o instanceof TaskResult)
-        {
-            TaskResult result = (TaskResult) o;
-            return getIdentifier().equals(result.getIdentifier()) &&
-                    uuidTask.equals(result.getUuidTask()) &&
-                    outputDirectory.equals(result.getOutputDirectory());
-
-        }
-        return false;
+        return results;
     }
 
     public StepResult getStepResult(String identifier)

@@ -20,7 +20,7 @@ public class StepResult <T> extends Result
      */
     public static final String DEFAULT_KEY = "answer";
 
-    public Map<String, T> results;
+    private Map<String, T> results;
 
     public StepResult(String identifier)
     {

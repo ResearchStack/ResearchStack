@@ -5,14 +5,13 @@ import java.util.Date;
 
 public class Result implements Serializable
 {
-
     private String identifier;
 
-    //TODO: these should probably go?  Steps don't need this.
     private Date startDate;
+
     private Date endDate;
 
-    private boolean saveable; //TODO Implement
+    // TODO Implement private boolean saveable;
 
     public Result(String identifier)
     {
@@ -44,8 +43,4 @@ public class Result implements Serializable
         this.endDate = endDate;
     }
 
-    public boolean isSaveable()
-    {
-        return saveable;
-    }
 }
