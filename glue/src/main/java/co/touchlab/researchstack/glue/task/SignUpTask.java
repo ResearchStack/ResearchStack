@@ -20,7 +20,7 @@ public class SignUpTask extends OnboardingTask
 
     public SignUpTask()
     {
-        super("SignUp", "SignUp");
+        super("SignUp");
     }
 
     @Override

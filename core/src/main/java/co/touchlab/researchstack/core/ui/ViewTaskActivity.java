@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
+import java.util.Date;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.helpers.LogExt;
@@ -27,7 +28,6 @@ import co.touchlab.researchstack.core.ui.views.StepSwitcher;
 public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
 {
     public static final String EXTRA_TASK        = "ViewTaskActivity.ExtraTask";
-    public static final String EXTRA_TASK_ID     = "ViewTaskActivity.ExtraTaskId";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
 
@@ -56,7 +56,8 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
         if(savedInstanceState == null)
         {
             task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
-            taskResult = new TaskResult(task.getIdentifier(), null, null);
+            taskResult = new TaskResult(task.getIdentifier());
+            taskResult.setStartDate(new Date());
         }
         else
         {
@@ -160,30 +161,10 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
     private void saveAndFinish()
     {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(EXTRA_TASK_ID, task.getScheduleId());
         resultIntent.putExtra(EXTRA_TASK_RESULT, taskResult);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
-
-    //    @Override
-    //    public boolean onCreateOptionsMenu(Menu menu)
-    //    {
-    //        getMenuInflater().inflate(R.menu.menu_view_task, menu);
-    //
-    //        for(int i = 0; i < menu.size(); i++)
-    //        {
-    //            MenuItem item = menu.getItem(i);
-    //            Drawable icon = item.getIcon();
-    //            icon = DrawableCompat.wrap(icon);
-    //            int color = ThemeUtils.getTextColorPrimary(this);
-    //            DrawableCompat.setTint(icon, color);
-    //            item.setIcon(icon);
-    //        }
-    //
-    //
-    //        return super.onCreateOptionsMenu(menu);
-    //    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -193,10 +174,6 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
             notifySceneOfBackPress();
             return true;
         }
-        //        else if(item.getItemId() == R.id.menu_cancel)
-        //        {
-        //            showConfirmExitDialog();
-        //        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -283,7 +260,7 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
 
     private void showConfirmExitDialog()
     {
-        //TODO Implement custom bottom sheet (to make it look purty)
+        //TODO Implement custom bottom sheet
         AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
                 "Are you sure you want to exit?")
                 .setMessage(R.string.lorem_medium)

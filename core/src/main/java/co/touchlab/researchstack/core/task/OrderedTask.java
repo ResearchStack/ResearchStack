@@ -13,21 +13,21 @@ public class OrderedTask extends Task implements Serializable
 
     private List<Step> steps;
 
-    public OrderedTask(String identifier, String scheduleId)
+    public OrderedTask(String identifier)
     {
-        super(identifier, scheduleId);
+        super(identifier);
         this.steps = new ArrayList<>();
     }
 
-    public OrderedTask(String identifier, String scheduleId, List<Step> steps)
+    public OrderedTask(String identifier, List<Step> steps)
     {
-        super(identifier, scheduleId);
+        super(identifier);
         this.steps = new ArrayList<>(steps);
     }
 
-    public OrderedTask(String identifier, String scheduleId, Step... steps)
+    public OrderedTask(String identifier, Step... steps)
     {
-        super(identifier, scheduleId);
+        super(identifier);
         this.steps = Arrays.asList(steps);
     }
 

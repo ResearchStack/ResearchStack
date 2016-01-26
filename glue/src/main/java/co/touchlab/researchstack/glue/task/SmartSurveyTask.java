@@ -44,9 +44,9 @@ public class SmartSurveyTask extends Task implements Serializable
     private List<String> staticStepIdentifiers;
     private List<String> dynamicStepIdentifiers;
 
-    public SmartSurveyTask(TaskModel taskModel, String scheduleId)
+    public SmartSurveyTask(TaskModel taskModel)
     {
-        super(taskModel.identifier, scheduleId);
+        super(taskModel.identifier);
         steps = new HashMap<>(taskModel.elements.size());
         rules = new HashMap<>();
         staticStepIdentifiers = new ArrayList<>(taskModel.elements.size());

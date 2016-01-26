@@ -57,9 +57,9 @@ public abstract class OnboardingTask extends Task
     private boolean permissionScreenSkipped = false;
 
 
-    public OnboardingTask(String identifier, String scheduleId)
+    public OnboardingTask(String identifier)
     {
-        super(identifier, scheduleId);
+        super(identifier);
     }
 
     @Override

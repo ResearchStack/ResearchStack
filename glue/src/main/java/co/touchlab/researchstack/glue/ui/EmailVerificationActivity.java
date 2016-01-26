@@ -101,8 +101,7 @@ public class EmailVerificationActivity extends PinCodeActivity
         signUpStep.setTitle(getString(R.string.change_email));
 
         Intent intent = new Intent(this, ViewTaskActivity.class);
-        intent.putExtra(ViewTaskActivity.EXTRA_TASK,
-                new OrderedTask(CHANGE_EMAIL_ID, CHANGE_EMAIL_ID, signUpStep));
+        intent.putExtra(ViewTaskActivity.EXTRA_TASK, new OrderedTask(CHANGE_EMAIL_ID, signUpStep));
         startActivityForResult(intent, REQUEST_CHANGE_EMAIL);
     }
 

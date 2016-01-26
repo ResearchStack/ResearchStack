@@ -35,8 +35,6 @@ import co.touchlab.researchstack.glue.utils.JsonUtils;
 
 public class ConsentTask extends OrderedTask
 {
-    public static final String SCHEDULE_ID_CONSENT = "consent";
-
     public static final String ID_CONSENT        = "consent";
     public static final String ID_VISUAL         = "ID_VISUAL";
     public static final String ID_FIRST_QUESTION = "question_1";
@@ -51,7 +49,7 @@ public class ConsentTask extends OrderedTask
 
     public ConsentTask(Context context)
     {
-        super(ID_CONSENT, SCHEDULE_ID_CONSENT);
+        super(ID_CONSENT);
 
         Resources r = context.getResources();
 

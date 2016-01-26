@@ -13,9 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -28,7 +25,6 @@ import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
-import co.touchlab.researchstack.core.utils.FormatHelper;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.glue.model.TaskModel;
@@ -89,7 +85,7 @@ public class ActivitiesFragment extends Fragment
             TaskModel taskModel = JsonUtils.loadClass(getContext(),
                     TaskModel.class,
                     task.taskFileName);
-            SmartSurveyTask newTask = new SmartSurveyTask(taskModel, task.taskID);
+            SmartSurveyTask newTask = new SmartSurveyTask(taskModel);
 
             startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask), REQUEST_TASK);
         });
@@ -101,15 +97,10 @@ public class ActivitiesFragment extends Fragment
         if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_TASK)
         {
             LogExt.d(getClass(), "Received task result from task activity");
-            String taskScheduleId = data.getStringExtra(ViewTaskActivity.EXTRA_TASK_ID);
+
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
-            TaskRecord taskRecord = new TaskRecord();
-            taskRecord.started = new Date();
-            taskRecord.completed = new Date();
-            taskRecord.taskId = taskScheduleId;
-            Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601).create();
-            taskRecord.result = gson.toJson(taskResult);
-            StorageManager.getAppDatabase().saveTaskRecord(taskRecord);
+            taskResult.setEndDate(new Date());
+            StorageManager.getAppDatabase().saveTaskResult(taskResult);
 
             setUpAdapter();
         }
