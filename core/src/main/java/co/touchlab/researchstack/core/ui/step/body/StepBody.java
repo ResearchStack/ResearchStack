@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 
-/**
- * Created by bradleymcdermott on 12/22/15.
- */
+//TODO Refactor
 public interface StepBody
 {
     View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step);
@@ -24,7 +22,7 @@ public interface StepBody
 
     // TODO how do we make this better? the step body needs the identifier for its StepResult
     // TODO in form steps and uses StepResult.DEFAULT_KEY in normal question steps
-    String getIdentifier();
+    //    String getIdentifier();
 
-    void setIdentifier(String identifier);
+    //    void setIdentifier(String identifier);
 }

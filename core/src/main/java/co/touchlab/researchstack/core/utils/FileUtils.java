@@ -12,27 +12,6 @@ import java.io.OutputStream;
 public class FileUtils
 {
 
-    //    /**
-    //     * TODO Move this to somewhere more appropriate (e.g. {@link co.touchlab.researchstack.core.StorageManager})
-    //     */
-    //    private void copyDbFile(Context context)
-    //    {
-    //        try
-    //        {
-    //            File folder = new File(Environment.getExternalStorageDirectory(), "researchstack");
-    //            folder.mkdirs();
-    //            File databasePath = context.getDatabasePath(DatabaseHelper.DB_NAME);
-    //            File outFile = new File(folder, databasePath.getName());
-    //            FileOutputStream output = new FileOutputStream(outFile);
-    //            Files.copy(databasePath, output);
-    //            output.close();
-    //        }
-    //        catch(IOException e)
-    //        {
-    //            LogExt.e(getClass(), e);
-    //        }
-    //    }
-
     /**
      * TODO Replace method with something that exists within system classes
      */

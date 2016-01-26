@@ -49,15 +49,4 @@ public class NotImplementedStepBody implements StepBody
         return true;
     }
 
-    @Override
-    public String getIdentifier()
-    {
-        return StepResult.DEFAULT_KEY;
-    }
-
-    @Override
-    public void setIdentifier(String identifier)
-    {
-
-    }
 }

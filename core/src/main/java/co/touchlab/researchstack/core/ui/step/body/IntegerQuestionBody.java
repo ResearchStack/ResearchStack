@@ -17,7 +17,6 @@ public class IntegerQuestionBody implements StepBody
 {
     private QuestionStep        step;
     private IntegerAnswerFormat format;
-    private String identifier = StepResult.DEFAULT_KEY;
     private NumberPicker numberPicker;
     private EditText     editText;
 
@@ -28,13 +27,12 @@ public class IntegerQuestionBody implements StepBody
     @Override
     public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
-        numberPicker = (NumberPicker) inflater.inflate(R.layout.item_number_picker, parent, false);
-        // TODO do we need both Step and AnswerFormat?
         this.step = step;
         format = (IntegerAnswerFormat) step.getAnswerFormat();
 
         IntegerAnswerFormat answerFormat = (IntegerAnswerFormat) step.getAnswerFormat();
 
+        numberPicker = (NumberPicker) inflater.inflate(R.layout.item_number_picker, parent, false);
         numberPicker.setMinValue(answerFormat.getMinValue());
 
         // if max and min are equal, don't set a max (it's 0/0 if they don't set min/max)
@@ -49,6 +47,10 @@ public class IntegerQuestionBody implements StepBody
     @Override
     public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
+        // TODO do we need both Step and AnswerFormat?
+        this.step = step;
+        format = (IntegerAnswerFormat) step.getAnswerFormat();
+
         View formItemView = inflater.inflate(R.layout.scene_form_item_editable, parent, false);
 
         TextView label = (TextView) formItemView.findViewById(R.id.text);
@@ -56,11 +58,6 @@ public class IntegerQuestionBody implements StepBody
         label.setText(step.getTitle());
 
         editText = (EditText) formItemView.findViewById(R.id.value);
-
-        // TODO do we need both Step and AnswerFormat?
-        this.step = step;
-        format = (IntegerAnswerFormat) step.getAnswerFormat();
-
         editText.setSingleLine(true);
         editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
 
@@ -70,7 +67,7 @@ public class IntegerQuestionBody implements StepBody
     @Override
     public StepResult getStepResult()
     {
-        StepResult<Object> stepResult = new StepResult<>(identifier);
+        StepResult<Object> stepResult = new StepResult<>(step.getIdentifier());
         if(editText != null)
         {
             stepResult.setResult(Integer.valueOf(editText.getText().toString()));
@@ -122,15 +119,4 @@ public class IntegerQuestionBody implements StepBody
         return result >= format.getMinValue() && result <= format.getMaxValue();
     }
 
-    @Override
-    public String getIdentifier()
-    {
-        return identifier;
-    }
-
-    @Override
-    public void setIdentifier(String identifier)
-    {
-        this.identifier = identifier;
-    }
 }

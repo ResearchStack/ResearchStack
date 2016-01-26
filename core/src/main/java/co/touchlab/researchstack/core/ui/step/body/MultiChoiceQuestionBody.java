@@ -27,11 +27,12 @@ public class MultiChoiceQuestionBody <T> implements StepBody
     private RadioGroup         radioGroup;
     private ChoiceAnswerFormat format;
     private Choice<T>[]        choices;
-    private String identifier = StepResult.DEFAULT_KEY;
+    private QuestionStep step;
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
+        this.step = step;
         results = new HashSet<>();
         format = (ChoiceAnswerFormat) step.getAnswerFormat();
         choices = format.getChoices();
@@ -77,6 +78,7 @@ public class MultiChoiceQuestionBody <T> implements StepBody
     @Override
     public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
+        this.step = step;
         results = new HashSet<>();
         View formItemView = inflater.inflate(R.layout.scene_form_item, parent, false);
 
@@ -99,7 +101,7 @@ public class MultiChoiceQuestionBody <T> implements StepBody
     @Override
     public StepResult getStepResult()
     {
-        StepResult<T[]> result = new StepResult<>(identifier);
+        StepResult<T[]> result = new StepResult<>(step.getIdentifier());
         result.setResult((T[]) results.toArray());
         return result;
     }
@@ -118,18 +120,6 @@ public class MultiChoiceQuestionBody <T> implements StepBody
     public boolean isAnswerValid()
     {
         return ! results.isEmpty();
-    }
-
-    @Override
-    public String getIdentifier()
-    {
-        return identifier;
-    }
-
-    @Override
-    public void setIdentifier(String identifier)
-    {
-        this.identifier = identifier;
     }
 
     private void showDialog(TextView textView, String title)

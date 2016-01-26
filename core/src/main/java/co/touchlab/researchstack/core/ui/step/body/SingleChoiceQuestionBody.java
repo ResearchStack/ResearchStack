@@ -21,9 +21,9 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     private RadioGroup         radioGroup;
     private ChoiceAnswerFormat format;
     private Choice<T>[]        choices;
-    private String identifier = StepResult.DEFAULT_KEY;
-    private T        currentSelection;
-    private TextView formLabel;
+    private T            currentSelection;
+    private TextView     formLabel;
+    private QuestionStep step;
 
     public SingleChoiceQuestionBody()
     {
@@ -32,6 +32,8 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     @Override
     public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
+        this.step = step;
+
         format = (ChoiceAnswerFormat) step.getAnswerFormat();
         choices = format.getChoices();
 
@@ -60,6 +62,8 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     @Override
     public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
     {
+        this.step = step;
+
         View formItemView = inflater.inflate(R.layout.scene_form_item, parent, false);
 
         TextView label = (TextView) formItemView.findViewById(R.id.text);
@@ -81,7 +85,7 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     @Override
     public StepResult getStepResult()
     {
-        StepResult<T> result = new StepResult<>(identifier);
+        StepResult<T> result = new StepResult<>(step.getIdentifier());
         result.setResult(currentSelection);
         return result;
     }
@@ -121,18 +125,6 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     public boolean isAnswerValid()
     {
         return currentSelection != null;
-    }
-
-    @Override
-    public String getIdentifier()
-    {
-        return identifier;
-    }
-
-    @Override
-    public void setIdentifier(String identifier)
-    {
-        this.identifier = identifier;
     }
 
     private void showDialog(TextView textView, String title)

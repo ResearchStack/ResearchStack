@@ -21,23 +21,20 @@ public class FormBody implements StepBody
     private LinearLayout   body;
     private FormStep       formStep;
     private List<StepBody> formStepBodies;
-    private String         identifier;
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
+    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep formStep)
     {
-        this.formStep = (FormStep) step;
+        this.formStep = (FormStep) formStep;
 
         body = (LinearLayout) inflater.inflate(R.layout.scene_form_body, parent, false);
 
-        List<QuestionStep> items = formStep.getFormSteps();
-        formStepBodies = new ArrayList<>(items.size());
-        for(QuestionStep item : items)
+        List<QuestionStep> steps = this.formStep.getFormSteps();
+        formStepBodies = new ArrayList<>(steps.size());
+        for(QuestionStep step : steps)
         {
-            StepBody stepBody = createStepBody(item);
-            View bodyView = stepBody.initViewCompact(inflater, body, item);
-            // TODO this is a little weird, but normal question steps use default, forms use ids
-            stepBody.setIdentifier(item.getIdentifier());
+            StepBody stepBody = createStepBody(step);
+            View bodyView = stepBody.initViewCompact(inflater, body, step);
 
             formStepBodies.add(stepBody);
             body.addView(bodyView);
@@ -55,14 +52,15 @@ public class FormBody implements StepBody
     @Override
     public StepResult getStepResult()
     {
-        StepResult<StepResult> stepResult = new StepResult<>(identifier);
+        StepResult<StepResult> stepResult = new StepResult<>(formStep.getIdentifier());
 
         for(StepBody formStepBody : formStepBodies)
         {
+
             StepResult result = formStepBody.getStepResult();
             if(result != null)
             {
-                stepResult.setResultForIdentifier(formStepBody.getIdentifier(), result);
+                stepResult.setResultForIdentifier(result.getIdentifier(), result);
             }
         }
 
@@ -74,11 +72,13 @@ public class FormBody implements StepBody
     {
         for(StepBody formStepBody : formStepBodies)
         {
-            StepResult formStepResult = (StepResult) result.getResultForIdentifier(formStepBody.getIdentifier());
-            if(formStepResult != null)
-            {
-                formStepBody.prefillResult(formStepResult);
-            }
+            // TODO Implement prefill, formStepBody.getStepResult() will always return null after
+            // orientation change
+            // StepResult formStepResult = (StepResult) result.getResultForIdentifier(formStepBody.getStepResult().getIdentifier());
+            // if(formStepResult != null)
+            // {
+            //     formStepBody.prefillResult(formStepResult);
+            // }
         }
     }
 
@@ -94,18 +94,6 @@ public class FormBody implements StepBody
             }
         }
         return true;
-    }
-
-    @Override
-    public String getIdentifier()
-    {
-        return identifier;
-    }
-
-    @Override
-    public void setIdentifier(String identifier)
-    {
-        this.identifier = identifier;
     }
 
     @NonNull

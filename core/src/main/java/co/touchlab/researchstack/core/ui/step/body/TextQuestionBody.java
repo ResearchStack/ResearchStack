@@ -19,9 +19,6 @@ public class TextQuestionBody implements StepBody
     private QuestionStep step;
     private EditText     editText;
 
-    // TODO why does the result need to know its own identifier, is there a better way
-    private String identifier = StepResult.DEFAULT_KEY;
-
     public TextQuestionBody()
     {
     }
@@ -55,7 +52,7 @@ public class TextQuestionBody implements StepBody
     @Override
     public StepResult getStepResult()
     {
-        StepResult<String> result = new StepResult<>(identifier);
+        StepResult<String> result = new StepResult<>(step.getIdentifier());
         result.setResult(editText.getText().toString());
         return result;
     }
@@ -75,18 +72,6 @@ public class TextQuestionBody implements StepBody
     {
         return ((TextAnswerFormat) step.getAnswerFormat()).isAnswerValid(editText.getText()
                 .toString());
-    }
-
-    @Override
-    public String getIdentifier()
-    {
-        return identifier;
-    }
-
-    @Override
-    public void setIdentifier(String identifier)
-    {
-        this.identifier = identifier;
     }
 
     private void setUpEditText(QuestionStep step)

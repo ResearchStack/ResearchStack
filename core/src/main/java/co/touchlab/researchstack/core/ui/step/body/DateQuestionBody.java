@@ -29,7 +29,6 @@ public class DateQuestionBody implements StepBody
     private DateAnswerFormat format;
     private Calendar         calendar;
     private DatePicker       datePicker;
-    private String identifier = StepResult.DEFAULT_KEY;
 
     public DateQuestionBody()
     {
@@ -96,7 +95,7 @@ public class DateQuestionBody implements StepBody
     @Override
     public StepResult getStepResult()
     {
-        StepResult<Long> result = new StepResult<>(identifier);
+        StepResult<Long> result = new StepResult<>(step.getIdentifier());
         result.setResult(calendar.getTimeInMillis());
         return result;
     }
@@ -141,18 +140,6 @@ public class DateQuestionBody implements StepBody
         }
 
         return true;
-    }
-
-    @Override
-    public String getIdentifier()
-    {
-        return identifier;
-    }
-
-    @Override
-    public void setIdentifier(String identifier)
-    {
-        this.identifier = identifier;
     }
 
     private void showDialog(TextView textView)
