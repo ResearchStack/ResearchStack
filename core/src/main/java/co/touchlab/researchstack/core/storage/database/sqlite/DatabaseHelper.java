@@ -157,24 +157,6 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     }
 
     @Override
-    public TaskResult loadTaskResult(String taskRecordId)
-    {
-        LogExt.d(getClass(), "loadTaskResult() id: " + taskRecordId);
-
-        try
-        {
-            TaskRecord taskRecord = getDao(TaskRecord.class).queryForId(taskRecordId);
-            List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.TASK_RECORD_ID,
-                    taskRecordId).list();
-            return TaskRecord.toTaskResult(taskRecord, stepRecords);
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public List<TaskResult> loadTaskResults(String taskId)
     {
         LogExt.d(getClass(), "loadTaskResults() id: " + taskId);
