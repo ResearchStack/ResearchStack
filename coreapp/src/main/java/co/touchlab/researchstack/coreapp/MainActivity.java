@@ -64,7 +64,7 @@ public class MainActivity extends PinCodeActivity
     public static final  String CONSENT                   = "consent";
     public static final  String MULTI_STEP                = "multi_step";
     public static final  String DATE                      = "date";
-    public static final  String DECIMAL                   = "decimal";
+    public static final String DECIMAL = "decimal";
     private static final int    REQUEST_CONSENT           = 0;
     private static final int    REQUEST_SURVEY            = 1;
     private static final String FORM_NAME                 = "form_name";
@@ -231,7 +231,6 @@ public class MainActivity extends PinCodeActivity
 
         // Finally, create and present a task including these steps.
         Task consentTask = new OrderedTask(CONSENT,
-                CONSENT,
                 visualStep,
                 documentStep,
                 formStep,
@@ -338,7 +337,6 @@ public class MainActivity extends PinCodeActivity
 
         // Create a task wrapping the steps.
         OrderedTask task = new OrderedTask("ordered_task",
-                "schedule_id",
                 instructionStep,
                 ageStep,
                 dateStep,
@@ -435,7 +433,7 @@ public class MainActivity extends PinCodeActivity
     {
         try
         {
-            return new String(StorageAccess.getInstance().loadFile(this, path));
+            return new String(StorageAccess.getFileAccess().readData(this, path));
         }
         catch(Exception e)
         {
@@ -446,6 +444,6 @@ public class MainActivity extends PinCodeActivity
     private void saveString(String path, String string)
     {
         string = string == null ? "" : string;
-        StorageAccess.getInstance().saveFile(this, path, string.getBytes());
+        StorageAccess.getFileAccess().writeData(this, path, string.getBytes());
     }
 }
