@@ -1,6 +1,5 @@
 package co.touchlab.researchstack.core.storage.database;
 import java.util.List;
-import java.util.Map;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
@@ -10,18 +9,9 @@ import co.touchlab.researchstack.core.result.TaskResult;
  */
 public interface AppDatabase
 {
-    @Deprecated
-    void saveTaskRecord(TaskRecord taskRecord);
-
-    @Deprecated
-    List<TaskRecord> findTaskRecordById(String taskId);
-
-    @Deprecated
-    Map<String, TaskRecord> findLatestForAllTypes();
-
     void saveTaskResult(TaskResult result);
 
-    TaskResult loadTaskResult(String taskResultId);
+    TaskResult loadLatestTaskResult(String taskId);
 
     List<TaskResult> loadTaskResults(String taskId);
 

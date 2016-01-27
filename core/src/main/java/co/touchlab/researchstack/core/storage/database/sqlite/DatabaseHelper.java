@@ -6,9 +6,7 @@ import com.google.gson.GsonBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.StepResult;
@@ -20,7 +18,6 @@ import co.touchlab.researchstack.core.utils.FormatHelper;
 import co.touchlab.squeaky.dao.Dao;
 import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
 import co.touchlab.squeaky.db.sqlite.SqueakyOpenHelper;
-import co.touchlab.squeaky.stmt.Where;
 import co.touchlab.squeaky.table.TableUtils;
 
 /**
@@ -29,10 +26,10 @@ import co.touchlab.squeaky.table.TableUtils;
 public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
 {
     // TODO Define in BuildConfig
-    public static  String DB_NAME    = "appdb";
+    public static String DB_NAME = "appdb";
 
     // TODO Define in BuildConfig
-    private static int    DB_VERSION = 1;
+    private static int DB_VERSION = 1;
 
     private static DatabaseHelper sInstance;
 
@@ -88,61 +85,6 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     }
 
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-    // Task Record TODO Deprecated: remove when ready
-    //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-
-    @Override //TODO Deprecated
-    public void saveTaskRecord(TaskRecord taskRecord)
-    {
-        try
-        {
-            getDao(TaskRecord.class).create(taskRecord);
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override //TODO Deprecated
-    public List<TaskRecord> findTaskRecordById(String taskId)
-    {
-        try
-        {
-            Where<TaskRecord> where = new Where<>(getDao(TaskRecord.class));
-            List<TaskRecord> taskRecords = where.eq("taskResultId", taskId).query().list();
-            return taskRecords;
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override //TODO Deprecated
-    public Map<String, TaskRecord> findLatestForAllTypes()
-    {
-        try
-        {
-            Map<String, TaskRecord> byTaskId = new HashMap<>();
-            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForAll().list();
-            for(TaskRecord taskRecord : taskRecords)
-            {
-                TaskRecord check = byTaskId.get(taskRecord.taskResultId);
-                if(check == null || check.completed.before(taskRecord.completed))
-                {
-                    byTaskId.put(taskRecord.taskResultId, taskRecord);
-                }
-            }
-            return byTaskId;
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
     // Task / Step Result
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
@@ -154,7 +96,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
         try
         {
             TaskRecord taskRecord = new TaskRecord();
-            taskRecord.taskResultId = taskResult.getIdentifier();
+            taskRecord.taskId = taskResult.getIdentifier();
             taskRecord.started = taskResult.getStartDate();
             taskRecord.completed = taskResult.getEndDate();
             getDao(TaskRecord.class).create(taskRecord);
@@ -166,12 +108,12 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
             {
                 // TODO Step result could be null, which still indicates that it was answered. Figure
                 // out how to handle this
-                if (stepResult != null)
+                if(stepResult != null)
                 {
                     StepRecord stepRecord = new StepRecord();
                     stepRecord.taskRecordId = taskRecord.id;
-                    stepRecord.taskResultId = taskResult.getIdentifier();
-                    stepRecord.stepResultId = stepResult.getIdentifier();
+                    stepRecord.taskId = taskResult.getIdentifier();
+                    stepRecord.stepId = stepResult.getIdentifier();
                     stepRecord.completed = stepResult.getEndDate();
                     if(! stepResult.getResults().isEmpty())
                     {
@@ -181,6 +123,32 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
                     stepResultDao.createOrUpdate(stepRecord);
                 }
             }
+        }
+        catch(SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public TaskResult loadLatestTaskResult(String taskId)
+    {
+        LogExt.d(getClass(), "loadTaskResults() id: " + taskId);
+
+        try
+        {
+            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
+                    taskId).orderBy(TaskRecord.COMPLETED + " DESC").limit(1).list();
+
+            if(taskRecords.size() == 0)
+            {
+                return null;
+            }
+
+            TaskRecord record = taskRecords.get(0);
+            List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.TASK_RECORD_ID,
+                    record.id).list();
+            return TaskRecord.toTaskResult(record, stepRecords);
         }
         catch(SQLException e)
         {
@@ -207,15 +175,15 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     }
 
     @Override
-    public List<TaskResult> loadTaskResults(String taskResultId)
+    public List<TaskResult> loadTaskResults(String taskId)
     {
-        LogExt.d(getClass(), "loadTaskResults() id: " + taskResultId);
+        LogExt.d(getClass(), "loadTaskResults() id: " + taskId);
 
         try
         {
             List<TaskResult> results = new ArrayList<>();
-            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_RESULT_ID,
-                    taskResultId).list();
+            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
+                    taskId).list();
 
             for(TaskRecord record : taskRecords)
             {
@@ -241,7 +209,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
         try
         {
             List<StepResult> results = new ArrayList<>();
-            List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.STEP_RESULT_ID,
+            List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.STEP_ID,
                     stepResultId).list();
 
             for(StepRecord stepRecord : stepRecords)

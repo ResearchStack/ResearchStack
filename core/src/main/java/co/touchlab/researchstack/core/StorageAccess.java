@@ -15,11 +15,9 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
-import co.touchlab.researchstack.core.storage.database.TaskRecord;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.FileAccessException;
 import co.touchlab.researchstack.core.storage.file.StorageAccessListener;
@@ -370,11 +368,11 @@ public class StorageAccess implements AuthDataAccess
 
     public void saveTaskResult(Context context, TaskResult taskResult)
     {
-        // TODO link to appDatabase
+        appDatabase.saveTaskResult(taskResult);
     }
 
-    public Map<String, TaskRecord> findLatestForAllTypes()
+    public AppDatabase getAppDatabase()
     {
-        return appDatabase.findLatestForAllTypes();
+        return appDatabase;
     }
 }

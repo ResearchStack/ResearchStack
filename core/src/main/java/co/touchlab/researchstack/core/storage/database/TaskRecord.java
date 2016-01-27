@@ -10,18 +10,19 @@ import co.touchlab.squeaky.table.DatabaseTable;
 @DatabaseTable
 public class TaskRecord
 {
-    public static final String TASK_RESULT_ID = "taskResultId";
+    public static final String TASK_ID   = "taskId";
+    public static final String COMPLETED = "completed";
 
     @DatabaseField(generatedId = true)
     public int id;
 
-    @DatabaseField(canBeNull = false, columnName = TASK_RESULT_ID)
-    public String taskResultId;
+    @DatabaseField(canBeNull = false, columnName = TASK_ID)
+    public String taskId;
 
     @DatabaseField(canBeNull = false)
     public Date started;
 
-    @DatabaseField
+    @DatabaseField(columnName = COMPLETED)
     public Date completed;
 
     @DatabaseField
@@ -29,7 +30,7 @@ public class TaskRecord
 
     public static TaskResult toTaskResult(TaskRecord taskRecord, List<StepRecord> stepRecords)
     {
-        TaskResult taskResult = new TaskResult(taskRecord.taskResultId);
+        TaskResult taskResult = new TaskResult(taskRecord.taskId);
         taskResult.setStartDate(taskRecord.started);
         taskResult.setEndDate(taskRecord.completed);
 

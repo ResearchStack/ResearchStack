@@ -10,6 +10,7 @@ import java.util.Date;
 
 import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.helpers.LogExt;
+import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.storage.file.FileAccessException;
 import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.DataResponse;
@@ -286,6 +287,12 @@ public class SampleDataProvider extends DataProvider
     private String loadJsonString(Context context, String path)
     {
         return new String(StorageAccess.getInstance().loadFile(context, path));
+    }
+
+    @Override
+    public void uploadTaskResult(Context context, TaskResult taskResult)
+    {
+        // TODO upload to bridge (or add to queue)
     }
 
     /**

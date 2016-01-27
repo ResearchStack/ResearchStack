@@ -20,7 +20,7 @@ public class StepRecord
 
     public static final String TASK_RECORD_ID = "taskRecordId";
 
-    public static final String STEP_RESULT_ID = "stepResultId";
+    public static final String STEP_ID = "stepId";
 
     @DatabaseField(generatedId = true)
     public int id;
@@ -28,11 +28,11 @@ public class StepRecord
     @DatabaseField(canBeNull = false, columnName = StepRecord.TASK_RECORD_ID)
     public int taskRecordId;
 
-    @DatabaseField(canBeNull = false, columnName = TaskRecord.TASK_RESULT_ID)
-    public String taskResultId;
+    @DatabaseField(canBeNull = false, columnName = TaskRecord.TASK_ID)
+    public String taskId;
 
-    @DatabaseField(canBeNull = false, columnName = StepRecord.STEP_RESULT_ID)
-    public String stepResultId;
+    @DatabaseField(canBeNull = false, columnName = StepRecord.STEP_ID)
+    public String stepId;
 
     @DatabaseField
     public Date started;
@@ -45,7 +45,7 @@ public class StepRecord
 
     public static StepResult toStepResult(StepRecord record)
     {
-        StepResult result = new StepResult(record.stepResultId);
+        StepResult result = new StepResult(record.stepId);
         result.setStartDate(record.started);
         result.setEndDate(record.completed);
         if(! TextUtils.isEmpty(record.result))

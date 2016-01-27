@@ -18,13 +18,13 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.storage.database.TaskRecord;
+import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
+import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.glue.model.TaskModel;
@@ -100,7 +100,8 @@ public class ActivitiesFragment extends Fragment
 
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             taskResult.setEndDate(new Date());
-            StorageAccess.getInstance().saveTaskResult(getActivity(), taskResult);
+            StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
+            DataProvider.getInstance().uploadTaskResult(getActivity(), taskResult);
 
             setUpAdapter();
         }
@@ -115,23 +116,24 @@ public class ActivitiesFragment extends Fragment
         SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(getContext(),
                 SchedulesAndTasksModel.class,
                 "tasks_and_schedules");
-        Map<String, TaskRecord> latestForAllTypes = StorageAccess.getInstance()
-                .findLatestForAllTypes();
+
+        // TODO should this be called on DataProvider instead of directly on the AppDatabase?
+        AppDatabase db = StorageAccess.getInstance().getAppDatabase();
 
         ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();
         for(SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)
         {
             for(SchedulesAndTasksModel.TaskModel task : schedule.tasks)
             {
-                TaskRecord taskRecord = latestForAllTypes.get(task.taskID);
-                if(taskRecord == null)
+                TaskResult result = db.loadLatestTaskResult(task.taskID);
+                if(result == null)
                 {
                     tasks.add(task);
                 }
                 else if(StringUtils.isNotEmpty(schedule.scheduleString))
                 {
                     Date date = ScheduleHelper.nextSchedule(schedule.scheduleString,
-                            taskRecord.completed);
+                            result.getEndDate());
                     if(date.before(new Date()))
                     {
                         tasks.add(task);

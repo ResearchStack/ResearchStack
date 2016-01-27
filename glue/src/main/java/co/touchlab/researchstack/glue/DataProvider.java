@@ -3,6 +3,7 @@ import android.content.Context;
 
 import java.util.Date;
 
+import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.glue.model.User;
 import rx.Observable;
 
@@ -52,9 +53,9 @@ public abstract class DataProvider
 
     public abstract void clearUserData(Context context);
 
+    public abstract void uploadTaskResult(Context context, TaskResult taskResult);
+
     //TODO public abstract void getUserProfile(TODO);
 
     //TODO public abstract void updateUserProfile(TODO);
-
-    //TODO public abstract void saveSurveyResult(TODO);
 }
