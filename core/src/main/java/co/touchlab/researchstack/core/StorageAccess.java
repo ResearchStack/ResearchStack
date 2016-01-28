@@ -200,7 +200,7 @@ public class StorageAccess implements AuthDataAccess
         {
             if(listener instanceof AuthStorageAccessListener)
             {
-                ((AuthStorageAccessListener) listener).onDataAuth(codeConfig);
+                ((AuthStorageAccessListener) listener).onDataAuth();
             }
         }
     }
@@ -233,7 +233,6 @@ public class StorageAccess implements AuthDataAccess
     public void authenticate(Context context, String pin)
     {
         startWithPassphrase(context, pin);
-        notifyReady();
     }
 
     @Override

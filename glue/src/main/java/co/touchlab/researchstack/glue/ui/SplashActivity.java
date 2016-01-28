@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.ui.PinCodeActivity;
 import co.touchlab.researchstack.core.utils.ObservableUtils;
 import co.touchlab.researchstack.glue.DataProvider;
@@ -44,9 +43,9 @@ public class SplashActivity extends PinCodeActivity
     }
 
     @Override
-    public void onDataAuth(PinCodeConfig config)
+    public void onDataAuth()
     {
-        super.onDataAuth(config);
+        super.onDataAuth();
     }
 
     @Override

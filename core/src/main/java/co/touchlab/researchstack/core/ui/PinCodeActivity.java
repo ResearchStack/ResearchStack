@@ -14,7 +14,6 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.storage.file.auth.AuthStorageAccessListener;
 import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.ui.views.PinCodeLayout;
@@ -24,7 +23,7 @@ import co.touchlab.researchstack.core.utils.UiThreadContext;
 import rx.Observable;
 import rx.functions.Action1;
 
-public class PinCodeActivity extends AppCompatActivity implements AuthStorageAccessListener<PinCodeConfig>
+public class PinCodeActivity extends AppCompatActivity implements AuthStorageAccessListener
 {
     private View             pinCodeLayout;
     private Action1<Boolean> toggleKeyboardAction;
@@ -87,7 +86,7 @@ public class PinCodeActivity extends AppCompatActivity implements AuthStorageAcc
     }
 
     @Override
-    public void onDataAuth(PinCodeConfig config)
+    public void onDataAuth()
     {
         LogExt.e(getClass(), "onDataAuth()");
         storageAccessUnregister();
@@ -142,23 +141,21 @@ public class PinCodeActivity extends AppCompatActivity implements AuthStorageAcc
                     }
                 })
                 .filter(pin -> pin != null && pin.length() == config.getPinLength())
-                .doOnNext(pin -> pincode.setEnabled(false)).flatMap(pin -> {
-            return Observable.create(subscriber -> {
-                UiThreadContext.assertBackgroundThread();
+                .doOnNext(pin -> pincode.setEnabled(false))
+                .flatMap(pin -> {
+                    return Observable.create(subscriber -> {
+                        UiThreadContext.assertBackgroundThread();
 
-                storageAccessRegister();
-                ((AuthDataAccess) StorageAccess.getInstance()).authenticate(PinCodeActivity.this,
-                        pin);
-                subscriber.onNext(true);
-            }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
-                storageAccessUnregister();
-                toggleKeyboardAction.call(true);
-                summary.setText(R.string.rsc_pincode_enter_error);
-                summary.setTextColor(errorColor);
-            }).onErrorResumeNext(throwable1 -> {
-                return Observable.empty();
-            });
-        })
+                        StorageAccess.getInstance().authenticate(PinCodeActivity.this, pin);
+                        subscriber.onNext(true);
+                    }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
+                        toggleKeyboardAction.call(true);
+                        summary.setText(R.string.rsc_pincode_enter_error);
+                        summary.setTextColor(errorColor);
+                    }).onErrorResumeNext(throwable1 -> {
+                        return Observable.empty();
+                    });
+                })
                 .subscribe(success -> {
                     if(! (boolean) success)
                     {
@@ -167,6 +164,9 @@ public class PinCodeActivity extends AppCompatActivity implements AuthStorageAcc
                     else
                     {
                         pinCodeLayout.setVisibility(View.GONE);
+                        // TODO clean this whole auth thing up some more
+                        // authenticate() no longer calls notifyReady(), call this after auth
+                        initStorageAccess();
                     }
                 });
 
