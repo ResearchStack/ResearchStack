@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import co.touchlab.researchstack.core.StorageAccess;
@@ -35,7 +34,6 @@ import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.InstructionStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.PinCodeActivity;
@@ -65,10 +63,11 @@ public class MainActivity extends PinCodeActivity
     public static final  String CONSENT                   = "consent";
     public static final  String MULTI_STEP                = "multi_step";
     public static final  String DATE                      = "date";
-    public static final String DECIMAL = "decimal";
+    public static final String DECIMAL       = "decimal";
     private static final int    REQUEST_CONSENT           = 0;
     private static final int    REQUEST_SURVEY            = 1;
     private static final String FORM_NAME                 = "form_name";
+    public static final String SAMPLE_SURVEY = "sample_survey";
     private AppCompatButton consentButton;
     private AppCompatButton surveyButton;
     private AppCompatButton clearButton;
@@ -111,11 +110,6 @@ public class MainActivity extends PinCodeActivity
 
     private void clearData()
     {
-        FileAccess fileAccess = StorageAccess.getFileAccess();
-        fileAccess.clearData(this, CONSENT_PATH + NAME);
-        fileAccess.clearData(this, CONSENT_PATH + SIGNATURE);
-        fileAccess.clearData(this, CONSENT_PATH + SIGNATURE_DATE);
-
         AppPrefs appPrefs = AppPrefs.getInstance(this);
         appPrefs.setHasSurveyed(false);
         appPrefs.setHasConsented(false);
@@ -138,9 +132,20 @@ public class MainActivity extends PinCodeActivity
             consentButton.setEnabled(false);
             consentButton.setText(R.string.consent_button_done);
             surveyButton.setEnabled(true);
-            printConsentInfo(loadString(CONSENT_PATH + NAME),
-                    loadString(CONSENT_PATH + SIGNATURE),
-                    loadString(CONSENT_PATH + SIGNATURE_DATE));
+
+            TaskResult result = StorageAccess.getAppDatabase().loadLatestTaskResult(CONSENT);
+
+            // TODO form step result saving is messed up (gson saving inner stepresult as map)
+            //            String fullName = ((StepResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
+            //                    .getResultForIdentifier(NAME)).getResult();
+
+            String signatureBase64 = (String) result.getStepResult(SIGNATURE)
+                    .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
+
+            String signatureDate = (String) result.getStepResult(SIGNATURE)
+                    .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
+
+            printConsentInfo("", signatureBase64, signatureDate);
         }
         else
         {
@@ -248,23 +253,10 @@ public class MainActivity extends PinCodeActivity
 
         if(consented)
         {
-            String fullName = ((StepResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
-                    .getResultForIdentifier(NAME)).getResult();
-
-            String signatureBase64 = (String) result.getStepResult(SIGNATURE)
-                    .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
-
-            String signatureDate = (String) result.getStepResult(SIGNATURE)
-                    .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
+            StorageAccess.getAppDatabase().saveTaskResult(result);
 
             AppPrefs prefs = AppPrefs.getInstance(this);
             prefs.setHasConsented(true);
-
-            saveString(CONSENT_PATH + NAME, fullName);
-
-            saveString(CONSENT_PATH + SIGNATURE, signatureBase64);
-
-            saveString(CONSENT_PATH + SIGNATURE_DATE, signatureDate);
 
             initViews();
         }
@@ -283,22 +275,13 @@ public class MainActivity extends PinCodeActivity
 
     private void printSurveyInfo()
     {
-        String[] resultKeys = new String[] {
-                NAME,
-                DATE,
-                FORM_NAME,
-                FORM_AGE,
-                FORM_GENDER,
-                FORM_MULTI_CHOICE,
-                FORM_DATE_OF_BIRTH,
-                NUTRITION,
-                MULTI_STEP
-        };
+        TaskResult taskResult = StorageAccess.getAppDatabase().loadLatestTaskResult(SAMPLE_SURVEY);
 
         String results = "";
-        for(String resultKey : resultKeys)
+        for(String id : taskResult.getResults().keySet())
         {
-            results += resultKey + ": " + loadString(SURVEY_PATH + resultKey) + "\n";
+            StepResult stepResult = taskResult.getStepResult(id);
+            results += id + ": " + stepResult.getResult().toString() + "\n";
         }
         ((TextView) findViewById(R.id.survey_results)).setText(results);
     }
@@ -319,7 +302,8 @@ public class MainActivity extends PinCodeActivity
         DecimalAnswerFormat decimalAnswerFormat = new DecimalAnswerFormat(0f, 1f);
         QuestionStep decimalStep = new QuestionStep(DECIMAL, "Decimal step", decimalAnswerFormat);
 
-        FormStep formStep = createFormStep();
+        // TODO off until formstep result saving is fixed
+        //        FormStep formStep = createFormStep();
 
         // Create a Boolean step to include in the task.
         QuestionStep booleanStep = new QuestionStep(NUTRITION);
@@ -337,12 +321,12 @@ public class MainActivity extends PinCodeActivity
         multiStep.setOptional(false);
 
         // Create a task wrapping the steps.
-        OrderedTask task = new OrderedTask("ordered_task",
+        OrderedTask task = new OrderedTask(SAMPLE_SURVEY,
                 instructionStep,
                 ageStep,
                 dateStep,
                 decimalStep,
-                formStep,
+                //                formStep,
                 booleanStep,
                 multiStep);
 
@@ -396,55 +380,10 @@ public class MainActivity extends PinCodeActivity
 
     private void processSurveyResult(TaskResult result)
     {
-        StepResult<StepResult> formStep = result.getStepResult(FORM_STEP);
-
-        String formName = (String) formStep.getResultForIdentifier(FORM_NAME).getResult();
-        saveString(SURVEY_PATH + FORM_NAME, formName);
-
-        Integer formAge = (Integer) formStep.getResultForIdentifier(FORM_AGE).getResult();
-        saveString(SURVEY_PATH + FORM_AGE, String.valueOf(formAge));
-
-        String date = (String) result.getStepResult(DATE).getResult();
-        saveString(SURVEY_PATH + DATE, date);
-
-        Integer gender = (Integer) formStep.getResultForIdentifier(FORM_GENDER).getResult();
-        saveString(SURVEY_PATH + FORM_GENDER, gender == 0 ? "Male" : "Female");
-
-        Object[] multiChoice = (Object[]) formStep.getResultForIdentifier(FORM_MULTI_CHOICE)
-                .getResult();
-        saveString(SURVEY_PATH + FORM_MULTI_CHOICE, Arrays.toString(multiChoice));
-
-        String dateofBirth = (String) formStep.getResultForIdentifier(FORM_DATE_OF_BIRTH)
-                .getResult();
-        saveString(SURVEY_PATH + FORM_DATE_OF_BIRTH, dateofBirth.toString());
-
-        Integer nutrition = (Integer) result.getStepResult(NUTRITION).getResult();
-        String nutritionString = nutrition == 0 ? "No" : "Yes";
-        saveString(SURVEY_PATH + NUTRITION, nutritionString);
-
-        Object[] multiStep = (Object[]) result.getStepResult(MULTI_STEP).getResult();
-        saveString(SURVEY_PATH + MULTI_STEP, Arrays.toString(multiStep));
+        StorageAccess.getAppDatabase().saveTaskResult(result);
 
         AppPrefs prefs = AppPrefs.getInstance(this);
         prefs.setHasSurveyed(true);
         initViews();
-    }
-
-    private String loadString(String path)
-    {
-        try
-        {
-            return new String(StorageAccess.getFileAccess().readData(this, path));
-        }
-        catch(Exception e)
-        {
-            return "";
-        }
-    }
-
-    private void saveString(String path, String string)
-    {
-        string = string == null ? "" : string;
-        StorageAccess.getFileAccess().writeData(this, path, string.getBytes());
     }
 }

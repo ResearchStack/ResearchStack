@@ -50,6 +50,7 @@ public class StepRecord
         result.setEndDate(record.completed);
         if(! TextUtils.isEmpty(record.result))
         {
+            // TODO save entire result json or just results map?
             result.setResults(GSON.fromJson(record.result, Map.class));
         }
 

@@ -16,7 +16,10 @@
         <item name="guidelineHeight">1dp</item>
     </style>
 
-    <style name="Core"/>
+    <style name="Core" parent="Base.Theme.AppCompat.Light">
+
+        <item name="submitBackground">@color/submit_bar_gray</item>
+    </style>
 
     <style name="Core.Dialog" parent="Theme.AppCompat.Light">
         <item name="android:windowIsFloating">false</item>
@@ -65,4 +68,5 @@
         <item name="android:paddingBottom">@dimen/rsc_padding_small</item>
     </style>
 
+    <color name="submit_bar_gray">#EEEEEE</color>
 </resources>

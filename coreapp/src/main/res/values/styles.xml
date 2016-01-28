@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="CoreAppTheme"
-           parent="Theme.AppCompat.Light.DarkActionBar">
+           parent="Core">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,7 +11,7 @@
     </style>
 
     <style name="CoreAppTheme.Dialog"
-           parent="Theme.AppCompat.Light.Dialog.Alert">
+           parent="Core.Dialog">
         <!-- Used for the buttons -->
         <item name="colorAccent">@color/colorAccent</item>
         <!-- Used for the title and text -->
