@@ -31,7 +31,7 @@ public class PinCodeActivity extends AppCompatActivity
     private View             pinCodeLayout;
     private Action1<Boolean> toggleKeyboardAction;
 
-    AuthStorageAccessListener fileAccessListener = new AuthStorageAccessListener<PinCodeConfig>()
+    AuthStorageAccessListener storageAccessListener = new AuthStorageAccessListener<PinCodeConfig>()
     {
         @Override
         public void dataReady()
@@ -52,10 +52,10 @@ public class PinCodeActivity extends AppCompatActivity
         }
     };
 
-    private void fileAccessRegister()
+    private void storageAccessRegister()
     {
         StorageAccess storageAccess = StorageAccess.getInstance();
-        storageAccess.register(fileAccessListener);
+        storageAccess.register(storageAccessListener);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class PinCodeActivity extends AppCompatActivity
     {
         super.onResume();
 
-        initFileAccess();
+        initStorageAccess();
 
         //        if(NewStorageManager.getInstance() instanceof AuthDataAccess)
         //        {
@@ -85,33 +85,33 @@ public class PinCodeActivity extends AppCompatActivity
     protected void onDestroy()
     {
         super.onDestroy();
-        fileAccessUnregister();
+        storageAccessUnregister();
     }
 
-    private void fileAccessUnregister()
+    private void storageAccessUnregister()
     {
         StorageAccess storageAccess = StorageAccess.getInstance();
-        storageAccess.unregister(fileAccessListener);
+        storageAccess.unregister(storageAccessListener);
     }
 
-    private void initFileAccess()
+    private void initStorageAccess()
     {
-        LogExt.i(getClass(), "initFileAccess()");
+        LogExt.i(getClass(), "initStorageAccess()");
         StorageAccess storageAccess = StorageAccess.getInstance();
-        fileAccessRegister();
+        storageAccessRegister();
         storageAccess.initStorageAccess(this);
     }
 
     protected void onDataReady()
     {
         LogExt.i(getClass(), "onDataReady()");
-        fileAccessUnregister();
+        storageAccessUnregister();
     }
 
     protected void onDataFailed()
     {
         LogExt.e(getClass(), "onDataFailed()");
-        fileAccessUnregister();
+        storageAccessUnregister();
     }
 
 
