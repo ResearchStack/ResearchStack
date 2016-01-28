@@ -23,7 +23,7 @@ public class SplashActivity extends PinCodeActivity
     }
 
     @Override
-    protected void onDataReady()
+    public void onDataReady()
     {
         super.onDataReady();
 
@@ -44,13 +44,13 @@ public class SplashActivity extends PinCodeActivity
     }
 
     @Override
-    protected void onDataAuth(PinCodeConfig config)
+    public void onDataAuth(PinCodeConfig config)
     {
         super.onDataAuth(config);
     }
 
     @Override
-    protected void onDataFailed()
+    public void onDataFailed()
     {
         super.onDataFailed();
         finish();

@@ -200,7 +200,7 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
     }
 
     @Override
-    protected void onDataReady()
+    public void onDataReady()
     {
         super.onDataReady();
 
@@ -213,7 +213,7 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
     }
 
     @Override
-    protected void onDataFailed()
+    public void onDataFailed()
     {
         super.onDataFailed();
         Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();

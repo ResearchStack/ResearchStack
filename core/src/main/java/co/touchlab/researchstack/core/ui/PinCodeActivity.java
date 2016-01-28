@@ -24,39 +24,10 @@ import co.touchlab.researchstack.core.utils.UiThreadContext;
 import rx.Observable;
 import rx.functions.Action1;
 
-public class PinCodeActivity extends AppCompatActivity
+public class PinCodeActivity extends AppCompatActivity implements AuthStorageAccessListener<PinCodeConfig>
 {
-
-
     private View             pinCodeLayout;
     private Action1<Boolean> toggleKeyboardAction;
-
-    AuthStorageAccessListener storageAccessListener = new AuthStorageAccessListener<PinCodeConfig>()
-    {
-        @Override
-        public void dataReady()
-        {
-            onDataReady();
-        }
-
-        @Override
-        public void dataAccessError()
-        {
-            onDataFailed();
-        }
-
-        @Override
-        public void dataAuth(PinCodeConfig config)
-        {
-            onDataAuth(config);
-        }
-    };
-
-    private void storageAccessRegister()
-    {
-        StorageAccess storageAccess = StorageAccess.getInstance();
-        storageAccess.register(storageAccessListener);
-    }
 
     @Override
     protected void onPause()
@@ -72,13 +43,6 @@ public class PinCodeActivity extends AppCompatActivity
         super.onResume();
 
         initStorageAccess();
-
-        //        if(NewStorageManager.getInstance() instanceof AuthDataAccess)
-        //        {
-        //            LogExt.i(getClass(), "checkAutoLock()");
-        //            ((AuthDataAccess) NewStorageManager.getInstance())
-        //                    .checkAutoLock(this);
-        //        }
     }
 
     @Override
@@ -86,12 +50,6 @@ public class PinCodeActivity extends AppCompatActivity
     {
         super.onDestroy();
         storageAccessUnregister();
-    }
-
-    private void storageAccessUnregister()
-    {
-        StorageAccess storageAccess = StorageAccess.getInstance();
-        storageAccess.unregister(storageAccessListener);
     }
 
     private void initStorageAccess()
@@ -102,16 +60,44 @@ public class PinCodeActivity extends AppCompatActivity
         storageAccess.initStorageAccess(this);
     }
 
-    protected void onDataReady()
+    private void storageAccessRegister()
+    {
+        StorageAccess storageAccess = StorageAccess.getInstance();
+        storageAccess.register(this);
+    }
+
+    private void storageAccessUnregister()
+    {
+        StorageAccess storageAccess = StorageAccess.getInstance();
+        storageAccess.unregister(this);
+    }
+
+    @Override
+    public void onDataReady()
     {
         LogExt.i(getClass(), "onDataReady()");
         storageAccessUnregister();
     }
 
-    protected void onDataFailed()
+    @Override
+    public void onDataFailed()
     {
         LogExt.e(getClass(), "onDataFailed()");
         storageAccessUnregister();
+    }
+
+    @Override
+    public void onDataAuth(PinCodeConfig config)
+    {
+        LogExt.e(getClass(), "onDataAuth()");
+        storageAccessUnregister();
+
+        // Show pincode layout
+        pinCodeLayout.setVisibility(View.VISIBLE);
+
+        // TODO figure out why keyboard wont show without delay
+        // Show keyboard
+        pinCodeLayout.postDelayed(() -> toggleKeyboardAction.call(true), 300);
     }
 
 
@@ -186,18 +172,5 @@ public class PinCodeActivity extends AppCompatActivity
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         getWindowManager().addView(pinCodeLayout, params);
-    }
-
-    protected void onDataAuth(PinCodeConfig config)
-    {
-        LogExt.e(getClass(), "onDataAuth()");
-        storageAccessUnregister();
-
-        // Show pincode layout
-        pinCodeLayout.setVisibility(View.VISIBLE);
-
-        // TODO figure out why keyboard wont show without delay
-        // Show keyboard
-        pinCodeLayout.postDelayed(() -> toggleKeyboardAction.call(true), 300);
     }
 }

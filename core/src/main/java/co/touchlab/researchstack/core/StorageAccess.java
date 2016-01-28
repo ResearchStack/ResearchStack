@@ -160,7 +160,7 @@ public class StorageAccess implements AuthDataAccess
 
         for(StorageAccessListener listener : listeners)
         {
-            listener.dataReady();
+            listener.onDataReady();
         }
     }
 
@@ -179,7 +179,7 @@ public class StorageAccess implements AuthDataAccess
 
         for(StorageAccessListener listener : listeners)
         {
-            listener.dataAccessError();
+            listener.onDataFailed();
         }
     }
 
@@ -200,7 +200,7 @@ public class StorageAccess implements AuthDataAccess
         {
             if(listener instanceof AuthStorageAccessListener)
             {
-                ((AuthStorageAccessListener) listener).dataAuth(codeConfig);
+                ((AuthStorageAccessListener) listener).onDataAuth(codeConfig);
             }
         }
     }

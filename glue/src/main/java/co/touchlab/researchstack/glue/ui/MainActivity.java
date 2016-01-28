@@ -139,7 +139,7 @@ public class MainActivity extends PinCodeActivity
     }
 
     @Override
-    protected void onDataReady()
+    public void onDataReady()
     {
         super.onDataReady();
 
@@ -156,7 +156,7 @@ public class MainActivity extends PinCodeActivity
     }
 
     @Override
-    protected void onDataFailed()
+    public void onDataFailed()
     {
         super.onDataFailed();
 

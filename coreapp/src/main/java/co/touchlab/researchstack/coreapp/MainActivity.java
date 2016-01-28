@@ -118,7 +118,7 @@ public class MainActivity extends PinCodeActivity
     }
 
     @Override
-    protected void onDataReady()
+    public void onDataReady()
     {
         super.onDataReady();
         initViews();

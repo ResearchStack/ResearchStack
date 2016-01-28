@@ -7,5 +7,5 @@ public interface AuthStorageAccessListener <T> extends StorageAccessListener
      * Data access is not ready, needs auth.
      * TODO add bool hasPinCode as a param ?
      */
-    void dataAuth(T config);
+    void onDataAuth(T config);
 }
