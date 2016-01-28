@@ -160,10 +160,12 @@ public class PinCodeActivity extends AppCompatActivity
             return Observable.create(subscriber -> {
                 UiThreadContext.assertBackgroundThread();
 
+                storageAccessRegister();
                 ((AuthDataAccess) StorageAccess.getInstance()).authenticate(PinCodeActivity.this,
                         pin);
                 subscriber.onNext(true);
             }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
+                storageAccessUnregister();
                 toggleKeyboardAction.call(true);
                 summary.setText(R.string.rsc_pincode_enter_error);
                 summary.setTextColor(errorColor);
@@ -189,6 +191,7 @@ public class PinCodeActivity extends AppCompatActivity
     protected void onDataAuth(PinCodeConfig config)
     {
         LogExt.e(getClass(), "onDataAuth()");
+        storageAccessUnregister();
 
         // Show pincode layout
         pinCodeLayout.setVisibility(View.VISIBLE);
