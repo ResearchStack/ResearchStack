@@ -87,8 +87,9 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 // THEN SaveConsentResultInfo. If we don't have a pincode then pincode-creation
                 // steps will appear when we call "showNextStep"
 
+                //TODO This is now misleading.
                 boolean doesNotHaveAuth = ! (StorageAccess.getInstance() instanceof AuthDataAccess);
-                boolean hasPinCode = ((AuthDataAccess) StorageAccess.getInstance()).hasPinCode(this);
+                boolean hasPinCode = StorageAccess.getInstance().hasPinCode(this);
 
                 if (doesNotHaveAuth || hasPinCode)
                 {

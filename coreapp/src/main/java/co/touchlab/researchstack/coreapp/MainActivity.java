@@ -35,6 +35,7 @@ import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.FormStep;
 import co.touchlab.researchstack.core.step.InstructionStep;
 import co.touchlab.researchstack.core.step.QuestionStep;
+import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.PinCodeActivity;
@@ -110,10 +111,10 @@ public class MainActivity extends PinCodeActivity
 
     private void clearData()
     {
-        StorageAccess storageAccess = StorageAccess.getInstance();
-        storageAccess.clearData(this, CONSENT_PATH + NAME);
-        storageAccess.clearData(this, CONSENT_PATH + SIGNATURE);
-        storageAccess.clearData(this, CONSENT_PATH + SIGNATURE_DATE);
+        FileAccess fileAccess = StorageAccess.getFileAccess();
+        fileAccess.clearData(this, CONSENT_PATH + NAME);
+        fileAccess.clearData(this, CONSENT_PATH + SIGNATURE);
+        fileAccess.clearData(this, CONSENT_PATH + SIGNATURE_DATE);
 
         AppPrefs appPrefs = AppPrefs.getInstance(this);
         appPrefs.setHasSurveyed(false);

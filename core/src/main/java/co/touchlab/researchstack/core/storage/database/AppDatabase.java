@@ -4,9 +4,6 @@ import java.util.List;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.result.TaskResult;
 
-/**
- * Created by kgalligan on 11/28/15.
- */
 public interface AppDatabase
 {
     void saveTaskResult(TaskResult result);

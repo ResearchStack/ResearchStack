@@ -100,7 +100,7 @@ public class ActivitiesFragment extends Fragment
 
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             taskResult.setEndDate(new Date());
-            StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
+            StorageAccess.getAppDatabase().saveTaskResult(taskResult);
             DataProvider.getInstance().uploadTaskResult(getActivity(), taskResult);
 
             setUpAdapter();
@@ -118,7 +118,7 @@ public class ActivitiesFragment extends Fragment
                 "tasks_and_schedules");
 
         // TODO should this be called on DataProvider instead of directly on the AppDatabase?
-        AppDatabase db = StorageAccess.getInstance().getAppDatabase();
+        AppDatabase db = StorageAccess.getAppDatabase();
 
         ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();
         for(SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)

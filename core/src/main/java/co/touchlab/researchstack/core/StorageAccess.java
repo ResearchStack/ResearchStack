@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.FileAccessException;
@@ -31,22 +30,38 @@ import co.touchlab.researchstack.core.utils.UiThreadContext;
 
 public class StorageAccess implements AuthDataAccess
 {
-    private PinCodeConfig codeConfig;
-    private FileAccess  fileAccess;
-    private AppDatabase appDatabase;
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // Assert Constants
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    private long minTimeToIgnorePinCode;
+    private static final boolean CHECK_THREADS = false;
+
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // Statics
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    private static final StorageAccess instance = new StorageAccess();
+
+    private static FileAccess fileAccess;
+
+    private static AppDatabase appDatabase;
+
+    private static AesCbcWithIntegrity.SecretKeys key;
+
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // Fields
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    private Handler handler = new Handler(Looper.getMainLooper());
+
+    private List<StorageAccessListener> listeners = Collections.synchronizedList(new ArrayList<>());
+
+    private PinCodeConfig codeConfig;
 
     private long lastAuthTime;
 
-    private AesCbcWithIntegrity.SecretKeys key;
-
-    private   Handler                     handler      = new Handler(Looper.getMainLooper());
-    protected List<StorageAccessListener> listeners    = Collections.synchronizedList(new ArrayList<>());
-    protected boolean                     checkThreads = false;
-
-    public static final StorageAccess instance = new StorageAccess();
     private Encrypter encrypter;
+
 
     private StorageAccess()
     {
@@ -57,12 +72,32 @@ public class StorageAccess implements AuthDataAccess
         return instance;
     }
 
+    public static FileAccess getFileAccess()
+    {
+        if(key == null)
+        {
+            //TODO throw new AuthAccessException();
+        }
+
+        return fileAccess;
+    }
+
+    public static AppDatabase getAppDatabase()
+    {
+        if(key == null)
+        {
+            //TODO throw new AuthAccessException();
+        }
+
+        return appDatabase;
+    }
+
     public void init(PinCodeConfig pinCodeConfig, FileAccess fileAccess, AppDatabase appDatabase)
     {
-        this.codeConfig = pinCodeConfig;
-        this.fileAccess = fileAccess;
-        this.appDatabase = appDatabase;
-        minTimeToIgnorePinCode = codeConfig.getPinAutoLockTime();
+        StorageAccess.appDatabase = appDatabase;
+        StorageAccess.fileAccess = fileAccess;
+
+        codeConfig = pinCodeConfig;
     }
 
     @Override
@@ -87,7 +122,7 @@ public class StorageAccess implements AuthDataAccess
     @MainThread
     public final void register(StorageAccessListener storageAccessListener)
     {
-        if(checkThreads)
+        if(CHECK_THREADS)
         {
             UiThreadContext.assertUiThread();
         }
@@ -103,7 +138,7 @@ public class StorageAccess implements AuthDataAccess
     @MainThread
     public final void unregister(StorageAccessListener storageAccessListener)
     {
-        if(checkThreads)
+        if(CHECK_THREADS)
         {
             UiThreadContext.assertUiThread();
         }
@@ -118,25 +153,30 @@ public class StorageAccess implements AuthDataAccess
     @MainThread
     public void notifyListenersReady()
     {
-        if(checkThreads)
+        if(CHECK_THREADS)
         {
             UiThreadContext.assertUiThread();
         }
-        //TODO: replace with lambda. Hey, if we're using them...
+
         for(StorageAccessListener listener : listeners)
         {
             listener.dataReady();
         }
     }
 
-    @MainThread
-    public void notifyListenersFailed()
+    protected void notifyHardFail()
     {
-        if(checkThreads)
+        handler.post(this :: notifyListenersHardFail);
+    }
+
+    @MainThread
+    public void notifyListenersHardFail()
+    {
+        if(CHECK_THREADS)
         {
             UiThreadContext.assertUiThread();
         }
-        //TODO: replace with lambda. Hey, if we're using them...
+
         for(StorageAccessListener listener : listeners)
         {
             listener.dataAccessError();
@@ -145,13 +185,13 @@ public class StorageAccess implements AuthDataAccess
 
     protected void notifySoftFail()
     {
-        getMainHandler().post(this :: notifyListenersSoftFail);
+        handler.post(this :: notifyListenersSoftFail);
     }
 
     @MainThread
     public void notifyListenersSoftFail()
     {
-        if(checkThreads)
+        if(CHECK_THREADS)
         {
             UiThreadContext.assertUiThread();
         }
@@ -165,11 +205,15 @@ public class StorageAccess implements AuthDataAccess
         }
     }
 
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // Auth
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
     private void validateKeyForTimeOut()
     {
         long now = System.currentTimeMillis();
 
-        boolean isPastMinIgnoreTime = now - lastAuthTime > minTimeToIgnorePinCode;
+        boolean isPastMinIgnoreTime = now - lastAuthTime > codeConfig.getPinAutoLockTime();
 
         if(isPastMinIgnoreTime)
         {
@@ -182,11 +226,6 @@ public class StorageAccess implements AuthDataAccess
     public void logAccessTime()
     {
         lastAuthTime = System.currentTimeMillis();
-    }
-
-    public Handler getMainHandler()
-    {
-        return handler;
     }
 
     // TODO Make pass-code auth more obvious that it throws an exception. Add throws list?
@@ -224,8 +263,7 @@ public class StorageAccess implements AuthDataAccess
         key = masterKey;
         encrypter = new AesEncrypter(masterKey);
         fileAccess.setEncrypter(encrypter);
-        // TODO Encrypt database
-        // appDatabase.setMasterKey(masterKey.toString());
+        //TODO  appDatabase.(masterKey.toString());
     }
 
     @Override
@@ -351,28 +389,8 @@ public class StorageAccess implements AuthDataAccess
         return FileUtils.readAll(salt);
     }
 
-    public void saveFile(Context context, String path, byte[] data)
+    public static class AuthAccessException extends Exception
     {
-        fileAccess.writeData(context, path, data);
     }
 
-    public byte[] loadFile(Context context, String path)
-    {
-        return fileAccess.readData(context, path);
-    }
-
-    public void clearData(Context context, String path)
-    {
-        fileAccess.clearData(context, path);
-    }
-
-    public void saveTaskResult(Context context, TaskResult taskResult)
-    {
-        appDatabase.saveTaskResult(taskResult);
-    }
-
-    public AppDatabase getAppDatabase()
-    {
-        return appDatabase;
-    }
 }

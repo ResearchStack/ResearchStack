@@ -35,6 +35,7 @@ public interface FileAccess
      * @param path    Path relative to the implementation's root store.  Must start with '/'.  No relative paths.
      * @param data    Byte array.  May implement streams in the future if all implementations support it.
      */
+    //TODO Rename to write
     void writeData(Context context, String path, byte[] data);
 
     /**
@@ -46,6 +47,7 @@ public interface FileAccess
      * @param context Can be Application context, but we'll be careful not to store, so don't worry too much.
      * @param path    Path relative to the implementation's root store.  Must start with '/'.  No relative paths.
      */
+    //TODO Rename to read
     byte[] readData(Context context, String path);
 
     /**
@@ -55,8 +57,10 @@ public interface FileAccess
      * @param path    Path relative to the implementation's root store.  Must start with '/'.  No relative paths.
      * @return Well...
      */
+    //TODO Rename to exists
     boolean dataExists(Context context, String path);
 
+    //TODO Rename to clear
     void clearData(Context context, String path);
 
     void setEncrypter(Encrypter encrypter);

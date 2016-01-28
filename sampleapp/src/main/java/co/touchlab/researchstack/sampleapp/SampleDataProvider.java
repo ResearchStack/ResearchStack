@@ -268,7 +268,8 @@ public class SampleDataProvider extends DataProvider
 
     private void writeJsonString(Context context, String userSessionJson, String userSessionPath)
     {
-        StorageAccess.getInstance().saveFile(context, userSessionPath, userSessionJson.getBytes());
+        StorageAccess.getFileAccess()
+                .writeData(context, userSessionPath, userSessionJson.getBytes());
     }
 
     private UserSessionInfo loadUserSession(Context context)
@@ -286,7 +287,7 @@ public class SampleDataProvider extends DataProvider
 
     private String loadJsonString(Context context, String path)
     {
-        return new String(StorageAccess.getInstance().loadFile(context, path));
+        return new String(StorageAccess.getFileAccess().readData(context, path));
     }
 
     @Override
