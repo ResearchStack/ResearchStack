@@ -233,6 +233,7 @@ public class StorageAccess implements AuthDataAccess
     public void authenticate(Context context, String pin)
     {
         startWithPassphrase(context, pin);
+        logAccessTime();
     }
 
     @Override

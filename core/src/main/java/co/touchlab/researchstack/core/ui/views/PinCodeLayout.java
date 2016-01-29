@@ -4,6 +4,7 @@ import android.support.annotation.CallSuper;
 import android.text.InputFilter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -13,7 +14,6 @@ import java.util.Arrays;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.StorageAccess;
-import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.core.utils.ViewUtils;
 
@@ -25,6 +25,7 @@ public class PinCodeLayout extends RelativeLayout
     protected TextView summary;
     protected TextView title;
     protected EditText editText;
+    protected View     progress;
 
     public PinCodeLayout(Context context)
     {
@@ -37,7 +38,6 @@ public class PinCodeLayout extends RelativeLayout
         super(context, attrs);
         init();
     }
-
     public PinCodeLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
@@ -47,7 +47,7 @@ public class PinCodeLayout extends RelativeLayout
     @CallSuper
     protected void init()
     {
-        config = ((AuthDataAccess) StorageAccess.getInstance()).getPinCodeConfig();
+        config = StorageAccess.getInstance().getPinCodeConfig();
         imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         LayoutInflater.from(getContext()).inflate(R.layout.step_layout_pincode, this, true);
@@ -73,6 +73,13 @@ public class PinCodeLayout extends RelativeLayout
         InputFilter[] filters = ViewUtils.addFilter(editText.getFilters(),
                 new InputFilter.LengthFilter(config.getPinLength()));
         editText.setFilters(filters);
+
+        progress = findViewById(R.id.progress);
+    }
+
+    public void showProgress(boolean show)
+    {
+        progress.setVisibility(show ? VISIBLE : GONE);
     }
 
 }

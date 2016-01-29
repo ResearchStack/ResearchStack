@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools"
     >
 
     <TextView
@@ -36,5 +36,12 @@
         android:background="@null"
         android:letterSpacing=".25"
         android:gravity="center"/>
+
+    <include
+        android:id="@+id/progress"
+        android:visibility="gone"
+        tools:visibility="gone"
+        layout="@layout/progress"
+        />
 
 </RelativeLayout>

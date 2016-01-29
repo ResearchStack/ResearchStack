@@ -25,7 +25,7 @@ import rx.functions.Action1;
 
 public class PinCodeActivity extends AppCompatActivity implements AuthStorageAccessListener
 {
-    private View             pinCodeLayout;
+    private PinCodeLayout pinCodeLayout;
     private Action1<Boolean> toggleKeyboardAction;
 
     @Override
@@ -141,7 +141,10 @@ public class PinCodeActivity extends AppCompatActivity implements AuthStorageAcc
                     }
                 })
                 .filter(pin -> pin != null && pin.length() == config.getPinLength())
-                .doOnNext(pin -> pincode.setEnabled(false))
+                .doOnNext(pin -> {
+                    pincode.setEnabled(false);
+                    pinCodeLayout.showProgress(true);
+                })
                 .flatMap(pin -> {
                     return Observable.create(subscriber -> {
                         UiThreadContext.assertBackgroundThread();
@@ -150,8 +153,10 @@ public class PinCodeActivity extends AppCompatActivity implements AuthStorageAcc
                         subscriber.onNext(true);
                     }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
                         toggleKeyboardAction.call(true);
+                        throwable.printStackTrace();
                         summary.setText(R.string.rsc_pincode_enter_error);
                         summary.setTextColor(errorColor);
+                        pinCodeLayout.showProgress(false);
                     }).onErrorResumeNext(throwable1 -> {
                         return Observable.empty();
                     });
@@ -164,6 +169,7 @@ public class PinCodeActivity extends AppCompatActivity implements AuthStorageAcc
                     else
                     {
                         pinCodeLayout.setVisibility(View.GONE);
+                        pinCodeLayout.showProgress(false);
                         // TODO clean this whole auth thing up some more
                         // authenticate() no longer calls notifyReady(), call this after auth
                         initStorageAccess();
