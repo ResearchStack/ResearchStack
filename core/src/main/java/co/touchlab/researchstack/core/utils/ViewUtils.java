@@ -1,5 +1,12 @@
 package co.touchlab.researchstack.core.utils;
+import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
 import android.text.InputFilter;
+import android.text.InputType;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 public class ViewUtils
 {
@@ -33,4 +40,35 @@ public class ViewUtils
         }
     }
 
+    public static void disableSoftInputFromAppearing(EditText editText)
+    {
+        if(Build.VERSION.SDK_INT >= 11)
+        {
+            editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
+            editText.setTextIsSelectable(true);
+        }
+        else
+        {
+            editText.setRawInputType(InputType.TYPE_NULL);
+            editText.setFocusable(true);
+        }
+    }
+
+    public static void hideSoftInputMethod(Context context)
+    {
+        if(context instanceof Activity)
+        {
+            View currentFocus = ((Activity) context).getCurrentFocus();
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromInputMethod(currentFocus.getWindowToken(), 0);
+        }
+    }
+
+    public static void showSoftInputMethod(EditText editText)
+    {
+        editText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) editText.getContext()
+                .getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editText, 0);
+    }
 }

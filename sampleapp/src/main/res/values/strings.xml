@@ -3,4 +3,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="custom">Custom</string>
+    <string name="debug">Debug</string>
 </resources>

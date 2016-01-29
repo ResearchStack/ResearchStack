@@ -1,14 +1,15 @@
 package co.touchlab.researchstack.core.ui.step.body;
 
 import android.app.AlertDialog;
+import android.content.res.Resources;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -19,26 +20,72 @@ import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
 import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
+import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.ui.views.NoShowImeEditText;
+import co.touchlab.researchstack.core.utils.ViewUtils;
 
 public class MultiChoiceQuestionBody <T> implements StepBody
 {
-    private Set<T> results;
-
-    private RadioGroup         radioGroup;
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // Constructor Fields
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    private QuestionStep    step;
+    private StepResult<T[]> result;
     private ChoiceAnswerFormat format;
     private Choice<T>[]        choices;
-    private QuestionStep step;
+    private Set<T>          currentSelected;
+
+    public MultiChoiceQuestionBody(Step step, StepResult result)
+    {
+        this.step = (QuestionStep) step;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.format = (ChoiceAnswerFormat) this.step.getAnswerFormat();
+        this.choices = format.getChoices();
+
+        // Restore results
+        currentSelected = new HashSet<>();
+
+        T[] resultArray = this.result.getResult();
+        if(resultArray != null && resultArray.length > 0)
+        {
+            currentSelected.addAll(Arrays.asList(resultArray));
+        }
+    }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
+    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
-        this.step = step;
-        results = new HashSet<>();
-        format = (ChoiceAnswerFormat) step.getAnswerFormat();
-        choices = format.getChoices();
+        View view = getViewForType(viewType, inflater, parent);
 
-        // TODO inflate this?
-        radioGroup = new RadioGroup(inflater.getContext());
+        Resources res = parent.getResources();
+        LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_right);
+        view.setLayoutParams(layoutParams);
+
+        return view;
+    }
+
+    private View getViewForType(int viewType, LayoutInflater inflater, ViewGroup parent)
+    {
+        if(viewType == VIEW_TYPE_DEFAULT)
+        {
+            return initViewDefault(inflater, parent);
+        }
+        else if(viewType == VIEW_TYPE_COMPACT)
+        {
+            return initViewCompact(inflater, parent);
+        }
+        else
+        {
+            throw new IllegalArgumentException("Invalid View Type");
+        }
+    }
+
+    private View initViewDefault(LayoutInflater inflater, ViewGroup parent)
+    {
+        RadioGroup radioGroup = new RadioGroup(inflater.getContext());
 
         for(int i = 0; i < choices.length; i++)
         {
@@ -53,7 +100,7 @@ public class MultiChoiceQuestionBody <T> implements StepBody
             radioGroup.addView(checkBox);
 
             // Set initial state
-            if(results.contains(item.getValue()))
+            if(currentSelected.contains(item.getValue()))
             {
                 checkBox.setChecked(true);
             }
@@ -63,11 +110,11 @@ public class MultiChoiceQuestionBody <T> implements StepBody
 
                 if(isChecked)
                 {
-                    results.add(item.getValue());
+                    currentSelected.add(item.getValue());
                 }
                 else
                 {
-                    results.remove(item.getValue());
+                    currentSelected.remove(item.getValue());
                 }
             });
         }
@@ -75,74 +122,79 @@ public class MultiChoiceQuestionBody <T> implements StepBody
         return radioGroup;
     }
 
-    @Override
-    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
+    private View initViewCompact(LayoutInflater inflater, ViewGroup parent)
     {
-        this.step = step;
-        results = new HashSet<>();
-        View formItemView = inflater.inflate(R.layout.scene_form_item, parent, false);
+        View compactView = inflater.inflate(R.layout.item_edit_text, parent, false);
 
-        TextView label = (TextView) formItemView.findViewById(R.id.text);
-
+        TextView label = (TextView) compactView.findViewById(R.id.text);
+        label.setVisibility(View.VISIBLE);
         label.setText(step.getTitle());
 
-        TextView textView = (TextView) formItemView.findViewById(R.id.value);
+        NoShowImeEditText editText = (NoShowImeEditText) compactView.findViewById(R.id.value);
+        editText.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus)
+            {
+                ViewUtils.hideSoftInputMethod(editText.getContext());
 
-        format = (ChoiceAnswerFormat) step.getAnswerFormat();
-        choices = format.getChoices();
-
-        RxView.clicks(textView).subscribe(o -> {
-            showDialog(textView, step.getTitle());
+                showDialog(editText, step.getTitle());
+            }
         });
 
-        return formItemView;
+
+        editText.setIsTextEdittingEnalbed(false);
+
+        return compactView;
     }
 
     @Override
     public StepResult getStepResult()
     {
-        StepResult<T[]> result = new StepResult<>(step.getIdentifier());
-        result.setResult((T[]) results.toArray());
+        result.setResult((T[]) currentSelected.toArray());
         return result;
-    }
-
-    @Override
-    public void prefillResult(StepResult result)
-    {
-        T[] resultArray = (T[]) result.getResult();
-        if(resultArray != null && resultArray.length > 0)
-        {
-            results.addAll(Arrays.asList(resultArray));
-        }
     }
 
     @Override
     public boolean isAnswerValid()
     {
-        return ! results.isEmpty();
+        return ! currentSelected.isEmpty();
     }
 
-    private void showDialog(TextView textView, String title)
+    private void showDialog(EditText editText, String title)
     {
-        // TODO use same view as initView() and just set the dialog's view to it?
+        // TODO use same view as getBodyView() and just set the dialog's view to it?
         // TODO use current result to precheck items
         // TODO improve this whole result/dialog logic
         boolean[] checkedItems = new boolean[format.getChoices().length];
-        new AlertDialog.Builder(textView.getContext()).setMultiChoiceItems(format.getTextChoiceNames(),
+        new AlertDialog.Builder(editText.getContext()).setMultiChoiceItems(format.getTextChoiceNames(),
                 checkedItems,
                 (dialog, which, isChecked) -> {
                     checkedItems[which] = isChecked;
                 }).setTitle(title).setPositiveButton(R.string.src_ok, (dialog, which) -> {
-            results.clear();
+            currentSelected.clear();
             for(int i = 0; i < checkedItems.length; i++)
             {
                 if(checkedItems[i])
                 {
                     Choice<T> choice = choices[i];
-                    results.add(choice.getValue());
+                    currentSelected.add(choice.getValue());
                 }
             }
-            textView.setText("chosen");
+
+            //TODO format from strings.xml
+            // Set result to our text view
+            editText.setText(currentSelected.size() + " options picked");
+
+            // Search for next focusable view request focus
+            View next = editText.getParent().focusSearch(editText, View.FOCUS_DOWN);
+            if(next != null)
+            {
+                next.requestFocus();
+            }
+            else
+            {
+                ViewUtils.hideSoftInputMethod(editText.getContext());
+            }
+
         }).setNegativeButton(R.string.src_cancel, null).show();
     }
 }

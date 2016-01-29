@@ -119,55 +119,23 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
-        LogExt.i(getClass(), "onCreateScene()");
         View scene = onCreateScene(inflater, this);
-
-        LogExt.i(getClass(), "onSceneCreated()");
         onSceneCreated(scene);
 
-        LogExt.i(getClass(), "onCreateBody()");
-        stepBody = createStepBody(step);
-        View body = stepBody.initView(inflater, this, step);
-        if(stepResult != null)
-        {
-            stepBody.prefillResult(stepResult);
-        }
-
-        if(body != null)
-        {
-            View oldView = container.findViewById(R.id.scene_body);
-            int bodyIndex = container.indexOfChild(oldView);
-            container.removeView(oldView);
-            container.addView(body, bodyIndex);
-            body.setId(R.id.scene_body);
-
-            LogExt.i(getClass(), "onBodyCreated()");
-            onBodyCreated(body);
-        }
-    }
-
-    @NonNull
-    private StepBody createStepBody(Step step)
-    {
-        try
-        {
-            Class cls = step.getSceneClass();
-            Constructor constructor = cls.getConstructor();
-            return (StepBody) constructor.newInstance();
-        }
-        catch(Exception e)
-        {
-            throw new RuntimeException(e);
-        }
+        View body = onCreateBody(inflater, this);
+        onBodyCreated(body);
     }
 
     public View onCreateScene(LayoutInflater inflater, ViewGroup parent)
     {
+        LogExt.i(getClass(), "onCreateScene()");
         return inflater.inflate(getRootLayoutResourceId(), parent, true);
     }
 
     public void onSceneCreated(View scene)
     {
+        LogExt.i(getClass(), "onSceneCreated()");
+
         View filler = findViewById(R.id.filler);
 
         container = (LinearLayout) findViewById(R.id.content_container);
@@ -238,14 +206,47 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         return R.layout.step_layout;
     }
 
+
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
     {
-        return null;
+        LogExt.i(getClass(), "onCreateBody()");
+
+        stepBody = createStepBody(step, stepResult);
+        View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, inflater, parent);
+
+        if(body != null)
+        {
+            View oldView = container.findViewById(R.id.scene_body);
+            int bodyIndex = container.indexOfChild(oldView);
+            container.removeView(oldView);
+            container.addView(body, bodyIndex);
+            body.setId(R.id.scene_body);
+        }
+
+        return body;
+    }
+
+    @NonNull
+    private StepBody createStepBody(Step step, StepResult result)
+    {
+        try
+        {
+            Class cls = step.getSceneClass();
+            Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
+            return (StepBody) constructor.newInstance(step, result);
+        }
+        catch(Exception e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     public void onBodyCreated(View body)
     {
-        LogExt.i(getClass(), "onBodyCreated()");
+        if(body != null)
+        {
+            LogExt.i(getClass(), "onBodyCreated()");
+        }
     }
 
     @Override

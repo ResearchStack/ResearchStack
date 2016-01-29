@@ -40,7 +40,7 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
     // are defined in researcher app
     private void initView(Context context)
     {
-        LogExt.i(getClass(), "initView()");
+        LogExt.i(getClass(), "getBodyView()");
 
         LayoutInflater inflater = LayoutInflater.from(context);
 

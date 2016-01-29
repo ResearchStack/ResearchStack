@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.core.ui.step.body;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,23 +12,25 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 @Deprecated
 public class NotImplementedStepBody implements StepBody
 {
-    public NotImplementedStepBody()
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // Constructor Fields
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    private QuestionStep step;
+
+    public NotImplementedStepBody(QuestionStep step, StepResult result)
     {
+        this.step = step;
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
+    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
-        TextView textView = new TextView(inflater.getContext());
-        textView.setText("Not implemented: " + step.getQuestionType().toString());
-        return textView;
-    }
+        Context ctx = parent.getContext();
 
-    @Override
-    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
-    {
-        TextView textView = new TextView(inflater.getContext());
-        textView.setText("Form not implemented: " + step.getQuestionType().toString());
+        TextView textView = new TextView(ctx);
+        textView.setText((viewType == VIEW_TYPE_COMPACT ? "form " : "") + "not implemented: " +
+                step.getQuestionType().toString());
+
         return textView;
     }
 
@@ -35,12 +38,6 @@ public class NotImplementedStepBody implements StepBody
     public StepResult getStepResult()
     {
         return null;
-    }
-
-    @Override
-    public void prefillResult(StepResult result)
-    {
-
     }
 
     @Override

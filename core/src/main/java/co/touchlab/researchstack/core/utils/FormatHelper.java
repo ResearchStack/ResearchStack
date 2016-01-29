@@ -1,5 +1,7 @@
 package co.touchlab.researchstack.core.utils;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 
@@ -9,6 +11,9 @@ public class FormatHelper
 
     // TODO find a better place for this, maybe only use it for Bridge
     public static final String DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+
+    public static final SimpleDateFormat DEFAULT_FORMAT = new SimpleDateFormat(FormatHelper.DATE_FORMAT_ISO_8601,
+            Locale.getDefault());
 
     /**
      * Helper method to return a formatter suitable for

@@ -1,10 +1,13 @@
 package co.touchlab.researchstack.core.ui.step.body;
 
+import android.content.res.Resources;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -12,54 +15,110 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
+import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.core.utils.ViewUtils;
 
 public class IntegerQuestionBody implements StepBody
 {
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // Constructor Fields
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private QuestionStep        step;
+    private StepResult<Integer> result;
     private IntegerAnswerFormat format;
+
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // View Fields
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    private int viewType;
     private NumberPicker numberPicker;
     private EditText     editText;
 
-    public IntegerQuestionBody()
+    public IntegerQuestionBody(Step step, StepResult result)
     {
+        this.step = (QuestionStep) step;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.format = (IntegerAnswerFormat) this.step.getAnswerFormat();
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
+    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
-        this.step = step;
-        format = (IntegerAnswerFormat) step.getAnswerFormat();
+        this.viewType = viewType;
 
-        IntegerAnswerFormat answerFormat = (IntegerAnswerFormat) step.getAnswerFormat();
+        View view = getViewForType(viewType, inflater, parent);
 
+        Resources res = parent.getResources();
+        LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_right);
+        view.setLayoutParams(layoutParams);
+
+        return view;
+    }
+
+    private View getViewForType(int viewType, LayoutInflater inflater, ViewGroup parent)
+    {
+        if(viewType == VIEW_TYPE_DEFAULT)
+        {
+            return initViewDefault(inflater, parent);
+        }
+        else if(viewType == VIEW_TYPE_COMPACT)
+        {
+            return initViewCompact(inflater, parent);
+        }
+        else
+        {
+            throw new IllegalArgumentException("Invalid View Type");
+        }
+    }
+
+    private View initViewDefault(LayoutInflater inflater, ViewGroup parent)
+    {
         numberPicker = (NumberPicker) inflater.inflate(R.layout.item_number_picker, parent, false);
-        numberPicker.setMinValue(answerFormat.getMinValue());
+        numberPicker.setMinValue(format.getMinValue());
 
         // if max and min are equal, don't set a max (it's 0/0 if they don't set min/max)
-        if(answerFormat.getMaxValue() != answerFormat.getMinValue())
+        if(format.getMaxValue() != format.getMinValue())
         {
-            numberPicker.setMaxValue(answerFormat.getMaxValue());
+            numberPicker.setMaxValue(format.getMaxValue());
+        }
+
+        //pre-fill if we have a result
+        if(result.getResult() != null)
+        {
+            numberPicker.setValue(result.getResult());
         }
 
         return numberPicker;
     }
 
-    @Override
-    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
+    private View initViewCompact(LayoutInflater inflater, ViewGroup parent)
     {
-        // TODO do we need both Step and AnswerFormat?
-        this.step = step;
-        format = (IntegerAnswerFormat) step.getAnswerFormat();
-
-        View formItemView = inflater.inflate(R.layout.scene_form_item_editable, parent, false);
+        View formItemView = inflater.inflate(R.layout.item_edit_text, parent, false);
 
         TextView label = (TextView) formItemView.findViewById(R.id.text);
-
+        label.setVisibility(View.VISIBLE);
         label.setText(step.getTitle());
 
         editText = (EditText) formItemView.findViewById(R.id.value);
         editText.setSingleLine(true);
         editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+        editText.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus)
+            {
+                ViewUtils.showSoftInputMethod(editText);
+            }
+        });
+
+        if(result.getResult() != null)
+        {
+            editText.setText(String.valueOf(result.getResult()));
+        }
+
+        // TODO filter out numbers < min && > max
+        // editText.setKeyListener(DigitsKeyListener);
 
         return formItemView;
     }
@@ -67,34 +126,24 @@ public class IntegerQuestionBody implements StepBody
     @Override
     public StepResult getStepResult()
     {
-        StepResult<Object> stepResult = new StepResult<>(step.getIdentifier());
-        if(editText != null)
+        if(viewType == VIEW_TYPE_DEFAULT)
         {
-            stepResult.setResult(Integer.valueOf(editText.getText().toString()));
+            result.setResult(numberPicker.getValue());
+        }
+        else if(viewType == VIEW_TYPE_COMPACT)
+        {
+            String numString = editText.getText().toString();
+            if(! TextUtils.isEmpty(numString))
+            {
+                result.setResult(Integer.valueOf(editText.getText().toString()));
+            }
         }
         else
         {
-            stepResult.setResult(numberPicker.getValue());
-        }
-        return stepResult;
-    }
-
-    @Override
-    public void prefillResult(StepResult result)
-    {
-        if(result.getResult() == null)
-        {
-            return;
+            throw new IllegalArgumentException("Invalid View Type");
         }
 
-        if(numberPicker != null)
-        {
-            numberPicker.setValue((Integer) result.getResult());
-        }
-        else
-        {
-            editText.setText(String.valueOf(result.getResult()));
-        }
+        return result;
     }
 
     @Override

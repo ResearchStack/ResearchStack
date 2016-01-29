@@ -18,74 +18,67 @@ import co.touchlab.researchstack.core.step.Step;
 
 public class FormBody implements StepBody
 {
-    private LinearLayout   body;
-    private FormStep       formStep;
-    private List<StepBody> formStepBodies;
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // Constructor Fields
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    private FormStep               step;
+    private StepResult<StepResult> result;
+
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // View Fields
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    private List<StepBody> formStepChildren;
+
+    public FormBody(Step step, StepResult result)
+    {
+        this.step = (FormStep) step;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+    }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup parent, QuestionStep formStep)
+    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
-        this.formStep = (FormStep) formStep;
+        // Inflate our container for each compact child StepBody
+        LinearLayout body = (LinearLayout) inflater.inflate(R.layout.scene_form_body,
+                parent,
+                false);
 
-        body = (LinearLayout) inflater.inflate(R.layout.scene_form_body, parent, false);
+        List<QuestionStep> steps = step.getFormSteps();
+        formStepChildren = new ArrayList<>(steps.size());
 
-        List<QuestionStep> steps = this.formStep.getFormSteps();
-        formStepBodies = new ArrayList<>(steps.size());
+        // Iterate through all steps and generate each compact view. Store each StepBody child in a
+        // list to iterate over (e.g. within getStepResult())
         for(QuestionStep step : steps)
         {
             StepBody stepBody = createStepBody(step);
-            View bodyView = stepBody.initViewCompact(inflater, body, step);
-
-            formStepBodies.add(stepBody);
+            View bodyView = stepBody.getBodyView(VIEW_TYPE_COMPACT, inflater, body);
             body.addView(bodyView);
+
+            formStepChildren.add(stepBody);
         }
 
         return body;
     }
 
     @Override
-    public View initViewCompact(LayoutInflater inflater, ViewGroup parent, QuestionStep step)
-    {
-        throw new RuntimeException("No compact view for this type of step");
-    }
-
-    @Override
     public StepResult getStepResult()
     {
-        StepResult<StepResult> stepResult = new StepResult<>(formStep.getIdentifier());
-
-        for(StepBody formStepBody : formStepBodies)
+        for(StepBody child : formStepChildren)
         {
-
-            StepResult result = formStepBody.getStepResult();
-            if(result != null)
+            StepResult childResult = child.getStepResult();
+            if(childResult != null)
             {
-                stepResult.setResultForIdentifier(result.getIdentifier(), result);
+                this.result.setResultForIdentifier(childResult.getIdentifier(), childResult);
             }
         }
 
-        return stepResult;
-    }
-
-    @Override
-    public void prefillResult(StepResult result)
-    {
-        for(StepBody formStepBody : formStepBodies)
-        {
-            // TODO Implement prefill, formStepBody.getStepResult() will always return null after
-            // orientation change
-            // StepResult formStepResult = (StepResult) result.getResultForIdentifier(formStepBody.getStepResult().getIdentifier());
-            // if(formStepResult != null)
-            // {
-            //     formStepBody.prefillResult(formStepResult);
-            // }
-        }
+        return this.result;
     }
 
     @Override
     public boolean isAnswerValid()
     {
-        for(StepBody formStepBody : formStepBodies)
+        for(StepBody formStepBody : formStepChildren)
         {
             // TODO show better invalid feedback
             if(! formStepBody.isAnswerValid())
@@ -99,11 +92,13 @@ public class FormBody implements StepBody
     @NonNull
     private StepBody createStepBody(Step step)
     {
+        StepResult childResult = result.getResultForIdentifier(step.getIdentifier());
+
         try
         {
             Class cls = step.getSceneClass();
-            Constructor constructor = cls.getConstructor();
-            return (StepBody) constructor.newInstance();
+            Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
+            return (StepBody) constructor.newInstance(step, childResult);
         }
         catch(Exception e)
         {

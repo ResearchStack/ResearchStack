@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EditText
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/rsc_margin_left"
-    android:layout_marginRight="@dimen/rsc_margin_right"
-    android:gravity="center_vertical"
     android:minHeight="@dimen/rsc_item_size_default"
-    android:padding="8dp"
-    />
+    android:gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".25"
+        android:layout_marginRight="8dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="Label"
+        />
+
+    <co.touchlab.researchstack.core.ui.views.NoShowImeEditText
+        android:id="@+id/value"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".75"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:textSize="14sp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:singleLine="true"
+        tools:text="Value"
+        />
+
+</LinearLayout>

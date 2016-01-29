@@ -4,4 +4,7 @@
     <item name="nav_custom"
           type="id"/>
 
+    <item name="nav_debug"
+          type="id"/>
+
 </resources>

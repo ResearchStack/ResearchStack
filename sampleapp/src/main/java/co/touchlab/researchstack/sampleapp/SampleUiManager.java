@@ -59,6 +59,13 @@ public class SampleUiManager extends UiManager
                 .setIcon(R.drawable.ic_nav_custom)
                 .setClass(SampleCustomFragment.class));
 
+        navItems.add(new NavigationItem().setId(R.id.nav_debug)
+                .setGroupId(R.id.nav_group)
+                .setTitle(R.string.debug)
+                .setIcon(R.mipmap.ic_launcher)
+                .setClass(SampleDebugFragment.class));
+
+
         return navItems;
     }
 
