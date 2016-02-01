@@ -2,9 +2,12 @@ package co.touchlab.researchstack.glue;
 import android.content.Context;
 
 import java.util.Date;
+import java.util.List;
 
 import co.touchlab.researchstack.core.result.TaskResult;
+import co.touchlab.researchstack.glue.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.glue.model.User;
+import co.touchlab.researchstack.glue.task.SmartSurveyTask;
 import rx.Observable;
 
 public abstract class DataProvider
@@ -54,6 +57,11 @@ public abstract class DataProvider
     public abstract void clearUserData(Context context);
 
     public abstract void uploadTaskResult(Context context, TaskResult taskResult);
+
+    public abstract List<SchedulesAndTasksModel.TaskModel> loadTasksAndSchedules(Context context);
+
+    public abstract SmartSurveyTask loadTask(Context context, SchedulesAndTasksModel.TaskModel task);
+
 
     //TODO public abstract void getUserProfile(TODO);
 

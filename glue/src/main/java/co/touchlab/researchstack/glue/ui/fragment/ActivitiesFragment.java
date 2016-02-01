@@ -13,24 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.SchedulesAndTasksModel;
-import co.touchlab.researchstack.glue.model.TaskModel;
-import co.touchlab.researchstack.glue.schedule.ScheduleHelper;
 import co.touchlab.researchstack.glue.task.SmartSurveyTask;
-import co.touchlab.researchstack.glue.utils.JsonUtils;
 import rx.Subscription;
 import rx.subjects.PublishSubject;
 
@@ -76,16 +68,16 @@ public class ActivitiesFragment extends Fragment
         // TODO make updating the list better, make sure not leaking memory with the rx subject
         unsubscribe();
 
-        adapter = new TaskAdapter(loadTasksAndSchedules());
+        // TODO relook at what object this adapter uses. Could be something simpler than TaskModel
+        List<SchedulesAndTasksModel.TaskModel> tasks = DataProvider.getInstance()
+                .loadTasksAndSchedules(getContext());
+        adapter = new TaskAdapter(tasks);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
 
         subscription = adapter.getPublishSubject().subscribe(task -> {
 
-            TaskModel taskModel = JsonUtils.loadClass(getContext(),
-                    TaskModel.class,
-                    task.taskFileName);
-            SmartSurveyTask newTask = new SmartSurveyTask(taskModel);
+            SmartSurveyTask newTask = DataProvider.getInstance().loadTask(getContext(), task);
 
             startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask), REQUEST_TASK);
         });
@@ -100,7 +92,6 @@ public class ActivitiesFragment extends Fragment
 
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             taskResult.setEndDate(new Date());
-            StorageAccess.getAppDatabase().saveTaskResult(taskResult);
             DataProvider.getInstance().uploadTaskResult(getActivity(), taskResult);
 
             setUpAdapter();
@@ -109,40 +100,6 @@ public class ActivitiesFragment extends Fragment
         {
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    private ArrayList<SchedulesAndTasksModel.TaskModel> loadTasksAndSchedules()
-    {
-        SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(getContext(),
-                SchedulesAndTasksModel.class,
-                "tasks_and_schedules");
-
-        // TODO should this be called on DataProvider instead of directly on the AppDatabase?
-        AppDatabase db = StorageAccess.getAppDatabase();
-
-        ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();
-        for(SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)
-        {
-            for(SchedulesAndTasksModel.TaskModel task : schedule.tasks)
-            {
-                TaskResult result = db.loadLatestTaskResult(task.taskID);
-                if(result == null)
-                {
-                    tasks.add(task);
-                }
-                else if(StringUtils.isNotEmpty(schedule.scheduleString))
-                {
-                    Date date = ScheduleHelper.nextSchedule(schedule.scheduleString,
-                            result.getEndDate());
-                    if(date.before(new Date()))
-                    {
-                        tasks.add(task);
-                    }
-                }
-            }
-        }
-
-        return tasks;
     }
 
     public static class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>
