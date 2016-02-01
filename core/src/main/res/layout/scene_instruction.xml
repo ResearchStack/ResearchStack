@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/rsc_padding_medium"
     >
 
     <TextView
         android:id="@+id/title"
-        style="@style/TextAppearance.AppCompat.Headline"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp"
-        android:gravity="center"
-        android:padding="@dimen/rsc_padding_medium"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/rsc_margin_left"
+        android:layout_marginRight="@dimen/rsc_margin_right"
+
+        android:textSize="20sp"
+        android:textColor="?attr/colorAccent"
+
         tools:text="@string/lorem_name"
         />
 
@@ -25,19 +26,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        tools:text="@string/lorem_name"
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="@dimen/rsc_margin_left"
+        android:layout_marginRight="@dimen/rsc_margin_right"
+        tools:text="@string/lorem_medium"
         />
 
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
+    <co.touchlab.researchstack.core.ui.views.SubmitBar
+        android:id="@+id/submit_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/skip"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/rsc_next"
-        />
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

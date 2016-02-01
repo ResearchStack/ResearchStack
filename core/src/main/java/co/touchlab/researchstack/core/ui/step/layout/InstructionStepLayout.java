@@ -7,12 +7,11 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding.view.RxView;
-
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.views.SubmitBar;
 
 public class InstructionStepLayout extends RelativeLayout implements StepLayout
 {
@@ -73,9 +72,10 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
         summaryView.setText(step.getText());
 
         // Set Next
-        TextView next = (TextView) findViewById(R.id.next);
-        RxView.clicks(next).subscribe(v -> {
-            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
-        });
-    }
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        submitBar.setPositiveTitle(R.string.rsc_get_started)
+                .setPositiveAction(v -> callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT,
+                        step,
+                        null));
+        }
 }
