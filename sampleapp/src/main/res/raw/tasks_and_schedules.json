@@ -7,7 +7,7 @@
         {
           "taskTitle": "About You",
           "taskID": "AboutYou-27829fa5-d731-4372-ba30-a5859f688297",
-          "taskFileName": "asthma_about_you",
+          "taskFileName": "about_you",
           "taskClassName": "APHDailyTaskViewController",
           "taskCompletionTimeString": "8 Questions"
         }
@@ -46,7 +46,7 @@
         {
           "taskTitle": "Medical History",
           "taskID": "MedicalHistory-b3cd0d66-b943-11e4-a71e-12e3f512a338",
-          "taskFileName": "asthma_medical_history",
+          "taskFileName": "medical_history",
           "taskClassName": "APCGenericSurveyTaskViewController",
           "taskCompletionTimeString": "17 Questions"
         }
@@ -71,7 +71,7 @@
         {
           "taskTitle": "Your Asthma",
           "taskID": "YourAsthma-cc06cd68-b943-11e4-a71e-12e3f512a338",
-          "taskFileName": "asthma_your_asthma",
+          "taskFileName": "your_asthma",
           "taskClassName": "APCGenericSurveyTaskViewController",
           "taskCompletionTimeString": "9 Questions"
         }
