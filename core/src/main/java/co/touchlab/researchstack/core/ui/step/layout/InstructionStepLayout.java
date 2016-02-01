@@ -73,7 +73,7 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
 
         // Set Next
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
-        submitBar.setPositiveTitle(R.string.rsc_get_started)
+        submitBar.setPositiveTitle(R.string.rsc_next)
                 .setPositiveAction(v -> callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT,
                         step,
                         null));

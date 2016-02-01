@@ -112,6 +112,8 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
 
         StepLayout stepLayout = getSceneForStep(step);
         stepLayout.getLayout().setTag(R.id.rsc_step_layout_id, step.getIdentifier());
+        //TODO Get SubmitBar from layout, set positive button title to either "Get Started", "Next", or "Done"
+        //TODO Remove ConsentTask.initVisualSteps() and ConsentVisualStep.nextButtonString
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
                         ? StepSwitcher.SHIFT_LEFT

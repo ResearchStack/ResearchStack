@@ -22,6 +22,7 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
+import co.touchlab.researchstack.glue.task.InitialTask;
 
 public class SampleDebugFragment extends Fragment
 {
@@ -74,5 +75,12 @@ public class SampleDebugFragment extends Fragment
             Intent intent = ViewTaskActivity.newIntent(getContext(), task);
             startActivityForResult(intent, 200);
         });
+
+        RxView.clicks(view.findViewById(R.id.debug_form_task_initial)).subscribe(v -> {
+            InitialTask initialTask = new InitialTask("task");
+            Intent intent = ViewTaskActivity.newIntent(getContext(), initialTask);
+            startActivityForResult(intent, 200);
+        });
+
     }
 }

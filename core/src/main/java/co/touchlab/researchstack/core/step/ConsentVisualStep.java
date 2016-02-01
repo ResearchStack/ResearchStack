@@ -5,6 +5,8 @@ import co.touchlab.researchstack.core.ui.step.layout.ConsentVisualStepLayout;
 public class ConsentVisualStep extends Step
 {
     private ConsentSection section;
+
+    @Deprecated //TODO ViewTaskActivity should be handling this
     private String         nextButtonString;
 
     public ConsentVisualStep(String identifier)
@@ -40,11 +42,13 @@ public class ConsentVisualStep extends Step
         this.section = section;
     }
 
+    @Deprecated
     public String getNextButtonString()
     {
         return nextButtonString;
     }
 
+    @Deprecated
     public void setNextButtonString(String nextButtonString)
     {
         this.nextButtonString = nextButtonString;
