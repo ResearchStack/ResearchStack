@@ -56,11 +56,11 @@ a {
 .page-header {
   color: #fff;
   text-align: center;
-  background-image: url('http://material.graphics/testubesm.jpg');
+  background-color: #0284b1;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  
+
 }
 
 @media screen and (min-width: 64em) {
