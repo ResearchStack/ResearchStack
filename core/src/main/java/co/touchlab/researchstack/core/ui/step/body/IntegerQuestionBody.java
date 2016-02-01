@@ -1,6 +1,7 @@
 package co.touchlab.researchstack.core.ui.step.body;
 
 import android.content.res.Resources;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,8 +118,50 @@ public class IntegerQuestionBody implements StepBody
             editText.setText(String.valueOf(result.getResult()));
         }
 
-        // TODO filter out numbers < min && > max
-        // editText.setKeyListener(DigitsKeyListener);
+
+        String minStr = Integer.toString(format.getMinValue());
+        String maxStr = Integer.toString(format.getMaxValue());
+        int maxLength = maxStr.length() >= minStr.length() ? maxStr.length() : minStr.length();
+        InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(maxLength);
+        InputFilter[] newFilters = ViewUtils.addFilter(editText.getFilters(), maxLengthFilter);
+        editText.setFilters(newFilters);
+
+        // TODO This will crash when typing not digit char (i.e. '.' or '-')
+        // If we have a range, set a range filter
+        if(format.getMaxValue() - format.getMinValue() > 0)
+        {
+            InputFilter rangeFilter = (source, start, end, dest, dstart, dend) -> {
+
+                // If the source its empty, just continue, its probably a backspace
+                if(TextUtils.isEmpty(source.toString()))
+                {
+                    return source;
+                }
+
+                // If the dest is empty and the incoming char isn't a digit, let it pass. Its
+                // probably a negative sign
+                if(dest.length() == 0 && ! TextUtils.isDigitsOnly(source))
+                {
+                    return source;
+                }
+
+                // Append source to dest and check the range.
+                String valueStr = new StringBuilder(dest).append(source).toString();
+                int value = Integer.parseInt(valueStr.toString());
+
+                if(value > format.getMaxValue() || value < format.getMinValue())
+                {
+                    return "";
+                }
+                else
+                {
+                    return source;
+                }
+            };
+
+            newFilters = ViewUtils.addFilter(editText.getFilters(), rangeFilter);
+            editText.setFilters(newFilters);
+        }
 
         return formItemView;
     }
