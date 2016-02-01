@@ -83,16 +83,6 @@ public class Step implements Serializable
         this.text = text;
     }
 
-    public Task getTask()
-    {
-        return task;
-    }
-
-    public void setTask(Task task)
-    {
-        this.task = task;
-    }
-
     public boolean isUseSurveyMode()
     {
         return useSurveyMode;

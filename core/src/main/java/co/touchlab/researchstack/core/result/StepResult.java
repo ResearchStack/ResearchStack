@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.core.result;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,7 @@ public class StepResult <T> extends Result
     public void setResult(T result)
     {
         setResultForIdentifier(DEFAULT_KEY, result);
+        setEndDate(new Date());
     }
 
     public T getResultForIdentifier(String identifier)
