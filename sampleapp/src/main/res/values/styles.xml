@@ -5,7 +5,7 @@
         <!-- Text Color for ActionBar and Text -->
         <item name="android:textColorPrimary">@color/warm_grey</item>
         <item name="android:textColor">@color/warm_grey</item>
-
+        <item name="android:windowContentOverlay">@null</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
