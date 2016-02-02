@@ -1,6 +1,7 @@
 package co.touchlab.researchstack.core.utils;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -70,5 +71,18 @@ public class ViewUtils
         InputMethodManager imm = (InputMethodManager) editText.getContext()
                 .getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.showSoftInput(editText, 0);
+    }
+
+    public static Drawable getDrawable(Context context, int resId)
+    {
+        //TODO use AppCompatDrawableManager?
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            return context.getResources().getDrawable(resId, context.getTheme());
+        }
+        else
+        {
+            return context.getResources().getDrawable(resId);
+        }
     }
 }
