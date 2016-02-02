@@ -88,7 +88,7 @@ public class SmartSurveyTask extends Task implements Serializable
         }
         else if(type.equals("IntegerConstraints"))
         {
-            answerFormat = new IntegerAnswerFormat(constraints.maxValue, constraints.minValue);
+            answerFormat = new IntegerAnswerFormat(constraints.minValue, constraints.maxValue);
         }
         else if(type.equals("TextConstraints"))
         {

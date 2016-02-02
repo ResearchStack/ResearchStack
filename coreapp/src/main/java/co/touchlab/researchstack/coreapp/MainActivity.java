@@ -357,7 +357,7 @@ public class MainActivity extends PinCodeActivity
         QuestionStep nameItem = new QuestionStep(FORM_NAME, "Name", format);
         formItems.add(nameItem);
 
-        QuestionStep ageItem = new QuestionStep(FORM_AGE, "Age", new IntegerAnswerFormat(90, 18));
+        QuestionStep ageItem = new QuestionStep(FORM_AGE, "Age", new IntegerAnswerFormat(18, 90));
         formItems.add(ageItem);
 
         AnswerFormat genderFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,

@@ -10,6 +10,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
@@ -96,11 +97,18 @@ public class IntegerQuestionBody implements StepBody
 
     private View initViewCompact(LayoutInflater inflater, ViewGroup parent)
     {
-        View formItemView = inflater.inflate(R.layout.item_edit_text, parent, false);
+        View formItemView = inflater.inflate(R.layout.compact_item_edit_text, parent, false);
+
+        TextView title = (TextView) formItemView.findViewById(R.id.label);
+        title.setText(step.getTitle());
 
         editText = (EditText) formItemView.findViewById(R.id.value);
         editText.setSingleLine(true);
-        editText.setHint(step.getTitle());
+        editText.setHint(parent.getContext()
+                .getString(R.string.rsc_hint_step_body_int,
+                        format.getMinValue(),
+                        format.getMaxValue()));
+
         editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
 
         if(result.getResult() != null)

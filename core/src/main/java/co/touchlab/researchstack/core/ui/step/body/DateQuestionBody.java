@@ -125,10 +125,14 @@ public class DateQuestionBody implements StepBody
 
     private View initViewCompact(LayoutInflater inflater, ViewGroup parent)
     {
-        View compactView = inflater.inflate(R.layout.item_text_view, parent, false);
+        View formItemView = inflater.inflate(R.layout.compact_item_text_view, parent, false);
 
-        TextView textView = (TextView) compactView.findViewById(R.id.value);
-        textView.setHint(step.getTitle());
+        TextView title = (TextView) formItemView.findViewById(R.id.label);
+        title.setText(step.getTitle());
+
+        TextView textView = (TextView) formItemView.findViewById(R.id.value);
+        textView.setSingleLine(true);
+        textView.setHint(R.string.rsc_hint_step_body_date);
 
         if(result.getResult() != null)
         {
@@ -149,7 +153,7 @@ public class DateQuestionBody implements StepBody
             }
         });
 
-        return compactView;
+        return formItemView;
     }
 
 

@@ -119,6 +119,9 @@
     <!-- TODO Confirm Copy -->
     <string name="rsc_pincode_enter_error">That code doesn’t match the one you entered, Try again!
     </string>
+    <string name="rsc_hint_step_body_int">Enter a number %1$d-%2$d</string>
+    <string name="rsc_hint_step_body_date">Enter a date</string>
+    <string name="rsc_hint_step_body_text">Answer</string>
 
 
 </resources>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
@@ -40,13 +41,20 @@ public class TextQuestionBody implements StepBody
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
-        View body = inflater.inflate(R.layout.item_edit_text, parent, false);
+        View body = inflater.inflate(R.layout.compact_item_edit_text, parent, false);
 
         editText = (EditText) body.findViewById(R.id.value);
+        editText.setHint(R.string.rsc_hint_step_body_text);
+
+        TextView title = (TextView) body.findViewById(R.id.label);
 
         if(viewType == VIEW_TYPE_COMPACT)
         {
-            editText.setHint(step.getTitle());
+            title.setText(step.getTitle());
+        }
+        else
+        {
+            title.setVisibility(View.GONE);
         }
 
         // Restore previous result

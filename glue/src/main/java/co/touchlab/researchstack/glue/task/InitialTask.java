@@ -56,7 +56,7 @@ public class InitialTask extends OrderedTask
 
         // Zip Code
         // TODO max value for zip
-        IntegerAnswerFormat zipCodeFormat = new IntegerAnswerFormat(1000, 0);
+        IntegerAnswerFormat zipCodeFormat = new IntegerAnswerFormat(0, 1000);
         QuestionStep zipCodeStep = new QuestionStep("zipCode",
                 "What is your zip code?",
                 zipCodeFormat);
