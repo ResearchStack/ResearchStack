@@ -1,14 +1,11 @@
 package co.touchlab.researchstack.core.ui.step.body;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,16 +18,14 @@ import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.views.NoShowImeEditText;
 import co.touchlab.researchstack.core.utils.FormatHelper;
-import co.touchlab.researchstack.core.utils.ViewUtils;
 
 public class DateQuestionBody implements StepBody
 {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Static Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private static final DateFormat DATE_FORMAT = FormatHelper.getFormat(DateFormat.SHORT,
+    private static final DateFormat DATE_FORMAT = FormatHelper.getFormat(DateFormat.MEDIUM,
             FormatHelper.NONE);
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -130,23 +125,29 @@ public class DateQuestionBody implements StepBody
 
     private View initViewCompact(LayoutInflater inflater, ViewGroup parent)
     {
-        View compactView = inflater.inflate(R.layout.item_edit_text, parent, false);
+        View compactView = inflater.inflate(R.layout.item_text_view, parent, false);
 
-        TextView label = (TextView) compactView.findViewById(R.id.text);
-        label.setVisibility(View.VISIBLE);
-        label.setText(step.getTitle());
+        TextView textView = (TextView) compactView.findViewById(R.id.value);
+        textView.setHint(step.getTitle());
 
-        NoShowImeEditText editText = (NoShowImeEditText) compactView.findViewById(R.id.value);
-        editText.setOnFocusChangeListener((v, hasFocus) -> {
+        if(result.getResult() != null)
+        {
+            textView.setText(createFormattedResult());
+        }
+
+        textView.setOnFocusChangeListener((v, hasFocus) -> {
             if(hasFocus)
             {
-                ViewUtils.hideSoftInputMethod(editText.getContext());
-
-                showDialog(editText);
+                showDialog(textView);
             }
         });
 
-        editText.setIsTextEdittingEnalbed(false);
+        textView.setOnClickListener(v -> {
+            if(v.isFocused())
+            {
+                showDialog(textView);
+            }
+        });
 
         return compactView;
     }
@@ -184,31 +185,26 @@ public class DateQuestionBody implements StepBody
         return true;
     }
 
-    private void showDialog(EditText editText)
+    private void showDialog(TextView tv)
     {
-        InputMethodManager imm = (InputMethodManager) editText.getContext()
-                .getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-
-        // TODO use same view as getBodyView() and just set the dialog's view to it?
-        new DatePickerDialog(editText.getContext(),
+        new DatePickerDialog(tv.getContext(),
                 (view, year, monthOfYear, dayOfMonth) -> {
                     calendar.set(year, monthOfYear, dayOfMonth);
 
                     // Set result to our edit text
                     String formattedResult = createFormattedResult();
-                    editText.setText(formattedResult);
+                    tv.setText(formattedResult);
 
                     // Search for next focusable view request focus
-                    View next = editText.getParent().focusSearch(editText, View.FOCUS_DOWN);
-                    if(next != null)
-                    {
-                        next.requestFocus();
-                    }
-                    else
-                    {
-                        ViewUtils.hideSoftInputMethod(editText.getContext());
-                    }
+                    // View next = tv.getParent().focusSearch(tv, View.FOCUS_DOWN);
+                    // if(next != null)
+                    // {
+                    //     next.requestFocus();
+                    // }
+                    // else
+                    // {
+                    //     ViewUtils.hideSoftInputMethod(tv.getContext());
+                    // }
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),

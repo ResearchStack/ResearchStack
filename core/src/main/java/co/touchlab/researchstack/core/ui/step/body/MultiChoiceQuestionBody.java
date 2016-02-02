@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.Arrays;
@@ -81,9 +82,9 @@ public class MultiChoiceQuestionBody <T> implements StepBody
 
     private View initViewDefault(LayoutInflater inflater, ViewGroup parent)
     {
-        LinearLayout linearLayout = new LinearLayout(inflater.getContext());
-        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-        linearLayout.setDividerDrawable(ViewUtils.getDrawable(parent.getContext(),
+        RadioGroup radioGroup = new RadioGroup(inflater.getContext());
+        radioGroup.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        radioGroup.setDividerDrawable(ViewUtils.getDrawable(parent.getContext(),
                 R.drawable.divider_empty_8dp));
 
         for(int i = 0; i < choices.length; i++)
@@ -92,11 +93,11 @@ public class MultiChoiceQuestionBody <T> implements StepBody
 
             // Create & add the View to our body-view
             AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(R.layout.item_checkbox,
-                    linearLayout,
+                    radioGroup,
                     false);
             checkBox.setText(item.getText());
             checkBox.setId(i);
-            linearLayout.addView(checkBox);
+            radioGroup.addView(checkBox);
 
             // Set initial state
             if(currentSelected.contains(item.getValue()))
@@ -118,7 +119,7 @@ public class MultiChoiceQuestionBody <T> implements StepBody
             });
         }
 
-        return linearLayout;
+        return radioGroup;
     }
 
     private View initViewCompact(LayoutInflater inflater, ViewGroup parent)

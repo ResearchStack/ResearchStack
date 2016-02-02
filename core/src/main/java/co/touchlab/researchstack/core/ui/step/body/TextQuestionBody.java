@@ -1,16 +1,13 @@
 package co.touchlab.researchstack.core.ui.step.body;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
@@ -43,26 +40,13 @@ public class TextQuestionBody implements StepBody
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
-        InputMethodManager imm = (InputMethodManager) parent.getContext()
-                .getSystemService(Activity.INPUT_METHOD_SERVICE);
-
         View body = inflater.inflate(R.layout.item_edit_text, parent, false);
-
-        TextView label = (TextView) body.findViewById(R.id.text);
 
         editText = (EditText) body.findViewById(R.id.value);
 
         if(viewType == VIEW_TYPE_COMPACT)
         {
-            label.setVisibility(View.VISIBLE);
-            label.setText(step.getTitle());
-
-            editText.setOnFocusChangeListener((v, hasFocus) -> {
-                if(hasFocus)
-                {
-                    ViewUtils.showSoftInputMethod(editText);
-                }
-            });
+            editText.setHint(step.getTitle());
         }
 
         // Restore previous result
