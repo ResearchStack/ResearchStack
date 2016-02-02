@@ -1,9 +1,6 @@
 package co.touchlab.researchstack.glue.ui.adapter;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.text.Html;
 import android.text.TextUtils;
@@ -11,7 +8,6 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -19,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import co.touchlab.researchstack.core.ui.LocalImageGetter;
 import co.touchlab.researchstack.core.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.model.StudyOverviewModel;
@@ -155,58 +152,6 @@ public class OnboardingPagerAdapter extends PagerAdapter
             throw new RuntimeException(e);
         }
         return byteArrayOutputStream.toString();
-    }
-
-    private class LocalImageGetter implements Html.ImageGetter {
-
-        private Context context;
-        private int screenWidth;
-
-        public LocalImageGetter(TextView host)
-        {
-            this.context = host.getContext();
-
-            int tvWidth = host.getWidth();
-
-            if (tvWidth == 0)
-            {
-                host.measure(0,0);
-            }
-
-            // TODO finding the measurements of screen width instead of the tv host is hacky. Find
-            // a better way
-            WindowManager manager = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE));
-            Point size = new Point();
-            manager.getDefaultDisplay().getSize(size);
-            screenWidth = size.x - host.getPaddingLeft() - host.getPaddingRight();
-        }
-
-        @Override
-        public Drawable getDrawable(String source)
-        {
-            Resources res = context.getResources();
-            int drawableId = res.getIdentifier(source, "drawable", context.getPackageName());
-            Drawable drawable = res.getDrawable(drawableId);
-
-            int [] dimens = getDrawableDimensForScreen(drawable);
-            drawable.setBounds(0, 0, dimens[0], dimens[1]);
-
-            return drawable;
-        }
-
-        private int[] getDrawableDimensForScreen(Drawable drawable)
-        {
-            int width = drawable.getIntrinsicWidth();
-            int height = drawable.getIntrinsicHeight();
-
-            if (width > screenWidth)
-            {
-                height = (height * screenWidth) / width;
-                width = screenWidth;
-            }
-
-            return new int[] {width, height};
-        }
     }
 
     @Override
