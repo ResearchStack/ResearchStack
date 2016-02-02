@@ -15,7 +15,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.glue.DataProvider;
@@ -29,7 +29,7 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
     private ActivityCallback permissionCallback;
     private Step             step;
     private StepResult       result;
-    private SceneCallbacks   callbacks;
+    private StepCallbacks callbacks;
 
     public SignUpEligibleStepLayout(Context context)
     {
@@ -87,7 +87,7 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
                         "all_qualified_researchers");
 
         // Go to the next step
-        callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, null);
+        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
     }
 
     private void startConsentActivity()
@@ -97,7 +97,7 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
 
     private void exitSignUpActivity()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_END, step, null);
+        callbacks.onSaveStep(StepCallbacks.ACTION_END, step, null);
     }
 
     @Override
@@ -109,12 +109,12 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, null);
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, null);
         return false;
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }

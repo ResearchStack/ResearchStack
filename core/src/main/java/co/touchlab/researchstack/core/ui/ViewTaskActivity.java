@@ -20,12 +20,12 @@ import co.touchlab.researchstack.core.result.TaskResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.task.Task;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.step.layout.SurveyStepLayout;
 import co.touchlab.researchstack.core.ui.views.StepSwitcher;
 
-public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
+public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 {
     public static final String EXTRA_TASK        = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
@@ -49,7 +49,7 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
     {
         super.onCreate(savedInstanceState);
         super.setResult(RESULT_CANCELED);
-        super.setContentView(R.layout.activity_scene_switcher);
+        super.setContentView(R.layout.activity_step_switcher);
 
         root = (StepSwitcher) findViewById(R.id.container);
 
@@ -237,19 +237,19 @@ public class ViewTaskActivity extends PinCodeActivity implements SceneCallbacks
 
     protected void onExecuteStepAction(int action)
     {
-        if(action == SceneCallbacks.ACTION_NEXT)
+        if(action == StepCallbacks.ACTION_NEXT)
         {
             showNextStep();
         }
-        else if(action == SceneCallbacks.ACTION_PREV)
+        else if(action == StepCallbacks.ACTION_PREV)
         {
             showPreviousStep();
         }
-        else if(action == SceneCallbacks.ACTION_END)
+        else if(action == StepCallbacks.ACTION_END)
         {
             showConfirmExitDialog();
         }
-        else if(action == SceneCallbacks.ACTION_NONE)
+        else if(action == StepCallbacks.ACTION_NONE)
         {
             // Used when onSaveInstanceState is called of a view. No action is taken.
         }

@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.core.utils.ObservableUtils;
@@ -24,7 +24,7 @@ import co.touchlab.researchstack.glue.ui.adapter.TextWatcherAdapter;
 
 public class SignUpStepLayout extends RelativeLayout implements StepLayout
 {
-    private SceneCallbacks callbacks;
+    private StepCallbacks callbacks;
 
     private StepResult<String> result;
     private Step               step;
@@ -99,7 +99,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction(v -> signUp());
-        submitBar.setNegativeAction(v -> callbacks.onSaveStep(SceneCallbacks.ACTION_END,
+        submitBar.setNegativeAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_END,
                 this.step,
                 this.result));
     }
@@ -127,7 +127,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
                                 result.setResultForIdentifier(SignUpTask.ID_USERNAME, username);
                                 result.setResultForIdentifier(SignUpTask.ID_PASSWORD, password);
 
-                                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+                                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
                             }, throwable -> {
                                 progress.animate()
                                         .alpha(0)
@@ -197,12 +197,12 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, result);
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }

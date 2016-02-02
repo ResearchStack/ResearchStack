@@ -22,8 +22,8 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.ConsentSignatureStep;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
 import co.touchlab.researchstack.core.ui.callbacks.SignatureCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.views.SignatureView;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.core.utils.FormatHelper;
@@ -34,7 +34,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     public static final String KEY_SIGNATURE_DATE = "ConsentSignatureScene.Signature.Date";
 
     private SignatureView      signatureView;
-    private SceneCallbacks     callbacks;
+    private StepCallbacks callbacks;
     private Step               step;
     private StepResult<String> result;
 
@@ -72,19 +72,20 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     public boolean isBackEventConsumed()
     {
         setDataToResult();
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, result);
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }
 
     private void initializeScene()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.scene_consent_signature, this, true);
+        LayoutInflater.from(getContext())
+                .inflate(R.layout.step_layout_consent_signature, this, true);
 
         TextView title = (TextView) findViewById(R.id.title);
         title.setText(step.getTitle());
@@ -127,7 +128,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
             if(signatureView.isSignatureDrawn())
             {
                 setDataToResult();
-                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
             }
             else
             {

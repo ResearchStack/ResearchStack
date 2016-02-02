@@ -20,7 +20,7 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import rx.functions.Action1;
 
 @Deprecated
@@ -37,7 +37,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Communicate w/ host
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private SceneCallbacks callbacks;
+    private StepCallbacks callbacks;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Child Views
@@ -97,17 +97,17 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, getStep(), getStepResult());
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, getStep(), getStepResult());
         return false;
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }
 
-    public SceneCallbacks getCallbacks()
+    public StepCallbacks getCallbacks()
     {
         return callbacks;
     }
@@ -116,9 +116,9 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
     {
         LogExt.i(getClass(), "initializeScene()");
 
-        if(getContext() instanceof SceneCallbacks)
+        if(getContext() instanceof StepCallbacks)
         {
-            setCallbacks((SceneCallbacks) getContext());
+            setCallbacks((StepCallbacks) getContext());
         }
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -202,7 +202,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
 
     protected int getRootLayoutResourceId()
     {
-        return R.layout.scene;
+        return R.layout.depricated_step_layout_impl;
     }
 
     public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
@@ -218,7 +218,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
     @Override
     public Parcelable onSaveInstanceState()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE, getStep(), getStepResult());
+        callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), getStepResult());
         return super.onSaveInstanceState();
     }
 
@@ -228,7 +228,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
         {
             if(callbacks != null)
             {
-                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, getStep(), getStepResult());
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, getStep(), getStepResult());
             }
             else
             {
@@ -247,7 +247,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
     {
         if(callbacks != null)
         {
-            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, getStep(), null);
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, getStep(), null);
         }
     }
 

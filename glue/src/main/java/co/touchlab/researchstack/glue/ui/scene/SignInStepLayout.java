@@ -16,7 +16,7 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.core.utils.ObservableUtils;
@@ -33,7 +33,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     private TextView           forgotPassword;
     private Step               step;
     private StepResult<String> result;
-    private SceneCallbacks     callbacks;
+    private StepCallbacks callbacks;
 
     public SignInStepLayout(Context context)
     {
@@ -126,7 +126,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
                             if(dataResponse.isSuccess())
                             {
                                 // TODO figure out a better way to return the password if necessary
-                                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+                                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
                             }
                             else
                             {
@@ -153,7 +153,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
             // TODO figure out a better way to return the password if necessary
             result.setResultForIdentifier(SignInTask.ID_EMAIL, username);
             result.setResultForIdentifier(SignInTask.ID_PASSWORD, password);
-            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
             return;
         }
 
@@ -202,12 +202,12 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, result);
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.core.utils.ResUtils;
@@ -21,7 +21,7 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
 
     private ConsentQuizEvaluationStep step;
     private StepResult<Boolean>       result;
-    private SceneCallbacks            callbacks;
+    private StepCallbacks callbacks;
 
     public ConsentQuizEvaluationStepLayout(Context context)
     {
@@ -58,7 +58,9 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.getNegativeActionView().setVisibility(View.GONE);
-        submitBar.setPositiveAction(v ->  callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result));
+        submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+                step,
+                result));
 
         // We have failed
         if(! step.isQuizPassed())
@@ -112,12 +114,12 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, result);
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }

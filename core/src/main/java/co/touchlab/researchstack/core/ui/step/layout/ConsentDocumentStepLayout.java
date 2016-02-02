@@ -12,7 +12,7 @@ import co.touchlab.researchstack.core.R;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.ConsentDocumentStep;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 
 /**
@@ -23,7 +23,7 @@ import co.touchlab.researchstack.core.ui.views.SubmitBar;
  */
 public class ConsentDocumentStepLayout extends LinearLayout implements StepLayout
 {
-    private SceneCallbacks callbacks;
+    private StepCallbacks callbacks;
 
     private String confirmationDialogBody;
     private String htmlContent;
@@ -72,19 +72,19 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     public boolean isBackEventConsumed()
     {
         stepResult.setResult(false);
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, stepResult);
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, stepResult);
         return false;
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }
 
     private void initializeScene()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.scene_consent_doc, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.step_layout_consent_doc, this, true);
 
         WebView pdfView = (WebView) findViewById(R.id.webview);
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
@@ -101,7 +101,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
                 .setCancelable(false)
                 .setPositiveButton(R.string.rsc_agree, (dialog, which) -> {
                     stepResult.setResult(true);
-                    callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, stepResult);
+                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
                 })
                 .setNegativeButton(R.string.rsc_consent_review_cancel, (dialog, which) -> {
                     // Gives them a chance to read it again

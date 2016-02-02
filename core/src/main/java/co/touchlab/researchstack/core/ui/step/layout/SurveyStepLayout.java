@@ -24,7 +24,7 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.step.body.StepBody;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 
@@ -41,7 +41,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Communicate w/ host
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private SceneCallbacks callbacks;
+    private StepCallbacks callbacks;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Child Views
@@ -99,12 +99,12 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, getStep(), stepBody.getStepResult());
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, getStep(), stepBody.getStepResult());
         return false;
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }
@@ -113,9 +113,9 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     {
         LogExt.i(getClass(), "initializeScene()");
 
-        if(getContext() instanceof SceneCallbacks)
+        if(getContext() instanceof StepCallbacks)
         {
-            setCallbacks((SceneCallbacks) getContext());
+            setCallbacks((StepCallbacks) getContext());
         }
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -281,7 +281,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     @Override
     public Parcelable onSaveInstanceState()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult());
+        callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult());
         return super.onSaveInstanceState();
     }
 
@@ -291,7 +291,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         {
             if(callbacks != null)
             {
-                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT,
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                         getStep(),
                         stepBody.getStepResult());
             }
@@ -312,7 +312,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     {
         if(callbacks != null)
         {
-            callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, getStep(), null);
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, getStep(), null);
         }
     }
 

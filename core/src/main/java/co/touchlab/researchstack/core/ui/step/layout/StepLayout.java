@@ -3,7 +3,7 @@ import android.view.View;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 
 public interface StepLayout
 {
@@ -18,6 +18,6 @@ public interface StepLayout
      */
     boolean isBackEventConsumed();
 
-    void setCallbacks(SceneCallbacks callbacks);
+    void setCallbacks(StepCallbacks callbacks);
 
 }

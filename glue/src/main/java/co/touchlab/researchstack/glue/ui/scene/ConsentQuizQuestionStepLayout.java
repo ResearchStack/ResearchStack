@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.glue.R;
@@ -27,7 +27,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
 {
     private ConsentQuizQuestionStep step;
     private StepResult<Boolean>     result;
-    private SceneCallbacks          callbacks;
+    private StepCallbacks callbacks;
 
     private TextView    resultSummary;
     private TextView    resultTitle;
@@ -77,7 +77,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
 
         submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction(v -> onSubmit());
-        submitBar.setNegativeAction(v -> callbacks.onSaveStep(SceneCallbacks.ACTION_END,
+        submitBar.setNegativeAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_END,
                 step,
                 result));
 
@@ -177,7 +177,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
             {
                 // Save the result and go to the next question
                 result.setResult(answerCorrect);
-                callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
             }
         }
 
@@ -204,12 +204,12 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, result);
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }

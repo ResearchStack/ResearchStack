@@ -9,14 +9,14 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
-import co.touchlab.researchstack.core.ui.views.PinCodeLayout;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.core.ui.views.PinCodeLayout;
 
 public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements StepLayout
 {
 
-    protected SceneCallbacks     callbacks;
+    protected StepCallbacks callbacks;
     protected Step               step;
     protected StepResult<String> result;
 
@@ -55,7 +55,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
                 .subscribe(pin -> {
                     new Handler().postDelayed(() -> {
                         result.setResult(pin);
-                        callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT, step, result);
+                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
                     }, 300);
                 });
 
@@ -66,7 +66,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, result);
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         return false;
     }
@@ -78,7 +78,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }

@@ -20,14 +20,14 @@ import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.ConsentVisualStep;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
-import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
+import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.core.ui.views.SubmitBar;
 import co.touchlab.researchstack.core.utils.ResUtils;
 
 public class ConsentVisualStepLayout extends RelativeLayout implements StepLayout
 {
 
-    private SceneCallbacks    callbacks;
+    private StepCallbacks callbacks;
     private ConsentVisualStep step;
 
     public ConsentVisualStepLayout(Context context)
@@ -62,19 +62,19 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, null);
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, null);
         return false;
     }
 
     @Override
-    public void setCallbacks(SceneCallbacks callbacks)
+    public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
     }
 
     private void initializeScene()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.scene_consent_visual, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.step_layout_consent_visual, this, true);
 
         ConsentSection data = step.getSection();
 
@@ -125,10 +125,10 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveTitle(step.getNextButtonString())
-                .setPositiveAction(v -> callbacks.onSaveStep(SceneCallbacks.ACTION_NEXT,
+                .setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                         step,
                         null))
-                .setNegativeAction((v -> callbacks.onSaveStep(SceneCallbacks.ACTION_END,
+                .setNegativeAction((v -> callbacks.onSaveStep(StepCallbacks.ACTION_END,
                         step,
                         null)));
     }
