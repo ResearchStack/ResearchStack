@@ -81,9 +81,9 @@ public class DateAnswerFormat extends AnswerFormat
     @Override
     public QuestionType getQuestionType()
     {
-        int def = QuestionType.DateAndTime.ordinal();
+        int def = Type.DateAndTime.ordinal();
         int style = getStyle().ordinal();
-        return QuestionType.values()[def + style];
+        return Type.values()[def + style];
     }
 
     //    - (BOOL)isEqual:(id)object {

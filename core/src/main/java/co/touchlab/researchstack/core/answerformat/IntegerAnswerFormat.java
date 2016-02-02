@@ -17,7 +17,7 @@ public class IntegerAnswerFormat extends AnswerFormat
     @Override
     public QuestionType getQuestionType()
     {
-        return QuestionType.Integer;
+        return Type.Integer;
     }
 
     public int getMaxValue()

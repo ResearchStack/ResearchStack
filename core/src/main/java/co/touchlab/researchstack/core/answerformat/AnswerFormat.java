@@ -2,7 +2,6 @@ package co.touchlab.researchstack.core.answerformat;
 
 import java.io.Serializable;
 
-import co.touchlab.researchstack.core.dev.DevUtils;
 import co.touchlab.researchstack.core.ui.step.body.DateQuestionBody;
 import co.touchlab.researchstack.core.ui.step.body.FormBody;
 import co.touchlab.researchstack.core.ui.step.body.IntegerQuestionBody;
@@ -11,7 +10,7 @@ import co.touchlab.researchstack.core.ui.step.body.NotImplementedStepBody;
 import co.touchlab.researchstack.core.ui.step.body.SingleChoiceQuestionBody;
 import co.touchlab.researchstack.core.ui.step.body.TextQuestionBody;
 
-
+// TODO are we just using this because ResearchKit did? look into just using QuestionBody class
 public abstract class AnswerFormat implements Serializable
 {
     public AnswerFormat()
@@ -20,61 +19,41 @@ public abstract class AnswerFormat implements Serializable
 
     public QuestionType getQuestionType()
     {
-        return QuestionType.None;
+        return Type.None;
     }
 
-    //TODO figure out if this makes sense
-    public Class getQuestionResultClass()
+    public interface QuestionType
     {
-        DevUtils.throwUnsupportedOpException();
-        return null;
+        Class<?> getSceneClass();
     }
 
-    // TODO do we need this at all? enum types + concrete implementations
-    public enum QuestionType
+    public enum Type implements QuestionType
     {
-        None,
-        Form,
-        Scale,
-        SingleChoice,
-        MultipleChoice,
-        Decimal,
-        Integer,
-        Boolean,
-        Text,
-        TimeOfDay,
-        DateAndTime,
-        Date,
-        TimeInterval;
+        None(NotImplementedStepBody.class),
+        Form(FormBody.class),
+        Scale(NotImplementedStepBody.class),
+        SingleChoice(SingleChoiceQuestionBody.class),
+        MultipleChoice(MultiChoiceQuestionBody.class),
+        Decimal(NotImplementedStepBody.class),
+        Integer(IntegerQuestionBody.class),
+        Boolean(NotImplementedStepBody.class),
+        Text(TextQuestionBody.class),
+        TimeOfDay(NotImplementedStepBody.class),
+        DateAndTime(NotImplementedStepBody.class),
+        Date(DateQuestionBody.class),
+        TimeInterval(NotImplementedStepBody.class);
 
-        //TODO add constructor and pass in class as param
+        private Class<?> stepBodyClass;
+
+        Type(Class<?> stepBodyClass)
+        {
+            this.stepBodyClass = stepBodyClass;
+        }
+
+        @Override
         public Class<?> getSceneClass()
         {
-            switch(this)
-            {
-                case SingleChoice:
-                    //TODO type <Integer>
-                    return SingleChoiceQuestionBody.class;
-                case MultipleChoice:
-                    //TODO type <Integer>
-                    return MultiChoiceQuestionBody.class;
-                case Text:
-                    return TextQuestionBody.class;
-                case Integer:
-                    return IntegerQuestionBody.class;
-                case Date:
-                    return DateQuestionBody.class;
-                case Form:
-                    return FormBody.class;
-                case Scale:
-                case Decimal:
-                case Boolean:
-                case TimeOfDay:
-                case DateAndTime:
-                case TimeInterval:
-                default:
-                    return NotImplementedStepBody.class;
-            }
+            return stepBodyClass;
         }
 
     }

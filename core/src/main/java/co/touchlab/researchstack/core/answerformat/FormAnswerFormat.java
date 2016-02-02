@@ -12,6 +12,6 @@ public class FormAnswerFormat extends AnswerFormat
     @Override
     public QuestionType getQuestionType()
     {
-        return QuestionType.Form;
+        return Type.Form;
     }
 }

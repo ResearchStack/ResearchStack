@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import co.touchlab.researchstack.core.answerformat.FormAnswerFormat;
-import co.touchlab.researchstack.core.ui.step.body.FormBody;
 
 
 public class FormStep extends QuestionStep
@@ -29,11 +28,5 @@ public class FormStep extends QuestionStep
     public void setFormSteps(QuestionStep... formSteps)
     {
         setFormSteps(Arrays.asList(formSteps));
-    }
-
-    @Override
-    public Class getSceneClass()
-    {
-        return FormBody.class;
     }
 }

@@ -18,10 +18,9 @@ public class ChoiceAnswerFormat extends AnswerFormat
     @Override
     public QuestionType getQuestionType()
     {
-        // TODO not sure what the point of question type is since answer style already has this distinction
         return answerStyle == ChoiceAnswerStyle.MultipleChoice
-                ? QuestionType.MultipleChoice
-                : QuestionType.SingleChoice;
+                ? Type.MultipleChoice
+                : Type.SingleChoice;
     }
 
     public Choice[] getChoices()

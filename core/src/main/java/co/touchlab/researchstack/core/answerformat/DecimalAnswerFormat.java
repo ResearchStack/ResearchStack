@@ -17,7 +17,7 @@ public class DecimalAnswerFormat extends AnswerFormat
     @Override
     public QuestionType getQuestionType()
     {
-        return QuestionType.Decimal;
+        return Type.Decimal;
     }
 
     public float getMaxValue()

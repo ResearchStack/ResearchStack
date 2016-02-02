@@ -25,7 +25,7 @@ public class TextAnswerFormat extends AnswerFormat
     @Override
     public QuestionType getQuestionType()
     {
-        return QuestionType.Text;
+        return Type.Text;
     }
 
     public void setIsMultipleLines(boolean isMultipleLines)

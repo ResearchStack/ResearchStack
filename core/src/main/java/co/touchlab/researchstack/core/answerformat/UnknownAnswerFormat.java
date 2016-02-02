@@ -13,6 +13,6 @@ public class UnknownAnswerFormat extends AnswerFormat
     @Override
     public QuestionType getQuestionType()
     {
-        return QuestionType.None;
+        return Type.None;
     }
 }
