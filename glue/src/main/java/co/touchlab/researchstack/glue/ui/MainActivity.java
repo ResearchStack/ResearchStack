@@ -16,18 +16,27 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
+import java.util.Date;
 
+import co.touchlab.researchstack.core.result.TaskResult;
+import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.core.ui.PinCodeActivity;
+import co.touchlab.researchstack.core.ui.ViewTaskActivity;
+import co.touchlab.researchstack.core.utils.ObservableUtils;
+import co.touchlab.researchstack.core.utils.UiThreadContext;
 import co.touchlab.researchstack.glue.DataProvider;
 import co.touchlab.researchstack.glue.NavigationItem;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.UiManager;
+import co.touchlab.researchstack.glue.task.InitialTask;
+import rx.Observable;
 
 /**
  * Created by bradleymcdermott on 10/27/15.
  */
 public class MainActivity extends PinCodeActivity
 {
+    private static final int REQUEST_CODE_INITIAL_TASK = 1010;
 
     private DrawerLayout   drawerLayout;
     private NavigationView navigationView;
@@ -86,6 +95,38 @@ public class MainActivity extends PinCodeActivity
         });
 
         navigationView.addHeaderView(headerView);
+
+        // Check if we need to run initial Task
+        Observable.create(subscriber -> {
+            UiThreadContext.assertBackgroundThread();
+
+            TaskResult result = DatabaseHelper.getInstance(this)
+                    .loadLatestTaskResult(InitialTask.TASK_ID);
+            subscriber.onNext(result == null);
+        }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
+            if((boolean) needsInitialSurvey)
+            {
+                InitialTask task = new InitialTask(InitialTask.TASK_ID);
+                Intent intent = ViewTaskActivity.newIntent(this, task);
+                startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(requestCode == REQUEST_CODE_INITIAL_TASK && resultCode == RESULT_OK)
+        {
+            TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+            taskResult.setEndDate(new Date());
+            DatabaseHelper.getInstance(this).saveTaskResult(taskResult);
+            //TODO DataProvider.getInstance().uploadTaskResult(this, taskResult);
+        }
+        else
+        {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     private void showFragment(String className)
