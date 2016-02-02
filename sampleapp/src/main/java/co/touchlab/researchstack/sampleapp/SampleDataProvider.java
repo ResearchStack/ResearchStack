@@ -310,7 +310,7 @@ public class SampleDataProvider extends DataProvider
 
     private void writeJsonString(Context context, String userSessionJson, String userSessionPath)
     {
-        StorageAccess.getFileAccess()
+        StorageAccess.getInstance().getFileAccess()
                 .writeData(context, userSessionPath, userSessionJson.getBytes());
     }
 
@@ -329,7 +329,7 @@ public class SampleDataProvider extends DataProvider
 
     private String loadJsonString(Context context, String path)
     {
-        return new String(StorageAccess.getFileAccess().readData(context, path));
+        return new String(StorageAccess.getInstance().getFileAccess().readData(context, path));
     }
 
     @Override
@@ -339,7 +339,7 @@ public class SampleDataProvider extends DataProvider
                 SchedulesAndTasksModel.class,
                 "tasks_and_schedules");
 
-        AppDatabase db = StorageAccess.getAppDatabase();
+        AppDatabase db = StorageAccess.getInstance().getAppDatabase();
 
         ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();
         for(SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)
@@ -390,7 +390,7 @@ public class SampleDataProvider extends DataProvider
     @Override
     public void uploadTaskResult(Context context, TaskResult taskResult)
     {
-        StorageAccess.getAppDatabase().saveTaskResult(taskResult);
+        StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
 
         TaskModel taskModel = loadedTasks.get(taskResult.getIdentifier());
         List<TaskModel.StepModel> elements = taskModel.elements;

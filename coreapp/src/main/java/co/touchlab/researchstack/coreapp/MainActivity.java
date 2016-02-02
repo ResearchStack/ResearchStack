@@ -42,7 +42,11 @@ import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
 
 public class MainActivity extends PinCodeActivity
 {
+    // Activity Request Codes
+    private static final int REQUEST_CONSENT = 0;
+    private static final int REQUEST_SURVEY  = 1;
 
+    // Task/Step Identifiers
     public static final  String FORM_STEP                 = "form_step";
     public static final  String AGE                       = "age";
     public static final  String INSTRUCTION               = "identifier";
@@ -51,8 +55,6 @@ public class MainActivity extends PinCodeActivity
     public static final  String FORM_GENDER               = "gender";
     public static final  String FORM_MULTI_CHOICE         = "multi_choice";
     public static final  String FORM_DATE_OF_BIRTH        = "date_of_birth";
-    public static final  String SURVEY_PATH               = "/survey_";
-    public static final  String CONSENT_PATH              = "/consent_";
     public static final  String NUTRITION                 = "nutrition";
     public static final  String SIGNATURE                 = "signature";
     public static final  String SIGNATURE_DATE            = "signature_date";
@@ -63,11 +65,11 @@ public class MainActivity extends PinCodeActivity
     public static final  String CONSENT                   = "consent";
     public static final  String MULTI_STEP                = "multi_step";
     public static final  String DATE                      = "date";
-    public static final String DECIMAL       = "decimal";
-    private static final int    REQUEST_CONSENT           = 0;
-    private static final int    REQUEST_SURVEY            = 1;
+    public static final  String DECIMAL                   = "decimal";
     private static final String FORM_NAME                 = "form_name";
-    public static final String SAMPLE_SURVEY = "sample_survey";
+    public static final  String SAMPLE_SURVEY             = "sample_survey";
+
+    // Views
     private AppCompatButton consentButton;
     private AppCompatButton surveyButton;
     private AppCompatButton clearButton;
@@ -133,7 +135,9 @@ public class MainActivity extends PinCodeActivity
             consentButton.setText(R.string.consent_button_done);
             surveyButton.setEnabled(true);
 
-            TaskResult result = StorageAccess.getAppDatabase().loadLatestTaskResult(CONSENT);
+            TaskResult result = StorageAccess.getInstance()
+                    .getAppDatabase()
+                    .loadLatestTaskResult(CONSENT);
 
             // TODO form step result saving is messed up (gson saving inner stepresult as map)
             //            String fullName = ((StepResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
@@ -253,7 +257,7 @@ public class MainActivity extends PinCodeActivity
 
         if(consented)
         {
-            StorageAccess.getAppDatabase().saveTaskResult(result);
+            StorageAccess.getInstance().getAppDatabase().saveTaskResult(result);
 
             AppPrefs prefs = AppPrefs.getInstance(this);
             prefs.setHasConsented(true);
@@ -275,7 +279,9 @@ public class MainActivity extends PinCodeActivity
 
     private void printSurveyInfo()
     {
-        TaskResult taskResult = StorageAccess.getAppDatabase().loadLatestTaskResult(SAMPLE_SURVEY);
+        TaskResult taskResult = StorageAccess.getInstance()
+                .getAppDatabase()
+                .loadLatestTaskResult(SAMPLE_SURVEY);
 
         String results = "";
         for(String id : taskResult.getResults().keySet())
@@ -380,7 +386,7 @@ public class MainActivity extends PinCodeActivity
 
     private void processSurveyResult(TaskResult result)
     {
-        StorageAccess.getAppDatabase().saveTaskResult(result);
+        StorageAccess.getInstance().getAppDatabase().saveTaskResult(result);
 
         AppPrefs prefs = AppPrefs.getInstance(this);
         prefs.setHasSurveyed(true);

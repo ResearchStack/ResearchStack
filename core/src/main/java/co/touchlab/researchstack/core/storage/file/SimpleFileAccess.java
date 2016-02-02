@@ -15,7 +15,7 @@ import co.touchlab.researchstack.core.utils.FileUtils;
  * Created by kgalligan on 11/25/15.
  */
 
-public class BaseFileAccess implements FileAccess
+public class SimpleFileAccess implements FileAccess
 {
     private Encrypter encrypter;
 

@@ -36,21 +36,17 @@ public class StorageAccess implements AuthDataAccess
 
     private static final boolean CHECK_THREADS = false;
 
-    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    // Statics
-    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-
-    private static final StorageAccess instance = new StorageAccess();
-
-    private static FileAccess fileAccess;
-
-    private static AppDatabase appDatabase;
-
-    private static AesCbcWithIntegrity.SecretKeys key;
+    private static StorageAccess instance = new StorageAccess();
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    private FileAccess fileAccess;
+
+    private AppDatabase appDatabase;
+
+    private AesCbcWithIntegrity.SecretKeys key;
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
@@ -72,7 +68,7 @@ public class StorageAccess implements AuthDataAccess
         return instance;
     }
 
-    public static FileAccess getFileAccess()
+    public FileAccess getFileAccess()
     {
         if(key == null)
         {
@@ -82,7 +78,7 @@ public class StorageAccess implements AuthDataAccess
         return fileAccess;
     }
 
-    public static AppDatabase getAppDatabase()
+    public AppDatabase getAppDatabase()
     {
         if(key == null)
         {
@@ -94,8 +90,8 @@ public class StorageAccess implements AuthDataAccess
 
     public void init(PinCodeConfig pinCodeConfig, FileAccess fileAccess, AppDatabase appDatabase)
     {
-        StorageAccess.appDatabase = appDatabase;
-        StorageAccess.fileAccess = fileAccess;
+        this.appDatabase = appDatabase;
+        this.fileAccess = fileAccess;
 
         codeConfig = pinCodeConfig;
     }
