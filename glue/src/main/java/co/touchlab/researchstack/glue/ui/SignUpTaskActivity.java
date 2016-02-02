@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.text.TextUtils;
 
 import java.util.Date;
 
@@ -48,7 +49,10 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
         if (step.getIdentifier().equals(OnboardingTask.SignUpPassCodeConfirmationStepIdentifier))
         {
             String pin = (String) result.getResult();
-            ((AuthDataAccess) StorageAccess.getInstance()).setPinCode(this, pin);
+            if(! TextUtils.isEmpty(pin))
+            {
+                StorageAccess.getInstance().setPinCode(this, pin);
+            }
 
             saveConsentResultInfo();
         }

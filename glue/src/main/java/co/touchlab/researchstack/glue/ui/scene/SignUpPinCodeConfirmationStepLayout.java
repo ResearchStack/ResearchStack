@@ -9,8 +9,8 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.Step;
 import co.touchlab.researchstack.core.ui.callbacks.SceneCallbacks;
-import co.touchlab.researchstack.core.ui.views.PinCodeLayout;
 import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.core.ui.views.PinCodeLayout;
 import co.touchlab.researchstack.core.utils.ThemeUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.glue.step.PassCodeConfirmationStep;
@@ -94,7 +94,7 @@ public class SignUpPinCodeConfirmationStepLayout extends PinCodeLayout implement
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, result);
+        callbacks.onSaveStep(SceneCallbacks.ACTION_PREV, step, null);
         return false;
     }
 
