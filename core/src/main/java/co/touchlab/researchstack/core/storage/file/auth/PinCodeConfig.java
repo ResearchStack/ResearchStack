@@ -10,7 +10,17 @@ public class PinCodeConfig
     private static final String DIGITS_ALPHABETIC   = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String DIGITS_ALPHANUMERIC = DIGITS_ALPHABETIC + DIGITS_NUMERIC;
 
-    public enum Type
+    // TODO document this better, but you may create your own enum that implements this interface
+    public interface Type
+    {
+        int getInputType();
+
+        KeyListener getDigitsKeyListener();
+
+        int getVisibleVariationType(boolean visible);
+    }
+
+    public enum PinCodeType implements Type
     {
         Alphabetic(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS,
                 InputType.TYPE_TEXT_VARIATION_NORMAL,
@@ -32,7 +42,7 @@ public class PinCodeConfig
         private int         inputTypeHidden;
         private KeyListener listener;
 
-        Type(int inputType, int inputTypeVisible, int inputTypeHidden, KeyListener listener)
+        PinCodeType(int inputType, int inputTypeVisible, int inputTypeHidden, KeyListener listener)
         {
             this.inputType = inputType;
             this.inputTypeVisible = inputTypeVisible;
@@ -40,16 +50,19 @@ public class PinCodeConfig
             this.listener = listener;
         }
 
+        @Override
         public int getInputType()
         {
             return inputType;
         }
 
+        @Override
         public KeyListener getDigitsKeyListener()
         {
             return listener;
         }
 
+        @Override
         public int getVisibleVariationType(boolean visible)
         {
             return visible ? inputTypeVisible : inputTypeHidden;
@@ -67,7 +80,7 @@ public class PinCodeConfig
 
     public PinCodeConfig(long autoLockTime)
     {
-        this(Type.Numeric, 4, autoLockTime);
+        this(PinCodeType.Numeric, 4, autoLockTime);
     }
 
     public PinCodeConfig(Type type, int length, long autoLockTime)

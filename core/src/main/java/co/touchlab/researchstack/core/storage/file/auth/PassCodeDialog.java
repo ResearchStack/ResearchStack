@@ -44,7 +44,7 @@ public class PassCodeDialog extends android.support.v7.app.AlertDialog
 
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        int resId = config.getPinType() == PinCodeConfig.Type.AlphaNumeric
+        int resId = config.getPinType() == PinCodeConfig.PinCodeType.AlphaNumeric
                 ? R.layout.dialog_pin_entry_alphanumeric
                 : R.layout.dialog_pin_entry;
 
