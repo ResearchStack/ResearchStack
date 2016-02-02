@@ -41,7 +41,7 @@ public class PinCodeActivity extends AppCompatActivity implements AuthStorageAcc
     {
         super.onResume();
 
-        initStorageAccess();
+        requestStorageAccess();
     }
 
     @Override
@@ -51,12 +51,12 @@ public class PinCodeActivity extends AppCompatActivity implements AuthStorageAcc
         storageAccessUnregister();
     }
 
-    private void initStorageAccess()
+    private void requestStorageAccess()
     {
-        LogExt.i(getClass(), "initStorageAccess()");
+        LogExt.i(getClass(), "requestStorageAccess()");
         StorageAccess storageAccess = StorageAccess.getInstance();
         storageAccessRegister();
-        storageAccess.initStorageAccess(this);
+        storageAccess.requestStorageAccess(this);
     }
 
     private void storageAccessRegister()
@@ -107,6 +107,7 @@ public class PinCodeActivity extends AppCompatActivity implements AuthStorageAcc
     {
         super.onPostCreate(savedInstanceState);
 
+        // TODO figure out a better way to get/store pin code config
         PinCodeConfig config = StorageAccess.getInstance().getPinCodeConfig();
 
         pinCodeLayout = new PinCodeLayout(this);
@@ -172,7 +173,7 @@ public class PinCodeActivity extends AppCompatActivity implements AuthStorageAcc
                         pinCodeLayout.showProgress(false);
                         // TODO clean this whole auth thing up some more
                         // authenticate() no longer calls notifyReady(), call this after auth
-                        initStorageAccess();
+                        requestStorageAccess();
                     }
                 });
 

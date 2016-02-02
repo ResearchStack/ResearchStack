@@ -4,8 +4,10 @@ import android.content.Context;
 
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
 import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
+import co.touchlab.researchstack.core.storage.file.EncryptionProvider;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.SimpleFileAccess;
+import co.touchlab.researchstack.core.storage.file.aes.AesProvider;
 import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.glue.AppPrefs;
 import co.touchlab.researchstack.glue.DataProvider;
@@ -29,10 +31,11 @@ public class SampleResearchStack extends ResearchStack
     }
 
     @Override
-    protected PinCodeConfig getPinCodeConfig(Context context)
+    protected EncryptionProvider getEncryptionProvider(Context context)
     {
         long autoLockTime = AppPrefs.getInstance(context).getAutoLockTime();
-        return new PinCodeConfig(autoLockTime);
+        PinCodeConfig pinCodeConfig = new PinCodeConfig(autoLockTime);
+        return new AesProvider(pinCodeConfig);
     }
 
     @Override

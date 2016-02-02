@@ -98,6 +98,7 @@ public class OnboardingActivity extends PinCodeActivity
     public void onSignInClicked(View view)
     {
         SignInTask task = new SignInTask();
+        // TODO setHasAuth on this too, add pin code creation step to sign in task
         startActivityForResult(SignUpTaskActivity.newIntent(this, task), REQUEST_CODE_SIGN_IN);
     }
 

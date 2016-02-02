@@ -4,8 +4,8 @@ import android.content.Context;
 
 import co.touchlab.researchstack.core.StorageAccess;
 import co.touchlab.researchstack.core.storage.database.AppDatabase;
+import co.touchlab.researchstack.core.storage.file.EncryptionProvider;
 import co.touchlab.researchstack.core.storage.file.FileAccess;
-import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
 
 public abstract class ResearchStack
 {
@@ -37,14 +37,14 @@ public abstract class ResearchStack
         DataProvider.init(concreteResearchStack.createDataProviderImplementation(context));
 
         StorageAccess.getInstance()
-                .init(concreteResearchStack.getPinCodeConfig(context),
+                .init(concreteResearchStack.getEncryptionProvider(context),
                         concreteResearchStack.createFileAccessImplementation(context),
                         concreteResearchStack.createAppDatabaseImplementation(context));
     }
 
     protected abstract AppDatabase createAppDatabaseImplementation(Context context);
 
-    protected abstract PinCodeConfig getPinCodeConfig(Context context);
+    protected abstract EncryptionProvider getEncryptionProvider(Context context);
 
     protected abstract FileAccess createFileAccessImplementation(Context context);
 
