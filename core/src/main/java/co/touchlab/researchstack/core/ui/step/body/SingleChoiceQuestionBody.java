@@ -1,11 +1,9 @@
 package co.touchlab.researchstack.core.ui.step.body;
 
-import android.app.AlertDialog;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -17,7 +15,6 @@ import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.views.NoShowImeEditText;
 import co.touchlab.researchstack.core.utils.ViewUtils;
 
 public class SingleChoiceQuestionBody <T> implements StepBody
@@ -25,11 +22,11 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private QuestionStep  step;
-    private StepResult<T> result;
+    private QuestionStep       step;
+    private StepResult<T>      result;
     private ChoiceAnswerFormat format;
     private Choice<T>[]        choices;
-    private T             currentSelected;
+    private T                  currentSelected;
 
     public SingleChoiceQuestionBody(Step step, StepResult result)
     {
@@ -86,6 +83,9 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     private View initViewDefault(LayoutInflater inflater, ViewGroup parent)
     {
         RadioGroup radioGroup = new RadioGroup(parent.getContext());
+        radioGroup.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        radioGroup.setDividerDrawable(ViewUtils.getDrawable(parent.getContext(),
+                R.drawable.divider_empty_8dp));
 
         for(int i = 0; i < choices.length; i++)
         {
@@ -114,22 +114,14 @@ public class SingleChoiceQuestionBody <T> implements StepBody
 
     private View initViewCompact(LayoutInflater inflater, ViewGroup parent)
     {
-        View compactView = inflater.inflate(R.layout.item_edit_text, parent, false);
+        ViewGroup compactView = (ViewGroup) initViewDefault(inflater, parent);
 
-        TextView label = (TextView) compactView.findViewById(R.id.text);
-        label.setVisibility(View.VISIBLE);
+        TextView label = (TextView) inflater.inflate(R.layout.item_text_view_title_compact,
+                compactView,
+                false);
         label.setText(step.getTitle());
 
-        NoShowImeEditText editText = (NoShowImeEditText) compactView.findViewById(R.id.value);
-        editText.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus)
-            {
-                ViewUtils.hideSoftInputMethod(editText.getContext());
-
-                showDialog(editText, step.getTitle());
-            }
-        });
-        editText.setIsTextEdittingEnalbed(false);
+        compactView.addView(label, 0);
 
         return compactView;
     }
@@ -147,33 +139,4 @@ public class SingleChoiceQuestionBody <T> implements StepBody
         return currentSelected != null;
     }
 
-    private void showDialog(EditText editText, String title)
-    {
-        // TODO use same view as getBodyView() and just set the dialog's view to it?
-        int[] checked = new int[1];
-        new AlertDialog.Builder(editText.getContext()).setSingleChoiceItems(format.getTextChoiceNames(),
-                0,
-                (dialog, which) -> {
-                    checked[0] = which;
-                }).setTitle(title).setPositiveButton(R.string.src_ok, (dialog, which) -> {
-            // TODO this array of one this is weird, revisit
-            Choice<T> choice = choices[checked[0]];
-            currentSelected = choice.getValue();
-
-            // Set result to our edit text
-            editText.setText(choice.getText());
-
-            // Search for next focusable view request focus
-            View next = editText.getParent().focusSearch(editText, View.FOCUS_DOWN);
-            if(next != null)
-            {
-                next.requestFocus();
-            }
-            else
-            {
-                ViewUtils.hideSoftInputMethod(editText.getContext());
-            }
-
-        }).setNegativeButton(R.string.src_cancel, null).show();
-    }
 }

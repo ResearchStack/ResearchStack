@@ -1,14 +1,11 @@
 package co.touchlab.researchstack.core.ui.step.body;
 
-import android.app.AlertDialog;
 import android.content.res.Resources;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.Arrays;
@@ -21,7 +18,6 @@ import co.touchlab.researchstack.core.model.Choice;
 import co.touchlab.researchstack.core.result.StepResult;
 import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.views.NoShowImeEditText;
 import co.touchlab.researchstack.core.utils.ViewUtils;
 
 public class MultiChoiceQuestionBody <T> implements StepBody
@@ -29,11 +25,11 @@ public class MultiChoiceQuestionBody <T> implements StepBody
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private QuestionStep    step;
-    private StepResult<T[]> result;
+    private QuestionStep       step;
+    private StepResult<T[]>    result;
     private ChoiceAnswerFormat format;
     private Choice<T>[]        choices;
-    private Set<T>          currentSelected;
+    private Set<T>             currentSelected;
 
     public MultiChoiceQuestionBody(Step step, StepResult result)
     {
@@ -85,7 +81,10 @@ public class MultiChoiceQuestionBody <T> implements StepBody
 
     private View initViewDefault(LayoutInflater inflater, ViewGroup parent)
     {
-        RadioGroup radioGroup = new RadioGroup(inflater.getContext());
+        LinearLayout linearLayout = new LinearLayout(inflater.getContext());
+        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        linearLayout.setDividerDrawable(ViewUtils.getDrawable(parent.getContext(),
+                R.drawable.divider_empty_8dp));
 
         for(int i = 0; i < choices.length; i++)
         {
@@ -93,11 +92,11 @@ public class MultiChoiceQuestionBody <T> implements StepBody
 
             // Create & add the View to our body-view
             AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(R.layout.item_checkbox,
-                    radioGroup,
+                    linearLayout,
                     false);
             checkBox.setText(item.getText());
             checkBox.setId(i);
-            radioGroup.addView(checkBox);
+            linearLayout.addView(checkBox);
 
             // Set initial state
             if(currentSelected.contains(item.getValue()))
@@ -119,29 +118,19 @@ public class MultiChoiceQuestionBody <T> implements StepBody
             });
         }
 
-        return radioGroup;
+        return linearLayout;
     }
 
     private View initViewCompact(LayoutInflater inflater, ViewGroup parent)
     {
-        View compactView = inflater.inflate(R.layout.item_edit_text, parent, false);
+        ViewGroup compactView = (ViewGroup) initViewDefault(inflater, parent);
 
-        TextView label = (TextView) compactView.findViewById(R.id.text);
-        label.setVisibility(View.VISIBLE);
+        TextView label = (TextView) inflater.inflate(R.layout.item_text_view_title_compact,
+                compactView,
+                false);
         label.setText(step.getTitle());
 
-        NoShowImeEditText editText = (NoShowImeEditText) compactView.findViewById(R.id.value);
-        editText.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus)
-            {
-                ViewUtils.hideSoftInputMethod(editText.getContext());
-
-                showDialog(editText, step.getTitle());
-            }
-        });
-
-
-        editText.setIsTextEdittingEnalbed(false);
+        compactView.addView(label, 0);
 
         return compactView;
     }
@@ -159,42 +148,4 @@ public class MultiChoiceQuestionBody <T> implements StepBody
         return ! currentSelected.isEmpty();
     }
 
-    private void showDialog(EditText editText, String title)
-    {
-        // TODO use same view as getBodyView() and just set the dialog's view to it?
-        // TODO use current result to precheck items
-        // TODO improve this whole result/dialog logic
-        boolean[] checkedItems = new boolean[format.getChoices().length];
-        new AlertDialog.Builder(editText.getContext()).setMultiChoiceItems(format.getTextChoiceNames(),
-                checkedItems,
-                (dialog, which, isChecked) -> {
-                    checkedItems[which] = isChecked;
-                }).setTitle(title).setPositiveButton(R.string.src_ok, (dialog, which) -> {
-            currentSelected.clear();
-            for(int i = 0; i < checkedItems.length; i++)
-            {
-                if(checkedItems[i])
-                {
-                    Choice<T> choice = choices[i];
-                    currentSelected.add(choice.getValue());
-                }
-            }
-
-            //TODO format from strings.xml
-            // Set result to our text view
-            editText.setText(currentSelected.size() + " options picked");
-
-            // Search for next focusable view request focus
-            View next = editText.getParent().focusSearch(editText, View.FOCUS_DOWN);
-            if(next != null)
-            {
-                next.requestFocus();
-            }
-            else
-            {
-                ViewUtils.hideSoftInputMethod(editText.getContext());
-            }
-
-        }).setNegativeButton(R.string.src_cancel, null).show();
-    }
 }
