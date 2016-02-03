@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="co.touchlab.researchstack.glue.ui.SplashActivity"
+            android:name="co.touchlab.researchstack.skin.ui.SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,7 +22,7 @@
         </activity>
 
         <activity
-            android:name="co.touchlab.researchstack.glue.ui.MainActivity"
+            android:name="co.touchlab.researchstack.skin.ui.MainActivity"
             android:label="@string/activities"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -34,23 +34,23 @@
             />
 
         <activity
-            android:name="co.touchlab.researchstack.glue.ui.SignUpTaskActivity"
+            android:name="co.touchlab.researchstack.skin.ui.SignUpTaskActivity"
             android:label="@string/app_name"
             />
 
         <activity
-            android:name="co.touchlab.researchstack.glue.ui.EmailVerificationActivity"
+            android:name="co.touchlab.researchstack.skin.ui.EmailVerificationActivity"
             android:label="@string/app_name"
             />
 
         <activity
-            android:name="co.touchlab.researchstack.glue.ui.OnboardingActivity"
+            android:name="co.touchlab.researchstack.skin.ui.OnboardingActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Onboarding"
             />
 
         <activity
-            android:name="co.touchlab.researchstack.glue.ui.ViewVideoActivity"
+            android:name="co.touchlab.researchstack.skin.ui.ViewVideoActivity"
             android:label="@string/app_name"
             />
 
@@ -60,7 +60,7 @@
             />
 
         <activity
-            android:name="co.touchlab.researchstack.glue.ui.ViewLicensesActivity"
+            android:name="co.touchlab.researchstack.skin.ui.ViewLicensesActivity"
             android:label="@string/app_name"
             />
 

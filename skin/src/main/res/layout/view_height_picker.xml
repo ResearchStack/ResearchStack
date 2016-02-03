@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<co.touchlab.researchstack.skin.ui.views.HeightPicker
+    android:id="@+id/height"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/height_feet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:nextFocusForward="@+id/height_inches"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="&apos;"
+        />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/height_inches"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:inputType="number"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="&quot;"
+        />
+
+</co.touchlab.researchstack.skin.ui.views.HeightPicker>

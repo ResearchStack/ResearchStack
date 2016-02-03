@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RadioGroup;
 
-import co.touchlab.researchstack.glue.ui.scene.AbstractSignUpInclusionCriteriaStepLayout;
+import co.touchlab.researchstack.skin.ui.scene.AbstractSignUpInclusionCriteriaStepLayout;
 
 /**
  * Created by bradleymcdermott on 11/17/15.

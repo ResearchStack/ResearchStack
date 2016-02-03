@@ -9,11 +9,11 @@ import co.touchlab.researchstack.core.storage.file.FileAccess;
 import co.touchlab.researchstack.core.storage.file.SimpleFileAccess;
 import co.touchlab.researchstack.core.storage.file.aes.AesProvider;
 import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
-import co.touchlab.researchstack.glue.AppPrefs;
-import co.touchlab.researchstack.glue.DataProvider;
-import co.touchlab.researchstack.glue.ResearchStack;
-import co.touchlab.researchstack.glue.ResourceManager;
-import co.touchlab.researchstack.glue.UiManager;
+import co.touchlab.researchstack.skin.AppPrefs;
+import co.touchlab.researchstack.skin.DataProvider;
+import co.touchlab.researchstack.skin.ResearchStack;
+import co.touchlab.researchstack.skin.ResourceManager;
+import co.touchlab.researchstack.skin.UiManager;
 
 public class SampleResearchStack extends ResearchStack
 {

@@ -1,5 +1,5 @@
 package co.touchlab.researchstack.sampleapp;
-import co.touchlab.researchstack.glue.ResourceManager;
+import co.touchlab.researchstack.skin.ResourceManager;
 
 public class SampleResourceManager extends ResourceManager
 {

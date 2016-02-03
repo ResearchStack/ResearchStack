@@ -2,13 +2,13 @@ package co.touchlab.researchstack.sampleapp;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.touchlab.researchstack.glue.NavigationItem;
-import co.touchlab.researchstack.glue.UiManager;
-import co.touchlab.researchstack.glue.ui.fragment.ActivitiesFragment;
-import co.touchlab.researchstack.glue.ui.fragment.DashboardFragment;
-import co.touchlab.researchstack.glue.ui.fragment.LearnFragment;
-import co.touchlab.researchstack.glue.ui.fragment.ProfileFragment;
-import co.touchlab.researchstack.glue.ui.fragment.SettingsFragment;
+import co.touchlab.researchstack.skin.NavigationItem;
+import co.touchlab.researchstack.skin.UiManager;
+import co.touchlab.researchstack.skin.ui.fragment.ActivitiesFragment;
+import co.touchlab.researchstack.skin.ui.fragment.DashboardFragment;
+import co.touchlab.researchstack.skin.ui.fragment.LearnFragment;
+import co.touchlab.researchstack.skin.ui.fragment.ProfileFragment;
+import co.touchlab.researchstack.skin.ui.fragment.SettingsFragment;
 
 public class SampleUiManager extends UiManager
 {

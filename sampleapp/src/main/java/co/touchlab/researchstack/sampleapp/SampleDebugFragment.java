@@ -22,7 +22,7 @@ import co.touchlab.researchstack.core.step.QuestionStep;
 import co.touchlab.researchstack.core.task.OrderedTask;
 import co.touchlab.researchstack.core.task.Task;
 import co.touchlab.researchstack.core.ui.ViewTaskActivity;
-import co.touchlab.researchstack.glue.task.InitialTask;
+import co.touchlab.researchstack.skin.task.InitialTask;
 
 public class SampleDebugFragment extends Fragment
 {

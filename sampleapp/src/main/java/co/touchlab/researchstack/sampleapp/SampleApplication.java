@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import co.touchlab.researchstack.core.helpers.LogExt;
 import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
-import co.touchlab.researchstack.glue.ResearchStack;
+import co.touchlab.researchstack.skin.ResearchStack;
 
 public class SampleApplication extends Application
 {
