@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 
-import co.touchlab.researchstack.core.utils.ResUtils;
+import co.touchlab.researchstack.backbone.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ResourceManager;
 import co.touchlab.researchstack.skin.model.StudyOverviewModel;

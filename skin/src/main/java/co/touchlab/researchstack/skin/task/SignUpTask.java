@@ -1,7 +1,7 @@
 package co.touchlab.researchstack.skin.task;
 
-import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.backbone.result.TaskResult;
+import co.touchlab.researchstack.backbone.step.Step;
 
 /**
  * TODO Needs Refactor

@@ -4,7 +4,7 @@ import android.content.Context;
 import java.util.Date;
 import java.util.List;
 
-import co.touchlab.researchstack.core.result.TaskResult;
+import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.skin.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.skin.model.User;
 import co.touchlab.researchstack.skin.task.SmartSurveyTask;

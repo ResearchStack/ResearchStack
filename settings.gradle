@@ -1,1 +1,1 @@
-include ':core', ':skin', ':sampleapp', ':coreapp'
+include ':backbone', ':skin', ':sampleapp', ':coreapp'

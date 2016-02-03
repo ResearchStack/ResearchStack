@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerInside"
+        tools:src="@drawable/debug_gray"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/rsc_margin_left"
+        android:layout_marginRight="@dimen/rsc_margin_right"
+
+        android:textSize="20sp"
+        android:textColor="?attr/colorAccent"
+
+        tools:text="@string/lorem_name"
+        />
+
+    <TextView
+        android:id="@+id/summary"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="@dimen/rsc_margin_left"
+        android:layout_marginRight="@dimen/rsc_margin_right"
+        tools:text="@string/lorem_medium"
+        />
+
+    <TextView
+        android:id="@+id/more_info"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/summary"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="@dimen/rsc_margin_right"
+        android:paddingTop="@dimen/rsc_padding_medium"
+        android:paddingBottom="@dimen/rsc_padding_medium"
+        android:paddingRight="@dimen/rsc_padding_medium"
+
+        android:textColor="?attr/colorAccent"
+
+        tools:text="More Info"
+        />
+
+    <co.touchlab.researchstack.backbone.ui.views.SubmitBar
+        android:id="@+id/submit_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

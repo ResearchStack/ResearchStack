@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import co.touchlab.researchstack.core.StorageAccess;
-import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.ui.PinCodeActivity;
-import co.touchlab.researchstack.core.ui.ViewTaskActivity;
+import co.touchlab.researchstack.backbone.StorageAccess;
+import co.touchlab.researchstack.backbone.result.TaskResult;
+import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
+import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ResourceManager;

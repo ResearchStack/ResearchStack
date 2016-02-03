@@ -18,12 +18,12 @@ import android.widget.Toast;
 import java.lang.reflect.Constructor;
 import java.util.Date;
 
-import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
-import co.touchlab.researchstack.core.ui.PinCodeActivity;
-import co.touchlab.researchstack.core.ui.ViewTaskActivity;
-import co.touchlab.researchstack.core.utils.ObservableUtils;
-import co.touchlab.researchstack.core.utils.UiThreadContext;
+import co.touchlab.researchstack.backbone.result.TaskResult;
+import co.touchlab.researchstack.backbone.storage.database.sqlite.DatabaseHelper;
+import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
+import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
+import co.touchlab.researchstack.backbone.utils.ObservableUtils;
+import co.touchlab.researchstack.backbone.utils.UiThreadContext;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.NavigationItem;
 import co.touchlab.researchstack.glue.R;

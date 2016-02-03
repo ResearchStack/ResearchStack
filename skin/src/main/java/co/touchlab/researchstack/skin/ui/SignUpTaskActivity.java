@@ -10,16 +10,16 @@ import android.text.TextUtils;
 
 import java.util.Date;
 
-import co.touchlab.researchstack.core.StorageAccess;
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
-import co.touchlab.researchstack.core.task.Task;
-import co.touchlab.researchstack.core.ui.ViewTaskActivity;
-import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
-import co.touchlab.researchstack.core.ui.step.layout.ConsentSignatureStepLayout;
-import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.backbone.StorageAccess;
+import co.touchlab.researchstack.backbone.result.StepResult;
+import co.touchlab.researchstack.backbone.result.TaskResult;
+import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.backbone.storage.file.auth.AuthDataAccess;
+import co.touchlab.researchstack.backbone.task.Task;
+import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
+import co.touchlab.researchstack.backbone.ui.callbacks.ActivityCallback;
+import co.touchlab.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
+import co.touchlab.researchstack.backbone.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.task.ConsentTask;

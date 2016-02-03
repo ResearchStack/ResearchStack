@@ -10,8 +10,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
+import co.touchlab.researchstack.backbone.helpers.LogExt;
+import co.touchlab.researchstack.backbone.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.skin.ResearchStack;
 
 public class SampleApplication extends Application

@@ -2,14 +2,14 @@ package co.touchlab.researchstack.coreapp;
 
 import android.app.Application;
 
-import co.touchlab.researchstack.core.StorageAccess;
-import co.touchlab.researchstack.core.storage.database.AppDatabase;
-import co.touchlab.researchstack.core.storage.database.sqlite.DatabaseHelper;
-import co.touchlab.researchstack.core.storage.file.EncryptionProvider;
-import co.touchlab.researchstack.core.storage.file.FileAccess;
-import co.touchlab.researchstack.core.storage.file.SimpleFileAccess;
-import co.touchlab.researchstack.core.storage.file.aes.AesProvider;
-import co.touchlab.researchstack.core.storage.file.auth.PinCodeConfig;
+import co.touchlab.researchstack.backbone.StorageAccess;
+import co.touchlab.researchstack.backbone.storage.database.AppDatabase;
+import co.touchlab.researchstack.backbone.storage.database.sqlite.DatabaseHelper;
+import co.touchlab.researchstack.backbone.storage.file.EncryptionProvider;
+import co.touchlab.researchstack.backbone.storage.file.FileAccess;
+import co.touchlab.researchstack.backbone.storage.file.SimpleFileAccess;
+import co.touchlab.researchstack.backbone.storage.file.aes.AesProvider;
+import co.touchlab.researchstack.backbone.storage.file.auth.PinCodeConfig;
 
 /**
  * Created by bradleymcdermott on 12/2/15.

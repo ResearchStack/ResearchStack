@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import co.touchlab.researchstack.core.ui.LocalImageGetter;
-import co.touchlab.researchstack.core.utils.ResUtils;
+import co.touchlab.researchstack.backbone.ui.LocalImageGetter;
+import co.touchlab.researchstack.backbone.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.model.StudyOverviewModel;
 import co.touchlab.researchstack.skin.ui.ViewVideoActivity;

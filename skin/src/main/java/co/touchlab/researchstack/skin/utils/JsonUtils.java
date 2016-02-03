@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import co.touchlab.researchstack.core.utils.ResUtils;
+import co.touchlab.researchstack.backbone.utils.ResUtils;
 
 /**
  * Created by bradleymcdermott on 11/4/15.

@@ -1,5 +1,5 @@
 package co.touchlab.researchstack.skin.step;
-import co.touchlab.researchstack.core.step.Step;
+import co.touchlab.researchstack.backbone.step.Step;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ui.scene.SignUpPinCodeConfirmationStepLayout;
 

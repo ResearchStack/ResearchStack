@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import co.touchlab.researchstack.core.ui.PinCodeActivity;
-import co.touchlab.researchstack.core.utils.ObservableUtils;
+import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
+import co.touchlab.researchstack.backbone.utils.ObservableUtils;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.glue.R;
 

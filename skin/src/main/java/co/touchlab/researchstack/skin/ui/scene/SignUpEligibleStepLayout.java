@@ -10,14 +10,14 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.Date;
 
-import co.touchlab.researchstack.core.StorageAccess;
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.storage.file.auth.AuthDataAccess;
-import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
-import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
-import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
-import co.touchlab.researchstack.core.ui.views.SubmitBar;
+import co.touchlab.researchstack.backbone.StorageAccess;
+import co.touchlab.researchstack.backbone.result.StepResult;
+import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.backbone.storage.file.auth.AuthDataAccess;
+import co.touchlab.researchstack.backbone.ui.callbacks.ActivityCallback;
+import co.touchlab.researchstack.backbone.ui.callbacks.StepCallbacks;
+import co.touchlab.researchstack.backbone.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.backbone.ui.views.SubmitBar;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.glue.R;
 

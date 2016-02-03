@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
+import co.touchlab.researchstack.backbone.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 
 /**

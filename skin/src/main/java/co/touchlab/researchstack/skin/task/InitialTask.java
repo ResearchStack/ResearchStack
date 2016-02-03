@@ -1,17 +1,17 @@
 package co.touchlab.researchstack.skin.task;
 import android.content.Context;
 
-import co.touchlab.researchstack.core.answerformat.AnswerFormat;
-import co.touchlab.researchstack.core.answerformat.BooleanAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
-import co.touchlab.researchstack.core.model.Choice;
-import co.touchlab.researchstack.core.step.FormStep;
-import co.touchlab.researchstack.core.step.InstructionStep;
-import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.task.OrderedTask;
+import co.touchlab.researchstack.backbone.answerformat.AnswerFormat;
+import co.touchlab.researchstack.backbone.answerformat.BooleanAnswerFormat;
+import co.touchlab.researchstack.backbone.answerformat.ChoiceAnswerFormat;
+import co.touchlab.researchstack.backbone.answerformat.DateAnswerFormat;
+import co.touchlab.researchstack.backbone.answerformat.IntegerAnswerFormat;
+import co.touchlab.researchstack.backbone.model.Choice;
+import co.touchlab.researchstack.backbone.step.FormStep;
+import co.touchlab.researchstack.backbone.step.InstructionStep;
+import co.touchlab.researchstack.backbone.step.QuestionStep;
+import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.backbone.task.OrderedTask;
 import co.touchlab.researchstack.glue.R;
 
 public class InitialTask extends OrderedTask

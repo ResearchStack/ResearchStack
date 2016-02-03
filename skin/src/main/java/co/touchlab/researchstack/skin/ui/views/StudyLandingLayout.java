@@ -18,8 +18,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.utils.ResUtils;
+import co.touchlab.researchstack.backbone.helpers.LogExt;
+import co.touchlab.researchstack.backbone.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ResourceManager;
 import co.touchlab.researchstack.skin.model.StudyOverviewModel;

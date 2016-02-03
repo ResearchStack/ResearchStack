@@ -9,14 +9,14 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.task.OrderedTask;
-import co.touchlab.researchstack.core.ui.PinCodeActivity;
-import co.touchlab.researchstack.core.ui.ViewTaskActivity;
-import co.touchlab.researchstack.core.utils.ObservableUtils;
-import co.touchlab.researchstack.core.utils.ResUtils;
+import co.touchlab.researchstack.backbone.result.StepResult;
+import co.touchlab.researchstack.backbone.result.TaskResult;
+import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.backbone.task.OrderedTask;
+import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
+import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
+import co.touchlab.researchstack.backbone.utils.ObservableUtils;
+import co.touchlab.researchstack.backbone.utils.ResUtils;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ResourceManager;

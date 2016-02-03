@@ -1,14 +1,14 @@
 package co.touchlab.researchstack.skin.task;
 
-import co.touchlab.researchstack.core.answerformat.AnswerFormat;
-import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
-import co.touchlab.researchstack.core.model.Choice;
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.task.Task;
-import co.touchlab.researchstack.core.ui.step.body.NotImplementedStepBody;
+import co.touchlab.researchstack.backbone.answerformat.AnswerFormat;
+import co.touchlab.researchstack.backbone.answerformat.ChoiceAnswerFormat;
+import co.touchlab.researchstack.backbone.model.Choice;
+import co.touchlab.researchstack.backbone.result.StepResult;
+import co.touchlab.researchstack.backbone.result.TaskResult;
+import co.touchlab.researchstack.backbone.step.QuestionStep;
+import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.backbone.task.Task;
+import co.touchlab.researchstack.backbone.ui.step.body.NotImplementedStepBody;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.UiManager;
 import co.touchlab.researchstack.skin.step.PassCodeConfirmationStep;

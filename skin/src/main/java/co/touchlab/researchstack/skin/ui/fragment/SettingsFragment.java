@@ -6,8 +6,8 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
 
-import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.ui.ViewWebDocumentActivity;
+import co.touchlab.researchstack.backbone.helpers.LogExt;
+import co.touchlab.researchstack.backbone.ui.ViewWebDocumentActivity;
 import co.touchlab.researchstack.glue.BuildConfig;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ResourceManager;

@@ -7,11 +7,11 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
-import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
-import co.touchlab.researchstack.core.ui.views.PinCodeLayout;
+import co.touchlab.researchstack.backbone.result.StepResult;
+import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.backbone.ui.callbacks.StepCallbacks;
+import co.touchlab.researchstack.backbone.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.backbone.ui.views.PinCodeLayout;
 
 public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements StepLayout
 {

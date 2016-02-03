@@ -15,11 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.step.Step;
-import co.touchlab.researchstack.core.ui.callbacks.StepCallbacks;
-import co.touchlab.researchstack.core.ui.step.layout.StepLayout;
-import co.touchlab.researchstack.core.ui.views.SubmitBar;
+import co.touchlab.researchstack.backbone.result.StepResult;
+import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.backbone.ui.callbacks.StepCallbacks;
+import co.touchlab.researchstack.backbone.ui.step.layout.StepLayout;
+import co.touchlab.researchstack.backbone.ui.views.SubmitBar;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.step.ConsentQuizQuestionStep;
 

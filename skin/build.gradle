@@ -42,7 +42,7 @@ install {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar', '*.so'])
     compile 'com.cronutils:cron-utils:3.1.2'
-    compile project(':core')
+    compile project(':backbone')
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'

@@ -11,17 +11,17 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.Arrays;
 
-import co.touchlab.researchstack.core.answerformat.AnswerFormat;
-import co.touchlab.researchstack.core.answerformat.ChoiceAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.DateAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.IntegerAnswerFormat;
-import co.touchlab.researchstack.core.answerformat.TextAnswerFormat;
-import co.touchlab.researchstack.core.model.Choice;
-import co.touchlab.researchstack.core.step.FormStep;
-import co.touchlab.researchstack.core.step.QuestionStep;
-import co.touchlab.researchstack.core.task.OrderedTask;
-import co.touchlab.researchstack.core.task.Task;
-import co.touchlab.researchstack.core.ui.ViewTaskActivity;
+import co.touchlab.researchstack.backbone.answerformat.AnswerFormat;
+import co.touchlab.researchstack.backbone.answerformat.ChoiceAnswerFormat;
+import co.touchlab.researchstack.backbone.answerformat.DateAnswerFormat;
+import co.touchlab.researchstack.backbone.answerformat.IntegerAnswerFormat;
+import co.touchlab.researchstack.backbone.answerformat.TextAnswerFormat;
+import co.touchlab.researchstack.backbone.model.Choice;
+import co.touchlab.researchstack.backbone.step.FormStep;
+import co.touchlab.researchstack.backbone.step.QuestionStep;
+import co.touchlab.researchstack.backbone.task.OrderedTask;
+import co.touchlab.researchstack.backbone.task.Task;
+import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.skin.task.InitialTask;
 
 public class SampleDebugFragment extends Fragment

@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.ui.callbacks.ActivityCallback;
-import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
+import co.touchlab.researchstack.backbone.helpers.LogExt;
+import co.touchlab.researchstack.backbone.ui.callbacks.ActivityCallback;
+import co.touchlab.researchstack.backbone.ui.step.layout.StepLayoutImpl;
 import co.touchlab.researchstack.glue.R;
 
 public class SignUpPermissionsStepLayout extends StepLayoutImpl

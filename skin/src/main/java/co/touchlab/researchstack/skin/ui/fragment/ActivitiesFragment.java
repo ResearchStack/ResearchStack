@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import java.util.Date;
 import java.util.List;
 
-import co.touchlab.researchstack.core.helpers.LogExt;
-import co.touchlab.researchstack.core.result.TaskResult;
-import co.touchlab.researchstack.core.ui.ViewTaskActivity;
+import co.touchlab.researchstack.backbone.helpers.LogExt;
+import co.touchlab.researchstack.backbone.result.TaskResult;
+import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.model.SchedulesAndTasksModel;

@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import co.touchlab.researchstack.core.result.StepResult;
-import co.touchlab.researchstack.core.ui.step.layout.StepLayoutImpl;
+import co.touchlab.researchstack.backbone.result.StepResult;
+import co.touchlab.researchstack.backbone.ui.step.layout.StepLayoutImpl;
 
 public abstract class AbstractSignUpInclusionCriteriaStepLayout extends StepLayoutImpl<Boolean>
 {
