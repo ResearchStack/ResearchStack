@@ -15,7 +15,6 @@ import co.touchlab.researchstack.backbone.storage.file.FileAccess;
 import co.touchlab.researchstack.backbone.storage.file.FileAccessException;
 import co.touchlab.researchstack.backbone.storage.file.StorageAccessListener;
 import co.touchlab.researchstack.backbone.storage.file.auth.AuthDataAccess;
-import co.touchlab.researchstack.backbone.storage.file.auth.AuthStorageAccessListener;
 import co.touchlab.researchstack.backbone.storage.file.auth.DataAccess;
 import co.touchlab.researchstack.backbone.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.backbone.utils.UiThreadContext;
@@ -36,7 +35,8 @@ public class StorageAccess implements DataAccess, AuthDataAccess
 
     private FileAccess fileAccess;
 
-    private AppDatabase appDatabase;
+    private PinCodeConfig pinCodeConfig;
+    private AppDatabase   appDatabase;
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
@@ -55,26 +55,19 @@ public class StorageAccess implements DataAccess, AuthDataAccess
 
     public FileAccess getFileAccess()
     {
-        if(! encryptionProvider.ready())
-        {
-            //TODO throw new AuthAccessException();
-        }
-
+        // TODO throw new AuthAccessException(); if not ready?
         return fileAccess;
     }
 
     public AppDatabase getAppDatabase()
     {
-        if(! encryptionProvider.ready())
-        {
-            //TODO throw new AuthAccessException();
-        }
-
+        // TODO throw new AuthAccessException(); if not ready?
         return appDatabase;
     }
 
-    public void init(EncryptionProvider encryptionProvider, FileAccess fileAccess, AppDatabase appDatabase)
+    public void init(PinCodeConfig pinCodeConfig, EncryptionProvider encryptionProvider, FileAccess fileAccess, AppDatabase appDatabase)
     {
+        this.pinCodeConfig = pinCodeConfig;
         this.appDatabase = appDatabase;
         this.fileAccess = fileAccess;
         this.encryptionProvider = encryptionProvider;
@@ -86,7 +79,7 @@ public class StorageAccess implements DataAccess, AuthDataAccess
     {
         UiThreadContext.assertUiThread();
 
-        if(encryptionProvider.needsAuth(context))
+        if(encryptionProvider.needsAuth(context, pinCodeConfig))
         {
             // just need to re-auth
             notifySoftFail();
@@ -177,11 +170,14 @@ public class StorageAccess implements DataAccess, AuthDataAccess
 
         for(StorageAccessListener listener : listeners)
         {
-            if(listener instanceof AuthStorageAccessListener)
-            {
-                ((AuthStorageAccessListener) listener).onDataAuth();
-            }
+            listener.onDataAuth();
         }
+    }
+
+    @Override
+    public PinCodeConfig getPinCodeConfig()
+    {
+        return pinCodeConfig;
     }
 
     // Encryption-only methods
@@ -200,13 +196,6 @@ public class StorageAccess implements DataAccess, AuthDataAccess
         fileAccess.setEncrypter(encryptionProvider.getEncrypter());
         // TODO encrypt db if using sqlcipher
         // appDatabase.setEncrypter(encryptionProvider.getEncrypter());
-    }
-
-    // TODO figure out a better way to get/store pin code config
-    @Override
-    public PinCodeConfig getPinCodeConfig()
-    {
-        return encryptionProvider.getPinCodeConfig();
     }
 
     // TODO this seems weird here

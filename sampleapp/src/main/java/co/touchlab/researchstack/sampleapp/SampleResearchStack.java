@@ -31,11 +31,16 @@ public class SampleResearchStack extends ResearchStack
     }
 
     @Override
-    protected EncryptionProvider getEncryptionProvider(Context context)
+    protected PinCodeConfig getPinCodeConfig(Context context)
     {
         long autoLockTime = AppPrefs.getInstance(context).getAutoLockTime();
-        PinCodeConfig pinCodeConfig = new PinCodeConfig(autoLockTime);
-        return new AesProvider(pinCodeConfig);
+        return new PinCodeConfig(autoLockTime);
+    }
+
+    @Override
+    protected EncryptionProvider getEncryptionProvider(Context context)
+    {
+        return new AesProvider();
     }
 
     @Override

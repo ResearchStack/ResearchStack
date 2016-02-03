@@ -17,4 +17,10 @@ public interface StorageAccessListener
      * distinguish those in the future, but for now you're just done.
      */
     void onDataFailed();
+
+    /**
+     * Data access is not ready, needs auth.
+     * TODO add pin code config as a param ?
+     */
+    void onDataAuth();
 }

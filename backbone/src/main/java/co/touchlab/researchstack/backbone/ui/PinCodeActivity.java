@@ -14,7 +14,7 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import co.touchlab.researchstack.backbone.R;
 import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.helpers.LogExt;
-import co.touchlab.researchstack.backbone.storage.file.auth.AuthStorageAccessListener;
+import co.touchlab.researchstack.backbone.storage.file.StorageAccessListener;
 import co.touchlab.researchstack.backbone.storage.file.auth.PinCodeConfig;
 import co.touchlab.researchstack.backbone.ui.views.PinCodeLayout;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
@@ -23,7 +23,7 @@ import co.touchlab.researchstack.backbone.utils.UiThreadContext;
 import rx.Observable;
 import rx.functions.Action1;
 
-public class PinCodeActivity extends AppCompatActivity implements AuthStorageAccessListener
+public class PinCodeActivity extends AppCompatActivity implements StorageAccessListener
 {
     private PinCodeLayout pinCodeLayout;
     private Action1<Boolean> toggleKeyboardAction;

@@ -6,6 +6,7 @@ import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.storage.database.AppDatabase;
 import co.touchlab.researchstack.backbone.storage.file.EncryptionProvider;
 import co.touchlab.researchstack.backbone.storage.file.FileAccess;
+import co.touchlab.researchstack.backbone.storage.file.auth.PinCodeConfig;
 
 public abstract class ResearchStack
 {
@@ -37,12 +38,15 @@ public abstract class ResearchStack
         DataProvider.init(concreteResearchStack.createDataProviderImplementation(context));
 
         StorageAccess.getInstance()
-                .init(concreteResearchStack.getEncryptionProvider(context),
+                .init(concreteResearchStack.getPinCodeConfig(context),
+                        concreteResearchStack.getEncryptionProvider(context),
                         concreteResearchStack.createFileAccessImplementation(context),
                         concreteResearchStack.createAppDatabaseImplementation(context));
     }
 
     protected abstract AppDatabase createAppDatabaseImplementation(Context context);
+
+    protected abstract PinCodeConfig getPinCodeConfig(Context context);
 
     protected abstract EncryptionProvider getEncryptionProvider(Context context);
 
