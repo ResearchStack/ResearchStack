@@ -14,13 +14,13 @@ public class ConsentDocumentStep extends Step
     }
 
     @Override
-    public int getSceneTitle()
+    public int getStepTitle()
     {
         return R.string.rsc_consent;
     }
 
     @Override
-    public Class getSceneClass()
+    public Class getStepLayoutClass()
     {
         return ConsentDocumentStepLayout.class;
     }

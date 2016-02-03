@@ -59,7 +59,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
             stepResult = new StepResult<>(step.getIdentifier());
         }
 
-        initializeScene();
+        initializeStep();
     }
 
     @Override
@@ -82,7 +82,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         this.callbacks = callbacks;
     }
 
-    private void initializeScene()
+    private void initializeStep()
     {
         LayoutInflater.from(getContext()).inflate(R.layout.step_layout_consent_doc, this, true);
 

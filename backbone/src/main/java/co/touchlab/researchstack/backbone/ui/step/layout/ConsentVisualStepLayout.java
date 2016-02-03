@@ -50,7 +50,7 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
     public void initialize(Step step, StepResult result)
     {
         this.step = (ConsentVisualStep) step;
-        initializeScene();
+        initializeStep();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
         this.callbacks = callbacks;
     }
 
-    private void initializeScene()
+    private void initializeStep()
     {
         LayoutInflater.from(getContext()).inflate(R.layout.step_layout_consent_visual, this, true);
 

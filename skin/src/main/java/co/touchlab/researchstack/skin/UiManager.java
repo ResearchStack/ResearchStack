@@ -23,7 +23,7 @@ public abstract class UiManager
 
     public abstract List<NavigationItem> getNavigationItems();
 
-    public abstract Class getInclusionCriteriaSceneClass();
+    public abstract Class getInclusionCriteriaStepLayoutClass();
 
     public abstract boolean isSignatureEnabledInConsent();
 

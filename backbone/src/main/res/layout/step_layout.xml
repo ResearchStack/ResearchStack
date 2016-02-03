@@ -34,7 +34,7 @@
             />
 
         <Space
-            android:id="@+id/scene_body"
+            android:id="@+id/step_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />

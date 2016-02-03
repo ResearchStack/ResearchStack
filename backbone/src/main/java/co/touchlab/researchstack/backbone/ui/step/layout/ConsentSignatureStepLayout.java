@@ -30,8 +30,8 @@ import co.touchlab.researchstack.backbone.utils.FormatHelper;
 
 public class ConsentSignatureStepLayout extends RelativeLayout implements StepLayout
 {
-    public static final String KEY_SIGNATURE      = "ConsentSignatureScene.Signature";
-    public static final String KEY_SIGNATURE_DATE = "ConsentSignatureScene.Signature.Date";
+    public static final String KEY_SIGNATURE      = "ConsentSignatureStep.Signature";
+    public static final String KEY_SIGNATURE_DATE = "ConsentSignatureStep.Signature.Date";
 
     private SignatureView      signatureView;
     private StepCallbacks callbacks;
@@ -59,7 +59,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         this.step = step;
         this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
 
-        initializeScene();
+        initializeStep();
     }
 
     @Override
@@ -82,7 +82,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         this.callbacks = callbacks;
     }
 
-    private void initializeScene()
+    private void initializeStep()
     {
         LayoutInflater.from(getContext())
                 .inflate(R.layout.step_layout_consent_signature, this, true);

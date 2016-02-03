@@ -213,7 +213,7 @@ public class ConsentTask extends OrderedTask
         {
             String formTitle = ctx.getString(R.string.rsc_consent_form_title);
             FormStep formStep = new FormStep(ID_FORM, formTitle, step.getText());
-            formStep.setSceneTitle(R.string.rsc_consent);
+            formStep.setStepTitle(R.string.rsc_consent);
             formStep.setUseSurveyMode(false);
             formStep.setOptional(false);
 
@@ -241,13 +241,13 @@ public class ConsentTask extends OrderedTask
         if(doc.getSignature(0).isRequiresSignatureImage())
         {
             ConsentSignatureStep signatureStep = new ConsentSignatureStep(ID_SIGNATURE);
-            signatureStep.setSceneTitle(R.string.rsc_consent);
+            signatureStep.setStepTitle(R.string.rsc_consent);
             signatureStep.setTitle(ctx.getString(R.string.rsc_consent_signature_title));
             signatureStep.setText(ctx.getString(R.string.rsc_consent_signature_instruction));
             signatureStep.setOptional(false);
             signatureStep.setSignatureDateFormat(doc.getSignature(0)
                     .getSignatureDateFormatString());
-            signatureStep.setSceneClass(ConsentSignatureStepLayout.class);
+            signatureStep.setStepLayoutClass(ConsentSignatureStepLayout.class);
             addStep(signatureStep);
         }
     }

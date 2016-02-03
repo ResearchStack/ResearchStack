@@ -3,7 +3,7 @@ package co.touchlab.researchstack.skin.step;
 import co.touchlab.researchstack.backbone.step.Step;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.model.ConsentQuizModel;
-import co.touchlab.researchstack.skin.ui.scene.ConsentQuizEvaluationStepLayout;
+import co.touchlab.researchstack.skin.ui.layout.ConsentQuizEvaluationStepLayout;
 
 public class ConsentQuizEvaluationStep extends Step
 {
@@ -19,13 +19,13 @@ public class ConsentQuizEvaluationStep extends Step
     }
 
     @Override
-    public int getSceneTitle()
+    public int getStepTitle()
     {
         return R.string.rsc_quiz_evaluation;
     }
 
     @Override
-    public Class getSceneClass()
+    public Class getStepLayoutClass()
     {
         return ConsentQuizEvaluationStepLayout.class;
     }

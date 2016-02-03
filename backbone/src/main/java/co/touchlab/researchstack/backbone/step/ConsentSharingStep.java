@@ -12,13 +12,13 @@ public class ConsentSharingStep extends QuestionStep
     }
 
     @Override
-    public int getSceneTitle()
+    public int getStepTitle()
     {
         return R.string.rsc_consent;
     }
 
     @Override
-    public Class getSceneClass()
+    public Class getStepLayoutClass()
     {
         return SingleChoiceQuestionBody.class;
     }

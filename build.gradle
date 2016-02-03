@@ -21,7 +21,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        mavenLocal()
+        maven {
+            url  "http://dl.bintray.com/bmcd87/Squeaky"
+        }
     }
 }
 

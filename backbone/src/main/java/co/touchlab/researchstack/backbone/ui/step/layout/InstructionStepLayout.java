@@ -37,7 +37,7 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
     public void initialize(Step step, StepResult result)
     {
         this.step = step;
-        initializeScene();
+        initializeStep();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
         this.callbacks = callbacks;
     }
 
-    private void initializeScene()
+    private void initializeStep()
     {
         LayoutInflater.from(getContext()).inflate(R.layout.step_layout_instruction, this, true);
 

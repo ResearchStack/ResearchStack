@@ -20,7 +20,7 @@ public class ConsentSection implements Serializable
     /**
      * The title of the consent section in a localized string.
      * <p>
-     * The title is displayed as a scene title in the animated consent sequence and is also included in the PDF file, but it can be overridden by setting `formalTitle`.
+     * The title is displayed as a step title in the animated consent sequence and is also included in the PDF file, but it can be overridden by setting `formalTitle`.
      * The title is prefilled unless the type is `ORKConsentSectionTypeCustom` or `ORKConsentSectionTypeOnlyInDocument`.
      */
     @SerializedName("sectionTitle")

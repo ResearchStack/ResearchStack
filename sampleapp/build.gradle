@@ -37,6 +37,4 @@ dependencies {
     compile project(':skin')
 
     compile 'com.android.support:appcompat-v7:23.1.1'
-//    compile 'co.touchlab.researchstack:core:0.0.3'
-//    compile 'co.touchlab.researchstack:glue:0.0.3'
 }

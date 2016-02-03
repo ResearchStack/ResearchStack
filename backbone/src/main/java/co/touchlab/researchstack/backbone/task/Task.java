@@ -34,7 +34,7 @@ public abstract class Task implements Serializable
 
     public String getTitleForStep(Context context, Step step)
     {
-        return step.getSceneTitle() != 0 ? context.getString(step.getSceneTitle()) : "";
+        return step.getStepTitle() != 0 ? context.getString(step.getStepTitle()) : "";
     }
 
     public abstract TaskProgress getProgressOfCurrentStep(Step step, TaskResult result);

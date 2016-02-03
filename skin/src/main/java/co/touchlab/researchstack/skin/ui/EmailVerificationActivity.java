@@ -17,12 +17,12 @@ import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
 import co.touchlab.researchstack.backbone.utils.ResUtils;
-import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.ResourceManager;
 import co.touchlab.researchstack.skin.task.OnboardingTask;
 import co.touchlab.researchstack.skin.task.SignUpTask;
-import co.touchlab.researchstack.skin.ui.scene.SignUpStepLayout;
+import co.touchlab.researchstack.skin.ui.layout.SignUpStepLayout;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
@@ -97,7 +97,7 @@ public class EmailVerificationActivity extends PinCodeActivity
     private void changeEmail()
     {
         Step signUpStep = new Step(OnboardingTask.SignUpStepIdentifier);
-        signUpStep.setSceneClass(SignUpStepLayout.class);
+        signUpStep.setStepLayoutClass(SignUpStepLayout.class);
         signUpStep.setTitle(getString(R.string.change_email));
 
         Intent intent = new Intent(this, ViewTaskActivity.class);

@@ -24,7 +24,7 @@ public abstract class AnswerFormat implements Serializable
 
     public interface QuestionType
     {
-        Class<?> getSceneClass();
+        Class<?> getStepBodyClass();
     }
 
     public enum Type implements QuestionType
@@ -51,7 +51,7 @@ public abstract class AnswerFormat implements Serializable
         }
 
         @Override
-        public Class<?> getSceneClass()
+        public Class<?> getStepBodyClass()
         {
             return stepBodyClass;
         }

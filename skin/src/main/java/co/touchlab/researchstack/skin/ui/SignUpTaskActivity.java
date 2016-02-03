@@ -20,12 +20,12 @@ import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.backbone.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import co.touchlab.researchstack.backbone.ui.step.layout.StepLayout;
-import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.task.ConsentTask;
 import co.touchlab.researchstack.skin.task.OnboardingTask;
-import co.touchlab.researchstack.skin.ui.scene.SignUpEligibleStepLayout;
-import co.touchlab.researchstack.skin.ui.scene.SignUpPermissionsStepLayout;
+import co.touchlab.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
+import co.touchlab.researchstack.skin.ui.layout.SignUpPermissionsStepLayout;
 
 public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCallback
 {

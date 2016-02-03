@@ -12,7 +12,7 @@ public interface StepLayout
     View getLayout();
 
     /**
-     * Method allowing a scene to consume a back event.
+     * Method allowing a step layout to consume a back event.
      *
      * @return
      */

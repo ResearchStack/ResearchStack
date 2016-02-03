@@ -110,7 +110,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
                 .getCurrent();
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
-        StepLayout stepLayout = getSceneForStep(step);
+        StepLayout stepLayout = getLayoutForStep(step);
         stepLayout.getLayout().setTag(R.id.rsc_step_layout_id, step.getIdentifier());
         //TODO Get SubmitBar from layout, set positive button title to either "Get Started", "Next", or "Done"
         //TODO Remove ConsentTask.initVisualSteps() and ConsentVisualStep.nextButtonString
@@ -121,7 +121,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         currentStep = step;
     }
 
-    protected StepLayout getSceneForStep(Step step)
+    protected StepLayout getLayoutForStep(Step step)
     {
         // Change the title on the activity
         String title = task.getTitleForStep(this, step);
@@ -131,7 +131,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         StepResult result = taskResult.getStepResult(step.getIdentifier());
 
         // Return the Class & constructor
-        StepLayout stepLayout = createSceneFromStep(step);
+        StepLayout stepLayout = createLayoutFromStep(step);
         stepLayout.initialize(step, result);
         stepLayout.setCallbacks(this);
 
@@ -139,9 +139,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     }
 
     @NonNull
-    private StepLayout createSceneFromStep(Step step)
+    private StepLayout createLayoutFromStep(Step step)
     {
-        // TODO figure out how to best create scenes (maybe method on the Step)
+        // TODO figure out how to best create layouts (maybe method on the Step)
         if(step instanceof QuestionStep)
         {
             LogExt.d(getClass(), "Making new SurveyStep");
@@ -150,7 +150,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         try
         {
-            Class cls = step.getSceneClass();
+            Class cls = step.getStepLayoutClass();
             Constructor constructor = cls.getConstructor(Context.class);
             return (StepLayout) constructor.newInstance(this);
         }
@@ -173,7 +173,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     {
         if(item.getItemId() == android.R.id.home)
         {
-            notifySceneOfBackPress();
+            notifyStepOfBackPress();
             return true;
         }
 
@@ -183,7 +183,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     @Override
     public void onBackPressed()
     {
-        notifySceneOfBackPress();
+        notifyStepOfBackPress();
     }
 
     @Override
@@ -195,7 +195,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         outState.putSerializable(EXTRA_STEP, currentStep);
     }
 
-    private void notifySceneOfBackPress()
+    private void notifyStepOfBackPress()
     {
         StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsc_current_step);
         currentStepLayout.isBackEventConsumed();
@@ -256,7 +256,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         else
         {
             throw new IllegalArgumentException("Action with value " + action + " is invalid. " +
-                    "See SceneCallbacks for allowable arguments");
+                    "See StepCallbacks for allowable arguments");
         }
     }
 

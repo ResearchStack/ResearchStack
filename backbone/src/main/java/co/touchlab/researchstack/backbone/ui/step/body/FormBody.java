@@ -96,7 +96,7 @@ public class FormBody implements StepBody
 
         try
         {
-            Class cls = step.getSceneClass();
+            Class cls = step.getStepLayoutClass();
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
             return (StepBody) constructor.newInstance(step, childResult);
         }

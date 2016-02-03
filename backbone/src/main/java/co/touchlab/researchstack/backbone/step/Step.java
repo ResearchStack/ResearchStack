@@ -10,9 +10,9 @@ public class Step implements Serializable
 
     private String identifier;
 
-    private Class sceneClass;
+    private Class stepLayoutClass;
 
-    private int sceneTitle;
+    private int stepTitle;
 
     private boolean restorable;
 
@@ -123,23 +123,23 @@ public class Step implements Serializable
         this.shouldTintImages = shouldTintImages;
     }
 
-    public int getSceneTitle()
+    public int getStepTitle()
     {
-        return sceneTitle;
+        return stepTitle;
     }
 
-    public void setSceneTitle(int sceneTitle)
+    public void setStepTitle(int stepTitle)
     {
-        this.sceneTitle = sceneTitle;
+        this.stepTitle = stepTitle;
     }
 
-    public Class getSceneClass()
+    public Class getStepLayoutClass()
     {
-        return sceneClass;
+        return stepLayoutClass;
     }
 
-    public void setSceneClass(Class sceneClass)
+    public void setStepLayoutClass(Class stepLayoutClass)
     {
-        this.sceneClass = sceneClass;
+        this.stepLayoutClass = stepLayoutClass;
     }
 }

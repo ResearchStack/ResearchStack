@@ -27,9 +27,9 @@ public class QuestionStep extends Step
     }
 
     @Override
-    public Class getSceneClass()
+    public Class getStepLayoutClass()
     {
-        return getQuestionType().getSceneClass();
+        return getQuestionType().getStepBodyClass();
     }
 
     public AnswerFormat getAnswerFormat()

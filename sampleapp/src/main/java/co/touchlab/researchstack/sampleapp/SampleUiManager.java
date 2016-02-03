@@ -70,7 +70,7 @@ public class SampleUiManager extends UiManager
     }
 
     @Override
-    public Class getInclusionCriteriaSceneClass()
+    public Class getInclusionCriteriaStepLayoutClass()
     {
         return SignUpInclusionCriteriaStepLayout.class;
     }

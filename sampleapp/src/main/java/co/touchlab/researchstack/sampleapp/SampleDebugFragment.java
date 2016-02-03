@@ -45,7 +45,7 @@ public class SampleDebugFragment extends Fragment
             FormStep formStep = new FormStep("debug_form_step",
                     "Form Title",
                     "Form step description");
-            formStep.setSceneTitle(R.string.rsc_consent);
+            formStep.setStepTitle(R.string.rsc_consent);
 
             QuestionStep debug1 = new QuestionStep("debug_1", "Text", new TextAnswerFormat());
 

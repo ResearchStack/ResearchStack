@@ -12,11 +12,11 @@ import co.touchlab.researchstack.backbone.ui.step.body.NotImplementedStepBody;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.UiManager;
 import co.touchlab.researchstack.skin.step.PassCodeConfirmationStep;
-import co.touchlab.researchstack.skin.ui.scene.SignInStepLayout;
-import co.touchlab.researchstack.skin.ui.scene.SignUpEligibleStepLayout;
-import co.touchlab.researchstack.skin.ui.scene.SignUpIneligibleStepLayout;
-import co.touchlab.researchstack.skin.ui.scene.SignUpPinCodeCreationStepLayout;
-import co.touchlab.researchstack.skin.ui.scene.SignUpStepLayout;
+import co.touchlab.researchstack.skin.ui.layout.SignInStepLayout;
+import co.touchlab.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
+import co.touchlab.researchstack.skin.ui.layout.SignUpIneligibleStepLayout;
+import co.touchlab.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
+import co.touchlab.researchstack.skin.ui.layout.SignUpStepLayout;
 
 /**
  * Created by bradleymcdermott on 10/16/15.
@@ -97,8 +97,8 @@ public abstract class OnboardingTask extends Task
         if(signInStep == null)
         {
             signInStep = new Step(SignInStepIdentifier);
-            signInStep.setSceneTitle(R.string.sign_in);
-            signInStep.setSceneClass(SignInStepLayout.class);
+            signInStep.setStepTitle(R.string.sign_in);
+            signInStep.setStepLayoutClass(SignInStepLayout.class);
         }
         return signInStep;
     }
@@ -108,10 +108,10 @@ public abstract class OnboardingTask extends Task
         if(thankyouStep == null)
         {
             thankyouStep = new Step(SignUpThankYouStepIdentifier);
-            thankyouStep.setSceneTitle(R.string.thank_you);
-            thankyouStep.setSceneClass(NotImplementedStepBody.class);
-            //            TODO Create SignUpThankYouScene
-            //            thankyouStep.setSceneClass(SignUpThankYouScene.class);
+            thankyouStep.setStepTitle(R.string.thank_you);
+            thankyouStep.setStepLayoutClass(NotImplementedStepBody.class);
+            //            TODO Create SignUpThankYouStepLayout
+            //            thankyouStep.setStepLayoutClass(SignUpThankYouStepLayout.class);
         }
         return thankyouStep;
     }
@@ -121,8 +121,8 @@ public abstract class OnboardingTask extends Task
         if(ineligibleStep == null)
         {
             ineligibleStep = new Step(SignUpIneligibleStepIdentifier);
-            ineligibleStep.setSceneTitle(R.string.ineligible);
-            ineligibleStep.setSceneClass(SignUpIneligibleStepLayout.class);
+            ineligibleStep.setStepTitle(R.string.ineligible);
+            ineligibleStep.setStepLayoutClass(SignUpIneligibleStepLayout.class);
         }
         return ineligibleStep;
     }
@@ -132,8 +132,8 @@ public abstract class OnboardingTask extends Task
         if(eligibleStep == null)
         {
             eligibleStep = new Step(SignUpEligibleStepIdentifier);
-            eligibleStep.setSceneTitle(R.string.eligibility);
-            eligibleStep.setSceneClass(SignUpEligibleStepLayout.class);
+            eligibleStep.setStepTitle(R.string.eligibility);
+            eligibleStep.setStepLayoutClass(SignUpEligibleStepLayout.class);
         }
         return eligibleStep;
     }
@@ -151,9 +151,9 @@ public abstract class OnboardingTask extends Task
             Choice<Boolean> alien = new Choice<>("No, I’m an alien.", false, null);
 
             inclusionCriteriaStep = new QuestionStep(SignUpInclusionCriteriaStepIdentifier);
-            inclusionCriteriaStep.setSceneTitle(R.string.eligibility);
-            inclusionCriteriaStep.setSceneClass(UiManager.getInstance()
-                    .getInclusionCriteriaSceneClass());
+            inclusionCriteriaStep.setStepTitle(R.string.eligibility);
+            inclusionCriteriaStep.setStepLayoutClass(UiManager.getInstance()
+                    .getInclusionCriteriaStepLayoutClass());
             inclusionCriteriaStep.setTitle(
                     "Were you born somewhere on planet earth and are you a human-ish?");
             inclusionCriteriaStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
@@ -170,11 +170,11 @@ public abstract class OnboardingTask extends Task
         if(passcodeCreationStep == null)
         {
             passcodeCreationStep = new Step(SignUpPassCodeCreationStepIdentifier);
-            passcodeCreationStep.setSceneTitle(R.string.passcode);
+            passcodeCreationStep.setStepTitle(R.string.passcode);
             passcodeCreationStep.setTitle("Choose a passcode");
             passcodeCreationStep.setText(
                     "Enter a secure code to protect your data and log in faster.");
-            passcodeCreationStep.setSceneClass(SignUpPinCodeCreationStepLayout.class);
+            passcodeCreationStep.setStepLayoutClass(SignUpPinCodeCreationStepLayout.class);
         }
         return passcodeCreationStep;
     }
@@ -199,8 +199,8 @@ public abstract class OnboardingTask extends Task
         if(signUpStep == null)
         {
             signUpStep = new Step(SignUpStepIdentifier);
-            signUpStep.setSceneTitle(R.string.sign_up);
-            signUpStep.setSceneClass(SignUpStepLayout.class);
+            signUpStep.setStepTitle(R.string.sign_up);
+            signUpStep.setStepLayoutClass(SignUpStepLayout.class);
         }
         return signUpStep;
     }

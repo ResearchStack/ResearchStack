@@ -12,7 +12,7 @@ public class InstructionStep extends Step
     }
 
     @Override
-    public Class getSceneClass()
+    public Class getStepLayoutClass()
     {
         return InstructionStepLayout.class;
     }

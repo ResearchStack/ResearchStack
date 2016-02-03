@@ -33,7 +33,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Data used to initializeScene and return
+    // Data used to initializeLayout and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private QuestionStep step;
     private StepResult   stepResult;
@@ -76,13 +76,13 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     {
         if(! (step instanceof QuestionStep))
         {
-            throw new RuntimeException("Step being used in SurveyScene is not a QuestionStep");
+            throw new RuntimeException("Step being used in SurveyStep is not a QuestionStep");
         }
 
         this.step = (QuestionStep) step;
         this.stepResult = result;
 
-        initializeScene();
+        initializeStep();
     }
 
     @Override
@@ -92,7 +92,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     }
 
     /**
-     * Method allowing a scene to consume a back event.
+     * Method allowing a step to consume a back event.
      *
      * @return
      */
@@ -109,9 +109,9 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         this.callbacks = callbacks;
     }
 
-    public void initializeScene()
+    public void initializeStep()
     {
-        LogExt.i(getClass(), "initializeScene()");
+        LogExt.i(getClass(), "initializeLayout()");
 
         if(getContext() instanceof StepCallbacks)
         {
@@ -120,22 +120,22 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
-        View scene = onCreateScene(inflater, this);
-        onSceneCreated(scene);
+        View layout = onCreateLayout(inflater, this);
+        onLayoutCreated(layout);
 
         View body = onCreateBody(inflater, this);
         onBodyCreated(body);
     }
 
-    public View onCreateScene(LayoutInflater inflater, ViewGroup parent)
+    public View onCreateLayout(LayoutInflater inflater, ViewGroup parent)
     {
-        LogExt.i(getClass(), "onCreateScene()");
+        LogExt.i(getClass(), "onCreateLayout()");
         return inflater.inflate(getRootLayoutResourceId(), parent, true);
     }
 
-    public void onSceneCreated(View scene)
+    public void onLayoutCreated(View layout)
     {
-        LogExt.i(getClass(), "onSceneCreated()");
+        LogExt.i(getClass(), "onLayoutCreated()");
 
         View filler = findViewById(R.id.filler);
 
@@ -245,11 +245,11 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
         if(body != null)
         {
-            View oldView = container.findViewById(R.id.scene_body);
+            View oldView = container.findViewById(R.id.step_body);
             int bodyIndex = container.indexOfChild(oldView);
             container.removeView(oldView);
             container.addView(body, bodyIndex);
-            body.setId(R.id.scene_body);
+            body.setId(R.id.step_body);
         }
 
         return body;
@@ -260,7 +260,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     {
         try
         {
-            Class cls = step.getSceneClass();
+            Class cls = step.getStepLayoutClass();
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
             return (StepBody) constructor.newInstance(step, result);
         }
@@ -298,7 +298,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
             else
             {
                 //TODO Review whether we should force a crash or just log the message through Logcat.
-                throw new IllegalStateException("SceneCallbacks must be set on class");
+                throw new IllegalStateException("StepCallbacks must be set on class");
             }
         }
         else

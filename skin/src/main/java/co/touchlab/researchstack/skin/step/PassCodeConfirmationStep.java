@@ -1,7 +1,7 @@
 package co.touchlab.researchstack.skin.step;
 import co.touchlab.researchstack.backbone.step.Step;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.skin.ui.scene.SignUpPinCodeConfirmationStepLayout;
+import co.touchlab.researchstack.skin.ui.layout.SignUpPinCodeConfirmationStepLayout;
 
 public class PassCodeConfirmationStep extends Step
 {
@@ -13,13 +13,13 @@ public class PassCodeConfirmationStep extends Step
     }
 
     @Override
-    public int getSceneTitle()
+    public int getStepTitle()
     {
         return R.string.passcode;
     }
 
     @Override
-    public Class getSceneClass()
+    public Class getStepLayoutClass()
     {
         return SignUpPinCodeConfirmationStepLayout.class;
     }

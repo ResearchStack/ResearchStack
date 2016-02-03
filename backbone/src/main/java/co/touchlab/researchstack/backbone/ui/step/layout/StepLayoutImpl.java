@@ -29,7 +29,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
     public static final String TAG = StepLayoutImpl.class.getSimpleName();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Data used to initializeScene and return
+    // Data used to initializeLayout and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private Step       step;
     private StepResult stepResult;
@@ -80,7 +80,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
             this.stepResult = new StepResult<T>(step.getIdentifier());
         }
 
-        initializeScene();
+        initializeLayout();
     }
 
     @Override
@@ -90,7 +90,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
     }
 
     /**
-     * Method allowing a scene to consume a back event.
+     * Method allowing a step layout to consume a back event.
      *
      * @return
      */
@@ -112,9 +112,9 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
         return callbacks;
     }
 
-    public void initializeScene()
+    public void initializeLayout()
     {
-        LogExt.i(getClass(), "initializeScene()");
+        LogExt.i(getClass(), "initializeLayout()");
 
         if(getContext() instanceof StepCallbacks)
         {
@@ -123,46 +123,46 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
-        LogExt.i(getClass(), "onCreateScene()");
-        View scene = onCreateScene(inflater, this);
+        LogExt.i(getClass(), "onCreateLayout()");
+        View layout = onCreateLayout(inflater, this);
 
-        LogExt.i(getClass(), "onSceneCreated()");
-        onSceneCreated(scene);
+        LogExt.i(getClass(), "onLayoutCreated()");
+        onLayoutCreated(layout);
 
         LogExt.i(getClass(), "onCreateBody()");
         View body = onCreateBody(inflater, container);
         if(body != null)
         {
-            View oldView = container.findViewById(R.id.scene_body);
+            View oldView = container.findViewById(R.id.step_body);
             int bodyIndex = container.indexOfChild(oldView);
             container.removeView(oldView);
             container.addView(body, bodyIndex);
-            body.setId(R.id.scene_body);
+            body.setId(R.id.step_body);
 
             LogExt.i(getClass(), "onBodyCreated()");
             onBodyCreated(body);
         }
     }
 
-    public View onCreateScene(LayoutInflater inflater, ViewGroup parent)
+    public View onCreateLayout(LayoutInflater inflater, ViewGroup parent)
     {
         return inflater.inflate(getRootLayoutResourceId(), parent, true);
     }
 
-    public void onSceneCreated(View scene)
+    public void onLayoutCreated(View layout)
     {
         View filler = findViewById(R.id.filler);
 
         container = (LinearLayout) findViewById(R.id.content_container);
         container.getViewTreeObserver().addOnPreDrawListener(() -> {
-            int sceneHeight = StepLayoutImpl.this.getHeight();
+            int layoutHeight = StepLayoutImpl.this.getHeight();
             int infoContainerHeight = container.getHeight();
 
-            //TODO Add additional check to see if the infoContainerHeight is > than sceneHeight. If it is, subtract difference from fillerHeight
-            if(sceneHeight > 0 && infoContainerHeight > 0 &&
-                    sceneHeight > infoContainerHeight)
+            //TODO Add additional check to see if the infoContainerHeight is > than layoutHeight. If it is, subtract difference from fillerHeight
+            if(layoutHeight > 0 && infoContainerHeight > 0 &&
+                    layoutHeight > infoContainerHeight)
             {
-                int fillerHeight = sceneHeight - infoContainerHeight;
+                int fillerHeight = layoutHeight - infoContainerHeight;
                 if(fillerHeight >= 0 && fillerHeight != filler.getHeight())
                 {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -233,7 +233,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
             else
             {
                 //TODO Review whether we should force a crash or just log the message through Logcat.
-                throw new IllegalStateException("SceneCallbacks must be set on class");
+                throw new IllegalStateException("StepCallbacks must be set on class");
             }
         }
         else
@@ -272,7 +272,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
     }
 
     /**
-     * @return true to call through to host and start next scene.
+     * @return true to call through to host and start next step.
      */
     public boolean isAnswerValid()
     {
