@@ -4,7 +4,7 @@ ResearchStack is an SDK and UX framework for building research study apps on And
 
 ###Backbone
 - The core building blocks of Research Stack
-- Tasks and Steps
+- Tasks, Steps, and Results
 - Consent
 - File/Database Storage and Encryption
 
