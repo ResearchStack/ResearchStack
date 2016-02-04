@@ -14,15 +14,12 @@ import java.lang.reflect.Constructor;
 import java.util.Date;
 
 import co.touchlab.researchstack.backbone.R;
-import co.touchlab.researchstack.backbone.helpers.LogExt;
 import co.touchlab.researchstack.backbone.result.StepResult;
 import co.touchlab.researchstack.backbone.result.TaskResult;
-import co.touchlab.researchstack.backbone.step.QuestionStep;
 import co.touchlab.researchstack.backbone.step.Step;
 import co.touchlab.researchstack.backbone.task.Task;
 import co.touchlab.researchstack.backbone.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.backbone.ui.step.layout.StepLayout;
-import co.touchlab.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 import co.touchlab.researchstack.backbone.ui.views.StepSwitcher;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
@@ -141,13 +138,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     @NonNull
     private StepLayout createLayoutFromStep(Step step)
     {
-        // TODO figure out how to best create layouts (maybe method on the Step)
-        if(step instanceof QuestionStep)
-        {
-            LogExt.d(getClass(), "Making new SurveyStep");
-            return new SurveyStepLayout(ViewTaskActivity.this);
-        }
-
         try
         {
             Class cls = step.getStepLayoutClass();

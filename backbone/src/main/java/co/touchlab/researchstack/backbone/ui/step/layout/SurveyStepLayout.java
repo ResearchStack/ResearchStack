@@ -35,7 +35,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Data used to initializeLayout and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private QuestionStep step;
+    private QuestionStep questionStep;
     private StepResult   stepResult;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -79,7 +79,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
             throw new RuntimeException("Step being used in SurveyStep is not a QuestionStep");
         }
 
-        this.step = (QuestionStep) step;
+        this.questionStep = (QuestionStep) step;
         this.stepResult = result;
 
         initializeStep();
@@ -197,28 +197,28 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
         submitBar.setPositiveAction(v -> onNextClicked());
 
-        if(step != null)
+        if(questionStep != null)
         {
-            title.setText(step.getTitle());
+            title.setText(questionStep.getTitle());
 
-            if(! TextUtils.isEmpty(step.getText()))
+            if(! TextUtils.isEmpty(questionStep.getText()))
             {
                 summary.setVisibility(View.VISIBLE);
-                summary.setText(Html.fromHtml(step.getText()));
+                summary.setText(Html.fromHtml(questionStep.getText()));
                 summary.setMovementMethod(new TextViewLinkHandler()
                 {
                     @Override
                     public void onLinkClick(String url)
                     {
                         Intent intent = ViewWebDocumentActivity.newIntent(getContext(),
-                                step.getTitle(),
+                                questionStep.getTitle(),
                                 url);
                         getContext().startActivity(intent);
                     }
                 });
             }
 
-            if(step.isOptional())
+            if(questionStep.isOptional())
             {
                 submitBar.setNegativeTitle(R.string.rsc_step_skip)
                         .setNegativeAction(v -> onSkipClicked());
@@ -240,7 +240,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     {
         LogExt.i(getClass(), "onCreateBody()");
 
-        stepBody = createStepBody(step, stepResult);
+        stepBody = createStepBody(questionStep, stepResult);
         View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, inflater, parent);
 
         if(body != null)
@@ -256,13 +256,13 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     }
 
     @NonNull
-    private StepBody createStepBody(Step step, StepResult result)
+    private StepBody createStepBody(QuestionStep questionStep, StepResult result)
     {
         try
         {
-            Class cls = step.getStepLayoutClass();
+            Class cls = questionStep.getStepBodyClass();
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
-            return (StepBody) constructor.newInstance(step, result);
+            return (StepBody) constructor.newInstance(questionStep, result);
         }
         catch(Exception e)
         {
@@ -318,7 +318,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
     public Step getStep()
     {
-        return step;
+        return questionStep;
     }
 
     public String getString(@StringRes int stringResId)

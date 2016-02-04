@@ -1,6 +1,7 @@
 package co.touchlab.researchstack.backbone.step;
 
 import co.touchlab.researchstack.backbone.answerformat.AnswerFormat;
+import co.touchlab.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 
 public class QuestionStep extends Step
 {
@@ -28,6 +29,11 @@ public class QuestionStep extends Step
 
     @Override
     public Class getStepLayoutClass()
+    {
+        return SurveyStepLayout.class;
+    }
+
+    public Class<?> getStepBodyClass()
     {
         return getQuestionType().getStepBodyClass();
     }

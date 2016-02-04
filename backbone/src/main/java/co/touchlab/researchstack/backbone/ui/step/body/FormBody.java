@@ -43,14 +43,14 @@ public class FormBody implements StepBody
                 parent,
                 false);
 
-        List<QuestionStep> steps = step.getFormSteps();
-        formStepChildren = new ArrayList<>(steps.size());
+        List<QuestionStep> questionSteps = step.getFormSteps();
+        formStepChildren = new ArrayList<>(questionSteps.size());
 
         // Iterate through all steps and generate each compact view. Store each StepBody child in a
         // list to iterate over (e.g. within getStepResult())
-        for(QuestionStep step : steps)
+        for(QuestionStep questionStep : questionSteps)
         {
-            StepBody stepBody = createStepBody(step);
+            StepBody stepBody = createStepBody(questionStep);
             View bodyView = stepBody.getBodyView(VIEW_TYPE_COMPACT, inflater, body);
             body.addView(bodyView);
 
@@ -90,15 +90,15 @@ public class FormBody implements StepBody
     }
 
     @NonNull
-    private StepBody createStepBody(Step step)
+    private StepBody createStepBody(QuestionStep questionStep)
     {
-        StepResult childResult = result.getResultForIdentifier(step.getIdentifier());
+        StepResult childResult = result.getResultForIdentifier(questionStep.getIdentifier());
 
         try
         {
-            Class cls = step.getStepLayoutClass();
+            Class cls = questionStep.getStepBodyClass();
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
-            return (StepBody) constructor.newInstance(step, childResult);
+            return (StepBody) constructor.newInstance(questionStep, childResult);
         }
         catch(Exception e)
         {
