@@ -75,3 +75,7 @@ This isn't well documented or even well implemented at this point, but this shou
 ## Tasks and Steps
 
 Tasks and Steps should function very similarly to Apple's ResearchKit. Extend Task if you need to do something different with step order that's not in OrderedTask or SmartSurveyTask.
+
+If you want to implement a custom Step, create a step and make getStepLayoutClass() return the Class of your own extension of StepLayout. This provides the View for your custom step and is responsible for creating the StepResult and passing it back up to the ViewTaskActivity.
+
+If you just want a custom QuestionStep with an answer type that isn't supported yet, you will need to just create your own AnswerFormat subclass. All QuestionSteps use the same StepLayout, but the AnswerFormat provides a StepBody class that determines what the inner UI for the question looks like (date picker, text field, slider, etc). Right now this is a weird hybrid of the way ResearchKit does things and the way ResearchStack does things, so it will probably change and break any custom steps you make at some point.

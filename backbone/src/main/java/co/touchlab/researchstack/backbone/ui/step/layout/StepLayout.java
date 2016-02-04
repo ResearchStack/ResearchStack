@@ -19,5 +19,4 @@ public interface StepLayout
     boolean isBackEventConsumed();
 
     void setCallbacks(StepCallbacks callbacks);
-
 }
