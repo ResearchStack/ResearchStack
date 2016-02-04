@@ -1,15 +1,18 @@
 package co.touchlab.researchstack.skin;
-public class NavigationItem
-{
+import android.view.MenuItem;
 
+//TODO Builder methods on non-builder class is weird.
+public class ActionItem
+{
     private int   id;
     private int   title;
     private int   icon;
     private Class clazz;
     private int   groupId;
     private int   order;
+    private int action = MenuItem.SHOW_AS_ACTION_IF_ROOM;
 
-    public NavigationItem()
+    public ActionItem()
     {
     }
 
@@ -18,7 +21,7 @@ public class NavigationItem
         return id;
     }
 
-    public NavigationItem setId(int id)
+    public ActionItem setId(int id)
     {
         this.id = id;
         return this;
@@ -29,7 +32,7 @@ public class NavigationItem
         return groupId;
     }
 
-    public NavigationItem setGroupId(int groupId)
+    public ActionItem setGroupId(int groupId)
     {
         this.groupId = groupId;
         return this;
@@ -40,7 +43,7 @@ public class NavigationItem
         return title;
     }
 
-    public NavigationItem setTitle(int title)
+    public ActionItem setTitle(int title)
     {
         this.title = title;
         return this;
@@ -51,7 +54,7 @@ public class NavigationItem
         return icon;
     }
 
-    public NavigationItem setIcon(int icon)
+    public ActionItem setIcon(int icon)
     {
         this.icon = icon;
         return this;
@@ -62,7 +65,7 @@ public class NavigationItem
         return clazz;
     }
 
-    public NavigationItem setClass(Class clazz)
+    public ActionItem setClass(Class clazz)
     {
         this.clazz = clazz;
         return this;
@@ -76,5 +79,16 @@ public class NavigationItem
     public void setOrder(int order)
     {
         this.order = order;
+    }
+
+    public int getAction()
+    {
+        return action;
+    }
+
+    public ActionItem setAction(int action)
+    {
+        this.action = action;
+        return this;
     }
 }

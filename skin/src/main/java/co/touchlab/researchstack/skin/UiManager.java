@@ -21,7 +21,9 @@ public abstract class UiManager
         return instance;
     }
 
-    public abstract List<NavigationItem> getNavigationItems();
+    public abstract List<ActionItem> getMainActionBarItems();
+
+    public abstract List<ActionItem> getMainTabBarItems();
 
     public abstract Class getInclusionCriteriaStepLayoutClass();
 

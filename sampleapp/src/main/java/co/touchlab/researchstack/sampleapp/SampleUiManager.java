@@ -1,8 +1,10 @@
 package co.touchlab.researchstack.sampleapp;
+import android.view.MenuItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import co.touchlab.researchstack.skin.NavigationItem;
+import co.touchlab.researchstack.skin.ActionItem;
 import co.touchlab.researchstack.skin.UiManager;
 import co.touchlab.researchstack.skin.ui.fragment.ActivitiesFragment;
 import co.touchlab.researchstack.skin.ui.fragment.DashboardFragment;
@@ -19,52 +21,51 @@ public class SampleUiManager extends UiManager
      * @return List of NavigationItems
      */
     @Override
-    public List<NavigationItem> getNavigationItems()
+    public List<ActionItem> getMainTabBarItems()
     {
-        List<NavigationItem> navItems = new ArrayList<>();
+        List<ActionItem> navItems = new ArrayList<>();
 
-        navItems.add(new NavigationItem().setId(R.id.nav_activities)
+        navItems.add(new ActionItem().setId(R.id.nav_activities)
                 .setGroupId(R.id.nav_group)
                 .setTitle(R.string.activities)
                 .setIcon(R.drawable.ic_nav_activities)
                 .setClass(ActivitiesFragment.class));
 
-        navItems.add(new NavigationItem().setId(R.id.nav_dashboard)
+        navItems.add(new ActionItem().setId(R.id.nav_dashboard)
                 .setGroupId(R.id.nav_group)
                 .setTitle(R.string.dashboard)
                 .setIcon(R.drawable.ic_nav_dashboard)
                 .setClass(DashboardFragment.class));
 
-        navItems.add(new NavigationItem().setId(R.id.nav_learn)
-                .setGroupId(R.id.nav_group)
-                .setTitle(R.string.learn)
-                .setIcon(R.drawable.ic_nav_learn)
-                .setClass(LearnFragment.class));
-
-        navItems.add(new NavigationItem().setId(R.id.nav_profile)
-                .setGroupId(R.id.nav_group)
-                .setTitle(R.string.profile)
-                .setIcon(R.drawable.ic_nav_profile)
-                .setClass(ProfileFragment.class));
-
-        navItems.add(new NavigationItem().setId(R.id.nav_settings)
-                .setGroupId(R.id.nav_group)
-                .setTitle(R.string.settings)
-                .setIcon(R.drawable.ic_nav_settings)
-                .setClass(SettingsFragment.class));
-
-        navItems.add(new NavigationItem().setId(R.id.nav_custom)
-                .setGroupId(R.id.nav_group)
-                .setTitle(R.string.custom)
-                .setIcon(R.drawable.ic_nav_custom)
-                .setClass(SampleCustomFragment.class));
-
-        navItems.add(new NavigationItem().setId(R.id.nav_debug)
+        navItems.add(new ActionItem().setId(R.id.nav_debug)
                 .setGroupId(R.id.nav_group)
                 .setTitle(R.string.debug)
                 .setIcon(R.mipmap.ic_launcher)
                 .setClass(SampleDebugFragment.class));
 
+        return navItems;
+    }
+
+    @Override
+    public List<ActionItem> getMainActionBarItems()
+    {
+        List<ActionItem> navItems = new ArrayList<>();
+
+        navItems.add(new ActionItem().setId(R.id.nav_learn)
+                .setTitle(R.string.learn)
+                .setIcon(R.drawable.ic_nav_learn)
+                .setClass(LearnFragment.class));
+
+        navItems.add(new ActionItem().setId(R.id.nav_profile)
+                .setTitle(R.string.profile)
+                .setIcon(R.drawable.ic_nav_profile)
+                .setClass(ProfileFragment.class));
+
+        navItems.add(new ActionItem().setId(R.id.nav_settings)
+                .setTitle(R.string.settings)
+                .setIcon(R.drawable.ic_nav_settings)
+                .setAction(MenuItem.SHOW_AS_ACTION_NEVER)
+                .setClass(SettingsFragment.class));
 
         return navItems;
     }

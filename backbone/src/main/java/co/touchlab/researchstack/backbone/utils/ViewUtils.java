@@ -3,11 +3,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import java.lang.reflect.Constructor;
 
 public class ViewUtils
 {
@@ -85,4 +88,33 @@ public class ViewUtils
             return context.getResources().getDrawable(resId);
         }
     }
+
+    public static Fragment createFragment(String className)
+    {
+        try
+        {
+            Class fragmentClass = Class.forName(className);
+            return createFragment(fragmentClass);
+        }
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static Fragment createFragment(Class fragmentClass)
+    {
+        try
+        {
+            Constructor<?> fragConstructor = fragmentClass.getConstructor();
+            Object fragment = fragConstructor.newInstance();
+            return (Fragment) fragment;
+        }
+        catch(Throwable e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

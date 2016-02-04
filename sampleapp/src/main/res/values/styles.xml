@@ -16,7 +16,10 @@
         <item name="android:actionBarStyle">@style/AppTheme.ActionBarStyle</item>
         <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
         <item name="submitBackground">@color/gray</item>
+    </style>
 
+    <style name="AppTheme.TransparentActionBar">
+        <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
     </style>
 
     <style name="AppTheme.Dialog"
