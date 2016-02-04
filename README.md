@@ -24,6 +24,7 @@ ResearchStack is an SDK and UX framework for building research study apps on And
 ## Deploying libraries to MavenLocal
 
 - The libraries are not on jcenter or maven central yet, so you need to deploy them to your local machine to use in other projects
+- Open the **ResearchStack project** in Android Studio
 - Go to Run > Edit Configurations...
 - Add new configuration (plus icon)
 - Choose Gradle as the configuration type
@@ -33,6 +34,7 @@ ResearchStack is an SDK and UX framework for building research study apps on And
 - Save
 - Run that configuration and check ~/.m2 to see if it deployed
 - Repeat with **/skin/build.gradle**
+- Open your own Android Studio project and follow the instructions below to add these newly-deployed libraries as dependencies.
 
 ## Using the library in a gradle Android app
 
