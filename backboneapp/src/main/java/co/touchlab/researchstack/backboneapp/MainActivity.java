@@ -134,21 +134,7 @@ public class MainActivity extends PinCodeActivity
             consentButton.setText(R.string.consent_button_done);
             surveyButton.setEnabled(true);
 
-            TaskResult result = StorageAccess.getInstance()
-                    .getAppDatabase()
-                    .loadLatestTaskResult(CONSENT);
-
-            // TODO form step result saving is messed up (gson saving inner stepresult as map)
-            //            String fullName = ((StepResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
-            //                    .getResultForIdentifier(NAME)).getResult();
-
-            String signatureBase64 = (String) result.getStepResult(SIGNATURE)
-                    .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
-
-            String signatureDate = (String) result.getStepResult(SIGNATURE)
-                    .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
-
-            printConsentInfo("", signatureBase64, signatureDate);
+            printConsentInfo();
         }
         else
         {
@@ -177,6 +163,8 @@ public class MainActivity extends PinCodeActivity
             processSurveyResult((TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT));
         }
     }
+
+    // Consent stuff
 
     private void launchConsent()
     {
@@ -265,10 +253,26 @@ public class MainActivity extends PinCodeActivity
         }
     }
 
-    private void printConsentInfo(String fullName, String signatureBase64, String consentDate)
+    private void printConsentInfo()
     {
+        TaskResult result = StorageAccess.getInstance()
+                .getAppDatabase()
+                .loadLatestTaskResult(CONSENT);
+
+        // TODO form step result saving is messed up (gson saving inner stepresult as map)
+        String fullName = "";
+        //            String fullName = ((StepResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
+        //                    .getResultForIdentifier(NAME)).getResult();
+
+        String signatureBase64 = (String) result.getStepResult(SIGNATURE)
+                .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
+
+        String signatureDate = (String) result.getStepResult(SIGNATURE)
+                .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
+
         ((TextView) findViewById(R.id.consented_name)).setText(fullName);
-        ((TextView) findViewById(R.id.consented_date)).setText(consentDate);
+        ((TextView) findViewById(R.id.consented_date)).setText(signatureDate);
+
         byte[] signatureBytes = Base64.decode(signatureBase64, Base64.DEFAULT);
         ((ImageView) findViewById(R.id.consented_signature)).setImageBitmap(BitmapFactory.decodeByteArray(
                 signatureBytes,
@@ -276,20 +280,8 @@ public class MainActivity extends PinCodeActivity
                 signatureBytes.length));
     }
 
-    private void printSurveyInfo()
-    {
-        TaskResult taskResult = StorageAccess.getInstance()
-                .getAppDatabase()
-                .loadLatestTaskResult(SAMPLE_SURVEY);
 
-        String results = "";
-        for(String id : taskResult.getResults().keySet())
-        {
-            StepResult stepResult = taskResult.getStepResult(id);
-            results += id + ": " + stepResult.getResult().toString() + "\n";
-        }
-        ((TextView) findViewById(R.id.survey_results)).setText(results);
-    }
+    // Survey Stuff
 
     private void launchSurvey()
     {
@@ -302,13 +294,6 @@ public class MainActivity extends PinCodeActivity
 
         DateAnswerFormat dateFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
         QuestionStep dateStep = new QuestionStep(DATE, "Enter a date", dateFormat);
-
-        // unimplemented
-        //        DecimalAnswerFormat decimalAnswerFormat = new DecimalAnswerFormat(0f, 1f);
-        //        QuestionStep decimalStep = new QuestionStep(DECIMAL, "Decimal step", decimalAnswerFormat);
-
-        // TODO off until formstep result saving is fixed
-        //        FormStep formStep = createFormStep();
 
         // Create a Boolean step to include in the task.
         QuestionStep booleanStep = new QuestionStep(NUTRITION);
@@ -325,9 +310,11 @@ public class MainActivity extends PinCodeActivity
         multiStep.setAnswerFormat(multiFormat);
         multiStep.setOptional(false);
 
+        // TODO off until formstep result saving is fixed
+        //        FormStep formStep = createFormStep();
+
         // Create a task wrapping the steps.
         OrderedTask task = new OrderedTask(SAMPLE_SURVEY, instructionStep, ageStep, dateStep,
-                // decimalStep,
                 // formStep,
                 booleanStep, multiStep);
 
@@ -386,5 +373,20 @@ public class MainActivity extends PinCodeActivity
         AppPrefs prefs = AppPrefs.getInstance(this);
         prefs.setHasSurveyed(true);
         initViews();
+    }
+
+    private void printSurveyInfo()
+    {
+        TaskResult taskResult = StorageAccess.getInstance()
+                .getAppDatabase()
+                .loadLatestTaskResult(SAMPLE_SURVEY);
+
+        String results = "";
+        for(String id : taskResult.getResults().keySet())
+        {
+            StepResult stepResult = taskResult.getStepResult(id);
+            results += id + ": " + stepResult.getResult().toString() + "\n";
+        }
+        ((TextView) findViewById(R.id.survey_results)).setText(results);
     }
 }
