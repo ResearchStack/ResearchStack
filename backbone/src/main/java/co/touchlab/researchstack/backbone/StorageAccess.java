@@ -193,6 +193,11 @@ public class StorageAccess implements DataAccess, AuthDataAccess
     public void authenticate(Context context, String pin)
     {
         encryptionProvider.startWithPassphrase(context, pin);
+        injectEncrypter();
+    }
+
+    private void injectEncrypter()
+    {
         fileAccess.setEncrypter(encryptionProvider.getEncrypter());
         // TODO encrypt db if using sqlcipher
         // appDatabase.setEncrypter(encryptionProvider.getEncrypter());
@@ -203,6 +208,7 @@ public class StorageAccess implements DataAccess, AuthDataAccess
     public void setPinCode(Context context, String pin)
     {
         encryptionProvider.setPinCode(context, pin);
+        injectEncrypter();
     }
 
     // TODO need to figure out a better way to allow no auth when they haven't created a pin code yet

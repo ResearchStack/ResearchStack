@@ -23,7 +23,7 @@ public class SampleApplication extends Application
 
         ResearchStack.init(this, new SampleResearchStack());
 
-        copyDbFile(this);
+//        copyDbFile(this);
     }
 
     //TODO For debug purposes only

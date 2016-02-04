@@ -18,8 +18,10 @@ public class ConsentSharingStep extends QuestionStep
     }
 
     @Override
-    public Class getStepLayoutClass()
+    public Class getStepBodyClass()
     {
         return SingleChoiceQuestionBody.class;
     }
+
+
 }
