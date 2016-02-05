@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 
 import co.touchlab.researchstack.backbone.ui.views.LocalWebView;
@@ -32,17 +33,23 @@ public class ViewWebDocumentActivity extends PinCodeActivity
         String path = ResUtils.getHTMLFilePath(documentName);
 
         LocalWebView webView = new LocalWebView(this);
-        webView.loadUrl(path);
-        setContentView(webView);
-
-        String title = getIntent().getStringExtra(KEY_TITLE);
 
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null)
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        String title = getIntent().getStringExtra(KEY_TITLE);
+        if (!TextUtils.isEmpty(title))
         {
             actionBar.setTitle(title);
-            actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        else
+        {
+            webView.setCallbacks(docTitle -> {
+                actionBar.setTitle(title);
+            });
+        }
+        webView.loadUrl(path);
+        setContentView(webView);
     }
 
     @Override

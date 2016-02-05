@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.text.Html;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import co.touchlab.researchstack.backbone.ui.LocalImageGetter;
+import co.touchlab.researchstack.backbone.ui.views.LocalWebView;
 import co.touchlab.researchstack.backbone.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.model.StudyOverviewModel;
@@ -112,16 +111,10 @@ public class OnboardingPagerAdapter extends PagerAdapter
         }
         else
         {
-            View layout = inflater.inflate(R.layout.layout_study_html, container, false);
+            String url = ResUtils.getHTMLFilePath(item.getDetails());
+            LocalWebView layout = new LocalWebView(container.getContext());
+            layout.loadUrl(url);
             container.addView(layout);
-
-            TextView simpleView = (TextView) layout.findViewById(R.id.text);
-            simpleView.setMovementMethod(LinkMovementMethod.getInstance());
-            int id =  ResUtils.getRawResourceId(container.getContext(), item.getDetails());
-            String html = getHtmlText(container.getContext(), id);
-            LocalImageGetter imageGetter = new LocalImageGetter(simpleView);
-            simpleView.setText(Html.fromHtml(html, imageGetter, null));
-
             return layout;
 
             //            NSString *filePath = [[NSBundle mainBundle] pathForResource: studyDetails.detailText ofType:@"html" inDirectory:@"HTMLContent"];
