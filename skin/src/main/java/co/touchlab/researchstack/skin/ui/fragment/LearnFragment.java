@@ -148,6 +148,7 @@ public class LearnFragment extends Fragment
             {
                 super(itemView);
                 logo = (ImageView) itemView.findViewById(R.id.logo);
+                logo.setImageResource(ResourceManager.getInstance().getLogoInstitution());
             }
         }
 

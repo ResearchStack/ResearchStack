@@ -23,6 +23,8 @@ public abstract class ResourceManager
 
     public abstract int getLargeLogoDiseaseIcon();
 
+    public abstract int getLogoInstitution();
+
     public abstract int getConsentPDF();
 
     public abstract int getConsentSections();

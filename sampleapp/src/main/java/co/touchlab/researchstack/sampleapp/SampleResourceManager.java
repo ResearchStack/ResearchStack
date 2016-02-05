@@ -51,4 +51,10 @@ public class SampleResourceManager extends ResourceManager
         return R.drawable.logo_disease_large;
     }
 
+    @Override
+    public int getLogoInstitution()
+    {
+        return R.drawable.logo_institution;
+    }
+
 }

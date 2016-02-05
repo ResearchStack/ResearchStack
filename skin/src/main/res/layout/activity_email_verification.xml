@@ -15,7 +15,7 @@
             android:id="@+id/study_logo"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
-            tools:src="@drawable/logo_disease_information_top"/>
+            tools:src="@mipmap/ic_launcher"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/email_verification_body"
