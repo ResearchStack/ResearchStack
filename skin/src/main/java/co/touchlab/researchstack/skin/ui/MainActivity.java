@@ -13,8 +13,8 @@ import android.widget.Toast;
 import java.util.Date;
 import java.util.List;
 
+import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.result.TaskResult;
-import co.touchlab.researchstack.backbone.storage.database.sqlite.DatabaseHelper;
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
@@ -94,7 +94,7 @@ public class MainActivity extends PinCodeActivity
         Observable.create(subscriber -> {
             UiThreadContext.assertBackgroundThread();
 
-            TaskResult result = DatabaseHelper.getInstance(this)
+            TaskResult result = StorageAccess.getInstance().getAppDatabase()
                     .loadLatestTaskResult(InitialTask.TASK_ID);
             subscriber.onNext(result == null);
         }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
@@ -114,7 +114,7 @@ public class MainActivity extends PinCodeActivity
         {
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             taskResult.setEndDate(new Date());
-            DatabaseHelper.getInstance(this).saveTaskResult(taskResult);
+            StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
             //TODO DataProvider.getInstance().uploadTaskResult(this, taskResult);
         }
         else
