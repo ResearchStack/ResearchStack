@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ public class StudyLandingLayout extends ScrollView
 {
 
     private TextView  titleView;
-//    private TextView  subtitleView;
+    private TextView  subtitleView;
     private ImageView logoView;
     private Button    readConsent;
     private Button    emailConsent;
@@ -57,7 +58,7 @@ public class StudyLandingLayout extends ScrollView
 
         logoView = (ImageView) findViewById(R.id.layout_studyoverview_landing_logo);
         titleView = (TextView) findViewById(R.id.layout_studyoverview_landing_title);
-//        subtitleView = (TextView) findViewById(R.id.layout_studyoverview_landing_subtitle);
+        subtitleView = (TextView) findViewById(R.id.layout_studyoverview_landing_subtitle);
         readConsent = (Button) findViewById(R.id.layout_studyoverview_landing_read);
         emailConsent = (Button) findViewById(R.id.layout_studyoverview_landing_email);
     }
@@ -67,7 +68,14 @@ public class StudyLandingLayout extends ScrollView
         logoView.setImageResource(ResourceManager.getInstance().getLargeLogoDiseaseIcon());
 
         titleView.setText(data.getTitle());
-//        subtitleView.setText(data.getDetails());
+        if (! TextUtils.isEmpty(data.getDetails()))
+        {
+            subtitleView.setText(data.getDetails());
+        }
+        else
+        {
+            subtitleView.setVisibility(View.GONE);
+        }
 
         if("yes".equals(data.getShowConsent()))
         {

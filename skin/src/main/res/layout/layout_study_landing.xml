@@ -38,6 +38,16 @@
             tools:text="@string/lorem_name"
             />
 
+        <TextView
+            android:id="@+id/layout_studyoverview_landing_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            tools:text="@string/lorem_long"
+            />
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/layout_studyoverview_landing_read"
             android:background="?attr/selectableItemBackground"
