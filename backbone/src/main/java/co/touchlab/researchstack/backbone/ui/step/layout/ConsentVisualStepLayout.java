@@ -115,21 +115,35 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
 
         // Set more info
         TextView moreInfoView = (TextView) findViewById(R.id.more_info);
-        moreInfoView.setText(data.getType().getMoreInfoResId());
-        RxView.clicks(moreInfoView).subscribe(v -> {
-            String path = data.getHtmlContent();
-            String webTitle = getResources().getString(R.string.rsc_consent_section_more_info);
-            Intent webDoc = ViewWebDocumentActivity.newIntent(getContext(), webTitle, path);
-            getContext().startActivity(webDoc);
-        });
+
+        if (!TextUtils.isEmpty(data.getHtmlContent()))
+        {
+            if (!TextUtils.isEmpty(data.getCustomLearnMoreButtonTitle()))
+            {
+                moreInfoView.setText(data.getCustomLearnMoreButtonTitle());
+            }
+            else
+            {
+                moreInfoView.setText(data.getType().getMoreInfoResId());
+            }
+
+            RxView.clicks(moreInfoView).subscribe(v -> {
+                String path = data.getHtmlContent();
+                String webTitle = getResources().getString(R.string.rsc_consent_section_more_info);
+                Intent webDoc = ViewWebDocumentActivity.newIntent(getContext(), webTitle, path);
+                getContext().startActivity(webDoc);
+            });
+        }
+        else
+        {
+            moreInfoView.setVisibility(View.GONE);
+        }
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveTitle(step.getNextButtonString())
                 .setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                         step,
-                        null))
-                .setNegativeAction((v -> callbacks.onSaveStep(StepCallbacks.ACTION_END,
-                        step,
-                        null)));
+                        null));
+        submitBar.getNegativeActionView().setVisibility(View.GONE);
     }
 }

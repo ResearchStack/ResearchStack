@@ -81,6 +81,7 @@ public class ConsentSection implements Serializable
      * titles for a visual consent step. When this property is not `nil`, it overrides that
      * default text.
      */
+    @SerializedName("sectionMoreTitle")
     private String customLearnMoreButtonTitle;
     /**
      * A file URL that specifies a custom transition animation video.
@@ -172,6 +173,11 @@ public class ConsentSection implements Serializable
         //TODO In XCODE project, they want to escape the strings, they also want to use <br/> to replace "\n". Find out why.
 
         return escapedContent;
+    }
+
+    public String getCustomLearnMoreButtonTitle()
+    {
+        return customLearnMoreButtonTitle;
     }
 
     public enum Type implements Serializable
@@ -289,7 +295,7 @@ public class ConsentSection implements Serializable
                 case StudyTasks:
                     return R.string.rsc_consent_section_study_tasks;
                 case Withdrawing:
-                    return R.string.rsc_consent_section_study_survey;
+                    return R.string.rsc_consent_section_withdrawing;
                 default:
                     return - 1;
             }
