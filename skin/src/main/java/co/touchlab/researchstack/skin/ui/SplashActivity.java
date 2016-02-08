@@ -7,7 +7,6 @@ import android.widget.Toast;
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
 import co.touchlab.researchstack.skin.DataProvider;
-import co.touchlab.researchstack.glue.R;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
@@ -18,7 +17,6 @@ public class SplashActivity extends PinCodeActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
     }
 
     @Override

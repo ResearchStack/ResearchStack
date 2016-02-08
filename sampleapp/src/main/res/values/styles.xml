@@ -37,6 +37,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name ="AppTheme.Splash" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="colorPrimaryDark">@color/warm_grey</item>
+    </style>
+
     <style name="AppTheme.Onboarding" parent="@style/AppTheme.NoActionBar">
         <item name="android:windowBackground">@color/gray</item>
         <item name="colorButtonNormal">@color/colorAccent</item>

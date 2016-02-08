@@ -15,7 +15,7 @@
         android:layout_height="100dp"
         android:longClickable="true"
         android:padding="12dp"
-        android:src="@drawable/splash"
+        android:src="@mipmap/ic_launcher"
         />
 
     <LinearLayout
