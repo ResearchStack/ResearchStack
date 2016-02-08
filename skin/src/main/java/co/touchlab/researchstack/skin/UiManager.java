@@ -1,6 +1,8 @@
 package co.touchlab.researchstack.skin;
 import java.util.List;
 
+import co.touchlab.researchstack.backbone.step.Step;
+
 public abstract class UiManager
 {
     private static UiManager instance;
@@ -25,7 +27,7 @@ public abstract class UiManager
 
     public abstract List<ActionItem> getMainTabBarItems();
 
-    public abstract Class getInclusionCriteriaStepLayoutClass();
+    public abstract Step getInclusionCriteriaStep();
 
     public abstract boolean isSignatureEnabledInConsent();
 

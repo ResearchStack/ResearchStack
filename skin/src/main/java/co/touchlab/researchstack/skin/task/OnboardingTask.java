@@ -1,8 +1,5 @@
 package co.touchlab.researchstack.skin.task;
 
-import co.touchlab.researchstack.backbone.answerformat.AnswerFormat;
-import co.touchlab.researchstack.backbone.answerformat.ChoiceAnswerFormat;
-import co.touchlab.researchstack.backbone.model.Choice;
 import co.touchlab.researchstack.backbone.result.StepResult;
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.step.QuestionStep;
@@ -144,24 +141,7 @@ public abstract class OnboardingTask extends Task
      */
     public Step getInclusionCriteriaStep()
     {
-        if(inclusionCriteriaStep == null)
-        {
-            Choice<Boolean> human = new Choice<>("Yes, I am a human.", true, null);
-            Choice<Boolean> robot = new Choice<>("No, I am a robot but I am sentient and concerned about my health.", true, null);
-            Choice<Boolean> alien = new Choice<>("No, I’m an alien.", false, null);
-
-            inclusionCriteriaStep = new QuestionStep(SignUpInclusionCriteriaStepIdentifier);
-            inclusionCriteriaStep.setStepTitle(R.string.eligibility);
-            inclusionCriteriaStep.setStepLayoutClass(UiManager.getInstance()
-                    .getInclusionCriteriaStepLayoutClass());
-            inclusionCriteriaStep.setTitle(
-                    "Were you born somewhere on planet earth and are you a human-ish?");
-            inclusionCriteriaStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-                    human,
-                    robot,
-                    alien));
-        }
-        return inclusionCriteriaStep;
+        return UiManager.getInstance().getInclusionCriteriaStep();
     }
 
     //TODO Move string to Resources
