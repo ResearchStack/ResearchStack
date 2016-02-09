@@ -22,6 +22,7 @@ import co.touchlab.researchstack.backbone.ui.step.layout.ConsentSignatureStepLay
 import co.touchlab.researchstack.backbone.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.DataProvider;
+import co.touchlab.researchstack.skin.TaskProvider;
 import co.touchlab.researchstack.skin.task.ConsentTask;
 import co.touchlab.researchstack.skin.task.OnboardingTask;
 import co.touchlab.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
@@ -72,7 +73,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     @Override
     public void startConsentTask()
     {
-        ConsentTask task = new ConsentTask(this);
+        Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_CONSENT);
         Intent intent = ViewTaskActivity.newIntent(this, task);
         startActivityForResult(intent, SignUpEligibleStepLayout.CONSENT_REQUEST);
     }

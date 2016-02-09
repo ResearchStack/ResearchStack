@@ -15,9 +15,6 @@ import co.touchlab.researchstack.skin.ui.layout.SignUpIneligibleStepLayout;
 import co.touchlab.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
 import co.touchlab.researchstack.skin.ui.layout.SignUpStepLayout;
 
-/**
- * Created by bradleymcdermott on 10/16/15.
- */
 public abstract class OnboardingTask extends Task
 {
     public static final String SignUpInclusionCriteriaStepIdentifier    = "InclusionCriteria";

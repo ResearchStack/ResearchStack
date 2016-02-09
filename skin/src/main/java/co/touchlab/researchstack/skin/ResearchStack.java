@@ -58,4 +58,6 @@ public abstract class ResearchStack
 
     protected abstract DataProvider createDataProviderImplementation(Context context);
 
+    protected abstract TaskProvider createTaskProviderImplementation(Context context);
+
 }

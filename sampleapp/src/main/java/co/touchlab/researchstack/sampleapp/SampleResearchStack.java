@@ -13,6 +13,7 @@ import co.touchlab.researchstack.skin.AppPrefs;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.ResearchStack;
 import co.touchlab.researchstack.skin.ResourceManager;
+import co.touchlab.researchstack.skin.TaskProvider;
 import co.touchlab.researchstack.skin.UiManager;
 
 public class SampleResearchStack extends ResearchStack
@@ -59,6 +60,12 @@ public class SampleResearchStack extends ResearchStack
     protected DataProvider createDataProviderImplementation(Context context)
     {
         return new SampleDataProvider();
+    }
+
+    @Override
+    protected TaskProvider createTaskProviderImplementation(Context context)
+    {
+        return new SampleTaskProvider(context);
     }
 
 }

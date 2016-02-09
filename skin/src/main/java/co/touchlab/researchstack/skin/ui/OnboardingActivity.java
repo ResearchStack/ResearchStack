@@ -7,11 +7,13 @@ import android.view.View;
 
 import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.result.TaskResult;
+import co.touchlab.researchstack.backbone.task.Task;
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ResourceManager;
+import co.touchlab.researchstack.skin.TaskProvider;
 import co.touchlab.researchstack.skin.model.StudyOverviewModel;
 import co.touchlab.researchstack.skin.task.OnboardingTask;
 import co.touchlab.researchstack.skin.task.SignInTask;
@@ -90,14 +92,14 @@ public class OnboardingActivity extends PinCodeActivity
     {
         boolean hasAuth = ! StorageAccess.getInstance().hasPinCode(this);
 
-        SignUpTask task = new SignUpTask();
+        SignUpTask task = (SignUpTask) TaskProvider.getInstance().get(TaskProvider.TASK_ID_SIGN_IN);
         task.setHasAuth(hasAuth);
         startActivityForResult(SignUpTaskActivity.newIntent(this, task), REQUEST_CODE_SIGN_UP);
     }
 
     public void onSignInClicked(View view)
     {
-        SignInTask task = new SignInTask();
+        Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_SIGN_IN);
         // TODO setHasAuth on this too, add pin code creation step to sign in task
         startActivityForResult(SignUpTaskActivity.newIntent(this, task), REQUEST_CODE_SIGN_IN);
     }

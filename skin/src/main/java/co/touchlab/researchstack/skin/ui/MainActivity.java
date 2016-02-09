@@ -15,14 +15,15 @@ import java.util.List;
 
 import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.result.TaskResult;
+import co.touchlab.researchstack.backbone.task.Task;
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
 import co.touchlab.researchstack.backbone.utils.UiThreadContext;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ActionItem;
+import co.touchlab.researchstack.skin.TaskProvider;
 import co.touchlab.researchstack.skin.UiManager;
-import co.touchlab.researchstack.skin.task.InitialTask;
 import co.touchlab.researchstack.skin.ui.adapter.MainPagerAdapter;
 import rx.Observable;
 
@@ -95,12 +96,12 @@ public class MainActivity extends PinCodeActivity
             UiThreadContext.assertBackgroundThread();
 
             TaskResult result = StorageAccess.getInstance().getAppDatabase()
-                    .loadLatestTaskResult(InitialTask.TASK_ID);
+                    .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
             subscriber.onNext(result == null);
         }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
             if((boolean) needsInitialSurvey)
             {
-                InitialTask task = new InitialTask(InitialTask.TASK_ID);
+                Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
                 Intent intent = ViewTaskActivity.newIntent(this, task);
                 startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
             }

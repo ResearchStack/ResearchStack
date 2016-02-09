@@ -2,6 +2,7 @@ package co.touchlab.researchstack.skin.task;
 
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.skin.TaskProvider;
 
 /**
  * Created by bradleymcdermott on 10/16/15.
@@ -15,7 +16,7 @@ public class SignInTask extends OnboardingTask
 
     public SignInTask()
     {
-        super("SignIn");
+        super(TaskProvider.TASK_ID_SIGN_IN);
     }
 
     @Override

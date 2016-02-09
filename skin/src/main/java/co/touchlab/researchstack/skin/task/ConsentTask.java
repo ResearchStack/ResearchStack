@@ -35,7 +35,6 @@ import co.touchlab.researchstack.skin.utils.JsonUtils;
 
 public class ConsentTask extends OrderedTask
 {
-    public static final String ID_CONSENT        = "consent";
     public static final String ID_VISUAL         = "ID_VISUAL";
     public static final String ID_FIRST_QUESTION = "question_1";
     public static final String ID_QUIZ_RESULT    = "ID_QUIZ_RESULT";
@@ -47,9 +46,9 @@ public class ConsentTask extends OrderedTask
     public static final String ID_FORM_BIRTHDATE = "ID_FORM_BIRTHDATE";
     public static final String ID_SIGNATURE      = "ID_SIGNATURE";
 
-    public ConsentTask(Context context)
+    public ConsentTask(Context context, String taskId)
     {
-        super(ID_CONSENT);
+        super(taskId);
 
         Resources r = context.getResources();
 

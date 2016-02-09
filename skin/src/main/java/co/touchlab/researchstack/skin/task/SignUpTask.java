@@ -2,6 +2,7 @@ package co.touchlab.researchstack.skin.task;
 
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.skin.TaskProvider;
 
 /**
  * TODO Needs Refactor
@@ -17,10 +18,9 @@ public class SignUpTask extends OnboardingTask
     public static final String ID_USERNAME = "ID_EMAIL";
     public static final String ID_PASSWORD = "ID_PASSWORD";
 
-
     public SignUpTask()
     {
-        super("SignUp");
+        super(TaskProvider.TASK_ID_SIGN_UP);
     }
 
     @Override

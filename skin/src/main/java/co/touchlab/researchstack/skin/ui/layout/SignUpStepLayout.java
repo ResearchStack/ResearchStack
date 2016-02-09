@@ -72,7 +72,6 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
                 }
             }
         });
-        email.setText("walter@touchlab.co");
 
         password = (AppCompatEditText) layout.findViewById(R.id.password);
         password.addTextChangedListener(new TextWatcherAdapter()
@@ -95,7 +94,6 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
             }
             return false;
         });
-        password.setText("password");
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction(v -> signUp());

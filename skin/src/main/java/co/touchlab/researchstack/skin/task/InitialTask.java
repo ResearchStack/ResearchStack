@@ -17,8 +17,6 @@ import co.touchlab.researchstack.glue.R;
 public class InitialTask extends OrderedTask
 {
 
-    public static final String TASK_ID = "initialTask";
-
     public InitialTask(String identifier)
     {
         super(identifier);
