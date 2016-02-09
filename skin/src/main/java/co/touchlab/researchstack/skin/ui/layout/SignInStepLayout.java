@@ -61,7 +61,6 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
         progress = layout.findViewById(R.id.progress);
 
         username = (AppCompatEditText) layout.findViewById(R.id.username);
-        username.setText("walter@touchlab.co");
         username.addTextChangedListener(new TextWatcherAdapter()
         {
             @Override
@@ -75,7 +74,6 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
         });
 
         password = (AppCompatEditText) layout.findViewById(R.id.password);
-        password.setText("password");
         password.addTextChangedListener(new TextWatcherAdapter()
         {
             @Override

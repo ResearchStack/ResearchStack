@@ -31,23 +31,29 @@ public class SampleUiManager extends UiManager
     {
         List<ActionItem> navItems = new ArrayList<>();
 
-        navItems.add(new ActionItem().setId(R.id.nav_activities)
+        navItems.add(new ActionItem.ActionItemBuilder()
+                .setId(R.id.nav_activities)
                 .setGroupId(R.id.nav_group)
                 .setTitle(R.string.activities)
                 .setIcon(R.drawable.ic_nav_activities)
-                .setClass(ActivitiesFragment.class));
+                .setClass(ActivitiesFragment.class)
+                .build());
 
-        navItems.add(new ActionItem().setId(R.id.nav_dashboard)
+        navItems.add(new ActionItem.ActionItemBuilder()
+                .setId(R.id.nav_dashboard)
                 .setGroupId(R.id.nav_group)
                 .setTitle(R.string.dashboard)
                 .setIcon(R.drawable.ic_nav_dashboard)
-                .setClass(DashboardFragment.class));
+                .setClass(DashboardFragment.class)
+                .build());
 
-        navItems.add(new ActionItem().setId(R.id.nav_debug)
+        navItems.add(new ActionItem.ActionItemBuilder()
+                .setId(R.id.nav_debug)
                 .setGroupId(R.id.nav_group)
                 .setTitle(R.string.debug)
                 .setIcon(R.mipmap.ic_launcher)
-                .setClass(SampleDebugFragment.class));
+                .setClass(SampleDebugFragment.class)
+                .build());
 
         return navItems;
     }
@@ -57,21 +63,27 @@ public class SampleUiManager extends UiManager
     {
         List<ActionItem> navItems = new ArrayList<>();
 
-        navItems.add(new ActionItem().setId(R.id.nav_learn)
+        navItems.add(new ActionItem.ActionItemBuilder()
+                .setId(R.id.nav_learn)
                 .setTitle(R.string.learn)
                 .setIcon(R.drawable.ic_nav_learn)
-                .setClass(LearnFragment.class));
+                .setClass(LearnFragment.class)
+                .build());
 
-        navItems.add(new ActionItem().setId(R.id.nav_profile)
+        navItems.add(new ActionItem.ActionItemBuilder()
+                .setId(R.id.nav_profile)
                 .setTitle(R.string.profile)
                 .setIcon(R.drawable.ic_nav_profile)
-                .setClass(ProfileFragment.class));
+                .setClass(ProfileFragment.class)
+                .build());
 
-        navItems.add(new ActionItem().setId(R.id.nav_settings)
+        navItems.add(new ActionItem.ActionItemBuilder()
+                .setId(R.id.nav_settings)
                 .setTitle(R.string.settings)
                 .setIcon(R.drawable.ic_nav_settings)
                 .setAction(MenuItem.SHOW_AS_ACTION_NEVER)
-                .setClass(SettingsFragment.class));
+                .setClass(SettingsFragment.class)
+                .build());
 
         return navItems;
     }
