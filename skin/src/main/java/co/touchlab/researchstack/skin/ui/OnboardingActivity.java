@@ -92,7 +92,7 @@ public class OnboardingActivity extends PinCodeActivity
     {
         boolean hasAuth = ! StorageAccess.getInstance().hasPinCode(this);
 
-        SignUpTask task = (SignUpTask) TaskProvider.getInstance().get(TaskProvider.TASK_ID_SIGN_IN);
+        SignUpTask task = (SignUpTask) TaskProvider.getInstance().get(TaskProvider.TASK_ID_SIGN_UP);
         task.setHasAuth(hasAuth);
         startActivityForResult(SignUpTaskActivity.newIntent(this, task), REQUEST_CODE_SIGN_UP);
     }
