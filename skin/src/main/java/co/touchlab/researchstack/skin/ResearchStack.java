@@ -21,7 +21,7 @@ public abstract class ResearchStack
         if(instance == null)
         {
             throw new RuntimeException(
-                    "Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
+                    "ResearchStack instance is null. Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
 
         return instance;
@@ -42,6 +42,8 @@ public abstract class ResearchStack
                         concreteResearchStack.getEncryptionProvider(context),
                         concreteResearchStack.createFileAccessImplementation(context),
                         concreteResearchStack.createAppDatabaseImplementation(context));
+
+        TaskProvider.init(concreteResearchStack.createTaskProviderImplementation(context));
     }
 
     protected abstract AppDatabase createAppDatabaseImplementation(Context context);

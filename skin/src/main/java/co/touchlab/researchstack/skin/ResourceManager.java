@@ -13,7 +13,7 @@ public abstract class ResourceManager
         if(instance == null)
         {
             throw new RuntimeException(
-                    "Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
+                    "ResourceManager instance is null. Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
 
         return instance;
