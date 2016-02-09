@@ -18,6 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="56dp"
+        app:tabIndicatorColor="?attr/tabIndicatorColor"
+        app:tabBackground="?attr/tabBackground"
+        app:tabTextColor="?attr/tabTextColor"
         />
 
     <android.support.v4.view.ViewPager
