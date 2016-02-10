@@ -21,6 +21,7 @@
         app:tabIndicatorColor="?attr/tabIndicatorColor"
         app:tabBackground="?attr/tabBackground"
         app:tabTextColor="?attr/tabTextColor"
+        app:tabSelectedTextColor="?attr/tabSelectedTextColor"
         />
 
     <android.support.v4.view.ViewPager
