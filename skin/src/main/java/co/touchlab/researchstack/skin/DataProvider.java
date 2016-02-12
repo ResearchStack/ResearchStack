@@ -6,7 +6,6 @@ import java.util.List;
 
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.skin.model.SchedulesAndTasksModel;
-import co.touchlab.researchstack.skin.model.User;
 import co.touchlab.researchstack.skin.task.SmartSurveyTask;
 import rx.Observable;
 
@@ -52,15 +51,15 @@ public abstract class DataProvider
 
     public abstract String getUserEmail(Context context);
 
-    public abstract User.UserInfoType[] getUserInfoTypes();
-
-    public abstract void clearUserData(Context context);
-
     public abstract void uploadTaskResult(Context context, TaskResult taskResult);
 
     public abstract List<SchedulesAndTasksModel.TaskModel> loadTasksAndSchedules(Context context);
 
     public abstract SmartSurveyTask loadTask(Context context, SchedulesAndTasksModel.TaskModel task);
+
+    // This initial task may include profile items such as height and weight that may need to be
+    // processed differently than a normal task result
+    public abstract void processInitialTaskResult(Context context, TaskResult taskResult);
 
 
     //TODO public abstract void getUserProfile(TODO);

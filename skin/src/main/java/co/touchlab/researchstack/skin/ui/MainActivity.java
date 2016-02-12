@@ -22,6 +22,7 @@ import co.touchlab.researchstack.backbone.utils.ObservableUtils;
 import co.touchlab.researchstack.backbone.utils.UiThreadContext;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ActionItem;
+import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.TaskProvider;
 import co.touchlab.researchstack.skin.UiManager;
 import co.touchlab.researchstack.skin.ui.adapter.MainPagerAdapter;
@@ -116,7 +117,7 @@ public class MainActivity extends PinCodeActivity
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             taskResult.setEndDate(new Date());
             StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
-            //TODO DataProvider.getInstance().uploadTaskResult(this, taskResult);
+            DataProvider.getInstance().processInitialTaskResult(this, taskResult);
         }
         else
         {

@@ -35,7 +35,6 @@ import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.DataResponse;
 import co.touchlab.researchstack.skin.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.skin.model.TaskModel;
-import co.touchlab.researchstack.skin.model.User;
 import co.touchlab.researchstack.skin.schedule.ScheduleHelper;
 import co.touchlab.researchstack.skin.task.SmartSurveyTask;
 import co.touchlab.researchstack.skin.ui.layout.SignInStepLayout;
@@ -438,26 +437,10 @@ public class SampleDataProvider extends DataProvider
                         });
     }
 
-    /**
-     * TODO use this for deciding what info to collect during signup, hardcoded in layouts for now
-     */
     @Override
-    public User.UserInfoType[] getUserInfoTypes()
+    public void processInitialTaskResult(Context context, TaskResult taskResult)
     {
-        return new User.UserInfoType[] {
-                User.UserInfoType.Name,
-                User.UserInfoType.Email,
-                User.UserInfoType.BiologicalSex,
-                User.UserInfoType.DateOfBirth,
-                User.UserInfoType.Height,
-                User.UserInfoType.Weight
-        };
-    }
-
-    @Deprecated
-    public void clearUserData(Context context)
-    {
-        // TODO make this work again
+        // do something with initial survey here
     }
 
     public interface BridgeService
