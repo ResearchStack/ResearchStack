@@ -53,6 +53,14 @@ a {
       margin-top: 1rem;
       margin-left: 0; } }
 
+.clicker {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
 .page-header {
   color: #fff;
   text-align: center;
@@ -65,7 +73,7 @@ a {
 
 @media screen and (min-width: 64em) {
   .page-header {
-    padding: 5rem 6rem; } }
+    padding: 4rem 6rem; } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .page-header {
@@ -223,6 +231,72 @@ a {
   .main-content {
     padding: 2rem 1rem;
     font-size: 1rem; } }
+
+.signup-field {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: black;
+  background-color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s; }
+  .signup-field + .signup-field {
+    margin-left: 1rem; }
+
+@media screen and (min-width: 64em) {
+
+  .signup-field {
+    width: 50%;
+    padding: 0.75rem 1rem; } }
+
+@media screen and (min-width: 42em) and (max-width: 64em) {
+  .signup-field {
+    width: 50%;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem; } }
+
+@media screen and (max-width: 42em) {
+  .signup-field {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 0.9rem; }
+    .signup-field + .signup-field {
+      margin-top: 1rem;
+      margin-left: 0; } }
+
+ {
+}
+
+.signup-section {
+  color: #fff;
+  text-align: center;
+  background-color: #159957;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+
+@media screen and (min-width: 64em) {
+  .signup-section {
+    padding: 2rem 6rem; } }
+
+@media screen and (min-width: 42em) and (max-width: 64em) {
+  .signup-section {
+    padding: 3rem 4rem; } }
+
+@media screen and (max-width: 42em) {
+  .signup-section {
+    padding: 2rem 1rem; } }
+
+.signup-tagline {
+  margin-bottom: 2rem;
+  font-weight: normal;
+  /*opacity: 0.7;*/
+}
 
 .site-footer {
   padding-top: 2rem;

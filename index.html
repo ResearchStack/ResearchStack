@@ -8,6 +8,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
   </head>
   <body>
     <section class="page-header">
@@ -17,6 +18,29 @@
       <a href="https://github.com/ResearchStack/ResearchStack" class="btn">GitHub</a>
       <a href="https://groups.google.com/forum/#!forum/researchstack" class="btn">Forum</a>
       <a href="https://twitter.com/researchstack" class="btn">Twitter</a>
+    </section>
+
+    <section class="signup-section">
+      <h2 class="signup-tagline successful-signup">Want to join the Beta Preview?</h2>
+      <h2 class="signup-tagline hidden success_message">
+        Thank you for signing up for the beta preview!
+      </h2>
+      <h2 class="project-tagline hidden success_message">
+        We are adding access on a rolling basis and will be in touch soon.
+      </h2>
+      <a id="click_here" onclick="revealForm()" class='btn clicker successful-signup'>Click here to sign up!</a>
+      <form id="registration_form" class="hidden successful-signup">
+        <input id="name" type="text" name="name" placeholder="name (required)" class="signup-field" required>
+        </br>
+        <input id="email" type="email" name="_replyto" placeholder="email (required)" class="signup-field" required>
+        </br>
+        <input id="github" type="text" name="github" placeholder="github handle" class="signup-field">
+        </br>
+        <textarea id="message" type="text" name="message" placeholder="Tell us a bit about your project/interest!" class="signup-field" rows="5"></textarea>
+        </br>
+        <input id="register" type="submit" value="Sign me up!" class="btn successful-signup" onclick="submitRegistration()">
+      </form>
+      <h1 id="success_message" class="signup-tagline hidden">
     </section>
 
     <section class="main-content">
@@ -49,8 +73,44 @@ We also would love it if you join <a href="https://groups.google.com/forum/#!for
       </footer>
 
     </section>
+          <script type="text/javascript">
+            $(document).ready(function () {
+                if(window.location.href.indexOf("successful-signup") > -1) {
+                  $('.successful-signup').hide();
+                  $('#registration_form').hide();
+                  $('.success_message').show();
+                }
+            });
 
-            <script type="text/javascript">
+            function revealForm () {
+                                    $('#click_here').hide();
+                                    $('#registration_form').show();
+                                   };
+
+            function submitRegistration () {
+                                            var $regForm = $('#registration_form')
+                                            if (!$regForm[0].checkValidity()) {
+                                              $regForm.find(':submit').click()
+                                            } else {
+                                                    $.ajax({
+                                                            url: "http://formspree.io/michael.carroll@cornell.edu",
+                                                            method: "POST",
+                                                            data: {
+                                                                    _replyto: $("#email").val(),
+                                                                    _subject: "ResearchStack beta preview access request: " + $("#name").val(),
+                                                                    github_handle: $("#github").val(),
+                                                                    message: $("#message").val()
+                                                                  },
+                                                            dataType: "json",
+                                                            success: function(result){
+                                                              location.href = "/#successful-signup"
+                                                            }
+                                                    });
+                                            }
+                                           };
+          </script>
+
+          <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
