@@ -131,14 +131,9 @@ public class SignUpTask extends OnboardingTask
             stepPosition = 2;
 
         }
-        else if(step.getIdentifier().equals(SignUpPassCodeConfirmationStepIdentifier))
-        {
-            stepPosition = 3;
-
-        }
         else if(step.getIdentifier().equals(SignUpStepIdentifier))
         {
-            stepPosition = 4;
+            stepPosition = 3;
 
         }
 

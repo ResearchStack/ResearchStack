@@ -7,13 +7,16 @@ import android.view.View;
 
 import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.result.TaskResult;
+import co.touchlab.researchstack.backbone.task.OrderedTask;
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.ResourceManager;
 import co.touchlab.researchstack.skin.TaskProvider;
+import co.touchlab.researchstack.skin.UiManager;
 import co.touchlab.researchstack.skin.model.StudyOverviewModel;
+import co.touchlab.researchstack.skin.step.PassCodeCreationStep;
 import co.touchlab.researchstack.skin.task.OnboardingTask;
 import co.touchlab.researchstack.skin.task.SignInTask;
 import co.touchlab.researchstack.skin.task.SignUpTask;
@@ -25,8 +28,9 @@ import co.touchlab.researchstack.skin.utils.JsonUtils;
  */
 public class OnboardingActivity extends PinCodeActivity
 {
-    public static final int REQUEST_CODE_SIGN_UP = 21473;
-    public static final int REQUEST_CODE_SIGN_IN = 31473;
+    public static final int REQUEST_CODE_SIGN_UP  = 21473;
+    public static final int REQUEST_CODE_SIGN_IN  = 31473;
+    public static final int REQUEST_CODE_PASSCODE = 41473;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,6 +40,10 @@ public class OnboardingActivity extends PinCodeActivity
 
         StudyOverviewModel model = parseStudyOverviewModel();
         OnboardingPagerAdapter adapter = new OnboardingPagerAdapter(this, model.getQuestions());
+
+        findViewById(R.id.intro_skip).setVisibility(UiManager.getInstance().isConsentSkippable()
+                ? View.VISIBLE
+                : View.GONE);
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(2);
@@ -62,10 +70,10 @@ public class OnboardingActivity extends PinCodeActivity
 
         // let them view this page without making passcode, but call onDataReady if they have
         //        NewStorageManager newStorageManager = NewStorageManager.getInstance();
-//        if(((AesFileAccess) fileAccess).passphraseExists(this))
-//        {
-//            initFileAccess();
-//        }
+        //        if(((AesFileAccess) fileAccess).passphraseExists(this))
+        //        {
+        //            initFileAccess();
+        //        }
     }
 
     @Override
@@ -96,6 +104,15 @@ public class OnboardingActivity extends PinCodeActivity
         startActivityForResult(SignUpTaskActivity.newIntent(this, task), REQUEST_CODE_SIGN_UP);
     }
 
+    public void onSkipClicked(View view)
+    {
+        PassCodeCreationStep step = new PassCodeCreationStep(OnboardingTask.SignUpPassCodeCreationStepIdentifier,
+                R.string.passcode);
+        // TODO make a passcode task?
+        OrderedTask task = new OrderedTask("PasscodeTask", step);
+        startActivityForResult(ViewTaskActivity.newIntent(this, task), REQUEST_CODE_PASSCODE);
+    }
+
     public void onSignInClicked(View view)
     {
         boolean hasPasscode = StorageAccess.getInstance().hasPinCode(this);
@@ -116,22 +133,23 @@ public class OnboardingActivity extends PinCodeActivity
                     .getResultForIdentifier(SignInTask.ID_EMAIL);
             String password = (String) result.getStepResult(OnboardingTask.SignInStepIdentifier)
                     .getResultForIdentifier(SignInTask.ID_PASSWORD);
-            Intent intent;
 
             // TODO find better way to tell the difference between sign in and needs verification
             if(email == null || password == null)
             {
 
-                intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
             else
             {
-                intent = new Intent(this, EmailVerificationActivity.class);
+                Intent intent = new Intent(this, EmailVerificationActivity.class);
                 intent.putExtra(EmailVerificationActivity.EXTRA_EMAIL, email);
                 intent.putExtra(EmailVerificationActivity.EXTRA_PASSWORD, password);
+                startActivity(intent);
             }
 
-            startActivity(intent);
         }
         else if(requestCode == REQUEST_CODE_SIGN_UP && resultCode == RESULT_OK)
         {
@@ -147,6 +165,17 @@ public class OnboardingActivity extends PinCodeActivity
             intent.putExtra(EmailVerificationActivity.EXTRA_EMAIL, email);
             intent.putExtra(EmailVerificationActivity.EXTRA_PASSWORD, password);
             startActivity(intent);
+        }
+        else if(requestCode == REQUEST_CODE_PASSCODE && resultCode == RESULT_OK)
+        {
+            TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+            String passcode = (String) result.getStepResult(OnboardingTask.SignUpPassCodeCreationStepIdentifier)
+                    .getResult();
+            StorageAccess.getInstance().setPinCode(this, passcode);
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
         else
         {

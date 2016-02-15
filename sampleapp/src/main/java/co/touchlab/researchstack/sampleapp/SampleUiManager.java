@@ -119,4 +119,10 @@ public class SampleUiManager extends UiManager
     {
         return true;
     }
+
+    @Override
+    public boolean isConsentSkippable()
+    {
+        return true;
+    }
 }

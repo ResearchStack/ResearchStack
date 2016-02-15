@@ -96,11 +96,13 @@ public class MainActivity extends PinCodeActivity
         Observable.create(subscriber -> {
             UiThreadContext.assertBackgroundThread();
 
-            TaskResult result = StorageAccess.getInstance().getAppDatabase()
+            TaskResult result = StorageAccess.getInstance()
+                    .getAppDatabase()
                     .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
             subscriber.onNext(result == null);
         }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
-            if((boolean) needsInitialSurvey)
+            if((boolean) needsInitialSurvey &&
+                    DataProvider.getInstance().isSignedIn(MainActivity.this))
             {
                 Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
                 Intent intent = ViewTaskActivity.newIntent(this, task);

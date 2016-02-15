@@ -14,13 +14,13 @@
 
         <ImageView
             android:id="@+id/layout_studyoverview_landing_logo"
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="80dp"
             android:minWidth="80dp"
             android:scaleType="center"
             tools:src="@mipmap/ic_launcher"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="24dp"
             />
 

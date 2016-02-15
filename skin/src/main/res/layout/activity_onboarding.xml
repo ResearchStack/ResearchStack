@@ -25,23 +25,42 @@
         <!--android:animateLayoutChanges="true"-->
         <!--/>-->
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/intro_sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="36dp"
-        android:paddingRight="36dp"
-        android:textColor="@android:color/white"
-        android:onClick="onSignUpClicked"
-        android:text="@string/join_study"
-        />
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
+        <Space android:layout_width="16dp" android:layout_height="match_parent"/>
+
+        <!-- TODO these buttons don't match the designs exactly and might look bad on low dpi -->
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/intro_skip"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/white"
+            android:onClick="onSkipClicked"
+            android:text="@string/skip_signup"
+            />
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/intro_sign_up"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/white"
+            android:onClick="onSignUpClicked"
+            android:text="@string/join_study"
+            />
+        <Space android:layout_width="16dp" android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/intro_sign_in"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_marginBottom="4dp"
+        android:layout_height="52dp"
+        android:gravity="center_vertical"
         android:clickable="true"
         android:onClick="onSignInClicked"
         android:text="@string/already_participating"

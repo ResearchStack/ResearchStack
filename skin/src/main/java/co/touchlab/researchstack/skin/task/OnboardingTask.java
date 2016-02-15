@@ -20,7 +20,6 @@ public abstract class OnboardingTask extends Task
     public static final String SignUpEligibleStepIdentifier             = "Eligible";
     public static final String SignUpIneligibleStepIdentifier           = "Ineligible";
     public static final String SignUpPassCodeCreationStepIdentifier     = "PassCodeCreation";
-    public static final String SignUpPassCodeConfirmationStepIdentifier = "PassCodeConfirmation";
     public static final String SignUpThankYouStepIdentifier             = "ThankYou";
     public static final String SignInStepIdentifier                     = "SignIn";
     public static final String SignUpStepIdentifier                     = "SignUp";

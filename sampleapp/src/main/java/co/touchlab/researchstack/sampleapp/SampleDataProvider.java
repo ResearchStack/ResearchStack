@@ -391,6 +391,8 @@ public class SampleDataProvider extends DataProvider
     {
         StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
 
+        // TODO use UploadResult queue for this? (upload encrypted)
+
         TaskModel taskModel = loadedTasks.get(taskResult.getIdentifier());
         List<TaskModel.StepModel> elements = taskModel.elements;
         Map<String, TaskModel.StepModel> stepModels = new HashMap<>(elements.size());
