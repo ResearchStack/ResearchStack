@@ -16,6 +16,14 @@
         <item name="android:actionBarStyle">@style/AppTheme.ActionBarStyle</item>
         <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
         <item name="submitBackground">@color/gray</item>
+
+        <!-- TabLayout -->
+        <!-- Using an attr and pointing app:theme on the tabLayout to the attr does not work. -->
+        <!-- TODO Figure out a better way of styling tabLayout without having to define all style-attrs in the theme -->
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabBackground">@color/colorPrimary</item>
+        <item name="tabTextColor">#6FFF</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
     </style>
 
     <style name="AppTheme.TransparentActionBar">
