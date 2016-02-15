@@ -6,20 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.jakewharton.rxbinding.view.RxView;
-
-import java.util.Date;
-
-import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.result.StepResult;
 import co.touchlab.researchstack.backbone.step.Step;
-import co.touchlab.researchstack.backbone.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.backbone.ui.callbacks.ActivityCallback;
 import co.touchlab.researchstack.backbone.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.backbone.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.backbone.ui.views.SubmitBar;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.skin.DataProvider;
 
 public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayout
 {
@@ -64,30 +57,9 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
     {
         LayoutInflater.from(getContext()).inflate(R.layout.item_eligible, this, true);
 
-        // TODO only for testing
-        RxView.clicks(findViewById(R.id.DEBUG_skip_consent)).subscribe(v -> skipConsentActivity());
-
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction((v) -> startConsentActivity());
         submitBar.setNegativeAction((v) -> exitSignUpActivity());
-    }
-
-    private void skipConsentActivity()
-    {
-        // Give the user a pin
-        ((AuthDataAccess) StorageAccess.getInstance()).setPinCode(getContext(), "1111");
-
-        // Save fake consent stuff
-        DataProvider.getInstance()
-                .saveConsent(getContext(),
-                        "test name",
-                        new Date(662748042000l),
-                        "VGhpcyBpc24ndCBhIHJlYWwgaW1hZ2Uu",
-                        "10202011",
-                        "all_qualified_researchers");
-
-        // Go to the next step
-        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
     }
 
     private void startConsentActivity()

@@ -9,6 +9,7 @@ import co.touchlab.researchstack.skin.TaskProvider;
  */
 public class SignInTask extends OnboardingTask
 {
+    private boolean hasPasscode;
 
     public static final int    MINIMUM_STEPS = 0;
     public static final String ID_EMAIL      = "ID_EMAIL";
@@ -26,23 +27,27 @@ public class SignInTask extends OnboardingTask
 
         if(step == null)
         {
+            if(! hasPasscode)
+            {
+                nextStep = getPassCodeCreationStep();
+            }
+            else
+            {
+                nextStep = getSignInStep();
+            }
+        }
+        else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
+        {
             nextStep = getSignInStep();
         }
-
         return nextStep;
     }
 
     @Override
     public Step getStepBeforeStep(Step step, TaskResult result)
     {
-        Step prevStep = null;
-
-        if(step.getIdentifier().equals(SignInStepIdentifier))
-        {
-            prevStep = null;
-        }
-
-        return prevStep;
+        // go back to onboarding
+        return null;
     }
 
     @Override
@@ -55,5 +60,10 @@ public class SignInTask extends OnboardingTask
     public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
     {
         return new TaskProgress(0, getNumberOfSteps());
+    }
+
+    public void setHasPasscode(boolean hasPasscode)
+    {
+        this.hasPasscode = hasPasscode;
     }
 }

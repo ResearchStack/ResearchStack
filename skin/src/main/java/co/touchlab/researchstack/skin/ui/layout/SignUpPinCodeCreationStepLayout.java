@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.skin.ui.layout;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
@@ -12,13 +13,26 @@ import co.touchlab.researchstack.backbone.step.Step;
 import co.touchlab.researchstack.backbone.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.backbone.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.backbone.ui.views.PinCodeLayout;
+import co.touchlab.researchstack.backbone.utils.ThemeUtils;
+import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.skin.step.PassCodeCreationStep;
 
 public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements StepLayout
 {
 
-    protected StepCallbacks callbacks;
-    protected Step               step;
-    protected StepResult<String> result;
+    protected StepCallbacks        callbacks;
+    protected PassCodeCreationStep step;
+    protected StepResult<String>   result;
+
+    private CharSequence currentPin = null;
+    private State        state      = State.CREATE;
+
+    private enum State
+    {
+        CREATE,
+        CONFIRM,
+        RETRY
+    }
 
     public SignUpPinCodeCreationStepLayout(Context context)
     {
@@ -38,7 +52,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     @Override
     public void initialize(Step step, StepResult result)
     {
-        this.step = step;
+        this.step = (PassCodeCreationStep) step;
         this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
 
         initializeLayout();
@@ -46,17 +60,36 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
 
     private void initializeLayout()
     {
-        summary.setText(step.getText());
-        title.setText(step.getTitle());
+        refreshState();
 
         RxTextView.textChanges(editText)
                 .map(CharSequence:: toString)
                 .filter(pin -> pin.length() == config.getPinLength())
                 .subscribe(pin -> {
-                    new Handler().postDelayed(() -> {
-                        result.setResult(pin);
-                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
-                    }, 300);
+                    if(state == State.CREATE)
+                    {
+                        currentPin = pin;
+                        editText.setText("");
+                        state = State.CONFIRM;
+                        refreshState();
+                    }
+                    else
+                    {
+                        if(pin.equals(currentPin))
+                        {
+                            new Handler().postDelayed(() -> {
+                                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                                result.setResult(pin);
+                                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
+                            }, 300);
+                        }
+                        else
+                        {
+                            state = State.RETRY;
+                            editText.setText("");
+                            refreshState();
+                        }
+                    }
                 });
 
         editText.post(() -> imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
@@ -66,9 +99,20 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-        return false;
+        if(state == State.CREATE)
+        {
+            callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, null);
+            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        }
+        else
+        {
+            // pressed back while confirming, go back to creation state
+            currentPin = null;
+            editText.setText("");
+            state = State.CREATE;
+            refreshState();
+        }
+        return true;
     }
 
     @Override
@@ -82,4 +126,38 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     {
         this.callbacks = callbacks;
     }
+
+    private void refreshState()
+    {
+        Resources res = getResources();
+        switch(state)
+        {
+            case CONFIRM:
+                updateText(res.getString(R.string.passcode_confirm_title),
+                        res.getString(R.string.passcode_confirm_summary),
+                        ThemeUtils.getTextColorPrimary(getContext()));
+                break;
+
+            case RETRY:
+                updateText(res.getString(R.string.passcode_confirm_title),
+                        res.getString(R.string.passcode_confirm_error),
+                        res.getColor(R.color.error));
+                break;
+
+            case CREATE:
+            default:
+                updateText(res.getString(R.string.passcode_create_title),
+                        res.getString(R.string.passcode_create_summary),
+                        ThemeUtils.getTextColorPrimary(getContext()));
+                break;
+        }
+    }
+
+    private void updateText(String titleString, String textString, int color)
+    {
+        title.setText(titleString);
+        summary.setText(textString);
+        summary.setTextColor(color);
+    }
+
 }

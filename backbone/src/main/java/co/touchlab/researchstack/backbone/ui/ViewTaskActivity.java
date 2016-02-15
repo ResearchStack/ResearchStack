@@ -188,6 +188,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private void notifyStepOfBackPress()
     {
         StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsc_current_step);
+        // TODO shouldn't we call onBackPressed if false?
         currentStepLayout.isBackEventConsumed();
     }
 

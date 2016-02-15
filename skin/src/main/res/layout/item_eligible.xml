@@ -29,20 +29,6 @@
         android:layout_marginTop="24dp"
         />
 
-    <!-- TODO Debug view, remove for production -->
-    <TextView
-        android:id="@+id/DEBUG_skip_consent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Debug Option: Skip Consent"
-        android:textColor="@android:color/holo_red_dark"
-        android:layout_below="@+id/eligible_desc"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="48dp"
-        android:paddingTop="24dp"
-        android:paddingBottom="24dp"
-        />
-
     <co.touchlab.researchstack.backbone.ui.views.SubmitBar
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"

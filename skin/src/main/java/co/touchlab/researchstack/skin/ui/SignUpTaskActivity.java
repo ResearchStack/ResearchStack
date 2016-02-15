@@ -14,7 +14,6 @@ import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.result.StepResult;
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.step.Step;
-import co.touchlab.researchstack.backbone.storage.file.auth.AuthDataAccess;
 import co.touchlab.researchstack.backbone.task.Task;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.backbone.ui.callbacks.ActivityCallback;
@@ -47,7 +46,8 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
         onSaveStepResult(step.getIdentifier(), result);
 
         // Save Pin to disk, then save our consent info
-        if (step.getIdentifier().equals(OnboardingTask.SignUpPassCodeConfirmationStepIdentifier))
+        if(action == ACTION_NEXT &&
+                step.getIdentifier().equals(OnboardingTask.SignUpPassCodeCreationStepIdentifier))
         {
             String pin = (String) result.getResult();
             if(! TextUtils.isEmpty(pin))
@@ -55,7 +55,10 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 StorageAccess.getInstance().setPinCode(this, pin);
             }
 
-            saveConsentResultInfo();
+            if(consentResult != null)
+            {
+                saveConsentResultInfo();
+            }
         }
 
         // Show next step
@@ -84,19 +87,13 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
         if(requestCode == SignUpEligibleStepLayout.CONSENT_REQUEST)
         {
             // User has passed through the entire consent flow
-            if (resultCode == Activity.RESULT_OK)
+            if(resultCode == Activity.RESULT_OK)
             {
                 consentResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
 
-                // (If we aren't using an AuthFileAccess) OR (if we are, and we have a pincode)
-                // THEN SaveConsentResultInfo. If we don't have a pincode then pincode-creation
-                // steps will appear when we call "showNextStep"
+                // If they've already created a pincode, save consent, otherwise go to pin creation
 
-                //TODO This is now misleading.
-                boolean doesNotHaveAuth = ! (StorageAccess.getInstance() instanceof AuthDataAccess);
-                boolean hasPinCode = StorageAccess.getInstance().hasPinCode(this);
-
-                if (doesNotHaveAuth || hasPinCode)
+                if(StorageAccess.getInstance().hasPinCode(this))
                 {
                     saveConsentResultInfo();
                 }

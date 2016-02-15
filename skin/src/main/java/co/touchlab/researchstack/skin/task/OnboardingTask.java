@@ -8,11 +8,10 @@ import co.touchlab.researchstack.backbone.task.Task;
 import co.touchlab.researchstack.backbone.ui.step.body.NotImplementedStepBody;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.UiManager;
-import co.touchlab.researchstack.skin.step.PassCodeConfirmationStep;
+import co.touchlab.researchstack.skin.step.PassCodeCreationStep;
 import co.touchlab.researchstack.skin.ui.layout.SignInStepLayout;
 import co.touchlab.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
 import co.touchlab.researchstack.skin.ui.layout.SignUpIneligibleStepLayout;
-import co.touchlab.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
 import co.touchlab.researchstack.skin.ui.layout.SignUpStepLayout;
 
 public abstract class OnboardingTask extends Task
@@ -32,20 +31,19 @@ public abstract class OnboardingTask extends Task
     //    public static final String SignUpPermissionsPrimingStepIdentifier = "PermissionsPriming";
 
     @Deprecated // TODO isnt used anywhere and its value is never read.
-    protected int          currentStepNumber;
-    private   QuestionStep inclusionCriteriaStep;
-    private   Step         eligibleStep;
-    private   Step         ineligibleStep;
-    private   Step         passcodeCreationStep;
-    private   PassCodeConfirmationStep         passcodeConfirmationStep;
-    private   Step         signUpStep;
-    private   Step         permissionsPrimingStep;
-    private   Step         generalInfoStep;
-    private   Step         medicalInfoStep;
-    private   Step         customInfoStep;
-    private   Step         permissionsStep;
-    private   Step         thankyouStep;
-    private   Step         signInStep;
+    protected int                  currentStepNumber;
+    private   QuestionStep         inclusionCriteriaStep;
+    private   Step                 eligibleStep;
+    private   Step                 ineligibleStep;
+    private   PassCodeCreationStep passcodeCreationStep;
+    private   Step                 signUpStep;
+    private   Step                 permissionsPrimingStep;
+    private   Step                 generalInfoStep;
+    private   Step                 medicalInfoStep;
+    private   Step                 customInfoStep;
+    private   Step                 permissionsStep;
+    private   Step                 thankyouStep;
+    private   Step                 signInStep;
     private boolean eligible                = true;
     private boolean customStepIncluded      = false;
     private boolean permissionScreenSkipped = false;
@@ -146,29 +144,9 @@ public abstract class OnboardingTask extends Task
     {
         if(passcodeCreationStep == null)
         {
-            passcodeCreationStep = new Step(SignUpPassCodeCreationStepIdentifier);
-            passcodeCreationStep.setStepTitle(R.string.passcode);
-            passcodeCreationStep.setTitle("Choose a passcode");
-            passcodeCreationStep.setText(
-                    "Enter a secure code to protect your data and log in faster.");
-            passcodeCreationStep.setStepLayoutClass(SignUpPinCodeCreationStepLayout.class);
+            passcodeCreationStep = new PassCodeCreationStep(SignUpPassCodeCreationStepIdentifier, R.string.passcode);
         }
         return passcodeCreationStep;
-    }
-
-    //TODO Move string to Resources
-    public PassCodeConfirmationStep getPassCodeConfirmationStep(String pin)
-    {
-        if(passcodeConfirmationStep == null)
-        {
-            passcodeConfirmationStep = new PassCodeConfirmationStep(SignUpPassCodeConfirmationStepIdentifier);
-            passcodeConfirmationStep.setTitle("Confirm your passcode");
-            passcodeConfirmationStep.setText("Enter your code one more time to confirm.");
-        }
-
-        passcodeConfirmationStep.setPin(pin);
-
-        return passcodeConfirmationStep;
     }
 
     public Step getSignUpStep()

@@ -10,7 +10,7 @@ import co.touchlab.researchstack.skin.TaskProvider;
  */
 public class SignUpTask extends OnboardingTask
 {
-    private boolean hasAuth;
+    private boolean hasPasscode;
 
     public static final int MINIMUM_STEPS = 2;
 
@@ -45,7 +45,7 @@ public class SignUpTask extends OnboardingTask
         }
         else if(step.getIdentifier().equals(SignUpEligibleStepIdentifier))
         {
-            if(hasAuth)
+            if(! hasPasscode)
             {
                 nextStep = getPassCodeCreationStep();
             }
@@ -55,13 +55,6 @@ public class SignUpTask extends OnboardingTask
             }
         }
         else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
-        {
-            String pin = (String) result.getStepResult(SignUpPassCodeCreationStepIdentifier)
-                    .getResult();
-
-            nextStep =  getPassCodeConfirmationStep(pin);
-        }
-        else if(step.getIdentifier().equals(SignUpPassCodeConfirmationStepIdentifier))
         {
             nextStep = getSignUpStep();
         }
@@ -92,13 +85,9 @@ public class SignUpTask extends OnboardingTask
         {
             prevStep = getEligibleStep();
         }
-        else if(step.getIdentifier().equals(SignUpPassCodeConfirmationStepIdentifier))
-        {
-            prevStep = getPassCodeCreationStep();
-        }
         else if(step.getIdentifier().equals(SignUpStepIdentifier))
         {
-            if(hasAuth)
+            if(hasPasscode)
             {
                 // Force user to create a new pin
                 prevStep = getPassCodeCreationStep();
@@ -156,8 +145,8 @@ public class SignUpTask extends OnboardingTask
         return new TaskProgress(stepPosition, getNumberOfSteps());
     }
 
-    public void setHasAuth(boolean hasAuth)
+    public void setHasPasscode(boolean hasPasscode)
     {
-        this.hasAuth = hasAuth;
+        this.hasPasscode = hasPasscode;
     }
 }
