@@ -106,11 +106,19 @@ public class OnboardingActivity extends PinCodeActivity
 
     public void onSkipClicked(View view)
     {
-        PassCodeCreationStep step = new PassCodeCreationStep(OnboardingTask.SignUpPassCodeCreationStepIdentifier,
-                R.string.passcode);
-        // TODO make a passcode task?
-        OrderedTask task = new OrderedTask("PasscodeTask", step);
-        startActivityForResult(ViewTaskActivity.newIntent(this, task), REQUEST_CODE_PASSCODE);
+        boolean hasPasscode = StorageAccess.getInstance().hasPinCode(this);
+        if(!hasPasscode)
+        {
+            PassCodeCreationStep step = new PassCodeCreationStep(OnboardingTask.SignUpPassCodeCreationStepIdentifier,
+                    R.string.passcode);
+            // TODO make a passcode task?
+            OrderedTask task = new OrderedTask("PasscodeTask", step);
+            startActivityForResult(ViewTaskActivity.newIntent(this, task), REQUEST_CODE_PASSCODE);
+        }
+        else
+        {
+            startMainActivity();
+        }
     }
 
     public void onSignInClicked(View view)
@@ -138,9 +146,7 @@ public class OnboardingActivity extends PinCodeActivity
             if(email == null || password == null)
             {
 
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                startMainActivity();
             }
             else
             {
@@ -173,13 +179,18 @@ public class OnboardingActivity extends PinCodeActivity
                     .getResult();
             StorageAccess.getInstance().setPinCode(this, passcode);
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            startMainActivity();
         }
         else
         {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void startMainActivity()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
