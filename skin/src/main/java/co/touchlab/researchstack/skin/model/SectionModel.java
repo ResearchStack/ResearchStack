@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.backbone.model;
+package co.touchlab.researchstack.skin.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -25,6 +25,11 @@ public class SectionModel
         public List<SectionRow> getItems()
         {
             return items;
+        }
+
+        public String getTitle()
+        {
+            return title;
         }
     }
 
