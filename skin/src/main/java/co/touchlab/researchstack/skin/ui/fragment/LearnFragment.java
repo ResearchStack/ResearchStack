@@ -19,12 +19,12 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import co.touchlab.researchstack.backbone.model.SectionModel;
 import co.touchlab.researchstack.backbone.ui.ViewWebDocumentActivity;
 import co.touchlab.researchstack.backbone.utils.ResUtils;
 import co.touchlab.researchstack.backbone.utils.ThemeUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ResourceManager;
+import co.touchlab.researchstack.skin.model.SectionModel;
 import co.touchlab.researchstack.skin.ui.views.DividerItemDecoration;
 import co.touchlab.researchstack.skin.utils.JsonUtils;
 
