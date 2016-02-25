@@ -70,6 +70,9 @@ public class TaskModel
         @SerializedName("minValue")
         public int minValue;
 
+        @SerializedName("multipleLines")
+        public boolean multipleLines;
+
         @SerializedName("rules")
         public List<RuleModel> rules;
 

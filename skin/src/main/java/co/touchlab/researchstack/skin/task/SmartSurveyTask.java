@@ -88,11 +88,15 @@ public class SmartSurveyTask extends Task implements Serializable
         }
         else if(type.equals("IntegerConstraints"))
         {
+            // TODO need to get max, min, etc
             answerFormat = new IntegerAnswerFormat(constraints.minValue, constraints.maxValue);
         }
         else if(type.equals("TextConstraints"))
         {
+            // TODO need to get maxlength
             answerFormat = new TextAnswerFormat();
+            boolean multipleLines = constraints.multipleLines;
+            ((TextAnswerFormat) answerFormat).setIsMultipleLines(multipleLines);
         }
         else if(type.equals("DateConstraints"))
         {
