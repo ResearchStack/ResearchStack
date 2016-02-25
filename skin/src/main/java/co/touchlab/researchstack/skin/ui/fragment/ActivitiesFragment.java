@@ -13,14 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Date;
 import java.util.List;
 
 import co.touchlab.researchstack.backbone.helpers.LogExt;
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
-import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.skin.task.SmartSurveyTask;
 import rx.Subscription;
@@ -91,7 +90,6 @@ public class ActivitiesFragment extends Fragment
             LogExt.d(getClass(), "Received task result from task activity");
 
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
-            taskResult.setEndDate(new Date());
             DataProvider.getInstance().uploadTaskResult(getActivity(), taskResult);
 
             setUpAdapter();

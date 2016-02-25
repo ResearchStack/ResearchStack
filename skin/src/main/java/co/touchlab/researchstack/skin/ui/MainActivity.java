@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.Date;
 import java.util.List;
 
 import co.touchlab.researchstack.backbone.StorageAccess;
@@ -116,7 +115,6 @@ public class MainActivity extends PinCodeActivity
         if(requestCode == REQUEST_CODE_INITIAL_TASK && resultCode == RESULT_OK)
         {
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
-            taskResult.setEndDate(new Date());
             StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
             DataProvider.getInstance().processInitialTaskResult(this, taskResult);
         }
