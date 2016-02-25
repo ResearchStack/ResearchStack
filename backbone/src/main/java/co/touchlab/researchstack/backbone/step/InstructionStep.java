@@ -9,6 +9,7 @@ public class InstructionStep extends Step
     {
         super(identifier, title);
         setText(detailText);
+        setOptional(false);
     }
 
     @Override

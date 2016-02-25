@@ -27,7 +27,7 @@ public class InitialTask extends OrderedTask
 
         InstructionStep step = new InstructionStep("intro",
                 "About You",
-                "We'd like to ask you a few questions to better understand potential melanoma risk\n\nThese questions should take less than 5 minutes");
+                "We'd like to ask you a few questions to better understand potential robot risks\n\nThese questions should take less than 5 minutes");
 
         // Add to Task
         addStep(step);
@@ -54,7 +54,7 @@ public class InitialTask extends OrderedTask
 
         // Zip Code
         // TODO max value for zip
-        IntegerAnswerFormat zipCodeFormat = new IntegerAnswerFormat(0, 1000);
+        IntegerAnswerFormat zipCodeFormat = new IntegerAnswerFormat(0, 99999);
         QuestionStep zipCodeStep = new QuestionStep("zipCode",
                 "What is your zip code?",
                 zipCodeFormat);
@@ -76,9 +76,6 @@ public class InitialTask extends OrderedTask
         // TODO iOS defines ORKValuePickerAnswerFormat
         AnswerFormat hairColorFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
                 new Choice<>("Red Hair", "redHair"),
-                // American English defines adjective-form as Blond where Noun type is based on sex
-                // of person (Male -> Blond, Female -> Blonde). I looked this up. We will keep the
-                // ID as blondeHair as thats the ID used in mole-mapper-ios.
                 new Choice<>("Blond Hair", "blondeHair"),
                 new Choice<>("Brown Hair", "brownHair"),
                 new Choice<>("Black Hair", "blackHair"));
@@ -86,9 +83,9 @@ public class InitialTask extends OrderedTask
 
         // TODO iOS defines ORKValuePickerAnswerFormat
         AnswerFormat eyeColorFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-                new Choice<>("Blue Hair", "blueEyes"),
-                new Choice<>("Green Hair", "greenEyes"),
-                new Choice<>("Brown Hair", "brownEyes"));
+                new Choice<>("Blue Eyes", "blueEyes"),
+                new Choice<>("Green Eyes", "greenEyes"),
+                new Choice<>("Brown Eyes", "brownEyes"));
         QuestionStep eyeColorStep = new QuestionStep("eyeColor", "Eye Color", eyeColorFormat);
 
         // Set items on FormStep
@@ -104,21 +101,13 @@ public class InitialTask extends OrderedTask
 
         // iOS defines this as a single choice, should be MultiChoice
         AnswerFormat professionFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-                new Choice<>("Pilot or flight crew", "pilot"),
-                new Choice<>("Dental professional", "dental"),
-                new Choice<>("Construction", "construction"),
-                new Choice<>("Radiology Technician", "radiology"),
-                new Choice<>("Farming", "farming"),
-                new Choice<>("TSA Agent", "tsaAgent"),
-                new Choice<>("Coal/Oil/Gas Extraction", "coalOilGas"),
-                new Choice<>("Military Veteran", "veteran"),
-                new Choice<>("Doctor/Nurse", "doctor"),
-                new Choice<>("Welding/Soldering", "welding"),
-                new Choice<>("Electrician", "electrician"),
-                new Choice<>("Biomedical Researcher", "researcher"),
-                new Choice<>("None of the above choices", "none"));
+                new Choice<>("Chocolate", "chocolate"),
+                new Choice<>("Vanilla", "vanilla"),
+                new Choice<>("Strawberry", "strawberry"),
+                new Choice<>("Cookies & Cream", "cookies_cream"),
+                new Choice<>("I am Robot, what is ice cream?", "robot"));
         QuestionStep professionStep = new QuestionStep("profession",
-                "Have you worked in any of the following professions?",
+                "What is your favorite flavor of ice cream?",
                 professionFormat);
         professionStep.setOptional(true);
 
@@ -133,27 +122,19 @@ public class InitialTask extends OrderedTask
 
         BooleanAnswerFormat booleanAnswerFormat = new BooleanAnswerFormat();
 
-        QuestionStep melanomaStep = new QuestionStep("historyMelanoma",
-                "Have you ever been diagnosed with melanoma",
+        QuestionStep robotStep = new QuestionStep("confirmRobot",
+                "Are you a robot?",
                 booleanAnswerFormat);
-        QuestionStep familyHistoryStep = new QuestionStep("familyHistory",
-                "Has a blood relative (parent, sibling, child) ever had melanoma?",
+        QuestionStep autoImmuneStep = new QuestionStep("feelings",
+                "Does your robot body feel?",
                 booleanAnswerFormat);
-        QuestionStep moleRemovedStep = new QuestionStep("moleRemoved",
-                "Have you ever had a mole removed?",
-                booleanAnswerFormat);
-        QuestionStep autoImmuneStep = new QuestionStep("autoImmune",
-                "Do you have an autoimmune condition (Psoriasis, Crohn's disease, or others)?",
-                booleanAnswerFormat);
-        QuestionStep immunocompromisedStep = new QuestionStep("immunocompromised",
-                "Do you have a weakened immune system for any reason (transplant recipient, lupus, prescribed drugs that suppress the immune system)?",
+        QuestionStep immunocompromisedStep = new QuestionStep("arnold",
+                "Are you stronger than a T-1000?",
                 booleanAnswerFormat);
 
         // Set items on FormStep
         medicalInfoForm.setOptional(true);
-        medicalInfoForm.setFormSteps(melanomaStep,
-                familyHistoryStep,
-                moleRemovedStep,
+        medicalInfoForm.setFormSteps(robotStep,
                 autoImmuneStep,
                 immunocompromisedStep);
 
@@ -166,8 +147,7 @@ public class InitialTask extends OrderedTask
 
         InstructionStep thankYouStep = new InstructionStep("thankYou",
                 "Thank You!",
-                "Your participation in this study is helping us to better understand melanoma risk and skin health\n\nYour task now is to map and measure your moles each month. You don't have to get them all, but the more the better!\n\nHappy Mapping!");
-
+                "Your participation in this study is helping us to better understand risks of becoming a robot\n\nYour task now is to take robot surveys each month. You don't have to get them all, but the more the better!\n\nHappy robot-ing!");
         // Add to Task
         addStep(thankYouStep);
 
