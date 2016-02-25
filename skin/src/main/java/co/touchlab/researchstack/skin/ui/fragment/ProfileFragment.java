@@ -12,8 +12,9 @@ import android.widget.Toast;
 import co.touchlab.researchstack.glue.R;
 
 /**
- * Created by bradleymcdermott on 10/28/15.
+ * Profile and Settings now merged. See SettingsFragment for profile info.
  */
+@Deprecated
 public class ProfileFragment extends Fragment
 {
     @Nullable

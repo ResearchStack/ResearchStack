@@ -13,7 +13,6 @@ import co.touchlab.researchstack.skin.task.OnboardingTask;
 import co.touchlab.researchstack.skin.ui.fragment.ActivitiesFragment;
 import co.touchlab.researchstack.skin.ui.fragment.DashboardFragment;
 import co.touchlab.researchstack.skin.ui.fragment.LearnFragment;
-import co.touchlab.researchstack.skin.ui.fragment.ProfileFragment;
 
 public class SampleUiManager extends UiManager
 {
@@ -68,10 +67,10 @@ public class SampleUiManager extends UiManager
                 .build());
 
         navItems.add(new ActionItem.ActionItemBuilder()
-                .setId(R.id.nav_profile)
-                .setTitle(R.string.profile)
-                .setIcon(R.drawable.ic_action_profile)
-                .setClass(ProfileFragment.class)
+                .setId(R.id.nav_settings)
+                .setTitle(R.string.settings)
+                .setIcon(R.drawable.ic_action_settings)
+                .setClass(SampleSettingsFragment.class)
                 .build());
 
         return navItems;
