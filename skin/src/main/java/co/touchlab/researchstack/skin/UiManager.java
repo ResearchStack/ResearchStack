@@ -1,7 +1,10 @@
 package co.touchlab.researchstack.skin;
+import android.support.v4.app.Fragment;
+
 import java.util.List;
 
 import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.skin.ui.fragment.SettingsFragment;
 
 public abstract class UiManager
 {
@@ -36,5 +39,10 @@ public abstract class UiManager
     public boolean isConsentSkippable()
     {
         return false;
+    }
+
+    public Fragment getSettingsFragment()
+    {
+        return new SettingsFragment();
     }
 }

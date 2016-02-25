@@ -1,4 +1,6 @@
 package co.touchlab.researchstack.sampleapp;
+import android.support.v4.app.Fragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,5 +117,11 @@ public class SampleUiManager extends UiManager
     public boolean isConsentSkippable()
     {
         return true;
+    }
+
+    @Override
+    public Fragment getSettingsFragment()
+    {
+        return new SampleSettingsFragment();
     }
 }

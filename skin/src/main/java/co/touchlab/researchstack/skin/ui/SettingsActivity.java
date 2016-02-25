@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.skin.ui.fragment.SettingsFragment;
+import co.touchlab.researchstack.skin.UiManager;
 
 public class SettingsActivity extends PinCodeActivity
 {
@@ -25,7 +25,7 @@ public class SettingsActivity extends PinCodeActivity
         if (savedInstanceState == null)
         {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new SettingsFragment())
+                    .add(R.id.container, UiManager.getInstance().getSettingsFragment())
                     .commit();
         }
     }
