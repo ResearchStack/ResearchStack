@@ -9,12 +9,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/SampleTheme">
 
         <activity
             android:name="co.touchlab.researchstack.skin.ui.SplashActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.Splash">
+            android:theme="@style/SampleTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -25,7 +25,7 @@
             android:name="co.touchlab.researchstack.skin.ui.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/SampleTheme.NoActionBar">
         </activity>
 
         <activity
@@ -46,7 +46,7 @@
         <activity
             android:name="co.touchlab.researchstack.skin.ui.OnboardingActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.Onboarding"
+            android:theme="@style/SampleTheme.Onboarding"
             />
 
         <activity
@@ -55,12 +55,22 @@
             />
 
         <activity
+            android:name="co.touchlab.researchstack.skin.ui.SettingsActivity"
+            android:label="@string/settings"
+            android:theme="@style/SampleTheme.Settings"/>
+
+        <activity
+            android:name="co.touchlab.researchstack.skin.ui.LearnActivity"
+            android:label="@string/learn"
+            android:theme="@style/SampleTheme.NoActionBar"/>
+
+        <activity
             android:name="co.touchlab.researchstack.backbone.ui.ViewWebDocumentActivity"
             android:label="@string/app_name"
             />
 
         <activity android:name="co.touchlab.researchstack.skin.ui.ViewFragmentActivity"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+                  android:theme="@style/SampleTheme.NoActionBar"/>
 
         <activity
             android:name="co.touchlab.researchstack.skin.ui.ViewLicensesActivity"

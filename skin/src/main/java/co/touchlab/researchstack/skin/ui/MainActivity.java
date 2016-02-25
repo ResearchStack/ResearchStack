@@ -1,6 +1,5 @@
 package co.touchlab.researchstack.skin.ui;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -147,30 +146,6 @@ public class MainActivity extends PinCodeActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-
-        if (item.getIntent() != null)
-        {
-            ComponentName componentName = item.getIntent().getComponent();
-            if (componentName != null)
-            {
-                try
-                {
-                    Class clazz = Class.forName(componentName.getClassName());
-
-                    Intent intent = ViewFragmentActivity.newIntent(this,
-                            item.getTitle().toString(),
-                            componentName.getClassName());
-                    startActivity(intent);
-                    return true;
-
-                }
-                catch(ClassNotFoundException e)
-                {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

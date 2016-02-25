@@ -10,17 +10,15 @@ import co.touchlab.researchstack.backbone.step.Step;
 import co.touchlab.researchstack.skin.ActionItem;
 import co.touchlab.researchstack.skin.UiManager;
 import co.touchlab.researchstack.skin.task.OnboardingTask;
+import co.touchlab.researchstack.skin.ui.LearnActivity;
+import co.touchlab.researchstack.skin.ui.SettingsActivity;
 import co.touchlab.researchstack.skin.ui.fragment.ActivitiesFragment;
 import co.touchlab.researchstack.skin.ui.fragment.DashboardFragment;
-import co.touchlab.researchstack.skin.ui.fragment.LearnFragment;
 
 public class SampleUiManager extends UiManager
 {
     /**
-     * TODO Clean up implementation *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-     * Not too happy about returning a list of objects. Could we / should we use XML impl?
-     *
-     * @return List of NavigationItems
+     * @return List of ActionItems w/ Fragment class items
      */
     @Override
     public List<ActionItem> getMainTabBarItems()
@@ -54,6 +52,11 @@ public class SampleUiManager extends UiManager
         return navItems;
     }
 
+    /**
+     * @return List of ActionItems w/ Activity class items. The class items are then used to
+     * construct an intent for a MenuItem when {@link co.touchlab.researchstack.skin.ui.MainActivity#onCreateOptionsMenu}
+     * is called
+     */
     @Override
     public List<ActionItem> getMainActionBarItems()
     {
@@ -63,14 +66,14 @@ public class SampleUiManager extends UiManager
                 .setId(R.id.nav_learn)
                 .setTitle(R.string.learn)
                 .setIcon(R.drawable.ic_action_info)
-                .setClass(LearnFragment.class)
+                .setClass(LearnActivity.class)
                 .build());
 
         navItems.add(new ActionItem.ActionItemBuilder()
                 .setId(R.id.nav_settings)
                 .setTitle(R.string.settings)
                 .setIcon(R.drawable.ic_action_settings)
-                .setClass(SampleSettingsFragment.class)
+                .setClass(SettingsActivity.class)
                 .build());
 
         return navItems;

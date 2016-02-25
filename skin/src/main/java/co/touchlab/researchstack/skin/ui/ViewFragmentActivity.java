@@ -11,6 +11,7 @@ import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.utils.ViewUtils;
 import co.touchlab.researchstack.glue.R;
 
+@Deprecated
 public class ViewFragmentActivity extends PinCodeActivity
 {
     public static final String TAG            = ViewFragmentActivity.class.getSimpleName();

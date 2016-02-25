@@ -1,13 +1,14 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Backbone">
+    <style name="SampleTheme" parent="Backbone">
         <!-- Text Color for ActionBar and Text -->
-        <item name="alertDialogTheme">@style/AppTheme.Dialog</item>
-        <item name="android:alertDialogTheme">@style/AppTheme.Dialog</item>
+        <item name="alertDialogTheme">@style/SampleTheme.Dialog</item>
+        <item name="android:alertDialogTheme">@style/SampleTheme.Dialog</item>
         <!-- Text Color for Toolbar and Text -->
         <item name="android:textColor">@color/warm_gray</item>
         <item name="android:textColorPrimary">@color/warm_gray</item>
+        <item name="android:textColorSecondary">@color/warm_gray</item>
         <item name="android:windowContentOverlay">@null</item>
 
         <!-- TODO colorControlNormal is used to color Back arrow in toolbar. Find better approach as this my affect other widgets. -->
@@ -15,10 +16,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
     </style>
 
-    <style name="AppTheme.ColorActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+    <style name="SampleTheme.ColorActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="background">?attr/colorPrimary</item>
         <item name="android:textColorPrimary">@android:color/white</item>
@@ -36,7 +36,7 @@
         <item name="colorControlNormal">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.Dialog"
+    <style name="SampleTheme.Dialog"
            parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- Used for the buttons -->
         <item name="colorAccent">@color/colorAccent</item>
@@ -46,28 +46,36 @@
         <item name="android:background">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="SampleTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!-- TODO figure out which of these is actually needed -->
-        <item name="android:actionBarStyle">@style/AppTheme.ColorActionBarStyle</item>
-        <item name="actionBarStyle">@style/AppTheme.ColorActionBarStyle</item>
-        <item name="toolbarStyle">@style/AppTheme.ColorActionBarStyle</item>
-        <item name="android:toolbarStyle">@style/AppTheme.ColorActionBarStyle</item>
+        <item name="android:actionBarStyle">@style/SampleTheme.ColorActionBarStyle</item>
+        <item name="actionBarStyle">@style/SampleTheme.ColorActionBarStyle</item>
+        <item name="toolbarStyle">@style/SampleTheme.ColorActionBarStyle</item>
     </style>
 
-    <style name ="AppTheme.Splash" parent="AppTheme.NoActionBar">
+    <style name="SampleTheme.Settings" parent="@style/SampleTheme.NoActionBar">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/warm_gray</item>
+        <item name="preferenceTheme">@style/SampleTheme.Settings.Preference</item>
+    </style>
+
+    <style name="SampleTheme.Settings.Preference" parent="@style/PreferenceThemeOverlay.v14.Material"/>
+
+    <style name ="SampleTheme.Splash" parent="SampleTheme.NoActionBar">
         <item name="android:windowBackground">@drawable/bg_splash</item>
         <item name="colorPrimaryDark">@color/warm_grey</item>
     </style>
 
-    <style name="AppTheme.Onboarding" parent="@style/AppTheme.NoActionBar">
+    <style name="SampleTheme.Onboarding" parent="@style/SampleTheme.NoActionBar">
         <item name="android:windowBackground">@color/gray</item>
         <item name="colorButtonNormal">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/dark_gray</item>
     </style>
 
-    <style name="AppTheme.Onboarding.Button" parent="Widget.AppCompat.Button.Colored">
+    <style name="SampleTheme.Onboarding.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/colorAccent</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
