@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="CoreAppTheme"
-           parent="Core">
+           parent="Backbone">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,7 +11,7 @@
     </style>
 
     <style name="CoreAppTheme.Dialog"
-           parent="Core.Dialog">
+           parent="Backbone.Dialog">
         <!-- Used for the buttons -->
         <item name="colorAccent">@color/colorAccent</item>
         <!-- Used for the title and text -->

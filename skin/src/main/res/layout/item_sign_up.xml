@@ -10,7 +10,7 @@
     >
 
     <TextView
-        style="@style/Core.Survey.Title"
+        style="@style/Backbone.Survey.Title"
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         />
 
     <TextView
-        style="@style/Core.Survey.Summary"
+        style="@style/Backbone.Survey.Summary"
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

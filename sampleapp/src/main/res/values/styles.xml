@@ -1,33 +1,39 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Backbone">
         <!-- Text Color for ActionBar and Text -->
-        <item name="android:textColorPrimary">@color/warm_grey</item>
-        <item name="android:textColor">@color/warm_grey</item>
+        <item name="alertDialogTheme">@style/AppTheme.Dialog</item>
+        <item name="android:alertDialogTheme">@style/AppTheme.Dialog</item>
+        <!-- Text Color for Toolbar and Text -->
+        <item name="android:textColor">@color/warm_gray</item>
+        <item name="android:textColorPrimary">@color/warm_gray</item>
         <item name="android:windowContentOverlay">@null</item>
+
+        <!-- TODO colorControlNormal is used to color Back arrow in toolbar. Find better approach as this my affect other widgets. -->
+        <item name="colorControlNormal">@android:color/white</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="alertDialogTheme">@style/AppTheme.Dialog</item>
-        <item name="android:alertDialogTheme">@style/AppTheme.Dialog</item>
-        <item name="android:actionBarStyle">@style/AppTheme.ActionBarStyle</item>
-        <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
-        <item name="submitBackground">@color/gray</item>
 
-        <!-- TabLayout -->
-        <!-- Using an attr and pointing app:theme on the tabLayout to the attr does not work. -->
-        <!-- TODO Figure out a better way of styling tabLayout without having to define all style-attrs in the theme -->
-        <item name="tabIndicatorColor">@android:color/white</item>
-        <item name="tabBackground">@color/colorPrimary</item>
-        <item name="tabTextColor">#6FFF</item>
-        <item name="tabSelectedTextColor">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.TransparentActionBar">
-        <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
+    <style name="AppTheme.ColorActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="background">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="colorControlNormal">#FF0000</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Toolbar.Title</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+    </style>
+
+    <style name="TextAppearance.Toolbar.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ActionButton.Overflow" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="colorControlNormal">@android:color/white</item>
     </style>
 
     <style name="AppTheme.Dialog"
@@ -43,6 +49,11 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!-- TODO figure out which of these is actually needed -->
+        <item name="android:actionBarStyle">@style/AppTheme.ColorActionBarStyle</item>
+        <item name="actionBarStyle">@style/AppTheme.ColorActionBarStyle</item>
+        <item name="toolbarStyle">@style/AppTheme.ColorActionBarStyle</item>
+        <item name="android:toolbarStyle">@style/AppTheme.ColorActionBarStyle</item>
     </style>
 
     <style name ="AppTheme.Splash" parent="AppTheme.NoActionBar">
@@ -59,13 +70,6 @@
     <style name="AppTheme.Onboarding.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/colorAccent</item>
         <item name="android:textColor">@android:color/white</item>
-    </style>
-
-    <style name="AppTheme.ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="background">@android:color/transparent</item>
-        <item name="android:textColorPrimary">@color/warm_grey</item>
-        <item name="colorControlNormal">#FF0000</item>
     </style>
 
 </resources>

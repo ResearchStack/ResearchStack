@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/text"
-        style="@style/Core.Survey.Summary"
+        style="@style/Backbone.Survey.Summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
@@ -43,7 +43,7 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/Core.Survey.Title"
+                style="@style/Backbone.Survey.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/rsc_padding_wedge"
@@ -90,7 +90,7 @@
 
             <TextView
                 android:id="@+id/quiz_result_title"
-                style="@style/Core.Survey.Title"
+                style="@style/Backbone.Survey.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/rsc_padding_wedge"
@@ -103,7 +103,7 @@
 
             <TextView
                 android:id="@+id/quiz_result_summary"
-                style="@style/Core.Survey.Summary"
+                style="@style/Backbone.Survey.Summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/quiz_result_title"

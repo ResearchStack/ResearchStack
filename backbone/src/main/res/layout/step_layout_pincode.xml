@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Core.Survey.Title"
+        style="@style/Backbone.Survey.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/rsc_pincode_enter_title"
@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/text"
-        style="@style/Core.Survey.Summary"
+        style="@style/Backbone.Survey.Summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
