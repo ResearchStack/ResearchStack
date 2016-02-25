@@ -3,29 +3,24 @@ package co.touchlab.researchstack.skin.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.touchlab.researchstack.backbone.ui.ViewWebDocumentActivity;
-import co.touchlab.researchstack.backbone.utils.ResUtils;
-import co.touchlab.researchstack.backbone.utils.ThemeUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.ResourceManager;
 import co.touchlab.researchstack.skin.model.SectionModel;
-import co.touchlab.researchstack.skin.ui.views.DividerItemDecoration;
 import co.touchlab.researchstack.skin.utils.JsonUtils;
 
 public class LearnFragment extends Fragment
@@ -42,29 +37,20 @@ public class LearnFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new LearnAdapter(getContext(), loadTasksAndSchedules()));
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(co.touchlab.researchstack.glue.R.id.recycler_view);
+        recyclerView.setAdapter(new LearnAdapter(getContext(), loadSections()));
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
 
         Configuration config = getResources().getConfiguration();
 
         //TODO Implement compat method to get RTL on API < 17
         boolean isRTL = config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
-        DividerItemDecoration decoration = new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL_LIST,
-                0,
-                isRTL);
-        recyclerView.addItemDecoration(decoration);
     }
 
-    private List<SectionModel.SectionRow> loadTasksAndSchedules()
+    private SectionModel loadSections()
     {
         int fileResId = ResourceManager.getInstance().getLearnSections();
-        SectionModel schedulesAndTasksModel = JsonUtils.loadClass(getContext(),
-                SectionModel.class,
-                fileResId);
-        SectionModel.Section section = schedulesAndTasksModel.getSections().get(0);
-        return section.getItems();
+        return JsonUtils.loadClass(getContext(), SectionModel.class, fileResId);
     }
 
     public static class LearnAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -73,13 +59,19 @@ public class LearnFragment extends Fragment
         private static final int VIEW_TYPE_HEADER = 0;
         private static final int VIEW_TYPE_ITEM   = 1;
 
-        private List<SectionModel.SectionRow> items;
-        private LayoutInflater                inflater;
+        private List<Object>   items;
+        private LayoutInflater inflater;
 
-        public LearnAdapter(Context context, List<SectionModel.SectionRow> items)
+        public LearnAdapter(Context context, SectionModel sections)
         {
             super();
-            this.items = items;
+            items = new ArrayList<>();
+            for(SectionModel.Section section : sections.getSections())
+            {
+                items.add(section.getTitle());
+                items.addAll(section.getItems());
+
+            }
             this.inflater = LayoutInflater.from(context);
         }
 
@@ -107,7 +99,7 @@ public class LearnFragment extends Fragment
                 Context context = holder.itemView.getContext();
 
                 //Offset for header
-                SectionModel.SectionRow item = items.get(position - 1);
+                SectionModel.SectionRow item = (SectionModel.SectionRow) items.get(position);
 
                 holder.title.setText(item.getTitle());
 
@@ -117,51 +109,49 @@ public class LearnFragment extends Fragment
                             item.getDetails());
                     v.getContext().startActivity(intent);
                 });
-
-                int imageResId = ResUtils.getDrawableResourceId(context, item.getIconImage());
-                Drawable icon = context.getResources().getDrawable(imageResId);
-                int tintColor = ThemeUtils.getAccentColor(context);
-                DrawableCompat.setTint(icon, tintColor);
-                holder.icon.setImageDrawable(icon);
+            }
+            else
+            {
+                HeaderViewHolder holder = (HeaderViewHolder) hldr;
+                String title = (String) items.get(position);
+                holder.title.setText(title);
             }
         }
 
         @Override
         public int getItemViewType(int position)
         {
-            return position == 0 ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
+            Object item = items.get(position);
+            return item instanceof String ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
         }
 
         @Override
         public int getItemCount()
         {
             // Size of items + header
-            return items.size() + 1;
+            return items.size();
         }
 
         public static class HeaderViewHolder extends RecyclerView.ViewHolder
         {
 
-            ImageView logo;
+            TextView title;
 
             public HeaderViewHolder(View itemView)
             {
                 super(itemView);
-                logo = (ImageView) itemView.findViewById(R.id.logo);
-                logo.setImageResource(ResourceManager.getInstance().getLogoInstitution());
+                title = ((TextView) itemView);
             }
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder
         {
-            AppCompatTextView  title;
-            AppCompatImageView icon;
+            AppCompatTextView title;
 
             public ViewHolder(View itemView)
             {
                 super(itemView);
-                title = (AppCompatTextView) itemView.findViewById(R.id.title);
-                icon = (AppCompatImageView) itemView.findViewById(R.id.icon);
+                title = (AppCompatTextView) itemView.findViewById(R.id.learn_item_title);
             }
         }
     }
