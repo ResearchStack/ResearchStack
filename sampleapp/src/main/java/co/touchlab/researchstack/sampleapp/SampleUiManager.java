@@ -1,6 +1,4 @@
 package co.touchlab.researchstack.sampleapp;
-import android.view.MenuItem;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +14,6 @@ import co.touchlab.researchstack.skin.ui.fragment.ActivitiesFragment;
 import co.touchlab.researchstack.skin.ui.fragment.DashboardFragment;
 import co.touchlab.researchstack.skin.ui.fragment.LearnFragment;
 import co.touchlab.researchstack.skin.ui.fragment.ProfileFragment;
-import co.touchlab.researchstack.skin.ui.fragment.SettingsFragment;
 
 public class SampleUiManager extends UiManager
 {
@@ -66,23 +63,15 @@ public class SampleUiManager extends UiManager
         navItems.add(new ActionItem.ActionItemBuilder()
                 .setId(R.id.nav_learn)
                 .setTitle(R.string.learn)
-                .setIcon(R.drawable.ic_nav_learn)
+                .setIcon(R.drawable.ic_action_info)
                 .setClass(LearnFragment.class)
                 .build());
 
         navItems.add(new ActionItem.ActionItemBuilder()
                 .setId(R.id.nav_profile)
                 .setTitle(R.string.profile)
-                .setIcon(R.drawable.ic_nav_profile)
+                .setIcon(R.drawable.ic_action_profile)
                 .setClass(ProfileFragment.class)
-                .build());
-
-        navItems.add(new ActionItem.ActionItemBuilder()
-                .setId(R.id.nav_settings)
-                .setTitle(R.string.settings)
-                .setIcon(R.drawable.ic_nav_settings)
-                .setAction(MenuItem.SHOW_AS_ACTION_NEVER)
-                .setClass(SettingsFragment.class)
                 .build());
 
         return navItems;
