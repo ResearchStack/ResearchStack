@@ -32,13 +32,20 @@
 
     <PreferenceCategory android:title="@string/settings_security">
 
-        <ListPreference
-            android:defaultValue="@string/settings_security_auto_lock_default"
-            android:entries="@array/settings_array_auto_lock_times"
-            android:entryValues="@array/settings_array_auto_lock_times_values"
-            android:key="settings_auto_lock_time"
+        <SwitchPreference
+            android:key="settings_auto_lock_on_exit"
+            android:defaultValue="true"
             android:summary="@string/settings_security_auto_lock_summary"
             android:title="@string/settings_security_auto_lock"/>
+
+        <ListPreference
+            android:defaultValue="@string/settings_security_auto_lock_time_default"
+            android:entries="@array/settings_array_auto_lock_times"
+            android:entryValues="@array/settings_array_auto_lock_times_values"
+            android:dependency="settings_auto_lock_on_exit"
+            android:key="settings_auto_lock_time"
+            android:summary="@string/settings_security_auto_lock_time_summary"
+            android:title="@string/settings_security_auto_lock_time"/>
 
         <Preference
             android:key="settings_security_change_passcode"

@@ -57,7 +57,9 @@
     <string name="settings_security">Security</string>
     <string name="settings_security_auto_lock">Auto-Lock on exit</string>
     <string name="settings_security_auto_lock_summary">App will automatically lock</string>
-    <string name="settings_security_auto_lock_default">1</string>
+    <string name="settings_security_auto_lock_time">Auto-Lock time</string>
+    <string name="settings_security_auto_lock_time_summary">The time it takes for auto-lock to trigger</string>
+    <string name="settings_security_auto_lock_time_default">1</string>
     <string name="settings_security_change_passcode">Change passcode</string>
 
     <string name="settings_general">General</string>
