@@ -7,12 +7,13 @@
         <item name="android:alertDialogTheme">@style/SampleTheme.Dialog</item>
         <!-- Text Color for Toolbar and Text -->
         <item name="android:textColor">@color/warm_gray</item>
+
+        <!-- Change this to white. Make sure all views have a color set instead of pointing to
+        textColorPrimary attribute-->
         <item name="android:textColorPrimary">@color/warm_gray</item>
         <item name="android:textColorSecondary">@color/warm_gray</item>
         <item name="android:windowContentOverlay">@null</item>
 
-        <!-- TODO colorControlNormal is used to color Back arrow in toolbar. Find better approach as this my affect other widgets. -->
-        <item name="colorControlNormal">@android:color/white</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -22,7 +23,7 @@
         <item name="android:background">?attr/colorPrimary</item>
         <item name="background">?attr/colorPrimary</item>
         <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="colorControlNormal">#FF0000</item>
+        <item name="colorControlNormal">@android:color/white</item>
         <item name="titleTextAppearance">@style/TextAppearance.Toolbar.Title</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
     </style>
@@ -50,14 +51,12 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!-- TODO figure out which of these is actually needed -->
-        <item name="android:actionBarStyle">@style/SampleTheme.ColorActionBarStyle</item>
-        <item name="actionBarStyle">@style/SampleTheme.ColorActionBarStyle</item>
         <item name="toolbarStyle">@style/SampleTheme.ColorActionBarStyle</item>
     </style>
 
     <style name="SampleTheme.Settings" parent="@style/SampleTheme.NoActionBar">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@color/warm_gray</item>
         <item name="preferenceTheme">@style/SampleTheme.Settings.Preference</item>
     </style>
