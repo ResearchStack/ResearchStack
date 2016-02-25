@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="Backbone" parent="Base.Theme.AppCompat.Light">
+    <style name="Base.Backbone" parent="Base.Theme.AppCompat.Light">
         <item name="submitBackground">@color/submit_bar_gray</item>
         <item name="android:actionBarStyle">@style/Backbone.ActionBarStyle</item>
         <item name="actionBarStyle">@style/Backbone.ActionBarStyle</item>
@@ -12,6 +12,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:listPreferredItemPaddingLeft">50dp</item>
+        <item name="android:listPreferredItemPaddingRight">16dp</item>
 
         <!-- TabLayout -->
         <!-- Using an attr and pointing app:theme on the tabLayout to the attr does not work. -->
@@ -21,6 +23,8 @@
         <item name="tabTextColor">#6FFF</item>
         <item name="tabSelectedTextColor">@android:color/white</item>
     </style>
+
+    <style name="Backbone" parent="Base.Backbone"/>
 
     <style name="Backbone.Dialog" parent="Theme.AppCompat.Light">
         <item name="android:windowIsFloating">false</item>

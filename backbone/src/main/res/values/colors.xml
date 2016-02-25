@@ -5,8 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorAccentDark">#cc3367</color>
     <color name="black">#000</color>
+    <color name="black_20">#33000000</color>
     <color name="white_60">#CCFFFFFF</color>
-    <color name="warm_gray">#757575</color>
+    <color name="warm_gray">#FF757575</color>
+    <color name="warm_gray_20">#33757575</color>
     <color name="submit_bar_gray">#EEEEEE</color>
     <color name="submit_bar_negative">#979797</color>
     <color name="error">#ffff5722</color>
