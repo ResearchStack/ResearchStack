@@ -17,6 +17,7 @@ import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.AppPrefs;
 import co.touchlab.researchstack.skin.ResourceManager;
 import co.touchlab.researchstack.skin.ui.ViewLicensesActivity;
+import co.touchlab.researchstack.skin.utils.ConsentFormUtils;
 import rx.Observable;
 
 /**
@@ -35,7 +36,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     /*TODO*/ public static final String KEY_REMINDERS_TIME       = "settings_reminders_time";
     // Privacy
     public static final String KEY_PRIVACY_POLICY       = "settings_privacy_policy";
-    /*TODO*/ public static final String KEY_REVIEW_CONSENT       = "settings_privacy_review_consent";
+    public static final String KEY_REVIEW_CONSENT       = "settings_privacy_review_consent";
     /*TODO*/ public static final String KEY_SHARING_OPTIONS      = "settings_privacy_sharing_options";
     // Security
     public static final String KEY_AUTO_LOCK_ENABLED    = "settings_auto_lock_on_exit";
@@ -94,6 +95,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
                 case KEY_LICENSE_INFORMATION:
                     showLicenseInformation();
+                    return true;
+
+                case KEY_REVIEW_CONSENT:
+                    ConsentFormUtils.viewConsentForm(getContext());
                     return true;
             }
         }
