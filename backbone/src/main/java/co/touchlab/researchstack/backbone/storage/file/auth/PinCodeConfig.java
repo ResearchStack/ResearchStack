@@ -104,4 +104,9 @@ public class PinCodeConfig
     {
         return autoLockTime;
     }
+
+    public void setPinAutoLockTime(long pinAutoLockTime)
+    {
+        this.autoLockTime = pinAutoLockTime;
+    }
 }

@@ -3,6 +3,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -110,7 +111,8 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         // TODO figure out a better way to get/store pin code config
         PinCodeConfig config = StorageAccess.getInstance().getPinCodeConfig();
 
-        pinCodeLayout = new PinCodeLayout(this);
+        //TODO get Pincode theme from activity theme using custom attribute
+        pinCodeLayout = new PinCodeLayout(new ContextThemeWrapper(this, R.style.Backbone));
         pinCodeLayout.setBackgroundColor(Color.WHITE);
         pinCodeLayout.setVisibility(View.GONE);
 

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory
+        android:key="settings_profile"
+        android:title="@string/settings_profile">
+
+        <Preference
+            android:key="settings_profile_name"
+            android:title="@string/settings_privacy_sharing_options"
+            android:summary=" "/>
+
+        <Preference
+            android:key="settings_profile_birthdate"
+            android:title="@string/settings_privacy_review_consent"
+            android:summary=" "/>
+
+    </PreferenceCategory>
+
     <SwitchPreference
         android:key="settings_reminders"
         android:title="@string/settings_reminders"
@@ -67,7 +83,7 @@
     </PreferenceCategory>
 
     <Preference
-        android:key="version"
+        android:key="settings_version"
         android:summary="@string/settings_version"/>
 
 </PreferenceScreen>

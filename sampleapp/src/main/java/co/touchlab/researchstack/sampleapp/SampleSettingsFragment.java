@@ -19,20 +19,28 @@ public class SampleSettingsFragment extends SettingsFragment
         PreferenceScreen screen = getPreferenceScreen();
 
         // Get profile preference
-        PreferenceCategory category = (PreferenceCategory) screen.getPreference(0);
+        PreferenceCategory category = (PreferenceCategory) screen.findPreference(KEY_PROFILE);
 
-        // If category at 0 is profile, add mole-mapper specific pref items
-        if(category.getKey().equals(SettingsFragment.KEY_PROFILE))
+        // If category exists, we should add mole mapper specific things. If not, that means we
+        // are not consented so we have no data to set.
+        if(category != null)
         {
-            // Occupation Preference
+            // Example Preference
             Preference checkBoxPref = new Preference(screen.getContext());
             checkBoxPref.setKey(KEY_EXAMPLE);
             checkBoxPref.setTitle("Example Title");
             checkBoxPref.setSummary("You need to extend your settings fragment from Skin's " +
-                    "Settings fragment and then add / remove any preferences that you want");
+                    "Settings fragment and then modify any preferences that you'd like");
             category.addPreference(checkBoxPref);
         }
+    }
 
+    @Override
+    public String getVersionString()
+    {
+        return getString(co.touchlab.researchstack.glue.R.string.settings_version,
+                BuildConfig.VERSION_NAME,
+                BuildConfig.VERSION_CODE);
     }
 
 }

@@ -3,22 +3,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-/**
- * Created by kgalligan on 11/24/15.
- */
+import co.touchlab.researchstack.skin.ui.fragment.SettingsFragment;
+
 public class AppPrefs
 {
-
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Flags
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-    //Flag indicates user has entered a pin, and we can attempt to re-auth access
-    public static final String APP_PIN_ENCODED = "APP_PIN_ENCODED";
-
-    //TODO Desc
-    public static final String AUTO_LOCK_TIME = "AUTO_LOCK_TIME";
-
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Statics
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -44,11 +32,15 @@ public class AppPrefs
     }
 
     /**
+     * If auto lock is disabled, default the time to a year.
      * @return time in milliseconds
      */
     public long getAutoLockTime()
     {
-        int autoLockMins = prefs.getInt(AUTO_LOCK_TIME, 1);
+        boolean isAutoLocked = prefs.getBoolean(SettingsFragment.KEY_AUTO_LOCK_ENABLED, true);
+
+        String time = prefs.getString(SettingsFragment.KEY_AUTO_LOCK_TIME, "1");
+        int autoLockMins = isAutoLocked ? Integer.parseInt(time) : 60 * 24 * 365;
         return autoLockMins * 60 * 1000;
     }
 
