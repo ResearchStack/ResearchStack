@@ -43,22 +43,24 @@ After deploying the library module(s) that you need to your local machine using 
 In the build.gradle file in your app folder, add the following to your root build.gradle so that it knows to search the ~/.m2 directory for dependencies:
 
 ```
-repositories {
-    mavenLocal()
+allprojects {
+    repositories {
+        ...
+        mavenLocal()
+        ...
+    }
 }
 ```
 
 Then add the following entry to your dependencies in your app build.gradle:
 
 ```
-allprojects {
-    repositories {
-        ...
-        compile 'co.touchlab.researchstack:backbone:0.0.3'
-        // or (if using Skin, you don't need Backbone since it is included)
-        compile 'co.touchlab.researchstack:skin:0.0.3'
-        ...
-    }
+dependencies {
+    ...
+    compile 'co.touchlab.researchstack:backbone:0.0.3'
+    // or (if using Skin, you don't need Backbone since it is included)
+    compile 'co.touchlab.researchstack:skin:0.0.3'
+    ...
 }
 ```
 
