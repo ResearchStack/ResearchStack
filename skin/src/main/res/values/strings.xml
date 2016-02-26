@@ -68,6 +68,8 @@
     <string name="settings_general">General</string>
     <string name="settings_general_license_information">License information</string>
     <string name="settings_general_leave_study">Leave Study</string>
+    <string name="settings_general_join_study">Join Study</string>
+
 
     <string name="settings_permissions">Permissions</string>
     <string name="settings_review_consent">Review Consent</string>

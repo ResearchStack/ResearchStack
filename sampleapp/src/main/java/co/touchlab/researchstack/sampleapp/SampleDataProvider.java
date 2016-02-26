@@ -27,6 +27,7 @@ import co.touchlab.researchstack.sampleapp.bridge.IdentifierHolder;
 import co.touchlab.researchstack.sampleapp.network.UserSessionInfo;
 import co.touchlab.researchstack.sampleapp.network.body.ConsentSignatureBody;
 import co.touchlab.researchstack.sampleapp.network.body.EmailBody;
+import co.touchlab.researchstack.sampleapp.network.body.SharingOptionBody;
 import co.touchlab.researchstack.sampleapp.network.body.SignInBody;
 import co.touchlab.researchstack.sampleapp.network.body.SignUpBody;
 import co.touchlab.researchstack.sampleapp.network.body.SurveyAnswer;
@@ -240,6 +241,32 @@ public class SampleDataProvider extends DataProvider
         LogExt.d(getClass(), "Writing user json:\n" + signature);
 
         writeJsonString(context, jsonString, TEMP_CONSENT_JSON_FILE_NAME);
+    }
+
+    @Override
+    public String getUserSharingScope(Context context)
+    {
+        ConsentSignatureBody body = loadConsentSignatureBody(context);
+        return body.scope;
+    }
+
+    @Override
+    public void setUserSharingScope(Context context, String scope)
+    {
+        ConsentSignatureBody body = loadConsentSignatureBody(context);
+        body.scope = scope;
+        String jsonString = gson.toJson(body);
+        writeJsonString(context, jsonString, TEMP_CONSENT_JSON_FILE_NAME);
+
+        // Update scope on server
+        service.dataSharing(new SharingOptionBody(scope))
+                .compose(ObservableUtils.applyDefault())
+                .subscribe(response -> LogExt.d(getClass(),
+                                "Response: " + response.code() + ", message: " +
+                                        response.message()), error -> {
+                            LogExt.e(getClass(), error.getMessage());
+                            error.printStackTrace();
+                        });
     }
 
     private ConsentSignatureBody loadConsentSignatureBody(Context context)
@@ -491,6 +518,9 @@ public class SampleDataProvider extends DataProvider
          */
         @POST("auth/signOut")
         Observable<Response> signOut();
+
+        @POST("users/self/dataSharing")
+        Observable<Response<BridgeMessageResponse>> dataSharing(@Body SharingOptionBody body);
 
         @POST("surveyresponses")
         Observable<IdentifierHolder> surveyResponses(@Body SurveyResponse body);

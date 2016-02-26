@@ -104,6 +104,7 @@ public class ConsentTask extends OrderedTask
 
         ConsentSharingStep sharingStep = new ConsentSharingStep(ID_SHARING);
         sharingStep.setOptional(false);
+        sharingStep.setStepTitle(R.string.rsc_consent);
         sharingStep.setShowsProgress(false);
         sharingStep.setUseSurveyMode(false);
 //        sharingStep.setLocalizedLearnMoreHTMLContent(localizedLearnMoreHTMLContent);

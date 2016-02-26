@@ -49,6 +49,10 @@ public abstract class DataProvider
 
     public abstract void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope);
 
+    public abstract String getUserSharingScope(Context context);
+
+    public abstract void setUserSharingScope(Context context, String scope);
+
     public abstract String getUserEmail(Context context);
 
     public abstract void uploadTaskResult(Context context, TaskResult taskResult);

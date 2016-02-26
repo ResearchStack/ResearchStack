@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="settings_profile"
@@ -29,7 +30,9 @@
         android:title="@string/settings_reminders_time"
         android:summary="Set a time for reminders"/>
 
-    <PreferenceCategory android:title="@string/settings_privacy">
+    <PreferenceCategory
+        android:key="settings_privacy"
+        android:title="@string/settings_privacy">
 
         <Preference
             android:key="settings_privacy_sharing_options"
@@ -70,15 +73,22 @@
     </PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/settings_general">
+    <PreferenceCategory
+        android:title="@string/settings_general"
+        android:key="settings_general">
+
+        <co.touchlab.researchstack.skin.ui.preference.TextColorPreference
+            android:key="settings_general_join_study"
+            android:title="@string/settings_general_join_study"/>
 
         <Preference
             android:key="settings_general_license_information"
             android:title="@string/settings_general_license_information"/>
 
-        <co.touchlab.researchstack.skin.ui.preference.DangerousPreference
+        <co.touchlab.researchstack.skin.ui.preference.TextColorPreference
             android:key="settings_general_leave_study"
-            android:title="@string/settings_general_leave_study"/>
+            android:title="@string/settings_general_leave_study"
+            app:preferenceTextColor="@color/error"/>
 
     </PreferenceCategory>
 

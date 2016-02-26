@@ -9,32 +9,32 @@ public class ConsentSignatureBody
     /**
      * The identifier for the study under which the user is signing in
      */
-    private String study;
+    public String study;
 
     /**
      * User's name
      */
-    private String name;
+    public String name;
 
     /**
      * User's birthdate
      */
-    private String birthdate;
+    public String birthdate;
 
     /**
      * User's signature image data
      */
-    private String imageData;
+    public String imageData;
 
     /**
      * User's signature image mime type
      */
-    private String imageMimeType;
+    public String imageMimeType;
 
     /**
      * User's sharing scope choice
      */
-    private String scope;
+    public String scope;
 
     public ConsentSignatureBody(String study, String name, Date birthdate, String imageData, String imageMimeType, String scope)
     {
