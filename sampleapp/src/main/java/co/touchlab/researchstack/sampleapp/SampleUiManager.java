@@ -1,6 +1,4 @@
 package co.touchlab.researchstack.sampleapp;
-import android.support.v4.app.Fragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,6 @@ import co.touchlab.researchstack.skin.ActionItem;
 import co.touchlab.researchstack.skin.UiManager;
 import co.touchlab.researchstack.skin.task.OnboardingTask;
 import co.touchlab.researchstack.skin.ui.LearnActivity;
-import co.touchlab.researchstack.skin.ui.SettingsActivity;
 import co.touchlab.researchstack.skin.ui.fragment.ActivitiesFragment;
 import co.touchlab.researchstack.skin.ui.fragment.DashboardFragment;
 
@@ -75,7 +72,7 @@ public class SampleUiManager extends UiManager
                 .setId(R.id.nav_settings)
                 .setTitle(R.string.settings)
                 .setIcon(R.drawable.ic_action_settings)
-                .setClass(SettingsActivity.class)
+                .setClass(SampleSettingsActivity.class)
                 .build());
 
         return navItems;
@@ -119,9 +116,4 @@ public class SampleUiManager extends UiManager
         return true;
     }
 
-    @Override
-    public Fragment getSettingsFragment()
-    {
-        return new SampleSettingsFragment();
-    }
 }

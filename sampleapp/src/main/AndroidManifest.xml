@@ -55,7 +55,7 @@
             />
 
         <activity
-            android:name="co.touchlab.researchstack.skin.ui.SettingsActivity"
+            android:name=".SampleSettingsActivity"
             android:label="@string/settings"
             android:theme="@style/SampleTheme.Settings"/>
 

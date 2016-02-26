@@ -1,22 +1,20 @@
-package co.touchlab.researchstack.skin.ui;
+package co.touchlab.researchstack.sampleapp;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
-import co.touchlab.researchstack.glue.R;
-import co.touchlab.researchstack.skin.ui.fragment.SettingsFragment;
 
-public class SettingsActivity extends PinCodeActivity
+public class SampleSettingsActivity extends PinCodeActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment);
+        setContentView(co.touchlab.researchstack.glue.R.layout.activity_fragment);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(co.touchlab.researchstack.glue.R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -25,7 +23,7 @@ public class SettingsActivity extends PinCodeActivity
         if (savedInstanceState == null)
         {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new SettingsFragment())
+                    .add(co.touchlab.researchstack.glue.R.id.container, new SampleSettingsFragment())
                     .commit();
         }
     }
