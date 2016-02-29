@@ -8,6 +8,10 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.answerformat.AnswerFormat;
@@ -27,8 +31,10 @@ import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.AppPrefs;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.ResourceManager;
+import co.touchlab.researchstack.skin.step.PassCodeCreationStep;
 import co.touchlab.researchstack.skin.task.ConsentTask;
 import co.touchlab.researchstack.skin.ui.ViewLicensesActivity;
+import co.touchlab.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
 import co.touchlab.researchstack.skin.utils.ConsentFormUtils;
 import co.touchlab.researchstack.skin.utils.JsonUtils;
 import rx.Observable;
@@ -41,6 +47,7 @@ import rx.Observable;
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener
 {
     private static final int REQUEST_CODE_SHARING_OPTIONS = 0;
+    private static final int REQUEST_CODE_CHANGE_PASSCODE = 1;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Settings Keys. If you are adding / changing settings, make sure they are unique / match in
@@ -61,7 +68,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     // Security
     public static final String KEY_AUTO_LOCK_ENABLED = "settings_auto_lock_on_exit";
     public static final String KEY_AUTO_LOCK_TIME    = "settings_auto_lock_time";
-    /*TODO*/ public static final String KEY_CHANGE_PASSCODE = "settings_security_change_passcode";
+    public static final String KEY_CHANGE_PASSCODE = "settings_security_change_passcode";
     // General
     public static final String KEY_GENERAL = "settings_general";
     public static final String KEY_LICENSE_INFORMATION = "settings_general_license_information";
@@ -70,6 +77,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     // Other
     public static final String KEY_VERSION = "settings_version";
     private ConsentSectionModel data;
+    private View progress;
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s)
@@ -81,7 +89,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         screen.getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
         //TODO check if consented
-        boolean isConsented = true;
+        boolean isConsented = false;
 
         // Find profile profileCategory
         PreferenceCategory profileCategory = (PreferenceCategory) screen.findPreference(KEY_PROFILE);
@@ -147,6 +155,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        ViewGroup v = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
+        progress = inflater.inflate(R.layout.progress, container, false);
+        progress.setVisibility(View.GONE);
+        v.addView(progress);
+        return v;
+    }
+
+    @Override
     public boolean onPreferenceTreeClick(Preference preference)
     {
         LogExt.i(getClass(), preference.getTitle().toString());
@@ -165,6 +183,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
                 case KEY_REVIEW_CONSENT:
                     ConsentFormUtils.viewConsentForm(getContext());
+                    return true;
+
+                case KEY_CHANGE_PASSCODE:
+                    PassCodeCreationStep step = new PassCodeCreationStep("passcode",
+                            R.string.passcode_change_title);
+                    step.setStateOrdinal(SignUpPinCodeCreationStepLayout.State.CHANGE.ordinal());
+                    OrderedTask passcodeTask = new OrderedTask("task_settings_passcode", step);
+                    Intent passcodeIntent = ViewTaskActivity.newIntent(getContext(), passcodeTask);
+                    startActivityForResult(passcodeIntent, REQUEST_CODE_CHANGE_PASSCODE);
                     return true;
 
                 case KEY_SHARING_OPTIONS:
@@ -228,6 +255,28 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             Observable.create(subscriber -> {
                 DataProvider.getInstance().setUserSharingScope(getContext(), result);
             }).compose(ObservableUtils.applyDefault()).subscribe();
+        }
+        else if (requestCode == REQUEST_CODE_CHANGE_PASSCODE && resultCode == Activity.RESULT_OK)
+        {
+            TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+
+            String oldPinCode = (String) result.getStepResult("passcode")
+                    .getResultForIdentifier(SignUpPinCodeCreationStepLayout.RESULT_OLD_PIN);
+
+            String newPinCode = (String) result.getStepResult("passcode").getResult();
+
+            progress.setVisibility(View.VISIBLE);
+
+            Observable.create(subscriber -> {
+                StorageAccess.getInstance().changePinCode(getActivity(), oldPinCode, newPinCode);
+                subscriber.onNext(null);
+            }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
+                Toast.makeText(getActivity(), "Passcode Changed", Toast.LENGTH_SHORT).show();
+                progress.setVisibility(View.GONE);
+            }, e -> {
+                Toast.makeText(getActivity(), "Changing Passcode Failed", Toast.LENGTH_SHORT).show();
+                progress.setVisibility(View.GONE);
+            });
         }
         else
         {

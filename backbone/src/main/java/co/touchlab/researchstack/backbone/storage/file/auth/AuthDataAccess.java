@@ -13,4 +13,6 @@ public interface AuthDataAccess
     PinCodeConfig getPinCodeConfig();
 
     void setPinCode(Context context, String pin);
+
+    void changePinCode(Context context, String oldPin, String newPin);
 }

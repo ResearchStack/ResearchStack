@@ -10,6 +10,8 @@ public interface EncryptionProvider
 
     void setPinCode(Context context, String pin);
 
+    void changePinCode(Context context, String oldPin, String newPin);
+
     boolean needsAuth(Context context, PinCodeConfig codeConfig);
 
     void startWithPassphrase(Context context, String pin);

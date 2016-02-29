@@ -62,12 +62,14 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
     private void storageAccessRegister()
     {
+        LogExt.i(getClass(), "storageAccessRegister()");
         StorageAccess storageAccess = StorageAccess.getInstance();
         storageAccess.register(this);
     }
 
     private void storageAccessUnregister()
     {
+        LogExt.i(getClass(), "storageAccessUnregister()");
         StorageAccess storageAccess = StorageAccess.getInstance();
         storageAccess.unregister(this);
     }
