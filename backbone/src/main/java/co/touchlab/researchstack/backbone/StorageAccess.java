@@ -199,8 +199,7 @@ public class StorageAccess implements DataAccess, AuthDataAccess
     private void injectEncrypter()
     {
         fileAccess.setEncrypter(encryptionProvider.getEncrypter());
-        // TODO encrypt db if using sqlcipher
-        // appDatabase.setEncrypter(encryptionProvider.getEncrypter());
+        appDatabase.setEncryptionKey(encryptionProvider.getEncrypter().getDbKey());
     }
 
     // TODO this seems weird here
