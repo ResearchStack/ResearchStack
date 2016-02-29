@@ -211,6 +211,13 @@ public class StorageAccess implements DataAccess, AuthDataAccess
         injectEncrypter();
     }
 
+    @Override
+    public void changePinCode(Context context, String oldPin, String newPin)
+    {
+        encryptionProvider.changePinCode(context, oldPin, newPin);
+        injectEncrypter();
+    }
+
     // TODO need to figure out a better way to allow no auth when they haven't created a pin code yet
     public boolean hasPinCode(Context context)
     {
