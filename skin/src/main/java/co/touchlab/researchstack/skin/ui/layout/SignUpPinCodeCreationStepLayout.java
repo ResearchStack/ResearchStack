@@ -19,6 +19,7 @@ import co.touchlab.researchstack.skin.step.PassCodeCreationStep;
 
 public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements StepLayout
 {
+    public static final String RESULT_OLD_PIN = "PassCodeCreationStep.oldPin";
 
     protected StepCallbacks        callbacks;
     protected PassCodeCreationStep step;
@@ -27,8 +28,9 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     private CharSequence currentPin = null;
     private State        state      = State.CREATE;
 
-    private enum State
+    public enum State
     {
+        CHANGE,
         CREATE,
         CONFIRM,
         RETRY
@@ -55,6 +57,11 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
         this.step = (PassCodeCreationStep) step;
         this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
 
+        if (this.step.getStateOrdinal() != -1)
+        {
+            this.state = State.values()[this.step.getStateOrdinal()];
+        }
+
         initializeLayout();
     }
 
@@ -66,7 +73,16 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
                 .map(CharSequence:: toString)
                 .filter(pin -> pin.length() == config.getPinLength())
                 .subscribe(pin -> {
-                    if(state == State.CREATE)
+                    if(state == State.CHANGE)
+                    {
+                        result.setResultForIdentifier(RESULT_OLD_PIN, pin);
+
+                        currentPin = pin;
+                        editText.setText("");
+                        state = State.CREATE;
+                        refreshState();
+                    }
+                    else if(state == State.CREATE)
                     {
                         currentPin = pin;
                         editText.setText("");
@@ -148,6 +164,12 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
             default:
                 updateText(res.getString(R.string.passcode_create_title),
                         res.getString(R.string.passcode_create_summary),
+                        ThemeUtils.getTextColorPrimary(getContext()));
+                break;
+
+            case CHANGE:
+                updateText(res.getString(R.string.rsc_pincode_enter_title),
+                        res.getString(R.string.rsc_pincode_enter_summary),
                         ThemeUtils.getTextColorPrimary(getContext()));
                 break;
         }

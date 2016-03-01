@@ -72,6 +72,24 @@ public abstract class PinProtectedProvider implements EncryptionProvider
         }
     }
 
+    @Override
+    public void changePinCode(Context context, String oldPin, String newPin)
+    {
+        try
+        {
+            File masterKeyFile = createMasterKeyFile(context);
+            String masterKeyString = readMasterKey(context, masterKeyFile, oldPin);
+            AesCbcWithIntegrity.SecretKeys masterKey = AesCbcWithIntegrity.keys(masterKeyString);
+
+            writeMasterKey(context, masterKeyFile, masterKey, newPin);
+            initWithMasterKey(masterKey);
+        }
+        catch(IOException | GeneralSecurityException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void initWithMasterKey(AesCbcWithIntegrity.SecretKeys masterKey)
     {
         encrypter = createEncrypter(masterKey);

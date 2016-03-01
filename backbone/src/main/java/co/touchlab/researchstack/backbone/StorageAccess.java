@@ -199,8 +199,7 @@ public class StorageAccess implements DataAccess, AuthDataAccess
     private void injectEncrypter()
     {
         fileAccess.setEncrypter(encryptionProvider.getEncrypter());
-        // TODO encrypt db if using sqlcipher
-        // appDatabase.setEncrypter(encryptionProvider.getEncrypter());
+        appDatabase.setEncryptionKey(encryptionProvider.getEncrypter().getDbKey());
     }
 
     // TODO this seems weird here
@@ -208,6 +207,13 @@ public class StorageAccess implements DataAccess, AuthDataAccess
     public void setPinCode(Context context, String pin)
     {
         encryptionProvider.setPinCode(context, pin);
+        injectEncrypter();
+    }
+
+    @Override
+    public void changePinCode(Context context, String oldPin, String newPin)
+    {
+        encryptionProvider.changePinCode(context, oldPin, newPin);
         injectEncrypter();
     }
 
