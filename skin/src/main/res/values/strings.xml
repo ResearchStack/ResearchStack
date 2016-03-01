@@ -69,7 +69,8 @@
     <string name="settings_general_license_information">License information</string>
     <string name="settings_general_leave_study">Leave Study</string>
     <string name="settings_general_join_study">Join Study</string>
-
+    <string name="consent_withdraw_failed">Failed to Withdraw</string>
+    <string name="consent_withdraw_success">Consent Withdrawn</string>
 
     <string name="settings_permissions">Permissions</string>
     <string name="settings_review_consent">Review Consent</string>
@@ -138,6 +139,5 @@
     <string name="passcode_confirm_summary">Enter your code one more time to confirm.</string>
     <string name="passcode_confirm_error">That code doesn’t match the one you entered. Try again or go back to choose a different code.</string>
     <string name="skip_signup">Skip Signup</string>
-
 
 </resources>

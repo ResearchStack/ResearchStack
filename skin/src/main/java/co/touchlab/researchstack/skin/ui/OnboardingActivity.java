@@ -11,6 +11,7 @@ import co.touchlab.researchstack.backbone.task.OrderedTask;
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.glue.R;
+import co.touchlab.researchstack.skin.AppPrefs;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.ResourceManager;
 import co.touchlab.researchstack.skin.TaskProvider;
@@ -48,32 +49,6 @@ public class OnboardingActivity extends PinCodeActivity
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(2);
         pager.setAdapter(adapter);
-        //      TODO  pager.setPageTransformer();
-        //      TODO  pager.setPageMargin();
-
-        //        final PageIndicator indicator = (PageIndicator) findViewById(R.id.pager_indicator);
-        //        indicator.removeAllMarkers(true);
-        //        indicator.addMarkers(adapter.getCount(),
-        //                R.drawable.ic_pageindicator_current_dark,
-        //                R.drawable.ic_pageindicator_default_dark,
-        //                true);
-
-        //        pager.clearOnPageChangeListeners();
-        //        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
-        //        {
-        //            @Override
-        //            public void onPageSelected(int position)
-        //            {
-        //                indicator.setActiveMarker(position);
-        //            }
-        //        });
-
-        // let them view this page without making passcode, but call onDataReady if they have
-        //        NewStorageManager newStorageManager = NewStorageManager.getInstance();
-        //        if(((AesFileAccess) fileAccess).passphraseExists(this))
-        //        {
-        //            initFileAccess();
-        //        }
     }
 
     @Override
@@ -81,7 +56,13 @@ public class OnboardingActivity extends PinCodeActivity
     {
         super.onDataReady();
 
-        // go straight to login screen if signed up but not verified
+        /**
+         * TODO This check is a problem -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+         * We can never go "back" from the SignInActivity. When heading back from
+         * SignUpTaskActivity, Onboarding activity will register its file-access listener resulting
+         * on onDataReady being called. This, in turn, does the check below and calls
+         * onSignInClicked, which creates and starts SignUpTaskActivity
+         */
         if(DataProvider.getInstance().isSignedUp(this))
         {
             onSignInClicked(null);
@@ -145,7 +126,6 @@ public class OnboardingActivity extends PinCodeActivity
             // TODO find better way to tell the difference between sign in and needs verification
             if(email == null || password == null)
             {
-
                 startMainActivity();
             }
             else
@@ -189,7 +169,17 @@ public class OnboardingActivity extends PinCodeActivity
 
     private void startMainActivity()
     {
+        // Onboarding completion is checked in splash activity. The check allows us to pass through
+        // to MainActivity even if we haven't signed in. We want to set this true in every case so
+        // the user is really only forced through Onboarding once. If they leave the study, they must
+        // re-enroll in Settings, which starts OnboardingActivty.
+        AppPrefs.getInstance(this).setOnboardingComplete(true);
+
+        // Start MainActivity w/ clear_top and single_top flags. MainActivity may
+        // already be on the activity-task. We want to re-use that activity instead
+        // of creating a new instance and have two instance active.
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
     }

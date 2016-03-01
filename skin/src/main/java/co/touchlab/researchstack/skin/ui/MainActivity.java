@@ -33,10 +33,6 @@ public class MainActivity extends PinCodeActivity
 {
     private static final int REQUEST_CODE_INITIAL_TASK = 1010;
 
-    //    private DrawerLayout   drawerLayout;
-    //    private NavigationView navigationView;
-    //    private ViewPager pager;
-    //    private ;
     private MainPagerAdapter pagerAdapter;
 
     @Override
@@ -47,48 +43,6 @@ public class MainActivity extends PinCodeActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        navigationView = (NavigationView) findViewById(R.id.navigation);
-//        navigationView.setNavigationItemSelectedListener(item -> {
-//            if(item.getIntent() != null)
-//            {
-//                String className = item.getIntent().getComponent().getClassName();
-//                showFragment(className);
-//
-//                //TODO remove delay call once I/O is offloaded onto separate thread w/in fragments
-//                navigationView.postDelayed(drawerLayout:: closeDrawers, 100);
-//            }
-//
-//            actionBar.setTitle(item.getTitle());
-//
-//            return true;
-//        });
-//        initNavigationMenu(navigationView);
-//
-//        View headerView = getLayoutInflater().inflate(R.layout.include_user_header, null);
-//
-//        // TODO set header from user data
-//        AppCompatTextView name = (AppCompatTextView) headerView.findViewById(R.id.name);
-//        AppCompatTextView email = (AppCompatTextView) headerView.findViewById(R.id.email);
-//
-//        ImageView image = (ImageView) headerView.findViewById(R.id.profile_image);
-//        image.setOnLongClickListener(v -> {
-//            new AlertDialog.Builder(MainActivity.this).setMessage("Clear saved user data?")
-//                    .setPositiveButton("Yes", (dialog, which) -> {
-//                        DataProvider.getInstance().clearUserData(MainActivity.this);
-//                        dialog.dismiss();
-//                        finish();
-//                        System.exit(0);
-//                    })
-//                    .setNegativeButton("No", ((dialog1, which1) -> {
-//                        dialog1.dismiss();
-//                    }))
-//                    .show();
-//            return false;
-//        });
-//
-//        navigationView.addHeaderView(headerView);
 
         // Check if we need to run initial Task
         Observable.create(subscriber -> {
@@ -107,6 +61,13 @@ public class MainActivity extends PinCodeActivity
                 startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
             }
         });
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent)
+    {
+        super.onNewIntent(intent);
+        // This may be called, no use yet as we never pass any args through Intent bundle.
     }
 
     @Override
