@@ -4,7 +4,7 @@ import co.touchlab.squeaky.db.sqlcipher.PassphraseProvider;
 /**
  * Created by bradleymcdermott on 2/29/16.
  */
-public class UpdateablePassphraseProvider implements PassphraseProvider
+public class UpdatablePassphraseProvider implements PassphraseProvider
 {
 
     private String passphrase = null;
