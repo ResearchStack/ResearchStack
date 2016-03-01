@@ -149,10 +149,6 @@ public class SampleDataProvider extends DataProvider
             {
                 ConsentSignatureBody consent = loadConsentSignatureBody(context);
                 uploadConsent(context, consent);
-
-                user.setName(consent.name);
-                user.setBirthDate(consent.birthdate);
-                saveUser(context, user);
             }
             catch(Exception e)
             {
@@ -234,6 +230,8 @@ public class SampleDataProvider extends DataProvider
 
             if(userSessionInfo != null)
             {
+                // TODO if we are direct from signing in, we need to load the user profile object
+                // from the server.
                 saveUserSession(context, userSessionInfo);
                 buildRetrofitService(userSessionInfo);
                 checkForTempConsentAndUpload(context);
@@ -280,6 +278,11 @@ public class SampleDataProvider extends DataProvider
                 "image/png",
                 scope);
         writeJsonString(context, gson.toJson(signature), TEMP_CONSENT_JSON_FILE_NAME);
+
+        // TODO init here isnt great. Refactor and create saveUser method.
+        user.setName(signature.name);
+        user.setBirthDate(signature.birthdate);
+        saveUser(context, user);
     }
 
     @Override
@@ -302,8 +305,7 @@ public class SampleDataProvider extends DataProvider
 
         // Update scope on server
         service.dataSharing(new SharingOptionBody(scope))
-                .compose(ObservableUtils.applyDefault())
-                .subscribe(response -> LogExt.d(getClass(),
+                .compose(ObservableUtils.applyDefault()).subscribe(response -> LogExt.d(getClass(),
                                 "Response: " + response.code() + ", message: " +
                                         response.message()), error -> {
                             LogExt.e(getClass(), error.getMessage());
