@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.sampleapp.encryption;
+package co.touchlab.researchstack.backbone.storage.database.sqlite;
 import android.content.Context;
 
 import com.google.gson.Gson;
@@ -46,6 +46,7 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
     {
         if(sInstance == null)
         {
+            SQLiteDatabase.loadLibs(context);
             sInstance = new SqlCipherDatabaseHelper(context, new UpdateablePassphraseProvider());
         }
         return sInstance;

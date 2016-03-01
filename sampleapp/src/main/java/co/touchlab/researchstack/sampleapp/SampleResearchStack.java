@@ -2,15 +2,13 @@ package co.touchlab.researchstack.sampleapp;
 
 import android.content.Context;
 
-import net.sqlcipher.database.SQLiteDatabase;
-
 import co.touchlab.researchstack.backbone.storage.database.AppDatabase;
+import co.touchlab.researchstack.backbone.storage.database.sqlite.SqlCipherDatabaseHelper;
 import co.touchlab.researchstack.backbone.storage.file.EncryptionProvider;
 import co.touchlab.researchstack.backbone.storage.file.FileAccess;
 import co.touchlab.researchstack.backbone.storage.file.SimpleFileAccess;
 import co.touchlab.researchstack.backbone.storage.file.aes.AesProvider;
 import co.touchlab.researchstack.backbone.storage.file.auth.PinCodeConfig;
-import co.touchlab.researchstack.sampleapp.encryption.SqlCipherDatabaseHelper;
 import co.touchlab.researchstack.skin.AppPrefs;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.ResearchStack;
@@ -24,7 +22,6 @@ public class SampleResearchStack extends ResearchStack
     @Override
     protected AppDatabase createAppDatabaseImplementation(Context context)
     {
-        SQLiteDatabase.loadLibs(context);
         return SqlCipherDatabaseHelper.getInstance(context);
     }
 

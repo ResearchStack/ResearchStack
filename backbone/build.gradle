@@ -56,6 +56,7 @@ dependencies {
     compile 'com.scottyab:aes-crypto:0.0.3'
     compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
     apt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
+    compile 'net.zetetic:android-database-sqlcipher:3.3.1-2@aar'
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0'
 }

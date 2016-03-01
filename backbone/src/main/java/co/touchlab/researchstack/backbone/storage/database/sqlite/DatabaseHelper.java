@@ -35,14 +35,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
 
     private DatabaseHelper(Context context)
     {
-        super(context, DB_NAME, null, DB_VERSION/*, new PassphraseProvider()
-        {
-            @Override
-            public String getPassphrase()
-            {
-                return secret;
-            }
-        }*/);
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     public static DatabaseHelper getInstance(Context context)
