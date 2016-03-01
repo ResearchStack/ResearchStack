@@ -3,7 +3,7 @@ package co.touchlab.researchstack.sampleapp;
 import android.content.Context;
 
 import co.touchlab.researchstack.backbone.storage.database.AppDatabase;
-import co.touchlab.researchstack.backbone.storage.database.sqlite.DatabaseHelper;
+import co.touchlab.researchstack.backbone.storage.database.sqlite.SqlCipherDatabaseHelper;
 import co.touchlab.researchstack.backbone.storage.file.EncryptionProvider;
 import co.touchlab.researchstack.backbone.storage.file.FileAccess;
 import co.touchlab.researchstack.backbone.storage.file.SimpleFileAccess;
@@ -22,7 +22,7 @@ public class SampleResearchStack extends ResearchStack
     @Override
     protected AppDatabase createAppDatabaseImplementation(Context context)
     {
-        return DatabaseHelper.getInstance(context);
+        return SqlCipherDatabaseHelper.getInstance(context);
     }
 
     @Override

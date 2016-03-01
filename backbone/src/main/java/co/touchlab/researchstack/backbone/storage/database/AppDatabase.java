@@ -14,4 +14,5 @@ public interface AppDatabase
 
     List<StepResult> loadStepResults(String stepId);
 
+    void setEncryptionKey(String key);
 }

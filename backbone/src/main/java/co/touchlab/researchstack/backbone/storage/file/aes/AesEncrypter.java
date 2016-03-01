@@ -29,4 +29,10 @@ public class AesEncrypter implements Encrypter
                 encrypted);
         return AesCbcWithIntegrity.decrypt(cipherText, secretKeys);
     }
+
+    @Override
+    public String getDbKey()
+    {
+        return secretKeys.toString();
+    }
 }

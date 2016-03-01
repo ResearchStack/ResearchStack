@@ -15,4 +15,10 @@ public class ClearEncrypter implements Encrypter
     {
         return data;
     }
+
+    @Override
+    public String getDbKey()
+    {
+        return null;
+    }
 }

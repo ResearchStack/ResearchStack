@@ -9,4 +9,6 @@ public interface Encrypter
     byte[] encrypt(byte[] data) throws GeneralSecurityException;
 
     byte[] decrypt(byte[] data) throws GeneralSecurityException;
+
+    String getDbKey();
 }

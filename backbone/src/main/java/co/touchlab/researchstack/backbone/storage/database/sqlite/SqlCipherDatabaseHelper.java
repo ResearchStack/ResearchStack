@@ -4,6 +4,8 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +18,14 @@ import co.touchlab.researchstack.backbone.storage.database.StepRecord;
 import co.touchlab.researchstack.backbone.storage.database.TaskRecord;
 import co.touchlab.researchstack.backbone.utils.FormatHelper;
 import co.touchlab.squeaky.dao.Dao;
-import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
-import co.touchlab.squeaky.db.sqlite.SqueakyOpenHelper;
+import co.touchlab.squeaky.db.sqlcipher.SQLiteDatabaseImpl;
+import co.touchlab.squeaky.db.sqlcipher.SqueakyOpenHelper;
 import co.touchlab.squeaky.table.TableUtils;
 
 /**
  * Created by kgalligan on 11/27/15.
  */
-public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
+public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDatabase
 {
     // TODO Define in BuildConfig
     public static String DB_NAME = "appdb";
@@ -31,25 +33,30 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     // TODO Define in BuildConfig
     private static int DB_VERSION = 1;
 
-    private static DatabaseHelper sInstance;
+    private static SqlCipherDatabaseHelper     sInstance;
+    private final  UpdatablePassphraseProvider passphraseProvider;
 
-    private DatabaseHelper(Context context)
+    private SqlCipherDatabaseHelper(Context context, UpdatablePassphraseProvider passphraseProvider)
     {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, DB_NAME, null, DB_VERSION, passphraseProvider);
+        this.passphraseProvider = passphraseProvider;
     }
 
-    public static DatabaseHelper getInstance(Context context)
+    public static SqlCipherDatabaseHelper getInstance(Context context)
     {
         if(sInstance == null)
         {
-            sInstance = new DatabaseHelper(context);
+            SQLiteDatabase.loadLibs(context);
+            sInstance = new SqlCipherDatabaseHelper(context, new UpdatablePassphraseProvider());
         }
         return sInstance;
     }
 
+
     @Override
-    public void onCreate(android.database.sqlite.SQLiteDatabase sqLiteDatabase)
+    public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
+
         try
         {
             TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase), TaskRecord.class);
@@ -63,7 +70,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     }
 
     @Override
-    public void onUpgrade(android.database.sqlite.SQLiteDatabase sqLiteDatabase, int i, int i1)
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
     {
         try
         {
@@ -204,7 +211,6 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     @Override
     public void setEncryptionKey(String key)
     {
-        // No-op, this db implementation is not encrypted
+        passphraseProvider.setPassphrase(key);
     }
-
 }
