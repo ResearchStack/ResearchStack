@@ -1,9 +1,9 @@
 package co.touchlab.researchstack.sampleapp.network.body;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import co.touchlab.researchstack.backbone.utils.FormatHelper;
 
 public final class SurveyAnswer
 {
@@ -20,8 +20,7 @@ public final class SurveyAnswer
         this.questionGuid = questionGuid;
         this.declined = declined;
         this.client = client;
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        this.answeredOn = format.format(answeredOn);
+        this.answeredOn = FormatHelper.SIMPLE_FORMAT_DATE.format(answeredOn);
         this.answers = answers;
     }
 }
