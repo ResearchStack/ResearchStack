@@ -123,27 +123,25 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         initPreferenceForConsent();
 
-        //TODO Crashes when changing 24hour setting in System-settings
-        // Set default value for reminder time if one doesnt exist
-        boolean is24hour = android.text.format.DateFormat.is24HourFormat(getActivity());
-        SimpleDateFormat dateFormat = new SimpleDateFormat(is24hour ? "H:mm" : "h:mma");
-        String defaultReminderFormatted = null;
+        // Set default value for reminder time if one doesnt exist.
         if (!screen.getSharedPreferences().contains(KEY_REMINDERS_TIME))
         {
             Calendar defaultReminderTime = Calendar.getInstance();
             defaultReminderTime.set(Calendar.HOUR_OF_DAY, 17);
             defaultReminderTime.set(Calendar.MINUTE, 0);
             defaultReminderTime.set(Calendar.SECOND, 0);
-            defaultReminderFormatted = dateFormat.format(defaultReminderTime.getTime());
             screen.getSharedPreferences().edit()
-                    .putString(KEY_REMINDERS_TIME, defaultReminderFormatted)
-                    .apply();
+                    .putString(KEY_REMINDERS_TIME,  Long.toString(defaultReminderTime.getTimeInMillis()))
+                    .commit();
         }
 
         // Set reminder time
+        boolean is24hour = android.text.format.DateFormat.is24HourFormat(getActivity());
+        DateFormat formatter = new SimpleDateFormat(is24hour ? "H:mm" : "h:mma");
+        long timeInMillis = Long.parseLong(screen.getSharedPreferences()
+                .getString(KEY_REMINDERS_TIME, null));
         Preference reminderTimePref = screen.findPreference(KEY_REMINDERS_TIME);
-        reminderTimePref.setSummary(screen.getSharedPreferences()
-                .getString(KEY_REMINDERS_TIME, defaultReminderFormatted).toLowerCase());
+        reminderTimePref.setSummary(formatter.format(new Date(timeInMillis)).toLowerCase());
 
         // Set version string
         screen.findPreference(KEY_VERSION).setSummary(getVersionString());
@@ -333,26 +331,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
                 case KEY_REMINDERS_TIME:
                     boolean is24hour = android.text.format.DateFormat.is24HourFormat(getActivity());
-                    DateFormat format = new SimpleDateFormat(is24hour ? "H:mm" : "h:mma");
+                    DateFormat formatter = new SimpleDateFormat(is24hour ? "H:mm" : "h:mma");
                     Calendar calendar = Calendar.getInstance();
-
-                    //TODO Crashes when changing 24hour setting in System-settings
-                    try
-                    {
-                        Date selectedTime = format.parse(preference.getSummary().toString());
-                        calendar.setTime(selectedTime);
-                    }
-                    catch(ParseException e)
-                    {
-                        throw new RuntimeException(e);
-                    }
+                    long timeInMillis = Long.parseLong(getPreferenceScreen().getSharedPreferences()
+                            .getString(KEY_REMINDERS_TIME, null));
+                    calendar.setTimeInMillis(timeInMillis);
 
                     new TimePickerDialog(getActivity(), (view, hourOfDay, minute) -> {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
-                        String formatted = format.format(calendar.getTime());
+                        String formatted = formatter.format(calendar.getTime());
                         preference.getSharedPreferences().edit().putString(KEY_REMINDERS_TIME,
-                                formatted).apply();
+                                Long.toString(calendar.getTimeInMillis())).apply();
                         preference.setSummary(formatted.toLowerCase());
                     }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24hour)
                             .show();
