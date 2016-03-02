@@ -4,14 +4,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.MediaController;
 import android.widget.VideoView;
 
 import co.touchlab.researchstack.glue.R;
 
 public class ViewVideoActivity extends AppCompatActivity
 {
-
     public static final String KEY_URI = "VideoViewActivity.URI";
+
+    private VideoView videoView;
 
     public static Intent newIntent(Context context, String videoName)
     {
@@ -29,8 +31,23 @@ public class ViewVideoActivity extends AppCompatActivity
         String videoName = getIntent().getStringExtra(KEY_URI);
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/" + videoName);
 
-        VideoView videoView = (VideoView) findViewById(R.id.videoView);
+        videoView = (VideoView) findViewById(R.id.videoView);
+
+        MediaController mediaController = new MediaController(this, false);
+        mediaController.setAnchorView(videoView);
+
+        videoView.setMediaController(mediaController);
         videoView.setVideoURI(uri);
         videoView.start();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        if (videoView.isPlaying())
+        {
+            videoView.pause();
+        }
     }
 }
