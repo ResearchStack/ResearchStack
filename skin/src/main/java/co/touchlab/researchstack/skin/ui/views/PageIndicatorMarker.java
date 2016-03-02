@@ -24,6 +24,7 @@ import android.widget.ImageView;
 
 import co.touchlab.researchstack.glue.R;
 
+@Deprecated
 public class PageIndicatorMarker extends FrameLayout
 {
     @SuppressWarnings("unused")

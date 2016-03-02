@@ -20,6 +20,7 @@ import co.touchlab.researchstack.backbone.step.Step;
 import co.touchlab.researchstack.backbone.ui.callbacks.StepCallbacks;
 import co.touchlab.researchstack.backbone.ui.step.layout.StepLayout;
 import co.touchlab.researchstack.backbone.ui.views.SubmitBar;
+import co.touchlab.researchstack.backbone.utils.ViewUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.step.ConsentQuizQuestionStep;
 
@@ -110,7 +111,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                 radioTrue.setEnabled(false);
 
                 // Set the drawable of the current checked button, with correct color tint
-                Drawable drawable = getContext().getDrawable(answerCorrect
+                Drawable drawable = ViewUtils.getDrawable(getContext(), answerCorrect
                         ? R.drawable.ic_check
                         : R.drawable.ic_window_close);
                 drawable = DrawableCompat.wrap(drawable);

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import co.touchlab.researchstack.glue.R;
 
+@Deprecated
 public class PageIndicator extends LinearLayout
 {
     @SuppressWarnings("unused")

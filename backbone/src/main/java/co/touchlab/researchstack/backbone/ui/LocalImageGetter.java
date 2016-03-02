@@ -7,6 +7,7 @@ import android.text.Html;
 import android.view.View;
 import android.view.WindowManager;
 
+@Deprecated
 public class LocalImageGetter implements Html.ImageGetter
 {
 
