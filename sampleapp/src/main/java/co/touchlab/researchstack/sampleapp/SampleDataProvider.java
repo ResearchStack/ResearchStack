@@ -67,7 +67,6 @@ public class SampleDataProvider extends DataProvider
 
     private BridgeService   service;
     private UserSessionInfo userSessionInfo;
-    private User            user;
     private Gson    gson     = new Gson();
     private boolean signedIn = false;
 
@@ -129,7 +128,6 @@ public class SampleDataProvider extends DataProvider
     {
         return Observable.create(subscriber -> {
             userSessionInfo = loadUserSession(context);
-            user = loadUser(context);
             signedIn = userSessionInfo != null;
 
             buildRetrofitService(userSessionInfo);
@@ -174,7 +172,7 @@ public class SampleDataProvider extends DataProvider
     public Observable<DataResponse> withdrawConsent(Context context, String reason)
     {
         return service.withdrawConsent(new WithdrawalBody(reason)).doOnNext(response -> {
-            if (response.isSuccess())
+            if(response.isSuccess())
             {
                 userSessionInfo.setConsented(false);
                 saveUserSession(context, userSessionInfo);
@@ -192,6 +190,13 @@ public class SampleDataProvider extends DataProvider
         //TODO pass in data groups, remove roles
         SignUpBody body = new SignUpBody(STUDY_ID, email, username, password, null, null);
 
+        // TODO Saving email to user object should exist elsewhere.
+        // Save email to user object.
+        User user = loadUser(context);
+        if (user == null)
+        {
+            user = new User();
+        }
         user.setEmail(email);
         saveUser(context, user);
 
@@ -258,7 +263,8 @@ public class SampleDataProvider extends DataProvider
     @Override
     public boolean isSignedUp(Context context)
     {
-        return user.getEmail() != null;
+        User user = loadUser(context);
+        return user != null && user.getEmail() != null;
     }
 
     @Override
@@ -280,6 +286,11 @@ public class SampleDataProvider extends DataProvider
         writeJsonString(context, gson.toJson(signature), TEMP_CONSENT_JSON_FILE_NAME);
 
         // TODO init here isnt great. Refactor and create saveUser method.
+        User user = loadUser(context);
+        if (user == null)
+        {
+            user = new User();
+        }
         user.setName(signature.name);
         user.setBirthDate(signature.birthdate);
         saveUser(context, user);
@@ -288,7 +299,7 @@ public class SampleDataProvider extends DataProvider
     @Override
     public User getUser(Context context)
     {
-        return user;
+        return loadUser(context);
     }
 
     @Override
@@ -300,16 +311,21 @@ public class SampleDataProvider extends DataProvider
     @Override
     public void setUserSharingScope(Context context, String scope)
     {
-        userSessionInfo.setSharingScope(scope);
-        saveUserSession(context, userSessionInfo);
-
         // Update scope on server
         service.dataSharing(new SharingOptionBody(scope))
-                .compose(ObservableUtils.applyDefault()).subscribe(response -> LogExt.d(getClass(),
-                                "Response: " + response.code() + ", message: " +
-                                        response.message()), error -> {
-                            LogExt.e(getClass(), error.getMessage());
-                        });
+                .compose(ObservableUtils.applyDefault())
+                .doOnNext(response -> {
+                    if(response.isSuccess())
+                    {
+                        userSessionInfo.setSharingScope(scope);
+                        saveUserSession(context, userSessionInfo);
+                    }
+                })
+                .subscribe(response -> LogExt.d(getClass(),
+                        "Response: " + response.code() + ", message: " +
+                                response.message()), error -> {
+                    LogExt.e(getClass(), error.getMessage());
+                });
     }
 
     private ConsentSignatureBody loadConsentSignatureBody(Context context)
@@ -350,7 +366,8 @@ public class SampleDataProvider extends DataProvider
     @Override
     public String getUserEmail(Context context)
     {
-        return user.getEmail();
+        User user = loadUser(context);
+        return user == null ? null : user.getEmail();
     }
 
     private void saveUserSession(Context context, UserSessionInfo userInfo)
@@ -363,12 +380,12 @@ public class SampleDataProvider extends DataProvider
     {
         try
         {
-            String userSessionJson = loadJsonString(context, USER_PATH);
-            return gson.fromJson(userSessionJson, User.class);
+            String user = loadJsonString(context, USER_PATH);
+            return gson.fromJson(user, User.class);
         }
         catch(FileAccessException e)
         {
-            return new User();
+            return null;
         }
     }
 
