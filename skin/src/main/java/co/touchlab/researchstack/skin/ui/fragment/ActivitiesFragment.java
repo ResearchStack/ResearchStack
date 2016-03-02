@@ -134,8 +134,8 @@ public class ActivitiesFragment extends Fragment
 
             // TODO fix this, just for looks atm
             holder.dailyIndicator.setBackgroundResource(task.taskTitle.equals("Daily Survey")
-                    ? R.color.recurring_color
-                    : R.color.one_time_color);
+                    ? R.color.rss_recurring_color
+                    : R.color.rss_one_time_color);
 
             holder.itemView.setOnClickListener(v -> {
                 LogExt.d(getClass(), "Item clicked: " + task.taskID);

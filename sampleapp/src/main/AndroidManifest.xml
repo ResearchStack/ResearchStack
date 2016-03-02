@@ -7,13 +7,13 @@
         android:name=".SampleApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/rss_app_name"
         android:supportsRtl="true"
         android:theme="@style/SampleTheme">
 
         <activity
             android:name="co.touchlab.researchstack.skin.ui.SplashActivity"
-            android:label="@string/app_name"
+            android:label="@string/rss_app_name"
             android:theme="@style/SampleTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,29 +23,29 @@
 
         <activity
             android:name="co.touchlab.researchstack.skin.ui.MainActivity"
-            android:label="@string/app_name"
+            android:label="@string/rss_app_name"
             android:screenOrientation="portrait"
             android:theme="@style/SampleTheme.NoActionBar">
         </activity>
 
         <activity
             android:name="co.touchlab.researchstack.backbone.ui.ViewTaskActivity"
-            android:label="@string/app_name"
+            android:label="@string/rss_app_name"
             />
 
         <activity
             android:name="co.touchlab.researchstack.skin.ui.SignUpTaskActivity"
-            android:label="@string/app_name"
+            android:label="@string/rss_app_name"
             />
 
         <activity
             android:name="co.touchlab.researchstack.skin.ui.EmailVerificationActivity"
-            android:label="@string/app_name"
+            android:label="@string/rss_app_name"
             />
 
         <activity
             android:name="co.touchlab.researchstack.skin.ui.OnboardingActivity"
-            android:label="@string/app_name"
+            android:label="@string/rss_app_name"
             android:theme="@style/SampleTheme.Onboarding"
             />
 
@@ -53,22 +53,22 @@
             android:name="co.touchlab.researchstack.skin.ui.ViewVideoActivity"
             android:theme="@style/SampleTheme.Video"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
-            android:label="@string/app_name"
+            android:label="@string/rss_app_name"
             />
 
         <activity
             android:name=".SampleSettingsActivity"
-            android:label="@string/settings"
+            android:label="@string/rss_settings"
             android:theme="@style/SampleTheme.Settings"/>
 
         <activity
             android:name="co.touchlab.researchstack.skin.ui.LearnActivity"
-            android:label="@string/learn"
+            android:label="@string/rss_learn"
             android:theme="@style/SampleTheme.NoActionBar"/>
 
         <activity
             android:name="co.touchlab.researchstack.backbone.ui.ViewWebDocumentActivity"
-            android:label="@string/app_name"
+            android:label="@string/rss_app_name"
             />
 
         <activity android:name="co.touchlab.researchstack.skin.ui.ViewFragmentActivity"

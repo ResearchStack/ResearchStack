@@ -39,7 +39,7 @@
                 android:layout_marginRight="@dimen/rsc_padding_small"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="right"
-                android:text="@string/rsc_username"
+                android:text="@string/rss_username"
                 />
 
             <android.support.v7.widget.AppCompatEditText
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:hint="@string/study_registration_username_hint"
+                android:hint="@string/rss_study_registration_username_hint"
                 android:inputType="textEmailAddress"
                 android:textSize="14sp"
                 />
@@ -66,7 +66,7 @@
                 android:layout_marginRight="@dimen/rsc_padding_small"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="right"
-                android:text="@string/password"
+                android:text="@string/rss_password"
                 />
 
             <android.support.v7.widget.AppCompatEditText
@@ -75,7 +75,7 @@
                 android:layout_height="match_parent"
                 android:layout_column="1"
                 android:gravity="center_vertical"
-                android:hint="@string/study_registration_password_hint"
+                android:hint="@string/rss_study_registration_password_hint"
                 android:inputType="textVisiblePassword"
                 android:textSize="14sp"
                 />
@@ -102,7 +102,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/submit_bar"
-        android:text="@string/forgot_password"
+        android:text="@string/rss_forgot_password"
         android:textColor="@color/submit_bar_negative"
         />
 

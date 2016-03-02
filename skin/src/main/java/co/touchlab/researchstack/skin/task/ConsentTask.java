@@ -56,7 +56,7 @@ public class ConsentTask extends OrderedTask
         ConsentSectionModel data = JsonUtils.loadClass(context,
                 ConsentSectionModel.class, ResourceManager.getInstance().getConsentSections());
 
-        String participant = r.getString(R.string.participant);
+        String participant = r.getString(R.string.rss_participant);
         ConsentSignature signature = new ConsentSignature("participant", participant, null);
 
         signature.setRequiresSignatureImage(UiManager.getInstance().isSignatureEnabledInConsent());

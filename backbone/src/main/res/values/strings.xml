@@ -1,11 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
-    <string name="lorem_name">Lorem Ipsum</string>
-    <string name="lorem_short">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
-    <string name="lorem_medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
+    <string name="lorem_name" tools:ignore="ResourceName">Lorem Ipsum</string>
+    <string name="lorem_short" tools:ignore="ResourceName">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="lorem_medium" tools:ignore="ResourceName">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
     </string>
-    <string name="lorem_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+    <string name="lorem_long" tools:ignore="ResourceName">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
         nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
         irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -109,8 +109,8 @@
     <string name="rsc_disagree">Disagree</string>
     <string name="rsc_agree">Agree</string>
     <string name="rsc_please_complete_step">Please complete this step before moving on</string>
-    <string name="src_ok">OK</string>
-    <string name="src_cancel">Cancel</string>
+    <string name="rsc_ok">OK</string>
+    <string name="rsc_cancel">Cancel</string>
 
 
     <!-- TODO Confirm Copy -->

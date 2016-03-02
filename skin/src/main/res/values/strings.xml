@@ -1,144 +1,156 @@
 <resources>
 
     <!-- App -->
-    <string name="app_name">ResearchStack</string>
+    <string name="rss_app_name">ResearchStack</string>
 
     <!-- Study Overview -->
-    <string name="send_email">Send Email</string>
-    <string name="study_overview_email_subject">%1$s Consent Form</string>
-    <string name="join_study">Join The Study</string>
-    <string name="read_consent_doc">Read consent document</string>
-    <string name="email_consent_doc">Email consent Document</string>
-    <string name="swipe_to_preview">Swipe to preview</string>
-    <string name="already_participating">Already Participating?</string>
+    <string name="rss_send_email">Send Email</string>
+    <string name="rss_study_overview_email_subject">%1$s Consent Form</string>
+    <string name="rss_join_study">Join The Study</string>
+    <string name="rss_read_consent_doc">Read consent document</string>
+    <string name="rss_email_consent_doc">Email consent Document</string>
+    <string name="rss_swipe_to_preview">Swipe to preview</string>
+    <string name="rss_already_participating">Already Participating?</string>
 
     <!-- Consent -->
-    <string name="start_consent_button">Start</string>
+    <string name="rss_start_consent_button">Start</string>
 
     <!-- Quiz -->
-    <string name="quiz">Quiz</string>
-    <string name="quiz_evaluation">Quiz Evaluation</string>
-    <string name="quiz_evaluation_try_again">Try Again</string>
-    <string name="quiz_evaluation_review_consent">Review Consent</string>
-    <string name="quiz_evaluation_retake">Retake Quiz</string>
-    <string name="quiz_evaluation_great_job">Great Job!</string>
+    <string name="rss_quiz">Quiz</string>
+    <string name="rss_quiz_evaluation">Quiz Evaluation</string>
+    <string name="rss_quiz_evaluation_try_again">Try Again</string>
+    <string name="rss_quiz_evaluation_review_consent">Review Consent</string>
+    <string name="rss_quiz_evaluation_retake">Retake Quiz</string>
+    <string name="rss_quiz_evaluation_great_job">Great Job!</string>
 
     <!-- Activities -->
-    <string name="activities">Activities</string>
+    <string name="rss_activities">Activities</string>
 
     <!-- Dashboard -->
-    <string name="dashboard">Dashboard</string>
+    <string name="rss_dashboard">Dashboard</string>
 
     <!-- Learn -->
-    <string name="learn">Learn</string>
+    <string name="rss_learn">Learn</string>
 
     <!-- Profile -->
-    <string name="profile">Profile</string>
-    <string name="name">Name</string>
-    <string name="email">Email</string>
-    <string name="biological_sex">Biological Sex</string>
-    <string name="birthdate">Birthdate</string>
-    <string name="height">Height</string>
-    <string name="weight">Weight</string>
+    <string name="rss_profile">Profile</string>
+    <string name="rss_name">Name</string>
+    <string name="rss_email">Email</string>
+    <string name="rss_biological_sex">Biological Sex</string>
+    <string name="rss_birthdate">Birthdate</string>
+    <string name="rss_height">Height</string>
+    <string name="rss_weight">Weight</string>
 
     <!-- Settings -->
-    <string name="settings">Settings</string>
+    <string name="rss_settings">Settings</string>
 
-    <string name="settings_profile">Profile</string>
-    <string name="settings_profile_name">Name</string>
-    <string name="settings_profile_birthdate">Birthdate</string>
+    <string name="rss_settings_profile">Profile</string>
+    <string name="rss_settings_profile_name">Name</string>
+    <string name="rss_settings_profile_birthdate">Birthdate</string>
 
-    <string name="settings_reminders">Reminders</string>
-    <string name="settings_reminders_time">Reminder Time</string>
+    <string name="rss_settings_reminders">Reminders</string>
+    <string name="rss_settings_reminders_time">Reminder Time</string>
 
-    <string name="settings_privacy">Privacy</string>
-    <string name="settings_privacy_sharing_options">Sharing Options</string>
-    <string name="settings_privacy_sharing_options_ph">Share with ...</string>
-    <string name="settings_privacy_review_consent">Review consent document</string>
-    <string name="settings_privacy_policy">Privacy policy</string>
+    <string name="rss_settings_privacy">Privacy</string>
+    <string name="rss_settings_privacy_sharing_options">Sharing Options</string>
+    <string name="rss_settings_privacy_sharing_options_ph">Share with ...</string>
+    <string name="rss_settings_privacy_review_consent">Review consent document</string>
+    <string name="rss_settings_privacy_policy">Privacy policy</string>
 
-    <string name="settings_security">Security</string>
-    <string name="settings_security_auto_lock">Auto-Lock on exit</string>
-    <string name="settings_security_auto_lock_summary">App will automatically lock</string>
-    <string name="settings_security_auto_lock_time">Auto-Lock time</string>
-    <string name="settings_security_auto_lock_time_summary">The time it takes for auto-lock to trigger</string>
-    <string name="settings_security_auto_lock_time_default">1</string>
-    <string name="settings_security_change_passcode">Change passcode</string>
+    <string name="rss_settings_security">Security</string>
+    <string name="rss_settings_security_auto_lock">Auto-Lock on exit</string>
+    <string name="rss_settings_security_auto_lock_summary">App will automatically lock</string>
+    <string name="rss_settings_security_auto_lock_time">Auto-Lock time</string>
+    <string name="rss_settings_security_auto_lock_time_summary">The time it takes for auto-lock to
+        trigger
+    </string>
+    <string name="rss_settings_security_auto_lock_time_default">1</string>
+    <string name="rss_settings_security_change_passcode">Change passcode</string>
 
-    <string name="settings_general">General</string>
-    <string name="settings_general_software_notices">Software Notices</string>
-    <string name="settings_general_leave_study">Leave Study</string>
-    <string name="settings_general_join_study">Join Study</string>
-    <string name="consent_withdraw_failed">Failed to Withdraw</string>
-    <string name="consent_withdraw_success">Consent Withdrawn</string>
+    <string name="rss_settings_general">General</string>
+    <string name="rss_settings_general_software_notices">Software Notices</string>
+    <string name="rss_settings_general_leave_study">Leave Study</string>
+    <string name="rss_settings_general_join_study">Join Study</string>
+    <string name="rss_consent_withdraw_failed">Failed to Withdraw</string>
+    <string name="rss_consent_withdraw_success">Consent Withdrawn</string>
 
-    <string name="settings_permissions">Permissions</string>
-    <string name="settings_review_consent">Review Consent</string>
-    <string name="settings_version">Build number %1$s (%2$s)</string>
+    <string name="rss_settings_permissions">Permissions</string>
+    <string name="rss_settings_review_consent">Review Consent</string>
+    <string name="rss_settings_version">Build number %1$s (%2$s)</string>
 
     <!-- Steps -->
-    <string name="step_skip">Skip this question</string>
-    <string name="next">next</string>
-    <string name="format_step_title">Step %1$s of %2$s</string>
-    <string name="please_complete_step">Please complete this step before moving on</string>
+    <string name="rss_step_skip">Skip this question</string>
+    <string name="rss_next">next</string>
+    <string name="rss_format_step_title">Step %1$s of %2$s</string>
+    <string name="rss_please_complete_step">Please complete this step before moving on</string>
 
     <!--Other -->
-    <string name="you_are_eligible">You are eligible to join the study!</string>
-    <string name="tap_below">Touch “NEXT” below to get started with the consent process.</string>
-    <string name="you_are_ineligible">Unfortunately, you are ineligible to join this study.</string>
-    <string name="sign_in">Sign In</string>
-    <string name="add_password_hint">add password</string>
-    <string name="password">Password</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="weight_hint">add weight (lb)</string>
-    <string name="location_services">Location Services</string>
-    <string name="location_services_description">Using your GPS will allow the app to advise you of
+    <string name="rss_you_are_eligible">You are eligible to join the study!</string>
+    <string name="rss_tap_below">Touch “NEXT” below to get started with the consent process.
+    </string>
+    <string name="rss_you_are_ineligible">Unfortunately, you are ineligible to join this study.
+    </string>
+    <string name="rss_sign_in">Sign In</string>
+    <string name="rss_add_password_hint">add password</string>
+    <string name="rss_password">Password</string>
+    <string name="rss_male">Male</string>
+    <string name="rss_female">Female</string>
+    <string name="rss_weight_hint">add weight (lb)</string>
+    <string name="rss_location_services">Location Services</string>
+    <string name="rss_location_services_description">Using your GPS will allow the app to advise you
+        of
         air quality in your area. Your actual location will never be shared.
     </string>
-    <string name="allow">Allow</string>
-    <string name="granted">Granted</string>
-    <string name="forgot_password">Forgot password</string>
-    <string name="participant">Participant</string>
-    <string name="btn_true">True</string>
-    <string name="btn_false">False</string>
-    <string name="eligibility">Eligibility</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="ineligible">Ineligible</string>
-    <string name="registration">Registration</string>
-    <string name="additional_info">Additional Information</string>
-    <string name="thank_you">Thank you</string>
-    <string name="study_registration">Study Registration</string>
-    <string name="study_registration_desc">We will send an email to the address below to confirm
+    <string name="rss_allow">Allow</string>
+    <string name="rss_granted">Granted</string>
+    <string name="rss_forgot_password">Forgot password</string>
+    <string name="rss_participant">Participant</string>
+    <string name="rss_btn_true">True</string>
+    <string name="rss_btn_false">False</string>
+    <string name="rss_eligibility">Eligibility</string>
+    <string name="rss_sign_up">Sign Up</string>
+    <string name="rss_ineligible">Ineligible</string>
+    <string name="rss_registration">Registration</string>
+    <string name="rss_additional_info">Additional Information</string>
+    <string name="rss_thank_you">Thank you</string>
+    <string name="rss_study_registration">Study Registration</string>
+    <string name="rss_study_registration_desc">We will send an email to the address below to confirm
         your registration in the research study.
     </string>
-    <string name="study_registration_password">Create your study login password</string>
-    <string name="email_hint">name@example.com</string>
-    <string name="study_registration_password_hint">Enter password</string>
-    <string name="study_registration_username_hint">Enter username or email</string>
-    <string name="error_invalid_password">Invalid Password</string>
-    <string name="error_invalid_username">Username must be at least 6 characters</string>
-    <string name="error_invalid_email">Invalid Email</string>
-    <string name="wrong_email">Wrong email address? Tap here.</string>
-    <string name="once_verified">Once verified, tap below</string>
-    <string name="rs_continue">Continue</string>
-    <string name="resend_email">Resend Verification Email</string>
-    <string name="email_verification_body">%1$s has send you a verification email at %2$s</string>
-    <string name="rsc_username">Username</string>
-    <string name="username_hint">username_123</string>
-    <string name="optional">Optional</string>
-    <string name="email_not_verified">Please check your email to verify your account before
+    <string name="rss_study_registration_password">Create your study login password</string>
+    <string name="rss_email_hint">name@example.com</string>
+    <string name="rss_study_registration_password_hint">Enter password</string>
+    <string name="rss_study_registration_username_hint">Enter username or email</string>
+    <string name="rss_error_invalid_password">Invalid Password</string>
+    <string name="rss_error_invalid_username">Username must be at least 6 characters</string>
+    <string name="rss_error_invalid_email">Invalid Email</string>
+    <string name="rss_wrong_email">Wrong email address? Tap here.</string>
+    <string name="rss_once_verified">Once verified, tap below</string>
+    <string name="rss_continue">Continue</string>
+    <string name="rss_resend_email">Resend Verification Email</string>
+    <string name="rss_email_verification_body">%1$s has send you a verification email at %2$s
+    </string>
+    <string name="rss_username">Username</string>
+    <string name="rss_username_hint">username_123</string>
+    <string name="rss_optional">Optional</string>
+    <string name="rss_email_not_verified">Please check your email to verify your account before
         continuing
     </string>
-    <string name="change_email">Change Email</string>
-    <string name="quiz_question_disclamer">Please answer a few questions to ensure that you understand the consent form.</string>
-    <string name="passcode">Passcode</string>
-    <string name="passcode_create_title">Choose a passcode</string>
-    <string name="passcode_create_summary">Enter a secure code to protect your data and log in faster.</string>
-    <string name="passcode_confirm_title">Confirm your passcode</string>
-    <string name="passcode_confirm_summary">Enter your code one more time to confirm.</string>
-    <string name="passcode_confirm_error">That code doesn’t match the one you entered. Try again or go back to choose a different code.</string>
-    <string name="passcode_change_title">Change Passcode</string>
-    <string name="skip_signup">Skip Signup</string>
+    <string name="rss_change_email">Change Email</string>
+    <string name="rss_quiz_question_disclamer">Please answer a few questions to ensure that you
+        understand the consent form.
+    </string>
+    <string name="rss_passcode">Passcode</string>
+    <string name="rss_passcode_create_title">Choose a passcode</string>
+    <string name="rss_passcode_create_summary">Enter a secure code to protect your data and log in
+        faster.
+    </string>
+    <string name="rss_passcode_confirm_title">Confirm your passcode</string>
+    <string name="rss_passcode_confirm_summary">Enter your code one more time to confirm.</string>
+    <string name="rss_passcode_confirm_error">That code doesn’t match the one you entered. Try again
+        or go back to choose a different code.
+    </string>
+    <string name="rss_passcode_change_title">Change Passcode</string>
+    <string name="rss_skip_signup">Skip Signup</string>
 
 </resources>

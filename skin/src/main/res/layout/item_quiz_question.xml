@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:paddingBottom="@dimen/rsc_padding_wedge"
-        android:text="@string/quiz_question_disclamer"
+        android:text="@string/rss_quiz_question_disclamer"
         android:visibility="visible"
         />
 

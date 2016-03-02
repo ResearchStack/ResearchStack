@@ -29,20 +29,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/wrong_email"/>
+            android:text="@string/rss_wrong_email"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/email_verification_once_verified"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/once_verified"/>
+            android:text="@string/rss_once_verified"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/continue_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rs_continue"/>
+            android:text="@string/rss_continue"/>
 
         <View
             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/resend_email"/>
+            android:text="@string/rss_resend_email"/>
 
 
     </LinearLayout>

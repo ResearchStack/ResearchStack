@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="config_maxNumberOfPageIndicatorsToShow">16</integer>
+    <integer name="rss_config_maxNumberOfPageIndicatorsToShow">16</integer>
 </resources>

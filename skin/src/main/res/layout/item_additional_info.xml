@@ -17,7 +17,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/height"
+            android:text="@string/rss_height"
             />
 
         <include layout="@layout/view_height_picker"/>
@@ -34,14 +34,14 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/weight"
+            android:text="@string/rss_weight"
             />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/weight_hint"
+            android:hint="@string/rss_weight_hint"
             android:inputType="number"
             />
     </LinearLayout>

@@ -84,13 +84,13 @@ public class SignUpPermissionsStepLayout extends StepLayoutImpl
         if(permissionCheck == PackageManager.PERMISSION_GRANTED)
         {
             LogExt.d(getClass(), "Permission Granted");
-            permissionButton.setText(R.string.granted);
+            permissionButton.setText(R.string.rss_granted);
             permissionButton.setEnabled(false);
         }
         else
         {
             LogExt.d(getClass(), "Permission Denied");
-            permissionButton.setText(R.string.allow);
+            permissionButton.setText(R.string.rss_allow);
             permissionButton.setEnabled(true);
         }
     }

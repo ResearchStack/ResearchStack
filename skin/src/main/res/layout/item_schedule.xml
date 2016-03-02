@@ -12,7 +12,7 @@
         android:id="@+id/daily_indicator"
         android:layout_width="4dp"
         android:layout_height="match_parent"
-        android:background="@color/one_time_color"
+        android:background="@color/rss_one_time_color"
         />
 
     <android.support.v7.widget.AppCompatCheckBox
