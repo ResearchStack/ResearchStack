@@ -73,8 +73,9 @@
                   android:theme="@style/SampleTheme.NoActionBar"/>
 
         <activity
-            android:name="co.touchlab.researchstack.skin.ui.ViewLicensesActivity"
-            android:label="@string/app_name"
+            android:name="co.touchlab.researchstack.skin.ui.SoftwareNoticesActivity"
+            android:theme="@style/SampleTheme.NoActionBar"
+            android:label="@string/software_notice"
             />
 
     </application>

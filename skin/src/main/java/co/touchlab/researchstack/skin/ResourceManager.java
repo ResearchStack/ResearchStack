@@ -35,6 +35,6 @@ public abstract class ResourceManager
 
     public abstract int getPrivacyPolicy();
 
-    public abstract int getLicenseSections();
+    public abstract int getSoftwareNotices();
 
 }
