@@ -157,7 +157,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
             case RETRY:
                 updateText(res.getString(R.string.rss_passcode_confirm_title),
                         res.getString(R.string.rss_passcode_confirm_error),
-                        res.getColor(R.color.error));
+                        res.getColor(R.color.rsc_error));
                 break;
 
             case CREATE:

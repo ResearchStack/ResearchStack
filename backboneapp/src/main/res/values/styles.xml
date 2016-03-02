@@ -4,16 +4,16 @@
     <style name="CoreAppTheme"
            parent="Backbone">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/rsc_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/rsc_colorPrimaryDark</item>
+        <item name="colorAccent">@color/rsc_colorAccent</item>
         <item name="alertDialogTheme">@style/CoreAppTheme.Dialog</item>
     </style>
 
     <style name="CoreAppTheme.Dialog"
            parent="Backbone.Dialog">
         <!-- Used for the buttons -->
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/rsc_colorAccent</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">@color/abc_primary_text_material_light</item>
         <!-- Used for the background -->

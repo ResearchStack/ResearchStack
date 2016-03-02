@@ -20,7 +20,7 @@
         android:id="@+id/bar_submit_negative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/submit_bar_negative"
+        android:textColor="@color/rsc_submit_bar_negative"
         tools:text="EXIT"
         />
 

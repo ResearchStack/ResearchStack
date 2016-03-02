@@ -91,7 +91,7 @@
             android:key="rss_settings_general_leave_study"
             android:title="@string/rss_settings_general_leave_study"
             android:order="2"
-            app:preferenceTextColor="@color/error"/>
+            app:preferenceTextColor="@color/rsc_error"/>
 
     </PreferenceCategory>
 

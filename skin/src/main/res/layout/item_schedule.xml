@@ -33,7 +33,7 @@
             android:id="@+id/task_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/rsc_black"
             android:textSize="16sp"
             tools:text="Survey Title"
             />

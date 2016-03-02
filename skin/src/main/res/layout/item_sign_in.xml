@@ -103,7 +103,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/submit_bar"
         android:text="@string/rss_forgot_password"
-        android:textColor="@color/submit_bar_negative"
+        android:textColor="@color/rsc_submit_bar_negative"
         />
 
     <include

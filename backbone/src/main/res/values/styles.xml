@@ -1,15 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
     <style name="Base.Backbone" parent="Base.Theme.AppCompat.Light">
-        <item name="submitBackground">@color/submit_bar_gray</item>
+        <item name="submitBackground">@color/rsc_submit_bar_gray</item>
         <item name="android:actionBarStyle">@style/Backbone.ActionBarStyle</item>
         <item name="actionBarStyle">@style/Backbone.ActionBarStyle</item>
-        <item name="android:textColorPrimary">@color/warm_gray</item>
-        <item name="android:textColor">@color/warm_gray</item>
+        <item name="android:textColorPrimary">@color/rsc_warm_gray</item>
+        <item name="android:textColor">@color/rsc_warm_gray</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/rsc_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/rsc_colorPrimaryDark</item>
+        <item name="colorAccent">@color/rsc_colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:listPreferredItemPaddingLeft">50dp</item>
@@ -19,7 +19,7 @@
         <!-- Using an attr and pointing app:theme on the tabLayout to the attr does not work. -->
         <!-- TODO Figure out a better way of styling tabLayout without having to define all style-attrs in the theme -->
         <item name="tabIndicatorColor">@android:color/white</item>
-        <item name="tabBackground">@color/colorPrimary</item>
+        <item name="tabBackground">@color/rsc_colorPrimary</item>
         <item name="tabTextColor">#6FFF</item>
         <item name="tabSelectedTextColor">@android:color/white</item>
     </style>
@@ -76,7 +76,7 @@
     <style name="Backbone.ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background">@android:color/transparent</item>
         <item name="background">@android:color/transparent</item>
-        <item name="android:textColorPrimary">@color/warm_gray</item>
+        <item name="android:textColorPrimary">@color/rsc_warm_gray</item>
         <item name="colorControlNormal">#FF0000</item>
     </style>
 

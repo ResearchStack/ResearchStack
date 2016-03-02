@@ -118,7 +118,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         pinCodeLayout.setBackgroundColor(Color.WHITE);
         pinCodeLayout.setVisibility(View.GONE);
 
-        int errorColor = getResources().getColor(R.color.error);
+        int errorColor = getResources().getColor(R.color.rsc_error);
 
         TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
         EditText pincode = (EditText) pinCodeLayout.findViewById(R.id.pincode);
