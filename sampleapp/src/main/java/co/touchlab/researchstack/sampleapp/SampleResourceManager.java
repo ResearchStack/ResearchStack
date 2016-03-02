@@ -28,9 +28,9 @@ public class SampleResourceManager extends ResourceManager
     }
 
     @Override
-    public int getLicenseSections()
+    public int getSoftwareNotices()
     {
-        return R.raw.license_items;
+        return R.raw.software_notices;
     }
 
     @Override

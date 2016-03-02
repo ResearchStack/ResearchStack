@@ -41,7 +41,7 @@ import co.touchlab.researchstack.skin.model.User;
 import co.touchlab.researchstack.skin.step.PassCodeCreationStep;
 import co.touchlab.researchstack.skin.task.ConsentTask;
 import co.touchlab.researchstack.skin.ui.OnboardingActivity;
-import co.touchlab.researchstack.skin.ui.ViewLicensesActivity;
+import co.touchlab.researchstack.skin.ui.SoftwareNoticesActivity;
 import co.touchlab.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
 import co.touchlab.researchstack.skin.utils.ConsentFormUtils;
 import co.touchlab.researchstack.skin.utils.JsonUtils;
@@ -79,7 +79,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     public static final String KEY_CHANGE_PASSCODE = "settings_security_change_passcode";
     // General
     public static final String KEY_GENERAL = "settings_general";
-    public static final String KEY_LICENSE_INFORMATION = "settings_general_license_information";
+    public static final String KEY_SOFTWARE_NOTICES  = "settings_general_software_notices";
     public static final String KEY_LEAVE_STUDY = "settings_general_leave_study";
     public static final String KEY_JOIN_STUDY = "settings_general_join_study";
     // Other
@@ -178,10 +178,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                         ConsentSectionModel.class,
                         ResourceManager.getInstance().getConsentSections());
                 subscriber.onNext(data);
-            })
-                    .compose(ObservableUtils.applyDefault())
-                    .map(o -> (ConsentSectionModel) o)
-                    .subscribe(data -> {
+            }).compose(ObservableUtils.applyDefault()).map(o -> (ConsentSectionModel) o).subscribe(data -> {
                         this.data = data;
 
                         // Load and set sharing scope
@@ -221,8 +218,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     showPrivacyPolicy();
                     return true;
 
-                case KEY_LICENSE_INFORMATION:
-                    showLicenseInformation();
+                case KEY_SOFTWARE_NOTICES:
+                    showSoftwareNotices();
                     return true;
 
                 case KEY_REVIEW_CONSENT:
@@ -416,9 +413,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         startActivity(intent);
     }
 
-    public void showLicenseInformation()
+    public void showSoftwareNotices()
     {
-        Intent intent = ViewLicensesActivity.newIntent(getContext());
+        Intent intent = SoftwareNoticesActivity.newIntent(getContext());
         startActivity(intent);
     }
 }
