@@ -44,7 +44,7 @@ public class TextQuestionBody implements StepBody
         View body = inflater.inflate(R.layout.compact_item_edit_text, parent, false);
 
         editText = (EditText) body.findViewById(R.id.value);
-        editText.setHint(R.string.rsc_hint_step_body_text);
+        editText.setHint(R.string.rsb_hint_step_body_text);
 
         TextView title = (TextView) body.findViewById(R.id.label);
 
@@ -84,8 +84,8 @@ public class TextQuestionBody implements StepBody
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_right);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
         body.setLayoutParams(layoutParams);
 
         return body;

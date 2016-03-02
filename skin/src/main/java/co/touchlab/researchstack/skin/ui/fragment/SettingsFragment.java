@@ -250,13 +250,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     sharingStep.setShowsProgress(false);
                     sharingStep.setUseSurveyMode(false);
 
-                    String shareWidely = getString(R.string.rsc_consent_share_widely,
+                    String shareWidely = getString(R.string.rsb_consent_share_widely,
                             investigatorLongDesc);
                     Choice<String> shareWidelyChoice = new Choice<>(shareWidely,
                             "sponsors_and_partners",
                             null);
 
-                    String shareRestricted = getString(R.string.rsc_consent_share_only,
+                    String shareRestricted = getString(R.string.rsb_consent_share_only,
                             investigatorShortDesc);
                     Choice<String> shareRestrictedChoice = new Choice<>(shareRestricted,
                             "all_qualified_researchers",
@@ -266,8 +266,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                             shareWidelyChoice,
                             shareRestrictedChoice));
 
-                    sharingStep.setTitle(getString(R.string.rsc_consent_share_title));
-                    sharingStep.setText(getString(R.string.rsc_consent_share_description,
+                    sharingStep.setTitle(getString(R.string.rsb_consent_share_title));
+                    sharingStep.setText(getString(R.string.rsb_consent_share_description,
                             investigatorLongDesc,
                             localizedLearnMoreHTMLContent));
 
@@ -371,7 +371,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             String investigatorLongDesc = data.getDocumentProperties()
                     .getInvestigatorLongDescription();
 
-            return getString(R.string.rsc_consent_share_widely,
+            return getString(R.string.rsb_consent_share_widely,
                     investigatorLongDesc);
         }
         else if (option.equals("all_qualified_researchers"))
@@ -379,12 +379,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             String investigatorShortDesc = data.getDocumentProperties()
                     .getInvestigatorShortDescription();
 
-            return getString(R.string.rsc_consent_share_only,
+            return getString(R.string.rsb_consent_share_only,
                     investigatorShortDesc);
         }
         else if (option.equals("no_sharing"))
         {
-            return getString(R.string.rsc_consent_share_no);
+            return getString(R.string.rsb_consent_share_no);
         }
         else
         {

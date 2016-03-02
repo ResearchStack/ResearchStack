@@ -16,7 +16,7 @@
         android:id="@+id/priming_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rsc_what_to_expect"
+        android:text="@string/rsb_what_to_expect"
         android:textSize="22sp"
         android:textStyle="bold"
         />

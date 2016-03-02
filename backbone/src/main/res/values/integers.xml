@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="rsc_config_mediumAnimTime">300</integer>
+    <integer name="rsb_config_mediumAnimTime">300</integer>
 </resources>

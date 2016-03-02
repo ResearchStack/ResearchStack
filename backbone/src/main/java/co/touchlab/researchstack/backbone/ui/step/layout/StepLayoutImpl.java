@@ -238,7 +238,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
         }
         else
         {
-            Toast.makeText(getContext(), R.string.rsc_please_complete_step, Toast.LENGTH_SHORT)
+            Toast.makeText(getContext(), R.string.rsb_please_complete_step, Toast.LENGTH_SHORT)
                     .show();
         }
     }

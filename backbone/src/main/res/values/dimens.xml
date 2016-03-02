@@ -2,22 +2,22 @@
 <resources>
 
     <!-- Padding -->
-    <dimen name="rsc_padding_small">8dp</dimen>
-    <dimen name="rsc_padding_wedge">12dp</dimen>
-    <dimen name="rsc_padding_medium">16dp</dimen>
-    <dimen name="rsc_padding_large">24dp</dimen>
+    <dimen name="rsb_padding_small">8dp</dimen>
+    <dimen name="rsb_padding_wedge">12dp</dimen>
+    <dimen name="rsb_padding_medium">16dp</dimen>
+    <dimen name="rsb_padding_large">24dp</dimen>
 
     <!-- Item Height -->
-    <dimen name="rsc_item_size_small">48dp</dimen>
-    <dimen name="rsc_item_size_medium">56dp</dimen>
-    <dimen name="rsc_item_size_default">@dimen/rsc_item_size_small</dimen>
-    <dimen name="rsc_item_size_divider">1dp</dimen>
+    <dimen name="rsb_item_size_small">48dp</dimen>
+    <dimen name="rsb_item_size_medium">56dp</dimen>
+    <dimen name="rsb_item_size_default">@dimen/rsb_item_size_small</dimen>
+    <dimen name="rsb_item_size_divider">1dp</dimen>
 
     <!-- Item Margin -->
-    <dimen name="rsc_margin_left">48dp</dimen>
-    <dimen name="rsc_margin_right">16dp</dimen>
+    <dimen name="rsb_margin_left">48dp</dimen>
+    <dimen name="rsb_margin_right">16dp</dimen>
 
     <!-- Text Size -->
-    <dimen name="rsc_text_size_title">20sp</dimen>
+    <dimen name="rsb_text_size_title">20sp</dimen>
 
 </resources>

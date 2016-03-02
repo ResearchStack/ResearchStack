@@ -30,7 +30,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    resourcePrefix 'rsc_'
+    resourcePrefix 'rsb_'
 }
 
 group = 'co.touchlab.researchstack'

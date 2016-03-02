@@ -72,8 +72,8 @@ public class DateQuestionBody implements StepBody
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_right);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
         view.setLayoutParams(layoutParams);
 
         return view;
@@ -132,7 +132,7 @@ public class DateQuestionBody implements StepBody
 
         TextView textView = (TextView) formItemView.findViewById(R.id.value);
         textView.setSingleLine(true);
-        textView.setHint(R.string.rsc_hint_step_body_date);
+        textView.setHint(R.string.rsb_hint_step_body_date);
 
         if(result.getResult() != null)
         {

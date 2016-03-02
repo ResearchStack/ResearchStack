@@ -157,7 +157,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
             case RETRY:
                 updateText(res.getString(R.string.rss_passcode_confirm_title),
                         res.getString(R.string.rss_passcode_confirm_error),
-                        res.getColor(R.color.rsc_error));
+                        res.getColor(R.color.rsb_error));
                 break;
 
             case CREATE:
@@ -168,8 +168,8 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
                 break;
 
             case CHANGE:
-                updateText(res.getString(R.string.rsc_pincode_enter_title),
-                        res.getString(R.string.rsc_pincode_enter_summary),
+                updateText(res.getString(R.string.rsb_pincode_enter_title),
+                        res.getString(R.string.rsb_pincode_enter_summary),
                         ThemeUtils.getTextColorPrimary(getContext()));
                 break;
         }

@@ -172,7 +172,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                 resultSummary.setVisibility(View.VISIBLE);
 
                 // Change the submit bar positive-title to "next"
-                submitBar.setPositiveTitle(R.string.rsc_next);
+                submitBar.setPositiveTitle(R.string.rsb_next);
             }
             else
             {

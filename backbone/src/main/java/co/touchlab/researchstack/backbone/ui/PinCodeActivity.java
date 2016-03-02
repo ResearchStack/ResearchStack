@@ -118,7 +118,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         pinCodeLayout.setBackgroundColor(Color.WHITE);
         pinCodeLayout.setVisibility(View.GONE);
 
-        int errorColor = getResources().getColor(R.color.rsc_error);
+        int errorColor = getResources().getColor(R.color.rsb_error);
 
         TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
         EditText pincode = (EditText) pinCodeLayout.findViewById(R.id.pincode);
@@ -142,7 +142,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
                         // TODO Figure out a better way of handling if we are in an error state. Its probably
                         // better to use the views state and set enabled/disabled instead
                         summary.setTextColor(ThemeUtils.getTextColorPrimary(PinCodeActivity.this));
-                        summary.setText(R.string.rsc_pincode_enter_summary);
+                        summary.setText(R.string.rsb_pincode_enter_summary);
                     }
                 })
                 .filter(pin -> pin != null && pin.length() == config.getPinLength())
@@ -159,7 +159,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
                     }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
                         toggleKeyboardAction.call(true);
                         throwable.printStackTrace();
-                        summary.setText(R.string.rsc_pincode_enter_error);
+                        summary.setText(R.string.rsb_pincode_enter_error);
                         summary.setTextColor(errorColor);
                         pinCodeLayout.showProgress(false);
                     }).onErrorResumeNext(throwable1 -> {

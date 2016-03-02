@@ -57,8 +57,8 @@ public class MultiChoiceQuestionBody <T> implements StepBody
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_right);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
         view.setLayoutParams(layoutParams);
 
         return view;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:minHeight="@dimen/rsc_item_size_default"
+    android:minHeight="@dimen/rsb_item_size_default"
     android:padding="8dp"
     tools:text="@string/lorem_name"
     />

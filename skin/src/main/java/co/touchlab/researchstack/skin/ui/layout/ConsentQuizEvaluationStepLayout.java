@@ -69,17 +69,17 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
                     step.getQuestionProperties().incorrectIcon);
 
             image.setImageResource(iconResId);
-            title.setText(R.string.rsc_quiz_evaluation_try_again);
+            title.setText(R.string.rsb_quiz_evaluation_try_again);
 
             if(! step.isOverMaxAttempts())
             {
                 summary.setText(step.getQuestionProperties().quizFailure1Text);
-                submitBar.setPositiveTitle(R.string.rsc_quiz_evaluation_retake);
+                submitBar.setPositiveTitle(R.string.rsb_quiz_evaluation_retake);
             }
             else
             {
                 summary.setText(step.getQuestionProperties().quizFailure2Text);
-                submitBar.setPositiveTitle(R.string.rsc_quiz_evaluation_review_consent);
+                submitBar.setPositiveTitle(R.string.rsb_quiz_evaluation_review_consent);
             }
         }
 
@@ -90,7 +90,7 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
                     step.getQuestionProperties().correctIcon);
 
             image.setImageResource(iconResId);
-            title.setText(R.string.rsc_quiz_evaluation_great_job);
+            title.setText(R.string.rsb_quiz_evaluation_great_job);
 
             if(step.getIncorrect() == 0)
             {
@@ -101,7 +101,7 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
                 summary.setText(step.getQuestionProperties().quizPassedText);
             }
 
-            submitBar.setPositiveTitle(R.string.rsc_next);
+            submitBar.setPositiveTitle(R.string.rsb_next);
         }
     }
 
