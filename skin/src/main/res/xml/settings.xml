@@ -18,17 +18,16 @@
 
     </PreferenceCategory>
 
-    <SwitchPreference
-        android:key="settings_reminders"
-        android:title="@string/settings_reminders"
-        android:defaultValue="true"
-        android:layout="@layout/preferene_switch_category"/>
+    <PreferenceCategory
+        android:title="@string/settings_reminders">
+        <!-- TODO Move title and summary to strings.xml, waiting for prefix-->
+        <SwitchPreference
+            android:key="settings_reminders"
+            android:title="Task reminders"
+            android:summary="You’ll be reminded to complete tasks"
+            android:defaultValue="true"/>
 
-    <Preference
-        android:key="settings_reminders_time"
-        android:dependency="settings_reminders"
-        android:title="@string/settings_reminders_time"
-        android:summary="Set a time for reminders"/>
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:key="settings_privacy"

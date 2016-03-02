@@ -1,7 +1,6 @@
 package co.touchlab.researchstack.skin.ui.fragment;
 
 import android.app.Activity;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,8 +15,6 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import co.touchlab.researchstack.backbone.StorageAccess;
@@ -69,7 +66,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     public static final String KEY_PROFILE_BIRTHDATE = "settings_profile_birthdate";
     // Reminders
     public static final String KEY_REMINDERS         = "settings_reminders";
-    public static final String KEY_REMINDERS_TIME    = "settings_reminders_time";
     // Privacy
     public static final String KEY_PRIVACY           = "settings_privacy";
     public static final String KEY_PRIVACY_POLICY    = "settings_privacy_policy";
@@ -122,26 +118,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         joinStudy = generalCategory.findPreference(KEY_JOIN_STUDY);
 
         initPreferenceForConsent();
-
-        // Set default value for reminder time if one doesnt exist.
-        if (!screen.getSharedPreferences().contains(KEY_REMINDERS_TIME))
-        {
-            Calendar defaultReminderTime = Calendar.getInstance();
-            defaultReminderTime.set(Calendar.HOUR_OF_DAY, 17);
-            defaultReminderTime.set(Calendar.MINUTE, 0);
-            defaultReminderTime.set(Calendar.SECOND, 0);
-            screen.getSharedPreferences().edit()
-                    .putString(KEY_REMINDERS_TIME,  Long.toString(defaultReminderTime.getTimeInMillis()))
-                    .commit();
-        }
-
-        // Set reminder time
-        boolean is24hour = android.text.format.DateFormat.is24HourFormat(getActivity());
-        DateFormat formatter = new SimpleDateFormat(is24hour ? "H:mm" : "h:mma");
-        long timeInMillis = Long.parseLong(screen.getSharedPreferences()
-                .getString(KEY_REMINDERS_TIME, null));
-        Preference reminderTimePref = screen.findPreference(KEY_REMINDERS_TIME);
-        reminderTimePref.setSummary(formatter.format(new Date(timeInMillis)).toLowerCase());
 
         // Set version string
         screen.findPreference(KEY_VERSION).setSummary(getVersionString());
@@ -329,23 +305,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     getActivity().finish();
                     return true;
 
-                case KEY_REMINDERS_TIME:
-                    boolean is24hour = android.text.format.DateFormat.is24HourFormat(getActivity());
-                    DateFormat formatter = new SimpleDateFormat(is24hour ? "H:mm" : "h:mma");
-                    Calendar calendar = Calendar.getInstance();
-                    long timeInMillis = Long.parseLong(getPreferenceScreen().getSharedPreferences()
-                            .getString(KEY_REMINDERS_TIME, null));
-                    calendar.setTimeInMillis(timeInMillis);
-
-                    new TimePickerDialog(getActivity(), (view, hourOfDay, minute) -> {
-                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        calendar.set(Calendar.MINUTE, minute);
-                        String formatted = formatter.format(calendar.getTime());
-                        preference.getSharedPreferences().edit().putString(KEY_REMINDERS_TIME,
-                                Long.toString(calendar.getTimeInMillis())).apply();
-                        preference.setSummary(formatted.toLowerCase());
-                    }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24hour)
-                            .show();
+                case KEY_REMINDERS:
+                    // TODO Alert Task Notification Manager
                     return true;
             }
         }
