@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -53,8 +54,8 @@ public class MainActivity extends PinCodeActivity
                     .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
             subscriber.onNext(result == null);
         }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
-            if((boolean) needsInitialSurvey &&
-                    DataProvider.getInstance().isSignedIn(MainActivity.this))
+            if((boolean) needsInitialSurvey)// &&
+            //                    DataProvider.getInstance().isSignedIn(MainActivity.this))
             {
                 Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
                 Intent intent = ViewTaskActivity.newIntent(this, task);
@@ -108,9 +109,11 @@ public class MainActivity extends PinCodeActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private static final String TAG = "MainActivity";
     @Override
     public void onDataReady()
     {
+        Log.d(TAG, "onDataReady() called with: " + "");
         super.onDataReady();
 
         if (pagerAdapter == null)
