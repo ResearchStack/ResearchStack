@@ -10,6 +10,7 @@ public class AppPrefs
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Statics
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    private static final String KEY_ONBOARDING_COMPLETE = "settings_onboarding_complete";
     private static AppPrefs instance;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -44,4 +45,22 @@ public class AppPrefs
         return autoLockMins * 60 * 1000;
     }
 
+    /**
+     * Method to set if onboarding is completed. This preference is used within Skin.SplashActivity
+     * to see if we should show onboarding or proceed to MainActivity.
+     *
+     * @param complete true if onboading is complete
+     */
+    public void setOnboardingComplete(boolean complete)
+    {
+        prefs.edit().putBoolean(KEY_ONBOARDING_COMPLETE, complete).apply();
+    }
+
+    /**
+     * @return true if onboading is complete
+     */
+    public boolean isOnboardingComplete()
+    {
+        return prefs.getBoolean(KEY_ONBOARDING_COMPLETE, false);
+    }
 }

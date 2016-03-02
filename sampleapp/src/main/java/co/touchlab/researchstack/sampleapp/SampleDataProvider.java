@@ -1,7 +1,6 @@
 package co.touchlab.researchstack.sampleapp;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 
@@ -36,6 +35,7 @@ import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.DataResponse;
 import co.touchlab.researchstack.skin.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.skin.model.TaskModel;
+import co.touchlab.researchstack.skin.model.User;
 import co.touchlab.researchstack.skin.schedule.ScheduleHelper;
 import co.touchlab.researchstack.skin.task.SmartSurveyTask;
 import co.touchlab.researchstack.skin.ui.layout.SignInStepLayout;
@@ -54,10 +54,9 @@ import rx.Observable;
 
 public class SampleDataProvider extends DataProvider
 {
-    public static final String TEMP_USER_JSON_FILE_NAME    = "/temp_user";
     public static final String TEMP_CONSENT_JSON_FILE_NAME = "/consent_sig";
-    public static final String TEMP_USER_EMAIL             = "/user_email";
     public static final String USER_SESSION_PATH           = "/user_session";
+    public static final String USER_PATH                   = "/user";
 
     //TODO Add build flavors, add var to BuildConfig for STUDY_ID
     public static final  String STUDY_ID = "ohsu-molemapper";
@@ -70,7 +69,6 @@ public class SampleDataProvider extends DataProvider
     private UserSessionInfo userSessionInfo;
     private Gson    gson     = new Gson();
     private boolean signedIn = false;
-    private String userEmail;
 
     // TODO figure out if there's a better way to do this
     // these are used to get task/step guids without rereading the json files and iterating through
@@ -131,23 +129,58 @@ public class SampleDataProvider extends DataProvider
         return Observable.create(subscriber -> {
             userSessionInfo = loadUserSession(context);
             signedIn = userSessionInfo != null;
-            userEmail = loadUserEmail(context);
 
             buildRetrofitService(userSessionInfo);
             subscriber.onNext(new DataResponse(true, null));
+            checkForTempConsentAndUpload(context);
+        });
+    }
 
-            if(userSessionInfo != null && ! userSessionInfo.isConsented())
+    private void checkForTempConsentAndUpload(Context context)
+    {
+        // If we are signed in, not consented on the server, but consented locally, upload consent
+        if(isSignedIn(context) && ! userSessionInfo.isConsented() && StorageAccess.getInstance()
+                .getFileAccess()
+                .dataExists(context, TEMP_CONSENT_JSON_FILE_NAME))
+        {
+            try
             {
-                try
-                {
-                    ConsentSignatureBody consent = loadConsentSignatureBody(context);
-                    uploadConsent(context, consent);
-                }
-                catch(Exception e)
-                {
-                    throw new RuntimeException("Error loading consent", e);
-                }
+                ConsentSignatureBody consent = loadConsentSignatureBody(context);
+                uploadConsent(context, consent);
             }
+            catch(Exception e)
+            {
+                throw new RuntimeException("Error loading consent", e);
+            }
+        }
+    }
+
+    /**
+     *
+     * @param context
+     * @return true if we are consented
+     */
+    @Override
+    public boolean isConsented(Context context)
+    {
+        return userSessionInfo.isConsented() || StorageAccess.getInstance()
+                .getFileAccess()
+                .dataExists(context, TEMP_CONSENT_JSON_FILE_NAME);
+    }
+
+    @Override
+    public Observable<DataResponse> withdrawConsent(Context context, String reason)
+    {
+        return service.withdrawConsent(new WithdrawalBody(reason)).doOnNext(response -> {
+            if(response.isSuccess())
+            {
+                userSessionInfo.setConsented(false);
+                saveUserSession(context, userSessionInfo);
+                buildRetrofitService(userSessionInfo);
+            }
+        }).map(response -> {
+            boolean success = response.isSuccess();
+            return new DataResponse(success, response.message());
         });
     }
 
@@ -156,7 +189,17 @@ public class SampleDataProvider extends DataProvider
     {
         //TODO pass in data groups, remove roles
         SignUpBody body = new SignUpBody(STUDY_ID, email, username, password, null, null);
-        saveUserEmail(context, email);
+
+        // TODO Saving email to user object should exist elsewhere.
+        // Save email to user object.
+        User user = loadUser(context);
+        if (user == null)
+        {
+            user = new User();
+        }
+        user.setEmail(email);
+        saveUser(context, user);
+
         return service.signUp(body).map(message -> {
             DataResponse response = new DataResponse();
             response.setSuccess(true);
@@ -189,10 +232,14 @@ public class SampleDataProvider extends DataProvider
                 }
 
             }
+
             if(userSessionInfo != null)
             {
+                // TODO if we are direct from signing in, we need to load the user profile object
+                // from the server.
                 saveUserSession(context, userSessionInfo);
                 buildRetrofitService(userSessionInfo);
+                checkForTempConsentAndUpload(context);
             }
         }).map(response -> {
             boolean success = response.isSuccess() || response.code() == 412;
@@ -216,7 +263,8 @@ public class SampleDataProvider extends DataProvider
     @Override
     public boolean isSignedUp(Context context)
     {
-        return userEmail != null;
+        User user = loadUser(context);
+        return user != null && user.getEmail() != null;
     }
 
     @Override
@@ -235,38 +283,49 @@ public class SampleDataProvider extends DataProvider
                 imageData,
                 "image/png",
                 scope);
+        writeJsonString(context, gson.toJson(signature), TEMP_CONSENT_JSON_FILE_NAME);
 
-        String jsonString = gson.toJson(signature);
+        // TODO init here isnt great. Refactor and create saveUser method.
+        User user = loadUser(context);
+        if (user == null)
+        {
+            user = new User();
+        }
+        user.setName(signature.name);
+        user.setBirthDate(signature.birthdate);
+        saveUser(context, user);
+    }
 
-        LogExt.d(getClass(), "Writing user json:\n" + signature);
-
-        writeJsonString(context, jsonString, TEMP_CONSENT_JSON_FILE_NAME);
+    @Override
+    public User getUser(Context context)
+    {
+        return loadUser(context);
     }
 
     @Override
     public String getUserSharingScope(Context context)
     {
-        ConsentSignatureBody body = loadConsentSignatureBody(context);
-        return body.scope;
+        return userSessionInfo.getSharingScope();
     }
 
     @Override
     public void setUserSharingScope(Context context, String scope)
     {
-        ConsentSignatureBody body = loadConsentSignatureBody(context);
-        body.scope = scope;
-        String jsonString = gson.toJson(body);
-        writeJsonString(context, jsonString, TEMP_CONSENT_JSON_FILE_NAME);
-
         // Update scope on server
         service.dataSharing(new SharingOptionBody(scope))
                 .compose(ObservableUtils.applyDefault())
+                .doOnNext(response -> {
+                    if(response.isSuccess())
+                    {
+                        userSessionInfo.setSharingScope(scope);
+                        saveUserSession(context, userSessionInfo);
+                    }
+                })
                 .subscribe(response -> LogExt.d(getClass(),
-                                "Response: " + response.code() + ", message: " +
-                                        response.message()), error -> {
-                            LogExt.e(getClass(), error.getMessage());
-                            error.printStackTrace();
-                        });
+                        "Response: " + response.code() + ", message: " +
+                                response.message()), error -> {
+                    LogExt.e(getClass(), error.getMessage());
+                });
     }
 
     private ConsentSignatureBody loadConsentSignatureBody(Context context)
@@ -291,6 +350,9 @@ public class SampleDataProvider extends DataProvider
 
                         LogExt.d(getClass(), "Response: " + response.code() + ", message: " +
                                 response.message());
+
+                        StorageAccess.getInstance().getFileAccess().clearData(context,
+                                TEMP_CONSENT_JSON_FILE_NAME);
                     }
                     else
                     {
@@ -304,34 +366,32 @@ public class SampleDataProvider extends DataProvider
     @Override
     public String getUserEmail(Context context)
     {
-        return userEmail;
-    }
-
-    // TODO this is a temporary solution
-    private void saveUserEmail(Context context, String email)
-    {
-        writeJsonString(context, email, TEMP_USER_EMAIL);
-    }
-
-    @Nullable
-    private String loadUserEmail(Context context)
-    {
-        String email = null;
-        try
-        {
-            email = loadJsonString(context, TEMP_USER_EMAIL);
-        }
-        catch(FileAccessException e)
-        {
-            LogExt.w(getClass(), "TEMP USER EMAIL not readable");
-        }
-        return email;
+        User user = loadUser(context);
+        return user == null ? null : user.getEmail();
     }
 
     private void saveUserSession(Context context, UserSessionInfo userInfo)
     {
         String userSessionJson = gson.toJson(userInfo);
         writeJsonString(context, userSessionJson, USER_SESSION_PATH);
+    }
+
+    private User loadUser(Context context)
+    {
+        try
+        {
+            String user = loadJsonString(context, USER_PATH);
+            return gson.fromJson(user, User.class);
+        }
+        catch(FileAccessException e)
+        {
+            return null;
+        }
+    }
+
+    private void saveUser(Context context, User profile)
+    {
+        writeJsonString(context, gson.toJson(profile), USER_PATH);
     }
 
     private void writeJsonString(Context context, String userSessionJson, String userSessionPath)
@@ -505,6 +565,10 @@ public class SampleDataProvider extends DataProvider
          */
         @POST("auth/requestResetPassword")
         Observable<Response> requestResetPassword(@Body EmailBody body);
+
+
+        @POST("subpopulations/" + STUDY_ID + "/consents/signature/withdraw")
+        Observable<Response<BridgeMessageResponse>> withdrawConsent(@Body WithdrawalBody withdrawal);
 
         /**
          * @return Response code <b>200</b> w/ message explaining instructions on how the user should

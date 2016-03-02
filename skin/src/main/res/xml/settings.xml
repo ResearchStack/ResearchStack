@@ -8,12 +8,12 @@
 
         <Preference
             android:key="settings_profile_name"
-            android:title="@string/settings_privacy_sharing_options"
+            android:title="@string/settings_profile_name"
             android:summary=" "/>
 
         <Preference
             android:key="settings_profile_birthdate"
-            android:title="@string/settings_privacy_review_consent"
+            android:title="@string/settings_profile_birthdate"
             android:summary=" "/>
 
     </PreferenceCategory>
@@ -79,15 +79,18 @@
 
         <co.touchlab.researchstack.skin.ui.preference.TextColorPreference
             android:key="settings_general_join_study"
+            android:order="0"
             android:title="@string/settings_general_join_study"/>
 
         <Preference
             android:key="settings_general_software_notices"
+            android:order="1"
             android:title="@string/settings_general_software_notices"/>
 
         <co.touchlab.researchstack.skin.ui.preference.TextColorPreference
             android:key="settings_general_leave_study"
             android:title="@string/settings_general_leave_study"
+            android:order="2"
             app:preferenceTextColor="@color/error"/>
 
     </PreferenceCategory>
