@@ -145,7 +145,12 @@ public class EmailVerificationActivity extends PinCodeActivity
                 .subscribe(dataResponse -> {
                     if(dataResponse.isSuccess())
                     {
-                        startActivity(new Intent(this, MainActivity.class));
+                        // Start MainActivity w/ clear_top and single_top flags. MainActivity may
+                        // already be on the activity-task. We want to re-use that activity instead
+                        // of creating a new instance and have two instance active.
+                        Intent intent = new Intent(this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
                         finish();
                     }
                     else

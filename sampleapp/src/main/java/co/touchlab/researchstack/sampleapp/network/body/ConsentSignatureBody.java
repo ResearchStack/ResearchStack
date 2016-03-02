@@ -1,8 +1,8 @@
 package co.touchlab.researchstack.sampleapp.network.body;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import co.touchlab.researchstack.backbone.utils.FormatHelper;
 
 public class ConsentSignatureBody
 {
@@ -40,8 +40,7 @@ public class ConsentSignatureBody
     {
         this.study = study;
         this.name = name;
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        this.birthdate = format.format(birthdate);
+        this.birthdate = FormatHelper.SIMPLE_FORMAT_DATE.format(birthdate);
         this.imageData = imageData;
         this.imageMimeType = imageMimeType;
         this.scope = scope;

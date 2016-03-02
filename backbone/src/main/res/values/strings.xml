@@ -49,6 +49,7 @@
     <string name="rsc_consent_share_widely">Share my data with %1$s and qualified researchers
         worldwide
     </string>
+    <string name="rsc_consent_share_no">Not sharing your data</string>
     <string name="rsc_consent_share_only">Only share my data with %1$s</string>
     <string name="rsc_consent_share_description"><![CDATA[%1$s will receive your study data from your
         participation in this study. \n\nSharing your coded study data more broadly (without

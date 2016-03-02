@@ -6,6 +6,7 @@ import java.util.List;
 
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.skin.model.SchedulesAndTasksModel;
+import co.touchlab.researchstack.skin.model.User;
 import co.touchlab.researchstack.skin.task.SmartSurveyTask;
 import rx.Observable;
 
@@ -47,7 +48,13 @@ public abstract class DataProvider
 
     public abstract boolean isSignedIn(Context context);
 
+    public abstract boolean isConsented(Context context);
+
+    public abstract Observable<DataResponse> withdrawConsent(Context context, String reason);
+
     public abstract void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope);
+
+    public abstract User getUser(Context context);
 
     public abstract String getUserSharingScope(Context context);
 
@@ -64,7 +71,6 @@ public abstract class DataProvider
     // This initial task may include profile items such as height and weight that may need to be
     // processed differently than a normal task result
     public abstract void processInitialTaskResult(Context context, TaskResult taskResult);
-
 
     //TODO public abstract void getUserProfile(TODO);
 

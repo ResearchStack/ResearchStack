@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
+import co.touchlab.researchstack.skin.AppPrefs;
 import co.touchlab.researchstack.skin.DataProvider;
 
 /**
@@ -27,7 +28,9 @@ public class SplashActivity extends PinCodeActivity
         DataProvider.getInstance().initialize(this)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(response -> {
-                    if(DataProvider.getInstance().isSignedIn(SplashActivity.this))
+
+                    if(AppPrefs.getInstance(this).isOnboardingComplete() ||
+                            DataProvider.getInstance().isSignedIn(this))
                     {
                         launchMainActivity();
                     }

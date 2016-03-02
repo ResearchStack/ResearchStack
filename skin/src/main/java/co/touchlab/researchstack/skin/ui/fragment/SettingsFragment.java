@@ -8,10 +8,15 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
+import android.widget.Toast;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 
 import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.answerformat.AnswerFormat;
@@ -25,14 +30,17 @@ import co.touchlab.researchstack.backbone.task.OrderedTask;
 import co.touchlab.researchstack.backbone.task.Task;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
 import co.touchlab.researchstack.backbone.ui.ViewWebDocumentActivity;
+import co.touchlab.researchstack.backbone.utils.FormatHelper;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
 import co.touchlab.researchstack.glue.BuildConfig;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.AppPrefs;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.ResourceManager;
+import co.touchlab.researchstack.skin.model.User;
 import co.touchlab.researchstack.skin.step.PassCodeCreationStep;
 import co.touchlab.researchstack.skin.task.ConsentTask;
+import co.touchlab.researchstack.skin.ui.OnboardingActivity;
 import co.touchlab.researchstack.skin.ui.ViewLicensesActivity;
 import co.touchlab.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
 import co.touchlab.researchstack.skin.utils.ConsentFormUtils;
@@ -50,13 +58,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     private static final int REQUEST_CODE_CHANGE_PASSCODE = 1;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    // Settings Keys. If you are adding / changing settings, make sure they are unique / match in
-    // the settings.xml file
+    // Settings Keys.
+    // If you are adding / changing settings, make sure they are unique / match in settings.xml
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Profile
-    /*TODO*/ public static final String KEY_PROFILE           = "settings_profile";
-    /*TODO*/ public static final String KEY_PROFILE_NAME      = "settings_profile_name";
-    /*TODO*/ public static final String KEY_PROFILE_BIRTHDATE = "settings_profile_birthdate";
+    public static final String KEY_PROFILE           = "settings_profile";
+    public static final String KEY_PROFILE_NAME      = "settings_profile_name";
+    public static final String KEY_PROFILE_BIRTHDATE = "settings_profile_birthdate";
     // Reminders
     /*TODO*/ public static final String KEY_REMINDERS         = "settings_reminders";
     /*TODO*/ public static final String KEY_REMINDERS_TIME    = "settings_reminders_time";
@@ -72,10 +80,24 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     // General
     public static final String KEY_GENERAL = "settings_general";
     public static final String KEY_LICENSE_INFORMATION = "settings_general_license_information";
-    /*TODO*/ public static final String KEY_LEAVE_STUDY = "settings_general_leave_study";
-    /*TODO*/ public static final String KEY_JOIN_STUDY = "settings_general_join_study";
+    public static final String KEY_LEAVE_STUDY = "settings_general_leave_study";
+    public static final String KEY_JOIN_STUDY = "settings_general_join_study";
     // Other
     public static final String KEY_VERSION = "settings_version";
+
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // Preference Items
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    private PreferenceCategory profileCategory;
+    private PreferenceCategory privacyCategory;
+    private Preference sharingScope;
+    private PreferenceCategory generalCategory;
+    private Preference leaveStudy;
+    private Preference joinStudy;
+
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    // Field Vars
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private ConsentSectionModel data;
     private View progress;
 
@@ -88,41 +110,66 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         PreferenceScreen screen = getPreferenceScreen();
         screen.getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
-        //TODO check if consented
-        boolean isConsented = false;
+        profileCategory = (PreferenceCategory) screen.findPreference(KEY_PROFILE);
 
-        // Find profile profileCategory
-        PreferenceCategory profileCategory = (PreferenceCategory) screen.findPreference(KEY_PROFILE);
+        privacyCategory = (PreferenceCategory) screen.findPreference(KEY_PRIVACY);
+        sharingScope = privacyCategory.findPreference(KEY_SHARING_OPTIONS);
 
-        PreferenceCategory privacyCategory = (PreferenceCategory) screen.findPreference(KEY_PRIVACY);
-        Preference sharingScope = privacyCategory.findPreference(KEY_SHARING_OPTIONS);
+        generalCategory = (PreferenceCategory) screen.findPreference(KEY_GENERAL);
+        leaveStudy = generalCategory.findPreference(KEY_LEAVE_STUDY);
+        joinStudy = generalCategory.findPreference(KEY_JOIN_STUDY);
 
-        PreferenceCategory generalCategory = (PreferenceCategory) screen.findPreference(KEY_GENERAL);
-        Preference leaveStudy = generalCategory.findPreference(KEY_LEAVE_STUDY);
-        Preference joinStudy = generalCategory.findPreference(KEY_JOIN_STUDY);
+        initPreferenceForConsent();
 
-        if(! isConsented)
+        // Set version string
+        screen.findPreference(KEY_VERSION).setSummary(getVersionString());
+    }
+
+    private void initPreferenceForConsent()
+    {
+        boolean isSignedInAndConsented =
+                DataProvider.getInstance().isSignedIn(getActivity()) &&
+                DataProvider.getInstance().isConsented(getActivity());
+
+        PreferenceScreen screen = getPreferenceScreen();
+
+        if(! isSignedInAndConsented)
         {
             screen.removePreference(profileCategory);
             privacyCategory.removePreference(sharingScope);
             generalCategory.removePreference(leaveStudy);
+
+            // This method will be called if we leave the study. This means we need to add
+            // "join study" back into the general-category as it was removed on the initial call of
+            // this method
+            if (generalCategory.findPreference(KEY_JOIN_STUDY) == null)
+            {
+                generalCategory.addPreference(joinStudy);
+            }
         }
         else
         {
             generalCategory.removePreference(joinStudy);
 
-            // TODO Set Name Preference
             Observable.create(subscriber -> {
-                subscriber.onNext("PLACEHOLDER");
-            }).compose(ObservableUtils.applyDefault()).subscribe(value -> {
-                profileCategory.findPreference(KEY_PROFILE_NAME).setSummary((String) value);
-            });
+                User user = DataProvider.getInstance().getUser(getActivity());
+                subscriber.onNext(user);
+            }).compose(ObservableUtils.applyDefault()).map(o -> (User) o).subscribe(profile -> {
+                profileCategory.findPreference(KEY_PROFILE_NAME).setSummary(profile.getName());
 
-            // TODO Set Birthdate Preference
-            Observable.create(subscriber -> {
-                subscriber.onNext("PLACEHOLDER");
-            }).compose(ObservableUtils.applyDefault()).subscribe(value -> {
-                profileCategory.findPreference(KEY_PROFILE_BIRTHDATE).setSummary((String) value);
+                Preference birthdatePref = profileCategory.findPreference(KEY_PROFILE_BIRTHDATE);
+                try
+                {
+                    // The incoming date is formated in "yyyy-MM-dd", clean it up to "MMM dd, yyyy"
+                    Date birthdate =FormatHelper.SIMPLE_FORMAT_DATE.parse(profile.getBirthDate());
+                    DateFormat format = FormatHelper.getFormat(DateFormat.LONG, FormatHelper.NONE);
+                    birthdatePref.setSummary(format.format(birthdate));
+                }
+                catch(ParseException e)
+                {
+                    LogExt.e(SettingsFragment.class, e);
+                    birthdatePref.setSummary(profile.getBirthDate());
+                }
             });
 
             // Load Consent Data and set sharing scope
@@ -149,9 +196,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                                 });
                     });
         }
-
-        // Set version string
-        screen.findPreference(KEY_VERSION).setSummary(getVersionString());
     }
 
     @Override
@@ -235,6 +279,33 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     Intent intent = ViewTaskActivity.newIntent(getContext(), task);
                     startActivityForResult(intent, REQUEST_CODE_SHARING_OPTIONS);
                     return true;
+
+                case KEY_LEAVE_STUDY:
+                    DataProvider.getInstance()
+                            .withdrawConsent(getActivity(), null)
+                            .compose(ObservableUtils.applyDefault())
+                            .subscribe(response -> {
+                                if(response.isSuccess())
+                                {
+                                    Toast.makeText(getActivity(),
+                                            R.string.consent_withdraw_success,
+                                            Toast.LENGTH_SHORT).show();
+
+                                    initPreferenceForConsent();
+                                }
+                                else
+                                {
+                                    Toast.makeText(getActivity(), R.string.consent_withdraw_failed,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+                            });
+                    return true;
+
+                case KEY_JOIN_STUDY:
+                    startActivity(new Intent(getActivity(), OnboardingActivity.class));
+                    getActivity().finish();
+                    return true;
             }
         }
 
@@ -315,11 +386,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             return getString(R.string.rsc_consent_share_only,
                     investigatorShortDesc);
         }
+        else if (option.equals("no_sharing"))
+        {
+            return getString(R.string.rsc_consent_share_no);
+        }
         else
         {
             // If you want to add another sharing option, feel free, you just need to override this
             // method in your SettingsFragment
-            throw new RuntimeException("Sharing option not supported");
+            throw new RuntimeException("Sharing option " + option + " not supported");
         }
     }
 
