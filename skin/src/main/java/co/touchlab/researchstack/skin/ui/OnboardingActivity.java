@@ -91,7 +91,7 @@ public class OnboardingActivity extends PinCodeActivity
         if(!hasPasscode)
         {
             PassCodeCreationStep step = new PassCodeCreationStep(OnboardingTask.SignUpPassCodeCreationStepIdentifier,
-                    R.string.passcode);
+                    R.string.rss_passcode);
             // TODO make a passcode task?
             OrderedTask task = new OrderedTask("PasscodeTask", step);
             startActivityForResult(ViewTaskActivity.newIntent(this, task), REQUEST_CODE_PASSCODE);

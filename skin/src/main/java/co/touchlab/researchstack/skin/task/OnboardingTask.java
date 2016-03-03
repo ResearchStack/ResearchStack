@@ -88,7 +88,7 @@ public abstract class OnboardingTask extends Task
         if(signInStep == null)
         {
             signInStep = new Step(SignInStepIdentifier);
-            signInStep.setStepTitle(R.string.sign_in);
+            signInStep.setStepTitle(R.string.rss_sign_in);
             signInStep.setStepLayoutClass(SignInStepLayout.class);
         }
         return signInStep;
@@ -99,7 +99,7 @@ public abstract class OnboardingTask extends Task
         if(thankyouStep == null)
         {
             thankyouStep = new Step(SignUpThankYouStepIdentifier);
-            thankyouStep.setStepTitle(R.string.thank_you);
+            thankyouStep.setStepTitle(R.string.rss_thank_you);
             thankyouStep.setStepLayoutClass(NotImplementedStepBody.class);
             //            TODO Create SignUpThankYouStepLayout
             //            thankyouStep.setStepLayoutClass(SignUpThankYouStepLayout.class);
@@ -112,7 +112,7 @@ public abstract class OnboardingTask extends Task
         if(ineligibleStep == null)
         {
             ineligibleStep = new Step(SignUpIneligibleStepIdentifier);
-            ineligibleStep.setStepTitle(R.string.ineligible);
+            ineligibleStep.setStepTitle(R.string.rss_ineligible);
             ineligibleStep.setStepLayoutClass(SignUpIneligibleStepLayout.class);
         }
         return ineligibleStep;
@@ -123,7 +123,7 @@ public abstract class OnboardingTask extends Task
         if(eligibleStep == null)
         {
             eligibleStep = new Step(SignUpEligibleStepIdentifier);
-            eligibleStep.setStepTitle(R.string.eligibility);
+            eligibleStep.setStepTitle(R.string.rss_eligibility);
             eligibleStep.setStepLayoutClass(SignUpEligibleStepLayout.class);
         }
         return eligibleStep;
@@ -143,7 +143,7 @@ public abstract class OnboardingTask extends Task
     {
         if(passcodeCreationStep == null)
         {
-            passcodeCreationStep = new PassCodeCreationStep(SignUpPassCodeCreationStepIdentifier, R.string.passcode);
+            passcodeCreationStep = new PassCodeCreationStep(SignUpPassCodeCreationStepIdentifier, R.string.rss_passcode);
         }
         return passcodeCreationStep;
     }
@@ -153,7 +153,7 @@ public abstract class OnboardingTask extends Task
         if(signUpStep == null)
         {
             signUpStep = new Step(SignUpStepIdentifier);
-            signUpStep.setStepTitle(R.string.sign_up);
+            signUpStep.setStepTitle(R.string.rss_sign_up);
             signUpStep.setStepLayoutClass(SignUpStepLayout.class);
         }
         return signUpStep;

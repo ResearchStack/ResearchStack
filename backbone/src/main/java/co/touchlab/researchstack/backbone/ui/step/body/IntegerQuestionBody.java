@@ -51,8 +51,8 @@ public class IntegerQuestionBody implements StepBody
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_right);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
         view.setLayoutParams(layoutParams);
 
         return view;
@@ -105,11 +105,11 @@ public class IntegerQuestionBody implements StepBody
 
         if(maxValue == Integer.MAX_VALUE)
         {
-            editText.setHint(context.getString(R.string.rsc_hint_step_body_int_no_max));
+            editText.setHint(context.getString(R.string.rsb_hint_step_body_int_no_max));
         }
         else
         {
-            editText.setHint(context.getString(R.string.rsc_hint_step_body_int,
+            editText.setHint(context.getString(R.string.rsb_hint_step_body_int,
                     minValue,
                     maxValue));
         }

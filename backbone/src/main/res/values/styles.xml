@@ -1,15 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
     <style name="Base.Backbone" parent="Base.Theme.AppCompat.Light">
-        <item name="submitBackground">@color/submit_bar_gray</item>
+        <item name="submitBackground">@color/rsb_submit_bar_gray</item>
         <item name="android:actionBarStyle">@style/Backbone.ActionBarStyle</item>
         <item name="actionBarStyle">@style/Backbone.ActionBarStyle</item>
-        <item name="android:textColorPrimary">@color/warm_gray</item>
-        <item name="android:textColor">@color/warm_gray</item>
+        <item name="android:textColorPrimary">@color/rsb_warm_gray</item>
+        <item name="android:textColor">@color/rsb_warm_gray</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/rsb_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/rsb_colorPrimaryDark</item>
+        <item name="colorAccent">@color/rsb_colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:listPreferredItemPaddingLeft">50dp</item>
@@ -19,7 +19,7 @@
         <!-- Using an attr and pointing app:theme on the tabLayout to the attr does not work. -->
         <!-- TODO Figure out a better way of styling tabLayout without having to define all style-attrs in the theme -->
         <item name="tabIndicatorColor">@android:color/white</item>
-        <item name="tabBackground">@color/colorPrimary</item>
+        <item name="tabBackground">@color/rsb_colorPrimary</item>
         <item name="tabTextColor">#6FFF</item>
         <item name="tabSelectedTextColor">@android:color/white</item>
     </style>
@@ -46,49 +46,49 @@
 
     <style name="Backbone.Survey.Title">
         <item name="android:layout_marginTop">16dp</item>
-        <item name="android:minHeight">@dimen/rsc_item_size_default</item>
+        <item name="android:minHeight">@dimen/rsb_item_size_default</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingLeft">@dimen/rsc_margin_left</item>
-        <item name="android:paddingRight">@dimen/rsc_margin_right</item>
-        <item name="android:paddingTop">@dimen/rsc_padding_medium</item>
-        <item name="android:paddingBottom">@dimen/rsc_padding_medium</item>
+        <item name="android:paddingLeft">@dimen/rsb_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsb_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsb_padding_medium</item>
+        <item name="android:paddingBottom">@dimen/rsb_padding_medium</item>
         <item name="android:textColor">?attr/colorAccent</item>
-        <item name="android:textSize">@dimen/rsc_text_size_title</item>
+        <item name="android:textSize">@dimen/rsb_text_size_title</item>
     </style>
 
     <style name="Backbone.Survey.Summary">
-        <item name="android:layout_marginTop">@dimen/rsc_padding_wedge</item>
-        <item name="android:layout_marginBottom">@dimen/rsc_padding_small</item>
-        <item name="android:paddingLeft">@dimen/rsc_margin_left</item>
-        <item name="android:paddingRight">@dimen/rsc_margin_right</item>
-        <item name="android:paddingTop">@dimen/rsc_padding_wedge</item>
-        <item name="android:paddingBottom">@dimen/rsc_padding_small</item>
+        <item name="android:layout_marginTop">@dimen/rsb_padding_wedge</item>
+        <item name="android:layout_marginBottom">@dimen/rsb_padding_small</item>
+        <item name="android:paddingLeft">@dimen/rsb_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsb_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsb_padding_wedge</item>
+        <item name="android:paddingBottom">@dimen/rsb_padding_small</item>
     </style>
 
     <style name="Backbone.Survey.Summary.Link">
-        <item name="android:layout_marginTop">@dimen/rsc_padding_wedge</item>
-        <item name="android:paddingLeft">@dimen/rsc_margin_left</item>
-        <item name="android:paddingRight">@dimen/rsc_margin_right</item>
-        <item name="android:paddingTop">@dimen/rsc_padding_wedge</item>
-        <item name="android:paddingBottom">@dimen/rsc_padding_small</item>
+        <item name="android:layout_marginTop">@dimen/rsb_padding_wedge</item>
+        <item name="android:paddingLeft">@dimen/rsb_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsb_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsb_padding_wedge</item>
+        <item name="android:paddingBottom">@dimen/rsb_padding_small</item>
     </style>
 
     <style name="Backbone.ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background">@android:color/transparent</item>
         <item name="background">@android:color/transparent</item>
-        <item name="android:textColorPrimary">@color/warm_gray</item>
+        <item name="android:textColorPrimary">@color/rsb_warm_gray</item>
         <item name="colorControlNormal">#FF0000</item>
     </style>
 
     <style name="SubmitBar">
-        <item name="positiveActionTitle">@string/rsc_next</item>
-        <item name="negativeActionTitle">@string/rsc_step_skip</item>
+        <item name="positiveActionTitle">@string/rsb_next</item>
+        <item name="negativeActionTitle">@string/rsb_step_skip</item>
     </style>
 
     <style name="ConsentReviewSignatureView">
         <item name="signatureColor">?android:attr/textColorPrimary</item>
         <item name="signatureStrokeSize">1dp</item>
-        <item name="hintText">@string/rsc_consent_signature_placeholder</item>
+        <item name="hintText">@string/rsb_consent_signature_placeholder</item>
         <item name="hintTextColor">#ccc</item>
         <item name="hintTextSize">16sp</item>
         <item name="guidelineColor">#ccc</item>

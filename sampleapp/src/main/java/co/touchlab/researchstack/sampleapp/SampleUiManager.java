@@ -27,7 +27,7 @@ public class SampleUiManager extends UiManager
         navItems.add(new ActionItem.ActionItemBuilder()
                 .setId(R.id.nav_activities)
                 .setGroupId(R.id.nav_group)
-                .setTitle(R.string.activities)
+                .setTitle(R.string.rss_activities)
                 .setIcon(R.drawable.ic_nav_activities)
                 .setClass(ActivitiesFragment.class)
                 .build());
@@ -35,7 +35,7 @@ public class SampleUiManager extends UiManager
         navItems.add(new ActionItem.ActionItemBuilder()
                 .setId(R.id.nav_dashboard)
                 .setGroupId(R.id.nav_group)
-                .setTitle(R.string.dashboard)
+                .setTitle(R.string.rss_dashboard)
                 .setIcon(R.drawable.ic_nav_dashboard)
                 .setClass(DashboardFragment.class)
                 .build());
@@ -63,14 +63,14 @@ public class SampleUiManager extends UiManager
 
         navItems.add(new ActionItem.ActionItemBuilder()
                 .setId(R.id.nav_learn)
-                .setTitle(R.string.learn)
+                .setTitle(R.string.rss_learn)
                 .setIcon(R.drawable.ic_action_info)
                 .setClass(LearnActivity.class)
                 .build());
 
         navItems.add(new ActionItem.ActionItemBuilder()
                 .setId(R.id.nav_settings)
-                .setTitle(R.string.settings)
+                .setTitle(R.string.rss_settings)
                 .setIcon(R.drawable.ic_action_settings)
                 .setClass(SampleSettingsActivity.class)
                 .build());
@@ -94,7 +94,7 @@ public class SampleUiManager extends UiManager
         Choice<Boolean> alien = new Choice<>("No, I’m an alien.", false, null);
 
         QuestionStep step = new QuestionStep(OnboardingTask.SignUpInclusionCriteriaStepIdentifier);
-        step.setStepTitle(R.string.eligibility);
+        step.setStepTitle(R.string.rss_eligibility);
         step.setTitle("Were you born somewhere on planet earth and are you a human-ish?");
         step.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
                 human,

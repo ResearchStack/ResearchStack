@@ -20,14 +20,14 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/password"
+            android:text="@string/rss_password"
             />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_password_hint"
+            android:hint="@string/rss_add_password_hint"
             android:inputType="textVisiblePassword"
             />
     </LinearLayout>
@@ -43,7 +43,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/birthdate"
+            android:text="@string/rss_birthdate"
             />
 
         <android.support.v7.widget.AppCompatTextView
@@ -75,7 +75,7 @@
             android:id="@+id/male_radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/male"
+            android:text="@string/rss_male"
             />
 
         <View
@@ -88,7 +88,7 @@
             android:id="@+id/female_radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/female"
+            android:text="@string/rss_female"
             />
 
         <View

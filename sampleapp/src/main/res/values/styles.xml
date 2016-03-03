@@ -6,17 +6,17 @@
         <item name="alertDialogTheme">@style/SampleTheme.Dialog</item>
         <item name="android:alertDialogTheme">@style/SampleTheme.Dialog</item>
         <!-- Text Color for Toolbar and Text -->
-        <item name="android:textColor">@color/warm_gray</item>
+        <item name="android:textColor">@color/rsb_warm_gray</item>
 
         <!-- Change this to white. Make sure all views have a color set instead of pointing to
         textColorPrimary attribute-->
-        <item name="android:textColorPrimary">@color/warm_gray</item>
-        <item name="android:textColorSecondary">@color/warm_gray</item>
+        <item name="android:textColorPrimary">@color/rsb_warm_gray</item>
+        <item name="android:textColorSecondary">@color/rsb_warm_gray</item>
         <item name="android:windowContentOverlay">@null</item>
 
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/rsb_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/rsb_colorPrimaryDark</item>
+        <item name="colorAccent">@color/rsb_colorAccent</item>
     </style>
 
     <style name="SampleTheme.ColorActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
@@ -40,7 +40,7 @@
     <style name="SampleTheme.Dialog"
            parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- Used for the buttons -->
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/rsb_colorAccent</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">@color/warm_grey</item>
         <!-- Used for the background -->
@@ -71,12 +71,12 @@
 
     <style name="SampleTheme.Onboarding" parent="@style/SampleTheme.NoActionBar">
         <item name="android:windowBackground">@color/gray</item>
-        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/rsb_colorAccent</item>
         <item name="colorPrimaryDark">@color/dark_gray</item>
     </style>
 
     <style name="SampleTheme.Onboarding.Button" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/rsb_colorAccent</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 

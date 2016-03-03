@@ -21,7 +21,7 @@ public class ConsentQuizEvaluationStep extends Step
     @Override
     public int getStepTitle()
     {
-        return R.string.rsc_quiz_evaluation;
+        return R.string.rsb_quiz_evaluation;
     }
 
     @Override

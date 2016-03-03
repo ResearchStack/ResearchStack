@@ -129,7 +129,7 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
 
             RxView.clicks(moreInfoView).subscribe(v -> {
                 String path = data.getHtmlContent();
-                String webTitle = getResources().getString(R.string.rsc_consent_section_more_info);
+                String webTitle = getResources().getString(R.string.rsb_consent_section_more_info);
                 Intent webDoc = ViewWebDocumentActivity.newIntent(getContext(), webTitle, path);
                 getContext().startActivity(webDoc);
             });

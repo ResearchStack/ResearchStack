@@ -18,8 +18,8 @@
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:positiveActionTitle="@string/rsc_agree"
-        app:negativeActionTitle="@string/rsc_disagree"
+        app:positiveActionTitle="@string/rsb_agree"
+        app:negativeActionTitle="@string/rsb_disagree"
         />
 
 </LinearLayout>

@@ -167,12 +167,12 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     {
         if(! isEmailValid())
         {
-            username.setError(getResources().getString(R.string.error_invalid_email));
+            username.setError(getResources().getString(R.string.rss_error_invalid_email));
         }
 
         if(! isPasswordValid())
         {
-            password.setError(getResources().getString(R.string.error_invalid_password));
+            password.setError(getResources().getString(R.string.rss_error_invalid_password));
         }
 
         return TextUtils.isEmpty(username.getError()) && TextUtils.isEmpty(password.getError());

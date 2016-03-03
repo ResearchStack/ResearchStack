@@ -28,6 +28,8 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
+
+    resourcePrefix 'rss_'
 }
 
 group = 'co.touchlab.researchstack'

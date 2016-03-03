@@ -53,10 +53,10 @@ public class PinCodeLayout extends RelativeLayout
         LayoutInflater.from(getContext()).inflate(R.layout.step_layout_pincode, this, true);
 
         title = (TextView) findViewById(R.id.title);
-        title.setText(R.string.rsc_pincode_enter_title);
+        title.setText(R.string.rsb_pincode_enter_title);
 
         summary = (TextView) findViewById(R.id.text);
-        summary.setText(R.string.rsc_pincode_enter_summary);
+        summary.setText(R.string.rsb_pincode_enter_summary);
 
         editText = (EditText) findViewById(R.id.pincode);
         editText.requestFocus();

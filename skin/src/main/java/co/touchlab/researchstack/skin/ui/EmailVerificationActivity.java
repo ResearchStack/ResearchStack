@@ -69,7 +69,7 @@ public class EmailVerificationActivity extends PinCodeActivity
 
     private void updateEmailText()
     {
-        ((AppCompatTextView) findViewById(R.id.email_verification_body)).setText(getString(R.string.email_verification_body,
+        ((AppCompatTextView) findViewById(R.id.email_verification_body)).setText(getString(R.string.rss_email_verification_body,
                 ResUtils.getApplicationName(this),
                 email));
     }
@@ -98,7 +98,7 @@ public class EmailVerificationActivity extends PinCodeActivity
     {
         Step signUpStep = new Step(OnboardingTask.SignUpStepIdentifier);
         signUpStep.setStepLayoutClass(SignUpStepLayout.class);
-        signUpStep.setTitle(getString(R.string.change_email));
+        signUpStep.setTitle(getString(R.string.rss_change_email));
 
         Intent intent = new Intent(this, ViewTaskActivity.class);
         intent.putExtra(ViewTaskActivity.EXTRA_TASK, new OrderedTask(CHANGE_EMAIL_ID, signUpStep));
@@ -167,7 +167,7 @@ public class EmailVerificationActivity extends PinCodeActivity
                             .alpha(0)
                             .withEndAction(() -> progress.setVisibility(View.GONE));
                     Toast.makeText(EmailVerificationActivity.this,
-                            R.string.email_not_verified,
+                            R.string.rss_email_not_verified,
                             Toast.LENGTH_SHORT).show();
                 });
     }

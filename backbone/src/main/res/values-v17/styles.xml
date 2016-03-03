@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
     <style name="Backbone" parent="Base.Backbone">
         <item name="android:listPreferredItemPaddingStart">50dp</item>
