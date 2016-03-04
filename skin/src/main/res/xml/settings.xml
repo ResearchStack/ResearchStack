@@ -3,99 +3,99 @@
                   xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:key="settings_profile"
-        android:title="@string/settings_profile">
+        android:key="rss_settings_profile"
+        android:title="@string/rss_settings_profile">
 
         <Preference
-            android:key="settings_profile_name"
-            android:title="@string/settings_profile_name"
+            android:key="rss_settings_profile_name"
+            android:title="@string/rss_settings_profile_name"
             android:summary=" "/>
 
         <Preference
-            android:key="settings_profile_birthdate"
-            android:title="@string/settings_profile_birthdate"
+            android:key="rss_settings_profile_birthdate"
+            android:title="@string/rss_settings_profile_birthdate"
             android:summary=" "/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/settings_reminders">
+        android:title="@string/rss_settings_reminders">
         <!-- TODO Move title and summary to strings.xml, waiting for prefix-->
         <SwitchPreference
-            android:key="settings_reminders"
+            android:key="rss_settings_reminders"
             android:title="Task reminders"
             android:summary="You’ll be reminded to complete tasks"
             android:defaultValue="true"/>
 
     </PreferenceCategory>
-
+    
     <PreferenceCategory
-        android:key="settings_privacy"
-        android:title="@string/settings_privacy">
+        android:key="rss_settings_privacy"
+        android:title="@string/rss_settings_privacy">
 
         <Preference
-            android:key="settings_privacy_sharing_options"
-            android:title="@string/settings_privacy_sharing_options"
-            android:summary="@string/settings_privacy_sharing_options_ph"/>
+            android:key="rss_settings_privacy_sharing_options"
+            android:title="@string/rss_settings_privacy_sharing_options"
+            android:summary="@string/rss_settings_privacy_sharing_options_ph"/>
 
         <Preference
-            android:key="settings_privacy_review_consent"
-            android:title="@string/settings_privacy_review_consent"/>
+            android:key="rss_settings_privacy_review_consent"
+            android:title="@string/rss_settings_privacy_review_consent"/>
 
         <Preference
-            android:key="settings_privacy_policy"
-            android:title="@string/settings_privacy_policy"/>
+            android:key="rss_settings_privacy_policy"
+            android:title="@string/rss_settings_privacy_policy"/>
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_security">
+    <PreferenceCategory android:title="@string/rss_settings_security">
 
         <SwitchPreference
-            android:key="settings_auto_lock_on_exit"
+            android:key="rss_settings_auto_lock_on_exit"
             android:defaultValue="true"
-            android:summary="@string/settings_security_auto_lock_summary"
-            android:title="@string/settings_security_auto_lock"/>
+            android:summary="@string/rss_settings_security_auto_lock_summary"
+            android:title="@string/rss_settings_security_auto_lock"/>
 
         <ListPreference
-            android:defaultValue="@string/settings_security_auto_lock_time_default"
-            android:entries="@array/settings_array_auto_lock_times"
-            android:entryValues="@array/settings_array_auto_lock_times_values"
-            android:dependency="settings_auto_lock_on_exit"
-            android:key="settings_auto_lock_time"
-            android:summary="@string/settings_security_auto_lock_time_summary"
-            android:title="@string/settings_security_auto_lock_time"/>
+            android:defaultValue="@string/rss_settings_security_auto_lock_time_default"
+            android:entries="@array/rss_settings_array_auto_lock_times"
+            android:entryValues="@array/rss_settings_array_auto_lock_times_values"
+            android:dependency="rss_settings_auto_lock_on_exit"
+            android:key="rss_settings_auto_lock_time"
+            android:summary="@string/rss_settings_security_auto_lock_time_summary"
+            android:title="@string/rss_settings_security_auto_lock_time"/>
 
         <Preference
-            android:key="settings_security_change_passcode"
-            android:title="@string/settings_security_change_passcode"/>
+            android:key="rss_settings_security_change_passcode"
+            android:title="@string/rss_settings_security_change_passcode"/>
 
     </PreferenceCategory>
 
 
     <PreferenceCategory
-        android:title="@string/settings_general"
-        android:key="settings_general">
+        android:title="@string/rss_settings_general"
+        android:key="rss_settings_general">
 
         <co.touchlab.researchstack.skin.ui.preference.TextColorPreference
-            android:key="settings_general_join_study"
+            android:key="rss_settings_general_join_study"
             android:order="0"
-            android:title="@string/settings_general_join_study"/>
+            android:title="@string/rss_settings_general_join_study"/>
 
         <Preference
-            android:key="settings_general_license_information"
+            android:key="rss_settings_general_software_notices"
             android:order="1"
-            android:title="@string/settings_general_license_information"/>
+            android:title="@string/rss_settings_general_software_notices"/>
 
         <co.touchlab.researchstack.skin.ui.preference.TextColorPreference
-            android:key="settings_general_leave_study"
-            android:title="@string/settings_general_leave_study"
+            android:key="rss_settings_general_leave_study"
+            android:title="@string/rss_settings_general_leave_study"
             android:order="2"
-            app:preferenceTextColor="@color/error"/>
+            app:preferenceTextColor="@color/rsb_error"/>
 
     </PreferenceCategory>
 
     <Preference
-        android:key="settings_version"
-        android:summary="@string/settings_version"/>
+        android:key="rss_settings_version"
+        android:summary="@string/rss_settings_version"/>
 
 </PreferenceScreen>

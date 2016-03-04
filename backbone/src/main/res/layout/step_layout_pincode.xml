@@ -10,7 +10,7 @@
         style="@style/Backbone.Survey.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/rsc_pincode_enter_title"
+        android:text="@string/rsb_pincode_enter_title"
         />
 
     <TextView
@@ -19,8 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:paddingTop="@dimen/rsc_padding_small"
-        android:text="@string/rsc_pincode_enter_summary"
+        android:paddingTop="@dimen/rsb_padding_small"
+        android:text="@string/rsb_pincode_enter_summary"
         android:textColorLink="?attr/colorAccent"
         android:minHeight="52dp"
         />
@@ -28,7 +28,7 @@
     <co.touchlab.researchstack.backbone.ui.views.PassCodeView
         android:id="@+id/pincode"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/rsc_item_size_default"
+        android:layout_height="@dimen/rsb_item_size_default"
         android:singleLine="true"
         android:layout_below="@+id/text"
         android:inputType="number"

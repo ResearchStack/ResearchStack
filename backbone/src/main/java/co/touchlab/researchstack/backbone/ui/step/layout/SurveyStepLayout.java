@@ -220,7 +220,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
             if(questionStep.isOptional())
             {
-                submitBar.setNegativeTitle(R.string.rsc_step_skip)
+                submitBar.setNegativeTitle(R.string.rsb_step_skip)
                         .setNegativeAction(v -> onSkipClicked());
             }
             else
@@ -303,7 +303,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         }
         else
         {
-            Toast.makeText(getContext(), R.string.rsc_please_complete_step, Toast.LENGTH_SHORT)
+            Toast.makeText(getContext(), R.string.rsb_please_complete_step, Toast.LENGTH_SHORT)
                     .show();
         }
     }

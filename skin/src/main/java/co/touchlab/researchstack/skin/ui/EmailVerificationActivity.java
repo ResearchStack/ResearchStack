@@ -1,9 +1,12 @@
 package co.touchlab.researchstack.skin.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.Html;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,11 +18,10 @@ import co.touchlab.researchstack.backbone.step.Step;
 import co.touchlab.researchstack.backbone.task.OrderedTask;
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
+import co.touchlab.researchstack.backbone.ui.views.SubmitBar;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
-import co.touchlab.researchstack.backbone.utils.ResUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.DataProvider;
-import co.touchlab.researchstack.skin.ResourceManager;
 import co.touchlab.researchstack.skin.task.OnboardingTask;
 import co.touchlab.researchstack.skin.task.SignUpTask;
 import co.touchlab.researchstack.skin.ui.layout.SignUpStepLayout;
@@ -44,6 +46,24 @@ public class EmailVerificationActivity extends PinCodeActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_verification);
         progress = findViewById(R.id.progress);
+
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null)
+        {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if(item.getItemId() == android.R.id.home)
+        {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -54,24 +74,26 @@ public class EmailVerificationActivity extends PinCodeActivity
         email = getIntent().getStringExtra(EXTRA_EMAIL);
         password = getIntent().getStringExtra(EXTRA_PASSWORD);
 
-        ((AppCompatImageView) findViewById(R.id.study_logo)).setImageResource(ResourceManager.getInstance()
-                .getLargeLogoDiseaseIcon());
         updateEmailText();
 
         RxView.clicks(findViewById(R.id.email_verification_wrong_email))
                 .subscribe(v -> changeEmail());
 
-        RxView.clicks(findViewById(R.id.email_verification_resend))
-                .subscribe(v -> resendVerificationEmail());
-
-        RxView.clicks(findViewById(R.id.continue_button)).subscribe(v -> attemptSignIn());
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        submitBar.setPositiveAction(v -> attemptSignIn());
+        submitBar.setNegativeAction(v -> resendVerificationEmail());
     }
 
     private void updateEmailText()
     {
-        ((AppCompatTextView) findViewById(R.id.email_verification_body)).setText(getString(R.string.email_verification_body,
-                ResUtils.getApplicationName(this),
-                email));
+        int accentColor = getResources().getColor(R.color.rsb_colorAccent);
+        String accentColorString = "#" + Integer.toHexString(Color.red(accentColor)) +
+                Integer.toHexString(Color.green(accentColor)) +
+                Integer.toHexString(Color.blue(accentColor)) ;
+        String formattedSummary = getString(R.string.rss_confirm_summary,
+                "<font color=\"" + accentColorString + "\">" + email + "</font>");
+        ((AppCompatTextView) findViewById(R.id.email_verification_body))
+                .setText(Html.fromHtml(formattedSummary));
     }
 
     @Override
@@ -97,8 +119,9 @@ public class EmailVerificationActivity extends PinCodeActivity
     private void changeEmail()
     {
         Step signUpStep = new Step(OnboardingTask.SignUpStepIdentifier);
+        signUpStep.setStepTitle(R.string.rss_sign_up);
         signUpStep.setStepLayoutClass(SignUpStepLayout.class);
-        signUpStep.setTitle(getString(R.string.change_email));
+        signUpStep.setTitle(getString(R.string.rss_change_email));
 
         Intent intent = new Intent(this, ViewTaskActivity.class);
         intent.putExtra(ViewTaskActivity.EXTRA_TASK, new OrderedTask(CHANGE_EMAIL_ID, signUpStep));
@@ -149,7 +172,8 @@ public class EmailVerificationActivity extends PinCodeActivity
                         // already be on the activity-task. We want to re-use that activity instead
                         // of creating a new instance and have two instance active.
                         Intent intent = new Intent(this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.setFlags(
+                                Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                         finish();
                     }
@@ -167,7 +191,7 @@ public class EmailVerificationActivity extends PinCodeActivity
                             .alpha(0)
                             .withEndAction(() -> progress.setVisibility(View.GONE));
                     Toast.makeText(EmailVerificationActivity.this,
-                            R.string.email_not_verified,
+                            R.string.rss_email_not_verified,
                             Toast.LENGTH_SHORT).show();
                 });
     }

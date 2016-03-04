@@ -86,7 +86,7 @@ public class StepSwitcher extends FrameLayout
 
     private void init()
     {
-        animationTime = getResources().getInteger(R.integer.rsc_config_mediumAnimTime);
+        animationTime = getResources().getInteger(R.integer.rsb_config_mediumAnimTime);
     }
 
     /**
@@ -100,11 +100,11 @@ public class StepSwitcher extends FrameLayout
     public void show(StepLayout stepLayout, int direction)
     {
         // if layouts originate from the same step, ignore show
-        View currentStep = findViewById(R.id.rsc_current_step);
+        View currentStep = findViewById(R.id.rsb_current_step);
         if(currentStep != null)
         {
-            String currentStepId = (String) currentStep.getTag(R.id.rsc_step_layout_id);
-            String stepLayoutId = (String) stepLayout.getLayout().getTag(R.id.rsc_step_layout_id);
+            String currentStepId = (String) currentStep.getTag(R.id.rsb_step_layout_id);
+            String stepLayoutId = (String) stepLayout.getLayout().getTag(R.id.rsb_step_layout_id);
             if(currentStepId.equals(stepLayoutId))
             {
                 return;
@@ -132,7 +132,7 @@ public class StepSwitcher extends FrameLayout
             // in the view hierarchy as the same as the current step on-screen
             LayoutParams lp = getLayoutParams(stepLayout);
             addView(stepLayout.getLayout(), currentIndex, lp);
-            stepLayout.getLayout().setId(R.id.rsc_current_step);
+            stepLayout.getLayout().setId(R.id.rsb_current_step);
 
             // If the old step is gone, we can go ahead and ignore the following animation code.
             // This will usually happen on start-up of the host (e.g. activity)

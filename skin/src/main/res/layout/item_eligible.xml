@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/you_are_eligible"
+        android:text="@string/rss_you_are_eligible"
         android:textSize="20sp"
         android:textColor="?attr/colorAccent"
         android:layout_marginLeft="48dp"
@@ -22,7 +22,7 @@
         android:id="@+id/eligible_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tap_below"
+        android:text="@string/rss_tap_below"
         android:layout_below="@+id/textView"
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"

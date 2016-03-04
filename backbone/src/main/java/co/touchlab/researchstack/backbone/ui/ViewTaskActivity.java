@@ -108,7 +108,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
         StepLayout stepLayout = getLayoutForStep(step);
-        stepLayout.getLayout().setTag(R.id.rsc_step_layout_id, step.getIdentifier());
+        stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
         //TODO Get SubmitBar from layout, set positive button title to either "Get Started", "Next", or "Done"
         //TODO Remove ConsentTask.initVisualSteps() and ConsentVisualStep.nextButtonString
         root.show(stepLayout,
@@ -188,7 +188,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     private void notifyStepOfBackPress()
     {
-        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsc_current_step);
+        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
         // TODO shouldn't we call onBackPressed if false?
         currentStepLayout.isBackEventConsumed();
     }

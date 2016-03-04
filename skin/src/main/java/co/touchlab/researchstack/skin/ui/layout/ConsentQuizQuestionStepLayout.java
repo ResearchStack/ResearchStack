@@ -71,10 +71,10 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
         radioGroup = (RadioGroup) findViewById(R.id.rdio_group);
 
         radioTrue = (RadioButton) findViewById(R.id.btn_true);
-        radioTrue.setText(R.string.btn_true);
+        radioTrue.setText(R.string.rss_btn_true);
 
         radioFalse = (RadioButton) findViewById(R.id.btn_false);
-        radioFalse.setText(R.string.btn_false);
+        radioFalse.setText(R.string.rss_btn_false);
 
         submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction(v -> onSubmit());
@@ -172,7 +172,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                 resultSummary.setVisibility(View.VISIBLE);
 
                 // Change the submit bar positive-title to "next"
-                submitBar.setPositiveTitle(R.string.rsc_next);
+                submitBar.setPositiveTitle(R.string.rsb_next);
             }
             else
             {

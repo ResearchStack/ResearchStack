@@ -149,27 +149,27 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
         switch(state)
         {
             case CONFIRM:
-                updateText(res.getString(R.string.passcode_confirm_title),
-                        res.getString(R.string.passcode_confirm_summary),
+                updateText(res.getString(R.string.rss_passcode_confirm_title),
+                        res.getString(R.string.rss_passcode_confirm_summary),
                         ThemeUtils.getTextColorPrimary(getContext()));
                 break;
 
             case RETRY:
-                updateText(res.getString(R.string.passcode_confirm_title),
-                        res.getString(R.string.passcode_confirm_error),
-                        res.getColor(R.color.error));
+                updateText(res.getString(R.string.rss_passcode_confirm_title),
+                        res.getString(R.string.rss_passcode_confirm_error),
+                        res.getColor(R.color.rsb_error));
                 break;
 
             case CREATE:
             default:
-                updateText(res.getString(R.string.passcode_create_title),
-                        res.getString(R.string.passcode_create_summary),
+                updateText(res.getString(R.string.rss_passcode_create_title),
+                        res.getString(R.string.rss_passcode_create_summary),
                         ThemeUtils.getTextColorPrimary(getContext()));
                 break;
 
             case CHANGE:
-                updateText(res.getString(R.string.rsc_pincode_enter_title),
-                        res.getString(R.string.rsc_pincode_enter_summary),
+                updateText(res.getString(R.string.rsb_pincode_enter_title),
+                        res.getString(R.string.rsb_pincode_enter_summary),
                         ThemeUtils.getTextColorPrimary(getContext()));
                 break;
         }

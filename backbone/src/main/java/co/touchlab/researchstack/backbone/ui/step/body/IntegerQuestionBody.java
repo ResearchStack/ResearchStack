@@ -1,5 +1,6 @@
 package co.touchlab.researchstack.backbone.ui.step.body;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import co.touchlab.researchstack.backbone.R;
@@ -31,9 +31,8 @@ public class IntegerQuestionBody implements StepBody
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private int viewType;
-    private NumberPicker numberPicker;
-    private EditText     editText;
+    private int      viewType;
+    private EditText editText;
 
     public IntegerQuestionBody(Step step, StepResult result)
     {
@@ -52,8 +51,8 @@ public class IntegerQuestionBody implements StepBody
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsc_margin_right);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
         view.setLayoutParams(layoutParams);
 
         return view;
@@ -77,22 +76,11 @@ public class IntegerQuestionBody implements StepBody
 
     private View initViewDefault(LayoutInflater inflater, ViewGroup parent)
     {
-        numberPicker = (NumberPicker) inflater.inflate(R.layout.item_number_picker, parent, false);
-        numberPicker.setMinValue(format.getMinValue());
+        editText = (EditText) inflater.inflate(R.layout.item_edit_text, parent, false);
 
-        // if max and min are equal, don't set a max (it's 0/0 if they don't set min/max)
-        if(format.getMaxValue() != format.getMinValue())
-        {
-            numberPicker.setMaxValue(format.getMaxValue());
-        }
+        setFilters(parent.getContext());
 
-        //pre-fill if we have a result
-        if(result.getResult() != null)
-        {
-            numberPicker.setValue(result.getResult());
-        }
-
-        return numberPicker;
+        return editText;
     }
 
     private View initViewCompact(LayoutInflater inflater, ViewGroup parent)
@@ -103,11 +91,28 @@ public class IntegerQuestionBody implements StepBody
         title.setText(step.getTitle());
 
         editText = (EditText) formItemView.findViewById(R.id.value);
+        setFilters(parent.getContext());
+
+        return formItemView;
+    }
+
+    private void setFilters(Context context)
+    {
         editText.setSingleLine(true);
-        editText.setHint(parent.getContext()
-                .getString(R.string.rsc_hint_step_body_int,
-                        format.getMinValue(),
-                        format.getMaxValue()));
+        final int minValue = format.getMinValue();
+        // allow any positive int if no max value is specified
+        final int maxValue = format.getMaxValue() == 0 ? Integer.MAX_VALUE : format.getMaxValue();
+
+        if(maxValue == Integer.MAX_VALUE)
+        {
+            editText.setHint(context.getString(R.string.rsb_hint_step_body_int_no_max));
+        }
+        else
+        {
+            editText.setHint(context.getString(R.string.rsb_hint_step_body_int,
+                    minValue,
+                    maxValue));
+        }
 
         editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
 
@@ -116,16 +121,15 @@ public class IntegerQuestionBody implements StepBody
             editText.setText(String.valueOf(result.getResult()));
         }
 
-        String minStr = Integer.toString(format.getMinValue());
-        String maxStr = Integer.toString(format.getMaxValue());
+        String minStr = Integer.toString(minValue);
+        String maxStr = Integer.toString(maxValue);
         int maxLength = maxStr.length() >= minStr.length() ? maxStr.length() : minStr.length();
         InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(maxLength);
         InputFilter[] newFilters = ViewUtils.addFilter(editText.getFilters(), maxLengthFilter);
         editText.setFilters(newFilters);
 
-        // TODO This will crash when typing not digit char (i.e. '.' or '-')
         // If we have a range, set a range filter
-        if(format.getMaxValue() - format.getMinValue() > 0)
+        if(maxValue - minValue > 0)
         {
             InputFilter rangeFilter = (source, start, end, dest, dstart, dend) -> {
 
@@ -143,10 +147,12 @@ public class IntegerQuestionBody implements StepBody
                 }
 
                 // Append source to dest and check the range.
-                String valueStr = new StringBuilder(dest).append(source).toString();
-                int value = Integer.parseInt(valueStr.toString());
+                String valueStr = new StringBuilder(dest).append(source)
+                        .toString()
+                        .replaceAll("\\D", "");
+                int value = Integer.parseInt(valueStr);
 
-                if(value > format.getMaxValue() || value < format.getMinValue())
+                if(value > maxValue || value < minValue)
                 {
                     return "";
                 }
@@ -159,30 +165,16 @@ public class IntegerQuestionBody implements StepBody
             newFilters = ViewUtils.addFilter(editText.getFilters(), rangeFilter);
             editText.setFilters(newFilters);
         }
-
-        return formItemView;
     }
 
     @Override
     public StepResult getStepResult()
     {
-        if(viewType == VIEW_TYPE_DEFAULT)
+        String numString = editText.getText().toString();
+        if(! TextUtils.isEmpty(numString))
         {
-            result.setResult(numberPicker.getValue());
+            result.setResult(Integer.valueOf(editText.getText().toString()));
         }
-        else if(viewType == VIEW_TYPE_COMPACT)
-        {
-            String numString = editText.getText().toString();
-            if(! TextUtils.isEmpty(numString))
-            {
-                result.setResult(Integer.valueOf(editText.getText().toString()));
-            }
-        }
-        else
-        {
-            throw new IllegalArgumentException("Invalid View Type");
-        }
-
         return result;
     }
 
@@ -191,11 +183,7 @@ public class IntegerQuestionBody implements StepBody
     {
         Integer result = null;
 
-        if(numberPicker != null)
-        {
-            result = numberPicker.getValue();
-        }
-        else if(editText != null && editText.getText().length() > 0)
+        if(editText != null && editText.getText().length() > 0)
         {
             result = Integer.valueOf(editText.getText().toString());
         }

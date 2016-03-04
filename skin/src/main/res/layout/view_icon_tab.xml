@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/tabTextColor"
+        android:fontFamily="sans-serif-medium"
+        android:textAllCaps="true"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:paddingLeft="10dp"
+        android:paddingTop="4dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="4dp"
+        tools:text="TEXT"
+        />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="centerInside"
+        android:layout_centerInParent="true"
+        android:tint="@android:color/white"
+        tools:src="@drawable/ic_action_profile"
+        />
+
+    <!-- TODO point to cusotm attr for tab indicator color-->
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/title"
+        android:layout_alignTop="@+id/title"
+        android:adjustViewBounds="true"
+        android:tint="@color/rsb_error"
+        android:src="@drawable/ic_circle_8dp"
+        />
+
+</RelativeLayout>

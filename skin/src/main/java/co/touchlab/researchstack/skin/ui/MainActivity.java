@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import co.touchlab.researchstack.skin.TaskProvider;
 import co.touchlab.researchstack.skin.UiManager;
 import co.touchlab.researchstack.skin.notification.TaskAlertReceiver;
 import co.touchlab.researchstack.skin.ui.adapter.MainPagerAdapter;
+import co.touchlab.researchstack.skin.ui.views.IconTab;
 import rx.Observable;
 
 /**
@@ -47,8 +49,7 @@ public class MainActivity extends PinCodeActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
+        
         handleNotificationIntent(getIntent());
     }
 
@@ -123,7 +124,7 @@ public class MainActivity extends PinCodeActivity
     public void onDataReady()
     {
         super.onDataReady();
-
+        
         // Check if we need to run initial Task
         Observable.create(subscriber -> {
             UiThreadContext.assertBackgroundThread();
@@ -133,15 +134,15 @@ public class MainActivity extends PinCodeActivity
                     .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
             subscriber.onNext(result == null);
         }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
-            if((boolean) needsInitialSurvey &&
-                    DataProvider.getInstance().isSignedIn(MainActivity.this))
+            if((boolean) needsInitialSurvey)// &&
+            //                    DataProvider.getInstance().isSignedIn(MainActivity.this))
             {
                 Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
                 Intent intent = ViewTaskActivity.newIntent(this, task);
                 startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
             }
         });
-
+        
         if (pagerAdapter == null)
         {
             List<ActionItem> items = UiManager.getInstance().getMainTabBarItems();
@@ -167,7 +168,16 @@ public class MainActivity extends PinCodeActivity
 
             for(ActionItem item : items)
             {
-                tabLayout.addTab(tabLayout.newTab().setText(item.getTitle()));
+                TabLayout.Tab tabItem = tabLayout.newTab();
+                IconTab iconTab = new IconTab(this);
+                iconTab.setText(item.getTitle());
+                iconTab.setIcon(item.getIcon());
+//                TODO Properly set indicator visibility
+                iconTab.setIsIndicatorShow(items.indexOf(item) == 0);
+                iconTab.setOnClickListener(v -> tabItem.select());
+                tabItem.setCustomView(iconTab);
+                tabLayout.addTab(tabItem);
+
             }
             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         }
@@ -177,7 +187,8 @@ public class MainActivity extends PinCodeActivity
     public void onDataFailed()
     {
         super.onDataFailed();
-
+        //TODO Show dialog explaing what went wrong, instead of finishing activity.
+        
         Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
         finish();
     }

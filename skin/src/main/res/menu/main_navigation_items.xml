@@ -4,18 +4,18 @@
         <item
             android:id="@+id/activities"
             android:checked="true"
-            android:title="@string/activities"/>
+            android:title="@string/rss_activities"/>
         <item
             android:id="@+id/dashboard"
-            android:title="@string/dashboard"/>
+            android:title="@string/rss_dashboard"/>
         <item
             android:id="@+id/learn"
-            android:title="@string/learn"/>
+            android:title="@string/rss_learn"/>
         <item
             android:id="@+id/profile"
-            android:title="@string/profile"/>
+            android:title="@string/rss_profile"/>
         <item
             android:id="@+id/settings"
-            android:title="@string/settings"/>
+            android:title="@string/rss_settings"/>
     </group>
 </menu>

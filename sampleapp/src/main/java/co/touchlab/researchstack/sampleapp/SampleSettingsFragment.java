@@ -38,7 +38,7 @@ public class SampleSettingsFragment extends SettingsFragment
     @Override
     public String getVersionString()
     {
-        return getString(co.touchlab.researchstack.glue.R.string.settings_version,
+        return getString(co.touchlab.researchstack.glue.R.string.rss_settings_version,
                 BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE);
     }

@@ -23,7 +23,7 @@ public class ConsentVisualStep extends Step
     @Override
     public int getStepTitle()
     {
-        return co.touchlab.researchstack.backbone.R.string.rsc_consent;
+        return co.touchlab.researchstack.backbone.R.string.rsb_consent;
     }
 
     @Override

@@ -12,7 +12,7 @@
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/location_services"
+        android:text="@string/rss_location_services"
         android:textSize="24sp"
         />
 
@@ -21,14 +21,14 @@
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/location_services_description"
+        android:text="@string/rss_location_services_description"
         />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/permission_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:hint="@string/allow"
+        tools:hint="@string/rss_allow"
         />
 
 </LinearLayout>

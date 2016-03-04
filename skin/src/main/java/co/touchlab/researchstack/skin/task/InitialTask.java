@@ -157,7 +157,7 @@ public class InitialTask extends OrderedTask
     public String getTitleForStep(Context context, Step step)
     {
         int currentIndex = getSteps().indexOf(step) + 1;
-        return context.getString(R.string.format_step_title, currentIndex, getSteps().size());
+        return context.getString(R.string.rss_format_step_title, currentIndex, getSteps().size());
     }
 
 }

@@ -42,7 +42,7 @@
             android:layout_height="match_parent"
             android:textColor="@android:color/white"
             android:onClick="onSkipClicked"
-            android:text="@string/skip_signup"
+            android:text="@string/rss_skip_signup"
             />
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_sign_up"
@@ -50,7 +50,7 @@
             android:layout_height="match_parent"
             android:textColor="@android:color/white"
             android:onClick="onSignUpClicked"
-            android:text="@string/join_study"
+            android:text="@string/rss_join_study"
             />
         <Space android:layout_width="16dp" android:layout_height="match_parent"/>
 
@@ -63,7 +63,7 @@
         android:gravity="center_vertical"
         android:clickable="true"
         android:onClick="onSignInClicked"
-        android:text="@string/already_participating"
+        android:text="@string/rss_already_participating"
         android:textColor="@android:color/black"
         android:textSize="12sp"
         />

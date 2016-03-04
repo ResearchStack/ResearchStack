@@ -40,7 +40,7 @@ import co.touchlab.researchstack.skin.model.User;
 import co.touchlab.researchstack.skin.step.PassCodeCreationStep;
 import co.touchlab.researchstack.skin.task.ConsentTask;
 import co.touchlab.researchstack.skin.ui.OnboardingActivity;
-import co.touchlab.researchstack.skin.ui.ViewLicensesActivity;
+import co.touchlab.researchstack.skin.ui.SoftwareNoticesActivity;
 import co.touchlab.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
 import co.touchlab.researchstack.skin.utils.ConsentFormUtils;
 import co.touchlab.researchstack.skin.utils.JsonUtils;
@@ -61,27 +61,27 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     // If you are adding / changing settings, make sure they are unique / match in settings.xml
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Profile
-    public static final String KEY_PROFILE           = "settings_profile";
-    public static final String KEY_PROFILE_NAME      = "settings_profile_name";
-    public static final String KEY_PROFILE_BIRTHDATE = "settings_profile_birthdate";
+    public static final String KEY_PROFILE           = "rss_settings_profile";
+    public static final String KEY_PROFILE_NAME      = "rss_settings_profile_name";
+    public static final String KEY_PROFILE_BIRTHDATE = "rss_settings_profile_birthdate";
     // Reminders
-    public static final String KEY_REMINDERS         = "settings_reminders";
+    public static final String KEY_REMINDERS         = "rss_settings_reminders";
     // Privacy
-    public static final String KEY_PRIVACY           = "settings_privacy";
-    public static final String KEY_PRIVACY_POLICY    = "settings_privacy_policy";
-    public static final String KEY_REVIEW_CONSENT    = "settings_privacy_review_consent";
-    public static final String KEY_SHARING_OPTIONS   = "settings_privacy_sharing_options";
+    public static final String KEY_PRIVACY           = "rss_settings_privacy";
+    public static final String KEY_PRIVACY_POLICY    = "rss_settings_privacy_policy";
+    public static final String KEY_REVIEW_CONSENT    = "rss_settings_privacy_review_consent";
+    public static final String KEY_SHARING_OPTIONS   = "rss_settings_privacy_sharing_options";
     // Security
-    public static final String KEY_AUTO_LOCK_ENABLED = "settings_auto_lock_on_exit";
-    public static final String KEY_AUTO_LOCK_TIME    = "settings_auto_lock_time";
-    public static final String KEY_CHANGE_PASSCODE = "settings_security_change_passcode";
+    public static final String KEY_AUTO_LOCK_ENABLED = "rss_settings_auto_lock_on_exit";
+    public static final String KEY_AUTO_LOCK_TIME    = "rss_settings_auto_lock_time";
+    public static final String KEY_CHANGE_PASSCODE = "rss_settings_security_change_passcode";
     // General
-    public static final String KEY_GENERAL = "settings_general";
-    public static final String KEY_LICENSE_INFORMATION = "settings_general_license_information";
-    public static final String KEY_LEAVE_STUDY = "settings_general_leave_study";
-    public static final String KEY_JOIN_STUDY = "settings_general_join_study";
+    public static final String KEY_GENERAL = "rss_settings_general";
+    public static final String KEY_SOFTWARE_NOTICES  = "rss_settings_general_software_notices";
+    public static final String KEY_LEAVE_STUDY = "rss_settings_general_leave_study";
+    public static final String KEY_JOIN_STUDY = "rss_settings_general_join_study";
     // Other
-    public static final String KEY_VERSION = "settings_version";
+    public static final String KEY_VERSION = "rss_settings_version";
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Preference Items
@@ -176,10 +176,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                         ConsentSectionModel.class,
                         ResourceManager.getInstance().getConsentSections());
                 subscriber.onNext(data);
-            })
-                    .compose(ObservableUtils.applyDefault())
-                    .map(o -> (ConsentSectionModel) o)
-                    .subscribe(data -> {
+            }).compose(ObservableUtils.applyDefault()).map(o -> (ConsentSectionModel) o).subscribe(data -> {
                         this.data = data;
 
                         // Load and set sharing scope
@@ -219,8 +216,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     showPrivacyPolicy();
                     return true;
 
-                case KEY_LICENSE_INFORMATION:
-                    showLicenseInformation();
+                case KEY_SOFTWARE_NOTICES:
+                    showSoftwareNotices();
                     return true;
 
                 case KEY_REVIEW_CONSENT:
@@ -229,9 +226,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
                 case KEY_CHANGE_PASSCODE:
                     PassCodeCreationStep step = new PassCodeCreationStep("passcode",
-                            R.string.passcode_change_title);
+                            R.string.rss_passcode_change_title);
                     step.setStateOrdinal(SignUpPinCodeCreationStepLayout.State.CHANGE.ordinal());
-                    OrderedTask passcodeTask = new OrderedTask("task_settings_passcode", step);
+                    OrderedTask passcodeTask = new OrderedTask("task_rss_settings_passcode", step);
                     Intent passcodeIntent = ViewTaskActivity.newIntent(getContext(), passcodeTask);
                     startActivityForResult(passcodeIntent, REQUEST_CODE_CHANGE_PASSCODE);
                     return true;
@@ -248,17 +245,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
                     ConsentSharingStep sharingStep = new ConsentSharingStep(ConsentTask.ID_SHARING);
                     sharingStep.setOptional(false);
-                    sharingStep.setStepTitle(R.string.settings_privacy_sharing_options);
+                    sharingStep.setStepTitle(R.string.rss_settings_privacy_sharing_options);
                     sharingStep.setShowsProgress(false);
                     sharingStep.setUseSurveyMode(false);
 
-                    String shareWidely = getString(R.string.rsc_consent_share_widely,
+                    String shareWidely = getString(R.string.rsb_consent_share_widely,
                             investigatorLongDesc);
                     Choice<String> shareWidelyChoice = new Choice<>(shareWidely,
                             "sponsors_and_partners",
                             null);
 
-                    String shareRestricted = getString(R.string.rsc_consent_share_only,
+                    String shareRestricted = getString(R.string.rsb_consent_share_only,
                             investigatorShortDesc);
                     Choice<String> shareRestrictedChoice = new Choice<>(shareRestricted,
                             "all_qualified_researchers",
@@ -268,8 +265,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                             shareWidelyChoice,
                             shareRestrictedChoice));
 
-                    sharingStep.setTitle(getString(R.string.rsc_consent_share_title));
-                    sharingStep.setText(getString(R.string.rsc_consent_share_description,
+                    sharingStep.setTitle(getString(R.string.rsb_consent_share_title));
+                    sharingStep.setText(getString(R.string.rsb_consent_share_description,
                             investigatorLongDesc,
                             localizedLearnMoreHTMLContent));
 
@@ -286,14 +283,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                                 if(response.isSuccess())
                                 {
                                     Toast.makeText(getActivity(),
-                                            R.string.consent_withdraw_success,
+                                            R.string.rss_consent_withdraw_success,
                                             Toast.LENGTH_SHORT).show();
 
                                     initPreferenceForConsent();
                                 }
                                 else
                                 {
-                                    Toast.makeText(getActivity(), R.string.consent_withdraw_failed,
+                                    Toast.makeText(getActivity(), R.string.rss_consent_withdraw_failed,
                                             Toast.LENGTH_SHORT).show();
                                 }
 
@@ -377,7 +374,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             String investigatorLongDesc = data.getDocumentProperties()
                     .getInvestigatorLongDescription();
 
-            return getString(R.string.rsc_consent_share_widely,
+            return getString(R.string.rsb_consent_share_widely,
                     investigatorLongDesc);
         }
         else if (option.equals("all_qualified_researchers"))
@@ -385,12 +382,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             String investigatorShortDesc = data.getDocumentProperties()
                     .getInvestigatorShortDescription();
 
-            return getString(R.string.rsc_consent_share_only,
+            return getString(R.string.rsb_consent_share_only,
                     investigatorShortDesc);
         }
         else if (option.equals("no_sharing"))
         {
-            return getString(R.string.rsc_consent_share_no);
+            return getString(R.string.rsb_consent_share_no);
         }
         else
         {
@@ -402,7 +399,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     public String getVersionString()
     {
-        return getString(R.string.settings_version,
+        return getString(R.string.rss_settings_version,
                 BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE);
     }
@@ -413,14 +410,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         int resId = ResourceManager.getInstance().getPrivacyPolicy();
         String docName = getResources().getResourceEntryName(resId);
         Intent intent = ViewWebDocumentActivity.newIntent(getContext(),
-                getString(R.string.settings_privacy_policy),
+                getString(R.string.rss_settings_privacy_policy),
                 docName);
         startActivity(intent);
     }
 
-    public void showLicenseInformation()
+    public void showSoftwareNotices()
     {
-        Intent intent = ViewLicensesActivity.newIntent(getContext());
+        Intent intent = SoftwareNoticesActivity.newIntent(getContext());
         startActivity(intent);
     }
 }
