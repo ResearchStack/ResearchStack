@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
     <TextView
@@ -36,17 +37,15 @@
     <co.touchlab.researchstack.backbone.ui.views.SignatureView
         android:id="@+id/layout_consent_review_signature"
         android:layout_width="match_parent"
-        android:layout_height="144dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_height="186dp"
         android:layout_below="@+id/summary"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="@dimen/rsb_margin_left"
-        android:layout_marginRight="@dimen/rsb_margin_left"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:layout_marginLeft="@dimen/rsb_padding_medium"
+        android:layout_marginRight="@dimen/rsb_padding_medium"
+        android:paddingBottom="52dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        app:signatureColor="?attr/colorAccent"
         />
 
     <co.touchlab.researchstack.backbone.ui.views.SubmitBar
