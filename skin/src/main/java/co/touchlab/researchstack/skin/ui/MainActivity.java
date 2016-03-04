@@ -25,6 +25,7 @@ import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.TaskProvider;
 import co.touchlab.researchstack.skin.UiManager;
 import co.touchlab.researchstack.skin.ui.adapter.MainPagerAdapter;
+import co.touchlab.researchstack.skin.ui.views.IconTab;
 import rx.Observable;
 
 /**
@@ -141,7 +142,16 @@ public class MainActivity extends PinCodeActivity
 
             for(ActionItem item : items)
             {
-                tabLayout.addTab(tabLayout.newTab().setText(item.getTitle()));
+                TabLayout.Tab tabItem = tabLayout.newTab();
+                IconTab iconTab = new IconTab(this);
+                iconTab.setText(item.getTitle());
+                iconTab.setIcon(item.getIcon());
+//                TODO Properly set indicator visibility
+                iconTab.setIsIndicatorShow(false);
+                iconTab.setOnClickListener(v -> tabItem.select());
+                tabItem.setCustomView(iconTab);
+                tabLayout.addTab(tabItem);
+
             }
             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         }
