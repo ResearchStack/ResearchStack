@@ -49,8 +49,6 @@ public class StudyLandingLayout extends ScrollView
         logoView = (ImageView) findViewById(R.id.layout_studyoverview_landing_logo);
         titleView = (TextView) findViewById(R.id.layout_studyoverview_landing_title);
         subtitleView = (TextView) findViewById(R.id.layout_studyoverview_landing_subtitle);
-        readConsent = (Button) findViewById(R.id.layout_studyoverview_landing_read);
-        emailConsent = (Button) findViewById(R.id.layout_studyoverview_landing_email);
     }
 
     public void setData(StudyOverviewModel.Question data)

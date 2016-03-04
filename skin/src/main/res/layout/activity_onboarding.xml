@@ -1,23 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="org.researchstack.skin.ui.OnboardingActivity"
+    tools:context="co.touchlab.researchstack.skin.ui.OnboardingActivity"
 >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
+    <ScrollView
+        android:layout_above="@+id/intro_buttons"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@android:color/white"
-    />
+        android:layout_height="match_parent"
+    >
 
-    <!--<org.researchstack.skin.ui.views.PageIndicator-->
+        <LinearLayout
+            android:id="@+id/layout_studyoverview_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+        >
+
+            <ImageView
+                android:id="@+id/layout_studyoverview_landing_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="24dp"
+                android:minHeight="80dp"
+                android:minWidth="80dp"
+                android:scaleType="center"
+                tools:src="@mipmap/ic_launcher"
+            />
+
+            <TextView
+                android:id="@+id/layout_studyoverview_landing_title"
+                style="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                tools:text="@string/lorem_name"
+            />
+
+            <TextView
+                android:id="@+id/layout_studyoverview_landing_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                tools:text="@string/lorem_long"
+            />
+
+        </LinearLayout>
+
+    </ScrollView>
+    <!--<android.support.v4.view.ViewPager-->
+    <!--android:id="@+id/pager"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@android:color/white"-->
+    <!--&gt;-->
+    <!--<android.support.v4.view.PagerTabStrip-->
+    <!--android:id="@+id/pager_title_strip"-->
+    <!--android:layout_gravity="top"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"/>-->
+    <!--</android.support.v4.view.ViewPager>-->
+
+    <!--<co.touchlab.researchstack.skin.ui.views.PageIndicator-->
     <!--android:id="@+id/pager_indicator"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
@@ -26,9 +84,11 @@
     <!--/>-->
 
     <LinearLayout
-        android:gravity="center_horizontal"
+        android:id="@+id/intro_buttons"
         android:layout_width="match_parent"
-        android:layout_height="44dp">
+        android:layout_height="44dp"
+        android:layout_above="@+id/intro_sign_in"
+        android:gravity="center_horizontal">
 
         <Space android:layout_width="16dp" android:layout_height="match_parent"/>
 
@@ -36,21 +96,21 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_skip"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:layout_width="160dp"
             android:layout_height="match_parent"
-            android:textColor="@android:color/white"
             android:onClick="onSkipClicked"
             android:text="@string/rss_skip_signup"
+            android:textColor="@android:color/white"
+            android:visibility="gone"
+            tools:visibility="visible"
         />
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_sign_up"
             android:layout_width="160dp"
             android:layout_height="match_parent"
-            android:textColor="@android:color/white"
             android:onClick="onSignUpClicked"
             android:text="@string/rss_join_study"
+            android:textColor="@android:color/white"
         />
         <Space android:layout_width="16dp" android:layout_height="match_parent"/>
 
@@ -60,12 +120,14 @@
         android:id="@+id/intro_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="52dp"
-        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:clickable="true"
+        android:gravity="center_vertical"
         android:onClick="onSignInClicked"
         android:text="@string/rss_already_participating"
         android:textColor="@android:color/black"
         android:textSize="12sp"
     />
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.AppCompatButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="?attr/selectableItemBackground"
+    android:textAllCaps="false"
+    android:text="@string/rss_email_consent_doc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/rsb_colorPrimary"
+    android:minHeight="48dp"
+    android:layout_marginTop="8dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:gravity="center_vertical"
+/>
+

@@ -2,8 +2,14 @@ package org.researchstack.skin.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatButton;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
@@ -27,7 +33,7 @@ import org.researchstack.skin.utils.JsonUtils;
 /**
  * Created by bradleymcdermott on 10/15/15.
  */
-public class OnboardingActivity extends PinCodeActivity
+public class OnboardingActivity extends PinCodeActivity implements View.OnClickListener
 {
     public static final int REQUEST_CODE_SIGN_UP  = 21473;
     public static final int REQUEST_CODE_SIGN_IN  = 31473;
@@ -39,16 +45,44 @@ public class OnboardingActivity extends PinCodeActivity
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_onboarding);
 
-        StudyOverviewModel model = parseStudyOverviewModel();
-        OnboardingPagerAdapter adapter = new OnboardingPagerAdapter(this, model.getQuestions());
+        ImageView logoView = (ImageView) findViewById(R.id.layout_studyoverview_landing_logo);
+        TextView titleView = (TextView) findViewById(R.id.layout_studyoverview_landing_title);
+        TextView subtitleView = (TextView) findViewById(R.id.layout_studyoverview_landing_subtitle);
 
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_studyoverview_main);
+        StudyOverviewModel model = parseStudyOverviewModel();
+        for(int i = 0; i < model.getQuestions().size(); i++)
+        {
+            final int index = i;
+            AppCompatButton button = (AppCompatButton) LayoutInflater.from(this)
+                    .inflate(R.layout.rss_button_study_overview, linearLayout, false);
+            button.setText(model.getQuestions().get(i).getTitle());
+            button.setTag(i);
+            linearLayout.addView(button);
+            button.setOnClickListener(this);
+        }
         findViewById(R.id.intro_skip).setVisibility(UiManager.getInstance().isConsentSkippable()
                 ? View.VISIBLE
                 : View.GONE);
 
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        pager.setOffscreenPageLimit(2);
-        pager.setAdapter(adapter);
+        logoView.setImageResource(ResourceManager.getInstance().getLargeLogoDiseaseIcon());
+
+        StudyOverviewModel.Question data = model.getQuestions().get(0);
+        titleView.setText(data.getTitle());
+        if(! TextUtils.isEmpty(data.getDetails()))
+        {
+            subtitleView.setText(data.getDetails());
+        }
+        else
+        {
+            subtitleView.setVisibility(View.GONE);
+        }
+        //        OnboardingPagerAdapter adapter = new OnboardingPagerAdapter(this, model.getQuestions());
+        //
+        //        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        //        PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
+        //        pager.setOffscreenPageLimit(2);
+        //        pager.setAdapter(adapter);
     }
 
     @Override
@@ -182,5 +216,13 @@ public class OnboardingActivity extends PinCodeActivity
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        int index = (int) v.getTag();
+        Toast.makeText(OnboardingActivity.this, "Open dialog on index " + index, Toast.LENGTH_SHORT)
+                .show();
     }
 }

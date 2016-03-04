@@ -34,6 +34,12 @@ public class OnboardingPagerAdapter extends PagerAdapter
     }
 
     @Override
+    public CharSequence getPageTitle(int position)
+    {
+        return items.get(position).getTitle();
+    }
+
+    @Override
     public int getCount()
     {
         return items.size();
