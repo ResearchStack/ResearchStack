@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -39,6 +38,9 @@ public class MainActivity extends PinCodeActivity
 
     private MainPagerAdapter pagerAdapter;
 
+    //TODO Quick fix for now.
+    private boolean failedToFinishInitialTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -49,7 +51,7 @@ public class MainActivity extends PinCodeActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        
+
         handleNotificationIntent(getIntent());
     }
 
@@ -66,11 +68,10 @@ public class MainActivity extends PinCodeActivity
     {
         LogExt.d(getClass(), "handleNotificationIntent");
 
-        if (intent != null && intent.hasExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID))
+        if(intent != null && intent.hasExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID))
         {
             // Get the notif-id from the incoming intent
-            int notificationId = intent.getIntExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID,
-                    - 1);
+            int notificationId = intent.getIntExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, - 1);
 
             // Create a delete intent w/ notif-id
             Intent deleteTaskIntent = TaskAlertReceiver.createDeleteIntent(notificationId);
@@ -85,11 +86,18 @@ public class MainActivity extends PinCodeActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == REQUEST_CODE_INITIAL_TASK && resultCode == RESULT_OK)
+        if(requestCode == REQUEST_CODE_INITIAL_TASK)
         {
-            TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
-            StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
-            DataProvider.getInstance().processInitialTaskResult(this, taskResult);
+            if (resultCode == RESULT_OK)
+            {
+                TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+                StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
+                DataProvider.getInstance().processInitialTaskResult(this, taskResult);
+            }
+            else
+            {
+                failedToFinishInitialTask = true;
+            }
         }
         else
         {
@@ -124,24 +132,27 @@ public class MainActivity extends PinCodeActivity
     public void onDataReady()
     {
         super.onDataReady();
-        
-        // Check if we need to run initial Task
-        Observable.create(subscriber -> {
-            UiThreadContext.assertBackgroundThread();
 
-            TaskResult result = StorageAccess.getInstance()
-                    .getAppDatabase()
-                    .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
-            subscriber.onNext(result == null);
-        }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
-            if((boolean) needsInitialSurvey)// &&
-            //                    DataProvider.getInstance().isSignedIn(MainActivity.this))
-            {
-                Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
-                Intent intent = ViewTaskActivity.newIntent(this, task);
-                startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
-            }
-        });
+        // Check if we need to run initial Task
+        if (! failedToFinishInitialTask)
+        {
+            Observable.create(subscriber -> {
+                UiThreadContext.assertBackgroundThread();
+
+                TaskResult result = StorageAccess.getInstance()
+                        .getAppDatabase()
+                        .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
+                subscriber.onNext(result == null);
+            }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
+                if((boolean) needsInitialSurvey)// &&
+                //                    DataProvider.getInstance().isSignedIn(MainActivity.this))
+                {
+                    Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
+                    Intent intent = ViewTaskActivity.newIntent(this, task);
+                    startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
+                }
+            });
+        }
         
         if (pagerAdapter == null)
         {
