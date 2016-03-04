@@ -65,8 +65,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     public static final String KEY_PROFILE_NAME      = "rss_settings_profile_name";
     public static final String KEY_PROFILE_BIRTHDATE = "rss_settings_profile_birthdate";
     // Reminders
-    /*TODO*/ public static final String KEY_REMINDERS         = "rss_settings_reminders";
-    /*TODO*/ public static final String KEY_REMINDERS_TIME    = "rss_settings_reminders_time";
+    public static final String KEY_REMINDERS         = "rss_settings_reminders";
     // Privacy
     public static final String KEY_PRIVACY           = "rss_settings_privacy";
     public static final String KEY_PRIVACY_POLICY    = "rss_settings_privacy_policy";
@@ -301,6 +300,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 case KEY_JOIN_STUDY:
                     startActivity(new Intent(getActivity(), OnboardingActivity.class));
                     getActivity().finish();
+                    return true;
+
+                case KEY_REMINDERS:
+                    // TODO Alert Task Notification Manager
                     return true;
             }
         }

@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import co.touchlab.researchstack.backbone.StorageAccess;
+import co.touchlab.researchstack.backbone.storage.file.UnencryptedProvider;
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
 import co.touchlab.researchstack.skin.AppPrefs;
 import co.touchlab.researchstack.skin.DataProvider;
+import co.touchlab.researchstack.skin.notification.TaskAlertReceiver;
+import rx.Observable;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
@@ -24,6 +28,18 @@ public class SplashActivity extends PinCodeActivity
     public void onDataReady()
     {
         super.onDataReady();
+
+        // Init all notifications
+        Observable.create(subscriber -> {
+            if(StorageAccess.getInstance().hasPinCode(this) || StorageAccess.getInstance()
+                    .getEncryptionProvider() instanceof UnencryptedProvider)
+            {
+                subscriber.onNext(null);
+            }
+        }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
+            sendBroadcast(new Intent(TaskAlertReceiver.ALERT_CREATE_ALL));
+        });
+
 
         DataProvider.getInstance().initialize(this)
                 .compose(ObservableUtils.applyDefault())

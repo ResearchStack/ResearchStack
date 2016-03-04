@@ -18,18 +18,17 @@
 
     </PreferenceCategory>
 
-    <SwitchPreference
-        android:key="rss_settings_reminders"
-        android:title="@string/rss_settings_reminders"
-        android:defaultValue="true"
-        android:layout="@layout/preferene_switch_category"/>
+    <PreferenceCategory
+        android:title="@string/rss_settings_reminders">
+        <!-- TODO Move title and summary to strings.xml, waiting for prefix-->
+        <SwitchPreference
+            android:key="rss_settings_reminders"
+            android:title="Task reminders"
+            android:summary="You’ll be reminded to complete tasks"
+            android:defaultValue="true"/>
 
-    <Preference
-        android:key="rss_settings_reminders_time"
-        android:dependency="rss_settings_reminders"
-        android:title="@string/rss_settings_reminders_time"
-        android:summary="Set a time for reminders"/>
-
+    </PreferenceCategory>
+    
     <PreferenceCategory
         android:key="rss_settings_privacy"
         android:title="@string/rss_settings_privacy">

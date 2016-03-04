@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import co.touchlab.researchstack.backbone.StorageAccess;
+import co.touchlab.researchstack.backbone.helpers.LogExt;
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.task.Task;
 import co.touchlab.researchstack.backbone.ui.PinCodeActivity;
@@ -24,6 +24,7 @@ import co.touchlab.researchstack.skin.ActionItem;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.TaskProvider;
 import co.touchlab.researchstack.skin.UiManager;
+import co.touchlab.researchstack.skin.notification.TaskAlertReceiver;
 import co.touchlab.researchstack.skin.ui.adapter.MainPagerAdapter;
 import co.touchlab.researchstack.skin.ui.views.IconTab;
 import rx.Observable;
@@ -37,49 +38,66 @@ public class MainActivity extends PinCodeActivity
 
     private MainPagerAdapter pagerAdapter;
 
+    //TODO Quick fix for now.
+    private boolean failedToFinishInitialTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        LogExt.d(getClass(), "onCreate");
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Check if we need to run initial Task
-        Observable.create(subscriber -> {
-            UiThreadContext.assertBackgroundThread();
-
-            TaskResult result = StorageAccess.getInstance()
-                    .getAppDatabase()
-                    .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
-            subscriber.onNext(result == null);
-        }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
-            if((boolean) needsInitialSurvey)// &&
-            //                    DataProvider.getInstance().isSignedIn(MainActivity.this))
-            {
-                Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
-                Intent intent = ViewTaskActivity.newIntent(this, task);
-                startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
-            }
-        });
+        handleNotificationIntent(getIntent());
     }
 
     @Override
     protected void onNewIntent(Intent intent)
     {
         super.onNewIntent(intent);
-        // This may be called, no use yet as we never pass any args through Intent bundle.
+        LogExt.d(getClass(), "onNewIntent");
+
+        handleNotificationIntent(intent);
+    }
+
+    private void handleNotificationIntent(Intent intent)
+    {
+        LogExt.d(getClass(), "handleNotificationIntent");
+
+        if(intent != null && intent.hasExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID))
+        {
+            // Get the notif-id from the incoming intent
+            int notificationId = intent.getIntExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, - 1);
+
+            // Create a delete intent w/ notif-id
+            Intent deleteTaskIntent = TaskAlertReceiver.createDeleteIntent(notificationId);
+            sendBroadcast(deleteTaskIntent);
+
+            // Finally, remove extra from the incoming intent so that, if activity is recreated, we
+            // do not re-call this method
+            intent.removeExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == REQUEST_CODE_INITIAL_TASK && resultCode == RESULT_OK)
+        if(requestCode == REQUEST_CODE_INITIAL_TASK)
         {
-            TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
-            StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
-            DataProvider.getInstance().processInitialTaskResult(this, taskResult);
+            if (resultCode == RESULT_OK)
+            {
+                TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+                StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
+                DataProvider.getInstance().processInitialTaskResult(this, taskResult);
+            }
+            else
+            {
+                failedToFinishInitialTask = true;
+            }
         }
         else
         {
@@ -110,13 +128,32 @@ public class MainActivity extends PinCodeActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private static final String TAG = "MainActivity";
     @Override
     public void onDataReady()
     {
-        Log.d(TAG, "onDataReady() called with: " + "");
         super.onDataReady();
 
+        // Check if we need to run initial Task
+        if (! failedToFinishInitialTask)
+        {
+            Observable.create(subscriber -> {
+                UiThreadContext.assertBackgroundThread();
+
+                TaskResult result = StorageAccess.getInstance()
+                        .getAppDatabase()
+                        .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
+                subscriber.onNext(result == null);
+            }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
+                if((boolean) needsInitialSurvey)// &&
+                //                    DataProvider.getInstance().isSignedIn(MainActivity.this))
+                {
+                    Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
+                    Intent intent = ViewTaskActivity.newIntent(this, task);
+                    startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
+                }
+            });
+        }
+        
         if (pagerAdapter == null)
         {
             List<ActionItem> items = UiManager.getInstance().getMainTabBarItems();
@@ -147,7 +184,7 @@ public class MainActivity extends PinCodeActivity
                 iconTab.setText(item.getTitle());
                 iconTab.setIcon(item.getIcon());
 //                TODO Properly set indicator visibility
-                iconTab.setIsIndicatorShow(false);
+                iconTab.setIsIndicatorShow(items.indexOf(item) == 0);
                 iconTab.setOnClickListener(v -> tabItem.select());
                 tabItem.setCustomView(iconTab);
                 tabLayout.addTab(tabItem);
@@ -161,7 +198,8 @@ public class MainActivity extends PinCodeActivity
     public void onDataFailed()
     {
         super.onDataFailed();
-
+        //TODO Show dialog explaing what went wrong, instead of finishing activity.
+        
         Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
         finish();
     }

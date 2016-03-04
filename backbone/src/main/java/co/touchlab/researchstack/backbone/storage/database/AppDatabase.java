@@ -15,4 +15,10 @@ public interface AppDatabase
     List<StepResult> loadStepResults(String stepId);
 
     void setEncryptionKey(String key);
+
+    List<TaskNotification> loadTaskNotifications();
+
+    void saveTaskNotification(TaskNotification notification);
+
+    void deleteTaskNotification(int taskNotificationId);
 }
