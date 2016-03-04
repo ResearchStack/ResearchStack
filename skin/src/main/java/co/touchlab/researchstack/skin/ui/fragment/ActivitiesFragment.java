@@ -2,26 +2,37 @@ package co.touchlab.researchstack.skin.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import co.touchlab.researchstack.backbone.helpers.LogExt;
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.ui.ViewTaskActivity;
+import co.touchlab.researchstack.backbone.utils.ObservableUtils;
 import co.touchlab.researchstack.glue.R;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.skin.task.SmartSurveyTask;
+import co.touchlab.researchstack.skin.ui.views.DividerItemDecoration;
+import co.touchlab.researchstack.skin.utils.JsonUtils;
+import rx.Observable;
 import rx.Subscription;
 import rx.subjects.PublishSubject;
 
@@ -67,19 +78,32 @@ public class ActivitiesFragment extends Fragment
         // TODO make updating the list better, make sure not leaking memory with the rx subject
         unsubscribe();
 
-        // TODO relook at what object this adapter uses. Could be something simpler than TaskModel
-        List<SchedulesAndTasksModel.TaskModel> tasks = DataProvider.getInstance()
-                .loadTasksAndSchedules(getContext());
-        adapter = new TaskAdapter(tasks);
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
+                DividerItemDecoration.VERTICAL_LIST,
+                0,
+                false));
 
-        subscription = adapter.getPublishSubject().subscribe(task -> {
+        Observable.create(subscriber -> {
+            SchedulesAndTasksModel model = JsonUtils.loadClass(getContext(),
+                    SchedulesAndTasksModel.class,
+                    "tasks_and_schedules");
+            subscriber.onNext(model);
+        })
+                .compose(ObservableUtils.applyDefault())
+                .map(o -> (SchedulesAndTasksModel) o)
+                .subscribe(model -> {
+                    // TODO relook at what object this adapter uses. Could be something simpler than TaskModel
+                    adapter = new TaskAdapter(model);
+                    recyclerView.setAdapter(adapter);
 
-            SmartSurveyTask newTask = DataProvider.getInstance().loadTask(getContext(), task);
+                    subscription = adapter.getPublishSubject().subscribe(task -> {
 
-            startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask), REQUEST_TASK);
-        });
+                        SmartSurveyTask newTask = DataProvider.getInstance().loadTask(getContext(), task);
+
+                        startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask), REQUEST_TASK);
+                    });
+                });
     }
 
     @Override
@@ -103,13 +127,30 @@ public class ActivitiesFragment extends Fragment
     public static class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>
     {
         List<SchedulesAndTasksModel.TaskModel> tasks;
+        HashMap<String, Boolean> taskScheduleType;
 
         PublishSubject<SchedulesAndTasksModel.TaskModel> publishSubject = PublishSubject.create();
 
-        public TaskAdapter(List<SchedulesAndTasksModel.TaskModel> tasks)
+        public TaskAdapter(SchedulesAndTasksModel model)
         {
             super();
-            this.tasks = tasks;
+
+            tasks = new ArrayList<>();
+            taskScheduleType = new HashMap<>();
+
+            //TODO refactor this, data should already be prepared / include all data we need
+            for(SchedulesAndTasksModel.ScheduleModel schedule : model.schedules)
+            {
+                for(SchedulesAndTasksModel.TaskModel task : schedule.tasks)
+                {
+                    // TODO supporting tasks that define taskClassName instead of a file should be supported
+                    if (!TextUtils.isEmpty(task.taskFileName))
+                    {
+                        taskScheduleType.put(task.taskID, schedule.scheduleType.equals("once"));
+                        tasks.add(task);
+                    }
+                }
+            }
         }
 
         public PublishSubject<SchedulesAndTasksModel.TaskModel> getPublishSubject()
@@ -129,13 +170,22 @@ public class ActivitiesFragment extends Fragment
         public void onBindViewHolder(TaskAdapter.ViewHolder holder, int position)
         {
             SchedulesAndTasksModel.TaskModel task = tasks.get(position);
-            holder.title.setText(task.taskTitle);
-            holder.completionTime.setText(task.taskCompletionTime);
+            boolean isOneTime = taskScheduleType.get(task.taskID);
 
-            // TODO fix this, just for looks atm
-            holder.dailyIndicator.setBackgroundResource(task.taskTitle.equals("Daily Survey")
+            Resources res = holder.itemView.getResources();
+            int tintColor = res.getColor(isOneTime
                     ? R.color.rss_recurring_color
                     : R.color.rss_one_time_color);
+
+            holder.title.setText(Html.fromHtml("<b>" + task.taskTitle + "</b>"));
+            holder.title.append("\n" + task.taskCompletionTime);
+            holder.title.setTextColor(tintColor);
+
+            //TODO get current drawable or set "complete" drawable if complete
+            Drawable drawable = holder.dailyIndicator.getDrawable();
+            drawable = DrawableCompat.wrap(drawable);
+            DrawableCompat.setTint(drawable, tintColor);
+            holder.dailyIndicator.setImageDrawable(drawable);
 
             holder.itemView.setOnClickListener(v -> {
                 LogExt.d(getClass(), "Item clicked: " + task.taskID);
@@ -151,18 +201,14 @@ public class ActivitiesFragment extends Fragment
 
         public static class ViewHolder extends RecyclerView.ViewHolder
         {
-            View              dailyIndicator;
-            AppCompatCheckBox completed;
+            ImageView         dailyIndicator;
             AppCompatTextView title;
-            AppCompatTextView completionTime;
 
             public ViewHolder(View itemView)
             {
                 super(itemView);
-                dailyIndicator = itemView.findViewById(R.id.daily_indicator);
-                completed = (AppCompatCheckBox) itemView.findViewById(R.id.completed);
+                dailyIndicator = (ImageView) itemView.findViewById(R.id.daily_indicator);
                 title = (AppCompatTextView) itemView.findViewById(R.id.task_title);
-                completionTime = (AppCompatTextView) itemView.findViewById(R.id.task_completion_time);
             }
         }
     }

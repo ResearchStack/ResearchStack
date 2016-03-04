@@ -40,7 +40,7 @@
 
         <activity
             android:name="co.touchlab.researchstack.skin.ui.EmailVerificationActivity"
-            android:label="@string/rss_app_name"
+            android:label="@string/rss_confirm"
             />
 
         <activity

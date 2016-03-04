@@ -26,26 +26,16 @@ public class SampleUiManager extends UiManager
 
         navItems.add(new ActionItem.ActionItemBuilder()
                 .setId(R.id.nav_activities)
-                .setGroupId(R.id.nav_group)
                 .setTitle(R.string.rss_activities)
-                .setIcon(R.drawable.ic_nav_activities)
+                .setIcon(R.drawable.ic_tab_activities)
                 .setClass(ActivitiesFragment.class)
                 .build());
 
         navItems.add(new ActionItem.ActionItemBuilder()
                 .setId(R.id.nav_dashboard)
-                .setGroupId(R.id.nav_group)
                 .setTitle(R.string.rss_dashboard)
-                .setIcon(R.drawable.ic_nav_dashboard)
+                .setIcon(R.drawable.ic_tab_dashboard)
                 .setClass(DashboardFragment.class)
-                .build());
-
-        navItems.add(new ActionItem.ActionItemBuilder()
-                .setId(R.id.nav_debug)
-                .setGroupId(R.id.nav_group)
-                .setTitle(R.string.debug)
-                .setIcon(R.mipmap.ic_launcher)
-                .setClass(SampleDebugFragment.class)
                 .build());
 
         return navItems;
