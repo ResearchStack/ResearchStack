@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<co.touchlab.researchstack.skin.ui.views.ProfileItemView
+<org.researchstack.skin.ui.views.ProfileItemView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -33,4 +33,4 @@
         android:gravity="right"
         tools:text="Value"
         />
-</co.touchlab.researchstack.skin.ui.views.ProfileItemView>
+</org.researchstack.skin.ui.views.ProfileItemView>

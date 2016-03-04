@@ -14,7 +14,7 @@
         android:layout_weight="1"
         />
 
-    <co.touchlab.researchstack.backbone.ui.views.SubmitBar
+    <org.researchstack.backbone.ui.views.SubmitBar
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

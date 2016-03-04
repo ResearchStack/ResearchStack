@@ -12,7 +12,7 @@
  limitations under the License.
 -->
 
-<co.touchlab.researchstack.skin.ui.views.PageIndicatorMarker
+<org.researchstack.skin.ui.views.PageIndicatorMarker
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="16dp"
     android:layout_height="16dp"
@@ -38,4 +38,4 @@
         android:src="@drawable/ic_pageindicator_current_dark"
         />
 
-</co.touchlab.researchstack.skin.ui.views.PageIndicatorMarker>
+</org.researchstack.skin.ui.views.PageIndicatorMarker>

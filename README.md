@@ -57,9 +57,9 @@ Then add the following entry to your dependencies in your app build.gradle:
 ```
 dependencies {
     ...
-    compile 'co.touchlab.researchstack:backbone:0.0.3'
+    compile 'org.researchstack:backbone:0.0.3'
     // or (if using Skin, you don't need Backbone since it is included)
-    compile 'co.touchlab.researchstack:skin:0.0.3'
+    compile 'org.researchstack:skin:0.0.3'
     ...
 }
 ```

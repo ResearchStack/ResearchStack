@@ -33,7 +33,7 @@ android {
     resourcePrefix 'rsb_'
 }
 
-group = 'co.touchlab.researchstack'
+group = 'org.researchstack'
 version = '0.0.3'
 install {
     repositories.mavenInstaller {

@@ -25,7 +25,7 @@
         android:minHeight="52dp"
         />
 
-    <co.touchlab.researchstack.backbone.ui.views.PassCodeView
+    <org.researchstack.backbone.ui.views.PassCodeView
         android:id="@+id/pincode"
         android:layout_width="match_parent"
         android:layout_height="@dimen/rsb_item_size_default"
