@@ -15,6 +15,7 @@ import co.touchlab.researchstack.backbone.result.StepResult;
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.storage.database.AppDatabase;
 import co.touchlab.researchstack.backbone.storage.database.StepRecord;
+import co.touchlab.researchstack.backbone.storage.database.TaskNotification;
 import co.touchlab.researchstack.backbone.storage.database.TaskRecord;
 import co.touchlab.researchstack.backbone.utils.FormatHelper;
 import co.touchlab.squeaky.dao.Dao;
@@ -59,9 +60,10 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
 
         try
         {
-            TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase), TaskRecord.class);
-
-            TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase), StepRecord.class);
+            TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase),
+                    TaskRecord.class,
+                    StepRecord.class,
+                    TaskNotification.class);
         }
         catch(SQLException e)
         {
@@ -74,9 +76,11 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
     {
         try
         {
-            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase), true, TaskRecord.class);
-
-            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase), true, StepRecord.class);
+            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase),
+                    true,
+                    TaskRecord.class,
+                    StepRecord.class,
+                    TaskNotification.class);
         }
         catch(SQLException e)
         {
@@ -209,8 +213,58 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
     }
 
     @Override
+    public <D extends Dao<T>, T> D getDao(Class<T> clazz)
+    {
+        return super.getDao(clazz);
+    }
+
+    @Override
     public void setEncryptionKey(String key)
     {
         passphraseProvider.setPassphrase(key);
+    }
+
+    @Override
+    public List<TaskNotification> loadTaskNotifications()
+    {
+        LogExt.d(getClass(), "loadTaskNotifications()");
+        try
+        {
+            return getDao(TaskNotification.class).queryForAll().list();
+        }
+        catch(SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void saveTaskNotification(TaskNotification notification)
+    {
+        LogExt.d(getClass(), "saveTaskNotification() : " + notification.taskId);
+
+        try
+        {
+            getDao(TaskNotification.class).createOrUpdate(notification);
+        }
+        catch(SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteTaskNotification(int taskNotificationId)
+    {
+        LogExt.d(getClass(), "deleteTaskNotification() : " + taskNotificationId);
+
+        try
+        {
+            getDao(TaskNotification.class).deleteById(taskNotificationId);
+        }
+        catch(SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -7,6 +7,7 @@ import co.touchlab.researchstack.backbone.storage.database.AppDatabase;
 import co.touchlab.researchstack.backbone.storage.file.EncryptionProvider;
 import co.touchlab.researchstack.backbone.storage.file.FileAccess;
 import co.touchlab.researchstack.backbone.storage.file.auth.PinCodeConfig;
+import co.touchlab.researchstack.skin.notification.NotificationConfig;
 
 public abstract class ResearchStack
 {
@@ -44,6 +45,8 @@ public abstract class ResearchStack
                         concreteResearchStack.createAppDatabaseImplementation(context));
 
         TaskProvider.init(concreteResearchStack.createTaskProviderImplementation(context));
+
+        NotificationConfig.init(concreteResearchStack.createNotificationConfigImplementation(context));
     }
 
     protected abstract AppDatabase createAppDatabaseImplementation(Context context);
@@ -61,5 +64,7 @@ public abstract class ResearchStack
     protected abstract DataProvider createDataProviderImplementation(Context context);
 
     protected abstract TaskProvider createTaskProviderImplementation(Context context);
+
+    protected abstract NotificationConfig createNotificationConfigImplementation(Context context);
 
 }

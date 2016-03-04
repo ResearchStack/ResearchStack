@@ -15,6 +15,8 @@ import co.touchlab.researchstack.skin.ResearchStack;
 import co.touchlab.researchstack.skin.ResourceManager;
 import co.touchlab.researchstack.skin.TaskProvider;
 import co.touchlab.researchstack.skin.UiManager;
+import co.touchlab.researchstack.skin.notification.NotificationConfig;
+import co.touchlab.researchstack.skin.notification.SimpleNotificationConfig;
 
 public class SampleResearchStack extends ResearchStack
 {
@@ -66,6 +68,12 @@ public class SampleResearchStack extends ResearchStack
     protected TaskProvider createTaskProviderImplementation(Context context)
     {
         return new SampleTaskProvider(context);
+    }
+
+    @Override
+    protected NotificationConfig createNotificationConfigImplementation(Context context)
+    {
+        return new SimpleNotificationConfig();
     }
 
 }

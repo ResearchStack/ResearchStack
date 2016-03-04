@@ -2,6 +2,7 @@ package co.touchlab.researchstack.skin;
 import java.util.List;
 
 import co.touchlab.researchstack.backbone.step.Step;
+import co.touchlab.researchstack.skin.notification.TaskNotificationReceiver;
 
 public abstract class UiManager
 {
@@ -38,4 +39,8 @@ public abstract class UiManager
         return false;
     }
 
+    public Class<?> getTaskNotificationReceiver()
+    {
+        return TaskNotificationReceiver.class;
+    }
 }

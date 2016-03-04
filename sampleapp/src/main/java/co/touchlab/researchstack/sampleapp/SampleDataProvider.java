@@ -1,6 +1,8 @@
 package co.touchlab.researchstack.sampleapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -18,6 +20,7 @@ import co.touchlab.researchstack.backbone.helpers.LogExt;
 import co.touchlab.researchstack.backbone.result.StepResult;
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.storage.database.AppDatabase;
+import co.touchlab.researchstack.backbone.storage.database.TaskNotification;
 import co.touchlab.researchstack.backbone.storage.file.FileAccessException;
 import co.touchlab.researchstack.backbone.utils.FormatHelper;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
@@ -31,11 +34,13 @@ import co.touchlab.researchstack.sampleapp.network.body.SignInBody;
 import co.touchlab.researchstack.sampleapp.network.body.SignUpBody;
 import co.touchlab.researchstack.sampleapp.network.body.SurveyAnswer;
 import co.touchlab.researchstack.sampleapp.network.body.SurveyResponse;
+import co.touchlab.researchstack.skin.AppPrefs;
 import co.touchlab.researchstack.skin.DataProvider;
 import co.touchlab.researchstack.skin.DataResponse;
 import co.touchlab.researchstack.skin.model.SchedulesAndTasksModel;
 import co.touchlab.researchstack.skin.model.TaskModel;
 import co.touchlab.researchstack.skin.model.User;
+import co.touchlab.researchstack.skin.notification.TaskAlertReceiver;
 import co.touchlab.researchstack.skin.schedule.ScheduleHelper;
 import co.touchlab.researchstack.skin.task.SmartSurveyTask;
 import co.touchlab.researchstack.skin.ui.layout.SignInStepLayout;
@@ -476,10 +481,28 @@ public class SampleDataProvider extends DataProvider
     @Override
     public void uploadTaskResult(Context context, TaskResult taskResult)
     {
+        // Add to database
         StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
 
-        // TODO use UploadResult queue for this? (upload encrypted)
+        // Update/Create TaskNotificationService
+        if (AppPrefs.getInstance(context).isTaskReminderEnabled())
+        {
+            Log.i("SampleDataProvider", "uploadTaskResult() _ isTaskReminderEnabled() = true");
 
+            String [] args = findTaskArgs(context, taskResult.getIdentifier());
+
+            Log.i("SampleDataProvider", "uploadTaskResult() _ args: " + args[0] + " " + args[1]);
+
+            // If chronoTime is null then either the task is not repeating OR its not found within
+            // the task_and_schedules.xml
+            if (args[1] != null)
+            {
+                scheduleReminderNotification(context, args[0], taskResult.getEndDate(), args[1]);
+            }
+        }
+
+        // Upload using the world-wide-web
+        // TODO use UploadResult queue for this? (upload encrypted)
         TaskModel taskModel = loadedTasks.get(taskResult.getIdentifier());
         List<TaskModel.StepModel> elements = taskModel.elements;
         Map<String, TaskModel.StepModel> stepModels = new HashMap<>(elements.size());
@@ -524,6 +547,48 @@ public class SampleDataProvider extends DataProvider
                             LogExt.e(getClass(), "Error uploading survey");
                             error.printStackTrace();
                         });
+    }
+
+    // TODO this stinks, I should be able to query the DB and find the chrono time.
+    private String [] findTaskArgs(Context context, String identifier)
+    {
+        SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(context,
+                SchedulesAndTasksModel.class,
+                "tasks_and_schedules");
+
+        for(SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)
+        {
+            for(SchedulesAndTasksModel.TaskModel task : schedule.tasks)
+            {
+                // TODO loading the task json here is bad, but the GUID is in the schedule
+                // TODO json but the id is in the task json
+                TaskModel taskModel = JsonUtils.loadClass(context, TaskModel.class,
+                        task.taskFileName);
+
+                if (taskModel.identifier.equals(identifier))
+                {
+                    return new String [] {task.taskID, schedule.scheduleString};
+                }
+            }
+        }
+        return null;
+    }
+
+    private void scheduleReminderNotification(Context context, String taskId, Date endDate, String chronoTime)
+    {
+        Log.i("SampleDataProvider", "scheduleReminderNotification() " + taskId);
+
+        // Save TaskNotification to DB
+        TaskNotification notification = new TaskNotification();
+        notification.taskId = taskId;
+        notification.endDate = endDate;
+        notification.chronoTime = chronoTime;
+        StorageAccess.getInstance().getAppDatabase().saveTaskNotification(notification);
+
+        // Add notification to Alarm Manager
+        Intent intent = new Intent(TaskAlertReceiver.ALERT_CREATE);
+        intent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION, notification);
+        context.sendBroadcast(intent);
     }
 
     @Override

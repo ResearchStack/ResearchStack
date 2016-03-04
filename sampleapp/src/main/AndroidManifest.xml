@@ -2,6 +2,7 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".SampleApplication"
@@ -25,6 +26,7 @@
             android:name="co.touchlab.researchstack.skin.ui.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/SampleTheme.NoActionBar">
         </activity>
 
@@ -76,6 +78,33 @@
             android:name="co.touchlab.researchstack.skin.ui.ViewLicensesActivity"
             android:label="@string/app_name"
             />
+
+        <receiver
+            android:name="co.touchlab.researchstack.skin.notification.TaskNotificationReceiver"
+            android:enabled="true"
+            />
+
+        <receiver
+            android:name="co.touchlab.researchstack.skin.notification.DeviceBootReceiver"
+            android:enabled="true"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="co.touchlab.researchstack.skin.notification.TaskAlertReceiver"
+            android:enabled="true"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="co.touchlab.researchstack.skin.notification.ALERT_DELETE"/>
+                <action android:name="co.touchlab.researchstack.skin.notification.ALERT_CREATE"/>
+                <action android:name="co.touchlab.researchstack.skin.notification.ALERT_CREATE_ALL"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

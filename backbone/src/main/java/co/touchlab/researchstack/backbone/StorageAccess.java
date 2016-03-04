@@ -65,6 +65,12 @@ public class StorageAccess implements DataAccess, AuthDataAccess
         return appDatabase;
     }
 
+    public EncryptionProvider getEncryptionProvider()
+    {
+        // TODO throw new AuthAccessException(); if not ready?
+        return encryptionProvider;
+    }
+
     public void init(PinCodeConfig pinCodeConfig, EncryptionProvider encryptionProvider, FileAccess fileAccess, AppDatabase appDatabase)
     {
         this.pinCodeConfig = pinCodeConfig;
