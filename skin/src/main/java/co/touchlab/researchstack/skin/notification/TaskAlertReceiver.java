@@ -10,10 +10,9 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-import co.touchlab.researchstack.backbone.StorageAccess;
 import co.touchlab.researchstack.backbone.helpers.LogExt;
 import co.touchlab.researchstack.backbone.storage.database.TaskNotification;
-import co.touchlab.researchstack.backbone.storage.database.TaskRecord;
+import co.touchlab.researchstack.backbone.storage.database.sqlite.NotificationHelper;
 import co.touchlab.researchstack.backbone.utils.FormatHelper;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
 import co.touchlab.researchstack.skin.UiManager;
@@ -48,8 +47,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
 
                     if(taskNotificationId != - 1)
                     {
-                        StorageAccess.getInstance()
-                                .getAppDatabase()
+                        NotificationHelper.getInstance(context)
                                 .deleteTaskNotification(taskNotificationId);
                         LogExt.d(TaskAlertReceiver.class,
                                 "TaskNotification[id." + taskNotificationId + "] Deleted");
@@ -71,8 +69,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
             case ALERT_CREATE_ALL:
                 //TODO this can be better with Rx, learn how (flatMap)
                 Observable.create(subscriber -> {
-                    subscriber.onNext(StorageAccess.getInstance()
-                            .getAppDatabase()
+                    subscriber.onNext(NotificationHelper.getInstance(context)
                             .loadTaskNotifications());
                 })
                         .compose(ObservableUtils.applyDefault())
@@ -99,7 +96,6 @@ public class TaskAlertReceiver extends BroadcastReceiver
         Intent taskNotificationIntent = new Intent(context,
                 UiManager.getInstance().getTaskNotificationReceiver());
         taskNotificationIntent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, notification.id);
-        taskNotificationIntent.putExtra(TaskRecord.TASK_ID, notification.taskId);
 
         // Remove pending intent if one already exists
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
@@ -109,7 +105,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
         alarmManager.cancel(pendingIntent);
 
         // Generate the time the intent will fire
-        Date nextExecuteTime = ScheduleHelper.nextSchedule(notification.chronoTime,
+        Date nextExecuteTime = ScheduleHelper.nextSchedule(notification.chronTime,
                 notification.endDate);
 
         // Add Alarm

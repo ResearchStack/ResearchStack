@@ -16,9 +16,4 @@ public interface AppDatabase
 
     void setEncryptionKey(String key);
 
-    List<TaskNotification> loadTaskNotifications();
-
-    void saveTaskNotification(TaskNotification notification);
-
-    void deleteTaskNotification(int taskNotificationId);
 }
