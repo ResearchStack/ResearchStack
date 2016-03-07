@@ -21,12 +21,12 @@
 
         <activity
             android:name="org.researchstack.backbone.ui.ViewTaskActivity"
-            />
+        />
 
         <activity
             android:name="org.researchstack.backbone.ui.ViewWebDocumentActivity"
             android:label="@string/app_name"
-            />
+        />
 
     </application>
 
