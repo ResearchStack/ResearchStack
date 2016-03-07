@@ -11,7 +11,6 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.database.AppDatabase;
 import org.researchstack.backbone.storage.database.StepRecord;
-import org.researchstack.backbone.storage.database.TaskNotification;
 import org.researchstack.backbone.storage.database.TaskRecord;
 import org.researchstack.backbone.utils.FormatHelper;
 
