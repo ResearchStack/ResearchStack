@@ -5,4 +5,11 @@
         <item name="preferenceTextColor">?attr/colorAccent</item>
     </style>
 
+    <style name="StudyOverviewTabStyle">
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabBackground">?attr/colorPrimary</item>
+        <item name="tabTextColor">#6FFF</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+    </style>
+
 </resources>

@@ -53,10 +53,12 @@ h1 {
     padding: 0 10px 15px 15px;
 }
 
-IMG.displayed {
+img {
     display: block;
-    margin-left: auto;
-    margin-right: auto
+    padding: 0;
+    margin: 0 auto;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 bold {
