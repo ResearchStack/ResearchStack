@@ -24,15 +24,13 @@ public class SampleUiManager extends UiManager
     {
         List<ActionItem> navItems = new ArrayList<>();
 
-        navItems.add(new ActionItem.ActionItemBuilder()
-                .setId(R.id.nav_activities)
+        navItems.add(new ActionItem.ActionItemBuilder().setId(R.id.nav_activities)
                 .setTitle(R.string.rss_activities)
                 .setIcon(R.drawable.ic_tab_activities)
                 .setClass(ActivitiesFragment.class)
                 .build());
 
-        navItems.add(new ActionItem.ActionItemBuilder()
-                .setId(R.id.nav_dashboard)
+        navItems.add(new ActionItem.ActionItemBuilder().setId(R.id.nav_dashboard)
                 .setTitle(R.string.rss_dashboard)
                 .setIcon(R.drawable.ic_tab_dashboard)
                 .setClass(DashboardFragment.class)
@@ -51,15 +49,13 @@ public class SampleUiManager extends UiManager
     {
         List<ActionItem> navItems = new ArrayList<>();
 
-        navItems.add(new ActionItem.ActionItemBuilder()
-                .setId(R.id.nav_learn)
+        navItems.add(new ActionItem.ActionItemBuilder().setId(R.id.nav_learn)
                 .setTitle(R.string.rss_learn)
                 .setIcon(R.drawable.ic_action_info)
                 .setClass(LearnActivity.class)
                 .build());
 
-        navItems.add(new ActionItem.ActionItemBuilder()
-                .setId(R.id.nav_settings)
+        navItems.add(new ActionItem.ActionItemBuilder().setId(R.id.nav_settings)
                 .setTitle(R.string.rss_settings)
                 .setIcon(R.drawable.ic_action_settings)
                 .setClass(SampleSettingsActivity.class)
@@ -80,7 +76,10 @@ public class SampleUiManager extends UiManager
     public Step getInclusionCriteriaStep()
     {
         Choice<Boolean> human = new Choice<>("Yes, I am a human.", true, null);
-        Choice<Boolean> robot = new Choice<>("No, I am a robot but I am sentient and concerned about my health.", true, null);
+        Choice<Boolean> robot = new Choice<>(
+                "No, I am a robot but I am sentient and concerned about my health.",
+                true,
+                null);
         Choice<Boolean> alien = new Choice<>("No, I’m an alien.", false, null);
 
         QuestionStep step = new QuestionStep(OnboardingTask.SignUpInclusionCriteriaStepIdentifier);

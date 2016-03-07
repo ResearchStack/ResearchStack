@@ -4,20 +4,20 @@
               android:layout_height="match_parent"
               android:gravity="center"
               android:orientation="vertical"
-    >
+>
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Are you a human?"
-        />
+    />
 
     <RadioGroup
         android:id="@+id/human_radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        >
+    >
 
         <android.support.v7.widget.AppCompatRadioButton
             android:id="@+id/human_radio_yes"
@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="@string/yes"
-            />
+        />
 
         <android.support.v7.widget.AppCompatRadioButton
             android:id="@+id/human_radio_no"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/no"
-            />
+        />
     </RadioGroup>
 
 </LinearLayout>

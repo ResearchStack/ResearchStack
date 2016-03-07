@@ -162,7 +162,6 @@ public class SampleDataProvider extends DataProvider
     }
 
     /**
-     *
      * @param context
      * @return true if we are consented
      */
@@ -199,7 +198,7 @@ public class SampleDataProvider extends DataProvider
         // TODO Saving email to user object should exist elsewhere.
         // Save email to user object.
         User user = loadUser(context);
-        if (user == null)
+        if(user == null)
         {
             user = new User();
         }
@@ -293,7 +292,7 @@ public class SampleDataProvider extends DataProvider
 
         // TODO init here isnt great. Refactor and create saveUser method.
         User user = loadUser(context);
-        if (user == null)
+        if(user == null)
         {
             user = new User();
         }
@@ -357,8 +356,9 @@ public class SampleDataProvider extends DataProvider
                         LogExt.d(getClass(), "Response: " + response.code() + ", message: " +
                                 response.message());
 
-                        StorageAccess.getInstance().getFileAccess().clearData(context,
-                                TEMP_CONSENT_JSON_FILE_NAME);
+                        StorageAccess.getInstance()
+                                .getFileAccess()
+                                .clearData(context, TEMP_CONSENT_JSON_FILE_NAME);
                     }
                     else
                     {
@@ -402,7 +402,8 @@ public class SampleDataProvider extends DataProvider
 
     private void writeJsonString(Context context, String userSessionJson, String userSessionPath)
     {
-        StorageAccess.getInstance().getFileAccess()
+        StorageAccess.getInstance()
+                .getFileAccess()
                 .writeData(context, userSessionPath, userSessionJson.getBytes());
     }
 
@@ -486,7 +487,7 @@ public class SampleDataProvider extends DataProvider
         StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
 
         // Update/Create TaskNotificationService
-        if (AppPrefs.getInstance(context).isTaskReminderEnabled())
+        if(AppPrefs.getInstance(context).isTaskReminderEnabled())
         {
             Log.i("SampleDataProvider", "uploadTaskResult() _ isTaskReminderEnabled() = true");
 
@@ -494,7 +495,7 @@ public class SampleDataProvider extends DataProvider
 
             // If chronTime is null then either the task is not repeating OR its not found within
             // the task_and_schedules.xml
-            if (chronTime != null)
+            if(chronTime != null)
             {
                 scheduleReminderNotification(context, taskResult.getEndDate(), chronTime);
             }
@@ -561,10 +562,11 @@ public class SampleDataProvider extends DataProvider
             {
                 // TODO loading the task json here is bad, but the GUID is in the schedule
                 // TODO json but the id is in the task json
-                TaskModel taskModel = JsonUtils.loadClass(context, TaskModel.class,
+                TaskModel taskModel = JsonUtils.loadClass(context,
+                        TaskModel.class,
                         task.taskFileName);
 
-                if (taskModel.identifier.equals(identifier))
+                if(taskModel.identifier.equals(identifier))
                 {
                     return schedule.scheduleString;
                 }
