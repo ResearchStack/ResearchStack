@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
+>
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/title"
@@ -23,7 +23,7 @@
         android:paddingRight="10dp"
         android:paddingBottom="4dp"
         tools:text="TEXT"
-        />
+    />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/icon"
@@ -33,7 +33,7 @@
         android:layout_centerInParent="true"
         android:tint="@android:color/white"
         tools:src="@drawable/ic_action_profile"
-        />
+    />
 
     <!-- TODO point to cusotm attr for tab indicator color-->
     <android.support.v7.widget.AppCompatImageView
@@ -45,6 +45,6 @@
         android:adjustViewBounds="true"
         android:tint="@color/rsb_error"
         android:src="@drawable/ic_circle_8dp"
-        />
+    />
 
 </RelativeLayout>

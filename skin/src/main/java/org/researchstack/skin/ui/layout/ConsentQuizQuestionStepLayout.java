@@ -28,7 +28,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
 {
     private ConsentQuizQuestionStep step;
     private StepResult<Boolean>     result;
-    private StepCallbacks callbacks;
+    private StepCallbacks           callbacks;
 
     private TextView    resultSummary;
     private TextView    resultTitle;
@@ -111,9 +111,8 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                 radioTrue.setEnabled(false);
 
                 // Set the drawable of the current checked button, with correct color tint
-                Drawable drawable = ViewUtils.getDrawable(getContext(), answerCorrect
-                        ? R.drawable.ic_check
-                        : R.drawable.ic_window_close);
+                Drawable drawable = ViewUtils.getDrawable(getContext(),
+                        answerCorrect ? R.drawable.ic_check : R.drawable.ic_window_close);
                 drawable = DrawableCompat.wrap(drawable);
                 DrawableCompat.setTint(drawable, resultTextColor);
                 RadioButton checkedRadioButton = (RadioButton) radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
@@ -128,8 +127,8 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                 // that will only push the text, not button-drawable. To solve this issue, we have a
                 // view that is floating behind out RadioGroup and position and height is set
                 // dynamically
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)
-                        radioItemBackground.getLayoutParams();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) radioItemBackground
+                        .getLayoutParams();
                 params.addRule(ALIGN_TOP, radioTrue.isChecked() ? R.id.rdio_group : 0);
                 params.addRule(ALIGN_BOTTOM, radioTrue.isChecked() ? 0 : R.id.rdio_group);
                 params.height = checkedRadioButton.getHeight();

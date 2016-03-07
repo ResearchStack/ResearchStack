@@ -17,7 +17,7 @@
     android:layout_width="16dp"
     android:layout_height="16dp"
     android:layout_gravity="center_vertical"
-    >
+>
 
     <ImageView
         android:id="@+id/inactive"
@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:scaleType="centerInside"
         android:src="@drawable/ic_pageindicator_default_dark"
-        />
+    />
 
     <ImageView
         android:id="@+id/active"
@@ -36,6 +36,6 @@
         android:scaleX="0.5"
         android:scaleY="0.5"
         android:src="@drawable/ic_pageindicator_current_dark"
-        />
+    />
 
 </org.researchstack.skin.ui.views.PageIndicatorMarker>

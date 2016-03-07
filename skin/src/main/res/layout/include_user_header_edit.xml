@@ -7,7 +7,7 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     tools:showIn="@layout/item_general_info"
-    >
+>
 
     <ImageView
         android:id="@+id/profile_image"
@@ -15,28 +15,28 @@
         android:layout_height="100dp"
         android:padding="12dp"
         android:src="@mipmap/ic_launcher"
-        />
+    />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        >
+    >
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/rsb_name"
-            />
+        />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/rsb_email"
-            />
+        />
 
     </LinearLayout>
 </LinearLayout>

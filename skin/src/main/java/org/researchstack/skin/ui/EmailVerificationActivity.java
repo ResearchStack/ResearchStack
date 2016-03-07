@@ -89,11 +89,11 @@ public class EmailVerificationActivity extends PinCodeActivity
         int accentColor = getResources().getColor(R.color.rsb_colorAccent);
         String accentColorString = "#" + Integer.toHexString(Color.red(accentColor)) +
                 Integer.toHexString(Color.green(accentColor)) +
-                Integer.toHexString(Color.blue(accentColor)) ;
+                Integer.toHexString(Color.blue(accentColor));
         String formattedSummary = getString(R.string.rss_confirm_summary,
                 "<font color=\"" + accentColorString + "\">" + email + "</font>");
-        ((AppCompatTextView) findViewById(R.id.email_verification_body))
-                .setText(Html.fromHtml(formattedSummary));
+        ((AppCompatTextView) findViewById(R.id.email_verification_body)).setText(Html.fromHtml(
+                formattedSummary));
     }
 
     @Override

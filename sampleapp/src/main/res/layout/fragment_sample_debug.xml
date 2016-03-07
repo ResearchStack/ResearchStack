@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="64dp"
-    >
+>
 
     <Button
         android:id="@+id/debug_form_task"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Form Task"
-        />
+    />
 
     <Button
         android:id="@+id/debug_form_task_initial"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Initial Task"
-        />
+    />
 
 
 </LinearLayout>

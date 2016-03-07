@@ -34,7 +34,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     public static final String KEY_SIGNATURE_DATE = "ConsentSignatureStep.Signature.Date";
 
     private SignatureView      signatureView;
-    private StepCallbacks callbacks;
+    private StepCallbacks      callbacks;
     private Step               step;
     private StepResult<String> result;
 

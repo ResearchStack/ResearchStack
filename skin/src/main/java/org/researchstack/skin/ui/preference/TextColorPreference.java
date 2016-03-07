@@ -11,8 +11,8 @@ import org.researchstack.skin.R;
 
 public class TextColorPreference extends Preference
 {
-    private  TextView titleView;
-    private int color;
+    private TextView titleView;
+    private int      color;
 
     public TextColorPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
@@ -62,7 +62,7 @@ public class TextColorPreference extends Preference
     {
         this.color = color;
 
-        if (titleView != null)
+        if(titleView != null)
         {
             titleView.setTextColor(color);
         }

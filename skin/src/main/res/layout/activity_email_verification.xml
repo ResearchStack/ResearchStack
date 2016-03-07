@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+>
 
     <TextView
         android:id="@+id/title"
@@ -17,7 +17,7 @@
         android:textSize="20sp"
         android:textColor="?attr/colorAccent"
         android:text="@string/rss_confirm_title"
-        />
+    />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/email_verification_body"
@@ -29,7 +29,7 @@
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
         tools:text="@string/lorem_medium"
-        />
+    />
 
     <android.support.v7.widget.AppCompatTextView
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
@@ -45,7 +45,7 @@
         android:layout_marginRight="@dimen/rsb_margin_left"
         android:gravity="left|center_vertical"
         android:text="@string/rss_confirm_diff"
-        />
+    />
 
 
     <org.researchstack.backbone.ui.views.SubmitBar
@@ -61,88 +61,88 @@
         android:visibility="gone"
         tools:visibility="gone"
         layout="@layout/progress"
-        />
+    />
 
 </RelativeLayout>
 
-<!--
+    <!--
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent" android:layout_height="match_parent"
-    >
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:tools="http://schemas.android.com/tools"
+                 android:layout_width="match_parent" android:layout_height="match_parent"
+        >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/study_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            tools:src="@mipmap/ic_launcher"/>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/email_verification_body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:text="App Name has sent you a verification email at email@example.com"/>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/email_verification_wrong_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/rss_wrong_email"/>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/email_verification_once_verified"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/rss_once_verified"/>
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/continue_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rss_continue"/>
-
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/rsb_black"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/study_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                tools:src="@mipmap/ic_launcher"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/email_verification_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="App Name has sent you a verification email at email@example.com"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/email_verification_wrong_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/rss_wrong_email"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/email_verification_once_verified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/rss_once_verified"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/continue_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rss_continue"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/rsb_black"
+                />
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/email_verification_consent_agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="A full copy of the consent agreement..."/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/email_verification_resend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/rss_resend_email"/>
+
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/progress"
+            android:visibility="gone"
+            tools:visibility="gone"
+            layout="@layout/progress"
             />
-
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/email_verification_consent_agreement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:text="A full copy of the consent agreement..."/>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/email_verification_resend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/rss_resend_email"/>
-
-
-    </LinearLayout>
-
-    <include
-        android:id="@+id/progress"
-        android:visibility="gone"
-        tools:visibility="gone"
-        layout="@layout/progress"
-        />
-</FrameLayout>
-    -->
+    </FrameLayout>
+        -->

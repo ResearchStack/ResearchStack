@@ -155,7 +155,9 @@
 
     <string name="rss_confirm">Confirm</string>
     <string name="rss_confirm_title">Check your email</string>
-    <string name="rss_confirm_summary">We’ve emailed %1$s with a link to confirm your account. After visiting the link, come back and touch “continue” below.</string>
+    <string name="rss_confirm_summary">We’ve emailed %1$s with a link to confirm your account. After
+        visiting the link, come back and touch “continue” below.
+    </string>
     <string name="rss_confirm_diff">ENTER A DIFFERENT EMAIL</string>
     <string name="rss_confirm_resend_email">Resend</string>
 

@@ -25,17 +25,17 @@ public class SignUpBody
     /**
      * An array of roles to assign to this user (admins only)
      */
-    private String [] roles;
+    private String[] roles;
 
     /**
      * An array of data group tags to assign to this user. Client applications can set this up
      * during sign up, it's not required to be an admin to add these.
      */
-    private String [] dataGroups;
+    private String[] dataGroups;
 
     private String type = "SignUp";
 
-    public SignUpBody(String study, String email, String username, String password, String [] roles, String [] dataGroups)
+    public SignUpBody(String study, String email, String username, String password, String[] roles, String[] dataGroups)
     {
         this.study = study;
         this.email = email;

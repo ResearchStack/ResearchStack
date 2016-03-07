@@ -4,13 +4,13 @@
               android:layout_height="match_parent"
               android:gravity="center_horizontal"
               android:orientation="vertical"
-    >
+>
 
     <ImageView
         android:id="@+id/priming_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+    />
 
     <TextView
         android:id="@+id/priming_title"
@@ -19,13 +19,13 @@
         android:text="@string/rsb_what_to_expect"
         android:textSize="22sp"
         android:textStyle="bold"
-        />
+    />
 
     <TextView
         android:id="@+id/priming_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lorem_medium"
-        />
+    />
 
 </LinearLayout>

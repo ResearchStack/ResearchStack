@@ -38,6 +38,7 @@ public class PinCodeLayout extends RelativeLayout
         super(context, attrs);
         init();
     }
+
     public PinCodeLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);

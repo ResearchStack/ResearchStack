@@ -53,7 +53,6 @@ public class StudyVideoLayout extends ScrollView
         builder.append("<p>" + data.getDetails() + "</p>");
 
 
-
         titleView.setText(data.getTitle());
         subtitleView.setText(data.getDetails());
         videoButton.setOnClickListener(v -> {

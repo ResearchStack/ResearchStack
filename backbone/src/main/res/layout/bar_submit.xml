@@ -7,13 +7,13 @@
     android:minHeight="56dp"
     android:gravity="center_vertical"
     android:background="?attr/submitBackground"
-    >
+>
 
     <Space
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        />
+    />
 
     <android.support.v7.widget.AppCompatTextView
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/rsb_submit_bar_negative"
         tools:text="EXIT"
-        />
+    />
 
     <android.support.v7.widget.AppCompatTextView
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
@@ -30,6 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Submit"
-        />
+    />
 
 </LinearLayout>

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-import org.researchstack.backbone.storage.database.TaskRecord;
 import org.researchstack.skin.ui.MainActivity;
 
 

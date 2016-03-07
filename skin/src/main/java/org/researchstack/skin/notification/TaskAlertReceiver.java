@@ -110,9 +110,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
                 notification.endDate);
 
         // Add Alarm
-        alarmManager.set(AlarmManager.RTC,
-                nextExecuteTime.getTime(),
-                pendingIntent);
+        alarmManager.set(AlarmManager.RTC, nextExecuteTime.getTime(), pendingIntent);
 
         DateFormat format = FormatHelper.getFormat(DateFormat.LONG, DateFormat.LONG);
         LogExt.i(getClass(), "Alarm " + notification.id + " Created. It will execute on or near " +

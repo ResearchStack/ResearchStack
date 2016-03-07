@@ -18,7 +18,7 @@ import org.researchstack.skin.R;
 
 public class IconTab extends RelativeLayout implements View.OnLongClickListener
 {
-    private TextView title;
+    private TextView  title;
     private ImageView icon;
     private ImageView indicator;
 
@@ -73,19 +73,23 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener
 
     private void adjustSelectedView()
     {
-        indicator.animate().setStartDelay(0).alpha(0).withEndAction(()->{
+        indicator.animate().setStartDelay(0).alpha(0).withEndAction(() -> {
             adjustIndicatorPosition();
             indicator.animate().setStartDelay(200).alpha(1);
         });
 
-        icon.animate().alpha(isSelected() ? 1 : 0)
+        icon.animate()
+                .alpha(isSelected() ? 1 : 0)
                 .scaleX(isSelected() ? 1 : 0)
                 .scaleY(isSelected() ? 1 : 0)
                 .setDuration(150)
-                .setInterpolator(isSelected() ? new OvershootInterpolator() : new AccelerateInterpolator())
+                .setInterpolator(isSelected()
+                        ? new OvershootInterpolator()
+                        : new AccelerateInterpolator())
                 .setStartDelay(isSelected() ? 150 : 0);
 
-        title.animate().alpha(isSelected() ? 0 : 1)
+        title.animate()
+                .alpha(isSelected() ? 0 : 1)
                 .setDuration(150)
                 .setStartDelay(isSelected() ? 0 : 150);
     }
@@ -115,8 +119,9 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener
     }
 
     @Override
-    public boolean onLongClick(View v) {
-        if (isSelected())
+    public boolean onLongClick(View v)
+    {
+        if(isSelected())
         {
             final int[] screenPos = new int[2];
             getLocationOnScreen(screenPos);

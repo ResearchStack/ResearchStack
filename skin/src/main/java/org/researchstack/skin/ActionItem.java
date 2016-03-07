@@ -6,17 +6,17 @@ public class ActionItem
     /**
      * TODO Description
      */
-    private int   id;
+    private int id;
 
     /**
      * TODO Description
      */
-    private int   title;
+    private int title;
 
     /**
      * TODO Description
      */
-    private int   icon;
+    private int icon;
 
     /**
      * TODO Description
@@ -26,12 +26,12 @@ public class ActionItem
     /**
      * TODO Description
      */
-    private int   groupId;
+    private int groupId;
 
     /**
      * TODO Description
      */
-    private int   order;
+    private int order;
 
     /**
      * TODO Description
@@ -93,7 +93,7 @@ public class ActionItem
         private Class clazz;
         private int   groupId;
         private int   order;
-        private int   action = MenuItem.SHOW_AS_ACTION_IF_ROOM;
+        private int action = MenuItem.SHOW_AS_ACTION_IF_ROOM;
 
         public ActionItem build()
         {

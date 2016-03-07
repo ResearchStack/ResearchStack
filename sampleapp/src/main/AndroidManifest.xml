@@ -33,30 +33,30 @@
         <activity
             android:name="org.researchstack.backbone.ui.ViewTaskActivity"
             android:label="@string/rss_app_name"
-            />
+        />
 
         <activity
             android:name="org.researchstack.skin.ui.SignUpTaskActivity"
             android:label="@string/rss_app_name"
-            />
+        />
 
         <activity
             android:name="org.researchstack.skin.ui.EmailVerificationActivity"
             android:label="@string/rss_confirm"
-            />
+        />
 
         <activity
             android:name="org.researchstack.skin.ui.OnboardingActivity"
             android:label="@string/rss_app_name"
             android:theme="@style/SampleTheme.Onboarding"
-            />
+        />
 
         <activity
             android:name="org.researchstack.skin.ui.ViewVideoActivity"
             android:theme="@style/SampleTheme.Video"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
             android:label="@string/rss_app_name"
-            />
+        />
 
         <activity
             android:name="org.researchstack.sampleapp.SampleSettingsActivity"
@@ -71,7 +71,7 @@
         <activity
             android:name="org.researchstack.backbone.ui.ViewWebDocumentActivity"
             android:label="@string/rss_app_name"
-            />
+        />
 
         <activity android:name="org.researchstack.skin.ui.ViewFragmentActivity"
                   android:theme="@style/SampleTheme.NoActionBar"/>
@@ -80,18 +80,18 @@
             android:name="org.researchstack.skin.ui.SoftwareNoticesActivity"
             android:theme="@style/SampleTheme.NoActionBar"
             android:label="@string/software_notice"
-            />
+        />
 
         <receiver
             android:name="org.researchstack.skin.notification.TaskNotificationReceiver"
             android:enabled="true"
-            />
+        />
 
         <receiver
             android:name="org.researchstack.skin.notification.DeviceBootReceiver"
             android:enabled="true"
             android:exported="false"
-            >
+        >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
@@ -101,7 +101,7 @@
             android:name="org.researchstack.skin.notification.TaskAlertReceiver"
             android:enabled="true"
             android:exported="false"
-            >
+        >
             <intent-filter>
                 <action android:name="org.researchstack.skin.notification.ALERT_DELETE"/>
                 <action android:name="org.researchstack.skin.notification.ALERT_CREATE"/>

@@ -7,7 +7,7 @@ public class ConsentVisualStep extends Step
     private ConsentSection section;
 
     @Deprecated //TODO ViewTaskActivity should be handling this
-    private String         nextButtonString;
+    private String nextButtonString;
 
     public ConsentVisualStep(String identifier)
     {

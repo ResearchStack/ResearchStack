@@ -75,30 +75,30 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     // Security
     public static final String KEY_AUTO_LOCK_ENABLED = "rss_settings_auto_lock_on_exit";
     public static final String KEY_AUTO_LOCK_TIME    = "rss_settings_auto_lock_time";
-    public static final String KEY_CHANGE_PASSCODE = "rss_settings_security_change_passcode";
+    public static final String KEY_CHANGE_PASSCODE   = "rss_settings_security_change_passcode";
     // General
-    public static final String KEY_GENERAL = "rss_settings_general";
+    public static final String KEY_GENERAL           = "rss_settings_general";
     public static final String KEY_SOFTWARE_NOTICES  = "rss_settings_general_software_notices";
-    public static final String KEY_LEAVE_STUDY = "rss_settings_general_leave_study";
-    public static final String KEY_JOIN_STUDY = "rss_settings_general_join_study";
+    public static final String KEY_LEAVE_STUDY       = "rss_settings_general_leave_study";
+    public static final String KEY_JOIN_STUDY        = "rss_settings_general_join_study";
     // Other
-    public static final String KEY_VERSION = "rss_settings_version";
+    public static final String KEY_VERSION           = "rss_settings_version";
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Preference Items
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private PreferenceCategory profileCategory;
     private PreferenceCategory privacyCategory;
-    private Preference sharingScope;
+    private Preference         sharingScope;
     private PreferenceCategory generalCategory;
-    private Preference leaveStudy;
-    private Preference joinStudy;
+    private Preference         leaveStudy;
+    private Preference         joinStudy;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Field Vars
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private ConsentSectionModel data;
-    private View progress;
+    private View                progress;
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s)
@@ -126,8 +126,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     private void initPreferenceForConsent()
     {
-        boolean isSignedInAndConsented =
-                DataProvider.getInstance().isSignedIn(getActivity()) &&
+        boolean isSignedInAndConsented = DataProvider.getInstance().isSignedIn(getActivity()) &&
                 DataProvider.getInstance().isConsented(getActivity());
 
         PreferenceScreen screen = getPreferenceScreen();
@@ -141,7 +140,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             // This method will be called if we leave the study. This means we need to add
             // "join study" back into the general-category as it was removed on the initial call of
             // this method
-            if (generalCategory.findPreference(KEY_JOIN_STUDY) == null)
+            if(generalCategory.findPreference(KEY_JOIN_STUDY) == null)
             {
                 generalCategory.addPreference(joinStudy);
             }
@@ -160,7 +159,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 try
                 {
                     // The incoming date is formated in "yyyy-MM-dd", clean it up to "MMM dd, yyyy"
-                    Date birthdate =FormatHelper.SIMPLE_FORMAT_DATE.parse(profile.getBirthDate());
+                    Date birthdate = FormatHelper.SIMPLE_FORMAT_DATE.parse(profile.getBirthDate());
                     DateFormat format = FormatHelper.getFormat(DateFormat.LONG, FormatHelper.NONE);
                     birthdatePref.setSummary(format.format(birthdate));
                 }
@@ -177,7 +176,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                         ConsentSectionModel.class,
                         ResourceManager.getInstance().getConsentSections());
                 subscriber.onNext(data);
-            }).compose(ObservableUtils.applyDefault()).map(o -> (ConsentSectionModel) o).subscribe(data -> {
+            })
+                    .compose(ObservableUtils.applyDefault())
+                    .map(o -> (ConsentSectionModel) o)
+                    .subscribe(data -> {
                         this.data = data;
 
                         // Load and set sharing scope
@@ -291,7 +293,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                                 }
                                 else
                                 {
-                                    Toast.makeText(getActivity(), R.string.rss_consent_withdraw_failed,
+                                    Toast.makeText(getActivity(),
+                                            R.string.rss_consent_withdraw_failed,
                                             Toast.LENGTH_SHORT).show();
                                 }
 
@@ -315,7 +318,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == REQUEST_CODE_SHARING_OPTIONS && resultCode == Activity.RESULT_OK)
+        if(requestCode == REQUEST_CODE_SHARING_OPTIONS && resultCode == Activity.RESULT_OK)
         {
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String result = (String) taskResult.getStepResult(ConsentTask.ID_SHARING).getResult();
@@ -327,7 +330,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 DataProvider.getInstance().setUserSharingScope(getContext(), result);
             }).compose(ObservableUtils.applyDefault()).subscribe();
         }
-        else if (requestCode == REQUEST_CODE_CHANGE_PASSCODE && resultCode == Activity.RESULT_OK)
+        else if(requestCode == REQUEST_CODE_CHANGE_PASSCODE && resultCode == Activity.RESULT_OK)
         {
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
 
@@ -345,7 +348,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 Toast.makeText(getActivity(), "Passcode Changed", Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             }, e -> {
-                Toast.makeText(getActivity(), "Changing Passcode Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Changing Passcode Failed", Toast.LENGTH_SHORT)
+                        .show();
                 progress.setVisibility(View.GONE);
             });
         }
@@ -370,23 +374,21 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     public String formatSharingOption(String option)
     {
-        if (option.equals("sponsors_and_partners"))
+        if(option.equals("sponsors_and_partners"))
         {
             String investigatorLongDesc = data.getDocumentProperties()
                     .getInvestigatorLongDescription();
 
-            return getString(R.string.rsb_consent_share_widely,
-                    investigatorLongDesc);
+            return getString(R.string.rsb_consent_share_widely, investigatorLongDesc);
         }
-        else if (option.equals("all_qualified_researchers"))
+        else if(option.equals("all_qualified_researchers"))
         {
             String investigatorShortDesc = data.getDocumentProperties()
                     .getInvestigatorShortDescription();
 
-            return getString(R.string.rsb_consent_share_only,
-                    investigatorShortDesc);
+            return getString(R.string.rsb_consent_share_only, investigatorShortDesc);
         }
-        else if (option.equals("no_sharing"))
+        else if(option.equals("no_sharing"))
         {
             return getString(R.string.rsb_consent_share_no);
         }

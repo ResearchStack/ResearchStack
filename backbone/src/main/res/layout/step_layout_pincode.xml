@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools"
-    >
+>
 
     <TextView
         android:id="@+id/title"
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/rsb_pincode_enter_title"
-        />
+    />
 
     <TextView
         android:id="@+id/text"
@@ -23,7 +23,7 @@
         android:text="@string/rsb_pincode_enter_summary"
         android:textColorLink="?attr/colorAccent"
         android:minHeight="52dp"
-        />
+    />
 
     <org.researchstack.backbone.ui.views.PassCodeView
         android:id="@+id/pincode"
@@ -42,6 +42,6 @@
         android:visibility="gone"
         tools:visibility="gone"
         layout="@layout/progress"
-        />
+    />
 
 </RelativeLayout>

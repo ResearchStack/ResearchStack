@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
+>
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        />
+    />
 
     <org.researchstack.backbone.ui.views.SubmitBar
         android:id="@+id/submit_bar"
@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         app:positiveActionTitle="@string/rsb_agree"
         app:negativeActionTitle="@string/rsb_disagree"
-        />
+    />
 
 </LinearLayout>

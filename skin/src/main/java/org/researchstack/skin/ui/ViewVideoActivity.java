@@ -45,7 +45,7 @@ public class ViewVideoActivity extends AppCompatActivity
     protected void onPause()
     {
         super.onPause();
-        if (videoView.isPlaying())
+        if(videoView.isPlaying())
         {
             videoView.pause();
         }

@@ -88,7 +88,7 @@ public class OnboardingActivity extends PinCodeActivity
     public void onSkipClicked(View view)
     {
         boolean hasPasscode = StorageAccess.getInstance().hasPinCode(this);
-        if(!hasPasscode)
+        if(! hasPasscode)
         {
             PassCodeCreationStep step = new PassCodeCreationStep(OnboardingTask.SignUpPassCodeCreationStepIdentifier,
                     R.string.rss_passcode);

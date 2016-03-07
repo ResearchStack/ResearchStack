@@ -22,7 +22,7 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
     private ActivityCallback permissionCallback;
     private Step             step;
     private StepResult       result;
-    private StepCallbacks callbacks;
+    private StepCallbacks    callbacks;
 
     public SignUpEligibleStepLayout(Context context)
     {

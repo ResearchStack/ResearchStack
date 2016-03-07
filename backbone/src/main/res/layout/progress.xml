@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/rsb_white_60"
     android:clickable="true"
-    >
+>
 
     <ProgressBar
         android:layout_width="wrap_content"

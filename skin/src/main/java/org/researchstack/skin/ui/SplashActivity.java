@@ -42,7 +42,8 @@ public class SplashActivity extends PinCodeActivity
         });
 
 
-        DataProvider.getInstance().initialize(this)
+        DataProvider.getInstance()
+                .initialize(this)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(response -> {
 

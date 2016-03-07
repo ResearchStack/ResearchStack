@@ -145,51 +145,52 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
                 {
                     @Override
                     public boolean onPreDraw()
-            {
-                int stepLayoutHeight = SurveyStepLayout.this.getHeight();
-                int contentHeight = container.getHeight();
-
-                // Make sure we have layout and height to measure
-                if(stepLayoutHeight == 0 || contentHeight == 0)
-                {
-                    return true;
-                }
-
-                boolean proceedToDraw = true;
-
-                // If our content does not take up the entire height of the screen, increase height
-                // of the filler space
-                if(contentHeight < stepLayoutHeight)
-                {
-                    filler.getLayoutParams().height = stepLayoutHeight - contentHeight;
-                    filler.requestLayout();
-
-                    proceedToDraw = false;
-                }
-
-                // If our content exceeds the height of the screen, adjust filler. If adjustment is
-                // less than minHeight of filler, proceed to draw.
-                else if(contentHeight > stepLayoutHeight)
-                {
-                    int contentBleedHeight = contentHeight - stepLayoutHeight;
-
-                    if(filler.getHeight() > 0)
                     {
-                        int newFillerHeight = filler.getHeight() - contentBleedHeight;
-                        filler.getLayoutParams().height = newFillerHeight > 0 ? newFillerHeight : 0;
-                        filler.requestLayout();
+                        int stepLayoutHeight = SurveyStepLayout.this.getHeight();
+                        int contentHeight = container.getHeight();
 
-                        proceedToDraw = false;
+                        // Make sure we have layout and height to measure
+                        if(stepLayoutHeight == 0 || contentHeight == 0)
+                        {
+                            return true;
+                        }
+
+                        boolean proceedToDraw = true;
+
+                        // If our content does not take up the entire height of the screen, increase height
+                        // of the filler space
+                        if(contentHeight < stepLayoutHeight)
+                        {
+                            filler.getLayoutParams().height = stepLayoutHeight - contentHeight;
+                            filler.requestLayout();
+
+                            proceedToDraw = false;
+                        }
+
+                        // If our content exceeds the height of the screen, adjust filler. If adjustment is
+                        // less than minHeight of filler, proceed to draw.
+                        else if(contentHeight > stepLayoutHeight)
+                        {
+                            int contentBleedHeight = contentHeight - stepLayoutHeight;
+
+                            if(filler.getHeight() > 0)
+                            {
+                                int newFillerHeight = filler.getHeight() - contentBleedHeight;
+                                filler.getLayoutParams().height =
+                                        newFillerHeight > 0 ? newFillerHeight : 0;
+                                filler.requestLayout();
+
+                                proceedToDraw = false;
+                            }
+                        }
+
+                        //Only modify height once, ignore any future attempts to modify hierarchy ... for now
+                        container.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                        LogExt.i("SurveyStepLayout", "onPreDraw - Returning " + proceedToDraw);
+                        return proceedToDraw;
                     }
-                }
-
-                //Only modify height once, ignore any future attempts to modify hierarchy ... for now
-                container.getViewTreeObserver().removeOnPreDrawListener(this);
-
-                LogExt.i("SurveyStepLayout", "onPreDraw - Returning " + proceedToDraw);
-                return proceedToDraw;
-            }
-        });
+                });
 
         title = (TextView) findViewById(R.id.title);
         summary = (TextView) findViewById(R.id.text);

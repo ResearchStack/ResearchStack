@@ -5,4 +5,4 @@
               android:divider="@drawable/divider_empty_16dp"
               android:showDividers="middle"
               android:orientation="vertical"
-    />
+/>

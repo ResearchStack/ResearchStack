@@ -34,6 +34,7 @@ public class AppPrefs
 
     /**
      * If auto lock is disabled, default the time to a year.
+     *
      * @return time in milliseconds
      */
     public long getAutoLockTime()

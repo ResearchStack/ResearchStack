@@ -28,7 +28,7 @@
             android:defaultValue="true"/>
 
     </PreferenceCategory>
-    
+
     <PreferenceCategory
         android:key="rss_settings_privacy"
         android:title="@string/rss_settings_privacy">
