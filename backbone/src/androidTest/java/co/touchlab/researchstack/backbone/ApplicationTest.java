@@ -1,4 +1,4 @@
-package co.touchlab.researchstack.backbone;
+package org.researchstack.backbone;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

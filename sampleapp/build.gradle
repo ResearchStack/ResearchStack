@@ -7,7 +7,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "co.touchlab.researchstack.sampleapp"
+        applicationId "org.researchstack.sampleapp"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1

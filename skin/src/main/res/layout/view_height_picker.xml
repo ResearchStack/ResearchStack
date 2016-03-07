@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<co.touchlab.researchstack.skin.ui.views.HeightPicker
+<org.researchstack.skin.ui.views.HeightPicker
     android:id="@+id/height"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -39,4 +39,4 @@
         android:text="&quot;"
         />
 
-</co.touchlab.researchstack.skin.ui.views.HeightPicker>
+</org.researchstack.skin.ui.views.HeightPicker>

@@ -76,7 +76,7 @@
         android:title="@string/rss_settings_general"
         android:key="rss_settings_general">
 
-        <co.touchlab.researchstack.skin.ui.preference.TextColorPreference
+        <org.researchstack.skin.ui.preference.TextColorPreference
             android:key="rss_settings_general_join_study"
             android:order="0"
             android:title="@string/rss_settings_general_join_study"/>
@@ -86,7 +86,7 @@
             android:order="1"
             android:title="@string/rss_settings_general_software_notices"/>
 
-        <co.touchlab.researchstack.skin.ui.preference.TextColorPreference
+        <org.researchstack.skin.ui.preference.TextColorPreference
             android:key="rss_settings_general_leave_study"
             android:title="@string/rss_settings_general_leave_study"
             android:order="2"
