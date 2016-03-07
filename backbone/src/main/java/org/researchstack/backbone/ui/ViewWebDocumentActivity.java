@@ -38,7 +38,7 @@ public class ViewWebDocumentActivity extends PinCodeActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         String title = getIntent().getStringExtra(KEY_TITLE);
-        if (!TextUtils.isEmpty(title))
+        if(! TextUtils.isEmpty(title))
         {
             actionBar.setTitle(title);
         }

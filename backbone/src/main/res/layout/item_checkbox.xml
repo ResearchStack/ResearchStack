@@ -8,4 +8,4 @@
     android:minHeight="@dimen/rsb_item_size_default"
     android:padding="8dp"
     tools:text="@string/lorem_name"
-    />
+/>

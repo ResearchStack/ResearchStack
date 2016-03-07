@@ -249,7 +249,7 @@ public class SignatureView extends View
                 lastX = point.x;
                 lastY = point.y;
             }
-            else if (i < size - 1)
+            else if(i < size - 1)
             {
                 sigPath.quadTo(lastX, lastY, (point.x + lastX) / 2, (point.y + lastY) / 2);
                 lastX = point.x;

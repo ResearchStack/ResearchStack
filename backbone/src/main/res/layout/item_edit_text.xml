@@ -12,4 +12,4 @@
     android:textColor="?android:attr/textColorPrimary"
     android:singleLine="true"
     tools:text="Value"
-    />
+/>

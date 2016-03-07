@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+>
 
     <ImageView
         android:id="@+id/image"
@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:scaleType="centerInside"
         tools:src="@drawable/debug_gray"
-        />
+    />
 
     <TextView
         android:id="@+id/title"
@@ -28,7 +28,7 @@
         android:textColor="?attr/colorAccent"
 
         tools:text="@string/lorem_name"
-        />
+    />
 
     <TextView
         android:id="@+id/summary"
@@ -40,7 +40,7 @@
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
         tools:text="@string/lorem_medium"
-        />
+    />
 
     <TextView
         android:id="@+id/more_info"
@@ -57,7 +57,7 @@
         android:textColor="?attr/colorAccent"
 
         tools:text="More Info"
-        />
+    />
 
     <org.researchstack.backbone.ui.views.SubmitBar
         android:id="@+id/submit_bar"

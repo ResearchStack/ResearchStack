@@ -28,7 +28,7 @@ import org.researchstack.backbone.utils.ResUtils;
 public class ConsentVisualStepLayout extends RelativeLayout implements StepLayout
 {
 
-    private StepCallbacks callbacks;
+    private StepCallbacks     callbacks;
     private ConsentVisualStep step;
 
     public ConsentVisualStepLayout(Context context)
@@ -119,9 +119,9 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
         // Set more info
         TextView moreInfoView = (TextView) findViewById(R.id.more_info);
 
-        if (!TextUtils.isEmpty(data.getHtmlContent()))
+        if(! TextUtils.isEmpty(data.getHtmlContent()))
         {
-            if (!TextUtils.isEmpty(data.getCustomLearnMoreButtonTitle()))
+            if(! TextUtils.isEmpty(data.getCustomLearnMoreButtonTitle()))
             {
                 moreInfoView.setText(data.getCustomLearnMoreButtonTitle());
             }

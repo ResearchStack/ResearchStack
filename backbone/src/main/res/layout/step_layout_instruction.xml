@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+>
 
     <TextView
         android:id="@+id/title"
@@ -18,7 +18,7 @@
         android:textColor="?attr/colorAccent"
 
         tools:text="@string/lorem_name"
-        />
+    />
 
     <TextView
         android:id="@+id/summary"
@@ -30,7 +30,7 @@
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
         tools:text="@string/lorem_medium"
-        />
+    />
 
     <org.researchstack.backbone.ui.views.SubmitBar
         android:id="@+id/submit_bar"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    >
+>
 
     <TextView
         android:id="@+id/label"
@@ -16,7 +16,7 @@
         android:textColor="?attr/colorAccent"
         android:textSize="16sp"
         tools:text="title"
-        />
+    />
 
     <TextView
         style="?android:attr/editTextStyle"
@@ -28,6 +28,6 @@
         android:textColor="?android:attr/textColorPrimary"
         android:singleLine="true"
         tools:text="Value"
-        />
+    />
 
 </LinearLayout>

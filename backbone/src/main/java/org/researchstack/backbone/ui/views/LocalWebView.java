@@ -19,6 +19,7 @@ public class LocalWebView extends WebView
 
         void onTitleLoaded(String title);
     }
+
     // First arg is document name (without file extension)
     // Second arg is document title
     private static final String SCHEMA_LOCAL_HTML = "file:///android_res/raw/";
@@ -71,7 +72,8 @@ public class LocalWebView extends WebView
             }
         });
 
-        setWebChromeClient(new WebChromeClient(){
+        setWebChromeClient(new WebChromeClient()
+        {
             @Override
             public void onReceivedTitle(WebView view, String title)
             {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+>
 
     <TextView
         android:id="@+id/title"
@@ -20,7 +20,7 @@
         android:textColor="?attr/colorAccent"
 
         tools:text="@string/lorem_name"
-        />
+    />
 
     <TextView
         android:id="@+id/summary"
@@ -32,7 +32,7 @@
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
         tools:text="@string/lorem_medium"
-        />
+    />
 
     <org.researchstack.backbone.ui.views.SignatureView
         android:id="@+id/layout_consent_review_signature"
@@ -46,7 +46,7 @@
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
         app:signatureColor="?attr/colorAccent"
-        />
+    />
 
     <org.researchstack.backbone.ui.views.SubmitBar
         android:id="@+id/submit_bar"
@@ -66,7 +66,7 @@
         android:layout_alignParentStart="true"
         android:text="@string/rsb_consent_signature_clear"
         android:layout_alignTop="@+id/submit_bar"
-        />
+    />
 
 </RelativeLayout>
 

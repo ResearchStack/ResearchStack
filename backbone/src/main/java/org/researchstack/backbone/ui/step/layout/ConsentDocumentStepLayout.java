@@ -98,10 +98,12 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     {
         new AlertDialog.Builder(getContext()).setTitle(R.string.rsb_consent_review_alert_title)
                 .setMessage(confirmationDialogBody)
-                .setCancelable(false).setPositiveButton(R.string.rsb_agree, (dialog, which) -> {
+                .setCancelable(false)
+                .setPositiveButton(R.string.rsb_agree, (dialog, which) -> {
                     stepResult.setResult(true);
                     callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
-                }).setNegativeButton(R.string.rsb_consent_review_cancel, (dialog, which) -> {
+                })
+                .setNegativeButton(R.string.rsb_consent_review_cancel, (dialog, which) -> {
                     // Gives them a chance to read it again
                 })
                 .show();

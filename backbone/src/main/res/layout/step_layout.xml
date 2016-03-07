@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+>
 
     <LinearLayout
         android:id="@+id/content_container"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:orientation="vertical"
-        >
+    >
 
         <TextView
             style="@style/Backbone.Survey.Title"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="@string/lorem_name"
-            />
+        />
 
         <TextView
             style="@style/Backbone.Survey.Summary"
@@ -31,26 +31,26 @@
             android:textColorLink="?attr/colorAccent"
             tools:visibility="visible"
             tools:text="@string/lorem_long"
-            />
+        />
 
         <Space
             android:id="@+id/step_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+        />
 
         <Space
             android:id="@+id/filler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+        />
 
         <org.researchstack.backbone.ui.views.SubmitBar
             android:id="@+id/submit_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            />
+        />
 
     </LinearLayout>
 

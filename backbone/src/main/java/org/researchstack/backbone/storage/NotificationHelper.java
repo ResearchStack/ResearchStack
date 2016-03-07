@@ -53,7 +53,9 @@ public class NotificationHelper extends SqueakyOpenHelper
     {
         try
         {
-            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase), true, TaskNotification.class);
+            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase),
+                    true,
+                    TaskNotification.class);
         }
         catch(SQLException e)
         {
