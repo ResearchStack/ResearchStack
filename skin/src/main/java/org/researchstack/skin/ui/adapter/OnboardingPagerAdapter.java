@@ -96,7 +96,8 @@ public class OnboardingPagerAdapter extends PagerAdapter
             simpleView.setText(Html.fromHtml(builder.toString()));
             simpleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.video_icon);
             simpleView.setOnClickListener(v -> {
-                Intent intent = ViewVideoActivity.newIntent(container.getContext(), item.getVideoName());
+                Intent intent = ViewVideoActivity.newIntent(container.getContext(),
+                        item.getVideoName());
                 container.getContext().startActivity(intent);
             });
 

@@ -134,9 +134,7 @@ public class InitialTask extends OrderedTask
 
         // Set items on FormStep
         medicalInfoForm.setOptional(true);
-        medicalInfoForm.setFormSteps(robotStep,
-                autoImmuneStep,
-                immunocompromisedStep);
+        medicalInfoForm.setFormSteps(robotStep, autoImmuneStep, immunocompromisedStep);
 
         // Add to Task
         addStep(medicalInfoForm);

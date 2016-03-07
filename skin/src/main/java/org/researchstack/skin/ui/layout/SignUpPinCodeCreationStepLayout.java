@@ -57,7 +57,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
         this.step = (PassCodeCreationStep) step;
         this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
 
-        if (this.step.getStateOrdinal() != -1)
+        if(this.step.getStateOrdinal() != - 1)
         {
             this.state = State.values()[this.step.getStateOrdinal()];
         }

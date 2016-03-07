@@ -89,7 +89,7 @@ public class MainActivity extends PinCodeActivity
     {
         if(requestCode == REQUEST_CODE_INITIAL_TASK)
         {
-            if (resultCode == RESULT_OK)
+            if(resultCode == RESULT_OK)
             {
                 TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
                 StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
@@ -135,7 +135,7 @@ public class MainActivity extends PinCodeActivity
         super.onDataReady();
 
         // Check if we need to run initial Task
-        if (! failedToFinishInitialTask)
+        if(! failedToFinishInitialTask)
         {
             Observable.create(subscriber -> {
                 UiThreadContext.assertBackgroundThread();
@@ -154,12 +154,11 @@ public class MainActivity extends PinCodeActivity
                 }
             });
         }
-        
-        if (pagerAdapter == null)
+
+        if(pagerAdapter == null)
         {
             List<ActionItem> items = UiManager.getInstance().getMainTabBarItems();
-            pagerAdapter = new MainPagerAdapter(
-                    getSupportFragmentManager(), items);
+            pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), items);
             ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
             viewPager.setAdapter(pagerAdapter);
 
@@ -173,9 +172,15 @@ public class MainActivity extends PinCodeActivity
                     viewPager.setCurrentItem(index);
                 }
 
-                @Override public void onTabUnselected(TabLayout.Tab tab) { }
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab)
+                {
+                }
 
-                @Override public void onTabReselected(TabLayout.Tab tab) { }
+                @Override
+                public void onTabReselected(TabLayout.Tab tab)
+                {
+                }
             });
 
             for(ActionItem item : items)
@@ -184,7 +189,7 @@ public class MainActivity extends PinCodeActivity
                 IconTab iconTab = new IconTab(this);
                 iconTab.setText(item.getTitle());
                 iconTab.setIcon(item.getIcon());
-//                TODO Properly set indicator visibility
+                //                TODO Properly set indicator visibility
                 iconTab.setIsIndicatorShow(items.indexOf(item) == 0);
                 iconTab.setOnClickListener(v -> tabItem.select());
                 tabItem.setCustomView(iconTab);
@@ -200,7 +205,7 @@ public class MainActivity extends PinCodeActivity
     {
         super.onDataFailed();
         //TODO Show dialog explaing what went wrong, instead of finishing activity.
-        
+
         Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
         finish();
     }

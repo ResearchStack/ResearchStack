@@ -21,7 +21,7 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
 
     private ConsentQuizEvaluationStep step;
     private StepResult<Boolean>       result;
-    private StepCallbacks callbacks;
+    private StepCallbacks             callbacks;
 
     public ConsentQuizEvaluationStepLayout(Context context)
     {

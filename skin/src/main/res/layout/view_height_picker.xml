@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    >
+>
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/height_feet"
@@ -16,13 +16,13 @@
         android:imeOptions="actionNext"
         android:inputType="number"
         android:nextFocusForward="@+id/height_inches"
-        />
+    />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="&apos;"
-        />
+    />
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/height_inches"
@@ -31,12 +31,12 @@
         android:layout_weight="1"
         android:gravity="right"
         android:inputType="number"
-        />
+    />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="&quot;"
-        />
+    />
 
 </org.researchstack.skin.ui.views.HeightPicker>

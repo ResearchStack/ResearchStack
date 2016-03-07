@@ -22,7 +22,7 @@ public class SettingsActivity extends PinCodeActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        if (savedInstanceState == null)
+        if(savedInstanceState == null)
         {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new SettingsFragment())

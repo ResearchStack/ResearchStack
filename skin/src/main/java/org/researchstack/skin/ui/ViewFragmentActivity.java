@@ -44,7 +44,7 @@ public class ViewFragmentActivity extends PinCodeActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        if (savedInstanceState == null)
+        if(savedInstanceState == null)
         {
             // Add Fragment
             String fragmentClass = getIntent().getStringExtra(KEY_FRAG_CLASS);

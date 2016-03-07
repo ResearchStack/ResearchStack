@@ -58,7 +58,7 @@ public class StudyLandingLayout extends ScrollView
         logoView.setImageResource(ResourceManager.getInstance().getLargeLogoDiseaseIcon());
 
         titleView.setText(data.getTitle());
-        if (! TextUtils.isEmpty(data.getDetails()))
+        if(! TextUtils.isEmpty(data.getDetails()))
         {
             subtitleView.setText(data.getDetails());
         }

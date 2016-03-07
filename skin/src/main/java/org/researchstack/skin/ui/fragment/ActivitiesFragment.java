@@ -100,9 +100,11 @@ public class ActivitiesFragment extends Fragment
 
                     subscription = adapter.getPublishSubject().subscribe(task -> {
 
-                        SmartSurveyTask newTask = DataProvider.getInstance().loadTask(getContext(), task);
+                        SmartSurveyTask newTask = DataProvider.getInstance()
+                                .loadTask(getContext(), task);
 
-                        startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask), REQUEST_TASK);
+                        startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask),
+                                REQUEST_TASK);
                     });
                 });
     }
@@ -128,7 +130,7 @@ public class ActivitiesFragment extends Fragment
     public static class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>
     {
         List<SchedulesAndTasksModel.TaskModel> tasks;
-        HashMap<String, Boolean> taskScheduleType;
+        HashMap<String, Boolean>               taskScheduleType;
 
         PublishSubject<SchedulesAndTasksModel.TaskModel> publishSubject = PublishSubject.create();
 
@@ -145,7 +147,7 @@ public class ActivitiesFragment extends Fragment
                 for(SchedulesAndTasksModel.TaskModel task : schedule.tasks)
                 {
                     // TODO supporting tasks that define taskClassName instead of a file should be supported
-                    if (!TextUtils.isEmpty(task.taskFileName))
+                    if(! TextUtils.isEmpty(task.taskFileName))
                     {
                         taskScheduleType.put(task.taskID, schedule.scheduleType.equals("once"));
                         tasks.add(task);

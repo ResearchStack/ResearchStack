@@ -13,4 +13,4 @@
     android:paddingStart="50dp"
     android:paddingLeft="50dp"
     tools:text="Header"
-    />
+/>

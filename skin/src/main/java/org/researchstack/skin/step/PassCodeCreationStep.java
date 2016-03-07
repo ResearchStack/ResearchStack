@@ -5,7 +5,7 @@ import org.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
 public class PassCodeCreationStep extends Step
 {
 
-    public int stateOrdinal = -1;
+    public int stateOrdinal = - 1;
 
     public PassCodeCreationStep(String identifier, int title)
     {

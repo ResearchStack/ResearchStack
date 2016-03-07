@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    >
+>
 
     <TextView
         android:id="@+id/title"
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Credentials"
-        />
+    />
 
     <TableLayout
         android:id="@+id/credentials"
@@ -26,12 +26,12 @@
         android:layout_marginRight="@dimen/rsb_margin_right"
         android:layout_marginTop="@dimen/rsb_padding_wedge"
         android:stretchColumns="1"
-        >
+    >
 
         <TableRow
             android:gravity="center_vertical"
             android:minHeight="@dimen/rsb_item_size_default"
-            >
+        >
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="right"
                 android:text="@string/rss_username"
-                />
+            />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/username"
@@ -50,14 +50,14 @@
                 android:hint="@string/rss_study_registration_username_hint"
                 android:inputType="textEmailAddress"
                 android:textSize="14sp"
-                />
+            />
 
         </TableRow>
 
         <TableRow
             android:gravity="center_vertical"
             android:minHeight="@dimen/rsb_item_size_default"
-            >
+        >
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="right"
                 android:text="@string/rss_password"
-                />
+            />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/password"
@@ -78,7 +78,7 @@
                 android:hint="@string/rss_study_registration_password_hint"
                 android:inputType="textVisiblePassword"
                 android:textSize="14sp"
-                />
+            />
 
         </TableRow>
 
@@ -91,7 +91,7 @@
         android:layout_alignParentBottom="true"
         app:negativeActionTitle="@string/rsb_exit"
         app:positiveActionTitle="@string/rsb_submit"
-        />
+    />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/forgot_password"
@@ -104,13 +104,13 @@
         android:layout_alignTop="@+id/submit_bar"
         android:text="@string/rss_forgot_password"
         android:textColor="@color/rsb_submit_bar_negative"
-        />
+    />
 
     <include
         android:id="@+id/progress"
         layout="@layout/progress"
         android:visibility="gone"
         tools:visibility="gone"
-        />
+    />
 
 </RelativeLayout>

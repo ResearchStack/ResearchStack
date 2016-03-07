@@ -16,13 +16,13 @@ import org.researchstack.skin.ui.layout.SignUpStepLayout;
 
 public abstract class OnboardingTask extends Task
 {
-    public static final String SignUpInclusionCriteriaStepIdentifier    = "InclusionCriteria";
-    public static final String SignUpEligibleStepIdentifier             = "Eligible";
-    public static final String SignUpIneligibleStepIdentifier           = "Ineligible";
-    public static final String SignUpPassCodeCreationStepIdentifier     = "PassCodeCreation";
-    public static final String SignUpThankYouStepIdentifier             = "ThankYou";
-    public static final String SignInStepIdentifier                     = "SignIn";
-    public static final String SignUpStepIdentifier                     = "SignUp";
+    public static final String SignUpInclusionCriteriaStepIdentifier = "InclusionCriteria";
+    public static final String SignUpEligibleStepIdentifier          = "Eligible";
+    public static final String SignUpIneligibleStepIdentifier        = "Ineligible";
+    public static final String SignUpPassCodeCreationStepIdentifier  = "PassCodeCreation";
+    public static final String SignUpThankYouStepIdentifier          = "ThankYou";
+    public static final String SignInStepIdentifier                  = "SignIn";
+    public static final String SignUpStepIdentifier                  = "SignUp";
     //    public static final String SignUpGeneralInfoStepIdentifier        = "GeneralInfo";
     //    public static final String SignUpMedicalInfoStepIdentifier        = "MedicalInfo";
     //    public static final String SignUpCustomInfoStepIdentifier         = "CustomInfo";
@@ -143,7 +143,8 @@ public abstract class OnboardingTask extends Task
     {
         if(passcodeCreationStep == null)
         {
-            passcodeCreationStep = new PassCodeCreationStep(SignUpPassCodeCreationStepIdentifier, R.string.rss_passcode);
+            passcodeCreationStep = new PassCodeCreationStep(SignUpPassCodeCreationStepIdentifier,
+                    R.string.rss_passcode);
         }
         return passcodeCreationStep;
     }

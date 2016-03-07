@@ -33,7 +33,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     private TextView           forgotPassword;
     private Step               step;
     private StepResult<String> result;
-    private StepCallbacks callbacks;
+    private StepCallbacks      callbacks;
 
     public SignInStepLayout(Context context)
     {
@@ -139,12 +139,9 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
 
     private void handleError(String message, String username, String password)
     {
-        progress.animate()
-                .alpha(0)
-                .withEndAction(() -> progress.setVisibility(View.GONE));
+        progress.animate().alpha(0).withEndAction(() -> progress.setVisibility(View.GONE));
 
-        if(username.equals(DataProvider.getInstance()
-                .getUserEmail(getContext())))
+        if(username.equals(DataProvider.getInstance().getUserEmail(getContext())))
         {
             // Sign in returns 404 if they haven't verified email. If the email
             // matches the one they used to sign up, go to verification activity
@@ -159,8 +156,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
         // Convert errorBody to JSON-String, convert json-string to object
         // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
         // toast
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     public boolean isAnswerValid()
