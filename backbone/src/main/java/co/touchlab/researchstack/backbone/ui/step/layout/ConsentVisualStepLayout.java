@@ -2,7 +2,8 @@ package co.touchlab.researchstack.backbone.ui.step.layout;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -86,7 +87,6 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
         a.recycle();
 
         ImageView imageView = (ImageView) findViewById(R.id.image);
-        imageView.setColorFilter(accentColor, PorterDuff.Mode.ADD);
 
         String imageName = ! TextUtils.isEmpty(data.getCustomImageName())
                 ? data.getCustomImageName()
@@ -95,7 +95,10 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
         if(! TextUtils.isEmpty(imageName))
         {
             int imageResId = ResUtils.getDrawableResourceId(getContext(), imageName);
-            imageView.setImageResource(imageResId);
+            Drawable drawable = getResources().getDrawable(imageResId);
+            drawable = DrawableCompat.wrap(drawable);
+            DrawableCompat.setTint(drawable, accentColor);
+            imageView.setImageDrawable(drawable);
             imageView.setVisibility(View.VISIBLE);
         }
         else
