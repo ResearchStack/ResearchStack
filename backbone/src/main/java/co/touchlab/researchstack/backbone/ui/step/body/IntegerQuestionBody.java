@@ -127,44 +127,6 @@ public class IntegerQuestionBody implements StepBody
         InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(maxLength);
         InputFilter[] newFilters = ViewUtils.addFilter(editText.getFilters(), maxLengthFilter);
         editText.setFilters(newFilters);
-
-        // If we have a range, set a range filter
-        if(maxValue - minValue > 0)
-        {
-            InputFilter rangeFilter = (source, start, end, dest, dstart, dend) -> {
-
-                // If the source its empty, just continue, its probably a backspace
-                if(TextUtils.isEmpty(source.toString()))
-                {
-                    return source;
-                }
-
-                // If the dest is empty and the incoming char isn't a digit, let it pass. Its
-                // probably a negative sign
-                if(dest.length() == 0 && ! TextUtils.isDigitsOnly(source))
-                {
-                    return source;
-                }
-
-                // Append source to dest and check the range.
-                String valueStr = new StringBuilder(dest).append(source)
-                        .toString()
-                        .replaceAll("\\D", "");
-                int value = Integer.parseInt(valueStr);
-
-                if(value > maxValue || value < minValue)
-                {
-                    return "";
-                }
-                else
-                {
-                    return source;
-                }
-            };
-
-            newFilters = ViewUtils.addFilter(editText.getFilters(), rangeFilter);
-            editText.setFilters(newFilters);
-        }
     }
 
     @Override

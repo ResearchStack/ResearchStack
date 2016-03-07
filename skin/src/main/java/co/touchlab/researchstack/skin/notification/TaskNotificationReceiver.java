@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-import co.touchlab.researchstack.backbone.storage.database.TaskRecord;
 import co.touchlab.researchstack.skin.ui.MainActivity;
 
 
@@ -20,7 +19,6 @@ public class TaskNotificationReceiver extends BroadcastReceiver
         Log.i("TaskNotifReceiver", "onReceive()");
 
         int notificationId = intent.getIntExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, 0);
-        String taskId = intent.getStringExtra(TaskRecord.TASK_ID);
 
         // Create pending intent wrapper that will open MainActivity
         Intent activityIntent = new Intent(context, MainActivity.class);

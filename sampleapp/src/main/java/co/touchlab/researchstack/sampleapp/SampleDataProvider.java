@@ -21,6 +21,7 @@ import co.touchlab.researchstack.backbone.result.StepResult;
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.storage.database.AppDatabase;
 import co.touchlab.researchstack.backbone.storage.database.TaskNotification;
+import co.touchlab.researchstack.backbone.storage.database.sqlite.NotificationHelper;
 import co.touchlab.researchstack.backbone.storage.file.FileAccessException;
 import co.touchlab.researchstack.backbone.utils.FormatHelper;
 import co.touchlab.researchstack.backbone.utils.ObservableUtils;
@@ -489,15 +490,13 @@ public class SampleDataProvider extends DataProvider
         {
             Log.i("SampleDataProvider", "uploadTaskResult() _ isTaskReminderEnabled() = true");
 
-            String [] args = findTaskArgs(context, taskResult.getIdentifier());
+            String chronTime = findChronTime(context, taskResult.getIdentifier());
 
-            Log.i("SampleDataProvider", "uploadTaskResult() _ args: " + args[0] + " " + args[1]);
-
-            // If chronoTime is null then either the task is not repeating OR its not found within
+            // If chronTime is null then either the task is not repeating OR its not found within
             // the task_and_schedules.xml
-            if (args[1] != null)
+            if (chronTime != null)
             {
-                scheduleReminderNotification(context, args[0], taskResult.getEndDate(), args[1]);
+                scheduleReminderNotification(context, taskResult.getEndDate(), chronTime);
             }
         }
 
@@ -550,7 +549,7 @@ public class SampleDataProvider extends DataProvider
     }
 
     // TODO this stinks, I should be able to query the DB and find the chrono time.
-    private String [] findTaskArgs(Context context, String identifier)
+    private String findChronTime(Context context, String identifier)
     {
         SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(context,
                 SchedulesAndTasksModel.class,
@@ -567,23 +566,22 @@ public class SampleDataProvider extends DataProvider
 
                 if (taskModel.identifier.equals(identifier))
                 {
-                    return new String [] {task.taskID, schedule.scheduleString};
+                    return schedule.scheduleString;
                 }
             }
         }
         return null;
     }
 
-    private void scheduleReminderNotification(Context context, String taskId, Date endDate, String chronoTime)
+    private void scheduleReminderNotification(Context context, Date endDate, String chronTime)
     {
-        Log.i("SampleDataProvider", "scheduleReminderNotification() " + taskId);
+        Log.i("SampleDataProvider", "scheduleReminderNotification()");
 
         // Save TaskNotification to DB
         TaskNotification notification = new TaskNotification();
-        notification.taskId = taskId;
         notification.endDate = endDate;
-        notification.chronoTime = chronoTime;
-        StorageAccess.getInstance().getAppDatabase().saveTaskNotification(notification);
+        notification.chronTime = chronTime;
+        NotificationHelper.getInstance(context).saveTaskNotification(notification);
 
         // Add notification to Alarm Manager
         Intent intent = new Intent(TaskAlertReceiver.ALERT_CREATE);

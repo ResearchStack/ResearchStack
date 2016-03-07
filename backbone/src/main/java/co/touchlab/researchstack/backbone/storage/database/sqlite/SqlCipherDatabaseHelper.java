@@ -15,7 +15,6 @@ import co.touchlab.researchstack.backbone.result.StepResult;
 import co.touchlab.researchstack.backbone.result.TaskResult;
 import co.touchlab.researchstack.backbone.storage.database.AppDatabase;
 import co.touchlab.researchstack.backbone.storage.database.StepRecord;
-import co.touchlab.researchstack.backbone.storage.database.TaskNotification;
 import co.touchlab.researchstack.backbone.storage.database.TaskRecord;
 import co.touchlab.researchstack.backbone.utils.FormatHelper;
 import co.touchlab.squeaky.dao.Dao;
@@ -62,8 +61,7 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
         {
             TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase),
                     TaskRecord.class,
-                    StepRecord.class,
-                    TaskNotification.class);
+                    StepRecord.class);
         }
         catch(SQLException e)
         {
@@ -79,8 +77,7 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
             TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase),
                     true,
                     TaskRecord.class,
-                    StepRecord.class,
-                    TaskNotification.class);
+                    StepRecord.class);
         }
         catch(SQLException e)
         {
@@ -224,47 +221,4 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
         passphraseProvider.setPassphrase(key);
     }
 
-    @Override
-    public List<TaskNotification> loadTaskNotifications()
-    {
-        LogExt.d(getClass(), "loadTaskNotifications()");
-        try
-        {
-            return getDao(TaskNotification.class).queryForAll().list();
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void saveTaskNotification(TaskNotification notification)
-    {
-        LogExt.d(getClass(), "saveTaskNotification() : " + notification.taskId);
-
-        try
-        {
-            getDao(TaskNotification.class).createOrUpdate(notification);
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void deleteTaskNotification(int taskNotificationId)
-    {
-        LogExt.d(getClass(), "deleteTaskNotification() : " + taskNotificationId);
-
-        try
-        {
-            getDao(TaskNotification.class).deleteById(taskNotificationId);
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
 }

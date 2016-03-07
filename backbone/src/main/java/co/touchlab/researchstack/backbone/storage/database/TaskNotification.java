@@ -12,12 +12,9 @@ public class TaskNotification implements Serializable
     @DatabaseField(generatedId = true)
     public int id;
 
-    @DatabaseField(canBeNull = false, columnName = TaskRecord.TASK_ID)
-    public String taskId;
-
     @DatabaseField
     public Date endDate;
 
     @DatabaseField
-    public String chronoTime;
+    public String chronTime;
 }
