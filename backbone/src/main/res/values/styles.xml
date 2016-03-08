@@ -29,12 +29,13 @@
         <item name="android:paddingBottom">@dimen/rsb_padding_small</item>
     </style>
 
-    <style name="Widget.Backbone.IconTabLayout" parent="">
+    <style name="Widget.Backbone.IconTabLayout" parent="@style/Widget.Design.TabLayout">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:minHeight">56dp</item>
         <item name="tabIconColor">@android:color/white</item>
-        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabIconIndicatorColor">?attr/colorAccent</item>
         <item name="tabTextColor">@color/rsb_white_60</item>
+        <item name="tabIndicatorColor">@android:color/white</item>
     </style>
 
     <style name="Widget.Backbone.SubmitBar" parent="">

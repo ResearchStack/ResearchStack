@@ -11,9 +11,9 @@ import org.researchstack.backbone.R;
 
 public class IconTabLayout extends TabLayout
 {
-    private int tabIconColor = Color.WHITE;
-    private int tabIndicatorColor = Color.RED;
-    private int tabTextColor = Color.WHITE;
+    private int tabIconColor          = Color.WHITE;
+    private int tabIconIndicatorColor = Color.RED;
+    private int tabTextColor          = Color.WHITE;
 
     public IconTabLayout(Context context) {
         this(context, null);
@@ -39,8 +39,9 @@ public class IconTabLayout extends TabLayout
         setMinimumHeight(minHeight);
 
         tabIconColor =  a.getColor(R.styleable.IconTabLayout_tabIconColor, tabIconColor);
+        tabIconIndicatorColor =  a.getColor(R.styleable.IconTabLayout_tabIconIndicatorColor,
+                tabIconIndicatorColor);
         tabTextColor = a.getColor(R.styleable.IconTabLayout_tabTextColor, tabTextColor);
-        tabIndicatorColor =  a.getColor(R.styleable.IconTabLayout_tabIndicatorColor, tabIndicatorColor);
 
         a.recycle();
     }
@@ -54,7 +55,7 @@ public class IconTabLayout extends TabLayout
         iconTab.setIcon(icon);
         iconTab.setIconTint(tabIconColor);
         iconTab.setIsIndicatorShow(showIndicator);
-        iconTab.setIndicatorTint(tabIndicatorColor);
+        iconTab.setIndicatorTint(tabIconIndicatorColor);
         iconTab.setSelected(isSelected);
         iconTab.setOnClickListener(v -> tabItem.select());
         tabItem.setCustomView(iconTab);
