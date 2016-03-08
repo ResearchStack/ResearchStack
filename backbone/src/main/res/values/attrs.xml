@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
+    <declare-styleable name="Backbone">
+        <attr name="passcodeTheme" format="reference"/>
+        <attr name="toolbarTheme" format="reference"/>
+        <attr name="submitbarStyle" format="reference"/>
+        <attr name="icontablayoutStyle" format="reference"/>
+        <attr name="signatureviewStyle" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="IconTabLayout">
+        <attr name="android:background"/>
+        <attr name="android:minHeight"/>
+        <attr name="tabIconColor" format="color"/>
+        <attr name="tabIndicatorColor"/>
+        <attr name="tabTextColor"/>
+    </declare-styleable>
+
     <declare-styleable name="SubmitBar">
+        <attr name="android:background"/>
         <attr name="positiveActionTitle"
               format="string"/>
         <attr name="negativeActionTitle"
               format="string"/>
+        <attr name="positiveActionColor"
+              format="color"/>
+        <attr name="negativeActionColor"
+              format="color"/>
     </declare-styleable>
 
     <declare-styleable name="SignatureView">
         <attr name="signatureColor"
+              format="color"/>
+        <attr name="signaturePrintColor"
               format="color"/>
         <attr name="signatureStrokeSize"
               format="dimension"/>

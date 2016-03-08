@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:minHeight="56dp"
     android:gravity="center_vertical"
-    android:background="?attr/submitBackground"
 >
 
     <Space
@@ -20,7 +19,6 @@
         android:id="@+id/bar_submit_negative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/rsb_submit_bar_negative"
         tools:text="EXIT"
     />
 

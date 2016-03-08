@@ -36,7 +36,6 @@ import org.researchstack.skin.model.User;
 import org.researchstack.skin.step.PassCodeCreationStep;
 import org.researchstack.skin.task.ConsentTask;
 import org.researchstack.skin.ui.OnboardingActivity;
-import org.researchstack.skin.ui.SoftwareNoticesActivity;
 import org.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
 import org.researchstack.skin.utils.ConsentFormUtils;
 import org.researchstack.skin.utils.JsonUtils;
@@ -420,7 +419,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     public void showSoftwareNotices()
     {
-        Intent intent = SoftwareNoticesActivity.newIntent(getContext());
+        int resId = ResourceManager.getInstance().getSoftwareNotices();
+        String documentName = getResources().getResourceEntryName(resId);
+        Intent intent = ViewWebDocumentActivity.newIntent(getContext(),
+                getString(R.string.rss_settings_general_software_notices),
+                documentName);
         startActivity(intent);
     }
 }

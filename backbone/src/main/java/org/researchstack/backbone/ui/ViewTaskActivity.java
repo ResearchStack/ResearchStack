@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -48,6 +49,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         super.setResult(RESULT_CANCELED);
         super.setContentView(R.layout.activity_step_switcher);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         root = (StepSwitcher) findViewById(R.id.container);
 
         if(savedInstanceState == null)
@@ -61,12 +66,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
             task = (Task) savedInstanceState.getSerializable(EXTRA_TASK);
             taskResult = (TaskResult) savedInstanceState.getSerializable(EXTRA_TASK_RESULT);
             currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
-        }
-
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null)
-        {
-            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
