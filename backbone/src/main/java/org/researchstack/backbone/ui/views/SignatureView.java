@@ -54,6 +54,7 @@ public class SignatureView extends View
     private int    guidelineHeight;
     private int    hintTextColor;
     private int    guidelineColor;
+    private int    sigPrintColor;
 
     public SignatureView(Context context)
     {
@@ -83,11 +84,14 @@ public class SignatureView extends View
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.SignatureView,
                 defStyleAttr,
-                R.style.ConsentReviewSignatureView);
+                R.style.Widget_Backbone_SignatureView);
 
         int signatureColor = a.getColor(R.styleable.SignatureView_signatureColor, Color.BLACK);
 
+        sigPrintColor = a.getColor(R.styleable.SignatureView_signaturePrintColor, Color.BLACK);
+
         int defSignatureStroke = (int) (getResources().getDisplayMetrics().density * 1);
+
         int signatureStroke = a.getDimensionPixelSize(R.styleable.SignatureView_signatureStrokeSize,
                 defSignatureStroke);
 
@@ -297,7 +301,7 @@ public class SignatureView extends View
     {
 
         Paint bitmapSigPaint = new Paint(sigPaint);
-        bitmapSigPaint.setColor(Color.BLACK);
+        bitmapSigPaint.setColor(sigPrintColor);
 
         RectF sigBounds = new RectF();
         sigPath.computeBounds(sigBounds, true);
