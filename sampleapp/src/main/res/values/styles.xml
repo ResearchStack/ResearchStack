@@ -9,10 +9,18 @@
 
     <style name="Widget.Sample.SubmitBar" parent="@style/Widget.Backbone.SubmitBar"/>
 
-    <style name="Widget.Sample.Light.ActionBar.Solid" parent="@style/Widget.AppCompat.Toolbar">
+    <style name="Base.Widget.Sample.Toolbar" parent="@style/Widget.AppCompat.Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:minHeight">56dp</item>
         <item name="titleTextAppearance">@style/TextAppearance.Widget.Sample.Toolbar.Title</item>
+    </style>
+
+    <style name="Widget.Sample.Toolbar" parent="@style/Base.Widget.Sample.Toolbar">
+        <item name="android:foreground">?android:windowContentOverlay</item>
+    </style>
+
+    <style name="Widget.Sample.Toolbar.Transparent" parent="@style/Base.Widget.Sample.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.Sample.Toolbar.Title.Transparent</item>
     </style>
 
     <style name="Widget.Sample.ActionButton.Overflow"
@@ -29,6 +37,10 @@
            parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Widget.Sample.Toolbar.Title.Transparent">
+        <item name="android:textColor">@color/rsb_warm_gray</item>
     </style>
 
 </resources>

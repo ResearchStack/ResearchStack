@@ -24,25 +24,12 @@
 
         <activity
             android:name="org.researchstack.skin.ui.MainActivity"
+            android:theme="@style/Theme.Sample.Main"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
 
-        <activity
-            android:name="org.researchstack.backbone.ui.ViewTaskActivity"
-            android:label="@string/app_name"
-        />
-
-        <activity
-            android:name="org.researchstack.skin.ui.SignUpTaskActivity"
-            android:label="@string/app_name"
-        />
-
-        <activity
-            android:name="org.researchstack.skin.ui.EmailVerificationActivity"
-            android:label="@string/rss_confirm"
-        />
 
         <activity
             android:name="org.researchstack.skin.ui.OnboardingActivity"
@@ -51,10 +38,34 @@
         />
 
         <activity
+            android:name="org.researchstack.backbone.ui.ViewTaskActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Survey"
+        />
+
+        <activity
+            android:name="org.researchstack.skin.ui.SignUpTaskActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Survey"
+        />
+
+        <activity
+            android:name="org.researchstack.skin.ui.EmailVerificationActivity"
+            android:label="@string/rss_confirm"
+            android:theme="@style/Theme.Sample.Survey"
+        />
+
+        <activity
+            android:name="org.researchstack.backbone.ui.ViewWebDocumentActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Survey"
+        />
+
+        <activity
             android:name="org.researchstack.skin.ui.ViewVideoActivity"
-            android:theme="@style/Theme.Sample.Video"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
             android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Video"
         />
 
         <activity
@@ -65,13 +76,6 @@
         <activity
             android:name="org.researchstack.skin.ui.LearnActivity"
             android:label="@string/rss_learn"/>
-
-        <activity
-            android:name="org.researchstack.backbone.ui.ViewWebDocumentActivity"
-            android:label="@string/app_name"
-        />
-
-        <activity android:name="org.researchstack.skin.ui.ViewFragmentActivity"/>
 
         <receiver
             android:name="org.researchstack.skin.notification.TaskNotificationReceiver"

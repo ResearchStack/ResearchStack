@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.util.TypedValue;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.helpers.LogExt;
+
+import java.lang.reflect.Method;
 
 public class ThemeUtils
 {
@@ -43,4 +46,27 @@ public class ThemeUtils
         a.recycle();
         return themeResId;
     }
+
+    /**
+     * Helper method to get the theme resource id. Warning, accessing non-public methods is
+     * a no-no and there is no guarantee this will work.
+     * @param context the context you want to extract the theme-resource-id from
+     * @return The themeId associated w/ the context
+     */
+    public static int getTheme(Context context)
+    {
+        try
+        {
+            Class<?> wrapper = Context.class;
+            Method method = wrapper.getMethod("getThemeResId");
+            method.setAccessible(true);
+            return (Integer) method.invoke(context);
+        }
+        catch(Exception e)
+        {
+            LogExt.e(ThemeUtils.class, e);
+        }
+        return 0;
+    }
 }
+
