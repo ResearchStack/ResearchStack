@@ -15,11 +15,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="toolBarTheme">@style/Theme.Sample.Toolbar</item>
-        <item name="passCodeTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
+        <item name="toolbarTheme">@style/Theme.Sample.Toolbar</item>
+        <item name="passcodeTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
         <item name="toolbarStyle">@style/Widget.Sample.Light.ActionBar.Solid</item>
-        <item name="iconTabLayoutStyle">@style/Widget.Sample.IconTabLayout</item>
-        <item name="submitBarStyle">@style/Widget.Sample.SubmitBar</item>
+        <item name="icontablayoutStyle">@style/Widget.Sample.IconTabLayout</item>
+        <item name="submitbarStyle">@style/Widget.Sample.SubmitBar</item>
     </style>
 
     <style name="Theme.Sample.Toolbar">

@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.views;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -20,26 +21,18 @@ public class SubmitBar extends LinearLayout
     private TextView positiveView;
     private TextView negativeView;
 
-    public SubmitBar(Context context)
-    {
-        super(context);
-        init(context, null, 0);
+    public SubmitBar(Context context) {
+        this(context, null);
     }
 
-    public SubmitBar(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-        init(context, attrs, 0);
+    public SubmitBar(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, R.attr.submitbarStyle);
     }
 
-    public SubmitBar(Context context, AttributeSet attrs, int defStyleAttr)
+    public SubmitBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, 0);
-    }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr)
-    {
         LayoutInflater.from(getContext()).inflate(R.layout.view_submitbar, this, true);
 
         TypedArray a = context.obtainStyledAttributes(attrs,

@@ -7,13 +7,7 @@
         <item name="tabTextColor">@color/tab_text_color</item>
     </style>
 
-    <style name="Widget.Sample.SubmitBar" parent="@style/Widget.Backbone.SubmitBar">
-        <item name="android:background">@color/rsb_submit_bar_gray</item>
-        <item name="positiveActionTitle">@string/rsb_next</item>
-        <item name="negativeActionTitle">@string/rsb_step_skip</item>
-        <item name="positiveActionColor">?attr/colorAccent</item>
-        <item name="negativeActionColor">@color/rsb_submit_bar_negative</item>
-    </style>
+    <style name="Widget.Sample.SubmitBar" parent="@style/Widget.Backbone.SubmitBar"/>
 
     <style name="Widget.Sample.Light.ActionBar.Solid" parent="@style/Widget.AppCompat.Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
