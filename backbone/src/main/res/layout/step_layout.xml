@@ -19,7 +19,9 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             tools:text="@string/lorem_name"
+            tools:visibility="visible"
         />
 
         <TextView
