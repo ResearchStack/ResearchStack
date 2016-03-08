@@ -8,14 +8,14 @@
         android:name="org.researchstack.sampleapp.SampleApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/rss_app_name"
+        android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/SampleTheme">
+        android:theme="@style/Theme.Sample">
 
         <activity
             android:name="org.researchstack.skin.ui.SplashActivity"
-            android:label="@string/rss_app_name"
-            android:theme="@style/SampleTheme.Splash">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -24,20 +24,19 @@
 
         <activity
             android:name="org.researchstack.skin.ui.MainActivity"
-            android:label="@string/rss_app_name"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask"
-            android:theme="@style/SampleTheme.NoActionBar">
+            android:launchMode="singleTask">
         </activity>
 
         <activity
             android:name="org.researchstack.backbone.ui.ViewTaskActivity"
-            android:label="@string/rss_app_name"
+            android:label="@string/app_name"
         />
 
         <activity
             android:name="org.researchstack.skin.ui.SignUpTaskActivity"
-            android:label="@string/rss_app_name"
+            android:label="@string/app_name"
         />
 
         <activity
@@ -47,40 +46,32 @@
 
         <activity
             android:name="org.researchstack.skin.ui.OnboardingActivity"
-            android:label="@string/rss_app_name"
-            android:theme="@style/SampleTheme.Onboarding"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Onboarding"
         />
 
         <activity
             android:name="org.researchstack.skin.ui.ViewVideoActivity"
-            android:theme="@style/SampleTheme.Video"
+            android:theme="@style/Theme.Sample.Video"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
-            android:label="@string/rss_app_name"
+            android:label="@string/app_name"
         />
 
         <activity
             android:name="org.researchstack.sampleapp.SampleSettingsActivity"
             android:label="@string/rss_settings"
-            android:theme="@style/SampleTheme.Settings"/>
+            android:theme="@style/Theme.Sample.Settings"/>
 
         <activity
             android:name="org.researchstack.skin.ui.LearnActivity"
-            android:label="@string/rss_learn"
-            android:theme="@style/SampleTheme.NoActionBar"/>
+            android:label="@string/rss_learn"/>
 
         <activity
             android:name="org.researchstack.backbone.ui.ViewWebDocumentActivity"
-            android:label="@string/rss_app_name"
+            android:label="@string/app_name"
         />
 
-        <activity android:name="org.researchstack.skin.ui.ViewFragmentActivity"
-                  android:theme="@style/SampleTheme.NoActionBar"/>
-
-        <activity
-            android:name="org.researchstack.skin.ui.SoftwareNoticesActivity"
-            android:theme="@style/SampleTheme.NoActionBar"
-            android:label="@string/software_notice"
-        />
+        <activity android:name="org.researchstack.skin.ui.ViewFragmentActivity"/>
 
         <receiver
             android:name="org.researchstack.skin.notification.TaskNotificationReceiver"

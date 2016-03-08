@@ -7,4 +7,6 @@
     <color name="dark_gray">#666666</color>
     <color name="gray">#EEEEEE</color>
 
+    <color name="tab_text_color">#66FFFFFF</color>
+
 </resources>
