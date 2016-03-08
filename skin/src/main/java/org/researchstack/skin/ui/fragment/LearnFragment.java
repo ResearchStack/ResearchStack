@@ -2,7 +2,6 @@ package org.researchstack.skin.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,11 +39,6 @@ public class LearnFragment extends Fragment
         RecyclerView recyclerView = (RecyclerView) view.findViewById(org.researchstack.skin.R.id.recycler_view);
         recyclerView.setAdapter(new LearnAdapter(getContext(), loadSections()));
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-
-        Configuration config = getResources().getConfiguration();
-
-        //TODO Implement compat method to get RTL on API < 17
-        boolean isRTL = config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
     }
 
     private SectionModel loadSections()
@@ -80,12 +74,12 @@ public class LearnFragment extends Fragment
         {
             if(viewType == VIEW_TYPE_HEADER)
             {
-                View view = inflater.inflate(R.layout.header_learn, parent, false);
+                View view = inflater.inflate(R.layout.preference_category_material, parent, false);
                 return new HeaderViewHolder(view);
             }
             else
             {
-                View view = inflater.inflate(R.layout.item_row_section, parent, false);
+                View view = inflater.inflate(R.layout.item_row_learn, parent, false);
                 return new ViewHolder(view);
             }
         }
@@ -96,7 +90,6 @@ public class LearnFragment extends Fragment
             if(hldr instanceof ViewHolder)
             {
                 ViewHolder holder = (ViewHolder) hldr;
-                Context context = holder.itemView.getContext();
 
                 //Offset for header
                 SectionModel.SectionRow item = (SectionModel.SectionRow) items.get(position);
