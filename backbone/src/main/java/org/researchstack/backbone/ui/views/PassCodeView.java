@@ -20,5 +20,6 @@ public class PassCodeView extends EditText
         super(context, attrs, defStyleAttr);
     }
 
+    //TODO Style EditText from Mockups.
 
 }

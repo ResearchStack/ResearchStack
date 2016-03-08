@@ -51,6 +51,10 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     {
         super.onDestroy();
         storageAccessUnregister();
+        if (pinCodeLayout != null)
+        {
+            getWindowManager().removeView(pinCodeLayout);
+        }
     }
 
     private void requestStorageAccess()
@@ -114,8 +118,9 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         // TODO figure out a better way to get/store pin code config
         PinCodeConfig config = StorageAccess.getInstance().getPinCodeConfig();
 
+        int theme = ThemeUtils.getPassCodeTheme(this);
         //TODO get Pincode theme from activity theme using custom attribute
-        pinCodeLayout = new PinCodeLayout(new ContextThemeWrapper(this, R.style.Backbone));
+        pinCodeLayout = new PinCodeLayout(new ContextThemeWrapper(this, theme));
         pinCodeLayout.setBackgroundColor(Color.WHITE);
         pinCodeLayout.setVisibility(View.GONE);
 
@@ -179,4 +184,6 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         getWindowManager().addView(pinCodeLayout, params);
     }
+
+
 }

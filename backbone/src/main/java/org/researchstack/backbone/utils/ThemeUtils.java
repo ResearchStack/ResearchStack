@@ -28,4 +28,19 @@ public class ThemeUtils
         a.recycle();
         return color;
     }
+
+    public static int getPassCodeTheme(Context context)
+    {
+        TypedValue typedValue = new TypedValue();
+        TypedArray a = context.obtainStyledAttributes(typedValue.data,
+                new int[] {R.attr.passcodeTheme});
+        int themeResId = a.getResourceId(0, 0);
+        if (themeResId == 0)
+        {
+            throw new RuntimeException("Theme must define attribute passCodeTheme or extend from @style/Base.Theme.Backbone");
+        }
+
+        a.recycle();
+        return themeResId;
+    }
 }
