@@ -81,6 +81,15 @@ public class StudyOverviewModel
         {
             return videoName;
         }
-    }
 
+        public void setTitle(String title)
+        {
+            this.title = title;
+        }
+
+        public void setDetails(String details)
+        {
+            this.details = details;
+        }
+    }
 }

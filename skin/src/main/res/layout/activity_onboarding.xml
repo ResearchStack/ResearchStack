@@ -59,9 +59,7 @@
                 android:textSize="14sp"
                 tools:text="@string/lorem_long"
             />
-
         </LinearLayout>
-
     </ScrollView>
 
     <View
@@ -78,14 +76,18 @@
         android:layout_height="match_parent"
         android:background="@color/rsb_black_40"
         android:visibility="gone"
+        tools:visibility="visible"
     >
-        <LinearLayout
+        <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="110dp"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginTop="110dp"
+            app:elevation="24dp"
+            android:elevation="24dp"
+            android:background="@android:color/white"
             android:orientation="vertical">
 
             <android.support.design.widget.TabLayout
@@ -102,7 +104,7 @@
                 android:background="@android:color/white"
                 app:elevation="16dp"
             />
-        </LinearLayout>
+        </android.support.v7.widget.LinearLayoutCompat>
     </FrameLayout>
 
     <LinearLayout

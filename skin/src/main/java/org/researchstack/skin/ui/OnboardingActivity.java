@@ -1,7 +1,6 @@
 package org.researchstack.skin.ui;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -59,6 +58,31 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_studyoverview_main);
         StudyOverviewModel model = parseStudyOverviewModel();
+
+        // The first item is used for the main activity and not the tabbed dialog
+        StudyOverviewModel.Question welcomeQuestion = model.getQuestions().remove(0);
+
+        titleView.setText(welcomeQuestion.getTitle());
+
+        if(! TextUtils.isEmpty(welcomeQuestion.getDetails()))
+        {
+            subtitleView.setText(welcomeQuestion.getDetails());
+        }
+        else
+        {
+            subtitleView.setVisibility(View.GONE);
+        }
+
+        // add Read Consent option to list and tabbed dialog
+        if("yes".equals(welcomeQuestion.getShowConsent()))
+        {
+            StudyOverviewModel.Question consent = new StudyOverviewModel.Question();
+            consent.setTitle(getString(R.string.rss_read_consent_doc));
+            int consentHtmlId = ResourceManager.getInstance().getConsentHtml();
+            consent.setDetails(getResources().getResourceEntryName(consentHtmlId));
+            model.getQuestions().add(0, consent);
+        }
+
         for(int i = 0; i < model.getQuestions().size(); i++)
         {
             AppCompatButton button = (AppCompatButton) LayoutInflater.from(this)
@@ -77,17 +101,6 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         skip.setVisibility(UiManager.getInstance().isConsentSkippable() ? View.VISIBLE : View.GONE);
 
         logoView.setImageResource(ResourceManager.getInstance().getLargeLogoDiseaseIcon());
-
-        StudyOverviewModel.Question data = model.getQuestions().get(0);
-        titleView.setText(data.getTitle());
-        if(! TextUtils.isEmpty(data.getDetails()))
-        {
-            subtitleView.setText(data.getDetails());
-        }
-        else
-        {
-            subtitleView.setVisibility(View.GONE);
-        }
 
         pagerFrame = findViewById(R.id.pager_frame);
         pagerFrame.setOnClickListener(v -> hidePager());
@@ -136,12 +149,12 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
     {
         pagerFrame.setVisibility(View.VISIBLE);
         tabStrip.getTabAt(index).select();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            // TODO change elevation?
-            //            skip.setElevation();
-            //            signUp.setElevation();
-        }
+
+        // TODO raise button elevation?
+        // this only changes the initial state, pressing will reset elevation
+        //        float newElevation = ConversionUtils.pxFromDp(this, 8);
+        //            ViewCompat.setElevation(skip, newElevation);
+        //            ViewCompat.setElevation(signUp, newElevation);
         signIn.setTextColor(getResources().getColor(android.R.color.white));
     }
 
@@ -149,12 +162,11 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
     {
         pagerFrame.setVisibility(View.GONE);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            // TODO change elevation?
-            //            skip.setElevation();
-            //            signUp.setElevation();
-        }
+        // TODO raise button elevation?
+        // this only changes the initial state, pressing will reset elevation
+        //        float newElevation = ConversionUtils.pxFromDp(this, 2);
+        //            ViewCompat.setElevation(skip, newElevation);
+        //            ViewCompat.setElevation(signUp, newElevation);
 
         signIn.setTextColor(getResources().getColor(android.R.color.black));
     }
