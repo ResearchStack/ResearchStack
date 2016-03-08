@@ -1,8 +1,10 @@
-package org.researchstack.skin.ui.views;
+package org.researchstack.backbone.ui.views;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,7 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.researchstack.skin.R;
+import org.researchstack.backbone.R;
+
 
 public class IconTab extends RelativeLayout implements View.OnLongClickListener
 {
@@ -56,9 +59,7 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener
         indicator = (ImageView) findViewById(R.id.indicator);
 
         // Adjust visibility and layout params
-        icon.animate().alpha(isSelected() ? 1 : 0).setDuration(0);
-        title.animate().alpha(isSelected() ? 0 : 1).setDuration(0);
-        adjustIndicatorPosition();
+        adjustSelectedView();
 
         // Show anchored toast when long pressing in selected state
         setOnLongClickListener(this);
@@ -73,25 +74,32 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener
 
     private void adjustSelectedView()
     {
-        indicator.animate().setStartDelay(0).alpha(0).withEndAction(() -> {
+        if (getParent() == null)
+        {
+            icon.setAlpha(isSelected() ? 1f : 0f);
+            title.setAlpha(isSelected() ? 0 : 1);
             adjustIndicatorPosition();
-            indicator.animate().setStartDelay(200).alpha(1);
-        });
+        }
+        else
+        {
+            indicator.animate().setStartDelay(0).alpha(0).withEndAction(() -> {
+                adjustIndicatorPosition();
+                indicator.animate().setStartDelay(200).alpha(1);
+            });
 
-        icon.animate()
-                .alpha(isSelected() ? 1 : 0)
-                .scaleX(isSelected() ? 1 : 0)
-                .scaleY(isSelected() ? 1 : 0)
-                .setDuration(150)
-                .setInterpolator(isSelected()
-                        ? new OvershootInterpolator()
-                        : new AccelerateInterpolator())
-                .setStartDelay(isSelected() ? 150 : 0);
+            icon.animate()
+                    .alpha(isSelected() ? 1 : 0)
+                    .scaleX(isSelected() ? 1 : 0)
+                    .scaleY(isSelected() ? 1 : 0)
+                    .setDuration(150)
+                    .setInterpolator(isSelected() ? new OvershootInterpolator() : new AccelerateInterpolator())
+                    .setStartDelay(isSelected() ? 150 : 0);
 
-        title.animate()
-                .alpha(isSelected() ? 0 : 1)
-                .setDuration(150)
-                .setStartDelay(isSelected() ? 0 : 150);
+            title.animate()
+                    .alpha(isSelected() ? 0 : 1)
+                    .setDuration(150)
+                    .setStartDelay(isSelected() ? 0 : 150);
+        }
     }
 
     private void adjustIndicatorPosition()
@@ -108,14 +116,40 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener
         title.setText(textResId);
     }
 
+    public void setTextColor(int textColor)
+    {
+        title.setTextColor(textColor);
+    }
+
     public void setIcon(@DrawableRes int iconResId)
     {
         icon.setImageResource(iconResId);
     }
 
+    public void setIcon(Drawable drawable)
+    {
+        icon.setImageDrawable(drawable);
+    }
+
+    public void setIconTint(int iconTint)
+    {
+        Drawable drawable = icon.getDrawable();
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable, iconTint);
+        icon.setImageDrawable(drawable);
+    }
+
     public void setIsIndicatorShow(boolean visible)
     {
         indicator.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    public void setIndicatorTint(int indicatorTint)
+    {
+        Drawable drawable = indicator.getDrawable();
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable, indicatorTint);
+        indicator.setImageDrawable(drawable);
     }
 
     @Override

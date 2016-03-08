@@ -11,7 +11,6 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="?attr/tabTextColor"
         android:fontFamily="sans-serif-medium"
         android:textAllCaps="true"
         android:layout_centerInParent="true"
@@ -32,10 +31,9 @@
         android:scaleType="centerInside"
         android:layout_centerInParent="true"
         android:tint="@android:color/white"
-        tools:src="@drawable/ic_action_profile"
+        tools:src="@drawable/icon"
     />
 
-    <!-- TODO point to cusotm attr for tab indicator color-->
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/indicator"
         android:layout_width="wrap_content"
@@ -43,7 +41,6 @@
         android:layout_alignRight="@+id/title"
         android:layout_alignTop="@+id/title"
         android:adjustViewBounds="true"
-        android:tint="@color/rsb_error"
         android:src="@drawable/ic_circle_8dp"
     />
 
