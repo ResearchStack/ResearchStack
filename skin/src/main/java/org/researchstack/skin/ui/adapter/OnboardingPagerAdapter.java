@@ -14,7 +14,6 @@ import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.StudyOverviewModel;
 import org.researchstack.skin.ui.ViewVideoActivity;
-import org.researchstack.skin.ui.views.StudyLandingLayout;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -31,6 +30,12 @@ public class OnboardingPagerAdapter extends PagerAdapter
     {
         this.items = items;
         this.inflater = LayoutInflater.from(context);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position)
+    {
+        return items.get(position).getTitle();
     }
 
     @Override
@@ -57,34 +62,7 @@ public class OnboardingPagerAdapter extends PagerAdapter
     {
         StudyOverviewModel.Question item = items.get(position);
 
-        if(position == 0)
-        {
-            //            APCStudyLandingCollectionViewCell *landingCell = (APCStudyLandingCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kAPCStudyLandingCollectionViewCellIdentifier forIndexPath:indexPath];
-            //            landingCell.delegate = self;
-            //            landingCell.titleLabel.text = studyDetails.caption;
-            //            landingCell.subTitleLabel.text = studyDetails.detailText;
-            //            landingCell.readConsentButton.hidden = YES;
-            //            landingCell.emailConsentButton.hidden = [((APCAppDelegate *)[UIApplication sharedApplication].delegate) hideEmailOnWelcomeScreen];
-            //
-            //            if ([MFMailComposeViewController canSendMail]) {
-            //            [landingCell.emailConsentButton setTitleColor:[UIColor appPrimaryColor] forState:UIControlStateNormal];
-            //            [landingCell.emailConsentButton setUserInteractionEnabled:YES];
-            //        }else{
-            //            [landingCell.emailConsentButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            //            [landingCell.emailConsentButton setUserInteractionEnabled:NO];
-            //        }
-            //
-            //        if (studyDetails.showsConsent) {
-            //            landingCell.readConsentButton.hidden = NO;
-            //        }
-
-            StudyLandingLayout layout = new StudyLandingLayout(container.getContext());
-            layout.setData(item);
-            container.addView(layout);
-            return layout;
-
-        }
-        else if(! TextUtils.isEmpty(item.getVideoName()))
+        if(! TextUtils.isEmpty(item.getVideoName()))
         {
             View layout = inflater.inflate(R.layout.layout_study_html, container, false);
             container.addView(layout);

@@ -40,6 +40,12 @@ public class SampleResourceManager extends ResourceManager
     }
 
     @Override
+    public int getConsentHtml()
+    {
+        return R.raw.asthma_fullconsent;
+    }
+
+    @Override
     public int getPrivacyPolicy()
     {
         return R.raw.app_privacy_policy;

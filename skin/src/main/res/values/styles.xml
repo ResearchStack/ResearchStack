@@ -5,4 +5,23 @@
         <item name="preferenceTextColor">?attr/colorAccent</item>
     </style>
 
+    <style name="StudyOverviewTabStyle">
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabBackground">?attr/colorPrimary</item>
+        <item name="tabTextColor">#6FFF</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+    </style>
+    <style name="StudyOverviewItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
 </resources>

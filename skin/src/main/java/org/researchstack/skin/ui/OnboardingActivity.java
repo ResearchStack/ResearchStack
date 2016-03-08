@@ -2,8 +2,16 @@ package org.researchstack.skin.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatButton;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
@@ -27,11 +35,16 @@ import org.researchstack.skin.utils.JsonUtils;
 /**
  * Created by bradleymcdermott on 10/15/15.
  */
-public class OnboardingActivity extends PinCodeActivity
+public class OnboardingActivity extends PinCodeActivity implements View.OnClickListener
 {
     public static final int REQUEST_CODE_SIGN_UP  = 21473;
     public static final int REQUEST_CODE_SIGN_IN  = 31473;
     public static final int REQUEST_CODE_PASSCODE = 41473;
+    private View      pagerFrame;
+    private TabLayout tabStrip;
+    private Button    skip;
+    private Button    signUp;
+    private TextView  signIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,16 +52,66 @@ public class OnboardingActivity extends PinCodeActivity
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_onboarding);
 
+        ImageView logoView = (ImageView) findViewById(R.id.layout_studyoverview_landing_logo);
+        TextView titleView = (TextView) findViewById(R.id.layout_studyoverview_landing_title);
+        TextView subtitleView = (TextView) findViewById(R.id.layout_studyoverview_landing_subtitle);
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_studyoverview_main);
         StudyOverviewModel model = parseStudyOverviewModel();
+
+        // The first item is used for the main activity and not the tabbed dialog
+        StudyOverviewModel.Question welcomeQuestion = model.getQuestions().remove(0);
+
+        titleView.setText(welcomeQuestion.getTitle());
+
+        if(! TextUtils.isEmpty(welcomeQuestion.getDetails()))
+        {
+            subtitleView.setText(welcomeQuestion.getDetails());
+        }
+        else
+        {
+            subtitleView.setVisibility(View.GONE);
+        }
+
+        // add Read Consent option to list and tabbed dialog
+        if("yes".equals(welcomeQuestion.getShowConsent()))
+        {
+            StudyOverviewModel.Question consent = new StudyOverviewModel.Question();
+            consent.setTitle(getString(R.string.rss_read_consent_doc));
+            int consentHtmlId = ResourceManager.getInstance().getConsentHtml();
+            consent.setDetails(getResources().getResourceEntryName(consentHtmlId));
+            model.getQuestions().add(0, consent);
+        }
+
+        for(int i = 0; i < model.getQuestions().size(); i++)
+        {
+            AppCompatButton button = (AppCompatButton) LayoutInflater.from(this)
+                    .inflate(R.layout.rss_button_study_overview, linearLayout, false);
+            button.setText(model.getQuestions().get(i).getTitle());
+            // set the index for opening the viewpager to the correct page on click
+            button.setTag(i);
+            linearLayout.addView(button);
+            button.setOnClickListener(this);
+        }
+
+        signUp = (Button) findViewById(R.id.intro_sign_up);
+        signIn = (TextView) findViewById(R.id.intro_sign_in);
+
+        skip = (Button) findViewById(R.id.intro_skip);
+        skip.setVisibility(UiManager.getInstance().isConsentSkippable() ? View.VISIBLE : View.GONE);
+
+        logoView.setImageResource(ResourceManager.getInstance().getLargeLogoDiseaseIcon());
+
+        pagerFrame = findViewById(R.id.pager_frame);
+        pagerFrame.setOnClickListener(v -> hidePager());
         OnboardingPagerAdapter adapter = new OnboardingPagerAdapter(this, model.getQuestions());
 
-        findViewById(R.id.intro_skip).setVisibility(UiManager.getInstance().isConsentSkippable()
-                ? View.VISIBLE
-                : View.GONE);
-
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        tabStrip = (TabLayout) findViewById(R.id.pager_title_strip);
         pager.setOffscreenPageLimit(2);
         pager.setAdapter(adapter);
+        tabStrip.setTabsFromPagerAdapter(adapter);
+        tabStrip.setupWithViewPager(pager);
     }
 
     @Override
@@ -76,8 +139,55 @@ public class OnboardingActivity extends PinCodeActivity
         return JsonUtils.loadClass(OnboardingActivity.this, StudyOverviewModel.class, fileResId);
     }
 
+    @Override
+    public void onClick(View v)
+    {
+        showPager((int) v.getTag());
+    }
+
+    private void showPager(int index)
+    {
+        pagerFrame.setVisibility(View.VISIBLE);
+        tabStrip.getTabAt(index).select();
+
+        // TODO raise button elevation?
+        // this only changes the initial state, pressing will reset elevation
+        //        float newElevation = ConversionUtils.pxFromDp(this, 8);
+        //            ViewCompat.setElevation(skip, newElevation);
+        //            ViewCompat.setElevation(signUp, newElevation);
+        signIn.setTextColor(getResources().getColor(android.R.color.white));
+    }
+
+    private void hidePager()
+    {
+        pagerFrame.setVisibility(View.GONE);
+
+        // TODO raise button elevation?
+        // this only changes the initial state, pressing will reset elevation
+        //        float newElevation = ConversionUtils.pxFromDp(this, 2);
+        //            ViewCompat.setElevation(skip, newElevation);
+        //            ViewCompat.setElevation(signUp, newElevation);
+
+        signIn.setTextColor(getResources().getColor(android.R.color.black));
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if(pagerFrame.getVisibility() == View.VISIBLE)
+        {
+            hidePager();
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+    }
+
     public void onSignUpClicked(View view)
     {
+        hidePager();
+
         boolean hasPin = StorageAccess.getInstance().hasPinCode(this);
 
         SignUpTask task = (SignUpTask) TaskProvider.getInstance().get(TaskProvider.TASK_ID_SIGN_UP);
@@ -87,6 +197,7 @@ public class OnboardingActivity extends PinCodeActivity
 
     public void onSkipClicked(View view)
     {
+        hidePager();
         boolean hasPasscode = StorageAccess.getInstance().hasPinCode(this);
         if(! hasPasscode)
         {
@@ -104,6 +215,7 @@ public class OnboardingActivity extends PinCodeActivity
 
     public void onSignInClicked(View view)
     {
+        hidePager();
         boolean hasPasscode = StorageAccess.getInstance().hasPinCode(this);
 
         SignInTask task = (SignInTask) TaskProvider.getInstance().get(TaskProvider.TASK_ID_SIGN_IN);

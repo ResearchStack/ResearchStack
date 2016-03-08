@@ -27,6 +27,8 @@ public abstract class ResourceManager
 
     public abstract int getConsentPDF();
 
+    public abstract int getConsentHtml();
+
     public abstract int getConsentSections();
 
     public abstract int getQuizSections();

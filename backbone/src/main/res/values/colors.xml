@@ -6,6 +6,7 @@
     <color name="rsb_colorAccentDark">#cc3367</color>
     <color name="rsb_black">#000</color>
     <color name="rsb_black_20">#33000000</color>
+    <color name="rsb_black_40">#66000000</color>
     <color name="rsb_white_60">#CCFFFFFF</color>
     <color name="rsb_warm_gray">#FF757575</color>
     <color name="rsb_warm_gray_20">#33757575</color>

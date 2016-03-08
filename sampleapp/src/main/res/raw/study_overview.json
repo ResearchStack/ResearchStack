@@ -5,8 +5,8 @@
   "logo_name": "logo_research_institute",
   "questions": [
     {
-      "title": "Welcome to Our Asthma Research Study",
-      "details": "",
+      "title": "Welcome to our ResearchStack study",
+      "details": "This is where you would put more details about your study that you would like the user to see on the first page of the study overview.",
       "show_consent": "yes"
     },
     {
