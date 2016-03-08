@@ -200,7 +200,11 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
         if(questionStep != null)
         {
-            title.setText(questionStep.getTitle());
+            if (! TextUtils.isEmpty(questionStep.getTitle()))
+            {
+                title.setVisibility(View.VISIBLE);
+                title.setText(questionStep.getTitle());
+            }
 
             if(! TextUtils.isEmpty(questionStep.getText()))
             {
