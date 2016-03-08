@@ -1,91 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="SampleTheme" parent="Backbone">
-        <!-- Text Color for ActionBar and Text -->
-        <item name="alertDialogTheme">@style/SampleTheme.Dialog</item>
-        <item name="android:alertDialogTheme">@style/SampleTheme.Dialog</item>
-        <!-- Text Color for Toolbar and Text -->
-        <item name="android:textColor">@color/rsb_warm_gray</item>
-
-        <!-- Change this to white. Make sure all views have a color set instead of pointing to
-        textColorPrimary attribute-->
-        <item name="android:textColorPrimary">@color/rsb_warm_gray</item>
-        <item name="android:textColorSecondary">@color/rsb_warm_gray</item>
-
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="tabBackground">@color/colorPrimary</item>
+    <style name="Widget.Sample.IconTabLayout" parent="@style/Widget.Backbone.IconTabLayout">
+        <item name="tabIconColor">@android:color/white</item>
+        <item name="tabIndicatorColor">@color/rsb_error</item>
+        <item name="tabTextColor">@color/tab_text_color</item>
     </style>
 
-    <style name="SampleTheme.ColorActionBarStyle"
-           parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+    <style name="Widget.Sample.SubmitBar" parent="@style/Widget.Backbone.SubmitBar"/>
+
+    <style name="Base.Widget.Sample.Toolbar" parent="@style/Widget.AppCompat.Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
-        <item name="background">?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="colorControlNormal">@android:color/white</item>
-        <item name="titleTextAppearance">@style/TextAppearance.Toolbar.Title</item>
-        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.Sample.Toolbar.Title</item>
     </style>
 
-    <style name="TextAppearance.Toolbar.Title"
+    <style name="Widget.Sample.Toolbar" parent="@style/Base.Widget.Sample.Toolbar">
+        <item name="android:foreground">?android:windowContentOverlay</item>
+    </style>
+
+    <style name="Widget.Sample.Toolbar.Transparent" parent="@style/Base.Widget.Sample.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.Sample.Toolbar.Title.Transparent</item>
+    </style>
+
+    <style name="Widget.Sample.ActionButton.Overflow"
+           parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="Widget.Sample.Onboarding.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Widget.Sample.Toolbar.Title"
            parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="ActionButton.Overflow" parent="@style/Widget.AppCompat.ActionButton.Overflow">
-        <item name="colorControlNormal">@android:color/white</item>
-    </style>
-
-    <style name="SampleTheme.Dialog"
-           parent="Theme.AppCompat.Light.Dialog.Alert">
-        <!-- Used for the buttons -->
-        <item name="colorAccent">@color/colorAccent</item>
-        <!-- Used for the title and text -->
-        <item name="android:textColorPrimary">@color/rsb_warm_gray</item>
-        <!-- Used for the background -->
-        <item name="android:background">@android:color/white</item>
-    </style>
-
-    <style name="SampleTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <!-- TODO figure out which of these is actually needed -->
-        <item name="toolbarStyle">@style/SampleTheme.ColorActionBarStyle</item>
-    </style>
-
-    <style name="SampleTheme.Settings" parent="@style/SampleTheme.NoActionBar">
-        <item name="android:textColor">@color/text_color_settings_title</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:textColorSecondary">@color/text_color_settings_summary</item>
-        <item name="colorControlNormal">@android:color/white</item>
-        <item name="preferenceTheme">@style/SampleTheme.Settings.Preference</item>
-    </style>
-
-    <style name="SampleTheme.Settings.Preference"
-           parent="@style/PreferenceThemeOverlay.v14.Material"/>
-
-    <style name="SampleTheme.Splash" parent="SampleTheme.NoActionBar">
-        <item name="android:windowBackground">@drawable/bg_splash</item>
-        <item name="colorPrimaryDark">@color/rsb_warm_gray</item>
-    </style>
-
-    <style name="SampleTheme.Onboarding" parent="@style/SampleTheme.NoActionBar">
-        <item name="android:windowBackground">@color/gray</item>
-        <item name="colorButtonNormal">@color/colorAccent</item>
-        <item name="colorPrimaryDark">@color/dark_gray</item>
-    </style>
-
-    <style name="SampleTheme.Onboarding.Button" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/colorAccent</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
-    <style name="SampleTheme.Video" parent="SampleTheme.NoActionBar">
-        <item name="android:windowBackground">@android:color/black</item>
-        <item name="colorPrimaryDark">@android:color/black</item>
+    <style name="TextAppearance.Widget.Sample.Toolbar.Title.Transparent">
+        <item name="android:textColor">@color/rsb_warm_gray</item>
     </style>
 
 </resources>

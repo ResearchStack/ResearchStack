@@ -15,6 +15,7 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
+import org.researchstack.backbone.ui.views.IconTabLayout;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.UiThreadContext;
 import org.researchstack.skin.ActionItem;
@@ -24,7 +25,6 @@ import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
 import org.researchstack.skin.notification.TaskAlertReceiver;
 import org.researchstack.skin.ui.adapter.MainPagerAdapter;
-import org.researchstack.skin.ui.views.IconTab;
 
 import java.util.List;
 
@@ -162,8 +162,8 @@ public class MainActivity extends PinCodeActivity
             ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
             viewPager.setAdapter(pagerAdapter);
 
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
+            IconTabLayout tabLayout = (IconTabLayout) findViewById(R.id.tabLayout);
+            tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter()
             {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab)
@@ -171,30 +171,16 @@ public class MainActivity extends PinCodeActivity
                     int index = tabLayout.getSelectedTabPosition();
                     viewPager.setCurrentItem(index);
                 }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab)
-                {
-                }
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab)
-                {
-                }
             });
 
             for(ActionItem item : items)
             {
-                TabLayout.Tab tabItem = tabLayout.newTab();
-                IconTab iconTab = new IconTab(this);
-                iconTab.setText(item.getTitle());
-                iconTab.setIcon(item.getIcon());
-                //                TODO Properly set indicator visibility
-                iconTab.setIsIndicatorShow(items.indexOf(item) == 0);
-                iconTab.setOnClickListener(v -> tabItem.select());
-                tabItem.setCustomView(iconTab);
-                tabLayout.addTab(tabItem);
-
+                tabLayout.addIconTab(
+                        item.getTitle(),
+                        item.getIcon(),
+                        items.indexOf(item) == 0,//TODO check if should show
+                        items.indexOf(item) == 0
+                );
             }
             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         }

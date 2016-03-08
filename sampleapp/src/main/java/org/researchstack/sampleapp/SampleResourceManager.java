@@ -24,7 +24,7 @@ public class SampleResourceManager extends ResourceManager
     @Override
     public int getLearnSections()
     {
-        return R.raw.learn_items;
+        return R.raw.learn;
     }
 
     @Override

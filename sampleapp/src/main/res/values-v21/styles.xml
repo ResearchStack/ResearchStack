@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Sample.Toolbar" parent="@style/Base.Widget.Sample.Toolbar">
+        <item name="android:elevation">4dp</item>
+        <item name="android:outlineProvider">bounds</item>
+    </style>
+
+    <style name="Widget.Sample.Toolbar.Transparent" parent="@style/Base.Widget.Sample.Toolbar">
+        <item name="android:elevation">0dp</item>
+        <item name="android:outlineProvider">none</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.Sample.Toolbar.Title.Transparent</item>
+    </style>
+
+</resources>

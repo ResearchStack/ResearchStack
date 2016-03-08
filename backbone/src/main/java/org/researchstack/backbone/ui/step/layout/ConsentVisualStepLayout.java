@@ -143,8 +143,8 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
         }
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
-        submitBar.setPositiveTitle(step.getNextButtonString())
-                .setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+        submitBar.setPositiveTitle(step.getNextButtonString());
+        submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                         step,
                         null));
         submitBar.getNegativeActionView().setVisibility(View.GONE);

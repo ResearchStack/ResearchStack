@@ -1,6 +1,8 @@
 package org.researchstack.backbone.ui.views;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.utils.ThemeUtils;
 
 import rx.functions.Action1;
 
@@ -18,38 +21,36 @@ public class SubmitBar extends LinearLayout
     private TextView positiveView;
     private TextView negativeView;
 
-    public SubmitBar(Context context)
-    {
-        super(context);
-        init(context, null, 0);
+    public SubmitBar(Context context) {
+        this(context, null);
     }
 
-    public SubmitBar(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-        init(context, attrs, 0);
+    public SubmitBar(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, R.attr.submitbarStyle);
     }
 
-    public SubmitBar(Context context, AttributeSet attrs, int defStyleAttr)
+    public SubmitBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, 0);
-    }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        LayoutInflater.from(getContext()).inflate(R.layout.bar_submit, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.view_submitbar, this, true);
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.SubmitBar,
                 defStyleAttr,
-                R.style.SubmitBar);
+                R.style.Widget_Backbone_SubmitBar);
+
+        setBackground(a.getDrawable(R.styleable.SubmitBar_android_background));
 
         positiveView = (TextView) findViewById(R.id.bar_submit_postitive);
-        setPositiveTitle(a.getString(R.styleable.SubmitBar_positiveActionTitle));
+        positiveView.setText(a.getString(R.styleable.SubmitBar_positiveActionTitle));
+        positiveView.setTextColor(a.getColor(R.styleable.SubmitBar_positiveActionColor,
+                ThemeUtils.getAccentColor(context)));
 
         negativeView = (TextView) findViewById(R.id.bar_submit_negative);
-        setNegativeTitle(a.getString(R.styleable.SubmitBar_negativeActionTitle));
+        negativeView.setText(a.getString(R.styleable.SubmitBar_negativeActionTitle));
+        negativeView.setTextColor(a.getColor(R.styleable.SubmitBar_negativeActionColor,
+                ContextCompat.getColor(context, R.color.rsb_submit_bar_negative)));
 
         a.recycle();
     }
@@ -58,22 +59,19 @@ public class SubmitBar extends LinearLayout
     // Positive Action Helper Methods
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-    public SubmitBar setPositiveTitle(int title)
+    public void setPositiveTitle(int title)
     {
         setPositiveTitle(getResources().getString(title));
-        return this;
     }
 
-    public SubmitBar setPositiveTitle(String title)
+    public void setPositiveTitle(String title)
     {
         positiveView.setText(title);
-        return this;
     }
 
-    public SubmitBar setPositiveAction(Action1 submit)
+    public void setPositiveAction(Action1 submit)
     {
         RxView.clicks(this.positiveView).subscribe(submit);
-        return this;
     }
 
     public View getPositiveActionView()
@@ -86,22 +84,19 @@ public class SubmitBar extends LinearLayout
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
-    public SubmitBar setNegativeTitle(int title)
+    public void setNegativeTitle(int title)
     {
         setNegativeTitle(getResources().getString(title));
-        return this;
     }
 
-    public SubmitBar setNegativeTitle(String title)
+    public void setNegativeTitle(String title)
     {
         negativeView.setText(title);
-        return this;
     }
 
-    public SubmitBar setNegativeAction(Action1 submit)
+    public void setNegativeAction(Action1 submit)
     {
         RxView.clicks(this.negativeView).subscribe(submit);
-        return this;
     }
 
     public View getNegativeActionView()

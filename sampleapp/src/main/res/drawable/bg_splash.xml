@@ -10,7 +10,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/logo_disease_large"/>
+            android:src="@drawable/logo_disease_information_top"/>
     </item>
 
 </layer-list>
