@@ -13,7 +13,7 @@
         <attr name="android:background"/>
         <attr name="android:minHeight"/>
         <attr name="tabIconColor" format="color"/>
-        <attr name="tabIndicatorColor"/>
+        <attr name="tabIconIndicatorColor" format="color"/>
         <attr name="tabTextColor"/>
     </declare-styleable>
 
