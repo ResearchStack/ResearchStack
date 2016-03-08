@@ -38,12 +38,12 @@ public class SubmitBar extends LinearLayout
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.bar_submit, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.view_submitbar, this, true);
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.SubmitBar,
                 defStyleAttr,
-                R.style.SubmitBar);
+                R.style.Widget_Backbone_SubmitBar);
 
         positiveView = (TextView) findViewById(R.id.bar_submit_postitive);
         setPositiveTitle(a.getString(R.styleable.SubmitBar_positiveActionTitle));

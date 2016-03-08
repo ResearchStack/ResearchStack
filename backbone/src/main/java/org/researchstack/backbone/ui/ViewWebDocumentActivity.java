@@ -3,15 +3,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.text.TextUtils;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.views.LocalWebView;
 import org.researchstack.backbone.utils.ResUtils;
 
 public class ViewWebDocumentActivity extends PinCodeActivity
 {
-
     public static final String TAG          = ViewWebDocumentActivity.class.getSimpleName();
     public static final String KEY_DOC_NAME = TAG + ".DOC_NAME";
     public static final String KEY_TITLE    = TAG + ".TITLE";
@@ -28,28 +28,23 @@ public class ViewWebDocumentActivity extends PinCodeActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        super.setContentView(R.layout.activity_web_document);
 
-        String documentName = getIntent().getStringExtra(KEY_DOC_NAME);
-        String path = ResUtils.getHTMLFilePath(documentName);
-
-        LocalWebView webView = new LocalWebView(this);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String title = getIntent().getStringExtra(KEY_TITLE);
-        if(! TextUtils.isEmpty(title))
+        if(getIntent().hasExtra(KEY_TITLE))
         {
+            String title = getIntent().getStringExtra(KEY_TITLE);
             actionBar.setTitle(title);
         }
-        else
-        {
-            webView.setCallbacks(docTitle -> {
-                actionBar.setTitle(title);
-            });
-        }
+
+        LocalWebView webView = (LocalWebView) findViewById(R.id.webview);
+        String documentName = getIntent().getStringExtra(KEY_DOC_NAME);
+        String path = ResUtils.getHTMLFilePath(documentName);
         webView.loadUrl(path);
-        setContentView(webView);
     }
 
     @Override
