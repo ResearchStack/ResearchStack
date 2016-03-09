@@ -32,8 +32,8 @@ public class SplashActivity extends PinCodeActivity
 
         // Init all notifications
         Observable.create(subscriber -> {
-            if(StorageAccess.getInstance().hasPinCode(this) || StorageAccess.getInstance()
-                    .getEncryptionProvider() instanceof UnencryptedProvider)
+            if(StorageAccess.getInstance().getEncryptionProvider() instanceof UnencryptedProvider
+                    || StorageAccess.getInstance().hasPinCode(this) )
             {
                 subscriber.onNext(null);
             }
