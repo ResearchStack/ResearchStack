@@ -2,8 +2,10 @@ package org.researchstack.sampleapp;
 
 import android.content.Context;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 import org.researchstack.backbone.storage.database.AppDatabase;
-import org.researchstack.backbone.storage.database.sqlite.SqlCipherDatabaseHelper;
+import org.researchstack.backbone.storage.database.sqlite.UpdatablePassphraseProvider;
 import org.researchstack.backbone.storage.file.EncryptionProvider;
 import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.storage.file.SimpleFileAccess;
@@ -15,6 +17,7 @@ import org.researchstack.skin.ResearchStack;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
+import org.researchstack.skin.network.bridge.BridgeEncryptedDatabase;
 import org.researchstack.skin.notification.NotificationConfig;
 import org.researchstack.skin.notification.SimpleNotificationConfig;
 
@@ -24,7 +27,8 @@ public class SampleResearchStack extends ResearchStack
     @Override
     protected AppDatabase createAppDatabaseImplementation(Context context)
     {
-        return SqlCipherDatabaseHelper.getInstance(context);
+        SQLiteDatabase.loadLibs(context);
+        return new BridgeEncryptedDatabase(context, new UpdatablePassphraseProvider());
     }
 
     @Override

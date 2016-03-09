@@ -32,20 +32,9 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     // TODO Define in BuildConfig
     private static int DB_VERSION = 1;
 
-    private static DatabaseHelper sInstance;
-
-    private DatabaseHelper(Context context)
+    public DatabaseHelper(Context context)
     {
         super(context, DB_NAME, null, DB_VERSION);
-    }
-
-    public static DatabaseHelper getInstance(Context context)
-    {
-        if(sInstance == null)
-        {
-            sInstance = new DatabaseHelper(context);
-        }
-        return sInstance;
     }
 
     @Override
@@ -53,9 +42,9 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     {
         try
         {
-            TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase), TaskRecord.class);
-
-            TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase), StepRecord.class);
+            TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase),
+                    TaskRecord.class,
+                    StepRecord.class);
         }
         catch(SQLException e)
         {
@@ -68,9 +57,10 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     {
         try
         {
-            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase), true, TaskRecord.class);
-
-            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase), true, StepRecord.class);
+            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase),
+                    true,
+                    TaskRecord.class,
+                    StepRecord.class);
         }
         catch(SQLException e)
         {
