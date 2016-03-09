@@ -152,6 +152,7 @@ public abstract class BridgeDataProvider extends DataProvider
             buildRetrofitService(userSessionInfo);
             subscriber.onNext(new DataResponse(true, null));
             checkForTempConsentAndUpload(context);
+            uploadPendingFiles(context);
         });
     }
 
@@ -255,9 +256,11 @@ public abstract class BridgeDataProvider extends DataProvider
             {
                 // TODO if we are direct from signing in, we need to load the user profile object
                 // from the server.
+                signedIn = true;
                 saveUserSession(context, userSessionInfo);
                 buildRetrofitService(userSessionInfo);
                 checkForTempConsentAndUpload(context);
+                uploadPendingFiles(context);
             }
         }).map(response -> {
             boolean success = response.isSuccess() || response.code() == 412;
@@ -610,6 +613,13 @@ public abstract class BridgeDataProvider extends DataProvider
 
     public void uploadPendingFiles(Context context)
     {
+        if(! isSignedIn(context) || ! isConsented(context))
+        {
+            LogExt.d(getClass(), "User is not consented, skipping uploadPendingFiles()");
+            return;
+        }
+
+        // TODO make sure we don't upload the same file twice if this gets called twice
         List<UploadRequest> uploadRequests = ((UploadQueue) StorageAccess.getInstance()
                 .getAppDatabase()).loadUploadRequests();
 
@@ -629,8 +639,14 @@ public abstract class BridgeDataProvider extends DataProvider
         }
     }
 
-    private void uploadFile(Context context, UploadRequest request)
+    protected void uploadFile(Context context, UploadRequest request)
     {
+        if(! isSignedIn(context) || ! isConsented(context))
+        {
+            LogExt.d(getClass(), "User is not consented, will upload later");
+            return;
+        }
+
         service.requestUploadSession(request)
                 .flatMap(uploadSession -> uploadToS3(context, request, uploadSession))
                 .flatMap(id -> {
