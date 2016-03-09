@@ -1,16 +1,26 @@
 package org.researchstack.bridge;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Base64;
 
 import com.google.gson.Gson;
 
 import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.utils.FileUtils;
+import org.spongycastle.cms.CMSAlgorithm;
+import org.spongycastle.cms.CMSEnvelopedData;
+import org.spongycastle.cms.CMSEnvelopedDataGenerator;
+import org.spongycastle.cms.CMSException;
+import org.spongycastle.cms.CMSProcessableFile;
+import org.spongycastle.cms.jcajce.JceCMSContentEncryptorBuilder;
+import org.spongycastle.cms.jcajce.JceKeyTransRecipientInfoGenerator;
+import org.spongycastle.jcajce.provider.asymmetric.x509.CertificateFactory;
+import org.spongycastle.operator.OutputEncryptor;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,6 +28,9 @@ import java.io.InputStream;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Security;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -47,7 +60,7 @@ public class BridgeDataArchive
         outputStream = new ZipOutputStream(new BufferedOutputStream(dest));
     }
 
-    public UploadRequest finishAndEncrypt(int publicKeyId, File baseDir) throws IOException
+    public UploadRequest finishAndEncrypt(Context context, int publicKeyId, File baseDir) throws IOException
     {
         try
         {
@@ -67,11 +80,9 @@ public class BridgeDataArchive
 
         try
         {
-            // TODO turn this back on when we include spongyCastle
-            //            InputStream encryptedInputStream = getEncryptedInputStream(context,
-            //                    tempFile,
-            //                    publicKeyId);
-            InputStream encryptedInputStream = new FileInputStream(tempFile);
+            InputStream encryptedInputStream = getEncryptedInputStream(context,
+                    tempFile,
+                    publicKeyId);
 
             File encryptedFile = new File(baseDir, filename);
 
@@ -150,36 +161,36 @@ public class BridgeDataArchive
 
     static
     {
-        //        Security.insertProviderAt(new org.spongycastle.jce.provider.BouncyCastleProvider(), 1);
+        Security.insertProviderAt(new org.spongycastle.jce.provider.BouncyCastleProvider(), 1);
     }
-    //
-    //    @NonNull
-    //    private InputStream getEncryptedInputStream(Context context, File tempFile, int publicKeyId)
-    //    {
-    //        // Creating a CMS encrypted input stream that only recipients can decrypt
-    //        CMSEnvelopedDataGenerator gen = new CMSEnvelopedDataGenerator();
-    //
-    //        // Load bridge public key certificate from R.raw and add to recipients list
-    //        try
-    //        {
-    //            CertificateFactory factory = new CertificateFactory();
-    //            InputStream keyInputStream = context.getResources().openRawResource(publicKeyId);
-    //            X509Certificate cert = (X509Certificate) factory.engineGenerateCertificate(
-    //                    keyInputStream);
-    //            JceKeyTransRecipientInfoGenerator recipientInfoGenerator = new JceKeyTransRecipientInfoGenerator(
-    //                    cert).setProvider("SC");
-    //            gen.addRecipientInfoGenerator(recipientInfoGenerator);
-    //
-    //            // Generate encrypted input stream in AES-256-CBC format, output is DER, not S/MIME or PEM
-    //            CMSProcessableFile content = new CMSProcessableFile(tempFile);
-    //            OutputEncryptor encryptor = new JceCMSContentEncryptorBuilder(CMSAlgorithm.AES256_CBC).setProvider(
-    //                    "SC").build();
-    //            CMSEnvelopedData envelopedData = gen.generate(content, encryptor);
-    //            return new BufferedInputStream(new ByteArrayInputStream(envelopedData.getEncoded()));
-    //        }
-    //        catch(CertificateException | IOException | CMSException e)
-    //        {
-    //            throw new RuntimeException("Error encrypting with CMS", e);
-    //        }
-    //    }
+
+    @NonNull
+    private InputStream getEncryptedInputStream(Context context, File tempFile, int publicKeyId)
+    {
+        // Creating a CMS encrypted input stream that only recipients can decrypt
+        CMSEnvelopedDataGenerator gen = new CMSEnvelopedDataGenerator();
+
+        // Load bridge public key certificate from R.raw and add to recipients list
+        try
+        {
+            CertificateFactory factory = new CertificateFactory();
+            InputStream keyInputStream = context.getResources().openRawResource(publicKeyId);
+            X509Certificate cert = (X509Certificate) factory.engineGenerateCertificate(
+                    keyInputStream);
+            JceKeyTransRecipientInfoGenerator recipientInfoGenerator = new JceKeyTransRecipientInfoGenerator(
+                    cert).setProvider("SC");
+            gen.addRecipientInfoGenerator(recipientInfoGenerator);
+
+            // Generate encrypted input stream in AES-256-CBC format, output is DER, not S/MIME or PEM
+            CMSProcessableFile content = new CMSProcessableFile(tempFile);
+            OutputEncryptor encryptor = new JceCMSContentEncryptorBuilder(CMSAlgorithm.AES256_CBC).setProvider(
+                    "SC").build();
+            CMSEnvelopedData envelopedData = gen.generate(content, encryptor);
+            return new BufferedInputStream(new ByteArrayInputStream(envelopedData.getEncoded()));
+        }
+        catch(CertificateException | IOException | CMSException e)
+        {
+            throw new RuntimeException("Error encrypting with CMS", e);
+        }
+    }
 }
