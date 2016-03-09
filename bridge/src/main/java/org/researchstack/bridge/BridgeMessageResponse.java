@@ -1,4 +1,4 @@
-package org.researchstack.sampleapp.bridge;
+package org.researchstack.bridge;
 public class BridgeMessageResponse
 {
     private String message;

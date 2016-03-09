@@ -1,4 +1,4 @@
-package org.researchstack.sampleapp.network.body;
+package org.researchstack.bridge.body;
 public class SharingOptionBody
 {
     /**

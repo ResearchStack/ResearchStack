@@ -1,4 +1,4 @@
-package org.researchstack.sampleapp.network.body;
+package org.researchstack.bridge.body;
 
 import org.researchstack.backbone.utils.FormatHelper;
 

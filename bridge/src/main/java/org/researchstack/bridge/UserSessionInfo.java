@@ -1,4 +1,4 @@
-package org.researchstack.sampleapp.network;
+package org.researchstack.bridge;
 import java.util.Map;
 
 public class UserSessionInfo

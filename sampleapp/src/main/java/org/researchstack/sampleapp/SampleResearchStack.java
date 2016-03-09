@@ -11,13 +11,13 @@ import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.storage.file.SimpleFileAccess;
 import org.researchstack.backbone.storage.file.aes.AesProvider;
 import org.researchstack.backbone.storage.file.auth.PinCodeConfig;
+import org.researchstack.bridge.BridgeEncryptedDatabase;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.ResearchStack;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
-import org.researchstack.skin.network.bridge.BridgeEncryptedDatabase;
 import org.researchstack.skin.notification.NotificationConfig;
 import org.researchstack.skin.notification.SimpleNotificationConfig;
 
