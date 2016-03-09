@@ -140,6 +140,13 @@ public class MainActivity extends PinCodeActivity
             Observable.create(subscriber -> {
                 UiThreadContext.assertBackgroundThread();
 
+                if(! DataProvider.getInstance().isSignedIn(MainActivity.this))
+                {
+                    LogExt.d(getClass(), "User not signed in, skipping initial survey");
+                    subscriber.onCompleted();
+                    return;
+                }
+
                 TaskResult result = StorageAccess.getInstance()
                         .getAppDatabase()
                         .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
