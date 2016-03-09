@@ -34,30 +34,17 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
     // TODO Define in BuildConfig
     private static int DB_VERSION = 1;
 
-    private static SqlCipherDatabaseHelper     sInstance;
-    private final  UpdatablePassphraseProvider passphraseProvider;
+    private final UpdatablePassphraseProvider passphraseProvider;
 
-    private SqlCipherDatabaseHelper(Context context, UpdatablePassphraseProvider passphraseProvider)
+    public SqlCipherDatabaseHelper(Context context, UpdatablePassphraseProvider passphraseProvider)
     {
         super(context, DB_NAME, null, DB_VERSION, passphraseProvider);
         this.passphraseProvider = passphraseProvider;
     }
 
-    public static SqlCipherDatabaseHelper getInstance(Context context)
-    {
-        if(sInstance == null)
-        {
-            SQLiteDatabase.loadLibs(context);
-            sInstance = new SqlCipherDatabaseHelper(context, new UpdatablePassphraseProvider());
-        }
-        return sInstance;
-    }
-
-
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
-
         try
         {
             TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase),
