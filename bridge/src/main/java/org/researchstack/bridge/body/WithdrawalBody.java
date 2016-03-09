@@ -1,4 +1,4 @@
-package org.researchstack.sampleapp;
+package org.researchstack.bridge.body;
 public class WithdrawalBody
 {
 

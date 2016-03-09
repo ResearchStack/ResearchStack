@@ -1,4 +1,4 @@
-package org.researchstack.skin.network.bridge;
+package org.researchstack.bridge;
 import android.content.Context;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -6,7 +6,6 @@ import net.sqlcipher.database.SQLiteDatabase;
 import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.storage.database.sqlite.SqlCipherDatabaseHelper;
 import org.researchstack.backbone.storage.database.sqlite.UpdatablePassphraseProvider;
-import org.researchstack.skin.model.UploadRequest;
 
 import java.sql.SQLException;
 import java.util.List;

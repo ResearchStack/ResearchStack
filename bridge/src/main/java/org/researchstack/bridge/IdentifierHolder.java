@@ -1,4 +1,4 @@
-package org.researchstack.sampleapp.bridge;
+package org.researchstack.bridge;
 /**
  * Created by bradleymcdermott on 1/29/16.
  */

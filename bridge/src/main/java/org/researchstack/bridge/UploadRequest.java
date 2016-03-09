@@ -1,4 +1,4 @@
-package org.researchstack.skin.model;
+package org.researchstack.bridge;
 import co.touchlab.squeaky.field.DatabaseField;
 import co.touchlab.squeaky.table.DatabaseTable;
 
