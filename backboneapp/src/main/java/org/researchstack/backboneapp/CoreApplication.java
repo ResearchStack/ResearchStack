@@ -36,7 +36,7 @@ public class CoreApplication extends Application
         FileAccess fileAccess = new SimpleFileAccess();
 
         // If you have your own custom database, implement AppDatabase
-        AppDatabase database = DatabaseHelper.getInstance(this);
+        AppDatabase database = new DatabaseHelper(this);
 
         StorageAccess.getInstance().init(pinCodeConfig, encryptionProvider, fileAccess, database);
     }
