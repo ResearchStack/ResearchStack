@@ -80,6 +80,7 @@
         <receiver
             android:name="org.researchstack.skin.notification.TaskNotificationReceiver"
             android:enabled="true"
+            android:exported="false"
         />
 
         <receiver
@@ -98,9 +99,10 @@
             android:exported="false"
         >
             <intent-filter>
-                <action android:name="org.researchstack.skin.notification.ALERT_DELETE"/>
                 <action android:name="org.researchstack.skin.notification.ALERT_CREATE"/>
                 <action android:name="org.researchstack.skin.notification.ALERT_CREATE_ALL"/>
+                <action android:name="org.researchstack.skin.notification.ALERT_DELETE"/>
+                <action android:name="org.researchstack.skin.notification.ALERT_DELETE_ALL"/>
             </intent-filter>
         </receiver>
 
