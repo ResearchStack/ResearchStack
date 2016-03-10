@@ -33,6 +33,7 @@ import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.User;
+import org.researchstack.skin.notification.TaskAlertReceiver;
 import org.researchstack.skin.step.PassCodeCreationStep;
 import org.researchstack.skin.task.ConsentTask;
 import org.researchstack.skin.ui.OnboardingActivity;
@@ -306,7 +307,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     return true;
 
                 case KEY_REMINDERS:
-                    // TODO Alert Task Notification Manager
+                    SharedPreferences preferences = preference.getSharedPreferences();
+                    boolean isRemindersEnabled = preferences.getBoolean(KEY_REMINDERS, true);
+                    if (!isRemindersEnabled)
+                    {
+                        getActivity().sendBroadcast(new Intent(TaskAlertReceiver.ALERT_DELETE_ALL));
+                    }
                     return true;
             }
         }

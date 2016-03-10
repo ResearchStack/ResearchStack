@@ -3,7 +3,7 @@
 
     <style name="Widget.Sample.IconTabLayout" parent="@style/Widget.Backbone.IconTabLayout">
         <item name="tabIconColor">@android:color/white</item>
-        <item name="tabIndicatorColor">@color/rsb_error</item>
+        <item name="tabIconIndicatorColor">@color/rsb_error</item>
         <item name="tabTextColor">@color/tab_text_color</item>
     </style>
 
