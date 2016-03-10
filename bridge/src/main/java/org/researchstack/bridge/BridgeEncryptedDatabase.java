@@ -16,7 +16,7 @@ import co.touchlab.squeaky.table.TableUtils;
 /**
  * Created by bradleymcdermott on 3/8/16.
  */
-public class BridgeEncryptedDatabase extends SqlCipherDatabaseHelper
+public class BridgeEncryptedDatabase extends SqlCipherDatabaseHelper implements UploadQueue
 {
     public BridgeEncryptedDatabase(Context context, UpdatablePassphraseProvider passphraseProvider)
     {
