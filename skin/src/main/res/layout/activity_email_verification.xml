@@ -7,6 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 >
 
+    <include layout="@layout/layout_toolbar"/>
+
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -14,6 +16,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
+        android:layout_below="@+id/toolbar"
         android:textSize="20sp"
         android:textColor="?attr/colorAccent"
         android:text="@string/rss_confirm_title"

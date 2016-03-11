@@ -3,8 +3,8 @@ package org.researchstack.skin.ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +20,7 @@ import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ObservableUtils;
+import org.researchstack.backbone.utils.ThemeUtils;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.task.OnboardingTask;
@@ -47,11 +48,9 @@ public class EmailVerificationActivity extends PinCodeActivity
         setContentView(R.layout.activity_email_verification);
         progress = findViewById(R.id.progress);
 
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null)
-        {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -86,7 +85,7 @@ public class EmailVerificationActivity extends PinCodeActivity
 
     private void updateEmailText()
     {
-        int accentColor = getResources().getColor(R.color.rsb_colorAccent);
+        int accentColor = ThemeUtils.getAccentColor(this);
         String accentColorString = "#" + Integer.toHexString(Color.red(accentColor)) +
                 Integer.toHexString(Color.green(accentColor)) +
                 Integer.toHexString(Color.blue(accentColor));
@@ -104,9 +103,7 @@ public class EmailVerificationActivity extends PinCodeActivity
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             StepResult stepResult = taskResult.getStepResult(OnboardingTask.SignUpStepIdentifier);
 
-            // TODO figure out how we're doing this username field
             email = (String) stepResult.getResultForIdentifier(SignUpTask.ID_EMAIL);
-            String newUsername = (String) stepResult.getResultForIdentifier(SignUpTask.ID_USERNAME);
             password = (String) stepResult.getResultForIdentifier(SignUpTask.ID_PASSWORD);
             updateEmailText();
         }
