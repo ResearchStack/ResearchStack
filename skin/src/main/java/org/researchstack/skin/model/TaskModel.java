@@ -10,6 +10,10 @@ public class TaskModel
     @SerializedName("identifier")
     public String identifier;
 
+    public String guid;
+
+    public String createdOn;
+
     @SerializedName("type")
     public String type;
 

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.ui.ViewTaskActivity;
@@ -27,7 +28,6 @@ import org.researchstack.skin.R;
 import org.researchstack.skin.model.SchedulesAndTasksModel;
 import org.researchstack.skin.task.SmartSurveyTask;
 import org.researchstack.skin.ui.views.DividerItemDecoration;
-import org.researchstack.skin.utils.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,9 +86,8 @@ public class ActivitiesFragment extends Fragment
                 false));
 
         Observable.create(subscriber -> {
-            SchedulesAndTasksModel model = JsonUtils.loadClass(getContext(),
-                    SchedulesAndTasksModel.class,
-                    "tasks_and_schedules");
+            SchedulesAndTasksModel model = DataProvider.getInstance()
+                    .loadTasksAndSchedules(getActivity());
             subscriber.onNext(model);
         })
                 .compose(ObservableUtils.applyDefault())
@@ -117,6 +116,7 @@ public class ActivitiesFragment extends Fragment
             LogExt.d(getClass(), "Received task result from task activity");
 
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
+            StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
             DataProvider.getInstance().uploadTaskResult(getActivity(), taskResult);
 
             setUpAdapter();
@@ -129,10 +129,10 @@ public class ActivitiesFragment extends Fragment
 
     public static class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>
     {
-        List<SchedulesAndTasksModel.TaskModel> tasks;
-        HashMap<String, Boolean>               taskScheduleType;
+        List<SchedulesAndTasksModel.TaskScheduleModel> tasks;
+        HashMap<String, Boolean>                       taskScheduleType;
 
-        PublishSubject<SchedulesAndTasksModel.TaskModel> publishSubject = PublishSubject.create();
+        PublishSubject<SchedulesAndTasksModel.TaskScheduleModel> publishSubject = PublishSubject.create();
 
         public TaskAdapter(SchedulesAndTasksModel model)
         {
@@ -144,7 +144,7 @@ public class ActivitiesFragment extends Fragment
             //TODO refactor this, data should already be prepared / include all data we need
             for(SchedulesAndTasksModel.ScheduleModel schedule : model.schedules)
             {
-                for(SchedulesAndTasksModel.TaskModel task : schedule.tasks)
+                for(SchedulesAndTasksModel.TaskScheduleModel task : schedule.tasks)
                 {
                     // TODO supporting tasks that define taskClassName instead of a file should be supported
                     if(! TextUtils.isEmpty(task.taskFileName))
@@ -156,7 +156,7 @@ public class ActivitiesFragment extends Fragment
             }
         }
 
-        public PublishSubject<SchedulesAndTasksModel.TaskModel> getPublishSubject()
+        public PublishSubject<SchedulesAndTasksModel.TaskScheduleModel> getPublishSubject()
         {
             return publishSubject;
         }
@@ -172,7 +172,7 @@ public class ActivitiesFragment extends Fragment
         @Override
         public void onBindViewHolder(TaskAdapter.ViewHolder holder, int position)
         {
-            SchedulesAndTasksModel.TaskModel task = tasks.get(position);
+            SchedulesAndTasksModel.TaskScheduleModel task = tasks.get(position);
             boolean isOneTime = taskScheduleType.get(task.taskID);
 
             Resources res = holder.itemView.getResources();

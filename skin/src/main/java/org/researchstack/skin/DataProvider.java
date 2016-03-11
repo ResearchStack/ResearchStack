@@ -7,7 +7,6 @@ import org.researchstack.skin.model.User;
 import org.researchstack.skin.task.SmartSurveyTask;
 
 import java.util.Date;
-import java.util.List;
 
 import rx.Observable;
 
@@ -65,9 +64,9 @@ public abstract class DataProvider
 
     public abstract void uploadTaskResult(Context context, TaskResult taskResult);
 
-    public abstract List<SchedulesAndTasksModel.TaskModel> loadTasksAndSchedules(Context context);
+    public abstract SchedulesAndTasksModel loadTasksAndSchedules(Context context);
 
-    public abstract SmartSurveyTask loadTask(Context context, SchedulesAndTasksModel.TaskModel task);
+    public abstract SmartSurveyTask loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task);
 
     // This initial task may include profile items such as height and weight that may need to be
     // processed differently than a normal task result

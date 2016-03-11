@@ -31,7 +31,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -47,10 +46,10 @@ public class BridgeDataArchive
     private ZipOutputStream outputStream;
     private File            tempFile;
 
-    public BridgeDataArchive(String reference)
+    public BridgeDataArchive(Info info)
     {
-        info = new Info(reference);
-        this.filename = UUID.randomUUID().toString() + "_" + reference + ".zip";
+        this.info = info;
+        this.filename = info.getFileName();
     }
 
     public void start(File baseDir) throws FileNotFoundException
