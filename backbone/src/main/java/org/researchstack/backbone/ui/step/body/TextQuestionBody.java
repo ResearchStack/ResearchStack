@@ -35,7 +35,7 @@ public class TextQuestionBody implements StepBody
     public TextQuestionBody(Step step, StepResult result)
     {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.result = result == null ? new StepResult<>(step) : result;
     }
 
     @Override

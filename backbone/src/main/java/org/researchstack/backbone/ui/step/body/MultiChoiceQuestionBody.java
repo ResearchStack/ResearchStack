@@ -35,7 +35,7 @@ public class MultiChoiceQuestionBody <T> implements StepBody
     public MultiChoiceQuestionBody(Step step, StepResult result)
     {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.result = result == null ? new StepResult<>(step) : result;
         this.format = (ChoiceAnswerFormat) this.step.getAnswerFormat();
         this.choices = format.getChoices();
 

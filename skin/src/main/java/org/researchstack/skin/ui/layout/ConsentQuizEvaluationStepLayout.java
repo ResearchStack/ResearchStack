@@ -42,7 +42,7 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
     public void initialize(Step step, StepResult result)
     {
         this.step = (ConsentQuizEvaluationStep) step;
-        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.result = result == null ? new StepResult<>(step) : result;
 
         initializeStep();
     }

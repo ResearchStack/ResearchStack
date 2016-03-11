@@ -1,5 +1,9 @@
 package org.researchstack.backbone.result;
 
+import org.researchstack.backbone.answerformat.AnswerFormat;
+import org.researchstack.backbone.step.QuestionStep;
+import org.researchstack.backbone.step.Step;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +26,19 @@ public class StepResult <T> extends Result
     public static final String DEFAULT_KEY = "answer";
 
     private Map<String, T> results;
+
+    private AnswerFormat answerFormat;
+
+    public StepResult(Step step)
+    {
+        this(step.getIdentifier());
+
+        if(step instanceof QuestionStep)
+        {
+            answerFormat = ((QuestionStep) step).getAnswerFormat();
+        }
+        setStartDate(new Date());
+    }
 
     public StepResult(String identifier)
     {
@@ -68,5 +85,10 @@ public class StepResult <T> extends Result
     public boolean isEmpty()
     {
         return results.isEmpty();
+    }
+
+    public AnswerFormat getAnswerFormat()
+    {
+        return answerFormat;
     }
 }

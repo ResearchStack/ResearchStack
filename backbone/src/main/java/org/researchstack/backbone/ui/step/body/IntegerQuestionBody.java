@@ -37,7 +37,7 @@ public class IntegerQuestionBody implements StepBody
     public IntegerQuestionBody(Step step, StepResult result)
     {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.result = result == null ? new StepResult<>(step) : result;
         this.format = (IntegerAnswerFormat) this.step.getAnswerFormat();
     }
 

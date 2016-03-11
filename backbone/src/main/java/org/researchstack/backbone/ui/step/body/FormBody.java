@@ -32,7 +32,7 @@ public class FormBody implements StepBody
     public FormBody(Step step, StepResult result)
     {
         this.step = (FormStep) step;
-        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.result = result == null ? new StepResult<>(step) : result;
     }
 
     @Override
