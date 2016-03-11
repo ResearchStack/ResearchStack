@@ -91,7 +91,7 @@ public class SmartSurveyTask extends Task implements Serializable
             // TODO need to get max, min, etc
             answerFormat = new IntegerAnswerFormat(constraints.minValue, constraints.maxValue);
         }
-        else if(type.equals("TextConstraints"))
+        else if(type.equals("TextConstraints") || type.equals("StringConstraints"))
         {
             // TODO need to get maxlength
             answerFormat = new TextAnswerFormat();
