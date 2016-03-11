@@ -100,7 +100,7 @@
     <string name="rsb_quiz_evaluation_retake">Retake Quiz</string>
     <string name="rsb_quiz_evaluation_great_job">Great Job!</string>
 
-    <!--Other -->
+    <!-- Other -->
     <string name="rsb_submit">Submit</string>
     <string name="rsb_exit">Exit</string>
     <string name="rsb_get_started">Get Started</string>
@@ -116,6 +116,14 @@
     <string name="rsb_ok">OK</string>
     <string name="rsb_cancel">Cancel</string>
 
+    <!-- Step Errors -->
+    <!-- TODO Confirm Copy -->
+    <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
+    <string name="rsb_invalid_answer_date_over">Invalid answer, date is over the limit!</string>
+    <string name="rsb_invalid_answer_date_under">Invalid answer, date is under the limit!</string>
+    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value is too large!</string>
+    <string name="rsb_invalid_answer_integer_under">Invalid answer, your value is too small!</string>
+    <string name="rsb_invalid_answer_choice">Please select a value!</string>
 
     <!-- TODO Confirm Copy -->
     <string name="rsb_pincode_enter_title">Enter your passcode</string>

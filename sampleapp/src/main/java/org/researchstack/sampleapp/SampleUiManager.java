@@ -102,7 +102,7 @@ public class SampleUiManager extends UiManager
     @Override
     public boolean isConsentSkippable()
     {
-        return true;
+        return false;
     }
 
 }

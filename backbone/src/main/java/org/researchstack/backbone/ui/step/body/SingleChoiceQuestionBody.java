@@ -134,9 +134,16 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     }
 
     @Override
-    public boolean isAnswerValid()
+    public BodyAnswer getBodyAnswerState()
     {
-        return currentSelected != null;
+        if (currentSelected == null)
+        {
+            return new BodyAnswer(false, R.string.rsb_invalid_answer_choice);
+        }
+        else
+        {
+            return BodyAnswer.VALID;
+        }
     }
 
 }

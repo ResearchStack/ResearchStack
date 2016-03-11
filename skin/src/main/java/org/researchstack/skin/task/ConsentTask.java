@@ -33,6 +33,8 @@ import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 import org.researchstack.skin.step.ConsentQuizQuestionStep;
 import org.researchstack.skin.utils.JsonUtils;
 
+import java.util.Calendar;
+
 public class ConsentTask extends OrderedTask
 {
     public static final String ID_VISUAL         = "ID_VISUAL";
@@ -232,7 +234,9 @@ public class ConsentTask extends OrderedTask
             String nameText = ctx.getResources().getString(R.string.rsb_consent_name_full);
             QuestionStep fullName = new QuestionStep(ID_FORM_NAME, nameText, format);
 
-            DateAnswerFormat dobFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
+            Calendar maxDate = Calendar.getInstance();
+            maxDate.add(Calendar.YEAR, -18);
+            DateAnswerFormat dobFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date, null, null, maxDate.getTime(), null);
             String dobText = ctx.getResources().getString(R.string.rsb_consent_dob_full);
             QuestionStep dobStep = new QuestionStep(ID_FORM_DOB, dobText, dobFormat);
 

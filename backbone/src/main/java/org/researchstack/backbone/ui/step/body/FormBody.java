@@ -76,17 +76,18 @@ public class FormBody implements StepBody
     }
 
     @Override
-    public boolean isAnswerValid()
+    public BodyAnswer getBodyAnswerState()
     {
         for(StepBody formStepBody : formStepChildren)
         {
-            // TODO show better invalid feedback
-            if(! formStepBody.isAnswerValid())
+            BodyAnswer bodyAnswer = formStepBody.getBodyAnswerState();
+            if(! bodyAnswer.isValid())
             {
-                return false;
+                return bodyAnswer;
             }
         }
-        return true;
+
+        return BodyAnswer.VALID;
     }
 
     @NonNull
