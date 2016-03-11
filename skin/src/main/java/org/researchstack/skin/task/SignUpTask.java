@@ -3,6 +3,7 @@ package org.researchstack.skin.task;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.skin.TaskProvider;
+import org.researchstack.skin.UiManager;
 
 /**
  * TODO Needs Refactor
@@ -33,7 +34,7 @@ public class SignUpTask extends OnboardingTask
         }
         else if(step.getIdentifier().equals(SignUpInclusionCriteriaStepIdentifier))
         {
-            if(isEligible(result))
+            if(UiManager.getInstance().isInclusionCriteriaValid(result.getStepResult(step.getIdentifier())))
             {
                 nextStep = getEligibleStep();
             }
