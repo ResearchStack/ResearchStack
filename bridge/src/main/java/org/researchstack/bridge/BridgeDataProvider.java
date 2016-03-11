@@ -72,17 +72,6 @@ public abstract class BridgeDataProvider extends DataProvider
     public static final String USER_SESSION_PATH           = "/user_session";
     public static final String USER_PATH                   = "/user";
 
-    //TODO Add build flavors, add var to BuildConfig for STUDY_ID
-    public static final  String STUDY_ID = "ohsu-molemapper";
-    private static final String CLIENT   = "android";
-
-    //TODO Add build flavors, add var to BuildConfig for BASE_URL
-    String BASE_URL = "https://webservices-staging.sagebridge.org/v3/";
-
-    // initial data upload
-    public static final String INITIAL_DATA_FILENAME  = "initialData.json";
-    public static final String INITIAL_DATA_ITEM_NAME = "initialData";
-
     private   BridgeService   service;
     protected UserSessionInfo userSessionInfo;
     protected Gson    gson     = new Gson();
@@ -95,6 +84,14 @@ public abstract class BridgeDataProvider extends DataProvider
     private Map<String, String> loadedTaskCrons = new HashMap<>();
 
     protected abstract int getPublicKeyResId();
+
+    protected abstract int getTasksAndSchedulesResId();
+
+    protected abstract String getBaseUrl();
+
+    protected abstract String getStudyId();
+
+    protected abstract String getUserAgent();
 
     public BridgeDataProvider()
     {
@@ -121,8 +118,7 @@ public abstract class BridgeDataProvider extends DataProvider
             Request original = chain.request();
 
             //TODO Get proper app-name and version name
-            Request request = original.newBuilder()
-                    .header("User-Agent", " Mole Mapper/1")
+            Request request = original.newBuilder().header("User-Agent", getUserAgent())
                     .header("Bridge-Session", sessionToken)
                     .method(original.method(), original.body())
                     .build();
@@ -135,8 +131,7 @@ public abstract class BridgeDataProvider extends DataProvider
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()).baseUrl(getBaseUrl())
                 .client(client)
                 .build();
         service = retrofit.create(BridgeService.class);
@@ -190,7 +185,8 @@ public abstract class BridgeDataProvider extends DataProvider
     @Override
     public Observable<DataResponse> withdrawConsent(Context context, String reason)
     {
-        return service.withdrawConsent(new WithdrawalBody(reason)).doOnNext(response -> {
+        return service.withdrawConsent(getStudyId(), new WithdrawalBody(reason))
+                .doOnNext(response -> {
             if(response.isSuccess())
             {
                 userSessionInfo.setConsented(false);
@@ -207,7 +203,7 @@ public abstract class BridgeDataProvider extends DataProvider
     public Observable<DataResponse> signUp(Context context, String email, String username, String password)
     {
         //TODO pass in data groups, remove roles
-        SignUpBody body = new SignUpBody(STUDY_ID, email, username, password, null, null);
+        SignUpBody body = new SignUpBody(getStudyId(), email, username, password, null, null);
 
         // TODO Saving email to user object should exist elsewhere.
         // Save email to user object.
@@ -226,10 +222,11 @@ public abstract class BridgeDataProvider extends DataProvider
         });
     }
 
+
     @Override
     public Observable<DataResponse> signIn(Context context, String username, String password)
     {
-        SignInBody body = new SignInBody(STUDY_ID, username, password);
+        SignInBody body = new SignInBody(getStudyId(), username, password);
 
         // response 412 still has a response body, so catch all http errors here
         return service.signIn(body).doOnNext(response -> {
@@ -277,7 +274,7 @@ public abstract class BridgeDataProvider extends DataProvider
     @Override
     public Observable<DataResponse> resendEmailVerification(Context context, String email)
     {
-        EmailBody body = new EmailBody(STUDY_ID, email);
+        EmailBody body = new EmailBody(getStudyId(), email);
         return service.resendEmailVerification(body);
     }
 
@@ -298,7 +295,7 @@ public abstract class BridgeDataProvider extends DataProvider
     public void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope)
     {
         // User is not signed in yet, so we need to save consent info to disk for later upload
-        ConsentSignatureBody signature = new ConsentSignatureBody(STUDY_ID,
+        ConsentSignatureBody signature = new ConsentSignatureBody(getStudyId(),
                 name,
                 birthDate,
                 imageData,
@@ -357,7 +354,7 @@ public abstract class BridgeDataProvider extends DataProvider
 
     private void uploadConsent(Context context, ConsentSignatureBody consent)
     {
-        service.consentSignature(consent)
+        service.consentSignature(getStudyId(), consent)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(response -> {
                     // TODO this isn't good, we should be getting an updated user session info from
@@ -445,8 +442,7 @@ public abstract class BridgeDataProvider extends DataProvider
     public SchedulesAndTasksModel loadTasksAndSchedules(Context context)
     {
         SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(context,
-                SchedulesAndTasksModel.class,
-                "tasks_and_schedules");
+                SchedulesAndTasksModel.class, getTasksAndSchedulesResId());
 
         AppDatabase db = StorageAccess.getInstance().getAppDatabase();
 
@@ -766,7 +762,7 @@ public abstract class BridgeDataProvider extends DataProvider
          * </ul>
          */
         @Headers("Content-Type: application/json")
-        @POST("auth/signUp")
+        @POST("v3/auth/signUp")
         Observable<BridgeMessageResponse> signUp(@Body SignUpBody body);
 
         /**
@@ -778,50 +774,50 @@ public abstract class BridgeDataProvider extends DataProvider
          * </ul>
          */
         @Headers("Content-Type: application/json")
-        @POST("auth/signIn")
+        @POST("v3/auth/signIn")
         Observable<Response<UserSessionInfo>> signIn(@Body SignInBody body);
 
         @Headers("Content-Type: application/json")
-        @POST("subpopulations/" + STUDY_ID + "/consents/signature")
-        Observable<Response<BridgeMessageResponse>> consentSignature(@Body ConsentSignatureBody body);
+        @POST("v3/subpopulations/{studyId}/consents/signature")
+        Observable<Response<BridgeMessageResponse>> consentSignature(@Path("studyId") String studyId, @Body ConsentSignatureBody body);
 
         /**
          * @return Response code <b>200</b> w/ message explaining instructions on how the user should
          * proceed
          */
         @Headers("Content-Type: application/json")
-        @POST("auth/requestResetPassword")
+        @POST("v3/auth/requestResetPassword")
         Observable<Response> requestResetPassword(@Body EmailBody body);
 
 
-        @POST("subpopulations/" + STUDY_ID + "/consents/signature/withdraw")
-        Observable<Response<BridgeMessageResponse>> withdrawConsent(@Body WithdrawalBody withdrawal);
+        @POST("v3/subpopulations/{studyId}/consents/signature/withdraw")
+        Observable<Response<BridgeMessageResponse>> withdrawConsent(@Path("studyId") String studyId, @Body WithdrawalBody withdrawal);
 
         /**
          * @return Response code <b>200</b> w/ message explaining instructions on how the user should
          * proceed
          */
         @Headers("Content-Type: application/json")
-        @POST("auth/resendEmailVerification")
+        @POST("v3/auth/resendEmailVerification")
         Observable<DataResponse> resendEmailVerification(@Body EmailBody body);
 
         /**
          * @return Response code 200 w/ message telling user has been signed out
          */
-        @POST("auth/signOut")
+        @POST("v3/auth/signOut")
         Observable<Response> signOut();
 
-        @POST("users/self/dataSharing")
+        @POST("v3/users/self/dataSharing")
         Observable<Response<BridgeMessageResponse>> dataSharing(@Body SharingOptionBody body);
 
         @Headers("Content-Type: application/json")
-        @POST("uploads")
+        @POST("v3/uploads")
         Observable<UploadSession> requestUploadSession(@Body UploadRequest body);
 
-        @POST("uploads/{id}/complete")
+        @POST("v3/uploads/{id}/complete")
         Observable<BridgeMessageResponse> uploadComplete(@Path("id") String id);
 
-        @GET("uploadstatuses/{id}")
+        @GET("v3/uploadstatuses/{id}")
         Observable<UploadValidationStatus> uploadStatus(@Path("id") String id);
     }
 

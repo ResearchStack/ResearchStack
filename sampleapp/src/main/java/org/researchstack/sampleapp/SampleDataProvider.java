@@ -25,4 +25,28 @@ public class SampleDataProvider extends BridgeDataProvider
     {
         return R.raw.bridge_key;
     }
+
+    @Override
+    protected int getTasksAndSchedulesResId()
+    {
+        return R.raw.tasks_and_schedules;
+    }
+
+    @Override
+    protected String getBaseUrl()
+    {
+        return "https://webservices-staging.sagebridge.org/";
+    }
+
+    @Override
+    protected String getStudyId()
+    {
+        return "ohsu-molemapper";
+    }
+
+    @Override
+    protected String getUserAgent()
+    {
+        return "Mole Mapper/1";
+    }
 }
