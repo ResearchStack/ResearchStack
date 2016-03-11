@@ -99,10 +99,16 @@ public class TextQuestionBody implements StepBody
     }
 
     @Override
-    public boolean isAnswerValid()
+    public BodyAnswer getBodyAnswerState()
     {
-        return ((TextAnswerFormat) step.getAnswerFormat()).isAnswerValid(editText.getText()
-                .toString());
+        TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
+        if (!format.isAnswerValid((editText.getText()
+                .toString())))
+        {
+            return BodyAnswer.INVALID;
+        }
+
+        return BodyAnswer.VALID;
     }
 
 }

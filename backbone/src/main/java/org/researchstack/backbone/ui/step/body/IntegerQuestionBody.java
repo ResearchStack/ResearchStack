@@ -77,7 +77,6 @@ public class IntegerQuestionBody implements StepBody
     private View initViewDefault(LayoutInflater inflater, ViewGroup parent)
     {
         editText = (EditText) inflater.inflate(R.layout.item_edit_text, parent, false);
-
         setFilters(parent.getContext());
 
         return editText;
@@ -141,21 +140,33 @@ public class IntegerQuestionBody implements StepBody
     }
 
     @Override
-    public boolean isAnswerValid()
+    public BodyAnswer getBodyAnswerState()
     {
-        Integer result = null;
-
-        if(editText != null && editText.getText().length() > 0)
+        // If no answer is recorded
+        if (editText == null || TextUtils.isEmpty(editText.getText()))
         {
-            result = Integer.valueOf(editText.getText().toString());
+            return BodyAnswer.INVALID;
         }
 
-        if(result == null)
+        else
         {
-            return false;
+            // Parse value from editText
+            Integer intAnswer = Integer.valueOf(editText.getText().toString());
+
+            // If greater
+            if (intAnswer < format.getMinValue())
+            {
+                return new BodyAnswer(false, R.string.rsb_invalid_answer_integer_under);
+            }
+
+            else if (intAnswer > format.getMaxValue())
+            {
+                return new BodyAnswer(false, R.string.rsb_invalid_answer_integer_over);
+            }
+
         }
 
-        return result >= format.getMinValue() && result <= format.getMaxValue();
+        return BodyAnswer.VALID;
     }
 
 }

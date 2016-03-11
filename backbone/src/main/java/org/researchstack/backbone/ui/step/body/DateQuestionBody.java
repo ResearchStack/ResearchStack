@@ -165,28 +165,27 @@ public class DateQuestionBody implements StepBody
     }
 
     /**
-     * @return true if result date is >= min and <= max date set within the Step.AnswerFormat
+     * @return {@link BodyAnswer#VALID} if result date is >= min and <= max date set within the Step.AnswerFormat
      */
     @Override
-    public boolean isAnswerValid()
+    public BodyAnswer getBodyAnswerState()
     {
         // TODO possible to start with no selection?
         Date minDate = format.getMinimumDate();
         Date maxDate = format.getMaximumDate();
-
         Date resultDate = calendar.getTime();
 
         if(minDate != null && resultDate.getTime() < minDate.getTime())
         {
-            return false;
+            return new BodyAnswer(false, R.string.rsb_invalid_answer_date_under);
         }
 
         if(maxDate != null && resultDate.getTime() > maxDate.getTime())
         {
-            return false;
+            return new BodyAnswer(false, R.string.rsb_invalid_answer_date_over);
         }
 
-        return true;
+        return BodyAnswer.VALID;
     }
 
     private void showDialog(TextView tv)

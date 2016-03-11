@@ -23,6 +23,7 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.ui.step.body.BodyAnswer;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.views.SubmitBar;
 
@@ -292,24 +293,19 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
     protected void onNextClicked()
     {
-        if(stepBody.isAnswerValid())
+        BodyAnswer bodyAnswer = stepBody.getBodyAnswerState();
+
+        if (bodyAnswer == null || !bodyAnswer.isValid())
         {
-            if(callbacks != null)
-            {
-                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                        getStep(),
-                        stepBody.getStepResult());
-            }
-            else
-            {
-                //TODO Review whether we should force a crash or just log the message through Logcat.
-                throw new IllegalStateException("StepCallbacks must be set on class");
-            }
+            Toast.makeText(getContext(),
+                    bodyAnswer == null ? BodyAnswer.INVALID.getReason() : bodyAnswer.getReason(),
+                    Toast.LENGTH_SHORT).show();
         }
         else
         {
-            Toast.makeText(getContext(), R.string.rsb_please_complete_step, Toast.LENGTH_SHORT)
-                    .show();
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+                    getStep(),
+                    stepBody.getStepResult());
         }
     }
 
