@@ -94,33 +94,6 @@
 
         </TableRow>
 
-        <TableRow
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/rsb_item_size_default"
-        >
-
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/rsb_padding_small"
-                android:gravity="right"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/rss_username"
-            />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:hint="@string/rss_optional"
-                android:textColorHint="#33000000"
-                android:textSize="14sp"
-                android:inputType="textEmailAddress"
-            />
-
-        </TableRow>
-
     </TableLayout>
 
     <org.researchstack.backbone.ui.views.SubmitBar

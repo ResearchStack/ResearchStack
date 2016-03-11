@@ -31,7 +31,6 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
 
     private View              progress;
     private AppCompatEditText email;
-    private AppCompatEditText username;
     private AppCompatEditText password;
 
     public SignUpStepLayout(Context context)
@@ -58,7 +57,6 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.item_sign_up, this, true);
 
         progress = layout.findViewById(R.id.progress);
-        username = (AppCompatEditText) layout.findViewById(R.id.username);
 
         email = (AppCompatEditText) layout.findViewById(R.id.email);
         email.addTextChangedListener(new TextWatcherAdapter()
@@ -107,8 +105,6 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
         if(isAnswerValid())
         {
             final String email = this.email.getText().toString();
-            String rawUsername = this.username.getText().toString();
-            final String username = TextUtils.isEmpty(rawUsername) ? email : rawUsername;
             final String password = this.password.getText().toString();
 
             progress.animate()
@@ -118,12 +114,11 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
                         progress.setAlpha(0);
                     })
                     .withEndAction(() -> DataProvider.getInstance()
-                            .signUp(getContext(), email, username, password)
+                            .signUp(getContext(), email, null, password)
                             .compose(ObservableUtils.applyDefault())
                             .subscribe(dataResponse -> {
                                 // Save Email, Username, and Password in memory
                                 result.setResultForIdentifier(SignUpTask.ID_EMAIL, email);
-                                result.setResultForIdentifier(SignUpTask.ID_USERNAME, username);
                                 result.setResultForIdentifier(SignUpTask.ID_PASSWORD, password);
 
                                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
@@ -157,14 +152,8 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
             password.setError(getResources().getString(R.string.rss_error_invalid_password));
         }
 
-        if(! isUsernameValid())
-        {
-            username.setError(getResources().getString(R.string.rss_error_invalid_username));
-        }
-
         return TextUtils.isEmpty(email.getError()) &&
-                TextUtils.isEmpty(password.getError()) &&
-                TextUtils.isEmpty(username.getError());
+                TextUtils.isEmpty(password.getError());
     }
 
     public boolean isEmailValid()
@@ -179,13 +168,6 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
         CharSequence target = password.getText();
         return ! TextUtils.isEmpty(target);
     }
-
-    public boolean isUsernameValid()
-    {
-        CharSequence target = username.getText();
-        return TextUtils.isEmpty(target) || target.length() >= 6;
-    }
-
 
     @Override
     public View getLayout()

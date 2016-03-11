@@ -16,6 +16,6 @@ public interface StepBody
 
     StepResult getStepResult();
 
-    boolean isAnswerValid();
+    BodyAnswer getBodyAnswerState();
 
 }

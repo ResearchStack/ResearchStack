@@ -41,9 +41,9 @@ public class NotImplementedStepBody implements StepBody
     }
 
     @Override
-    public boolean isAnswerValid()
+    public BodyAnswer getBodyAnswerState()
     {
-        return true;
+        return BodyAnswer.VALID;
     }
 
 }
