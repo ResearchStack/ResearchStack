@@ -1,4 +1,5 @@
 package org.researchstack.skin;
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.skin.notification.TaskNotificationReceiver;
 
@@ -29,6 +30,8 @@ public abstract class UiManager
     public abstract List<ActionItem> getMainTabBarItems();
 
     public abstract Step getInclusionCriteriaStep();
+
+    public abstract boolean isInclusionCriteriaValid(StepResult result);
 
     public abstract boolean isSignatureEnabledInConsent();
 

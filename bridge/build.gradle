@@ -47,5 +47,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile project(":skin")
+    apt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
     compile 'com.android.support:appcompat-v7:23.1.1'
 }

@@ -2,6 +2,7 @@ package org.researchstack.sampleapp;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.model.Choice;
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.skin.ActionItem;
@@ -91,6 +92,17 @@ public class SampleUiManager extends UiManager
                 alien));
 
         return step;
+    }
+
+    @Override
+    public boolean isInclusionCriteriaValid(StepResult stepResult)
+    {
+        if(stepResult != null)
+        {
+            return ((StepResult<Boolean>) stepResult).getResult();
+        }
+
+        return false;
     }
 
     @Override
