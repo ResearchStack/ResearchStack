@@ -39,6 +39,7 @@ import org.researchstack.skin.utils.JsonUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -131,7 +132,8 @@ public abstract class BridgeDataProvider extends DataProvider
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create()).baseUrl(getBaseUrl())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(getBaseUrl())
                 .client(client)
                 .build();
         service = retrofit.create(BridgeService.class);
@@ -187,16 +189,16 @@ public abstract class BridgeDataProvider extends DataProvider
     {
         return service.withdrawConsent(getStudyId(), new WithdrawalBody(reason))
                 .doOnNext(response -> {
-            if(response.isSuccess())
-            {
-                userSessionInfo.setConsented(false);
-                saveUserSession(context, userSessionInfo);
-                buildRetrofitService(userSessionInfo);
-            }
-        }).map(response -> {
-            boolean success = response.isSuccess();
-            return new DataResponse(success, response.message());
-        });
+                    if(response.isSuccess())
+                    {
+                        userSessionInfo.setConsented(false);
+                        saveUserSession(context, userSessionInfo);
+                        buildRetrofitService(userSessionInfo);
+                    }
+                }).map(response -> {
+                    boolean success = response.isSuccess();
+                    return new DataResponse(success, response.message());
+                });
     }
 
     @Override
@@ -442,7 +444,8 @@ public abstract class BridgeDataProvider extends DataProvider
     public SchedulesAndTasksModel loadTasksAndSchedules(Context context)
     {
         SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(context,
-                SchedulesAndTasksModel.class, getTasksAndSchedulesResId());
+                SchedulesAndTasksModel.class,
+                getTasksAndSchedulesResId());
 
         AppDatabase db = StorageAccess.getInstance().getAppDatabase();
 
@@ -528,18 +531,38 @@ public abstract class BridgeDataProvider extends DataProvider
             }
         }
 
+        List<BridgeDataInput> files = new ArrayList<>();
+
+        for(StepResult stepResult : taskResult.getResults().values())
+        {
+            SurveyAnswer surveyAnswer = SurveyAnswer.create(stepResult);
+            files.add(new BridgeDataInput(surveyAnswer,
+                    SurveyAnswer.class,
+                    stepResult.getIdentifier() + ".json",
+                    FormatHelper.DEFAULT_FORMAT.format(stepResult.getEndDate())));
+        }
+
+        uploadBridgeData(context,
+                new Info(getGuid(taskResult.getIdentifier()),
+                        getCreatedOnDate(taskResult.getIdentifier())),
+                files);
+    }
+
+    public void uploadBridgeData(Context context, Info info, BridgeDataInput... dataFiles)
+    {
+        uploadBridgeData(context, info, Arrays.asList(dataFiles));
+    }
+
+    public void uploadBridgeData(Context context, Info info, List<BridgeDataInput> dataFiles)
+    {
         try
         {
-            BridgeDataArchive archive = new BridgeDataArchive(new Info(getGuid(taskResult.getIdentifier()),
-                    getCreatedOnDate(taskResult.getIdentifier())));
+            BridgeDataArchive archive = new BridgeDataArchive(info);
             archive.start(getFilesDir(context));
 
-            for(StepResult stepResult : taskResult.getResults().values())
+            for(BridgeDataInput dataFile : dataFiles)
             {
-                SurveyAnswer surveyAnswer = SurveyAnswer.create(stepResult);
-                archive.addFile(stepResult.getIdentifier() + ".json",
-                        gson.toJson(surveyAnswer).getBytes(),
-                        FormatHelper.DEFAULT_FORMAT.format(stepResult.getEndDate()));
+                archive.addFile(context, dataFile);
             }
 
             UploadRequest request = archive.finishAndEncrypt(context,
