@@ -78,7 +78,7 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
 
         if(this.stepResult == null)
         {
-            this.stepResult = new StepResult<T>(step.getIdentifier());
+            this.stepResult = new StepResult<T>(step);
         }
 
         initializeLayout();

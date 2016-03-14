@@ -56,7 +56,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
 
         if(stepResult == null)
         {
-            stepResult = new StepResult<>(step.getIdentifier());
+            stepResult = new StepResult<>(step);
         }
 
         initializeStep();

@@ -24,7 +24,6 @@ import org.researchstack.bridge.body.SharingOptionBody;
 import org.researchstack.bridge.body.SignInBody;
 import org.researchstack.bridge.body.SignUpBody;
 import org.researchstack.bridge.body.SurveyAnswer;
-import org.researchstack.bridge.body.SurveyResponse;
 import org.researchstack.bridge.body.WithdrawalBody;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
@@ -73,28 +72,26 @@ public abstract class BridgeDataProvider extends DataProvider
     public static final String USER_SESSION_PATH           = "/user_session";
     public static final String USER_PATH                   = "/user";
 
-    //TODO Add build flavors, add var to BuildConfig for STUDY_ID
-    public static final  String STUDY_ID = "ohsu-molemapper";
-    private static final String CLIENT   = "android";
-
-    //TODO Add build flavors, add var to BuildConfig for BASE_URL
-    String BASE_URL = "https://webservices-staging.sagebridge.org/v3/";
-
-    // initial data upload
-    public static final String INITIAL_DATA_FILENAME  = "initialData.json";
-    public static final String INITIAL_DATA_ITEM_NAME = "initialData";
-
     private   BridgeService   service;
     protected UserSessionInfo userSessionInfo;
     protected Gson    gson     = new Gson();
     protected boolean signedIn = false;
 
-    // TODO figure out if there's a better way to do this
+    // TODO add these to a db for easier lookups, direct updating from bridge server
     // these are used to get task/step guids without rereading the json files and iterating through
-    private Map<String, TaskModel> loadedTasks     = new HashMap<>();
-    private Map<String, String>    loadedTaskGuids = new HashMap<>();
+    private Map<String, String> loadedTaskGuids = new HashMap<>();
+    private Map<String, String> loadedTaskDates = new HashMap<>();
+    private Map<String, String> loadedTaskCrons = new HashMap<>();
 
     protected abstract int getPublicKeyResId();
+
+    protected abstract int getTasksAndSchedulesResId();
+
+    protected abstract String getBaseUrl();
+
+    protected abstract String getStudyId();
+
+    protected abstract String getUserAgent();
 
     public BridgeDataProvider()
     {
@@ -121,8 +118,7 @@ public abstract class BridgeDataProvider extends DataProvider
             Request original = chain.request();
 
             //TODO Get proper app-name and version name
-            Request request = original.newBuilder()
-                    .header("User-Agent", " Mole Mapper/1")
+            Request request = original.newBuilder().header("User-Agent", getUserAgent())
                     .header("Bridge-Session", sessionToken)
                     .method(original.method(), original.body())
                     .build();
@@ -135,8 +131,7 @@ public abstract class BridgeDataProvider extends DataProvider
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()).baseUrl(getBaseUrl())
                 .client(client)
                 .build();
         service = retrofit.create(BridgeService.class);
@@ -190,7 +185,8 @@ public abstract class BridgeDataProvider extends DataProvider
     @Override
     public Observable<DataResponse> withdrawConsent(Context context, String reason)
     {
-        return service.withdrawConsent(new WithdrawalBody(reason)).doOnNext(response -> {
+        return service.withdrawConsent(getStudyId(), new WithdrawalBody(reason))
+                .doOnNext(response -> {
             if(response.isSuccess())
             {
                 userSessionInfo.setConsented(false);
@@ -207,7 +203,7 @@ public abstract class BridgeDataProvider extends DataProvider
     public Observable<DataResponse> signUp(Context context, String email, String username, String password)
     {
         //TODO pass in data groups, remove roles
-        SignUpBody body = new SignUpBody(STUDY_ID, email, username, password, null, null);
+        SignUpBody body = new SignUpBody(getStudyId(), email, username, password, null, null);
 
         // TODO Saving email to user object should exist elsewhere.
         // Save email to user object.
@@ -226,10 +222,11 @@ public abstract class BridgeDataProvider extends DataProvider
         });
     }
 
+
     @Override
     public Observable<DataResponse> signIn(Context context, String username, String password)
     {
-        SignInBody body = new SignInBody(STUDY_ID, username, password);
+        SignInBody body = new SignInBody(getStudyId(), username, password);
 
         // response 412 still has a response body, so catch all http errors here
         return service.signIn(body).doOnNext(response -> {
@@ -277,7 +274,7 @@ public abstract class BridgeDataProvider extends DataProvider
     @Override
     public Observable<DataResponse> resendEmailVerification(Context context, String email)
     {
-        EmailBody body = new EmailBody(STUDY_ID, email);
+        EmailBody body = new EmailBody(getStudyId(), email);
         return service.resendEmailVerification(body);
     }
 
@@ -298,7 +295,7 @@ public abstract class BridgeDataProvider extends DataProvider
     public void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope)
     {
         // User is not signed in yet, so we need to save consent info to disk for later upload
-        ConsentSignatureBody signature = new ConsentSignatureBody(STUDY_ID,
+        ConsentSignatureBody signature = new ConsentSignatureBody(getStudyId(),
                 name,
                 birthDate,
                 imageData,
@@ -357,7 +354,7 @@ public abstract class BridgeDataProvider extends DataProvider
 
     private void uploadConsent(Context context, ConsentSignatureBody consent)
     {
-        service.consentSignature(consent)
+        service.consentSignature(getStudyId(), consent)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(response -> {
                     // TODO this isn't good, we should be getting an updated user session info from
@@ -442,73 +439,86 @@ public abstract class BridgeDataProvider extends DataProvider
     }
 
     @Override
-    public List<SchedulesAndTasksModel.TaskModel> loadTasksAndSchedules(Context context)
+    public SchedulesAndTasksModel loadTasksAndSchedules(Context context)
     {
         SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(context,
-                SchedulesAndTasksModel.class,
-                "tasks_and_schedules");
+                SchedulesAndTasksModel.class, getTasksAndSchedulesResId());
 
         AppDatabase db = StorageAccess.getInstance().getAppDatabase();
 
-        ArrayList<SchedulesAndTasksModel.TaskModel> tasks = new ArrayList<>();
+        List<SchedulesAndTasksModel.ScheduleModel> schedules = new ArrayList<>();
         for(SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)
         {
-            for(SchedulesAndTasksModel.TaskModel task : schedule.tasks)
+            if(schedule.tasks.size() == 0)
             {
-                if(task.taskFileName == null)
-                {
-                    LogExt.e(getClass(), "No filename found for task with id: " + task.taskID);
-                    continue;
-                }
+                LogExt.e(getClass(), "No tasks in schedule");
+                continue;
+            }
 
-                // TODO loading the task json here is bad, but the GUID is in the schedule
-                // TODO json but the id is in the task json
-                TaskModel taskModel = JsonUtils.loadClass(context,
-                        TaskModel.class,
-                        task.taskFileName);
-                TaskResult result = db.loadLatestTaskResult(taskModel.identifier);
+            // only supporting one task per schedule for now
+            SchedulesAndTasksModel.TaskScheduleModel task = schedule.tasks.get(0);
 
-                if(result == null)
+            if(task.taskFileName == null)
+            {
+                LogExt.e(getClass(), "No filename found for task with id: " + task.taskID);
+                continue;
+            }
+
+            // TODO loading the task json here is bad, but the taskID is in the schedule
+            // TODO json but the readable id is in the task json
+            TaskModel taskModel = loadTaskModel(context, task);
+            TaskResult result = db.loadLatestTaskResult(taskModel.identifier);
+
+            // cache cron string for later lookup
+            loadedTaskCrons.put(taskModel.identifier, schedule.scheduleString);
+
+            if(result == null)
+            {
+                schedules.add(schedule);
+            }
+            else if(StringUtils.isNotEmpty(schedule.scheduleString))
+            {
+                Date date = ScheduleHelper.nextSchedule(schedule.scheduleString,
+                        result.getEndDate());
+                if(date.before(new Date()))
                 {
-                    tasks.add(task);
-                }
-                else if(StringUtils.isNotEmpty(schedule.scheduleString))
-                {
-                    Date date = ScheduleHelper.nextSchedule(schedule.scheduleString,
-                            result.getEndDate());
-                    if(date.before(new Date()))
-                    {
-                        tasks.add(task);
-                    }
+                    schedules.add(schedule);
                 }
             }
         }
-        return tasks;
+
+        schedulesAndTasksModel.schedules = schedules;
+        return schedulesAndTasksModel;
+    }
+
+    private TaskModel loadTaskModel(Context context, SchedulesAndTasksModel.TaskScheduleModel task)
+    {
+        TaskModel taskModel = JsonUtils.loadClass(context, TaskModel.class, task.taskFileName);
+
+        // cache guid and createdOnDate
+        loadedTaskGuids.put(taskModel.identifier, taskModel.guid);
+        loadedTaskDates.put(taskModel.identifier, taskModel.createdOn);
+
+        return taskModel;
     }
 
     @Override
-    public SmartSurveyTask loadTask(Context context, SchedulesAndTasksModel.TaskModel task)
+    public SmartSurveyTask loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task)
     {
-        // TODO 2 types of taskmodels here, confusing
-        TaskModel taskModel = JsonUtils.loadClass(context, TaskModel.class, task.taskFileName);
-        loadedTasks.put(taskModel.identifier, taskModel);
-        loadedTaskGuids.put(taskModel.identifier, task.taskID);
-        return new SmartSurveyTask(taskModel);
+        TaskModel taskModel = loadTaskModel(context, task);
+        SmartSurveyTask smartSurveyTask = new SmartSurveyTask(taskModel);
+        return smartSurveyTask;
     }
 
     @Override
     public void uploadTaskResult(Context context, TaskResult taskResult)
     {
-        // TODO should we do this here?
-        // Add to database
-        StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
-
         // Update/Create TaskNotificationService
         if(AppPrefs.getInstance(context).isTaskReminderEnabled())
         {
             Log.i("SampleDataProvider", "uploadTaskResult() _ isTaskReminderEnabled() = true");
 
-            String chronTime = findChronTime(context, taskResult.getIdentifier());
+            String chronTime = findChronTime(taskResult.getIdentifier());
 
             // If chronTime is null then either the task is not repeating OR its not found within
             // the task_and_schedules.xml
@@ -518,78 +528,47 @@ public abstract class BridgeDataProvider extends DataProvider
             }
         }
 
-        // Upload using the world-wide-web
-        // TODO use UploadResult queue for this? (upload encrypted)
-        TaskModel taskModel = loadedTasks.get(taskResult.getIdentifier());
-        List<TaskModel.StepModel> elements = taskModel.elements;
-        Map<String, TaskModel.StepModel> stepModels = new HashMap<>(elements.size());
-
-        for(TaskModel.StepModel stepModel : elements)
+        try
         {
-            stepModels.put(stepModel.identifier, stepModel);
-        }
+            BridgeDataArchive archive = new BridgeDataArchive(new Info(getGuid(taskResult.getIdentifier()),
+                    getCreatedOnDate(taskResult.getIdentifier())));
+            archive.start(getFilesDir(context));
 
-        ArrayList<SurveyAnswer> surveyAnswers = new ArrayList<>();
-
-        for(StepResult stepResult : taskResult.getResults().values())
-        {
-            boolean declined = stepResult.getResults().size() == 0;
-            List<String> answers = new ArrayList<>();
-            for(Object answer : stepResult.getResults().values())
+            for(StepResult stepResult : taskResult.getResults().values())
             {
-                answers.add(answer.toString());
+                SurveyAnswer surveyAnswer = SurveyAnswer.create(stepResult);
+                archive.addFile(stepResult.getIdentifier() + ".json",
+                        gson.toJson(surveyAnswer).getBytes(),
+                        FormatHelper.DEFAULT_FORMAT.format(stepResult.getEndDate()));
             }
-            SurveyAnswer surveyAnswer = new SurveyAnswer(stepModels.get(stepResult.getIdentifier()).guid,
-                    declined,
-                    CLIENT,
-                    stepResult.getEndDate(),
-                    answers);
-            surveyAnswers.add(surveyAnswer);
-        }
 
-        SurveyResponse response = new SurveyResponse(taskResult.getIdentifier(),
-                taskResult.getStartDate(),
-                taskResult.getEndDate(),
-                loadedTaskGuids.get(taskResult.getIdentifier()),
-                // TODO createdOn date for survey not in the schedule json, not sure what date to use
-                FormatHelper.DEFAULT_FORMAT.format(taskResult.getStartDate()),
-                SurveyResponse.Status.FINISHED,
-                surveyAnswers);
-        // TODO use encrypted upload?
-        service.surveyResponses(response)
-                .compose(ObservableUtils.applyDefault())
-                .subscribe(httpResponse -> LogExt.d(getClass(),
-                        "Successful upload of survey, identifier: " + httpResponse.identifier),
-                        error -> {
-                            LogExt.e(getClass(), "Error uploading survey");
-                            error.printStackTrace();
-                        });
+            UploadRequest request = archive.finishAndEncrypt(context,
+                    getPublicKeyResId(),
+                    getFilesDir(context));
+
+            ((UploadQueue) StorageAccess.getInstance().getAppDatabase()).saveUploadRequest(request);
+            uploadPendingFiles(context);
+        }
+        catch(IOException e)
+        {
+            throw new RuntimeException("Error encrypting initial task data", e);
+        }
     }
 
-    // TODO this stinks, I should be able to query the DB and find the chrono time.
-    private String findChronTime(Context context, String identifier)
+    // TODO these stink, I should be able to query the DB and find these
+    private String getCreatedOnDate(String identifier)
     {
-        SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(context,
-                SchedulesAndTasksModel.class,
-                "tasks_and_schedules");
+        return loadedTaskDates.get(identifier);
+    }
 
-        for(SchedulesAndTasksModel.ScheduleModel schedule : schedulesAndTasksModel.schedules)
-        {
-            for(SchedulesAndTasksModel.TaskModel task : schedule.tasks)
-            {
-                // TODO loading the task json here is bad, but the GUID is in the schedule
-                // TODO json but the id is in the task json
-                TaskModel taskModel = JsonUtils.loadClass(context,
-                        TaskModel.class,
-                        task.taskFileName);
+    private String getGuid(String identifier)
+    {
+        return loadedTaskGuids.get(identifier);
+    }
 
-                if(taskModel.identifier.equals(identifier))
-                {
-                    return schedule.scheduleString;
-                }
-            }
-        }
-        return null;
+    private String findChronTime(String identifier)
+    {
+        return loadedTaskCrons.get(identifier);
     }
 
     private void scheduleReminderNotification(Context context, Date endDate, String chronTime)
@@ -666,6 +645,7 @@ public abstract class BridgeDataProvider extends DataProvider
                 }, error -> {
                     error.printStackTrace();
                     LogExt.e(getClass(), "Error uploading file to S3, will try again");
+                    deleteUploadRequest(context, request);
                 });
     }
 
@@ -717,7 +697,8 @@ public abstract class BridgeDataProvider extends DataProvider
                     {
                         case UNKNOWN:
                         case VALIDATION_FAILED:
-                            LogExt.e(getClass(), "Unrecoverable error, retry");
+                            LogExt.e(getClass(), "Unrecoverable error, deleting");
+                            deleteUploadRequest(context, request);
                             // TODO figure out what to actually do on unrecoverable
                             break;
 
@@ -781,7 +762,7 @@ public abstract class BridgeDataProvider extends DataProvider
          * </ul>
          */
         @Headers("Content-Type: application/json")
-        @POST("auth/signUp")
+        @POST("v3/auth/signUp")
         Observable<BridgeMessageResponse> signUp(@Body SignUpBody body);
 
         /**
@@ -793,54 +774,50 @@ public abstract class BridgeDataProvider extends DataProvider
          * </ul>
          */
         @Headers("Content-Type: application/json")
-        @POST("auth/signIn")
+        @POST("v3/auth/signIn")
         Observable<Response<UserSessionInfo>> signIn(@Body SignInBody body);
 
         @Headers("Content-Type: application/json")
-        @POST("subpopulations/" + STUDY_ID + "/consents/signature")
-        Observable<Response<BridgeMessageResponse>> consentSignature(@Body ConsentSignatureBody body);
+        @POST("v3/subpopulations/{studyId}/consents/signature")
+        Observable<Response<BridgeMessageResponse>> consentSignature(@Path("studyId") String studyId, @Body ConsentSignatureBody body);
 
         /**
          * @return Response code <b>200</b> w/ message explaining instructions on how the user should
          * proceed
          */
         @Headers("Content-Type: application/json")
-        @POST("auth/requestResetPassword")
+        @POST("v3/auth/requestResetPassword")
         Observable<Response> requestResetPassword(@Body EmailBody body);
 
 
-        @POST("subpopulations/" + STUDY_ID + "/consents/signature/withdraw")
-        Observable<Response<BridgeMessageResponse>> withdrawConsent(@Body WithdrawalBody withdrawal);
+        @POST("v3/subpopulations/{studyId}/consents/signature/withdraw")
+        Observable<Response<BridgeMessageResponse>> withdrawConsent(@Path("studyId") String studyId, @Body WithdrawalBody withdrawal);
 
         /**
          * @return Response code <b>200</b> w/ message explaining instructions on how the user should
          * proceed
          */
         @Headers("Content-Type: application/json")
-        @POST("auth/resendEmailVerification")
+        @POST("v3/auth/resendEmailVerification")
         Observable<DataResponse> resendEmailVerification(@Body EmailBody body);
 
         /**
          * @return Response code 200 w/ message telling user has been signed out
          */
-        @POST("auth/signOut")
+        @POST("v3/auth/signOut")
         Observable<Response> signOut();
 
-        @POST("users/self/dataSharing")
+        @POST("v3/users/self/dataSharing")
         Observable<Response<BridgeMessageResponse>> dataSharing(@Body SharingOptionBody body);
 
         @Headers("Content-Type: application/json")
-        @POST("surveyresponses")
-        Observable<IdentifierHolder> surveyResponses(@Body SurveyResponse body);
-
-        @Headers("Content-Type: application/json")
-        @POST("uploads")
+        @POST("v3/uploads")
         Observable<UploadSession> requestUploadSession(@Body UploadRequest body);
 
-        @POST("uploads/{id}/complete")
+        @POST("v3/uploads/{id}/complete")
         Observable<BridgeMessageResponse> uploadComplete(@Path("id") String id);
 
-        @GET("uploadstatuses/{id}")
+        @GET("v3/uploadstatuses/{id}")
         Observable<UploadValidationStatus> uploadStatus(@Path("id") String id);
     }
 

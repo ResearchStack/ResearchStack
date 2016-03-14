@@ -57,7 +57,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     public void initialize(Step step, StepResult result)
     {
         this.step = step;
-        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.result = result == null ? new StepResult<>(step) : result;
 
         initializeStep();
     }

@@ -54,7 +54,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     public void initialize(Step step, StepResult result)
     {
         this.step = step;
-        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.result = result == null ? new StepResult<>(step) : result;
 
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.item_sign_in, this, true);
 

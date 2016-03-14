@@ -31,7 +31,7 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     public SingleChoiceQuestionBody(Step step, StepResult result)
     {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.result = result == null ? new StepResult<>(step) : result;
         this.format = (ChoiceAnswerFormat) this.step.getAnswerFormat();
         this.choices = format.getChoices();
 

@@ -44,7 +44,7 @@ public class DateQuestionBody implements StepBody
     public DateQuestionBody(Step step, StepResult result)
     {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
+        this.result = result == null ? new StepResult<>(step) : result;
         this.format = (DateAnswerFormat) this.step.getAnswerFormat();
         this.calendar = Calendar.getInstance();
 

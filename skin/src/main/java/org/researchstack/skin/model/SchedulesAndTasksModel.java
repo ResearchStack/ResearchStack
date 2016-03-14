@@ -10,13 +10,13 @@ public class SchedulesAndTasksModel
 
     public static class ScheduleModel
     {
-        public String          scheduleType;
-        public String          delay;
-        public String          scheduleString;
-        public List<TaskModel> tasks;
+        public String                  scheduleType;
+        public String                  delay;
+        public String                  scheduleString;
+        public List<TaskScheduleModel> tasks;
     }
 
-    public static class TaskModel
+    public static class TaskScheduleModel
     {
         public String taskTitle;
         public String taskID;

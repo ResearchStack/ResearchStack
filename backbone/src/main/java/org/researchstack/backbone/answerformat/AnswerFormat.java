@@ -27,21 +27,24 @@ public abstract class AnswerFormat implements Serializable
         Class<?> getStepBodyClass();
     }
 
+    // order matters for bridge uploads
     public enum Type implements QuestionType
     {
         None(NotImplementedStepBody.class),
-        Form(FormBody.class),
         Scale(NotImplementedStepBody.class),
         SingleChoice(SingleChoiceQuestionBody.class),
         MultipleChoice(MultiChoiceQuestionBody.class),
         Decimal(NotImplementedStepBody.class),
         Integer(IntegerQuestionBody.class),
-        Boolean(NotImplementedStepBody.class),
+        Boolean(SingleChoiceQuestionBody.class),
+        Eligibility(NotImplementedStepBody.class),
         Text(TextQuestionBody.class),
         TimeOfDay(NotImplementedStepBody.class),
         DateAndTime(NotImplementedStepBody.class),
         Date(DateQuestionBody.class),
-        TimeInterval(NotImplementedStepBody.class);
+        TimeInterval(NotImplementedStepBody.class),
+        Location(NotImplementedStepBody.class),
+        Form(FormBody.class);
 
         private Class<?> stepBodyClass;
 
