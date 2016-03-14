@@ -114,17 +114,10 @@ public class BridgeDataArchive
         }
     }
 
-
-    public void addFile(String filename, byte[] data, String date) throws IOException
+    public void addFile(Context context, BridgeDataInput dataFile) throws IOException
     {
-        addFile(filename, new ByteArrayInputStream(data), date);
-    }
-
-
-    public void addFile(String filename, InputStream data, String date) throws IOException
-    {
-        info.addFileInfo(new FileInfo(filename, date));
-        addZipEntry(filename, data);
+        info.addFileInfo(new FileInfo(dataFile.filename, dataFile.endDate));
+        addZipEntry(dataFile.filename, dataFile.getInputStream(context));
     }
 
 
