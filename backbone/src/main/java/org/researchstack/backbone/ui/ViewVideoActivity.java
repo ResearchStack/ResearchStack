@@ -1,4 +1,4 @@
-package org.researchstack.skin.ui;
+package org.researchstack.backbone.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-import org.researchstack.skin.R;
+import org.researchstack.backbone.R;
+
 
 public class ViewVideoActivity extends AppCompatActivity
 {

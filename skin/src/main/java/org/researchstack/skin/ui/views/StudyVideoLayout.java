@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.StudyOverviewModel;
-import org.researchstack.skin.ui.ViewVideoActivity;
+import org.researchstack.backbone.ui.ViewVideoActivity;
 
 @Deprecated
 public class StudyVideoLayout extends ScrollView
