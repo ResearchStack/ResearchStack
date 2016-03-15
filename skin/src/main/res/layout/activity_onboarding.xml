@@ -74,21 +74,22 @@
         android:id="@+id/pager_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/rsb_black_40"
+        android:background="@color/rss_black_60"
         android:visibility="gone"
         tools:visibility="visible"
     >
         <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/pager_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="110dp"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginTop="110dp"
-            app:elevation="24dp"
-            android:elevation="24dp"
             android:background="@android:color/white"
-            android:orientation="vertical">
+            android:elevation="24dp"
+            android:orientation="vertical"
+            app:elevation="24dp">
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/pager_title_strip"
@@ -96,7 +97,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                app:tabMode="scrollable"/>
+                app:tabMode="scrollable" android:fillViewport="false"/>
+
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
@@ -120,21 +122,18 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_skip"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
+            style="@style/Button.Skin.Onboarding"
             android:onClick="onSkipClicked"
             android:text="@string/rss_skip_signup"
-            android:textColor="@android:color/white"
             android:visibility="gone"
+            app:backgroundTint="@color/rsb_submit_bar_negative"
             tools:visibility="visible"
         />
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_sign_up"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
+            style="@style/Button.Skin.Onboarding"
             android:onClick="onSignUpClicked"
             android:text="@string/rss_join_study"
-            android:textColor="@android:color/white"
         />
         <Space android:layout_width="16dp" android:layout_height="match_parent"/>
     </LinearLayout>
@@ -147,7 +146,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:clickable="true"
-        android:fontFamily="sans-serif"
         android:gravity="center_vertical"
         android:onClick="onSignInClicked"
         android:text="@string/rss_already_participating"

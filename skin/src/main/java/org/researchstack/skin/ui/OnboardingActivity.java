@@ -1,8 +1,11 @@
 package org.researchstack.skin.ui;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
@@ -18,6 +21,7 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
+import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
@@ -41,6 +45,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
     public static final int REQUEST_CODE_SIGN_IN  = 31473;
     public static final int REQUEST_CODE_PASSCODE = 41473;
     private View      pagerFrame;
+    private View      pagerContainer;
     private TabLayout tabStrip;
     private Button    skip;
     private Button    signUp;
@@ -100,17 +105,24 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         skip = (Button) findViewById(R.id.intro_skip);
         skip.setVisibility(UiManager.getInstance().isConsentSkippable() ? View.VISIBLE : View.GONE);
 
-        logoView.setImageResource(ResourceManager.getInstance().getLargeLogoDiseaseIcon());
+        int resId = ResUtils.getDrawableResourceId(this, model.getLogoName(), R.mipmap.ic_launcher);
+        logoView.setImageResource(resId);
+
+        pagerContainer = findViewById(R.id.pager_container);
+        pagerContainer.setTranslationY(48);
+        pagerContainer.setAlpha(0);
+        pagerContainer.setScaleX(.9f);
+        pagerContainer.setScaleY(.9f);
 
         pagerFrame = findViewById(R.id.pager_frame);
+        pagerFrame.setAlpha(0);
         pagerFrame.setOnClickListener(v -> hidePager());
-        OnboardingPagerAdapter adapter = new OnboardingPagerAdapter(this, model.getQuestions());
 
+        OnboardingPagerAdapter adapter = new OnboardingPagerAdapter(this, model.getQuestions());
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        tabStrip = (TabLayout) findViewById(R.id.pager_title_strip);
         pager.setOffscreenPageLimit(2);
         pager.setAdapter(adapter);
-        tabStrip.setTabsFromPagerAdapter(adapter);
+        tabStrip = (TabLayout) findViewById(R.id.pager_title_strip);
         tabStrip.setupWithViewPager(pager);
     }
 
@@ -147,28 +159,52 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
 
     private void showPager(int index)
     {
-        pagerFrame.setVisibility(View.VISIBLE);
+        pagerFrame.animate().alpha(1)
+                .setDuration(150)
+                .withStartAction(() -> pagerFrame.setVisibility(View.VISIBLE))
+                .withEndAction(() -> {
+                    pagerContainer.animate()
+                            .translationY(0)
+                            .setDuration(100)
+                            .alpha(1)
+                            .scaleX(1)
+                            .scaleY(1);
+                });
         tabStrip.getTabAt(index).select();
+        skip.setActivated(true);
+        signUp.setActivated(true);
 
-        // TODO raise button elevation?
-        // this only changes the initial state, pressing will reset elevation
-        //        float newElevation = ConversionUtils.pxFromDp(this, 8);
-        //            ViewCompat.setElevation(skip, newElevation);
-        //            ViewCompat.setElevation(signUp, newElevation);
-        signIn.setTextColor(getResources().getColor(android.R.color.white));
+        int colorFrom = ContextCompat.getColor(this, android.R.color.black);
+        int colorTo = ContextCompat.getColor(this, android.R.color.white);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(150);
+        colorAnimation.addUpdateListener(animator -> signIn.setTextColor((int) animator.getAnimatedValue()));
+        colorAnimation.start();
     }
 
     private void hidePager()
     {
-        pagerFrame.setVisibility(View.GONE);
+        pagerContainer.animate()
+                .translationY(48)
+                .alpha(0)
+                .setDuration(100)
+                .scaleX(.9f)
+                .scaleY(.9f)
+                .withEndAction(() -> {
+                    pagerFrame.animate()
+                            .alpha(0)
+                            .setDuration(150)
+                            .withEndAction(() -> pagerFrame.setVisibility(View.GONE));
+                    skip.setActivated(false);
+                    signUp.setActivated(false);
+                });
 
-        // TODO raise button elevation?
-        // this only changes the initial state, pressing will reset elevation
-        //        float newElevation = ConversionUtils.pxFromDp(this, 2);
-        //            ViewCompat.setElevation(skip, newElevation);
-        //            ViewCompat.setElevation(signUp, newElevation);
-
-        signIn.setTextColor(getResources().getColor(android.R.color.black));
+        int colorFrom = ContextCompat.getColor(this, android.R.color.white);
+        int colorTo = ContextCompat.getColor(this, android.R.color.black);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(150);
+        colorAnimation.addUpdateListener(animator -> signIn.setTextColor((int) animator.getAnimatedValue()));
+        colorAnimation.start();
     }
 
     @Override
