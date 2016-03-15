@@ -21,8 +21,10 @@ public abstract class ResourceManager
 
     public abstract int getStudyOverviewSections();
 
+    @Deprecated
     public abstract int getLargeLogoDiseaseIcon();
 
+    @Deprecated
     public abstract int getLogoInstitution();
 
     public abstract int getConsentPDF();

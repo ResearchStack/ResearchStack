@@ -1,6 +1,8 @@
 package org.researchstack.skin.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -168,6 +170,8 @@ public class MainActivity extends PinCodeActivity
             pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), items);
             ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
             viewPager.setAdapter(pagerAdapter);
+            viewPager.setPageMargin(1);
+            viewPager.setPageMarginDrawable(new ColorDrawable(Color.LTGRAY));
 
             IconTabLayout tabLayout = (IconTabLayout) findViewById(R.id.tabLayout);
             tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter()

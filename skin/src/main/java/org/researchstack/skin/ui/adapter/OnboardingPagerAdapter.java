@@ -13,11 +13,8 @@ import org.researchstack.backbone.ui.views.LocalWebView;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.StudyOverviewModel;
-import org.researchstack.skin.ui.ViewVideoActivity;
+import org.researchstack.backbone.ui.ViewVideoActivity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 
@@ -67,7 +64,7 @@ public class OnboardingPagerAdapter extends PagerAdapter
             View layout = inflater.inflate(R.layout.layout_study_html, container, false);
             container.addView(layout);
 
-            StringBuilder builder = new StringBuilder("<h1>" + item.getTitle() + "</h1>");
+            StringBuilder builder = new StringBuilder("<h3>" + item.getTitle() + "</h3>");
             builder.append("<p>" + item.getDetails() + "</p>");
 
             TextView simpleView = (TextView) layout.findViewById(R.id.text);
@@ -80,13 +77,6 @@ public class OnboardingPagerAdapter extends PagerAdapter
             });
 
             return layout;
-
-
-            //            APCStudyVideoCollectionViewCell *videoCell = (APCStudyVideoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kAPCStudyVideoCollectionViewCellIdentifier forIndexPath:indexPath];
-            //            videoCell.delegate = self;
-            //            videoCell.titleLabel.text = studyDetails.caption;
-            //            videoCell.videoMessageLabel.text = studyDetails.detailText;
-
         }
         else
         {
@@ -95,35 +85,7 @@ public class OnboardingPagerAdapter extends PagerAdapter
             layout.loadUrl(url);
             container.addView(layout);
             return layout;
-
-            //            NSString *filePath = [[NSBundle mainBundle] pathForResource: studyDetails.detailText ofType:@"html" inDirectory:@"HTMLContent"];
-            //            NSURL *targetURL = [NSURL URLWithString:filePath];
-            //            NSURLRequest *request = [NSURLRequest requestWithURL:targetURL];
-            //            [webViewCell.webView loadRequest:request];
-
         }
-    }
-
-    private String getHtmlText(Context context, int id)
-    {
-        InputStream inputStream = context.getResources().openRawResource(id);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        int i;
-        try
-        {
-            i = inputStream.read();
-            while(i != - 1)
-            {
-                byteArrayOutputStream.write(i);
-                i = inputStream.read();
-            }
-            inputStream.close();
-        }
-        catch(IOException e)
-        {
-            throw new RuntimeException(e);
-        }
-        return byteArrayOutputStream.toString();
     }
 
     @Override

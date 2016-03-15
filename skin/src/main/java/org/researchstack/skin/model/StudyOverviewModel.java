@@ -27,6 +27,11 @@ public class StudyOverviewModel
         return questions;
     }
 
+    public String getLogoName()
+    {
+        return logoName;
+    }
+
     /**
      * TODO Extend from {@link org.researchstack.skin.model.SectionModel.Section} class
      */

@@ -11,28 +11,19 @@
     },
     {
       "title": "About This Study",
-      "details": "study_overview_about",
-      "icon_image": "paperplus_icon",
-      "tint_color": "blue"
+      "details": "study_overview_about"
     },
     {
       "title": "How This Study Works",
-      "details": "study_overview_howstudyworks",
-      "icon_image": "rulerpencil_icon",
-      "tint_color": "yellow"
+      "details": "study_overview_howstudyworks"
     },
     {
       "title": "Who is Running This Study",
-      "details": "study_overview_whoisrunning",
-      "icon_image": "stethescope_icon",
-      "tint_color": "red"
+      "details": "study_overview_whoisrunning"
     },
     {
       "title": "About the App",
-      "details": "Please tap on the image below to watch a short video about the Asthma Study and this app.",
-      "icon_image": "paperplus_icon",
-      "tint_color": "blue",
-      "video_name": "study_overview_video"
+      "details": "study_overview_app"
     }
   ]
 }
