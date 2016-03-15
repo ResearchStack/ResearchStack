@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import org.researchstack.backbone.helpers.LogExt;
+import org.researchstack.backbone.ui.ViewVideoActivity;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 
 public class LocalWebView extends WebView
@@ -20,8 +21,6 @@ public class LocalWebView extends WebView
         void onTitleLoaded(String title);
     }
 
-    // First arg is document name (without file extension)
-    // Second arg is document title
     private static final String SCHEMA_LOCAL_HTML = "file:///android_res/raw/";
 
     private LocalWebViewCallbacks callbacks;
@@ -55,17 +54,26 @@ public class LocalWebView extends WebView
             {
                 LogExt.i(getClass(), url);
 
-                // Check if we should load local html
+                // Check if we should load local html / video
                 if(url.startsWith(SCHEMA_LOCAL_HTML))
                 {
-                    String docName = url.substring(SCHEMA_LOCAL_HTML.length(), url.length());
-                    Intent intent = ViewWebDocumentActivity.newIntent(getContext(), null, docName);
-                    getContext().startActivity(intent);
+                    String file = url.substring(SCHEMA_LOCAL_HTML.length(), url.length());
+                    String fileName = file.split("\\.")[0];
+                    if (file.endsWith(".html"))
+                    {
+                        Intent intent = ViewWebDocumentActivity.newIntent(getContext(), null, fileName);
+                        getContext().startActivity(intent);
+                    }
+                    else if (file.endsWith(".mp4"))
+                    {
+                        Intent intent = ViewVideoActivity.newIntent(getContext(), fileName);
+                        getContext().startActivity(intent);
+                    }
                 }
                 else
                 {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    view.getContext().startActivity(intent);
+                    getContext().startActivity(intent);
                 }
 
                 return true;
