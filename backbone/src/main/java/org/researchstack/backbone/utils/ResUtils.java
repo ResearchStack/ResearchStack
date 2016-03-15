@@ -54,7 +54,13 @@ public class ResUtils
 
     public static int getDrawableResourceId(Context context, String name)
     {
-        return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+        return getDrawableResourceId(context, name, 0);
+    }
+
+    public static int getDrawableResourceId(Context context, String name, int defaultResId)
+    {
+        int resId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+        return resId != 0 ? resId : defaultResId ;
     }
 
     public static int getRawResourceId(Context context, String name)
