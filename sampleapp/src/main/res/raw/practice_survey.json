@@ -53,6 +53,8 @@
         "dataType": "string",
         "minLength": 0,
         "maxLength": 255,
+        "multipleLines": true
+        ;
         "type": "StringConstraints"
       },
       "uiHint": "multilinetext"

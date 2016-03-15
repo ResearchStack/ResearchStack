@@ -125,6 +125,15 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         onLayoutCreated(layout);
 
         View body = onCreateBody(inflater, this);
+        body.addOnLayoutChangeListener(new OnLayoutChangeListener()
+        {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom)
+            {
+                // TODO add something here to adjust filler size when the body's view size changes
+                // use "test survey" question 3 to test
+            }
+        });
         onBodyCreated(body);
     }
 
