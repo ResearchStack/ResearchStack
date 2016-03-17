@@ -6,6 +6,7 @@
         <attr name="toolbarTheme" format="reference"/>
         <attr name="submitbarStyle" format="reference"/>
         <attr name="icontablayoutStyle" format="reference"/>
+        <attr name="emptyviewStyle" format="reference"/>
         <attr name="signatureviewStyle" format="reference"/>
     </declare-styleable>
 
@@ -15,6 +16,14 @@
         <attr name="tabIconColor" format="color"/>
         <attr name="tabIconIndicatorColor" format="color"/>
         <attr name="tabTextColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="EmptyView">
+        <attr name="android:background"/>
+        <attr name="emptyIcon" format="reference"/>
+        <attr name="emptyIconTint" format="color"/>
+        <attr name="emptyText" format="string"/>
+        <attr name="emptyTextAppearance" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="SubmitBar">

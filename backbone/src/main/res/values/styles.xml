@@ -58,4 +58,17 @@
         <item name="guidelineHeight">1dp</item>
     </style>
 
+    <style name="Widget.Backbone.EmptyView" parent="">
+        <item name="android:background">#d5e8ff</item>
+        <item name="emptyIcon">@drawable/illo_dashboard_empty</item>
+        <item name="emptyIconTint">?attr/colorPrimaryDark</item>
+        <item name="emptyText">No data recorded yet…</item>
+        <item name="emptyTextAppearance">@style/TextAppearance.Widget.Backbone.EmptyView</item>
+    </style>
+
+    <style name="TextAppearance.Widget.Backbone.EmptyView" parent="@style/TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/colorPrimaryDark</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

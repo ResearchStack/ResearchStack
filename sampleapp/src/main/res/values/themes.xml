@@ -20,6 +20,7 @@
         <item name="passcodeTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
         <item name="icontablayoutStyle">@style/Widget.Sample.IconTabLayout</item>
         <item name="submitbarStyle">@style/Widget.Sample.SubmitBar</item>
+        <item name="emptyviewStyle">@style/Widget.Sample.EmptyView</item>
     </style>
 
     <style name="Theme.Sample.Toolbar">
