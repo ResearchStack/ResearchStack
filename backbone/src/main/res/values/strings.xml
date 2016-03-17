@@ -139,6 +139,7 @@
 
     <!-- Graphing -->
     <string name="rsb_chart_progress_center">%1$s of %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
 
 
 </resources>

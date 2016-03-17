@@ -13,6 +13,9 @@
         <item name="submitbarStyle">@style/Widget.Backbone.SubmitBar</item>
         <item name="icontablayoutStyle">@style/Widget.Backbone.IconTabLayout</item>
         <item name="signatureviewStyle">@style/Widget.Backbone.SignatureView</item>
+        <item name="emptyviewStyle">@style/Widget.Backbone.EmptyView</item>
+        <item name="progressChartCardStyle">@style/Widget.Backbone.Chart.Progress</item>
+        <item name="pieChartCardStyle">@style/Widget.Backbone.Chart.Pie</item>
     </style>
 
     <style name="Theme.Backbone" parent="Base.Theme.Backbone"/>

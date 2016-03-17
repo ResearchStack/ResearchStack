@@ -9,6 +9,7 @@
         <attr name="emptyviewStyle" format="reference"/>
         <attr name="signatureviewStyle" format="reference"/>
         <attr name="progressChartCardStyle" format="reference"/>
+        <attr name="pieChartCardStyle" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="IconTabLayout">
@@ -60,6 +61,13 @@
               format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="ChartCard">
+        <attr name="titleText" format="string"/>
+        <attr name="titleTextColor"/>
+        <attr name="titleTextSize" format="dimension"/>
+        <attr name="titleTextTypeface" format="string"/>
+    </declare-styleable>
+
     <declare-styleable name="ProgressChartCard">
         <attr name="completeValueColor" format="color"/>
         <attr name="completeValueText" format="string"/>
@@ -69,16 +77,23 @@
         <attr name="centerTextColor" format="color"/>
         <attr name="centerTextSize" format="dimension"/>
         <attr name="centerTextTypeface" format="string"/>
-        <attr name="titleText" format="string"/>
+        <attr name="titleText"/>
         <attr name="titleTextColor"/>
-        <attr name="titleTextSize" format="dimension"/>
-        <attr name="titleTextTypeface" format="string"/>
+        <attr name="titleTextSize"/>
+        <attr name="titleTextTypeface"/>
         <attr name="finishText" format="string"/>
         <attr name="finishTextColor" format="color"/>
         <attr name="tabIndicatorColor"/>
         <attr name="tabTextColor"/>
         <attr name="tabSelectedTextColor"/>
+    </declare-styleable>
 
+    <declare-styleable name="PieChartCard" parent="ChartCard">
+        <attr name="valueTextFormat" format="reference"/>
+        <attr name="titleText"/>
+        <attr name="titleTextColor"/>
+        <attr name="titleTextSize"/>
+        <attr name="titleTextTypeface"/>
     </declare-styleable>
 
 </resources>

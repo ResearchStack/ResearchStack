@@ -79,7 +79,14 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="Widget.Backbone.Chart.Progress" parent="">
+    <style name="Widget.Backbone.Chart" parent="">
+        <item name="titleText">Amount of pie eaten</item>
+        <item name="titleTextColor">@color/rsb_warm_gray</item>
+        <item name="titleTextSize">14sp</item>
+        <item name="titleTextTypeface">sans-serif-medium</item>
+    </style>
+
+    <style name="Widget.Backbone.Chart.Progress">
         <item name="completeValueColor">?attr/colorPrimary</item>
         <item name="completeValueText">Complete</item>
         <item name="incompleteValueColor">#FFe5e5e5</item>
@@ -88,15 +95,15 @@
         <item name="centerTextColor">?attr/colorPrimary</item>
         <item name="centerTextSize">20sp</item>
         <item name="centerTextTypeface">sans-serif-medium</item>
-        <item name="titleText">Amount of pie eaten</item>
-        <item name="titleTextColor">@color/rsb_warm_gray</item>
-        <item name="titleTextSize">14sp</item>
-        <item name="titleTextTypeface">sans-serif-medium</item>
         <item name="finishText">Finish</item>
         <item name="finishTextColor">@color/rsb_error</item>
         <item name="tabIndicatorColor">@color/rsb_tab_indicator</item>
         <item name="tabTextColor">@color/rsb_tab_text_selected</item>
         <item name="tabSelectedTextColor">@color/rsb_tab_indicator</item>
+    </style>
+
+    <style name="Widget.Backbone.Chart.Pie">
+        <item name="valueTextFormat">@string/rsb_chart_pie_value</item>
     </style>
 
     <style name="Widget.Backbone.Chart.Title" parent="">

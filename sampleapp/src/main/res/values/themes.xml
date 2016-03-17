@@ -21,9 +21,6 @@
         <item name="icontablayoutStyle">@style/Widget.Sample.IconTabLayout</item>
         <item name="submitbarStyle">@style/Widget.Sample.SubmitBar</item>
         <item name="emptyviewStyle">@style/Widget.Sample.EmptyView</item>
-
-        <item name="progressChartCardStyle">@style/Widget.Backbone.Chart.Progress</item>
-
     </style>
 
     <style name="Theme.Sample.Toolbar">
