@@ -14,19 +14,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.views.IconTabLayout;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import rx.Subscription;
 import rx.functions.Action1;
@@ -45,10 +40,6 @@ public class ProgressChartCard extends CardView
     private String titleTextTypeface;
     private String finishText;
     private int    finishTextColor;
-    private String completeValueText;
-    private int    completeValueColor;
-    private int    incompleteValueColor;
-    private String incompleteValueText;
     private String centerTextFormat;
     private int    centerTextColor;
     private float  centerTextSize;
@@ -97,18 +88,11 @@ public class ProgressChartCard extends CardView
         titleTextColor = a.getColor(R.styleable.ProgressChartCard_titleTextColor, 0);
         titleTextSize = a.getDimension(R.styleable.ProgressChartCard_titleTextSize, 0);
         titleTextTypeface = a.getString(R.styleable.ProgressChartCard_titleTextTypeface);
-
         finishText = a.getString(R.styleable.ProgressChartCard_finishText);
         finishTextColor = a.getColor(R.styleable.ProgressChartCard_finishTextColor, 0);
-
         tabIndicatorColor = a.getColor(R.styleable.ProgressChartCard_tabIndicatorColor, 0);
         tabTextColor = a.getColor(R.styleable.ProgressChartCard_tabTextColor, 0);
         tabSelectedTextColor = a.getColor(R.styleable.ProgressChartCard_tabSelectedTextColor, 0);
-
-        completeValueColor = a.getColor(R.styleable.ProgressChartCard_completeValueColor, 0);
-        completeValueText = a.getString(R.styleable.ProgressChartCard_completeValueText);
-        incompleteValueColor = a.getColor(R.styleable.ProgressChartCard_incompleteValueColor, 0);
-        incompleteValueText = a.getString(R.styleable.ProgressChartCard_incompleteValueText);
         centerTextFormat = a.getString(R.styleable.ProgressChartCard_centerTextFormat);
         centerTextColor = a.getColor(R.styleable.ProgressChartCard_centerTextColor, 0);
         centerTextSize = a.getDimension(R.styleable.ProgressChartCard_centerTextSize, 0) /
@@ -144,35 +128,6 @@ public class ProgressChartCard extends CardView
         chart.setCenterTextColor(centerTextColor);
         chart.setCenterTextSize(centerTextSize);
         chart.setCenterTextTypeface(Typeface.create(centerTextTypeface, Typeface.NORMAL));
-    }
-
-    public List<PieData> generateEditorData()
-    {
-        List<PieData> items = new ArrayList<>();
-        for(int i = 0, size = 12; i <= size; i++)
-        {
-            List<Entry> entries = new ArrayList<>();
-            entries.add(new Entry(i, 0)); // Complete
-            entries.add(new Entry(size - i, 1)); // Incomplete
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.MONTH, - i);
-
-            String month = calendar.getDisplayName(Calendar.MONTH,
-                    Calendar.SHORT,
-                    Locale.getDefault());
-
-            PieDataSet data = new PieDataSet(entries, month + " '16");
-            data.setDrawValues(false);
-            data.setColors(new int[] {
-                    completeValueColor, incompleteValueColor
-            });
-
-            String[] labels = new String[] {incompleteValueText, completeValueText};
-
-            items.add(new PieData(labels, data));
-        }
-        return items;
     }
 
     public void setTitle(@StringRes int titleResId)

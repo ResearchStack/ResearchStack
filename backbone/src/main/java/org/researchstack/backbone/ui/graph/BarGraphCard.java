@@ -1,7 +1,6 @@
 package org.researchstack.backbone.ui.graph;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.StringRes;
@@ -18,15 +17,9 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
-
-import java.text.NumberFormat;
-import java.util.ArrayList;
 
 import rx.Subscription;
 import rx.functions.Action1;
@@ -144,80 +137,6 @@ public class BarGraphCard extends CardView
         yAxisRight.setDrawGridLines(false);
         yAxisRight.setDrawZeroLine(false);
         yAxisRight.setDrawLabels(false);
-    }
-
-    public BarData generateEditorData()
-    {
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        numberFormat.setMinimumFractionDigits(0);
-        numberFormat.setMaximumFractionDigits(2);
-
-        ArrayList<String> xVals = new ArrayList<>();
-        for(int i = 0; i < 12; i++)
-        {
-            xVals.add(i + "");
-        }
-
-        ArrayList<BarEntry> yVals1 = new ArrayList<>();
-
-        for(int i = 0; i < 12; i++)
-        {
-            float mult = (5 + 1);
-            int val = (int) (Math.random() * mult);
-            yVals1.add(new BarEntry((val == 0 ? 1 : val), i));
-        }
-
-        BarDataSet set1 = new BarDataSet(yVals1, "DataSet");
-        set1.setColor(0xFF2196f3);
-        set1.setBarSpacePercent(40f);
-
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-
-        BarData data = new BarData(xVals, dataSets);
-        data.setValueTextSize(10);
-        data.setValueTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
-        data.setValueTextColor(Color.WHITE);
-        data.setValueFormatter((value, entry, dataSetIndex, viewPortHandler) -> numberFormat.format(
-                value));
-        return data;
-    }
-
-    public BarData generateStackedEditorData()
-    {
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        numberFormat.setMinimumFractionDigits(0);
-        numberFormat.setMaximumFractionDigits(2);
-
-        ArrayList<String> xVals = new ArrayList<>();
-        for(int i = 0; i < 12; i++)
-        {
-            xVals.add(i + "");
-        }
-
-        ArrayList<BarEntry> yVals1 = new ArrayList<>();
-
-        for(int i = 0; i < 12; i++)
-        {
-            float mult = (5 + 1);
-            int val = (int) (Math.random() * mult);
-            yVals1.add(new BarEntry(new float[] {(val == 0 ? 1 : val - 1), 1}, i));
-        }
-
-        BarDataSet set1 = new BarDataSet(yVals1, "DataSet");
-        set1.setColors(new int[] {0xFF2196f3, 0xFF3f51b5});
-        set1.setBarSpacePercent(40f);
-
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-
-        BarData data = new BarData(xVals, dataSets);
-        data.setValueTextSize(10);
-        data.setValueTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
-        data.setValueTextColor(Color.WHITE);
-        data.setValueFormatter((value, entry, dataSetIndex, viewPortHandler) -> numberFormat.format(
-                value));
-        return data;
     }
 
     public void setTitle(@StringRes int titleResId)

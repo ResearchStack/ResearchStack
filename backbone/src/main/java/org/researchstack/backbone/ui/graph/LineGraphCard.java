@@ -16,14 +16,10 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
-
-import java.util.ArrayList;
 
 import rx.Subscription;
 import rx.functions.Action1;
@@ -150,34 +146,6 @@ public class LineGraphCard extends CardView
         yAxisRight.setDrawZeroLine(false);
         yAxisRight.setDrawLabels(false);
         yAxisRight.setSpaceTop(0);
-    }
-
-    public LineData generateEditorData()
-    {
-        ArrayList<String> xValues = new ArrayList<>();
-        for(int i = 0; i < 12; i++)
-        {
-            xValues.add(i + "");
-        }
-
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        for(int i = 0; i < 12; i++)
-        {
-            float mult = (5 + 1);
-            int val = (int) (Math.random() * mult) + 1;
-            entries.add(new Entry(val, i));
-        }
-
-        LineDataSet set = new LineDataSet(entries, "");
-        set.setCircleColor(0xFF2196f3);
-        set.setCircleRadius(4f);
-        set.setDrawCircleHole(false);
-        set.setColor(0xFF2196f3);
-        set.setLineWidth(2f);
-        set.setDrawValues(false);
-
-        return new LineData(xValues, set);
     }
 
     public void setTitle(@StringRes int titleResId)

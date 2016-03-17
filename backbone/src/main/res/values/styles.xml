@@ -87,10 +87,6 @@
     </style>
 
     <style name="Widget.Backbone.Chart.Progress">
-        <item name="completeValueColor">?attr/colorPrimary</item>
-        <item name="completeValueText">Complete</item>
-        <item name="incompleteValueColor">#FFe5e5e5</item>
-        <item name="incompleteValueText">Incomplete</item>
         <item name="centerTextFormat">@string/rsb_chart_progress_center</item>
         <item name="centerTextColor">?attr/colorPrimary</item>
         <item name="centerTextSize">20sp</item>

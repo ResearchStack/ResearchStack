@@ -12,15 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
 
 import org.researchstack.backbone.R;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PieChartCard extends CardView
 {
@@ -97,25 +93,6 @@ public class PieChartCard extends CardView
         chart.setDrawCenterText(false);
 
         rowContainer = (LinearLayout) findViewById(R.id.view_chart_pie_rows);
-    }
-
-    public PieData generateEditorData()
-    {
-        List<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(50, 0));
-        entries.add(new Entry(25, 1));
-        entries.add(new Entry(12.5f, 2));
-        entries.add(new Entry(12.5f, 3));
-
-        PieDataSet data = new PieDataSet(entries, null);
-        data.setDrawValues(false);
-        data.setColors(new int[] {
-                0xFF673ab7, 0xFF2196f3, 0xFF4caf50, 0xFF009688
-        });
-
-        String[] labels = new String[] {"Blackberry", "Blueberry", "Green apple", "Seaweed"};
-
-        return new PieData(labels, data);
     }
 
     public void setTitle(@StringRes int titleResId)

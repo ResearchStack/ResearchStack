@@ -71,10 +71,6 @@
     </declare-styleable>
 
     <declare-styleable name="ProgressChartCard">
-        <attr name="completeValueColor" format="color"/>
-        <attr name="completeValueText" format="string"/>
-        <attr name="incompleteValueColor" format="color"/>
-        <attr name="incompleteValueText" format="string"/>
         <attr name="centerTextFormat" format="reference"/>
         <attr name="centerTextColor" format="color"/>
         <attr name="centerTextSize" format="dimension"/>
