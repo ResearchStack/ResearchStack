@@ -144,12 +144,6 @@ public class ProgressChartCard extends CardView
         chart.setCenterTextColor(centerTextColor);
         chart.setCenterTextSize(centerTextSize);
         chart.setCenterTextTypeface(Typeface.create(centerTextTypeface, Typeface.NORMAL));
-
-        if(isInEditMode())
-        {
-            List<PieData> data = generateEditorData();
-            setData(data);
-        }
     }
 
     public List<PieData> generateEditorData()

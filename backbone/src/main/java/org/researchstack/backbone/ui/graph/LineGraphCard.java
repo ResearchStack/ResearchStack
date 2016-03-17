@@ -150,12 +150,6 @@ public class LineGraphCard extends CardView
         yAxisRight.setDrawZeroLine(false);
         yAxisRight.setDrawLabels(false);
         yAxisRight.setSpaceTop(0);
-
-        if(isInEditMode())
-        {
-            LineData data = generateEditorData();
-            setData(data);
-        }
     }
 
     public LineData generateEditorData()

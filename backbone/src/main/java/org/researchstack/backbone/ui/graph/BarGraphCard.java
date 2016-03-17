@@ -144,12 +144,6 @@ public class BarGraphCard extends CardView
         yAxisRight.setDrawGridLines(false);
         yAxisRight.setDrawZeroLine(false);
         yAxisRight.setDrawLabels(false);
-
-        if(isInEditMode())
-        {
-            BarData data = generateStackedEditorData();
-            setData(data, true);
-        }
     }
 
     public BarData generateEditorData()

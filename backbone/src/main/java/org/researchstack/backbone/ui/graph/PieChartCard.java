@@ -97,12 +97,6 @@ public class PieChartCard extends CardView
         chart.setDrawCenterText(false);
 
         rowContainer = (LinearLayout) findViewById(R.id.view_chart_pie_rows);
-
-        if(isInEditMode())
-        {
-            PieData data = generateEditorData();
-            setData(data);
-        }
     }
 
     public PieData generateEditorData()
