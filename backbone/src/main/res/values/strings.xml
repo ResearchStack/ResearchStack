@@ -137,5 +137,8 @@
     <string name="rsb_hint_step_body_date">Enter a date</string>
     <string name="rsb_hint_step_body_text">Answer</string>
 
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s of %2$s</string>
+
 
 </resources>

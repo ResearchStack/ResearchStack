@@ -38,6 +38,14 @@
         <item name="tabIndicatorColor">@android:color/white</item>
     </style>
 
+    <style name="Widget.Backbone.TabLayout.Chart" parent="@style/Widget.Design.TabLayout">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingRight">50dp</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="tabMode">scrollable</item>
+    </style>
+
     <style name="Widget.Backbone.SubmitBar" parent="">
         <item name="android:background">@color/rsb_submit_bar_gray</item>
         <item name="positiveActionTitle">@string/rsb_next</item>
@@ -69,6 +77,32 @@
     <style name="TextAppearance.Widget.Backbone.EmptyView" parent="@style/TextAppearance.AppCompat">
         <item name="android:textColor">?attr/colorPrimaryDark</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Widget.Backbone.Chart.Progress" parent="">
+        <item name="completeValueColor">?attr/colorPrimary</item>
+        <item name="completeValueText">Complete</item>
+        <item name="incompleteValueColor">#FFe5e5e5</item>
+        <item name="incompleteValueText">Incomplete</item>
+        <item name="centerTextFormat">@string/rsb_chart_progress_center</item>
+        <item name="centerTextColor">?attr/colorPrimary</item>
+        <item name="centerTextSize">20sp</item>
+        <item name="centerTextTypeface">sans-serif-medium</item>
+        <item name="titleText">Amount of pie eaten</item>
+        <item name="titleTextColor">@color/rsb_warm_gray</item>
+        <item name="titleTextSize">14sp</item>
+        <item name="titleTextTypeface">sans-serif-medium</item>
+        <item name="finishText">Finish</item>
+        <item name="finishTextColor">@color/rsb_error</item>
+        <item name="tabIndicatorColor">@color/rsb_tab_indicator</item>
+        <item name="tabTextColor">@color/rsb_tab_text_selected</item>
+        <item name="tabSelectedTextColor">@color/rsb_tab_indicator</item>
+    </style>
+
+    <style name="Widget.Backbone.Chart.Title" parent="">
+        <item name="android:padding">16dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
 </resources>

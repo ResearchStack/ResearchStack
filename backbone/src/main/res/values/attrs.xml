@@ -8,6 +8,7 @@
         <attr name="icontablayoutStyle" format="reference"/>
         <attr name="emptyviewStyle" format="reference"/>
         <attr name="signatureviewStyle" format="reference"/>
+        <attr name="progressChartCardStyle" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="IconTabLayout">
@@ -57,6 +58,27 @@
               format="dimension"/>
         <attr name="guidelineHeight"
               format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="ProgressChartCard">
+        <attr name="completeValueColor" format="color"/>
+        <attr name="completeValueText" format="string"/>
+        <attr name="incompleteValueColor" format="color"/>
+        <attr name="incompleteValueText" format="string"/>
+        <attr name="centerTextFormat" format="reference"/>
+        <attr name="centerTextColor" format="color"/>
+        <attr name="centerTextSize" format="dimension"/>
+        <attr name="centerTextTypeface" format="string"/>
+        <attr name="titleText" format="string"/>
+        <attr name="titleTextColor"/>
+        <attr name="titleTextSize" format="dimension"/>
+        <attr name="titleTextTypeface" format="string"/>
+        <attr name="finishText" format="string"/>
+        <attr name="finishTextColor" format="color"/>
+        <attr name="tabIndicatorColor"/>
+        <attr name="tabTextColor"/>
+        <attr name="tabSelectedTextColor"/>
+
     </declare-styleable>
 
 </resources>
