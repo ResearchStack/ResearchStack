@@ -28,14 +28,16 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import rx.Subscription;
 import rx.functions.Action1;
 
 public class ProgressChartCard extends CardView
 {
-    private PieChart chart;
+    private PieChart  chart;
     private TabLayout tabLayout;
     private TextView  titleTextView;
     private TextView  finishView;
+    private Subscription finishSub;
 
     private String titleText;
     private int    titleTextColor;
@@ -109,8 +111,8 @@ public class ProgressChartCard extends CardView
         incompleteValueText = a.getString(R.styleable.ProgressChartCard_incompleteValueText);
         centerTextFormat = a.getString(R.styleable.ProgressChartCard_centerTextFormat);
         centerTextColor = a.getColor(R.styleable.ProgressChartCard_centerTextColor, 0);
-        centerTextSize = a.getDimension(R.styleable.ProgressChartCard_centerTextSize, 0)
-                / getResources().getDisplayMetrics().density;
+        centerTextSize = a.getDimension(R.styleable.ProgressChartCard_centerTextSize, 0) /
+                getResources().getDisplayMetrics().density;
         centerTextTypeface = a.getString(R.styleable.ProgressChartCard_centerTextTypeface);
 
         a.recycle();
@@ -193,7 +195,16 @@ public class ProgressChartCard extends CardView
     public void setFinishAction(Action1<Object> action)
     {
         finishView.setVisibility(action == null ? View.GONE : View.VISIBLE);
-        RxView.clicks(finishView).subscribe(action);
+
+        if(finishSub != null)
+        {
+            finishSub.unsubscribe();
+        }
+
+        if(action != null)
+        {
+            finishSub = RxView.clicks(finishView).subscribe(action);
+        }
     }
 
     public void setData(List<PieData> dataSet)

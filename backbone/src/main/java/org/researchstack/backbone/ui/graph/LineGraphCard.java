@@ -25,13 +25,15 @@ import org.researchstack.backbone.R;
 
 import java.util.ArrayList;
 
+import rx.Subscription;
 import rx.functions.Action1;
 
 public class LineGraphCard extends CardView
 {
-    private TextView  titleTextView;
-    private ImageView expand;
-    private LineChart chart;
+    private TextView     titleTextView;
+    private ImageView    expand;
+    private Subscription expandSub;
+    private LineChart    chart;
 
     private String titleText;
     private int    titleTextColor;
@@ -198,7 +200,16 @@ public class LineGraphCard extends CardView
     public void setExpandAction(Action1<Object> action)
     {
         expand.setVisibility(action == null ? View.GONE : View.VISIBLE);
-        RxView.clicks(expand).subscribe(action);
+
+        if(expandSub != null)
+        {
+            expandSub.unsubscribe();
+        }
+
+        if(action != null)
+        {
+            expandSub = RxView.clicks(expand).subscribe(action);
+        }
     }
 
     public void setData(LineData data)
