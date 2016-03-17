@@ -31,12 +31,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <org.researchstack.backbone.ui.graph.BarGraphCard
+            <org.researchstack.backbone.ui.graph.BarChartCard
                 android:id="@+id/dashboard_chart_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <org.researchstack.backbone.ui.graph.BarGraphCard
+            <org.researchstack.backbone.ui.graph.BarChartCard
                 android:id="@+id/dashboard_chart_bar_stacked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

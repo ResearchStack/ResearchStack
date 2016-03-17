@@ -20,7 +20,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
-import org.researchstack.backbone.ui.graph.BarGraphCard;
+import org.researchstack.backbone.ui.graph.BarChartCard;
 import org.researchstack.backbone.ui.graph.LineGraphCard;
 import org.researchstack.backbone.ui.graph.PieChartCard;
 import org.researchstack.backbone.ui.graph.ProgressChartCard;
@@ -70,14 +70,14 @@ public class DashboardFragment extends Fragment
         pieCard.setTitle("Pie Flavors");
         pieCard.setData(createPieChartData());
 
-        BarGraphCard barCard = (BarGraphCard) view.findViewById(R.id.dashboard_chart_bar);
+        BarChartCard barCard = (BarChartCard) view.findViewById(R.id.dashboard_chart_bar);
         barCard.setTitle("Pie Flavors");
         barCard.setData(createBarChartData(), false);
         barCard.setExpandAction(o -> {
             Snackbar.make(view, "Expand Action", Snackbar.LENGTH_SHORT).show();
         });
 
-        BarGraphCard barStackedCard = (BarGraphCard) view.findViewById(R.id.dashboard_chart_bar_stacked);
+        BarChartCard barStackedCard = (BarChartCard) view.findViewById(R.id.dashboard_chart_bar_stacked);
         barStackedCard.setTitle("Pie Flavors");
         barStackedCard.setData(createStackedBarChartData(), true);
         barStackedCard.setExpandAction(o -> {
