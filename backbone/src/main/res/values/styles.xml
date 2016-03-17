@@ -117,6 +117,16 @@
         <item name="expandTintColor">@color/rsb_warm_gray</item>
     </style>
 
+    <style name="Widget.Backbone.Chart.Bar">
+        <item name="chartXAxisTextColor">@color/rsb_warm_gray</item>
+        <item name="chartXAxisTextSize">14sp</item>
+        <item name="chartXAxisTextTypeface">sans-serif-medium</item>
+        <item name="chartYAxisTextColor">@color/rsb_warm_gray</item>
+        <item name="chartYAxisTextSize">14sp</item>
+        <item name="chartYAxisTextTypeface">sans-serif-medium</item>
+        <item name="expandTintColor">@color/rsb_warm_gray</item>
+    </style>
+
     <style name="Widget.Backbone.Chart.Title" parent="">
         <item name="android:padding">16dp</item>
         <item name="android:minHeight">48dp</item>

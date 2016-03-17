@@ -11,6 +11,7 @@
         <attr name="progressChartCardStyle" format="reference"/>
         <attr name="pieChartCardStyle" format="reference"/>
         <attr name="lineChartCardStyle" format="reference"/>
+        <attr name="barChartCardStyle" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="IconTabLayout">
@@ -105,6 +106,17 @@
         <attr name="chartYAxisTextSize" format="dimension"/>
         <attr name="chartYAxisTextTypeface" format="string"/>
         <attr name="expandTintColor" format="color"/>
+        <attr name="titleText"/>
+        <attr name="titleTextColor"/>
+        <attr name="titleTextSize"/>
+        <attr name="titleTextTypeface"/>
+    </declare-styleable>
+
+    <declare-styleable name="BarChartCard">
+        <attr name="chartXAxisTextColor"/>
+        <attr name="chartXAxisTextSize"/>
+        <attr name="chartXAxisTextTypeface"/>
+        <attr name="expandTintColor"/>
         <attr name="titleText"/>
         <attr name="titleTextColor"/>
         <attr name="titleTextSize"/>
