@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <org.researchstack.backbone.ui.graph.LineGraphCard
+            <org.researchstack.backbone.ui.graph.LineChartCard
                 android:id="@+id/dashboard_chart_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

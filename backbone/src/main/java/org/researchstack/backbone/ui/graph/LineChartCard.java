@@ -24,7 +24,7 @@ import org.researchstack.backbone.R;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class LineGraphCard extends CardView
+public class LineChartCard extends CardView
 {
     private TextView     titleTextView;
     private ImageView    expand;
@@ -43,21 +43,21 @@ public class LineGraphCard extends CardView
     private String chartYAxisTextTypeface;
     private int    expandTintColor;
 
-    public LineGraphCard(Context context)
+    public LineChartCard(Context context)
     {
         super(context);
         initializeRoot(null, R.attr.lineChartCardStyle);
         initializeViews();
     }
 
-    public LineGraphCard(Context context, AttributeSet attrs)
+    public LineChartCard(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         initializeRoot(attrs, R.attr.lineChartCardStyle);
         initializeViews();
     }
 
-    public LineGraphCard(Context context, AttributeSet attrs, int defStyleAttr)
+    public LineChartCard(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
         initializeRoot(attrs, defStyleAttr);

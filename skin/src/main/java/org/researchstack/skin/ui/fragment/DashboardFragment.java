@@ -21,7 +21,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import org.researchstack.backbone.ui.graph.BarChartCard;
-import org.researchstack.backbone.ui.graph.LineGraphCard;
+import org.researchstack.backbone.ui.graph.LineChartCard;
 import org.researchstack.backbone.ui.graph.PieChartCard;
 import org.researchstack.backbone.ui.graph.ProgressChartCard;
 import org.researchstack.backbone.utils.ThemeUtils;
@@ -84,7 +84,7 @@ public class DashboardFragment extends Fragment
             Snackbar.make(view, "Expand Action", Snackbar.LENGTH_SHORT).show();
         });
 
-        LineGraphCard lineCard = (LineGraphCard) view.findViewById(R.id.dashboard_chart_line);
+        LineChartCard lineCard = (LineChartCard) view.findViewById(R.id.dashboard_chart_line);
         lineCard.setTitle("Daily steps");
         lineCard.setData(createLineChartData());
         lineCard.setExpandAction(o -> {
