@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,10 +35,7 @@ public class DateQuestionBody implements StepBody
     private DateAnswerFormat format;
     private Calendar         calendar;
 
-    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    // View Fields
-    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private int viewType;
+    private boolean hasChosenDate;
 
     public DateQuestionBody(Step step, StepResult result)
     {
@@ -53,21 +49,28 @@ public class DateQuestionBody implements StepBody
         if(savedTimeInMillis != null)
         {
             calendar.setTimeInMillis(savedTimeInMillis);
+            hasChosenDate = true;
         }
 
-        // If no result, use default date
+        // If no result, use default date if available
         else if(format.getDefaultDate() != null)
         {
             calendar.setTime(format.getDefaultDate());
+            hasChosenDate = true;
+        }
+
+        // otherwise, make sure user has made a selection before moving on
+        else
+        {
+            hasChosenDate = false;
         }
     }
 
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
-        this.viewType = viewType;
-
-        View view = getViewForType(viewType, inflater, parent);
+        // showing compact view with dialog all the time
+        View view = initView(inflater, parent);
 
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -79,51 +82,7 @@ public class DateQuestionBody implements StepBody
         return view;
     }
 
-    private View getViewForType(int viewType, LayoutInflater inflater, ViewGroup parent)
-    {
-        if(viewType == VIEW_TYPE_DEFAULT)
-        {
-            return initViewDefault(inflater, parent);
-        }
-        else if(viewType == VIEW_TYPE_COMPACT)
-        {
-            return initViewCompact(inflater, parent);
-        }
-        else
-        {
-            throw new IllegalArgumentException("Invalid View Type");
-        }
-    }
-
-    private View initViewDefault(LayoutInflater inflater, ViewGroup parent)
-    {
-        DatePicker datePicker = (DatePicker) inflater.inflate(R.layout.item_date_picker,
-                parent,
-                false);
-        datePicker.setCalendarViewShown(false);
-
-        if(format.getMinimumDate() != null)
-        {
-            datePicker.setMinDate(format.getMinimumDate().getTime());
-        }
-
-        if(format.getMaximumDate() != null)
-        {
-            datePicker.setMaxDate(format.getMaximumDate().getTime());
-        }
-
-        int initYear = calendar.get(Calendar.YEAR);
-        int initMonth = calendar.get(Calendar.MONTH);
-        int initDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-        datePicker.init(initYear, initMonth, initDay, (view, year, monthOfYear, dayOfMonth) -> {
-            calendar.set(year, monthOfYear, dayOfMonth);
-        });
-
-        return datePicker;
-    }
-
-    private View initViewCompact(LayoutInflater inflater, ViewGroup parent)
+    private View initView(LayoutInflater inflater, ViewGroup parent)
     {
         View formItemView = inflater.inflate(R.layout.item_text_view_compact, parent, false);
 
@@ -175,6 +134,11 @@ public class DateQuestionBody implements StepBody
         Date maxDate = format.getMaximumDate();
         Date resultDate = calendar.getTime();
 
+        if(! hasChosenDate)
+        {
+            return new BodyAnswer(false, R.string.rsb_invalid_answer_default);
+        }
+
         if(minDate != null && resultDate.getTime() < minDate.getTime())
         {
             return new BodyAnswer(false, R.string.rsb_invalid_answer_date_under);
@@ -193,21 +157,11 @@ public class DateQuestionBody implements StepBody
         new DatePickerDialog(tv.getContext(),
                 (view, year, monthOfYear, dayOfMonth) -> {
                     calendar.set(year, monthOfYear, dayOfMonth);
+                    hasChosenDate = true;
 
                     // Set result to our edit text
                     String formattedResult = createFormattedResult();
                     tv.setText(formattedResult);
-
-                    // Search for next focusable view request focus
-                    // View next = tv.getParent().focusSearch(tv, View.FOCUS_DOWN);
-                    // if(next != null)
-                    // {
-                    //     next.requestFocus();
-                    // }
-                    // else
-                    // {
-                    //     ViewUtils.hideSoftInputMethod(tv.getContext());
-                    // }
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
