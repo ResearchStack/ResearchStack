@@ -10,6 +10,7 @@
         <attr name="signatureviewStyle" format="reference"/>
         <attr name="progressChartCardStyle" format="reference"/>
         <attr name="pieChartCardStyle" format="reference"/>
+        <attr name="lineChartCardStyle" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="IconTabLayout">
@@ -88,8 +89,22 @@
         <attr name="tabSelectedTextColor"/>
     </declare-styleable>
 
-    <declare-styleable name="PieChartCard" parent="ChartCard">
+    <declare-styleable name="PieChartCard">
         <attr name="valueTextFormat" format="reference"/>
+        <attr name="titleText"/>
+        <attr name="titleTextColor"/>
+        <attr name="titleTextSize"/>
+        <attr name="titleTextTypeface"/>
+    </declare-styleable>
+
+    <declare-styleable name="LineChartCard">
+        <attr name="chartXAxisTextColor" format="color"/>
+        <attr name="chartXAxisTextSize" format="dimension"/>
+        <attr name="chartXAxisTextTypeface" format="string"/>
+        <attr name="chartYAxisTextColor" format="color"/>
+        <attr name="chartYAxisTextSize" format="dimension"/>
+        <attr name="chartYAxisTextTypeface" format="string"/>
+        <attr name="expandTintColor" format="color"/>
         <attr name="titleText"/>
         <attr name="titleTextColor"/>
         <attr name="titleTextSize"/>

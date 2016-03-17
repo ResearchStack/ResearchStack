@@ -16,6 +16,7 @@
         <item name="emptyviewStyle">@style/Widget.Backbone.EmptyView</item>
         <item name="progressChartCardStyle">@style/Widget.Backbone.Chart.Progress</item>
         <item name="pieChartCardStyle">@style/Widget.Backbone.Chart.Pie</item>
+        <item name="lineChartCardStyle">@style/Widget.Backbone.Chart.Line</item>
     </style>
 
     <style name="Theme.Backbone" parent="Base.Theme.Backbone"/>
