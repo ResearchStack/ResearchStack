@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -141,57 +140,46 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         View filler = findViewById(R.id.filler);
 
         container = (LinearLayout) findViewById(R.id.content_container);
-        container.getViewTreeObserver()
-                .addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener()
+        container.addOnLayoutChangeListener(new OnLayoutChangeListener()
+        {
+            boolean isChangeFromFiller = false;
+
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom)
+            {
+                LogExt.i("SurveyStepLayout", "LAYOUT CHANGE");
+                int stepLayoutHeight = SurveyStepLayout.this.getHeight();
+                int contentHeightSansFiller = container.getHeight() - filler.getHeight();
+
+                // Make sure we have layout and height to measure
+                if(stepLayoutHeight == 0 || contentHeightSansFiller == 0)
                 {
-                    @Override
-                    public boolean onPreDraw()
-                    {
-                        int stepLayoutHeight = SurveyStepLayout.this.getHeight();
-                        int contentHeight = container.getHeight();
+                    return;
+                }
 
-                        // Make sure we have layout and height to measure
-                        if(stepLayoutHeight == 0 || contentHeight == 0)
-                        {
-                            return true;
-                        }
+                // if the last call to this resulted in filler changing size, ignore
+                if(isChangeFromFiller)
+                {
+                    isChangeFromFiller = false;
+                    return;
+                }
 
-                        boolean proceedToDraw = true;
-
-                        // If our content does not take up the entire height of the screen, increase height
-                        // of the filler space
-                        if(contentHeight < stepLayoutHeight)
-                        {
-                            filler.getLayoutParams().height = stepLayoutHeight - contentHeight;
-                            filler.requestLayout();
-
-                            proceedToDraw = false;
-                        }
-
-                        // If our content exceeds the height of the screen, adjust filler. If adjustment is
-                        // less than minHeight of filler, proceed to draw.
-                        else if(contentHeight > stepLayoutHeight)
-                        {
-                            int contentBleedHeight = contentHeight - stepLayoutHeight;
-
-                            if(filler.getHeight() > 0)
-                            {
-                                int newFillerHeight = filler.getHeight() - contentBleedHeight;
-                                filler.getLayoutParams().height =
-                                        newFillerHeight > 0 ? newFillerHeight : 0;
-                                filler.requestLayout();
-
-                                proceedToDraw = false;
-                            }
-                        }
-
-                        //Only modify height once, ignore any future attempts to modify hierarchy ... for now
-                        container.getViewTreeObserver().removeOnPreDrawListener(this);
-
-                        LogExt.i("SurveyStepLayout", "onPreDraw - Returning " + proceedToDraw);
-                        return proceedToDraw;
-                    }
-                });
+                // If our content does not take up the entire height of the screen, increase height
+                // of the filler space
+                if(contentHeightSansFiller < stepLayoutHeight)
+                {
+                    filler.getLayoutParams().height = stepLayoutHeight - contentHeightSansFiller;
+                    filler.requestLayout();
+                    isChangeFromFiller = true;
+                }
+                else if (contentHeightSansFiller > stepLayoutHeight && filler.getHeight() != 0)
+                {
+                    filler.getLayoutParams().height = 0;
+                    filler.requestLayout();
+                    isChangeFromFiller = true;
+                }
+            }
+        });
 
         title = (TextView) findViewById(R.id.title);
         summary = (TextView) findViewById(R.id.text);
