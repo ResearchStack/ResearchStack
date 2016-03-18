@@ -33,6 +33,10 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="Widget.Sample.EmptyView" parent="@style/Widget.Backbone.EmptyView">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
     <style name="TextAppearance.Widget.Sample.Toolbar.Title"
            parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textColor">@android:color/white</item>

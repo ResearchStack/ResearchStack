@@ -25,6 +25,7 @@ allprojects {
         maven {
             url  "http://dl.bintray.com/bmcd87/Squeaky"
         }
+        maven { url "https://jitpack.io" }
     }
 }
 
