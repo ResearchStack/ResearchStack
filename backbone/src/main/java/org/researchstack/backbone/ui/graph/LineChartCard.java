@@ -195,4 +195,9 @@ public class LineChartCard extends CardView
         chart.notifyDataSetChanged();
         chart.invalidate();
     }
+
+    public LineChart getChart()
+    {
+        return chart;
+    }
 }

@@ -181,4 +181,9 @@ public class BarChartCard extends CardView
         chart.notifyDataSetChanged();
         chart.invalidate();
     }
+
+    public BarChart getChart()
+    {
+        return chart;
+    }
 }

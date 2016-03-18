@@ -133,4 +133,9 @@ public class PieChartCard extends CardView
             rowContainer.addView(row);
         }
     }
+
+    public PieChart getChart()
+    {
+        return chart;
+    }
 }

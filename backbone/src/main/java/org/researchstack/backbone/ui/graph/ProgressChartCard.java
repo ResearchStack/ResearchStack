@@ -203,6 +203,10 @@ public class ProgressChartCard extends CardView
                 onTabSelected(tab);
             }
         });
+    }
 
+    public PieChart getChart()
+    {
+        return chart;
     }
 }
