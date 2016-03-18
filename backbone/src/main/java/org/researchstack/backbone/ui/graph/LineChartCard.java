@@ -176,11 +176,22 @@ public class LineChartCard extends CardView
 
     public void setData(LineData data)
     {
+        setData(data, 0, 0);
+    }
+
+    public void setData(LineData data, int viewportStart, int viewPortEnd)
+    {
         float maxOffset = data.getYMax() + (data.getYMax() * .05f);
 
         chart.setData(data);
         chart.getAxisLeft().setAxisMaxValue(maxOffset);
         chart.getAxisRight().setAxisMaxValue(maxOffset);
+
+        if(viewportStart != viewPortEnd)
+        {
+            chart.setVisibleXRange(viewportStart, viewPortEnd);
+        }
+
         chart.notifyDataSetChanged();
         chart.invalidate();
     }
