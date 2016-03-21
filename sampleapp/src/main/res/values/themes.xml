@@ -64,7 +64,10 @@
     </style>
 
     <style name="Theme.Sample.Settings.Preference"
-           parent="@style/PreferenceThemeOverlay.v14.Material"/>
+           parent="@style/PreferenceThemeOverlay.v14.Material">
+        <item name="preferenceFragmentCompatStyle">@style/PreferenceFragment.Sample</item>
+        <item name="preferenceFragmentStyle">@style/PreferenceFragment.Sample</item>
+    </style>
 
     <style name="Theme.Sample.Splash">
         <item name="android:windowBackground">@drawable/bg_splash</item>

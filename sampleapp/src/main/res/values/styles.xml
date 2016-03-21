@@ -47,4 +47,8 @@
         <item name="android:textColor">@color/rsb_warm_gray</item>
     </style>
 
+    <style name="PreferenceFragment.Sample" parent="@style/PreferenceFragment.Material">
+        <item name="android:divider">@null</item>
+    </style>
+
 </resources>

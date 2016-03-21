@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 
 import org.researchstack.backbone.helpers.LogExt;
+import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
@@ -22,15 +23,11 @@ public class ConsentFormUtils
 {
     public static void viewConsentForm(Context context)
     {
-        Observable.create(subscriber -> {
-            File consentFile = ConsentFormUtils.getConsentFormFileFromExternalStorage(context);
-            subscriber.onNext(consentFile);
-        }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
-            //TODO This may fail and throw an ActivityNotFoundException for type "application/pdf"
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile((File) o), "application/pdf");
-            context.startActivity(intent);
-        });
+        int consentResId = ResourceManager.getInstance().getConsentHtml();
+        String path = context.getResources().getResourceEntryName(consentResId);
+        String title = context.getString(R.string.rsb_consent);
+        Intent intent = ViewWebDocumentActivity.newIntent(context, title, path);
+        context.startActivity(intent);
     }
 
     public static void shareConsentForm(Context context)
