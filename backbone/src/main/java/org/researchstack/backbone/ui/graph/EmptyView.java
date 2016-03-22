@@ -16,27 +16,34 @@ public class EmptyView extends FrameLayout
 {
     public EmptyView(Context context)
     {
-        this(context, null);
+        super(context);
+        init(null, R.attr.emptyviewStyle, R.style.Widget_Backbone_EmptyView);
     }
 
     public EmptyView(Context context, @Nullable AttributeSet attrs)
     {
-        this(context, attrs, R.attr.emptyviewStyle);
+        super(context, attrs, R.attr.emptyviewStyle);
+        init(attrs, R.attr.emptyviewStyle, R.style.Widget_Backbone_EmptyView);
     }
 
     public EmptyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
     {
-        this(context, attrs, defStyleAttr, R.style.Widget_Backbone_EmptyView);
+        super(context, attrs, defStyleAttr);
+        init(attrs, defStyleAttr, R.style.Widget_Backbone_EmptyView);
     }
 
     @TargetApi(21)
     public EmptyView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init(attrs, defStyleAttr, defStyleRes);
+    }
 
+    private void init(AttributeSet attrs, int defStyleAttr, int defStyleRes)
+    {
         LayoutInflater.from(getContext()).inflate(R.layout.view_empty, this, true);
 
-        final TypedArray a = context.obtainStyledAttributes(attrs,
+        final TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.EmptyView,
                 defStyleAttr,
                 defStyleRes);
