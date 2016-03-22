@@ -28,17 +28,14 @@ import co.touchlab.squeaky.table.TableUtils;
  */
 public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDatabase
 {
-    // TODO Define in BuildConfig
-    public static String DB_NAME = "appdb";
-
-    // TODO Define in BuildConfig
-    private static int DB_VERSION = 1;
+    public static final String DEFAULT_NAME    = "appdb";
+    public static final int    DEFAULT_VERSION = 1;
 
     private final UpdatablePassphraseProvider passphraseProvider;
 
-    public SqlCipherDatabaseHelper(Context context, UpdatablePassphraseProvider passphraseProvider)
+    public SqlCipherDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, UpdatablePassphraseProvider passphraseProvider)
     {
-        super(context, DB_NAME, null, DB_VERSION, passphraseProvider);
+        super(context, name, factory, version, passphraseProvider);
         this.passphraseProvider = passphraseProvider;
     }
 
@@ -60,17 +57,7 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
     {
-        try
-        {
-            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase),
-                    true,
-                    TaskRecord.class,
-                    StepRecord.class);
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
+        // handle future db upgrades here
     }
 
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-

@@ -1,5 +1,6 @@
 package org.researchstack.backbone.storage.database.sqlite;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,15 +27,12 @@ import co.touchlab.squeaky.table.TableUtils;
  */
 public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
 {
-    // TODO Define in BuildConfig
-    public static String DB_NAME = "appdb";
+    public static final String DEFAULT_NAME    = "appdb";
+    public static final int    DEFAULT_VERSION = 1;
 
-    // TODO Define in BuildConfig
-    private static int DB_VERSION = 1;
-
-    public DatabaseHelper(Context context)
+    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
     {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, name, factory, version);
     }
 
     @Override
@@ -55,17 +53,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     @Override
     public void onUpgrade(android.database.sqlite.SQLiteDatabase sqLiteDatabase, int i, int i1)
     {
-        try
-        {
-            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase),
-                    true,
-                    TaskRecord.class,
-                    StepRecord.class);
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
+        // handle future db upgrades here
     }
 
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-

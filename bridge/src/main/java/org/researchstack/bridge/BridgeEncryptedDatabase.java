@@ -18,9 +18,9 @@ import co.touchlab.squeaky.table.TableUtils;
  */
 public class BridgeEncryptedDatabase extends SqlCipherDatabaseHelper implements UploadQueue
 {
-    public BridgeEncryptedDatabase(Context context, UpdatablePassphraseProvider passphraseProvider)
+    public BridgeEncryptedDatabase(Context context, String name, SQLiteDatabase.CursorFactory cursorFactory, int version, UpdatablePassphraseProvider passphraseProvider)
     {
-        super(context, passphraseProvider);
+        super(context, name, cursorFactory, version, passphraseProvider);
     }
 
     @Override
@@ -40,18 +40,8 @@ public class BridgeEncryptedDatabase extends SqlCipherDatabaseHelper implements 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion)
     {
-        // TODO properly handle upgrades without dropping the whole db
-        try
-        {
-            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase),
-                    true,
-                    UploadRequest.class);
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-        onCreate(sqLiteDatabase);
+        super.onUpgrade(sqLiteDatabase, oldVersion, newVersion);
+        // handle future db upgrades here
     }
 
     public void saveUploadRequest(UploadRequest uploadRequest)
