@@ -70,12 +70,12 @@ public class SurveyAnswer
     public static class BooleanSurveyAnswer extends SurveyAnswer
     {
 
-        private final boolean booleanAnswer;
+        private final Boolean booleanAnswer;
 
         public BooleanSurveyAnswer(StepResult result)
         {
             super(result);
-            booleanAnswer = (boolean) result.getResult();
+            booleanAnswer = (Boolean) result.getResult();
         }
     }
 
@@ -105,13 +105,13 @@ public class SurveyAnswer
     public static class NumericSurveyAnswer extends SurveyAnswer
     {
 
-        private final int    numericAnswer;
+        private final Integer    numericAnswer;
         private final String unit;
 
         public NumericSurveyAnswer(StepResult result)
         {
             super(result);
-            numericAnswer = (int) result.getResult();
+            numericAnswer = (Integer) result.getResult();
             // TODO add unit?
             unit = null; //((IntegerAnswerFormat) result.getAnswerFormat()).getUnit();
         }
@@ -137,7 +137,8 @@ public class SurveyAnswer
         public DateSurveyAnswer(StepResult result)
         {
             super(result);
-            dateAnswer = FormatHelper.DEFAULT_FORMAT.format(((Date) result.getResult()));
+            Date dateResult = (Date) result.getResult();
+            dateAnswer = dateResult == null ? null : FormatHelper.DEFAULT_FORMAT.format(dateResult);
         }
     }
 }
