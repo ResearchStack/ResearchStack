@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.body;
 
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,6 @@ import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.ViewUtils;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -84,7 +84,7 @@ public class MultiChoiceQuestionBody <T> implements StepBody
     {
         RadioGroup radioGroup = new RadioGroup(inflater.getContext());
         radioGroup.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-        radioGroup.setDividerDrawable(ViewUtils.getDrawable(parent.getContext(),
+        radioGroup.setDividerDrawable(ContextCompat.getDrawable(parent.getContext(),
                 R.drawable.divider_empty_8dp));
 
         for(int i = 0; i < choices.length; i++)

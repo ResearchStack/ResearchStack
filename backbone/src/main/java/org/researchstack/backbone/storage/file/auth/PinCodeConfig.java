@@ -10,7 +10,6 @@ public class PinCodeConfig
     private static final String DIGITS_ALPHABETIC   = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String DIGITS_ALPHANUMERIC = DIGITS_ALPHABETIC + DIGITS_NUMERIC;
 
-    // TODO document this better, but you may create your own enum that implements this interface
     public interface Type
     {
         int getInputType();

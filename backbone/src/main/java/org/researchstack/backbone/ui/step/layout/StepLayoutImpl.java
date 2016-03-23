@@ -159,7 +159,6 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
             int layoutHeight = StepLayoutImpl.this.getHeight();
             int infoContainerHeight = container.getHeight();
 
-            //TODO Add additional check to see if the infoContainerHeight is > than layoutHeight. If it is, subtract difference from fillerHeight
             if(layoutHeight > 0 && infoContainerHeight > 0 &&
                     layoutHeight > infoContainerHeight)
             {
@@ -233,7 +232,6 @@ public abstract class StepLayoutImpl <T> extends RelativeLayout implements StepL
             }
             else
             {
-                //TODO Review whether we should force a crash or just log the message through Logcat.
                 throw new IllegalStateException("StepCallbacks must be set on class");
             }
         }

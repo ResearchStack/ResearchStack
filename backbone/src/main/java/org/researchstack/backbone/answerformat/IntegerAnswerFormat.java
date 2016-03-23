@@ -8,11 +8,10 @@ public class IntegerAnswerFormat extends AnswerFormat
     private int maxValue;
     private int minValue;
 
-    // TODO Params should be reserved.
     public IntegerAnswerFormat(int minValue, int maxValue)
     {
-        this.maxValue = maxValue;
         this.minValue = minValue;
+        this.maxValue = maxValue;
     }
 
     @Override

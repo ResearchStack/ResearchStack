@@ -78,7 +78,6 @@ public class FormBody implements StepBody
     @Override
     public BodyAnswer getBodyAnswerState()
     {
-        // TODO allow parts of form steps to be skipped
         for(StepBody formStepBody : formStepChildren)
         {
             BodyAnswer bodyAnswer = formStepBody.getBodyAnswerState();

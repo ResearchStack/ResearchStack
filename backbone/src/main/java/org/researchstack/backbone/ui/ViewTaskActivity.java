@@ -108,8 +108,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         StepLayout stepLayout = getLayoutForStep(step);
         stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
-        //TODO Get SubmitBar from layout, set positive button title to either "Get Started", "Next", or "Done"
-        //TODO Remove ConsentTask.initVisualSteps() and ConsentVisualStep.nextButtonString
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
                         ? StepSwitcher.SHIFT_LEFT
@@ -188,7 +186,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private void notifyStepOfBackPress()
     {
         StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
-        // TODO shouldn't we call onBackPressed if false?
         currentStepLayout.isBackEventConsumed();
     }
 
@@ -253,7 +250,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     private void showConfirmExitDialog()
     {
-        //TODO Implement custom bottom sheet
         AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
                 "Are you sure you want to exit?")
                 .setMessage(R.string.lorem_medium)

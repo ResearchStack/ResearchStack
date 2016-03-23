@@ -82,8 +82,6 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
 
             for(StepResult stepResult : taskResult.getResults().values())
             {
-                // TODO Step result could be null, which still indicates that it was answered. Figure
-                // out how to handle this
                 if(stepResult != null)
                 {
                     StepRecord stepRecord = new StepRecord();

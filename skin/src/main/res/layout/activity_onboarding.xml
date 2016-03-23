@@ -118,8 +118,6 @@
 
         <Space android:layout_width="16dp" android:layout_height="match_parent"/>
 
-        <!-- TODO these buttons don't match the designs exactly and might look bad on low dpi -->
-
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_skip"
             style="@style/Button.Skin.Onboarding"

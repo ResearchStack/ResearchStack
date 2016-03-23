@@ -3,9 +3,6 @@ import android.content.Context;
 
 import org.researchstack.backbone.storage.file.StorageAccessListener;
 
-/**
- * TODO Rename methods below
- */
 public interface DataAccess
 {
     /**

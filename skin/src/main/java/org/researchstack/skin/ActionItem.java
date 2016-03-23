@@ -3,39 +3,18 @@ import android.view.MenuItem;
 
 public class ActionItem
 {
-    /**
-     * TODO Description
-     */
     private int id;
 
-    /**
-     * TODO Description
-     */
     private int title;
 
-    /**
-     * TODO Description
-     */
     private int icon;
 
-    /**
-     * TODO Description
-     */
     private Class clazz;
 
-    /**
-     * TODO Description
-     */
     private int groupId;
 
-    /**
-     * TODO Description
-     */
     private int order;
 
-    /**
-     * TODO Description
-     */
     private int action;
 
     public ActionItem(ActionItemBuilder builder)

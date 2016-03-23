@@ -26,7 +26,6 @@ public class ResUtils
     }
 
     /**
-     * TODO Determine if method should exists in class
      * Should this be here or should {@link StorageAccess} have the
      * ability to write files to SDCard
      *

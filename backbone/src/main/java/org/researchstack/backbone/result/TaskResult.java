@@ -1,15 +1,18 @@
 package org.researchstack.backbone.result;
 
+import android.net.Uri;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class TaskResult extends Result
 {
     private Map<String, StepResult> results;
 
-    // TODO Implement private UUID uuidTask;
+    private UUID uuidTask;
 
-    // TODO Implement private Uri outputDirectory;
+    private Uri outputDirectory;
 
     public TaskResult(String identifier)
     {

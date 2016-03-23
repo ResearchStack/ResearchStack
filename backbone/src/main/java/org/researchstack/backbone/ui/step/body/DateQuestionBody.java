@@ -137,7 +137,6 @@ public class DateQuestionBody implements StepBody
     @Override
     public BodyAnswer getBodyAnswerState()
     {
-        // TODO possible to start with no selection?
         Date minDate = format.getMinimumDate();
         Date maxDate = format.getMaximumDate();
         Date resultDate = calendar.getTime();

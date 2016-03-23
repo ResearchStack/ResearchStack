@@ -49,9 +49,6 @@ public class FileUtils
         return byteArrayOutputStream.toByteArray();
     }
 
-    /**
-     * TODO Replace method with something that exists within system classes
-     */
     public static void copy(InputStream inputStream, File output) throws IOException
     {
         OutputStream outputStream = null;
