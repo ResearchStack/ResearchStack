@@ -16,7 +16,7 @@ public class Step implements Serializable
 
     private boolean restorable;
 
-    private boolean optional;
+    private boolean optional = true;
 
     private String title;
 

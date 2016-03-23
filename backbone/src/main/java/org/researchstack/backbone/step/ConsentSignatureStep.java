@@ -6,6 +6,7 @@ public class ConsentSignatureStep extends Step
     public ConsentSignatureStep(String identifier)
     {
         super(identifier);
+        setOptional(false);
     }
 
     public String getSignatureDateFormat()

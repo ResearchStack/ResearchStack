@@ -103,7 +103,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction(v -> signIn());
-        submitBar.setNegativeAction(v -> isBackEventConsumed());
+        submitBar.getNegativeActionView().setVisibility(GONE);
     }
 
     private void signIn()

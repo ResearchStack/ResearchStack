@@ -17,7 +17,6 @@ public class QuestionStep extends Step
     public QuestionStep(String identifier, String title)
     {
         super(identifier, title);
-        setOptional(true);
         setUseSurveyMode(true);
     }
 
