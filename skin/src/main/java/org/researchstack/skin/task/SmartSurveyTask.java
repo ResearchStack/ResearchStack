@@ -56,8 +56,11 @@ public class SmartSurveyTask extends Task implements Serializable
             {
                 AnswerFormat answerFormat = from(stepModel.constraints);
 
-                steps.put(stepModel.identifier,
-                        new QuestionStep(stepModel.identifier, stepModel.prompt, answerFormat));
+                QuestionStep questionStep = new QuestionStep(stepModel.identifier,
+                        stepModel.prompt,
+                        answerFormat);
+                questionStep.setOptional(stepModel.optional);
+                steps.put(stepModel.identifier, questionStep);
                 staticStepIdentifiers.add(stepModel.identifier);
                 rules.put(stepModel.identifier, stepModel.constraints.rules);
             }
@@ -135,10 +138,7 @@ public class SmartSurveyTask extends Task implements Serializable
         {
             LogExt.d(getClass(), "Rules exist for this step");
             Object answer = result.getStepResult(currentIdentifier).getResult();
-            if(answer != null)
-            {
-                skipToStep = processRules(stepRules, answer);
-            }
+            skipToStep = processRules(stepRules, answer);
 
             if(skipToStep != null && skipToStep.equals(END_OF_SURVEY_MARKER))
             {

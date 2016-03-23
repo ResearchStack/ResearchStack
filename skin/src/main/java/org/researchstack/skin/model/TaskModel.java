@@ -45,6 +45,9 @@ public class TaskModel
 
         @SerializedName("constraints")
         public ConstraintsModel constraints;
+
+        @SerializedName("optional")
+        public boolean optional = true;
     }
 
     public static class ConstraintsModel implements Serializable
