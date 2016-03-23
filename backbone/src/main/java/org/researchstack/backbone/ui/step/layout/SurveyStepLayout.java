@@ -99,7 +99,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     @Override
     public boolean isBackEventConsumed()
     {
-        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, getStep(), stepBody.getStepResult());
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, getStep(), stepBody.getStepResult(false));
         return false;
     }
 
@@ -275,7 +275,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     @Override
     public Parcelable onSaveInstanceState()
     {
-        callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult());
+        callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(false));
         return super.onSaveInstanceState();
     }
 
@@ -292,8 +292,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         else
         {
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                    getStep(),
-                    stepBody.getStepResult());
+                    getStep(), stepBody.getStepResult(false));
         }
     }
 
@@ -301,7 +300,10 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     {
         if(callbacks != null)
         {
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, getStep(), null);
+            // empty step result when skipped
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+                    getStep(),
+                    stepBody.getStepResult(true));
         }
     }
 

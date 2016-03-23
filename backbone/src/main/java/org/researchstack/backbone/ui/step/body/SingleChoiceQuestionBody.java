@@ -127,9 +127,17 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     }
 
     @Override
-    public StepResult getStepResult()
+    public StepResult getStepResult(boolean skipped)
     {
-        result.setResult(currentSelected);
+        if(skipped)
+        {
+            result.setResult(null);
+        }
+        else
+        {
+            result.setResult(currentSelected);
+        }
+
         return result;
     }
 

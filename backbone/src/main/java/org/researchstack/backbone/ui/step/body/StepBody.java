@@ -14,7 +14,7 @@ public interface StepBody
 
     View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent);
 
-    StepResult getStepResult();
+    StepResult getStepResult(boolean skipped);
 
     BodyAnswer getBodyAnswerState();
 

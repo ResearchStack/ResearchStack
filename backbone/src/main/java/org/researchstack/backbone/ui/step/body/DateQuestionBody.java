@@ -117,9 +117,17 @@ public class DateQuestionBody implements StepBody
 
 
     @Override
-    public StepResult getStepResult()
+    public StepResult getStepResult(boolean skipped)
     {
-        result.setResult(calendar.getTimeInMillis());
+        if(skipped)
+        {
+            result.setResult(null);
+        }
+        else
+        {
+            result.setResult(calendar.getTimeInMillis());
+        }
+
         return result;
     }
 

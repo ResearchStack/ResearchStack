@@ -61,23 +61,24 @@ public class FormBody implements StepBody
     }
 
     @Override
-    public StepResult getStepResult()
+    public StepResult getStepResult(boolean skipped)
     {
         for(StepBody child : formStepChildren)
         {
-            StepResult childResult = child.getStepResult();
+            StepResult childResult = child.getStepResult(skipped);
             if(childResult != null)
             {
-                this.result.setResultForIdentifier(childResult.getIdentifier(), childResult);
+                result.setResultForIdentifier(childResult.getIdentifier(), childResult);
             }
         }
 
-        return this.result;
+        return result;
     }
 
     @Override
     public BodyAnswer getBodyAnswerState()
     {
+        // TODO allow parts of form steps to be skipped
         for(StepBody formStepBody : formStepChildren)
         {
             BodyAnswer bodyAnswer = formStepBody.getBodyAnswerState();

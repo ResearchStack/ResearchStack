@@ -35,7 +35,7 @@ public class NotImplementedStepBody implements StepBody
     }
 
     @Override
-    public StepResult getStepResult()
+    public StepResult getStepResult(boolean skipped)
     {
         return null;
     }
