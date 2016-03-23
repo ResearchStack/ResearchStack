@@ -84,6 +84,7 @@ public class SampleUiManager extends UiManager
         Choice<Boolean> alien = new Choice<>("No, I’m an alien.", false, null);
 
         QuestionStep step = new QuestionStep(OnboardingTask.SignUpInclusionCriteriaStepIdentifier);
+        step.setOptional(false);
         step.setStepTitle(R.string.rss_eligibility);
         step.setTitle("Were you born somewhere on planet earth and are you a human-ish?");
         step.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,

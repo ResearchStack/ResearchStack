@@ -8,6 +8,7 @@ public class ConsentSharingStep extends QuestionStep
     public ConsentSharingStep(String identifier)
     {
         super(identifier);
+        setOptional(false);
     }
 
     @Override

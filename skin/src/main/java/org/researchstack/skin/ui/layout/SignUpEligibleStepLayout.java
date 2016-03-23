@@ -59,7 +59,7 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction((v) -> startConsentActivity());
-        submitBar.setNegativeAction((v) -> exitSignUpActivity());
+        submitBar.getNegativeActionView().setVisibility(GONE);
     }
 
     private void startConsentActivity()

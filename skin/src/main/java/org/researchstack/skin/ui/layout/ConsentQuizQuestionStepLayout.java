@@ -78,9 +78,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
 
         submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction(v -> onSubmit());
-        submitBar.setNegativeAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_END,
-                step,
-                result));
+        submitBar.getNegativeActionView().setVisibility(GONE);
 
         resultTitle = (TextView) findViewById(R.id.quiz_result_title);
         resultSummary = (TextView) findViewById(R.id.quiz_result_summary);
