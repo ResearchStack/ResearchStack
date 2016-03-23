@@ -137,16 +137,24 @@ public class MultiChoiceQuestionBody <T> implements StepBody
     }
 
     @Override
-    public StepResult getStepResult()
+    public StepResult getStepResult(boolean skipped)
     {
-        result.setResult((T[]) currentSelected.toArray());
+        if(skipped)
+        {
+            currentSelected.clear();
+            result.setResult((T[]) currentSelected.toArray());
+        }
+        else
+        {
+            result.setResult((T[]) currentSelected.toArray());
+        }
         return result;
     }
 
     @Override
     public BodyAnswer getBodyAnswerState()
     {
-        if (currentSelected.isEmpty())
+        if(currentSelected.isEmpty())
         {
             return new BodyAnswer(false, R.string.rsb_invalid_answer_choice);
         }

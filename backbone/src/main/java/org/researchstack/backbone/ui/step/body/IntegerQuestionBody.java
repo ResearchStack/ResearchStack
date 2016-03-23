@@ -129,13 +129,21 @@ public class IntegerQuestionBody implements StepBody
     }
 
     @Override
-    public StepResult getStepResult()
+    public StepResult getStepResult(boolean skipped)
     {
-        String numString = editText.getText().toString();
-        if(! TextUtils.isEmpty(numString))
+        if(skipped)
         {
-            result.setResult(Integer.valueOf(editText.getText().toString()));
+            result.setResult(null);
         }
+        else
+        {
+            String numString = editText.getText().toString();
+            if(! TextUtils.isEmpty(numString))
+            {
+                result.setResult(Integer.valueOf(editText.getText().toString()));
+            }
+        }
+
         return result;
     }
 

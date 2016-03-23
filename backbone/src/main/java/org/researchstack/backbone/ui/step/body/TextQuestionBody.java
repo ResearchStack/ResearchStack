@@ -93,8 +93,13 @@ public class TextQuestionBody implements StepBody
 
 
     @Override
-    public StepResult getStepResult()
+    public StepResult getStepResult(boolean skipped)
     {
+        if(skipped)
+        {
+            result.setResult(null);
+        }
+
         return result;
     }
 
