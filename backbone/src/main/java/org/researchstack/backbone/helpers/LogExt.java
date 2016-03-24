@@ -18,7 +18,6 @@ public class LogExt
     public static void i(String tag, String s)
     {
         Log.i(tag, s);
-        crashlytics(Log.INFO, tag, s);
     }
 
     public static void i(Class c, String s, Throwable t)
@@ -30,7 +29,6 @@ public class LogExt
     public static void i(String tag, String s, Throwable t)
     {
         Log.i(tag, s, t);
-        crashlytics(Log.INFO, tag, s);
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -46,7 +44,6 @@ public class LogExt
     public static void e(String tag, String s)
     {
         Log.e(tag, s);
-        crashlytics(Log.ERROR, tag, s);
     }
 
     public static void e(Class c, Throwable t)
@@ -64,7 +61,6 @@ public class LogExt
     public static void e(String tag, String s, Throwable t)
     {
         Log.e(tag, s, t);
-        crashlytics(Log.ERROR, tag, s);
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -80,7 +76,6 @@ public class LogExt
     public static void d(String tag, String s)
     {
         Log.d(tag, s);
-        crashlytics(Log.DEBUG, tag, s);
     }
 
     public static void d(Class c, String s, Throwable t)
@@ -92,7 +87,6 @@ public class LogExt
     public static void d(String tag, String s, Throwable t)
     {
         Log.d(tag, s, t);
-        crashlytics(Log.DEBUG, tag, s);
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -108,7 +102,6 @@ public class LogExt
     public static void w(String tag, String s)
     {
         Log.w(tag, s);
-        crashlytics(Log.WARN, tag, s);
     }
 
     public static void w(Class c, String s, Throwable t)
@@ -120,7 +113,6 @@ public class LogExt
     public static void w(String tag, String s, Throwable t)
     {
         Log.w(tag, s, t);
-        crashlytics(Log.WARN, tag, s);
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -131,21 +123,11 @@ public class LogExt
     {
         String tag = tagMe(c);
         Log.d(tag, s);
-        crashlytics(Log.DEBUG, tag, "ua:" + s);
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Helper Methods
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-    public static void crashlytics(int priority, String tag, String msg)
-    {
-        //        TODO Enable Crash logging in crashlytics
-        //        if (! BuildConfig.DEBUG)
-        //        {
-        //            Crashlytics.log(priority, tag, msg);
-        //        }
-    }
 
     private static String tagMe(Class c)
     {

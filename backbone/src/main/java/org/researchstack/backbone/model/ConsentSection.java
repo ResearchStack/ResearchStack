@@ -170,8 +170,6 @@ public class ConsentSection implements Serializable
             return content;
         }
 
-        //TODO In XCODE project, they want to escape the strings, they also want to use <br/> to replace "\n". Find out why.
-
         return escapedContent;
     }
 

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO Implement method / ability -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
  * <p>
  * Initializer with ORKHTMLPDFWriter parameter. Allows for injecting mock dependency for the
  * purposes of isolated unit testing.
@@ -18,7 +17,6 @@ import java.util.List;
  *                           public void initWithHTMLPDFWriter(HTMLPDFWriter writer, ConsentSectionFormatter sectionFormatter,
  *                           SignatureFormatter signatureFormatter) { }
  *                           <p>
- *                           TODO Implement method / ability -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
  *                           <p>
  *                           The PDF is generated in a form suitable for printing. This is done asynchronously,
  *                           so the PDF data is returned through a completion block.

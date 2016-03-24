@@ -20,7 +20,6 @@ public interface StorageAccessListener
 
     /**
      * Data access is not ready, needs auth.
-     * TODO add pin code config as a param ?
      */
     void onDataAuth();
 }

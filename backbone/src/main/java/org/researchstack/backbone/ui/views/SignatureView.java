@@ -77,7 +77,6 @@ public class SignatureView extends View
 
     /**
      * Init all paint objects
-     * TODO: Read attrs of signature paint and hint paint from attrs
      */
     private void init(Context context, AttributeSet attrs, int defStyleAttr)
     {
@@ -137,7 +136,6 @@ public class SignatureView extends View
         int x = (int) event.getX();
         int y = (int) event.getY();
 
-        //TODO Pass in dirty rect instead of invalidating the entire view.
         switch(event.getAction())
         {
             case MotionEvent.ACTION_DOWN:
@@ -291,7 +289,6 @@ public class SignatureView extends View
     }
 
     /**
-     * TODO Fix The Following -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
      * 1. Iterating over the path points, saving them in an array ... not bueno. Try to use
      * {@link android.graphics.PathMeasure} class and get minX and minY from that.
      * <p>

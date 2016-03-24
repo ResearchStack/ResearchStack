@@ -109,24 +109,19 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         // Show pincode layout
         pinCodeLayout.setVisibility(View.VISIBLE);
 
-        // TODO figure out why keyboard wont show without delay
-        // Show keyboard
+        // Show keyboard, needs to be delayed, not sure why
         pinCodeLayout.postDelayed(() -> toggleKeyboardAction.call(true), 300);
     }
 
 
-    //TODO Create Third PinCode layout, or refactor and use PinCodeLayout,
-    // and move following code within there.
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
     {
         super.onPostCreate(savedInstanceState);
 
-        // TODO figure out a better way to get/store pin code config
         PinCodeConfig config = StorageAccess.getInstance().getPinCodeConfig();
 
         int theme = ThemeUtils.getPassCodeTheme(this);
-        //TODO get Pincode theme from activity theme using custom attribute
         pinCodeLayout = new PinCodeLayout(new ContextThemeWrapper(this, theme));
         pinCodeLayout.setBackgroundColor(Color.WHITE);
         pinCodeLayout.setVisibility(View.GONE);
@@ -150,8 +145,6 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         RxTextView.textChanges(pincode).map(CharSequence:: toString).doOnNext(pin -> {
             if(summary.getCurrentTextColor() == errorColor)
             {
-                // TODO Figure out a better way of handling if we are in an error state. Its probably
-                // better to use the views state and set enabled/disabled instead
                 summary.setTextColor(ThemeUtils.getTextColorPrimary(PinCodeActivity.this));
                 summary.setText(R.string.rsb_pincode_enter_summary);
             }
@@ -182,7 +175,6 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
             {
                 pinCodeLayout.setVisibility(View.GONE);
                 pinCodeLayout.showProgress(false);
-                // TODO clean this whole auth thing up some more
                 // authenticate() no longer calls notifyReady(), call this after auth
                 requestStorageAccess();
             }

@@ -10,7 +10,6 @@ import org.researchstack.backbone.ui.step.body.TextQuestionBody;
 
 import java.io.Serializable;
 
-// TODO are we just using this because ResearchKit did? look into just using QuestionBody class
 public abstract class AnswerFormat implements Serializable
 {
     public AnswerFormat()
@@ -61,21 +60,18 @@ public abstract class AnswerFormat implements Serializable
 
     }
 
-    // TODO why here (or at all)?
     public enum ChoiceAnswerStyle
     {
         SingleChoice,
         MultipleChoice
     }
 
-    // TODO why here?
     public enum NumberFormattingStyle
     {
         Default,
         Percent
     }
 
-    // TODO why here?
     public enum DateAnswerStyle
     {
         DateAndTime,

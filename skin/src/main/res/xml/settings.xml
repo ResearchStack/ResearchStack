@@ -20,11 +20,10 @@
 
     <PreferenceCategory
         android:title="@string/rss_settings_reminders">
-        <!-- TODO Move title and summary to strings.xml, waiting for prefix-->
         <SwitchPreference
             android:key="rss_settings_reminders"
-            android:title="Task reminders"
-            android:summary="You’ll be reminded to complete tasks"
+            android:title="@string/rss_settings_reminders_title"
+            android:summary="@string/rss_settings_reminders_summary"
             android:defaultValue="true"/>
 
     </PreferenceCategory>

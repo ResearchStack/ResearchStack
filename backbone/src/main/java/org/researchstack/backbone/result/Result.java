@@ -11,7 +11,7 @@ public class Result implements Serializable
 
     private Date endDate;
 
-    // TODO Implement private boolean saveable;
+    private boolean saveable;
 
     public Result(String identifier)
     {

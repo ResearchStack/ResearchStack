@@ -9,7 +9,6 @@ public class FormatHelper
 {
     public static final int NONE = - 1;
 
-    // TODO find a better place for this, maybe only use it for Bridge
     public static final String           DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final SimpleDateFormat DEFAULT_FORMAT       = new SimpleDateFormat(FormatHelper.DATE_FORMAT_ISO_8601,
             Locale.getDefault());

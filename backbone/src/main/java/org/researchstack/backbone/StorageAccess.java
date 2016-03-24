@@ -55,19 +55,16 @@ public class StorageAccess implements DataAccess, AuthDataAccess
 
     public FileAccess getFileAccess()
     {
-        // TODO throw new AuthAccessException(); if not ready?
         return fileAccess;
     }
 
     public AppDatabase getAppDatabase()
     {
-        // TODO throw new AuthAccessException(); if not ready?
         return appDatabase;
     }
 
     public EncryptionProvider getEncryptionProvider()
     {
-        // TODO throw new AuthAccessException(); if not ready?
         return encryptionProvider;
     }
 
@@ -194,7 +191,6 @@ public class StorageAccess implements DataAccess, AuthDataAccess
         encryptionProvider.logAccessTime();
     }
 
-    // TODO Make pass-code auth more obvious that it throws an exception. Add throws list?
     @Override
     public void authenticate(Context context, String pin)
     {
@@ -208,7 +204,6 @@ public class StorageAccess implements DataAccess, AuthDataAccess
         appDatabase.setEncryptionKey(encryptionProvider.getEncrypter().getDbKey());
     }
 
-    // TODO this seems weird here
     @Override
     public void setPinCode(Context context, String pin)
     {
@@ -223,7 +218,6 @@ public class StorageAccess implements DataAccess, AuthDataAccess
         injectEncrypter();
     }
 
-    // TODO need to figure out a better way to allow no auth when they haven't created a pin code yet
     public boolean hasPinCode(Context context)
     {
         return encryptionProvider.hasPinCode(context);

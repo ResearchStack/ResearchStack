@@ -3,6 +3,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
@@ -20,7 +21,6 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
-import org.researchstack.backbone.utils.ViewUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.step.ConsentQuizQuestionStep;
 
@@ -109,8 +109,8 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                 radioTrue.setEnabled(false);
 
                 // Set the drawable of the current checked button, with correct color tint
-                Drawable drawable = ViewUtils.getDrawable(getContext(),
-                        answerCorrect ? R.drawable.ic_check : R.drawable.ic_window_close);
+                int resId = answerCorrect ? R.drawable.ic_check : R.drawable.ic_window_close;
+                Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
                 drawable = DrawableCompat.wrap(drawable);
                 DrawableCompat.setTint(drawable, resultTextColor);
                 RadioButton checkedRadioButton = (RadioButton) radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());

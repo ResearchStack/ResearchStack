@@ -40,7 +40,6 @@ public abstract class PinProtectedProvider implements EncryptionProvider
         if(isPastMinIgnoreTime)
         {
             encrypter = null;
-            // TODO de-auth fileaccess and appdatabase
         }
     }
 
@@ -220,7 +219,7 @@ public abstract class PinProtectedProvider implements EncryptionProvider
     {
         validateKeyForTimeOut(codeConfig.getPinAutoLockTime());
 
-        // TODO why ok with no pincode?
+        // why ok with no pincode?
         return encrypter == null && hasPinCode(context);
     }
 }

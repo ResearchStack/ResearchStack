@@ -117,7 +117,6 @@
     <string name="rsb_cancel">Cancel</string>
 
     <!-- Step Errors -->
-    <!-- TODO Confirm Copy -->
     <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
     <string name="rsb_invalid_answer_date_over">Invalid answer, date is over the limit!</string>
     <string name="rsb_invalid_answer_date_under">Invalid answer, date is under the limit!</string>
@@ -125,11 +124,8 @@
     <string name="rsb_invalid_answer_integer_under">Invalid answer, your value is too small!</string>
     <string name="rsb_invalid_answer_choice">Please select a value!</string>
 
-    <!-- TODO Confirm Copy -->
     <string name="rsb_pincode_enter_title">Enter your passcode</string>
-    <!-- TODO Confirm Copy -->
     <string name="rsb_pincode_enter_summary">Enter your code to confirm your identity.</string>
-    <!-- TODO Confirm Copy -->
     <string name="rsb_pincode_enter_error">That code doesn’t match the one you entered, Try again!
     </string>
     <string name="rsb_hint_step_body_int">Enter a number %1$d-%2$d</string>

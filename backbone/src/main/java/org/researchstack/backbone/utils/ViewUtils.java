@@ -1,7 +1,6 @@
 package org.researchstack.backbone.utils;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
@@ -74,19 +73,6 @@ public class ViewUtils
         InputMethodManager imm = (InputMethodManager) editText.getContext()
                 .getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.showSoftInput(editText, 0);
-    }
-
-    public static Drawable getDrawable(Context context, int resId)
-    {
-        //TODO use AppCompatDrawableManager?
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            return context.getResources().getDrawable(resId, context.getTheme());
-        }
-        else
-        {
-            return context.getResources().getDrawable(resId);
-        }
     }
 
     public static Fragment createFragment(String className)

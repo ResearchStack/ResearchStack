@@ -119,7 +119,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
 
         clear.setClickable(signatureView.isSignatureDrawn());
 
-        //TODO call view.setAlpha() is not working, investigate
+        // view.setAlpha() is not working, this is kind of a hack around that
         clear.animate().alpha(signatureView.isSignatureDrawn() ? 1 : 0);
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
