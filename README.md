@@ -133,7 +133,7 @@ com.scottyab:aes-crypto
 compile 'com.cronutils:cron-utils
 </b>
 
-- Used to parse crons within the tasks_and_scehdules json file and calculating system notification execution time
+- Used to parse crons within the tasks_and_schedules json file and calculating system notification execution time
 
 <b>
 com.google.code.gson:gson
