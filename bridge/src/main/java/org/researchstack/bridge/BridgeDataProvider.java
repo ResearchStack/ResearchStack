@@ -65,7 +65,7 @@ import rx.schedulers.Schedulers;
 
 /*
 * This is a very simple implementation that hits only part of the Sage Bridge REST API
-* TODO a complete port of the Sage Bridge Java SDK for android: https://github.com/Sage-Bionetworks/BridgeJavaSDK
+* a complete port of the Sage Bridge Java SDK for android: https://github.com/Sage-Bionetworks/BridgeJavaSDK
  */
 public abstract class BridgeDataProvider extends DataProvider
 {
@@ -78,7 +78,6 @@ public abstract class BridgeDataProvider extends DataProvider
     protected Gson    gson     = new Gson();
     protected boolean signedIn = false;
 
-    // TODO add these to a db for easier lookups, direct updating from bridge server
     // these are used to get task/step guids without rereading the json files and iterating through
     private Map<String, String> loadedTaskGuids = new HashMap<>();
     private Map<String, String> loadedTaskDates = new HashMap<>();
@@ -118,7 +117,6 @@ public abstract class BridgeDataProvider extends DataProvider
         Interceptor headerInterceptor = chain -> {
             Request original = chain.request();
 
-            //TODO Get proper app-name and version name
             Request request = original.newBuilder().header("User-Agent", getUserAgent())
                     .header("Bridge-Session", sessionToken)
                     .method(original.method(), original.body())
@@ -204,10 +202,10 @@ public abstract class BridgeDataProvider extends DataProvider
     @Override
     public Observable<DataResponse> signUp(Context context, String email, String username, String password)
     {
-        //TODO pass in data groups, remove roles
+        // we should pass in data groups, remove roles
         SignUpBody body = new SignUpBody(getStudyId(), email, username, password, null, null);
 
-        // TODO Saving email to user object should exist elsewhere.
+        // saving email to user object should exist elsewhere.
         // Save email to user object.
         User user = loadUser(context);
         if(user == null)
@@ -253,8 +251,8 @@ public abstract class BridgeDataProvider extends DataProvider
 
             if(userSessionInfo != null)
             {
-                // TODO if we are direct from signing in, we need to load the user profile object
-                // from the server.
+                // if we are direct from signing in, we need to load the user profile object
+                // from the server. that wouldn't work right now
                 signedIn = true;
                 saveUserSession(context, userSessionInfo);
                 buildRetrofitService(userSessionInfo);
@@ -305,7 +303,6 @@ public abstract class BridgeDataProvider extends DataProvider
                 scope);
         writeJsonString(context, gson.toJson(signature), TEMP_CONSENT_JSON_FILE_NAME);
 
-        // TODO init here isnt great. Refactor and create saveUser method.
         User user = loadUser(context);
         if(user == null)
         {
@@ -359,9 +356,6 @@ public abstract class BridgeDataProvider extends DataProvider
         service.consentSignature(getStudyId(), consent)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(response -> {
-                    // TODO this isn't good, we should be getting an updated user session info from
-                    // TODO the server, but there doesn't seem to be a way to do that without
-                    // TODO signing in again with the username and password
                     if(response.code() == 201 ||
                             response.code() == 409) // success or already consented
                     {
@@ -467,8 +461,8 @@ public abstract class BridgeDataProvider extends DataProvider
                 continue;
             }
 
-            // TODO loading the task json here is bad, but the taskID is in the schedule
-            // TODO json but the readable id is in the task json
+            // loading the task json here is bad, but the taskID is in the schedule
+            // json but the readable id is in the task json
             TaskModel taskModel = loadTaskModel(context, task);
             TaskResult result = db.loadLatestTaskResult(taskModel.identifier);
 
@@ -578,7 +572,7 @@ public abstract class BridgeDataProvider extends DataProvider
         }
     }
 
-    // TODO these stink, I should be able to query the DB and find these
+    // these stink, I should be able to query the DB and find these
     private String getCreatedOnDate(String identifier)
     {
         return loadedTaskDates.get(identifier);
@@ -621,7 +615,6 @@ public abstract class BridgeDataProvider extends DataProvider
             return;
         }
 
-        // TODO make sure we don't upload the same file twice if this gets called twice
         List<UploadRequest> uploadRequests = ((UploadQueue) StorageAccess.getInstance()
                 .getAppDatabase()).loadUploadRequests();
 
@@ -721,8 +714,8 @@ public abstract class BridgeDataProvider extends DataProvider
                         case UNKNOWN:
                         case VALIDATION_FAILED:
                             LogExt.e(getClass(), "Unrecoverable error, deleting");
+                            // figure out what to actually do on unrecoverable, from a user perspective
                             deleteUploadRequest(context, request);
-                            // TODO figure out what to actually do on unrecoverable
                             break;
 
                         case REQUESTED:
@@ -768,7 +761,7 @@ public abstract class BridgeDataProvider extends DataProvider
         }
     }
 
-    // TODO figure out what directory to save files in and where to put this method
+    // figure out what directory to save files in and where to put this method
     public static File getFilesDir(Context context)
     {
         return context.getFilesDir();

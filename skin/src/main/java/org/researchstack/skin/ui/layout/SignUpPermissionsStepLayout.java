@@ -43,7 +43,6 @@ public class SignUpPermissionsStepLayout extends StepLayoutImpl
     @Override
     public void initializeLayout()
     {
-        //TODO Fix this, very disgusting
         if(getContext() instanceof ActivityCallback)
         {
             permissionCallback = (ActivityCallback) getContext();
@@ -63,7 +62,6 @@ public class SignUpPermissionsStepLayout extends StepLayoutImpl
     {
         super.onBodyCreated(body);
 
-        //TODO Handle permissions UI/Flow on NON-M devices
         permissionButton = (AppCompatButton) body.findViewById(R.id.permission_button);
         RxView.clicks(permissionButton).subscribe(view -> permissionCallback.requestPermissions());
 

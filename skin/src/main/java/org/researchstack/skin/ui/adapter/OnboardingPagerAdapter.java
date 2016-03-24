@@ -9,11 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.researchstack.backbone.ui.ViewVideoActivity;
 import org.researchstack.backbone.ui.views.LocalWebView;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.StudyOverviewModel;
-import org.researchstack.backbone.ui.ViewVideoActivity;
 
 import java.util.List;
 
@@ -42,7 +42,6 @@ public class OnboardingPagerAdapter extends PagerAdapter
     }
 
     /**
-     * TODO Clean this code up -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
      * Each case is the same block of code. Figure out what the layout-id needs to be, then upcast
      * to the super class that the layouts each share. If the layouts cant extend from the same parent
      * class, maybe have each implement an interface?

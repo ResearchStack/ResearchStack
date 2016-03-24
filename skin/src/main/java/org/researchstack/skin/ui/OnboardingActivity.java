@@ -132,7 +132,6 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         super.onDataReady();
 
         /**
-         * TODO This check is a problem -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
          * We can never go "back" from the SignInActivity. When heading back from
          * SignUpTaskActivity, Onboarding activity will register its file-access listener resulting
          * on onDataReady being called. This, in turn, does the check below and calls
@@ -144,7 +143,6 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         }
     }
 
-    //TODO Read on main thread for intense UI blockage.
     private StudyOverviewModel parseStudyOverviewModel()
     {
         int fileResId = ResourceManager.getInstance().getStudyOverviewSections();
@@ -239,7 +237,6 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         {
             PassCodeCreationStep step = new PassCodeCreationStep(OnboardingTask.SignUpPassCodeCreationStepIdentifier,
                     R.string.rss_passcode);
-            // TODO make a passcode task?
             OrderedTask task = new OrderedTask("PasscodeTask", step);
             startActivityForResult(ViewTaskActivity.newIntent(this, task), REQUEST_CODE_PASSCODE);
         }
@@ -271,7 +268,6 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             String password = (String) result.getStepResult(OnboardingTask.SignInStepIdentifier)
                     .getResultForIdentifier(SignInTask.ID_PASSWORD);
 
-            // TODO find better way to tell the difference between sign in and needs verification
             if(email == null || password == null)
             {
                 startMainActivity();

@@ -6,7 +6,6 @@ import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
 
 /**
- * TODO Needs Refactor
  * Created by bradleymcdermott on 10/16/15.
  */
 public class SignUpTask extends OnboardingTask

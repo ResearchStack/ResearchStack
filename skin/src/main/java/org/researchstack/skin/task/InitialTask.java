@@ -38,7 +38,6 @@ public class InitialTask extends OrderedTask
 
         FormStep basicInfoForm = new FormStep("basicInfo", "About You", "");
 
-        // TODO dateOfBirthItem.placeholder = @"DOB"; FormItem has a placeholder field. Which would translate to the hint field on TextView
         // Date of Birth
         DateAnswerFormat dateOfBirthFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
         QuestionStep dateOfBirthStep = new QuestionStep("dateOfBirth",
@@ -53,7 +52,6 @@ public class InitialTask extends OrderedTask
         QuestionStep genderStep = new QuestionStep("gender", "Gender", genderFormat);
 
         // Zip Code
-        // TODO max value for zip
         IntegerAnswerFormat zipCodeFormat = new IntegerAnswerFormat(0, 99999);
         QuestionStep zipCodeStep = new QuestionStep("zipCode",
                 "What is your zip code?",
@@ -73,7 +71,6 @@ public class InitialTask extends OrderedTask
         FormStep hairEyesForm = new FormStep("hairEyesInfo", "Natural Hair and Eye Color", "");
 
         // Hair Color
-        // TODO iOS defines ORKValuePickerAnswerFormat
         AnswerFormat hairColorFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
                 new Choice<>("Red Hair", "redHair"),
                 new Choice<>("Blond Hair", "blondeHair"),
@@ -81,7 +78,6 @@ public class InitialTask extends OrderedTask
                 new Choice<>("Black Hair", "blackHair"));
         QuestionStep hairColorStep = new QuestionStep("hairColor", "Hair Color", hairColorFormat);
 
-        // TODO iOS defines ORKValuePickerAnswerFormat
         AnswerFormat eyeColorFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
                 new Choice<>("Blue Eyes", "blueEyes"),
                 new Choice<>("Green Eyes", "greenEyes"),

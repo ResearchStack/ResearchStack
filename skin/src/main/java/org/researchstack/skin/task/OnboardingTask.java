@@ -29,7 +29,7 @@ public abstract class OnboardingTask extends Task
     //    public static final String SignUpPermissionsStepIdentifier        = "Permissions";
     //    public static final String SignUpPermissionsPrimingStepIdentifier = "PermissionsPriming";
 
-    @Deprecated // TODO isnt used anywhere and its value is never read.
+    @Deprecated
     protected int                  currentStepNumber;
     private   QuestionStep         inclusionCriteriaStep;
     private   Step                 eligibleStep;
@@ -101,7 +101,6 @@ public abstract class OnboardingTask extends Task
             thankyouStep = new Step(SignUpThankYouStepIdentifier);
             thankyouStep.setStepTitle(R.string.rss_thank_you);
             thankyouStep.setStepLayoutClass(NotImplementedStepBody.class);
-            //            TODO Create SignUpThankYouStepLayout
             //            thankyouStep.setStepLayoutClass(SignUpThankYouStepLayout.class);
         }
         return thankyouStep;
@@ -129,16 +128,11 @@ public abstract class OnboardingTask extends Task
         return eligibleStep;
     }
 
-    /**
-     * TODO Question is currently a placeholder. Implement unique UI for step.
-     * TODO Move string to Resources
-     */
     public Step getInclusionCriteriaStep()
     {
         return UiManager.getInstance().getInclusionCriteriaStep();
     }
 
-    //TODO Move string to Resources
     public Step getPassCodeCreationStep()
     {
         if(passcodeCreationStep == null)

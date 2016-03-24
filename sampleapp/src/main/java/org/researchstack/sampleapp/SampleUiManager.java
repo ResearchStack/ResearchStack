@@ -66,7 +66,6 @@ public class SampleUiManager extends UiManager
     }
 
     /**
-     * TODO Refactor into a framework step builder *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
      * This needs to change, strange that UIManager is handling step creation of OnboardingTask.
      * We should have a place where all the steps are created and returned if dev wants to edit any
      * step within said task.

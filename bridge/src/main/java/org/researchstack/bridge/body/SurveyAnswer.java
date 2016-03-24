@@ -61,7 +61,6 @@ public class SurveyAnswer
             case Location:
             case Form:
             default:
-                // TODO add all these
                 throw new RuntimeException("Cannot upload this question type to bridge");
         }
         return answer;
@@ -106,14 +105,11 @@ public class SurveyAnswer
     {
 
         private final Integer    numericAnswer;
-        private final String unit;
 
         public NumericSurveyAnswer(StepResult result)
         {
             super(result);
             numericAnswer = (Integer) result.getResult();
-            // TODO add unit?
-            unit = null; //((IntegerAnswerFormat) result.getAnswerFormat()).getUnit();
         }
     }
 
