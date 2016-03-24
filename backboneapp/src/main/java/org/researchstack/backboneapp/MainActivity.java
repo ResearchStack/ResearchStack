@@ -259,7 +259,6 @@ public class MainActivity extends PinCodeActivity
                 .getAppDatabase()
                 .loadLatestTaskResult(CONSENT);
 
-        // TODO form step result saving is messed up (gson saving inner stepresult as map)
         String fullName = "";
         //            String fullName = ((StepResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
         //                    .getResultForIdentifier(NAME)).getResult();
@@ -310,7 +309,7 @@ public class MainActivity extends PinCodeActivity
         multiStep.setAnswerFormat(multiFormat);
         multiStep.setOptional(false);
 
-        // TODO off until formstep result saving is fixed
+        // off until formstep result saving is fixed
         //        FormStep formStep = createFormStep();
 
         // Create a task wrapping the steps.
