@@ -101,12 +101,6 @@ public class SignUpTask extends OnboardingTask
     }
 
     @Override
-    public int getNumberOfSteps()
-    {
-        return MINIMUM_STEPS;
-    }
-
-    @Override
     public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
     {
         int stepPosition = 0;
@@ -136,7 +130,7 @@ public class SignUpTask extends OnboardingTask
 
         }
 
-        return new TaskProgress(stepPosition, getNumberOfSteps());
+        return new TaskProgress(stepPosition, MINIMUM_STEPS);
     }
 
     public void setHasPasscode(boolean hasPasscode)

@@ -67,6 +67,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
             taskResult = (TaskResult) savedInstanceState.getSerializable(EXTRA_TASK_RESULT);
             currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
         }
+
+        task.validateParameters();
     }
 
     protected Step getCurrentStep()
