@@ -76,7 +76,6 @@ public class ActivitiesFragment extends Fragment
 
     private void setUpAdapter()
     {
-        // TODO make updating the list better, make sure not leaking memory with the rx subject
         unsubscribe();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
@@ -93,7 +92,6 @@ public class ActivitiesFragment extends Fragment
                 .compose(ObservableUtils.applyDefault())
                 .map(o -> (SchedulesAndTasksModel) o)
                 .subscribe(model -> {
-                    // TODO relook at what object this adapter uses. Could be something simpler than TaskModel
                     adapter = new TaskAdapter(model);
                     recyclerView.setAdapter(adapter);
 
@@ -141,12 +139,10 @@ public class ActivitiesFragment extends Fragment
             tasks = new ArrayList<>();
             taskScheduleType = new HashMap<>();
 
-            //TODO refactor this, data should already be prepared / include all data we need
             for(SchedulesAndTasksModel.ScheduleModel schedule : model.schedules)
             {
                 for(SchedulesAndTasksModel.TaskScheduleModel task : schedule.tasks)
                 {
-                    // TODO supporting tasks that define taskClassName instead of a file should be supported
                     if(! TextUtils.isEmpty(task.taskFileName))
                     {
                         taskScheduleType.put(task.taskID, schedule.scheduleType.equals("once"));
@@ -184,7 +180,6 @@ public class ActivitiesFragment extends Fragment
             holder.title.append("\n" + task.taskCompletionTime);
             holder.title.setTextColor(tintColor);
 
-            //TODO get current drawable or set "complete" drawable if complete
             Drawable drawable = holder.dailyIndicator.getDrawable();
             drawable = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(drawable, tintColor);

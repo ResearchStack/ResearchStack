@@ -47,11 +47,6 @@ import java.util.Date;
 
 import rx.Observable;
 
-/**
- * TODO Try and point to a single instance of a key instead of defining them in XML and in code.
- * TODO Version text currently points to ResearchStack, implement a way of getting version of SampleApp
- * TODO Implement screens for all items in {@link #onPreferenceTreeClick}
- */
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener
 {
     private static final int REQUEST_CODE_SHARING_OPTIONS = 0;

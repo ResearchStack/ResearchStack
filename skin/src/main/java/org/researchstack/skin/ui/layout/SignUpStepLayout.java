@@ -125,7 +125,6 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
                                         .alpha(0)
                                         .withEndAction(() -> progress.setVisibility(View.GONE));
 
-                                // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 // Convert errorBody to JSON-String, convert json-string to object
                                 // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
                                 // toast

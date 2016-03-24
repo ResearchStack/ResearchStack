@@ -41,7 +41,6 @@ public class MainActivity extends PinCodeActivity
 
     private MainPagerAdapter pagerAdapter;
 
-    //TODO Quick fix for now.
     private boolean failedToFinishInitialTask;
 
     @Override
@@ -189,7 +188,8 @@ public class MainActivity extends PinCodeActivity
                 tabLayout.addIconTab(
                         item.getTitle(),
                         item.getIcon(),
-                        items.indexOf(item) == 0,//TODO check if should show
+                        items.indexOf(item) == 0,
+                        // need real logic for this (show badge)
                         items.indexOf(item) == 0
                 );
             }
@@ -201,7 +201,6 @@ public class MainActivity extends PinCodeActivity
     public void onDataFailed()
     {
         super.onDataFailed();
-        //TODO Show dialog explaing what went wrong, instead of finishing activity.
 
         Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
         finish();

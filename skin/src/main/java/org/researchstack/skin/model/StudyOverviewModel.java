@@ -32,9 +32,6 @@ public class StudyOverviewModel
         return logoName;
     }
 
-    /**
-     * TODO Extend from {@link org.researchstack.skin.model.SectionModel.Section} class
-     */
     public static class Question
     {
         @SerializedName("title")
@@ -46,11 +43,11 @@ public class StudyOverviewModel
         @SerializedName("show_consent")
         String showConsent;
 
-        @Deprecated //TODO Figure out purpose, not used.
+        @Deprecated // not used in new designs
         @SerializedName("icon_image")
         String iconImage;
 
-        @Deprecated //TODO Figure out purpose, not used.
+        @Deprecated // not used in new designs
         @SerializedName("tint_color")
         String tintColor;
 
