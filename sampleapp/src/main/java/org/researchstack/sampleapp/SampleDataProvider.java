@@ -47,6 +47,6 @@ public class SampleDataProvider extends BridgeDataProvider
     @Override
     protected String getUserAgent()
     {
-        return "Mole Mapper/1";
+        return "Mole Mapper/" + BuildConfig.VERSION_CODE;
     }
 }
