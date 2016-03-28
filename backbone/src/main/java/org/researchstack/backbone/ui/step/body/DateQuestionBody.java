@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui.step.body;
 
 import android.app.DatePickerDialog;
 import android.content.res.Resources;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,7 +133,8 @@ public class DateQuestionBody implements StepBody
     }
 
     /**
-     * @return {@link BodyAnswer#VALID} if result date is >= min and <= max date set within the Step.AnswerFormat
+     * @return {@link BodyAnswer#VALID} if result date is >= min and <= max date set within the
+     * Step.AnswerFormat
      */
     @Override
     public BodyAnswer getBodyAnswerState()
@@ -161,7 +163,10 @@ public class DateQuestionBody implements StepBody
 
     private void showDialog(TextView tv)
     {
-        new DatePickerDialog(tv.getContext(),
+        // need to find a material date picker, since it's not in the support library
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(tv.getContext(),
+                R.style.Theme_Backbone);
+        new DatePickerDialog(contextWrapper,
                 (view, year, monthOfYear, dayOfMonth) -> {
                     calendar.set(year, monthOfYear, dayOfMonth);
                     hasChosenDate = true;
