@@ -75,7 +75,6 @@ public class SmartSurveyTask extends Task implements Serializable
 
     public static AnswerFormat from(TaskModel.ConstraintsModel constraints)
     {
-        // TODO seems like we're doing weird things just to fit the ResearchKit architecture
         AnswerFormat answerFormat;
         String type = constraints.type;
         if(type.equals("BooleanConstraints"))
@@ -91,12 +90,10 @@ public class SmartSurveyTask extends Task implements Serializable
         }
         else if(type.equals("IntegerConstraints"))
         {
-            // TODO need to get max, min, etc
             answerFormat = new IntegerAnswerFormat(constraints.minValue, constraints.maxValue);
         }
         else if(type.equals("TextConstraints") || type.equals("StringConstraints"))
         {
-            // TODO need to get maxlength
             answerFormat = new TextAnswerFormat();
             boolean multipleLines = constraints.multipleLines;
             ((TextAnswerFormat) answerFormat).setIsMultipleLines(multipleLines);
@@ -119,7 +116,6 @@ public class SmartSurveyTask extends Task implements Serializable
         for(int i = 0; i < enumeration.size(); i++)
         {
             TaskModel.EnumerationModel choice = enumeration.get(i);
-            // TODO none of the examples seem to have detail text, add that if we find it
             choices[i] = new Choice<>(choice.label, choice.value);
         }
         return choices;
@@ -196,12 +192,6 @@ public class SmartSurveyTask extends Task implements Serializable
     {
     }
 
-    @Override
-    public int getNumberOfSteps()
-    {
-        return steps.size();
-    }
-
     private String nextStepIdentifier(boolean after, String currentIdentifier)
     {
         if(currentIdentifier == null && after)
@@ -268,7 +258,6 @@ public class SmartSurveyTask extends Task implements Serializable
     {
         String skipToIdentifier = null;
 
-        // TODO only Integer answers for now
         if(answer == null || answer instanceof Integer)
         {
             for(TaskModel.RuleModel stepRule : stepRules)

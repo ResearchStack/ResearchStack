@@ -54,7 +54,6 @@ public class ConsentTask extends OrderedTask
 
         Resources r = context.getResources();
 
-        //TODO Read on main thread for intense UI blockage.
         ConsentSectionModel data = JsonUtils.loadClass(context,
                 ConsentSectionModel.class,
                 ResourceManager.getInstance().getConsentSections());
@@ -224,10 +223,6 @@ public class ConsentTask extends OrderedTask
 
             TextAnswerFormat format = new TextAnswerFormat();
             format.setIsMultipleLines(false);
-            // TODO Implement the following -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-            // TODO format.autocapitalizationType = UITextAutocapitalizationTypeWords;
-            // TODO format.autocorrectionType = UITextAutocorrectionTypeNo;
-            // TODO format.spellCheckingType = UITextSpellCheckingTypeNo;
 
             String placeholder = ctx.getResources()
                     .getString(R.string.rsb_consent_name_placeholder);

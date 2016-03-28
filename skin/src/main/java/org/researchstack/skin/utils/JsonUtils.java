@@ -21,7 +21,6 @@ public class JsonUtils
 
     public static <T> T loadClass(Context context, Class<T> clazz, String filename)
     {
-        //TODO /raw prefix needed?
         int rawFileId = ResUtils.getRawResourceId(context, "raw/" + filename);
         return loadClass(context, clazz, rawFileId);
     }

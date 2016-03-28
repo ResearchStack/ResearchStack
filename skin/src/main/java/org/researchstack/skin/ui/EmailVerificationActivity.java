@@ -141,7 +141,6 @@ public class EmailVerificationActivity extends PinCodeActivity
                             .withEndAction(() -> progress.setVisibility(View.GONE));
                     Toast.makeText(this, dataResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 }, throwable -> {
-                    // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                     // Convert errorBody to JSON-String, convert json-string to object
                     // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
                     // toast

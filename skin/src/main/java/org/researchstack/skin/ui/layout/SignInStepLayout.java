@@ -97,7 +97,6 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
 
         forgotPassword = (TextView) layout.findViewById(R.id.forgot_password);
         RxView.clicks(forgotPassword).subscribe(v -> {
-            //TODO implement call on data provider
             Toast.makeText(getContext(), "TODO RESET PASSWORD", Toast.LENGTH_SHORT).show();
         });
 
@@ -123,7 +122,6 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
                         .subscribe(dataResponse -> {
                             if(dataResponse.isSuccess())
                             {
-                                // TODO figure out a better way to return the password if necessary
                                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
                             }
                             else
@@ -145,14 +143,12 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
         {
             // Sign in returns 404 if they haven't verified email. If the email
             // matches the one they used to sign up, go to verification activity
-            // TODO figure out a better way to return the password if necessary
             result.setResultForIdentifier(SignInTask.ID_EMAIL, username);
             result.setResultForIdentifier(SignInTask.ID_PASSWORD, password);
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
             return;
         }
 
-        // TODO Cast throwable to HttpException -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         // Convert errorBody to JSON-String, convert json-string to object
         // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
         // toast

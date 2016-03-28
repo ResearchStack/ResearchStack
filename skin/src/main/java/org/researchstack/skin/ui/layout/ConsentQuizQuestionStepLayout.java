@@ -96,7 +96,6 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
 
             if(resultTitle.getVisibility() == View.GONE)
             {
-                //TODO get from resources / theme
                 int resultTextColor = answerCorrect ? 0xFF67bd61 : 0xFFc96677;
                 int radioBackground = Color.argb(51,
                         //20% alpha
@@ -185,7 +184,6 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
     {
         if(radioGroup.getCheckedRadioButtonId() == - 1)
         {
-            //TODO get string from res
             Toast.makeText(getContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
             return false;
         }

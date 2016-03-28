@@ -90,7 +90,6 @@ public class ConsentQuizModel implements Serializable
         @SerializedName("quizFailure2Text")
         public String quizFailure2Text;
 
-        //TODO Rename this variable
         @SerializedName("maxIncorrect")
         public int maxIncorrect;
     }

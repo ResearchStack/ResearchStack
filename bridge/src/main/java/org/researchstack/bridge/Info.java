@@ -17,7 +17,7 @@ public class Info
     private String         surveyGuid;
     private String         surveyCreatedOn;
     private int    schemaRevision = 1;
-    // TODO since this buildconfig is in skin, this won't be correct
+    // since this buildconfig is in skin, this won't be correct
     private String appVersion     = BuildConfig.VERSION_NAME;
     private String phoneInfo      = Build.MANUFACTURER + " " + Build.MODEL;
 

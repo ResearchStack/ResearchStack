@@ -17,7 +17,7 @@ public class SampleDataProvider extends BridgeDataProvider
     @Override
     public void processInitialTaskResult(Context context, TaskResult taskResult)
     {
-        // TODO
+        // handle result from initial task (save profile info to disk, upload to your server, etc)
     }
 
     @Override
@@ -47,6 +47,6 @@ public class SampleDataProvider extends BridgeDataProvider
     @Override
     protected String getUserAgent()
     {
-        return "Mole Mapper/1";
+        return "Mole Mapper/" + BuildConfig.VERSION_CODE;
     }
 }
