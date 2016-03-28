@@ -16,6 +16,7 @@ import org.researchstack.backbone.storage.NotificationHelper;
 import org.researchstack.backbone.storage.database.AppDatabase;
 import org.researchstack.backbone.storage.database.TaskNotification;
 import org.researchstack.backbone.storage.file.FileAccessException;
+import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.bridge.body.ConsentSignatureBody;
@@ -500,7 +501,7 @@ public abstract class BridgeDataProvider extends DataProvider
     }
 
     @Override
-    public SmartSurveyTask loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task)
+    public Task loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task)
     {
         TaskModel taskModel = loadTaskModel(context, task);
         SmartSurveyTask smartSurveyTask = new SmartSurveyTask(taskModel);
