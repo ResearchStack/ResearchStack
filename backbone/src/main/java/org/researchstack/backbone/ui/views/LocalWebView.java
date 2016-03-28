@@ -59,14 +59,21 @@ public class LocalWebView extends WebView
                 {
                     String file = url.substring(SCHEMA_LOCAL_HTML.length(), url.length());
                     String fileName = file.split("\\.")[0];
-                    if (file.endsWith(".html"))
+
+                    if (file.endsWith(".pdf"))
                     {
-                        Intent intent = ViewWebDocumentActivity.newIntent(getContext(), null, fileName);
-                        getContext().startActivity(intent);
+                        throw new UnsupportedOperationException("LocalWebView does not currently " +
+                                "support viewing PDF files. Its suggested you generate HTML version" +
+                                " of PDF for viewing");
                     }
                     else if (file.endsWith(".mp4"))
                     {
                         Intent intent = ViewVideoActivity.newIntent(getContext(), fileName);
+                        getContext().startActivity(intent);
+                    }
+                    else
+                    {
+                        Intent intent = ViewWebDocumentActivity.newIntent(getContext(), null, fileName);
                         getContext().startActivity(intent);
                     }
                 }
