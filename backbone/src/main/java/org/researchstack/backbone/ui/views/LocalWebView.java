@@ -3,7 +3,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.AttributeSet;
-import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -46,7 +45,6 @@ public class LocalWebView extends WebView
     private void init()
     {
         getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        setLayerType(View.LAYER_TYPE_HARDWARE, null);
         setWebViewClient(new WebViewClient()
         {
             @Override
