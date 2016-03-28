@@ -168,15 +168,23 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
                 // of the filler space
                 if(contentHeightSansFiller < stepLayoutHeight)
                 {
-                    filler.getLayoutParams().height = stepLayoutHeight - contentHeightSansFiller;
-                    filler.requestLayout();
-                    isChangeFromFiller = true;
+                    filler.post(() -> {
+                        ViewGroup.LayoutParams params = filler.getLayoutParams();
+                        params.height = stepLayoutHeight - contentHeightSansFiller;
+                        filler.setLayoutParams(params);
+
+                        isChangeFromFiller = true;
+                    });
                 }
                 else if (contentHeightSansFiller > stepLayoutHeight && filler.getHeight() != 0)
                 {
-                    filler.getLayoutParams().height = 0;
-                    filler.requestLayout();
-                    isChangeFromFiller = true;
+                    filler.post(() -> {
+                        ViewGroup.LayoutParams params = filler.getLayoutParams();
+                        params.height = 0;
+                        filler.setLayoutParams(params);
+
+                        isChangeFromFiller = true;
+                    });
                 }
             }
         });
