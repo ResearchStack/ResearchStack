@@ -51,15 +51,9 @@ public class SignInTask extends OnboardingTask
     }
 
     @Override
-    public int getNumberOfSteps()
-    {
-        return MINIMUM_STEPS;
-    }
-
-    @Override
     public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
     {
-        return new TaskProgress(0, getNumberOfSteps());
+        return new TaskProgress(0, MINIMUM_STEPS);
     }
 
     public void setHasPasscode(boolean hasPasscode)

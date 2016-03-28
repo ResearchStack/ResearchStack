@@ -192,12 +192,6 @@ public class SmartSurveyTask extends Task implements Serializable
     {
     }
 
-    @Override
-    public int getNumberOfSteps()
-    {
-        return steps.size();
-    }
-
     private String nextStepIdentifier(boolean after, String currentIdentifier)
     {
         if(currentIdentifier == null && after)

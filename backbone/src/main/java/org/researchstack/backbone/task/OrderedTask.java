@@ -6,7 +6,10 @@ import org.researchstack.backbone.step.Step;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 
 public class OrderedTask extends Task implements Serializable
 {
@@ -87,12 +90,16 @@ public class OrderedTask extends Task implements Serializable
     @Override
     public void validateParameters()
     {
-    }
+        Set<String> uniqueIds = new HashSet<>();
+        for(Step step : steps)
+        {
+            uniqueIds.add(step.getIdentifier());
+        }
 
-    @Override
-    public int getNumberOfSteps()
-    {
-        return steps.size();
+        if(uniqueIds.size() != steps.size())
+        {
+            throw new InvalidTaskException("OrderedTask has steps with duplicate ids");
+        }
     }
 
     public void addStep(Step step)

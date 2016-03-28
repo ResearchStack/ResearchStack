@@ -1,9 +1,17 @@
 package org.researchstack.backbone.task;
+import android.content.Context;
+
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.researchstack.backbone.R;
+import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.Step;
+
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TaskTest
@@ -14,73 +22,61 @@ public class TaskTest
 
     }
 
-    @Ignore
     @Test
-    public void testOrderedTask() throws Exception
+    public void testGetTitleForStep() throws Exception
     {
+        Task task = new TaskImpl("id");
 
+        Context mockContext = Mockito.mock(Context.class);
+        Mockito.when(mockContext.getString(R.string.app_name)).thenReturn("title");
+        Mockito.when(mockContext.getString(0)).thenReturn("title");
+
+        Step mockStepWithTitle = Mockito.mock(Step.class);
+        Mockito.when(mockStepWithTitle.getStepTitle()).thenReturn(R.string.app_name);
+        String title = task.getTitleForStep(mockContext, mockStepWithTitle);
+        assertEquals("Gets title from context using step id", "title", title);
+
+        Step mockStepWithoutTitle = Mockito.mock(Step.class);
+        Mockito.when(mockStepWithoutTitle.getStepTitle()).thenReturn(0);
+        String noTitle = task.getTitleForStep(mockContext, mockStepWithoutTitle);
+        assertEquals("Gets empty string when no title id on step", "", noTitle);
     }
 
-    @Ignore
-    @Test
-    public void testNavigableOrderedTask() throws Exception
+    private static class TaskImpl extends Task
     {
+        public TaskImpl(String identifier)
+        {
+            super(identifier);
+        }
 
-    }
+        @Override
+        public Step getStepAfterStep(Step step, TaskResult result)
+        {
+            return null;
+        }
 
-    @Ignore
-    @Test
-    public void testNavigableOrderedTaskEmpty() throws Exception
-    {
+        @Override
+        public Step getStepBeforeStep(Step step, TaskResult result)
+        {
+            return null;
+        }
 
-    }
+        @Override
+        public Step getStepWithIdentifier(String identifier)
+        {
+            return null;
+        }
 
-    @Ignore
-    @Test
-    public void testNavigableOrderedTaskHeadache() throws Exception
-    {
+        @Override
+        public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
+        {
+            return null;
+        }
 
-    }
+        @Override
+        public void validateParameters()
+        {
 
-    @Ignore
-    @Test
-    public void testNavigableOrderedTaskDizziness() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testNavigableOrderedTaskSevereHeadache() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testNavigableOrderedTaskLightHeadache() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testPredicateStepNavigationRule() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testDirectStepNavigationRule() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testResultPredicates() throws Exception
-    {
-
+        }
     }
 }
