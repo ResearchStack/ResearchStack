@@ -1,7 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
