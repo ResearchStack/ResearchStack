@@ -141,14 +141,14 @@ public class SignatureView extends View
             case MotionEvent.ACTION_DOWN:
                 sigPoints.add(new LinePathPoint(x, y, LinePathPoint.TYPE_LINE_START));
 
-                sigPath.moveTo(x, y);
-                lastX = x;
-                lastY = y;
-
                 if(sigPath.isEmpty())
                 {
                     callbacks.onSignatureStarted();
                 }
+
+                sigPath.moveTo(x, y);
+                lastX = x;
+                lastY = y;
 
                 invalidate();
                 break;
