@@ -3,6 +3,8 @@ package org.researchstack.skin.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
@@ -28,7 +30,6 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.AppPrefs;
-import org.researchstack.skin.BuildConfig;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
@@ -204,7 +205,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public boolean onPreferenceTreeClick(Preference preference)
     {
-        LogExt.i(getClass(), preference.getTitle().toString());
+        LogExt.i(getClass(), String.valueOf(preference.getTitle()));
 
         if(preference.hasKey())
         {
@@ -402,9 +403,21 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     public String getVersionString()
     {
-        return getString(R.string.rss_settings_version,
-                BuildConfig.VERSION_NAME,
-                BuildConfig.VERSION_CODE);
+        int versionCode = 0;
+        String versionName = "";
+        PackageManager manager = getActivity().getPackageManager();
+
+        try
+        {
+            PackageInfo info = manager.getPackageInfo(getActivity().getPackageName(), 0);
+            versionCode = info.versionCode;
+            versionName = info.versionName;
+        }
+        catch(PackageManager.NameNotFoundException e)
+        {
+            // TODO Auto-generated catch block
+        }
+        return getString(R.string.rss_settings_version, versionName, versionCode);
     }
 
     public void showPrivacyPolicy()
