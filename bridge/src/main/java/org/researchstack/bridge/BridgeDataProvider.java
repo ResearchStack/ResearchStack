@@ -535,7 +535,7 @@ public abstract class BridgeDataProvider extends DataProvider
         }
 
         uploadBridgeData(context,
-                new Info(getGuid(taskResult.getIdentifier()),
+                new Info(context, getGuid(taskResult.getIdentifier()),
                         getCreatedOnDate(taskResult.getIdentifier())),
                 files);
     }
