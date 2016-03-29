@@ -23,7 +23,6 @@ import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.AppPrefs;
-import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.TaskProvider;
@@ -124,23 +123,6 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         pager.setAdapter(adapter);
         tabStrip = (TabLayout) findViewById(R.id.pager_title_strip);
         tabStrip.setupWithViewPager(pager);
-    }
-
-    @Override
-    public void onDataReady()
-    {
-        super.onDataReady();
-
-        /**
-         * We can never go "back" from the SignInActivity. When heading back from
-         * SignUpTaskActivity, Onboarding activity will register its file-access listener resulting
-         * on onDataReady being called. This, in turn, does the check below and calls
-         * onSignInClicked, which creates and starts SignUpTaskActivity
-         */
-        if(DataProvider.getInstance().isSignedUp(this))
-        {
-            onSignInClicked(null);
-        }
     }
 
     private StudyOverviewModel parseStudyOverviewModel()

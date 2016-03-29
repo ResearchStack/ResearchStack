@@ -187,8 +187,9 @@ public abstract class BridgeDataProvider extends DataProvider
     public Observable<DataResponse> withdrawConsent(Context context, String reason)
     {
         return service.withdrawConsent(getStudyId(), new WithdrawalBody(reason))
+                .compose(ObservableUtils.applyDefault())
                 .doOnNext(response -> {
-                    if(response.isSuccess())
+                    if (response.isSuccess())
                     {
                         userSessionInfo.setConsented(false);
                         saveUserSession(context, userSessionInfo);

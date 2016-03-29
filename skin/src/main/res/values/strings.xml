@@ -162,5 +162,8 @@
     <string name="rss_confirm_resend_email">Resend</string>
     <string name="rss_settings_reminders_title">Task reminders</string>
     <string name="rss_settings_reminders_summary">You’ll be reminded to complete tasks</string>
+    <string name="rss_settings_dialog_leave_study">Are you sure you want to leave the study? This
+        action cannot be undone and you will need to provide consent in order to re-enroll.
+    </string>
 
 </resources>
