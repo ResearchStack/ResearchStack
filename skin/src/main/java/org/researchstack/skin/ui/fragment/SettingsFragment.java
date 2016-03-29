@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -13,6 +14,7 @@ import android.support.v7.preference.PreferenceScreen;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import org.researchstack.backbone.StorageAccess;
@@ -195,11 +197,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        FrameLayout settingsRoot = new FrameLayout(container.getContext());
+
         ViewGroup v = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
+        settingsRoot.addView(v);
+
         progress = inflater.inflate(R.layout.progress, container, false);
         progress.setVisibility(View.GONE);
-        v.addView(progress);
-        return v;
+        settingsRoot.addView(progress);
+
+        return settingsRoot;
     }
 
     @Override
@@ -275,26 +282,42 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     return true;
 
                 case KEY_LEAVE_STUDY:
-                    DataProvider.getInstance()
-                            .withdrawConsent(getActivity(), null)
-                            .compose(ObservableUtils.applyDefault())
-                            .subscribe(response -> {
-                                if(response.isSuccess())
-                                {
-                                    Toast.makeText(getActivity(),
-                                            R.string.rss_consent_withdraw_success,
-                                            Toast.LENGTH_SHORT).show();
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(R.string.rss_settings_general_leave_study)
+                            .setMessage(R.string.rss_settings_dialog_leave_study)
+                            .setPositiveButton(R.string.rss_settings_general_leave_study,
+                                    (dialog, which) -> {
 
-                                    initPreferenceForConsent();
-                                }
-                                else
-                                {
-                                    Toast.makeText(getActivity(),
-                                            R.string.rss_consent_withdraw_failed,
-                                            Toast.LENGTH_SHORT).show();
-                                }
+                                        progress.setVisibility(View.VISIBLE);
 
-                            });
+                                        DataProvider.getInstance()
+                                                .withdrawConsent(getActivity(), null)
+                                                .compose(ObservableUtils.applyDefault())
+                                                .subscribe(response -> {
+                                                    progress.setVisibility(View.GONE);
+
+                                                    if(response.isSuccess())
+                                                    {
+                                                        Toast.makeText(getActivity(),
+                                                                R.string.rss_consent_withdraw_success,
+                                                                Toast.LENGTH_SHORT).show();
+
+                                                        initPreferenceForConsent();
+                                                    }
+                                                    else
+                                                    {
+                                                        Toast.makeText(getActivity(),
+                                                                R.string.rss_consent_withdraw_failed,
+                                                                Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                }, error -> {
+                                                    LogExt.e(getClass(), error);
+                                                    progress.setVisibility(View.GONE);
+                                                });
+                                    })
+                            .setNegativeButton(R.string.rsb_cancel, null)
+                            .show();
                     return true;
 
                 case KEY_JOIN_STUDY:
