@@ -403,8 +403,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     public String getVersionString()
     {
-        int versionCode = 0;
-        String versionName = "";
+        int versionCode;
+        String versionName;
         PackageManager manager = getActivity().getPackageManager();
 
         try
@@ -415,7 +415,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         }
         catch(PackageManager.NameNotFoundException e)
         {
-            // TODO Auto-generated catch block
+            LogExt.e(getClass(), "Could not find package version info");
+            versionCode = 0;
+            versionName = "Unknown version";
         }
         return getString(R.string.rss_settings_version, versionName, versionCode);
     }
