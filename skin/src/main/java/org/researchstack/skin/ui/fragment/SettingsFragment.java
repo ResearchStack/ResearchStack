@@ -292,7 +292,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
                                         DataProvider.getInstance()
                                                 .withdrawConsent(getActivity(), null)
-                                                .compose(ObservableUtils.applyDefault())
                                                 .subscribe(response -> {
                                                     progress.setVisibility(View.GONE);
 
