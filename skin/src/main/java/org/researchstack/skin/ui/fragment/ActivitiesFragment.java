@@ -21,12 +21,12 @@ import android.widget.ImageView;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.SchedulesAndTasksModel;
-import org.researchstack.skin.task.SmartSurveyTask;
 import org.researchstack.skin.ui.views.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class ActivitiesFragment extends Fragment
 
                     subscription = adapter.getPublishSubject().subscribe(task -> {
 
-                        SmartSurveyTask newTask = DataProvider.getInstance()
+                        Task newTask = DataProvider.getInstance()
                                 .loadTask(getContext(), task);
 
                         startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask),
