@@ -387,6 +387,21 @@ public abstract class BridgeDataProvider extends DataProvider
         return user == null ? null : user.getEmail();
     }
 
+    @Override
+    public Observable<DataResponse> forgotPassword(Context context, String email)
+    {
+        return service.requestResetPassword(new EmailBody(getStudyId(), email)).map(response -> {
+            if(response.isSuccess())
+            {
+                return new DataResponse(true, response.body().getMessage());
+            }
+            else
+            {
+                return new DataResponse(false, response.message());
+            }
+        });
+    }
+
     private void saveUserSession(Context context, UserSessionInfo userInfo)
     {
         String userSessionJson = gson.toJson(userInfo);
@@ -805,7 +820,7 @@ public abstract class BridgeDataProvider extends DataProvider
          */
         @Headers("Content-Type: application/json")
         @POST("v3/auth/requestResetPassword")
-        Observable<Response> requestResetPassword(@Body EmailBody body);
+        Observable<Response<BridgeMessageResponse>> requestResetPassword(@Body EmailBody body);
 
 
         @POST("v3/subpopulations/{studyId}/consents/signature/withdraw")
