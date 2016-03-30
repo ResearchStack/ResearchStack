@@ -4,7 +4,6 @@ import android.content.Context;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.task.ConsentTask;
-import org.researchstack.skin.task.InitialTask;
 import org.researchstack.skin.task.SignInTask;
 import org.researchstack.skin.task.SignUpTask;
 
@@ -16,7 +15,7 @@ public class SampleTaskProvider extends TaskProvider
 
     public SampleTaskProvider(Context context)
     {
-        put(TASK_ID_INITIAL, new InitialTask(TASK_ID_INITIAL));
+        put(TASK_ID_INITIAL, new SampleInitialTask(TASK_ID_INITIAL));
         put(TASK_ID_CONSENT, new ConsentTask(context, TASK_ID_CONSENT));
         put(TASK_ID_SIGN_IN, new SignInTask());
         put(TASK_ID_SIGN_UP, new SignUpTask());
