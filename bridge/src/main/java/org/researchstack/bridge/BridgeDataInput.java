@@ -3,6 +3,8 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
+import org.researchstack.backbone.StorageAccess;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -42,7 +44,9 @@ public class BridgeDataInput
         }
         else
         {
-            return context.openFileInput(inputFilename);
+            return new ByteArrayInputStream(StorageAccess.getInstance()
+                    .getFileAccess()
+                    .readData(context, inputFilename));
         }
     }
 }
