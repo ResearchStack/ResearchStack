@@ -11,30 +11,54 @@ import java.util.List;
 import java.util.Set;
 
 
+/**
+ * The OrderedTask class implements all the methods in the {@link Task} protocol and represents a
+ * task that assumes a fixed order for its steps.
+ * <p>
+ * In the ResearchStack framework, any simple sequential task, such as a survey or an active task,
+ * can be represented as an ordered task.
+ * <p>
+ * If you want further custom conditional behaviors in a task, it can be easier to subclass
+ * OrderedTask or {@link NavigableOrderedTask} and override particular {@link Task} methods than it
+ * is to implement a new Task subclass directly. Override the methods {@link #getStepAfterStep} and
+ * {@link #getStepBeforeStep}, and call super for all other methods.
+ */
 public class OrderedTask extends Task implements Serializable
 {
 
-    private List<Step> steps;
+    protected List<Step> steps;
 
-    public OrderedTask(String identifier)
-    {
-        super(identifier);
-        this.steps = new ArrayList<>();
-    }
-
+    /**
+     * Returns an initialized ordered task using the specified identifier and array of steps.
+     *
+     * @param identifier The unique identifier for the task.
+     * @param steps      An array of {@link Step} objects in the order in which they should be
+     *                   presented.
+     */
     public OrderedTask(String identifier, List<Step> steps)
     {
         super(identifier);
-        this.steps = new ArrayList<>(steps);
+        this.steps = steps;
     }
 
+    /**
+     * Returns an initialized ordered task using the specified identifier and array of steps.
+     *
+     * @param identifier The unique identifier for the task
+     * @param steps      The {@link Step} objects in the order in which they should be presented.
+     */
     public OrderedTask(String identifier, Step... steps)
     {
-        super(identifier);
-        this.steps = Arrays.asList(steps);
+        this(identifier, Arrays.asList(steps));
     }
 
-
+    /**
+     * Returns the next step immediately after the passed in step in the list of steps, or null
+     *
+     * @param step   The reference step. Pass null to specify the first step.
+     * @param result A snapshot of the current set of results.
+     * @return the next step in <code>steps</code> after the passed in step, or null if at the end
+     */
     @Override
     public Step getStepAfterStep(Step step, TaskResult result)
     {
@@ -53,7 +77,14 @@ public class OrderedTask extends Task implements Serializable
         return null;
     }
 
-
+    /**
+     * Returns the next step immediately before the passed in step in the list of steps, or null
+     *
+     * @param step   The reference step.
+     * @param result A snapshot of the current set of results.
+     * @return the next step in <code>steps</code> before the passed in step, or null if at the
+     * start
+     */
     @Override
     public Step getStepBeforeStep(Step step, TaskResult result)
     {
@@ -87,6 +118,11 @@ public class OrderedTask extends Task implements Serializable
         return new TaskProgress(current, steps.size());
     }
 
+    /**
+     * Validates that there are no duplicate identifiers in the list of steps
+     *
+     * @throws org.researchstack.backbone.task.Task.InvalidTaskException
+     */
     @Override
     public void validateParameters()
     {
@@ -102,30 +138,13 @@ public class OrderedTask extends Task implements Serializable
         }
     }
 
-    public void addStep(Step step)
-    {
-        if(steps == null)
-        {
-            steps = new ArrayList<>();
-        }
-
-        steps.add(step);
-    }
-
+    /**
+     * Returns a copy of the list of steps.
+     *
+     * @return a copy of the ordered list of steps in the task
+     */
     public List<Step> getSteps()
     {
-        return steps;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if(o instanceof OrderedTask)
-        {
-            OrderedTask orderedTask = (OrderedTask) o;
-            return getIdentifier().equals(orderedTask.getIdentifier()) &&
-                    steps.equals(orderedTask.getSteps());
-        }
-        return false;
+        return new ArrayList<>(steps);
     }
 }
