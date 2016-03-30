@@ -103,9 +103,13 @@ public class EmailVerificationActivity extends PinCodeActivity
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             StepResult stepResult = taskResult.getStepResult(OnboardingTask.SignUpStepIdentifier);
 
-            email = (String) stepResult.getResultForIdentifier(SignUpTask.ID_EMAIL);
-            password = (String) stepResult.getResultForIdentifier(SignUpTask.ID_PASSWORD);
-            updateEmailText();
+            String newEmail = (String) stepResult.getResultForIdentifier(SignUpTask.ID_EMAIL);
+            String newPassword = (String) stepResult.getResultForIdentifier(SignUpTask.ID_PASSWORD);
+
+            // need to overwrite the values in the intent since they will be re-read in onDataReady
+            Intent intent = getIntent();
+            intent.putExtra(EXTRA_EMAIL, newEmail);
+            intent.putExtra(EXTRA_PASSWORD, newPassword);
         }
         else
         {
@@ -179,7 +183,7 @@ public class EmailVerificationActivity extends PinCodeActivity
                                 .alpha(0)
                                 .withEndAction(() -> progress.setVisibility(View.GONE));
                         Toast.makeText(EmailVerificationActivity.this,
-                                dataResponse.getMessage(),
+                                R.string.rss_email_not_verified,
                                 Toast.LENGTH_SHORT).show();
                     }
                 }, error -> {
