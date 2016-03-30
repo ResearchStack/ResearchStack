@@ -138,25 +138,30 @@ public class MainActivity extends PinCodeActivity
         // Check if we need to run initial Task
         if(! failedToFinishInitialTask)
         {
-            Observable.create(subscriber -> {
+            Observable.defer(() -> {
                 UiThreadContext.assertBackgroundThread();
 
                 if(! DataProvider.getInstance().isSignedIn(MainActivity.this))
                 {
                     LogExt.d(getClass(), "User not signed in, skipping initial survey");
-                    subscriber.onCompleted();
-                    return;
+                    return Observable.empty();
                 }
 
                 TaskResult result = StorageAccess.getInstance()
                         .getAppDatabase()
                         .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
-                subscriber.onNext(result == null);
+                return Observable.just(result == null);
             }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
-                if((boolean) needsInitialSurvey)// &&
-                //                    DataProvider.getInstance().isSignedIn(MainActivity.this))
+                if(needsInitialSurvey)
                 {
                     Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
+
+                    if(task == null)
+                    {
+                        LogExt.d(getClass(), "No initial survey provided in TaskProvider");
+                        return;
+                    }
+
                     Intent intent = ViewTaskActivity.newIntent(this, task);
                     startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
                 }

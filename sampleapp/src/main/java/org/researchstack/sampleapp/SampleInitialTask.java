@@ -1,4 +1,4 @@
-package org.researchstack.skin.task;
+package org.researchstack.sampleapp;
 import android.content.Context;
 
 import org.researchstack.backbone.answerformat.AnswerFormat;
@@ -14,10 +14,10 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.skin.R;
 
-public class InitialTask extends OrderedTask
+public class SampleInitialTask extends OrderedTask
 {
 
-    public InitialTask(String identifier)
+    public SampleInitialTask(String identifier)
     {
         super(identifier);
 
