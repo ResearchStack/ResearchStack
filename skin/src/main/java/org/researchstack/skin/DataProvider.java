@@ -71,4 +71,6 @@ public abstract class DataProvider
     // This initial task may include profile items such as height and weight that may need to be
     // processed differently than a normal task result
     public abstract void processInitialTaskResult(Context context, TaskResult taskResult);
+
+    public abstract Observable<DataResponse> forgotPassword(Context context, String email);
 }

@@ -28,7 +28,7 @@ import org.researchstack.skin.ui.adapter.TextWatcherAdapter;
 public class SignInStepLayout extends RelativeLayout implements StepLayout
 {
     private View               progress;
-    private AppCompatEditText  username;
+    private AppCompatEditText  email;
     private AppCompatEditText  password;
     private TextView           forgotPassword;
     private Step               step;
@@ -60,15 +60,15 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
 
         progress = layout.findViewById(R.id.progress);
 
-        username = (AppCompatEditText) layout.findViewById(R.id.username);
-        username.addTextChangedListener(new TextWatcherAdapter()
+        email = (AppCompatEditText) layout.findViewById(R.id.username);
+        email.addTextChangedListener(new TextWatcherAdapter()
         {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                if(! TextUtils.isEmpty(username.getError()))
+                if(! TextUtils.isEmpty(email.getError()))
                 {
-                    username.setError(null);
+                    email.setError(null);
                 }
             }
         });
@@ -97,7 +97,20 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
 
         forgotPassword = (TextView) layout.findViewById(R.id.forgot_password);
         RxView.clicks(forgotPassword).subscribe(v -> {
-            Toast.makeText(getContext(), "TODO RESET PASSWORD", Toast.LENGTH_SHORT).show();
+            if(! isEmailValid())
+            {
+                Toast.makeText(getContext(), R.string.rss_error_invalid_email, Toast.LENGTH_SHORT)
+                        .show();
+                return;
+            }
+
+            DataProvider.getInstance()
+                    .forgotPassword(getContext(), email.getText().toString())
+                    .compose(ObservableUtils.applyDefault())
+                    .subscribe(dataResponse -> {
+                        Toast.makeText(getContext(), dataResponse.getMessage(), Toast.LENGTH_SHORT)
+                                .show();
+                    });
         });
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
@@ -109,7 +122,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     {
         if(isAnswerValid())
         {
-            final String username = this.username.getText().toString();
+            final String username = this.email.getText().toString();
             final String password = this.password.getText().toString();
 
             progress.animate().alpha(1).withStartAction(() -> {
@@ -159,7 +172,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     {
         if(! isEmailValid())
         {
-            username.setError(getResources().getString(R.string.rss_error_invalid_email));
+            email.setError(getResources().getString(R.string.rss_error_invalid_email));
         }
 
         if(! isPasswordValid())
@@ -167,12 +180,12 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
             password.setError(getResources().getString(R.string.rss_error_invalid_password));
         }
 
-        return TextUtils.isEmpty(username.getError()) && TextUtils.isEmpty(password.getError());
+        return TextUtils.isEmpty(email.getError()) && TextUtils.isEmpty(password.getError());
     }
 
     public boolean isEmailValid()
     {
-        CharSequence target = username.getText();
+        CharSequence target = email.getText();
         return ! TextUtils.isEmpty(target) &&
                 android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
