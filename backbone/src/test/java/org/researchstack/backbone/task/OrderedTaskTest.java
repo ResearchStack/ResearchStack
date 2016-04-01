@@ -1,7 +1,15 @@
 package org.researchstack.backbone.task;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.researchstack.backbone.step.Step;
+
+import java.util.List;
+
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by bradleymcdermott on 3/24/16.
@@ -9,124 +17,80 @@ import org.researchstack.backbone.step.Step;
 public class OrderedTaskTest
 {
 
-    @Ignore
+    OrderedTask testTask;
+    private Step stepOne     = new Step("idOne");
+    private Step stepTwo     = new Step("idTwo");
+    private Step stepThree   = new Step("idThree");
+    private Step stepOneDupe = new Step("idOne");
+
+    @Before
+    public void setUp() throws Exception
+    {
+        testTask = new OrderedTask("id", stepOne, stepTwo, stepThree);
+    }
+
     @Test
     public void testGetStepAfterStep() throws Exception
     {
-
+        Step nextStep = testTask.getStepAfterStep(stepOne, null);
+        assertEquals("Returns the next sequential step in the task", stepTwo, nextStep);
+        nextStep = testTask.getStepAfterStep(stepThree, null);
+        assertNull("Returns null if passed in step is the last", nextStep);
     }
 
-    @Ignore
     @Test
     public void testGetStepBeforeStep() throws Exception
     {
-
+        Step previousStep = testTask.getStepBeforeStep(stepThree, null);
+        assertEquals("Returns the previous sequential step in the task", stepTwo, previousStep);
+        previousStep = testTask.getStepBeforeStep(stepOne, null);
+        assertNull("Returns null if passed in step is the first", previousStep);
     }
 
-    @Ignore
     @Test
     public void testGetStepWithIdentifier() throws Exception
     {
-
+        Step foundStep = testTask.getStepWithIdentifier("idOne");
+        assertEquals("Finds step if it is in the task", stepOne, foundStep);
+        foundStep = testTask.getStepWithIdentifier("non-existent");
+        assertNull("Returns null if no step in the task has that identifier", foundStep);
     }
 
-    @Ignore
     @Test
     public void testGetProgressOfCurrentStep() throws Exception
     {
-
+        Task.TaskProgress progress = testTask.getProgressOfCurrentStep(stepOne, null);
+        assertEquals("Current is accurate for first step (0)", 0, progress.getCurrent());
+        progress = testTask.getProgressOfCurrentStep(stepTwo, null);
+        assertEquals("Current is accurate for second step (1)", 1, progress.getCurrent());
+        assertEquals("Total is accurate for task", 3, progress.getTotal());
     }
 
     @Test(expected = Task.InvalidTaskException.class)
     public void testValidateParametersDuplicate() throws Exception
     {
-        Step stepOne = new Step("idOne");
-        Step stepTwo = new Step("idTwo");
-        Step stepDupe = new Step("idOne");
-        Task task = new OrderedTask("id", stepOne, stepTwo, stepDupe);
-        task.validateParameters();
-
+        Task invalidTask = new OrderedTask("id", stepOne, stepTwo, stepOneDupe);
+        invalidTask.validateParameters();
     }
 
     @Test
     public void testValidateParametersValid() throws Exception
     {
-        Step stepOne = new Step("idOne");
-        Step stepTwo = new Step("idTwo");
-        Task task = new OrderedTask("id", stepOne, stepTwo);
-        task.validateParameters();
         // exception will be thrown if this is not valid and fail the test
+        testTask.validateParameters();
     }
 
-    @Ignore
     @Test
-    public void testOrderedTask() throws Exception
+    public void testGetSteps() throws Exception
     {
-
+        List<Step> steps = testTask.getSteps();
+        assertEquals("Returns list of proper length", 3, steps.size());
+        assertTrue("Contains expected step", steps.contains(stepTwo));
+        steps.add(stepOneDupe);
+        steps = testTask.getSteps();
+        assertEquals("Adding items to the returned list doesn't affect task's internal list",
+                3,
+                steps.size());
+        assertFalse("Does not contain illegally added step", steps.contains(stepOneDupe));
     }
-
-    // NavigableOrderedTask stuff, move to its own test class
-    @Ignore
-    @Test
-    public void testNavigableOrderedTask() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testNavigableOrderedTaskEmpty() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testNavigableOrderedTaskHeadache() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testNavigableOrderedTaskDizziness() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testNavigableOrderedTaskSevereHeadache() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testNavigableOrderedTaskLightHeadache() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testPredicateStepNavigationRule() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testDirectStepNavigationRule() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testResultPredicates() throws Exception
-    {
-
-    }
-
 }

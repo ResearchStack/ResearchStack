@@ -33,7 +33,9 @@ import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 import org.researchstack.skin.step.ConsentQuizQuestionStep;
 import org.researchstack.skin.utils.JsonUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class ConsentTask extends OrderedTask
 {
@@ -48,11 +50,16 @@ public class ConsentTask extends OrderedTask
     public static final String ID_FORM_BIRTHDATE = "ID_FORM_BIRTHDATE";
     public static final String ID_SIGNATURE      = "ID_SIGNATURE";
 
-    public ConsentTask(Context context, String taskId)
+    private ConsentTask(String taskId, List<Step> steps)
     {
-        super(taskId);
+        super(taskId, steps);
+    }
 
+    public static ConsentTask createConsentTask(Context context, String taskId)
+    {
         Resources r = context.getResources();
+
+        List<Step> steps = new ArrayList<>();
 
         ConsentSectionModel data = JsonUtils.loadClass(context,
                 ConsentSectionModel.class,
@@ -74,16 +81,18 @@ public class ConsentTask extends OrderedTask
         int id = ResUtils.getRawResourceId(context, htmlDocName);
         doc.setHtmlReviewContent(ResUtils.getStringResource(context, id));
 
-        initVisualSteps(context, doc);
+        initVisualSteps(context, doc, steps);
 
-        initConsentSharingStep(r, data);
+        initConsentSharingStep(r, data, steps);
 
-        initQuizSteps(context);
+        initQuizSteps(context, steps);
 
-        initConsentReviewSteps(context, doc);
+        initConsentReviewSteps(context, doc, steps);
+
+        return new ConsentTask(taskId, steps);
     }
 
-    private void initConsentSharingStep(Resources r, ConsentSectionModel data)
+    private static void initConsentSharingStep(Resources r, ConsentSectionModel data, List<Step> steps)
     {
         String investigatorShortDesc = data.getDocumentProperties()
                 .getInvestigatorShortDescription();
@@ -129,10 +138,10 @@ public class ConsentTask extends OrderedTask
                 investigatorLongDesc,
                 localizedLearnMoreHTMLContent));
 
-        addStep(sharingStep);
+        steps.add(sharingStep);
     }
 
-    private void initVisualSteps(Context ctx, ConsentDocument doc)
+    private static void initVisualSteps(Context ctx, ConsentDocument doc, List<Step> steps)
     {
         for(int i = 0, size = doc.getSections().size(); i < size; i++)
         {
@@ -151,11 +160,11 @@ public class ConsentTask extends OrderedTask
             }
             step.setNextButtonString(nextString);
 
-            addStep(step);
+            steps.add(step);
         }
     }
 
-    private void initQuizSteps(Context ctx)
+    private static void initQuizSteps(Context ctx, List<Step> steps)
     {
         ConsentQuizModel model = JsonUtils.loadClass(ctx,
                 ConsentQuizModel.class,
@@ -185,15 +194,15 @@ public class ConsentTask extends OrderedTask
             quizStep.setText(model.getQuestionProperties().introText);
             //            quizStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
             //                            new Choice[] {trueChoice, falseChoice}));
-            addStep(quizStep);
+            steps.add(quizStep);
         }
 
         ConsentQuizEvaluationStep evaluationStep = new ConsentQuizEvaluationStep(ID_QUIZ_RESULT,
                 model.getEvaluationProperties());
-        addStep(evaluationStep);
+        steps.add(evaluationStep);
     }
 
-    private void initConsentReviewSteps(Context ctx, ConsentDocument doc)
+    private static void initConsentReviewSteps(Context ctx, ConsentDocument doc, List<Step> steps)
     {
         // Add ConsentReviewDocumentStep (view html version of the PDF doc)
         StringBuilder docBuilder = new StringBuilder(
@@ -210,7 +219,7 @@ public class ConsentTask extends OrderedTask
         ConsentDocumentStep step = new ConsentDocumentStep(ID_CONSENT_DOC);
         step.setConsentHTML(docBuilder.toString());
         step.setConfirmMessage(ctx.getString(R.string.rsb_consent_review_reason));
-        addStep(step);
+        steps.add(step);
 
         // Add full-name input
         if(doc.getSignature(0).isRequiresName())
@@ -236,7 +245,7 @@ public class ConsentTask extends OrderedTask
             QuestionStep dobStep = new QuestionStep(ID_FORM_DOB, dobText, dobFormat);
 
             formStep.setFormSteps(fullName, dobStep);
-            addStep(formStep);
+            steps.add(formStep);
         }
 
         // Add signature input
@@ -250,7 +259,7 @@ public class ConsentTask extends OrderedTask
             signatureStep.setSignatureDateFormat(doc.getSignature(0)
                     .getSignatureDateFormatString());
             signatureStep.setStepLayoutClass(ConsentSignatureStepLayout.class);
-            addStep(signatureStep);
+            steps.add(signatureStep);
         }
     }
 
@@ -361,5 +370,4 @@ public class ConsentTask extends OrderedTask
 
         return count;
     }
-
 }
