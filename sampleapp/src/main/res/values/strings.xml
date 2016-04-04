@@ -2,4 +2,5 @@
     <string name="app_name">SampleApp</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="task_inital_toolbar_title">Initial Task</string>
 </resources>

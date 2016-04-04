@@ -56,6 +56,7 @@ public class SampleTaskProvider extends TaskProvider
         InstructionStep step = new InstructionStep("intro",
                 "About You",
                 "We'd like to ask you a few questions to better understand potential robot risks\n\nThese questions should take less than 5 minutes");
+        step.setStepTitle(R.string.task_inital_toolbar_title);
 
         // Add to Task
         steps.add(step);
@@ -65,6 +66,7 @@ public class SampleTaskProvider extends TaskProvider
         //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
         FormStep basicInfoForm = new FormStep("basicInfo", "About You", "");
+        basicInfoForm.setStepTitle(R.string.task_inital_toolbar_title);
 
         // Date of Birth
         DateAnswerFormat dateOfBirthFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
@@ -97,6 +99,7 @@ public class SampleTaskProvider extends TaskProvider
         //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
         FormStep hairEyesForm = new FormStep("hairEyesInfo", "Natural Hair and Eye Color", "");
+        hairEyesForm.setStepTitle(R.string.task_inital_toolbar_title);
 
         // Hair Color
         AnswerFormat hairColorFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
@@ -133,6 +136,7 @@ public class SampleTaskProvider extends TaskProvider
         QuestionStep professionStep = new QuestionStep("profession",
                 "What is your favorite flavor of ice cream?",
                 professionFormat);
+        professionStep.setStepTitle(R.string.task_inital_toolbar_title);
         professionStep.setOptional(true);
 
         // Add to Task
@@ -143,6 +147,7 @@ public class SampleTaskProvider extends TaskProvider
         //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
         FormStep medicalInfoForm = new FormStep("medicalInfo", "Medical Information", "");
+        medicalInfoForm.setStepTitle(R.string.task_inital_toolbar_title);
 
         BooleanAnswerFormat booleanAnswerFormat = new BooleanAnswerFormat();
 
@@ -170,6 +175,7 @@ public class SampleTaskProvider extends TaskProvider
         InstructionStep thankYouStep = new InstructionStep("thankYou",
                 "Thank You!",
                 "Your participation in this study is helping us to better understand risks of becoming a robot\n\nYour task now is to take robot surveys each month. You don't have to get them all, but the more the better!\n\nHappy robot-ing!");
+        thankYouStep.setStepTitle(R.string.task_inital_toolbar_title);
         // Add to Task
         steps.add(thankYouStep);
 
