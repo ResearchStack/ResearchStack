@@ -3,6 +3,7 @@ package org.researchstack.bridge;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -15,6 +16,7 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.NotificationHelper;
 import org.researchstack.backbone.storage.database.AppDatabase;
 import org.researchstack.backbone.storage.database.TaskNotification;
+import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.storage.file.FileAccessException;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.utils.FormatHelper;
@@ -118,7 +120,8 @@ public abstract class BridgeDataProvider extends DataProvider
         Interceptor headerInterceptor = chain -> {
             Request original = chain.request();
 
-            Request request = original.newBuilder().header("User-Agent", getUserAgent())
+            Request request = original.newBuilder()
+                    .header("User-Agent", getUserAgent())
                     .header("Bridge-Session", sessionToken)
                     .method(original.method(), original.body())
                     .build();
@@ -189,16 +192,18 @@ public abstract class BridgeDataProvider extends DataProvider
         return service.withdrawConsent(getStudyId(), new WithdrawalBody(reason))
                 .compose(ObservableUtils.applyDefault())
                 .doOnNext(response -> {
-                    if (response.isSuccess())
+                    if(response.isSuccess())
                     {
                         userSessionInfo.setConsented(false);
                         saveUserSession(context, userSessionInfo);
                         buildRetrofitService(userSessionInfo);
                     }
-                }).map(response -> {
-                    boolean success = response.isSuccess();
-                    return new DataResponse(success, response.message());
-                });
+                    else
+                    {
+                        handleError(context, response.code());
+                    }
+                })
+                .map(response -> new DataResponse(response.isSuccess(), response.message()));
     }
 
     @Override
@@ -339,6 +344,10 @@ public abstract class BridgeDataProvider extends DataProvider
                         userSessionInfo.setSharingScope(scope);
                         saveUserSession(context, userSessionInfo);
                     }
+                    else
+                    {
+                        handleError(context, response.code());
+                    }
                 })
                 .subscribe(response -> LogExt.d(getClass(),
                         "Response: " + response.code() + ", message: " +
@@ -351,6 +360,18 @@ public abstract class BridgeDataProvider extends DataProvider
     {
         String consentJson = loadJsonString(context, TEMP_CONSENT_JSON_FILE_NAME);
         return gson.fromJson(consentJson, ConsentSignatureBody.class);
+    }
+
+    @Override
+    public void uploadConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope)
+    {
+        uploadConsent(context,
+                new ConsentSignatureBody(getStudyId(),
+                        name,
+                        birthDate,
+                        imageData,
+                        "image/png",
+                        scope));
     }
 
     private void uploadConsent(Context context, ConsentSignatureBody consent)
@@ -367,9 +388,11 @@ public abstract class BridgeDataProvider extends DataProvider
                         LogExt.d(getClass(), "Response: " + response.code() + ", message: " +
                                 response.message());
 
-                        StorageAccess.getInstance()
-                                .getFileAccess()
-                                .clearData(context, TEMP_CONSENT_JSON_FILE_NAME);
+                        FileAccess fileAccess = StorageAccess.getInstance().getFileAccess();
+                        if(fileAccess.dataExists(context, TEMP_CONSENT_JSON_FILE_NAME))
+                        {
+                            fileAccess.clearData(context, TEMP_CONSENT_JSON_FILE_NAME);
+                        }
                     }
                     else
                     {
@@ -554,7 +577,8 @@ public abstract class BridgeDataProvider extends DataProvider
         }
 
         uploadBridgeData(context,
-                new Info(context, getGuid(taskResult.getIdentifier()),
+                new Info(context,
+                        getGuid(taskResult.getIdentifier()),
                         getCreatedOnDate(taskResult.getIdentifier())),
                 files);
     }
@@ -626,12 +650,6 @@ public abstract class BridgeDataProvider extends DataProvider
 
     public void uploadPendingFiles(Context context)
     {
-        if(! isSignedIn(context) || ! isConsented(context))
-        {
-            LogExt.d(getClass(), "User is not consented, skipping uploadPendingFiles()");
-            return;
-        }
-
         List<UploadRequest> uploadRequests = ((UploadQueue) StorageAccess.getInstance()
                 .getAppDatabase()).loadUploadRequests();
 
@@ -653,33 +671,39 @@ public abstract class BridgeDataProvider extends DataProvider
 
     protected void uploadFile(Context context, UploadRequest request)
     {
-        if(! isSignedIn(context) || ! isConsented(context))
-        {
-            LogExt.d(getClass(), "User is not consented, will upload later");
-            return;
-        }
+        service.requestUploadSession(request).flatMap(response -> {
+            if(response.isSuccess())
+            {
+                return uploadToS3(context, request, response.body());
+            }
+            else
+            {
+                handleError(context, response.code());
+                throw new RuntimeException(response.message());
+            }
+        }).flatMap(id -> {
+            LogExt.d(getClass(), "Notifying bridge of s3 upload: " + id);
 
-        service.requestUploadSession(request)
-                .flatMap(uploadSession -> uploadToS3(context, request, uploadSession))
-                .flatMap(id -> {
-                    LogExt.d(getClass(), "Notifying bridge of s3 upload: " + id);
+            // Updating request entry with Bridge ID for saving on success
+            request.bridgeId = id;
 
-                    // Updating request entry with Bridge ID for saving on success
-                    request.bridgeId = id;
-
-                    return service.uploadComplete(id);
-                })
-                .subscribeOn(Schedulers.io())
-                .subscribe(completeResponse -> {
-                    LogExt.d(getClass(), "Notified bridge of s3 upload, need to confirm");
-                    // update UploadRequest in DB with id for later confirmation
-                    ((UploadQueue) StorageAccess.getInstance().getAppDatabase()).saveUploadRequest(
-                            request);
-                }, error -> {
-                    error.printStackTrace();
-                    LogExt.e(getClass(), "Error uploading file to S3, will try again");
-                    deleteUploadRequest(context, request);
-                });
+            return service.uploadComplete(id);
+        }).subscribeOn(Schedulers.io()).subscribe(completeResponse -> {
+            if(completeResponse.isSuccess())
+            {
+                LogExt.d(getClass(), "Notified bridge of s3 upload, need to confirm");
+                // update UploadRequest in DB with id for later confirmation
+                ((UploadQueue) StorageAccess.getInstance().getAppDatabase()).saveUploadRequest(
+                        request);
+            }
+            else
+            {
+                handleError(context, completeResponse.code());
+            }
+        }, error -> {
+            error.printStackTrace();
+            LogExt.e(getClass(), "Error uploading file to S3, will try again");
+        });
     }
 
     @NonNull
@@ -708,6 +732,7 @@ public abstract class BridgeDataProvider extends DataProvider
                 }
                 else
                 {
+                    handleError(context, response.code());
                     throw new RuntimeException("Response unsuccessful, code: " + response.code());
                 }
             }
@@ -720,47 +745,92 @@ public abstract class BridgeDataProvider extends DataProvider
 
     private void confirmUpload(Context context, UploadRequest request)
     {
-        service.uploadStatus(request.bridgeId)
-                .subscribeOn(Schedulers.io())
-                .subscribe(uploadValidationStatus -> {
-                    LogExt.d(getClass(), "Received validation status from Bridge(" +
-                            uploadValidationStatus.getStatus() + ")");
+        service.uploadStatus(request.bridgeId).subscribeOn(Schedulers.io()).subscribe(response -> {
+            if(response.isSuccess())
+            {
+                UploadValidationStatus uploadStatus = response.body();
 
-                    switch(uploadValidationStatus.getStatus())
-                    {
-                        case UNKNOWN:
-                        case VALIDATION_FAILED:
-                            LogExt.e(getClass(), "Unrecoverable error, deleting");
-                            // figure out what to actually do on unrecoverable, from a user perspective
-                            deleteUploadRequest(context, request);
-                            break;
+                LogExt.d(getClass(), "Received validation status from Bridge(" +
+                        uploadStatus.getStatus() + ")");
 
-                        case REQUESTED:
-                            LogExt.e(getClass(),
-                                    "Status is still 'requested' for some reason, will retry upload later");
-                            // removing bridge id so upload is retried later
-                            request.bridgeId = null;
-                            ((UploadQueue) StorageAccess.getInstance()
-                                    .getAppDatabase()).saveUploadRequest(request);
-                            break;
+                switch(uploadStatus.getStatus())
+                {
+                    case UNKNOWN:
+                    case VALIDATION_FAILED:
+                        LogExt.e(getClass(), "Unrecoverable error, deleting");
+                        // figure out what to actually do on unrecoverable, from a user perspective
+                        deleteUploadRequest(context, request);
+                        break;
 
-                        case SUCCEEDED:
-                            LogExt.d(getClass(), "Status is 'success', removing request locally");
-                            deleteUploadRequest(context, request);
-                            break;
+                    case REQUESTED:
+                        LogExt.e(getClass(),
+                                "Status is still 'requested' for some reason, will retry upload later");
+                        // removing bridge id so upload is retried later
+                        request.bridgeId = null;
+                        ((UploadQueue) StorageAccess.getInstance()
+                                .getAppDatabase()).saveUploadRequest(request);
+                        break;
 
-                        case VALIDATION_IN_PROGRESS:
-                        default:
-                            LogExt.d(getClass(),
-                                    "Status is pending, will retry confirmation later");
-                            // No action necessary
-                            break;
+                    case SUCCEEDED:
+                        LogExt.d(getClass(), "Status is 'success', removing request locally");
+                        deleteUploadRequest(context, request);
+                        break;
 
-                    }
-                }, error -> {
-                    error.printStackTrace();
-                    LogExt.e(getClass(), "Error connecting to Bridge server, will try again later");
-                });
+                    case VALIDATION_IN_PROGRESS:
+                    default:
+                        LogExt.d(getClass(), "Status is pending, will retry confirmation later");
+                        // No action necessary
+                        break;
+                }
+            }
+            else
+            {
+                handleError(context, response.code());
+            }
+
+        }, error -> {
+            error.printStackTrace();
+            LogExt.e(getClass(), "Error connecting to Bridge server, will try again later");
+        });
+    }
+
+    /**
+     * 400	BadRequestException	            variable
+     * 400	PublishedSurveyException	    A published survey cannot be updated or deleted (only closed).
+     * 400	InvalidEntityException	        variable based on fields that are invalid
+     * 401	✓ NotAuthenticatedException	    Not signed in.
+     * 403	UnauthorizedException	        Caller does not have permission to access this service.
+     * 404	EntityNotFoundException	        <entityTypeName> not found.
+     * 409	EntityAlreadyExistsException	<entityTypeName> already exists.
+     * 409	ConcurrentModificationException	<entityTypeName> has the wrong version number; it may have been saved in the background.
+     * 410	UnsupportedVersionException	    "This app version is not supported. Please update." The app has sent a valid User-Agent header and the server has determined that the app's version is out-of-date and no longer supported by the configuration of the study on the server. The user should be prompted to update the application before using it further. Data will not be accepted by the server and schedule, activities, surveys, etc. will not be returned to this app until it sends a later version number.
+     * 412	✓ ConsentRequiredException	    Consent is required before signing in. This exception is returned with a JSON payload that includes the user's session. The user is considered signed in at this point, but unable to use any service endpoint that requires consent to participate in the study.
+     * 423	BridgeServerException           "Account disabled, please contact user support" Contact BridgeIT@sagebase.org to resolve this issue.
+     * 473	StudyLimitExceededException	    The study '<studyName>' has reached the limit of allowed participants.
+     * 500	BridgeServerException	        variable
+     * 503	ServiceUnavailableException	    variable
+     **/
+    private void handleError(Context context, int responseCode)
+    {
+        String intentAction = null;
+
+        switch(responseCode)
+        {
+            // Not signed in.
+            case 401:
+                intentAction = DataProvider.ERROR_NOT_AUTHENTICATED;
+                break;
+
+            // Not Consented
+            case 412:
+                intentAction = DataProvider.ERROR_CONSENT_REQUIRED;
+                break;
+        }
+
+        if(intentAction != null)
+        {
+            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(intentAction));
+        }
     }
 
     private void deleteUploadRequest(Context context, UploadRequest request)
@@ -845,13 +915,13 @@ public abstract class BridgeDataProvider extends DataProvider
 
         @Headers("Content-Type: application/json")
         @POST("v3/uploads")
-        Observable<UploadSession> requestUploadSession(@Body UploadRequest body);
+        Observable<Response<UploadSession>> requestUploadSession(@Body UploadRequest body);
 
         @POST("v3/uploads/{id}/complete")
-        Observable<BridgeMessageResponse> uploadComplete(@Path("id") String id);
+        Observable<Response<BridgeMessageResponse>> uploadComplete(@Path("id") String id);
 
         @GET("v3/uploadstatuses/{id}")
-        Observable<UploadValidationStatus> uploadStatus(@Path("id") String id);
+        Observable<Response<UploadValidationStatus>> uploadStatus(@Path("id") String id);
     }
 
 }

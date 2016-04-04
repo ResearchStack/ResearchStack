@@ -4,4 +4,5 @@
     <color name="rss_recurring_color">#4caf50</color>
     <color name="rss_teal">#009891</color>
     <color name="rss_black_60">#99000000</color>
+    <color name="rss_snackbar_action_color">#1d92f4</color>
 </resources>

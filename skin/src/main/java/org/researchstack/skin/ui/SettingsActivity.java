@@ -3,11 +3,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ui.fragment.SettingsFragment;
 
-public class SettingsActivity extends PinCodeActivity
+public class SettingsActivity extends BaseActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)

@@ -12,6 +12,9 @@ import rx.Observable;
 
 public abstract class DataProvider
 {
+    public final static String ERROR_NOT_AUTHENTICATED = "ERROR_NOT_AUTHENTICATED";
+    public final static String ERROR_CONSENT_REQUIRED = "ERROR_CONSENT_REQUIRED";
+
     private static DataProvider instance;
 
     public DataProvider()
@@ -51,6 +54,8 @@ public abstract class DataProvider
     public abstract boolean isConsented(Context context);
 
     public abstract Observable<DataResponse> withdrawConsent(Context context, String reason);
+
+    public abstract void uploadConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope);
 
     public abstract void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope);
 

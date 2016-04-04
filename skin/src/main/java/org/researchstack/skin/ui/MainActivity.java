@@ -15,7 +15,6 @@ import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.views.IconTabLayout;
 import org.researchstack.backbone.utils.ObservableUtils;
@@ -35,7 +34,7 @@ import rx.Observable;
 /**
  * Created by bradleymcdermott on 10/27/15.
  */
-public class MainActivity extends PinCodeActivity
+public class MainActivity extends BaseActivity
 {
     private static final int REQUEST_CODE_INITIAL_TASK = 1010;
 
