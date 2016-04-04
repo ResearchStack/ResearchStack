@@ -15,12 +15,6 @@ public class ConsentVisualStep extends Step
     }
 
     @Override
-    public boolean isShowsProgress()
-    {
-        return false;
-    }
-
-    @Override
     public int getStepTitle()
     {
         return org.researchstack.backbone.R.string.rsb_consent;

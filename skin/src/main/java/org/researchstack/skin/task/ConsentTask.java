@@ -116,8 +116,6 @@ public class ConsentTask extends OrderedTask
         ConsentSharingStep sharingStep = new ConsentSharingStep(ID_SHARING);
         sharingStep.setOptional(false);
         sharingStep.setStepTitle(R.string.rsb_consent);
-        sharingStep.setShowsProgress(false);
-        sharingStep.setUseSurveyMode(false);
         //        sharingStep.setLocalizedLearnMoreHTMLContent(localizedLearnMoreHTMLContent);
 
         String shareWidely = r.getString(R.string.rsb_consent_share_widely, investigatorLongDesc);
@@ -227,7 +225,6 @@ public class ConsentTask extends OrderedTask
             String formTitle = ctx.getString(R.string.rsb_consent_form_title);
             FormStep formStep = new FormStep(ID_FORM, formTitle, step.getText());
             formStep.setStepTitle(R.string.rsb_consent);
-            formStep.setUseSurveyMode(false);
             formStep.setOptional(false);
 
             TextAnswerFormat format = new TextAnswerFormat();

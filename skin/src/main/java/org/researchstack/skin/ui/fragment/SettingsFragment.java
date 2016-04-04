@@ -252,8 +252,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     ConsentSharingStep sharingStep = new ConsentSharingStep(ConsentTask.ID_SHARING);
                     sharingStep.setOptional(false);
                     sharingStep.setStepTitle(R.string.rss_settings_privacy_sharing_options);
-                    sharingStep.setShowsProgress(false);
-                    sharingStep.setUseSurveyMode(false);
 
                     String shareWidely = getString(R.string.rsb_consent_share_widely,
                             investigatorLongDesc);
