@@ -25,6 +25,7 @@ import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ConsentSectionModel;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ConsentSharingStep;
+import org.researchstack.backbone.storage.file.StorageAccessListener;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
@@ -50,7 +51,8 @@ import java.util.Date;
 
 import rx.Observable;
 
-public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener
+public class SettingsFragment extends PreferenceFragmentCompat implements
+        SharedPreferences.OnSharedPreferenceChangeListener, StorageAccessListener
 {
     private static final int REQUEST_CODE_SHARING_OPTIONS = 0;
     private static final int REQUEST_CODE_CHANGE_PASSCODE = 1;
@@ -115,8 +117,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         generalCategory = (PreferenceCategory) screen.findPreference(KEY_GENERAL);
         leaveStudy = generalCategory.findPreference(KEY_LEAVE_STUDY);
         joinStudy = generalCategory.findPreference(KEY_JOIN_STUDY);
-
-        initPreferenceForConsent();
 
         // Set version string
         screen.findPreference(KEY_VERSION).setSummary(getVersionString());
@@ -461,5 +461,24 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 getString(R.string.rss_settings_general_software_notices),
                 documentName);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDataReady()
+    {
+        LogExt.i(getClass(), "onDataReady()");
+        initPreferenceForConsent();
+    }
+
+    @Override
+    public void onDataFailed()
+    {
+        // Ignore
+    }
+
+    @Override
+    public void onDataAuth()
+    {
+        // Ignore, handled in activity
     }
 }

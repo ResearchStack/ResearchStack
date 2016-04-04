@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.storage.file.StorageAccessListener;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.ObservableUtils;
@@ -40,7 +41,7 @@ import rx.subjects.PublishSubject;
 /**
  * Created by bradleymcdermott on 10/28/15.
  */
-public class ActivitiesFragment extends Fragment
+public class ActivitiesFragment extends Fragment implements StorageAccessListener
 {
     private static final int REQUEST_TASK = 1492;
     private TaskAdapter  adapter;
@@ -51,11 +52,14 @@ public class ActivitiesFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_activities, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        setUpAdapter();
+        return inflater.inflate(R.layout.fragment_activities, container, false);
+    }
 
-        return view;
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
     }
 
     @Override
@@ -123,6 +127,26 @@ public class ActivitiesFragment extends Fragment
         {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void onDataReady()
+    {
+        LogExt.i(getClass(), "onDataReady()");
+
+        setUpAdapter();
+    }
+
+    @Override
+    public void onDataFailed()
+    {
+        // Ignore
+    }
+
+    @Override
+    public void onDataAuth()
+    {
+        // Ignore, activity handles auth
     }
 
     public static class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>
