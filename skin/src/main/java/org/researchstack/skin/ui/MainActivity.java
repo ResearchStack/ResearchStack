@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.helpers.LogExt;
@@ -52,6 +51,42 @@ public class MainActivity extends BaseActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+        if(pagerAdapter == null)
+        {
+            List<ActionItem> items = UiManager.getInstance().getMainTabBarItems();
+            pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), items);
+
+            ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+            viewPager.setAdapter(pagerAdapter);
+            viewPager.setPageMargin(1);
+            viewPager.setPageMarginDrawable(new ColorDrawable(Color.LTGRAY));
+
+            IconTabLayout tabLayout = (IconTabLayout) findViewById(R.id.tabLayout);
+            tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter()
+            {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab)
+                {
+                    int index = tabLayout.getSelectedTabPosition();
+                    viewPager.setCurrentItem(index);
+                }
+            });
+
+            for(ActionItem item : items)
+            {
+                tabLayout.addIconTab(
+                        item.getTitle(),
+                        item.getIcon(),
+                        items.indexOf(item) == 0,
+                        // need real logic for this (show badge)
+                        items.indexOf(item) == 0
+                );
+            }
+
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        }
 
         handleNotificationIntent(getIntent());
     }
@@ -166,39 +201,6 @@ public class MainActivity extends BaseActivity
                 }
             });
         }
-
-        if(pagerAdapter == null)
-        {
-            List<ActionItem> items = UiManager.getInstance().getMainTabBarItems();
-            pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), items);
-            ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-            viewPager.setAdapter(pagerAdapter);
-            viewPager.setPageMargin(1);
-            viewPager.setPageMarginDrawable(new ColorDrawable(Color.LTGRAY));
-
-            IconTabLayout tabLayout = (IconTabLayout) findViewById(R.id.tabLayout);
-            tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter()
-            {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab)
-                {
-                    int index = tabLayout.getSelectedTabPosition();
-                    viewPager.setCurrentItem(index);
-                }
-            });
-
-            for(ActionItem item : items)
-            {
-                tabLayout.addIconTab(
-                        item.getTitle(),
-                        item.getIcon(),
-                        items.indexOf(item) == 0,
-                        // need real logic for this (show badge)
-                        items.indexOf(item) == 0
-                );
-            }
-            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        }
     }
 
     @Override
@@ -206,8 +208,7 @@ public class MainActivity extends BaseActivity
     {
         super.onDataFailed();
 
-        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
-        finish();
+        throw new RuntimeException("Registering FileAccess has failed");
     }
 
 }
