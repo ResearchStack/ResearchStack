@@ -4,9 +4,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import org.researchstack.backbone.ui.PinCodeActivity;
+import org.researchstack.skin.ui.BaseActivity;
 
-public class SampleSettingsActivity extends PinCodeActivity
+public class SampleSettingsActivity extends BaseActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
