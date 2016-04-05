@@ -4,18 +4,19 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.shapes.PathShape;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.callbacks.SignatureCallbacks;
@@ -37,8 +38,6 @@ public class SignatureView extends View
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Paint
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private float touchSlop = 4;
-    private float lastX, lastY;
     private List<LinePathPoint> sigPoints = new ArrayList<>();
 
     private Path  sigPath    = new Path();
@@ -114,14 +113,12 @@ public class SignatureView extends View
 
         a.recycle();
 
-        ViewConfiguration vc = ViewConfiguration.get(context);
-        touchSlop = vc.getScaledTouchSlop();
-
         sigPaint.setAntiAlias(true);
         sigPaint.setColor(signatureColor);
         sigPaint.setStyle(Paint.Style.STROKE);
         sigPaint.setStrokeJoin(Paint.Join.ROUND);
         sigPaint.setStrokeCap(Paint.Cap.ROUND);
+        sigPaint.setPathEffect(new CornerPathEffect(20));
         sigPaint.setStrokeWidth(signatureStroke);
 
         hintPaint.setAntiAlias(true);
@@ -147,29 +144,25 @@ public class SignatureView extends View
                 }
 
                 sigPath.moveTo(x, y);
-                lastX = x;
-                lastY = y;
 
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
-                sigPoints.add(new LinePathPoint(x, y, LinePathPoint.TYPE_LINE_POINT));
+            case MotionEvent.ACTION_UP:
 
-                float dx = Math.abs(x - lastX);
-                float dy = Math.abs(y - lastY);
+                int hSize = event.getHistorySize();
 
-                if(dx >= touchSlop || dy >= touchSlop)
+                for(int i = 0; i < hSize; i++)
                 {
-                    sigPath.quadTo(lastX, lastY, (x + lastX) / 2, (y + lastY) / 2);
-                    lastX = x;
-                    lastY = y;
+                    int hX = (int) event.getHistoricalX(i);
+                    int hY = (int) event.getHistoricalY(i);
+                    sigPath.lineTo(hX, hY);
+                    sigPoints.add(new LinePathPoint(x, y, LinePathPoint.TYPE_LINE_POINT));
                 }
 
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
+                sigPath.lineTo(x, y);
                 sigPoints.add(new LinePathPoint(x, y, LinePathPoint.TYPE_LINE_POINT));
-                sigPath.lineTo(lastX, lastY);
+
                 invalidate();
                 break;
         }
@@ -241,23 +234,12 @@ public class SignatureView extends View
         sigPoints = ss.points;
         sigPath.rewind();
 
-        for(int i = 0, size = sigPoints.size(); i < size; i++)
+        for(LinePathPoint point : sigPoints)
         {
-            LinePathPoint point = sigPoints.get(i);
-
             if(point.isStartPoint())
             {
                 sigPath.moveTo(point.x, point.y);
-                lastX = point.x;
-                lastY = point.y;
             }
-            else if(i < size - 1)
-            {
-                sigPath.quadTo(lastX, lastY, (point.x + lastX) / 2, (point.y + lastY) / 2);
-                lastX = point.x;
-                lastY = point.y;
-            }
-            // Last point
             else
             {
                 sigPath.lineTo(point.x, point.y);
@@ -305,8 +287,11 @@ public class SignatureView extends View
 
         if(sigBounds.width() != 0 && sigBounds.height() != 0)
         {
-            Bitmap returnedBitmap = Bitmap.createBitmap((int) sigBounds.width(),
-                    (int) sigBounds.height(),
+            float density = getResources().getDisplayMetrics().density;
+            int dipWidth = (int) (sigBounds.width() / density);
+            int dipHeight = (int) (sigBounds.height() / density);
+
+            Bitmap returnedBitmap = Bitmap.createBitmap(dipWidth, dipHeight,
                     Bitmap.Config.ARGB_4444);
 
             float minX = Integer.MAX_VALUE;
@@ -320,8 +305,12 @@ public class SignatureView extends View
 
             sigPath.offset(- minX, - minY);
 
+            PathShape pathShape = new PathShape(sigPath, sigBounds.width(), sigBounds.height());
+            pathShape.resize(dipWidth, dipHeight);
+
             Canvas canvas = new Canvas(returnedBitmap);
-            canvas.drawPath(sigPath, bitmapSigPaint);
+            pathShape.draw(canvas, bitmapSigPaint);
+
             return returnedBitmap;
         }
 
