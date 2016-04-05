@@ -49,6 +49,14 @@ public interface FileAccess
     byte[] readData(Context context, String path);
 
     /**
+     *
+     * @param context
+     * @param fromPath
+     * @param toPath
+     */
+    void moveData(Context context, String fromPath, String toPath);
+
+    /**
      * See if we have the data.
      *
      * @param context Can be Application context, but we'll be careful not to store, so don't worry too much.
