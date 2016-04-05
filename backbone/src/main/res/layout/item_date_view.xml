@@ -7,7 +7,7 @@
     android:orientation="vertical"
 >
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,8 +18,8 @@
         tools:text="title"
     />
 
-    <TextView
-        style="?android:attr/editTextStyle"
+    <android.support.v7.widget.AppCompatTextView
+        style="?attr/editTextStyle"
         android:id="@+id/value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:textSize="14sp"
         android:textColor="?android:attr/textColorPrimary"
         android:singleLine="true"
-        tools:text="Value"
+        tools:text="value"
     />
 
 </LinearLayout>

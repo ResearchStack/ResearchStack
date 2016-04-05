@@ -70,27 +70,19 @@ public class DateQuestionBody implements StepBody
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
-        // showing compact view with dialog all the time
-        View view = initView(inflater, parent);
+        View view = inflater.inflate(R.layout.item_date_view, parent, false);
 
-        Resources res = parent.getResources();
-        LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
-        view.setLayoutParams(layoutParams);
+        TextView title = (TextView) view.findViewById(R.id.label);
+        if (viewType == VIEW_TYPE_COMPACT)
+        {
+            title.setText(step.getTitle());
+        }
+        else
+        {
+            title.setVisibility(View.GONE);
+        }
 
-        return view;
-    }
-
-    private View initView(LayoutInflater inflater, ViewGroup parent)
-    {
-        View formItemView = inflater.inflate(R.layout.item_text_view_compact, parent, false);
-
-        TextView title = (TextView) formItemView.findViewById(R.id.label);
-        title.setText(step.getTitle());
-
-        TextView textView = (TextView) formItemView.findViewById(R.id.value);
+        TextView textView = (TextView) view.findViewById(R.id.value);
         textView.setSingleLine(true);
         textView.setHint(R.string.rsb_hint_step_body_date);
 
@@ -113,9 +105,15 @@ public class DateQuestionBody implements StepBody
             }
         });
 
-        return formItemView;
-    }
+        Resources res = parent.getResources();
+        LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
+        view.setLayoutParams(layoutParams);
 
+        return view;
+    }
 
     @Override
     public StepResult getStepResult(boolean skipped)
