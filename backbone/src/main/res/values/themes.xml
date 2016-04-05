@@ -9,7 +9,7 @@
 
         <!-- Custom Styles for Views -->
         <item name="toolbarTheme">@style/Theme.Backbone.Toolbar</item>
-        <item name="passcodeTheme">@style/Theme.AppCompat.NoActionBar</item>
+        <item name="passcodeTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
         <item name="submitbarStyle">@style/Widget.Backbone.SubmitBar</item>
         <item name="icontablayoutStyle">@style/Widget.Backbone.IconTabLayout</item>
         <item name="signatureviewStyle">@style/Widget.Backbone.SignatureView</item>
