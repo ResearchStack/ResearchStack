@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -757,7 +758,10 @@ public abstract class BridgeDataProvider extends DataProvider
                 {
                     case UNKNOWN:
                     case VALIDATION_FAILED:
-                        LogExt.e(getClass(), "Unrecoverable error, deleting");
+                        String errorText = "ERROR: Bridge validation of file upload failed for: " +
+                                request.name;
+                        Toast.makeText(context, errorText, Toast.LENGTH_SHORT).show();
+                        LogExt.e(getClass(), errorText);
                         // figure out what to actually do on unrecoverable, from a user perspective
                         deleteUploadRequest(context, request);
                         break;
