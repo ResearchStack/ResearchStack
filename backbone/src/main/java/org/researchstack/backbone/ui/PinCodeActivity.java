@@ -3,6 +3,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -22,6 +23,8 @@ import org.researchstack.backbone.ui.views.PinCodeLayout;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.ThemeUtils;
 import org.researchstack.backbone.utils.UiThreadContext;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.functions.Action1;
@@ -90,14 +93,52 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     public void onDataReady()
     {
         LogExt.i(getClass(), "onDataReady()");
+
         storageAccessUnregister();
+
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
+        if (fragments != null)
+        {
+            LogExt.i(getClass(), "Fragments found on stack. Checking for StorageAccessListener.");
+
+            for(Fragment fragment : fragments)
+            {
+                if(fragment instanceof StorageAccessListener)
+                {
+                    LogExt.i(getClass(),
+                            "Notifying " + fragment.getClass().getSimpleName() + " of onDataReady");
+
+                    ((StorageAccessListener) fragment).onDataReady();
+                }
+            }
+        }
     }
 
     @Override
     public void onDataFailed()
     {
         LogExt.e(getClass(), "onDataFailed()");
+
         storageAccessUnregister();
+
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
+        if (fragments != null)
+        {
+            LogExt.i(getClass(), "Fragments found on stack. Checking for StorageAccessListener.");
+
+            for(Fragment fragment : fragments)
+            {
+                if(fragment instanceof StorageAccessListener)
+                {
+                    LogExt.i(getClass(), "Notifying " + fragment.getClass().getSimpleName() +
+                            " of onDataFailed");
+
+                    ((StorageAccessListener) fragment).onDataFailed();
+                }
+            }
+        }
     }
 
     @Override
