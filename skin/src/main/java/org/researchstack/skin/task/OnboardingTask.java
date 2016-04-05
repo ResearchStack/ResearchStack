@@ -130,7 +130,9 @@ public abstract class OnboardingTask extends Task
 
     public Step getInclusionCriteriaStep()
     {
-        return UiManager.getInstance().getInclusionCriteriaStep();
+        Step inclusion = UiManager.getInstance().getInclusionCriteriaStep();
+        inclusion.setOptional(false);
+        return inclusion;
     }
 
     public Step getPassCodeCreationStep()
