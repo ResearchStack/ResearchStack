@@ -59,6 +59,7 @@ public class SmartSurveyTask extends Task implements Serializable
                 QuestionStep questionStep = new QuestionStep(stepModel.identifier,
                         stepModel.prompt,
                         answerFormat);
+                questionStep.setText(stepModel.promptDetail);
                 questionStep.setOptional(stepModel.optional);
                 steps.put(stepModel.identifier, questionStep);
                 staticStepIdentifiers.add(stepModel.identifier);
