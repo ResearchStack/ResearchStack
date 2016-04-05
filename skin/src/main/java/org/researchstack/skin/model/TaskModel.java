@@ -31,6 +31,9 @@ public class TaskModel
         @SerializedName("prompt")
         public String prompt;
 
+        @SerializedName("promptDetail")
+        public String promptDetail;
+
         @SerializedName("checkbox")
         public String checkbox;
 
