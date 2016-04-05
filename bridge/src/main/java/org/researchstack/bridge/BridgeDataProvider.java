@@ -151,8 +151,13 @@ public abstract class BridgeDataProvider extends DataProvider
 
             buildRetrofitService(userSessionInfo);
             subscriber.onNext(new DataResponse(true, null));
-            checkForTempConsentAndUpload(context);
-            uploadPendingFiles(context);
+
+            // will crash if the user hasn't created a pincode yet, need to fix needsAuth()
+            if(StorageAccess.getInstance().hasPinCode(context))
+            {
+                checkForTempConsentAndUpload(context);
+                uploadPendingFiles(context);
+            }
         });
     }
 
