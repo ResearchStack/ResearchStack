@@ -1,4 +1,4 @@
-package org.researchstack.skin.ui.fragment;
+package org.researchstack.sampleapp;
 
 import android.graphics.Color;
 import android.graphics.Typeface;

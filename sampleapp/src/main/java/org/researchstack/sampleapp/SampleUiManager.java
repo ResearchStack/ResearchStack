@@ -10,7 +10,6 @@ import org.researchstack.skin.UiManager;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.ui.LearnActivity;
 import org.researchstack.skin.ui.fragment.ActivitiesFragment;
-import org.researchstack.skin.ui.fragment.DashboardFragment;
 
 import java.util.ArrayList;
 import java.util.List;
