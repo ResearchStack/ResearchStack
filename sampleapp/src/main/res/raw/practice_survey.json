@@ -42,6 +42,17 @@
       "uiHint": "numberfield"
     },
     {
+      "guid": "6EC74824-ACF7-4D44-852F-B56A9FE5ACFB",
+      "identifier": "dateWhen",
+      "prompt": "At what date?",
+      "uiHint": "datepicker",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "string",
+        "type": "DateConstraints"
+      }
+    },
+    {
       "guid": "06d619df-a147-471a-b1ed-429f47d404bf",
       "identifier": "infoText",
       "type": "SurveyQuestion",

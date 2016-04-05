@@ -133,8 +133,8 @@ public class SurveyAnswer
         public DateSurveyAnswer(StepResult result)
         {
             super(result);
-            Date dateResult = (Date) result.getResult();
-            dateAnswer = dateResult == null ? null : FormatHelper.DEFAULT_FORMAT.format(dateResult);
+            Long dateResult = (Long) result.getResult();
+            dateAnswer = dateResult == null ? null : FormatHelper.DEFAULT_FORMAT.format(new Date(dateResult));
         }
     }
 }
