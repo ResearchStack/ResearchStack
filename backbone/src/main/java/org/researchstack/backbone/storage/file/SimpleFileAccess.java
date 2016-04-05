@@ -7,6 +7,7 @@ import org.researchstack.backbone.storage.file.aes.Encrypter;
 import org.researchstack.backbone.utils.FileUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
@@ -46,6 +47,30 @@ public class SimpleFileAccess implements FileAccess
         catch(IOException | GeneralSecurityException e)
         {
             throw new FileAccessException(e);
+        }
+    }
+
+    @Override
+    public void moveData(Context context, String fromPath, String toPath)
+    {
+        checkPath(fromPath);
+        checkPath(toPath);
+
+        File from = new File(context.getFilesDir(), fromPath.substring(1));
+        File to = new File(context.getFilesDir(), toPath.substring(1));
+
+        try
+        {
+            FileUtils.copy(new FileInputStream(from), to);
+        }
+        catch(IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        if (!from.delete())
+        {
+            throw new RuntimeException("Failed to delete temp file");
         }
     }
 
