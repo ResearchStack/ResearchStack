@@ -1,5 +1,7 @@
 package org.researchstack.skin.task;
 
+import android.content.Context;
+
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.skin.TaskProvider;
@@ -11,15 +13,18 @@ import org.researchstack.skin.UiManager;
 public class SignUpTask extends OnboardingTask
 {
     private boolean hasPasscode;
+    private Step inclusionCriteriaStep;
 
     public static final int MINIMUM_STEPS = 2;
 
     public static final String ID_EMAIL    = "ID_EMAIL";
     public static final String ID_PASSWORD = "ID_PASSWORD";
 
-    public SignUpTask()
+    public SignUpTask(Context context)
     {
         super(TaskProvider.TASK_ID_SIGN_UP);
+        // creating here so it has access to context
+        inclusionCriteriaStep = UiManager.getInstance().getInclusionCriteriaStep(context);
     }
 
     @Override
@@ -29,7 +34,7 @@ public class SignUpTask extends OnboardingTask
 
         if(step == null)
         {
-            nextStep = getInclusionCriteriaStep();
+            nextStep = inclusionCriteriaStep;
         }
         else if(step.getIdentifier().equals(SignUpInclusionCriteriaStepIdentifier))
         {
@@ -72,12 +77,12 @@ public class SignUpTask extends OnboardingTask
         }
         else if(step.getIdentifier().equals(SignUpEligibleStepIdentifier))
         {
-            prevStep = getInclusionCriteriaStep();
+            prevStep = inclusionCriteriaStep;
 
         }
         else if(step.getIdentifier().equals(SignUpIneligibleStepIdentifier))
         {
-            prevStep = getInclusionCriteriaStep();
+            prevStep = inclusionCriteriaStep;
 
         }
         else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))

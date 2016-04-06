@@ -30,8 +30,8 @@ public class SampleTaskProvider extends TaskProvider
     {
         put(TASK_ID_INITIAL, createInitialTask(context));
         put(TASK_ID_CONSENT, ConsentTask.createConsentTask(context, TASK_ID_CONSENT));
-        put(TASK_ID_SIGN_IN, new SignInTask());
-        put(TASK_ID_SIGN_UP, new SignUpTask());
+        put(TASK_ID_SIGN_IN, new SignInTask(context));
+        put(TASK_ID_SIGN_UP, new SignUpTask(context));
     }
 
     @Override

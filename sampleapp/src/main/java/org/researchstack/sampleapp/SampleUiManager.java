@@ -1,4 +1,6 @@
 package org.researchstack.sampleapp;
+import android.content.Context;
+
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.model.Choice;
@@ -70,21 +72,21 @@ public class SampleUiManager extends UiManager
      * step within said task.
      *
      * @return InclusionCriteria Step
+     * @param context
      */
     @Override
-    public Step getInclusionCriteriaStep()
+    public Step getInclusionCriteriaStep(Context context)
     {
-        Choice<Boolean> human = new Choice<>("Yes, I am a human.", true, null);
-        Choice<Boolean> robot = new Choice<>(
-                "No, I am a robot but I am sentient and concerned about my health.",
+        Choice<Boolean> human = new Choice<>(context.getString(R.string.yes_human), true, null);
+        Choice<Boolean> robot = new Choice<>(context.getString(R.string.yes_robot),
                 true,
                 null);
-        Choice<Boolean> alien = new Choice<>("No, I’m an alien.", false, null);
+        Choice<Boolean> alien = new Choice<>(context.getString(R.string.no_alien), false, null);
 
         QuestionStep step = new QuestionStep(OnboardingTask.SignUpInclusionCriteriaStepIdentifier);
         step.setOptional(false);
         step.setStepTitle(R.string.rss_eligibility);
-        step.setTitle("Were you born somewhere on planet earth and are you a human-ish?");
+        step.setTitle(context.getString(R.string.inclusion_question));
         step.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
                 human,
                 robot,

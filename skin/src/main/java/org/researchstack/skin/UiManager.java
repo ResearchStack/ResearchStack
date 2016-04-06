@@ -1,4 +1,6 @@
 package org.researchstack.skin;
+import android.content.Context;
+
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.skin.notification.TaskNotificationReceiver;
@@ -29,7 +31,7 @@ public abstract class UiManager
 
     public abstract List<ActionItem> getMainTabBarItems();
 
-    public abstract Step getInclusionCriteriaStep();
+    public abstract Step getInclusionCriteriaStep(Context context);
 
     public abstract boolean isInclusionCriteriaValid(StepResult result);
 
