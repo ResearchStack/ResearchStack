@@ -38,7 +38,7 @@ public class OrderedTask extends Task implements Serializable
     public OrderedTask(String identifier, List<Step> steps)
     {
         super(identifier);
-        this.steps = steps;
+        this.steps = new ArrayList<>(steps);
     }
 
     /**
