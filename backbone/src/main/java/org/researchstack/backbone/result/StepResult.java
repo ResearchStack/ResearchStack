@@ -38,6 +38,8 @@ public class StepResult <T> extends Result
             answerFormat = ((QuestionStep) step).getAnswerFormat();
         }
         setStartDate(new Date());
+        // this will be updated when the result is set
+        setEndDate(new Date());
     }
 
     public StepResult(String identifier)
