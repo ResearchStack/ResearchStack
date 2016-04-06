@@ -24,6 +24,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This Task allows creation of a special survey from json that has custom navigation logic.
+ * <p>
+ * Based on the user's answers to questions, they may be taken to a specific step rather than the
+ * next one in the task.
+ */
 public class SmartSurveyTask extends Task implements Serializable
 {
 
@@ -36,7 +42,8 @@ public class SmartSurveyTask extends Task implements Serializable
     private static final String OPERATOR_GREATER_THAN_EQUAL = "ge";
     private static final String OPERATOR_OTHER_THAN         = "ot";
 
-    private static final String END_OF_SURVEY_MARKER = "END_OF_SURVEY";
+    // use this as the 'skipTo' identifier to end the survey instead of going to a question
+    public static final String END_OF_SURVEY_MARKER = "END_OF_SURVEY";
 
     private HashMap<String, Step>                      steps;
     private HashMap<String, List<TaskModel.RuleModel>> rules;
@@ -44,6 +51,11 @@ public class SmartSurveyTask extends Task implements Serializable
     private List<String> staticStepIdentifiers;
     private List<String> dynamicStepIdentifiers;
 
+    /**
+     * Creates a SmartSurveyTask from a {@link TaskModel} object
+     *
+     * @param taskModel Java representation of the task json
+     */
     public SmartSurveyTask(TaskModel taskModel)
     {
         super(taskModel.identifier);
@@ -74,7 +86,7 @@ public class SmartSurveyTask extends Task implements Serializable
         dynamicStepIdentifiers = new ArrayList<>(staticStepIdentifiers);
     }
 
-    public static AnswerFormat from(TaskModel.ConstraintsModel constraints)
+    private static AnswerFormat from(TaskModel.ConstraintsModel constraints)
     {
         AnswerFormat answerFormat;
         String type = constraints.type;
@@ -110,18 +122,41 @@ public class SmartSurveyTask extends Task implements Serializable
         return answerFormat;
     }
 
-    public static Choice[] from(List<TaskModel.EnumerationModel> enumeration)
+    private static Choice[] from(List<TaskModel.EnumerationModel> enumeration)
     {
         Choice[] choices = new Choice[enumeration.size()];
 
         for(int i = 0; i < enumeration.size(); i++)
         {
             TaskModel.EnumerationModel choice = enumeration.get(i);
-            choices[i] = new Choice<>(choice.label, choice.value);
+            if(choice.value instanceof String)
+            {
+                choices[i] = new Choice<>(choice.label, (String) choice.value);
+            }
+            else if(choice.value instanceof Number)
+            {
+                // if the field type is Object, gson turns all numbers into doubles. Assuming Integer
+                choices[i] = new Choice<>(choice.label, ((Number) choice.value).intValue());
+            }
+            else
+            {
+                throw new RuntimeException(
+                        "String and Integer are the only supported values for generating Choices from json");
+            }
         }
         return choices;
     }
 
+    /**
+     * Returns the next step in the task based on current answers, or null if at the end.
+     * <p>
+     * This method rebuilds the order of the steps based on the current results and returns the next
+     * one.
+     *
+     * @param step   The reference step. Pass null to specify the first step.
+     * @param result A snapshot of the current set of results.
+     * @return the Step to navigate to
+     */
     @Override
     public Step getStepAfterStep(Step step, TaskResult result)
     {
@@ -157,13 +192,23 @@ public class SmartSurveyTask extends Task implements Serializable
         return nextStepIdentifier == null ? null : steps.get(nextStepIdentifier);
     }
 
+    /**
+     * Returns the step that should be before the current step based on current results.
+     * <p>
+     * This method rebuilds the order of the remaining steps based on the current results and
+     * returns the previous one to the current step.
+     *
+     * @param step   The reference step. Pass null to specify the last step.
+     * @param result A snapshot of the current set of results.
+     * @return the Step to navigate to
+     */
     @Override
     public Step getStepBeforeStep(Step step, TaskResult result)
     {
         String currentIdentifier = step == null ? null : step.getIdentifier();
         refillDynamicStepIdentifiers(currentIdentifier);
-        String nextStepIdentifier = nextStepIdentifier(false, currentIdentifier);
-        return nextStepIdentifier == null ? null : steps.get(nextStepIdentifier);
+        String previousStepIdentifier = nextStepIdentifier(false, currentIdentifier);
+        return previousStepIdentifier == null ? null : steps.get(previousStepIdentifier);
     }
 
     @Override
@@ -172,6 +217,15 @@ public class SmartSurveyTask extends Task implements Serializable
         return steps.get(identifier);
     }
 
+    /**
+     * Returns the current progress String for use in the action bar
+     * <p>
+     * This is updated based on the current and total in the dynamic list of steps.
+     *
+     * @param context for fetching resources
+     * @param step    the current step
+     * @return
+     */
     @Override
     public String getTitleForStep(Context context, Step step)
     {
@@ -191,6 +245,7 @@ public class SmartSurveyTask extends Task implements Serializable
     @Override
     public void validateParameters()
     {
+        // Construction validates most issues, add some validation here if needed
     }
 
     private String nextStepIdentifier(boolean after, String currentIdentifier)
@@ -259,61 +314,101 @@ public class SmartSurveyTask extends Task implements Serializable
     {
         String skipToIdentifier = null;
 
-        if(answer == null || answer instanceof Integer)
+        for(TaskModel.RuleModel stepRule : stepRules)
         {
-            for(TaskModel.RuleModel stepRule : stepRules)
+            skipToIdentifier = checkRule(stepRule, answer);
+            if(skipToIdentifier != null)
             {
-                skipToIdentifier = checkRule(stepRule, (Integer) answer);
-                if(skipToIdentifier != null)
-                {
-                    break;
-                }
+                break;
             }
-        }
-        else
-        {
-            LogExt.d(getClass(), "Answer is null or not an int");
         }
 
         return skipToIdentifier;
     }
 
-    private String checkRule(TaskModel.RuleModel stepRule, Integer answer)
+    private String checkRule(TaskModel.RuleModel stepRule, Object answer)
     {
         String operator = stepRule.operator;
         String skipTo = stepRule.skipTo;
-        int value = stepRule.value;
+        Object value = stepRule.value;
 
-        if(answer == null)
+        if(operator.equals(OPERATOR_SKIP))
         {
-            return operator.equals(OPERATOR_SKIP) ? skipTo : null;
+            return answer == null ? skipTo : null;
+        }
+        else if(answer instanceof Integer)
+        {
+            return checkNumberRule(operator, skipTo, ((Number) value).intValue(), ((Integer) answer));
+        }
+        else if(answer instanceof Double)
+        {
+            return checkNumberRule(operator, skipTo, ((Number) value).doubleValue(), ((Double) answer));
+        }
+        else if(answer instanceof Boolean)
+        {
+            Boolean booleanValue;
+
+            if(value instanceof Boolean)
+            {
+                booleanValue = (Boolean) value;
+            }
+            else if(value instanceof Number)
+            {
+                booleanValue = ((Number) value).intValue() == 0 ? Boolean.FALSE : Boolean.TRUE;
+            }
+            else if(value instanceof String)
+            {
+                booleanValue = Boolean.valueOf(((String) value));
+            }
+            else
+            {
+                throw new RuntimeException("Invalid value for Boolean skip rule");
+            }
+
+            return checkEqualsRule(operator, skipTo, booleanValue, answer);
+        }
+        else if(answer instanceof String)
+        {
+            return checkEqualsRule(operator, skipTo, value, answer);
+        }
+        else
+        {
+            LogExt.e(getClass(), "Unsupported answer type for smart survey rules");
         }
 
+        return null;
+    }
+
+    private <T> String checkEqualsRule(String operator, String skipTo, T value, T answer)
+    {
+        switch(operator)
+        {
+            case OPERATOR_EQUAL:
+                return value.equals(answer) ? skipTo : null;
+            case OPERATOR_NOT_EQUAL:
+                return ! value.equals(answer) ? skipTo : null;
+        }
+        return null;
+    }
+
+    private <T extends Comparable<T>> String checkNumberRule(String operator, String skipTo, T value, T answer)
+    {
         int compare = answer.compareTo(value);
 
-        if(operator.equals(OPERATOR_EQUAL))
+        switch(operator)
         {
-            return compare == 0 ? skipTo : null;
-        }
-        else if(operator.equals(OPERATOR_GREATER_THAN))
-        {
-            return compare > 0 ? skipTo : null;
-        }
-        else if(operator.equals(OPERATOR_GREATER_THAN_EQUAL))
-        {
-            return compare >= 0 ? skipTo : null;
-        }
-        else if(operator.equals(OPERATOR_LESS_THAN))
-        {
-            return compare < 0 ? skipTo : null;
-        }
-        else if(operator.equals(OPERATOR_LESS_THAN_EQUAL))
-        {
-            return compare <= 0 ? skipTo : null;
-        }
-        else if(operator.equals(OPERATOR_NOT_EQUAL))
-        {
-            return compare != 0 ? skipTo : null;
+            case OPERATOR_EQUAL:
+                return compare == 0 ? skipTo : null;
+            case OPERATOR_NOT_EQUAL:
+                return compare != 0 ? skipTo : null;
+            case OPERATOR_GREATER_THAN:
+                return compare > 0 ? skipTo : null;
+            case OPERATOR_GREATER_THAN_EQUAL:
+                return compare >= 0 ? skipTo : null;
+            case OPERATOR_LESS_THAN:
+                return compare < 0 ? skipTo : null;
+            case OPERATOR_LESS_THAN_EQUAL:
+                return compare <= 0 ? skipTo : null;
         }
 
         return null;

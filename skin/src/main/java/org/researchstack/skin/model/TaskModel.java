@@ -96,7 +96,7 @@ public class TaskModel
         public String type;
 
         @SerializedName("value")
-        public int value;
+        public Object value;
 
         @SerializedName("label")
         public String label;
@@ -114,7 +114,7 @@ public class TaskModel
         public String type;
 
         @SerializedName("value")
-        public int value;
+        public Object value;
 
     }
 
