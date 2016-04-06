@@ -12,11 +12,11 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.helpers.LogExt;
@@ -101,8 +101,15 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
 
                     subscription = adapter.getPublishSubject().subscribe(task -> {
 
-                        Task newTask = DataProvider.getInstance()
-                                .loadTask(getContext(), task);
+                        Task newTask = DataProvider.getInstance().loadTask(getContext(), task);
+
+                        if(newTask == null)
+                        {
+                            Toast.makeText(getActivity(),
+                                    R.string.rss_unable_to_load_task,
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
                         startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask),
                                 REQUEST_TASK);
@@ -167,11 +174,8 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
             {
                 for(SchedulesAndTasksModel.TaskScheduleModel task : schedule.tasks)
                 {
-                    if(! TextUtils.isEmpty(task.taskFileName))
-                    {
-                        taskScheduleType.put(task.taskID, schedule.scheduleType.equals("once"));
-                        tasks.add(task);
-                    }
+                    taskScheduleType.put(task.taskID, schedule.scheduleType.equals("once"));
+                    tasks.add(task);
                 }
             }
         }
