@@ -548,6 +548,12 @@ public abstract class BridgeDataProvider extends DataProvider
     @Override
     public Task loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task)
     {
+        // currently we only support task json files, override this method to taskClassName
+        if(StringUtils.isEmpty(task.taskFileName))
+        {
+            return null;
+        }
+
         TaskModel taskModel = loadTaskModel(context, task);
         SmartSurveyTask smartSurveyTask = new SmartSurveyTask(taskModel);
         return smartSurveyTask;

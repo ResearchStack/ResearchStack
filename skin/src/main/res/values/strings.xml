@@ -175,6 +175,7 @@
     <string name="rss_network_error_unknown">Whoops! looks like something bad happened when talking
         to the server, try again later!
     </string>
+    <string name="rss_unable_to_load_task">Unable to load the selected task</string>
     <!-- Unknown -->
 
 
