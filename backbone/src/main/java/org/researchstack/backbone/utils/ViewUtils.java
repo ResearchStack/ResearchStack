@@ -62,8 +62,12 @@ public class ViewUtils
         if(context instanceof Activity)
         {
             View currentFocus = ((Activity) context).getCurrentFocus();
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromInputMethod(currentFocus.getWindowToken(), 0);
+
+            if(currentFocus != null && currentFocus.getWindowToken() != null)
+            {
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromInputMethod(currentFocus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
         }
     }
 

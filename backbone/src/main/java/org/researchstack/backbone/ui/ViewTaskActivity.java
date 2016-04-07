@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import org.researchstack.backbone.R;
@@ -159,6 +160,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     }
 
     @Override
+    protected void onPause()
+    {
+        hideKeyboard();
+        super.onPause();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         if(item.getItemId() == android.R.id.home)
@@ -247,6 +255,15 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         {
             throw new IllegalArgumentException("Action with value " + action + " is invalid. " +
                     "See StepCallbacks for allowable arguments");
+        }
+    }
+
+    private void hideKeyboard()
+    {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if(imm.isActive() && imm.isAcceptingText())
+        {
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         }
     }
 
