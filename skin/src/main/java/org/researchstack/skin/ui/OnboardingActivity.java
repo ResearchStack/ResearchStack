@@ -224,7 +224,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         }
         else
         {
-            startMainActivity();
+            skipToMainActivity();
         }
     }
 
@@ -244,6 +244,9 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         if(requestCode == REQUEST_CODE_SIGN_IN && resultCode == RESULT_OK)
         {
             finish();
+
+            AppPrefs.getInstance(this).setSkippedOnboarding(false);
+
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String email = (String) result.getStepResult(OnboardingTask.SignInStepIdentifier)
                     .getResultForIdentifier(SignInTask.ID_EMAIL);
@@ -268,6 +271,8 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
 
             finish();
 
+            AppPrefs.getInstance(this).setSkippedOnboarding(false);
+
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String email = (String) result.getStepResult(OnboardingTask.SignUpStepIdentifier)
                     .getResultForIdentifier(SignUpTask.ID_EMAIL);
@@ -285,12 +290,18 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
                     .getResult();
             StorageAccess.getInstance().setPinCode(this, passcode);
 
-            startMainActivity();
+            skipToMainActivity();
         }
         else
         {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void skipToMainActivity()
+    {
+        AppPrefs.getInstance(this).setSkippedOnboarding(true);
+        startMainActivity();
     }
 
     private void startMainActivity()
