@@ -11,6 +11,7 @@ public class AppPrefs
     // Statics
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private static final String KEY_ONBOARDING_COMPLETE = "settings_onboarding_complete";
+    private static final String KEY_ONBOARDING_SKIPPED  = "settings_onboarding_skipped";
     private static AppPrefs instance;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -44,6 +45,16 @@ public class AppPrefs
         String time = prefs.getString(SettingsFragment.KEY_AUTO_LOCK_TIME, "1");
         int autoLockMins = isAutoLocked ? Integer.parseInt(time) : 60 * 24 * 365;
         return autoLockMins * 60 * 1000;
+    }
+
+    public void setSkippedOnboarding(boolean skipped)
+    {
+        prefs.edit().putBoolean(KEY_ONBOARDING_SKIPPED, skipped).apply();
+    }
+
+    public boolean skippedOnboarding()
+    {
+        return prefs.getBoolean(KEY_ONBOARDING_SKIPPED, false);
     }
 
     /**

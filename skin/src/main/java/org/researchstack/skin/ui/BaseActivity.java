@@ -20,6 +20,7 @@ import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.utils.ObservableUtils;
+import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.TaskProvider;
@@ -66,6 +67,13 @@ public class BaseActivity extends PinCodeActivity
         {
             LogExt.i(getClass(), "errorBroadcastReceiver()");
 
+            if(AppPrefs.getInstance(context).skippedOnboarding())
+            {
+                // We don't want to bother a user that has skipped sign-up with the signed out
+                // or consent messages. Short-circuiting until we have an approved message to show
+                // a user that has skipped.
+                return;
+            }
             String messageText = null;
             String actionText = null;
             int length = Snackbar.LENGTH_INDEFINITE;
