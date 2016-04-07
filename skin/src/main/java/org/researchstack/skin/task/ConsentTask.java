@@ -8,6 +8,7 @@ import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.dev.DevUtils;
+import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
@@ -169,6 +170,12 @@ public class ConsentTask extends OrderedTask
 
     private static void initQuizSteps(Context ctx, ConsentQuizModel model, List<Step> steps)
     {
+        if(model == null)
+        {
+            LogExt.d(ConsentTask.class, "No quiz specified in consent json, skipping");
+            return;
+        }
+
         for(int i = 0; i < model.getQuestions().size(); i++)
         {
             ConsentQuizModel.QuizQuestion question = model.getQuestions().get(i);
