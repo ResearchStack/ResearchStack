@@ -20,6 +20,7 @@ import org.researchstack.backbone.storage.database.TaskNotification;
 import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.storage.file.FileAccessException;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.bridge.body.ConsentSignatureBody;
@@ -37,6 +38,7 @@ import org.researchstack.skin.model.TaskModel;
 import org.researchstack.skin.model.User;
 import org.researchstack.skin.notification.TaskAlertReceiver;
 import org.researchstack.skin.schedule.ScheduleHelper;
+import org.researchstack.skin.task.ConsentTask;
 import org.researchstack.skin.task.SmartSurveyTask;
 import org.researchstack.skin.utils.JsonUtils;
 
@@ -305,15 +307,9 @@ public abstract class BridgeDataProvider extends DataProvider
     }
 
     @Override
-    public void saveConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope)
+    public void saveConsent(Context context, TaskResult consentResult)
     {
-        // User is not signed in yet, so we need to save consent info to disk for later upload
-        ConsentSignatureBody signature = new ConsentSignatureBody(getStudyId(),
-                name,
-                birthDate,
-                imageData,
-                "image/png",
-                scope);
+        ConsentSignatureBody signature = createConsentSignatureBody(consentResult);
         writeJsonString(context, gson.toJson(signature), TEMP_CONSENT_JSON_FILE_NAME);
 
         User user = loadUser(context);
@@ -324,6 +320,37 @@ public abstract class BridgeDataProvider extends DataProvider
         user.setName(signature.name);
         user.setBirthDate(signature.birthdate);
         saveUser(context, user);
+    }
+
+    @NonNull
+    protected ConsentSignatureBody createConsentSignatureBody(TaskResult consentResult)
+    {
+        StepResult<StepResult> formResult = (StepResult<StepResult>) consentResult.getStepResult(
+                ConsentTask.ID_FORM);
+
+        String sharingScope = (String) consentResult.getStepResult(ConsentTask.ID_SHARING)
+                .getResult();
+
+        String fullName = (String) formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
+                .getResult();
+
+        Long birthdateInMillis = (Long) formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
+                .getResult();
+
+        String base64Image = (String) consentResult.getStepResult(ConsentTask.ID_SIGNATURE)
+                .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
+
+        String signatureDate = (String) consentResult.getStepResult(ConsentTask.ID_SIGNATURE)
+                .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
+
+        // Save Consent Information
+        // User is not signed in yet, so we need to save consent info to disk for later upload
+        return new ConsentSignatureBody(getStudyId(),
+                fullName,
+                new Date(birthdateInMillis),
+                base64Image,
+                "image/png",
+                sharingScope);
     }
 
     @Override
@@ -369,15 +396,9 @@ public abstract class BridgeDataProvider extends DataProvider
     }
 
     @Override
-    public void uploadConsent(Context context, String name, Date birthDate, String imageData, String signatureDate, String scope)
+    public void uploadConsent(Context context, TaskResult consentResult)
     {
-        uploadConsent(context,
-                new ConsentSignatureBody(getStudyId(),
-                        name,
-                        birthDate,
-                        imageData,
-                        "image/png",
-                        scope));
+        uploadConsent(context, createConsentSignatureBody(consentResult));
     }
 
     private void uploadConsent(Context context, ConsentSignatureBody consent)

@@ -35,8 +35,6 @@ public abstract class UiManager
 
     public abstract boolean isInclusionCriteriaValid(StepResult result);
 
-    public abstract boolean isSignatureEnabledInConsent();
-
     // Override this if you want to allow the user to get to the main portion of the app without
     // signing up for the study and consenting
     public boolean isConsentSkippable()

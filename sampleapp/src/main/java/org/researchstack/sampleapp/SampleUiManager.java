@@ -107,12 +107,6 @@ public class SampleUiManager extends UiManager
     }
 
     @Override
-    public boolean isSignatureEnabledInConsent()
-    {
-        return true;
-    }
-
-    @Override
     public boolean isConsentSkippable()
     {
         return true;

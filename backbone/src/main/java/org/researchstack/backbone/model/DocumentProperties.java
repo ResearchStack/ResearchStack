@@ -59,7 +59,7 @@ public class DocumentProperties
         this.htmlContent = htmlContent;
     }
 
-    public boolean isRequiresSignature()
+    public boolean requiresSignature()
     {
         return requiresSignature;
     }
@@ -69,7 +69,7 @@ public class DocumentProperties
         this.requiresSignature = requiresSignature;
     }
 
-    public boolean isRequiresName()
+    public boolean requiresName()
     {
         return requiresName;
     }
@@ -79,7 +79,7 @@ public class DocumentProperties
         this.requiresName = requiresName;
     }
 
-    public boolean isRequiresBirthdate()
+    public boolean requiresBirthdate()
     {
         return requiresBirthdate;
     }

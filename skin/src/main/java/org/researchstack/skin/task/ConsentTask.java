@@ -73,8 +73,9 @@ public class ConsentTask extends OrderedTask
         List<ConsentSection> sections = data.getSections();
         ConsentQuizModel quiz = data.getQuiz();
 
-        signature.setRequiresSignatureImage(properties.isRequiresSignature());
-        signature.setRequiresName(properties.isRequiresName());
+        signature.setRequiresSignatureImage(properties.requiresSignature());
+        signature.setRequiresName(properties.requiresName());
+        signature.setRequiresBirthDate(properties.requiresBirthdate());
 
         ConsentDocument doc = new ConsentDocument();
         doc.setTitle(r.getString(R.string.rsb_consent_form_title));
@@ -216,37 +217,45 @@ public class ConsentTask extends OrderedTask
         steps.add(step);
 
         // Add full-name input
-        if(doc.getSignature(0).isRequiresName())
+        boolean requiresName = doc.getSignature(0).requiresName();
+        boolean requiresBirthDate = doc.getSignature(0).requiresBirthDate();
+        if(requiresName || requiresBirthDate)
         {
+            List<QuestionStep> formSteps = new ArrayList<>();
+            if(requiresName)
+            {
+                TextAnswerFormat format = new TextAnswerFormat();
+                format.setIsMultipleLines(false);
+
+                String placeholder = ctx.getResources()
+                        .getString(R.string.rsb_consent_name_placeholder);
+                String nameText = ctx.getResources().getString(R.string.rsb_consent_name_full);
+                formSteps.add(new QuestionStep(ID_FORM_NAME, nameText, format));
+            }
+
+            if(requiresBirthDate)
+            {
+                Calendar maxDate = Calendar.getInstance();
+                maxDate.add(Calendar.YEAR, - 18);
+                DateAnswerFormat dobFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date,
+                        null,
+                        null,
+                        maxDate.getTime(),
+                        null);
+                String dobText = ctx.getResources().getString(R.string.rsb_consent_dob_full);
+                formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
+            }
+
             String formTitle = ctx.getString(R.string.rsb_consent_form_title);
             FormStep formStep = new FormStep(ID_FORM, formTitle, step.getText());
             formStep.setStepTitle(R.string.rsb_consent);
             formStep.setOptional(false);
-
-            TextAnswerFormat format = new TextAnswerFormat();
-            format.setIsMultipleLines(false);
-
-            String placeholder = ctx.getResources()
-                    .getString(R.string.rsb_consent_name_placeholder);
-            String nameText = ctx.getResources().getString(R.string.rsb_consent_name_full);
-            QuestionStep fullName = new QuestionStep(ID_FORM_NAME, nameText, format);
-
-            Calendar maxDate = Calendar.getInstance();
-            maxDate.add(Calendar.YEAR, - 18);
-            DateAnswerFormat dobFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date,
-                    null,
-                    null,
-                    maxDate.getTime(),
-                    null);
-            String dobText = ctx.getResources().getString(R.string.rsb_consent_dob_full);
-            QuestionStep dobStep = new QuestionStep(ID_FORM_DOB, dobText, dobFormat);
-
-            formStep.setFormSteps(fullName, dobStep);
+            formStep.setFormSteps(formSteps);
             steps.add(formStep);
         }
 
         // Add signature input
-        if(doc.getSignature(0).isRequiresSignatureImage())
+        if(doc.getSignature(0).requiresSignatureImage())
         {
             ConsentSignatureStep signatureStep = new ConsentSignatureStep(ID_SIGNATURE);
             signatureStep.setStepTitle(R.string.rsb_consent);

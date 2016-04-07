@@ -23,6 +23,15 @@ public class ConsentSignature implements Serializable, Cloneable
     private boolean requiresSignatureImage;
 
     /**
+     * A Boolean value indicating whether the user needs to enter their birth date during consent
+     * review.
+     * <p>
+     * The default value of this property is `YES`. In a consent review step, the name entry screen
+     * is not displayed when the value of this property is `NO`.
+     */
+    private boolean requiresBirthDate;
+
+    /**
      * The identifier for this signature.
      * <p>
      * The identifier should be unique in the document. It can be used to find or
@@ -106,7 +115,7 @@ public class ConsentSignature implements Serializable, Cloneable
         this.identifier = identifier;
     }
 
-    public boolean isRequiresName()
+    public boolean requiresName()
     {
         return requiresName;
     }
@@ -116,7 +125,7 @@ public class ConsentSignature implements Serializable, Cloneable
         this.requiresName = requiresName;
     }
 
-    public boolean isRequiresSignatureImage()
+    public boolean requiresSignatureImage()
     {
         return requiresSignatureImage;
     }
@@ -124,6 +133,16 @@ public class ConsentSignature implements Serializable, Cloneable
     public void setRequiresSignatureImage(boolean requiresSignatureImage)
     {
         this.requiresSignatureImage = requiresSignatureImage;
+    }
+
+    public boolean requiresBirthDate()
+    {
+        return requiresBirthDate;
+    }
+
+    public void setRequiresBirthDate(boolean requiresBirthDate)
+    {
+        this.requiresBirthDate = requiresBirthDate;
     }
 
     public String getTitle()
