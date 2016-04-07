@@ -64,8 +64,8 @@ public class ConsentQuizModel implements Serializable
         private String       expectedAnswer;
         private String       text;
         private List<String> textChoices;
-        private String positiveFeedback = "";
-        private String negativeFeedback = "";
+        private String       positiveFeedback;
+        private String       negativeFeedback;
 
         public String getIdentifier()
         {
@@ -104,12 +104,12 @@ public class ConsentQuizModel implements Serializable
 
         public String getPositiveFeedback()
         {
-            return positiveFeedback;
+            return positiveFeedback == null ? "" : positiveFeedback;
         }
 
         public String getNegativeFeedback()
         {
-            return negativeFeedback;
+            return negativeFeedback == null ? "" : negativeFeedback;
         }
     }
 }

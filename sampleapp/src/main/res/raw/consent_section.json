@@ -11,6 +11,22 @@
   "quiz": {
     "questions": [
       {
+        "identifier": "instruction",
+        "prompt": "Comprehension",
+        "text": "Let's do a quick and simple test of your understanding of this study.",
+        "type": "instruction"
+      },
+      {
+        "identifier": "purpose",
+        "prompt": "What is the purpose of this study?",
+        "type": "singleChoiceText",
+        "textChoices": [
+          "Understand the fluctuations of Parkinson disease symptoms",
+          "Treating Parkinson disease"
+        ],
+        "expectedAnswer": "0"
+      },
+      {
         "identifier": "question1",
         "prompt": "If my asthma gets worse during the study I should stop relying on the app and see my doctor.",
         "type": "boolean",
