@@ -50,13 +50,9 @@ public class TaskAlertReceiver extends BroadcastReceiver
                 break;
 
             case ALERT_CREATE_ALL:
-                Observable.create(subscriber -> {
-                    subscriber.onNext(NotificationHelper.getInstance(context)
-                            .loadTaskNotifications());
-                })
+                Observable.defer(() -> Observable.from(NotificationHelper.getInstance(context)
+                        .loadTaskNotifications()))
                         .compose(ObservableUtils.applyDefault())
-                        .map(o -> (List<TaskNotification>) o)
-                        .flatMap(notifications -> Observable.from(notifications))
                         .subscribe(notification -> {
                             postNotificationToAlertManager(context, notification);
                         });
@@ -89,8 +85,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
             if(taskNotificationId != - 1)
             {
                 // Delete from database
-                NotificationHelper.getInstance(context)
-                        .deleteTaskNotification(taskNotificationId);
+                NotificationHelper.getInstance(context).deleteTaskNotification(taskNotificationId);
 
                 LogExt.d(TaskAlertReceiver.class,
                         "TaskNotification[id." + taskNotificationId + "] Deleted");
@@ -114,8 +109,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
         PendingIntent pendingIntent = createNotificationIntent(context, taskNotification.id);
 
         // Generate the time the intent will fire
-        Date nextExecuteTime = ScheduleHelper.nextSchedule(
-                taskNotification.chronTime,
+        Date nextExecuteTime = ScheduleHelper.nextSchedule(taskNotification.chronTime,
                 taskNotification.endDate);
 
         // Create alert
@@ -144,8 +138,8 @@ public class TaskAlertReceiver extends BroadcastReceiver
         alarmManager.set(AlarmManager.RTC, nextExecuteTime.getTime(), pendingIntent);
 
         DateFormat format = FormatHelper.getFormat(DateFormat.LONG, DateFormat.LONG);
-        LogExt.i(getClass(), "Alarm  Created. Executing on or near " +
-                format.format(nextExecuteTime));
+        LogExt.i(getClass(),
+                "Alarm  Created. Executing on or near " + format.format(nextExecuteTime));
     }
 
     private void cancelAlert(Context context, int taskNotificationId)

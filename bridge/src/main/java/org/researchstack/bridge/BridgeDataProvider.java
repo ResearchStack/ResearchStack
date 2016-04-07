@@ -145,13 +145,14 @@ public abstract class BridgeDataProvider extends DataProvider
     @Override
     public Observable<DataResponse> initialize(Context context)
     {
-        return Observable.create(subscriber -> {
+        return Observable.defer(() -> {
             userSessionInfo = loadUserSession(context);
             signedIn = userSessionInfo != null;
 
             buildRetrofitService(userSessionInfo);
-            subscriber.onNext(new DataResponse(true, null));
+            return Observable.just(new DataResponse(true, null));
 
+        }).doOnNext(response -> {
             // will crash if the user hasn't created a pincode yet, need to fix needsAuth()
             if(StorageAccess.getInstance().hasPinCode(context))
             {
