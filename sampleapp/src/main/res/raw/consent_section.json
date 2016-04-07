@@ -3,7 +3,45 @@
     "htmlDocument": "asthma_fullconsent",
     "investigatorShortDescription": "Mount Sinai",
     "investigatorLongDescription": "Mount Sinai and its partners",
-    "htmlContent": "consent_section_html_sharing_rsch"
+    "htmlContent": "consent_section_html_sharing_rsch",
+    "requiresSignature": true,
+    "requiresName": true,
+    "requiresBirthdate": true
+  },
+  "quiz": {
+    "questions": [
+      {
+        "identifier": "question1",
+        "prompt": "If my asthma gets worse during the study I should stop relying on the app and see my doctor.",
+        "type": "boolean",
+        "positiveFeedback": "The app does not replace your usual medical care. Continue asthma care with your usual doctor at all times and let him/her know you are in the study. If your asthma is getting worse at any time, including during the study, please contact your doctor.",
+        "negativeFeedback": "The app does not replace your usual medical care. Continue asthma care with your usual doctor at all times and let him/her know you are in the study. If your asthma is getting worse at any time, including during the study, please contact your doctor.",
+        "expectedAnswer": "true"
+      },
+      {
+        "identifier": "question2",
+        "prompt": "Once I start participating in the study, I am free to withdraw at any time but the data I contributed will not be deleted.",
+        "type": "boolean",
+        "positiveFeedback": "You are free to withdraw at any time from the study. To withdraw, choose “Leave Study” on the app's “Profile” page, delete the app from your phone, or contact the researchers. Data you have contributed up until you withdraw will stay in the study but no further data will be gathered.",
+        "negativeFeedback": "You are free to withdraw at any time from the study. To withdraw, choose “Leave Study” on the app's “Profile” page, delete the app from your phone, or contact the researchers. Data you have contributed up until you withdraw will stay in the study but no further data will be gathered.",
+        "expectedAnswer": "true"
+      },
+      {
+        "identifier": "question3",
+        "prompt": "This app is a research study and not a commercial application.",
+        "positiveFeedback": "This is a research study and not a commercial application.",
+        "negativeFeedback": "This is a research study and not a commercial application.",
+        "type": "boolean",
+        "expectedAnswer": "true"
+      }
+    ],
+    "successTitle": "Great Job!",
+    "successMessage": "You answered all of the questions correctly. Tap Next to continue.",
+    "failureTitle": "Try again",
+    "failureMessage": "Unfortunately, you answered one or more questions incorrectly on the quiz. We need you to repeat the quiz to make sure you understand what you need to know about the study. Please read the consent information and take the quiz again.",
+    "allowedFailures": 0,
+    "incorrectIcon": "consent_quiz_retry",
+    "correctIcon": "valid_icon"
   },
   "sections": [
     {

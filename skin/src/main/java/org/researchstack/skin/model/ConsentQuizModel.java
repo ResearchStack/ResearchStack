@@ -1,28 +1,44 @@
 package org.researchstack.skin.model;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class ConsentQuizModel implements Serializable
 {
-    @SerializedName("evaluation_properties")
-    public EvaluationProperties evalProperties;
+    private String             failureTitle;
+    private String             failureMessage;
+    private String             successTitle;
+    private String             successMessage;
+    private int                allowedFailures;
+    private List<QuizQuestion> questions;
 
-    @SerializedName("question_properties")
-    public QuestionProperties questionProperties;
+    // fields with defaults
+    private String incorrectIcon = "rsb_quiz_retry";
+    private String correctIcon   = "valid_icon";
 
-    @SerializedName("questions")
-    public List<QuizQuestion> questions;
-
-    public EvaluationProperties getEvaluationProperties()
+    public String getFailureTitle()
     {
-        return evalProperties;
+        return failureTitle;
     }
 
-    public QuestionProperties getQuestionProperties()
+    public String getFailureMessage()
     {
-        return questionProperties;
+        return failureMessage;
+    }
+
+    public String getSuccessTitle()
+    {
+        return successTitle;
+    }
+
+    public String getSuccessMessage()
+    {
+        return successMessage;
+    }
+
+    public int getAllowedFailures()
+    {
+        return allowedFailures;
     }
 
     public List<QuizQuestion> getQuestions()
@@ -30,68 +46,70 @@ public class ConsentQuizModel implements Serializable
         return questions;
     }
 
+    public String getIncorrectIcon()
+    {
+        return incorrectIcon;
+    }
+
+    public String getCorrectIcon()
+    {
+        return correctIcon;
+    }
+
     public class QuizQuestion implements Serializable
     {
-        @SerializedName("identifier")
-        public String id;
+        private String       identifier;
+        private String       prompt;
+        private String       type;
+        private String       expectedAnswer;
+        private String       text;
+        private List<String> textChoices;
+        private String positiveFeedback = "";
+        private String negativeFeedback = "";
 
-        @SerializedName("prompt")
-        public String question;
+        public String getIdentifier()
+        {
+            return identifier;
+        }
 
-        @SerializedName("positiveFeedback")
-        public String positiveFeedback;
+        public void setIdentifier(String identifier)
+        {
+            this.identifier = identifier;
+        }
 
-        @SerializedName("negativeFeedback")
-        public String negativeFeedback;
+        public String getPrompt()
+        {
+            return prompt;
+        }
 
-        @SerializedName("constraints")
-        public TaskModel.ConstraintsModel constraints;
+        public String getType()
+        {
+            return type;
+        }
+
+        public String getExpectedAnswer()
+        {
+            return expectedAnswer;
+        }
+
+        public String getText()
+        {
+            return text;
+        }
+
+        public List<String> getTextChoices()
+        {
+            return textChoices;
+        }
+
+        public String getPositiveFeedback()
+        {
+            return positiveFeedback;
+        }
+
+        public String getNegativeFeedback()
+        {
+            return negativeFeedback;
+        }
     }
-
-    public class QuestionProperties implements Serializable
-    {
-        @SerializedName("correctTitle")
-        public String correctTitle;
-
-        @SerializedName("incorrectTitle")
-        public String incorrectTitle;
-
-        @SerializedName("correctCliffhanger")
-        public String correctCliffhanger;
-
-        @SerializedName("incorrectCliffhanger")
-        public String incorrectCliffhanger;
-
-        @SerializedName("correct")
-        public String correct;
-
-        @SerializedName("introText")
-        public String introText;
-
-    }
-
-    public class EvaluationProperties implements Serializable
-    {
-        @SerializedName("correctIcon")
-        public String correctIcon;
-
-        @SerializedName("incorrectIcon")
-        public String incorrectIcon;
-
-        @SerializedName("quizAllCorrectText")
-        public String quizAllCorrectText;
-
-        @SerializedName("quizPassedText")
-        public String quizPassedText;
-
-        @SerializedName("quizFailure1Text")
-        public String quizFailure1Text;
-
-        @SerializedName("quizFailure2Text")
-        public String quizFailure2Text;
-
-        @SerializedName("maxIncorrect")
-        public int maxIncorrect;
-    }
-
 }

@@ -11,8 +11,8 @@ import org.researchstack.backbone.dev.DevUtils;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
-import org.researchstack.backbone.model.ConsentSectionModel;
 import org.researchstack.backbone.model.ConsentSignature;
+import org.researchstack.backbone.model.DocumentProperties;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ConsentDocumentStep;
@@ -27,8 +27,8 @@ import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
-import org.researchstack.skin.UiManager;
 import org.researchstack.skin.model.ConsentQuizModel;
+import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 import org.researchstack.skin.step.ConsentQuizQuestionStep;
 import org.researchstack.skin.utils.JsonUtils;
@@ -68,16 +68,21 @@ public class ConsentTask extends OrderedTask
         String participant = r.getString(R.string.rss_participant);
         ConsentSignature signature = new ConsentSignature("participant", participant, null);
 
-        signature.setRequiresSignatureImage(UiManager.getInstance().isSignatureEnabledInConsent());
+        DocumentProperties properties = data.getDocumentProperties();
+        List<ConsentSection> sections = data.getSections();
+        ConsentQuizModel quiz = data.getQuiz();
+
+        signature.setRequiresSignatureImage(properties.isRequiresSignature());
+        signature.setRequiresName(properties.isRequiresName());
 
         ConsentDocument doc = new ConsentDocument();
         doc.setTitle(r.getString(R.string.rsb_consent_form_title));
         doc.setSignaturePageTitle(R.string.rsb_consent_form_title);
         doc.setSignaturePageContent(r.getString(R.string.rsb_consent_signature_content));
-        doc.setSections(data.getSections());
+        doc.setSections(sections);
         doc.addSignature(signature);
 
-        String htmlDocName = data.getDocumentProperties().getHtmlDocument();
+        String htmlDocName = properties.getHtmlDocument();
         int id = ResUtils.getRawResourceId(context, htmlDocName);
         doc.setHtmlReviewContent(ResUtils.getStringResource(context, id));
 
@@ -85,7 +90,7 @@ public class ConsentTask extends OrderedTask
 
         initConsentSharingStep(r, data, steps);
 
-        initQuizSteps(context, steps);
+        initQuizSteps(context, quiz, steps);
 
         initConsentReviewSteps(context, doc, steps);
 
@@ -162,18 +167,8 @@ public class ConsentTask extends OrderedTask
         }
     }
 
-    private static void initQuizSteps(Context ctx, List<Step> steps)
+    private static void initQuizSteps(Context ctx, ConsentQuizModel model, List<Step> steps)
     {
-        ConsentQuizModel model = JsonUtils.loadClass(ctx,
-                ConsentQuizModel.class,
-                ResourceManager.getInstance().getQuizSections());
-
-        //        String trueString = ctx.getString(R.string.btn_true);
-        //        Choice<Boolean> trueChoice = new Choice<>(trueString, true, null);
-
-        //        String falseString = ctx.getString(R.string.btn_false);
-        //        Choice<Boolean> falseChoice = new Choice<>(falseString, false, null);
-
         for(int i = 0; i < model.getQuestions().size(); i++)
         {
             ConsentQuizModel.QuizQuestion question = model.getQuestions().get(i);
@@ -182,21 +177,15 @@ public class ConsentTask extends OrderedTask
             // map later on. This is done to clear and attain the incorrect question count.
             if(i == 0)
             {
-                question.id = ID_FIRST_QUESTION;
+                question.setIdentifier(ID_FIRST_QUESTION);
             }
 
-            ConsentQuizQuestionStep quizStep = new ConsentQuizQuestionStep(question.id,
-                    model.getQuestionProperties(),
-                    question);
-            quizStep.setTitle(question.question);
-            quizStep.setText(model.getQuestionProperties().introText);
-            //            quizStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-            //                            new Choice[] {trueChoice, falseChoice}));
+            ConsentQuizQuestionStep quizStep = new ConsentQuizQuestionStep(question);
             steps.add(quizStep);
         }
 
         ConsentQuizEvaluationStep evaluationStep = new ConsentQuizEvaluationStep(ID_QUIZ_RESULT,
-                model.getEvaluationProperties());
+                model);
         steps.add(evaluationStep);
     }
 
@@ -236,8 +225,12 @@ public class ConsentTask extends OrderedTask
             QuestionStep fullName = new QuestionStep(ID_FORM_NAME, nameText, format);
 
             Calendar maxDate = Calendar.getInstance();
-            maxDate.add(Calendar.YEAR, -18);
-            DateAnswerFormat dobFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date, null, null, maxDate.getTime(), null);
+            maxDate.add(Calendar.YEAR, - 18);
+            DateAnswerFormat dobFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date,
+                    null,
+                    null,
+                    maxDate.getTime(),
+                    null);
             String dobText = ctx.getResources().getString(R.string.rsb_consent_dob_full);
             QuestionStep dobStep = new QuestionStep(ID_FORM_DOB, dobText, dobFormat);
 

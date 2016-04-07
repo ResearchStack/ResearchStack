@@ -1,20 +1,41 @@
 package org.researchstack.skin.step;
 
-import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.answerformat.AnswerFormat;
+import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
+import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
+import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
+import org.researchstack.backbone.model.Choice;
+import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.ConsentQuizModel;
 import org.researchstack.skin.ui.layout.ConsentQuizQuestionStepLayout;
 
-public class ConsentQuizQuestionStep extends Step
+import java.util.List;
+
+public class ConsentQuizQuestionStep extends QuestionStep
 {
-    private ConsentQuizModel.QuestionProperties properties;
     private ConsentQuizModel.QuizQuestion       question;
 
-    public ConsentQuizQuestionStep(String identifier, ConsentQuizModel.QuestionProperties properties, ConsentQuizModel.QuizQuestion question)
+    public ConsentQuizQuestionStep(ConsentQuizModel.QuizQuestion question)
     {
-        super(identifier);
-        this.properties = properties;
+        super(question.getIdentifier());
         this.question = question;
+
+        if(question.getType().equals("instruction"))
+        {
+            setAnswerFormat(new UnknownAnswerFormat());
+        }
+        else if(question.getType().equals("boolean"))
+        {
+            setAnswerFormat(new BooleanAnswerFormat());
+        }
+        else if(question.getType().equals("singleChoiceText"))
+        {
+            List<Choice<Integer>> choices = Choice.from(question.getTextChoices());
+            setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
+                    (Choice[]) choices.toArray()));
+        }
+
     }
 
     @Override
@@ -29,9 +50,10 @@ public class ConsentQuizQuestionStep extends Step
         return R.string.rsb_quiz;
     }
 
-    public ConsentQuizModel.QuestionProperties getProperties()
+    @Override
+    public String getTitle()
     {
-        return properties;
+        return question.getPrompt();
     }
 
     public ConsentQuizModel.QuizQuestion getQuestion()

@@ -1,6 +1,8 @@
 package org.researchstack.backbone.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Choice <T> implements Serializable
 {
@@ -52,4 +54,13 @@ public class Choice <T> implements Serializable
         this.detailText = detailText;
     }
 
+    public static List<Choice<Integer>> from(List<String> textChoices)
+    {
+        List<Choice<Integer>> choices = new ArrayList<>();
+        for(String textChoice : textChoices)
+        {
+            choices.add(new Choice<>(textChoice, choices.size()));
+        }
+        return choices;
+    }
 }

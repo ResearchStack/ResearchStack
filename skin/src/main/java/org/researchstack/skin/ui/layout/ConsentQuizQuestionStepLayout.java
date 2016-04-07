@@ -1,12 +1,10 @@
 package org.researchstack.skin.ui.layout;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.text.SpannableString;
-import android.text.style.StyleSpan;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,7 +88,7 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
     {
         if(isAnswerValid())
         {
-            boolean answer = step.getQuestion().constraints.validation.answer.equals("true");
+            boolean answer = step.getQuestion().getExpectedAnswer().equals("true");
             boolean selected = radioGroup.getCheckedRadioButtonId() == R.id.btn_true;
             boolean answerCorrect = answer == selected;
 
@@ -134,37 +132,30 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
 
                 //Set our Result-title
                 String resultTitle = answerCorrect
-                        ? step.getProperties().correctTitle
-                        : step.getProperties().incorrectTitle;
+                        ? getContext().getString(R.string.rss_quiz_evaluation_correct)
+                        : getContext().getString(R.string.rss_quiz_evaluation_incorrect);
 
                 this.resultTitle.setVisibility(View.VISIBLE);
                 this.resultTitle.setText(resultTitle);
                 this.resultTitle.setTextColor(resultTextColor);
 
                 //Build and set our result-summary
-                String part1;
-                String part2;
-                String part3;
+                String explanation;
 
                 if(answerCorrect)
                 {
-                    part1 = step.getProperties().correctCliffhanger;
-                    part2 = step.getProperties().correct;
-                    part3 = step.getQuestion().positiveFeedback;
+                    explanation = getContext().getString(R.string.rss_quiz_question_explanation_correct,
+                            step.getQuestion().getPositiveFeedback());
                 }
                 else
                 {
-                    part1 = step.getProperties().incorrectCliffhanger;
-                    part2 = Boolean.toString(answer) + ". ";
-                    part3 = step.getQuestion().negativeFeedback;
+                    explanation = getContext().getString(R.string.rss_quiz_question_explanation_incorrect,
+                            step.getQuestion().getExpectedAnswer(),
+                            step.getQuestion().getNegativeFeedback());
                 }
 
-                SpannableString explanation = new SpannableString(part1 + part2 + part3);
-                explanation.setSpan(new StyleSpan(Typeface.BOLD_ITALIC),
-                        part1.length(),
-                        part1.length() + part2.length(),
-                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
-                resultSummary.setText(explanation);
+
+                resultSummary.setText(Html.fromHtml(explanation));
                 resultSummary.setVisibility(View.VISIBLE);
 
                 // Change the submit bar positive-title to "next"

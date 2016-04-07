@@ -66,19 +66,19 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
         if(! step.isQuizPassed())
         {
             int iconResId = ResUtils.getDrawableResourceId(getContext(),
-                    step.getQuestionProperties().incorrectIcon);
+                    step.getQuizModel().getIncorrectIcon());
 
             image.setImageResource(iconResId);
             title.setText(R.string.rsb_quiz_evaluation_try_again);
 
             if(! step.isOverMaxAttempts())
             {
-                summary.setText(step.getQuestionProperties().quizFailure1Text);
+                summary.setText(step.getQuizModel().getFailureMessage());
                 submitBar.setPositiveTitle(R.string.rsb_quiz_evaluation_retake);
             }
             else
             {
-                summary.setText(step.getQuestionProperties().quizFailure2Text);
+                summary.setText(step.getQuizModel().getFailureMessage());
                 submitBar.setPositiveTitle(R.string.rsb_quiz_evaluation_review_consent);
             }
         }
@@ -87,18 +87,18 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
         else
         {
             int iconResId = ResUtils.getDrawableResourceId(getContext(),
-                    step.getQuestionProperties().correctIcon);
+                    step.getQuizModel().getCorrectIcon());
 
             image.setImageResource(iconResId);
             title.setText(R.string.rsb_quiz_evaluation_great_job);
 
             if(step.getIncorrect() == 0)
             {
-                summary.setText(step.getQuestionProperties().quizAllCorrectText);
+                summary.setText(step.getQuizModel().getSuccessMessage());
             }
             else
             {
-                summary.setText(step.getQuestionProperties().quizPassedText);
+                summary.setText(step.getQuizModel().getSuccessMessage());
             }
 
             submitBar.setPositiveTitle(R.string.rsb_next);
