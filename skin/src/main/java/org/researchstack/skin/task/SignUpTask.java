@@ -25,6 +25,7 @@ public class SignUpTask extends OnboardingTask
         super(TaskProvider.TASK_ID_SIGN_UP);
         // creating here so it has access to context
         inclusionCriteriaStep = UiManager.getInstance().getInclusionCriteriaStep(context);
+        inclusionCriteriaStep.setOptional(false);
     }
 
     @Override
