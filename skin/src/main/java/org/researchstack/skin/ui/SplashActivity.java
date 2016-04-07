@@ -3,15 +3,11 @@ package org.researchstack.skin.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.storage.file.UnencryptedProvider;
 import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.notification.TaskAlertReceiver;
-
-import rx.Observable;
 
 /**
  * Created by bradleymcdermott on 10/15/15.
@@ -30,15 +26,7 @@ public class SplashActivity extends PinCodeActivity
         super.onDataReady();
 
         // Init all notifications
-        Observable.create(subscriber -> {
-            if(StorageAccess.getInstance().getEncryptionProvider() instanceof UnencryptedProvider
-                    || StorageAccess.getInstance().hasPinCode(this) )
-            {
-                subscriber.onNext(null);
-            }
-        }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
-            sendBroadcast(new Intent(TaskAlertReceiver.ALERT_CREATE_ALL));
-        });
+        sendBroadcast(new Intent(TaskAlertReceiver.ALERT_CREATE_ALL));
 
 
         DataProvider.getInstance()
