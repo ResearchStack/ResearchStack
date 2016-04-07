@@ -1,5 +1,7 @@
 package org.researchstack.skin.task;
 
+import android.content.Context;
+
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.skin.TaskProvider;
@@ -15,7 +17,7 @@ public class SignInTask extends OnboardingTask
     public static final String ID_EMAIL      = "ID_EMAIL";
     public static final String ID_PASSWORD   = "ID_PASSWORD";
 
-    public SignInTask()
+    public SignInTask(Context context)
     {
         super(TaskProvider.TASK_ID_SIGN_IN);
     }

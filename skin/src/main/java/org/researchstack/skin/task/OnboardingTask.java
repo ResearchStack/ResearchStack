@@ -2,12 +2,10 @@ package org.researchstack.skin.task;
 
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.step.body.NotImplementedStepBody;
 import org.researchstack.skin.R;
-import org.researchstack.skin.UiManager;
 import org.researchstack.skin.step.PassCodeCreationStep;
 import org.researchstack.skin.ui.layout.SignInStepLayout;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
@@ -31,7 +29,6 @@ public abstract class OnboardingTask extends Task
 
     @Deprecated
     protected int                  currentStepNumber;
-    private   QuestionStep         inclusionCriteriaStep;
     private   Step                 eligibleStep;
     private   Step                 ineligibleStep;
     private   PassCodeCreationStep passcodeCreationStep;
@@ -126,13 +123,6 @@ public abstract class OnboardingTask extends Task
             eligibleStep.setStepLayoutClass(SignUpEligibleStepLayout.class);
         }
         return eligibleStep;
-    }
-
-    public Step getInclusionCriteriaStep()
-    {
-        Step inclusion = UiManager.getInstance().getInclusionCriteriaStep();
-        inclusion.setOptional(false);
-        return inclusion;
     }
 
     public Step getPassCodeCreationStep()
