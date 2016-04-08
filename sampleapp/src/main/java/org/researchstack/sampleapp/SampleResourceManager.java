@@ -16,12 +16,6 @@ public class SampleResourceManager extends ResourceManager
     }
 
     @Override
-    public int getQuizSections()
-    {
-        return R.raw.quiz_section;
-    }
-
-    @Override
     public int getLearnSections()
     {
         return R.raw.learn;
