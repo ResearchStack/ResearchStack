@@ -13,23 +13,18 @@ import android.widget.TextView;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.helpers.LogExt;
-import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
-import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.TaskProvider;
-import org.researchstack.skin.task.ConsentTask;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.task.SignInTask;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
-
-import java.util.Date;
 
 import rx.Observable;
 import rx.functions.Action1;
@@ -183,34 +178,9 @@ public class BaseActivity extends PinCodeActivity
         {
             TaskResult consentResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
 
-            StepResult<StepResult> formResult = (StepResult<StepResult>) consentResult.getStepResult(
-                    ConsentTask.ID_FORM);
-
-            String fullName = (String) formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
-                    .getResult();
-
-            Long birthdateInMillis = (Long) formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
-                    .getResult();
-
-            String sharingScope = (String) consentResult.getStepResult(ConsentTask.ID_SHARING)
-                    .getResult();
-
-            String base64Image = (String) consentResult.getStepResult(ConsentTask.ID_SIGNATURE)
-                    .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
-
-            String signatureDate = (String) consentResult.getStepResult(ConsentTask.ID_SIGNATURE)
-                    .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
-
-
             Observable.fromCallable(() -> {
                 // Upload consent object
-                DataProvider.getInstance()
-                        .uploadConsent(this,
-                                fullName,
-                                new Date(birthdateInMillis),
-                                base64Image,
-                                signatureDate,
-                                sharingScope);
+                DataProvider.getInstance().uploadConsent(this, consentResult);
                 return null;
             }).compose(ObservableUtils.applyDefault()).subscribe();
         }

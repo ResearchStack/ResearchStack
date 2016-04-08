@@ -15,17 +15,13 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
-import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.TaskProvider;
-import org.researchstack.skin.task.ConsentTask;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
 import org.researchstack.skin.ui.layout.SignUpPermissionsStepLayout;
-
-import java.util.Date;
 
 public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCallback
 {
@@ -116,32 +112,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
     private void saveConsentResultInfo()
     {
-        StepResult<StepResult> formResult = (StepResult<StepResult>) consentResult.getStepResult(
-                ConsentTask.ID_FORM);
-
-        String fullName = (String) formResult.getResultForIdentifier(ConsentTask.ID_FORM_NAME)
-                .getResult();
-
-        Long birthdateInMillis = (Long) formResult.getResultForIdentifier(ConsentTask.ID_FORM_DOB)
-                .getResult();
-
-        String sharingScope = (String) consentResult.getStepResult(ConsentTask.ID_SHARING)
-                .getResult();
-
-        String base64Image = (String) consentResult.getStepResult(ConsentTask.ID_SIGNATURE)
-                .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
-
-        String signatureDate = (String) consentResult.getStepResult(ConsentTask.ID_SIGNATURE)
-                .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
-
-        // Save Consent Information
-        DataProvider.getInstance()
-                .saveConsent(this,
-                        fullName,
-                        new Date(birthdateInMillis),
-                        base64Image,
-                        signatureDate,
-                        sharingScope);
+        DataProvider.getInstance().saveConsent(this, consentResult);
     }
 
     @Override
