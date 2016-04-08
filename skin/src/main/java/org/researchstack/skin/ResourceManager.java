@@ -33,8 +33,6 @@ public abstract class ResourceManager
 
     public abstract int getConsentSections();
 
-    public abstract int getQuizSections();
-
     public abstract int getLearnSections();
 
     public abstract int getPrivacyPolicy();
