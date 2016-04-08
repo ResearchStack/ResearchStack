@@ -32,7 +32,19 @@ public class FileUtils
     @NonNull
     private static File makeTempFile(File localFile)
     {
-        return new File(localFile.getParentFile(), localFile.getName() + ".temp");
+        File temp = new File(localFile.getParentFile() + "/temp/" + localFile.getName() + ".temp");
+        makeParent(temp);
+        return temp;
+    }
+
+    public static void makeParent(File file)
+    {
+        File parent = file.getParentFile();
+
+        if (parent != null && !parent.exists() && !parent.mkdirs())
+        {
+            throw new FileAccessException("Could not create parent dir of file: " + file.getPath());
+        }
     }
 
     public static byte[] readAll(File file) throws IOException
