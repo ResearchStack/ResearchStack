@@ -106,10 +106,6 @@ public abstract class BridgeDataProvider extends DataProvider
 
     private void buildRetrofitService(UserSessionInfo userSessionInfo)
     {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> LogExt.i(getClass(),
-                message));
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
         final String sessionToken;
         if(userSessionInfo != null)
         {
@@ -132,9 +128,18 @@ public abstract class BridgeDataProvider extends DataProvider
             return chain.proceed(request);
         };
 
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(headerInterceptor)
-                .addInterceptor(interceptor)
-                .build();
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().addInterceptor(headerInterceptor);
+
+        if (BuildConfig.DEBUG)
+        {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> LogExt.i(
+                    getClass(),
+                    message));
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            clientBuilder.addInterceptor(interceptor);
+        }
+
+        OkHttpClient client = clientBuilder.build();
 
         Retrofit retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
