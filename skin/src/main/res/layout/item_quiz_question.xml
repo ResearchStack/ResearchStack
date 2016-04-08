@@ -39,7 +39,6 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"
         >
-
             <TextView
                 android:id="@+id/title"
                 style="@style/Backbone.Survey.Title"
@@ -49,6 +48,17 @@
                 android:paddingTop="@dimen/rsb_padding_wedge"
                 tools:text="@string/lorem_short"
             />
+            <TextView
+                android:id="@+id/instruction_text"
+                style="@style/Backbone.Survey.Summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/rsb_padding_wedge"
+                android:paddingTop="@dimen/rsb_padding_wedge"
+                android:layout_below="@+id/title"
+                android:visibility="gone"
+                tools:text="@string/lorem_short"
+            />
 
             <View
                 android:id="@+id/quiz_result_item_background"
@@ -56,36 +66,16 @@
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/rsb_item_size_default"
                 android:background="@android:color/holo_red_light"
-                android:layout_alignTop="@+id/rdio_group"
-                android:visibility="gone"
-                tools:visibility="visible"/>
+                android:layout_alignTop="@+id/radio_group"
+                android:visibility="gone"/>
 
             <RadioGroup
-                android:id="@+id/rdio_group"
+                android:id="@+id/radio_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
-            >
+                android:layout_below="@+id/instruction_text"
+            />
 
-                <include
-                    android:id="@+id/btn_true"
-                    layout="@layout/item_radio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/rsb_margin_left"
-                    android:layout_marginRight="@dimen/rsb_margin_right"
-                />
-
-                <include
-                    android:id="@+id/btn_false"
-                    layout="@layout/item_radio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/rsb_margin_left"
-                    android:layout_marginRight="@dimen/rsb_margin_right"
-                />
-
-            </RadioGroup>
 
             <TextView
                 android:id="@+id/quiz_result_title"
@@ -94,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/rsb_padding_wedge"
                 android:paddingTop="@dimen/rsb_padding_wedge"
-                android:layout_below="@+id/rdio_group"
+                android:layout_below="@+id/radio_group"
                 android:visibility="gone"
                 tools:text="@string/lorem_name"
                 tools:visibility="visible"

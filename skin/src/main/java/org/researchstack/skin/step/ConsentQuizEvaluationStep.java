@@ -7,15 +7,15 @@ import org.researchstack.skin.ui.layout.ConsentQuizEvaluationStepLayout;
 
 public class ConsentQuizEvaluationStep extends Step
 {
-    private ConsentQuizModel.EvaluationProperties questionProperties;
+    private ConsentQuizModel quizModel;
 
     private int attempt;
     private int incorrect;
 
-    public ConsentQuizEvaluationStep(String identifier, ConsentQuizModel.EvaluationProperties questionProperties)
+    public ConsentQuizEvaluationStep(String identifier, ConsentQuizModel quizModel)
     {
         super(identifier);
-        this.questionProperties = questionProperties;
+        this.quizModel = quizModel;
     }
 
     @Override
@@ -50,9 +50,9 @@ public class ConsentQuizEvaluationStep extends Step
         return incorrect;
     }
 
-    public ConsentQuizModel.EvaluationProperties getQuestionProperties()
+    public ConsentQuizModel getQuizModel()
     {
-        return questionProperties;
+        return quizModel;
     }
 
     public boolean isOverMaxAttempts()
@@ -62,6 +62,6 @@ public class ConsentQuizEvaluationStep extends Step
 
     public boolean isQuizPassed()
     {
-        return questionProperties != null && incorrect < questionProperties.maxIncorrect;
+        return incorrect <= quizModel.getAllowedFailures();
     }
 }

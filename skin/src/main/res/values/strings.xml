@@ -165,6 +165,14 @@
     <string name="rss_settings_dialog_leave_study">Are you sure you want to leave the study? This
         action cannot be undone and you will need to provide consent in order to re-enroll.
     </string>
+    <string name="rss_quiz_evaluation_correct">That\'s Correct!</string>
+    <string name="rss_quiz_evaluation_incorrect">That\'s Incorrect!</string>
+    <string name="rss_quiz_question_explanation_correct">You are &lt;b>&lt;i>correct.&lt;/i>&lt;/b>
+        %1$s
+    </string>
+    <string name="rss_quiz_question_explanation_incorrect">The correct answer is &lt;b>&lt;i>%1$s.&lt;/i>&lt;/b>
+        %2$s
+    </string>
 
     <!-- Network Errors -->
     <string name="rss_network_error_consent">Please review the consent documentation to continue participating in the study.</string>

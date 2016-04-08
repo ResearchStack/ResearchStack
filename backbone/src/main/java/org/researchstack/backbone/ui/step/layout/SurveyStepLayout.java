@@ -72,6 +72,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         initialize(step, null);
     }
 
+    @Override
     public void initialize(Step step, StepResult result)
     {
         if(! (step instanceof QuestionStep))

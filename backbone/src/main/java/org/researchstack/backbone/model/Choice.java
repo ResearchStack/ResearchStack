@@ -51,5 +51,4 @@ public class Choice <T> implements Serializable
     {
         this.detailText = detailText;
     }
-
 }

@@ -15,6 +15,10 @@ public class DocumentProperties
     @SerializedName("htmlContent")
     private String htmlContent;
 
+    private boolean requiresSignature;
+    private boolean requiresName;
+    private boolean requiresBirthdate;
+
     public String getHtmlDocument()
     {
         return htmlDocument;
@@ -53,5 +57,35 @@ public class DocumentProperties
     public void setHtmlContent(String htmlContent)
     {
         this.htmlContent = htmlContent;
+    }
+
+    public boolean isRequiresSignature()
+    {
+        return requiresSignature;
+    }
+
+    public void setRequiresSignature(boolean requiresSignature)
+    {
+        this.requiresSignature = requiresSignature;
+    }
+
+    public boolean isRequiresName()
+    {
+        return requiresName;
+    }
+
+    public void setRequiresName(boolean requiresName)
+    {
+        this.requiresName = requiresName;
+    }
+
+    public boolean isRequiresBirthdate()
+    {
+        return requiresBirthdate;
+    }
+
+    public void setRequiresBirthdate(boolean requiresBirthdate)
+    {
+        this.requiresBirthdate = requiresBirthdate;
     }
 }

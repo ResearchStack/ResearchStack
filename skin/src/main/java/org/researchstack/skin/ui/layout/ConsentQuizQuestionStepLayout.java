@@ -1,12 +1,12 @@
 package org.researchstack.skin.ui.layout;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.text.SpannableString;
-import android.text.style.StyleSpan;
+import android.support.v7.widget.AppCompatRadioButton;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +16,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.skin.R;
+import org.researchstack.skin.model.ConsentQuizModel;
 import org.researchstack.skin.step.ConsentQuizQuestionStep;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConsentQuizQuestionStepLayout extends RelativeLayout implements StepLayout
 {
@@ -30,13 +35,12 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
     private StepResult<Boolean>     result;
     private StepCallbacks           callbacks;
 
-    private TextView    resultSummary;
-    private TextView    resultTitle;
-    private RadioGroup  radioGroup;
-    private SubmitBar   submitBar;
-    private RadioButton radioFalse;
-    private RadioButton radioTrue;
-    private View        radioItemBackground;
+    private TextView       resultSummary;
+    private TextView       resultTitle;
+    private RadioGroup     radioGroup;
+    private SubmitBar      submitBar;
+    private View           radioItemBackground;
+    private Choice<String> expectedChoice;
 
     public ConsentQuizQuestionStepLayout(Context context)
     {
@@ -64,35 +68,86 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
 
     public void initializeStep()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.item_quiz_question, this, true);
+        ConsentQuizModel.QuizQuestion question = step.getQuestion();
+
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        inflater.inflate(R.layout.item_quiz_question, this, true);
 
         ((TextView) findViewById(R.id.title)).setText(step.getTitle());
 
-        radioGroup = (RadioGroup) findViewById(R.id.rdio_group);
-
-        radioTrue = (RadioButton) findViewById(R.id.btn_true);
-        radioTrue.setText(R.string.rss_btn_true);
-
-        radioFalse = (RadioButton) findViewById(R.id.btn_false);
-        radioFalse.setText(R.string.rss_btn_false);
+        radioGroup = (RadioGroup) findViewById(R.id.radio_group);
 
         submitBar = (SubmitBar) findViewById(R.id.submit_bar);
-        submitBar.setPositiveAction(v -> onSubmit());
         submitBar.getNegativeActionView().setVisibility(GONE);
 
         resultTitle = (TextView) findViewById(R.id.quiz_result_title);
         resultSummary = (TextView) findViewById(R.id.quiz_result_summary);
 
         radioItemBackground = findViewById(R.id.quiz_result_item_background);
+
+        if(question.getType().equals("instruction"))
+        {
+            TextView instructionText = (TextView) findViewById(R.id.instruction_text);
+            instructionText.setText(question.getText());
+            instructionText.setVisibility(VISIBLE);
+
+            // instruction steps don't need submit, also always count as correct answer
+            submitBar.setPositiveTitle(R.string.rsb_next);
+            submitBar.setPositiveAction(v -> onNext(true));
+        }
+        else
+        {
+            submitBar.setPositiveTitle(R.string.rsb_submit);
+            submitBar.setPositiveAction(v -> onSubmit());
+
+            for(Choice<String> choice : getChoices(question))
+            {
+                AppCompatRadioButton button = (AppCompatRadioButton) inflater.inflate(R.layout.item_radio_quiz,
+                        radioGroup,
+                        false);
+                button.setText(choice.getText());
+                button.setTag(choice);
+                radioGroup.addView(button);
+
+                if(question.getExpectedAnswer().equals(choice.getValue()))
+                {
+                    expectedChoice = choice;
+                }
+            }
+        }
+    }
+
+    @NonNull
+    private List<Choice<String>> getChoices(ConsentQuizModel.QuizQuestion question)
+    {
+        List<Choice<String>> choices = new ArrayList<>();
+
+        if(question.getType().equals("boolean"))
+        {
+            // json expected answer is a string of either "true" or "false"
+            choices.add(new Choice<>(getContext().getString(R.string.rss_btn_true), "true"));
+            choices.add(new Choice<>(getContext().getString(R.string.rss_btn_false), "false"));
+        }
+        else if(question.getType().equals("singleChoiceText"))
+        {
+            // json expected answer is a string of the index ("0" for the first choice)
+            List<String> textChoices = question.getTextChoices();
+            for(int i = 0; i < textChoices.size(); i++)
+            {
+                choices.add(new Choice<>(textChoices.get(i), String.valueOf(i)));
+            }
+        }
+        return choices;
     }
 
     public void onSubmit()
     {
         if(isAnswerValid())
         {
-            boolean answer = step.getQuestion().constraints.validation.answer.equals("true");
-            boolean selected = radioGroup.getCheckedRadioButtonId() == R.id.btn_true;
-            boolean answerCorrect = answer == selected;
+            int buttonId = radioGroup.getCheckedRadioButtonId();
+            RadioButton checkedRadioButton = (RadioButton) radioGroup.findViewById(buttonId);
+            Choice<String> selectedChoice = (Choice<String>) checkedRadioButton.getTag();
+            boolean answerCorrect = expectedChoice.equals(selectedChoice);
 
             if(resultTitle.getVisibility() == View.GONE)
             {
@@ -103,16 +158,17 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                         Color.green(resultTextColor),
                         Color.blue(resultTextColor));
 
-                // Disable both buttons to prevent further action
-                radioFalse.setEnabled(false);
-                radioTrue.setEnabled(false);
+                // Disable buttons to prevent further action
+                for(int i = 0; i < radioGroup.getChildCount(); i++)
+                {
+                    radioGroup.getChildAt(i).setEnabled(false);
+                }
 
                 // Set the drawable of the current checked button, with correct color tint
                 int resId = answerCorrect ? R.drawable.ic_check : R.drawable.ic_window_close;
                 Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
                 drawable = DrawableCompat.wrap(drawable);
                 DrawableCompat.setTint(drawable, resultTextColor);
-                RadioButton checkedRadioButton = (RadioButton) radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
                 checkedRadioButton.setCompoundDrawablesWithIntrinsicBounds(null,
                         null,
                         drawable,
@@ -126,58 +182,60 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
                 // dynamically
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) radioItemBackground
                         .getLayoutParams();
-                params.addRule(ALIGN_TOP, radioTrue.isChecked() ? R.id.rdio_group : 0);
-                params.addRule(ALIGN_BOTTOM, radioTrue.isChecked() ? 0 : R.id.rdio_group);
+                params.setMargins(0, checkedRadioButton.getTop(), 0, 0);
                 params.height = checkedRadioButton.getHeight();
                 radioItemBackground.setBackgroundColor(radioBackground);
                 radioItemBackground.setVisibility(View.VISIBLE);
 
                 //Set our Result-title
                 String resultTitle = answerCorrect
-                        ? step.getProperties().correctTitle
-                        : step.getProperties().incorrectTitle;
+                        ? getContext().getString(R.string.rss_quiz_evaluation_correct)
+                        : getContext().getString(R.string.rss_quiz_evaluation_incorrect);
 
                 this.resultTitle.setVisibility(View.VISIBLE);
                 this.resultTitle.setText(resultTitle);
                 this.resultTitle.setTextColor(resultTextColor);
 
                 //Build and set our result-summary
-                String part1;
-                String part2;
-                String part3;
+                String explanation;
 
                 if(answerCorrect)
                 {
-                    part1 = step.getProperties().correctCliffhanger;
-                    part2 = step.getProperties().correct;
-                    part3 = step.getQuestion().positiveFeedback;
+                    explanation = getContext().getString(R.string.rss_quiz_question_explanation_correct,
+                            step.getQuestion().getPositiveFeedback());
                 }
                 else
                 {
-                    part1 = step.getProperties().incorrectCliffhanger;
-                    part2 = Boolean.toString(answer) + ". ";
-                    part3 = step.getQuestion().negativeFeedback;
+                    explanation = getContext().getString(R.string.rss_quiz_question_explanation_incorrect,
+                            expectedChoice.getText(),
+                            step.getQuestion().getNegativeFeedback());
                 }
 
-                SpannableString explanation = new SpannableString(part1 + part2 + part3);
-                explanation.setSpan(new StyleSpan(Typeface.BOLD_ITALIC),
-                        part1.length(),
-                        part1.length() + part2.length(),
-                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
-                resultSummary.setText(explanation);
+
+                resultSummary.setText(Html.fromHtml(explanation));
                 resultSummary.setVisibility(View.VISIBLE);
 
-                // Change the submit bar positive-title to "next"
-                submitBar.setPositiveTitle(R.string.rsb_next);
+                setSubmitBarNext();
             }
             else
             {
-                // Save the result and go to the next question
-                result.setResult(answerCorrect);
-                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
+                onNext(answerCorrect);
             }
         }
 
+    }
+
+    private void onNext(boolean answerCorrect)
+    {
+        // Save the result and go to the next question
+        result.setResult(answerCorrect);
+        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
+    }
+
+    private void setSubmitBarNext()
+    {
+        // Change the submit bar positive-title to "next"
+        submitBar.setPositiveTitle(R.string.rsb_next);
     }
 
     public boolean isAnswerValid()

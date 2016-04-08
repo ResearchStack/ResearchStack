@@ -7,13 +7,11 @@ import org.researchstack.skin.ui.layout.ConsentQuizQuestionStepLayout;
 
 public class ConsentQuizQuestionStep extends Step
 {
-    private ConsentQuizModel.QuestionProperties properties;
-    private ConsentQuizModel.QuizQuestion       question;
+    private ConsentQuizModel.QuizQuestion question;
 
-    public ConsentQuizQuestionStep(String identifier, ConsentQuizModel.QuestionProperties properties, ConsentQuizModel.QuizQuestion question)
+    public ConsentQuizQuestionStep(ConsentQuizModel.QuizQuestion question)
     {
-        super(identifier);
-        this.properties = properties;
+        super(question.getIdentifier());
         this.question = question;
     }
 
@@ -29,9 +27,10 @@ public class ConsentQuizQuestionStep extends Step
         return R.string.rsb_quiz;
     }
 
-    public ConsentQuizModel.QuestionProperties getProperties()
+    @Override
+    public String getTitle()
     {
-        return properties;
+        return question.getPrompt();
     }
 
     public ConsentQuizModel.QuizQuestion getQuestion()
