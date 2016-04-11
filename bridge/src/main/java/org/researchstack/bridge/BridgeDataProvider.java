@@ -692,6 +692,9 @@ public abstract class BridgeDataProvider extends DataProvider
         List<UploadRequest> uploadRequests = ((UploadQueue) StorageAccess.getInstance()
                 .getAppDatabase()).loadUploadRequests();
 
+        // There is an issue here, being that this will loop through the upload requests and upload
+        // a zip async. The service cannot handle more than two async calls so any other requested
+        // async calls fail due to SockTimeoutException
         for(UploadRequest uploadRequest : uploadRequests)
         {
             if(uploadRequest.bridgeId == null)
@@ -893,7 +896,7 @@ public abstract class BridgeDataProvider extends DataProvider
     // figure out what directory to save files in and where to put this method
     public static File getFilesDir(Context context)
     {
-        return context.getFilesDir();
+        return new File(context.getFilesDir() + "/upload_request/");
     }
 
     public interface BridgeService

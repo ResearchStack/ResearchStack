@@ -55,6 +55,8 @@ public class BridgeDataArchive
     public void start(File baseDir) throws FileNotFoundException
     {
         tempFile = new File(baseDir, filename + ".temp");
+        FileUtils.makeParent(tempFile);
+
         FileOutputStream dest = new FileOutputStream(tempFile);
         outputStream = new ZipOutputStream(new BufferedOutputStream(dest));
     }
