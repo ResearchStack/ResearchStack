@@ -58,10 +58,6 @@ ext {
     allLicenses = ["Apache-2.0"]
 }
 
-configurations {
-    javadocDeps
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar', '*.so'])
     compile 'com.cronutils:cron-utils:3.1.2'
@@ -122,10 +118,9 @@ if (project.hasProperty("android")) { // Android libraries
     }
 
     task javadoc(type: Javadoc) {
+        failOnError false
         source = android.sourceSets.main.java.srcDirs
         classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-        classpath += configurations.javadocDeps
-        failOnError false
     }
 } else { // Java libraries
     task sourcesJar(type: Jar, dependsOn: classes) {
