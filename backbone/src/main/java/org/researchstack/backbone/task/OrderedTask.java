@@ -19,7 +19,7 @@ import java.util.Set;
  * can be represented as an ordered task.
  * <p>
  * If you want further custom conditional behaviors in a task, it can be easier to subclass
- * OrderedTask or {@link NavigableOrderedTask} and override particular {@link Task} methods than it
+ * OrderedTask or NavigableOrderedTask and override particular {@link Task} methods than it
  * is to implement a new Task subclass directly. Override the methods {@link #getStepAfterStep} and
  * {@link #getStepBeforeStep}, and call super for all other methods.
  */
