@@ -51,6 +51,7 @@ ext {
 
     libraryVersion = version
 
+    userOrgName = 'researchstack'
     developerId = 'bmcd87'
     developerName = 'Brad McDermott'
     developerEmail = 'brad@touchlab.co'
@@ -164,6 +165,7 @@ bintray {
     pkg {
         repo = bintrayRepo
         name = bintrayName
+        userOrg = userOrgName
         desc = libraryDescription
         websiteUrl = siteUrl
         vcsUrl = gitUrl
