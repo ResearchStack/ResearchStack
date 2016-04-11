@@ -2,7 +2,7 @@ package org.researchstack.sampleapp;
 import android.content.Context;
 
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.bridge.BridgeDataProvider;
+import org.researchstack.sampleapp.bridge.BridgeDataProvider;
 
 /**
  * Created by bradleymcdermott on 3/8/16.
