@@ -167,7 +167,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
                 }
 
                 // Set the drawable of the current checked button, with correct color tint
-                int resId = answerCorrect ? R.drawable.ic_check : R.drawable.ic_window_close;
+                int resId = answerCorrect ? R.drawable.ic_check : R.drawable.ic_x;
                 Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
                 drawable = DrawableCompat.wrap(drawable);
                 DrawableCompat.setTint(drawable, resultTextColor);
