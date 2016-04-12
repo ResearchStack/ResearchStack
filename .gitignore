@@ -34,3 +34,5 @@ app/crashlytics.properties
 *.gz
 com_crashlytics_export_strings.xml
 *.iml
+
+sampleapp/gradle.properties
