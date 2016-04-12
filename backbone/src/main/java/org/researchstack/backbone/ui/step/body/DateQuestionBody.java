@@ -84,7 +84,14 @@ public class DateQuestionBody implements StepBody
 
         TextView textView = (TextView) view.findViewById(R.id.value);
         textView.setSingleLine(true);
-        textView.setHint(R.string.rsb_hint_step_body_date);
+        if(step.getPlaceholder() != null)
+        {
+            textView.setHint(step.getPlaceholder());
+        }
+        else
+        {
+            textView.setHint(R.string.rsb_hint_step_body_date);
+        }
 
         if(result.getResult() != null)
         {

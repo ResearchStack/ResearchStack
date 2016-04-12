@@ -44,7 +44,14 @@ public class TextQuestionBody implements StepBody
         View body = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
 
         editText = (EditText) body.findViewById(R.id.value);
-        editText.setHint(R.string.rsb_hint_step_body_text);
+        if(step.getPlaceholder() != null)
+        {
+            editText.setHint(step.getPlaceholder());
+        }
+        else
+        {
+            editText.setHint(R.string.rsb_hint_step_body_text);
+        }
 
         TextView title = (TextView) body.findViewById(R.id.label);
 
