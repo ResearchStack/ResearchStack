@@ -68,7 +68,7 @@
 
     <style name="Widget.Backbone.EmptyView" parent="">
         <item name="android:background">#d5e8ff</item>
-        <item name="emptyIcon">@drawable/illo_dashboard_empty</item>
+        <item name="emptyIcon">@drawable/rsb_illo_dashboard_empty</item>
         <item name="emptyIconTint">?attr/colorPrimaryDark</item>
         <item name="emptyText">No data recorded yet…</item>
         <item name="emptyTextAppearance">@style/TextAppearance.Widget.Backbone.EmptyView</item>

@@ -304,19 +304,19 @@ public class ConsentSection implements Serializable
             switch(this)
             {
                 case DataGathering:
-                    return "consent_section_data_gathering";
+                    return "rsb_consent_section_data_gathering";
                 case Privacy:
-                    return "consent_section_privacy";
+                    return "rsb_consent_section_privacy";
                 case DataUse:
-                    return "consent_section_data_use";
+                    return "rsb_consent_section_data_use";
                 case TimeCommitment:
-                    return "consent_section_time_commitment";
+                    return "rsb_consent_section_time_commitment";
                 case StudySurvey:
-                    return "consent_section_study_survey";
+                    return "rsb_consent_section_study_survey";
                 case StudyTasks:
-                    return "consent_section_study_tasks";
+                    return "rsb_consent_section_study_tasks";
                 case Withdrawing:
-                    return "consent_section_withdrawing";
+                    return "rsb_consent_section_withdrawing";
                 default:
                     return null;
             }
