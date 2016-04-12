@@ -55,7 +55,7 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
 
     private void initializeStep()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.item_eligible, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.layout_eligible, this, true);
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction((v) -> startConsentActivity());

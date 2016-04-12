@@ -54,7 +54,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;
 
-        View layout = LayoutInflater.from(getContext()).inflate(R.layout.item_sign_up, this, true);
+        View layout = LayoutInflater.from(getContext()).inflate(R.layout.layout_sign_up, this, true);
 
         progress = layout.findViewById(R.id.progress);
 
