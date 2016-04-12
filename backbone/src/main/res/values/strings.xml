@@ -61,9 +61,6 @@
         Learn more about data sharing</a>]]>
     </string>
 
-
-    <string name="rsb_consent_share_more_info">Learn more about data sharing</string>
-
     <!-- Consent doc step -->
     <string name="rsb_consent_review_title">Review</string>
     <string name="rsb_consent_review_alert_title">Review</string>
@@ -112,7 +109,6 @@
     <string name="rsb_email">Email</string>
     <string name="rsb_disagree">Disagree</string>
     <string name="rsb_agree">Agree</string>
-    <string name="rsb_please_complete_step">Please complete this step before moving on</string>
     <string name="rsb_ok">OK</string>
     <string name="rsb_cancel">Cancel</string>
 
@@ -124,10 +120,13 @@
     <string name="rsb_invalid_answer_integer_under">Invalid answer, your value is too small!</string>
     <string name="rsb_invalid_answer_choice">Please select a value!</string>
 
+    <!-- Pin Code -->
     <string name="rsb_pincode_enter_title">Enter your passcode</string>
     <string name="rsb_pincode_enter_summary">Enter your code to confirm your identity.</string>
     <string name="rsb_pincode_enter_error">That code doesn’t match the one you entered, Try again!
     </string>
+
+    <!-- Body Hints -->
     <string name="rsb_hint_step_body_int">Enter a number %1$d-%2$d</string>
     <string name="rsb_hint_step_body_int_no_max">Enter a number</string>
     <string name="rsb_hint_step_body_date">Enter a date</string>
@@ -136,6 +135,5 @@
     <!-- Graphing -->
     <string name="rsb_chart_progress_center">%1$s of %2$s</string>
     <string name="rsb_chart_pie_value">%1$s&#65285;</string>
-
 
 </resources>
