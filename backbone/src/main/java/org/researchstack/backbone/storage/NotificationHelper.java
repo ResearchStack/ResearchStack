@@ -1,8 +1,8 @@
 package org.researchstack.backbone.storage;
 import android.content.Context;
 
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.storage.database.TaskNotification;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.sql.SQLException;
 import java.util.List;
