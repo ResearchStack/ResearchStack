@@ -8,10 +8,10 @@ import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
  * which a single question is presented to the user.
  * <p>
  * To use a question step, instantiate an QuestionStep object, fill in its properties, and include
- * it in a task. Next, create a task view controller for the task and present it. When the task
- * completes, the user's answer is encoded in the result hierarchy in the task view controller.
+ * it in a task. When the task completes, the user's answer is encoded in the result hierarchy
+ * returned from the {@link org.researchstack.backbone.ui.ViewTaskActivity}.
  * <p>
- * When a task view controller presents an QuestionStep object, it instantiates an {@link
+ * When the ViewTaskActivity presents a QuestionStep object, it instantiates a {@link
  * SurveyStepLayout} object to present the step. The actual visual presentation depends on the
  * answer format and its {@link org.researchstack.backbone.ui.step.body.StepBody}.
  * <p>
