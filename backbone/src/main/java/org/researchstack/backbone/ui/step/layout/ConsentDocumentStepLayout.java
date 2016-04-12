@@ -85,7 +85,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     private void initializeStep()
     {
         setOrientation(VERTICAL);
-        LayoutInflater.from(getContext()).inflate(R.layout.step_layout_consent_doc, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);
 
         WebView pdfView = (WebView) findViewById(R.id.webview);
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);

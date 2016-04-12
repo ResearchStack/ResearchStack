@@ -27,7 +27,7 @@ public class ViewVideoActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_video_viewer);
+        super.setContentView(R.layout.rsb_activity_video_viewer);
 
         String videoName = getIntent().getStringExtra(KEY_URI);
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/" + videoName);

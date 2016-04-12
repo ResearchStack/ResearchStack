@@ -92,7 +92,7 @@ public class MultiChoiceQuestionBody <T> implements StepBody
             Choice<T> item = choices[i];
 
             // Create & add the View to our body-view
-            AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(R.layout.item_checkbox,
+            AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(R.layout.rsb_item_checkbox,
                     radioGroup,
                     false);
             checkBox.setText(item.getText());
@@ -126,7 +126,7 @@ public class MultiChoiceQuestionBody <T> implements StepBody
     {
         ViewGroup compactView = (ViewGroup) initViewDefault(inflater, parent);
 
-        TextView label = (TextView) inflater.inflate(R.layout.item_text_view_title_compact,
+        TextView label = (TextView) inflater.inflate(R.layout.rsb_item_text_view_title_compact,
                 compactView,
                 false);
         label.setText(step.getTitle());

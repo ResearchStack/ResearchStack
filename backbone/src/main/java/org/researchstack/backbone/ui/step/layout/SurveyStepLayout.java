@@ -234,7 +234,7 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
 
     protected int getRootLayoutResourceId()
     {
-        return R.layout.step_layout;
+        return R.layout.rsb_step_layout;
     }
 
 

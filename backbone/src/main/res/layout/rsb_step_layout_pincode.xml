@@ -42,7 +42,7 @@
         android:id="@+id/progress"
         android:visibility="gone"
         tools:visibility="gone"
-        layout="@layout/progress"
+        layout="@layout/rsb_progress"
     />
 
 </merge>

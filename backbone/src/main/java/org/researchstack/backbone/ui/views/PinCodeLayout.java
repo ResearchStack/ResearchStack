@@ -51,7 +51,7 @@ public class PinCodeLayout extends RelativeLayout
         config = StorageAccess.getInstance().getPinCodeConfig();
         imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        LayoutInflater.from(getContext()).inflate(R.layout.step_layout_pincode, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_pincode, this, true);
 
         title = (TextView) findViewById(R.id.title);
         title.setText(R.string.rsb_pincode_enter_title);

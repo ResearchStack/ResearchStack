@@ -202,7 +202,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         ViewGroup v = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
         settingsRoot.addView(v);
 
-        progress = inflater.inflate(R.layout.progress, container, false);
+        progress = inflater.inflate(R.layout.rsb_progress, container, false);
         progress.setVisibility(View.GONE);
         settingsRoot.addView(progress);
 

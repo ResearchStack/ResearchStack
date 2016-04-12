@@ -48,7 +48,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     {
         super.onCreate(savedInstanceState);
         super.setResult(RESULT_CANCELED);
-        super.setContentView(R.layout.activity_step_switcher);
+        super.setContentView(R.layout.rsb_activity_step_switcher);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

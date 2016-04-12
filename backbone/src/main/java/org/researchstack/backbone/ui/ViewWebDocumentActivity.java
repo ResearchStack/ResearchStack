@@ -52,7 +52,7 @@ public class ViewWebDocumentActivity extends PinCodeActivity
             setTheme(getIntent().getIntExtra(KEY_THEME, 0));
         }
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_web_document);
+        super.setContentView(R.layout.rsb_activity_web_document);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

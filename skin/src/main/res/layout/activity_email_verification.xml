@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 >
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/rsb_layout_toolbar"/>
 
     <TextView
         android:id="@+id/title"
@@ -63,7 +63,7 @@
         android:id="@+id/progress"
         android:visibility="gone"
         tools:visibility="gone"
-        layout="@layout/progress"
+        layout="@layout/rsb_progress"
     />
 
 </RelativeLayout>
@@ -142,10 +142,10 @@
         </LinearLayout>
 
         <include
-            android:id="@+id/progress"
+            android:id="@+id/rsb_progress"
             android:visibility="gone"
             tools:visibility="gone"
-            layout="@layout/progress"
+            layout="@layout/rsb_progress"
             />
     </FrameLayout>
         -->

@@ -6,7 +6,7 @@
     android:orientation="vertical"
 >
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/rsb_layout_toolbar"/>
 
     <org.researchstack.backbone.ui.views.LocalWebView
         android:id="@+id/webview"

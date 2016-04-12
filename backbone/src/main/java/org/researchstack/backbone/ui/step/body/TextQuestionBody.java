@@ -41,7 +41,7 @@ public class TextQuestionBody implements StepBody
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
-        View body = inflater.inflate(R.layout.item_edit_text_compact, parent, false);
+        View body = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
 
         editText = (EditText) body.findViewById(R.id.value);
         editText.setHint(R.string.rsb_hint_step_body_text);
