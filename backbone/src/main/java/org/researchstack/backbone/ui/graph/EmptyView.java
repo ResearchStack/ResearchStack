@@ -41,7 +41,7 @@ public class EmptyView extends FrameLayout
 
     private void init(AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.view_empty, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_empty, this, true);
 
         final TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.EmptyView,

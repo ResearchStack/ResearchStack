@@ -67,7 +67,7 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
 
     private void initializeStep()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.step_layout_instruction, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_instruction, this, true);
 
         if(step != null)
         {

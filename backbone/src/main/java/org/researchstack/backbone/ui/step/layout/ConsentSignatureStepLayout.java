@@ -85,7 +85,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     private void initializeStep()
     {
         LayoutInflater.from(getContext())
-                .inflate(R.layout.step_layout_consent_signature, this, true);
+                .inflate(R.layout.rsb_step_layout_consent_signature, this, true);
 
         TextView title = (TextView) findViewById(R.id.title);
         title.setText(step.getTitle());

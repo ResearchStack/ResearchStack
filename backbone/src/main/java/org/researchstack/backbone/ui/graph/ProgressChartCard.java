@@ -73,7 +73,7 @@ public class ProgressChartCard extends CardView
 
     private void initializeRoot(AttributeSet attrs, int defStyleAttr)
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.view_chart_progress, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_progress, this, true);
 
         numberFormat = NumberFormat.getInstance();
         numberFormat.setMinimumFractionDigits(0);

@@ -63,7 +63,7 @@ public class BarChartCard extends CardView
 
     private void initializeRoot(AttributeSet attrs, int defStyleAttr)
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.view_chart_bar, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_bar, this, true);
 
         final TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.BarChartCard,

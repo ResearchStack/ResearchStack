@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/layout_toolbar"/>
+        layout="@layout/rsb_layout_toolbar"/>
 
     <TextView
         android:id="@+id/quiz_result_title"

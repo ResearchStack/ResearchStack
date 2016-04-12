@@ -75,7 +75,7 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
 
     private void initializeStep()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.step_layout_consent_visual, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_visual, this, true);
 
         ConsentSection data = step.getSection();
 

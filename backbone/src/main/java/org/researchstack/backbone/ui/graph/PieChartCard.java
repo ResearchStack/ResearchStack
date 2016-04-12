@@ -55,7 +55,7 @@ public class PieChartCard extends CardView
 
     private void initializeRoot(AttributeSet attrs, int defStyleAttr)
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.view_chart_pie, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_pie, this, true);
 
         numberFormat = NumberFormat.getInstance();
         numberFormat.setMinimumFractionDigits(0);
@@ -120,7 +120,7 @@ public class PieChartCard extends CardView
             String xVal = data.getXVals().get(i);
             float entryValue = data.getDataSet().getEntryForIndex(i).getVal();
 
-            View row = inflater.inflate(R.layout.item_chart_pie, rowContainer, false);
+            View row = inflater.inflate(R.layout.rsb_item_chart_pie, rowContainer, false);
 
             TextView label = (TextView) row.findViewById(R.id.item_chart_pie_label);
             label.setText(xVal);

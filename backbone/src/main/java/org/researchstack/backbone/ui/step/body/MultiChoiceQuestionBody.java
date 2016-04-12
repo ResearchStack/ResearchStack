@@ -85,14 +85,14 @@ public class MultiChoiceQuestionBody <T> implements StepBody
         RadioGroup radioGroup = new RadioGroup(inflater.getContext());
         radioGroup.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         radioGroup.setDividerDrawable(ContextCompat.getDrawable(parent.getContext(),
-                R.drawable.divider_empty_8dp));
+                R.drawable.rsb_divider_empty_8dp));
 
         for(int i = 0; i < choices.length; i++)
         {
             Choice<T> item = choices[i];
 
             // Create & add the View to our body-view
-            AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(R.layout.item_checkbox,
+            AppCompatCheckBox checkBox = (AppCompatCheckBox) inflater.inflate(R.layout.rsb_item_checkbox,
                     radioGroup,
                     false);
             checkBox.setText(item.getText());
@@ -126,7 +126,7 @@ public class MultiChoiceQuestionBody <T> implements StepBody
     {
         ViewGroup compactView = (ViewGroup) initViewDefault(inflater, parent);
 
-        TextView label = (TextView) inflater.inflate(R.layout.item_text_view_title_compact,
+        TextView label = (TextView) inflater.inflate(R.layout.rsb_item_text_view_title_compact,
                 compactView,
                 false);
         label.setText(step.getTitle());

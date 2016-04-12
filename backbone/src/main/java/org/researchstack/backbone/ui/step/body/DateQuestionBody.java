@@ -70,7 +70,7 @@ public class DateQuestionBody implements StepBody
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
-        View view = inflater.inflate(R.layout.item_date_view, parent, false);
+        View view = inflater.inflate(R.layout.rsb_item_date_view, parent, false);
 
         TextView title = (TextView) view.findViewById(R.id.label);
         if (viewType == VIEW_TYPE_COMPACT)

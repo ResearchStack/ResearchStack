@@ -39,7 +39,7 @@ public class FormBody implements StepBody
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
     {
         // Inflate our container for each compact child StepBody
-        LinearLayout body = (LinearLayout) inflater.inflate(R.layout.step_layout_form_body,
+        LinearLayout body = (LinearLayout) inflater.inflate(R.layout.rsb_step_layout_form_body,
                 parent,
                 false);
 

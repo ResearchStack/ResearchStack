@@ -33,7 +33,7 @@ public class SubmitBar extends LinearLayout
     {
         super(context, attrs, defStyleAttr);
 
-        LayoutInflater.from(getContext()).inflate(R.layout.view_submitbar, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_submitbar, this, true);
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.SubmitBar,

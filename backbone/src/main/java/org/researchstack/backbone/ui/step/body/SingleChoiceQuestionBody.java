@@ -85,12 +85,12 @@ public class SingleChoiceQuestionBody <T> implements StepBody
         RadioGroup radioGroup = new RadioGroup(parent.getContext());
         radioGroup.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         radioGroup.setDividerDrawable(ContextCompat.getDrawable(parent.getContext(),
-                R.drawable.divider_empty_8dp));
+                R.drawable.rsb_divider_empty_8dp));
 
         for(int i = 0; i < choices.length; i++)
         {
             Choice choice = choices[i];
-            RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.item_radio,
+            RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.rsb_item_radio,
                     radioGroup,
                     false);
             radioButton.setText(choice.getText());
@@ -116,7 +116,7 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     {
         ViewGroup compactView = (ViewGroup) initViewDefault(inflater, parent);
 
-        TextView label = (TextView) inflater.inflate(R.layout.item_text_view_title_compact,
+        TextView label = (TextView) inflater.inflate(R.layout.rsb_item_text_view_title_compact,
                 compactView,
                 false);
         label.setText(step.getTitle());

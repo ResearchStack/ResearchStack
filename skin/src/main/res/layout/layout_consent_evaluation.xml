@@ -13,7 +13,7 @@
         android:layout_height="180dp"
         android:layout_centerHorizontal="true"
         android:scaleType="center"
-        tools:src="@drawable/debug_gray"
+        tools:src="@drawable/rsb_debug_gray"
     />
 
     <TextView

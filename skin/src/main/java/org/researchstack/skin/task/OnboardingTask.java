@@ -109,7 +109,7 @@ public abstract class OnboardingTask extends Task
         if(ineligibleStep == null)
         {
             ineligibleStep = new Step(SignUpIneligibleStepIdentifier);
-            ineligibleStep.setStepTitle(R.string.rss_ineligible);
+            ineligibleStep.setStepTitle(R.string.rss_eligibility);
             ineligibleStep.setStepLayoutClass(SignUpIneligibleStepLayout.class);
         }
         return ineligibleStep;
