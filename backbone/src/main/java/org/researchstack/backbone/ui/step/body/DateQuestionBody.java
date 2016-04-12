@@ -131,8 +131,8 @@ public class DateQuestionBody implements StepBody
     }
 
     /**
-     * @return {@link BodyAnswer#VALID} if result date is >= min and <= max date set within the
-     * Step.AnswerFormat
+     * @return {@link BodyAnswer#VALID} if result date is between min and max (inclusive) date set
+     * within the Step.AnswerFormat
      */
     @Override
     public BodyAnswer getBodyAnswerState()

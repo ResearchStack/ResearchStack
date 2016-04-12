@@ -86,6 +86,10 @@ If you want to implement a custom Step, create a step and make getStepLayoutClas
 
 If you just want a custom QuestionStep with an answer type that isn't supported yet, you will need to just create your own AnswerFormat subclass. All QuestionSteps use the same StepLayout, but the AnswerFormat provides a StepBody class that determines what the inner UI for the question looks like (date picker, text field, slider, etc). Right now this is a weird hybrid of the way ResearchKit does things and the way ResearchStack does things, so it will probably change and break any custom steps you make at some point.
 
+## Code Style
+
+Contributors should import code_style_settings.jar into Android Studio and use the 'researchstack' Java code style. Make sure to 'Reformat Code' and 'Optimize Imports' using this style (but don't 'Reorganize Code') before submitting a pull request.
+
 ## 3<sup>rd</sup>-party library disclosures
 
 <b>

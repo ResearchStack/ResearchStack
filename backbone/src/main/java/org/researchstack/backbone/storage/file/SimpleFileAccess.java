@@ -27,6 +27,7 @@ public class SimpleFileAccess implements FileAccess
         try
         {
             File localFile = findLocalFile(context, path);
+            FileUtils.makeParent(localFile);
             FileUtils.writeSafe(localFile, encrypter.encrypt(data));
         }
         catch(GeneralSecurityException e)
@@ -53,11 +54,10 @@ public class SimpleFileAccess implements FileAccess
     @Override
     public void moveData(Context context, String fromPath, String toPath)
     {
-        checkPath(fromPath);
-        checkPath(toPath);
+        File from = findLocalFile(context, fromPath);
 
-        File from = new File(context.getFilesDir(), fromPath.substring(1));
-        File to = new File(context.getFilesDir(), toPath.substring(1));
+        File to = findLocalFile(context, toPath);
+        FileUtils.makeParent(to);
 
         try
         {
@@ -78,7 +78,7 @@ public class SimpleFileAccess implements FileAccess
     private File findLocalFile(Context context, String path)
     {
         checkPath(path);
-        return new File(context.getFilesDir(), path.substring(1));
+        return new File(context.getFilesDir() + path);
     }
 
     @Override

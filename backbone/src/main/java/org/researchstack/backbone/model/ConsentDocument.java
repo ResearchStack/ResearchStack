@@ -5,26 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * <p>
- * Initializer with ORKHTMLPDFWriter parameter. Allows for injecting mock dependency for the
- * purposes of isolated unit testing.
- *
- * @param writer             The instance of the ORKHTMLPDFWriter upon which the class depends.
- * @param sectionFormatter   An instance of ORKConsentSectionFormatter
- * @param signatureFormatter An instance of ORKConsentSignatureFormatter
- *                           <p>
- *                           public void initWithHTMLPDFWriter(HTMLPDFWriter writer, ConsentSectionFormatter sectionFormatter,
- *                           SignatureFormatter signatureFormatter) { }
- *                           <p>
- *                           <p>
- *                           The PDF is generated in a form suitable for printing. This is done asynchronously,
- *                           so the PDF data is returned through a completion block.
- * @param handler            The handler block for generated PDF data. When successful, the returned
- *                           data represents a complete PDF document that represents the consent.
- *                           <p>
- *                           - (void)makePDFWithCompletionHandler:(void (^)(NSData * __nullable PDFData, NSError * __nullable error))handler;
- */
 public class ConsentDocument implements Serializable
 {
 
