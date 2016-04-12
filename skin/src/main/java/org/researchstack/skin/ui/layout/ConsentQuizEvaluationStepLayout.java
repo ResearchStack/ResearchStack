@@ -50,7 +50,7 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
     private void initializeStep()
     {
         LayoutInflater.from(getContext())
-                .inflate(R.layout.step_layout_consent_evaluation, this, true);
+                .inflate(R.layout.layout_consent_evaluation, this, true);
 
         ImageView image = (ImageView) findViewById(R.id.image);
         TextView title = (TextView) findViewById(R.id.title);

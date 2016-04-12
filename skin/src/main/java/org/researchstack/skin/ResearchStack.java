@@ -47,6 +47,9 @@ public abstract class ResearchStack
         TaskProvider.init(concreteResearchStack.createTaskProviderImplementation(context));
 
         NotificationConfig.init(concreteResearchStack.createNotificationConfigImplementation(context));
+
+        PermissionRequestManager.init(concreteResearchStack.createPermissionRequestManagerImplementation(
+                context));
     }
 
     protected abstract AppDatabase createAppDatabaseImplementation(Context context);
@@ -66,5 +69,7 @@ public abstract class ResearchStack
     protected abstract TaskProvider createTaskProviderImplementation(Context context);
 
     protected abstract NotificationConfig createNotificationConfigImplementation(Context context);
+
+    protected abstract PermissionRequestManager createPermissionRequestManagerImplementation(Context context);
 
 }

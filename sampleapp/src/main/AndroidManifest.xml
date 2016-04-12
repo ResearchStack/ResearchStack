@@ -78,6 +78,10 @@
             android:name="org.researchstack.skin.ui.LearnActivity"
             android:label="@string/rss_learn"/>
 
+        <activity
+            android:name="org.researchstack.sampleapp.NotificationPermissionActivity"
+            android:label="@string/sample_notification_example"/>
+
         <receiver
             android:name="org.researchstack.skin.notification.TaskNotificationReceiver"
             android:enabled="true"

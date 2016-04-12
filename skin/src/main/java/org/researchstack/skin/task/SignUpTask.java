@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
 
@@ -54,12 +55,27 @@ public class SignUpTask extends OnboardingTask
             {
                 nextStep = getPassCodeCreationStep();
             }
+            else if (! PermissionRequestManager.getInstance().getPermissionRequests().isEmpty())
+            {
+                nextStep = getPermissionStep();
+            }
             else
             {
                 nextStep = getSignUpStep();
             }
         }
         else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
+        {
+            if (! PermissionRequestManager.getInstance().getPermissionRequests().isEmpty())
+            {
+                nextStep = getPermissionStep();
+            }
+            else
+            {
+                nextStep = getSignUpStep();
+            }
+        }
+        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
         {
             nextStep = getSignUpStep();
         }
@@ -90,9 +106,25 @@ public class SignUpTask extends OnboardingTask
         {
             prevStep = getEligibleStep();
         }
-        else if(step.getIdentifier().equals(SignUpStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
         {
             if(hasPasscode)
+            {
+                // Force user to create a new pin
+                prevStep = getPassCodeCreationStep();
+            }
+            else
+            {
+                prevStep = getEligibleStep();
+            }
+        }
+        else if(step.getIdentifier().equals(SignUpStepIdentifier))
+        {
+            if (! PermissionRequestManager.getInstance().getPermissionRequests().isEmpty())
+            {
+                prevStep = getPermissionStep();
+            }
+            else if(hasPasscode)
             {
                 // Force user to create a new pin
                 prevStep = getPassCodeCreationStep();
@@ -130,9 +162,14 @@ public class SignUpTask extends OnboardingTask
             stepPosition = 2;
 
         }
-        else if(step.getIdentifier().equals(SignUpStepIdentifier))
+        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
         {
             stepPosition = 3;
+
+        }
+        else if(step.getIdentifier().equals(SignUpStepIdentifier))
+        {
+            stepPosition = 4;
 
         }
 

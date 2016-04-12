@@ -10,6 +10,7 @@ import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -29,7 +30,7 @@ import org.researchstack.skin.step.ConsentQuizQuestionStep;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsentQuizQuestionStepLayout extends RelativeLayout implements StepLayout
+public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepLayout
 {
     private ConsentQuizQuestionStep step;
     private StepResult<Boolean>     result;
@@ -68,10 +69,11 @@ public class ConsentQuizQuestionStepLayout extends RelativeLayout implements Ste
 
     public void initializeStep()
     {
-        ConsentQuizModel.QuizQuestion question = step.getQuestion();
+        setOrientation(VERTICAL);
 
+        ConsentQuizModel.QuizQuestion question = step.getQuestion();
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.item_quiz_question, this, true);
+        inflater.inflate(R.layout.layout_quiz_question, this, true);
 
         ((TextView) findViewById(R.id.title)).setText(step.getTitle());
 

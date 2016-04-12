@@ -10,4 +10,6 @@
     <string name="inclusion_question">Were you born somewhere on planet earth and are you a
         human-ish?
     </string>
+    <string name="sample_notification_example">Notification Permission</string>
+    <string name="grant">Grant</string>
 </resources>

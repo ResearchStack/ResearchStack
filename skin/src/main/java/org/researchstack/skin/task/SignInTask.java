@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.TaskProvider;
 
 /**
@@ -33,6 +34,10 @@ public class SignInTask extends OnboardingTask
             {
                 nextStep = getPassCodeCreationStep();
             }
+            else if (! PermissionRequestManager.getInstance().getPermissionRequests().isEmpty())
+            {
+                nextStep = getPermissionStep();
+            }
             else
             {
                 nextStep = getSignInStep();
@@ -40,8 +45,20 @@ public class SignInTask extends OnboardingTask
         }
         else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
         {
+            if (! PermissionRequestManager.getInstance().getPermissionRequests().isEmpty())
+            {
+                nextStep = getPermissionStep();
+            }
+            else
+            {
+                nextStep = getSignInStep();
+            }
+        }
+        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
+        {
             nextStep = getSignInStep();
         }
+
         return nextStep;
     }
 
