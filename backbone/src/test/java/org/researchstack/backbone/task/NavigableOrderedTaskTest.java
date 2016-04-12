@@ -3,7 +3,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Created by bradleymcdermott on 3/24/16.
+ * NavigableOrderedTask is a class in RK that does many of the same things as
+ * SmartSurveyTask. In the future it would be nice to implement this to replace SmartSurveyTask.
  */
 public class NavigableOrderedTaskTest
 {

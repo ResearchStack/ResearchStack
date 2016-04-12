@@ -102,7 +102,11 @@ public class IntegerQuestionBody implements StepBody
         // allow any positive int if no max value is specified
         final int maxValue = format.getMaxValue() == 0 ? Integer.MAX_VALUE : format.getMaxValue();
 
-        if(maxValue == Integer.MAX_VALUE)
+        if(step.getPlaceholder() != null)
+        {
+            editText.setHint(step.getPlaceholder());
+        }
+        else if(maxValue == Integer.MAX_VALUE)
         {
             editText.setHint(context.getString(R.string.rsb_hint_step_body_int_no_max));
         }
