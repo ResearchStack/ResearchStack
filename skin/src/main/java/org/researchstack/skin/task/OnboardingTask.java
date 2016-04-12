@@ -7,6 +7,7 @@ import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.step.body.NotImplementedStepBody;
 import org.researchstack.skin.R;
 import org.researchstack.skin.step.PassCodeCreationStep;
+import org.researchstack.skin.ui.layout.PermissionStepLayout;
 import org.researchstack.skin.ui.layout.SignInStepLayout;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
 import org.researchstack.skin.ui.layout.SignUpIneligibleStepLayout;
@@ -24,7 +25,7 @@ public abstract class OnboardingTask extends Task
     //    public static final String SignUpGeneralInfoStepIdentifier        = "GeneralInfo";
     //    public static final String SignUpMedicalInfoStepIdentifier        = "MedicalInfo";
     //    public static final String SignUpCustomInfoStepIdentifier         = "CustomInfo";
-    //    public static final String SignUpPermissionsStepIdentifier        = "Permissions";
+        public static final String SignUpPermissionsStepIdentifier        = "Permissions";
     //    public static final String SignUpPermissionsPrimingStepIdentifier = "PermissionsPriming";
 
     @Deprecated
@@ -144,5 +145,16 @@ public abstract class OnboardingTask extends Task
             signUpStep.setStepLayoutClass(SignUpStepLayout.class);
         }
         return signUpStep;
+    }
+
+    public Step getPermissionStep()
+    {
+        if(permissionsStep == null)
+        {
+            permissionsStep = new Step(SignUpPermissionsStepIdentifier);
+            permissionsStep.setStepTitle(R.string.rss_permissions);
+            permissionsStep.setStepLayoutClass(PermissionStepLayout.class);
+        }
+        return permissionsStep;
     }
 }

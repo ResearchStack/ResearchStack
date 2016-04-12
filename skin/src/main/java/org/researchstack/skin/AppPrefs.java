@@ -76,8 +76,13 @@ public class AppPrefs
         return prefs.getBoolean(KEY_ONBOARDING_COMPLETE, false);
     }
 
+    public void setTaskReminderComplete(boolean enabled)
+    {
+        prefs.edit().putBoolean(SettingsFragment.KEY_REMINDERS, enabled).apply();
+    }
+
     public boolean isTaskReminderEnabled()
     {
-        return prefs.getBoolean(SettingsFragment.KEY_REMINDERS, true);
+        return prefs.getBoolean(SettingsFragment.KEY_REMINDERS, false);
     }
 }

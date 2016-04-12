@@ -1,6 +1,5 @@
 package org.researchstack.skin.ui;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -16,12 +15,13 @@ import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
 import org.researchstack.skin.DataProvider;
+import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.R;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
-import org.researchstack.skin.ui.layout.SignUpPermissionsStepLayout;
 
 public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCallback
 {
@@ -59,14 +59,6 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
         // Show next step
         onExecuteStepAction(action);
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    public void requestPermissions()
-    {
-        requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
-                SignUpPermissionsStepLayout.LOCATION_PERMISSION_REQUEST_CODE);
     }
 
     @Override
@@ -107,7 +99,16 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
                 finish();
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
+        else if(PermissionRequestManager.getInstance()
+                .onNonSystemPermissionResult(this, requestCode, resultCode, data))
+        {
+            updateStepLayoutForPermission();
+        }
+        else
+        {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
     }
 
     private void saveConsentResultInfo()
@@ -115,20 +116,39 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
         DataProvider.getInstance().saveConsent(this, consentResult);
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermission(String id)
+    {
+        if (PermissionRequestManager.getInstance().isNonSystemPermission(id))
+        {
+            PermissionRequestManager.getInstance().onRequestNonSystemPermission(this, id);
+        }
+        else
+        {
+            requestPermissions(new String[] {id}, PermissionRequestManager.PERMISSION_REQUEST_CODE);
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(requestCode == SignUpPermissionsStepLayout.LOCATION_PERMISSION_REQUEST_CODE)
+        if(requestCode == PermissionRequestManager.PERMISSION_REQUEST_CODE)
         {
-            StepLayout stepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
-            if(stepLayout instanceof SignUpPermissionsStepLayout)
-            {
-                ((SignUpPermissionsStepLayout) stepLayout).onRequestPermissionsResult(requestCode,
-                        permissions,
-                        grantResults);
-            }
+            updateStepLayoutForPermission();
+        }
+    }
+
+    private void updateStepLayoutForPermission()
+    {
+        StepLayout stepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
+
+        if(stepLayout instanceof StepPermissionRequest)
+        {
+            ((StepPermissionRequest) stepLayout)
+                    .onUpdateForPermissionResult();
         }
     }
 }
