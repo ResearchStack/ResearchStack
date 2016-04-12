@@ -85,7 +85,7 @@ public class SingleChoiceQuestionBody <T> implements StepBody
         RadioGroup radioGroup = new RadioGroup(parent.getContext());
         radioGroup.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         radioGroup.setDividerDrawable(ContextCompat.getDrawable(parent.getContext(),
-                R.drawable.divider_empty_8dp));
+                R.drawable.rsb_divider_empty_8dp));
 
         for(int i = 0; i < choices.length; i++)
         {
