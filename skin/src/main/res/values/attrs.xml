@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="PageIndicator">
-        <!-- Used to identify how to draw the cling bg -->
-        <attr name="windowSize"
-              format="integer"/>
-    </declare-styleable>
-
     <declare-styleable name="TextColorPreference">
         <attr name="preferenceTextColor" format="color"/>
     </declare-styleable>
