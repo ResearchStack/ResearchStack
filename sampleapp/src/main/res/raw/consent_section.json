@@ -114,7 +114,7 @@
       "sectionType": "custom",
       "sectionTitle": "Secure Database",
       "sectionSummary": "Your study data will be stored in a manner that maintains strict information technology procedures to safeguard your information and to prevent improper access.",
-      "sectionImage": "consent_section_potential_benefits_alt",
+      "sectionImage": "rsb_consent_section_potential_benefits_alt",
       "sectionHtmlContent": "consent_section_html_security",
       "sectionAnimationUrl": "10_PotentialBenifits_Alt"
     },
@@ -122,7 +122,7 @@
       "sectionType": "custom",
       "sectionTitle": "Issues to Consider",
       "sectionSummary": "This Asthma app does not replace your usual medical care. Continue your asthma care with your usual doctor.",
-      "sectionImage": "consent_section_visiting_doctor",
+      "sectionImage": "rsb_consent_section_visiting_doctor",
       "sectionHtmlContent": "consent_section_html_talktodoctor",
       "sectionAnimationUrl": "11_VisitingDoctor"
     },
@@ -130,7 +130,7 @@
       "sectionType": "custom",
       "sectionTitle": "Follow Up",
       "sectionSummary": "Study investigators may contact you as needed for feedback and further mobile health app development needs if you opt in at the conclusion of the study.",
-      "sectionImage": "consent_section_recontact",
+      "sectionImage": "rsb_consent_section_recontact",
       "sectionHtmlContent": "consent_section_html_recontact",
       "sectionAnimationUrl": "12_Recontact"
     }
