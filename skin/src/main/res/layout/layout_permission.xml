@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:showDividers="middle|end"
-            android:divider="@drawable/divider_1dp"
+            android:divider="@drawable/rss_divider_1dp"
             android:orientation="vertical"/>
 
     </ScrollView>
