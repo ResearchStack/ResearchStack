@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:minHeight="48dp"
-            android:src="@drawable/ic_fullscreen"
+            android:src="@drawable/rsb_ic_fullscreen"
             android:visibility="gone"
             tools:visibility="visible"/>
 
