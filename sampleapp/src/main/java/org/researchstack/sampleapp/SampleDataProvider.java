@@ -35,18 +35,18 @@ public class SampleDataProvider extends BridgeDataProvider
     @Override
     protected String getBaseUrl()
     {
-        return "https://webservices-staging.sagebridge.org/";
+        return BuildConfig.STUDY_BASE_URL;
     }
 
     @Override
     protected String getStudyId()
     {
-        return "ohsu-molemapper";
+        return BuildConfig.STUDY_ID;
     }
 
     @Override
     protected String getUserAgent()
     {
-        return "Mole Mapper/" + BuildConfig.VERSION_CODE;
+        return BuildConfig.STUDY_NAME + "/" + BuildConfig.VERSION_CODE;
     }
 }
