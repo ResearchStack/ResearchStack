@@ -8,7 +8,7 @@ public class SimpleNotificationConfig extends NotificationConfig
     @Override
     public int getSmallIcon()
     {
-        return R.drawable.ic_notification_small;
+        return R.drawable.ic_notification_24dp;
     }
 
     @Override
