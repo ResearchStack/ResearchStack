@@ -111,6 +111,8 @@
     <string name="rsb_agree">Agree</string>
     <string name="rsb_ok">OK</string>
     <string name="rsb_cancel">Cancel</string>
+    <string name="rsb_yes">Yes</string>
+    <string name="rsb_no">No</string>
 
     <!-- Step Errors -->
     <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>

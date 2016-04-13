@@ -297,7 +297,8 @@ public class MainActivity extends PinCodeActivity
         // Create a Boolean step to include in the task.
         QuestionStep booleanStep = new QuestionStep(NUTRITION);
         booleanStep.setTitle("Do you take nutritional supplements?");
-        booleanStep.setAnswerFormat(new BooleanAnswerFormat());
+        booleanStep.setAnswerFormat(new BooleanAnswerFormat(getString(R.string.rsb_yes),
+                getString(R.string.rsb_no)));
         booleanStep.setOptional(false);
 
         QuestionStep multiStep = new QuestionStep(MULTI_STEP);

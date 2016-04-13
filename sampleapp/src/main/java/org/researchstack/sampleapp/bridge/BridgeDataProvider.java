@@ -583,7 +583,7 @@ public abstract class BridgeDataProvider extends DataProvider
         }
 
         TaskModel taskModel = loadTaskModel(context, task);
-        SmartSurveyTask smartSurveyTask = new SmartSurveyTask(taskModel);
+        SmartSurveyTask smartSurveyTask = new SmartSurveyTask(context, taskModel);
         return smartSurveyTask;
     }
 
