@@ -3,7 +3,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import org.researchstack.backbone.ui.ViewVideoActivity;
 import org.researchstack.backbone.ui.views.LocalWebView;
 import org.researchstack.backbone.utils.ResUtils;
+import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.StudyOverviewModel;
 

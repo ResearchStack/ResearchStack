@@ -2,7 +2,6 @@ package org.researchstack.skin.ui.layout;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,6 +19,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ObservableUtils;
+import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.task.SignInTask;
@@ -186,8 +186,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     public boolean isEmailValid()
     {
         CharSequence target = email.getText();
-        return ! TextUtils.isEmpty(target) &&
-                android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        return TextUtils.isValidEmail(target);
     }
 
     public boolean isPasswordValid()

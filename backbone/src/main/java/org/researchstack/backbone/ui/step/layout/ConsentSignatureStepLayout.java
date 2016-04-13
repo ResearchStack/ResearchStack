@@ -2,7 +2,6 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -22,6 +21,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SignatureView;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.FormatHelper;
+import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;

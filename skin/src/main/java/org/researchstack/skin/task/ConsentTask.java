@@ -1,7 +1,6 @@
 package org.researchstack.skin.task;
 import android.content.Context;
 import android.content.res.Resources;
-import android.text.TextUtils;
 
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
@@ -25,6 +24,7 @@ import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ResUtils;
+import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.ConsentQuizModel;
