@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;

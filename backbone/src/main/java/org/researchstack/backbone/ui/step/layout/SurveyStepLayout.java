@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
@@ -25,6 +24,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.lang.reflect.Constructor;
 

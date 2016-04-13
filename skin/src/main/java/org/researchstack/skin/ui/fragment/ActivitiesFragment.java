@@ -19,11 +19,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;

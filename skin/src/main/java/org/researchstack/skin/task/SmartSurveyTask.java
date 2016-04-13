@@ -9,13 +9,12 @@ import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
-import org.researchstack.backbone.dev.DevUtils;
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.TaskModel;
 
@@ -79,7 +78,7 @@ public class SmartSurveyTask extends Task implements Serializable
             }
             else
             {
-                DevUtils.throwUnsupportedOpException("Wasn't a survey question");
+                throw new UnsupportedOperationException("Wasn't a survey question");
             }
         }
 

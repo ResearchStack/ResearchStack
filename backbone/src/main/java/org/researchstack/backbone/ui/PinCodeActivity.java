@@ -16,10 +16,10 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
 import org.researchstack.backbone.storage.file.auth.PinCodeConfig;
 import org.researchstack.backbone.ui.views.PinCodeLayout;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.ThemeUtils;
 import org.researchstack.backbone.utils.UiThreadContext;

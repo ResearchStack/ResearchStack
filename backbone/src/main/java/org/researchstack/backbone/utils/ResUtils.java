@@ -3,7 +3,6 @@ package org.researchstack.backbone.utils;
 import android.content.Context;
 
 import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.helpers.LogExt;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
