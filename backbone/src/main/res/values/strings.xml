@@ -113,6 +113,8 @@
     <string name="rsb_cancel">Cancel</string>
 
     <!-- Step Errors -->
+    <string name="rsb_error_data_failed">Failed to load encrypted data, try again!</string>
+    <string name="rsb_error_invalid_signature">Signature Invalid</string>
     <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
     <string name="rsb_invalid_answer_date_over">Invalid answer, date is over the limit!</string>
     <string name="rsb_invalid_answer_date_under">Invalid answer, date is under the limit!</string>
@@ -135,5 +137,6 @@
     <!-- Graphing -->
     <string name="rsb_chart_progress_center">%1$s of %2$s</string>
     <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
 
 </resources>

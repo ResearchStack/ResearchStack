@@ -138,7 +138,7 @@
     <string name="rss_local_error_passcode_failed">Changing Passcode Failed</string>
     <string name="rss_local_result_passcode_changed">Passcode Changed</string>
     <string name="rss_local_error_load_task">Unable to load the selected task</string>
-
+    <string name="rss_error_select_answer">Please select an answer</string>
     <string name="rss_error_invalid_password">Invalid Password</string>
     <string name="rss_error_invalid_email">Invalid Email</string>
 
@@ -165,7 +165,5 @@
     <string name="rss_allow">Allow</string>
     <string name="rss_granted">Granted</string>
     <string name="rss_optional">Optional</string>
-    <!-- Unknown -->
-
 
 </resources>

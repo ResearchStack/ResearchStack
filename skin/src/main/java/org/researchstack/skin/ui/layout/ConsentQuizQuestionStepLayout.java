@@ -244,7 +244,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
     {
         if(radioGroup.getCheckedRadioButtonId() == - 1)
         {
-            Toast.makeText(getContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.rss_error_select_answer, Toast.LENGTH_SHORT).show();
             return false;
         }
 
