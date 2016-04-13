@@ -6,9 +6,11 @@ import org.researchstack.backbone.model.Choice;
 public class BooleanAnswerFormat extends ChoiceAnswerFormat
 {
 
-    public BooleanAnswerFormat()
+    public BooleanAnswerFormat(String trueString, String falseString)
     {
-        super(ChoiceAnswerStyle.SingleChoice, new Choice<>("Yes", true), new Choice<>("No", false));
+        super(ChoiceAnswerStyle.SingleChoice,
+                new Choice<>(trueString, true),
+                new Choice<>(falseString, false));
     }
 
     @Override

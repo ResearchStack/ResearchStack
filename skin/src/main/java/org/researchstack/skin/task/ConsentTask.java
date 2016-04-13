@@ -55,7 +55,7 @@ public class ConsentTask extends OrderedTask
         super(taskId, steps);
     }
 
-    public static ConsentTask createConsentTask(Context context, String taskId)
+    public static ConsentTask create(Context context, String taskId)
     {
         Resources r = context.getResources();
 

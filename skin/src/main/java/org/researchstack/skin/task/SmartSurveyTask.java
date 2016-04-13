@@ -53,9 +53,10 @@ public class SmartSurveyTask extends Task implements Serializable
     /**
      * Creates a SmartSurveyTask from a {@link TaskModel} object
      *
+     * @param context context for fetching any resources needed
      * @param taskModel Java representation of the task json
      */
-    public SmartSurveyTask(TaskModel taskModel)
+    public SmartSurveyTask(Context context, TaskModel taskModel)
     {
         super(taskModel.identifier);
         steps = new HashMap<>(taskModel.elements.size());
@@ -65,7 +66,7 @@ public class SmartSurveyTask extends Task implements Serializable
         {
             if(stepModel.type.equals("SurveyQuestion"))
             {
-                AnswerFormat answerFormat = from(stepModel.constraints);
+                AnswerFormat answerFormat = from(context, stepModel.constraints);
 
                 QuestionStep questionStep = new QuestionStep(stepModel.identifier,
                         stepModel.prompt,
@@ -85,13 +86,14 @@ public class SmartSurveyTask extends Task implements Serializable
         dynamicStepIdentifiers = new ArrayList<>(staticStepIdentifiers);
     }
 
-    private static AnswerFormat from(TaskModel.ConstraintsModel constraints)
+    private AnswerFormat from(Context context, TaskModel.ConstraintsModel constraints)
     {
         AnswerFormat answerFormat;
         String type = constraints.type;
         if(type.equals("BooleanConstraints"))
         {
-            answerFormat = new BooleanAnswerFormat();
+            answerFormat = new BooleanAnswerFormat(context.getString(R.string.rsb_yes),
+                    context.getString(R.string.rsb_no));
         }
         else if(type.equals("MultiValueConstraints"))
         {
@@ -121,7 +123,7 @@ public class SmartSurveyTask extends Task implements Serializable
         return answerFormat;
     }
 
-    private static Choice[] from(List<TaskModel.EnumerationModel> enumeration)
+    private Choice[] from(List<TaskModel.EnumerationModel> enumeration)
     {
         Choice[] choices = new Choice[enumeration.size()];
 
