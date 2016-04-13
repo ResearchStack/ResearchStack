@@ -13,7 +13,7 @@
         android:minHeight="40dp"
         android:minWidth="40dp"
         android:scaleType="center"
-        tools:src="@drawable/ic_location_24dp"
+        tools:src="@drawable/rss_ic_location_24dp"
     />
 
     <android.support.v7.widget.AppCompatTextView

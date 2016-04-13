@@ -56,8 +56,8 @@
     "failureTitle": "Try again",
     "failureMessage": "Unfortunately, you answered one or more questions incorrectly on the quiz. We need you to repeat the quiz to make sure you understand what you need to know about the study. Please read the consent information and take the quiz again.",
     "allowedFailures": 0,
-    "incorrectIcon": "consent_quiz_retry",
-    "correctIcon": "valid_icon"
+    "incorrectIcon": "rss_ic_quiz_retry",
+    "correctIcon": "rss_ic_quiz_valid"
   },
   "sections": [
     {
