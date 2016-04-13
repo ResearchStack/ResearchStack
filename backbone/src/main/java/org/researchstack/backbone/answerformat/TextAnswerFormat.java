@@ -1,9 +1,9 @@
 package org.researchstack.backbone.answerformat;
 
-import android.text.InputFilter;
 
 /**
- * Created by bradleymcdermott on 10/13/15.
+ * The TextAnswerFormat class represents the answer format for questions that collect a text
+ * response from the user.
  */
 public class TextAnswerFormat extends AnswerFormat
 {
@@ -12,14 +12,32 @@ public class TextAnswerFormat extends AnswerFormat
 
     private boolean isMultipleLines = false;
 
+    /**
+     * Creates a TextAnswerFormat with no maximum length
+     */
     public TextAnswerFormat()
     {
         this(UNLIMITED_LENGTH);
     }
 
+    /**
+     * Creates a TextAnswerFormat with a specified maximum length
+     *
+     * @param maximumLength the maximum text length allowed
+     */
     public TextAnswerFormat(int maximumLength)
     {
         this.maximumLength = maximumLength;
+    }
+
+    /**
+     * Returns the maximum length for the answer, <code>UNLIMITED_LENGTH</code> (0) if no maximum
+     *
+     * @return the maximum length, <code>UNLIMITED_LENGTH</code> (0) if no maximum
+     */
+    public int getMaximumLength()
+    {
+        return maximumLength;
     }
 
     @Override
@@ -28,58 +46,35 @@ public class TextAnswerFormat extends AnswerFormat
         return Type.Text;
     }
 
+    /**
+     * Sets whether the EditText should allow multiple lines.
+     *
+     * @param isMultipleLines boolean indicating if multiple lines are allowed
+     */
     public void setIsMultipleLines(boolean isMultipleLines)
     {
         this.isMultipleLines = isMultipleLines;
     }
 
-    public InputFilter[] getInputFilters()
-    {
-        if(maximumLength > UNLIMITED_LENGTH)
-        {
-            return new InputFilter[] {new InputFilter.LengthFilter(maximumLength)};
-        }
-        else
-        {
-            return new InputFilter[0];
-        }
-    }
-
-    public int getMaximumLength()
-    {
-        return maximumLength;
-    }
-
+    /**
+     * Returns whether multiple lines are allowed.
+     *
+     * @return boolean indicating if multiple lines are allowed
+     */
     public boolean isMultipleLines()
     {
         return isMultipleLines;
     }
 
+    /**
+     * Returns a boolean indicating whether the passed in text is valid based on this answer format
+     *
+     * @param text the user's text answer to be validated
+     * @return a boolean indicating if the answer is valid
+     */
     public boolean isAnswerValid(String text)
     {
         return text != null && text.length() > 0 &&
                 (maximumLength == UNLIMITED_LENGTH || text.length() <= maximumLength);
     }
-
-
-    //    + (BOOL)supportsSecureCoding {
-    //    return YES;
-    //}
-
-    //    - (BOOL)isEqual:(id)object {
-    //    BOOL isParentSame = [super isEqual:object];
-    //
-    //    __typeof(self) castObject = object;
-    //    return (isParentSame &&
-    //            (self.maximumLength == castObject.maximumLength &&
-    //                    self.autocapitalizationType == castObject.autocapitalizationType &&
-    //                    self.autocorrectionType == castObject.autocorrectionType &&
-    //                    self.spellCheckingType == castObject.spellCheckingType &&
-    //                    self.multipleLines == castObject.multipleLines));
-    //}
-
-    //    - (BOOL)isAnswerValidWithString:(NSString *)text {
-    //    return (_maximumLength == 0 || [text length] <= _maximumLength);
-    //}
-
 }

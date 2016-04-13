@@ -1,13 +1,24 @@
 package org.researchstack.backbone.answerformat;
 
 /**
- * Created by bradleymcdermott on 10/13/15.
+ * This class defines the attributes for an integer answer format that participants enter using a
+ * numeric keyboard.
+ * <p>
+ * If you specify maximum or minimum values and the user enters a value outside the specified range,
+ * the {@link org.researchstack.backbone.ui.step.body.IntegerQuestionBody} does not allow navigation
+ * until the participant provides a value that is within the valid range.
  */
 public class IntegerAnswerFormat extends AnswerFormat
 {
     private int maxValue;
     private int minValue;
 
+    /**
+     * Creates an integer answer format with the specified min and max values.
+     *
+     * @param minValue minimum allowed value
+     * @param maxValue maximum allowed value, 0 if no max
+     */
     public IntegerAnswerFormat(int minValue, int maxValue)
     {
         this.minValue = minValue;
@@ -20,11 +31,21 @@ public class IntegerAnswerFormat extends AnswerFormat
         return Type.Integer;
     }
 
+    /**
+     * Returns the maximum allowed value for the question, 0 if no max
+     *
+     * @return the max value, 0 if no max
+     */
     public int getMaxValue()
     {
         return maxValue;
     }
 
+    /**
+     * Returns the minimum allowed value for the question
+     *
+     * @return returns the minimum allowed value for the question
+     */
     public int getMinValue()
     {
         return minValue;
