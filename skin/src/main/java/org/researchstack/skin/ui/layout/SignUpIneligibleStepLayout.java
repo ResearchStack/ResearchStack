@@ -1,27 +1,16 @@
 package org.researchstack.skin.ui.layout;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.Html;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import org.researchstack.skin.R;
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
-import org.researchstack.backbone.ui.step.layout.TextViewLinkHandler;
-import org.researchstack.backbone.ui.views.SubmitBar;
 
 public class SignUpIneligibleStepLayout extends LinearLayout implements StepLayout
 {
@@ -53,7 +42,7 @@ public class SignUpIneligibleStepLayout extends LinearLayout implements StepLayo
 
     private void initializeStep()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.layout_ineligible, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rss_layout_ineligible, this, true);
     }
 
     @Override

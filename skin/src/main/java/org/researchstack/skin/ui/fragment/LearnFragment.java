@@ -28,7 +28,7 @@ public class LearnFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.fragment_learn, container, false);
+        return inflater.inflate(R.layout.rss_fragment_learn, container, false);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class LearnFragment extends Fragment
             }
             else
             {
-                View view = inflater.inflate(R.layout.item_row_learn, parent, false);
+                View view = inflater.inflate(R.layout.rss_item_row_learn, parent, false);
                 return new ViewHolder(view);
             }
         }

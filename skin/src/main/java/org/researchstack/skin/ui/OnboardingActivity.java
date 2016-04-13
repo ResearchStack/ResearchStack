@@ -54,7 +54,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_onboarding);
+        super.setContentView(R.layout.rss_activity_onboarding);
 
         ImageView logoView = (ImageView) findViewById(R.id.layout_studyoverview_landing_logo);
         TextView titleView = (TextView) findViewById(R.id.layout_studyoverview_landing_title);

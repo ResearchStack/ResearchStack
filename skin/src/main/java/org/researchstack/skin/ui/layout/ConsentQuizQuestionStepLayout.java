@@ -73,7 +73,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
 
         ConsentQuizModel.QuizQuestion question = step.getQuestion();
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.layout_quiz_question, this, true);
+        inflater.inflate(R.layout.rss_layout_quiz_question, this, true);
 
         ((TextView) findViewById(R.id.title)).setText(step.getTitle());
 
@@ -104,7 +104,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
 
             for(Choice<String> choice : getChoices(question))
             {
-                AppCompatRadioButton button = (AppCompatRadioButton) inflater.inflate(R.layout.item_radio_quiz,
+                AppCompatRadioButton button = (AppCompatRadioButton) inflater.inflate(R.layout.rss_item_radio_quiz,
                         radioGroup,
                         false);
                 button.setText(choice.getText());

@@ -60,7 +60,7 @@ public class OnboardingPagerAdapter extends PagerAdapter
 
         if(! TextUtils.isEmpty(item.getVideoName()))
         {
-            View layout = inflater.inflate(R.layout.layout_study_html, container, false);
+            View layout = inflater.inflate(R.layout.rss_layout_study_html, container, false);
             container.addView(layout);
 
             StringBuilder builder = new StringBuilder("<h3>" + item.getTitle() + "</h3>");
