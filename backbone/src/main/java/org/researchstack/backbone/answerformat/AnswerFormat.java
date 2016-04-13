@@ -10,23 +10,53 @@ import org.researchstack.backbone.ui.step.body.TextQuestionBody;
 
 import java.io.Serializable;
 
+/**
+ * The AnswerFormat class is the abstract base class for classes that describe the format in which a
+ * survey question should be answered. The ResearchStack framework uses {@link
+ * org.researchstack.backbone.step.QuestionStep} to represent questions to ask the user. Each
+ * question must have an associated answer format.
+ * <p>
+ * To use an answer format, instantiate the appropriate answer format subclass and attach it to a
+ * question step or form item. Incorporate the resulting step into a task, and present the task with
+ * a {@link org.researchstack.backbone.ui.ViewTaskActivity}.
+ */
 public abstract class AnswerFormat implements Serializable
 {
+    /**
+     * Default constructor. The appropriate subclass of AnswerFormat should be used instead of this
+     * directly.
+     */
     public AnswerFormat()
     {
     }
 
+    /**
+     * Returns the QuestionType for this answer format. Implement this in your subclass.
+     *
+     * @return the question type
+     */
     public QuestionType getQuestionType()
     {
         return Type.None;
     }
 
+    /**
+     * Interface that {@link Type} implements. Since you cannot add a value to an existing enum, you
+     * may implement this interface instead to provide your own QuestionType that provides a {@link
+     * org.researchstack.backbone.ui.step.body.StepBody} class.
+     */
     public interface QuestionType
     {
         Class<?> getStepBodyClass();
     }
 
-    // order matters for bridge uploads
+    /**
+     * The type of question. (read-only)
+     * <p>
+     * The type provides a default {@link org.researchstack.backbone.ui.step.body.StepBody} for that
+     * type of question. A custom StepLayout implementation may provide it's own StepBody rather
+     * than using the default provided by this AnswerFormat.
+     */
     public enum Type implements QuestionType
     {
         None(NotImplementedStepBody.class),
@@ -60,18 +90,27 @@ public abstract class AnswerFormat implements Serializable
 
     }
 
+    /**
+     * The style of the question (that is, single or multiple choice).
+     */
     public enum ChoiceAnswerStyle
     {
         SingleChoice,
         MultipleChoice
     }
 
+    /**
+     * An enumeration of the format styles available for scale answers.
+     */
     public enum NumberFormattingStyle
     {
         Default,
         Percent
     }
 
+    /**
+     * The style of date picker to use in an {@link DateAnswerFormat} object.
+     */
     public enum DateAnswerStyle
     {
         DateAndTime,

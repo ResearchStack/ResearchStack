@@ -239,8 +239,7 @@ public class ConsentTask extends OrderedTask
                 DateAnswerFormat dobFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date,
                         null,
                         null,
-                        maxDate.getTime(),
-                        null);
+                        maxDate.getTime());
                 String dobText = ctx.getResources().getString(R.string.rsb_consent_dob_full);
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
             }
