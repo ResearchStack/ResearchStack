@@ -104,7 +104,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         skip = (Button) findViewById(R.id.intro_skip);
         skip.setVisibility(UiManager.getInstance().isConsentSkippable() ? View.VISIBLE : View.GONE);
 
-        int resId = ResUtils.getDrawableResourceId(this, model.getLogoName(), R.mipmap.ic_launcher);
+        int resId = ResUtils.getDrawableResourceId(this, model.getLogoName());
         logoView.setImageResource(resId);
 
         pagerContainer = findViewById(R.id.pager_container);
