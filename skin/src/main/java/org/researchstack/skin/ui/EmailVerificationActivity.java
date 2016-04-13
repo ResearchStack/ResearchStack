@@ -43,7 +43,7 @@ public class EmailVerificationActivity extends PinCodeActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_email_verification);
+        setContentView(R.layout.rss_activity_email_verification);
         progress = findViewById(R.id.progress);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

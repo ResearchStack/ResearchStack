@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         LogExt.d(getClass(), "onCreate");
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.rss_activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

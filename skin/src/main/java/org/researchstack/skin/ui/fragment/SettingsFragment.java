@@ -59,7 +59,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Settings Keys.
-    // If you are adding / changing settings, make sure they are unique / match in settings.xml
+    // If you are adding / changing settings, make sure they are unique / match in rss_settingsings.xml
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Profile
     public static final String KEY_PROFILE           = "rss_settings_profile";
@@ -103,7 +103,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onCreatePreferences(Bundle bundle, String s)
     {
-        super.addPreferencesFromResource(R.xml.settings);
+        super.addPreferencesFromResource(R.xml.rss_settings);
 
         // Get our screen which is created in Skin SettingsFragment
         PreferenceScreen screen = getPreferenceScreen();
@@ -296,7 +296,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                                                     if(response.isSuccess())
                                                     {
                                                         Toast.makeText(getActivity(),
-                                                                R.string.rss_consent_withdraw_success,
+                                                                R.string.rss_network_result_consent_withdraw_success,
                                                                 Toast.LENGTH_SHORT).show();
 
                                                         initPreferenceForConsent();
@@ -304,7 +304,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                                                     else
                                                     {
                                                         Toast.makeText(getActivity(),
-                                                                R.string.rss_consent_withdraw_failed,
+                                                                R.string.rss_network_error_consent_withdraw_failed,
                                                                 Toast.LENGTH_SHORT).show();
                                                     }
 
@@ -366,10 +366,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 StorageAccess.getInstance().changePinCode(getActivity(), oldPinCode, newPinCode);
                 subscriber.onNext(null);
             }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
-                Toast.makeText(getActivity(), "Passcode Changed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.rss_local_result_passcode_changed, Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             }, e -> {
-                Toast.makeText(getActivity(), "Changing Passcode Failed", Toast.LENGTH_SHORT)
+                Toast.makeText(getActivity(), R.string.rss_local_error_passcode_failed, Toast.LENGTH_SHORT)
                         .show();
                 progress.setVisibility(View.GONE);
             });
@@ -437,7 +437,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         {
             LogExt.e(getClass(), "Could not find package version info");
             versionCode = 0;
-            versionName = "Unknown version";
+            versionName = getString(R.string.rss_settings_version_unknown);
         }
         return getString(R.string.rss_settings_version, versionName, versionCode);
     }

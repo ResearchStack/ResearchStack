@@ -85,7 +85,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
         // Inflate step UI
-        inflater.inflate(R.layout.layout_permission, this, true);
+        inflater.inflate(R.layout.rss_layout_permission, this, true);
 
         // Add Sub-items to our ScrollView
         LinearLayout permissionContainer = (LinearLayout) findViewById(R.id.container_permission_items);
@@ -97,7 +97,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
         {
             boolean isGranted = PermissionRequestManager.getInstance().hasPermission(getContext(), item.getId());
 
-            View child = inflater.inflate(R.layout.item_permission_content,
+            View child = inflater.inflate(R.layout.rss_item_permission_content,
                     permissionContainer,
                     false);
 
@@ -186,7 +186,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
             {
                 String permissionName = getResources().getString(item.getTitle());
                 String formattedError = getResources().getString(
-                        R.string.rss_permission_continue_invalid, permissionName);
+                        R.string.rss_permission_continue_invalid, permissionName.toLowerCase());
                 Toast.makeText(getContext(), formattedError, Toast.LENGTH_SHORT).show();
                 return false;
             }

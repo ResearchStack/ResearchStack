@@ -33,7 +33,7 @@ public class SampleApplication extends Application
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
             PermissionRequestManager.PermissionRequest location = new PermissionRequestManager.PermissionRequest(Manifest.permission.ACCESS_FINE_LOCATION,
-                    R.drawable.ic_location_24dp,
+                    R.drawable.rss_ic_location_24dp,
                     R.string.rss_permission_location_title,
                     R.string.rss_permission_location_desc);
             location.setIsBlockingPermission(true);
@@ -47,7 +47,7 @@ public class SampleApplication extends Application
         PermissionRequestManager.PermissionRequest notifications =
                 new PermissionRequestManager.PermissionRequest(
                         PERMISSION_NOTIFICATIONS,
-                        R.drawable.ic_notification_24dp,
+                        R.drawable.rss_ic_notification_24dp,
                         R.string.rss_permission_notification_title,
                         R.string.rss_permission_notification_desc
                 );

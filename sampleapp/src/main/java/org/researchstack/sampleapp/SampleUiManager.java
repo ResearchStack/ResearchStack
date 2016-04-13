@@ -28,13 +28,13 @@ public class SampleUiManager extends UiManager
 
         navItems.add(new ActionItem.ActionItemBuilder().setId(R.id.nav_activities)
                 .setTitle(R.string.rss_activities)
-                .setIcon(R.drawable.ic_tab_activities)
+                .setIcon(R.drawable.rss_ic_tab_activities)
                 .setClass(ActivitiesFragment.class)
                 .build());
 
         navItems.add(new ActionItem.ActionItemBuilder().setId(R.id.nav_dashboard)
                 .setTitle(R.string.rss_dashboard)
-                .setIcon(R.drawable.ic_tab_dashboard)
+                .setIcon(R.drawable.rss_ic_tab_dashboard)
                 .setClass(DashboardFragment.class)
                 .build());
 
@@ -53,13 +53,13 @@ public class SampleUiManager extends UiManager
 
         navItems.add(new ActionItem.ActionItemBuilder().setId(R.id.nav_learn)
                 .setTitle(R.string.rss_learn)
-                .setIcon(R.drawable.ic_action_info)
+                .setIcon(R.drawable.rss_ic_action_learn)
                 .setClass(LearnActivity.class)
                 .build());
 
         navItems.add(new ActionItem.ActionItemBuilder().setId(R.id.nav_settings)
                 .setTitle(R.string.rss_settings)
-                .setIcon(R.drawable.ic_action_settings)
+                .setIcon(R.drawable.rss_ic_action_settings)
                 .setClass(SampleSettingsActivity.class)
                 .build());
 

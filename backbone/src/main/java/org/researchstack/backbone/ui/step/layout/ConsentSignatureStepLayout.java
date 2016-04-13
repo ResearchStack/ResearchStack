@@ -132,7 +132,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
             }
             else
             {
-                Toast.makeText(getContext(), "Signature Invalid", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.rsb_error_invalid_signature, Toast.LENGTH_SHORT).show();
             }
         });
     }
