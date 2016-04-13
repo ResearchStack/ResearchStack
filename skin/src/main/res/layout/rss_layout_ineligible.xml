@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorLink="?attr/colorAccent"
-        android:text="@string/rss_you_are_ineligible"
+        android:text="@string/rss_eligibility_you_are_ineligible"
     />
 
 </merge>

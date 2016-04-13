@@ -296,7 +296,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                                                     if(response.isSuccess())
                                                     {
                                                         Toast.makeText(getActivity(),
-                                                                R.string.rss_consent_withdraw_success,
+                                                                R.string.rss_network_result_consent_withdraw_success,
                                                                 Toast.LENGTH_SHORT).show();
 
                                                         initPreferenceForConsent();
@@ -304,7 +304,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                                                     else
                                                     {
                                                         Toast.makeText(getActivity(),
-                                                                R.string.rss_consent_withdraw_failed,
+                                                                R.string.rss_network_error_consent_withdraw_failed,
                                                                 Toast.LENGTH_SHORT).show();
                                                     }
 

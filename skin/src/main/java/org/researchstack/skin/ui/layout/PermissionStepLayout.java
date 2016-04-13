@@ -186,7 +186,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
             {
                 String permissionName = getResources().getString(item.getTitle());
                 String formattedError = getResources().getString(
-                        R.string.rss_permission_continue_invalid, permissionName);
+                        R.string.rss_permission_continue_invalid, permissionName.toLowerCase());
                 Toast.makeText(getContext(), formattedError, Toast.LENGTH_SHORT).show();
                 return false;
             }

@@ -106,7 +106,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                         if(newTask == null)
                         {
                             Toast.makeText(getActivity(),
-                                    R.string.rss_unable_to_load_task,
+                                    R.string.rss_local_error_load_task,
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
