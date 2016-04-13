@@ -19,7 +19,6 @@ import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.R;
-import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
 
@@ -33,6 +32,19 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
         Intent intent = new Intent(context, SignUpTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         return intent;
+    }
+
+    @Override
+    public void onDataAuth()
+    {
+        if(StorageAccess.getInstance().hasPinCode(this))
+        {
+            super.onDataAuth();
+        }
+        else // allow signup/in if no pincode
+        {
+            onDataReady();
+        }
     }
 
     @Override
@@ -64,8 +76,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     @Override
     public void startConsentTask()
     {
-        Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_CONSENT);
-        Intent intent = ViewTaskActivity.newIntent(this, task);
+        Intent intent = ConsentTaskActivity.newIntent(this);
         startActivityForResult(intent, SignUpEligibleStepLayout.CONSENT_REQUEST);
     }
 

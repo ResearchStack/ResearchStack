@@ -3,6 +3,7 @@ package org.researchstack.skin.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
+import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.AppPrefs;
@@ -22,10 +23,27 @@ public class SplashActivity extends PinCodeActivity
     public void onDataReady()
     {
         super.onDataReady();
+        initializeApp();
+    }
 
+    @Override
+    public void onDataAuth()
+    {
+        if(StorageAccess.getInstance().hasPinCode(this))
+        {
+            super.onDataAuth();
+        }
+        else // allow them through to onboarding if no pincode
+        {
+            storageAccessUnregister();
+            initializeApp();
+        }
+    }
+
+    private void initializeApp()
+    {
         // Init all notifications
         sendBroadcast(new Intent(TaskAlertReceiver.ALERT_CREATE_ALL));
-
 
         DataProvider.getInstance()
                 .initialize(this)
@@ -44,12 +62,6 @@ public class SplashActivity extends PinCodeActivity
 
                     finish();
                 });
-    }
-
-    @Override
-    public void onDataAuth()
-    {
-        super.onDataAuth();
     }
 
     @Override

@@ -219,7 +219,6 @@ public abstract class PinProtectedProvider implements EncryptionProvider
     {
         validateKeyForTimeOut(codeConfig.getPinAutoLockTime());
 
-        // why ok with no pincode?
-        return encrypter == null && hasPinCode(context);
+        return encrypter == null;
     }
 }
