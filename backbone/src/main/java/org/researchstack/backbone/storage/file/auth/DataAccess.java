@@ -6,7 +6,7 @@ import org.researchstack.backbone.storage.file.StorageAccessListener;
 public interface DataAccess
 {
     /**
-     * Check and init file access.  If there is an auth flow, the FileAccess implementation is
+     * Checks and inits file access.  If there is an auth flow, the FileAccess implementation is
      * required to handle it.  Once file access is ready, registered listeners will be notified
      * via the FileAccessListener.  This is true whether there is an auth flow or if the system
      * is already prepared.  The callback will happen on the main thread looper, after all scheduled
