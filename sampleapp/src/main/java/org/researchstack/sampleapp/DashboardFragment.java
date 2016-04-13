@@ -33,9 +33,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by bradleymcdermott on 10/28/15.
- */
+
 public class DashboardFragment extends Fragment
 {
     private View emptyView;

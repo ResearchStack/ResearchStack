@@ -7,9 +7,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.TaskProvider;
 
-/**
- * Created by bradleymcdermott on 10/16/15.
- */
+
 public class SignInTask extends OnboardingTask
 {
     private boolean hasPasscode;

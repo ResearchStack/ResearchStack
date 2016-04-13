@@ -13,31 +13,33 @@ public class ConsentSection implements Serializable
     /**
      * The type of section. (read-only)
      * <p>
-     * The value of this property indicates whether a predefined image, title, and animation are present.
+     * The value of this property indicates whether a predefined image, title, and animation are
+     * present.
      */
     @SerializedName("sectionType")
     private Type   type;
     /**
      * The title of the consent section in a localized string.
      * <p>
-     * The title is displayed as a step title in the animated consent sequence and is also included in the PDF file, but it can be overridden by setting `formalTitle`.
-     * The title is prefilled unless the type is `ORKConsentSectionTypeCustom` or `ORKConsentSectionTypeOnlyInDocument`.
+     * The title is displayed as a step title in the animated consent sequence and is also included
+     * in the PDF file, but it can be overridden by setting <code>formalTitle</code>.
      */
     @SerializedName("sectionTitle")
     private String title;
     /**
      * The formal title of the section in a localized string, for use in the legal document.
      * <p>
-     * If the value of this property is `nil`, the value of `title` is used in the legal document instead.
+     * If the value of this property is <code>null</code>, the value of <code>title</code> is used
+     * in the legal document instead.
      */
     @SerializedName("sectionFormalTitle")
     private String formalTitle;
     /**
      * A short summary of the content in a localized string.
      * <p>
-     * The summary is displayed as description text in the animated consent sequence.
-     * The summary should be limited in length, so that the consent can be reliably
-     * displayed on smaller screens.
+     * The summary is displayed as description text in the animated consent sequence. The summary
+     * should be limited in length, so that the consent can be reliably displayed on smaller
+     * screens.
      */
     @SerializedName("sectionSummary")
     private String summary;
@@ -47,28 +49,33 @@ public class ConsentSection implements Serializable
      * In a consent review step or in PDF file generation, the string is printed as the section's
      * content. The string is also displayed as Learn More content in a visual consent step.
      * <p>
-     * This property is never prepopulated based on the value of `type`. If both `content` and `htmlContent` are non-nil, the value of the `htmlContent` property is used.
+     * This property is never prepopulated based on the value of <code>type</code>. If both
+     * <code>content</code> and <code>htmlContent</code> are non-nil, the value of the
+     * <code>htmlContent</code> property is used.
      */
     @SerializedName("sectionContent")
     private String content;
     private String escapedContent;
     /**
-     * The HTML content used to override the `content` property if additional formatting is needed. The content should be localized.
+     * The HTML content used to override the <code>content</code> property if additional formatting
+     * is needed. The content should be localized.
      * <p>
-     * In cases where plain text content is not sufficient to convey important details
-     * during the consent process, you can provide HTML content in this property. When you do this, the `htmlContent` property takes precedence over the `content` property.
+     * In cases where plain text content is not sufficient to convey important details during the
+     * consent process, you can provide HTML content in this property. When you do this, the
+     * <code>htmlContent</code> property takes precedence over the <code>content</code> property.
      * <p>
-     * In a consent review step or in PDF file generation, the value of this property is printed as the section's
-     * content; in a visual consent step, the content is displayed as Learn More content.
+     * In a consent review step or in PDF file generation, the value of this property is printed as
+     * the section's content; in a visual consent step, the content is displayed as Learn More
+     * content.
      */
     @SerializedName("sectionHtmlContent")
     private String htmlContent;
     /**
      * A custom illustration for the consent.
      * <p>
-     * The custom image can override the image associated with any of the predefined
-     * section types for an `ORKVisualConsentStep` object. It is ignored for a consent review step and
-     * for PDF generation.
+     * The custom image can override the image associated with any of the predefined section types
+     * for an {@link org.researchstack.backbone.step.ConsentVisualStep} object. It is ignored for a
+     * consent review step and for PDF generation.
      * <p>
      * The image is used in template rendering mode, and is tinted using the tint color.
      */
@@ -77,31 +84,27 @@ public class ConsentSection implements Serializable
     /**
      * A custom Learn More button title in a localized string.
      * <p>
-     * The predefined section types have localized descriptive Learn More button
-     * titles for a visual consent step. When this property is not `nil`, it overrides that
-     * default text.
+     * The predefined section types have localized descriptive Learn More button titles for a visual
+     * consent step. When this property is not <code>null</code>, it overrides that default text.
      */
     @SerializedName("sectionMoreTitle")
     private String customLearnMoreButtonTitle;
     /**
      * A file URL that specifies a custom transition animation video.
      * <p>
-     * Animations of the illustration between one screen and the next are provided
-     * by default for transitions between consecutive section `type` codes. Custom
-     * sections and out-of-order transitions may require custom animations.
+     * Animations of the illustration between one screen and the next are provided by default for
+     * transitions between consecutive section <code>type</code> codes. Custom sections and
+     * out-of-order transitions may require custom animations.
      * <p>
-     * The animation loaded from the file URL is played aspect fill in the
-     * illustration area for forward transitions only. The video is rendered in
-     * template mode, with white treated as if it were transparent.
+     * The animation loaded from the file URL is played aspect fill in the illustration area for
+     * forward transitions only. The video is rendered in template mode, with white treated as if it
+     * were transparent.
      */
     @SerializedName("sectionAnimationUrl")
     private String customAnimationURL;
 
     /**
      * Returns an initialized consent section using the specified type.
-     * <p>
-     * This method populates the title and summary for all types except for
-     * `ORKConsentSectionTypeCustom` and `ORKConsentSectionTypeOnlyInDocument`.
      *
      * @param type The consent section type.
      */
@@ -183,8 +186,8 @@ public class ConsentSection implements Serializable
         /**
          * Overview of the informed consent process.
          * <p>
-         * This content can inform the user of what to expect during the process,
-         * and provide general background information on the purpose of the study.
+         * This content can inform the user of what to expect during the process, and provide
+         * general background information on the purpose of the study.
          */
         @SerializedName("overview")
         Overview(),
@@ -192,8 +195,8 @@ public class ConsentSection implements Serializable
         /**
          * A section informing the user that sensor data will be collected.
          * <p>
-         * This content can identify which sensors will be used, for how long,
-         * and for what purpose.
+         * This content can identify which sensors will be used, for how long, and for what
+         * purpose.
          */
         @SerializedName("dataGathering")
         DataGathering(),
@@ -201,8 +204,8 @@ public class ConsentSection implements Serializable
         /**
          * A section describing the privacy policies for the study.
          * <p>
-         * This content can describe how data is protected, the processes used
-         * to sanitize the collected data or make it anonymous, and address the risks
+         * This content can describe how data is protected, the processes used to sanitize the
+         * collected data or make it anonymous, and address the risks
          * <p>
          * involved.
          */
@@ -212,9 +215,9 @@ public class ConsentSection implements Serializable
         /**
          * A section describing how the collected data will be used.
          * <p>
-         * This content can include details about those who will have access to the data, the types of
-         * analysis that will be performed, and the degree of control the participant
-         * may have over the data after it is collected.
+         * This content can include details about those who will have access to the data, the types
+         * of analysis that will be performed, and the degree of control the participant may have
+         * over the data after it is collected.
          */
         @SerializedName("dataUse")
         DataUse(),
@@ -230,9 +233,8 @@ public class ConsentSection implements Serializable
         /**
          * A section describing active task use in the study.
          * <p>
-         * This content can describe what types of tasks need to be performed, how
-         * often, and for what purpose. Any risks that are involved can
-         * also be communicated in this section.
+         * This content can describe what types of tasks need to be performed, how often, and for
+         * what purpose. Any risks that are involved can also be communicated in this section.
          */
         @SerializedName("studyTasks")
         StudyTasks(),
@@ -240,8 +242,8 @@ public class ConsentSection implements Serializable
         /**
          * A section describing survey use in the study.
          * <p>
-         * This content can explain how survey data will be collected, for what purpose,
-         * and make it clear to what extent participation is optional.
+         * This content can explain how survey data will be collected, for what purpose, and make it
+         * clear to what extent participation is optional.
          */
         @SerializedName("studySurvey")
         StudySurvey(),
@@ -249,8 +251,8 @@ public class ConsentSection implements Serializable
         /**
          * A section describing how to withdraw from the study.
          * <p>
-         * This section can describe the policies
-         * that govern the collected data if the user decides to withdraw.
+         * This section can describe the policies that govern the collected data if the user decides
+         * to withdraw.
          */
         @SerializedName("withdrawing")
         Withdrawing(),
@@ -258,9 +260,8 @@ public class ConsentSection implements Serializable
         /**
          * A custom section.
          * <p>
-         * Custom sections don't have a predefined title, summary, content, image,
-         * or animation. A consent document may have as many or as few custom sections
-         * as needed.
+         * Custom sections don't have a predefined title, summary, content, image, or animation. A
+         * consent document may have as many or as few custom sections as needed.
          */
         @SerializedName("custom")
         Custom,
@@ -268,8 +269,9 @@ public class ConsentSection implements Serializable
         /**
          * Document-only sections.
          * <p>
-         * Document-only sections are ignored for a visual consent step and are only
-         * displayed in a consent review step (assuming no value is provided for the  `htmlReviewContent` property).
+         * Document-only sections are ignored for a visual consent step and are only displayed in a
+         * consent review step (assuming no value is provided for the  <code>htmlReviewContent</code>
+         * property).
          */
         @SerializedName("onlyInDocument")
         OnlyInDocument;

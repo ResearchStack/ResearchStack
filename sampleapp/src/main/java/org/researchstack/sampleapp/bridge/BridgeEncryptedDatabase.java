@@ -13,9 +13,7 @@ import java.util.List;
 import co.touchlab.squeaky.db.sqlcipher.SQLiteDatabaseImpl;
 import co.touchlab.squeaky.table.TableUtils;
 
-/**
- * Created by bradleymcdermott on 3/8/16.
- */
+
 public class BridgeEncryptedDatabase extends SqlCipherDatabaseHelper implements UploadQueue
 {
     public BridgeEncryptedDatabase(Context context, String name, SQLiteDatabase.CursorFactory cursorFactory, int version, UpdatablePassphraseProvider passphraseProvider)

@@ -22,9 +22,7 @@ import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
 import co.touchlab.squeaky.db.sqlite.SqueakyOpenHelper;
 import co.touchlab.squeaky.table.TableUtils;
 
-/**
- * Created by kgalligan on 11/27/15.
- */
+
 public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
 {
     public static final String DEFAULT_NAME    = "appdb";

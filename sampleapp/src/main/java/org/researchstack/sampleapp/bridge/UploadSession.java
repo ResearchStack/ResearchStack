@@ -1,7 +1,5 @@
 package org.researchstack.sampleapp.bridge;
-/**
- * Created by bradleymcdermott on 2/11/16.
- */
+
 public class UploadSession
 {
     public String id;

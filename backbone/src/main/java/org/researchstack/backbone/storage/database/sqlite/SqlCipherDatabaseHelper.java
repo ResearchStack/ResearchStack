@@ -23,9 +23,7 @@ import co.touchlab.squeaky.db.sqlcipher.SQLiteDatabaseImpl;
 import co.touchlab.squeaky.db.sqlcipher.SqueakyOpenHelper;
 import co.touchlab.squeaky.table.TableUtils;
 
-/**
- * Created by kgalligan on 11/27/15.
- */
+
 public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDatabase
 {
     public static final String DEFAULT_NAME    = "appdb";

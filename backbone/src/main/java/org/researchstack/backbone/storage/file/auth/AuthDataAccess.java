@@ -1,9 +1,7 @@
 package org.researchstack.backbone.storage.file.auth;
 import android.content.Context;
 
-/**
- * Created by bradleymcdermott on 2/2/16.
- */
+
 public interface AuthDataAccess
 {
     void logAccessTime();

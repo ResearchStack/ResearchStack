@@ -38,9 +38,7 @@ import rx.Observable;
 import rx.Subscription;
 import rx.subjects.PublishSubject;
 
-/**
- * Created by bradleymcdermott on 10/28/15.
- */
+
 public class ActivitiesFragment extends Fragment implements StorageAccessListener
 {
     private static final int REQUEST_TASK = 1492;

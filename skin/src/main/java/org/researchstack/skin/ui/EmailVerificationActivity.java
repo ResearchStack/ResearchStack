@@ -27,9 +27,7 @@ import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.layout.SignUpStepLayout;
 
-/**
- * Created by bradleymcdermott on 10/15/15.
- */
+
 public class EmailVerificationActivity extends PinCodeActivity
 {
     public static final  String EXTRA_EMAIL          = "EXTRA_EMAIL";

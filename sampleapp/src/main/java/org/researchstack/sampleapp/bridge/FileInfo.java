@@ -1,7 +1,5 @@
 package org.researchstack.sampleapp.bridge;
-/**
- * Created by bradleymcdermott on 2/8/16.
- */
+
 public class FileInfo
 {
     private String filename;

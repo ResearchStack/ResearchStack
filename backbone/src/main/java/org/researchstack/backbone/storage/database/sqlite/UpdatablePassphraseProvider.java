@@ -1,9 +1,7 @@
 package org.researchstack.backbone.storage.database.sqlite;
 import co.touchlab.squeaky.db.sqlcipher.PassphraseProvider;
 
-/**
- * Created by bradleymcdermott on 2/29/16.
- */
+
 public class UpdatablePassphraseProvider implements PassphraseProvider
 {
 

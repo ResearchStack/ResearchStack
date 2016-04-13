@@ -9,9 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-/**
- * Created by bradleymcdermott on 3/14/16.
- */
+
 public class BridgeDataInput
 {
     private static Gson gson = new Gson();

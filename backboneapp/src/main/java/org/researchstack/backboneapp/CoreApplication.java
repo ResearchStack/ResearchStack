@@ -12,9 +12,7 @@ import org.researchstack.backbone.storage.file.UnencryptedProvider;
 import org.researchstack.backbone.storage.file.auth.PinCodeConfig;
 
 
-/**
- * Created by bradleymcdermott on 12/2/15.
- */
+
 public class CoreApplication extends Application
 {
     @Override

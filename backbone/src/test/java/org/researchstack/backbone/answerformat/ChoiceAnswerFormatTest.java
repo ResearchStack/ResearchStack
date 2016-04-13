@@ -3,9 +3,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-/**
- * Created by bradleymcdermott on 3/24/16.
- */
+
 public class ChoiceAnswerFormatTest
 {
 

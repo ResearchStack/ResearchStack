@@ -1,7 +1,5 @@
 package org.researchstack.backbone.storage.file;
-/**
- * Created by kgalligan on 11/24/15.
- */
+
 public class FileAccessException extends RuntimeException
 {
     public FileAccessException()

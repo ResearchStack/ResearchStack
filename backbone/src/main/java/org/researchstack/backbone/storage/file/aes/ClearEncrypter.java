@@ -1,7 +1,5 @@
 package org.researchstack.backbone.storage.file.aes;
-/**
- * Created by bradleymcdermott on 1/26/16.
- */
+
 public class ClearEncrypter implements Encrypter
 {
     @Override

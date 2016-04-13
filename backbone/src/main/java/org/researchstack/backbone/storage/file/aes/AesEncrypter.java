@@ -3,9 +3,7 @@ import com.tozny.crypto.android.AesCbcWithIntegrity;
 
 import java.security.GeneralSecurityException;
 
-/**
- * Created by bradleymcdermott on 1/26/16.
- */
+
 public class AesEncrypter implements Encrypter
 {
     private AesCbcWithIntegrity.SecretKeys secretKeys;
