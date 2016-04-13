@@ -216,7 +216,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     public void onDataFailed()
     {
         super.onDataFailed();
-        Toast.makeText(this, "Whoops", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.rsb_error_data_failed, Toast.LENGTH_LONG).show();
         finish();
     }
 

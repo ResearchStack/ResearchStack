@@ -42,7 +42,7 @@ public class SignUpIneligibleStepLayout extends LinearLayout implements StepLayo
 
     private void initializeStep()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.layout_ineligible, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rss_layout_ineligible, this, true);
     }
 
     @Override

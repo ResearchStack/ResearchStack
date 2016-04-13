@@ -14,7 +14,7 @@ public class ConsentQuizModel implements Serializable
 
     // fields with defaults
     private String incorrectIcon = "rsb_quiz_retry";
-    private String correctIcon   = "valid_icon";
+    private String correctIcon   = "rss_ic_quiz_valid";
 
     public String getFailureTitle()
     {

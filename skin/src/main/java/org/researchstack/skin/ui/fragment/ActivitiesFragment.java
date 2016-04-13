@@ -52,7 +52,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.fragment_activities, container, false);
+        return inflater.inflate(R.layout.rss_fragment_activities, container, false);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                         if(newTask == null)
                         {
                             Toast.makeText(getActivity(),
-                                    R.string.rss_unable_to_load_task,
+                                    R.string.rss_local_error_load_task,
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -189,7 +189,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         public TaskAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_schedule, parent, false);
+                    .inflate(R.layout.rss_item_schedule, parent, false);
             return new ViewHolder(view);
         }
 

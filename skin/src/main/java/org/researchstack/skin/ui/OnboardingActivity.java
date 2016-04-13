@@ -54,7 +54,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_onboarding);
+        super.setContentView(R.layout.rss_activity_onboarding);
 
         ImageView logoView = (ImageView) findViewById(R.id.layout_studyoverview_landing_logo);
         TextView titleView = (TextView) findViewById(R.id.layout_studyoverview_landing_title);
@@ -104,7 +104,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         skip = (Button) findViewById(R.id.intro_skip);
         skip.setVisibility(UiManager.getInstance().isConsentSkippable() ? View.VISIBLE : View.GONE);
 
-        int resId = ResUtils.getDrawableResourceId(this, model.getLogoName(), R.mipmap.ic_launcher);
+        int resId = ResUtils.getDrawableResourceId(this, model.getLogoName());
         logoView.setImageResource(resId);
 
         pagerContainer = findViewById(R.id.pager_container);

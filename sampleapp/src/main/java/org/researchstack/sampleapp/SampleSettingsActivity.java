@@ -12,7 +12,7 @@ public class SampleSettingsActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(org.researchstack.skin.R.layout.activity_fragment);
+        setContentView(org.researchstack.skin.R.layout.rss_activity_fragment);
 
         Toolbar toolbar = (Toolbar) findViewById(org.researchstack.skin.R.id.toolbar);
         setSupportActionBar(toolbar);

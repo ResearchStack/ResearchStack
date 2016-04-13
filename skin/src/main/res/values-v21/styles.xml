@@ -3,7 +3,7 @@
 
     <style name="Button.Skin.Onboarding" parent="@style/Base.Button.Skin.Onboarding"
            tools:ignore="ResourceName">
-        <item name="android:stateListAnimator">@drawable/btn_state_onboarding_anim</item>
+        <item name="android:stateListAnimator">@drawable/rss_btn_state_onboarding_anim</item>
     </style>
 
 </resources>
