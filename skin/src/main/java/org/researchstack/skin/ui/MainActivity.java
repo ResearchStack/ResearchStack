@@ -30,9 +30,7 @@ import java.util.List;
 
 import rx.Observable;
 
-/**
- * Created by bradleymcdermott on 10/27/15.
- */
+
 public class MainActivity extends BaseActivity
 {
     private static final int REQUEST_CODE_INITIAL_TASK = 1010;

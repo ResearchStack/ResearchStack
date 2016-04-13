@@ -3,9 +3,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-/**
- * Created by kgalligan on 11/24/15.
- */
+
 public class AppPrefs
 {
     public static final String HAS_CONSENTED     = "HAS_CONSENTED";

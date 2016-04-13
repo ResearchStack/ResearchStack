@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by bradleymcdermott on 2/8/16.
- */
+
 public class Info
 {
     public static final int BRIDGE_PHONE_INFO_LIMIT = 48;

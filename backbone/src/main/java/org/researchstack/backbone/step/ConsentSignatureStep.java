@@ -18,7 +18,7 @@ public class ConsentSignatureStep extends Step
      * Returns the date format string to be used when producing a date string for the PDF or consent
      * review.
      * <p>
-     * For example, "yyyy-MM-dd 'at' HH:mm". When the value of this property is `nil`, the current
+     * For example, "yyyy-MM-dd 'at' HH:mm". When the value of this property is <code>null</code>, the current
      * date and time for the current locale is used.
      *
      * @return the date format string
@@ -32,7 +32,7 @@ public class ConsentSignatureStep extends Step
      * Sets the date format string to be used when producing a date string for the PDF or consent
      * review.
      * <p>
-     * For example, "yyyy-MM-dd 'at' HH:mm". When the value of this property is `nil`, the current
+     * For example, "yyyy-MM-dd 'at' HH:mm". When the value of this property is <code>null</code>, the current
      * date and time for the current locale is used.
      *
      * @param signatureDateFormat a string representing the date format

@@ -318,7 +318,7 @@ public class MainActivity extends PinCodeActivity
                 // formStep,
                 booleanStep, multiStep);
 
-        // Create a task view controller using the task and set a delegate.
+        // Create an activity using the task and set a delegate.
         Intent intent = ViewTaskActivity.newIntent(this, task);
         startActivityForResult(intent, REQUEST_SURVEY);
     }

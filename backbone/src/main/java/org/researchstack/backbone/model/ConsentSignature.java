@@ -10,15 +10,15 @@ public class ConsentSignature implements Serializable, Cloneable
     /**
      * A Boolean value indicating whether the user needs to enter their name during consent review.
      * <p>
-     * The default value of this property is `YES`. In a consent review step, the name entry screen is not displayed when the value of this property is `NO`.
+     * The default value of this property is <code>true</code>. In a consent review step, the name entry screen is not displayed when the value of this property is <code>false</code>.
      */
     private boolean requiresName;
 
     /**
      * A Boolean value indicating whether the user needs to draw a signature during consent review.
      * <p>
-     * The default value of this property is `YES`. In a consent review step, the signature entry
-     * screen is not shown when this property is `NO`.
+     * The default value of this property is <code>true</code>. In a consent review step, the signature entry
+     * screen is not shown when this property is <code>false</code>.
      */
     private boolean requiresSignatureImage;
 
@@ -26,8 +26,8 @@ public class ConsentSignature implements Serializable, Cloneable
      * A Boolean value indicating whether the user needs to enter their birth date during consent
      * review.
      * <p>
-     * The default value of this property is `YES`. In a consent review step, the name entry screen
-     * is not displayed when the value of this property is `NO`.
+     * The default value of this property is <code>true</code>. In a consent review step, the name entry screen
+     * is not displayed when the value of this property is <code>false</code>.
      */
     private boolean requiresBirthDate;
 
@@ -35,8 +35,7 @@ public class ConsentSignature implements Serializable, Cloneable
      * The identifier for this signature.
      * <p>
      * The identifier should be unique in the document. It can be used to find or
-     * replace a specific signature in an `ORKConsentDocument` object. The identifier is also reproduced in
-     * the `ORKConsentSignatureResult` object produced by an `ORKConsentReviewStep` object.
+     * replace a specific signature in an {@link ConsentDocument} object.
      */
     private String identifier;
 

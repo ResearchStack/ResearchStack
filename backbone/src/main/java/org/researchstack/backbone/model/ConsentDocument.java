@@ -11,19 +11,16 @@ public class ConsentDocument implements Serializable
     /**
      * The document's title in a localized string.
      * <p>
-     * The title appears only in the generated PDF for review; it is not used in the
-     * visual consent process.
+     * The title appears only in the generated PDF for review; it is not used in the visual consent
+     * process.
      */
     private String title;
 
     /**
-     * The sections to be in printed in the PDF file and or presented in the
-     * visual consent sequence.
+     * The sections to be in printed in the PDF file and or presented in the visual consent
+     * sequence.
      * <p>
-     * All sections appear in the animated process, except for those sections of the
-     * type `ORKConsentSectionTypeOnlyInDocument`.
-     * <p>
-     * If the `htmlReviewContent` property is not set, this content is also used to
+     * If the <code>htmlReviewContent</code> property is not set, this content is also used to
      * populate the document for review in the consent review step.
      * <p>
      * The PDF file contains all sections.
@@ -33,14 +30,17 @@ public class ConsentDocument implements Serializable
     /**
      * The title to be rendered on the signature page of the generated PDF in a localized string.
      * <p>
-     * The title is ignored for visual consent. The title is also ignored if you supply a value for the `htmlReviewContent` property.
+     * The title is ignored for visual consent. The title is also ignored if you supply a value for
+     * the <code>htmlReviewContent</code> property.
      */
     private int signaturePageTitle;
 
     /**
-     * The content to be rendered below the title on the signature page of the generated PDF in a localized string.
+     * The content to be rendered below the title on the signature page of the generated PDF in a
+     * localized string.
      * <p>
-     * The content is ignored for visual consent. The content is also ignored if you supply a value for the `htmlReviewContent` property.
+     * The content is ignored for visual consent. The content is also ignored if you supply a value
+     * for the <code>htmlReviewContent</code> property.
      */
     @Deprecated
     private String signaturePageContent;
@@ -48,21 +48,21 @@ public class ConsentDocument implements Serializable
     /**
      * The set of signatures that are required or prepopulated in the document.
      * <p>
-     * To add a signature to the document after consent review, the `signatures` array
-     * needs to be modified to incorporate the new signature content prior to PDF
-     * generation. For more information, see `[ORKConsentSignatureResult applyToDocument:]`.
+     * To add a signature to the document after consent review, the <code>signatures</code> array
+     * needs to be modified to incorporate the new signature content prior to PDF generation. For
+     * more information, see `[ORKConsentSignatureResult applyToDocument:]`.
      */
     private List<ConsentSignature> signatures = new ArrayList<>(1);
 
     /**
      * Override HTML content for review.
      * <p>
-     * Typically, the review content is generated from the values of the `sections` and `signatures`
-     * properties.
+     * Typically, the review content is generated from the values of the <code>sections</code> and
+     * <code>signatures</code> properties.
      * <p>
-     * When this property is set, the review content is reproduced exactly as provided in the property
-     * in the consent review step, and the `sections` and `signatures` properties
-     * are ignored.
+     * When this property is set, the review content is reproduced exactly as provided in the
+     * property in the consent review step, and the <code>sections</code> and
+     * <code>signatures</code> properties are ignored.
      */
     private String htmlReviewContent;
 

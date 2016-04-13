@@ -2,9 +2,7 @@ package org.researchstack.sampleapp.bridge;
 import co.touchlab.squeaky.field.DatabaseField;
 import co.touchlab.squeaky.table.DatabaseTable;
 
-/**
- * Created by bradleymcdermott on 2/11/16.
- */
+
 @DatabaseTable
 public class UploadRequest
 {

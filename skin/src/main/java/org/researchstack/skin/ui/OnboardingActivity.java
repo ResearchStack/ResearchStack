@@ -35,9 +35,7 @@ import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.adapter.OnboardingPagerAdapter;
 import org.researchstack.skin.utils.JsonUtils;
 
-/**
- * Created by bradleymcdermott on 10/15/15.
- */
+
 public class OnboardingActivity extends PinCodeActivity implements View.OnClickListener
 {
     public static final int REQUEST_CODE_SIGN_UP  = 21473;

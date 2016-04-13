@@ -11,9 +11,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
-/**
- * Created by bradleymcdermott on 3/24/16.
- */
+
 public class OrderedTaskTest
 {
 

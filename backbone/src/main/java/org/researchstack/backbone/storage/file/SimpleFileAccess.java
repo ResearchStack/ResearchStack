@@ -12,9 +12,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 
-/**
- * Created by kgalligan on 11/25/15.
- */
+
 
 public class SimpleFileAccess implements FileAccess
 {

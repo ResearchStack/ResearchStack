@@ -12,9 +12,7 @@ import org.researchstack.skin.R;
 
 import rx.Observable;
 
-/**
- * Created by bradleymcdermott on 11/17/15.
- */
+
 public class HeightPicker extends LinearLayout
 {
     private AppCompatEditText   feet;

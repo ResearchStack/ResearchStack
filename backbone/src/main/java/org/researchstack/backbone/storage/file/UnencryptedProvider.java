@@ -5,9 +5,7 @@ import org.researchstack.backbone.storage.file.aes.ClearEncrypter;
 import org.researchstack.backbone.storage.file.aes.Encrypter;
 import org.researchstack.backbone.storage.file.auth.PinCodeConfig;
 
-/**
- * Created by bradleymcdermott on 2/3/16.
- */
+
 public class UnencryptedProvider implements EncryptionProvider
 {
 

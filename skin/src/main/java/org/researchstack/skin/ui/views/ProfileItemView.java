@@ -9,9 +9,7 @@ import android.widget.LinearLayout;
 
 import org.researchstack.skin.R;
 
-/**
- * Created by bradleymcdermott on 11/9/15.
- */
+
 public class ProfileItemView extends LinearLayout
 {
     private AppCompatTextView label;

@@ -12,9 +12,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-/**
- * Created by bradleymcdermott on 11/4/15.
- */
+
 public class JsonUtils
 {
     static Gson gson = new GsonBuilder().setDateFormat("MMM yyyy").create();

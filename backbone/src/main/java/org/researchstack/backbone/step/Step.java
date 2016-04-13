@@ -6,19 +6,19 @@ import java.io.Serializable;
 
 /**
  * Step is the base class for the steps that can compose a task for presentation in an {@link
- * org.researchstack.backbone.ui.ViewTaskActivity} object. Each {@link Step} object represents one
- * logical piece of data entry or activity in a larger task.
+ * org.researchstack.backbone.ui.ViewTaskActivity} object. Each Step object represents one logical
+ * piece of data entry or activity in a larger task.
  * <p>
- * A step can be a question, an active test, or a simple instruction. An {@link Step} subclass is
- * usually paired with an {@link org.researchstack.backbone.ui.step.layout.StepLayout} subclass that
+ * A step can be a question, an active test, or a simple instruction. An Step subclass is usually
+ * paired with an {@link org.researchstack.backbone.ui.step.layout.StepLayout} subclass that
  * displays the step.
  * <p>
- * To use a step, instantiate an {@link Step} object and populate its properties. Add the step to a
- * task, such as an {@link org.researchstack.backbone.task.OrderedTask} object, and then present the
- * task using a task view controller (an ViewTaskActivity object).
+ * To use a step, instantiate an Step object and populate its properties. Add the step to a task,
+ * such as an {@link org.researchstack.backbone.task.OrderedTask} object, and then present the task
+ * using a ViewTaskActivity.
  * <p>
- * To implement a new type of step, subclass {@link Step} and add your additional properties.
- * Separately, subclass StepLayout and implement your user interface.
+ * To implement a new type of step, subclass Step and add your additional properties. Separately,
+ * subclass StepLayout and implement your user interface.
  */
 public class Step implements Serializable
 {
@@ -178,13 +178,14 @@ public class Step implements Serializable
     }
 
     /**
-     * Returns the class that the task view controller should instantiate to display this step.
+     * Returns the class that the {@link org.researchstack.backbone.ui.ViewTaskActivity} should
+     * instantiate to display this step.
      * <p>
      * This method is used within the framework so that steps can define their step view controller
      * pairing.
      * <p>
      * Outside the framework, developers should instantiate the required view controller in their
-     * task view controller delegate to override the task view controller's default.
+     * ViewTaskActivity delegate to override the ViewTaskActivity's default.
      *
      * @return the class of the {@link org.researchstack.backbone.ui.step.layout.StepLayout} for
      * this step

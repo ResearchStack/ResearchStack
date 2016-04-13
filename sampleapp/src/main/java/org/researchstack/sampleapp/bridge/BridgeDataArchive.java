@@ -34,9 +34,7 @@ import java.security.cert.X509Certificate;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-/**
- * Created by bradleymcdermott on 2/11/16.
- */
+
 public class BridgeDataArchive
 {
     public static final String INFO_JSON_FILENAME = "info.json";

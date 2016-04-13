@@ -9,9 +9,7 @@ import org.joda.time.DateTime;
 
 import java.util.Date;
 
-/**
- * Created by kgalligan on 11/27/15.
- */
+
 public class ScheduleHelper
 {
     public static Date nextSchedule(String cronString, Date lastExecution)

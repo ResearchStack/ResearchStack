@@ -82,7 +82,7 @@ public abstract class Task implements Serializable
      * This method lets you use a result to determine the next step.
      * <p>
      * The {@link org.researchstack.backbone.ui.ViewTaskActivity}  calls this method to determine
-     * the step to display after the specified step. The task view controller can also call this
+     * the step to display after the specified step. The ViewTaskActivity can also call this
      * method every time the result updates, to determine if the new result changes which steps are
      * available.
      * <p>

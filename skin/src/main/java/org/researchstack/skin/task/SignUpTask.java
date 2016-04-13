@@ -8,9 +8,7 @@ import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
 
-/**
- * Created by bradleymcdermott on 10/16/15.
- */
+
 public class SignUpTask extends OnboardingTask
 {
     private boolean hasPasscode;

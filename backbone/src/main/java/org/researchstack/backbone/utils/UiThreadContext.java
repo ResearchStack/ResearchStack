@@ -1,9 +1,7 @@
 package org.researchstack.backbone.utils;
 import android.os.Looper;
 
-/**
- * Created by kgalligan on 11/26/15.
- */
+
 public class UiThreadContext
 {
     /**

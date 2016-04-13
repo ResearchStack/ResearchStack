@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by bradleymcdermott on 3/10/16.
- */
+
 public class SurveyAnswer
 {
     public int    questionType;

@@ -9,9 +9,7 @@ import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.notification.TaskAlertReceiver;
 
-/**
- * Created by bradleymcdermott on 10/15/15.
- */
+
 public class SplashActivity extends PinCodeActivity
 {
     @Override
