@@ -7,8 +7,6 @@ import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
-import org.researchstack.backbone.dev.DevUtils;
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
@@ -25,6 +23,7 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
@@ -105,19 +104,19 @@ public class ConsentTask extends OrderedTask
                 .getInvestigatorShortDescription();
         if(TextUtils.isEmpty(investigatorShortDesc))
         {
-            DevUtils.throwIllegalArgumentException();
+            throw new IllegalArgumentException("Invalid argument, cannot be null");
         }
 
         String investigatorLongDesc = data.getDocumentProperties().getInvestigatorLongDescription();
         if(TextUtils.isEmpty(investigatorLongDesc))
         {
-            DevUtils.throwIllegalArgumentException();
+            throw new IllegalArgumentException("Invalid argument, cannot be null");
         }
 
         String localizedLearnMoreHTMLContent = data.getDocumentProperties().getHtmlContent();
         if(TextUtils.isEmpty(localizedLearnMoreHTMLContent))
         {
-            DevUtils.throwIllegalArgumentException();
+            throw new IllegalArgumentException("Invalid argument, cannot be null");
         }
 
         ConsentSharingStep sharingStep = new ConsentSharingStep(ID_SHARING);

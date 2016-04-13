@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
 import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.NotificationHelper;
@@ -22,6 +21,7 @@ import org.researchstack.backbone.storage.file.FileAccessException;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.utils.FormatHelper;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.sampleapp.BuildConfig;
 import org.researchstack.sampleapp.bridge.body.ConsentSignatureBody;

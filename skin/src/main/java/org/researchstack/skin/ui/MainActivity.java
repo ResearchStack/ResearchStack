@@ -11,11 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.views.IconTabLayout;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.UiThreadContext;
 import org.researchstack.skin.ActionItem;

@@ -1,4 +1,4 @@
-package org.researchstack.backbone.helpers;
+package org.researchstack.backbone.utils;
 
 import android.util.Log;
 

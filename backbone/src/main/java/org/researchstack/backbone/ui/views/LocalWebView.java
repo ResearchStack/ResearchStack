@@ -8,9 +8,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.ui.ViewVideoActivity;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
+import org.researchstack.backbone.utils.LogExt;
 
 public class LocalWebView extends WebView
 {

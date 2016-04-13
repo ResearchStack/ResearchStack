@@ -4,7 +4,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import org.researchstack.backbone.helpers.LogExt;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.util.ArrayList;
 import java.util.List;

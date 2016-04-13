@@ -5,13 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.database.AppDatabase;
 import org.researchstack.backbone.storage.database.StepRecord;
 import org.researchstack.backbone.storage.database.TaskRecord;
 import org.researchstack.backbone.utils.FormatHelper;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -29,7 +29,7 @@ public class NotImplementedStepBody implements StepBody
 
         TextView textView = new TextView(ctx);
         textView.setText((viewType == VIEW_TYPE_COMPACT ? "form " : "") + "not implemented: " +
-                step.getQuestionType().toString());
+                step.getAnswerFormat().getQuestionType().toString());
 
         return textView;
     }

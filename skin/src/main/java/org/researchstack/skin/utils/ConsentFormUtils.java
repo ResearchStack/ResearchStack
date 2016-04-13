@@ -5,8 +5,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 
-import org.researchstack.backbone.helpers.LogExt;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;

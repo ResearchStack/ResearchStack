@@ -4,20 +4,36 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
-        applicationId "org.researchstack.sampleapp"
+        applicationId 'org.researchstack.sampleapp'
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName '1.0'
         multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // create a 'gradle.properties' file in the same directory as this build.gradle and add
+            // the needed values, for example studyId="bridge_study_id" to make them available as
+            // BuildConfig.STUDY_ID, BuildConfig.STUDY_NAME, etc
+            buildConfigField 'String', 'STUDY_ID', studyId
+            buildConfigField 'String', 'STUDY_NAME', studyName
+            buildConfigField 'String', 'STUDY_BASE_URL', "\"https://webservices.sagebridge.org/\""
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationIdSuffix '.debug'
+            buildConfigField 'String', 'STUDY_ID', studyId
+            buildConfigField 'String', 'STUDY_NAME', studyName
+            buildConfigField 'String', 'STUDY_BASE_URL', "\"https://webservices-staging.sagebridge.org/\""
         }
     }
 
@@ -32,7 +48,7 @@ android {
     }
 
     dexOptions {
-        javaMaxHeapSize "4g" //specify the heap size for the dex process
+        javaMaxHeapSize '4g' //specify the heap size for the dex process
     }
 }
 

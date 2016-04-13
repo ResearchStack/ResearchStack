@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.FormatHelper;
 
 import java.util.Date;
@@ -46,7 +47,7 @@ public class StepRecord
 
     public static StepResult toStepResult(StepRecord record)
     {
-        StepResult result = new StepResult(record.stepId);
+        StepResult result = new StepResult(new Step(record.stepId));
         result.setStartDate(record.started);
         result.setEndDate(record.completed);
         if(! TextUtils.isEmpty(record.result))

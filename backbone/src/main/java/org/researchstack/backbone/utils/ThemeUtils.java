@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.util.TypedValue;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.helpers.LogExt;
 
 import java.lang.reflect.Method;
 
