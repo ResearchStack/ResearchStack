@@ -366,10 +366,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 StorageAccess.getInstance().changePinCode(getActivity(), oldPinCode, newPinCode);
                 subscriber.onNext(null);
             }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
-                Toast.makeText(getActivity(), "Passcode Changed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.rss_local_result_passcode_changed, Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             }, e -> {
-                Toast.makeText(getActivity(), "Changing Passcode Failed", Toast.LENGTH_SHORT)
+                Toast.makeText(getActivity(), R.string.rss_local_error_passcode_failed, Toast.LENGTH_SHORT)
                         .show();
                 progress.setVisibility(View.GONE);
             });
@@ -437,7 +437,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         {
             LogExt.e(getClass(), "Could not find package version info");
             versionCode = 0;
-            versionName = "Unknown version";
+            versionName = getString(R.string.rss_settings_version_unknown);
         }
         return getString(R.string.rss_settings_version, versionName, versionCode);
     }

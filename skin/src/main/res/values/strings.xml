@@ -114,6 +114,7 @@
     <string name="rss_settings_general_leave_study">Leave Study</string>
     <string name="rss_settings_general_join_study">Join Study</string>
     <string name="rss_settings_version">Build number %1$s (%2$s)</string>
+    <string name="rss_settings_version_unknown">Unknown version</string>
     <string name="rss_settings_dialog_leave_study">Are you sure you want to leave the study? This
         action cannot be undone and you will need to provide consent in order to re-enroll.
     </string>
@@ -125,7 +126,6 @@
 
     <!-- Errors / Results -->
     <string name="rss_network_result_consent_withdraw_success">Consent Withdrawn</string>
-
     <string name="rss_network_error_consent_withdraw_failed">Failed to Withdraw</string>
     <string name="rss_network_error_consent">Please review the consent documentation to continue participating in the study.</string>
     <string name="rss_network_error_consent_action">GO</string>
@@ -135,7 +135,8 @@
     <string name="rss_network_error_unknown">Whoops! looks like something bad happened when talking
         to the server, try again later!
     </string>
-
+    <string name="rss_local_error_passcode_failed">Changing Passcode Failed</string>
+    <string name="rss_local_result_passcode_changed">Passcode Changed</string>
     <string name="rss_local_error_load_task">Unable to load the selected task</string>
 
     <string name="rss_error_invalid_password">Invalid Password</string>
@@ -164,7 +165,6 @@
     <string name="rss_allow">Allow</string>
     <string name="rss_granted">Granted</string>
     <string name="rss_optional">Optional</string>
-
     <!-- Unknown -->
 
 
