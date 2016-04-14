@@ -69,11 +69,12 @@ You will need to add some ResearchStack Activities to your apps AndroidManifest.
 ## Converting an existing ResearchKit AppCore iOS app to ResearchStack's Skin
 
 This isn't well documented or even well implemented at this point, but this should get you started:
-
-- All file-names must to be changed to lowercase (with or without ‘_’ separator).
-- JSON / HTML / CSS / MP4 files exist under sampleapp/src/main/res/raw
-- Any images must be defined in res/drawable with density bucket attribute (i.e. drawable-xhdpi). Any HTML Doc that defines an image will look at that directory.
-- CSS font-family attribute must be changed to what exists on the system (i.e. sans-serif, sans-serif-light, etc..)
+- Assets can be dragged and dropped into the assets folder of your project. 
+- Please make sure to validate and check for malformed JSON
+- Please make sure your links define a url in your HTML. An empty HREF attribute will reload the same file in a different activity.
+- ResearchStack adds attributes to the documentProperties object for consent. Additionally, ResearchStack also supports quiz conent define in the same json file. Please update your ConsentSection json file to reflect these changes. An example can be found in the SampleApp project. 
+- Images can be defined in the same directory of an HTML doc or through android's drawable directories. You can do this using the following path as an example "file:///android_res/drawable/image_name.png". Please note, loading assets through drawable path breaks when using applicationIdSuffix in gradle.
+- CSS font-family attribute should be changed to what exists on the system (i.e. sans-serif, sans-serif-light, etc..).
 - You will need to implement a class that extends the ResearchStack class and pass an instance of it into ResearchStack.init() in your Application.onCreate() method
 - Inside your ResearchStack implementation you may need to return your own implementations of things such as ResourceManager to point to your own resources
 - Look at sample app for examples of all of this. Most of the resources were pulled from the [Asthma iOS app](https://github.com/researchkit/AsthmaHealth) and modified base on the above points.
