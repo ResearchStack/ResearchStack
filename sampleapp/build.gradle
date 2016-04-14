@@ -30,7 +30,6 @@ android {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationIdSuffix '.debug'
             buildConfigField 'String', 'STUDY_ID', studyId
             buildConfigField 'String', 'STUDY_NAME', studyName
             buildConfigField 'String', 'STUDY_BASE_URL', "\"https://webservices-staging.sagebridge.org/\""

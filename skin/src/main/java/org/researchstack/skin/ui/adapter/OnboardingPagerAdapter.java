@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import org.researchstack.backbone.ui.ViewVideoActivity;
 import org.researchstack.backbone.ui.views.LocalWebView;
-import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
+import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.StudyOverviewModel;
 
 import java.util.List;
@@ -70,8 +70,9 @@ public class OnboardingPagerAdapter extends PagerAdapter
             simpleView.setText(Html.fromHtml(builder.toString()));
             simpleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.rss_ic_video);
             simpleView.setOnClickListener(v -> {
-                Intent intent = ViewVideoActivity.newIntent(container.getContext(),
-                        item.getVideoName());
+                String videoPath = ResourceManager.getInstance()
+                        .generatePath(ResourceManager.Resource.TYPE_MP4, item.getVideoName());
+                Intent intent = ViewVideoActivity.newIntent(container.getContext(), videoPath);
                 container.getContext().startActivity(intent);
             });
 
@@ -79,9 +80,10 @@ public class OnboardingPagerAdapter extends PagerAdapter
         }
         else
         {
-            String url = ResUtils.getHTMLFilePath(item.getDetails());
             LocalWebView layout = new LocalWebView(container.getContext());
-            layout.loadUrl(url);
+            String path = ResourceManager.getInstance().generateAbsolutePath(
+                    ResourceManager.Resource.TYPE_HTML, item.getDetails());
+            layout.loadUrl(path);
             container.addView(layout);
             return layout;
         }

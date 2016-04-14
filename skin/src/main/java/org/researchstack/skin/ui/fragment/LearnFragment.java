@@ -17,7 +17,6 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.SectionModel;
-import org.researchstack.skin.utils.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +42,7 @@ public class LearnFragment extends Fragment
 
     private SectionModel loadSections()
     {
-        int fileResId = ResourceManager.getInstance().getLearnSections();
-        return JsonUtils.loadClass(getContext(), SectionModel.class, fileResId);
+        return ResourceManager.getInstance().getLearnSections().create(getActivity());
     }
 
     public static class LearnAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -97,9 +95,11 @@ public class LearnFragment extends Fragment
                 holder.title.setText(item.getTitle());
 
                 holder.itemView.setOnClickListener(v -> {
-                    Intent intent = ViewWebDocumentActivity.newIntent(v.getContext(),
+                    String path = ResourceManager.getInstance().
+                            generateAbsolutePath(ResourceManager.Resource.TYPE_HTML, item.getDetails());
+                    Intent intent = ViewWebDocumentActivity.newIntentForPath(v.getContext(),
                             item.getTitle(),
-                            item.getDetails());
+                            path);
                     v.getContext().startActivity(intent);
                 });
             }

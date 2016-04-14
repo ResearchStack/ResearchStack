@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
@@ -212,9 +213,11 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
                     @Override
                     public void onLinkClick(String url)
                     {
-                        Intent intent = ViewWebDocumentActivity.newIntent(getContext(),
+                        String path = ResourcePathManager.getInstance().
+                                generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
+                        Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
                                 questionStep.getTitle(),
-                                url);
+                                path);
                         getContext().startActivity(intent);
                     }
                 });

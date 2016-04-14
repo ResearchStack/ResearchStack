@@ -139,6 +139,11 @@ public class ConsentSection implements Serializable
         return htmlContent;
     }
 
+    public void setHtmlContent(String htmlContent)
+    {
+        this.htmlContent = htmlContent;
+    }
+
     public String getCustomImageName()
     {
         return customImageName;

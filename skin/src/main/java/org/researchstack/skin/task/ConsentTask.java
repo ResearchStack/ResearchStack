@@ -24,14 +24,12 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.ConsentQuizModel;
 import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 import org.researchstack.skin.step.ConsentQuizQuestionStep;
-import org.researchstack.skin.utils.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,9 +59,9 @@ public class ConsentTask extends OrderedTask
 
         List<Step> steps = new ArrayList<>();
 
-        ConsentSectionModel data = JsonUtils.loadClass(context,
-                ConsentSectionModel.class,
-                ResourceManager.getInstance().getConsentSections());
+        ConsentSectionModel data = ResourceManager.getInstance()
+                .getConsentSections()
+                .create(context);
 
         String participant = r.getString(R.string.rss_participant);
         ConsentSignature signature = new ConsentSignature("participant", participant, null);
@@ -84,8 +82,9 @@ public class ConsentTask extends OrderedTask
         doc.addSignature(signature);
 
         String htmlDocName = properties.getHtmlDocument();
-        int id = ResUtils.getRawResourceId(context, htmlDocName);
-        doc.setHtmlReviewContent(ResUtils.getStringResource(context, id));
+        String htmlFilePath = ResourceManager.getInstance()
+                .generatePath(ResourceManager.Resource.TYPE_HTML, htmlDocName);
+        doc.setHtmlReviewContent(ResourceManager.getResourceAsString(context, htmlFilePath));
 
         initVisualSteps(context, doc, steps);
 
@@ -150,6 +149,10 @@ public class ConsentTask extends OrderedTask
         for(int i = 0, size = doc.getSections().size(); i < size; i++)
         {
             ConsentSection section = doc.getSections().get(i);
+            String htmlFilePath = ResourceManager.getInstance()
+                    .generatePath(ResourceManager.Resource.TYPE_HTML, section.getHtmlContent());
+            section.setContent(ResourceManager.getResourceAsString(ctx, htmlFilePath));
+
             ConsentVisualStep step = new ConsentVisualStep("consent_" + i);
             step.setSection(section);
 

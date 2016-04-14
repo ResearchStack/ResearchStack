@@ -1,42 +1,45 @@
 package org.researchstack.skin;
-public abstract class ResourceManager
-{
-    private static ResourceManager instance;
+import android.content.Context;
+import android.content.res.AssetManager;
 
-    public static void init(ResourceManager manager)
-    {
-        ResourceManager.instance = manager;
-    }
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.researchstack.backbone.ResourcePathManager;
+import org.researchstack.backbone.utils.LogExt;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+
+public abstract class ResourceManager extends ResourcePathManager
+{
 
     public static ResourceManager getInstance()
     {
-        if(instance == null)
-        {
-            throw new RuntimeException(
-                    "ResourceManager instance is null. Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
-        }
-
-        return instance;
+        return (ResourceManager) ResourcePathManager.getInstance();
     }
 
-    public abstract int getStudyOverviewSections();
+    public abstract Resource getStudyOverview();
 
-    @Deprecated
-    public abstract int getLargeLogoDiseaseIcon();
+    public abstract Resource getConsentHtml();
 
-    @Deprecated
-    public abstract int getLogoInstitution();
+    public abstract Resource getConsentPDF();
 
-    public abstract int getConsentPDF();
+    public abstract Resource getConsentSections();
 
-    public abstract int getConsentHtml();
+    public abstract Resource getLearnSections();
 
-    public abstract int getConsentSections();
+    public abstract Resource getPrivacyPolicy();
 
-    public abstract int getLearnSections();
+    public abstract Resource getSoftwareNotices();
 
-    public abstract int getPrivacyPolicy();
+    public abstract Resource getTasksAndSchedules();
 
-    public abstract int getSoftwareNotices();
+    public abstract Resource getTask(String taskFileName);
 
 }

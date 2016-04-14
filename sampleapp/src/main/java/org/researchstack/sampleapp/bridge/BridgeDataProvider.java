@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
@@ -34,6 +35,7 @@ import org.researchstack.sampleapp.bridge.body.WithdrawalBody;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.DataResponse;
+import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.SchedulesAndTasksModel;
 import org.researchstack.skin.model.TaskModel;
 import org.researchstack.skin.model.User;
@@ -41,7 +43,6 @@ import org.researchstack.skin.notification.TaskAlertReceiver;
 import org.researchstack.skin.schedule.ScheduleHelper;
 import org.researchstack.skin.task.ConsentTask;
 import org.researchstack.skin.task.SmartSurveyTask;
-import org.researchstack.skin.utils.JsonUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,9 +91,9 @@ public abstract class BridgeDataProvider extends DataProvider
     private Map<String, String> loadedTaskDates = new HashMap<>();
     private Map<String, String> loadedTaskCrons = new HashMap<>();
 
-    protected abstract int getPublicKeyResId();
+    protected abstract ResourcePathManager.Resource getPublicKeyResId();
 
-    protected abstract int getTasksAndSchedulesResId();
+    protected abstract ResourcePathManager.Resource getTasksAndSchedules();
 
     protected abstract String getBaseUrl();
 
@@ -511,9 +512,7 @@ public abstract class BridgeDataProvider extends DataProvider
     @Override
     public SchedulesAndTasksModel loadTasksAndSchedules(Context context)
     {
-        SchedulesAndTasksModel schedulesAndTasksModel = JsonUtils.loadClass(context,
-                SchedulesAndTasksModel.class,
-                getTasksAndSchedulesResId());
+        SchedulesAndTasksModel schedulesAndTasksModel = getTasksAndSchedules().create(context);
 
         AppDatabase db = StorageAccess.getInstance().getAppDatabase();
 
@@ -564,7 +563,9 @@ public abstract class BridgeDataProvider extends DataProvider
 
     private TaskModel loadTaskModel(Context context, SchedulesAndTasksModel.TaskScheduleModel task)
     {
-        TaskModel taskModel = JsonUtils.loadClass(context, TaskModel.class, task.taskFileName);
+        TaskModel taskModel = ResourceManager.getInstance()
+                .getTask(task.taskFileName)
+                .create(context);
 
         // cache guid and createdOnDate
         loadedTaskGuids.put(taskModel.identifier, taskModel.guid);

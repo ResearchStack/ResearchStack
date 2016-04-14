@@ -1,60 +1,146 @@
 package org.researchstack.sampleapp;
+import android.text.TextUtils;
+
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.skin.ResourceManager;
+import org.researchstack.skin.model.ConsentSectionModel;
+import org.researchstack.skin.model.SchedulesAndTasksModel;
+import org.researchstack.skin.model.SectionModel;
+import org.researchstack.skin.model.StudyOverviewModel;
+import org.researchstack.skin.model.TaskModel;
 
 public class SampleResourceManager extends ResourceManager
 {
+    private static final String BASE_PATH_HTML        = "html";
+    private static final String BASE_PATH_JSON        = "json";
+    private static final String BASE_PATH_JSON_SURVEY = "json/survey";
+    private static final String BASE_PATH_PDF         = "pdf";
+    private static final String BASE_PATH_VIDEO       = "mp4";
+
+    public static final int PEM    = 4;
+    public static final int SURVEY = 5;
+
     @Override
-    public int getStudyOverviewSections()
+    public Resource getStudyOverview()
     {
-        return R.raw.study_overview;
+        return new Resource(Resource.TYPE_JSON,
+                BASE_PATH_JSON,
+                "study_overview",
+                StudyOverviewModel.class);
     }
 
     @Override
-    public int getConsentSections()
+    public Resource getConsentHtml()
     {
-        return R.raw.consent_section;
+        return new Resource(Resource.TYPE_HTML, BASE_PATH_HTML, "asthma_fullconsent");
     }
 
     @Override
-    public int getLearnSections()
+    public Resource getConsentPDF()
     {
-        return R.raw.learn;
+        return new Resource(Resource.TYPE_PDF, BASE_PATH_HTML, "study_overview_consent_form");
     }
 
     @Override
-    public int getSoftwareNotices()
+    public Resource getConsentSections()
     {
-        return R.raw.software_notices;
+        return new Resource(Resource.TYPE_JSON,
+                BASE_PATH_JSON,
+                "consent_section",
+                ConsentSectionModel.class);
     }
 
     @Override
-    public int getConsentPDF()
+    public Resource getLearnSections()
     {
-        return R.raw.study_overview_consent_form;
+        return new Resource(Resource.TYPE_JSON, BASE_PATH_JSON, "learn", SectionModel.class);
     }
 
     @Override
-    public int getConsentHtml()
+    public Resource getPrivacyPolicy()
     {
-        return R.raw.asthma_fullconsent;
+        return new Resource(Resource.TYPE_HTML, BASE_PATH_HTML, "app_privacy_policy");
     }
 
     @Override
-    public int getPrivacyPolicy()
+    public Resource getSoftwareNotices()
     {
-        return R.raw.app_privacy_policy;
+        return new Resource(Resource.TYPE_HTML, BASE_PATH_HTML, "software_notices");
     }
 
     @Override
-    public int getLargeLogoDiseaseIcon()
+    public Resource getTasksAndSchedules()
     {
-        return R.drawable.logo_disease_large;
+        return new Resource(Resource.TYPE_JSON,
+                BASE_PATH_JSON,
+                "tasks_and_schedules",
+                SchedulesAndTasksModel.class);
     }
 
     @Override
-    public int getLogoInstitution()
+    public Resource getTask(String taskFileName)
     {
-        return R.drawable.logo_institution;
+        return new Resource(Resource.TYPE_JSON,
+                BASE_PATH_JSON_SURVEY,
+                taskFileName,
+                TaskModel.class);
     }
 
+    @Override
+    public String generatePath(int type, String name)
+    {
+        String dir;
+        switch(type)
+        {
+            default:
+                dir = null;
+                break;
+            case Resource.TYPE_HTML:
+                dir = BASE_PATH_HTML;
+                break;
+            case Resource.TYPE_JSON:
+                dir = BASE_PATH_JSON;
+                break;
+            case Resource.TYPE_PDF:
+                dir = BASE_PATH_PDF;
+                break;
+            case Resource.TYPE_MP4:
+                dir = BASE_PATH_VIDEO;
+                break;
+            case SURVEY:
+                dir = BASE_PATH_JSON_SURVEY;
+                break;
+        }
+
+        StringBuilder path = new StringBuilder();
+        if(! TextUtils.isEmpty(dir))
+        {
+            path.append(dir).append("/");
+        }
+
+        return path.append(name).append(".").append(getFileExtension(type)).toString();
+    }
+
+    @Override
+    public String getFileExtension(int type)
+    {
+        switch(type)
+        {
+            case PEM:
+                return "pem";
+            case SURVEY:
+                return "json";
+            default:
+                return super.getFileExtension(type);
+        }
+    }
+
+    public static class PemResource extends ResourcePathManager.Resource
+    {
+
+        public PemResource(String name)
+        {
+            super(SampleResourceManager.PEM, null, name);
+        }
+    }
 }

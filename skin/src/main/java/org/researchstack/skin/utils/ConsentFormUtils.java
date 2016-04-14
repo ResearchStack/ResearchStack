@@ -23,20 +23,21 @@ public class ConsentFormUtils
 {
     public static void viewConsentForm(Context context)
     {
-        int consentResId = ResourceManager.getInstance().getConsentHtml();
-        String path = context.getResources().getResourceEntryName(consentResId);
+        String path = ResourceManager.getInstance().getConsentHtml().getAbsolutePath();
         String title = context.getString(R.string.rsb_consent);
-        Intent intent = ViewWebDocumentActivity.newIntent(context, title, path);
+        Intent intent = ViewWebDocumentActivity.newIntentForPath(context, title, path);
         context.startActivity(intent);
     }
 
+    @Deprecated
     public static void shareConsentForm(Context context)
     {
         Observable.create(subscriber -> {
             File consentFile = ConsentFormUtils.getConsentFormFileFromExternalStorage(context);
             subscriber.onNext(consentFile);
         }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
-            String appName = ResUtils.getApplicationName(context);
+            int stringId = context.getApplicationInfo().labelRes;
+            String appName = context.getString(stringId);
             String emailSubject = context.getResources()
                     .getString(R.string.rss_study_overview_email_subject, appName);
 
@@ -54,15 +55,15 @@ public class ConsentFormUtils
      * @return Consent form pdf
      */
     @NonNull
+    @Deprecated
     public static File getConsentFormFileFromExternalStorage(Context context)
     {
         LogExt.d(ConsentFormUtils.class, "getConsentFormFileFromExternalStorage() - - - - - - ");
         String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
         String basepath = extStorageDirectory + "/" + ResUtils.getExternalSDAppFolder();
 
-        int fileResId = ResourceManager.getInstance().getConsentPDF();
-        String formName = context.getResources().getResourceEntryName(fileResId);
-        String fileName = formName + ".pdf";
+        ResourceManager.Resource consentPdf = ResourceManager.getInstance().getConsentPDF();
+        String fileName = consentPdf.getName() + "." + consentPdf.getFileExtension();
 
         File consentFile = new File(basepath, fileName);
         LogExt.d(ConsentFormUtils.class, "File Path: " + consentFile.getAbsolutePath());
@@ -76,7 +77,7 @@ public class ConsentFormUtils
 
             try
             {
-                copy(context.getResources().openRawResource(fileResId), consentFile);
+                copy(ResourceManager.getInstance().getConsentHtml().open(context), consentFile);
                 LogExt.d(ConsentFormUtils.class, "File copied to external storage");
             }
             catch(IOException e)
@@ -87,6 +88,7 @@ public class ConsentFormUtils
         return consentFile;
     }
 
+    @Deprecated
     private static void copy(InputStream in, File dst) throws IOException
     {
         FileOutputStream out = new FileOutputStream(dst);

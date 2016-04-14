@@ -1,8 +1,10 @@
 package org.researchstack.sampleapp;
 import android.content.Context;
 
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.sampleapp.bridge.BridgeDataProvider;
+import org.researchstack.skin.ResourceManager;
 
 
 public class SampleDataProvider extends BridgeDataProvider
@@ -19,15 +21,15 @@ public class SampleDataProvider extends BridgeDataProvider
     }
 
     @Override
-    protected int getPublicKeyResId()
+    protected ResourcePathManager.Resource getPublicKeyResId()
     {
-        return R.raw.bridge_key;
+        return new SampleResourceManager.PemResource("bridge_key");
     }
 
     @Override
-    protected int getTasksAndSchedulesResId()
+    protected ResourcePathManager.Resource getTasksAndSchedules()
     {
-        return R.raw.tasks_and_schedules;
+        return ResourceManager.getInstance().getTasksAndSchedules();
     }
 
     @Override

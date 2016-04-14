@@ -8,32 +8,49 @@ import android.view.MenuItem;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.views.LocalWebView;
-import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.ThemeUtils;
 
 /**
  * The ViewWebDocumentActivity is used for viewing both local and network HTML docs. This activity
  * has the ability to be themed by the calling activity. You are able to ignore this, and use the
- * default manifest theme by calling {@link #newIntent(Context, String, String)}.
+ * default manifest theme by calling {@link #newIntentForPath(Context, String, String)}.
  */
 public class ViewWebDocumentActivity extends PinCodeActivity
 {
-    public static final String TAG          = ViewWebDocumentActivity.class.getSimpleName();
-    public static final String KEY_DOC_NAME = TAG + ".DOC_NAME";
-    public static final String KEY_TITLE    = TAG + ".TITLE";
-    public static final String KEY_THEME    = TAG + ".THEME";
+    public static final String TAG             = ViewWebDocumentActivity.class.getSimpleName();
+    public static final String KEY_DOC_PATH    = TAG + ".DOC_PATH";
+    public static final String KEY_DOC_CONTENT = TAG + ".DOC_CONTENT";
+    public static final String KEY_TITLE       = TAG + ".TITLE";
+    public static final String KEY_THEME       = TAG + ".THEME";
 
-    public static Intent newIntent(Context context, String title, String docName)
+    public static Intent newIntentForContent(Context context, String title, String htmlConent)
     {
-        return newIntent(context, title, docName, true);
+        return  newIntentForContent(context, title, htmlConent, true);
+    }
+    public static Intent newIntentForContent(Context context, String title, String htmlConent,  boolean useCallingTheme)
+    {
+        Intent intent = newIntent(context, title, useCallingTheme);
+        intent.putExtra(KEY_DOC_CONTENT, htmlConent);
+        return intent;
     }
 
-    public static Intent newIntent(Context context, String title, String docName, boolean useCallingTheme)
+    public static Intent newIntentForPath(Context context, String title, String absDocPath)
+    {
+        return newIntentForPath(context, title, absDocPath, true);
+    }
+
+    public static Intent newIntentForPath(Context context, String title, String absDocPath, boolean useCallingTheme)
+    {
+        Intent intent = newIntent(context, title, useCallingTheme);
+        intent.putExtra(KEY_DOC_PATH, absDocPath);
+        return intent;
+    }
+
+    private static Intent newIntent(Context context, String title, boolean useCallingTheme)
     {
         Intent intent = new Intent(context, ViewWebDocumentActivity.class);
-        intent.putExtra(KEY_DOC_NAME, docName);
         intent.putExtra(KEY_TITLE, title);
-        if (useCallingTheme)
+        if(useCallingTheme)
         {
             int theme = ThemeUtils.getTheme(context);
             if(theme != 0)
@@ -66,9 +83,18 @@ public class ViewWebDocumentActivity extends PinCodeActivity
         }
 
         LocalWebView webView = (LocalWebView) findViewById(R.id.webview);
-        String documentName = getIntent().getStringExtra(KEY_DOC_NAME);
-        String path = ResUtils.getHTMLFilePath(documentName);
-        webView.loadUrl(path);
+
+        if(getIntent().hasExtra(KEY_DOC_PATH))
+        {
+            String docPath = getIntent().getStringExtra(KEY_DOC_PATH);
+            webView.loadUrl(docPath);
+        }
+        else if(getIntent().hasExtra(KEY_DOC_CONTENT))
+        {
+            String docContent = getIntent().getStringExtra(KEY_DOC_CONTENT);
+//            webView.loadData(docContent, "text/html", "UTF-8");
+            webView.loadDataWithBaseURL(null, docContent,"text/html", "UTF-8", null);
+        }
     }
 
     @Override
