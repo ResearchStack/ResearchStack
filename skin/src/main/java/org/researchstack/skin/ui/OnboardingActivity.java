@@ -296,7 +296,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String passcode = (String) result.getStepResult(OnboardingTask.SignUpPassCodeCreationStepIdentifier)
                     .getResult();
-            StorageAccess.getInstance().setPinCode(this, passcode);
+            StorageAccess.getInstance().createPinCode(this, passcode);
 
             skipToMainActivity();
         }

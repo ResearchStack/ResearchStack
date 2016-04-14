@@ -16,8 +16,8 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
+import org.researchstack.backbone.storage.file.PinCodeConfig;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
-import org.researchstack.backbone.storage.file.auth.PinCodeConfig;
 import org.researchstack.backbone.ui.views.PinCodeLayout;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
@@ -31,7 +31,7 @@ import rx.functions.Action1;
 
 public class PinCodeActivity extends AppCompatActivity implements StorageAccessListener
 {
-    private PinCodeLayout pinCodeLayout;
+    private PinCodeLayout    pinCodeLayout;
     private Action1<Boolean> toggleKeyboardAction;
 
     @Override
@@ -61,13 +61,13 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     {
         super.onDestroy();
         storageAccessUnregister();
-        if (pinCodeLayout != null)
+        if(pinCodeLayout != null)
         {
             getWindowManager().removeView(pinCodeLayout);
         }
     }
 
-    private void requestStorageAccess()
+    protected void requestStorageAccess()
     {
         LogExt.i(getClass(), "requestStorageAccess()");
         StorageAccess storageAccess = StorageAccess.getInstance();
@@ -75,14 +75,14 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         storageAccess.requestStorageAccess(this);
     }
 
-    private void storageAccessRegister()
+    protected void storageAccessRegister()
     {
         LogExt.i(getClass(), "storageAccessRegister()");
         StorageAccess storageAccess = StorageAccess.getInstance();
         storageAccess.register(this);
     }
 
-    private void storageAccessUnregister()
+    protected void storageAccessUnregister()
     {
         LogExt.i(getClass(), "storageAccessUnregister()");
         StorageAccess storageAccess = StorageAccess.getInstance();
@@ -98,7 +98,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
-        if (fragments != null)
+        if(fragments != null)
         {
             LogExt.i(getClass(), "Fragments found on stack. Checking for StorageAccessListener.");
 
@@ -124,7 +124,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
-        if (fragments != null)
+        if(fragments != null)
         {
             LogExt.i(getClass(), "Fragments found on stack. Checking for StorageAccessListener.");
 

@@ -1,7 +1,7 @@
 package org.researchstack.backbone.utils;
 import android.support.annotation.NonNull;
 
-import org.researchstack.backbone.storage.file.FileAccessException;
+import org.researchstack.backbone.storage.file.StorageAccessException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -25,7 +25,7 @@ public class FileUtils
         }
         catch(IOException e)
         {
-            throw new FileAccessException(e);
+            throw new StorageAccessException(e);
         }
     }
 
@@ -43,7 +43,7 @@ public class FileUtils
 
         if (parent != null && !parent.exists() && !parent.mkdirs())
         {
-            throw new FileAccessException("Could not create parent dir of file: " + file.getPath());
+            throw new StorageAccessException("Could not create parent dir of file: " + file.getPath());
         }
     }
 

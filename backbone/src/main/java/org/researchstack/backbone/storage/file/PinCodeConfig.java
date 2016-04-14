@@ -1,4 +1,4 @@
-package org.researchstack.backbone.storage.file.auth;
+package org.researchstack.backbone.storage.file;
 import android.text.InputType;
 import android.text.format.DateUtils;
 import android.text.method.DigitsKeyListener;

@@ -3,7 +3,6 @@ import android.content.Context;
 
 import org.researchstack.backbone.storage.file.aes.ClearEncrypter;
 import org.researchstack.backbone.storage.file.aes.Encrypter;
-import org.researchstack.backbone.storage.file.auth.PinCodeConfig;
 
 
 public class UnencryptedProvider implements EncryptionProvider
@@ -20,7 +19,7 @@ public class UnencryptedProvider implements EncryptionProvider
     }
 
     @Override
-    public void setPinCode(Context context, String pin)
+    public void createPinCode(Context context, String pin)
     {
         throw new RuntimeException("Pin codes should not be used with this encryption provider");
     }

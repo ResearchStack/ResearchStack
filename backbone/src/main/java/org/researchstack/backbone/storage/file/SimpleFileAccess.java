@@ -30,7 +30,7 @@ public class SimpleFileAccess implements FileAccess
         }
         catch(GeneralSecurityException e)
         {
-            throw new FileAccessException(e);
+            throw new StorageAccessException(e);
         }
     }
 
@@ -45,7 +45,7 @@ public class SimpleFileAccess implements FileAccess
         }
         catch(IOException | GeneralSecurityException e)
         {
-            throw new FileAccessException(e);
+            throw new StorageAccessException(e);
         }
     }
 
@@ -103,7 +103,7 @@ public class SimpleFileAccess implements FileAccess
     {
         if(! path.startsWith("/"))
         {
-            throw new FileAccessException("Path must be absolute (ie start with '/')");
+            throw new StorageAccessException("Path must be absolute (ie start with '/')");
         }
     }
 }
