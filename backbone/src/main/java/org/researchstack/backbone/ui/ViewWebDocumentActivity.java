@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -15,7 +16,7 @@ import org.researchstack.backbone.utils.ThemeUtils;
  * has the ability to be themed by the calling activity. You are able to ignore this, and use the
  * default manifest theme by calling {@link #newIntentForPath(Context, String, String)}.
  */
-public class ViewWebDocumentActivity extends PinCodeActivity
+public class ViewWebDocumentActivity extends AppCompatActivity
 {
     public static final String TAG             = ViewWebDocumentActivity.class.getSimpleName();
     public static final String KEY_DOC_PATH    = TAG + ".DOC_PATH";
