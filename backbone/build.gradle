@@ -134,7 +134,13 @@ if (project.hasProperty("android")) { // Android libraries
     task javadoc(type: Javadoc) {
         failOnError false
         source = android.sourceSets.main.java.srcDirs
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+
+    afterEvaluate {
+        javadoc.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        javadoc.classpath += files(android.libraryVariants.collect { variant ->
+            variant.javaCompile.classpath.files
+        })
     }
 } else { // Java libraries
     task sourcesJar(type: Jar, dependsOn: classes) {
