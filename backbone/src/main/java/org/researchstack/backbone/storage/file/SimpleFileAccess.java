@@ -11,9 +11,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-
-
-
+/**
+ * This class is a simple implementation of FileAccess that passes all data read/written through the
+ * encrypter for encryption/decryption. An encrypter such as {@link UnencryptedProvider} can be used
+ * to write unencrypted data instead.
+ */
 public class SimpleFileAccess implements FileAccess
 {
     private Encrypter encrypter;
@@ -66,7 +68,7 @@ public class SimpleFileAccess implements FileAccess
             throw new RuntimeException(e);
         }
 
-        if (!from.delete())
+        if(! from.delete())
         {
             throw new RuntimeException("Failed to delete temp file");
         }
