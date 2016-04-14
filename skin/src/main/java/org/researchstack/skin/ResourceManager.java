@@ -8,6 +8,8 @@ import org.researchstack.backbone.ResourcePathManager;
 public abstract class ResourceManager extends ResourcePathManager
 {
     /**
+     * Returns a singleton static instance of the ResourceManager class
+     *
      * @return A singleton static instance of the ResourceManager class
      */
     public static ResourceManager getInstance()
@@ -16,12 +18,18 @@ public abstract class ResourceManager extends ResourcePathManager
     }
 
     /**
+     * Returns a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing the
+     * StudyOverview file.
+     *
      * @return a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing the
      * StudyOverview file.
      */
     public abstract Resource getStudyOverview();
 
     /**
+     * Returns a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing an
+     * HTML version of the Consent file.
+     *
      * @return a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing an
      * HTML version of the Consent file.
      */
