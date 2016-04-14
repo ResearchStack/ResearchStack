@@ -60,7 +60,11 @@ public abstract class ResourcePathManager
     }
 
     /**
-     * Generates a relative string file path
+     * The genereatePath method is abstract as the Framework does not know what the parent
+     * directory of a file is. While it is possible to open a file using only the fileName, there are
+     * many instances where we need the path of a file instead (like for WebView). This method is
+     * used for that purpose and is used to get the path of a resource when the framework only knows
+     * the name of the file and what type of file it is.
      *
      * @param type the type of file. This will be used for appending the file extension.
      * @param name the name of the file
