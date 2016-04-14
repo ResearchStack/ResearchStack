@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +21,7 @@ import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.ResUtils;
+import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
@@ -119,6 +119,19 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         pager.setAdapter(adapter);
         tabStrip = (TabLayout) findViewById(R.id.pager_title_strip);
         tabStrip.setupWithViewPager(pager);
+    }
+
+    @Override
+    public void onDataAuth()
+    {
+        if(StorageAccess.getInstance().hasPinCode(this))
+        {
+            super.onDataAuth();
+        }
+        else // allow onboarding if no pincode
+        {
+            onDataReady();
+        }
     }
 
     private StudyOverviewModel parseStudyOverviewModel()

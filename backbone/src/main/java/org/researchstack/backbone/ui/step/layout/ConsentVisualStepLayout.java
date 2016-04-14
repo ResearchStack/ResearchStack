@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -25,6 +24,7 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ResUtils;
+import org.researchstack.backbone.utils.TextUtils;
 
 public class ConsentVisualStepLayout extends RelativeLayout implements StepLayout
 {
