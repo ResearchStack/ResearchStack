@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.storage.file.auth.PinCodeConfig;
+import org.researchstack.backbone.storage.file.PinCodeConfig;
 import org.researchstack.backbone.utils.ViewUtils;
 
 import java.util.Arrays;

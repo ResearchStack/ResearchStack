@@ -9,9 +9,9 @@ import org.researchstack.backbone.storage.database.sqlite.SqlCipherDatabaseHelpe
 import org.researchstack.backbone.storage.database.sqlite.UpdatablePassphraseProvider;
 import org.researchstack.backbone.storage.file.EncryptionProvider;
 import org.researchstack.backbone.storage.file.FileAccess;
+import org.researchstack.backbone.storage.file.PinCodeConfig;
 import org.researchstack.backbone.storage.file.SimpleFileAccess;
 import org.researchstack.backbone.storage.file.aes.AesProvider;
-import org.researchstack.backbone.storage.file.auth.PinCodeConfig;
 import org.researchstack.sampleapp.bridge.BridgeEncryptedDatabase;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;

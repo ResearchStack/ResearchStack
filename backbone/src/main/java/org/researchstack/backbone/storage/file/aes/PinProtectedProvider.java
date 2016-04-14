@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import com.tozny.crypto.android.AesCbcWithIntegrity;
 
 import org.researchstack.backbone.storage.file.EncryptionProvider;
-import org.researchstack.backbone.storage.file.FileAccessException;
-import org.researchstack.backbone.storage.file.auth.PinCodeConfig;
+import org.researchstack.backbone.storage.file.PinCodeConfig;
+import org.researchstack.backbone.storage.file.StorageAccessException;
 import org.researchstack.backbone.utils.FileUtils;
 
 import java.io.File;
@@ -56,7 +56,7 @@ public abstract class PinProtectedProvider implements EncryptionProvider
     }
 
     @Override
-    public void setPinCode(Context context, String pin)
+    public void createPinCode(Context context, String pin)
     {
         try
         {
@@ -67,7 +67,7 @@ public abstract class PinProtectedProvider implements EncryptionProvider
         }
         catch(IOException | GeneralSecurityException e)
         {
-            throw new RuntimeException(e);
+            throw new StorageAccessException(e);
         }
     }
 
@@ -85,7 +85,7 @@ public abstract class PinProtectedProvider implements EncryptionProvider
         }
         catch(IOException | GeneralSecurityException e)
         {
-            throw new RuntimeException(e);
+            throw new StorageAccessException(e);
         }
     }
 
@@ -106,7 +106,7 @@ public abstract class PinProtectedProvider implements EncryptionProvider
             if(! masterKeyFile.exists())
             {
                 throw new IllegalAccessException("Master-key file does not exist. You should call" +
-                        "setPinCode(String pin) to create a Master-key file and encrypt w/ pin-code");
+                        "createPinCode(String pin) to create a Master-key file and encrypt w/ pin-code");
             }
 
             AesCbcWithIntegrity.SecretKeys masterKey;
@@ -119,7 +119,7 @@ public abstract class PinProtectedProvider implements EncryptionProvider
         }
         catch(IOException | IllegalAccessException | GeneralSecurityException e)
         {
-            throw new FileAccessException(e);
+            throw new StorageAccessException(e);
         }
     }
 
@@ -164,7 +164,7 @@ public abstract class PinProtectedProvider implements EncryptionProvider
         }
         catch(IOException | GeneralSecurityException e)
         {
-            throw new FileAccessException(e);
+            throw new StorageAccessException(e);
         }
     }
 

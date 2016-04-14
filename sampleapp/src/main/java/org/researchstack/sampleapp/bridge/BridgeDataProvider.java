@@ -17,7 +17,7 @@ import org.researchstack.backbone.storage.NotificationHelper;
 import org.researchstack.backbone.storage.database.AppDatabase;
 import org.researchstack.backbone.storage.database.TaskNotification;
 import org.researchstack.backbone.storage.file.FileAccess;
-import org.researchstack.backbone.storage.file.FileAccessException;
+import org.researchstack.backbone.storage.file.StorageAccessException;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.utils.FormatHelper;
@@ -472,7 +472,7 @@ public abstract class BridgeDataProvider extends DataProvider
             String user = loadJsonString(context, USER_PATH);
             return gson.fromJson(user, User.class);
         }
-        catch(FileAccessException e)
+        catch(StorageAccessException e)
         {
             return null;
         }
@@ -497,7 +497,7 @@ public abstract class BridgeDataProvider extends DataProvider
             String userSessionJson = loadJsonString(context, USER_SESSION_PATH);
             return gson.fromJson(userSessionJson, UserSessionInfo.class);
         }
-        catch(FileAccessException e)
+        catch(StorageAccessException e)
         {
             return null;
         }

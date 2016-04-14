@@ -60,7 +60,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             String pin = (String) result.getResult();
             if(! TextUtils.isEmpty(pin))
             {
-                StorageAccess.getInstance().setPinCode(this, pin);
+                StorageAccess.getInstance().createPinCode(this, pin);
             }
 
             if(consentResult != null)

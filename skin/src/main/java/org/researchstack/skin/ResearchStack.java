@@ -6,7 +6,7 @@ import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.storage.database.AppDatabase;
 import org.researchstack.backbone.storage.file.EncryptionProvider;
 import org.researchstack.backbone.storage.file.FileAccess;
-import org.researchstack.backbone.storage.file.auth.PinCodeConfig;
+import org.researchstack.backbone.storage.file.PinCodeConfig;
 import org.researchstack.skin.notification.NotificationConfig;
 
 public abstract class ResearchStack

@@ -49,9 +49,6 @@ public class BaseActivity extends PinCodeActivity
     protected void onPause()
     {
         super.onPause();
-        LogExt.i(getClass(), "logAccessTime()");
-        StorageAccess.getInstance().logAccessTime();
-
         LocalBroadcastManager.getInstance(this).unregisterReceiver(errorBroadcastReceiver);
     }
 
