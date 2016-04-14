@@ -23,25 +23,6 @@ public class SplashActivity extends PinCodeActivity
     public void onDataReady()
     {
         super.onDataReady();
-        initializeApp();
-    }
-
-    @Override
-    public void onDataAuth()
-    {
-        if(StorageAccess.getInstance().hasPinCode(this))
-        {
-            super.onDataAuth();
-        }
-        else // allow them through to onboarding if no pincode
-        {
-            storageAccessUnregister();
-            initializeApp();
-        }
-    }
-
-    private void initializeApp()
-    {
         // Init all notifications
         sendBroadcast(new Intent(TaskAlertReceiver.ALERT_CREATE_ALL));
 
@@ -62,6 +43,19 @@ public class SplashActivity extends PinCodeActivity
 
                     finish();
                 });
+    }
+
+    @Override
+    public void onDataAuth()
+    {
+        if(StorageAccess.getInstance().hasPinCode(this))
+        {
+            super.onDataAuth();
+        }
+        else // allow them through to onboarding if no pincode
+        {
+            onDataReady();
+        }
     }
 
     @Override

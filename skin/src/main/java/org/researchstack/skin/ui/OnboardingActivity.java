@@ -132,7 +132,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         }
         else // allow onboarding if no pincode
         {
-            storageAccessUnregister();
+            onDataReady();
         }
     }
 

@@ -24,7 +24,6 @@ public class ConsentTaskActivity extends ViewTaskActivity
         }
         else // consent doesn't require a pin code
         {
-            storageAccessUnregister();
             onDataReady();
         }
     }
