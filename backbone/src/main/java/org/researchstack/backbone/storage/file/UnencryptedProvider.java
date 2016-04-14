@@ -4,10 +4,12 @@ import android.content.Context;
 import org.researchstack.backbone.storage.file.aes.ClearEncrypter;
 import org.researchstack.backbone.storage.file.aes.Encrypter;
 
-
+/**
+ * Use this class as the EncryptionProvider when you want to store all data without encryption. Pin
+ * protection is still available, but will not be used to encrypt files written.
+ */
 public class UnencryptedProvider implements EncryptionProvider
 {
-
     public UnencryptedProvider()
     {
     }

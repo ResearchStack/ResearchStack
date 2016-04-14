@@ -15,12 +15,19 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 
+/**
+ * This abstract class allows for pin protection, whether or not the files are actually encrypted
+ * and with what method is up to the implementation.
+ */
 public abstract class PinProtectedProvider implements EncryptionProvider
 {
     private Encrypter encrypter;
 
     private long lastAuthTime;
 
+    /**
+     * Default constructor
+     */
     public PinProtectedProvider()
     {
     }
@@ -149,23 +156,6 @@ public abstract class PinProtectedProvider implements EncryptionProvider
         File file = new File(context.getFilesDir(), "secure");
         file.mkdirs();
         return file;
-    }
-
-    public void updatePassphrase(Context context, String oldPassphrase, String newPassphrase)
-    {
-        try
-        {
-            File passphraseFile = createMasterKeyFile(context);
-            String masterKeys = readMasterKey(context, passphraseFile, oldPassphrase);
-            writeMasterKey(context,
-                    passphraseFile,
-                    AesCbcWithIntegrity.keys(masterKeys),
-                    newPassphrase);
-        }
-        catch(IOException | GeneralSecurityException e)
-        {
-            throw new StorageAccessException(e);
-        }
     }
 
     @NonNull

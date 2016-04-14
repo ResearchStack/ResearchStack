@@ -3,7 +3,9 @@ import com.tozny.crypto.android.AesCbcWithIntegrity;
 
 import java.security.GeneralSecurityException;
 
-
+/**
+ * Encrypts all bytes passed through with {@link AesCbcWithIntegrity}'s standard AES encryption.
+ */
 public class AesEncrypter implements Encrypter
 {
     private AesCbcWithIntegrity.SecretKeys secretKeys;
