@@ -10,7 +10,6 @@ import com.google.gson.GsonBuilder;
 import org.researchstack.backbone.utils.LogExt;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,13 +18,13 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 /**
- * This class is responsible for returning paths of resources defined in the assets folder. You should
- * call {@link #init(ResourcePathManager)} at the start of your application and pass in your implementation
- * of this class. Wihtin there you will have to implement {@link #generatePath(int, String)} method
- * and return the relative path based on what file type it is.
- *
- * The necessity of defining a file type is needed to keep compatibility with assets define
- * in ResearchKit™ applications
+ * This class is responsible for returning paths of resources defined in the assets folder. You
+ * should call {@link #init(ResourcePathManager)} at the start of your application and pass in your
+ * implementation of this class. Wihtin there you will have to implement {@link #generatePath(int,
+ * String)} method and return the relative path based on what file type it is.
+ * <p>
+ * The necessity of defining a file type is needed to keep compatibility with assets define in
+ * ResearchKit™ applications
  */
 public abstract class ResourcePathManager
 {
@@ -34,10 +33,10 @@ public abstract class ResourcePathManager
     private static ResourcePathManager instance;
 
     /**
-     * Initializes the ResourcePathManager singleton. It is best to call
-     * this method inside your {@link Application#onCreate()} method.
+     * Initializes the ResourcePathManager singleton. It is best to call this method inside your
+     * {@link Application#onCreate()} method.
      *
-     * @param manager        an implementation of ResourcePathManager
+     * @param manager an implementation of ResourcePathManager
      */
     public static void init(ResourcePathManager manager)
     {
@@ -83,10 +82,9 @@ public abstract class ResourcePathManager
     }
 
     /**
-     *
      * @param type the type of file. Supported file types are defined within the {@link Resource}
-     *             class. You may override this method in your implementation and implement your
-     *             own cases
+     *             class. You may override this method in your implementation and implement your own
+     *             cases
      * @return file extension of a file type
      */
     public String getFileExtension(int type)
@@ -107,9 +105,9 @@ public abstract class ResourcePathManager
     }
 
     /**
-     * Method that turns an asset resource to a String
+     * Load resource from a file-path and turns contents to a String for consumption
      *
-     * @param context android context
+     * @param context  android context
      * @param filePath relative file path
      * @return String representation of the file
      */
@@ -119,9 +117,9 @@ public abstract class ResourcePathManager
     }
 
     /**
-     * Method that turns an asset resource to a byte[]
+     * Load resource from a file-path and turns contents to a byte[] for consumption
      *
-     * @param context android context
+     * @param context  android context
      * @param filePath relative file path
      * @return byte [] representation of the asset
      */
@@ -167,11 +165,11 @@ public abstract class ResourcePathManager
     }
 
     /**
-     * Method that turns an asset resource to an InputStream
+     * Load resource from a file-path and turns contents to a InputStream for consumption
      *
-     * @param context android context
+     * @param context  android context
      * @param filePath relative file path
-     * @return byte [] representation of the asset
+     * @return InputStream representation of the asset
      */
     public static InputStream getResouceAsInputStream(Context context, String filePath)
     {
@@ -183,16 +181,15 @@ public abstract class ResourcePathManager
         }
         catch(IOException e)
         {
-           throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
     /**
-     * Method that turns asset resource to a class object of type T. This method only works with
-     * converting JSON files.
+     * Load resource from a file-path and turns contents to a objects, of type T, for consumption
      *
-     * @param context android context
-     * @param clazz the class of T
+     * @param context  android context
+     * @param clazz    the class of T
      * @param filePath relative file path
      * @return Class representation of the asset
      */
@@ -219,19 +216,19 @@ public abstract class ResourcePathManager
     {
         public static final int TYPE_HTML = 0;
         public static final int TYPE_JSON = 1;
-        public static final int TYPE_PDF = 2;
-        public static final int TYPE_MP4 = 3;
+        public static final int TYPE_PDF  = 2;
+        public static final int TYPE_MP4  = 3;
 
-        private final int type;
+        private final int    type;
         private final String dir;
         private final String name;
-        private Class clazz;
+        private       Class  clazz;
 
         /**
-         * Initialize a resource object
+         * Initializes this Resource object
          *
          * @param type the type of file of the resource
-         * @param dir the sub directory of the fiel
+         * @param dir  the sub directory of the fiel
          * @param name the name of the file (excluding extension)
          */
         public Resource(int type, String dir, String name)
@@ -240,11 +237,11 @@ public abstract class ResourcePathManager
         }
 
         /**
-         * Initialize a resource object
+         * Initializes this Resource object
          *
-         * @param type the type of file of the resource
-         * @param dir the dir path of the file
-         * @param name the name of the file (excluding extension)
+         * @param type  the type of file of the resource
+         * @param dir   the dir path of the file
+         * @param name  the name of the file (excluding extension)
          * @param clazz the class file that this file is represented as
          */
         public Resource(int type, String dir, String name, Class clazz)
@@ -256,6 +253,8 @@ public abstract class ResourcePathManager
         }
 
         /**
+         * Returns the directroy path of this Resource
+         *
          * @return The dir path of the file
          */
         public String getDir()
@@ -264,6 +263,8 @@ public abstract class ResourcePathManager
         }
 
         /**
+         * Returns the name of this Resource
+         *
          * @return the name, excluding extension, of the file
          */
         public String getName()
@@ -272,6 +273,8 @@ public abstract class ResourcePathManager
         }
 
         /**
+         * Returns the file type of this Resource
+         *
          * @return The dir path of the file
          */
         public int getType()
@@ -280,7 +283,8 @@ public abstract class ResourcePathManager
         }
 
         /**
-         * Create the file into an Object of type T. This method will only work for Json resources
+         * Create this Resource into an Object of type T. This method will only work for Json
+         * files.
          *
          * @param context android context
          * @return object of type T
@@ -292,7 +296,7 @@ public abstract class ResourcePathManager
         }
 
         /**
-         * Returns an inputstream for reading a resource from assets folder.
+         * Returns an inputstream for this Resource
          *
          * @param context android context
          * @return InputStream of the resource
@@ -304,39 +308,35 @@ public abstract class ResourcePathManager
         }
 
         /**
-         * Returns the absolute path of this resource
+         * Returns the absolute path of this Resource
          *
-         * @return the absolute path of this resource
+         * @return the absolute path of this Resource
          */
         public String getAbsolutePath()
         {
-            return new StringBuilder("file:///android_asset/").append(getRelativePath())
-                    .toString();
+            return new StringBuilder("file:///android_asset/").append(getRelativePath()).toString();
         }
 
         /**
-         * Returns the relative path of this resource
+         * Returns the relative path of this Resource
          *
-         * @return the relative path of this resource
+         * @return the relative path of this Resource
          */
         public String getRelativePath()
         {
             StringBuilder path = new StringBuilder();
-            if (! TextUtils.isEmpty(dir))
+            if(! TextUtils.isEmpty(dir))
             {
                 path.append(dir).append("/");
             }
 
-            return path.append(name)
-                    .append(".")
-                    .append(getFileExtension())
-                    .toString();
+            return path.append(name).append(".").append(getFileExtension()).toString();
         }
 
         /**
-         * Returns the file extension of this resource
+         * Returns the file extension of this Resource
          *
-         * @return the file extension of this resource
+         * @return the file extension of this Resource
          */
         public String getFileExtension()
         {
