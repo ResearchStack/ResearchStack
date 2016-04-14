@@ -3,7 +3,6 @@ package org.researchstack.backbone.ui.step.layout;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.backbone.utils.TextUtils;
 
 public class InstructionStepLayout extends RelativeLayout implements StepLayout
 {

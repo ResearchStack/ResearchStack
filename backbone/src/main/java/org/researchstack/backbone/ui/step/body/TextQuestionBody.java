@@ -2,7 +2,6 @@ package org.researchstack.backbone.ui.step.body;
 
 import android.content.res.Resources;
 import android.text.InputFilter;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.backbone.utils.ViewUtils;
 
 public class TextQuestionBody implements StepBody

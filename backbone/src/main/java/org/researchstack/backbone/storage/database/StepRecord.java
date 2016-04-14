@@ -1,12 +1,11 @@
 package org.researchstack.backbone.storage.database;
-import android.text.TextUtils;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.FormatHelper;
+import org.researchstack.backbone.utils.TextUtils;
 
 import java.util.Date;
 import java.util.Map;

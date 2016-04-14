@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.text.TextUtils;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.StepResult;
@@ -16,6 +15,7 @@ import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
+import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.R;

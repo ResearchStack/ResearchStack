@@ -22,6 +22,14 @@ public class MultiChoiceQuestionBodyTest
 
     @Ignore
     @Test
+    public void testMultiChoice() throws Exception
+    {
+
+    }
+
+    // exclusive not yet implemented on Choice
+    @Ignore
+    @Test
     public void testSingleChoiceWithOneExclusive() throws Exception
     {
 
@@ -44,13 +52,6 @@ public class MultiChoiceQuestionBodyTest
     @Ignore
     @Test
     public void testSingleChoiceWithAllExclusives() throws Exception
-    {
-
-    }
-
-    @Ignore
-    @Test
-    public void testMultiChoice() throws Exception
     {
 
     }

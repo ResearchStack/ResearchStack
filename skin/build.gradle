@@ -4,7 +4,8 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.jfrog.bintray'
 
-version = '0.0.3'
+version = '0.9.0'
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -122,6 +123,13 @@ if (project.hasProperty("android")) { // Android libraries
         failOnError false
         source = android.sourceSets.main.java.srcDirs
         classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+
+    afterEvaluate {
+        javadoc.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        javadoc.classpath += files(android.libraryVariants.collect { variant ->
+            variant.javaCompile.classpath.files
+        })
     }
 } else { // Java libraries
     task sourcesJar(type: Jar, dependsOn: classes) {
