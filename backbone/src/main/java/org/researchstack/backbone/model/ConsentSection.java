@@ -1,9 +1,8 @@
 package org.researchstack.backbone.model;
-import android.text.TextUtils;
-
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.Serializable;
 
