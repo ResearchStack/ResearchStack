@@ -156,7 +156,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
     public boolean isEmailValid()
     {
         CharSequence target = email.getText();
-        return ! TextUtils.isValidEmail(target);
+        return TextUtils.isValidEmail(target);
     }
 
     public boolean isPasswordValid()
