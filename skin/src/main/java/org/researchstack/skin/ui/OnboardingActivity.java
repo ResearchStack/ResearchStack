@@ -123,6 +123,19 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         tabStrip.setupWithViewPager(pager);
     }
 
+    @Override
+    public void onDataAuth()
+    {
+        if(StorageAccess.getInstance().hasPinCode(this))
+        {
+            super.onDataAuth();
+        }
+        else // allow onboarding if no pincode
+        {
+            onDataReady();
+        }
+    }
+
     private StudyOverviewModel parseStudyOverviewModel()
     {
         int fileResId = ResourceManager.getInstance().getStudyOverviewSections();
