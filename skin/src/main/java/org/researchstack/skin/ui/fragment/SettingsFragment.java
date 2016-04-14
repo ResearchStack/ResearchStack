@@ -43,7 +43,6 @@ import org.researchstack.skin.task.ConsentTask;
 import org.researchstack.skin.ui.OnboardingActivity;
 import org.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
 import org.researchstack.skin.utils.ConsentFormUtils;
-import org.researchstack.skin.utils.JsonUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -170,9 +169,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
             // Load Consent Data and set sharing scope
             Observable.create(subscriber -> {
-                ConsentSectionModel data = JsonUtils.loadClass(getContext(),
-                        ConsentSectionModel.class,
-                        ResourceManager.getInstance().getConsentSections());
+                ConsentSectionModel data = ResourceManager.getInstance()
+                        .getConsentSections()
+                        .create(getActivity());
                 subscriber.onNext(data);
             })
                     .compose(ObservableUtils.applyDefault())
@@ -444,22 +443,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     public void showPrivacyPolicy()
     {
-
-        int resId = ResourceManager.getInstance().getPrivacyPolicy();
-        String docName = getResources().getResourceEntryName(resId);
-        Intent intent = ViewWebDocumentActivity.newIntent(getContext(),
+        String path = ResourceManager.getInstance().getPrivacyPolicy().getAbsolutePath();
+        Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
                 getString(R.string.rss_settings_privacy_policy),
-                docName);
+                path);
         startActivity(intent);
     }
 
     public void showSoftwareNotices()
     {
-        int resId = ResourceManager.getInstance().getSoftwareNotices();
-        String documentName = getResources().getResourceEntryName(resId);
-        Intent intent = ViewWebDocumentActivity.newIntent(getContext(),
+        String path = ResourceManager.getInstance().getSoftwareNotices().getAbsolutePath();
+        Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
                 getString(R.string.rss_settings_general_software_notices),
-                documentName);
+                path);
         startActivity(intent);
     }
 

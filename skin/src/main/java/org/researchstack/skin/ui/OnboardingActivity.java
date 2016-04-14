@@ -33,7 +33,6 @@ import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.task.SignInTask;
 import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.adapter.OnboardingPagerAdapter;
-import org.researchstack.skin.utils.JsonUtils;
 
 
 public class OnboardingActivity extends PinCodeActivity implements View.OnClickListener
@@ -80,8 +79,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         {
             StudyOverviewModel.Question consent = new StudyOverviewModel.Question();
             consent.setTitle(getString(R.string.rss_read_consent_doc));
-            int consentHtmlId = ResourceManager.getInstance().getConsentHtml();
-            consent.setDetails(getResources().getResourceEntryName(consentHtmlId));
+            consent.setDetails(ResourceManager.getInstance().getConsentHtml().getName());
             model.getQuestions().add(0, consent);
         }
 
@@ -138,8 +136,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
 
     private StudyOverviewModel parseStudyOverviewModel()
     {
-        int fileResId = ResourceManager.getInstance().getStudyOverviewSections();
-        return JsonUtils.loadClass(OnboardingActivity.this, StudyOverviewModel.class, fileResId);
+        return ResourceManager.getInstance().getStudyOverview().create(this);
     }
 
     @Override

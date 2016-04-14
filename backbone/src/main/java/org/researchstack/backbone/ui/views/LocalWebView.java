@@ -8,9 +8,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.ui.ViewVideoActivity;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.utils.LogExt;
+
+import java.io.File;
 
 public class LocalWebView extends WebView
 {
@@ -20,7 +23,7 @@ public class LocalWebView extends WebView
         void onTitleLoaded(String title);
     }
 
-    private static final String SCHEMA_LOCAL_HTML = "file:///android_res/raw/";
+    private static final String SCHEMA_LOCAL_HTML = "file:///android_asset/";
 
     private LocalWebViewCallbacks callbacks;
 
@@ -55,8 +58,8 @@ public class LocalWebView extends WebView
                 // Check if we should load local html / video
                 if(url.startsWith(SCHEMA_LOCAL_HTML))
                 {
-                    String file = url.substring(SCHEMA_LOCAL_HTML.length(), url.length());
-                    String fileName = file.split("\\.")[0];
+                    int index = url.lastIndexOf(File.separatorChar);
+                    String file = url.substring(index + 1);
 
                     if (file.endsWith(".pdf"))
                     {
@@ -66,12 +69,17 @@ public class LocalWebView extends WebView
                     }
                     else if (file.endsWith(".mp4"))
                     {
-                        Intent intent = ViewVideoActivity.newIntent(getContext(), fileName);
+                        String fileName = file.substring(0, file.lastIndexOf("."));
+                        String absVideoFilePath = ResourcePathManager.getInstance()
+                                .generatePath(ResourcePathManager.Resource.TYPE_MP4, fileName);
+                        Intent intent = ViewVideoActivity.newIntent(getContext(), absVideoFilePath);
                         getContext().startActivity(intent);
                     }
                     else
                     {
-                        Intent intent = ViewWebDocumentActivity.newIntent(getContext(), null, fileName);
+                        Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
+                                null,
+                                url);
                         getContext().startActivity(intent);
                     }
                 }

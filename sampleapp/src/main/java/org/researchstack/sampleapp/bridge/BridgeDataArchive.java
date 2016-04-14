@@ -5,6 +5,7 @@ import android.util.Base64;
 
 import com.google.gson.Gson;
 
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.utils.FileUtils;
 import org.researchstack.backbone.utils.LogExt;
 import org.spongycastle.cms.CMSAlgorithm;
@@ -59,7 +60,7 @@ public class BridgeDataArchive
         outputStream = new ZipOutputStream(new BufferedOutputStream(dest));
     }
 
-    public UploadRequest finishAndEncrypt(Context context, int publicKeyId, File baseDir) throws IOException
+    public UploadRequest finishAndEncrypt(Context context, ResourcePathManager.Resource publicKey, File baseDir) throws IOException
     {
         try
         {
@@ -81,7 +82,7 @@ public class BridgeDataArchive
         {
             InputStream encryptedInputStream = getEncryptedInputStream(context,
                     tempFile,
-                    publicKeyId);
+                    publicKey);
 
             File encryptedFile = new File(baseDir, filename);
 
@@ -157,7 +158,7 @@ public class BridgeDataArchive
     }
 
     @NonNull
-    private InputStream getEncryptedInputStream(Context context, File tempFile, int publicKeyId)
+    private InputStream getEncryptedInputStream(Context context, File tempFile,  ResourcePathManager.Resource publicKey)
     {
         // Creating a CMS encrypted input stream that only recipients can decrypt
         CMSEnvelopedDataGenerator gen = new CMSEnvelopedDataGenerator();
@@ -166,7 +167,7 @@ public class BridgeDataArchive
         try
         {
             CertificateFactory factory = new CertificateFactory();
-            InputStream keyInputStream = context.getResources().openRawResource(publicKeyId);
+            InputStream keyInputStream = publicKey.open(context);
             X509Certificate cert = (X509Certificate) factory.engineGenerateCertificate(
                     keyInputStream);
             JceKeyTransRecipientInfoGenerator recipientInfoGenerator = new JceKeyTransRecipientInfoGenerator(
