@@ -35,6 +35,9 @@ android {
     resourcePrefix 'rss_'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 ext {
     bintrayRepo = 'ResearchStack'
     bintrayName = 'Skin'
@@ -51,9 +54,9 @@ ext {
     libraryVersion = version
 
     userOrgName = 'researchstack'
-    developerId = 'bmcd87'
-    developerName = 'Brad McDermott'
-    developerEmail = 'brad@touchlab.co'
+    developerId = properties.getProperty("bintray.user")
+    developerName = properties.getProperty("bintray.developerName")
+    developerEmail = properties.getProperty("bintray.developerEmail")
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
@@ -147,10 +150,6 @@ artifacts {
     archives javadocJar
     archives sourcesJar
 }
-
-// Bintray
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 bintray {
     user = properties.getProperty("bintray.user")

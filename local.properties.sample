@@ -1,0 +1,6 @@
+# add the following lines to your local.properties file in the project root in order to use
+# the uploadBintray gradle task
+bintray.user=BINTRAY_USERNAME
+bintray.apikey=BINTRAY_API_KEY
+bintray.developerName=NAME
+bintray.developerEmail=EMAIL
