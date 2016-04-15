@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="CoreAppTheme" parent="Theme.Backbone">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/rsb_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/rsb_colorPrimaryDark</item>
+        <item name="colorAccent">@color/rsb_colorAccent</item>
+        <item name="alertDialogTheme">@style/CoreAppTheme.Dialog</item>
+    </style>
+
+    <style name="CoreAppTheme.Dialog" parent="Theme.AppCompat.Light">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowSoftInputMode">stateAlwaysVisible</item>
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/rsb_colorAccent</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/rsb_black</item>
+        <!-- Used for the background -->
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+</resources>
