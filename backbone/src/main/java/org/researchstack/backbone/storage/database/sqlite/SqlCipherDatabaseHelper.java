@@ -23,7 +23,18 @@ import co.touchlab.squeaky.db.sqlcipher.SQLiteDatabaseImpl;
 import co.touchlab.squeaky.db.sqlcipher.SqueakyOpenHelper;
 import co.touchlab.squeaky.table.TableUtils;
 
-
+/**
+ * A simple database implementation of {@link AppDatabase} that uses SqlCipher for encryption and
+ * only has tables for saving TaskResults and StepResults. You can extend this class and override
+ * onCreate and onUpgrade to add your own tables to those provided by this implementation.
+ * <p>
+ * Uses Squeaky, a simple ORM, which uses annotation processing on the model classes to create the
+ * tables and add methods for database operations. <b>If you create a subclass of this database
+ * class and add more models, you will need to add the annotation processor to your app's
+ * build.gradle file:</b> (See the Sample App for details, but add `apt
+ * 'co.touchlab.squeaky:squeaky-processor:0.4.0'` to your dependencies and add android-apt:
+ * https://bitbucket.org/hvisser/android-apt)
+ */
 public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDatabase
 {
     public static final String DEFAULT_NAME    = "appdb";
@@ -103,14 +114,14 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
     }
 
     @Override
-    public TaskResult loadLatestTaskResult(String taskId)
+    public TaskResult loadLatestTaskResult(String taskIdentifier)
     {
-        LogExt.d(getClass(), "loadTaskResults() id: " + taskId);
+        LogExt.d(getClass(), "loadTaskResults() id: " + taskIdentifier);
 
         try
         {
             List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
-                    taskId).orderBy(TaskRecord.COMPLETED + " DESC").limit(1).list();
+                    taskIdentifier).orderBy(TaskRecord.COMPLETED + " DESC").limit(1).list();
 
             if(taskRecords.size() == 0)
             {
@@ -129,15 +140,15 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
     }
 
     @Override
-    public List<TaskResult> loadTaskResults(String taskId)
+    public List<TaskResult> loadTaskResults(String taskIdentifier)
     {
-        LogExt.d(getClass(), "loadTaskResults() id: " + taskId);
+        LogExt.d(getClass(), "loadTaskResults() id: " + taskIdentifier);
 
         try
         {
             List<TaskResult> results = new ArrayList<>();
             List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
-                    taskId).list();
+                    taskIdentifier).list();
 
             for(TaskRecord record : taskRecords)
             {
@@ -156,15 +167,15 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
     }
 
     @Override
-    public List<StepResult> loadStepResults(String stepResultId)
+    public List<StepResult> loadStepResults(String stepIdentifier)
     {
-        LogExt.d(getClass(), "loadStepResults() id: " + stepResultId);
+        LogExt.d(getClass(), "loadStepResults() id: " + stepIdentifier);
 
         try
         {
             List<StepResult> results = new ArrayList<>();
             List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.STEP_ID,
-                    stepResultId).list();
+                    stepIdentifier).list();
 
             for(StepRecord stepRecord : stepRecords)
             {
