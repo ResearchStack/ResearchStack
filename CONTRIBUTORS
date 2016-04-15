@@ -1,0 +1,49 @@
+## Deploying libraries to MavenLocal
+
+- When working locally on backbone or skin, it can help to deploy the libraries to a local maven repo for testing
+- Open the **ResearchStack project** in Android Studio
+- Go to Run > Edit Configurations...
+- Add new configuration (plus icon)
+- Choose Gradle as the configuration type
+- Set the name to "Deploy locally" or something
+- Choose the **/build.gradle** file as the "Gradle project" field
+- Add "install" to the tasks field
+- Save
+- Run that configuration and check ~/.m2 to see if it deployed
+- Open your own Android Studio project and follow the instructions below to add these newly-deployed libraries as dependencies.
+
+## Using the local library in a gradle Android app
+
+After deploying the library module(s) that you need to your local machine using the above instructions, add it to your Android Studio project by doing this:
+
+In the build.gradle file in your app folder, add the following to your root build.gradle so that it knows to search the ~/.m2 directory for dependencies:
+
+```
+allprojects {
+    repositories {
+        ...
+        mavenLocal()
+        ...
+    }
+}
+```
+
+Then add the following entry to your dependencies in your app build.gradle:
+
+```
+dependencies {
+    ...
+    compile 'org.researchstack:backbone:VERSION'
+    // or (if using Skin, you don't need Backbone since it is included)
+    compile 'org.researchstack:skin:VERSION'
+    ...
+}
+```
+
+## Running tests
+
+Tests are located in the /backbone/src/test or /skin/src/test folder. Run the tests in Android Studio by right clicking on 'backbone' or 'skin' and clicking "Run 'All Tests'".
+
+## Code Style
+
+Contributors should import code_style_settings.jar into Android Studio and use the 'researchstack' Java code style. Make sure to 'Reformat Code' and 'Optimize Imports' using this style (but don't 'Reorganize Code') before submitting a pull request.
