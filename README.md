@@ -1,6 +1,6 @@
 # ResearchStack
 
-ResearchStack is an SDK and UX framework for building research study apps on Android. This is very much a work in progress that will constantly be changing and breaking anything you build on top of it.
+ResearchStack is an SDK and UX framework for building research study apps on Android.
 
 ## Download
 Add one or both to your app/build.gradle:
@@ -19,71 +19,24 @@ allprojects {
 }
 ```
 
-###Backbone
+##Backbone
 - The core building blocks of Research Stack
 - Tasks, Steps, and Results
 - Consent
 - File/Database Storage and Encryption
 
-###Skin
+##Skin
 - Framework/template that pulls together Backbone components to take most of the work out of building a ResearchStack app
 - Designed to work with minor changes to an existing ResearchKit iOS app's resources
 
-###Backbone App
-- An example app using only the Backbone module
-- Shows how to present a Consent document and a survey to the user
-- Shows how to use StorageAccess to save and load consent, surveys, and files
+##Examples
+- [Backbone Example App](https://github.com/ResearchStack/BackboneExampleApp)
+  * Uses only backbone features.
+  * Shows how to create simple tasks (consent and a survey), present them to the user, and process the results.
+- [Sample App](https://github.com/ResearchStack/SampleApp)
+  * Shows how to create a ResearchStack app using the skin framework.
 
-###Sample App
-- An example app using the Skin module
-- Currently using resources from the Asthma ResearchKit app
-
-## Deploying libraries to MavenLocal
-
-- The libraries are not on jcenter or maven central yet, so you need to deploy them to your local machine to use in other projects
-- Open the **ResearchStack project** in Android Studio
-- Go to Run > Edit Configurations...
-- Add new configuration (plus icon)
-- Choose Gradle as the configuration type
-- Set the name to "Deploy Backbone locally" or something
-- Choose the **/backbone/build.gradle** file as the "Gradle project" field
-- Add "install" to the tasks field
-- Save
-- Run that configuration and check ~/.m2 to see if it deployed
-- Repeat with **/skin/build.gradle**
-- Open your own Android Studio project and follow the instructions below to add these newly-deployed libraries as dependencies.
-
-## Using the library in a gradle Android app
-
-After deploying the library module(s) that you need to your local machine using the above instructions, add it to your Android Studio project by doing this:
-
-In the build.gradle file in your app folder, add the following to your root build.gradle so that it knows to search the ~/.m2 directory for dependencies:
-
-```
-allprojects {
-    repositories {
-        ...
-        mavenLocal()
-        ...
-    }
-}
-```
-
-Then add the following entry to your dependencies in your app build.gradle:
-
-```
-dependencies {
-    ...
-    compile 'org.researchstack:backbone:0.0.3'
-    // or (if using Skin, you don't need Backbone since it is included)
-    compile 'org.researchstack:skin:0.0.3'
-    ...
-}
-```
-
-You will need to add some ResearchStack Activities to your apps AndroidManifest.xml. Look at Backbone App or Sample App's manifest for an example.
-
-## Converting an existing ResearchKit AppCore iOS app to ResearchStack's Skin
+## Things to look out for when converting your ResearchKit™ app
 
 - Assets can be dragged and dropped into the assets folder of your project. 
 - Please make sure to validate and check for malformed JSON
@@ -101,13 +54,9 @@ Tasks and Steps should function very similarly to Apple's ResearchKit. Extend Ta
 
 If you want to implement a custom Step, create a step and make getStepLayoutClass() return the Class of your own extension of StepLayout. This provides the View for your custom step and is responsible for creating the StepResult and passing it back up to the ViewTaskActivity.
 
-If you just want a custom QuestionStep with an answer type that isn't supported yet, you will need to just create your own AnswerFormat subclass. All QuestionSteps use the same StepLayout, but the AnswerFormat provides a StepBody class that determines what the inner UI for the question looks like (date picker, text field, slider, etc). Right now this is a weird hybrid of the way ResearchKit does things and the way ResearchStack does things, so it will probably change and break any custom steps you make at some point.
+If you just want a custom QuestionStep with an answer type that isn't supported yet, you will need to just create your own AnswerFormat subclass. All QuestionSteps use the same StepLayout, but the AnswerFormat provides a StepBody class that determines what the inner UI for the question looks like (date picker, text field, slider, etc).
 
-## Code Style
-
-Contributors should import code_style_settings.jar into Android Studio and use the 'researchstack' Java code style. Make sure to 'Reformat Code' and 'Optimize Imports' using this style (but don't 'Reorganize Code') before submitting a pull request.
-
-## 3<sup>rd</sup>-party library disclosures
+## Third-party libraries used
 
 <b>
 com.android.support:appcompat-v7<br />
@@ -179,19 +128,11 @@ com.jakewharton.rxbinding:rxbinding
 - RxJava binding APIs for Android UI widgets from the platform and support libraries. Provides helper methods that wrap API methods and returns Rx Observables
 
 <b>
-com.madgag.spongycastle:core<br />
-com.madgag.spongycastle:pkix<br />
-com.madgag.spongycastle:prov
-</b>
-
-- Spongy Castle is a Bouncy Castle implementation for Android. These libraries are used during data upload to Sage Bridge CMS.
-
-<b>
 com.squareup.okhttp3:logging-interceptor
 com.squareup.retrofit2:adapter-rxjava
 com.squareup.retrofit2:converter-gson
 com.squareup.retrofit2:retrofit
 </b>
 
-- Networking libraries used for communication w/ Sage Bridge REST API
+- Networking libraries used for network interface
     
