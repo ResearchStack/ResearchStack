@@ -259,17 +259,12 @@ public class MainActivity extends PinCodeActivity
                 .getAppDatabase()
                 .loadLatestTaskResult(CONSENT);
 
-        String fullName = "";
-        //            String fullName = ((StepResult<String>) result.getStepResult(SIGNATURE_FORM_STEP)
-        //                    .getResultForIdentifier(NAME)).getResult();
-
         String signatureBase64 = (String) result.getStepResult(SIGNATURE)
                 .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE);
 
         String signatureDate = (String) result.getStepResult(SIGNATURE)
                 .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
 
-        ((TextView) findViewById(R.id.consented_name)).setText(fullName);
         ((TextView) findViewById(R.id.consented_date)).setText(signatureDate);
 
         byte[] signatureBytes = Base64.decode(signatureBase64, Base64.DEFAULT);
@@ -309,9 +304,6 @@ public class MainActivity extends PinCodeActivity
         multiStep.setTitle("Select multiple");
         multiStep.setAnswerFormat(multiFormat);
         multiStep.setOptional(false);
-
-        // off until formstep result saving is fixed
-        //        FormStep formStep = createFormStep();
 
         // Create a task wrapping the steps.
         OrderedTask task = new OrderedTask(SAMPLE_SURVEY, instructionStep, ageStep, dateStep,

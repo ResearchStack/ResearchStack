@@ -12,7 +12,7 @@ import org.researchstack.backbone.storage.file.SimpleFileAccess;
 import org.researchstack.backbone.storage.file.UnencryptedProvider;
 
 
-public class CoreApplication extends Application
+public class BackboneApplication extends Application
 {
     @Override
     public void onCreate()
@@ -24,9 +24,6 @@ public class CoreApplication extends Application
 
         // Customize encryption preferences
         EncryptionProvider encryptionProvider = new UnencryptedProvider(); // No pin, no encryption
-        // pin/encryption only working properly in Skin right now, fix it (onDataReady called when no pincode has been create
-        // EncryptionProvider encryptionProvider = new UnencryptedPinProvider(); // Pin, no encryption
-        // EncryptionProvider encryptionProvider = new AesProvider(); // Pin + AES encryption
 
         // If you have special file handling needs, implement FileAccess
         FileAccess fileAccess = new SimpleFileAccess();
