@@ -9,7 +9,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/CoreAppTheme">
+        android:theme="@style/Theme.BackboneApp">
 
         <activity android:name="org.researchstack.backboneapp.MainActivity">
             <intent-filter>
@@ -21,11 +21,14 @@
 
         <activity
             android:name="org.researchstack.backbone.ui.ViewTaskActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.BackboneApp.Survey"
         />
 
         <activity
             android:name="org.researchstack.backbone.ui.ViewWebDocumentActivity"
             android:label="@string/app_name"
+            android:theme="@style/Theme.BackboneApp.Survey"
         />
 
     </application>

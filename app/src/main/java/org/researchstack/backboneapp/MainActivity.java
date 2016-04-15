@@ -4,11 +4,16 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.answerformat.AnswerFormat;
@@ -71,13 +76,17 @@ public class MainActivity extends PinCodeActivity
     // Views
     private AppCompatButton consentButton;
     private AppCompatButton surveyButton;
-    private AppCompatButton clearButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
 
         consentButton = (AppCompatButton) findViewById(R.id.consent_button);
         consentButton.setOnClickListener(new View.OnClickListener()
@@ -88,6 +97,7 @@ public class MainActivity extends PinCodeActivity
                 launchConsent();
             }
         });
+
         surveyButton = (AppCompatButton) findViewById(R.id.survey_button);
         surveyButton.setOnClickListener(new View.OnClickListener()
         {
@@ -97,16 +107,28 @@ public class MainActivity extends PinCodeActivity
                 launchSurvey();
             }
         });
-        clearButton = (AppCompatButton) findViewById(R.id.clear_button);
-        clearButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                clearData();
-            }
-        });
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (item.getItemId() == R.id.menu_clear)
+        {
+            clearData();
+            Toast.makeText(this, R.string.menu_data_cleared, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else
+        {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private void clearData()
@@ -115,7 +137,7 @@ public class MainActivity extends PinCodeActivity
         appPrefs.setHasSurveyed(false);
         appPrefs.setHasConsented(false);
 
-        finish();
+        initViews();
     }
 
     @Override
@@ -128,24 +150,43 @@ public class MainActivity extends PinCodeActivity
     private void initViews()
     {
         AppPrefs prefs = AppPrefs.getInstance(this);
+
+        View lblConsentedDate = findViewById(R.id.consented_date_lbl);
+        TextView consentedDate = (TextView)findViewById(R.id.consented_date);
+        ImageView consentedSig = (ImageView) findViewById(R.id.consented_signature);
+
         if(prefs.hasConsented())
         {
-            consentButton.setEnabled(false);
-            consentButton.setText(R.string.consent_button_done);
+            consentButton.setVisibility(View.GONE);
             surveyButton.setEnabled(true);
 
-            printConsentInfo();
+            consentedSig.setVisibility(View.VISIBLE);
+            consentedDate.setVisibility(View.VISIBLE);
+            lblConsentedDate.setVisibility(View.VISIBLE);
+
+            printConsentInfo(consentedDate, consentedSig);
         }
         else
         {
-            consentButton.setEnabled(true);
-            consentButton.setText(R.string.consent_button);
+            consentButton.setVisibility(View.VISIBLE);
             surveyButton.setEnabled(false);
+
+            consentedSig.setVisibility(View.INVISIBLE);
+            consentedSig.setImageBitmap(null);
+            consentedDate.setVisibility(View.INVISIBLE);
+            lblConsentedDate.setVisibility(View.INVISIBLE);
         }
+
+        TextView surveyAnswer = (TextView) findViewById(R.id.survey_results);
 
         if(prefs.hasSurveyed())
         {
-            printSurveyInfo();
+            surveyAnswer.setVisibility(View.VISIBLE);
+            printSurveyInfo(surveyAnswer);
+        }
+        else
+        {
+            surveyAnswer.setVisibility(View.GONE);
         }
     }
 
@@ -180,6 +221,7 @@ public class MainActivity extends PinCodeActivity
 
         // ...add more sections as needed, then create a visual consent step
         ConsentVisualStep visualStep = new ConsentVisualStep(VISUAL_CONSENT_IDENTIFIER);
+        visualStep.setStepTitle(R.string.rsb_consent);
         visualStep.setSection(section1);
         visualStep.setNextButtonString(getString(R.string.rsb_next));
 
@@ -253,7 +295,7 @@ public class MainActivity extends PinCodeActivity
         }
     }
 
-    private void printConsentInfo()
+    private void printConsentInfo(TextView consentedDate, ImageView consentedSig)
     {
         TaskResult result = StorageAccess.getInstance()
                 .getAppDatabase()
@@ -265,10 +307,10 @@ public class MainActivity extends PinCodeActivity
         String signatureDate = (String) result.getStepResult(SIGNATURE)
                 .getResultForIdentifier(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE);
 
-        ((TextView) findViewById(R.id.consented_date)).setText(signatureDate);
+        consentedDate.setText(signatureDate);
 
         byte[] signatureBytes = Base64.decode(signatureBase64, Base64.DEFAULT);
-        ((ImageView) findViewById(R.id.consented_signature)).setImageBitmap(BitmapFactory.decodeByteArray(
+        consentedSig.setImageBitmap(BitmapFactory.decodeByteArray(
                 signatureBytes,
                 0,
                 signatureBytes.length));
@@ -282,21 +324,26 @@ public class MainActivity extends PinCodeActivity
         InstructionStep instructionStep = new InstructionStep(INSTRUCTION,
                 "Selection Survey",
                 "This survey can help us understand your eligibility for the fitness study");
+        instructionStep.setStepTitle(R.string.survey);
 
         TextAnswerFormat format = new TextAnswerFormat();
         QuestionStep ageStep = new QuestionStep(NAME, "What is your name?", format);
+        ageStep.setStepTitle(R.string.survey);
 
         DateAnswerFormat dateFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
         QuestionStep dateStep = new QuestionStep(DATE, "Enter a date", dateFormat);
+        dateStep.setStepTitle(R.string.survey);
 
         // Create a Boolean step to include in the task.
         QuestionStep booleanStep = new QuestionStep(NUTRITION);
+        booleanStep.setStepTitle(R.string.survey);
         booleanStep.setTitle("Do you take nutritional supplements?");
         booleanStep.setAnswerFormat(new BooleanAnswerFormat(getString(R.string.rsb_yes),
                 getString(R.string.rsb_no)));
         booleanStep.setOptional(false);
 
         QuestionStep multiStep = new QuestionStep(MULTI_STEP);
+        multiStep.setStepTitle(R.string.survey);
         AnswerFormat multiFormat = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.MultipleChoice,
                 new Choice<>("Zero", 0),
                 new Choice<>("One", 1),
@@ -367,7 +414,7 @@ public class MainActivity extends PinCodeActivity
         initViews();
     }
 
-    private void printSurveyInfo()
+    private void printSurveyInfo(TextView surveyAnswer)
     {
         TaskResult taskResult = StorageAccess.getInstance()
                 .getAppDatabase()
@@ -379,6 +426,7 @@ public class MainActivity extends PinCodeActivity
             StepResult stepResult = taskResult.getStepResult(id);
             results += id + ": " + stepResult.getResult().toString() + "\n";
         }
-        ((TextView) findViewById(R.id.survey_results)).setText(results);
+
+        surveyAnswer.setText(results);
     }
 }
