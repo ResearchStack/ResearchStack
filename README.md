@@ -2,6 +2,23 @@
 
 ResearchStack is an SDK and UX framework for building research study apps on Android. This is very much a work in progress that will constantly be changing and breaking anything you build on top of it.
 
+## Download
+Add one or both to your app/build.gradle:
+```groovy
+compile 'org.researchstack:backbone:1.0.0.rc1'
+compile 'org.researchstack:skin:1.0.0.rc1'
+```
+
+You may also need to add the following source repos to your project's build.gradle:
+```groovy
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" } // for MPAndroidChard dependency, not on jcenter yet
+    }
+}
+```
+
 ###Backbone
 - The core building blocks of Research Stack
 - Tasks, Steps, and Results
@@ -68,7 +85,6 @@ You will need to add some ResearchStack Activities to your apps AndroidManifest.
 
 ## Converting an existing ResearchKit AppCore iOS app to ResearchStack's Skin
 
-This isn't well documented or even well implemented at this point, but this should get you started:
 - Assets can be dragged and dropped into the assets folder of your project. 
 - Please make sure to validate and check for malformed JSON
 - Please make sure your links define a url in your HTML. An empty HREF attribute will reload the same file in a different activity.
