@@ -27,7 +27,7 @@ allprojects {
 
 ##Skin
 - Framework/template that pulls together Backbone components to take most of the work out of building a ResearchStack app
-- Designed to work with minor changes to an existing ResearchKit iOS app's resources
+- Designed to work with minor changes to an existing ResearchKit™ iOS app's resources
 
 ##Examples
 - [Backbone Example App](https://github.com/ResearchStack/BackboneExampleApp)
@@ -50,7 +50,7 @@ allprojects {
 
 ## Tasks and Steps
 
-Tasks and Steps should function very similarly to Apple's ResearchKit. Extend Task if you need to do something different with step order that's not in OrderedTask or SmartSurveyTask.
+Tasks and Steps should function very similarly to Apple's ResearchKit™. Extend Task if you need to do something different with step order that's not in OrderedTask or SmartSurveyTask.
 
 If you want to implement a custom Step, create a step and make getStepLayoutClass() return the Class of your own extension of StepLayout. This provides the View for your custom step and is responsible for creating the StepResult and passing it back up to the ViewTaskActivity.
 
