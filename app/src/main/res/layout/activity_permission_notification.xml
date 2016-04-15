@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".NotificationPermissionActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/rsb_layout_toolbar"/>
+
+    <TextView
+        android:id="@+id/quiz_result_title"
+        style="@style/Backbone.Survey.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:paddingBottom="@dimen/rsb_padding_wedge"
+        android:paddingTop="@dimen/rsb_padding_wedge"
+        android:text="@string/rss_permission_notification_title"
+    />
+
+    <TextView
+        android:id="@+id/quiz_result_summary"
+        style="@style/Backbone.Survey.Summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quiz_result_title"
+        android:layout_marginTop="0dp"
+        android:paddingBottom="@dimen/rsb_padding_medium"
+        android:paddingTop="@dimen/rsb_padding_small"
+        android:text="@string/rss_permission_notification_desc_long"
+    />
+
+    <org.researchstack.backbone.ui.views.SubmitBar
+        android:id="@+id/submit_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:positiveActionTitle="@string/grant"
+        app:negativeActionTitle="@string/rsb_cancel"/>
+
+</RelativeLayout>

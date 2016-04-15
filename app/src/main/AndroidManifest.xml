@@ -1,0 +1,122 @@
+<manifest package="org.researchstack.sampleapp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <application
+        android:name="org.researchstack.sampleapp.SampleApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Sample">
+
+        <activity
+            android:name="org.researchstack.skin.ui.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.researchstack.skin.ui.MainActivity"
+            android:theme="@style/Theme.Sample.Main"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+
+
+        <activity
+            android:name="org.researchstack.skin.ui.OnboardingActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Onboarding"
+        />
+
+        <activity
+            android:name="org.researchstack.backbone.ui.ViewTaskActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Sample.Survey"
+        />
+
+        <activity
+            android:name="org.researchstack.skin.ui.SignUpTaskActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Survey"
+        />
+
+        <activity
+            android:name="org.researchstack.skin.ui.ConsentTaskActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Survey"
+        />
+
+        <activity
+            android:name="org.researchstack.skin.ui.EmailVerificationActivity"
+            android:label="@string/rss_confirm"
+            android:theme="@style/Theme.Sample.Survey"
+        />
+
+        <activity
+            android:name="org.researchstack.backbone.ui.ViewWebDocumentActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Survey"
+        />
+
+        <activity
+            android:name="org.researchstack.backbone.ui.ViewVideoActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sample.Video"
+        />
+
+        <activity
+            android:name="org.researchstack.sampleapp.SampleSettingsActivity"
+            android:label="@string/rss_settings"
+            android:theme="@style/Theme.Sample.Settings"/>
+
+        <activity
+            android:name="org.researchstack.skin.ui.LearnActivity"
+            android:label="@string/rss_learn"/>
+
+        <activity
+            android:name="org.researchstack.sampleapp.NotificationPermissionActivity"
+            android:label="@string/sample_notification_example"/>
+
+        <receiver
+            android:name="org.researchstack.skin.notification.TaskNotificationReceiver"
+            android:enabled="true"
+            android:exported="false"
+        />
+
+        <receiver
+            android:name="org.researchstack.skin.notification.DeviceBootReceiver"
+            android:enabled="true"
+            android:exported="false"
+        >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="org.researchstack.skin.notification.TaskAlertReceiver"
+            android:enabled="true"
+            android:exported="false"
+        >
+            <intent-filter>
+                <action android:name="org.researchstack.skin.notification.ALERT_CREATE"/>
+                <action android:name="org.researchstack.skin.notification.ALERT_CREATE_ALL"/>
+                <action android:name="org.researchstack.skin.notification.ALERT_DELETE"/>
+                <action android:name="org.researchstack.skin.notification.ALERT_DELETE_ALL"/>
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

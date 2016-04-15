@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Sample.IconTabLayout" parent="@style/Widget.Backbone.IconTabLayout">
+        <item name="tabIconColor">@android:color/white</item>
+        <item name="tabIconIndicatorColor">@color/rsb_error</item>
+        <item name="tabTextColor">@color/tab_text_color</item>
+    </style>
+
+    <style name="Widget.Sample.SubmitBar" parent="@style/Widget.Backbone.SubmitBar"/>
+
+    <style name="Base.Widget.Sample.Toolbar" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.Sample.Toolbar.Title</item>
+    </style>
+
+    <style name="Widget.Sample.Toolbar" parent="@style/Base.Widget.Sample.Toolbar">
+        <item name="android:foreground">?android:windowContentOverlay</item>
+    </style>
+
+    <style name="Widget.Sample.Toolbar.Transparent" parent="@style/Base.Widget.Sample.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.Sample.Toolbar.Title.Transparent</item>
+    </style>
+
+    <style name="Widget.Sample.ActionButton.Overflow"
+           parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="Widget.Sample.Onboarding.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Widget.Sample.EmptyView" parent="@style/Widget.Backbone.EmptyView">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Widget.Sample.Toolbar.Title"
+           parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Widget.Sample.Toolbar.Title.Transparent">
+        <item name="android:textColor">@color/rsb_warm_gray</item>
+    </style>
+
+    <style name="PreferenceFragment.Sample" parent="@style/PreferenceFragment.Material">
+        <item name="android:divider">@null</item>
+    </style>
+
+</resources>

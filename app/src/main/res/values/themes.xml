@@ -1,0 +1,88 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="Theme.Sample" parent="Theme.Backbone">
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- Text Color for ActionBar and Text -->
+        <item name="alertDialogTheme">@style/Theme.Sample.Dialog</item>
+        <item name="android:alertDialogTheme">@style/Theme.Sample.Dialog</item>
+
+        <item name="android:textColor">@color/rsb_warm_gray</item>
+        <item name="android:textColorPrimary">@color/rsb_warm_gray</item>
+        <item name="android:textColorSecondary">@color/rsb_warm_gray</item>
+
+        <item name="colorControlNormal">@color/rsb_warm_gray</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:listDivider">@color/rsb_list_divider</item>
+
+        <item name="toolbarTheme">@style/Theme.Sample.Toolbar</item>
+        <item name="passcodeTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
+        <item name="icontablayoutStyle">@style/Widget.Sample.IconTabLayout</item>
+        <item name="submitbarStyle">@style/Widget.Sample.SubmitBar</item>
+        <item name="emptyviewStyle">@style/Widget.Sample.EmptyView</item>
+    </style>
+
+    <style name="Theme.Sample.Toolbar">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="toolbarStyle">@style/Widget.Sample.Toolbar</item>
+    </style>
+
+    <style name="Theme.Sample.Survey">
+        <item name="toolbarTheme">@style/Theme.Sample.Toolbar.Transparent</item>
+        <item name="colorPrimaryDark">@color/dark_gray</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="Theme.Sample.Toolbar.Transparent">
+        <item name="colorControlNormal">@color/rsb_warm_gray</item>
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="toolbarStyle">@style/Widget.Sample.Toolbar.Transparent</item>
+    </style>
+
+    <style name="Theme.Sample.Main">
+        <item name="toolbarTheme">@style/Theme.Sample.Toolbar.Main</item>
+    </style>
+
+    <style name="Theme.Sample.Toolbar.Main">
+        <item name="toolbarStyle">@style/Base.Widget.Sample.Toolbar</item>
+    </style>
+
+    <style name="Theme.Sample.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/rsb_warm_gray</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="Theme.Sample.Settings">
+        <item name="android:textColor">@color/text_color_settings_title</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@color/text_color_settings_summary</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="preferenceTheme">@style/Theme.Sample.Settings.Preference</item>
+    </style>
+
+    <style name="Theme.Sample.Settings.Preference"
+           parent="@style/PreferenceThemeOverlay.v14.Material">
+        <item name="preferenceFragmentCompatStyle">@style/PreferenceFragment.Sample</item>
+        <item name="preferenceFragmentStyle">@style/PreferenceFragment.Sample</item>
+    </style>
+
+    <style name="Theme.Sample.Splash">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="colorPrimaryDark">@color/rsb_warm_gray</item>
+    </style>
+
+    <style name="Theme.Sample.Onboarding">
+        <item name="android:windowBackground">@color/gray</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/dark_gray</item>
+    </style>
+
+    <style name="Theme.Sample.Video">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
+    </style>
+
+</resources>

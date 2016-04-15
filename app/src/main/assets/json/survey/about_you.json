@@ -1,0 +1,280 @@
+{
+  "identifier": "AboutYou",
+  "type": "Survey",
+  "name": "AboutYou",
+  "elements": [
+    {
+      "identifier": "ethnicity",
+      "prompt": "Ethnicity",
+      "uiHint": "MultiValueConstraints",
+      "guid": "854afd00-3d2b-41c2-9f36-17c72287810f",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "Hispanic/Latino"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "Non-Hispanic/Latino"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "I choose not to answer"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "race",
+      "prompt": "Race (check any that apply)",
+      "uiHint": "MultiValueConstraints",
+      "guid": "854aed00-3d2c-41a2-9f36-17b72287819b",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "allowMultiple": true,
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "Black/African American"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "Asian"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "American Indian or Alaskan Native"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 4,
+            "label": "Hawaiian or other Pacific Islander"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 5,
+            "label": "White"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 6,
+            "label": "Other"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 7,
+            "label": "I choose not to answer"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "Income",
+      "prompt": "Which of the following best describes the total annual income of all members of your household?",
+      "uiHint": "list",
+      "guid": "1992b80e-912c-4b05-b29b-5c35f02688b4",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "<$14,999"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "$15,000-21,999"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "$22,000-43,999"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 4,
+            "label": "$44,000-60,000"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 5,
+            "label": ">$60,000"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 6,
+            "label": "I don't know"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 7,
+            "label": "I choose not to answer"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "education",
+      "prompt": "What is the highest level of education you have completed?",
+      "uiHint": "MultiValueConstraints",
+      "guid": "854aed00-3d2c-41c2-9a36-17b72287819b",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "8th grade or less"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "More than 8th grade but did not graduate high school"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "High school graduate or equivalent"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 4,
+            "label": "Some college"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 5,
+            "label": "Graduate of Two Year College or Technical School"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 6,
+            "label": "Graduate of Four Year College"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 7,
+            "label": "Post graduate studies"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 8,
+            "label": "I choose not to answer"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "smoking_status",
+      "prompt": "What is your smoking status?",
+      "uiHint": "MultiValueConstraints",
+      "guid": "854cef00-3d2c-41c2-9b36-17b72287819b",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "Never (<100 Cigarettes in lifetime)"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "Current"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "Former"
+          }
+        ],
+        "rules": [
+          {
+            "operator": "eq",
+            "skipTo": "health_insurance",
+            "type": "SurveyRule",
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "avg_cigarettes",
+      "prompt": "On average, how many cigarettes per day did you smoke daily?",
+      "uiHint": "numberfield",
+      "guid": "BE571E9D-6CE8-4C09-92EC-F38ECF5B4BDD",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "type": "IntegerConstraints",
+        "maxValue": 250,
+        "minValue": 0
+      }
+    },
+    {
+      "identifier": "smoking_years",
+      "prompt": "How many years in total did you smoke?",
+      "uiHint": "numberfield",
+      "guid": "BE571E9D-2BE8-4C09-92EC-F38ECF5B4BDD",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "type": "IntegerConstraints",
+        "maxValue": 125,
+        "minValue": 0
+      }
+    },
+    {
+      "identifier": "health_insurance",
+      "prompt": "Do you have health insurance?",
+      "uiHint": "MultiValueConstraints",
+      "guid": "854fff00-3d2c-41c2-9b36-17b72287819b",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "Private (bought by you or your employer)"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "Public (Medicare or Medicaid)"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "I have no health insurance"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 4,
+            "label": "I choose not to answer"
+          }
+        ]
+      }
+    }
+  ]
+}
