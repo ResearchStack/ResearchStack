@@ -30,9 +30,6 @@ allprojects {
 - Designed to work with minor changes to an existing ResearchKit™ iOS app's resources
 
 ##Examples
-- [Backbone Example App](https://github.com/ResearchStack/BackboneExampleApp)
-  * Uses only backbone features.
-  * Shows how to create simple tasks (consent and a survey), present them to the user, and process the results.
 - [Sample App](https://github.com/ResearchStack/SampleApp)
   * Shows how to create a ResearchStack app using the skin framework.
 
