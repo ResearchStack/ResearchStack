@@ -99,14 +99,14 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     }
 
     @Override
-    public TaskResult loadLatestTaskResult(String taskId)
+    public TaskResult loadLatestTaskResult(String taskIdentifier)
     {
-        LogExt.d(getClass(), "loadTaskResults() id: " + taskId);
+        LogExt.d(getClass(), "loadTaskResults() id: " + taskIdentifier);
 
         try
         {
             List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
-                    taskId).orderBy(TaskRecord.COMPLETED + " DESC").limit(1).list();
+                    taskIdentifier).orderBy(TaskRecord.COMPLETED + " DESC").limit(1).list();
 
             if(taskRecords.size() == 0)
             {
@@ -125,15 +125,15 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     }
 
     @Override
-    public List<TaskResult> loadTaskResults(String taskId)
+    public List<TaskResult> loadTaskResults(String taskIdentifier)
     {
-        LogExt.d(getClass(), "loadTaskResults() id: " + taskId);
+        LogExt.d(getClass(), "loadTaskResults() id: " + taskIdentifier);
 
         try
         {
             List<TaskResult> results = new ArrayList<>();
             List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
-                    taskId).list();
+                    taskIdentifier).list();
 
             for(TaskRecord record : taskRecords)
             {
@@ -152,15 +152,15 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
     }
 
     @Override
-    public List<StepResult> loadStepResults(String stepResultId)
+    public List<StepResult> loadStepResults(String stepIdentifier)
     {
-        LogExt.d(getClass(), "loadStepResults() id: " + stepResultId);
+        LogExt.d(getClass(), "loadStepResults() id: " + stepIdentifier);
 
         try
         {
             List<StepResult> results = new ArrayList<>();
             List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.STEP_ID,
-                    stepResultId).list();
+                    stepIdentifier).list();
 
             for(StepRecord stepRecord : stepRecords)
             {
