@@ -23,7 +23,6 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
@@ -150,9 +149,13 @@ public class ConsentTask extends OrderedTask
         for(int i = 0, size = doc.getSections().size(); i < size; i++)
         {
             ConsentSection section = doc.getSections().get(i);
-            String htmlFilePath = ResourceManager.getInstance()
-                    .generatePath(ResourceManager.Resource.TYPE_HTML, section.getHtmlContent());
-            section.setContent(ResourceManager.getResourceAsString(ctx, htmlFilePath));
+
+            if (!TextUtils.isEmpty(section.getHtmlContent()))
+            {
+                String htmlFilePath = ResourceManager.getInstance()
+                        .generatePath(ResourceManager.Resource.TYPE_HTML, section.getHtmlContent());
+                section.setHtmlContent(ResourceManager.getResourceAsString(ctx, htmlFilePath));
+            }
 
             ConsentVisualStep step = new ConsentVisualStep("consent_" + i);
             step.setSection(section);
