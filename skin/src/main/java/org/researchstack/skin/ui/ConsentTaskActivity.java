@@ -3,15 +3,15 @@ import android.content.Context;
 import android.content.Intent;
 
 import org.researchstack.backbone.StorageAccess;
+import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
-import org.researchstack.skin.TaskProvider;
 
 public class ConsentTaskActivity extends ViewTaskActivity
 {
-    public static Intent newIntent(Context context)
+    public static Intent newIntent(Context context, Task task)
     {
         Intent intent = new Intent(context, ConsentTaskActivity.class);
-        intent.putExtra(EXTRA_TASK, TaskProvider.getInstance().get(TaskProvider.TASK_ID_CONSENT));
+        intent.putExtra(EXTRA_TASK, task);
         return intent;
     }
 

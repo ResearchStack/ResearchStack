@@ -228,7 +228,8 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             PassCodeCreationStep step = new PassCodeCreationStep(OnboardingTask.SignUpPassCodeCreationStepIdentifier,
                     R.string.rss_passcode);
             OrderedTask task = new OrderedTask("PasscodeTask", step);
-            startActivityForResult(ViewTaskActivity.newIntent(this, task), REQUEST_CODE_PASSCODE);
+            startActivityForResult(ConsentTaskActivity.newIntent(this, task),
+                    REQUEST_CODE_PASSCODE);
         }
         else
         {
