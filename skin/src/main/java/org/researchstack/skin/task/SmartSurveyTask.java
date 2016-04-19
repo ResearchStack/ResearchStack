@@ -231,7 +231,7 @@ public class SmartSurveyTask extends Task implements Serializable
     public String getTitleForStep(Context context, Step step)
     {
         int currentIndex = staticStepIdentifiers.indexOf(step.getIdentifier()) + 1;
-        return context.getString(R.string.rss_format_step_title,
+        return context.getString(R.string.rsb_format_step_title,
                 currentIndex,
                 staticStepIdentifiers.size());
     }
