@@ -255,6 +255,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             finish();
 
             AppPrefs.getInstance(this).setSkippedOnboarding(false);
+            AppPrefs.getInstance(this).setOnboardingComplete(true);
 
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String email = (String) result.getStepResult(OnboardingTask.SignInStepIdentifier)
@@ -281,6 +282,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             finish();
 
             AppPrefs.getInstance(this).setSkippedOnboarding(false);
+            AppPrefs.getInstance(this).setOnboardingComplete(true);
 
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String email = (String) result.getStepResult(OnboardingTask.SignUpStepIdentifier)
