@@ -141,7 +141,7 @@ public class EmailVerificationActivity extends PinCodeActivity
                     progress.animate()
                             .alpha(0)
                             .withEndAction(() -> progress.setVisibility(View.GONE));
-                    Toast.makeText(this, dataResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, dataResponse.getMessage(), Toast.LENGTH_LONG).show();
                 }, throwable -> {
                     // Convert errorBody to JSON-String, convert json-string to object
                     // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
@@ -149,7 +149,7 @@ public class EmailVerificationActivity extends PinCodeActivity
                     progress.animate()
                             .alpha(0)
                             .withEndAction(() -> progress.setVisibility(View.GONE));
-                    Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
 
@@ -181,16 +181,14 @@ public class EmailVerificationActivity extends PinCodeActivity
                                 .alpha(0)
                                 .withEndAction(() -> progress.setVisibility(View.GONE));
                         Toast.makeText(EmailVerificationActivity.this,
-                                R.string.rss_email_not_verified,
-                                Toast.LENGTH_SHORT).show();
+                                R.string.rss_email_not_verified, Toast.LENGTH_LONG).show();
                     }
                 }, error -> {
                     progress.animate()
                             .alpha(0)
                             .withEndAction(() -> progress.setVisibility(View.GONE));
                     Toast.makeText(EmailVerificationActivity.this,
-                            R.string.rss_email_not_verified,
-                            Toast.LENGTH_SHORT).show();
+                            R.string.rss_email_not_verified, Toast.LENGTH_LONG).show();
                 });
     }
 }
