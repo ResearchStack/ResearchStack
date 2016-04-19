@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.ConsentVisualStep;
@@ -133,8 +132,6 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
             }
 
             RxView.clicks(moreInfoView).subscribe(v -> {
-                String path = ResourcePathManager.getInstance().
-                        generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, data.getHtmlContent());
                 String webTitle = getResources().getString(R.string.rsb_consent_section_more_info);
                 Intent webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle,
                         TextUtils.isEmpty(data.getContent()) ? data.getHtmlContent() : data.getContent());

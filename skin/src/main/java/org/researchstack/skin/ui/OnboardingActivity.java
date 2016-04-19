@@ -228,7 +228,8 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             PassCodeCreationStep step = new PassCodeCreationStep(OnboardingTask.SignUpPassCodeCreationStepIdentifier,
                     R.string.rss_passcode);
             OrderedTask task = new OrderedTask("PasscodeTask", step);
-            startActivityForResult(ViewTaskActivity.newIntent(this, task), REQUEST_CODE_PASSCODE);
+            startActivityForResult(ConsentTaskActivity.newIntent(this, task),
+                    REQUEST_CODE_PASSCODE);
         }
         else
         {
@@ -254,6 +255,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             finish();
 
             AppPrefs.getInstance(this).setSkippedOnboarding(false);
+            AppPrefs.getInstance(this).setOnboardingComplete(true);
 
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String email = (String) result.getStepResult(OnboardingTask.SignInStepIdentifier)
@@ -280,6 +282,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             finish();
 
             AppPrefs.getInstance(this).setSkippedOnboarding(false);
+            AppPrefs.getInstance(this).setOnboardingComplete(true);
 
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String email = (String) result.getStepResult(OnboardingTask.SignUpStepIdentifier)
