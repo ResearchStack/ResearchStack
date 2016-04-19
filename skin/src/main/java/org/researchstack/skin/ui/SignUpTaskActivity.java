@@ -19,6 +19,7 @@ import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.R;
+import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
 
@@ -76,7 +77,8 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     @Override
     public void startConsentTask()
     {
-        Intent intent = ConsentTaskActivity.newIntent(this);
+        Intent intent = ConsentTaskActivity.newIntent(this,
+                TaskProvider.getInstance().get(TaskProvider.TASK_ID_CONSENT));
         startActivityForResult(intent, SignUpEligibleStepLayout.CONSENT_REQUEST);
     }
 
