@@ -168,27 +168,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             });
 
             // Load Consent Data and set sharing scope
-            Observable.create(subscriber -> {
-                ConsentSectionModel data = ResourceManager.getInstance()
-                        .getConsentSections()
-                        .create(getActivity());
-                subscriber.onNext(data);
-            })
-                    .compose(ObservableUtils.applyDefault())
-                    .map(o -> (ConsentSectionModel) o)
-                    .subscribe(data -> {
-                        this.data = data;
+            Observable.defer(() -> Observable.just(ResourceManager.getInstance()
+                    .getConsentSections()
+                    .create(getActivity())))
+                    .flatMap((consentData) -> {
+                        this.data = (ConsentSectionModel) consentData;
 
                         // Load and set sharing scope
-                        Observable.create(subscriber -> {
-                            subscriber.onNext(DataProvider.getInstance()
+                        return Observable.just(DataProvider.getInstance()
                                     .getUserSharingScope(getContext()));
-                        })
-                                .compose(ObservableUtils.applyDefault())
-                                .map(o -> (String) o)
-                                .subscribe(scope -> {
-                                    sharingScope.setSummary(formatSharingOption(scope));
-                                });
+                    })
+                    .compose(ObservableUtils.applyDefault())
+                    .subscribe(scope -> {
+                        sharingScope.setSummary(formatSharingOption(scope));
                     });
         }
     }
