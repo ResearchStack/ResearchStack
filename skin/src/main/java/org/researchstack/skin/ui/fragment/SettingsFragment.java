@@ -36,7 +36,6 @@ import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.ConsentSectionModel;
-import org.researchstack.skin.model.User;
 import org.researchstack.skin.notification.TaskAlertReceiver;
 import org.researchstack.skin.step.PassCodeCreationStep;
 import org.researchstack.skin.task.ConsentTask;
@@ -146,26 +145,50 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         {
             generalCategory.removePreference(joinStudy);
 
-            Observable.create(subscriber -> {
-                User user = DataProvider.getInstance().getUser(getActivity());
-                subscriber.onNext(user);
-            }).compose(ObservableUtils.applyDefault()).map(o -> (User) o).subscribe(profile -> {
-                profileCategory.findPreference(KEY_PROFILE_NAME).setSummary(profile.getName());
+            Observable.defer(() -> Observable.just(DataProvider.getInstance()
+                    .getUser(getActivity())))
+                    .compose(ObservableUtils.applyDefault())
+                    .subscribe(profile -> {
+                        if(profile == null)
+                        {
+                            getPreferenceScreen().removePreference(profileCategory);
+                            return;
 
-                Preference birthdatePref = profileCategory.findPreference(KEY_PROFILE_BIRTHDATE);
-                try
-                {
-                    // The incoming date is formated in "yyyy-MM-dd", clean it up to "MMM dd, yyyy"
-                    Date birthdate = FormatHelper.SIMPLE_FORMAT_DATE.parse(profile.getBirthDate());
-                    DateFormat format = FormatHelper.getFormat(DateFormat.LONG, FormatHelper.NONE);
-                    birthdatePref.setSummary(format.format(birthdate));
-                }
-                catch(ParseException e)
-                {
-                    LogExt.e(SettingsFragment.class, e);
-                    birthdatePref.setSummary(profile.getBirthDate());
-                }
-            });
+                        }
+
+                        Preference namePref = profileCategory.findPreference(KEY_PROFILE_NAME);
+                        if(profile.getName() != null)
+                        {
+                            namePref.setSummary(profile.getName());
+                        }
+                        else
+                        {
+                            profileCategory.removePreference(namePref);
+                        }
+
+                        Preference birthdatePref = profileCategory.findPreference(
+                                KEY_PROFILE_BIRTHDATE);
+                        if(profile.getBirthDate() != null)
+                        {
+                            try
+                            {
+                                // The incoming date is formated in "yyyy-MM-dd", clean it up to "MMM dd, yyyy"
+                                Date birthdate = FormatHelper.SIMPLE_FORMAT_DATE.parse(profile.getBirthDate());
+                                DateFormat format = FormatHelper.getFormat(DateFormat.LONG,
+                                        FormatHelper.NONE);
+                                birthdatePref.setSummary(format.format(birthdate));
+                            }
+                            catch(ParseException e)
+                            {
+                                LogExt.e(SettingsFragment.class, e);
+                                birthdatePref.setSummary(profile.getBirthDate());
+                            }
+                        }
+                        else
+                        {
+                            profileCategory.removePreference(birthdatePref);
+                        }
+                    });
 
             // Load Consent Data and set sharing scope
             Observable.create(subscriber -> {
