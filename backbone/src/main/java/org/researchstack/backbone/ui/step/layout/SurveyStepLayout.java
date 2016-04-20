@@ -8,9 +8,7 @@ import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,13 +21,14 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
 import org.researchstack.backbone.ui.step.body.StepBody;
+import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
 
-public class SurveyStepLayout extends RelativeLayout implements StepLayout
+public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
 
@@ -48,9 +47,6 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
     // Child Views
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private LinearLayout container;
-    private TextView     title;
-    private TextView     summary;
-    private SubmitBar    submitBar;
     private StepBody     stepBody;
 
     public SurveyStepLayout(Context context)
@@ -111,89 +107,26 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         this.callbacks = callbacks;
     }
 
+    @Override
+    public int getContentResourceId()
+    {
+        return R.layout.rsb_step_layout;
+    }
+
     public void initializeStep()
     {
-        LogExt.i(getClass(), "initializeLayout()");
-
-        if(getContext() instanceof StepCallbacks)
-        {
-            setCallbacks((StepCallbacks) getContext());
-        }
-
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-
-        View layout = onCreateLayout(inflater, this);
-        onLayoutCreated(layout);
-
-        View body = onCreateBody(inflater, this);
-        onBodyCreated(body);
+        initStepLayout();
+        initStepBody();
     }
 
-    public View onCreateLayout(LayoutInflater inflater, ViewGroup parent)
+    public void initStepLayout()
     {
-        LogExt.i(getClass(), "onCreateLayout()");
-        return inflater.inflate(getRootLayoutResourceId(), parent, true);
-    }
+        LogExt.i(getClass(), "initStepLayout()");
 
-    public void onLayoutCreated(View layout)
-    {
-        LogExt.i(getClass(), "onLayoutCreated()");
-
-        View filler = findViewById(R.id.filler);
-
-        container = (LinearLayout) findViewById(R.id.content_container);
-        container.addOnLayoutChangeListener(new OnLayoutChangeListener()
-        {
-            boolean isChangeFromFiller = false;
-
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom)
-            {
-                LogExt.i("SurveyStepLayout", "LAYOUT CHANGE");
-                int stepLayoutHeight = SurveyStepLayout.this.getHeight();
-                int contentHeightSansFiller = container.getHeight() - filler.getHeight();
-
-                // Make sure we have layout and height to measure
-                if(stepLayoutHeight == 0 || contentHeightSansFiller == 0)
-                {
-                    return;
-                }
-
-                // if the last call to this resulted in filler changing size, ignore
-                if(isChangeFromFiller)
-                {
-                    isChangeFromFiller = false;
-                    return;
-                }
-
-                // If our content does not take up the entire height of the screen, increase height
-                // of the filler space
-                if(contentHeightSansFiller < stepLayoutHeight)
-                {
-                    filler.post(() -> {
-                        ViewGroup.LayoutParams params = filler.getLayoutParams();
-                        params.height = stepLayoutHeight - contentHeightSansFiller;
-                        filler.setLayoutParams(params);
-
-                        isChangeFromFiller = true;
-                    });
-                }
-                else if (contentHeightSansFiller > stepLayoutHeight && filler.getHeight() != 0)
-                {
-                    filler.post(() -> {
-                        ViewGroup.LayoutParams params = filler.getLayoutParams();
-                        params.height = 0;
-                        filler.setLayoutParams(params);
-
-                        isChangeFromFiller = true;
-                    });
-                }
-            }
-        });
-
-        title = (TextView) findViewById(R.id.title);
-        summary = (TextView) findViewById(R.id.text);
-        submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        container = (LinearLayout) findViewById(R.id.rsb_survey_content_container);
+        TextView title = (TextView) findViewById(R.id.rsb_survey_title);
+        TextView summary = (TextView) findViewById(R.id.rsb_survey_text);
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveAction(v -> onNextClicked());
 
         if(questionStep != null)
@@ -235,29 +168,22 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         }
     }
 
-    protected int getRootLayoutResourceId()
+    public void initStepBody()
     {
-        return R.layout.rsb_step_layout;
-    }
+        LogExt.i(getClass(), "initStepBody()");
 
-
-    public View onCreateBody(LayoutInflater inflater, ViewGroup parent)
-    {
-        LogExt.i(getClass(), "onCreateBody()");
-
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         stepBody = createStepBody(questionStep, stepResult);
-        View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, inflater, parent);
+        View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, inflater, this);
 
         if(body != null)
         {
-            View oldView = container.findViewById(R.id.step_body);
+            View oldView = container.findViewById(R.id.rsb_survey_step_body);
             int bodyIndex = container.indexOfChild(oldView);
             container.removeView(oldView);
             container.addView(body, bodyIndex);
-            body.setId(R.id.step_body);
+            body.setId(R.id.rsb_survey_step_body);
         }
-
-        return body;
     }
 
     @NonNull
@@ -272,14 +198,6 @@ public class SurveyStepLayout extends RelativeLayout implements StepLayout
         catch(Exception e)
         {
             throw new RuntimeException(e);
-        }
-    }
-
-    public void onBodyCreated(View body)
-    {
-        if(body != null)
-        {
-            LogExt.i(getClass(), "onBodyCreated()");
         }
     }
 
