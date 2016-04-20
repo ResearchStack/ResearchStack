@@ -120,7 +120,6 @@
     </string>
 
     <!-- Steps -->
-    <string name="rss_format_step_title">Step %1$s of %2$s</string>
     <string name="rss_btn_true">True</string>
     <string name="rss_btn_false">False</string>
 
