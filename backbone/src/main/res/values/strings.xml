@@ -127,7 +127,10 @@
 
     <!-- Pin Code -->
     <string name="rsb_pincode_enter_title">Enter your passcode</string>
-    <string name="rsb_pincode_enter_summary">Enter your code to confirm your identity.</string>
+    <string name="rsb_pincode_enter_summary">Enter your %1$d-%2$s code to confirm your identity.</string>
+    <string name="rsb_pincode_enter_digit">digit</string>
+    <string name="rsb_pincode_enter_letter">letter</string>
+    <string name="rsb_pincode_enter_character">character</string>
     <string name="rsb_pincode_enter_error">That code doesn’t match the one you entered, Try again!
     </string>
 

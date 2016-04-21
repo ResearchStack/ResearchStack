@@ -2,11 +2,11 @@ package org.researchstack.backbone.ui;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextThemeWrapper;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -22,7 +22,6 @@ import org.researchstack.backbone.ui.views.PinCodeLayout;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.ThemeUtils;
-import org.researchstack.backbone.utils.UiThreadContext;
 
 import java.util.List;
 
@@ -96,23 +95,27 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
         storageAccessUnregister();
 
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-
-        if(fragments != null)
-        {
-            LogExt.i(getClass(), "Fragments found on stack. Checking for StorageAccessListener.");
-
-            for(Fragment fragment : fragments)
+        // this fixes the race condition where fragments from the viewpager weren't created yet
+        // need a more permanent solution for notifying fragments of onDataReady() after creation
+        new Handler().post(() -> {
+            List<Fragment> fragments = getSupportFragmentManager().getFragments();
+            if(fragments != null)
             {
-                if(fragment instanceof StorageAccessListener)
-                {
-                    LogExt.i(getClass(),
-                            "Notifying " + fragment.getClass().getSimpleName() + " of onDataReady");
+                LogExt.i(getClass(),
+                        "Fragments found on stack. Checking for StorageAccessListener.");
 
-                    ((StorageAccessListener) fragment).onDataReady();
+                for(Fragment fragment : fragments)
+                {
+                    if(fragment instanceof StorageAccessListener)
+                    {
+                        LogExt.i(getClass(), "Notifying " + fragment.getClass().getSimpleName() +
+                                " of onDataReady");
+
+                        ((StorageAccessListener) fragment).onDataReady();
+                    }
                 }
             }
-        }
+        });
     }
 
     @Override
@@ -148,24 +151,11 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         storageAccessUnregister();
 
         // Show pincode layout
-        pinCodeLayout.setVisibility(View.VISIBLE);
-
-        // Show keyboard, needs to be delayed, not sure why
-        pinCodeLayout.postDelayed(() -> toggleKeyboardAction.call(true), 300);
-    }
-
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState)
-    {
-        super.onPostCreate(savedInstanceState);
-
         PinCodeConfig config = StorageAccess.getInstance().getPinCodeConfig();
 
         int theme = ThemeUtils.getPassCodeTheme(this);
         pinCodeLayout = new PinCodeLayout(new ContextThemeWrapper(this, theme));
         pinCodeLayout.setBackgroundColor(Color.WHITE);
-        pinCodeLayout.setVisibility(View.GONE);
 
         int errorColor = getResources().getColor(R.color.rsb_error);
 
@@ -187,35 +177,31 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
             if(summary.getCurrentTextColor() == errorColor)
             {
                 summary.setTextColor(ThemeUtils.getTextColorPrimary(PinCodeActivity.this));
-                summary.setText(R.string.rsb_pincode_enter_summary);
+                pinCodeLayout.resetSummaryText();
             }
         }).filter(pin -> pin != null && pin.length() == config.getPinLength()).doOnNext(pin -> {
             pincode.setEnabled(false);
             pinCodeLayout.showProgress(true);
-        }).flatMap(pin -> {
-            return Observable.create(subscriber -> {
-                UiThreadContext.assertBackgroundThread();
-
-                StorageAccess.getInstance().authenticate(PinCodeActivity.this, pin);
-                subscriber.onNext(true);
-            }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
-                toggleKeyboardAction.call(true);
-                throwable.printStackTrace();
-                summary.setText(R.string.rsb_pincode_enter_error);
-                summary.setTextColor(errorColor);
-                pinCodeLayout.showProgress(false);
-            }).onErrorResumeNext(throwable1 -> {
-                return Observable.empty();
-            });
-        }).subscribe(success -> {
-            if(! (boolean) success)
+        }).flatMap(pin -> Observable.fromCallable(() -> {
+            StorageAccess.getInstance().authenticate(PinCodeActivity.this, pin);
+            return true;
+        }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
+            toggleKeyboardAction.call(true);
+            throwable.printStackTrace();
+            summary.setText(R.string.rsb_pincode_enter_error);
+            summary.setTextColor(errorColor);
+            pinCodeLayout.showProgress(false);
+        }).onErrorResumeNext(throwable1 -> {
+            return Observable.empty();
+        })).subscribe(success -> {
+            if(! success)
             {
                 toggleKeyboardAction.call(true);
             }
             else
             {
-                pinCodeLayout.setVisibility(View.GONE);
-                pinCodeLayout.showProgress(false);
+                getWindowManager().removeView(pinCodeLayout);
+                pinCodeLayout = null;
                 // authenticate() no longer calls notifyReady(), call this after auth
                 requestStorageAccess();
             }
@@ -223,7 +209,8 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         getWindowManager().addView(pinCodeLayout, params);
+
+        // Show keyboard, needs to be delayed, not sure why
+        pinCodeLayout.postDelayed(() -> toggleKeyboardAction.call(true), 300);
     }
-
-
 }
