@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.researchstack.backbone.R;
@@ -16,11 +13,11 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
-import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 
-public class InstructionStepLayout extends RelativeLayout implements StepLayout
+public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout
 {
     private StepCallbacks callbacks;
     private Step          step;
@@ -66,17 +63,21 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
         this.callbacks = callbacks;
     }
 
+    @Override
+    public int getContentResourceId()
+    {
+        return R.layout.rsb_step_layout_instruction;
+    }
+
     private void initializeStep()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_instruction, this, true);
-
         if(step != null)
         {
 
             // Set Title
             if (! TextUtils.isEmpty(step.getTitle()))
             {
-                TextView title = (TextView) findViewById(R.id.title);
+                TextView title = (TextView) findViewById(R.id.rsb_intruction_title);
                 title.setVisibility(View.VISIBLE);
                 title.setText(step.getTitle());
             }
@@ -84,7 +85,7 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
             // Set Summary
             if(! TextUtils.isEmpty(step.getText()))
             {
-                TextView summary = (TextView) findViewById(R.id.text);
+                TextView summary = (TextView) findViewById(R.id.rsb_intruction_text);
                 summary.setVisibility(View.VISIBLE);
                 summary.setText(Html.fromHtml(step.getText()));
                 summary.setMovementMethod(new TextViewLinkHandler()
@@ -103,7 +104,7 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
             }
 
             // Set Next / Skip
-            SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+            SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
             submitBar.setPositiveTitle(R.string.rsb_next);
             submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                     step,
@@ -124,58 +125,5 @@ public class InstructionStepLayout extends RelativeLayout implements StepLayout
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
         }
-
-        // Init filler code
-        View filler = findViewById(R.id.filler);
-        View container = findViewById(R.id.content_container);
-        addOnLayoutChangeListener(new OnLayoutChangeListener()
-        {
-            boolean isChangeFromFiller = false;
-
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom)
-            {
-                LogExt.i("InstructionStepLayout", "Layout Change, Adjusting Filler");
-
-                int stepLayoutHeight = InstructionStepLayout.this.getHeight();
-                int contentHeightSansFiller = container.getHeight() - filler.getHeight();
-
-                // Make sure we have layout and height to measure
-                if(stepLayoutHeight == 0 || contentHeightSansFiller == 0)
-                {
-                    return;
-                }
-
-                // if the last call to this resulted in filler changing size, ignore
-                if(isChangeFromFiller)
-                {
-                    isChangeFromFiller = false;
-                    return;
-                }
-
-                // If our content does not take up the entire height of the screen, increase height
-                // of the filler space
-                if(contentHeightSansFiller < stepLayoutHeight)
-                {
-                    filler.post(() -> {
-                        ViewGroup.LayoutParams params = filler.getLayoutParams();
-                        params.height = stepLayoutHeight - contentHeightSansFiller;
-                        filler.setLayoutParams(params);
-
-                        isChangeFromFiller = true;
-                    });
-                }
-                else if (contentHeightSansFiller > stepLayoutHeight && filler.getHeight() != 0)
-                {
-                    filler.post(() -> {
-                        ViewGroup.LayoutParams params = filler.getLayoutParams();
-                        params.height = 0;
-                        filler.setLayoutParams(params);
-
-                        isChangeFromFiller = true;
-                    });
-                }
-            }
-        });
     }
 }

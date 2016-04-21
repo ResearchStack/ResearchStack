@@ -1,22 +1,21 @@
 package org.researchstack.skin.ui.layout;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 
-public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements StepLayout
+public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implements StepLayout
 {
 
     private ConsentQuizEvaluationStep step;
@@ -47,16 +46,19 @@ public class ConsentQuizEvaluationStepLayout extends RelativeLayout implements S
         initializeStep();
     }
 
+    @Override
+    public int getContentResourceId()
+    {
+        return R.layout.rss_layout_consent_evaluation;
+    }
+
     private void initializeStep()
     {
-        LayoutInflater.from(getContext())
-                .inflate(R.layout.rss_layout_consent_evaluation, this, true);
+        ImageView image = (ImageView) findViewById(R.id.rss_quiz_eval_image);
+        TextView title = (TextView) findViewById(R.id.rss_quiz_eval_title);
+        TextView summary = (TextView) findViewById(R.id.rss_quiz_eval_summary);
 
-        ImageView image = (ImageView) findViewById(R.id.image);
-        TextView title = (TextView) findViewById(R.id.title);
-        TextView summary = (TextView) findViewById(R.id.summary);
-
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.getNegativeActionView().setVisibility(View.GONE);
         submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                 step,

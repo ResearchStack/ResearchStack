@@ -6,10 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -21,11 +19,12 @@ import org.researchstack.backbone.step.ConsentVisualStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
-public class ConsentVisualStepLayout extends RelativeLayout implements StepLayout
+public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements StepLayout
 {
 
     private StepCallbacks     callbacks;
@@ -45,7 +44,6 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
     {
         super(context, attrs, defStyleAttr);
     }
-
 
     @Override
     public void initialize(Step step, StepResult result)
@@ -73,10 +71,14 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
         this.callbacks = callbacks;
     }
 
+    @Override
+    public int getContentResourceId()
+    {
+        return R.layout.rsb_step_layout_consent_visual;
+    }
+
     private void initializeStep()
     {
-        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_visual, this, true);
-
         ConsentSection data = step.getSection();
 
         // Set Image
@@ -143,7 +145,7 @@ public class ConsentVisualStepLayout extends RelativeLayout implements StepLayou
             moreInfoView.setVisibility(View.GONE);
         }
 
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveTitle(step.getNextButtonString());
         submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                         step,

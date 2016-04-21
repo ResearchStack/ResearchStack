@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Change to RelativeLayout for preview to work -->
-<merge
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
 >
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/rss_quiz_eval_image"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_centerHorizontal="true"
@@ -17,10 +17,10 @@
     />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/rss_quiz_eval_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image"
+        android:layout_below="@+id/rss_quiz_eval_image"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
@@ -32,21 +32,15 @@
     />
 
     <TextView
-        android:id="@+id/summary"
+        android:id="@+id/rss_quiz_eval_summary"
         style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/rss_quiz_eval_title"
         android:layout_marginTop="36dp"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
         tools:text="@string/lorem_medium"
     />
 
-    <org.researchstack.backbone.ui.views.SubmitBar
-        android:id="@+id/submit_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
-
-</merge>
+</RelativeLayout>
