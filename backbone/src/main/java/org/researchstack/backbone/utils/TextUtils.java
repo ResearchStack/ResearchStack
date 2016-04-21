@@ -1,5 +1,8 @@
 package org.researchstack.backbone.utils;
 
+import android.text.InputFilter;
+import android.text.Spanned;
+
 import java.util.regex.Pattern;
 
 public class TextUtils
@@ -40,5 +43,54 @@ public class TextUtils
     public static boolean isValidEmail(CharSequence text)
     {
         return ! isEmpty(text) && EMAIL_ADDRESS.matcher(text).matches();
+    }
+
+
+    public static class AlphabeticFilter implements InputFilter
+    {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend)
+        {
+            for(int i = start; i < end; i++)
+            {
+                if(! Character.isLetter(source.charAt(i)))
+                {
+                    return "";
+                }
+            }
+            return null;
+        }
+    }
+
+    public static class NumericFilter implements InputFilter
+    {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend)
+        {
+            for(int i = start; i < end; i++)
+            {
+                if(! Character.isDigit(source.charAt(i)))
+                {
+                    return "";
+                }
+            }
+            return null;
+        }
+    }
+
+    public static class AlphanumericFilter implements InputFilter
+    {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend)
+        {
+            for(int i = start; i < end; i++)
+            {
+                if(! Character.isLetterOrDigit(source.charAt(i)))
+                {
+                    return "";
+                }
+            }
+            return null;
+        }
     }
 }
