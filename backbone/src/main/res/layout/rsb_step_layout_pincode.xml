@@ -26,13 +26,13 @@
         android:minHeight="52dp"
     />
 
-    <org.researchstack.backbone.ui.views.PassCodeView
+    <android.support.v7.widget.AppCompatEditText
         android:id="@+id/pincode"
         android:layout_width="match_parent"
         android:layout_height="@dimen/rsb_item_size_default"
         android:singleLine="true"
         android:layout_below="@+id/text"
-        android:inputType="number"
+        android:imeOptions="actionNone"
         android:textSize="20sp"
         android:background="@null"
         android:letterSpacing=".25"

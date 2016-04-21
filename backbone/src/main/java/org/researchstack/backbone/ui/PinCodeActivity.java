@@ -177,7 +177,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
             if(summary.getCurrentTextColor() == errorColor)
             {
                 summary.setTextColor(ThemeUtils.getTextColorPrimary(PinCodeActivity.this));
-                summary.setText(R.string.rsb_pincode_enter_summary);
+                pinCodeLayout.resetSummaryText();
             }
         }).filter(pin -> pin != null && pin.length() == config.getPinLength()).doOnNext(pin -> {
             pincode.setEnabled(false);

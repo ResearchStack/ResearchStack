@@ -56,26 +56,34 @@ public class PinCodeLayout extends RelativeLayout
         title = (TextView) findViewById(R.id.title);
         title.setText(R.string.rsb_pincode_enter_title);
 
-        summary = (TextView) findViewById(R.id.text);
-        summary.setText(R.string.rsb_pincode_enter_summary);
+        resetSummaryText();
 
         editText = (EditText) findViewById(R.id.pincode);
         editText.requestFocus();
 
         PinCodeConfig.Type pinType = config.getPinType();
         editText.setInputType(pinType.getInputType() | pinType.getVisibleVariationType(false));
-        editText.setKeyListener(pinType.getDigitsKeyListener());
 
         char[] chars = new char[config.getPinLength()];
         Arrays.fill(chars, '◦');
         editText.setHint(new String(chars));
 
-        // Must come after pin-type code as calling setKeyListener(null) sets InputFilters to null
         InputFilter[] filters = ViewUtils.addFilter(editText.getFilters(),
                 new InputFilter.LengthFilter(config.getPinLength()));
+        filters = ViewUtils.addFilter(filters, config.getPinType().getInputFilter());
         editText.setFilters(filters);
 
         progress = findViewById(R.id.progress);
+    }
+
+    public void resetSummaryText()
+    {
+        summary = (TextView) findViewById(R.id.text);
+        String characterType = getContext().getString(config.getPinType().getInputTypeStringId());
+        String pinCodeInstructions = getContext().getString(R.string.rsb_pincode_enter_summary,
+                config.getPinLength(),
+                characterType);
+        summary.setText(pinCodeInstructions);
     }
 
     public void showProgress(boolean show)

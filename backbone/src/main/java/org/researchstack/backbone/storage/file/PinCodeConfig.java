@@ -1,8 +1,10 @@
 package org.researchstack.backbone.storage.file;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.format.DateUtils;
-import android.text.method.DigitsKeyListener;
-import android.text.method.KeyListener;
+
+import org.researchstack.backbone.R;
+import org.researchstack.backbone.utils.TextUtils;
 
 /**
  * This class allows you to customize the type/strength of the pin code that the user must create to
@@ -29,12 +31,23 @@ public class PinCodeConfig
         int getInputType();
 
         /**
-         * Returns the {@link KeyListener} for the EditText. Use this to limit the types of
+         * Returns the id for the string resource representing the input character type.
+         * <p>
+         * This will be inserted into the instructions for creating a pincode. For example, if you
+         * return 'digit', it will tell the user to enter a '4-digit code'. If you return 'letter',
+         * it will say '4-letter code'.
+         *
+         * @return the resource id for the string representing the input character type
+         */
+        int getInputTypeStringId();
+
+        /**
+         * Returns the {@link InputFilter} for the EditText. Use this to limit the types of
          * characters that may be used in the pin code type.
          *
-         * @return the key listener
+         * @return the input filter
          */
-        KeyListener getDigitsKeyListener();
+        InputFilter getInputFilter();
 
         /**
          * Returns the {@link InputType} that should be applied to the EditText based on whether the
@@ -54,29 +67,29 @@ public class PinCodeConfig
         Alphabetic(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS,
                 InputType.TYPE_TEXT_VARIATION_NORMAL,
                 InputType.TYPE_TEXT_VARIATION_PASSWORD,
-                DigitsKeyListener.getInstance(DIGITS_ALPHABETIC)),
+                new TextUtils.AlphabeticFilter()),
 
         Numeric(InputType.TYPE_CLASS_NUMBER,
                 InputType.TYPE_NUMBER_VARIATION_NORMAL,
                 InputType.TYPE_NUMBER_VARIATION_PASSWORD,
-                DigitsKeyListener.getInstance(DIGITS_NUMERIC)),
+                new TextUtils.NumericFilter()),
 
         AlphaNumeric(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS,
                 InputType.TYPE_TEXT_VARIATION_NORMAL,
                 InputType.TYPE_TEXT_VARIATION_PASSWORD,
-                DigitsKeyListener.getInstance(DIGITS_ALPHANUMERIC));
+                new TextUtils.AlphanumericFilter());
 
         private int         inputType;
         private int         inputTypeVisible;
         private int         inputTypeHidden;
-        private KeyListener listener;
+        private InputFilter filter;
 
-        PinCodeType(int inputType, int inputTypeVisible, int inputTypeHidden, KeyListener listener)
+        PinCodeType(int inputType, int inputTypeVisible, int inputTypeHidden, InputFilter filter)
         {
             this.inputType = inputType;
             this.inputTypeVisible = inputTypeVisible;
             this.inputTypeHidden = inputTypeHidden;
-            this.listener = listener;
+            this.filter = filter;
         }
 
         @Override
@@ -86,9 +99,26 @@ public class PinCodeConfig
         }
 
         @Override
-        public KeyListener getDigitsKeyListener()
+        public int getInputTypeStringId()
         {
-            return listener;
+            if(this == PinCodeType.Numeric)
+            {
+                return R.string.rsb_pincode_enter_digit;
+            }
+            else if(this == PinCodeType.Alphabetic)
+            {
+                return R.string.rsb_pincode_enter_letter;
+            }
+            else
+            {
+                return R.string.rsb_pincode_enter_character;
+            }
+        }
+
+        @Override
+        public InputFilter getInputFilter()
+        {
+            return filter;
         }
 
         @Override

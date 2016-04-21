@@ -2,6 +2,7 @@ package org.researchstack.skin.ui.layout;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -145,34 +146,50 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
 
     private void refreshState()
     {
+        String pinCodeTitle;
+        String pinCodeInstructions;
+        int summaryColor;
+
         Resources res = getResources();
+        int pinLength = config.getPinLength();
+        String characterType = res.getString(config.getPinType().getInputTypeStringId());
         switch(state)
         {
             case CONFIRM:
-                updateText(res.getString(R.string.rss_passcode_confirm_title),
-                        res.getString(R.string.rss_passcode_confirm_summary),
-                        ThemeUtils.getTextColorPrimary(getContext()));
+                pinCodeTitle = res.getString(R.string.rss_passcode_confirm_title);
+                pinCodeInstructions = res.getString(R.string.rss_passcode_confirm_summary,
+                        pinLength,
+                        characterType);
+                summaryColor = ThemeUtils.getTextColorPrimary(getContext());
                 break;
 
             case RETRY:
-                updateText(res.getString(R.string.rss_passcode_confirm_title),
-                        res.getString(R.string.rss_passcode_confirm_error),
-                        res.getColor(R.color.rsb_error));
+                pinCodeTitle = res.getString(R.string.rss_passcode_confirm_title);
+                pinCodeInstructions = res.getString(R.string.rss_passcode_confirm_error,
+                        pinLength,
+                        characterType);
+                summaryColor = ContextCompat.getColor(getContext(), R.color.rsb_error);
                 break;
 
             case CREATE:
             default:
-                updateText(res.getString(R.string.rss_passcode_create_title),
-                        res.getString(R.string.rss_passcode_create_summary),
-                        ThemeUtils.getTextColorPrimary(getContext()));
+                pinCodeTitle = res.getString(R.string.rss_passcode_create_title);
+                pinCodeInstructions = res.getString(R.string.rss_passcode_create_summary,
+                        pinLength,
+                        characterType);
+                summaryColor = ThemeUtils.getTextColorPrimary(getContext());
                 break;
 
             case CHANGE:
-                updateText(res.getString(R.string.rsb_pincode_enter_title),
-                        res.getString(R.string.rsb_pincode_enter_summary),
-                        ThemeUtils.getTextColorPrimary(getContext()));
+                pinCodeTitle = res.getString(R.string.rsb_pincode_enter_title);
+                pinCodeInstructions = res.getString(R.string.rsb_pincode_enter_summary,
+                        pinLength,
+                        characterType);
+                summaryColor = ThemeUtils.getTextColorPrimary(getContext());
                 break;
         }
+
+        updateText(pinCodeTitle, pinCodeInstructions, summaryColor);
     }
 
     private void updateText(String titleString, String textString, int color)
