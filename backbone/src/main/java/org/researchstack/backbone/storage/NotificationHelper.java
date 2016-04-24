@@ -13,7 +13,7 @@ import co.touchlab.squeaky.table.TableUtils;
 
 public class NotificationHelper extends SqueakyOpenHelper
 {
-    public static String DB_NAME = "db_notification";
+    public static final String DB_NAME = "db_notification";
 
     private static int DB_VERSION = 1;
 
