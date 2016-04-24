@@ -123,7 +123,7 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
             List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
                     taskIdentifier).orderBy(TaskRecord.COMPLETED + " DESC").limit(1).list();
 
-            if(taskRecords.size() == 0)
+            if(taskRecords.isEmpty())
             {
                 return null;
             }

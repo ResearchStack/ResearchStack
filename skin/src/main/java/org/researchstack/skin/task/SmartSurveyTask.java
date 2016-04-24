@@ -167,7 +167,7 @@ public class SmartSurveyTask extends Task implements Serializable
         String skipToStep = null;
 
         List<TaskModel.RuleModel> stepRules = rules.get(currentIdentifier);
-        if(stepRules != null && stepRules.size() > 0)
+        if(stepRules != null && !stepRules.isEmpty())
         {
             LogExt.d(getClass(), "Rules exist for this step");
             Object answer = result.getStepResult(currentIdentifier).getResult();
@@ -253,7 +253,7 @@ public class SmartSurveyTask extends Task implements Serializable
     {
         if(currentIdentifier == null && after)
         {
-            return dynamicStepIdentifiers.size() > 0 ? dynamicStepIdentifiers.get(0) : null;
+            return !dynamicStepIdentifiers.isEmpty() ? dynamicStepIdentifiers.get(0) : null;
         }
 
         int currentIndex = dynamicStepIdentifiers.indexOf(currentIdentifier);
@@ -339,11 +339,11 @@ public class SmartSurveyTask extends Task implements Serializable
         }
         else if(answer instanceof Integer)
         {
-            return checkNumberRule(operator, skipTo, ((Number) value).intValue(), ((Integer) answer));
+            return checkNumberRule(operator, skipTo, ((Number) value).intValue(), (Integer) answer);
         }
         else if(answer instanceof Double)
         {
-            return checkNumberRule(operator, skipTo, ((Number) value).doubleValue(), ((Double) answer));
+            return checkNumberRule(operator, skipTo, ((Number) value).doubleValue(), (Double) answer);
         }
         else if(answer instanceof Boolean)
         {
@@ -359,7 +359,7 @@ public class SmartSurveyTask extends Task implements Serializable
             }
             else if(value instanceof String)
             {
-                booleanValue = Boolean.valueOf(((String) value));
+                booleanValue = Boolean.valueOf((String) value);
             }
             else
             {
