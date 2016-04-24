@@ -13,6 +13,8 @@ import java.io.OutputStream;
 
 public class FileUtils
 {
+    private FileUtils() {}
+
     public static void writeSafe(File file, byte[] data)
     {
         try

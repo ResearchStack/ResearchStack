@@ -5,6 +5,8 @@ import rx.schedulers.Schedulers;
 
 public class ObservableUtils
 {
+    private ObservableUtils() {}
+
     public static <T> Observable.Transformer<T, T> applyDefault()
     {
         return observable -> observable.subscribeOn(Schedulers.io())

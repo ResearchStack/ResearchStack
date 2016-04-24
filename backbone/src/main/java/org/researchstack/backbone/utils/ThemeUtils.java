@@ -11,6 +11,8 @@ import java.lang.reflect.Method;
 public class ThemeUtils
 {
 
+    private ThemeUtils() {}
+
     public static int getTextColorPrimary(Context context)
     {
         TypedValue typedValue = new TypedValue();
