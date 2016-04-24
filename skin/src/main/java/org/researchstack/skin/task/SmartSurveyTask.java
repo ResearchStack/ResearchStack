@@ -164,7 +164,7 @@ public class SmartSurveyTask extends Task implements Serializable
         String currentIdentifier = step == null ? null : step.getIdentifier();
         refillDynamicStepIdentifiers(currentIdentifier);
 
-        String skipToStep = null;
+        String skipToStep;
 
         List<TaskModel.RuleModel> stepRules = rules.get(currentIdentifier);
         if(stepRules != null && stepRules.size() > 0)

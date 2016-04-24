@@ -234,8 +234,6 @@ public class ConsentTask extends OrderedTask
                 TextAnswerFormat format = new TextAnswerFormat();
                 format.setIsMultipleLines(false);
 
-                String placeholder = ctx.getResources()
-                        .getString(R.string.rsb_consent_name_placeholder);
                 String nameText = ctx.getResources().getString(R.string.rsb_consent_name_full);
                 formSteps.add(new QuestionStep(ID_FORM_NAME, nameText, format));
             }

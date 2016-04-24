@@ -178,7 +178,6 @@ public abstract class ResourcePathManager
     public static InputStream getResouceAsInputStream(Context context, String filePath)
     {
         AssetManager assetManager = context.getAssets();
-        InputStream inputStream = null;
         try
         {
             return assetManager.open(filePath);
