@@ -18,7 +18,6 @@ import org.researchstack.backbone.utils.FormatHelper;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class DateQuestionBody implements StepBody
 {
@@ -144,26 +143,12 @@ public class DateQuestionBody implements StepBody
     @Override
     public BodyAnswer getBodyAnswerState()
     {
-        Date minDate = format.getMinimumDate();
-        Date maxDate = format.getMaximumDate();
-        Date resultDate = calendar.getTime();
-
         if(! hasChosenDate)
         {
-            return new BodyAnswer(false, R.string.rsb_invalid_answer_default);
+            return new BodyAnswer(false, R.string.rsb_invalid_answer_date_none);
         }
 
-        if(minDate != null && resultDate.getTime() < minDate.getTime())
-        {
-            return new BodyAnswer(false, R.string.rsb_invalid_answer_date_under);
-        }
-
-        if(maxDate != null && resultDate.getTime() > maxDate.getTime())
-        {
-            return new BodyAnswer(false, R.string.rsb_invalid_answer_date_over);
-        }
-
-        return BodyAnswer.VALID;
+        return format.validateAnswer(calendar.getTime());
     }
 
     private void showDialog(TextView tv)

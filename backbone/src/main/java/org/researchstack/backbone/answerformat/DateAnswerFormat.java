@@ -1,4 +1,8 @@
 package org.researchstack.backbone.answerformat;
+import org.researchstack.backbone.R;
+import org.researchstack.backbone.ui.step.body.BodyAnswer;
+import org.researchstack.backbone.utils.FormatHelper;
+
 import java.util.Date;
 
 /**
@@ -83,4 +87,27 @@ public class DateAnswerFormat extends AnswerFormat
         int style = getStyle().ordinal();
         return Type.values()[def + style];
     }
+
+    public BodyAnswer validateAnswer(Date resultDate)
+    {
+        Date minDate = getMinimumDate();
+        Date maxDate = getMaximumDate();
+
+        if(minDate != null && resultDate.getTime() < minDate.getTime())
+        {
+            return new BodyAnswer(false,
+                    R.string.rsb_invalid_answer_date_under,
+                    FormatHelper.SIMPLE_FORMAT_DATE.format(minDate));
+        }
+
+        if(maxDate != null && resultDate.getTime() > maxDate.getTime())
+        {
+            return new BodyAnswer(false,
+                    R.string.rsb_invalid_answer_date_over,
+                    FormatHelper.SIMPLE_FORMAT_DATE.format(maxDate));
+        }
+
+        return BodyAnswer.VALID;
+    }
+
 }
