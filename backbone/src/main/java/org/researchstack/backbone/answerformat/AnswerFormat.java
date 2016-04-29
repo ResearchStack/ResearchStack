@@ -1,6 +1,7 @@
 package org.researchstack.backbone.answerformat;
 
 import org.researchstack.backbone.ui.step.body.DateQuestionBody;
+import org.researchstack.backbone.ui.step.body.DecimalQuestionBody;
 import org.researchstack.backbone.ui.step.body.FormBody;
 import org.researchstack.backbone.ui.step.body.IntegerQuestionBody;
 import org.researchstack.backbone.ui.step.body.MultiChoiceQuestionBody;
@@ -63,7 +64,7 @@ public abstract class AnswerFormat implements Serializable
         Scale(NotImplementedStepBody.class),
         SingleChoice(SingleChoiceQuestionBody.class),
         MultipleChoice(MultiChoiceQuestionBody.class),
-        Decimal(NotImplementedStepBody.class),
+        Decimal(DecimalQuestionBody.class),
         Integer(IntegerQuestionBody.class),
         Boolean(SingleChoiceQuestionBody.class),
         Eligibility(NotImplementedStepBody.class),

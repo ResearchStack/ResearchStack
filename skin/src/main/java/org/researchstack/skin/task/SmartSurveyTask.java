@@ -6,6 +6,8 @@ import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.DateAnswerFormat;
+import org.researchstack.backbone.answerformat.DecimalAnswerFormat;
+import org.researchstack.backbone.answerformat.DurationAnswerFormat;
 import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
@@ -106,6 +108,10 @@ public class SmartSurveyTask extends Task implements Serializable
         {
             answerFormat = new IntegerAnswerFormat(constraints.minValue, constraints.maxValue);
         }
+        else if(type.equals("DecimalConstraints"))
+        {
+            answerFormat = new DecimalAnswerFormat(constraints.minValue, constraints.maxValue);
+        }
         else if(type.equals("TextConstraints") || type.equals("StringConstraints"))
         {
             answerFormat = new TextAnswerFormat();
@@ -116,8 +122,13 @@ public class SmartSurveyTask extends Task implements Serializable
         {
             answerFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
         }
+        else if(type.equals("DurationConstraints"))
+        {
+            answerFormat = new DurationAnswerFormat(constraints.step, constraints.durationUnit);
+        }
         else
         {
+            LogExt.e(SmartSurveyTask.class, "Survey question has answer type not supported:" + type);
             answerFormat = new UnknownAnswerFormat();
         }
         return answerFormat;
