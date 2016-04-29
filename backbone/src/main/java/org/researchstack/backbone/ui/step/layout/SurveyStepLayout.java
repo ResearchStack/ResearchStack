@@ -131,7 +131,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
         if(questionStep != null)
         {
-            if (! TextUtils.isEmpty(questionStep.getTitle()))
+            if(! TextUtils.isEmpty(questionStep.getTitle()))
             {
                 title.setVisibility(View.VISIBLE);
                 title.setText(questionStep.getTitle());
@@ -212,16 +212,19 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     {
         BodyAnswer bodyAnswer = stepBody.getBodyAnswerState();
 
-        if (bodyAnswer == null || !bodyAnswer.isValid())
+        if(bodyAnswer == null || ! bodyAnswer.isValid())
         {
             Toast.makeText(getContext(),
-                    bodyAnswer == null ? BodyAnswer.INVALID.getReason() : bodyAnswer.getReason(),
+                    bodyAnswer == null
+                            ? BodyAnswer.INVALID.getString(getContext())
+                            : bodyAnswer.getString(getContext()),
                     Toast.LENGTH_SHORT).show();
         }
         else
         {
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                    getStep(), stepBody.getStepResult(false));
+                    getStep(),
+                    stepBody.getStepResult(false));
         }
     }
 
