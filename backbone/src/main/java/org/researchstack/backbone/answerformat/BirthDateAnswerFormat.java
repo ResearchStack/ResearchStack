@@ -35,16 +35,29 @@ public class BirthDateAnswerFormat extends DateAnswerFormat
         Date minDate = getMinimumDate();
         Date maxDate = getMaximumDate();
 
-        if(minDate != null && resultDate.getTime() > minDate.getTime())
+        if(minDate != null && isOnOrBefore(resultDate, minDate))
         {
             return new BodyAnswer(false, R.string.rsb_birth_date_too_old, String.valueOf(maxAge));
         }
 
-        if(maxDate != null && resultDate.getTime() > maxDate.getTime())
+        if(maxDate != null && ! isOnOrBefore(resultDate, maxDate))
         {
             return new BodyAnswer(false, R.string.rsb_birth_date_too_young, String.valueOf(minAge));
         }
 
         return BodyAnswer.VALID;
+    }
+
+    private boolean isOnOrBefore(Date inputDate, Date cutoffDate)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(inputDate);
+        int year = calendar.get(Calendar.YEAR);
+        int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+        calendar.setTime(cutoffDate);
+        int cutoffYear = calendar.get(Calendar.YEAR);
+        int cutoffDayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+
+        return year < cutoffYear || (year == cutoffYear && dayOfYear <= cutoffDayOfYear);
     }
 }
