@@ -59,6 +59,9 @@ public class TaskModel
         @SerializedName("dataType")
         public String dataType;
 
+        @SerializedName("durationUnit")
+        public String durationUnit;
+
         @SerializedName("allowMultiple")
         public boolean allowMultiple;
 
@@ -72,7 +75,7 @@ public class TaskModel
         public List<EnumerationModel> enumeration;
 
         @SerializedName("step")
-        public String step;
+        public int step;
 
         @SerializedName("maxValue")
         public int maxValue;
