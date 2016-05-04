@@ -117,6 +117,7 @@ public abstract class AnswerFormat implements Serializable
     public enum DateAnswerStyle
     {
         DateAndTime,
-        Date
+        Date,
+        Time
     }
 }
