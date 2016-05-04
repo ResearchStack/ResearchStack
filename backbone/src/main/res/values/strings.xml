@@ -121,11 +121,19 @@
     <string name="rsb_error_data_failed">Failed to load encrypted data, try again!</string>
     <string name="rsb_error_invalid_signature">Signature Invalid</string>
     <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
-    <string name="rsb_invalid_answer_date_over">Invalid answer, date is over the limit!</string>
-    <string name="rsb_invalid_answer_date_under">Invalid answer, date is under the limit!</string>
-    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value is too large!</string>
-    <string name="rsb_invalid_answer_integer_under">Invalid answer, your value is too small!</string>
+    <string name="rsb_invalid_answer_date_over">Invalid answer, date must be before %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Invalid answer, date must be after %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value must be %1$s or
+        lower
+    </string>
+    <string name="rsb_invalid_answer_integer_under">Invalid answer, your value must be %1$s or
+        higher
+    </string>
     <string name="rsb_invalid_answer_choice">Please select a value!</string>
+    <string name="rsb_invalid_answer_date_none">Please choose a date.</string>
+    <string name="rsb_birth_date_too_old">You must be %1$s years or younger</string>
+    <string name="rsb_birth_date_too_young">You must be at least %1$s years old</string>
+
 
     <!-- Pin Code -->
     <string name="rsb_pincode_enter_title">Enter your passcode</string>
@@ -155,5 +163,4 @@
     <string name="rsb_error_assetvideoview_unknown">Can\'t play this video.</string>
     <!-- Button to close error alert when a video cannot be played -->
     <string name="rsb_error_assetvideoview_button">OK</string>
-
 </resources>

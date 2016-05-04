@@ -54,7 +54,8 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;
 
-        View layout = LayoutInflater.from(getContext()).inflate(R.layout.rss_layout_sign_up, this, true);
+        View layout = LayoutInflater.from(getContext())
+                .inflate(R.layout.rss_layout_sign_up, this, true);
 
         progress = layout.findViewById(R.id.progress);
 
@@ -115,26 +116,34 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
                             .signUp(getContext(), email, null, password)
                             .compose(ObservableUtils.applyDefault())
                             .subscribe(dataResponse -> {
-                                // Save Email, Username, and Password in memory
-                                result.setResultForIdentifier(SignUpTask.ID_EMAIL, email);
-                                result.setResultForIdentifier(SignUpTask.ID_PASSWORD, password);
+                                if(dataResponse.isSuccess())
+                                {
+                                    // Save Email, Username, and Password in memory
+                                    result.setResultForIdentifier(SignUpTask.ID_EMAIL, email);
+                                    result.setResultForIdentifier(SignUpTask.ID_PASSWORD, password);
+                                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
+                                }
+                                else
+                                {
+                                    handleError(dataResponse.getMessage());
+                                }
 
-                                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
                             }, throwable -> {
-                                progress.animate()
-                                        .alpha(0)
-                                        .withEndAction(() -> progress.setVisibility(View.GONE));
-
-                                // Convert errorBody to JSON-String, convert json-string to object
-                                // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
-                                // toast
-                                Toast.makeText(getContext(),
-                                        throwable.getMessage(),
-                                        Toast.LENGTH_SHORT).show();
+                                handleError(throwable.getMessage());
                             }));
 
 
         }
+    }
+
+    private void handleError(String message)
+    {
+        progress.animate().alpha(0).withEndAction(() -> progress.setVisibility(View.GONE));
+
+        // Convert errorBody to JSON-String, convert json-string to object
+        // (BridgeMessageResponse) and pass BridgeMessageResponse.getMessage()to
+        // toast
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     public boolean isAnswerValid()
@@ -149,8 +158,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
             password.setError(getResources().getString(R.string.rss_error_invalid_password));
         }
 
-        return TextUtils.isEmpty(email.getError()) &&
-                TextUtils.isEmpty(password.getError());
+        return TextUtils.isEmpty(email.getError()) && TextUtils.isEmpty(password.getError());
     }
 
     public boolean isEmailValid()
