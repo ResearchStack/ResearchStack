@@ -98,6 +98,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     private ConsentSectionModel data;
     private View                progress;
 
+    /**
+     * This boolean is responsible for keeping track of the UI on whether changes have been made
+     * based on if the user has consented (or not). This is done to prevent the UI from "reseting"
+     * when coming back from taking a survey.
+     */
+    private boolean isInitializedForConsent = false;
+
     @Override
     public void onCreatePreferences(Bundle bundle, String s)
     {
@@ -193,19 +200,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             // Load Consent Data and set sharing scope
             Observable.defer(() -> Observable.just(ResourceManager.getInstance()
                     .getConsentSections()
-                    .create(getActivity())))
-                    .flatMap((consentData) -> {
-                        this.data = (ConsentSectionModel) consentData;
+                    .create(getActivity()))).flatMap((consentData) -> {
+                this.data = (ConsentSectionModel) consentData;
 
-                        // Load and set sharing scope
-                        return Observable.just(DataProvider.getInstance()
-                                    .getUserSharingScope(getContext()));
-                    })
-                    .compose(ObservableUtils.applyDefault())
-                    .subscribe(scope -> {
-                        sharingScope.setSummary(formatSharingOption(scope));
-                    });
+                // Load and set sharing scope
+                return Observable.just(DataProvider.getInstance()
+                        .getUserSharingScope(getContext()));
+            }).compose(ObservableUtils.applyDefault()).subscribe(scope -> {
+                sharingScope.setSummary(formatSharingOption(scope));
+            });
         }
+
+        isInitializedForConsent = true;
     }
 
     @Override
@@ -294,8 +300,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     return true;
 
                 case KEY_LEAVE_STUDY:
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle(R.string.rss_settings_general_leave_study)
+                    new AlertDialog.Builder(getActivity()).setTitle(R.string.rss_settings_general_leave_study)
                             .setMessage(R.string.rss_settings_dialog_leave_study)
                             .setPositiveButton(R.string.rss_settings_general_leave_study,
                                     (dialog, which) -> {
@@ -313,6 +318,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                                                                 R.string.rss_network_result_consent_withdraw_success,
                                                                 Toast.LENGTH_SHORT).show();
 
+                                                        isInitializedForConsent = false;
                                                         initPreferenceForConsent();
                                                     }
                                                     else
@@ -339,7 +345,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 case KEY_REMINDERS:
                     SharedPreferences preferences = preference.getSharedPreferences();
                     boolean isRemindersEnabled = preferences.getBoolean(KEY_REMINDERS, true);
-                    if (!isRemindersEnabled)
+                    if(! isRemindersEnabled)
                     {
                         getActivity().sendBroadcast(new Intent(TaskAlertReceiver.ALERT_DELETE_ALL));
                     }
@@ -358,12 +364,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String result = (String) taskResult.getStepResult(ConsentTask.ID_SHARING).getResult();
 
-            getPreferenceScreen().findPreference(KEY_SHARING_OPTIONS)
-                    .setSummary(formatSharingOption(result));
-
-            Observable.create(subscriber -> {
+            Observable.fromCallable(() -> {
                 DataProvider.getInstance().setUserSharingScope(getContext(), result);
-            }).compose(ObservableUtils.applyDefault()).subscribe();
+                return null;
+            }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
+                sharingScope.setSummary(formatSharingOption(result));
+            });
         }
         else if(requestCode == REQUEST_CODE_CHANGE_PASSCODE && resultCode == Activity.RESULT_OK)
         {
@@ -376,15 +382,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
             progress.setVisibility(View.VISIBLE);
 
-            Observable.create(subscriber -> {
+            Observable.fromCallable(() -> {
                 StorageAccess.getInstance().changePinCode(getActivity(), oldPinCode, newPinCode);
-                subscriber.onNext(null);
+                return null;
             }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
-                Toast.makeText(getActivity(), R.string.rss_local_result_passcode_changed, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),
+                        R.string.rss_local_result_passcode_changed,
+                        Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             }, e -> {
-                Toast.makeText(getActivity(), R.string.rss_local_error_passcode_failed, Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(getActivity(),
+                        R.string.rss_local_error_passcode_failed,
+                        Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             });
         }
@@ -478,7 +487,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public void onDataReady()
     {
         LogExt.i(getClass(), "onDataReady()");
-        initPreferenceForConsent();
+
+        if(! isInitializedForConsent)
+        {
+            initPreferenceForConsent();
+        }
     }
 
     @Override
