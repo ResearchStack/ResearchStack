@@ -11,6 +11,7 @@ import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
@@ -77,6 +78,19 @@ public class SmartSurveyTask extends Task implements Serializable
                 staticStepIdentifiers.add(stepModel.identifier);
                 rules.put(stepModel.identifier, stepModel.constraints.rules);
             }
+            /*
+            In a survey JSON file, if you want to define a step that has text but no question,
+            set the type to "SurveyTextOnly" instead of "SurveyQuestion"
+             */
+            else if (stepModel.type.equals("SurveyTextOnly"))
+            {
+                System.out.println("Survey type is: " + stepModel.type);
+                InstructionStep instructionStep = new InstructionStep(stepModel.identifier, stepModel.prompt, stepModel.promptDetail);
+                steps.put(stepModel.identifier, instructionStep);
+                staticStepIdentifiers.add(stepModel.identifier);
+
+            }
+
             else
             {
                 throw new UnsupportedOperationException("Wasn't a survey question");
