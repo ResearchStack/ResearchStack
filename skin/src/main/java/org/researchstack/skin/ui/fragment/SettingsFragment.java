@@ -57,7 +57,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Settings Keys.
-    // If you are adding / changing settings, make sure they are unique / match in rss_settingsings.xml
+    // If you are adding / changing settings, make sure they are unique / match in rss_settings.xml
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Profile
     public static final String KEY_PROFILE           = "rss_settings_profile";
