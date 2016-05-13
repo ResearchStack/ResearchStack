@@ -5,8 +5,8 @@ ResearchStack is an SDK and UX framework for building research study apps on And
 ## Download
 Add one or both to your app/build.gradle:
 ```groovy
-compile 'org.researchstack:backbone:1.0.0.rc2'
-compile 'org.researchstack:skin:1.0.0.rc2'
+compile 'org.researchstack:backbone:1.0.0.rc3'
+compile 'org.researchstack:skin:1.0.0.rc3'
 ```
 
 You may also need to add the following source repos to your project's build.gradle:
