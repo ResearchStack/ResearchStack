@@ -9,7 +9,7 @@ buildscript {
 
     dependencies {
         // change this to 1.5.x if you're not on Android Studio 2.0.0 beta
-        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.android.tools.build:gradle:2.1.0'
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
         classpath "com.neenbedankt.gradle.plugins:android-apt:1.4"
 
@@ -22,6 +22,7 @@ allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" } // for MPAndroidChard, not on jcenter yet
+        mavenLocal()        // for updates to local rstack
     }
 }
 
