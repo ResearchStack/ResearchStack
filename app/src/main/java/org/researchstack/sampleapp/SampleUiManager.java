@@ -3,9 +3,11 @@ import android.content.Context;
 
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
+import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
+import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.skin.ActionItem;
 import org.researchstack.skin.UiManager;
@@ -15,6 +17,9 @@ import org.researchstack.skin.ui.fragment.ActivitiesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Iterator;
 
 public class SampleUiManager extends UiManager
 {
@@ -77,32 +82,66 @@ public class SampleUiManager extends UiManager
     @Override
     public Step getInclusionCriteriaStep(Context context)
     {
-        Choice<Boolean> human = new Choice<>(context.getString(R.string.yes_human), true, null);
-        Choice<Boolean> robot = new Choice<>(context.getString(R.string.yes_robot),
-                true,
-                null);
-        Choice<Boolean> alien = new Choice<>(context.getString(R.string.no_alien), false, null);
+        BooleanAnswerFormat booleanAnswerFormat = new BooleanAnswerFormat("true","false");
 
-        QuestionStep step = new QuestionStep(OnboardingTask.SignUpInclusionCriteriaStepIdentifier);
-        step.setOptional(false);
-        step.setStepTitle(R.string.rss_eligibility);
-        step.setTitle(context.getString(R.string.inclusion_question));
-        step.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-                human,
-                robot,
-                alien));
+        QuestionStep ageStep = new QuestionStep("signupInclusionAgeStep",
+                "Are you over 18 years of age?",
+                booleanAnswerFormat);
 
-        return step;
+        QuestionStep diagnosisStep = new QuestionStep("signupInclusionDiagnosisStep",
+                "Have you been diagnosed with pre-diabetes or diabetes?",
+                booleanAnswerFormat);
+
+        QuestionStep englishStep = new QuestionStep("signupInclusionEnglishStep",
+                "Can you read and understand English in order to provide informed consent and to follow the instructions?",
+                booleanAnswerFormat);
+
+        QuestionStep usaStep = new QuestionStep("signupInclusionUsaStep",
+                "Do you live in the United States of America?",
+                booleanAnswerFormat);
+
+
+
+        FormStep eligibilityFormStep = new FormStep(OnboardingTask.SignUpInclusionCriteriaStepIdentifier, "", "");
+        // Set items on FormStep
+        eligibilityFormStep.setStepTitle(R.string.rss_eligibility);
+        eligibilityFormStep.setOptional(false);
+        eligibilityFormStep.setFormSteps(ageStep, diagnosisStep, englishStep, usaStep);
+
+        return eligibilityFormStep;
+
     }
 
+    private Boolean getBooleanAnswer(Map mapStepResult, String id){
+        StepResult stepResult = (StepResult)mapStepResult.get(id);
+        if (stepResult == null) return false;
+        Map mapResult = stepResult.getResults();
+        if (mapResult == null) return false;
+        Boolean answer = (Boolean)mapResult.get("answer");
+        System.out.println("id = : " + id + ", answer = " + answer);
+        if (answer == null || answer == false) return false;
+        else return true;
+
+    }
+
+    //If all answers are true, result is true
+    //If any answer is false, result is false
     @Override
     public boolean isInclusionCriteriaValid(StepResult stepResult)
     {
         if(stepResult != null)
         {
-            return ((StepResult<Boolean>) stepResult).getResult();
+            Map mapStepResult = stepResult.getResults();
+            Boolean answer = getBooleanAnswer(mapStepResult, "signupInclusionAgeStep");
+            if (answer == false) return false;
+            answer = getBooleanAnswer(mapStepResult, "signupInclusionDiagnosisStep");
+            if (answer == false) return false;
+            answer = getBooleanAnswer(mapStepResult, "signupInclusionEnglishStep");
+            if (answer == false) return false;
+            answer = getBooleanAnswer(mapStepResult, "signupInclusionUsaStep");
+            if (answer == false) return false;
+            return true;
         }
-
         return false;
     }
 
