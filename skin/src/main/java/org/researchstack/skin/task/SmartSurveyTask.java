@@ -84,7 +84,6 @@ public class SmartSurveyTask extends Task implements Serializable
              */
             else if (stepModel.type.equals("SurveyTextOnly"))
             {
-                System.out.println("Survey type is: " + stepModel.type);
                 InstructionStep instructionStep = new InstructionStep(stepModel.identifier, stepModel.prompt, stepModel.promptDetail);
                 steps.put(stepModel.identifier, instructionStep);
                 staticStepIdentifiers.add(stepModel.identifier);

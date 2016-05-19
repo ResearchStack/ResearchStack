@@ -71,7 +71,7 @@ public abstract class OnboardingTask extends Task
 
     public boolean isEligible(TaskResult result)
     {
-        StepResult<Boolean> stepResult = (StepResult<Boolean>) result.getStepResult(SignUpTask.SignUpInclusionCriteriaStepIdentifier);
+        StepResult<Boolean> stepResult = (StepResult<Boolean>) result.getStepResult(SignUpInclusionCriteriaStepIdentifier);
 
         if(stepResult != null)
         {

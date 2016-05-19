@@ -37,6 +37,7 @@ android {
     }
 
     resourcePrefix 'rss_'
+    sourceSets { main { java.srcDirs = ['src/main/java', 'src/test/java'] } }
 }
 
 Properties properties = new Properties()
@@ -73,6 +74,7 @@ dependencies {
     compile project(':backbone')
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0'
+    testCompile 'org.mockito:mockito-core:1.10.19'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta3'
