@@ -1,5 +1,9 @@
 package org.researchstack.backbone.answerformat;
 
+import org.researchstack.backbone.R;
+import org.researchstack.backbone.ui.step.body.BodyAnswer;
+import org.researchstack.backbone.utils.TextUtils;
+
 /**
  * This class defines the attributes for an integer answer format that participants enter using a
  * numeric keyboard.
@@ -49,5 +53,36 @@ public class IntegerAnswerFormat extends AnswerFormat
     public int getMinValue()
     {
         return minValue;
+    }
+
+    public BodyAnswer validateAnswer(String inputString)
+    {
+
+        // If no answer is recorded
+        if(TextUtils.isEmpty(inputString))
+        {
+            return BodyAnswer.INVALID;
+        }
+        else
+        {
+            // Parse value from editText
+            Integer intAnswer = Integer.valueOf(inputString);
+            if(intAnswer < getMinValue())
+            {
+                return new BodyAnswer(false,
+                        R.string.rsb_invalid_answer_integer_under,
+                        String.valueOf(getMinValue()));
+            }
+
+            else if(intAnswer > getMaxValue())
+            {
+                return new BodyAnswer(false,
+                        R.string.rsb_invalid_answer_integer_over,
+                        String.valueOf(getMaxValue()));
+            }
+
+        }
+
+        return BodyAnswer.VALID;
     }
 }

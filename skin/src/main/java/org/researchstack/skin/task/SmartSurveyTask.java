@@ -282,7 +282,7 @@ public class SmartSurveyTask extends Task implements Serializable
         //Remove till end in dynamic
         int currentIndexInDynamic = dynamicStepIdentifiers.indexOf(currentIdentifier);
         currentIndexInDynamic = currentIndexInDynamic == - 1 ? 0 : currentIndexInDynamic;
-        dynamicStepIdentifiers = dynamicStepIdentifiers.subList(0, currentIndexInDynamic);
+        dynamicStepIdentifiers = new ArrayList<>(dynamicStepIdentifiers.subList(0, currentIndexInDynamic));
 
         //Add array from static
         int currentIndexInStatic = staticStepIdentifiers.indexOf(currentIdentifier);

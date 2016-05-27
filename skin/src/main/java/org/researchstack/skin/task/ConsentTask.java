@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import org.researchstack.backbone.answerformat.AnswerFormat;
+import org.researchstack.backbone.answerformat.BirthDateAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
@@ -150,7 +151,7 @@ public class ConsentTask extends OrderedTask
         {
             ConsentSection section = doc.getSections().get(i);
 
-            if (!TextUtils.isEmpty(section.getHtmlContent()))
+            if(! TextUtils.isEmpty(section.getHtmlContent()))
             {
                 String htmlFilePath = ResourceManager.getInstance()
                         .generatePath(ResourceManager.Resource.TYPE_HTML, section.getHtmlContent());
@@ -243,10 +244,7 @@ public class ConsentTask extends OrderedTask
             {
                 Calendar maxDate = Calendar.getInstance();
                 maxDate.add(Calendar.YEAR, - 18);
-                DateAnswerFormat dobFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date,
-                        null,
-                        null,
-                        maxDate.getTime());
+                DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
                 String dobText = ctx.getResources().getString(R.string.rsb_consent_dob_full);
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
             }

@@ -154,31 +154,12 @@ public class IntegerQuestionBody implements StepBody
     @Override
     public BodyAnswer getBodyAnswerState()
     {
-        // If no answer is recorded
-        if (editText == null || TextUtils.isEmpty(editText.getText()))
+        if(editText == null)
         {
             return BodyAnswer.INVALID;
         }
 
-        else
-        {
-            // Parse value from editText
-            Integer intAnswer = Integer.valueOf(editText.getText().toString());
-
-            // If greater
-            if (intAnswer < format.getMinValue())
-            {
-                return new BodyAnswer(false, R.string.rsb_invalid_answer_integer_under);
-            }
-
-            else if (intAnswer > format.getMaxValue())
-            {
-                return new BodyAnswer(false, R.string.rsb_invalid_answer_integer_over);
-            }
-
-        }
-
-        return BodyAnswer.VALID;
+        return format.validateAnswer(editText.getText().toString());
     }
 
 }
