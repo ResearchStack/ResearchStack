@@ -1,4 +1,9 @@
 language: android
+
+# Required to run retrolambda
+jdk:
+    - oraclejdk8
+    
 android:
   components:
     # Uncomment the lines below if you want to
@@ -15,13 +20,24 @@ android:
     - android-23
 
     # Additional components go here.
+    - extra-android-support
+    - extra-android-m2repository
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
+
+# Required to run retrolambda
+before_install:
+  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+  - export JAVA_HOME=$JAVA8_HOME
 
 before_script:
   # Tests crash if a local.properties file isn't present; this file is not kept
   # under version control. Create an empty local.properties for testing.
   - touch local.properties
-  
+
 script: ./gradlew test
+
+# Uncomment line below to add post-test scripts.
+# after_script:
+#   - cat /home/travis/build/nrlakin/ResearchStack/backbone/build/reports/tests/debug/classes/org.researchstack.backbone.task.TaskTest.html
