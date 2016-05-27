@@ -38,3 +38,6 @@ before_script:
   - touch local.properties
 
 script: ./gradlew test
+
+after_script:
+  - cat /home/travis/build/nrlakin/ResearchStack/backbone/build/reports/tests/debug/index.html
