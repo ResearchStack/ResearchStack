@@ -19,4 +19,9 @@ android:
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
 
+before_script:
+  # Tests crash if a local.properties file isn't present; this file is not kept
+  # under version control. Create an empty local.properties for testing.
+  - touch local.properties
+  
 script: ./gradlew test
