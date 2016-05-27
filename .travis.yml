@@ -40,4 +40,4 @@ before_script:
 script: ./gradlew test
 
 after_script:
-  - cat /home/travis/build/nrlakin/ResearchStack/backbone/build/reports/tests/debug/index.html
+  - cat /home/travis/build/nrlakin/ResearchStack/backbone/build/reports/tests/debug/classes/org.researchstack.backbone.task.TaskTest.html
