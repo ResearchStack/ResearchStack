@@ -2,8 +2,8 @@ language: android
 
 # Required to run retrolambda
 jdk:
-    # - oraclejdk7
     - oraclejdk8
+    
 android:
   components:
     # Uncomment the lines below if you want to
@@ -28,7 +28,6 @@ android:
 
 # Required to run retrolambda
 before_install:
-  - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
   - export JAVA_HOME=$JAVA8_HOME
 
@@ -39,5 +38,6 @@ before_script:
 
 script: ./gradlew test
 
-after_script:
-  - cat /home/travis/build/nrlakin/ResearchStack/backbone/build/reports/tests/debug/classes/org.researchstack.backbone.task.TaskTest.html
+# Uncomment line below to add post-test scripts.
+# after_script:
+#   - cat /home/travis/build/nrlakin/ResearchStack/backbone/build/reports/tests/debug/classes/org.researchstack.backbone.task.TaskTest.html
