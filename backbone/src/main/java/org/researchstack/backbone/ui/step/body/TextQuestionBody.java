@@ -114,8 +114,7 @@ public class TextQuestionBody implements StepBody
     public BodyAnswer getBodyAnswerState()
     {
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
-        if (!format.isAnswerValid((editText.getText()
-                .toString())))
+        if (!format.isAnswerValid(editText.getText().toString()))
         {
             return BodyAnswer.INVALID;
         }

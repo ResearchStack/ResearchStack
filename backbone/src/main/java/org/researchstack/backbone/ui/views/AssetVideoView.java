@@ -298,15 +298,7 @@ public class AssetVideoView extends SurfaceView implements MediaController.Media
             mCurrentState = STATE_PREPARING;
             attachMediaController();
         }
-        catch(IOException ex)
-        {
-            Log.w(TAG, "Unable to open content: " + mFileDescriptor, ex);
-            mCurrentState = STATE_ERROR;
-            mTargetState = STATE_ERROR;
-            mErrorListener.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
-            return;
-        }
-        catch(IllegalArgumentException ex)
+        catch(IOException|IllegalArgumentException ex)
         {
             Log.w(TAG, "Unable to open content: " + mFileDescriptor, ex);
             mCurrentState = STATE_ERROR;
@@ -780,10 +772,10 @@ public class AssetVideoView extends SurfaceView implements MediaController.Media
 
     private boolean isInPlaybackState()
     {
-        return (mMediaPlayer != null &&
+        return  mMediaPlayer != null &&
                 mCurrentState != STATE_ERROR &&
                 mCurrentState != STATE_IDLE &&
-                mCurrentState != STATE_PREPARING);
+                mCurrentState != STATE_PREPARING;
     }
 
     @Override
