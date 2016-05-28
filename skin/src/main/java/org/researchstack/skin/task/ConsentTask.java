@@ -48,6 +48,7 @@ public class ConsentTask extends OrderedTask
     public static final String ID_FORM_DOB       = "ID_FORM_DOB";
     public static final String ID_FORM_BIRTHDATE = "ID_FORM_BIRTHDATE";
     public static final String ID_SIGNATURE      = "ID_SIGNATURE";
+    public static final String INVALID_ARGUMENT_CANNOT_BE_NULL = "Invalid argument, cannot be null";
 
     private ConsentTask(String taskId, List<Step> steps)
     {
@@ -104,19 +105,19 @@ public class ConsentTask extends OrderedTask
                 .getInvestigatorShortDescription();
         if(TextUtils.isEmpty(investigatorShortDesc))
         {
-            throw new IllegalArgumentException("Invalid argument, cannot be null");
+            throw new IllegalArgumentException(INVALID_ARGUMENT_CANNOT_BE_NULL);
         }
 
         String investigatorLongDesc = data.getDocumentProperties().getInvestigatorLongDescription();
         if(TextUtils.isEmpty(investigatorLongDesc))
         {
-            throw new IllegalArgumentException("Invalid argument, cannot be null");
+            throw new IllegalArgumentException(INVALID_ARGUMENT_CANNOT_BE_NULL);
         }
 
         String localizedLearnMoreHTMLContent = data.getDocumentProperties().getHtmlContent();
         if(TextUtils.isEmpty(localizedLearnMoreHTMLContent))
         {
-            throw new IllegalArgumentException("Invalid argument, cannot be null");
+            throw new IllegalArgumentException(INVALID_ARGUMENT_CANNOT_BE_NULL);
         }
 
         ConsentSharingStep sharingStep = new ConsentSharingStep(ID_SHARING);
