@@ -12,6 +12,8 @@ import java.util.Date;
 
 public class ScheduleHelper
 {
+    private ScheduleHelper() {}
+
     public static Date nextSchedule(String cronString, Date lastExecution)
     {
         DateTime now = new DateTime(lastExecution);

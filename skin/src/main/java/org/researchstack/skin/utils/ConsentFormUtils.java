@@ -21,6 +21,9 @@ import rx.Observable;
 
 public class ConsentFormUtils
 {
+
+    private ConsentFormUtils() {}
+
     public static void viewConsentForm(Context context)
     {
         String path = ResourceManager.getInstance().getConsentHtml().getAbsolutePath();

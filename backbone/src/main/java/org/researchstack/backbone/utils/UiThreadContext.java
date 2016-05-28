@@ -4,6 +4,9 @@ import android.os.Looper;
 
 public class UiThreadContext
 {
+
+    private UiThreadContext() {}
+
     /**
      * Checks if you're in the UI thread.
      */
