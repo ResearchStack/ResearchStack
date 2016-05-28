@@ -393,13 +393,10 @@ public class AssetVideoView extends SurfaceView implements MediaController.Media
                             mMediaController.show();
                         }
                     }
-                    else if(! isPlaying() && (seekToPosition != 0 || getCurrentPosition() > 0))
+                    else if(! isPlaying() && (seekToPosition != 0 || getCurrentPosition() > 0) && mMediaController != null)
                     {
-                        if(mMediaController != null)
-                        {
-                            // Show the media controls when we're paused into a video and make 'em stick.
-                            mMediaController.show(0);
-                        }
+                        // Show the media controls when we're paused into a video and make 'em stick.
+                        mMediaController.show(0);
                     }
                 }
             }
@@ -457,12 +454,9 @@ public class AssetVideoView extends SurfaceView implements MediaController.Media
             }
 
             /* If an error handler has been supplied, use it and finish. */
-            if(mOnErrorListener != null)
+            if(mOnErrorListener != null && mOnErrorListener.onError(mMediaPlayer, framework_err, impl_err))
             {
-                if(mOnErrorListener.onError(mMediaPlayer, framework_err, impl_err))
-                {
-                    return true;
-                }
+                return true;
             }
 
             /* Otherwise, pop up an error dialog so the user knows that
@@ -715,13 +709,10 @@ public class AssetVideoView extends SurfaceView implements MediaController.Media
     @Override
     public void pause()
     {
-        if(isInPlaybackState())
+        if(isInPlaybackState() && mMediaPlayer.isPlaying())
         {
-            if(mMediaPlayer.isPlaying())
-            {
-                mMediaPlayer.pause();
-                mCurrentState = STATE_PAUSED;
-            }
+            mMediaPlayer.pause();
+            mCurrentState = STATE_PAUSED;
         }
         mTargetState = STATE_PAUSED;
     }
