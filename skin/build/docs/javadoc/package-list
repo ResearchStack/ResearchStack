@@ -1,0 +1,13 @@
+org.researchstack.skin
+org.researchstack.skin.model
+org.researchstack.skin.notification
+org.researchstack.skin.schedule
+org.researchstack.skin.step
+org.researchstack.skin.task
+org.researchstack.skin.ui
+org.researchstack.skin.ui.adapter
+org.researchstack.skin.ui.fragment
+org.researchstack.skin.ui.layout
+org.researchstack.skin.ui.preference
+org.researchstack.skin.ui.views
+org.researchstack.skin.utils
