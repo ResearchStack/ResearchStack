@@ -14,6 +14,8 @@ import java.lang.reflect.Constructor;
 public class ViewUtils
 {
 
+    private ViewUtils() {}
+
     public static InputFilter[] addFilter(InputFilter[] filters, InputFilter filter)
     {
         if(filters == null || filters.length == 0)

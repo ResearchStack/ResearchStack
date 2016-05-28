@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 
 public class TextUtils
 {
+    private TextUtils() {}
+
     public static final Pattern EMAIL_ADDRESS = Pattern.compile(
             "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                     "\\@" +
