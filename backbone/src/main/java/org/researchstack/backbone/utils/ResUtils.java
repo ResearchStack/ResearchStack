@@ -3,6 +3,7 @@ package org.researchstack.backbone.utils;
 import android.content.Context;
 
 import org.researchstack.backbone.StorageAccess;
+import org.researchstack.backbone.result.Result;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,6 +13,9 @@ import java.nio.charset.Charset;
 
 public class ResUtils
 {
+
+    private ResUtils() {}
+
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Resource Names
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

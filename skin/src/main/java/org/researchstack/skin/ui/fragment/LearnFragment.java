@@ -133,7 +133,7 @@ public class LearnFragment extends Fragment
             public HeaderViewHolder(View itemView)
             {
                 super(itemView);
-                title = ((TextView) itemView);
+                title = (TextView) itemView;
             }
         }
 
