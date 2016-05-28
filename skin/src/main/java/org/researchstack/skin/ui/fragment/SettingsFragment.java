@@ -81,7 +81,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public static final String KEY_JOIN_STUDY        = "rss_settings_general_join_study";
     // Other
     public static final String KEY_VERSION           = "rss_settings_version";
-    public static final String PASSCODE = "passcode";
+    public static final String PASSCODE              = "passcode";
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Preference Items
