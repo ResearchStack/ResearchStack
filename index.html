@@ -15,26 +15,22 @@
       <img src="images/ResearchStack-logo.png" alt="ResearchStack logo" height="150" width="150">
       <h1 class="project-name">ResearchStack</h1>
       <h2 class="project-tagline">An SDK for building research study apps on Android</h2>
-      <a href="https://github.com/ResearchStack/ResearchStack" class="btn">GitHub</a>
-      <a href="https://groups.google.com/forum/#!forum/researchstack" class="btn">Forum</a>
-      <a href="https://twitter.com/researchstack" class="btn">Twitter</a>
+      <a href="https://github.com/ResearchStack/ResearchStack" class="btn">Source Code (GitHub)</a>
+      <a href="#documentation" class="btn">Documentation</a>
+      <a href="https://groups.google.com/forum/#!forum/researchstack" class="btn">Announcements & Forum</a>
+      <!-- <a href="https://twitter.com/researchstack" class="btn">Twitter</a> -->
+      <a id="click_here" onclick="revealForm()" class='btn clicker successful-signup'>Contact Us</a>
     </section>
 
     <section id="signup-section" class="signup-section">
-      <h2 class="signup-tagline successful-signup">Want to join the Beta Preview?</h2>
+      <!-- <h2 class="signup-tagline successful-signup">Want to join the Beta Preview?</h2> -->
       <h2 class="signup-tagline hidden success_message">
-        Thank you for signing up for the beta preview!
+        Thank you for your message!
       </h2>
-      <h2 class="project-tagline hidden success_message">
-        We are adding access on a rolling basis and will be in touch soon.
-      </h2>
-      <a id="click_here" onclick="revealForm()" class='btn clicker successful-signup'>Click here to sign up!</a>
       <form id="registration_form" action="http://formspree.io/michael.carroll@cornell.edu" method="POST" class="hidden successful-signup">
         <input id="name" type="text" name="name" placeholder="name (required)" class="signup-field" required>
         </br>
         <input id="email" type="email" name="_replyto" placeholder="email (required)" class="signup-field" required>
-        </br>
-        <input id="github" type="text" name="github" placeholder="github handle" class="signup-field">
         </br>
         <textarea id="message" type="text" name="message" placeholder="Tell us a bit about your project/interest!" class="signup-field" rows="5"></textarea>
         </br>
@@ -49,52 +45,136 @@
       <h3>
 <a id="what-is-researchstack" class="anchor" href="#what-is-researchstack" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is ResearchStack?</h3>
 
-<p>ResearchStack is an SDK and UX framework for building research study apps on Android.</p>
+  <p>
+    ResearchStack is an SDK and UX framework for building research study apps on Android.
+  </p>
+
+  <p>
+    It is designed from the ground up to meet the requirements of most scientific research, including capturing participant consent, extensible input tasks, and the security and privacy needs necessary for IRB approval.
+  </p>
 
 <h3>
-<a id="is-it-similar-to-ios-researchkittm" class="anchor" href="#is-it-similar-to-ios-researchkittm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Is it similar to iOS ResearchKit(TM)?</h3>
+  <a id="is-it-similar-to-ios-researchkittm" class="anchor" href="#is-it-similar-to-ios-researchkittm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Is it similar to Apple's ResearchKit(TM)?
+</h3>
 
-<p>Yes, an overriding goal of ResearchStack is to help developers and researchers with existing apps on iOS more easily adapt those apps for Android. Though the correspondence of features between the two SDKs isn’t one-to-one, the two SDKs will offer enough shared functionality and a common framework and naming scheme to greatly speed up adaptation of ResearchKit apps to Android (and ResearchStack apps to iOS) and the procedural aspects of running a study on a new platform (such as IRB approval and secure connectivity with a data collection backend).</p>
+  <p>
+    Yes, an overarching goal of ResearchStack is to help developers and researchers with existing apps on iOS more easily adapt those apps for Android.
+  </p>
 
-<h3>
-<a id="how-can-i-get-started-where-is-all-the-code" class="anchor" href="#how-can-i-get-started-where-is-all-the-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>How can I get started? Where is all the code?</h3>
-
-<p>In an effort to make basic functionality available to researchers as quickly as possible, we are planning a phased rollout of ResearchStack.</p>
-
-<p>On Friday 2/19/15 our <a class="anchor" href="#beta-preview-access" aria-hidden="true">Beta Preview</a> early access program begins. Researchers and developers who would like to view the status of ResearchStack and follow along with the progress of the first phase are encouraged to request an invite using <a class="anchor" href="#signup-section" aria-hidden="true">the signup sheet provided above</a></p>
-
-<p><a class="anchor" href="#researchstack-1-0-release" aria-hidden="true">Research Stack 1.0</a> will be publicly available for use and contributions by everyone by April 15, 2016.</p>
+  <p>
+    Though the correspondence of features between the two SDKs isn’t one-to-one, the two SDKs will offer enough shared functionality and a common framework and naming scheme to greatly speed up adaptation of ResearchKit apps to Android (and ResearchStack apps to iOS) and the procedural aspects of running a study on a new platform (such as IRB approval and secure connectivity with a data collection backend).
+  </p>
 
 <h3>
-<a id="beta-preview-access" class="anchor" href="#beta-preview-access" aria-hidden="true"><span class="octicon octicon-link"></span></a>Beta Preview access</h3>
+  <a id="researchstack-1-0-release" class="anchor" href="#researchstack-1-0-release" aria-hidden="true"><span class="octicon octicon-link"></span></a>What features are available?
+</h3>
 
-<p>The early access phase is targeted at researchers and developers who want to get a head start building their Android apps by understanding what will be included in version 1.0. While we won’t be directly accepting pull requests the ResearchStack core development team will be reviewing feedback and reaching out to people to ensure that the release is stable and production-ready.</p>
+  <p>
+    Researchers and developers can leverage ResearchStack to build a basic Android app without having extensive knowledge of the Android platform. Using JSON and HTML files, a simple app can be built that will include the onboarding flow (Study Overview/Consent/Sign Up) and an Activities screen with scheduled tasks for the user. Researchers will also be able to reuse existing ResearchKit AppCore resources, <a href="https://github.com/ResearchStack/ResearchStack#things-to-look-out-for-when-converting-your-researchkit-app">with some minor changes</a>.
+  </p>
 
-<h3>
-<a id="researchstack-1-0-release" class="anchor" href="#researchstack-1-0-release" aria-hidden="true"><span class="octicon octicon-link"></span></a>ResearchStack 1.0 release</h3>
-
-<p>ResearchStack 1.0 will be publicly available on April 15th, 2016.</p>
-
-<p>Researchers can expect the ability to build a basic Android app without having extensive knowledge of the Android platform. Using JSON and HTML files a simple app can be built that will include the onboarding flow (Study Overview/Consent/Sign Up) and an Activities screen with scheduled tasks for the user. Researchers will also be able to reuse existing ResearchKit AppCore resources, with some minor changes.</p>
-
-<p>Included graphing libraries will facilitate data visualization. ResearchStack 1.0 will also have tools to allow easy on-disk encryption and strives to be extensible so that researchers can implement or modify screens they need.</p>
-
-<p>An open source Android version of Mole Mapper will be released alongside ResearchStack 1.0 as an example implementation of the platform.</p>
+  <p>
+    Included graphing libraries facilitate data visualization. ResearchStack also has tools to allow easy on-disk encryption and strives to be extensible so that researchers can implement or modify screens they need.
+  </p>
 
 <h3>
-<a id="who-is-backing-this-project" class="anchor" href="#who-is-backing-this-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Who is backing this project?</h3>
+  <a id="how-to-port" class="anchor" href="#how-to-port" aria-hidden="true"><span class="octicon octicon-link"></span></a>I have an existing ResearchKit app, how do I port it to ResearchStack?
+</h3>
 
-<p>ResearchStack is developed by <a href="https://tech.cornell.edu/">Cornell Tech</a>'s <a href="http://smalldata.io/">Small Data Lab</a> and <a href="http://www.openmhealth.org/">Open mHealth</a> in collaboration with <a href="http://www.touchlab.co">touchlab</a>. Initial funding for the project is provided by the <a href="http://www.rwjf.org/">Robert Wood Johnson Foundation</a>.</p>
+  <p>
+    Not all ResearchKit apps were made equal but, if your ResearchKit app was built using the 'AppCore' JSON schemas and other assets, you can adapt those over to work in ResearchStack with minimal effort. Along those lines, the <a href="https://github.com/ResearchStack/SampleApp">SampleApp</a> is an excellent, lightweight implementation of AppCore assets into ResearchStack to reference.
+  </p>
+
+  <p>
+    We are also currently working to develop tutorials on adapting ResearchKit apps to ResearchStack but, in the meantime, probably the best reference is to look at actual implementations of ResearchKit apps to ResearchStack. The open source <a href="https://github.com/Sage-Bionetworks/MoleMapper">iOS</a> and <a href="https://github.com/ResearchStack/MoleMapperAndroid">Android</a> repositories for <a href='https://www.ohsu.edu/xd/health/services/dermatology/war-on-melanoma/mole-mapper.cfm'> OHSU's MoleMapper</a> are good examples to start with (particularly if your app uses Sage Bridge for a backend).
+  </p>
+
+  <p>
+    If your ResearchKit app was <i>not</i> built using the features of AppCore, the road ahead involves a bit more work but should still be familiar to you, since the naming schema and APIs of ResearchStack are deliberately similar to those of ResearchKit. A good place to look is the <a href="https://github.com/ResearchStack/BackboneExampleApp">Backbone ExampleApp</a>, which sticks a bit closer to the "metal" of the ResearchStack framework.
+  </p>
+
+  <ul>
+    <li>
+      <a href="https://github.com/ResearchStack/SampleApp">
+        SampleApp (ResearchStack)
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/Sage-Bionetworks/MoleMapper">
+        MoleMapper ResearchKit source code (iOS)
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/ResearchStack/MoleMapperAndroid">
+        MoleMapper ResearchStack source code (Android)
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/ResearchStack/BackboneExampleApp">
+        Backbone ExampleApp (ResearchStack)
+      </a>
+    </li>
+  </ul>
 
 <h3>
-<a id="questions" class="anchor" href="#questions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Questions?</h3>
+  <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Where's the documentation?
+</h3>
 
-<p>For further questions, please join <a href="https://groups.google.com/forum/#!forum/researchstack">the ResearchStack forum</a> or contact <a href="mailto:michael.carroll@cornell.edu">Michael Carroll</a>.</p>
+  <p>
+    ResearchStack has two primary modules. Backbone contains the core ResearchStack functionality and is designed to follow the APIs laid out in Apple's ResearchKit core as closely as possible. Skin is an application framework that implements the functionality of ResearchKit's AppCore. Links to the Javadocs for both Backbone and Skin are below; be aware that the documentation is itself a work in progress. Please post any issues on the ResearchStack <a href="https://github.com/ResearchStack/ResearchStack">GitHub</a>.
+  </p>
+
+  <ul>
+    <li>
+      <a href="documentation/backbone">Backbone Documentation</a>
+    </li>
+    <li>
+      <a href="documentation/skin">Skin Documentation</a>
+    </li>
+  </ul>
+
+<h3>
+  <a id="packages" class="anchor" href="#packages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Are there extensions or packages available?
+</h3>
+
+  <p>
+    The ResearchStack community is still nascent, but a number of extensions -- including ActiveTasks -- are currently in the works. We'll be publishing a list of them here, as they become available.
+  </p>
+
+  <p>
+    If you have an extension/package for ResearchStack, please <a href="mailto:michael.carroll@cornell.edu">reach out to let us know</a>, so that we can help make others aware. (Or just <a href="https://github.com/ResearchStack/ResearchStack/tree/gh-pages">fork this site</a> and submit your addition as a pull request!)
+  </p>
+
+<h3>
+  <a id="who-is-backing-this-project" class="anchor" href="#who-is-backing-this-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Who is backing this project?
+</h3>
+
+  <p>
+    ResearchStack is maintained by <a href="https://tech.cornell.edu/">Cornell Tech</a>'s <a href="http://smalldata.io/">Small Data Lab</a> and <a href="http://www.openmhealth.org/">Open mHealth</a>. The current project maintainers are <a href="http://destrin.smalldata.io">Deborah Estrin</a>, <a href="http://michael.carroll.io">Michael Carroll</a> and <a href="https://github.com/nrlakin">Neil Lakin</a>.
+  </p>
+
+  <p>
+    A special debt of gratitude is also owed to <a href="http://www.rwjf.org/">Robert Wood Johnson Foundation</a>, which provided initial funding for the project, and to <a href="http://www.ohsu.edu/xd/education/schools/school-of-medicine/departments/clinical-departments/dermatology-research/">OHSU</a>, <a href="http://sagebase.org/">Sage Bionetworks</a>, <a href="http://www.touchlab.co">touchlab</a>, <a href="https://twitter.com/Dan_E_Webster">Dan Webster</a>, and all of <a href="https://github.com/ResearchStack/ResearchStack/graphs/contributors">our volunteer contributors</a> for their involvement in getting the initial platform and MoleMapper Android off the ground.
+  </p>
+
+<h3>
+  <a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>How can I contribute?
+</h3>
+
+  <p>
+    We ❤︎ contributors! Please check out our <a href="https://github.com/ResearchStack/ResearchStack/blob/master/CONTRIBUTORS">CONTRIBUTORS file</a> for details on how to submit a pull request to ResearchStack.
+  </p>
+
+<h3>
+  <a id="questions" class="anchor" href="#questions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Questions?
+</h3>
+
+  <p>
+    For further questions, please join <a href="https://groups.google.com/forum/#!forum/researchstack">the ResearchStack forum</a> or contact <a href="mailto:michael.carroll@cornell.edu">Michael Carroll</a>.
+  </p>
 
       <footer class="site-footer">
-      <!--         <span class="site-footer-owner"><a href="https://github.com/ResearchStack/ResearchStack">ResearchStack</a> is maintained by <a href="https://github.com/ResearchStack">ResearchStack</a>.</span> -->
-
-        <span class="site-footer-credits">This page is a modification of the <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+        <span class="site-footer-credits">This page is a modification of the <a href="https://pages.github.com">GitHub Pages</a> <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
 
     </section>
@@ -108,7 +188,6 @@
             });
 
             function revealForm () {
-                                    $('#click_here').hide();
                                     $('#registration_form').show();
                                    };
           </script>
