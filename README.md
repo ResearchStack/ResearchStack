@@ -2,13 +2,13 @@
 
 ResearchStack is an SDK and UX framework for building research study apps on Android.
 
+Be sure to check out [researchstack.org](http://researchstack.org/) and the [ResearchStack forum](https://groups.google.com/forum/#!forum/researchstack) for general information and announcements about the framework.
+
 ## Documentation
 
 Documentation is written and maintained using [Javadoc](http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html):
 - [Backbone Documentation](http://researchstack.org/documentation/backbone/)
 - [Skin Documentation](http://researchstack.org/documentation/skin/)
-
-Be sure to check out [researchstack.org](http://researchstack.org/) for general information about the framework.
 
 ## Download
 Add one or both to your app/build.gradle:
