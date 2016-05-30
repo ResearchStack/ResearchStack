@@ -119,7 +119,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
             List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
                     taskIdentifier).orderBy(TaskRecord.COMPLETED + " DESC").limit(1).list();
 
-            if(taskRecords.size() == 0)
+            if(taskRecords.isEmpty())
             {
                 return null;
             }
