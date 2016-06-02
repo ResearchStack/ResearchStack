@@ -22,7 +22,7 @@ You may also need to add the following source repos to your project's build.grad
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" } // for MPAndroidChard dependency, not on jcenter yet
+        maven { url "https://jitpack.io" } // for MPAndroidChart dependency, not on jcenter yet
     }
 }
 ```
