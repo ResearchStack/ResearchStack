@@ -18,8 +18,8 @@
     <string name="rss_send_email">Send Email</string>
     <string name="rss_study_overview_email_subject">%1$s Consent Form</string>
     <string name="rss_join_study">Join The Study</string>
-    <string name="rss_read_consent_doc">Read consent document</string>
-    <string name="rss_email_consent_doc">Email consent Document</string>
+    <string name="rss_read_consent_doc">Read Consent Document</string>
+    <string name="rss_email_consent_doc">Email Consent Document</string>
     <string name="rss_already_participating">Already Participating?</string>
     <string name="rss_skip_signup">Skip Signup</string>
 

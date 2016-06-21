@@ -4,7 +4,7 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.jfrog.bintray'
 
-version = '1.0.0.rc4'
+version = '1.0.0.rc4-DIHI-SNAPSHOT'
 
 android {
     compileSdkVersion 23

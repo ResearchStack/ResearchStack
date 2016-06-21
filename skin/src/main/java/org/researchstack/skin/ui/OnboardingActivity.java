@@ -79,8 +79,13 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         {
             StudyOverviewModel.Question consent = new StudyOverviewModel.Question();
             consent.setTitle(getString(R.string.rss_read_consent_doc));
-            consent.setDetails(ResourceManager.getInstance().getConsentHtml().getName());
-            model.getQuestions().add(0, consent);
+            consent.setDetails("CONSENT TAG");
+            consent.setConsentText(welcomeQuestion.getConsentText());
+            model.getQuestions().add(consent);
+
+            // These two lines set the content of the first onboarding page to the content of consent
+            //consent.setDetails(ResourceManager.getInstance().getConsentHtml().getName());
+            //model.getQuestions().add(0, consent);
         }
 
         for(int i = 0; i < model.getQuestions().size(); i++)

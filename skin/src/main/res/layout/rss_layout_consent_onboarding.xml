@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/consent_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/email_consent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rss_email_consent_doc"/>
+
+    <Button
+        android:id="@+id/view_consent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rss_read_consent_doc"/>
+
+</LinearLayout>
