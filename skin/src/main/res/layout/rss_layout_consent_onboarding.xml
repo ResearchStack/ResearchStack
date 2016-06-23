@@ -7,18 +7,26 @@
     <TextView
         android:id="@+id/consent_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:paddingLeft="16dp"
+        android:paddingTop="24dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="24dp" />
 
     <Button
         android:id="@+id/email_consent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rss_email_consent_doc"/>
+        android:text="@string/rss_email_consent_doc"
+        android:textColor="@android:color/white"/>
 
     <Button
         android:id="@+id/view_consent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rss_read_consent_doc"/>
+        android:text="@string/rss_read_consent_doc"
+        android:textColor="@android:color/white"/>
 
 </LinearLayout>
