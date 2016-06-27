@@ -81,6 +81,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public static final String KEY_JOIN_STUDY        = "rss_settings_general_join_study";
     // Other
     public static final String KEY_VERSION           = "rss_settings_version";
+    public static final String PASSCODE              = "passcode";
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Preference Items
@@ -251,7 +252,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     return true;
 
                 case KEY_CHANGE_PASSCODE:
-                    PassCodeCreationStep step = new PassCodeCreationStep("passcode",
+                    PassCodeCreationStep step = new PassCodeCreationStep(PASSCODE,
                             R.string.rss_passcode_change_title);
                     step.setStateOrdinal(SignUpPinCodeCreationStepLayout.State.CHANGE.ordinal());
                     OrderedTask passcodeTask = new OrderedTask("task_rss_settings_passcode", step);
@@ -375,10 +376,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         {
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
 
-            String oldPinCode = (String) result.getStepResult("passcode")
+            String oldPinCode = (String) result.getStepResult(PASSCODE)
                     .getResultForIdentifier(SignUpPinCodeCreationStepLayout.RESULT_OLD_PIN);
 
-            String newPinCode = (String) result.getStepResult("passcode").getResult();
+            String newPinCode = (String) result.getStepResult(PASSCODE).getResult();
 
             progress.setVisibility(View.VISIBLE);
 

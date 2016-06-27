@@ -10,6 +10,9 @@ import org.researchstack.backbone.storage.file.aes.Encrypter;
  */
 public class UnencryptedProvider implements EncryptionProvider
 {
+
+    public static final String PIN_CODE_ERROR_MSG = "Pin codes should not be used with this encryption provider";
+
     public UnencryptedProvider()
     {
     }
@@ -17,19 +20,19 @@ public class UnencryptedProvider implements EncryptionProvider
     @Override
     public boolean hasPinCode(Context context)
     {
-        throw new RuntimeException("Pin codes should not be used with this encryption provider");
+        throw new RuntimeException(PIN_CODE_ERROR_MSG);
     }
 
     @Override
     public void createPinCode(Context context, String pin)
     {
-        throw new RuntimeException("Pin codes should not be used with this encryption provider");
+        throw new RuntimeException(PIN_CODE_ERROR_MSG);
     }
 
     @Override
     public void changePinCode(Context context, String oldPin, String newPin)
     {
-        throw new RuntimeException("Pin codes should not be used with this encryption provider");
+        throw new RuntimeException(PIN_CODE_ERROR_MSG);
     }
 
     @Override
@@ -42,7 +45,7 @@ public class UnencryptedProvider implements EncryptionProvider
     @Override
     public void startWithPassphrase(Context context, String pin)
     {
-        throw new RuntimeException("Pin codes should not be used with this encryption provider");
+        throw new RuntimeException(PIN_CODE_ERROR_MSG);
     }
 
     @Override

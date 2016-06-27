@@ -2,11 +2,19 @@
 
 ResearchStack is an SDK and UX framework for building research study apps on Android.
 
+Be sure to check out [researchstack.org](http://researchstack.org/) and the [ResearchStack forum](https://groups.google.com/forum/#!forum/researchstack) for general information and announcements about the framework.
+
+## Documentation
+
+Documentation is written and maintained using [Javadoc](http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html):
+- [Backbone Documentation](http://researchstack.org/documentation/backbone/)
+- [Skin Documentation](http://researchstack.org/documentation/skin/)
+
 ## Download
 Add one or both to your app/build.gradle:
 ```groovy
-compile 'org.researchstack:backbone:1.0.0.rc3'
-compile 'org.researchstack:skin:1.0.0.rc3'
+compile 'org.researchstack:backbone:1.0.0.rc4'
+compile 'org.researchstack:skin:1.0.0.rc4'
 ```
 
 You may also need to add the following source repos to your project's build.gradle:
@@ -14,7 +22,7 @@ You may also need to add the following source repos to your project's build.grad
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" } // for MPAndroidChard dependency, not on jcenter yet
+        maven { url "https://jitpack.io" } // for MPAndroidChart dependency, not on jcenter yet
     }
 }
 ```
@@ -32,16 +40,19 @@ allprojects {
 ##Examples
 - [Sample App](https://github.com/ResearchStack/SampleApp)
   * Shows how to create a ResearchStack app using the skin framework.
-- [Backbone Example App](https://github.com/ResearchStack/BackboneExampleApp)		
-    * Uses only backbone features.		
-    * Shows how to create simple tasks (consent and a survey), present them to the user, and process the results.
+- [Backbone Example App](https://github.com/ResearchStack/BackboneExampleApp)
+  * Uses only backbone features.
+  * Shows how to create simple tasks (consent and a survey), present them to the user, and process the results.
+- [MoleMapper Android](https://github.com/ResearchStack/MoleMapperAndroid)
+  * The full source code of the MoleMapper Android app, which will be available soon on Google Play.
+  * Useful to compare against [the open source code of iOS/ResearchKit implementation of Mole Mapper](https://github.com/Sage-Bionetworks/MoleMapper).
 
 ## Things to look out for when converting your ResearchKit™ app
 
-- Assets can be dragged and dropped into the assets folder of your project. 
+- Assets can be dragged and dropped into the assets folder of your project.
 - Please make sure to validate and check for malformed JSON
 - Please make sure your links define a url in your HTML. An empty HREF attribute will reload the same file in a different activity.
-- ResearchStack adds attributes to the documentProperties object for consent. Additionally, ResearchStack also supports quiz conent define in the same json file. Please update your ConsentSection json file to reflect these changes. An example can be found in the SampleApp project. 
+- ResearchStack adds attributes to the documentProperties object for consent. Additionally, ResearchStack also supports quiz conent define in the same json file. Please update your ConsentSection json file to reflect these changes. An example can be found in the SampleApp project.
 - Images can be defined in the same directory of an HTML doc or through android's drawable directories. You can do this using the following path as an example "file:///android_res/drawable/image_name.png". Please note, loading assets through drawable path breaks when using applicationIdSuffix in gradle.
 - CSS font-family attribute should be changed to what exists on the system (i.e. sans-serif, sans-serif-light, etc..).
 - You will need to implement a class that extends the ResearchStack class and pass an instance of it into ResearchStack.init() in your Application.onCreate() method
@@ -79,7 +90,7 @@ com.android.support:preference-v14
 co.touchlab.squeaky:squeaky-query
 </b>
 
-- Squeaky is a Database ORM for Android, simplifying database functions and used to store Task / Step result information 
+- Squeaky is a Database ORM for Android, simplifying database functions and used to store Task / Step result information
 
 <b>
 co.touchlab.squeaky:squeaky-processor
@@ -116,8 +127,8 @@ io.reactivex:rxandroid
 io.reactivex:rxjava
 </b>
 
-- Used to compose asynchronous and event-based networking and database calls. Also used for event-based UI calls for varius UI widgets. 
-    
+- Used to compose asynchronous and event-based networking and database calls. Also used for event-based UI calls for varius UI widgets.
+
 <b>
 com.jakewharton.rxbinding:rxbinding-appcompat-v7<br />
 com.jakewharton.rxbinding:rxbinding-design<br />
@@ -135,4 +146,4 @@ com.squareup.retrofit2:retrofit
 </b>
 
 - Networking libraries used for network interface
-    
+
