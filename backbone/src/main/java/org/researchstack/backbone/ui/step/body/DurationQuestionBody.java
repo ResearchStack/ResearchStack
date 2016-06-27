@@ -23,8 +23,18 @@ import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.backbone.utils.ViewUtils;
 
 /**
- * Implementation of the question type "duration"
- * the JSON can specify a unit and a step, here they are not used, and probably not either in ResearchKit
+ * Implementation of the question type "duration".
+ *
+ * This is an example of the JSON used in the definition of the question
+ * "constraints":{
+ *  "durationUnit":"minutes",
+ *  "step":15,
+ *  "dataType":"duration",
+ *  "type":"DurationConstraints"
+ * }
+ * the "durationUnit" and "step" are not used in this implementation.
+ *
+ * The answer to this question (the StepResult) is given as the total number of minutes.
  */
 public class DurationQuestionBody implements StepBody
 {
@@ -32,7 +42,7 @@ public class DurationQuestionBody implements StepBody
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private QuestionStep        step;
-    //I'm assuming the result is given as the total number of minutes
+    //Total number of minutes
     private StepResult<Integer> result;
     private DurationAnswerFormat format;
 

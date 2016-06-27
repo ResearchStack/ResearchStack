@@ -129,6 +129,8 @@ public class SmartSurveyTask extends Task implements Serializable
         else
         {
             LogExt.e(SmartSurveyTask.class, "Survey question has answer type not supported:" + type);
+            //we can launch an exception here, but I don't thing it would follow the original design
+            //throw new RuntimeException("Survey question has answer type not supported:" + type);
             answerFormat = new UnknownAnswerFormat();
         }
         return answerFormat;
