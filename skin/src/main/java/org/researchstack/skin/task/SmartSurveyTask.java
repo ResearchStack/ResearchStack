@@ -1,12 +1,14 @@
 package org.researchstack.skin.task;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
+import org.researchstack.backbone.answerformat.SliderAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
 import org.researchstack.backbone.model.Choice;
@@ -115,6 +117,39 @@ public class SmartSurveyTask extends Task implements Serializable
         else if(type.equals("DateConstraints"))
         {
             answerFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
+        }
+        else if (type.equals("SliderConstraints"))
+        {
+            answerFormat = new SliderAnswerFormat(constraints.minValue, constraints.maxValue);
+            //Resources resources = context.getResources();
+
+            if (constraints.maxText != null && !constraints.maxText.isEmpty()) {
+                ((SliderAnswerFormat) answerFormat).setMaxText(constraints.maxText);
+            }
+
+            if (constraints.minText != null && !constraints.minText.isEmpty()) {
+                ((SliderAnswerFormat) answerFormat).setMinText(constraints.minText);
+            }
+
+            if (constraints.maxImage != null && !constraints.maxImage.isEmpty()) {
+                //((SliderAnswerFormat) answerFormat).setMaxImage(resources.getDrawable(resources.getIdentifier(constraints.maxImage, "drawable",
+                  //      context.getPackageName())));
+            }
+
+            if (constraints.minImage != null && !constraints.minImage.isEmpty()) {
+               // ((SliderAnswerFormat) answerFormat).setMinImage(resources.getDrawable(resources.getIdentifier(constraints.minImage, "drawable",
+                 //       context.getPackageName())));
+            }
+
+            if (constraints.color != null && !constraints.color.isEmpty()) {
+                ((SliderAnswerFormat) answerFormat).setColor(constraints.color);
+            }
+
+            if (constraints.sliderView != null && !constraints.sliderView.isEmpty()) {
+                ((SliderAnswerFormat) answerFormat).setSliderView(constraints.sliderView);
+            }
+
+                ((SliderAnswerFormat) answerFormat).setShowVal(constraints.showValue);
         }
         else
         {
