@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -67,6 +66,11 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
     @Override
     public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
+    }
+
+    @Override
+    public void receiveIntentExtraOnResult(int requestCode, Intent intent) {
+
     }
 
     @Override

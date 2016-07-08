@@ -132,7 +132,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSIONS);
-                ActivityCompat.shouldShowRequestPermissionRationale(this, "Our research app would like to access your phone's data to allow you to download and send content such as consent forms and privacy terms. You will not be able to view and email full documentation without enabling this permission.");
+                //ActivityCompat.shouldShowRequestPermissionRationale(this, "Our research app would like to access your phone's data to allow you to download and send content such as consent forms and privacy terms. You will not be able to view and email full documentation without enabling this permission.");
             }
         }
         LogExt.i(OnboardingActivity.class, "Write File Permission Granted");

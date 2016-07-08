@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.util.Base64;
@@ -80,6 +81,11 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    @Override
+    public void receiveIntentExtraOnResult(int requestCode, Intent intent) {
+
     }
 
     private void initializeStep()

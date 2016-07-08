@@ -1,5 +1,6 @@
 package org.researchstack.skin.ui.layout;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -142,6 +143,11 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    @Override
+    public void receiveIntentExtraOnResult(int requestCode, Intent intent) {
+
     }
 
     private void refreshState()

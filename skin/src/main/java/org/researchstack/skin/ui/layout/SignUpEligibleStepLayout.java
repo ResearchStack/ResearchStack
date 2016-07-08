@@ -1,6 +1,7 @@
 package org.researchstack.skin.ui.layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,5 +90,10 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
     public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    @Override
+    public void receiveIntentExtraOnResult(int requestCode, Intent intent) {
+
     }
 }

@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -80,6 +81,11 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    @Override
+    public void receiveIntentExtraOnResult(int requestCode, Intent intent) {
+
     }
 
     private void initializeStep()
