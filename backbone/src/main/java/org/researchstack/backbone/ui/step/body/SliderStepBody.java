@@ -116,10 +116,10 @@ public class SliderStepBody implements StepBody {
         maxImage = (ImageView) view.findViewById(R.id.max_image);
 
         if (format.getMinImage() != null){
-            minImage.setImageDrawable(format.getMinImage());
+            //minImage.setImageDrawable(format.getMinImage());
         }
         if (format.getMaxImage() != null){
-            maxImage.setImageDrawable(format.getMaxImage());
+            //maxImage.setImageDrawable(format.getMaxImage());
         }
     }
 

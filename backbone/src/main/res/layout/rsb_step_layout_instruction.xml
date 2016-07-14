@@ -9,7 +9,7 @@
 >
 
     <TextView
-        android:id="@+id/rsb_intruction_title"
+        android:id="@+id/rsb_instruction_title"
         style="@style/Backbone.Survey.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
     />
 
     <TextView
-        android:id="@+id/rsb_intruction_text"
+        android:id="@+id/rsb_instruction_text"
         style="@style/Backbone.Survey.Summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,5 +28,12 @@
         tools:text="@string/lorem_long"
         tools:visibility="visible"
     />
+
+    <ImageView
+        android:id="@+id/rsb_instruction_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
 </LinearLayout>

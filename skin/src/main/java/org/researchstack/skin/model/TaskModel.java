@@ -37,6 +37,9 @@ public class TaskModel
         @SerializedName("checkbox")
         public String checkbox;
 
+        @SerializedName("image")
+        public String image;
+
         @SerializedName("uiHint")
         public String uiHint;
 

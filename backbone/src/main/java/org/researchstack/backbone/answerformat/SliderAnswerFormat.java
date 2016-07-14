@@ -1,7 +1,5 @@
 package org.researchstack.backbone.answerformat;
 
-import android.graphics.drawable.Drawable;
-
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
 
@@ -18,8 +16,8 @@ public class SliderAnswerFormat extends AnswerFormat {
     private int maxVal;
     private String color;
     private boolean showVal;
-    private Drawable minImage;
-    private Drawable maxImage;
+    private String minImage;
+    private String maxImage;
     private String minText;
     private String maxText;
     private String sliderView;
@@ -89,19 +87,19 @@ public class SliderAnswerFormat extends AnswerFormat {
         this.showVal = showVal;
     }
 
-    public Drawable getMinImage() {
+    public String getMinImage() {
         return minImage;
     }
 
-    public void setMinImage(Drawable minImage) {
+    public void setMinImage(String minImage) {
         this.minImage = minImage;
     }
 
-    public Drawable getMaxImage() {
+    public String getMaxImage() {
         return maxImage;
     }
 
-    public void setMaxImage(Drawable maxImage) {
+    public void setMaxImage(String maxImage) {
         this.maxImage = maxImage;
     }
 

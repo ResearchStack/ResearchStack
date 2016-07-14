@@ -82,7 +82,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             // Set Title
             if (! TextUtils.isEmpty(step.getTitle()))
             {
-                TextView title = (TextView) findViewById(R.id.rsb_intruction_title);
+                TextView title = (TextView) findViewById(R.id.rsb_instruction_title);
                 title.setVisibility(View.VISIBLE);
                 title.setText(step.getTitle());
             }
@@ -90,7 +90,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             // Set Summary
             if(! TextUtils.isEmpty(step.getText()))
             {
-                TextView summary = (TextView) findViewById(R.id.rsb_intruction_text);
+                TextView summary = (TextView) findViewById(R.id.rsb_instruction_text);
                 summary.setVisibility(View.VISIBLE);
                 summary.setText(Html.fromHtml(step.getText()));
                 summary.setMovementMethod(new TextViewLinkHandler()

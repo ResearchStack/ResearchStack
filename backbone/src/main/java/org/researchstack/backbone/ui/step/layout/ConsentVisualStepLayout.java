@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -26,6 +27,7 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
@@ -146,18 +148,20 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         if (data.getRequiresAcceptance()) {
             CheckBox checkAcceptance = new CheckBox(this.getContext());
             checkAcceptance.setText("I Accept the Privacy Terms");
-            checkAcceptance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        submitBar.setEnabled(true);
-                    } else {
-                        submitBar.setEnabled(false);
-                    }
+            checkAcceptance.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                LogExt.i(getClass(), "Checkbox listener set for consent step");
+                if (isChecked) {
+                    submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+                            step,
+                            null));
+                } else {
+                    submitBar.setPositiveAction(v -> Toast.makeText(getContext(),
+                            "Please accept the conditions to continue.",
+                            Toast.LENGTH_SHORT).show()) ;
                 }
             });
 
-            RelativeLayout layout = (RelativeLayout)findViewById(R.id.relative_layout);
+            RelativeLayout layout = (RelativeLayout) findViewById(R.id.relative_layout);
             layout.setGravity(Gravity.CENTER_HORIZONTAL);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             params.addRule(RelativeLayout.BELOW, R.id.more_info);
