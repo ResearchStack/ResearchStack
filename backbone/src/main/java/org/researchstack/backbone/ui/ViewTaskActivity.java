@@ -20,6 +20,7 @@ import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.lang.reflect.Constructor;
 import java.util.Date;
@@ -33,6 +34,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private StepSwitcher root;
 
     private Step       currentStep;
+    private StepLayout currentLayout;
     private Task       task;
     private TaskResult taskResult;
 
@@ -72,9 +74,32 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         task.validateParameters();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        LogExt.i(ViewTaskActivity.class, "Result received");
+
+        // case where result isn't ok?
+
+        if (resultCode == RESULT_OK) {
+
+            if (data != null) {
+                getCurrentLayout().receiveIntentExtraOnResult(requestCode, data);
+            } else {
+                // case for some actions (such as camera) where default behavior is to return null
+                // even if action was successful- lets layout know request was successful
+                getCurrentLayout().receiveIntentExtraOnResult(requestCode, new Intent());
+            }
+            LogExt.i(ViewTaskActivity.class, "Result sent to layout " + getCurrentLayout().getClass());
+        }
+    }
+
     protected Step getCurrentStep()
     {
         return currentStep;
+    }
+
+    protected StepLayout getCurrentLayout() {
+        return currentLayout;
     }
 
     protected void showNextStep()
@@ -110,6 +135,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
         StepLayout stepLayout = getLayoutForStep(step);
+        currentLayout = stepLayout;
         stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
@@ -146,6 +172,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         }
         catch(Exception e)
         {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

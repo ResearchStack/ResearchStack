@@ -4,7 +4,11 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = '1.0.0.rc4'
+version = '1.0.0.rc4-DIHI-SNAPSHOT'
+
+retrolambda {
+    jvmArgs '-noverify'
+}
 
 android {
     compileSdkVersion 23
@@ -79,6 +83,10 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.2.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
 
+    // Added sliderbars
+    compile 'org.adw.library:discrete-seekbar:1.0.1'
+    compile 'com.edmodo:rangebar:1.0.0'
+
     compile 'com.scottyab:aes-crypto:0.0.3'
     compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
     apt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
@@ -86,6 +94,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile 'org.mockito:mockito-core:1.10.19'
+}
+
+repositories {
+    mavenCentral()
 }
 
 group = publishedGroupId                               // Maven Group ID for the artifact

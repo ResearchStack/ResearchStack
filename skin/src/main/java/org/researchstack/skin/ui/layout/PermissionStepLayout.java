@@ -1,5 +1,6 @@
 package org.researchstack.skin.ui.layout;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -212,6 +213,11 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
     public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    @Override
+    public void receiveIntentExtraOnResult(int requestCode, Intent intent) {
+
     }
 
 }

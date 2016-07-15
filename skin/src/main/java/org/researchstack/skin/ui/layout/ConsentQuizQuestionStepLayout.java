@@ -1,5 +1,6 @@
 package org.researchstack.skin.ui.layout;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -268,6 +269,11 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
     public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    @Override
+    public void receiveIntentExtraOnResult(int requestCode, Intent intent) {
+
     }
 
 }

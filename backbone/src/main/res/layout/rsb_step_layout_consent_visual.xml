@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Change to RelativeLayout for preview to work -->
 <RelativeLayout
+    android:id="@+id/relative_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -56,7 +57,21 @@
         android:paddingRight="@dimen/rsb_padding_medium"
         android:paddingTop="@dimen/rsb_padding_medium"
         android:textColor="?attr/colorAccent"
-        tools:text="More Info"
+        tools:text="@string/rsb_consent_learn_more"
     />
+
+    <CheckBox
+        android:id="@+id/duke_accept_privacy"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/more_info"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="@dimen/rsb_margin_right"
+        android:paddingBottom="@dimen/rsb_padding_medium"
+        android:paddingRight="@dimen/rsb_padding_medium"
+        android:paddingTop="@dimen/rsb_padding_medium"
+        android:text="@string/rsb_duke_consent_accept_privacy"
+        />
 
 </RelativeLayout>

@@ -8,4 +8,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
+    <provider
+        android:name="org.researchstack.skin.utils.AssetsProvider"
+        android:authorities="org.researchstack.skin.utils"
+        android:grantUriPermissions="true"
+        android:exported="true" />
+
 </manifest>

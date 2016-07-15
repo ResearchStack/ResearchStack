@@ -1,5 +1,6 @@
 package org.researchstack.skin.ui.layout;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -124,5 +125,10 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
     public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    @Override
+    public void receiveIntentExtraOnResult(int requestCode, Intent intent) {
+
     }
 }

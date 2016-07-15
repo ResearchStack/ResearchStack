@@ -1,6 +1,7 @@
 package org.researchstack.skin.ui.layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -212,6 +213,11 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     public void setCallbacks(StepCallbacks callbacks)
     {
         this.callbacks = callbacks;
+    }
+
+    @Override
+    public void receiveIntentExtraOnResult(int requestCode, Intent intent) {
+
     }
 
 }

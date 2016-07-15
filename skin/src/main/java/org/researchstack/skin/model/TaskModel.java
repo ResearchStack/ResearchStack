@@ -37,6 +37,9 @@ public class TaskModel
         @SerializedName("checkbox")
         public String checkbox;
 
+        @SerializedName("image")
+        public String image;
+
         @SerializedName("uiHint")
         public String uiHint;
 
@@ -59,6 +62,7 @@ public class TaskModel
         @SerializedName("dataType")
         public String dataType;
 
+        // Determines whether more than one answer choice is accepted
         @SerializedName("allowMultiple")
         public boolean allowMultiple;
 
@@ -68,21 +72,58 @@ public class TaskModel
         @SerializedName("type")
         public String type;
 
+        // Each element is option within step
         @SerializedName("enumeration")
         public List<EnumerationModel> enumeration;
 
         @SerializedName("step")
         public String step;
 
+        // Maximum accepted value for integer constraints
+        // Maximum value available for slider constraints
         @SerializedName("maxValue")
         public int maxValue;
 
+        // Minimum accepted value for integer constraints
+        // Minimum value available for slider constraints
         @SerializedName("minValue")
         public int minValue;
 
+        // Determines whether or not slider displays selected value
+        @SerializedName("showValue")
+        public boolean showValue;
+
+        // Detemines appearance of slider from three choices
+        // gradient, solid, or ticked
+        @SerializedName("sliderView")
+        public String sliderView;
+
+        // Determines color of visual (for now, slider)
+        // multiple colors separated by spaces used for gradient
+        @SerializedName("color")
+        public String color;
+
+        // Determines text shown at minimum side of slider
+        @SerializedName("minText")
+        public String minText;
+
+        // Determines text shown at maximum side of slider
+        @SerializedName("maxText")
+        public String maxText;
+
+        // Determines image shown at minimum side of slider
+        @SerializedName("minImage")
+        public String minImage;
+
+        // Determines image shown at maximum side of slider
+        @SerializedName("maxImage")
+        public String maxImage;
+
+        // Determines if multiple lines of text are accepted for text constraints
         @SerializedName("multipleLines")
         public boolean multipleLines;
 
+        // Determines rules for navigation of task
         @SerializedName("rules")
         public List<RuleModel> rules;
 

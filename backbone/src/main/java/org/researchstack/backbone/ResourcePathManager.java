@@ -1,8 +1,14 @@
 package org.researchstack.backbone;
+import android.Manifest;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,9 +16,13 @@ import com.google.gson.GsonBuilder;
 import org.researchstack.backbone.utils.LogExt;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -103,6 +113,12 @@ public abstract class ResourcePathManager
                 return "pdf";
             case Resource.TYPE_MP4:
                 return "mp4";
+            case Resource.TYPE_JPEG:
+                return "jpeg";
+            case Resource.TYPE_MP3:
+                return "mp3";
+            case Resource.TYPE_PNG:
+                return "png";
             default:
                 throw new IllegalArgumentException("Unknown type " + type);
         }
@@ -214,6 +230,100 @@ public abstract class ResourcePathManager
     }
 
     /**
+     * Creates copy of resource in external storage
+     * can be used to share file between apps
+     *
+     * @param resource
+     * @return
+     * @throws IOException
+     */
+    public File saveResourceToExternalStorage(Context context, ResourcePathManager.Resource resource) throws Exception {
+        if(!isExternalStorageWritable()){
+            throw new Exception("Unable to write to external storage");
+        }
+
+        int fileType = resource.getType();
+        File file;
+
+        String environment;
+        switch (fileType){
+            case ResourcePathManager.Resource.TYPE_HTML:
+                environment = Environment.DIRECTORY_DOCUMENTS;
+                break;
+            case ResourcePathManager.Resource.TYPE_JSON:
+                environment = Environment.DIRECTORY_DOCUMENTS;
+                break;
+            case ResourcePathManager.Resource.TYPE_PDF:
+                //environment = Environment.DIRECTORY_DOCUMENTS;
+                environment = Environment.DIRECTORY_DOWNLOADS;
+                break;
+            case ResourcePathManager.Resource.TYPE_MP4:
+                environment = Environment.DIRECTORY_MUSIC;
+                break;
+            case ResourcePathManager.Resource.TYPE_MP3:
+                environment = Environment.DIRECTORY_MUSIC;
+                break;
+            case ResourcePathManager.Resource.TYPE_PNG:
+                environment = Environment.DIRECTORY_PICTURES;
+                break;
+            case ResourcePathManager.Resource.TYPE_JPEG:
+                environment = Environment.DIRECTORY_PICTURES;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown type " + fileType);
+        }
+
+        String filename = resource.getName() + "." + getFileExtension(fileType);
+        Log.i("ResourcePathManager", "saveResourceToExternalStorage filename: " + filename);
+
+        file = new File(context.getExternalFilesDir(
+                environment), filename);
+
+        writeToFile(context, file, resource);
+        return file;
+    }
+
+    /**
+     * Writes from resource to copy file
+     * @param context
+     * @param storedFile
+     * @param resource
+     * @throws IOException
+     */
+    private void writeToFile(Context context, File storedFile, Resource resource) throws IOException {
+        try {
+            OutputStream oos = new FileOutputStream(storedFile.getPath());
+
+            byte[] buf = new byte[8192];
+
+            InputStream is = getResouceAsInputStream(context, resource.getRelativePath());
+
+            int c = 0;
+
+            while ((c = is.read(buf, 0, buf.length)) > 0) {
+                oos.write(buf, 0, c);
+                oos.flush();
+            }
+
+            oos.close();
+            LogExt.i(ResourcePathManager.class, "Finished writing");
+            is.close();
+        } catch (IOException e){
+            //throw new IOException("Could not write to file");
+            e.printStackTrace();
+        }
+    }
+
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Class represents one asset within the assets folder.
      */
     public static class Resource
@@ -222,6 +332,9 @@ public abstract class ResourcePathManager
         public static final int TYPE_JSON = 1;
         public static final int TYPE_PDF  = 2;
         public static final int TYPE_MP4  = 3;
+        public static final int TYPE_PNG  = 4;
+        public static final int TYPE_JPEG = 5;
+        public static final int TYPE_MP3  = 6;
 
         private final int    type;
         private final String dir;
@@ -321,6 +434,9 @@ public abstract class ResourcePathManager
             return new StringBuilder("file:///android_asset/").append(getRelativePath()).toString();
         }
 
+        public String getContentPath(){
+            return new StringBuilder("content://android_asset/").append(getRelativePath()).toString();
+        }
         /**
          * Returns the relative path of this Resource
          *

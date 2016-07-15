@@ -45,7 +45,7 @@ public class ConsentFormUtils
                     .getString(R.string.rss_study_overview_email_subject, appName);
 
             Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("message/rfc822");
+            intent.setType("application/pdf");
             intent.putExtra(Intent.EXTRA_SUBJECT, emailSubject);
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile((File) o));
 

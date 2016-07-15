@@ -6,6 +6,8 @@ import org.researchstack.backbone.ui.step.body.IntegerQuestionBody;
 import org.researchstack.backbone.ui.step.body.MultiChoiceQuestionBody;
 import org.researchstack.backbone.ui.step.body.NotImplementedStepBody;
 import org.researchstack.backbone.ui.step.body.SingleChoiceQuestionBody;
+//import org.researchstack.backbone.ui.step.body.SliderStepBody;
+import org.researchstack.backbone.ui.step.body.SliderStepBody;
 import org.researchstack.backbone.ui.step.body.TextQuestionBody;
 
 import java.io.Serializable;
@@ -73,7 +75,8 @@ public abstract class AnswerFormat implements Serializable
         Date(DateQuestionBody.class),
         TimeInterval(NotImplementedStepBody.class),
         Location(NotImplementedStepBody.class),
-        Form(FormBody.class);
+        Form(FormBody.class),
+        Slider(SliderStepBody.class);
 
         private Class<?> stepBodyClass;
 

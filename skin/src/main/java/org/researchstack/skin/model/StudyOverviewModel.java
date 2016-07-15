@@ -54,6 +54,9 @@ public class StudyOverviewModel
         @SerializedName("video_name")
         String videoName;
 
+        @SerializedName("consent_text")
+        String consentText;
+
         public String getTitle()
         {
             return title;
@@ -82,6 +85,14 @@ public class StudyOverviewModel
         public String getVideoName()
         {
             return videoName;
+        }
+
+        public String getConsentText() {
+            return consentText;
+        }
+
+        public void setConsentText(String text) {
+            this.consentText = text;
         }
 
         public void setTitle(String title)
