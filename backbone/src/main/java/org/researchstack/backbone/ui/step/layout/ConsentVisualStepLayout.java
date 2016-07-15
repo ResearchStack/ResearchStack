@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
+import rx.functions.Action1;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.ConsentSection;
@@ -140,24 +141,18 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveTitle(step.getNextButtonString());
-        submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                step,
-                null));
+        submitBar.setPositiveAction(positiveAction());
         submitBar.getNegativeActionView().setVisibility(View.GONE);
 
         if (data.getRequiresAcceptance()) {
+            submitBar.setPositiveAction(positiveAction(false));
+
             CheckBox checkAcceptance = new CheckBox(this.getContext());
             checkAcceptance.setText("I Accept the Privacy Terms");
-            checkAcceptance.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                LogExt.i(getClass(), "Checkbox listener set for consent step");
-                if (isChecked) {
-                    submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                            step,
-                            null));
-                } else {
-                    submitBar.setPositiveAction(v -> Toast.makeText(getContext(),
-                            "Please accept the conditions to continue.",
-                            Toast.LENGTH_SHORT).show()) ;
+            checkAcceptance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    submitBar.setPositiveAction(positiveAction(isChecked));
                 }
             });
 
@@ -168,5 +163,21 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
             layout.addView(checkAcceptance, params);
         }
 
+    }
+    
+    private Action1 positiveAction() {
+        return v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+                step,
+                null);
+    }
+    
+    private Action1 positiveAction(Boolean accepted) {
+        if (accepted) {
+            return positiveAction();
+        } else {
+            return v -> Toast.makeText(getContext(),
+                    "Please accept the conditions to continue.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }
