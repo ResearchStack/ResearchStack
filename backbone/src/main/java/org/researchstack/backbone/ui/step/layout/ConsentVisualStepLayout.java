@@ -139,28 +139,24 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
             moreInfoView.setVisibility(View.GONE);
         }
 
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveTitle(step.getNextButtonString());
         submitBar.setPositiveAction(positiveAction());
         submitBar.getNegativeActionView().setVisibility(View.GONE);
 
+        CheckBox acceptPrivacy = (CheckBox) findViewById(R.id.duke_accept_privacy);
+        acceptPrivacy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                submitBar.setPositiveAction(positiveAction(isChecked));
+            }
+        });
         if (data.getRequiresAcceptance()) {
             submitBar.setPositiveAction(positiveAction(false));
-
-            CheckBox checkAcceptance = new CheckBox(this.getContext());
-            checkAcceptance.setText("I Accept the Privacy Terms");
-            checkAcceptance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    submitBar.setPositiveAction(positiveAction(isChecked));
-                }
-            });
-
-            RelativeLayout layout = (RelativeLayout) findViewById(R.id.relative_layout);
-            layout.setGravity(Gravity.CENTER_HORIZONTAL);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            params.addRule(RelativeLayout.BELOW, R.id.more_info);
-            layout.addView(checkAcceptance, params);
+            acceptPrivacy.setVisibility(View.VISIBLE);
+        } else {
+            submitBar.setPositiveAction(positiveAction());
+            acceptPrivacy.setVisibility(View.GONE);
         }
 
     }
@@ -175,8 +171,11 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         if (accepted) {
             return positiveAction();
         } else {
+            String msg = getResources().getString(getResources().getIdentifier(
+                    "rsb_duke_consent_must_accept_privacy", "string",
+                    getContext().getPackageName()));
             return v -> Toast.makeText(getContext(),
-                    "Please accept the conditions to continue.",
+                    msg,
                     Toast.LENGTH_SHORT).show();
         }
     }

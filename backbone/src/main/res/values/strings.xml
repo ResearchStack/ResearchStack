@@ -161,4 +161,8 @@
     <string name="rsb_error_assetvideoview_unknown">Can\'t play this video.</string>
     <!-- Button to close error alert when a video cannot be played -->
     <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Duke Customizations -->
+    <string name="rsb_duke_consent_accept_privacy">I have reviewed, understand and accept Duke\'s Notice of Privacy Practices.</string>
+    <string name="rsb_duke_consent_must_accept_privacy">"Please accept the terms to continue."</string>
 </resources>
