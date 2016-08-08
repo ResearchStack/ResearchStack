@@ -36,7 +36,7 @@ public class DateAnswerFormat extends AnswerFormat
     /**
      * Returns the style of date entry.
      *
-     * @return the style of the date entry, Date or Date and Time
+     * @return the style of the date entry
      */
     public DateAnswerStyle getStyle()
     {
@@ -83,9 +83,11 @@ public class DateAnswerFormat extends AnswerFormat
     @Override
     public QuestionType getQuestionType()
     {
-        int def = Type.DateAndTime.ordinal();
-        int style = getStyle().ordinal();
-        return Type.values()[def + style];
+        if(style == DateAnswerStyle.Date) return Type.Date;
+        if(style == DateAnswerStyle.DateAndTime) return Type.DateAndTime;
+        if(style == DateAnswerStyle.TimeOfDay) return Type.TimeOfDay;
+
+        return Type.None;
     }
 
     public BodyAnswer validateAnswer(Date resultDate)

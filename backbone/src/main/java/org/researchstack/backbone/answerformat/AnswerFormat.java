@@ -70,8 +70,8 @@ public abstract class AnswerFormat implements Serializable
         Boolean(SingleChoiceQuestionBody.class),
         Eligibility(NotImplementedStepBody.class),
         Text(TextQuestionBody.class),
-        TimeOfDay(NotImplementedStepBody.class),
-        DateAndTime(NotImplementedStepBody.class),
+        TimeOfDay(DateQuestionBody.class),
+        DateAndTime(DateQuestionBody.class),
         Date(DateQuestionBody.class),
         TimeInterval(NotImplementedStepBody.class),
         Duration(DurationQuestionBody.class),
@@ -118,6 +118,6 @@ public abstract class AnswerFormat implements Serializable
     {
         DateAndTime,
         Date,
-        Time
+        TimeOfDay
     }
 }

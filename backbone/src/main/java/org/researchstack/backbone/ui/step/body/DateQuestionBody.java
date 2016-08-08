@@ -1,7 +1,6 @@
 package org.researchstack.backbone.ui.step.body;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.res.Resources;
 import android.support.v7.view.ContextThemeWrapper;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
@@ -52,7 +50,7 @@ public class DateQuestionBody implements StepBody
             this.dateformatter = FormatHelper.getFormat(DateFormat.MEDIUM, DateFormat.MEDIUM);
         } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.Date){
             this.dateformatter = FormatHelper.getFormat(DateFormat.MEDIUM, FormatHelper.NONE);
-        } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.Time){
+        } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay){
             this.dateformatter = FormatHelper.getFormat(FormatHelper.NONE, DateFormat.MEDIUM);
         }
 
@@ -101,7 +99,13 @@ public class DateQuestionBody implements StepBody
         }
         else
         {
-            textView.setHint(R.string.rsb_hint_step_body_date);
+            if(format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
+                textView.setHint(R.string.rsb_hint_step_body_date);
+            } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
+                textView.setHint(R.string.rsb_hint_step_body_time);
+            } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
+                textView.setHint(R.string.rsb_hint_step_body_datetime);
+            }
         }
 
         if(result.getResult() != null)
@@ -181,7 +185,7 @@ public class DateQuestionBody implements StepBody
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)).show();
-        } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.Time) {
+        } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
             new TimePickerDialog(contextWrapper,
                     (view, hourOfDay, minute) -> {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
