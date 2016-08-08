@@ -123,12 +123,8 @@
     <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
     <string name="rsb_invalid_answer_date_over">Invalid answer, date must be before %1$s</string>
     <string name="rsb_invalid_answer_date_under">Invalid answer, date must be after %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value must be %1$s or
-        lower
-    </string>
-    <string name="rsb_invalid_answer_integer_under">Invalid answer, your value must be %1$s or
-        higher
-    </string>
+    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value must be %1$s or lower</string>
+    <string name="rsb_invalid_answer_integer_under">Invalid answer, your value must be %1$s or higher</string>
     <string name="rsb_invalid_answer_choice">Please select a value!</string>
     <string name="rsb_invalid_answer_date_none">Please choose a date.</string>
     <string name="rsb_birth_date_too_old">You must be %1$s years or younger</string>

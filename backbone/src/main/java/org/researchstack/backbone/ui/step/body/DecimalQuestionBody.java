@@ -155,31 +155,11 @@ public class DecimalQuestionBody implements StepBody
     @Override
     public BodyAnswer getBodyAnswerState()
     {
-        // If no answer is recorded
-        if (editText == null || TextUtils.isEmpty(editText.getText()))
-        {
+        if(editText == null) {
             return BodyAnswer.INVALID;
         }
 
-        else
-        {
-            // Parse value from editText
-            Float floatAnswer = Float.valueOf(editText.getText().toString());
-
-            // If greater
-            if (floatAnswer < format.getMinValue())
-            {
-                return new BodyAnswer(false, R.string.rsb_invalid_answer_integer_under);
-            }
-
-            else if (floatAnswer > format.getMaxValue())
-            {
-                return new BodyAnswer(false, R.string.rsb_invalid_answer_integer_over);
-            }
-
-        }
-
-        return BodyAnswer.VALID;
+        return format.validateAnswer(editText.getText().toString());
     }
 
 }

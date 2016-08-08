@@ -92,21 +92,18 @@ public class DateAnswerFormat extends AnswerFormat
 
     public BodyAnswer validateAnswer(Date resultDate)
     {
-        Date minDate = getMinimumDate();
-        Date maxDate = getMaximumDate();
-
-        if(minDate != null && resultDate.getTime() < minDate.getTime())
+        if(minimumDate != null && resultDate.getTime() < minimumDate.getTime())
         {
             return new BodyAnswer(false,
                     R.string.rsb_invalid_answer_date_under,
-                    FormatHelper.SIMPLE_FORMAT_DATE.format(minDate));
+                    FormatHelper.SIMPLE_FORMAT_DATE.format(minimumDate));
         }
 
-        if(maxDate != null && resultDate.getTime() > maxDate.getTime())
+        if(maximumDate != null && resultDate.getTime() > maximumDate.getTime())
         {
             return new BodyAnswer(false,
                     R.string.rsb_invalid_answer_date_over,
-                    FormatHelper.SIMPLE_FORMAT_DATE.format(maxDate));
+                    FormatHelper.SIMPLE_FORMAT_DATE.format(maximumDate));
         }
 
         return BodyAnswer.VALID;
