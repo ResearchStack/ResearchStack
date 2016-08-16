@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.ui.ViewTaskActivity;
 
 import java.io.Serializable;
 
@@ -227,5 +228,25 @@ public abstract class Task implements Serializable
         {
             super(throwable);
         }
+    }
+
+    public static enum ViewChangeType {
+        ActivityCreate,
+        ActivityPause,
+        ActivityResume,
+        ActivityStop,
+        StepChanged
+    }
+
+    /**
+     * Function that can be overridden in order to access the low level changes in the view.
+     * The function is called at Activity lifecycle events (creation, pause, resume, stop and whenever
+     * the content of the activity is changed, according to the step.
+     * @param type lifecycle event
+     * @param activity current activity
+     * @param currentStep the current step being shown
+     */
+    public void onViewChange(ViewChangeType type, ViewTaskActivity activity, Step currentStep){
+
     }
 }
