@@ -5,7 +5,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = '1.0.0.rc3'
+version = '1.1.0'
 
 android {
     compileSdkVersion 23
