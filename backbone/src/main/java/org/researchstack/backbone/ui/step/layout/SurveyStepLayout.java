@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -8,6 +9,8 @@ import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -135,6 +138,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             {
                 title.setVisibility(View.VISIBLE);
                 title.setText(questionStep.getTitle());
+                title.setContentDescription(questionStep.getContentDescription());
             }
 
             if(! TextUtils.isEmpty(questionStep.getText()))
@@ -165,6 +169,15 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             {
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
+
+            AccessibilityManager manager = (AccessibilityManager) getContext()
+                    .getSystemService(Context.ACCESSIBILITY_SERVICE);
+
+            if (manager != null && manager.isEnabled())
+            {
+                this.SendAccessibilityInfo(questionStep.getContentDescription());
+            }
+
         }
     }
 
@@ -184,6 +197,28 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             container.addView(body, bodyIndex);
             body.setId(R.id.rsb_survey_step_body);
         }
+    }
+
+    private void SendAccessibilityInfo(final String text){
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AccessibilityManager manager = (AccessibilityManager) getContext()
+                        .getSystemService(Context.ACCESSIBILITY_SERVICE);
+
+                if (manager != null && manager.isEnabled())
+                {
+                    AccessibilityEvent e = AccessibilityEvent.obtain();
+                    e.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                    e.setClassName(getClass().getName());
+                    e.setPackageName(getContext().getPackageName());
+                    e.getText().add(text);
+                    manager.sendAccessibilityEvent(e);
+                }
+            }
+        }, 400);
+
     }
 
     @NonNull
