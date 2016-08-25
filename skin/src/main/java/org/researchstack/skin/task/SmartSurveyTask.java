@@ -6,11 +6,14 @@ import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.DateAnswerFormat;
+import org.researchstack.backbone.answerformat.DecimalAnswerFormat;
+import org.researchstack.backbone.answerformat.DurationAnswerFormat;
 import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
@@ -77,6 +80,18 @@ public class SmartSurveyTask extends Task implements Serializable
                 staticStepIdentifiers.add(stepModel.identifier);
                 rules.put(stepModel.identifier, stepModel.constraints.rules);
             }
+            /*
+            In a survey JSON file, if you want to define a step that has text but no question,
+            set the type to "SurveyTextOnly" instead of "SurveyQuestion"
+             */
+            else if (stepModel.type.equals("SurveyTextOnly"))
+            {
+                InstructionStep instructionStep = new InstructionStep(stepModel.identifier, stepModel.prompt, stepModel.promptDetail);
+                steps.put(stepModel.identifier, instructionStep);
+                staticStepIdentifiers.add(stepModel.identifier);
+
+            }
+
             else
             {
                 throw new UnsupportedOperationException("Wasn't a survey question");
@@ -106,6 +121,10 @@ public class SmartSurveyTask extends Task implements Serializable
         {
             answerFormat = new IntegerAnswerFormat(constraints.minValue, constraints.maxValue);
         }
+        else if(type.equals("DecimalConstraints"))
+        {
+            answerFormat = new DecimalAnswerFormat(constraints.minValue, constraints.maxValue);
+        }
         else if(type.equals("TextConstraints") || type.equals("StringConstraints"))
         {
             answerFormat = new TextAnswerFormat();
@@ -116,8 +135,15 @@ public class SmartSurveyTask extends Task implements Serializable
         {
             answerFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
         }
+        else if(type.equals("DurationConstraints"))
+        {
+            answerFormat = new DurationAnswerFormat(constraints.step, constraints.durationUnit);
+        }
         else
         {
+            LogExt.e(SmartSurveyTask.class, "Survey question has answer type not supported:" + type);
+            //we can launch an exception here, but I don't thing it would follow the original design
+            //throw new RuntimeException("Survey question has answer type not supported:" + type);
             answerFormat = new UnknownAnswerFormat();
         }
         return answerFormat;

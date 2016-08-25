@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.body;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.res.Resources;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
@@ -24,8 +26,7 @@ public class DateQuestionBody implements StepBody
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Static Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private static final DateFormat DATE_FORMAT = FormatHelper.getFormat(DateFormat.MEDIUM,
-            FormatHelper.NONE);
+
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
@@ -34,6 +35,7 @@ public class DateQuestionBody implements StepBody
     private StepResult<Long> result;
     private DateAnswerFormat format;
     private Calendar         calendar;
+    private DateFormat dateformatter;
 
     private boolean hasChosenDate;
 
@@ -43,6 +45,14 @@ public class DateQuestionBody implements StepBody
         this.result = result == null ? new StepResult<>(step) : result;
         this.format = (DateAnswerFormat) this.step.getAnswerFormat();
         this.calendar = Calendar.getInstance();
+
+        if(format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime){
+            this.dateformatter = FormatHelper.getFormat(DateFormat.MEDIUM, DateFormat.MEDIUM);
+        } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.Date){
+            this.dateformatter = FormatHelper.getFormat(DateFormat.MEDIUM, FormatHelper.NONE);
+        } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay){
+            this.dateformatter = FormatHelper.getFormat(FormatHelper.NONE, DateFormat.MEDIUM);
+        }
 
         // First check the result and restore last picked date
         Long savedTimeInMillis = this.result.getResult();
@@ -89,7 +99,13 @@ public class DateQuestionBody implements StepBody
         }
         else
         {
-            textView.setHint(R.string.rsb_hint_step_body_date);
+            if(format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
+                textView.setHint(R.string.rsb_hint_step_body_date);
+            } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
+                textView.setHint(R.string.rsb_hint_step_body_time);
+            } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
+                textView.setHint(R.string.rsb_hint_step_body_datetime);
+            }
         }
 
         if(result.getResult() != null)
@@ -156,23 +172,62 @@ public class DateQuestionBody implements StepBody
         // need to find a material date picker, since it's not in the support library
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(tv.getContext(),
                 R.style.Theme_Backbone);
-        new DatePickerDialog(contextWrapper,
-                (view, year, monthOfYear, dayOfMonth) -> {
-                    calendar.set(year, monthOfYear, dayOfMonth);
-                    hasChosenDate = true;
+        if(format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
+            new DatePickerDialog(contextWrapper,
+                    (view, year, monthOfYear, dayOfMonth) -> {
+                        calendar.set(year, monthOfYear, dayOfMonth);
+                        hasChosenDate = true;
 
-                    // Set result to our edit text
-                    String formattedResult = createFormattedResult();
-                    tv.setText(formattedResult);
-                },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)).show();
+                        // Set result to our edit text
+                        String formattedResult = createFormattedResult();
+                        tv.setText(formattedResult);
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)).show();
+        } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
+            new TimePickerDialog(contextWrapper,
+                    (view, hourOfDay, minute) -> {
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+                        hasChosenDate = true;
+
+                        // Set result to our edit text
+                        String formattedResult = createFormattedResult();
+                        tv.setText(formattedResult);
+                    },
+                    calendar.get(Calendar.HOUR_OF_DAY),
+                    calendar.get(Calendar.MINUTE),
+                    true).show();
+
+        } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
+            new DatePickerDialog(contextWrapper,
+                    (dview, year, monthOfYear, dayOfMonth) -> {
+                        calendar.set(year, monthOfYear, dayOfMonth);
+                        new TimePickerDialog(contextWrapper,
+                                (tview, hourOfDay, minute) -> {
+                                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                    calendar.set(Calendar.MINUTE, minute);
+                                    hasChosenDate = true;
+                                    // Set result to our edit text
+                                    String formattedResult = createFormattedResult();
+                                    tv.setText(formattedResult);
+                                },
+                                calendar.get(Calendar.HOUR_OF_DAY),
+                                calendar.get(Calendar.MINUTE),
+                                true).show();
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)).show();
+        } else {
+            throw new RuntimeException("DateAnswerStyle " + format.getStyle() + " is not recognised");
+        }
     }
 
     private String createFormattedResult()
     {
-        return DATE_FORMAT.format(calendar.getTime());
+        return dateformatter.format(calendar.getTime());
     }
 
 }

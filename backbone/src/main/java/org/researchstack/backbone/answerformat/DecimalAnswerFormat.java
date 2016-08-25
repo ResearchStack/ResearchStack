@@ -1,5 +1,9 @@
 package org.researchstack.backbone.answerformat;
 
+import org.researchstack.backbone.R;
+import org.researchstack.backbone.ui.step.body.BodyAnswer;
+import org.researchstack.backbone.utils.TextUtils;
+
 /**
  * This class defines the attributes for a decimal answer format that participants enter using a
  * numeric keyboard.
@@ -49,5 +53,28 @@ public class DecimalAnswerFormat extends AnswerFormat
     public float getMaxValue()
     {
         return maxValue;
+    }
+
+    public BodyAnswer validateAnswer(String inputString)
+    {
+        // If no answer is recorded
+        if(inputString == null || TextUtils.isEmpty(inputString)) {
+            return BodyAnswer.INVALID;
+        }
+        else {
+            // Parse value from editText
+            Float floatAnswer = Float.valueOf(inputString);
+            if(floatAnswer < minValue) {
+                return new BodyAnswer(false,
+                        R.string.rsb_invalid_answer_integer_under, String.valueOf(getMinValue()));
+            }
+
+            else if(floatAnswer > maxValue) {
+                return new BodyAnswer(false,
+                        R.string.rsb_invalid_answer_integer_over, String.valueOf(getMaxValue()));
+            }
+        }
+
+        return BodyAnswer.VALID;
     }
 }
