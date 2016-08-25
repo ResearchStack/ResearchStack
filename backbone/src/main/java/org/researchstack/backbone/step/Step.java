@@ -34,8 +34,6 @@ public class Step implements Serializable
 
     private String text;
 
-    private String contentDescription;
-
     // The following fields are in RK but not implemented in ResearchStack
     // These options can be developed as needed or removed if we find they are not necessary
     private boolean restorable;
@@ -206,23 +204,5 @@ public class Step implements Serializable
     public void setStepLayoutClass(Class stepLayoutClass)
     {
         this.stepLayoutClass = stepLayoutClass;
-    }
-
-    /**
-     * Gets text that briefly describes content of the view (optional).
-     *
-     * @return the content description.
-     */
-    public String getContentDescription() {
-        return contentDescription;
-    }
-
-    /**
-     * Sets text that briefly describes content of the view (optional).
-     *
-     * @param contentDescription the content description for accessibility.
-     */
-    public void setContentDescription(String contentDescription) {
-        this.contentDescription = contentDescription;
     }
 }
