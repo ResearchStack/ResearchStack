@@ -21,6 +21,7 @@ package org.researchstack.backbone.ui.views;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -98,8 +99,9 @@ public class StepSwitcher extends FrameLayout
      * @param stepLayout the step you want to switch to
      * @param direction  the direction of the animation in the x direction. This values can either be
      *                   {@link StepSwitcher#SHIFT_LEFT} or {@link StepSwitcher#SHIFT_RIGHT}
+     * @param finshed a piece of code that is executed when the animation is completed (can be null)
      */
-    public void show(StepLayout stepLayout, int direction)
+    public void show(StepLayout stepLayout, int direction, @Nullable Runnable finshed)
     {
         // if layouts originate from the same step, ignore show
         View currentStep = findViewById(R.id.rsb_current_step);
@@ -163,6 +165,7 @@ public class StepSwitcher extends FrameLayout
                             }
 
                             removeView(currentStep);
+                            if(finshed != null) finshed.run();
                         });
             }
         });

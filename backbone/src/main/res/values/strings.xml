@@ -114,6 +114,8 @@
     <string name="rsb_yes">Yes</string>
     <string name="rsb_no">No</string>
     <string name="rsb_format_step_title">Step %1$s of %2$s</string>
+    <string name="rsb_hours">Hours</string>
+    <string name="rsb_minutes">Minutes</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_data_failed">Failed to load encrypted data, try again!</string>
@@ -121,12 +123,8 @@
     <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
     <string name="rsb_invalid_answer_date_over">Invalid answer, date must be before %1$s</string>
     <string name="rsb_invalid_answer_date_under">Invalid answer, date must be after %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value must be %1$s or
-        lower
-    </string>
-    <string name="rsb_invalid_answer_integer_under">Invalid answer, your value must be %1$s or
-        higher
-    </string>
+    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value must be %1$s or lower</string>
+    <string name="rsb_invalid_answer_integer_under">Invalid answer, your value must be %1$s or higher</string>
     <string name="rsb_invalid_answer_choice">Please select a value!</string>
     <string name="rsb_invalid_answer_date_none">Please choose a date.</string>
     <string name="rsb_birth_date_too_old">You must be %1$s years or younger</string>
@@ -139,13 +137,15 @@
     <string name="rsb_pincode_enter_digit">digit</string>
     <string name="rsb_pincode_enter_letter">letter</string>
     <string name="rsb_pincode_enter_character">character</string>
-    <string name="rsb_pincode_enter_error">That code doesn’t match the one you entered, Try again!
-    </string>
+    <string name="rsb_pincode_enter_error">That code doesn’t match the one you entered, Try again!</string>
 
     <!-- Body Hints -->
     <string name="rsb_hint_step_body_int">Enter a number %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Enter a number %1$.2f-%2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Enter a number</string>
     <string name="rsb_hint_step_body_date">Enter a date</string>
+    <string name="rsb_hint_step_body_time">Enter a time</string>
+    <string name="rsb_hint_step_body_datetime">Enter a date and a time</string>
     <string name="rsb_hint_step_body_text">Answer</string>
 
     <!-- Graphing -->

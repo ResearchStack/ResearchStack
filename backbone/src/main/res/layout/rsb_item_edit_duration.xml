@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/rsb_hours"
+            android:id="@+id/hours_label"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.6" />
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/rsb_item_size_default"
+            android:id="@+id/hours"
+            android:layout_weight="0.4"
+            android:spinnerMode="dialog"
+            android:scrollIndicators="right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/rsb_minutes"
+            android:id="@+id/minutes_label"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.6" />
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/rsb_item_size_default"
+            android:id="@+id/minutes"
+            android:layout_weight="0.4"
+            android:spinnerMode="dialog"
+            android:scrollIndicators="right" />
+    </LinearLayout>
+
+</LinearLayout>

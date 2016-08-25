@@ -11,6 +11,7 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -95,14 +96,15 @@ public class FormBody implements StepBody
     {
         StepResult childResult = result.getResultForIdentifier(questionStep.getIdentifier());
 
+        Class cls = questionStep.getStepBodyClass();
         try
         {
-            Class cls = questionStep.getStepBodyClass();
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
             return (StepBody) constructor.newInstance(questionStep, childResult);
         }
         catch(Exception e)
         {
+            LogExt.e(this.getClass(), "Cannot instantiate step body for step " + questionStep.getStepTitle() + ", class name: " + cls.getCanonicalName());
             throw new RuntimeException(e);
         }
     }
