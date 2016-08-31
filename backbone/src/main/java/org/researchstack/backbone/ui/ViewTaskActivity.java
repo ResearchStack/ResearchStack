@@ -120,13 +120,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
                         ? StepSwitcher.SHIFT_LEFT
-                        : StepSwitcher.SHIFT_RIGHT, new Runnable() {
-                    @Override
-                    public void run() {
-                        currentStep = step;
-                        task.onViewChange(Task.ViewChangeType.StepChanged, ViewTaskActivity.this, currentStep);
-                    }
-                });
+                        : StepSwitcher.SHIFT_RIGHT);
+        currentStep = step;
     }
 
     protected StepLayout getLayoutForStep(Step step)
