@@ -123,10 +123,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
                         : StepSwitcher.SHIFT_RIGHT, new Runnable() {
                     @Override
                     public void run() {
-                        currentStep = step;
-                        task.onViewChange(Task.ViewChangeType.StepChanged, ViewTaskActivity.this, currentStep);
+                        task.onViewChange(Task.ViewChangeType.StepChanged, ViewTaskActivity.this, step);
                     }
                 });
+        currentStep = step;
     }
 
     protected StepLayout getLayoutForStep(Step step)

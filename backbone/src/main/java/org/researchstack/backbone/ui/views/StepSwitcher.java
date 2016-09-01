@@ -99,9 +99,9 @@ public class StepSwitcher extends FrameLayout
      * @param stepLayout the step you want to switch to
      * @param direction  the direction of the animation in the x direction. This values can either be
      *                   {@link StepSwitcher#SHIFT_LEFT} or {@link StepSwitcher#SHIFT_RIGHT}
-     * @param finshed a piece of code that is executed when the animation is completed (can be null)
+     * @param finished a piece of code that is executed when the animation is completed (can be null)
      */
-    public void show(StepLayout stepLayout, int direction, @Nullable Runnable finshed)
+    public void show(StepLayout stepLayout, int direction, @Nullable Runnable finished)
     {
         // if layouts originate from the same step, ignore show
         View currentStep = findViewById(R.id.rsb_current_step);
@@ -163,9 +163,8 @@ public class StepSwitcher extends FrameLayout
                             {
                                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                             }
-
                             removeView(currentStep);
-                            if(finshed != null) finshed.run();
+                            if(finished != null) finished.run();
                         });
             }
         });
