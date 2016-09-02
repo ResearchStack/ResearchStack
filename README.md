@@ -13,8 +13,8 @@ Documentation is written and maintained using [Javadoc](http://www.oracle.com/te
 ## Download
 Add one or both to your app/build.gradle:
 ```groovy
-compile 'org.researchstack:backbone:1.0.0.rc4'
-compile 'org.researchstack:skin:1.0.0.rc4'
+compile 'org.researchstack:backbone:1.1.1'
+compile 'org.researchstack:skin:1.1.1'
 ```
 
 You may also need to add the following source repos to your project's build.gradle:
@@ -146,4 +146,3 @@ com.squareup.retrofit2:retrofit
 </b>
 
 - Networking libraries used for network interface
-

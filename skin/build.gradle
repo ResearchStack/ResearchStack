@@ -4,7 +4,7 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.jfrog.bintray'
 
-version = '1.0.0.rc4'
+version = '1.1.1'
 
 android {
     compileSdkVersion 23
@@ -17,7 +17,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 4
+        versionCode 6
         versionName version
     }
     buildTypes {
@@ -31,6 +31,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
@@ -71,13 +72,14 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar', '*.so'])
     compile 'com.cronutils:cron-utils:3.1.2'
     compile project(':backbone')
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.robolectric:robolectric:3.0'
+    testCompile 'org.mockito:mockito-core:1.10.19'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta3'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.robolectric:robolectric:3.0'
-    testCompile 'org.mockito:mockito-core:1.10.19'
+
 }
 
 // this could be a script, since it is used in two places

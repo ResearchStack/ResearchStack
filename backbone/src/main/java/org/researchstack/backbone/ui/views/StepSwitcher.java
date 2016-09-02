@@ -163,6 +163,7 @@ public class StepSwitcher extends FrameLayout
                             {
                                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                             }
+
                             removeView(currentStep);
                             if(finished != null) finished.run();
                         });
