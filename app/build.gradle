@@ -13,26 +13,26 @@ android {
         versionCode 1
         versionName '1.0'
         multiDexEnabled true
+
+        // To configure communications with Bridge Study Manager (https://research.sagebridge.org/),
+        // create a 'gradle.properties' file in the same directory as this build.gradle and add
+        // the needed values, for example studyId="bridge_study_id" to make them available as
+        // BuildConfig.STUDY_ID, BuildConfig.STUDY_NAME, etc
+        buildConfigField 'String', 'STUDY_ID', studyId
+        buildConfigField 'String', 'STUDY_NAME', studyName
+        buildConfigField 'String', 'STUDY_SUBPOPULATION_GUID', studyId // default subpopulation
+        buildConfigField 'String', 'STUDY_BASE_URL', "\"https://webservices.sagebridge.org/\""
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // create a 'gradle.properties' file in the same directory as this build.gradle and add
-            // the needed values, for example studyId="bridge_study_id" to make them available as
-            // BuildConfig.STUDY_ID, BuildConfig.STUDY_NAME, etc
-            buildConfigField 'String', 'STUDY_ID', studyId
-            buildConfigField 'String', 'STUDY_NAME', studyName
-            buildConfigField 'String', 'STUDY_BASE_URL', "\"https://webservices.sagebridge.org/\""
         }
 
         debug {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'STUDY_ID', studyId
-            buildConfigField 'String', 'STUDY_NAME', studyName
-            buildConfigField 'String', 'STUDY_BASE_URL', "\"https://webservices-staging.sagebridge.org/\""
         }
     }
 

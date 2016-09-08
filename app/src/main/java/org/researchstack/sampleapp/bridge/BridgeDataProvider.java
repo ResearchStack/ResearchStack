@@ -219,7 +219,7 @@ public abstract class BridgeDataProvider extends DataProvider
             try
             {
                 ConsentSignatureBody consent = loadConsentSignatureBody(context);
-                uploadConsent(context, consent);
+                uploadConsent(context, BuildConfig.STUDY_SUBPOPULATION_GUID, consent);
             }
             catch(Exception e)
             {
@@ -444,12 +444,12 @@ public abstract class BridgeDataProvider extends DataProvider
     @Override
     public void uploadConsent(Context context, TaskResult consentResult)
     {
-        uploadConsent(context, createConsentSignatureBody(consentResult));
+        uploadConsent(context, BuildConfig.STUDY_SUBPOPULATION_GUID, createConsentSignatureBody(consentResult));
     }
 
-    private void uploadConsent(Context context, ConsentSignatureBody consent)
+    private void uploadConsent(Context context, String subpopulationGuid, ConsentSignatureBody consent)
     {
-        service.consentSignature(getStudyId(), consent)
+        service.consentSignature(subpopulationGuid, consent)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(response -> {
                     if(response.code() == 201 ||
@@ -966,8 +966,9 @@ public abstract class BridgeDataProvider extends DataProvider
         Observable<Response<UserSessionInfo>> signIn(@Body SignInBody body);
 
         @Headers("Content-Type: application/json")
-        @POST("v3/subpopulations/{studyId}/consents/signature")
-        Observable<Response<BridgeMessageResponse>> consentSignature(@Path("studyId") String studyId, @Body ConsentSignatureBody body);
+        @POST("v3/subpopulations/{subpopulationGuid}/consents/signature")
+        Observable<Response<BridgeMessageResponse>> consentSignature(@Path("subpopulationGuid") String subpopulationGuid,
+                                                                     @Body ConsentSignatureBody body);
 
         /**
          * @return Response code <b>200</b> w/ message explaining instructions on how the user should
@@ -978,8 +979,9 @@ public abstract class BridgeDataProvider extends DataProvider
         Observable<Response<BridgeMessageResponse>> requestResetPassword(@Body EmailBody body);
 
 
-        @POST("v3/subpopulations/{studyId}/consents/signature/withdraw")
-        Observable<Response<BridgeMessageResponse>> withdrawConsent(@Path("studyId") String studyId, @Body WithdrawalBody withdrawal);
+        @POST("v3/subpopulations/{subpopulationGuid}/consents/signature/withdraw")
+        Observable<Response<BridgeMessageResponse>> withdrawConsent(@Path("subpopulationGuid") String subpopulationGuid,
+                                                                    @Body WithdrawalBody withdrawal);
 
         /**
          * @return Response code <b>200</b> w/ message explaining instructions on how the user should
