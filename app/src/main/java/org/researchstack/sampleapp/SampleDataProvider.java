@@ -45,8 +45,13 @@ public class SampleDataProvider extends BridgeDataProvider
     }
 
     @Override
-    protected String getUserAgent()
-    {
-        return BuildConfig.STUDY_NAME + "/" + BuildConfig.VERSION_CODE;
+    protected String getStudyName() {
+        return BuildConfig.STUDY_NAME;
     }
+
+    @Override
+    protected int getAppVersion() {
+        return BuildConfig.VERSION_CODE;
+    }
+
 }

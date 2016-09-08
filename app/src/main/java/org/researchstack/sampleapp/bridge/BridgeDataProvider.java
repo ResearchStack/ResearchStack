@@ -2,8 +2,10 @@ package org.researchstack.sampleapp.bridge;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -99,7 +101,43 @@ public abstract class BridgeDataProvider extends DataProvider
 
     protected abstract String getStudyId();
 
-    protected abstract String getUserAgent();
+    protected final String getUserAgent() {
+        return getStudyName() + "/" + getAppVersion() + " (" + getDeviceName() + "; Android " + Build.VERSION.RELEASE + ") BridgeSDK/0";
+    }
+
+    protected abstract String getStudyName();
+
+    protected abstract int getAppVersion();
+
+    private String getDeviceName() {
+        String manufacturer = Build.MANUFACTURER;
+        if (TextUtils.isEmpty(manufacturer)){
+            manufacturer = "Unknown";
+        }
+
+        String model = Build.MODEL;
+        if(TextUtils.isEmpty(model)){
+            model = "Android";
+        }
+
+        if (model.startsWith(manufacturer)) {
+            return capitalize(model);
+        } else {
+            return capitalize(manufacturer) + " " + model;
+        }
+    }
+
+    private String capitalize(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        char first = s.charAt(0);
+        if (Character.isUpperCase(first)) {
+            return s;
+        } else {
+            return Character.toUpperCase(first) + s.substring(1);
+        }
+    }
 
     public BridgeDataProvider()
     {
