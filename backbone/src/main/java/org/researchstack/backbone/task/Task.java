@@ -55,7 +55,7 @@ public abstract class Task implements Serializable
         activity.setStepViewCallback(new StepViewCallback() {
             @Override
             public void onStepShown(ViewTaskActivity activity, Step step) {
-                onStepShown(activity, step);
+                onStepChanged(activity, step);
             }
         });
     }
