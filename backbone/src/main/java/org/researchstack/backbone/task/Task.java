@@ -1,10 +1,13 @@
 package org.researchstack.backbone.task;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewTaskActivity;
+import org.researchstack.backbone.ui.callbacks.StepViewCallback;
 
 import java.io.Serializable;
 
@@ -29,6 +32,8 @@ public abstract class Task implements Serializable
 {
     private String identifier;
 
+    private transient ViewTaskActivity activity;
+
     /**
      * Class constructor specifying a unique identifier.
      *
@@ -37,6 +42,53 @@ public abstract class Task implements Serializable
     public Task(String identifier)
     {
         this.identifier = identifier;
+    }
+
+    /**
+     * Sets the current @{@link ViewTaskActivity} for this task.
+     * This function should be called only by the {@link ViewTaskActivity} instance running
+     * at its creation time.
+     * @param activity the @{@link ViewTaskActivity} instance
+     */
+    public void setActivity(ViewTaskActivity activity){
+        this.activity = activity;
+        activity.setStepViewCallback(new StepViewCallback() {
+            @Override
+            public void onStepShown(ViewTaskActivity activity, Step step) {
+                onStepShown(activity, step);
+            }
+        });
+    }
+
+    /**
+     * Retrieves the @{@link ViewTaskActivity} that is actually running this task.
+     * Tasks can use this to have access to the current activity and its context.
+     */
+    public ViewTaskActivity getActivity(){
+        return this.activity;
+    }
+
+    /**
+     * Forces the task to proceed to a given @{@link Step}.
+     * Results, if any, should be computed before.
+     * @param step the @{@link Step}
+     */
+    public void forceStep(@NonNull Step step){
+        activity.showStep(step);
+    }
+
+    /**
+     * Forces the task to be finished.
+     */
+    public void forceFinish(){
+        this.activity.saveAndFinish();
+    }
+
+    /**
+     * Function that is called whenever a step is visualised in the activity.
+     */
+    protected void onStepChanged(ViewTaskActivity activity, Step step){
+
     }
 
     /**
@@ -230,23 +282,4 @@ public abstract class Task implements Serializable
         }
     }
 
-    public static enum ViewChangeType {
-        ActivityCreate,
-        ActivityPause,
-        ActivityResume,
-        ActivityStop,
-        StepChanged
-    }
-
-    /**
-     * Function that can be overridden in order to access the low level changes in the view.
-     * The function is called at Activity lifecycle events (creation, pause, resume, stop and whenever
-     * the content of the activity is changed, according to the step.
-     * @param type lifecycle event
-     * @param activity current activity
-     * @param currentStep the current step being shown
-     */
-    public void onViewChange(ViewChangeType type, ViewTaskActivity activity, Step currentStep){
-
-    }
 }
