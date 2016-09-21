@@ -32,6 +32,7 @@ public abstract class Task implements Serializable
 {
     private String identifier;
 
+    // instance of the activity that holds this task
     private transient ViewTaskActivity activity;
 
     /**
