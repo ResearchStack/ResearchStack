@@ -90,9 +90,6 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout {
         if (generatePassword) {
             TableRow passwordrow = (TableRow) layout.findViewById(R.id.passwordrow);
             passwordrow.setVisibility(View.GONE);
-
-            AppCompatTextView forgotPasswrod = (AppCompatTextView) layout.findViewById(R.id.forgot_password);
-            forgotPasswrod.setVisibility(View.GONE);
         } else {
             password = (AppCompatEditText) layout.findViewById(R.id.password);
             password.addTextChangedListener(new TextWatcherAdapter() {
