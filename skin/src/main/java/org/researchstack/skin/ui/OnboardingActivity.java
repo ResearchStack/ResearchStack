@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.researchstack.backbone.StorageAccess;
+import org.researchstack.backbone.model.DocumentProperties;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.ui.PinCodeActivity;
@@ -27,6 +28,7 @@ import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
+import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.model.StudyOverviewModel;
 import org.researchstack.skin.step.PassCodeCreationStep;
 import org.researchstack.skin.task.OnboardingTask;
@@ -52,6 +54,11 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
     {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.rss_activity_onboarding);
+
+        ConsentSectionModel data = ResourceManager.getInstance()
+                .getConsentSections()
+                .create(this);
+        DocumentProperties properties = data.getDocumentProperties();
 
         ImageView logoView = (ImageView) findViewById(R.id.layout_studyoverview_landing_logo);
         TextView titleView = (TextView) findViewById(R.id.layout_studyoverview_landing_title);
@@ -96,6 +103,9 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
 
         signUp = (Button) findViewById(R.id.intro_sign_up);
         signIn = (TextView) findViewById(R.id.intro_sign_in);
+        if(properties.generatePassword()){
+            signIn.setVisibility(View.GONE);
+        }
 
         skip = (Button) findViewById(R.id.intro_skip);
         skip.setVisibility(UiManager.getInstance().isConsentSkippable() ? View.VISIBLE : View.GONE);

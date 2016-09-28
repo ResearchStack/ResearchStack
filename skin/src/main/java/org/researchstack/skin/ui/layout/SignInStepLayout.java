@@ -2,17 +2,21 @@ package org.researchstack.skin.ui.layout;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import org.researchstack.backbone.model.ConsentSignature;
+import org.researchstack.backbone.model.DocumentProperties;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
@@ -22,11 +26,17 @@ import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
+import org.researchstack.skin.ResourceManager;
+import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.task.SignInTask;
 import org.researchstack.skin.ui.adapter.TextWatcherAdapter;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 public class SignInStepLayout extends RelativeLayout implements StepLayout
 {
+    private Context ctx;
     private View               progress;
     private AppCompatEditText  email;
     private AppCompatEditText  password;
@@ -34,20 +44,25 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     private Step               step;
     private StepResult<String> result;
     private StepCallbacks      callbacks;
+    private boolean generatePassword;
+    private int passwordLength;
 
     public SignInStepLayout(Context context)
     {
         super(context);
+        this.ctx = context;
     }
 
     public SignInStepLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        this.ctx = context;
     }
 
     public SignInStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
+        this.ctx = context;
     }
 
     @Override
@@ -57,6 +72,13 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
         this.result = result == null ? new StepResult<>(step) : result;
 
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.rss_layout_sign_in, this, true);
+
+        ConsentSectionModel data = ResourceManager.getInstance()
+                .getConsentSections()
+                .create(ctx);
+        DocumentProperties properties = data.getDocumentProperties();
+        generatePassword = properties.generatePassword();
+        passwordLength = properties.passwordLenght();
 
         progress = layout.findViewById(R.id.progress);
 
@@ -73,45 +95,56 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
             }
         });
 
-        password = (AppCompatEditText) layout.findViewById(R.id.password);
-        password.addTextChangedListener(new TextWatcherAdapter()
-        {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
+
+
+        if(generatePassword){
+            TableRow passwordrow = (TableRow) layout.findViewById(R.id.passwordrow);
+            passwordrow.setVisibility(View.GONE);
+
+            AppCompatTextView forgotPasswrod = (AppCompatTextView) layout.findViewById(R.id.forgot_password);
+            forgotPasswrod.setVisibility(View.GONE);
+        } else {
+            password = (AppCompatEditText) layout.findViewById(R.id.password);
+            password.addTextChangedListener(new TextWatcherAdapter()
             {
-                if(! TextUtils.isEmpty(password.getError()))
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count)
                 {
-                    password.setError(null);
+                    if(! TextUtils.isEmpty(password.getError()))
+                    {
+                        password.setError(null);
+                    }
                 }
-            }
-        });
-        password.setOnEditorActionListener((v, actionId, event) -> {
-            if((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
-                    (actionId == EditorInfo.IME_ACTION_DONE))
-            {
-                signIn();
-                return true;
-            }
-            return false;
-        });
+            });
+            password.setOnEditorActionListener((v, actionId, event) -> {
+                if((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
+                        (actionId == EditorInfo.IME_ACTION_DONE))
+                {
+                    signIn();
+                    return true;
+                }
+                return false;
+            });
 
-        forgotPassword = (TextView) layout.findViewById(R.id.forgot_password);
-        RxView.clicks(forgotPassword).subscribe(v -> {
-            if(! isEmailValid())
-            {
-                Toast.makeText(getContext(), R.string.rss_error_invalid_email, Toast.LENGTH_SHORT)
-                        .show();
-                return;
-            }
+            forgotPassword = (TextView) layout.findViewById(R.id.forgot_password);
+            RxView.clicks(forgotPassword).subscribe(v -> {
+                if(! isEmailValid())
+                {
+                    Toast.makeText(getContext(), R.string.rss_error_invalid_email, Toast.LENGTH_SHORT)
+                            .show();
+                    return;
+                }
 
-            DataProvider.getInstance()
-                    .forgotPassword(getContext(), email.getText().toString())
-                    .compose(ObservableUtils.applyDefault())
-                    .subscribe(dataResponse -> {
-                        Toast.makeText(getContext(), dataResponse.getMessage(), Toast.LENGTH_SHORT)
-                                .show();
-                    });
-        });
+                DataProvider.getInstance()
+                        .forgotPassword(getContext(), email.getText().toString())
+                        .compose(ObservableUtils.applyDefault())
+                        .subscribe(dataResponse -> {
+                            Toast.makeText(getContext(), dataResponse.getMessage(), Toast.LENGTH_SHORT)
+                                    .show();
+                        });
+            });
+        }
+
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction(v -> signIn());
@@ -122,15 +155,24 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     {
         if(isAnswerValid())
         {
+            String pass = "";
             final String username = this.email.getText().toString();
-            final String password = this.password.getText().toString();
+            if(generatePassword){
+                // generate random password
+                SecureRandom random = new SecureRandom();
+                pass = new BigInteger(passwordLength * 5, random).toString(32);
+                pass = String.format("%1$" + passwordLength + "s", pass).replace(' ', 'x');
+            } else {
+                pass = this.password.getText().toString();
+            }
+            final String passwordS = pass;
 
             progress.animate().alpha(1).withStartAction(() -> {
                 progress.setVisibility(View.VISIBLE);
                 progress.setAlpha(0);
             }).withEndAction(() -> {
                 DataProvider.getInstance()
-                        .signIn(getContext(), username, password)
+                        .signIn(getContext(), username, passwordS)
                         .compose(ObservableUtils.applyDefault())
                         .subscribe(dataResponse -> {
                             if(dataResponse.isSuccess())
@@ -139,10 +181,10 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
                             }
                             else
                             {
-                                handleError(dataResponse.getMessage(), username, password);
+                                handleError(dataResponse.getMessage(), username, passwordS);
                             }
                         }, throwable -> {
-                            handleError(throwable.getMessage(), username, password);
+                            handleError(throwable.getMessage(), username, passwordS);
                         });
             });
         }
@@ -175,24 +217,26 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
             email.setError(getResources().getString(R.string.rss_error_invalid_email));
         }
 
-        if(! isPasswordValid())
+        if(generatePassword)
         {
-            password.setError(getResources().getString(R.string.rss_error_invalid_password));
-        }
+            return TextUtils.isEmpty(email.getError());
+        } else {
+            CharSequence target = password.getText();
+            if(! TextUtils.isEmpty(target)){
+                password.setError(getResources().getString(R.string.rss_error_invalid_password));
+            }
+            if (passwordLength > 0 && target.length() >= passwordLength) {
+                password.setError(getResources().getString(R.string.rss_error_small_password, passwordLength));
+            }
 
-        return TextUtils.isEmpty(email.getError()) && TextUtils.isEmpty(password.getError());
+            return TextUtils.isEmpty(email.getError()) && TextUtils.isEmpty(password.getError());
+        }
     }
 
     public boolean isEmailValid()
     {
         CharSequence target = email.getText();
         return TextUtils.isValidEmail(target);
-    }
-
-    public boolean isPasswordValid()
-    {
-        CharSequence target = password.getText();
-        return ! TextUtils.isEmpty(target);
     }
 
     @Override

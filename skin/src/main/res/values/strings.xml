@@ -139,6 +139,7 @@
     <string name="rss_local_error_load_task">Unable to load the selected task</string>
     <string name="rss_error_select_answer">Please select an answer</string>
     <string name="rss_error_invalid_password">Invalid Password</string>
+    <string name="rss_error_small_password">%1$d characters minimum</string>
     <string name="rss_error_invalid_email">Invalid Email</string>
 
     <!-- Permissions -->
