@@ -36,6 +36,12 @@ public class UnencryptedProvider implements EncryptionProvider
     }
 
     @Override
+    public void removePinCode(Context context)
+    {
+        throw new RuntimeException(PIN_CODE_ERROR_MSG);
+    }
+
+    @Override
     public boolean needsAuth(Context context, PinCodeConfig codeConfig)
     {
         // never needs auth since there's no encryption

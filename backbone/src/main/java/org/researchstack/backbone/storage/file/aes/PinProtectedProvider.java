@@ -96,6 +96,10 @@ public abstract class PinProtectedProvider implements EncryptionProvider
         }
     }
 
+    public void removePinCode(Context context) {
+        removePassphrase(context);
+    }
+
     private void initWithMasterKey(AesCbcWithIntegrity.SecretKeys masterKey)
     {
         encrypter = createEncrypter(masterKey);
@@ -136,11 +140,24 @@ public abstract class PinProtectedProvider implements EncryptionProvider
         return masterKeyFile.exists();
     }
 
+    public void removePassphrase(Context context) {
+        if (passphraseExists(context)) {
+            removeMasterKeyFile(context);
+        }
+    }
+
     @NonNull
     private File createMasterKeyFile(Context context)
     {
         File secure = createSecureDirectory(context);
         return new File(secure, "__encrypted");
+    }
+
+    private void removeMasterKeyFile(Context context) {
+        File masterKeyFile = createMasterKeyFile(context);
+        if (masterKeyFile.exists()) {
+            masterKeyFile.delete();
+        }
     }
 
     @NonNull
