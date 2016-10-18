@@ -37,7 +37,7 @@ public class MainActivity extends BaseActivity
 
     private MainPagerAdapter pagerAdapter;
 
-    private boolean failedToFinishInitialTask;
+    private boolean failedToFinishInitialTask = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -118,23 +118,20 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if(requestCode == REQUEST_CODE_INITIAL_TASK)
-        {
-            if(resultCode == RESULT_OK)
-            {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode == REQUEST_CODE_INITIAL_TASK) {
+            if(resultCode == RESULT_OK) {
+                failedToFinishInitialTask = false;
                 TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
                 StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
                 DataProvider.getInstance().processInitialTaskResult(this, taskResult);
             }
-            else
-            {
+            else {
                 failedToFinishInitialTask = true;
             }
         }
-        else
-        {
+        else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -168,7 +165,7 @@ public class MainActivity extends BaseActivity
         super.onDataReady();
 
         // Check if we need to run initial Task
-        if(! failedToFinishInitialTask)
+        if(failedToFinishInitialTask)
         {
             Observable.defer(() -> {
                 UiThreadContext.assertBackgroundThread();
