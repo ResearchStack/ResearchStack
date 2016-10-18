@@ -105,7 +105,7 @@ public abstract class DataProvider
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
      */
-    public abstract Observable<DataResponse> resendEmailVerification(Context context, String email);
+    public abstract Observable<DataResponse> resendEmailVerification(Context context, String email, String password);
 
     /**
      * Returns true if user is currently signed up

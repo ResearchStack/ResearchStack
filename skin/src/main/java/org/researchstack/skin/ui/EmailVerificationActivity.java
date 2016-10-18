@@ -136,7 +136,7 @@ public class EmailVerificationActivity extends PinCodeActivity
         });
 
         DataProvider.getInstance()
-                .resendEmailVerification(this, email)
+                .resendEmailVerification(this, email, password)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(dataResponse -> {
                     progress.animate()
