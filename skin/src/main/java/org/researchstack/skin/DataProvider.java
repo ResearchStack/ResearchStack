@@ -86,7 +86,7 @@ public abstract class DataProvider
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
      */
-    public abstract Observable<DataResponse> signIn(Context context, String username, String password);
+    public abstract Observable<DataResponse> signIn(Context context, String email, String password);
 
     /**
      * Currently not used within the framework
