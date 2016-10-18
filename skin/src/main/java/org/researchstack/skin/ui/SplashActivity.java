@@ -30,14 +30,14 @@ public class SplashActivity extends PinCodeActivity
                 .initialize(this)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(response -> {
+                    boolean boarded = AppPrefs.getInstance(this).isOnboardingComplete();
+                    boolean signedin = DataProvider.getInstance().isSignedIn(this);
+                    boolean emailverified = AppPrefs.getInstance(this).isEmailVerified();
 
-                    if(AppPrefs.getInstance(this).isOnboardingComplete() ||
-                            DataProvider.getInstance().isSignedIn(this))
-                    {
+                    if((boarded && emailverified) || signedin) {
                         launchMainActivity();
                     }
-                    else
-                    {
+                    else {
                         launchOnboardingActivity();
                     }
 

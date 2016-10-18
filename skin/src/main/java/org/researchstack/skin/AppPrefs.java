@@ -12,6 +12,7 @@ public class AppPrefs
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private static final String KEY_ONBOARDING_COMPLETE = "settings_onboarding_complete";
     private static final String KEY_ONBOARDING_SKIPPED  = "settings_onboarding_skipped";
+    private static final String KEY_EMAIL_VERIFIED = "settings_email_verified";
     private static AppPrefs instance;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -74,6 +75,24 @@ public class AppPrefs
     public boolean isOnboardingComplete()
     {
         return prefs.getBoolean(KEY_ONBOARDING_COMPLETE, false);
+    }
+
+    /**
+     * Method to set if email is verified.
+     *
+     * @param verified true if email is verified
+     */
+    public void setEmailVerfied(boolean verified)
+    {
+        prefs.edit().putBoolean(KEY_EMAIL_VERIFIED, verified).apply();
+    }
+
+    /**
+     * @return true if email has been verified
+     */
+    public boolean isEmailVerified()
+    {
+        return prefs.getBoolean(KEY_EMAIL_VERIFIED, false);
     }
 
     public void setTaskReminderComplete(boolean enabled)

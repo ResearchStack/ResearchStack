@@ -21,6 +21,7 @@ import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.ThemeUtils;
+import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.task.OnboardingTask;
@@ -166,6 +167,7 @@ public class EmailVerificationActivity extends PinCodeActivity
                 .subscribe(dataResponse -> {
                     if(dataResponse.isSuccess())
                     {
+                        AppPrefs.getInstance(this).setEmailVerfied(true);
                         // Start MainActivity w/ clear_top and single_top flags. MainActivity may
                         // already be on the activity-task. We want to re-use that activity instead
                         // of creating a new instance and have two instance active.
