@@ -25,6 +25,13 @@ public interface EncryptionProvider
     void createPinCode(Context context, String pin);
 
     /**
+     * Removes the pin code if one exists.
+     *
+     * @param context android context
+     */
+    void removePinCode(Context context);
+
+    /**
      * Changes the pin code if the old pin provided matches
      *
      * @param context android context
