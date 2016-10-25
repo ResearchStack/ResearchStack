@@ -24,6 +24,7 @@ import org.researchstack.skin.R;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.task.SignInTask;
+import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
 
 import rx.Observable;
@@ -40,6 +41,7 @@ public class BaseActivity extends PinCodeActivity
         IntentFilter errorFilter = new IntentFilter();
         errorFilter.addAction(DataProvider.ERROR_CONSENT_REQUIRED);
         errorFilter.addAction(DataProvider.ERROR_NOT_AUTHENTICATED);
+        errorFilter.addAction(DataProvider.ERROR_REPEAT_SIGNUP);
 
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(errorBroadcastReceiver, errorFilter);
@@ -102,7 +104,7 @@ public class BaseActivity extends PinCodeActivity
                     action = v -> {
                         boolean hasPinCode = StorageAccess.getInstance()
                                 .hasPinCode(BaseActivity.this);
-                        SignInTask task = (SignInTask) TaskProvider.getInstance()
+                        SignUpTask task = (SignUpTask) TaskProvider.getInstance()
                                 .get(TaskProvider.TASK_ID_SIGN_UP);
                         task.setHasPasscode(hasPinCode);
                         startActivityForResult(SignUpTaskActivity.newIntent(BaseActivity.this,
