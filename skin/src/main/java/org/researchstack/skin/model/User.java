@@ -11,6 +11,8 @@ public class User implements Serializable
 
     private String name;
 
+    private String password;
+
     private String email;
 
     private String birthDate;
@@ -40,6 +42,23 @@ public class User implements Serializable
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    /**
+     * Gets the password of the user, as registered on the server.
+     */
+    public String getPassword()
+    {
+        return password;
+    }
+
+    /**
+     * Sets the password of the user.
+     * This function should be called once the sign-up phase is completed.
+     */
+    public void setPassword(String pass)
+    {
+        this.password = pass;
     }
 
     public String getEmail()
