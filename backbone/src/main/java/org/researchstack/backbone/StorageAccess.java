@@ -328,6 +328,14 @@ public class StorageAccess
         injectEncrypter();
     }
 
+    /**
+     * Removes the pin code if one exists.
+     * @param context android context
+     */
+    public void removePinCode(Context context) {
+        encryptionProvider.removePinCode(context);
+    }
+
     private void injectEncrypter()
     {
         fileAccess.setEncrypter(encryptionProvider.getEncrypter());
