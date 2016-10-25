@@ -96,6 +96,19 @@ public class BaseActivity extends PinCodeActivity
                                 task), OnboardingActivity.REQUEST_CODE_SIGN_IN);
                     };
                     break;
+                case DataProvider.ERROR_REPEAT_SIGNUP:
+                    messageText = getString(R.string.rss_repeat_signup);
+                    actionText = getString(R.string.rss_repeat_signup_action);
+                    action = v -> {
+                        boolean hasPinCode = StorageAccess.getInstance()
+                                .hasPinCode(BaseActivity.this);
+                        SignInTask task = (SignInTask) TaskProvider.getInstance()
+                                .get(TaskProvider.TASK_ID_SIGN_UP);
+                        task.setHasPasscode(hasPinCode);
+                        startActivityForResult(SignUpTaskActivity.newIntent(BaseActivity.this,
+                                task), OnboardingActivity.REQUEST_CODE_SIGN_UP);
+                    };
+                    break;
             }
 
             // Throw up a Snackbar

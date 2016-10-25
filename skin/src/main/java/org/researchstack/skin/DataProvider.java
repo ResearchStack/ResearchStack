@@ -23,6 +23,7 @@ public abstract class DataProvider
 {
     public final static String ERROR_NOT_AUTHENTICATED = "ERROR_NOT_AUTHENTICATED";
     public final static String ERROR_CONSENT_REQUIRED  = "ERROR_CONSENT_REQUIRED";
+    public final static String ERROR_REPEAT_SIGNUP = "ERROR_REPEAT_SIGNUP";
 
     private static DataProvider instance;
 
