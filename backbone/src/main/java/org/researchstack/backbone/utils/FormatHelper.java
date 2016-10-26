@@ -12,7 +12,7 @@ public class FormatHelper
 
     public static final int NONE = - 1;
 
-    public static final String           DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    public static final String           DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"; //Java 7 and on, see http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
     public static final SimpleDateFormat DEFAULT_FORMAT       = new SimpleDateFormat(FormatHelper.DATE_FORMAT_ISO_8601,
             Locale.getDefault());
 
