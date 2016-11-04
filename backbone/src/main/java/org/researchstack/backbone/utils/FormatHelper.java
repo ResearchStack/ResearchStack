@@ -12,9 +12,10 @@ public class FormatHelper
 
     public static final int NONE = - 1;
 
-    public static final String           DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"; //Java 7 and on, see http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
-    public static final SimpleDateFormat DEFAULT_FORMAT       = new SimpleDateFormat(FormatHelper.DATE_FORMAT_ISO_8601,
-            Locale.getDefault());
+    //public static final String DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"; //ISO 8601 does not seem to be supported in Android
+    public static final String DATE_FORMAT_RFC_822 = "yyyy-MM-dd'T'HH:mm:ssZ";
+
+    public static final SimpleDateFormat DEFAULT_FORMAT  = new SimpleDateFormat(DATE_FORMAT_RFC_822, Locale.getDefault());
 
     public static final String           DATE_FORMAT_SIMPLE_DATE = "yyyy-MM-dd";
     public static final SimpleDateFormat SIMPLE_FORMAT_DATE      = new SimpleDateFormat(

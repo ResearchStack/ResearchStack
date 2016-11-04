@@ -16,7 +16,7 @@ import co.touchlab.squeaky.table.DatabaseTable;
 @DatabaseTable
 public class StepRecord
 {
-    private static final Gson GSON = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601)
+    private static final Gson GSON = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_RFC_822)
             .create();
 
     public static final String TASK_RECORD_ID = "taskRecordId";
