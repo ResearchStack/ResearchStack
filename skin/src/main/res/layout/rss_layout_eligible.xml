@@ -15,7 +15,7 @@
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
         android:layout_marginTop="28dp"
-        android:id="@+id/textView"
+        android:id="@+id/eligible_text"
     />
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/rss_eligibility_tap_below"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/eligible_text"
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
         android:layout_marginTop="24dp"

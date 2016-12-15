@@ -104,28 +104,6 @@ public abstract class OnboardingTask extends Task
         return thankyouStep;
     }
 
-    public Step getIneligibleStep()
-    {
-        if(ineligibleStep == null)
-        {
-            ineligibleStep = new Step(SignUpIneligibleStepIdentifier);
-            ineligibleStep.setStepTitle(R.string.rss_eligibility);
-            ineligibleStep.setStepLayoutClass(SignUpIneligibleStepLayout.class);
-        }
-        return ineligibleStep;
-    }
-
-    public Step getEligibleStep()
-    {
-        if(eligibleStep == null)
-        {
-            eligibleStep = new Step(SignUpEligibleStepIdentifier);
-            eligibleStep.setStepTitle(R.string.rss_eligibility);
-            eligibleStep.setStepLayoutClass(SignUpEligibleStepLayout.class);
-        }
-        return eligibleStep;
-    }
-
     public Step getPassCodeCreationStep()
     {
         if(passcodeCreationStep == null)

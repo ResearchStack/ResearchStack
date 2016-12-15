@@ -4,9 +4,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
@@ -55,11 +58,19 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
 
     private void initializeStep()
     {
+        InstructionStep istep = (InstructionStep)step;
+
         LayoutInflater.from(getContext()).inflate(R.layout.rss_layout_eligible, this, true);
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveAction((v) -> startConsentActivity());
         submitBar.getNegativeActionView().setVisibility(GONE);
+
+        TextView text = (TextView) findViewById(R.id.eligible_text);
+        TextView detailText = (TextView) findViewById(R.id.eligible_desc);
+
+        text.setText(istep.getTitle());
+        detailText.setText(istep.getText());
     }
 
     private void startConsentActivity()

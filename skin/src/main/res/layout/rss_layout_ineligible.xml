@@ -13,7 +13,7 @@
     />
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/ineligible_text"
         style="@style/Backbone.Survey.Summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,4 +21,13 @@
         android:text="@string/rss_eligibility_you_are_ineligible"
     />
 
+    <TextView
+        android:id="@+id/ineligible_detail"
+        style="@style/Backbone.Survey.Summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorLink="?attr/colorAccent"
+        android:textSize="14sp"
+        android:text=""
+        />
 </merge>

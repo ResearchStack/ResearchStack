@@ -4,9 +4,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
@@ -43,6 +46,13 @@ public class SignUpIneligibleStepLayout extends LinearLayout implements StepLayo
     private void initializeStep()
     {
         LayoutInflater.from(getContext()).inflate(R.layout.rss_layout_ineligible, this, true);
+
+        TextView text = (TextView) findViewById(R.id.ineligible_text);
+        TextView detailText = (TextView) findViewById(R.id.ineligible_detail);
+
+        InstructionStep istep = (InstructionStep)step;
+        text.setText(step.getTitle());
+        detailText.setText(istep.getText());
     }
 
     @Override

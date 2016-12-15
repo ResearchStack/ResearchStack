@@ -97,4 +97,13 @@ public abstract class ResourceManager extends ResourcePathManager
      */
     public abstract Resource getTask(String taskFileName);
 
+    /**
+     * Returns a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing the
+     * inclusion criteria
+     *
+     * @return a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing the
+     * inclusion criteria
+     */
+    public abstract Resource getInclusionCriteria();
+
 }

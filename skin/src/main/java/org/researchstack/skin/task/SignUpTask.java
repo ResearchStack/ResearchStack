@@ -2,11 +2,28 @@ package org.researchstack.skin.task;
 
 import android.content.Context;
 
+import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.FormStep;
+import org.researchstack.backbone.step.InstructionStep;
+import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.skin.PermissionRequestManager;
+import org.researchstack.skin.R;
+import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
+import org.researchstack.skin.model.ConsentSectionModel;
+import org.researchstack.skin.model.InclusionCriteriaModel;
+import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
+import org.researchstack.skin.ui.layout.SignUpIneligibleStepLayout;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class SignUpTask extends OnboardingTask
@@ -19,12 +36,80 @@ public class SignUpTask extends OnboardingTask
     public static final String ID_EMAIL    = "ID_EMAIL";
     public static final String ID_PASSWORD = "ID_PASSWORD";
 
+    private Map<String,Step> stepMap = new HashMap<>();
+    private Map<String,Boolean> answerMap = new HashMap<>();
+
     public SignUpTask(Context context)
     {
         super(TaskProvider.TASK_ID_SIGN_UP);
-        // creating here so it has access to context
-        inclusionCriteriaStep = UiManager.getInstance().getInclusionCriteriaStep(context);
-        inclusionCriteriaStep.setOptional(false);
+
+        initSteps(context);
+
+        inclusionCriteriaStep = stepMap.get(SignUpInclusionCriteriaStepIdentifier);
+
+    }
+
+  /**
+   * Create steps as defined in the JSON file.
+   *
+   * @param context
+   */
+  private void initSteps(Context context) {
+        InclusionCriteriaModel model = ResourceManager.getInstance()
+                .getInclusionCriteria()
+                .create(context);
+
+        for(InclusionCriteriaModel.Step s: model.steps) {
+            switch(s.type)
+            {
+                case "instruction":
+                    Step instruction = null;
+                    switch(s.identifier)
+                    {
+                        case "ineligibleInstruction":
+                            instruction = new InstructionStep(SignUpIneligibleStepIdentifier, s.text, s.detailText);
+                            instruction.setStepTitle(R.string.rss_eligibility);
+                            instruction.setStepLayoutClass(SignUpIneligibleStepLayout.class);
+                            break;
+                        case "eligibleInstruction":
+                            instruction = new InstructionStep(SignUpEligibleStepIdentifier, s.text, s.detailText);
+                            instruction.setStepTitle(R.string.rss_eligibility);
+                            instruction.setStepLayoutClass(SignUpEligibleStepLayout.class);
+                            break;
+                        default:
+                            instruction.setStepTitle(R.string.rss_eligibility);
+                            instruction = new InstructionStep(s.identifier, s.text, s.detailText);
+                    }
+
+                    stepMap.put(instruction.getIdentifier(), instruction);
+                    break;
+                case "compound":
+                    FormStep form = new FormStep(SignUpInclusionCriteriaStepIdentifier, s.text, s.detailText);
+                    List<QuestionStep> questions = new ArrayList<>();
+
+                    if(s.items != null)
+                    {
+                        // TODO: extend the json to include (yes/no)?
+                        BooleanAnswerFormat booleanAnswerFormat = new BooleanAnswerFormat("Yes", "No");
+                        for (InclusionCriteriaModel.Item item : s.items) {
+                            QuestionStep question = new QuestionStep(item.identifier, item.text, booleanAnswerFormat);
+                            answerMap.put(item.identifier, item.expectedAnswer);
+                            questions.add(question);
+                        }
+                        form.setFormSteps(questions);
+                    }
+                    form.setStepTitle(R.string.rss_eligibility);
+                    form.setOptional(false);
+                    stepMap.put(form.getIdentifier(), form);
+                    break;
+                case "share":
+                    Step step = new Step(s.identifier);
+                    stepMap.put(step.getIdentifier(), step);
+                    break;
+                default:
+                    LogExt.i(getClass(), "Unrecognized InclusionCriteriaModel.Step: " + s.type);
+            }
+        }
     }
 
     @Override
@@ -38,13 +123,13 @@ public class SignUpTask extends OnboardingTask
         }
         else if(step.getIdentifier().equals(SignUpInclusionCriteriaStepIdentifier))
         {
-            if(UiManager.getInstance().isInclusionCriteriaValid(result.getStepResult(step.getIdentifier())))
+            if(isInclusionCriteriaValid(result.getStepResult(step.getIdentifier())))
             {
-                nextStep = getEligibleStep();
+                nextStep = stepMap.get(SignUpEligibleStepIdentifier);
             }
             else
             {
-                nextStep = getIneligibleStep();
+                nextStep = stepMap.get(SignUpIneligibleStepIdentifier);
             }
         }
         else if(step.getIdentifier().equals(SignUpEligibleStepIdentifier))
@@ -102,7 +187,7 @@ public class SignUpTask extends OnboardingTask
         }
         else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
         {
-            prevStep = getEligibleStep();
+            prevStep = stepMap.get(SignUpEligibleStepIdentifier);
         }
         else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
         {
@@ -113,7 +198,7 @@ public class SignUpTask extends OnboardingTask
             }
             else
             {
-                prevStep = getEligibleStep();
+                prevStep = stepMap.get(SignUpEligibleStepIdentifier);
             }
         }
         else if(step.getIdentifier().equals(SignUpStepIdentifier))
@@ -129,7 +214,7 @@ public class SignUpTask extends OnboardingTask
             }
             else
             {
-                prevStep = getEligibleStep();
+                prevStep = stepMap.get(SignUpEligibleStepIdentifier);
             }
         }
 
@@ -178,4 +263,44 @@ public class SignUpTask extends OnboardingTask
     {
         this.hasPasscode = hasPasscode;
     }
+
+    private Boolean getBooleanAnswer(Map mapStepResult, String id)
+    {
+        StepResult stepResult = (StepResult)mapStepResult.get(id);
+        if (stepResult == null) return false;
+        Map mapResult = stepResult.getResults();
+        if (mapResult == null) return false;
+        Boolean answer = (Boolean)mapResult.get("answer");
+        if (answer == null || answer == false)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+    }
+
+    protected boolean isInclusionCriteriaValid(StepResult stepResult)
+    {
+        if(stepResult != null)
+        {
+            Map mapStepResult = stepResult.getResults();
+            for(Object obj: mapStepResult.keySet())
+            {
+                String id = (String)obj;
+                Boolean answer = getBooleanAnswer(mapStepResult, id);
+                Boolean expectedAnswer = answerMap.get(id);
+                if(answer.booleanValue() != expectedAnswer.booleanValue())
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        return false;
+    }
+
 }
