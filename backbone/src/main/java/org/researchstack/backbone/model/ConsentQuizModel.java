@@ -1,5 +1,7 @@
 package org.researchstack.backbone.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -59,7 +61,11 @@ public class ConsentQuizModel implements Serializable
     public class QuizQuestion implements Serializable
     {
         private String       identifier;
+
+        /** iOS named it "title" but Android named it prompt, so allow for parsing of both */
+        @SerializedName(value="prompt", alternate = {"title"})
         private String       prompt;
+
         private ConsentQuestionType type;
         private String       expectedAnswer;
         private String       text;
