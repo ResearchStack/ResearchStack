@@ -1,4 +1,4 @@
-package org.researchstack.skin.model;
+package org.researchstack.backbone.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -60,12 +60,23 @@ public class ConsentQuizModel implements Serializable
     {
         private String       identifier;
         private String       prompt;
-        private String       type;
+        private ConsentQuestionType type;
         private String       expectedAnswer;
         private String       text;
-        private List<String> textChoices;
         private String       positiveFeedback;
         private String       negativeFeedback;
+
+        /**
+         * There are multiple ways you can provide the options for a quiz question:
+         * textChoices - a simple String list of choices for the user, the answer
+         *               format will be the index in the array of the selected item
+         */
+        private List<String> textChoices;
+        /**
+         * There are multiple ways you can provide the options for a quiz question:
+         * items - a list of text / value pairs that can provide any type of answer value per text
+         */
+        private List<Choice> items;
 
         public String getIdentifier()
         {
@@ -82,7 +93,7 @@ public class ConsentQuizModel implements Serializable
             return prompt;
         }
 
-        public String getType()
+        public ConsentQuestionType getType()
         {
             return type;
         }
@@ -100,6 +111,10 @@ public class ConsentQuizModel implements Serializable
         public List<String> getTextChoices()
         {
             return textChoices;
+        }
+
+        public List<Choice> getItems() {
+            return items;
         }
 
         public String getPositiveFeedback()
