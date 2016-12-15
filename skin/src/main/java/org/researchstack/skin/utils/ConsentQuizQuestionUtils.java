@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * Created by TheMDP on 12/15/16.
+ *
+ * This class the business logic of interacting with the ConsentQuizModel object
  */
 
 public class ConsentQuizQuestionUtils {
