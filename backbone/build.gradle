@@ -33,7 +33,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    resourcePrefix 'rsb_'
+//    resourcePrefix 'rsb_'
 }
 
 Properties properties = new Properties()
