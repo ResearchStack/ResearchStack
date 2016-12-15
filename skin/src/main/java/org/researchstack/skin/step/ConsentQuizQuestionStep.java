@@ -2,7 +2,7 @@ package org.researchstack.skin.step;
 
 import org.researchstack.backbone.step.Step;
 import org.researchstack.skin.R;
-import org.researchstack.skin.model.ConsentQuizModel;
+import org.researchstack.backbone.model.ConsentQuizModel;
 import org.researchstack.skin.ui.layout.ConsentQuizQuestionStepLayout;
 
 public class ConsentQuizQuestionStep extends Step

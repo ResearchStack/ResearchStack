@@ -2,7 +2,6 @@ package org.researchstack.skin.ui.layout;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatRadioButton;
@@ -18,20 +17,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.researchstack.backbone.model.Choice;
+import org.researchstack.backbone.model.ConsentQuestionType;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.skin.utils.ConsentQuizQuestionUtils;
 import org.researchstack.skin.R;
-import org.researchstack.skin.model.ConsentQuizModel;
+import org.researchstack.backbone.model.ConsentQuizModel;
 import org.researchstack.skin.step.ConsentQuizQuestionStep;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepLayout
 {
+    static final String LOG_TAG = ConsentQuizQuestionStepLayout.class.getCanonicalName();
+
     private ConsentQuizQuestionStep step;
     private StepResult<Boolean>     result;
     private StepCallbacks           callbacks;
@@ -87,7 +90,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
 
         radioItemBackground = findViewById(R.id.quiz_result_item_background);
 
-        if(question.getType().equals("instruction"))
+        if(question.getType() == ConsentQuestionType.INSTRUCTION)
         {
             TextView instructionText = (TextView) findViewById(R.id.instruction_text);
             instructionText.setText(question.getText());
@@ -101,45 +104,23 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
         {
             submitBar.setPositiveTitle(R.string.rsb_submit);
             submitBar.setPositiveAction(v -> onSubmit());
+        }
 
-            for(Choice<String> choice : getChoices(question))
+        List<Choice> choices = ConsentQuizQuestionUtils.createChoices(getContext(), question);
+        for(Choice<String> choice : choices)
+        {
+            AppCompatRadioButton button = (AppCompatRadioButton) inflater.inflate(R.layout.rss_item_radio_quiz,
+                    radioGroup,
+                    false);
+            button.setText(choice.getText());
+            button.setTag(choice);
+            radioGroup.addView(button);
+
+            if(question.getExpectedAnswer().equals(String.valueOf(choice.getValue())))
             {
-                AppCompatRadioButton button = (AppCompatRadioButton) inflater.inflate(R.layout.rss_item_radio_quiz,
-                        radioGroup,
-                        false);
-                button.setText(choice.getText());
-                button.setTag(choice);
-                radioGroup.addView(button);
-
-                if(question.getExpectedAnswer().equals(choice.getValue()))
-                {
-                    expectedChoice = choice;
-                }
+                expectedChoice = choice;
             }
         }
-    }
-
-    @NonNull
-    private List<Choice<String>> getChoices(ConsentQuizModel.QuizQuestion question)
-    {
-        List<Choice<String>> choices = new ArrayList<>();
-
-        if(question.getType().equals("boolean"))
-        {
-            // json expected answer is a string of either "true" or "false"
-            choices.add(new Choice<>(getContext().getString(R.string.rss_btn_true), "true"));
-            choices.add(new Choice<>(getContext().getString(R.string.rss_btn_false), "false"));
-        }
-        else if(question.getType().equals("singleChoiceText"))
-        {
-            // json expected answer is a string of the index ("0" for the first choice)
-            List<String> textChoices = question.getTextChoices();
-            for(int i = 0; i < textChoices.size(); i++)
-            {
-                choices.add(new Choice<>(textChoices.get(i), String.valueOf(i)));
-            }
-        }
-        return choices;
     }
 
     public void onSubmit()
@@ -149,10 +130,16 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
             int buttonId = radioGroup.getCheckedRadioButtonId();
             RadioButton checkedRadioButton = (RadioButton) radioGroup.findViewById(buttonId);
             Choice<String> selectedChoice = (Choice<String>) checkedRadioButton.getTag();
+
+            if (expectedChoice == null) {
+                LogExt.e(LOG_TAG, "Check JSON and sure your expectedChoice is equal to the value of your choices");
+            }
+
             boolean answerCorrect = expectedChoice.equals(selectedChoice);
 
             if(resultTitle.getVisibility() == View.GONE)
             {
+                // TODO: remove hardcoded colors
                 int resultTextColor = answerCorrect ? 0xFF67bd61 : 0xFFc96677;
                 int radioBackground = Color.argb(51,
                         //20% alpha
