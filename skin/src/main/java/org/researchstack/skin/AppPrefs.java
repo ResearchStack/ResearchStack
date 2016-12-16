@@ -5,6 +5,8 @@ import android.preference.PreferenceManager;
 
 import org.researchstack.skin.ui.fragment.SettingsFragment;
 
+import java.util.Date;
+
 public class AppPrefs
 {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -12,7 +14,9 @@ public class AppPrefs
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private static final String KEY_ONBOARDING_COMPLETE = "settings_onboarding_complete";
     private static final String KEY_ONBOARDING_SKIPPED  = "settings_onboarding_skipped";
+    private static final String KEY_ONBOARDING_COMPLETE_TIME = "settings_onboarding_complete_time";
     private static final String KEY_EMAIL_VERIFIED = "settings_email_verified";
+    private static final String KEY_EMAIL_VERIFIED_TIME = "settings_email_verified_time";
     private static AppPrefs instance;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -67,6 +71,8 @@ public class AppPrefs
     public void setOnboardingComplete(boolean complete)
     {
         prefs.edit().putBoolean(KEY_ONBOARDING_COMPLETE, complete).apply();
+        if(complete) prefs.edit().putLong(KEY_ONBOARDING_COMPLETE_TIME, new Date().getTime());
+        else prefs.edit().putLong(KEY_ONBOARDING_COMPLETE_TIME, 0);
     }
 
     /**
@@ -78,6 +84,14 @@ public class AppPrefs
     }
 
     /**
+     * @return the time when the onboarding was completed
+     */
+    public Date getOnboardingCompleteTime()
+    {
+        return new Date(prefs.getLong(KEY_ONBOARDING_COMPLETE_TIME, 0));
+    }
+
+    /**
      * Method to set if email is verified.
      *
      * @param verified true if email is verified
@@ -85,6 +99,8 @@ public class AppPrefs
     public void setEmailVerfied(boolean verified)
     {
         prefs.edit().putBoolean(KEY_EMAIL_VERIFIED, verified).apply();
+        if(verified) prefs.edit().putLong(KEY_EMAIL_VERIFIED_TIME, new Date().getTime());
+        else prefs.edit().putLong(KEY_EMAIL_VERIFIED_TIME, 0);
     }
 
     /**
@@ -93,6 +109,14 @@ public class AppPrefs
     public boolean isEmailVerified()
     {
         return prefs.getBoolean(KEY_EMAIL_VERIFIED, false);
+    }
+
+    /**
+     * @return the time when the email was verified
+     */
+    public Date getEmailVerifiedTime()
+    {
+        return new Date(prefs.getLong(KEY_EMAIL_VERIFIED_TIME, 0));
     }
 
     public void setTaskReminderComplete(boolean enabled)
