@@ -232,7 +232,7 @@ public abstract class ResourcePathManager
          * Initializes this Resource object
          *
          * @param type the type of file of the resource
-         * @param dir  the sub directory of the fiel
+         * @param dir  the sub directory of the field
          * @param name the name of the file (excluding extension)
          */
         public Resource(int type, String dir, String name)
@@ -257,7 +257,7 @@ public abstract class ResourcePathManager
         }
 
         /**
-         * Returns the directroy path of this Resource
+         * Returns the directory path of this Resource
          *
          * @return The dir path of the file
          */
