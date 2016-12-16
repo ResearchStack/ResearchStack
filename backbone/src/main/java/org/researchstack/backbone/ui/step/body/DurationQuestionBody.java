@@ -107,6 +107,12 @@ public class DurationQuestionBody implements StepBody
         minutesSpinner = (Spinner) v.findViewById(R.id.minutes);
         minutesSpinner.setAdapter(minutesChoices);
 
+        Integer result = this.result.getResult();
+        if(result != null){
+            hoursSpinner.setSelection(result/60);
+            minutesSpinner.setSelection(result%60);
+        }
+
         return v;
     }
 

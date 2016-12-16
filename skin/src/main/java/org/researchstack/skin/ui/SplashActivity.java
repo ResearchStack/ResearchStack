@@ -65,13 +65,17 @@ public class SplashActivity extends PinCodeActivity
         finish();
     }
 
-    private void launchOnboardingActivity()
+    protected void launchOnboardingActivity()
     {
+        // TODO: this shouldnt be hardcoded
+        // TODO: consider an OnboardingManager class like iOS
         startActivity(new Intent(this, OnboardingActivity.class));
     }
 
-    private void launchMainActivity()
+    protected void launchMainActivity()
     {
+        // TODO: this shouldnt be hardcoded
+        // TODO: consider an OnboardingManager class like iOS
         startActivity(new Intent(this, MainActivity.class));
     }
 }
