@@ -83,7 +83,9 @@ public class SignUpTask extends OnboardingTask
 
                     stepMap.put(instruction.getIdentifier(), instruction);
                     break;
+                // TODO: not sure what the differences are between compound/toggle or is compound obsolete?
                 case "compound":
+                case "toggle":
                     FormStep form = new FormStep(SignUpInclusionCriteriaStepIdentifier, s.text, s.detailText);
                     List<QuestionStep> questions = new ArrayList<>();
 
