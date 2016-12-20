@@ -71,6 +71,7 @@ public abstract class UiManager
      * @param context android context
      * @return a Step used for Eligibility within the onboarding process
      */
+    @Deprecated
     public abstract Step getInclusionCriteriaStep(Context context);
 
     /**
@@ -80,6 +81,7 @@ public abstract class UiManager
      * @param result StepResult object that contains the answers of the InclusionCriteria step
      * @return true if the user is elligible for the study
      */
+    @Deprecated
     public abstract boolean isInclusionCriteriaValid(StepResult result);
 
     /**
