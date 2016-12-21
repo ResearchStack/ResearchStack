@@ -67,18 +67,21 @@ public class SignUpTask extends OnboardingTask
                     switch(s.identifier)
                     {
                         case InclusionCriteriaModel.INELIGIBLE_INSTRUCTION_IDENTIFIER:
-                            instruction = new InstructionStep(SignUpIneligibleStepIdentifier, s.text, s.detailText);
+                            instruction = new Step(SignUpIneligibleStepIdentifier, s.text);
+                            instruction.setText(s.detailText);
                             instruction.setStepTitle(R.string.rss_eligibility);
                             instruction.setStepLayoutClass(SignUpIneligibleStepLayout.class);
                             break;
                         case InclusionCriteriaModel.ELIGIBLE_INSTRUCTION_IDENTIFIER:
-                            instruction = new InstructionStep(SignUpEligibleStepIdentifier, s.text, s.detailText);
+                            instruction = new Step(SignUpEligibleStepIdentifier, s.text);
+                            instruction.setText(s.detailText);
                             instruction.setStepTitle(R.string.rss_eligibility);
                             instruction.setStepLayoutClass(SignUpEligibleStepLayout.class);
                             break;
                         default:
                             instruction.setStepTitle(R.string.rss_eligibility);
-                            instruction = new InstructionStep(s.identifier, s.text, s.detailText);
+                            instruction = new Step(s.identifier, s.text);
+                            instruction.setText(s.detailText);
                     }
 
                     stepMap.put(instruction.getIdentifier(), instruction);
