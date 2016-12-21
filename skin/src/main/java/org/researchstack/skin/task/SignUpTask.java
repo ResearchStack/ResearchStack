@@ -62,16 +62,16 @@ public class SignUpTask extends OnboardingTask
         for(InclusionCriteriaModel.Step s: model.steps) {
             switch(s.type)
             {
-                case "instruction":
+                case INSTRUCTION:
                     Step instruction = null;
                     switch(s.identifier)
                     {
-                        case "ineligibleInstruction":
+                        case InclusionCriteriaModel.INELIGIBLE_INSTRUCTION_IDENTIFIER:
                             instruction = new InstructionStep(SignUpIneligibleStepIdentifier, s.text, s.detailText);
                             instruction.setStepTitle(R.string.rss_eligibility);
                             instruction.setStepLayoutClass(SignUpIneligibleStepLayout.class);
                             break;
-                        case "eligibleInstruction":
+                        case InclusionCriteriaModel.ELIGIBLE_INSTRUCTION_IDENTIFIER:
                             instruction = new InstructionStep(SignUpEligibleStepIdentifier, s.text, s.detailText);
                             instruction.setStepTitle(R.string.rss_eligibility);
                             instruction.setStepLayoutClass(SignUpEligibleStepLayout.class);
@@ -84,15 +84,16 @@ public class SignUpTask extends OnboardingTask
                     stepMap.put(instruction.getIdentifier(), instruction);
                     break;
                 // TODO: not sure what the differences are between compound/toggle or is compound obsolete?
-                case "compound":
-                case "toggle":
+                case COMPOUND:
+                case TOGGLE:
                     FormStep form = new FormStep(SignUpInclusionCriteriaStepIdentifier, s.text, s.detailText);
                     List<QuestionStep> questions = new ArrayList<>();
 
                     if(s.items != null)
                     {
                         // TODO: extend the json to include (yes/no)?
-                        BooleanAnswerFormat booleanAnswerFormat = new BooleanAnswerFormat("Yes", "No");
+                        BooleanAnswerFormat booleanAnswerFormat =
+                                new BooleanAnswerFormat(context.getString(R.string.rsb_yes), context.getString(R.string.rsb_no));
                         for (InclusionCriteriaModel.Item item : s.items) {
                             QuestionStep question = new QuestionStep(item.identifier, item.text, booleanAnswerFormat);
                             answerMap.put(item.identifier, item.expectedAnswer);
@@ -104,7 +105,7 @@ public class SignUpTask extends OnboardingTask
                     form.setOptional(false);
                     stepMap.put(form.getIdentifier(), form);
                     break;
-                case "share":
+                case SHARE:
                     Step step = new Step(s.identifier);
                     stepMap.put(step.getIdentifier(), step);
                     break;
@@ -272,7 +273,7 @@ public class SignUpTask extends OnboardingTask
         if (stepResult == null) return false;
         Map mapResult = stepResult.getResults();
         if (mapResult == null) return false;
-        Boolean answer = (Boolean)mapResult.get("answer");
+        Boolean answer = (Boolean)mapResult.get(StepResult.DEFAULT_KEY);
         if (answer == null || answer == false)
         {
             return false;

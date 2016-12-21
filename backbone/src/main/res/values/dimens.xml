@@ -19,5 +19,6 @@
 
     <!-- Text Size -->
     <dimen name="rsb_text_size_title">20sp</dimen>
+    <dimen name="rsb_text_size_detail">14sp</dimen>
 
 </resources>
