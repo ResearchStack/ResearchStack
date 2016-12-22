@@ -50,9 +50,8 @@ public class SignUpIneligibleStepLayout extends LinearLayout implements StepLayo
         TextView text = (TextView) findViewById(R.id.ineligible_text);
         TextView detailText = (TextView) findViewById(R.id.ineligible_detail);
 
-        InstructionStep istep = (InstructionStep)step;
         text.setText(step.getTitle());
-        detailText.setText(istep.getText());
+        detailText.setText(step.getText());
     }
 
     @Override

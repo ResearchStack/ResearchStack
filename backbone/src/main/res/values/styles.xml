@@ -21,6 +21,16 @@
         <item name="android:paddingBottom">@dimen/rsb_padding_small</item>
     </style>
 
+    <style name="Backbone.Survey.Summary.Detail" parent="">
+        <item name="android:layout_marginTop">@dimen/rsb_padding_wedge</item>
+        <item name="android:layout_marginBottom">@dimen/rsb_padding_small</item>
+        <item name="android:paddingLeft">@dimen/rsb_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsb_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsb_padding_wedge</item>
+        <item name="android:paddingBottom">@dimen/rsb_padding_small</item>
+        <item name="android:textSize">@dimen/rsb_text_size_detail</item>
+    </style>
+
     <style name="Backbone.Survey.Summary.Link">
         <item name="android:layout_marginTop">@dimen/rsb_padding_wedge</item>
         <item name="android:paddingLeft">@dimen/rsb_margin_left</item>

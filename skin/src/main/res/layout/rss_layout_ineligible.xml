@@ -23,11 +23,10 @@
 
     <TextView
         android:id="@+id/ineligible_detail"
-        style="@style/Backbone.Survey.Summary"
+        style="@style/Backbone.Survey.Summary.Detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorLink="?attr/colorAccent"
-        android:textSize="14sp"
         android:text=""
         />
 </merge>

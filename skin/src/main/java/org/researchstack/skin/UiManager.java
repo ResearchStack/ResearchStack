@@ -68,6 +68,9 @@ public abstract class UiManager
      * inelligible for the study. That result in calculate and returned within {@link
      * #isInclusionCriteriaValid(StepResult)}
      *
+     * This method is now deprecated and Inclusion Criteria will now be loaded from a JSON file as
+     * defined  {@link org.researchstack.skin.ResourceManager#getInclusionCriteria()}.
+     *
      * @param context android context
      * @return a Step used for Eligibility within the onboarding process
      */
@@ -89,6 +92,10 @@ public abstract class UiManager
      * user to get to the main portion of the app without signing up for the study and consenting.
      * All data will still be collected and uploaded when the user successfully signs up for the
      * first time Defaults to false.
+     *
+     * This method is now deprecated and Inclusion Criteria will now be loaded from a JSON file as
+     * defined  {@link org.researchstack.skin.ResourceManager#getInclusionCriteria()}.  The JSON file
+     * contains expected answers which will be used to determine if the inclusion criteria is valid.
      *
      * @return true if consent is skippable
      */
