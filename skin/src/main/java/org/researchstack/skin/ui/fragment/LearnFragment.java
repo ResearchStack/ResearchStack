@@ -5,24 +5,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
+import org.researchstack.backbone.utils.ResUtils;
+import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.SectionModel;
+import org.researchstack.skin.ui.ShareActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LearnFragment extends Fragment
 {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -34,10 +39,33 @@ public class LearnFragment extends Fragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        SectionModel model = loadSections();
+
+        ImageView logoView = (ImageView) view.findViewById(R.id.learn_logo_view);
+        if(!TextUtils.isEmpty(model.getLogoName()))
+        {
+            int resId = ResUtils.getDrawableResourceId(view.getContext(), model.getLogoName());
+            logoView.setImageResource(resId);
+        }
+        else
+        {
+            logoView.setVisibility(View.GONE);
+        }
+
+        TextView titleView = (TextView) view.findViewById(R.id.learn_title_view);
+        if(!TextUtils.isEmpty(model.getTitle()))
+        {
+            titleView.setText(model.getTitle());
+        }
+        else
+        {
+            titleView.setVisibility(View.GONE);
+        }
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(org.researchstack.skin.R.id.recycler_view);
         recyclerView.setAdapter(new LearnAdapter(getContext(), loadSections()));
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+
     }
 
     private SectionModel loadSections()
@@ -51,16 +79,21 @@ public class LearnFragment extends Fragment
         private static final int VIEW_TYPE_HEADER = 0;
         private static final int VIEW_TYPE_ITEM   = 1;
 
+        private Context        context;
         private List<Object>   items;
         private LayoutInflater inflater;
 
-        public LearnAdapter(Context context, SectionModel sections)
+        public LearnAdapter(Context ctx, SectionModel sections)
         {
             super();
+            context = ctx;
             items = new ArrayList<>();
             for(SectionModel.Section section : sections.getSections())
             {
-                items.add(section.getTitle());
+                if(!TextUtils.isEmpty(section.getTitle()))
+                {
+                    items.add(section.getTitle());
+                }
                 items.addAll(section.getItems());
 
             }
@@ -94,13 +127,34 @@ public class LearnFragment extends Fragment
 
                 holder.title.setText(item.getTitle());
 
+                if(!TextUtils.isEmpty(item.getIconImage()))
+                {
+                    holder.icon.setVisibility(View.VISIBLE);
+                    int resId = ResUtils.getDrawableResourceId(context, item.getIconImage());
+                    holder.icon.setImageResource(resId);
+                    int colorId = ResUtils.getColorResourceId(context, item.getTintColor());
+                    holder.icon.setColorFilter(ContextCompat.getColor(context, colorId));
+                }
+                else
+                {
+                    holder.icon.setVisibility(View.GONE);
+                }
+
                 holder.itemView.setOnClickListener(v -> {
-                    String path = ResourceManager.getInstance().
-                            generateAbsolutePath(ResourceManager.Resource.TYPE_HTML, item.getDetails());
-                    Intent intent = ViewWebDocumentActivity.newIntentForPath(v.getContext(),
-                            item.getTitle(),
-                            path);
-                    v.getContext().startActivity(intent);
+                    if(SectionModel.SHARE_TYPE_DETAILS.equals(item.getDetails()))
+                    {
+                        Intent intent = new Intent(v.getContext(), ShareActivity.class);
+                        v.getContext().startActivity(intent);
+                    }
+                    else {
+                        String path = ResourceManager.getInstance().
+                                generateAbsolutePath(ResourceManager.Resource.TYPE_HTML, item.getDetails());
+                        Intent intent = ViewWebDocumentActivity.newIntentForPath(v.getContext(),
+                                item.getTitle(),
+                                path);
+                        v.getContext().startActivity(intent);
+
+                    }
                 });
             }
             else
@@ -139,12 +193,14 @@ public class LearnFragment extends Fragment
 
         public static class ViewHolder extends RecyclerView.ViewHolder
         {
-            AppCompatTextView title;
+            TextView title;
+            ImageView icon;
 
             public ViewHolder(View itemView)
             {
                 super(itemView);
-                title = (AppCompatTextView) itemView.findViewById(R.id.learn_item_title);
+                title = (TextView) itemView.findViewById(R.id.learn_item_title);
+                icon = (ImageView) itemView.findViewById(R.id.learn_item_icon);
             }
         }
     }

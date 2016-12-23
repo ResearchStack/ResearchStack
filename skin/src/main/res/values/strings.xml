@@ -165,4 +165,6 @@
     <string name="rss_granted">Granted</string>
     <string name="rss_optional">Optional</string>
 
+    <!-- Share -->
+    <string name="rss_share">Spread the Word</string>
 </resources>

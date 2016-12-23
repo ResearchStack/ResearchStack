@@ -50,6 +50,11 @@ public class ResUtils
         return "file:///android_res/raw/" + docName + "." + postfix;
     }
 
+    public static int getColorResourceId(Context context, String name)
+    {
+        return context.getResources().getIdentifier(name, "color", context.getPackageName());
+    }
+
     public static int getDrawableResourceId(Context context, String name)
     {
         return getDrawableResourceId(context, name, 0);
