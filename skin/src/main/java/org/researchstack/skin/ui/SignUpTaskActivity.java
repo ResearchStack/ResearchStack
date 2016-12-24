@@ -21,6 +21,7 @@ import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.R;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.task.OnboardingTask;
+import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
 
 public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCallback
@@ -62,6 +63,8 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             if(! TextUtils.isEmpty(pin))
             {
                 StorageAccess.getInstance().createPinCode(this, pin);
+                SignUpTask signUpTask = (SignUpTask)getTask();
+                signUpTask.setHasPasscode(true);
             }
 
             if(consentResult != null)

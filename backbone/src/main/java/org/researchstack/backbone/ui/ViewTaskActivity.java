@@ -34,6 +34,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     private Step       currentStep;
     private Task       task;
+    public Task getTask() {
+        return task;
+    }
     private TaskResult taskResult;
 
     public static Intent newIntent(Context context, Task task)
