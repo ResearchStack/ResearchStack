@@ -167,4 +167,14 @@
 
     <!-- Share -->
     <string name="rss_share">Spread the Word</string>
+    <string name="rss_share_title">Help us spread the work</string>
+    <string name="rss_share_app_url">PUT_YOUR_APP_PLAY_STORE_URL_HERE</string>
+    <string name="rss_share_message">Please help us find study participants by sharing information about the study.</string>
+    <string name="rss_share_twitter">Share on Twitter</string>
+    <string name="rss_share_facebook">Share on Facebook</string>
+    <string name="rss_share_sms">Share via SMS</string>
+    <string name="rss_share_email">Share via Email</string>
+    <string name="rss_share_message_format">Please take a look at this app.</string>
+    <string name="rss_share_facebook_key">facebook</string>
+    <string name="rss_share_email_subject">Subject</string>
 </resources>

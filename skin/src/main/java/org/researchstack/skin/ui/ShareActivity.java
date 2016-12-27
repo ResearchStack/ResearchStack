@@ -5,7 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import org.researchstack.skin.ui.fragment.ShareFragment;
+import org.researchstack.skin.UiManager;
+
 
 public class ShareActivity extends BaseActivity
 {
@@ -24,7 +25,7 @@ public class ShareActivity extends BaseActivity
     if(savedInstanceState == null)
     {
       getSupportFragmentManager().beginTransaction()
-              .add(org.researchstack.skin.R.id.container, new ShareFragment())
+              .add(org.researchstack.skin.R.id.container, UiManager.getInstance().getShareFragment())
               .commit();
     }
   }
@@ -41,4 +42,5 @@ public class ShareActivity extends BaseActivity
 
     return super.onOptionsItemSelected(item);
   }
+
 }
