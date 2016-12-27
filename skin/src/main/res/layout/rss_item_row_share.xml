@@ -10,13 +10,13 @@
     android:layout_gravity="center_vertical">
 
     <ImageView
-        android:id="@+id/learn_item_icon"
+        android:id="@+id/share_item_icon"
         style="@style/LearnItemLogo"
         android:layout_gravity="center_vertical"
         />
 
     <TextView
-        android:id="@+id/learn_item_title"
+        android:id="@+id/share_item_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -27,4 +27,6 @@
         tools:text="@string/lorem_name"
         />
 </LinearLayout>
+
+
 
