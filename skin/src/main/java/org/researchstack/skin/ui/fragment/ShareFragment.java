@@ -53,6 +53,15 @@ public class ShareFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
+        ImageView logoView = (ImageView) view.findViewById(R.id.share_logo_view);
+        // look for a logo to show, otherwise hide it
+        int logoId = ResUtils.getDrawableResourceId(getActivity(), "logo_disease");
+        if(logoId > 0)
+        {
+            logoView.setImageResource(logoId);
+            logoView.setVisibility(View.VISIBLE);
+        }
+
         RecyclerView recyclerView = (RecyclerView) view.findViewById(org.researchstack.skin.R.id.share_recycler_view);
         recyclerView.setAdapter(new ShareFragment.ShareAdapter(getContext(), loadItems()));
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));

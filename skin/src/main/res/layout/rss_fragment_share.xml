@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:src="@drawable/logo_disease"/>
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/share_title_view"
