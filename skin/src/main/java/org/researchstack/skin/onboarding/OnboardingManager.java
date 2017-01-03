@@ -1,7 +1,6 @@
 package org.researchstack.skin.onboarding;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -10,7 +9,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.survey.SurveyItem;
-import org.researchstack.backbone.model.survey.SurveyItemType;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.onboarding.OnboardingSectionType;
@@ -18,8 +16,6 @@ import org.researchstack.backbone.onboarding.OnboardingSectionAdapter;
 import org.researchstack.backbone.onboarding.OnboardingTaskType;
 import org.researchstack.backbone.onboarding.ResourceNameJsonProvider;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.task.NavigableOrderedTask;
-import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.ConsentDocumentFactory;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
@@ -139,9 +135,10 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
 
         String identifier = taskType.toString();
 
-        NavigableOrderedTask task = new NavigableOrderedTask(identifier, steps);
-        Intent taskIntent = ViewTaskActivity.newIntent(context, task);
-        context.startActivity(taskIntent);
+        // TODO: complete NavigableOrderedTask
+//        NavigableOrderedTask task = new NavigableOrderedTask(identifier, steps);
+//        Intent taskIntent = ViewTaskActivity.newIntent(context, task);
+//        context.startActivity(taskIntent);
     }
 
     /**
