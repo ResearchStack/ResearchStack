@@ -39,7 +39,7 @@ public class SurveyFactory {
         switch (item.type) {
             case INSTRUCTION:
             case INSTRUCTION_COMPLETION:
-                return new InstructionStep(item);
+                //return new InstructionStep(item);
             case SUBTASK:
                 if (item instanceof QuestionSurveyItem) {
                     //return ((QuestionSurveyItem)item).createSubtaskStep(this);
@@ -59,7 +59,7 @@ public class SurveyFactory {
             case QUESTION_TIMING_RANGE:
             case QUESTION_TOGGLE:
                 if (item instanceof QuestionSurveyItem) {
-                    return ((QuestionSurveyItem)item).createQuestionStep(isSubtaskStep, this);
+                    //return ((QuestionSurveyItem)item).createQuestionStep(isSubtaskStep, this);
                 }
             break;
         }
