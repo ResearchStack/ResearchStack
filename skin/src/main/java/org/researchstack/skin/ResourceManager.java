@@ -106,4 +106,12 @@ public abstract class ResourceManager extends ResourcePathManager
      */
     public abstract Resource getInclusionCriteria();
 
+    /**
+     * Returns a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing the
+     * Onboarding sections
+     *
+     * @return a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing the
+     * Onboarding sections
+     */
+    public abstract Resource getOnboardingManager();
 }
