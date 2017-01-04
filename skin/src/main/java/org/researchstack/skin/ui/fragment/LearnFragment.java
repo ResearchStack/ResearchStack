@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.R;
@@ -40,6 +42,7 @@ public class LearnFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         SectionModel model = loadSections();
+        if(model == null) return;
 
         ImageView logoView = (ImageView) view.findViewById(R.id.learn_logo_view);
         if(!TextUtils.isEmpty(model.getLogoName()))
@@ -70,7 +73,18 @@ public class LearnFragment extends Fragment
 
     private SectionModel loadSections()
     {
-        return ResourceManager.getInstance().getLearnSections().create(getActivity());
+        SectionModel model = null;
+        ResourcePathManager.Resource resource = ResourceManager.getInstance().getLearnSections();
+        try
+        {
+            model = resource.create(getActivity());
+        }
+        catch (RuntimeException re)
+        {
+            LogExt.e(getClass(), "Error loading SectionModel for Learn: " + re.getMessage());
+        }
+
+        return model;
     }
 
     public static class LearnAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
