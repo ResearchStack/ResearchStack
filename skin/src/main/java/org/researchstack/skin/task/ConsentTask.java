@@ -27,7 +27,7 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
-import org.researchstack.skin.model.ConsentQuizModel;
+import org.researchstack.backbone.model.ConsentQuizModel;
 import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 import org.researchstack.skin.step.ConsentQuizQuestionStep;
