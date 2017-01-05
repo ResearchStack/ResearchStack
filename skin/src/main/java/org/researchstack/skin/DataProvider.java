@@ -171,7 +171,7 @@ public abstract class DataProvider
     /**
      * Gets the current sharing scope of the user.
      * <p>
-     * This scope can be: <li>sponsors_and_partners</li> <li>all_quali5dfied_researchers</li>
+     * This scope can be: <ul><li>sponsors_and_partners</li> <li>all_quali5dfied_researchers</li></ul>
      *
      * @param context android context
      * @return the sharing scope of the user

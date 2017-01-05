@@ -41,6 +41,7 @@ public class ConsentQuizQuestionUtilsTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testBooleanChoiceCreation() {
         resetQuestion(ConsentQuestionType.BOOLEAN);
 
@@ -53,6 +54,7 @@ public class ConsentQuizQuestionUtilsTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testSingleChoiceTextTextChoicesCreation() {
         resetQuestion(ConsentQuestionType.SINGLE_CHOICE_TEXT);
         List<String> textChoices = new ArrayList<>();
@@ -69,6 +71,7 @@ public class ConsentQuizQuestionUtilsTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testSingleChoiceTextItemsChoiceCreation() {
         resetQuestion(ConsentQuestionType.SINGLE_CHOICE_TEXT);
         List<Choice> expectedChoices = new ArrayList<>();

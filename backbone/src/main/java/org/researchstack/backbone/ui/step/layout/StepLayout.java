@@ -14,7 +14,7 @@ public interface StepLayout
     /**
      * Method allowing a step layout to consume a back event.
      *
-     * @return
+     * @return a boolean indicating whether the back event is consumed
      */
     boolean isBackEventConsumed();
 
