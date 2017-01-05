@@ -94,6 +94,8 @@ public class ConsentDocumentFactory extends SurveyFactory {
 
     /**
      * Return visual consent step
+     *
+     * @return the visual consent step
      */
     public Step visualConsentStep() {
 //    open func visualConsentStep() -> ORKVisualConsentStep {
@@ -105,6 +107,8 @@ public class ConsentDocumentFactory extends SurveyFactory {
 
     /**
      * Return subtask step with only the steps required for reconsent
+     *
+     * @return the subtask step for reconsent
      */
     public Step reconsentStep() {
         //        open func reconsentStep() -> SBASubtaskStep {
@@ -118,6 +122,8 @@ public class ConsentDocumentFactory extends SurveyFactory {
 
     /**
      * Return subtask step with only the steps required for consent or reconsent on login
+     *
+     * @return the subtask step for consent or reconsent on login
      */
     public Step loginConsentStep() {
 //    open func loginConsentStep() -> SBASubtaskStep {
@@ -136,6 +142,8 @@ public class ConsentDocumentFactory extends SurveyFactory {
 
     /**
      * Return subtask step with only the steps required for initial registration
+     *
+     * @return the subtask step for initial registration
      */
     public Step registrationConsentStep() {
         //    open func registrationConsentStep() -> SBASubtaskStep {

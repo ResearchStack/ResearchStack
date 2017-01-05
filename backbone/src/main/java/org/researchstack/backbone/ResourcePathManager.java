@@ -192,6 +192,7 @@ public abstract class ResourcePathManager
     /**
      * Load resource from a file-path and turns contents to a objects, of type T, for consumption
      *
+     * @param <T> object type
      * @param context  android context
      * @param clazz    the class of T
      * @param filePath relative file path
@@ -290,6 +291,7 @@ public abstract class ResourcePathManager
          * Create this Resource into an Object of type T. This method will only work for Json
          * files.
          *
+         * @param <T> object type
          * @param context android context
          * @return object of type T
          */

@@ -60,9 +60,9 @@ public abstract class TaskProvider
     }
 
     /**
-     * Used, in combination of {@link #put(String, Task)}, for task lookup and resuse
+     * Used, in combination of {@link #put(String, Task)}, for task lookup and reuse
      * @param taskId the task id
-     * @return a task object with an id of {@param taskId}
+     * @return a task object with the provided id
      */
     public abstract Task get(String taskId);
 

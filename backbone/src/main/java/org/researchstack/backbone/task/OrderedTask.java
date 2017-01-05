@@ -146,7 +146,7 @@ public class OrderedTask extends Task implements Serializable
     /**
      * Validates that there are no duplicate identifiers in the list of steps
      *
-     * @throws org.researchstack.backbone.task.Task.InvalidTaskException
+     * @throws org.researchstack.backbone.task.Task.InvalidTaskException if the task is invalid
      */
     @Override
     public void validateParameters()

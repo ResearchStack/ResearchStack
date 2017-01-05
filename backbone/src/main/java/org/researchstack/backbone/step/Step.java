@@ -75,6 +75,8 @@ public class Step implements Serializable
      * <p>
      * In some cases, it can be useful to link the step identifier to a unique identifier in a
      * database; in other cases, it can make sense to make the identifier human readable.
+     *
+     * @return a short string that uniquely identifies the step
      */
     public String getIdentifier()
     {
@@ -100,7 +102,7 @@ public class Step implements Serializable
     /**
      * Sets whether the step is skippable
      *
-     * @param optional
+     * @param optional a boolean indicating whether the step is skippable
      * @see #isOptional()
      */
     public void setOptional(boolean optional)
@@ -139,7 +141,7 @@ public class Step implements Serializable
      * display a long question, it can work well to keep the title short and put the additional
      * content in the <code>text</code> property.
      *
-     * @return
+     * @return the additional text to display
      */
     public String getText()
     {
