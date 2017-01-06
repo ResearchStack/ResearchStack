@@ -3,6 +3,7 @@ package org.researchstack.backbone.result;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.ObjectUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -117,5 +118,15 @@ public class StepResult <T> extends Result
     public AnswerFormat getAnswerFormat()
     {
         return answerFormat;
+    }
+
+    /**
+     * @param newIdentifier to use instead of cloned step's identifier
+     * @return cloned step using Gson but with different identifier
+     */
+    public StepResult clone(String newIdentifier) {
+        StepResult clonedStepResult = ObjectUtils.deepCopy(this, StepResult.class);
+        clonedStepResult.identifier = newIdentifier;
+        return clonedStepResult;
     }
 }

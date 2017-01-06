@@ -2,6 +2,7 @@ package org.researchstack.backbone.task;
 
 import android.content.Context;
 
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewTaskActivity;

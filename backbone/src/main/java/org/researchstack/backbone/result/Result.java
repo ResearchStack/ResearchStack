@@ -23,7 +23,7 @@ import java.util.Date;
  */
 public class Result implements Serializable
 {
-    private String identifier;
+    String identifier;
 
     private Date startDate;
 
@@ -31,6 +31,9 @@ public class Result implements Serializable
 
     // unimplemented but exists in RK, implement or delete if not needed
     private boolean saveable;
+
+    /* Default identifier for serilization/deserialization */
+    Result() {}
 
     /**
      * Returns an initialized result using the specified identifier.

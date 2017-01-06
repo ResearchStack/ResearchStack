@@ -27,10 +27,21 @@ public class TaskResult extends Result
     // unimplemented but exists in RK, implement or delete if not needed
     private Uri outputDirectory;
 
+    /* Default identifier for serilization/deserialization */
+    TaskResult() { super(); }
+
     public TaskResult(String identifier)
     {
         super(identifier);
         this.results = new HashMap<>();
+    }
+
+    /**
+     * Set the Map of all of the StepResults in the task.
+     */
+    public void setResults(Map<String, StepResult> newResults)
+    {
+        results = newResults;
     }
 
     /**
