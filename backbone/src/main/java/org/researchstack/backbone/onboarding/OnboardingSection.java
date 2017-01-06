@@ -5,7 +5,6 @@ import android.content.Context;
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.model.survey.SurveyItem;
-import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 
 import java.util.List;

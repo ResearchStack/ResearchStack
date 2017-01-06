@@ -9,17 +9,18 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.ResourcePathManager;
+import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ConsentSectionAdapter;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
+import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.onboarding.OnboardingSectionType;
 import org.researchstack.backbone.onboarding.OnboardingSectionAdapter;
 import org.researchstack.backbone.onboarding.OnboardingTaskType;
 import org.researchstack.backbone.onboarding.ResourceNameJsonProvider;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.skin.AppPrefs;
@@ -207,7 +208,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
                         !AppPrefs.getInstance(context).isOnboardingComplete();
             case PASSCODE:
                 // Passcode is included if it has not already been set
-                return !hasPasscode();
+                return !hasPasscode(context);
             case EMAIL_VERIFICATION:
                 // Only registration where the login has not been verified includes verification
                 return (taskType == OnboardingTaskType.REGISTRATION) &&
@@ -223,9 +224,8 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
         return false;
     }
 
-    boolean hasPasscode() {
-        // TODO: grab from StorageAccess
-        //StorageAccess.getInstance().hasPinCode(this);
+    boolean hasPasscode(Context context) {
+        StorageAccess.getInstance().hasPinCode(context);
         return false;
     }
 
