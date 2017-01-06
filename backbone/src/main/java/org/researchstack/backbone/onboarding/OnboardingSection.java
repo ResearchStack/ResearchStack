@@ -1,10 +1,12 @@
 package org.researchstack.backbone.onboarding;
 
+import android.content.Context;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.model.survey.SurveyItem;
-import org.researchstack.backbone.utils.ConsentDocumentFactory;
-import org.researchstack.backbone.utils.SurveyFactory;
+import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
+import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 
 import java.util.List;
 
@@ -27,17 +29,13 @@ public class OnboardingSection {
     // Isnt deserialized into a field, but is used in the deserialization process
     static final String ONBOARDING_RESOURCE_NAME_GSON = "resourceName";
 
-    transient private SurveyFactory surveyFactory;
-    public SurveyFactory getDefaultOnboardingSurveyFactory() {
+    transient SurveyFactory surveyFactory;
+    public SurveyFactory getDefaultOnboardingSurveyFactory(Context context) {
         if (surveyFactory != null) {
             return surveyFactory;
         }
 
-        if (onboardingType == OnboardingSectionType.CONSENT) {
-            surveyFactory = new ConsentDocumentFactory(surveyItems);
-        } else {
-            surveyFactory = new SurveyFactory(surveyItems);
-        }
+        surveyFactory = new SurveyFactory(context, surveyItems);
         return surveyFactory;
     }
 }

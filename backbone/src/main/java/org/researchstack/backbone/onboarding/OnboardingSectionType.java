@@ -8,21 +8,30 @@ import com.google.gson.annotations.SerializedName;
 
 public enum OnboardingSectionType {
     @SerializedName("login")
-    LOGIN,
+    LOGIN("login"),
     @SerializedName("eligibility")
-    ELIGIBILITY,
+    ELIGIBILITY("eligibility"),
     @SerializedName("consent")
-    CONSENT,
+    CONSENT("consent"),
     @SerializedName("registration")
-    REGISTRATION,
+    REGISTRATION("registration"),
     @SerializedName("passcode")
-    PASSCODE,
+    PASSCODE("passcode"),
     @SerializedName("emailVerification")
-    EMAIL_VERIFICATION,
+    EMAIL_VERIFICATION("emailVerification"),
     @SerializedName("permissions")
-    PERMISSIONS,
+    PERMISSIONS("permissions"),
     @SerializedName("profile")
-    PROFILE,
+    PROFILE("profile"),
     @SerializedName("completion")
-    COMPLETION;
+    COMPLETION("completion");
+
+    OnboardingSectionType(String identifier) {
+        this.identifier = identifier;
+    }
+
+    String identifier;
+    public String getIdentifier() {
+        return identifier;
+    }
 }

@@ -9,6 +9,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.survey.SurveyItem;
 
 import java.lang.reflect.Type;
@@ -44,7 +45,15 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
             json = nestedSectionElement;
         }
 
-        OnboardingSection section = new OnboardingSection();
+        OnboardingSection section;
+        // Consent section also has a consent document with it, try and parse it if we have that type
+        if (type == OnboardingSectionType.CONSENT) {
+            ConsentOnboardingSection consentSection = new ConsentOnboardingSection();
+            consentSection.consentDocument = context.deserialize(json, ConsentDocument.class);
+            section = consentSection;
+        } else {  // otherwise make the base onboarding section class
+            section = new OnboardingSection();
+        }
         section.onboardingType = type;
 
         List<SurveyItem> surveyItems = context.deserialize(
