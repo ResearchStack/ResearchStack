@@ -58,7 +58,7 @@ public class TaskResult extends Result
      * Returns a step result for the specified step identifier, if one exists.
      *
      * @param identifier The identifier for which to search.
-     * @return The result for the specified step, or {@link nil} for none.
+     * @return The result for the specified step, or null for none.
      */
     public StepResult getStepResult(String identifier)
     {

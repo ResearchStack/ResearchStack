@@ -152,7 +152,7 @@ public abstract class Task implements Serializable
      * This method is usually called by {@link org.researchstack.backbone.ui.ViewTaskActivity} when
      * its task is set.
      *
-     * @throws InvalidTaskException
+     * @throws InvalidTaskException if the task is invalid
      */
     public abstract void validateParameters();
 

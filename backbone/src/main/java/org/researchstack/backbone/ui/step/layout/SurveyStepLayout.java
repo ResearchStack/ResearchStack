@@ -92,7 +92,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     /**
      * Method allowing a step to consume a back event.
      *
-     * @return
+     * @return a boolean indication whether the back event is consumed
      */
     @Override
     public boolean isBackEventConsumed()

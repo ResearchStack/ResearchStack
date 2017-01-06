@@ -53,6 +53,8 @@ public class PinCodeConfig
          * Returns the {@link InputType} that should be applied to the EditText based on whether the
          * text is visible or not.
          *
+         * @param visible a boolean indicating whether the text is visible or not
+         *
          * @return the input type for the EditText
          */
         int getVisibleVariationType(boolean visible);

@@ -47,7 +47,7 @@ public abstract class UiManager
     /**
      * All ActionItems returned by this method should define a title, icon, and class. These
      * ActionItems are used to populate an ActionBar in the main Activity, so the class should be
-     * that of activity (either SettingsActivity & LearnActivity or your own items)
+     * that of activity (either SettingsActivity &amp; LearnActivity or your own items)
      *
      * @return a list of ActionItems for display in the MainActivity ActionBar
      */
@@ -56,7 +56,7 @@ public abstract class UiManager
     /**
      * All ActionItems returned by this method should define a title, icon, and class. These items
      * are used to fill a pager in the MainActivity. The framework uses the class objects from this
-     * list to create a Fragments for tha pager. It is imperative that the defined classes be of
+     * list to create Fragments for tha pager. It is imperative that the defined classes be of
      * instance  {@link android.support.v4.app.Fragment}.
      *
      * @return a list of ActionItems for display in the MainActivity ActionBar
@@ -64,10 +64,9 @@ public abstract class UiManager
     public abstract List<ActionItem> getMainTabBarItems();
 
     /**
-     * Includsion Criteria Step is one of the first Steps the user will come in contact with. It is
+     * Inclusion Criteria Step is one of the first Steps the user will come in contact with. It is
      * a question / form of questions whos result is used to see if the user elligible or
-     * inelligible for the study. That result in calculate and returned within {@link
-     * #isInclusionCriteriaValid(StepResult)}
+     * inelligible for the study.
      *
      * This method is now deprecated and Inclusion Criteria will now be loaded from a JSON file as
      * defined  {@link org.researchstack.skin.ResourceManager#getInclusionCriteria()}.
