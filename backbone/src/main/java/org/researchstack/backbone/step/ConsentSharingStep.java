@@ -1,5 +1,6 @@
 package org.researchstack.backbone.step;
 
+import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.ui.step.body.SingleChoiceQuestionBody;
 
 /**
@@ -15,11 +16,13 @@ public class ConsentSharingStep extends QuestionStep
         setOptional(false);
     }
 
+    public ConsentSharingStep(String identifier, String title, AnswerFormat format) {
+        super(identifier, title, format);
+    }
+
     @Override
     public Class getStepBodyClass()
     {
         return SingleChoiceQuestionBody.class;
     }
-
-
 }

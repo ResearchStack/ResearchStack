@@ -16,12 +16,17 @@ import java.util.List;
  */
 public class FormStep extends QuestionStep
 {
-    private List<QuestionStep> formSteps;
+    List<QuestionStep> formSteps;
 
     public FormStep(String identifier, String title, String text)
     {
         super(identifier, title, new FormAnswerFormat());
         setText(text);
+    }
+
+    public FormStep(String identifier, String title, String text, List<QuestionStep> steps) {
+        this(identifier, title, text);
+        formSteps = steps;
     }
 
     /**

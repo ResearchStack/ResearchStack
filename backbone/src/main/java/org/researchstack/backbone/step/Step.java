@@ -1,6 +1,9 @@
 package org.researchstack.backbone.step;
 
+import com.google.gson.Gson;
+
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.utils.ObjectUtils;
 
 import java.io.Serializable;
 
@@ -42,6 +45,9 @@ public class Step implements Serializable
     private boolean showsProgress;
     private boolean allowsBackNavigation;
     private boolean useSurveyMode;
+
+    /* Default identifier for serilization/deserialization */
+    Step() {}
 
     /**
      * Returns a new step initialized with the specified identifier.
@@ -204,5 +210,15 @@ public class Step implements Serializable
     public void setStepLayoutClass(Class stepLayoutClass)
     {
         this.stepLayoutClass = stepLayoutClass;
+    }
+
+    /**
+     * @param newIdentifier to use instead of cloned step's identifier
+     * @return cloned step using Gson but with different identifier
+     */
+    public Step clone(String newIdentifier) {
+        Step clonedStep = ObjectUtils.deepCopy(this, Step.class);
+        clonedStep.identifier = newIdentifier;
+        return clonedStep;
     }
 }
