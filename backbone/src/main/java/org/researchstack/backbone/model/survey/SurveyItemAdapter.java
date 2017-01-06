@@ -35,23 +35,30 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
                 return context.deserialize(json, InstructionSurveyItem.class);
             case SUBTASK:
                 return context.deserialize(json, SubtaskQuestionSurveyItem.class);
-            case QUESTION_BOOLEAN:
             case QUESTION_COMPOUND:
-            case QUESTION_DATE:
-            case QUESTION_DATE_TIME:
-            case QUESTION_DECIMAL:
-            case QUESTION_DURATION:
-            case QUESTION_INTEGER:
-            case QUESTION_MULTIPLE_CHOICE:
-            case QUESTION_SCALE:
-            case QUESTION_TEXT:
-            case QUESTION_TIME:
-            case QUESTION_TIMING_RANGE:
-                return context.deserialize(json, QuestionSurveyItem.class);
+                return context.deserialize(json, CompoundQuestionSurveyItem.class);
             case QUESTION_TOGGLE:
                 return context.deserialize(json, ToggleQuestionSurveyItem.class);
+            case QUESTION_BOOLEAN:
+                return context.deserialize(json, BooleanQuestionSurveyItem.class);
+            case QUESTION_DECIMAL:
+                return context.deserialize(json, FloatRangeSurveyItem.class);
+            case QUESTION_INTEGER:
+                return context.deserialize(json, IntegerRangeSurveyItem.class);
+            case QUESTION_DURATION:
+                break;
+            case QUESTION_SCALE:
+                return context.deserialize(json, ScaleQuestionSurveyItem.class);
+            case QUESTION_TEXT:
+                return context.deserialize(json, CompoundQuestionSurveyItem.class);
+            case QUESTION_DATE:
+            case QUESTION_DATE_TIME:
+            case QUESTION_TIME:
+                return context.deserialize(json, DateRangeSurveyItem.class);
+            case QUESTION_MULTIPLE_CHOICE:
             case QUESTION_SINGLE_CHOICE:
-                return context.deserialize(json, SingleChoiceTextQuestionSurveyItem.class);
+            case QUESTION_TIMING_RANGE:
+                return context.deserialize(json, ChoiceQuestionSurveyItem.class);
             case CONSENT_SHARING_OPTIONS:
                 return context.deserialize(json, ConsentSharingOptionsSurveyItem.class);
             case CONSENT_REVIEW:
@@ -59,17 +66,22 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
             case CONSENT_VISUAL:
                 break;
             case ACCOUNT_REGISTRATION:
-                return context.deserialize(json, RegistrationSurveyItem.class);
             case ACCOUNT_LOGIN:
+            case ACCOUNT_PROFILE:
+                return context.deserialize(json, ProfileSurveyItem.class);
+            case ACCOUNT_COMPLETION:
             case ACCOUNT_EMAIL_VERIFICATION:
+                return context.deserialize(json, InstructionSurveyItem.class);
+            case ACCOUNT_DATA_GROUPS:
             case ACCOUNT_EXTERNAL_ID:
             case ACCOUNT_PERMISSIONS:
-            case ACCOUNT_COMPLETION:
-            case ACCOUNT_DATA_GROUPS:
-            case ACCOUNT_PROFILE:
-            case PASSCODE:
-            case CUSTOM:
                 break;
+            case PASSCODE:
+                break;
+            case CUSTOM:
+                InstructionSurveyItem item = context.deserialize(json, InstructionSurveyItem.class);
+                item.type = surveyItemType; // need to set CUSTOM type for surveyItem, since it is a special case
+                return item;
         }
 
         SurveyItem surveyItem = context.deserialize(json, BaseSurveyItem.class);

@@ -2,12 +2,6 @@ package org.researchstack.backbone.model.survey;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.SurveyFactory;
-
-import java.util.List;
-
 /**
  * Created by TheMDP on 12/31/16.
  */
@@ -21,7 +15,7 @@ public class QuestionSurveyItem<T extends Object> extends SurveyItem<T> {
     @SerializedName("optional")
     public boolean optional;
     @SerializedName("range")
-    public SurveyRange range;
+    public RangeSurveyItem range;
 
     @SerializedName("expectedAnswer")
     public boolean expectedAnswer; // Does this need to be a generic type?
@@ -38,69 +32,13 @@ public class QuestionSurveyItem<T extends Object> extends SurveyItem<T> {
         return isBooleanToggle() || type == SurveyItemType.QUESTION_COMPOUND;
     }
 
-    // TODO: moved to SubtaskQuestionSurveyItem
-//    public SubtaskStep createSubtaskStep(SurveyFactory factory) {
-//        if (items == null || items.isEmpty()) {
-//            throw new IllegalStateException("A subtask step requires items, since the items are the steps");
-//        }
-//
-//        List<Step> steps = factory.createSteps(items, true);
-//        SubtaskStep step = usesNavigation() ?
-//            // TODO: Create NavigationSubtaskStep, for now just return subtask
-//            new SubtaskStep(identifier, steps) :
-//            new SubtaskStep(identifier, steps);
-//        return step;
-//    }
-
-    // TODO: moved somewhere else, probably in task creation with navigation rules
-//    boolean usesNavigation() {
-//        if (skipIdentifier != null || rulePredicate != null) {
-//            return true;
-//        }
-//        if (items == null) {
-//            return false;
-//        }
-//        for (SurveyItem item : items) {
-//            if (item instanceof QuestionSurveyItem &&
-//               ((QuestionSurveyItem)item).rulePredicate != null)
-//            {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-    public Step createQuestionStep(boolean isSubtaskStep, SurveyFactory factory) {
-        // Factory method for determining the proper type of form-style step to return
-        // the ORKQuestionStep and ORKFormStep have a different UI presentation
-        QuestionStep step = null;
-        if (isBooleanToggle()) {
-            // TODO finish coding
-            //step = new QuestionStep()
+    public boolean usesNavigation() {
+        if (skipIdentifier != null || rulePredicate != null) {
+            return true;
         }
-        return step;
+        return false;
     }
 
-//
-//    func createFormStep(isSubtaskStep: Bool, factory: SBASurveyFactory? = nil) -> ORKStep {
-//
-//        // Factory method for determining the proper type of form-style step to return
-//        // the ORKQuestionStep and ORKFormStep have a different UI presentation
-//        let step: ORKStep =
-//                // If this is a boolean toggle step then that casting takes priority
-//                self.isBooleanToggle ? SBAToggleFormStep(inputItem: self) :
-//        // If this is a question style then use the SBA subclass
-//        self.questionStyle ? SBANavigationQuestionStep(inputItem: self) :
-//        // If this is *not* a subtask step and it uses navigation then return a survey form step
-//        (!isSubtaskStep && self.usesNavigation()) ? SBANavigationFormStep(inputItem: self) :
-//        // Otherwise, use a form step
-//        ORKFormStep(identifier: self.identifier)
-//
-//        buildFormItems(with: step as! SBAFormProtocol, isSubtaskStep: isSubtaskStep, factory: factory)
-//        mapStepValues(with: step)
-//        return step
-//    }
-//
 //    func mapStepValues(with step: ORKStep) {
 //        step.title = self.stepTitle?.trim()
 //        step.text = self.stepText?.trim()

@@ -55,7 +55,7 @@ public enum SurveyItemType {
     CONSENT_VISUAL              ("consentVisual"),          // VisualConsentStep
     // Account subtypes
     @SerializedName("registration")
-    ACCOUNT_REGISTRATION        ("registration"        ),   // RegistrationStep
+    ACCOUNT_REGISTRATION        ("registration"        ),   // ProfileStep
     @SerializedName("login")
     ACCOUNT_LOGIN               ("login"               ),   // LoginStep
     @SerializedName("emailVerification")
@@ -71,8 +71,8 @@ public enum SurveyItemType {
     @SerializedName("profile")
     ACCOUNT_PROFILE             ("profile"),                // ProfileQuestionStep or ProfileFormStep
     // Passcode subtypes
-    @SerializedName("passcodeType4Digit")
-    PASSCODE                    ("passcodeType4Digit");     // iOS has 6 digit too, but for now only support 4 digit
+    @SerializedName(value="PASSCODE", alternate={"passcodeType4Digit", "passcodeType6Digit"})
+    PASSCODE                    ("passcode");               // iOS has 6 digit too, but for now only support 4 digit
 
     SurveyItemType(String rawValue) {
         value = rawValue;

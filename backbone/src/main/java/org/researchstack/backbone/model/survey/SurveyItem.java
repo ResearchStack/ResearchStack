@@ -2,9 +2,6 @@ package org.researchstack.backbone.model.survey;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.SurveyFactory;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -53,5 +50,31 @@ public class SurveyItem<T> {
 
             return 0;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        if (identifier == null) {
+            return super.hashCode();
+        }
+        return identifier.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof SurveyItem)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+
+        SurveyItem rhs = (SurveyItem) obj;
+
+        if (identifier == null || rhs.identifier == null) {
+            return false;
+        }
+
+        return identifier.equals(rhs.identifier);
     }
 }
