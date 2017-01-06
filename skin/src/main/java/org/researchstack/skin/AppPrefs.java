@@ -24,11 +24,16 @@ public class AppPrefs
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static synchronized AppPrefs getInstance(Context context)
+    public static void init(Context context) {
+        instance = new AppPrefs(context);
+    }
+
+    public static synchronized AppPrefs getInstance()
     {
         if(instance == null)
         {
-            instance = new AppPrefs(context);
+            throw new RuntimeException(
+                    "AppPrefs instance is null. Make sure it is initialized in ResearchStack before calling.");
         }
         return instance;
     }

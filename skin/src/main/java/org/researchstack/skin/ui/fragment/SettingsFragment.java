@@ -411,7 +411,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         {
             case KEY_AUTO_LOCK_ENABLED:
             case KEY_AUTO_LOCK_TIME:
-                long autoLockTime = AppPrefs.getInstance(getContext()).getAutoLockTime();
+                long autoLockTime = AppPrefs.getInstance().getAutoLockTime();
                 StorageAccess.getInstance().getPinCodeConfig().setPinAutoLockTime(autoLockTime);
                 break;
         }
