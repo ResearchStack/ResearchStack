@@ -1,6 +1,8 @@
 package org.researchstack.backbone.answerformat;
 
 
+import android.text.InputType;
+
 /**
  * The TextAnswerFormat class represents the answer format for questions that collect a text
  * response from the user.
@@ -8,9 +10,12 @@ package org.researchstack.backbone.answerformat;
 public class TextAnswerFormat extends AnswerFormat
 {
     public static final int UNLIMITED_LENGTH = 0;
-    private int maximumLength;
+    int maximumLength;
+    int minimumLength = 0;
 
-    private boolean isMultipleLines = false;
+    boolean isMultipleLines = false;
+    int     inputType       = InputType.TYPE_CLASS_TEXT;
+    String  validationRegex = null;
 
     /**
      * Creates a TextAnswerFormat with no maximum length
@@ -40,6 +45,24 @@ public class TextAnswerFormat extends AnswerFormat
         return maximumLength;
     }
 
+    /**
+     * Returns the minimum length for the answer, 0 if no minumum set
+     *
+     * @return the minumum
+     */
+    public int getMinumumLength()
+    {
+        return minimumLength;
+    }
+
+    /**
+     * Set the minimum length for the answer, 0 if no minumum set
+     */
+    public void setMinumumLength(int minimumLength)
+    {
+        this.minimumLength = minimumLength;
+    }
+
     @Override
     public QuestionType getQuestionType()
     {
@@ -67,6 +90,40 @@ public class TextAnswerFormat extends AnswerFormat
     }
 
     /**
+     * @param validationRegex used to validate the text answer
+     */
+    public void setValidationRegex(String validationRegex)
+    {
+        this.validationRegex = validationRegex;
+    }
+
+    /**
+     * Returns whether validation regex for text answer
+     *
+     * @return String which can be null
+     */
+    public String validationRegex()
+    {
+        return validationRegex;
+    }
+
+    /**
+     * @return int indicating the input type of the text answer format
+     */
+    public int getInputType()
+    {
+        return inputType;
+    }
+
+    /**
+     * @param inputType indicating the input type used for this format
+     */
+    public void setInputType(int inputType)
+    {
+        this.inputType = inputType;
+    }
+
+    /**
      * Returns a boolean indicating whether the passed in text is valid based on this answer format
      *
      * @param text the user's text answer to be validated
@@ -74,7 +131,17 @@ public class TextAnswerFormat extends AnswerFormat
      */
     public boolean isAnswerValid(String text)
     {
-        return text != null && text.length() > 0 &&
+        boolean valid = text != null && text.length() > minimumLength &&
                 (maximumLength == UNLIMITED_LENGTH || text.length() <= maximumLength);
+
+        if (valid == false) {
+            return valid;
+        }
+
+        if (validationRegex != null) {
+            valid = text.matches(validationRegex);
+        }
+
+        return valid;
     }
 }
