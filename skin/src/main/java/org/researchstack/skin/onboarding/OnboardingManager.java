@@ -1,6 +1,7 @@
 package org.researchstack.skin.onboarding;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -8,6 +9,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.ResourcePathManager;
+import org.researchstack.backbone.model.ConsentSection;
+import org.researchstack.backbone.model.ConsentSectionAdapter;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 import org.researchstack.backbone.onboarding.OnboardingSection;
@@ -16,10 +19,12 @@ import org.researchstack.backbone.onboarding.OnboardingSectionAdapter;
 import org.researchstack.backbone.onboarding.OnboardingTaskType;
 import org.researchstack.backbone.onboarding.ResourceNameJsonProvider;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.ConsentDocumentFactory;
+import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
+import org.researchstack.backbone.task.NavigableOrderedTask;
+import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
-import org.researchstack.backbone.utils.SurveyFactory;
+import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.skin.ResourceManager;
 
 import java.lang.reflect.InvocationTargetException;
@@ -69,6 +74,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
         GsonBuilder onboardingGson = new GsonBuilder();
         onboardingGson.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
         onboardingGson.registerTypeAdapter(OnboardingSection.class, new OnboardingSectionAdapter(jsonProvider));
+        onboardingGson.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter());
         Gson gson = onboardingGson.create();
 
         String onboardingJson = jsonProvider.getJsonStringForResourceName(onboardingResourceName);
@@ -135,10 +141,9 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
 
         String identifier = taskType.toString();
 
-        // TODO: complete NavigableOrderedTask
-//        NavigableOrderedTask task = new NavigableOrderedTask(identifier, steps);
-//        Intent taskIntent = ViewTaskActivity.newIntent(context, task);
-//        context.startActivity(taskIntent);
+        NavigableOrderedTask task = new NavigableOrderedTask(identifier, steps);
+        Intent taskIntent = ViewTaskActivity.newIntent(context, task);
+        context.startActivity(taskIntent);
     }
 
     /**
@@ -156,7 +161,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
         }
 
         // Get the default factory
-        SurveyFactory factory = section.getDefaultOnboardingSurveyFactory();
+        SurveyFactory factory = section.getDefaultOnboardingSurveyFactory(context);
 
         // For consent, need to filter out steps that should not be included and group the steps into a substep.
         // This is to facilitate skipping reconsent for a user who is logging in where it is unknown whether

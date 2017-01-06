@@ -6,7 +6,7 @@ import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.survey.ConsentReviewSurveyItem;
 import org.researchstack.backbone.model.survey.ConsentSharingOptionsSurveyItem;
 import org.researchstack.backbone.model.survey.InstructionSurveyItem;
-import org.researchstack.backbone.model.survey.SingleChoiceTextQuestionSurveyItem;
+import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SubtaskQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
 import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
@@ -82,7 +82,7 @@ public class OnboardingManagerTest {
         SubtaskQuestionSurveyItem consentQuiz = (SubtaskQuestionSurveyItem)consent.surveyItems.get(2);
 
         assertEquals(consentQuiz.items.get(1).type, SurveyItemType.QUESTION_SINGLE_CHOICE);
-        SingleChoiceTextQuestionSurveyItem singleChoice = (SingleChoiceTextQuestionSurveyItem)consentQuiz.items.get(1);
+        ChoiceQuestionSurveyItem singleChoice = (ChoiceQuestionSurveyItem)consentQuiz.items.get(1);
         assertEquals(2, singleChoice.items.size());
         assertTrue(singleChoice.items.get(0) instanceof Choice);
         assertTrue(singleChoice.expectedAnswer);
