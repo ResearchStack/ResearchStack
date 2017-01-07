@@ -2,6 +2,7 @@ package org.researchstack.backbone.step;
 
 import com.google.gson.Gson;
 
+import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.utils.ObjectUtils;
 
@@ -222,5 +223,31 @@ public class Step implements Serializable
         Step clonedStep = ObjectUtils.deepCopy(this, Step.class);
         clonedStep.identifier = newIdentifier;
         return clonedStep;
+    }
+
+    @Override
+    public int hashCode() {
+        if (identifier == null) {
+            return super.hashCode();
+        }
+        return identifier.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Step)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+
+        Step rhs = (Step) obj;
+
+        if (identifier == null || rhs.identifier == null) {
+            return false;
+        }
+
+        return identifier.equals(rhs.identifier);
     }
 }

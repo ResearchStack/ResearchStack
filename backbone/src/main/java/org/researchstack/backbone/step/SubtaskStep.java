@@ -56,19 +56,20 @@ public class SubtaskStep extends Step {
         }
 
         // Add a period to the end of the substep
-        int startIndex = identifier.indexOf(subtask.getIdentifier() + ".");
+        String baseIdPrefix = subtask.getIdentifier() + ".";
+        int startIndex = identifier.indexOf(baseIdPrefix);
 
         if (startIndex < 0) {
             return null;
         }
 
-        String substepId = identifier.substring(startIndex + subtask.getIdentifier().length());
+        String substepId = identifier.substring(startIndex + baseIdPrefix.length());
         return substepId;
     }
 
     private Step replacementStep(Step step) {
         if (step == null) {
-            Log.e(LOG_TAG, "Step is null in subtask step method");
+            //Log.e(LOG_TAG, "Step is null in subtask step method");
             return null;
         }
         String replacementIdentifier = subtask.getIdentifier() + "." + step.getIdentifier();
@@ -78,7 +79,7 @@ public class SubtaskStep extends Step {
 
     private TaskResult filteredTaskResult(TaskResult inputResult) {
         // create a mutated copy of the results that includes only the subtask results
-        TaskResult subtaskResult = ObjectUtils.deepCopy(inputResult, TaskResult.class);
+        TaskResult subtaskResult = inputResult.copy();
         Map<String, StepResult> stepResults = subtaskResult.getResults();
         subtaskResult.getResults().clear();
         for (String identifier : stepResults.keySet()) {
@@ -146,8 +147,8 @@ public class SubtaskStep extends Step {
 
         // If the task result was mutated, need to add any changes back into the result set
         StepResult thisStepResult = replacementTaskResult.getStepResult(substepIdentifier);
-        StepResult parentStepResult = result.getStepResult(step.getIdentifier());
-        if (parentStepResult != null) {
+        if (thisStepResult != null && result != null) {
+            StepResult parentStepResult = result.getStepResult(step.getIdentifier());
             parentStepResult.setResults(thisStepResult.getResults());
         }
 

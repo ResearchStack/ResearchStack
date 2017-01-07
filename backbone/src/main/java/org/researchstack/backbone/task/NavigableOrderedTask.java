@@ -8,6 +8,7 @@ import org.researchstack.backbone.result.TaskResultSource;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +23,12 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
 
     public NavigableOrderedTask(String identifier, List<Step> steps) {
         super(identifier, steps);
+        orderedStepIdentifiers = new ArrayList<>();
     }
 
     public NavigableOrderedTask(String identifier, Step... steps) {
         super(identifier, steps);
+        orderedStepIdentifiers = new ArrayList<>();
     }
 
     List<TaskResult> additionalTaskResults;
@@ -36,14 +39,14 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
     private SubtaskStep subtaskStep(String identifier) {
         // Look for a period in the range of the string
         if (identifier == null) {
-            Log.e(LOG_TAG, "Identifier is null, cannot find subtask step");
+            //Log.d(LOG_TAG, "Identifier is null, cannot find subtask step");
             return null;
         }
 
         // Parse out the subtask identifier and look in super for a step with that identifier
         int indexOfPeriod = identifier.indexOf(".");
         if (indexOfPeriod < 0) {
-            Log.e(LOG_TAG, "Identifier has no substep deliminator, aka a period");
+            //Log.d(LOG_TAG, "Identifier has no substep deliminator, aka a period");
             return null;
         }
 
@@ -65,9 +68,9 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
             }
         }
 
-        Step returnStep = null;
-        Step previousStep = null;
-        boolean shouldSkip = false;
+        Step returnStep;
+        Step previousStep = step;
+        boolean shouldSkip;
 
         do {
             do {
@@ -146,32 +149,32 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
     @Override
     public Step getStepAfterStep(Step step, TaskResult result)
     {
-        Step returnStep = null;
+        Step returnStep;
 
-        if (step.getIdentifier() == null) {
-            Log.e(LOG_TAG, "Found step with null identifier");
-            return null;
-        }
+        String stepIdentifier = step != null ? step.getIdentifier() : null;
 
         // Look to see if this has a valid subtask step associated with this step
-        SubtaskStep subtaskStep = subtaskStep(step.getIdentifier());
+        SubtaskStep subtaskStep = subtaskStep(stepIdentifier);
         if (subtaskStep != null) {
             returnStep = subtaskStep.getStepAfterStep(step, result);
             if (returnStep == null) {
                 // If the subtask returns nil then it is at the last step
                 // Check super for more steps
                 returnStep = superStepAfterStep(subtaskStep, result);
-            } else {
-                // If this isn't a subtask step then look to super nav for the next step
-                returnStep = superStepAfterStep(step, result);
             }
+        } else {
+            // If this isn't a subtask step then look to super nav for the next step
+            returnStep = superStepAfterStep(step, result);
         }
 
         // Look for step in the ordered steps and remove all items in the list after this one
-        String previousIdentifier = step.getIdentifier();
-        int idx = orderedStepIdentifiers.indexOf(previousIdentifier);
-        if (idx >= 0 && idx < (orderedStepIdentifiers.size() - 1)) {
-            orderedStepIdentifiers = orderedStepIdentifiers.subList(idx+1, orderedStepIdentifiers.size());
+        String previousIdentifier = stepIdentifier;
+        int idx = -1;
+        if (previousIdentifier != null) {
+            idx = orderedStepIdentifiers.indexOf(previousIdentifier);
+            if (idx >= 0 && idx < (orderedStepIdentifiers.size() - 1)) {
+                orderedStepIdentifiers = orderedStepIdentifiers.subList(idx + 1, orderedStepIdentifiers.size());
+            }
         }
 
         String identifier = null;
@@ -201,17 +204,17 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
     @Override
     public Step getStepBeforeStep(Step step, TaskResult result) {
         if (step.getIdentifier() == null) {
-            Log.e(LOG_TAG, "Found step with null identifier");
+            //Log.e(LOG_TAG, "Found step with null identifier");
             return null;
         }
 
         int idx = orderedStepIdentifiers.indexOf(step.getIdentifier());
         if (idx < 0) {
-            Log.d(LOG_TAG, "Couldnt find step in orderedStepIdentifiers");
+            //Log.d(LOG_TAG, "Couldnt find step in orderedStepIdentifiers");
             return null;
         }
 
-        String previousIdentifier = orderedStepIdentifiers.get(idx+1);
+        String previousIdentifier = orderedStepIdentifiers.get(idx-1);
         return getStepWithIdentifier(previousIdentifier);
     }
 

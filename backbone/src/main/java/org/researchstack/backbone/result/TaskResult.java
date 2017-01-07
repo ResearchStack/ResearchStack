@@ -3,6 +3,7 @@ package org.researchstack.backbone.result;
 import android.net.Uri;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -28,12 +29,15 @@ public class TaskResult extends Result
     private Uri outputDirectory;
 
     /* Default identifier for serilization/deserialization */
-    TaskResult() { super(); }
+    TaskResult() {
+        super();
+        this.results = new LinkedHashMap<>();
+    }
 
     public TaskResult(String identifier)
     {
         super(identifier);
-        this.results = new HashMap<>();
+        this.results = new LinkedHashMap<>();
     }
 
     /**
@@ -74,5 +78,20 @@ public class TaskResult extends Result
     public void setStepResultForStepIdentifier(String identifier, StepResult stepResult)
     {
         results.put(identifier, stepResult);
+    }
+
+    /**
+     * @return deep copy version of source
+     */
+    public TaskResult copy() {
+        TaskResult copy = new TaskResult();
+        if (results != null) {
+            for (String key : results.keySet()) {
+                copy.getResults().put(key, results.get(key));
+            }
+        }
+        copy.uuidTask = uuidTask;
+        copy.outputDirectory = outputDirectory;
+        return copy;
     }
 }
