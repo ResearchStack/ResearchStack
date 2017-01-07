@@ -4,7 +4,11 @@ import android.util.Log;
 
 import org.researchstack.backbone.model.survey.InstructionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
+import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.ui.step.layout.InstructionStepLayout;
+
+import java.util.List;
 
 /**
  * An InstructionStep object gives the participant instructions for a task.
@@ -13,7 +17,7 @@ import org.researchstack.backbone.ui.step.layout.InstructionStepLayout;
  * introductory content, instructions in the middle of a task, or a final message at the completion
  * of a task.
  */
-public class InstructionStep extends Step
+public class InstructionStep extends Step implements NavigableOrderedTask.NavigationRule
 {
     /*
      * Additional detailed text to display
@@ -107,6 +111,11 @@ public class InstructionStep extends Step
         nextStepIdentifier = identifier;
     }
     public String getNextStepIdentifier() {
+        return nextStepIdentifier;
+    }
+
+    @Override
+    public String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
         return nextStepIdentifier;
     }
 }

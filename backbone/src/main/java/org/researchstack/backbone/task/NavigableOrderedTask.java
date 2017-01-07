@@ -81,7 +81,11 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
                     // If this is a step that conforms to the SBANavigableStep protocol and
                     // the next step identifier is non-nil then get the next step by looking within
                     // the steps associated with this task
-                    returnStep = super.getStepWithIdentifier(nextStepIdentifier);
+                    if (nextStepIdentifier == null) {
+                        returnStep = super.getStepAfterStep(previousStep, result);
+                    } else {
+                        returnStep = super.getStepWithIdentifier(nextStepIdentifier);
+                    }
                 } else {
                     // If we've dropped through without setting the return step to something non-nil
                     // then look to super for the next step
@@ -173,7 +177,7 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
         if (previousIdentifier != null) {
             idx = orderedStepIdentifiers.indexOf(previousIdentifier);
             if (idx >= 0 && idx < (orderedStepIdentifiers.size() - 1)) {
-                orderedStepIdentifiers = orderedStepIdentifiers.subList(idx + 1, orderedStepIdentifiers.size());
+                orderedStepIdentifiers = orderedStepIdentifiers.subList(0, idx + 1);
             }
         }
 
@@ -185,9 +189,10 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
         if (identifier != null) {
             int indexOfId = orderedStepIdentifiers.indexOf(identifier);
             if (indexOfId >= 0) {
-                orderedStepIdentifiers = orderedStepIdentifiers.subList(idx, orderedStepIdentifiers.size());
+                orderedStepIdentifiers = orderedStepIdentifiers.subList(0, indexOfId);
+            } else {
+                orderedStepIdentifiers.add(identifier);
             }
-            orderedStepIdentifiers.add(identifier);
         }
 
         return returnStep;
@@ -214,8 +219,13 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
             return null;
         }
 
-        String previousIdentifier = orderedStepIdentifiers.get(idx-1);
-        return getStepWithIdentifier(previousIdentifier);
+        int prevIdx = idx - 1;
+        if (prevIdx >= 0) {
+            String previousIdentifier = orderedStepIdentifiers.get(prevIdx);
+            return getStepWithIdentifier(previousIdentifier);
+        }
+
+        return null;
     }
 
     @Override
