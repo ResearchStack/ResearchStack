@@ -5,6 +5,10 @@ package org.researchstack.backbone.model.survey;
  */
 
 public class CompoundQuestionSurveyItem extends QuestionSurveyItem<QuestionSurveyItem> {
+
+    /**
+     * @return false by default, true if any of the sub-questions use navigation
+     */
     @Override
     public boolean usesNavigation() {
         boolean usesNavigation = super.usesNavigation();
