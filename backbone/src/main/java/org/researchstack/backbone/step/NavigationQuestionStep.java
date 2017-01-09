@@ -1,4 +1,4 @@
-package org.researchstack.backbone.step.navigation;
+package org.researchstack.backbone.step;
 
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.model.survey.NavigationStep;
@@ -61,41 +61,4 @@ public class NavigationQuestionStep extends QuestionStep implements NavigationSt
     public void setSkipIfPassed(boolean skipIfPassed) {
         this.skipIfPassed = skipIfPassed;
     }
-
-// TODO: do we need this?
-//
-//    // MARK: NSCopying
-//
-//    override public func copy(with zone: NSZone? = nil) -> Any {
-//        let copy = super.copy(with: zone) as! SBANavigationQuestionStep
-//        copy.rulePredicate = self.rulePredicate
-//        return self.sharedCopying(copy)
-//    }
-//
-//    // MARK: NSSecureCoding
-//
-//    required public init(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder);
-//        self.sharedDecoding(coder: aDecoder)
-//        self.rulePredicate = aDecoder.decodeObject(forKey: #keyPath(rulePredicate)) as? NSPredicate
-//    }
-//
-//    override public func encode(with aCoder: NSCoder){
-//        super.encode(with: aCoder)
-//        self.sharedEncoding(aCoder)
-//        aCoder.encode(self.rulePredicate, forKey: #keyPath(rulePredicate))
-//    }
-//
-//    // MARK: Equality
-//
-//    override public func isEqual(_ object: Any?) -> Bool {
-//        guard let castObject = object as? SBANavigationQuestionStep else { return false }
-//        return super.isEqual(object) &&
-//                sharedEquality(object) &&
-//                SBAObjectEquality(castObject.rulePredicate, self.rulePredicate)
-//    }
-//
-//    override public var hash: Int {
-//        return super.hash ^ sharedHash() ^ SBAObjectHash(self.rulePredicate)
-//    }
 }

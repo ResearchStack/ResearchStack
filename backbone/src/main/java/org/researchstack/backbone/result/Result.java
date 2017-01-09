@@ -1,6 +1,11 @@
 package org.researchstack.backbone.result;
 
+import org.researchstack.backbone.model.GsonSerializablePolymorphism;
+import org.researchstack.backbone.step.Step;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -21,7 +26,7 @@ import java.util.Date;
  * hold the type of result data the step can generate, unless it makes sense to use an existing
  * subclass.
  */
-public class Result implements Serializable
+public class Result extends GsonSerializablePolymorphism<Result> implements Serializable
 {
     String identifier;
 
@@ -67,6 +72,10 @@ public class Result implements Serializable
         return identifier;
     }
 
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
     /**
      * Returns the time when the task, step, or data collection began.
      *
@@ -107,4 +116,24 @@ public class Result implements Serializable
         this.endDate = endDate;
     }
 
+    // Methods for GsonSerializablePolymorphism
+
+    // Methods for GsonSerializablePolymorphism
+
+    @Override
+    public Data<Result> getPolymorphismData() {
+        return new Data<>(Result.class, Arrays.asList(new DataPair[] {
+                new DataPair(Result.class, getClass())
+        }));
+    }
+
+    /**
+     * @param newIdentifier
+     * @return a deep copy of this object, and its polymorphism, with a new identifier set
+     */
+    public Result deepCopy(String newIdentifier) {
+        Result copy = deepCopy();
+        copy.identifier = newIdentifier;
+        return copy;
+    }
 }

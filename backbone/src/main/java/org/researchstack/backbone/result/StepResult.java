@@ -5,8 +5,10 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -120,13 +122,21 @@ public class StepResult <T> extends Result
         return answerFormat;
     }
 
-    /**
-     * @param newIdentifier to use instead of cloned step's identifier
-     * @return cloned step using Gson but with different identifier
-     */
-    public StepResult clone(String newIdentifier) {
-        StepResult clonedStepResult = ObjectUtils.deepCopy(this, StepResult.class);
-        clonedStepResult.identifier = newIdentifier;
-        return clonedStepResult;
+    // Methods for GsonSerializablePolymorphism
+
+    @Override
+    public Data<Result> getPolymorphismData() {
+        List<DataPair> dataPairs = new ArrayList<>();
+
+        // Add any AnswerFormat polymorphism
+        if (answerFormat != null) {
+            Data<AnswerFormat> answerData = answerFormat.getPolymorphismData();
+            dataPairs.addAll(answerData.baseSubClassPairs);
+        }
+
+        // Build new one with AnswerFormat first in the List
+        Data<Result> superData = super.getPolymorphismData();
+        dataPairs.addAll(new ArrayList<>(superData.baseSubClassPairs));
+        return new Data<>(superData.baseClass, dataPairs);
     }
 }

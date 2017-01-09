@@ -2,8 +2,14 @@ package org.researchstack.backbone.result;
 
 import android.net.Uri;
 
+import org.researchstack.backbone.step.QuestionStep;
+import org.researchstack.backbone.step.Step;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -80,18 +86,24 @@ public class TaskResult extends Result
         results.put(identifier, stepResult);
     }
 
-    /**
-     * @return deep copy version of source
-     */
-    public TaskResult copy() {
-        TaskResult copy = new TaskResult();
-        if (results != null) {
+    // Methods for GsonSerializablePolymorphism
+
+    @Override
+    public Data<Result> getPolymorphismData() {
+        List<DataPair> dataPairs = new ArrayList<>();
+
+        // Add any Form Step polymorphisms
+        if (results != null && !results.isEmpty()) {
+
             for (String key : results.keySet()) {
-                copy.getResults().put(key, results.get(key));
+                Data<Result> resultData = results.get(key).getPolymorphismData();
+                dataPairs.addAll(resultData.baseSubClassPairs);
             }
         }
-        copy.uuidTask = uuidTask;
-        copy.outputDirectory = outputDirectory;
-        return copy;
+
+        // Build new one with AnswerFormat first in the List
+        Data<Result> superData = super.getPolymorphismData();
+        dataPairs.addAll(new ArrayList<>(superData.baseSubClassPairs));
+        return new Data<>(superData.baseClass, dataPairs);
     }
 }

@@ -3,6 +3,10 @@ package org.researchstack.backbone.step;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * The {@link QuestionStep} class is a concrete subclass of {@link Step} that represents a step in
  * which a single question is presented to the user.
@@ -149,5 +153,23 @@ public class QuestionStep extends Step
     public void setPlaceholder(String placeholder)
     {
         this.placeholder = placeholder;
+    }
+
+    // Methods for GsonSerializablePolymorphism
+
+    @Override
+    public Data<Step> getPolymorphismData() {
+        List<DataPair> dataPairs = new ArrayList<>();
+
+        // Add any AnswerFormat polymorphism
+        if (answerFormat != null) {
+            Data<AnswerFormat> answerData = answerFormat.getPolymorphismData();
+            dataPairs.addAll(answerData.baseSubClassPairs);
+        }
+
+        // Build new one with AnswerFormat first in the List
+        Data<Step> superData = super.getPolymorphismData();
+        dataPairs.addAll(new ArrayList<>(superData.baseSubClassPairs));
+        return new Data<>(superData.baseClass, dataPairs);
     }
 }

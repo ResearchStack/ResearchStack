@@ -1,12 +1,11 @@
 package org.researchstack.backbone.step;
 
-import com.google.gson.Gson;
-
-import org.researchstack.backbone.model.survey.SurveyItem;
+import org.researchstack.backbone.model.GsonSerializablePolymorphism;
 import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.utils.ObjectUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Step is the base class for the steps that can compose a task for presentation in an {@link
@@ -24,7 +23,7 @@ import java.io.Serializable;
  * To implement a new type of step, subclass Step and add your additional properties. Separately,
  * subclass StepLayout and implement your user interface.
  */
-public class Step implements Serializable
+public class Step extends GsonSerializablePolymorphism<Step> implements Serializable
 {
     private String identifier;
 
@@ -219,8 +218,8 @@ public class Step implements Serializable
      * @param newIdentifier to use instead of cloned step's identifier
      * @return cloned step using Gson but with different identifier
      */
-    public Step clone(String newIdentifier) {
-        Step clonedStep = ObjectUtils.deepCopy(this, Step.class);
+    public Step deepCopy(String newIdentifier) {
+        Step clonedStep = deepCopy();
         clonedStep.identifier = newIdentifier;
         return clonedStep;
     }
@@ -249,5 +248,14 @@ public class Step implements Serializable
         }
 
         return identifier.equals(rhs.identifier);
+    }
+
+    // Methods for GsonSerializablePolymorphism
+
+    @Override
+    public Data<Step> getPolymorphismData() {
+        return new Data<>(Step.class, Arrays.asList(new DataPair[] {
+                new DataPair(Step.class, getClass())
+        }));
     }
 }

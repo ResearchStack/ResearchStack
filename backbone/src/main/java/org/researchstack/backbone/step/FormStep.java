@@ -1,6 +1,8 @@
 package org.researchstack.backbone.step;
+import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.FormAnswerFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,5 +49,25 @@ public class FormStep extends QuestionStep
     public void setFormSteps(QuestionStep... formSteps)
     {
         setFormSteps(Arrays.asList(formSteps));
+    }
+
+    // Methods for GsonSerializablePolymorphism
+
+    @Override
+    public Data<Step> getPolymorphismData() {
+        List<DataPair> dataPairs = new ArrayList<>();
+
+        // Add any Form Step polymorphisms
+        if (formSteps != null) {
+            for (QuestionStep step : formSteps) {
+                Data<Step> questionData = step.getPolymorphismData();
+                dataPairs.addAll(questionData.baseSubClassPairs);
+            }
+        }
+
+        // Build new one with AnswerFormat first in the List
+        Data<Step> superData = super.getPolymorphismData();
+        dataPairs.addAll(new ArrayList<>(superData.baseSubClassPairs));
+        return new Data<>(superData.baseClass, dataPairs);
     }
 }

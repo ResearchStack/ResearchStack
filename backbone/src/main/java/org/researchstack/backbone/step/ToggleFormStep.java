@@ -1,7 +1,5 @@
 package org.researchstack.backbone.step;
 
-import org.researchstack.backbone.step.navigation.NavigationFormStep;
-
 import java.util.List;
 
 /**

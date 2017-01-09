@@ -2,6 +2,7 @@ package org.researchstack.backbone.step;
 
 import android.util.Log;
 
+import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.result.TaskResultSource;
@@ -9,7 +10,9 @@ import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.utils.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,45 +76,45 @@ public class SubtaskStep extends Step {
             return null;
         }
         String replacementIdentifier = subtask.getIdentifier() + "." + step.getIdentifier();
-        Step replacementStep = step.clone(replacementIdentifier);
+        Step replacementStep = step.deepCopy(replacementIdentifier);
         return replacementStep;
     }
 
     private TaskResult filteredTaskResult(TaskResult inputResult) {
         // create a mutated copy of the results that includes only the subtask results
-        TaskResult subtaskResult = inputResult.copy();
+        TaskResult subtaskResult = (TaskResult)inputResult.deepCopy();
         Map<String, StepResult> stepResults = subtaskResult.getResults();
-        subtaskResult.getResults().clear();
-        for (String identifier : stepResults.keySet()) {
-            subtaskResult.setStepResultForStepIdentifier(identifier, stepResults.get(identifier));
+        if (stepResults != null && !stepResults.keySet().isEmpty()) {
+            Map<String, StepResult> subtaskResults = filteredStepResults(stepResults);
+            subtaskResult.setResults(subtaskResults);
         }
         return subtaskResult;
     }
 
     private Map<String, StepResult> filteredStepResults(Map<String, StepResult> inputResults) {
-        Map<String, StepResult> subtaskResults = new HashMap<>();
+        Map<String, StepResult> subtaskResults = new LinkedHashMap<>();
+        String prefix = subtask.getIdentifier() + ".";
         for (String identifier : inputResults.keySet()) {
-            if (identifier.startsWith(subtask.getIdentifier())) {
-                // TODO: iOS does a deep copy, I'm not sure if we need to
-                StepResult inStepResult = inputResults.get(identifier);
-                String newIdentifier = identifier.substring(subtask.getIdentifier().length());
-                StepResult stepResult = inStepResult.clone(newIdentifier);
+            if (identifier.startsWith(prefix)) {
+                
+                Map<String, Object> newResultMap = new LinkedHashMap<>();
+                String newIdentifier = identifier.substring(prefix.length());
+                StepResult stepResult = (StepResult)inputResults.get(identifier).deepCopy(newIdentifier);
 
                 // Search results of the step for non-subtask identifiers as well
                 if (stepResult.getResults() != null) {
-                    Map<String, Object> subtaskStepResults = new HashMap<>();
-                    for (String stepResultIdentifier : inputResults.keySet()) {
-                        Object stepResultObject = stepResult.getResults().get(stepResultIdentifier);
-                        int indexOfId = stepResultIdentifier.indexOf(subtask.getIdentifier());
-                        if (indexOfId < 0) {
-                            subtaskStepResults.put(stepResultIdentifier, stepResultObject);
-                        } else {
-                            String stepResultNewIdentifier = stepResultIdentifier.substring(
-                                    indexOfId + subtask.getIdentifier().length());
-                            subtaskStepResults.put(stepResultNewIdentifier, stepResultObject);
+                    for (Object stepResultIdentifierObj : stepResult.getResults().keySet()) {
+                        if (stepResultIdentifierObj instanceof String) {
+                            String stepResultIdentifier = (String)stepResultIdentifierObj;
+                            Object stepResultObject = stepResult.getResults().get(stepResultIdentifierObj);
+                            if (stepResultObject instanceof Result) {
+                                Result newResult = (Result)stepResultObject;
+                                newResult.setIdentifier(stepResultIdentifier);
+                            }
+                            newResultMap.put(stepResultIdentifier, stepResultObject);
                         }
                     }
-                    stepResult.setResults(subtaskStepResults);
+                    stepResult.setResults(newResultMap);
                 }
 
                 subtaskResults.put(newIdentifier, stepResult);
@@ -141,7 +144,7 @@ public class SubtaskStep extends Step {
             return null;
         }
 
-        Step substep = step.clone(substepIdentifier);
+        Step substep = step.deepCopy(substepIdentifier);
         TaskResult replacementTaskResult = filteredTaskResult(result);
         Step nextStep = subtask.getStepAfterStep(substep, replacementTaskResult);
 
@@ -167,65 +170,20 @@ public class SubtaskStep extends Step {
         return null;
     }
 
-    // TODO: do we need this?
-//    override open var requestedPermissions: ORKPermissionMask {
-//        if let permissions = self.subtask.requestedPermissions {
-//            return permissions
-//        }
-//        return []
-//    }
+    // GsonSerializablePolymorphism method
 
+    @Override
+    public Data<Step> getPolymorphismData() {
+        List<DataPair> dataPairs = new ArrayList<>();
 
+        // Add any Task polymorphisms
+        if (subtask != null) {
+            dataPairs.add(new DataPair(Task.class, subtask.getClass()));
+        }
 
-
-    // TODO: do we need this?
-//    // MARK: NSCopy
-//
-//    @objc(copyWithSubtask:)
-//    open func copy(with subtask: ORKTask & NSCopying & NSSecureCoding) -> SBASubtaskStep {
-//        let copy = self.copy() as! SBASubtaskStep
-//        copy._subtask = subtask
-//        return copy
-//    }
-//
-//    override open func copy(with zone: NSZone? = nil) -> Any {
-//        let copy = super.copy(with: zone) as! SBASubtaskStep
-//        copy._subtask = _subtask.copy(with: zone) as! ORKTask & NSCopying & NSSecureCoding
-//        copy.taskIdentifier = taskIdentifier
-//        copy.schemaIdentifier = schemaIdentifier
-//        return copy
-//    }
-//
-//    // MARK: NSCoding
-//
-//    required public init(coder aDecoder: NSCoder) {
-//        _subtask = aDecoder.decodeObject(forKey: #keyPath(subtask)) as! ORKTask & NSCopying & NSSecureCoding
-//        taskIdentifier = aDecoder.decodeObject(forKey: #keyPath(taskIdentifier)) as? String
-//        schemaIdentifier = aDecoder.decodeObject(forKey: #keyPath(schemaIdentifier)) as? String
-//        super.init(coder: aDecoder);
-//    }
-//
-//    override open func encode(with aCoder: NSCoder) {
-//        super.encode(with: aCoder)
-//        aCoder.encode(_subtask, forKey: #keyPath(subtask))
-//        aCoder.encode(taskIdentifier, forKey: #keyPath(taskIdentifier))
-//        aCoder.encode(schemaIdentifier, forKey: #keyPath(schemaIdentifier))
-//    }
-//
-//    // MARK: Equality
-//
-//    override open func isEqual(_ object: Any?) -> Bool {
-//        guard let object = object as? SBASubtaskStep else { return false }
-//        return super.isEqual(object) &&
-//                _subtask.isEqual(object._subtask) &&
-//                (self.taskIdentifier == object.taskIdentifier) &&
-//                (self.schemaIdentifier == object.schemaIdentifier)
-//    }
-//
-//    override open var hash: Int {
-//        return super.hash ^
-//                SBAObjectHash(self.taskIdentifier) ^
-//                SBAObjectHash(self.schemaIdentifier) ^
-//                _subtask.hash
-//    }
+        // Build new one with Task first in the list before the super ones
+        Data<Step> superData = super.getPolymorphismData();
+        dataPairs.addAll(new ArrayList<>(superData.baseSubClassPairs));
+        return new Data<>(superData.baseClass, dataPairs);
+    }
 }
