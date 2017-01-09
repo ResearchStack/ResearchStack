@@ -39,4 +39,22 @@ public class AnswerFormatTest
         assertFalse(format.isAnswerValid("emailtest@.org"));
         assertFalse(format.isAnswerValid("12345"));
     }
+
+    @Test
+    public void testPasswordAnswerFormat()
+    {
+        PasswordAnswerFormat format = new PasswordAnswerFormat();
+        assertTrue(format.isAnswerValid("Abcd1234"));           // normal password valid
+        assertTrue(format.isAnswerValid("Abcd"));               // 4 characters is valid up to
+        assertTrue(format.isAnswerValid("Abcd1234Abcd1234"));   // 16 characters
+    }
+
+    @Test
+    public void testInvalidTextRegexAnswerFormat()
+    {
+        PasswordAnswerFormat format = new PasswordAnswerFormat();
+        assertFalse(format.isAnswerValid("Ãbcd1234"));          // non-asciii character, Ã, not allowed
+        assertFalse(format.isAnswerValid("Abc"));               // less than 3 characters invalid
+        assertFalse(format.isAnswerValid("Abcd1234Abcd1234A")); // more than 17 characters
+    }
 }

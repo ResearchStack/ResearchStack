@@ -131,7 +131,7 @@ public class TextAnswerFormat extends AnswerFormat
      */
     public boolean isAnswerValid(String text)
     {
-        boolean valid = text != null && text.length() > minimumLength &&
+        boolean valid = text != null && text.length() >= minimumLength &&
                 (maximumLength == UNLIMITED_LENGTH || text.length() <= maximumLength);
 
         if (valid == false) {

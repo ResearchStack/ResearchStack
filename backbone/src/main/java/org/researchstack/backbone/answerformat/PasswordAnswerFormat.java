@@ -10,7 +10,7 @@ public class PasswordAnswerFormat extends TextAnswerFormat {
 
     static final int DEFAULT_PASSWORD_MIN_LENGTH    = 4;
     static final int DEFAULT_PASSWORD_MAX_LENGTH    = 16;
-    static final String PASSWORD_VALIDATION_REGEX   = "[[:ascii:]]";
+    static final String PASSWORD_VALIDATION_REGEX   = "^\\p{ASCII}*$";
 
     /**
      * Creates a TextAnswerFormat with no maximum length
@@ -19,6 +19,7 @@ public class PasswordAnswerFormat extends TextAnswerFormat {
     {
         super(DEFAULT_PASSWORD_MAX_LENGTH);
         minimumLength = DEFAULT_PASSWORD_MIN_LENGTH;
+        maximumLength = DEFAULT_PASSWORD_MAX_LENGTH;
         inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD;
         isMultipleLines = false;
         validationRegex = PASSWORD_VALIDATION_REGEX;
