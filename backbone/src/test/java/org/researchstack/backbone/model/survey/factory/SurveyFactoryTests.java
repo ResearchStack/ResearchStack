@@ -1,29 +1,19 @@
 package org.researchstack.backbone.model.survey.factory;
 
-import android.content.Context;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.EmailAnswerFormat;
 import org.researchstack.backbone.answerformat.PasswordAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.model.ConsentDocument;
-import org.researchstack.backbone.model.ConsentSection;
-import org.researchstack.backbone.model.ConsentSectionAdapter;
-import org.researchstack.backbone.model.ConsentSignature;
 import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.SurveyItem;
-import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
@@ -38,12 +28,8 @@ import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.ToggleFormStep;
-import org.researchstack.backbone.step.navigation.NavigationSubtaskStep;
+import org.researchstack.backbone.step.NavigationSubtaskStep;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -58,53 +44,24 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class SurveyFactoryTests {
 
-    Gson gson;
-    Context mockContext;
+    SurveyFactoryHelper  helper;
+    ResourceParserHelper resourceHelper;
 
     @Before
     public void setUp() throws Exception
     {
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
-        builder.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter());
-        gson = builder.create();
-
-        mockContext = Mockito.mock(Context.class);
-        Mockito.when(mockContext.getString(R.string.rsb_yes))       .thenReturn("Yes");
-        Mockito.when(mockContext.getString(R.string.rsb_no))        .thenReturn("No");
-        Mockito.when(mockContext.getString(R.string.rsb_not_sure))  .thenReturn("Not sure");
-
-        Mockito.when(mockContext.getString(R.string.rsb_name))              .thenReturn("Name");
-        Mockito.when(mockContext.getString(R.string.rsb_name_placeholder))  .thenReturn("Enter full name");
-
-        Mockito.when(mockContext.getString(R.string.rsb_email))             .thenReturn("Email");
-        Mockito.when(mockContext.getString(R.string.rsb_email_placeholder)) .thenReturn("jappleseed@example.com");
-
-        Mockito.when(mockContext.getString(R.string.rsb_password))              .thenReturn("Password");
-        Mockito.when(mockContext.getString(R.string.rsb_password_placeholder))  .thenReturn("Enter password");
-
-        Mockito.when(mockContext.getString(R.string.rsb_confirm_password))              .thenReturn("Confirm");
-        Mockito.when(mockContext.getString(R.string.rsb_confirm_password_placeholder))  .thenReturn("Enter password again");
-
-        Mockito.when(mockContext.getString(R.string.rsb_birthdate))             .thenReturn("Date of Birth");
-        Mockito.when(mockContext.getString(R.string.rsb_birthdate_placeholder)) .thenReturn("Pick a date");
-
-        Mockito.when(mockContext.getString(R.string.rsb_birthdate))             .thenReturn("Gender");
-        Mockito.when(mockContext.getString(R.string.rsb_birthdate_placeholder)) .thenReturn("Pick a gender");
-
-        Mockito.when(mockContext.getString(R.string.rsb_gender_male))   .thenReturn("Male");
-        Mockito.when(mockContext.getString(R.string.rsb_gender_female)) .thenReturn("Female");
-        Mockito.when(mockContext.getString(R.string.rsb_gender_other))  .thenReturn("Other");
+        helper = new SurveyFactoryHelper();
+        resourceHelper = new ResourceParserHelper();
     }
 
     @Test
     public void testEligibilitySurveyFactory() {
         Type listType = new TypeToken<List<SurveyItem>>() {
         }.getType();
-        String eligibilityJson = getJsonStringForResourceName("eligibilityrequirements");
-        List<SurveyItem> surveyItemList = gson.fromJson(eligibilityJson, listType);
+        String eligibilityJson = resourceHelper.getJsonStringForResourceName("eligibilityrequirements");
+        List<SurveyItem> surveyItemList = helper.gson.fromJson(eligibilityJson, listType);
 
-        SurveyFactory factory = new SurveyFactory(mockContext, surveyItemList);
+        SurveyFactory factory = new SurveyFactory(helper.mockContext, surveyItemList);
 
         assertNotNull(factory.getSteps());
         assertTrue(factory.getSteps().size() > 0);
@@ -142,10 +99,10 @@ public class SurveyFactoryTests {
     {
         Type listType = new TypeToken<List<SurveyItem>>() {
         }.getType();
-        String eligibilityJson = getJsonStringForResourceName("onboarding");
-        List<SurveyItem> surveyItemList = gson.fromJson(eligibilityJson, listType);
+        String eligibilityJson = resourceHelper.getJsonStringForResourceName("onboarding");
+        List<SurveyItem> surveyItemList = helper.gson.fromJson(eligibilityJson, listType);
 
-        SurveyFactory factory = new SurveyFactory(mockContext, surveyItemList);
+        SurveyFactory factory = new SurveyFactory(helper.mockContext, surveyItemList);
 
         assertNotNull(factory.getSteps());
         assertTrue(factory.getSteps().size() > 0);
@@ -193,15 +150,15 @@ public class SurveyFactoryTests {
     @Test
     public void testConsentDocumentFactory()
     {
-        String consentDocJson = getJsonStringForResourceName("consentdocument");
-        ConsentDocument consentDoc = gson.fromJson(consentDocJson, ConsentDocument.class);
+        String consentDocJson = resourceHelper.getJsonStringForResourceName("consentdocument");
+        ConsentDocument consentDoc = helper.gson.fromJson(consentDocJson, ConsentDocument.class);
 
         Type listType = new TypeToken<List<SurveyItem>>() {
         }.getType();
-        String consentItemsJson = getJsonStringForResourceName("consent");
-        List<SurveyItem> surveyItemList = gson.fromJson(consentItemsJson, listType);
+        String consentItemsJson = resourceHelper.getJsonStringForResourceName("consent");
+        List<SurveyItem> surveyItemList = helper.gson.fromJson(consentItemsJson, listType);
 
-        ConsentDocumentFactory factory = new ConsentDocumentFactory(mockContext, surveyItemList, consentDoc);
+        ConsentDocumentFactory factory = new ConsentDocumentFactory(helper.mockContext, surveyItemList, consentDoc);
 
         assertNotNull(factory.getSteps());
         assertTrue(factory.getSteps().size() > 0);
@@ -251,33 +208,5 @@ public class SurveyFactoryTests {
 
         assertTrue(factory.getSteps().get(26) instanceof InstructionStep);
         assertEquals("consentCompletion", factory.getSteps().get(26).getIdentifier());
-    }
-
-    String getJsonStringForResourceName(String resourceName) {
-        // Resources are in src/test/resources
-        InputStream jsonStream = getClass().getClassLoader().getResourceAsStream(resourceName+".json");
-        String json = convertStreamToString(jsonStream);
-        return json;
-    }
-
-    String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append('\n');
-            }
-        } catch (IOException e) {
-            assertTrue("Failed to read stream", false);
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                assertTrue("Failed to read stream", false);
-            }
-        }
-        return sb.toString();
     }
 }

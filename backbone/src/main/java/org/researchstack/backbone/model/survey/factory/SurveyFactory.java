@@ -45,8 +45,8 @@ import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
-import org.researchstack.backbone.step.navigation.NavigationQuestionStep;
-import org.researchstack.backbone.step.navigation.NavigationSubtaskStep;
+import org.researchstack.backbone.step.NavigationQuestionStep;
+import org.researchstack.backbone.step.NavigationSubtaskStep;
 
 import java.util.ArrayList;
 import java.util.List;
