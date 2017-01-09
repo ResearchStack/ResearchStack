@@ -46,15 +46,6 @@ public enum  ProfileInfoOption {
     String identifier;
     public String getIdentifier() { return identifier; }
 
-    /** Only useful for when Enum == PASSWORD */
-    boolean addConfirmPassword = false;
-    public void setAddConfirmPassword(boolean addConfirmPassword) {
-        this.addConfirmPassword = addConfirmPassword;
-    }
-    public boolean getAddConfirmPassword() {
-        return addConfirmPassword;
-    }
-
     ProfileInfoOption(String identifier) {
         this.identifier = identifier;
     }

@@ -400,7 +400,11 @@ public class SurveyFactory {
      * @param profileInfoOptions type of profile item that should be included in profile form step
      * @return a QuestionStep that can be used to get the correct data type for ProfileInfoOption
      */
-    public List<QuestionStep> createQuestionSteps(Context context, List<ProfileInfoOption> profileInfoOptions) {
+    public List<QuestionStep> createQuestionSteps(
+            Context context,
+            List<ProfileInfoOption> profileInfoOptions,
+            boolean addConfirmPasswordOption)
+    {
         List<QuestionStep> questionSteps = new ArrayList<>();
         for (ProfileInfoOption profileInfo : profileInfoOptions) {
             switch (profileInfo) {
@@ -410,7 +414,7 @@ public class SurveyFactory {
                 case PASSWORD:
                     questionSteps.add(createPasswordQuestionStep(context, profileInfo));
                     // For password fields, we also need a "Confirm Password" field, if applicable
-                    if (profileInfo.getAddConfirmPassword()) {
+                    if (addConfirmPasswordOption) {
                         questionSteps.add(createConfirmPasswordQuestionStep(context));
                     }
                     break;
@@ -547,7 +551,7 @@ public class SurveyFactory {
         List<ProfileInfoOption> options = createProfileInfoOptions(context, item, defaultRegistrationOptions());
         return new RegistrationStep(
                 item.identifier, item.title, item.text,
-                options, createQuestionSteps(context, options));
+                options, createQuestionSteps(context, options, true)); // true = create ConfirmPassword step
     }
 
     /**
@@ -558,7 +562,7 @@ public class SurveyFactory {
         List<ProfileInfoOption> options = createProfileInfoOptions(context, item, defaultProfileOptions());
         return new ProfileStep(
                 item.identifier, item.title, item.text,
-                options, createQuestionSteps(context, options));
+                options, createQuestionSteps(context, options, false)); // false = dont create ConfirmPassword step
     }
 
     /**
@@ -569,7 +573,7 @@ public class SurveyFactory {
         List<ProfileInfoOption> options = createProfileInfoOptions(context, item, defaultLoginOptions());
         return new LoginStep(
                 item.identifier, item.title, item.text,
-                options, createQuestionSteps(context, options));
+                options, createQuestionSteps(context, options, false)); // false = dont create ConfirmPassword step
     }
 
     /** Helper for determining which profile info options to use */
@@ -589,7 +593,7 @@ public class SurveyFactory {
     List<ProfileInfoOption> defaultLoginOptions() {
         List<ProfileInfoOption> profileInfo = new ArrayList<>();
         profileInfo.add(ProfileInfoOption.EMAIL);
-        profileInfo.add(ProfileInfoOption.PASSWORD);  // dont create ConfirmPassword step
+        profileInfo.add(ProfileInfoOption.PASSWORD);
         return profileInfo;
     }
 
@@ -597,9 +601,7 @@ public class SurveyFactory {
         List<ProfileInfoOption> profileInfo = new ArrayList<>();
         profileInfo.add(ProfileInfoOption.NAME);
         profileInfo.add(ProfileInfoOption.EMAIL);
-        ProfileInfoOption passwordOption = ProfileInfoOption.PASSWORD;
-        passwordOption.setAddConfirmPassword(true);
-        profileInfo.add(passwordOption);
+        profileInfo.add(ProfileInfoOption.PASSWORD);
         return profileInfo;
     }
 
