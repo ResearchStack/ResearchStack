@@ -41,6 +41,17 @@ public class AnswerFormatTest
     }
 
     @Test
+    public void testTextMinMaxRegexAnswerFormat()
+    {
+        TextAnswerFormat format = new TextAnswerFormat();
+        format.setValidationRegex("^\\w{4,16}$");
+        assertFalse(format.isAnswerValid("Abc"));               // less than 3 characters invalid
+        assertFalse(format.isAnswerValid("Abcd1234Abcd1234A")); // more than 17 characters
+        assertTrue(format.isAnswerValid("Abcd1234Abcd1234"));   // 16 characters
+        assertTrue(format.isAnswerValid("Abcd"));               // 4 characters is valid up to
+    }
+
+    @Test
     public void testPasswordAnswerFormat()
     {
         PasswordAnswerFormat format = new PasswordAnswerFormat();
