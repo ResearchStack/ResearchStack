@@ -43,11 +43,14 @@ public enum  ProfileInfoOption {
 
     static Gson gson;
 
-    String identifier;
-    public String getIdentifier() { return identifier; }
+    private final String identifier;
 
     ProfileInfoOption(String identifier) {
         this.identifier = identifier;
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 
     public static List<ProfileInfoOption> toProfileInfoOptions(List<String> identifiers) {
