@@ -73,24 +73,18 @@ public class ConsentDocument implements Serializable
      */
     @SerializedName("requiresName")
     private boolean requiresName = true;
-    public boolean getRequiresName() { return requiresName; }
-    public void setRequiresName(boolean requiresName) { this.requiresName = requiresName; }
 
     /**
      * True if consent must require the user's birthdate
      */
     @SerializedName("requiresBirthdate")
     private boolean requiresBirthdate = true;
-    public boolean getRequiresBirthdate() { return requiresBirthdate; }
-    public void setRequiresBirthdate(boolean requiresBirthdate) { this.requiresBirthdate = requiresName; }
 
     /**
      * True if consent must require the user's signature
      */
     @SerializedName("requiresSignature")
     private boolean requiresSignature = true;
-    public boolean getRequiresSignature() { return requiresSignature; }
-    public void setRequiresSignature(boolean requiresSignature) { this.requiresSignature = requiresSignature; }
 
     public void setTitle(String title)
     {
@@ -149,4 +143,33 @@ public class ConsentDocument implements Serializable
         this.htmlReviewContent = htmlReviewContent;
     }
 
+    public boolean getRequiresName()
+    {
+        return requiresName;
+    }
+
+    public void setRequiresName(boolean requiresName)
+    {
+        this.requiresName = requiresName;
+    }
+
+    public boolean getRequiresBirthdate()
+    {
+        return requiresBirthdate;
+    }
+
+    public void setRequiresBirthdate(boolean requiresBirthdate)
+    {
+        this.requiresBirthdate = requiresName;
+    }
+
+    public boolean getRequiresSignature()
+    {
+        return requiresSignature;
+    }
+
+    public void setRequiresSignature(boolean requiresSignature)
+    {
+        this.requiresSignature = requiresSignature;
+    }
 }
