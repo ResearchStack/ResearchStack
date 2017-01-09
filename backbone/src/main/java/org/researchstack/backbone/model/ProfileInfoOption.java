@@ -1,5 +1,6 @@
 package org.researchstack.backbone.model;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public enum  ProfileInfoOption {
     @SerializedName("sleepTime")
     SLEEP_TIME("sleepTime");
 
+    static Gson gson;
+
     String identifier;
     public String getIdentifier() { return identifier; }
 
@@ -68,34 +71,9 @@ public enum  ProfileInfoOption {
     }
 
     public static ProfileInfoOption toProfileInfoOption(String identifier) {
-        List<ProfileInfoOption> options = new ArrayList<>();
-        if (EMAIL.getIdentifier().equals(identifier)) {
-            return EMAIL;
-        } else if (PASSWORD.getIdentifier().equals(identifier)) {
-            return PASSWORD;
-        } else if (EXTERNAL_ID.getIdentifier().equals(identifier)) {
-            return EXTERNAL_ID;
-        } else if (NAME.getIdentifier().equals(identifier)) {
-            return NAME;
-        } else if (BIRTHDATE.getIdentifier().equals(identifier)) {
-            return BIRTHDATE;
-        } else if (GENDER.getIdentifier().equals(identifier)) {
-            return GENDER;
-        } else if (BLOOD_TYPE.getIdentifier().equals(identifier)) {
-            return BLOOD_TYPE;
-        } else if (FITZPATRICK_SKIN_TYPE.getIdentifier().equals(identifier)) {
-            return FITZPATRICK_SKIN_TYPE;
-        } else if (WHEEL_CHAIR_USE.getIdentifier().equals(identifier)) {
-            return WHEEL_CHAIR_USE;
-        } else if (HEIGHT.getIdentifier().equals(identifier)) {
-            return HEIGHT;
-        } else if (WEIGHT.getIdentifier().equals(identifier)) {
-            return WEIGHT;
-        } else if (WAKE_TIME.getIdentifier().equals(identifier)) {
-            return WAKE_TIME;
-        } else if (SLEEP_TIME.getIdentifier().equals(identifier)) {
-            return SLEEP_TIME;
+        if (gson == null) {
+            gson = new Gson();
         }
-        return null;
+        return gson.fromJson(identifier, ProfileInfoOption.class);
     }
 }
