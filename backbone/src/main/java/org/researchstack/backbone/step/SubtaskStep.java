@@ -108,10 +108,11 @@ public class SubtaskStep extends Step {
                             String stepResultIdentifier = (String)stepResultIdentifierObj;
                             Object stepResultObject = stepResult.getResults().get(stepResultIdentifierObj);
                             if (stepResultObject instanceof Result) {
-                                Result newResult = (Result)stepResultObject;
-                                newResult.setIdentifier(stepResultIdentifier);
+                                Result newResult = ((Result)stepResultObject).deepCopy(stepResultIdentifier);
+                                newResultMap.put(stepResultIdentifier, newResult);
+                            } else {
+                                newResultMap.put(stepResultIdentifier, stepResultObject);
                             }
-                            newResultMap.put(stepResultIdentifier, stepResultObject);
                         }
                     }
                     stepResult.setResults(newResultMap);

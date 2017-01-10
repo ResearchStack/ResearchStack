@@ -72,10 +72,6 @@ public class Result extends GsonSerializablePolymorphism<Result> implements Seri
         return identifier;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
-
     /**
      * Returns the time when the task, step, or data collection began.
      *
