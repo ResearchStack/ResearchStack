@@ -1,6 +1,6 @@
 package org.researchstack.backbone.step;
 
-import org.researchstack.backbone.ui.step.layout.CompletionStepLayout;
+import org.researchstack.backbone.ui.step.layout.OnboardingCompletionStepLayout;
 
 /**
  * Created by TheMDP on 12/31/16.
@@ -18,6 +18,6 @@ public class OnboardingCompletionStep extends InstructionStep {
     @Override
     public Class getStepLayoutClass()
     {
-        return CompletionStepLayout.class;
+        return OnboardingCompletionStepLayout.class;
     }
 }

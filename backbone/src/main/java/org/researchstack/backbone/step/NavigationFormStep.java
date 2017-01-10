@@ -28,20 +28,6 @@ public class NavigationFormStep extends FormStep implements NavigationStep {
     }
 
     @Override
-    public String getNextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
-        // TODO: this is what is called SBADirectNavigationalRule, is this what we want?
-        return skipToStepIdentifier;
-    }
-
-    @Override
-    public QuestionStep matchingSurveyStep(StepResult result) {
-        if (result.getIdentifier().equals(getIdentifier())) {
-            return this;
-        }
-        return null;
-    }
-
-    @Override
     public String getSkipToStepIdentifier() {
         return skipToStepIdentifier;
     }

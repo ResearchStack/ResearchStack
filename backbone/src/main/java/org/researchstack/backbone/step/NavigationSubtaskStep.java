@@ -34,21 +34,7 @@ public class NavigationSubtaskStep extends SubtaskStep implements NavigationStep
     public NavigationSubtaskStep(Task task) {
         super(task);
     }
-
-    @Override
-    public String getNextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
-        return null;
-    }
-
-    @Override
-    public QuestionStep matchingSurveyStep(StepResult result) {
-        Step step = getStepWithIdentifier(result.getIdentifier());
-        if (step != null && step instanceof QuestionStep) {
-            return (QuestionStep) step;
-        }
-        return null;
-    }
-
+    
     @Override
     public String getSkipToStepIdentifier() {
         return skipToStepIdentifier;

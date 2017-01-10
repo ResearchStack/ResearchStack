@@ -30,19 +30,6 @@ public class NavigationQuestionStep extends QuestionStep implements NavigationSt
     }
 
     @Override
-    public String getNextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
-        return null;
-    }
-
-    @Override
-    public QuestionStep matchingSurveyStep(StepResult result) {
-        if (result.getIdentifier().equals(getIdentifier())) {
-            return this;
-        }
-        return null;
-    }
-
-    @Override
     public String getSkipToStepIdentifier() {
         return skipToStepIdentifier;
     }
