@@ -16,7 +16,7 @@ public enum SurveyItemType {
     @SerializedName("instruction")
     INSTRUCTION                 ("instruction"),            // InstructionStep
     @SerializedName("completion")
-    INSTRUCTION_COMPLETION      ("completion"),             // CompletionStep
+    INSTRUCTION_COMPLETION      ("completion"),             // OnboardingCompletionStep
     // Question, aka Form, Subtypes
     @SerializedName("compound")
     QUESTION_COMPOUND           ("compound"),               // QuestionSteps > 1
