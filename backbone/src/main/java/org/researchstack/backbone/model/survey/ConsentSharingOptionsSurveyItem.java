@@ -10,9 +10,9 @@ import org.researchstack.backbone.model.Choice;
 
 public class ConsentSharingOptionsSurveyItem extends SurveyItem<Choice<Boolean>> {
     @SerializedName("investigatorShortDescription")
-    public String investigatorShortDescription;
+    String investigatorShortDescription;
     @SerializedName("investigatorLongDescription")
-    public String investigatorLongDescription;
+    String investigatorLongDescription;
     @SerializedName("learnMoreHTMLContentURL")
-    public String learnMoreHTMLContentURL;
+    String learnMoreHTMLContentURL;
 }

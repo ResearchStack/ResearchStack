@@ -50,10 +50,6 @@ public class ConsentDocumentFactory extends SurveyFactory {
         List<Step> steps = new ArrayList<>();
         for (SurveyItem item : surveyItems) {
             switch (item.type) {
-                // Consent review actually consists of two steps,
-                // the name, and birthdate profile steps
-                // and the consent signature step,
-                // so, instead of making a subtask step, just add multiple steps
                 case CONSENT_REVIEW:
                     if (!(item instanceof ConsentReviewSurveyItem)) {
                         throw new IllegalStateException("Error in json parsing, CONSENT_REVIEW types must be ConsentReviewSurveyItem");
@@ -86,7 +82,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
 
     /**
      * Creates consent review steps, which can be a total of name, birthdate step,
-     * SignatureStep, and a consent doc review step
+     * SignatureStep, but always a consent doc review step
      * @param context
      * @param item ConsentReviewSurveyItem used to create steps
      * @return
