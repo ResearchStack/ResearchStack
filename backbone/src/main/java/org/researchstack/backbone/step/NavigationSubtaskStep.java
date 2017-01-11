@@ -34,7 +34,7 @@ public class NavigationSubtaskStep extends SubtaskStep implements NavigationStep
     public NavigationSubtaskStep(Task task) {
         super(task);
     }
-    
+
     @Override
     public String getSkipToStepIdentifier() {
         return skipToStepIdentifier;

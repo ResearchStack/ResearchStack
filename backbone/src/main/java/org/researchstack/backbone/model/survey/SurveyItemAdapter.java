@@ -10,6 +10,16 @@ import java.lang.reflect.Type;
 
 /**
  * Created by TheMDP on 1/2/17.
+ *
+ * This class is the deserializer for SurveyItem classes
+ * It looks at the "type" field, attempts to map it to this library's pre-defined types
+ * and if it does not find it, creates a custom survey item
+ * the class of the custom survey item can easily be controlled by overriding this
+ * adapter, and overriding the method getCustomClass
+ *
+ * To go even further and change the mapping of the custom survey item to a custom step,
+ * you should override SurveyFactory's method public Step createCustomStep(SurveyItem item)
+ * which is the go to for converting a survey item to a step
  */
 
 public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
@@ -79,7 +89,7 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
             case PASSCODE:
                 break;
             case CUSTOM:
-                InstructionSurveyItem item = context.deserialize(json, InstructionSurveyItem.class);
+                SurveyItem item = context.deserialize(json, getCustomClass(surveyItemType.getValue()));
                 item.type = surveyItemType; // need to set CUSTOM type for surveyItem, since it is a special case
                 return item;
         }
@@ -87,5 +97,15 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
         SurveyItem surveyItem = context.deserialize(json, BaseSurveyItem.class);
         surveyItem.type = surveyItemType;
         return surveyItem;
+    }
+
+    /**
+     * This can be overridden by subclasses to provide custom survey item deserialization
+     * the default deserialization is always an instruction survey item
+     * @param customType used to map to different types of survey items
+     * @return type of survey item to create from the custom class
+     */
+    public Class<? extends SurveyItem> getCustomClass(String customType) {
+        return InstructionSurveyItem.class;
     }
 }

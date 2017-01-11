@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.annotation.StringRes;
 import android.text.InputType;
 
+import com.google.gson.JsonDeserializer;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
@@ -163,10 +165,9 @@ public class SurveyFactory {
             case PASSCODE:
                 return createPasscodeStep(item);
             case CUSTOM:
-                if (!(item instanceof InstructionSurveyItem)) {
-                    throw new IllegalStateException("Error in json parsing, CUSTOM types must be InstructionSurveyItem");
-                }
-                return createCustomStep((InstructionSurveyItem)item);
+                // To override a custom step from survey item mapping,
+                // You need to override the
+                return createCustomStep(item);
         }
 
         // Handled by ConsentDocumentFactory subclass
@@ -640,10 +641,13 @@ public class SurveyFactory {
      * @param item InstructionSurveyItem from JSON
      * @return valid CustomStep matching the InstructionSurveyItem
      */
-    public CustomStep createCustomStep(InstructionSurveyItem item) {
+    public Step createCustomStep(SurveyItem item) {
         CustomStep step = new CustomStep(item.identifier, item.title, item.text);
         step.setCustomTypeIdentifier(item.type.getValue());
-        fillInstructionStep(step, item);
+        // Default mapping of SurveyItemAdapter has the item be an instruction
+        if (item instanceof InstructionSurveyItem) {
+            fillInstructionStep(step, (InstructionSurveyItem) item);
+        }
         return step;
     }
 
