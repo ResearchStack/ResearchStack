@@ -13,8 +13,8 @@ public class ObjectUtils {
      * Performs a deep copy on the object of type using Gson
      * Object type must have a default constructor to work properly
      *
-     * NOTE: this does not work with Polymorphism yet
-     * Use GsonSerializablePolumorphism class instead
+     * NOTE: this does not work with Polymorphism
+     * Use GsonSerializablePolymorphism class instead
      */
     public static <T> T deepCopy(Object object, Class<T> type) {
         return deepCopy(object, type, new Gson());
@@ -24,8 +24,8 @@ public class ObjectUtils {
     * Performs a deep copy on the object of type using Gson
     * Object type must have a default constructor to work properly
     *
-    * NOTE: this does not work with Polymorphism yet
-    * Use GsonSerializablePolumorphism class instead
+    * NOTE: this does not work with Polymorphism
+    * Use GsonSerializablePolymorphism class instead
     */
     public static <T> T deepCopy(Object object, Class<T> type, Gson gson) {
         try {

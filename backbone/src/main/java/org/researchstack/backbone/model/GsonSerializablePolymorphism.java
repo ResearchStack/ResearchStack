@@ -38,13 +38,13 @@ public abstract class GsonSerializablePolymorphism<T> {
      * The base/sub class pairs to use in the automatic polymorphism serialization/deserialization
      * For example, if you have a base class Shape.class, and a Triangle.class that extends Shape.class,
      * You would do...
-     * List A = new List { new GsonBaseSubClassPair(Shape.class, getClass()) }
+     * List A = new List { new GsonBaseSubClassPair(Shape.class, TriangleObj.getClass()) }
      * return new Data(Shape.class, A);
      *
      * If Shape.class has member which LineType.class base, and its of subclass type BigLineType.class
      * You would return something like this,
      * List A = new List { new GsonSerializablePolymorphism.DataPair(LineType.class, BigLineTypeObj.getClass()) }
-     * A.add(new GsonSerializablePolymorphism.DataPair(LineType.class, BigLineTypeObj.getClass()));
+     * A.add(new GsonSerializablePolymorphism.DataPair(Shape.class, TriangleObj.getClass()));
      * return new Data(Shape.class, A);
      */
     public abstract Data<T> getPolymorphismData();
