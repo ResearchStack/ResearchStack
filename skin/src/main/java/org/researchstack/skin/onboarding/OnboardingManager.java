@@ -6,7 +6,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.StorageAccess;
@@ -30,6 +32,7 @@ import org.researchstack.skin.ResourceManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,10 +46,14 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
 
     static final String LOG_TAG = OnboardingManager.class.getCanonicalName();
 
-    static final String SECTIONS_JSON_NAME = "sections";
-    @SerializedName(SECTIONS_JSON_NAME)
-    List<OnboardingSection> sections;
-
+    /**
+     * Class used for easy deserialization of sections list
+     */
+    class SectionsGsonHolder {
+        @SerializedName("sections")
+        List<OnboardingSection> sections;
+    }
+    SectionsGsonHolder mSectionsGsonHolder;
     Gson mGson;
 
     /*
@@ -55,10 +62,10 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
      *                the onboarding manager
      * @return OnboardingManager set up using ResourceManager, so make sure it is initialized
      */
-    public static OnboardingManager createOnboardingManager(Context context) {
-        return createOnboardingManager(
-                ResourceManager.getInstance().getOnboardingManager().getName(),
-                new ResourceManagerResourceNameJsonProvider(context));
+    public OnboardingManager(Context context) {
+        this(context,
+             ResourceManager.getInstance().getOnboardingManager().getName(),
+             new ResourceManagerResourceNameJsonProvider(context));
     }
 
     /*
@@ -68,21 +75,41 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
      *                the onboarding manager
      * @return OnboardingManager set up using ResourceManager, so make sure it is initialized
      */
-    static OnboardingManager createOnboardingManager(
-            String onboardingResourceName,
-            ResourceNameJsonProvider jsonProvider)
+    OnboardingManager(Context context,
+                      String onboardingResourceName,
+                      ResourceNameJsonProvider jsonProvider)
     {
-        GsonBuilder onboardingGson = new GsonBuilder();
-        onboardingGson.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
-        onboardingGson.registerTypeAdapter(OnboardingSection.class, new OnboardingSectionAdapter(jsonProvider));
-        onboardingGson.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter());
-        Gson gson = onboardingGson.create();
-
+        mGson = buildGson(context, jsonProvider);
         String onboardingJson = jsonProvider.getJsonStringForResourceName(onboardingResourceName);
 
-        OnboardingManager manager = gson.fromJson(onboardingJson, OnboardingManager.class);
-        Collections.sort(manager.sections, manager.getSectionComparator());
-        return manager;
+        mSectionsGsonHolder = mGson.fromJson(onboardingJson, SectionsGsonHolder.class);
+        Collections.sort(mSectionsGsonHolder.sections, getSectionComparator());
+    }
+
+    public List<OnboardingSection> getSections() {
+        return mSectionsGsonHolder.sections;
+    }
+
+    /**
+     * Override to register custom SurveyItemAdapters,
+     * but make sure that the adapter extends from SurveyItemAdapter, and only overrides
+     * the method getCustomClass()
+     */
+    public void registerSurveyItemAdapter(GsonBuilder builder) {
+        builder.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
+    }
+
+    /**
+     * @param jsonProvider used to find recursive json resourceNames and load them while parsing
+     * @return a Gson to be used by the OnboardingManager
+     */
+    private Gson buildGson(Context context, ResourceNameJsonProvider jsonProvider) {
+        GsonBuilder onboardingGson = new GsonBuilder();
+        registerSurveyItemAdapter(onboardingGson);
+        onboardingGson.registerTypeAdapter(OnboardingSection.class, new OnboardingSectionAdapter(jsonProvider));
+        onboardingGson.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(context));
+        Gson gson = onboardingGson.create();
+        return gson;
     }
 
     // Override this to control OnboardingSection sort order
@@ -113,27 +140,40 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
             }  else if (rhs == null) {
                 return -1;
             }
-            OnboardingSectionType lhsType = lhs.onboardingType;
-            OnboardingSectionType rhsType = rhs.onboardingType;
+
+            OnboardingSectionType lhsType = lhs.getOnboardingSectionType();
+            OnboardingSectionType rhsType = rhs.getOnboardingSectionType();
+
+            // If there is a CUSTOM type, just return same, or 0, so it does not shift positions
+            if (lhsType == OnboardingSectionType.CUSTUM || rhsType == OnboardingSectionType.CUSTUM) {
+                return 0;
+            }
+
             Integer lhsOrdinal = lhsType.ordinal();
             Integer rhsOrdinal = rhsType.ordinal();
             return lhsOrdinal.compareTo(rhsOrdinal);
         }
     }
 
+    /**
+     * This is the method that developers should be calling to start off any onboarding process
+     * @param taskType the type of onboarding process that should be kicked off
+     *                 currently, it is either login, registration, or reconsent
+     * @param context  used to transition app to the new onboarding activity
+     */
     public void launchOnboarding(OnboardingTaskType taskType, Context context) {
-        if (sections == null) {
+        if (getSections() == null) {
             Log.e(LOG_TAG, "Improper Onboarding json file, sections is null");
             return;
         }
 
-        if (sections.isEmpty()) {
+        if (getSections().isEmpty()) {
             Log.e(LOG_TAG, "Improper Onboarding json file, sections are empty");
             return;
         }
 
         List<Step> steps = new ArrayList<>();
-        for (OnboardingSection section : sections) {
+        for (OnboardingSection section : getSections()) {
             List<Step> subSteps = steps(context, section, taskType);
             if (subSteps != null) {
                 steps.addAll(subSteps);
@@ -156,7 +196,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
     public List<Step> steps(Context context, OnboardingSection section, OnboardingTaskType taskType) {
 
         // Check to see that the steps for this section should be included
-        if (shouldInclude(context, section, taskType) == false) {
+        if (shouldInclude(context, section.getOnboardingSectionType(), taskType) == false) {
             Log.d(LOG_TAG, "No sections for the task type " + taskType.ordinal());
             return null;
         }
@@ -193,26 +233,26 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
      Define the rules for including a given section in a given task type.
      @return    `true` if the `SBAOnboardingSection` should be included for this `SBAOnboardingTaskType`
      */
-    public boolean shouldInclude(Context context, OnboardingSection section, OnboardingTaskType taskType) {
-        switch (section.onboardingType) {
+    boolean shouldInclude(Context context, OnboardingSectionType sectionType, OnboardingTaskType taskType) {
+        switch (sectionType) {
             case LOGIN:
                 return taskType == OnboardingTaskType.LOGIN;
             case CONSENT:
                 // All types *except* email verification include consent
                 return (taskType != OnboardingTaskType.REGISTRATION) ||
-                        !AppPrefs.getInstance(context).isOnboardingComplete();
+                        !isRegistered(context);
             case ELIGIBILITY:
             case REGISTRATION:
                 // Intro, eligibility and registration are only included in registration
-                return (taskType == OnboardingTaskType.REGISTRATION) ||
-                        !AppPrefs.getInstance(context).isOnboardingComplete();
+                return (taskType == OnboardingTaskType.REGISTRATION) &&
+                        !isRegistered(context);
             case PASSCODE:
                 // Passcode is included if it has not already been set
                 return !hasPasscode(context);
             case EMAIL_VERIFICATION:
                 // Only registration where the login has not been verified includes verification
                 return (taskType == OnboardingTaskType.REGISTRATION) &&
-                        !DataProvider.getInstance().isSignedIn(context);
+                        !isLoginVerified(context);
             case PROFILE:
                 return (taskType == OnboardingTaskType.REGISTRATION);
             case PERMISSIONS:
@@ -224,9 +264,29 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
         return false;
     }
 
+    /**
+     * @param context used to access if login is verified
+     * @return true when the user has successfully signed in, false otherwise
+     *         also, returns false on special case is if the user has signed up but not signed in yet
+     */
+    boolean isLoginVerified(Context context) {
+        return DataProvider.getInstance().isSignedIn(context);
+    }
+
+    /**
+     * @param context used to access if user is registered
+     * @return true when the user has successfully signed up, or signed in, false otherwise
+     */
+    boolean isRegistered(Context context) {
+        return AppPrefs.getInstance(context).isOnboardingComplete();
+    }
+
+    /**
+     * @param context used to access if user has made a pin code yet
+     * @return true if user has made a pin code yet, false otherwise
+     */
     boolean hasPasscode(Context context) {
-        StorageAccess.getInstance().hasPinCode(context);
-        return false;
+        return StorageAccess.getInstance().hasPinCode(context);
     }
 
     static class ResourceManagerResourceNameJsonProvider implements ResourceNameJsonProvider {

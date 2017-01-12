@@ -78,14 +78,9 @@ public enum SurveyItemType {
         value = rawValue;
     }
 
-    String value;
-    public String getValue() {
+    private String value;
+    String getValue() {
         return value;
-    }
-    public void setCustomValue(String customValue) {
-        if (value == null) {  // Is a custom identifier
-            value = customValue;
-        }
     }
 
     public boolean isQuestionSubtype() {

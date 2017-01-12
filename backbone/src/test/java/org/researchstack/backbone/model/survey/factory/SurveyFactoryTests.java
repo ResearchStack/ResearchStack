@@ -12,12 +12,15 @@ import org.researchstack.backbone.answerformat.EmailAnswerFormat;
 import org.researchstack.backbone.answerformat.PasswordAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.model.ConsentDocument;
+import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.model.survey.CustomInstructionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.ConsentVisualStep;
+import org.researchstack.backbone.step.CustomInstructionStep;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.InstructionStep;
@@ -153,8 +156,7 @@ public class SurveyFactoryTests {
         String consentDocJson = resourceHelper.getJsonStringForResourceName("consentdocument");
         ConsentDocument consentDoc = helper.gson.fromJson(consentDocJson, ConsentDocument.class);
 
-        Type listType = new TypeToken<List<SurveyItem>>() {
-        }.getType();
+        Type listType = new TypeToken<List<SurveyItem>>() {}.getType();
         String consentItemsJson = resourceHelper.getJsonStringForResourceName("consent");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(consentItemsJson, listType);
 
@@ -166,8 +168,8 @@ public class SurveyFactoryTests {
         // 19 consent visual steps, 8 other steps
         assertEquals(27, factory.getSteps().size());
 
-        assertTrue(factory.getSteps().get(0) instanceof CustomStep);
-        CustomStep customStep = (CustomStep)factory.getSteps().get(0);
+        assertTrue(factory.getSteps().get(0) instanceof CustomInstructionStep);
+        CustomInstructionStep customStep = (CustomInstructionStep)factory.getSteps().get(0);
         assertEquals("reconsentIntroduction", customStep.getIdentifier());
         assertEquals("reconsent.instruction", customStep.getCustomTypeIdentifier());
 
@@ -211,7 +213,30 @@ public class SurveyFactoryTests {
     }
 
     @Test
-    public void testSerialization() {
-        
+    public void testCustomConsentDocument()
+    {
+        String consentDocJson = resourceHelper.getJsonStringForResourceName("custom_consentdocument");
+        ConsentDocument consentDoc = helper.gson.fromJson(consentDocJson, ConsentDocument.class);
+
+        assertEquals(consentDoc.getSections().size(), 4);
+
+        assertEquals(ConsentSection.Type.DataGathering, consentDoc.getSections().get(0).getType());
+        assertEquals("Overridden Title", consentDoc.getSections().get(0).getTitle());
+        assertEquals("Overridden More Title", consentDoc.getSections().get(0).getCustomLearnMoreButtonTitle());
+        assertEquals("image1", consentDoc.getSections().get(0).getCustomImageName());
+
+        assertEquals(ConsentSection.Type.Privacy, consentDoc.getSections().get(1).getType());
+        assertEquals(SurveyFactoryHelper.PRIVACY_TITLE, consentDoc.getSections().get(1).getTitle());
+        assertEquals(SurveyFactoryHelper.PRIVACY_LEARN_MORE, consentDoc.getSections().get(1).getCustomLearnMoreButtonTitle());
+        assertEquals("rsb_consent_section_privacy", consentDoc.getSections().get(1).getCustomImageName());
+
+        assertEquals(ConsentSection.Type.Custom, consentDoc.getSections().get(2).getType());
+        assertEquals("custom_step_identifier", consentDoc.getSections().get(2).getTypeIdentifier());
+        assertEquals("Overridden Title", consentDoc.getSections().get(2).getTitle());
+        assertEquals("Overridden More Title", consentDoc.getSections().get(2).getCustomLearnMoreButtonTitle());
+        assertEquals("image1", consentDoc.getSections().get(2).getCustomImageName());
+
+        assertEquals(ConsentSection.Type.Custom, consentDoc.getSections().get(3).getType());
+        assertEquals("custom_step_identifier2", consentDoc.getSections().get(3).getTypeIdentifier());
     }
 }

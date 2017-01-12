@@ -110,7 +110,7 @@
          "sectionType" : "understanding",
          "sectionTitle": "We'll Test Your Understanding",
          "sectionSummary": "It is important to know what this study is about and what is involved. Before you can join, we will ask you to take a short quiz to test your understanding.",
-        "sectionHtmlContent" : "consent_2quiz_headsup"
+         "sectionHtmlContent" : "consent_2quiz_headsup"
      },
      {
          "sectionType" : "activities",

@@ -7,31 +7,33 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public enum OnboardingSectionType {
-    @SerializedName("login")
-    LOGIN("login"),
-    @SerializedName("eligibility")
-    ELIGIBILITY("eligibility"),
-    @SerializedName("consent")
-    CONSENT("consent"),
-    @SerializedName("registration")
-    REGISTRATION("registration"),
-    @SerializedName("passcode")
-    PASSCODE("passcode"),
-    @SerializedName("emailVerification")
-    EMAIL_VERIFICATION("emailVerification"),
-    @SerializedName("permissions")
-    PERMISSIONS("permissions"),
-    @SerializedName("profile")
-    PROFILE("profile"),
-    @SerializedName("completion")
-    COMPLETION("completion");
+    @SerializedName(OnboardingSection.LOGIN_IDENTIFIER)
+    LOGIN(OnboardingSection.LOGIN_IDENTIFIER),
+    @SerializedName(OnboardingSection.ELIGIBILITY_IDENTIFIER)
+    ELIGIBILITY(OnboardingSection.ELIGIBILITY_IDENTIFIER),
+    @SerializedName(OnboardingSection.CONSENT_IDENTIFIER)
+    CONSENT(OnboardingSection.CONSENT_IDENTIFIER),
+    @SerializedName(OnboardingSection.REGISTRATION_IDENTIFIER)
+    REGISTRATION(OnboardingSection.REGISTRATION_IDENTIFIER),
+    @SerializedName(OnboardingSection.PASSCODE_IDENTIFIER)
+    PASSCODE(OnboardingSection.PASSCODE_IDENTIFIER),
+    @SerializedName(OnboardingSection.EMAIL_VERIFICATION_IDENTIFIER)
+    EMAIL_VERIFICATION(OnboardingSection.EMAIL_VERIFICATION_IDENTIFIER),
+    @SerializedName(OnboardingSection.PERMISSIONS_IDENTIFIER)
+    PERMISSIONS(OnboardingSection.PERMISSIONS_IDENTIFIER),
+    @SerializedName(OnboardingSection.PROFILE_IDENTIFIER)
+    PROFILE(OnboardingSection.PROFILE_IDENTIFIER),
+    @SerializedName(OnboardingSection.COMPLETION_IDENTIFIER)
+    COMPLETION(OnboardingSection.COMPLETION_IDENTIFIER),
+    // Custom onboarding section, identifier should be set in OnboardingSection class
+    CUSTUM(null);
 
     OnboardingSectionType(String identifier) {
         this.identifier = identifier;
     }
 
-    String identifier;
-    public String getIdentifier() {
+    private String identifier;
+    String getIdentifier() {
         return identifier;
     }
 }

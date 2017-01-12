@@ -10,12 +10,16 @@ import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.ConsentReviewSurveyItem;
 import org.researchstack.backbone.model.survey.ConsentSharingOptionsSurveyItem;
+import org.researchstack.backbone.model.survey.CustomInstructionSurveyItem;
+import org.researchstack.backbone.model.survey.CustomSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
+import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.onboarding.OnboardingSectionType;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.ConsentVisualStep;
+import org.researchstack.backbone.step.CustomInstructionStep;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.Step;
@@ -151,7 +155,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
         for (ConsentSection section : consentDocument.getSections()) {
             // OnlyInDocument is used to create the ConsentDocumentStep later on
             if (section.getType() != ConsentSection.Type.OnlyInDocument) {
-                ConsentVisualStep step = new ConsentVisualStep(section.getType().getIdentifier());
+                ConsentVisualStep step = new ConsentVisualStep(section.getTypeIdentifier());
                 step.setSection(section);
                 stepList.add(step);
             }
@@ -191,7 +195,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
                 steps.add(step);
             }
         }
-        return new NavigationSubtaskStep(OnboardingSectionType.CONSENT.getIdentifier(), steps);
+        return new NavigationSubtaskStep(OnboardingSection.CONSENT_IDENTIFIER, steps);
     }
 
     boolean isRegistrationStep(Step step) {
@@ -210,7 +214,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
                 steps.add(step);
             }
         }
-        return new NavigationSubtaskStep(OnboardingSectionType.LOGIN.getIdentifier(), steps);
+        return new NavigationSubtaskStep(OnboardingSection.LOGIN_IDENTIFIER, steps);
     }
 
     /**
@@ -228,6 +232,33 @@ public class ConsentDocumentFactory extends SurveyFactory {
                 steps.add(step);
             }
         }
-        return new NavigationSubtaskStep(OnboardingSectionType.CONSENT.getIdentifier(), steps);
+        return new NavigationSubtaskStep(OnboardingSection.CONSENT_IDENTIFIER, steps);
+    }
+
+    /**
+     * @param item InstructionSurveyItem from JSON
+     * @return valid CustomStep matching the InstructionSurveyItem
+     */
+    @Override
+    public CustomStep createCustomStep(CustomSurveyItem item) {
+        if (item instanceof CustomInstructionSurveyItem) {
+            return createCustomInstructionStep((CustomInstructionSurveyItem)item);
+        } else {
+            return super.createCustomStep(item);
+        }
+    }
+
+    /**
+     * @param item CustomInstructionSurveyItem from JSON
+     * @return valid CustomInstructionStep matching the CustomInstructionSurveyItem
+     */
+    CustomInstructionStep createCustomInstructionStep(CustomInstructionSurveyItem item) {
+        CustomInstructionStep step = new CustomInstructionStep(item.identifier, item.title, item.text, item.getTypeIdentifier());
+        step.setFootnote(item.footnote);
+        step.setNextStepIdentifier(item.nextIdentifier);
+        step.setMoreDetailText(item.detailText);
+        step.setImage(item.image);
+        step.setIconImage(item.iconImage);
+        return step;
     }
 }

@@ -61,6 +61,10 @@ public class SurveyItem<T> implements Serializable {
         }
     }
 
+    public String getTypeIdentifier() {
+        return type.getValue();
+    }
+
     @Override
     public int hashCode() {
         if (identifier == null) {

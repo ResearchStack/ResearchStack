@@ -6,7 +6,7 @@ package org.researchstack.backbone.step;
  * This is simply used to keep track of if a Step is a CustomStep
  */
 
-public class CustomStep extends InstructionStep {
+public class CustomStep extends Step {
     String customTypeIdentifier;
 
     /* Default constructor needed for serilization/deserialization of object */
@@ -14,13 +14,17 @@ public class CustomStep extends InstructionStep {
         super();
     }
 
-    public CustomStep(String identifier, String title, String detailText) {
-        super(identifier, title, detailText);
+    /**
+     * Returns a new step initialized with the specified identifier and title.
+     * @param identifier The unique identifier of the step.
+     * @param title      The primary text to display for this step.
+     * @param customTypeIdentifier the value of deserialized "type" field
+     */
+    public CustomStep(String identifier, String title, String customTypeIdentifier) {
+        super(identifier, title);
+        this.customTypeIdentifier = customTypeIdentifier;
     }
 
-    public void setCustomTypeIdentifier(String identifier) {
-        customTypeIdentifier = identifier;
-    }
     public String getCustomTypeIdentifier() {
         return customTypeIdentifier;
     }

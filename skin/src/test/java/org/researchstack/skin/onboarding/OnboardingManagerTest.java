@@ -12,12 +12,16 @@ import org.researchstack.backbone.model.survey.SurveyItemType;
 import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.onboarding.OnboardingSectionType;
+import org.researchstack.backbone.onboarding.OnboardingTaskType;
 import org.researchstack.backbone.onboarding.ResourceNameJsonProvider;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -31,33 +35,35 @@ import static junit.framework.Assert.assertTrue;
 public class OnboardingManagerTest {
 
     ResourceNameJsonProvider mFullResourceProvider;
+    OnboardingManager mOnboardingManager;
+    MockOnboardingManager mMockOnboardingManager;
 
     @Before
     public void setUp() throws Exception
     {
         mFullResourceProvider = new FullTestResourceProvider();
+        mOnboardingManager = new OnboardingManager(null, "onboarding", mFullResourceProvider);
+        mMockOnboardingManager = new MockOnboardingManager("onboarding", mFullResourceProvider);
     }
 
     @Test
-    public void testTestValidEmailAnswerFormat() throws Exception {
-        OnboardingManager manager = OnboardingManager.createOnboardingManager("onboarding", mFullResourceProvider);
-
-        assertNotNull(manager.sections);
-        assertFalse(manager.sections.isEmpty());
-        assertEquals(8, manager.sections.size());
+    public void testTestValidEmailAnswerFormat() {
+        assertNotNull(mOnboardingManager.getSections());
+        assertFalse(mOnboardingManager.getSections().isEmpty());
+        assertEquals(8, mOnboardingManager.getSections().size());
 
         // Sections assertions
-        assertEquals(OnboardingSectionType.LOGIN,               manager.sections.get(0).onboardingType);
-        assertEquals(OnboardingSectionType.ELIGIBILITY,         manager.sections.get(1).onboardingType);
-        assertEquals(OnboardingSectionType.CONSENT,             manager.sections.get(2).onboardingType);
-        assertEquals(OnboardingSectionType.REGISTRATION,        manager.sections.get(3).onboardingType);
-        assertEquals(OnboardingSectionType.PASSCODE,            manager.sections.get(4).onboardingType);
-        assertEquals(OnboardingSectionType.EMAIL_VERIFICATION,  manager.sections.get(5).onboardingType);
-        assertEquals(OnboardingSectionType.PERMISSIONS,         manager.sections.get(6).onboardingType);
-        assertEquals(OnboardingSectionType.COMPLETION,          manager.sections.get(7).onboardingType);
+        assertEquals(OnboardingSectionType.LOGIN,               mOnboardingManager.getSections().get(0).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.ELIGIBILITY,         mOnboardingManager.getSections().get(1).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.CONSENT,             mOnboardingManager.getSections().get(2).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.REGISTRATION,        mOnboardingManager.getSections().get(3).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.PASSCODE,            mOnboardingManager.getSections().get(4).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.EMAIL_VERIFICATION,  mOnboardingManager.getSections().get(5).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.PERMISSIONS,         mOnboardingManager.getSections().get(6).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.COMPLETION,          mOnboardingManager.getSections().get(7).getOnboardingSectionType());
 
         // Eligibility assertions
-        OnboardingSection eligibilty = manager.sections.get(1);
+        OnboardingSection eligibilty = mOnboardingManager.getSections().get(1);
         assertEquals(3, eligibilty.surveyItems.size());
         assertEquals(SurveyItemType.QUESTION_TOGGLE, eligibilty.surveyItems.get(0).type);
         assertEquals("eligibleInstruction",          eligibilty.surveyItems.get(0).skipIdentifier);
@@ -70,10 +76,10 @@ public class OnboardingManagerTest {
         assertEquals(SurveyItemType.INSTRUCTION,     eligibilty.surveyItems.get(1).type);
 
         // Consent assertions
-        OnboardingSection consent = manager.sections.get(2);
+        OnboardingSection consent = mOnboardingManager.getSections().get(2);
         assertEquals(8, consent.surveyItems.size());
         assertEquals(SurveyItemType.CUSTOM,         consent.surveyItems.get(0).type);
-        assertEquals("reconsent.instruction",       consent.surveyItems.get(0).type.getValue());
+        assertEquals("reconsent.instruction",       consent.surveyItems.get(0).getTypeIdentifier());
         assertEquals(SurveyItemType.CONSENT_VISUAL, consent.surveyItems.get(1).type);
         assertEquals(SurveyItemType.SUBTASK,        consent.surveyItems.get(2).type);
         assertEquals(5,                             consent.surveyItems.get(2).items.size());
@@ -104,6 +110,191 @@ public class OnboardingManagerTest {
 
         assertEquals(SurveyItemType.CONSENT_REVIEW, consent.surveyItems.get(6).type);
         assertTrue(consent.surveyItems.get(6) instanceof ConsentReviewSurveyItem);
+    }
+
+    @Test
+    public void testShouldInclude() {
+        resetMockToDefaults();
+
+        ShouldIncludeData[] shouldIncludeData = new ShouldIncludeData[] {
+                new ShouldIncludeData(
+                        OnboardingSectionType.LOGIN,
+                        OnboardingTaskType.LOGIN),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.ELIGIBILITY,
+                        OnboardingTaskType.REGISTRATION),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.CONSENT,
+                        OnboardingTaskType.LOGIN, OnboardingTaskType.REGISTRATION, OnboardingTaskType.RECONSENT),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.REGISTRATION,
+                        OnboardingTaskType.REGISTRATION),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.PASSCODE,
+                        OnboardingTaskType.LOGIN, OnboardingTaskType.REGISTRATION, OnboardingTaskType.RECONSENT),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.EMAIL_VERIFICATION,
+                        OnboardingTaskType.REGISTRATION),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.PERMISSIONS,
+                        OnboardingTaskType.LOGIN, OnboardingTaskType.REGISTRATION),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.PROFILE,
+                        OnboardingTaskType.REGISTRATION),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.COMPLETION,
+                        OnboardingTaskType.LOGIN, OnboardingTaskType.REGISTRATION)
+        };
+
+        for (OnboardingSectionType sectionType : OnboardingSectionType.values()) {
+            ShouldIncludeData includeData = findType(sectionType, shouldIncludeData);
+            if (includeData != null) {  // null for CUSTOM
+                for (OnboardingTaskType taskType : OnboardingTaskType.values()) {
+                    boolean expectedShouldInclude = includeData.taskTypesIncluded.contains(taskType);
+                    boolean actualShouldInclude = mMockOnboardingManager.shouldInclude(null, sectionType, taskType);
+                    assertEquals(expectedShouldInclude, actualShouldInclude);
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testShouldInclude_HasPasscode() {
+        resetMockToDefaults();
+        mMockOnboardingManager.setHasPasscode(true);
+
+        // Check that if the passcode has been set that it is not included
+        for (OnboardingTaskType taskType : OnboardingTaskType.values()) {
+            boolean shouldInclude = mMockOnboardingManager.shouldInclude(
+                    null, OnboardingSectionType.PASSCODE, taskType);
+            assertFalse(shouldInclude);
+        }
+    }
+
+    @Test
+    public void testShouldInclude_HasRegistered() {
+        resetMockToDefaults();
+
+        // If the user has registered and this is a completion of the registration
+        // then only include email verification and those sections AFTER verification
+        // However, if the user is being reconsented then include the reconsent section
+
+        mMockOnboardingManager.setHasPasscode(true);
+        mMockOnboardingManager.setIsRegistered(true);
+
+        OnboardingTaskType[] taskTypes = new OnboardingTaskType[] {
+                OnboardingTaskType.REGISTRATION, OnboardingTaskType.RECONSENT
+        };
+
+        ShouldIncludeData[] shouldIncludeData = new ShouldIncludeData[] {
+                new ShouldIncludeData(
+                        OnboardingSectionType.LOGIN,
+                        OnboardingTaskType.LOGIN),
+
+                // eligibility should *not* be included in registration if the user is at the email verification step
+                new ShouldIncludeData(
+                        OnboardingSectionType.ELIGIBILITY),
+
+                // consent should *not* be included in registration if the user is at the email verification step
+                new ShouldIncludeData(
+                        OnboardingSectionType.CONSENT,
+                        OnboardingTaskType.LOGIN, OnboardingTaskType.RECONSENT),
+
+                // registration should *not* be included in registration if the user is at the email verification step
+                new ShouldIncludeData(
+                        OnboardingSectionType.REGISTRATION),
+
+                // passcode should *not* be included in registration if the user is at the email verification step and has already set the passcode
+                new ShouldIncludeData(
+                        OnboardingSectionType.PASSCODE),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.EMAIL_VERIFICATION,
+                        OnboardingTaskType.REGISTRATION),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.PERMISSIONS,
+                        OnboardingTaskType.LOGIN, OnboardingTaskType.REGISTRATION),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.PROFILE,
+                        OnboardingTaskType.REGISTRATION),
+
+                new ShouldIncludeData(
+                        OnboardingSectionType.COMPLETION,
+                        OnboardingTaskType.LOGIN, OnboardingTaskType.REGISTRATION)
+        };
+
+        for (OnboardingSectionType sectionType : OnboardingSectionType.values()) {
+            ShouldIncludeData includeData = findType(sectionType, shouldIncludeData);
+            if (includeData != null) { // null for custom
+                for (OnboardingTaskType taskType : taskTypes) {
+                    boolean expectedShouldInclude = includeData.taskTypesIncluded.contains(taskType);
+                    boolean actualShouldInclude = mMockOnboardingManager.shouldInclude(null, sectionType, taskType);
+                    assertEquals(expectedShouldInclude, actualShouldInclude);
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testSortOrder() {
+        OnboardingManager manager = new OnboardingManager(null, "section_sort_order_test", mFullResourceProvider);
+        // See file for section order
+        List<String> expectedOrder = new ArrayList<>();
+        expectedOrder.add("customWelcome");
+        expectedOrder.add("login");
+        expectedOrder.add("eligibility");
+        expectedOrder.add("consent");
+        expectedOrder.add("registration");
+        expectedOrder.add("passcode");
+        expectedOrder.add("emailVerification");
+        expectedOrder.add("permissions");
+        expectedOrder.add("profile");
+        expectedOrder.add("completion");
+        expectedOrder.add("customEnd");
+
+        for (int i = 0; i < manager.getSections().size(); i++) {
+            String actualSectionId = manager.getSections().get(i).getOnboardingSectionIdentifier();
+            String expectedSectionId = expectedOrder.get(i);
+            assertEquals(actualSectionId, expectedSectionId);
+        }
+    }
+
+    void resetMockToDefaults() {
+        mMockOnboardingManager.setHasPasscode(false);
+        mMockOnboardingManager.setIsRegistered(false);
+        mMockOnboardingManager.setIsLoginVerified(false);
+    }
+
+    class ShouldIncludeData {
+        OnboardingSectionType sectionType;
+        List<OnboardingTaskType> taskTypesIncluded;
+        ShouldIncludeData(OnboardingSectionType type, OnboardingTaskType... taskTypes) {
+            sectionType = type;
+            taskTypesIncluded = Arrays.asList(taskTypes);
+        }
+        ShouldIncludeData(OnboardingSectionType type) {
+            sectionType = type;
+            taskTypesIncluded = new ArrayList<>();
+        }
+    }
+
+    ShouldIncludeData findType(OnboardingSectionType type, ShouldIncludeData[] data) {
+        for (ShouldIncludeData shouldIncludeData : data) {
+            if (shouldIncludeData.sectionType == type) {
+                return shouldIncludeData;
+            }
+        }
+        return null;
     }
 
     class FullTestResourceProvider implements ResourceNameJsonProvider {

@@ -34,6 +34,11 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
         JsonElement typeJson = json.getAsJsonObject().get(OnboardingSection.ONBOARDING_TYPE_GSON);
         OnboardingSectionType type = context.deserialize(typeJson, OnboardingSectionType.class);
 
+        // setup custom type
+        if (type == null) {
+            type = OnboardingSectionType.CUSTUM;
+        }
+
         JsonElement resourceName = json.getAsJsonObject().get(OnboardingSection.ONBOARDING_RESOURCE_NAME_GSON);
         if (resourceName != null) {
             // Android does not support spaces or uppercase letters for resource names
@@ -51,6 +56,8 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
             ConsentOnboardingSection consentSection = new ConsentOnboardingSection();
             consentSection.consentDocument = context.deserialize(json, ConsentDocument.class);
             section = consentSection;
+        } else if (type == OnboardingSectionType.CUSTUM) {
+            section = new CustomOnboardingSection(typeJson.getAsString());
         } else {  // otherwise make the base onboarding section class
             section = new OnboardingSection();
         }

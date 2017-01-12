@@ -106,6 +106,11 @@ public class ConsentSection implements Serializable
     @SerializedName("sectionAnimationUrl")
     private String customAnimationURL;
 
+    /**
+     * Used for storing custom type identifer when type is CUSTOM eum
+     */
+    transient String customTypeIdentifier;
+
     /* Default identifier for serilization/deserialization */
     ConsentSection() {
         super();
@@ -160,6 +165,10 @@ public class ConsentSection implements Serializable
         return customImageName;
     }
 
+    void setCustomImageName(String imageName) {
+        customImageName = imageName;
+    }
+
     public String getContent()
     {
         return content;
@@ -197,6 +206,19 @@ public class ConsentSection implements Serializable
         return customLearnMoreButtonTitle;
     }
 
+    public void setCustomLearnMoreButtonTitle(String customLearnMoreButtonTitle)
+    {
+        this.customLearnMoreButtonTitle = customLearnMoreButtonTitle;
+    }
+
+    public String getTypeIdentifier() {
+        if (type == Type.Custom) {
+            return customTypeIdentifier;
+        }
+        return type.getIdentifier();
+    }
+
+    public static final int UNDEFINED_RES = -1;
     public enum Type implements Serializable
     {
         /**
@@ -312,7 +334,7 @@ public class ConsentSection implements Serializable
          * consent document may have as many or as few custom sections as needed.
          */
         @SerializedName("custom")
-        Custom("custom", -1, R.string.rsb_consent_section_more_info, null),
+        Custom("custom", UNDEFINED_RES, R.string.rsb_consent_section_more_info, null),
 
         /**
          * Document-only sections.
@@ -322,7 +344,7 @@ public class ConsentSection implements Serializable
          * property).
          */
         @SerializedName("onlyInDocument")
-        OnlyInDocument("onlyInDocument", -1, R.string.rsb_consent_section_more_info, null);
+        OnlyInDocument("onlyInDocument", UNDEFINED_RES, R.string.rsb_consent_section_more_info, null);
 
         Type(
             String identifier,
@@ -344,29 +366,14 @@ public class ConsentSection implements Serializable
         public int getTitleResId() {
             return titleRes;
         }
-        public void setTitleResId(@StringRes int titleRes) {
-            this.titleRes = titleRes;
-        }
-
         public String getImageName() {
             return imageName;
         }
-        public void setImageName(String imageName) {
-            this.imageName = imageName;
-        }
-
         public int getMoreInfoResId() {
             return moreInfoRes;
         }
-        public void setMoreInfoRes(@StringRes int moreInfoRes) {
-            this.moreInfoRes = moreInfoRes;
-        }
-
-        public String getIdentifier() {
+        private String getIdentifier() {
             return identifier;
-        }
-        public void setIdentifier(String identifier) {
-            this.identifier = identifier;
         }
     }
 

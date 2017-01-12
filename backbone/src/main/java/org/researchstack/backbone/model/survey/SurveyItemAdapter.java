@@ -28,15 +28,16 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
     public SurveyItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject =  json.getAsJsonObject();
 
-        SurveyItemType surveyItemType = context.deserialize(
-                jsonObject.get(SurveyItem.TYPE_GSON), SurveyItemType.class);
+        JsonElement typeJson = jsonObject.get(SurveyItem.TYPE_GSON);
+        SurveyItemType surveyItemType = context.deserialize(typeJson, SurveyItemType.class);
 
         // This was a custom survey item type
         // For instance, "reconsent.instruction" is a subtask consent type
         // That will be dealt with by a custom ConsentDocumentSurveyFactory
+        String customTypeString = null;
         if (surveyItemType == null) {
             surveyItemType = SurveyItemType.CUSTOM;
-            surveyItemType.setCustomValue(jsonObject.get(SurveyItem.TYPE_GSON).getAsString());
+            customTypeString = typeJson.getAsString();
         }
 
         switch (surveyItemType) {
@@ -89,8 +90,9 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
             case PASSCODE:
                 break;
             case CUSTOM:
-                SurveyItem item = context.deserialize(json, getCustomClass(surveyItemType.getValue()));
+                CustomSurveyItem item = context.deserialize(json, getCustomClass(customTypeString));
                 item.type = surveyItemType; // need to set CUSTOM type for surveyItem, since it is a special case
+                item.customSurveyItemIdentifer = customTypeString;
                 return item;
         }
 
@@ -105,7 +107,10 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
      * @param customType used to map to different types of survey items
      * @return type of survey item to create from the custom class
      */
-    public Class<? extends SurveyItem> getCustomClass(String customType) {
-        return InstructionSurveyItem.class;
+    public Class<? extends CustomSurveyItem> getCustomClass(String customType) {
+        if (customType.endsWith(".instruction")) {
+            return CustomInstructionSurveyItem.class;
+        }
+        return CustomSurveyItem.class;
     }
 }

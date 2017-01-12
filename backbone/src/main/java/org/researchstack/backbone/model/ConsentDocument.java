@@ -81,7 +81,7 @@ public class ConsentDocument implements Serializable
     private boolean requiresBirthdate = true;
 
     /* Default constructor needed for serilization/deserialization of object */
-    ConsentDocument() {
+    public ConsentDocument() {
         super();
     }
 

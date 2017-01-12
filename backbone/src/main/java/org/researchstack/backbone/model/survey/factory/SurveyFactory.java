@@ -22,6 +22,8 @@ import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.BooleanQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.CompoundQuestionSurveyItem;
+import org.researchstack.backbone.model.survey.CustomInstructionSurveyItem;
+import org.researchstack.backbone.model.survey.CustomSurveyItem;
 import org.researchstack.backbone.model.survey.DateRangeSurveyItem;
 import org.researchstack.backbone.model.survey.FloatRangeSurveyItem;
 import org.researchstack.backbone.model.survey.IntegerRangeSurveyItem;
@@ -34,6 +36,7 @@ import org.researchstack.backbone.model.survey.SubtaskQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
 import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
+import org.researchstack.backbone.step.CustomInstructionStep;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.FormStep;
@@ -165,9 +168,12 @@ public class SurveyFactory {
             case PASSCODE:
                 return createPasscodeStep(item);
             case CUSTOM:
+                if (!(item instanceof CustomSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, CUSTOM types must be CustomSurveyItem");
+                }
                 // To override a custom step from survey item mapping,
                 // You need to override the
-                return createCustomStep(item);
+                return createCustomStep((CustomSurveyItem)item);
         }
 
         // Handled by ConsentDocumentFactory subclass
@@ -641,13 +647,9 @@ public class SurveyFactory {
      * @param item InstructionSurveyItem from JSON
      * @return valid CustomStep matching the InstructionSurveyItem
      */
-    public Step createCustomStep(SurveyItem item) {
-        CustomStep step = new CustomStep(item.identifier, item.title, item.text);
-        step.setCustomTypeIdentifier(item.type.getValue());
-        // Default mapping of SurveyItemAdapter has the item be an instruction
-        if (item instanceof InstructionSurveyItem) {
-            fillInstructionStep(step, (InstructionSurveyItem) item);
-        }
+    public CustomStep createCustomStep(CustomSurveyItem item) {
+        CustomStep step = new CustomStep(item.identifier, item.title, item.getTypeIdentifier());
+        step.setText(item.text);
         return step;
     }
 
