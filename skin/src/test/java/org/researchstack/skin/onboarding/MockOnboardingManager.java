@@ -18,6 +18,10 @@ public class MockOnboardingManager extends OnboardingManager {
     private boolean isRegistered = false;
     private boolean hasPasscode = false;
 
+    MockOnboardingManager(Context context, String onboardingResourceName, ResourceNameJsonProvider jsonProvider) {
+        super(context, onboardingResourceName, jsonProvider);
+    }
+
     MockOnboardingManager(String onboardingResourceName, ResourceNameJsonProvider jsonProvider) {
         super(null, onboardingResourceName, jsonProvider);
     }

@@ -14,6 +14,10 @@ import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.onboarding.OnboardingSectionType;
 import org.researchstack.backbone.onboarding.OnboardingTaskType;
 import org.researchstack.backbone.onboarding.ResourceNameJsonProvider;
+import org.researchstack.backbone.step.InstructionStep;
+import org.researchstack.backbone.step.PasscodeStep;
+import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.step.ToggleFormStep;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,13 +41,15 @@ public class OnboardingManagerTest {
     ResourceNameJsonProvider mFullResourceProvider;
     OnboardingManager mOnboardingManager;
     MockOnboardingManager mMockOnboardingManager;
+    SurveyFactoryHelper mSurveyFactoryHelper;
 
     @Before
     public void setUp() throws Exception
     {
+        mSurveyFactoryHelper = new SurveyFactoryHelper();
         mFullResourceProvider = new FullTestResourceProvider();
-        mOnboardingManager = new OnboardingManager(null, "onboarding", mFullResourceProvider);
-        mMockOnboardingManager = new MockOnboardingManager("onboarding", mFullResourceProvider);
+        mOnboardingManager = new OnboardingManager(mSurveyFactoryHelper.mockContext, "onboarding", mFullResourceProvider);
+        mMockOnboardingManager = new MockOnboardingManager(mSurveyFactoryHelper.mockContext, "onboarding", mFullResourceProvider);
     }
 
     @Test
@@ -267,6 +273,60 @@ public class OnboardingManagerTest {
             String expectedSectionId = expectedOrder.get(i);
             assertEquals(actualSectionId, expectedSectionId);
         }
+    }
+
+    @Test
+    public void testEligibilitySection() {
+        List<Step> steps = checkOnboardingSteps(OnboardingSectionType.ELIGIBILITY, OnboardingTaskType.REGISTRATION);
+        List<Step> expectedSteps = new ArrayList<>();
+        expectedSteps.add(new ToggleFormStep("inclusionCriteria", null, null));
+        expectedSteps.add(new InstructionStep("ineligibleInstruction", null, "Unfortunately, you are ineligible to join this study."));
+        expectedSteps.add(new InstructionStep("eligibleInstruction", null, "You are eligible to join the study."));
+
+        assertEquals(steps.size(), expectedSteps.size());
+        for (int i = 0; i < expectedSteps.size(); i++) {
+            assertEquals(steps.get(i).getIdentifier(), expectedSteps.get(i).getIdentifier());
+            assertEquals(steps.get(i).getClass(), expectedSteps.get(i).getClass());
+        }
+    }
+
+    @Test
+    public void testPasscodeSection() {
+        List<Step> steps = checkOnboardingSteps(OnboardingSectionType.PASSCODE, OnboardingTaskType.REGISTRATION);
+        assertEquals(steps.size(), 1);
+
+        assertEquals(steps.get(0).getIdentifier(), "passcode");
+        assertTrue(steps.get(0) instanceof PasscodeStep);
+        assertEquals(steps.get(0).getText(), "Select a 6-digit passcode. Setting up a passcode will help provide quick and secure access to this application.");
+        assertEquals(steps.get(0).getTitle(), "Identification");
+    }
+
+    @Test
+    public void testLoginSection() {
+        List<Step> steps = checkOnboardingSteps(OnboardingSectionType.LOGIN, OnboardingTaskType.LOGIN);
+        assertEquals(steps.size(), 1);
+
+        assertEquals(steps.get(0).getIdentifier(), "login");
+    }
+
+    List<Step> checkOnboardingSteps(OnboardingSectionType sectionType, OnboardingTaskType taskType) {
+        OnboardingSection section = getSection(sectionType);
+        assertNotNull(section);
+        List<Step> steps = mMockOnboardingManager.steps(mSurveyFactoryHelper.mockContext, section, taskType);
+        assertNotNull(steps);
+        return steps;
+    }
+
+    OnboardingSection getSection(OnboardingSectionType sectionType) {
+        if (mMockOnboardingManager.getSections() == null) {
+            return null;
+        }
+        for (OnboardingSection section : mMockOnboardingManager.getSections()) {
+            if (section.getOnboardingSectionType() == sectionType) {
+                return section;
+            }
+        }
+        return null;
     }
 
     void resetMockToDefaults() {
