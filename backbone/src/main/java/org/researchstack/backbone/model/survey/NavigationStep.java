@@ -2,6 +2,9 @@ package org.researchstack.backbone.model.survey;
 
 /**
  * Created by TheMDP on 12/31/16.
+ *
+ * TODO this interface needs expanded to support
+ * TODO SBANavigationRule, SBAConditionalRule, and SBANavigationSkipRule in the near-future.
  */
 
 public interface NavigationStep {

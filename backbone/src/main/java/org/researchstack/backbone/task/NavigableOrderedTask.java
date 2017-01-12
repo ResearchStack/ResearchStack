@@ -15,6 +15,9 @@ import java.util.Map;
 
 /**
  * Created by TheMDP on 12/29/16.
+ *
+ * TODO this class needs expanded to support
+ * TODO SBANavigationRule, SBAConditionalRule, and SBANavigationSkipRule in the near-future.
  */
 
 public class NavigableOrderedTask extends OrderedTask implements TaskResultSource {
