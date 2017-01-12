@@ -18,11 +18,11 @@ public class PasswordAnswerFormat extends TextAnswerFormat {
      */
     public PasswordAnswerFormat()
     {
-        super(DEFAULT_PASSWORD_MAX_LENGTH);
-        minimumLength = DEFAULT_PASSWORD_MIN_LENGTH;
-        maximumLength = DEFAULT_PASSWORD_MAX_LENGTH;
-        inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD;
-        isMultipleLines = false;
-        validationRegex = PASSWORD_VALIDATION_REGEX;
+        super();
+        setMinumumLength(DEFAULT_PASSWORD_MIN_LENGTH);
+        setMaximumLength(DEFAULT_PASSWORD_MAX_LENGTH);
+        setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        setIsMultipleLines(false);
+        setValidationRegex(PASSWORD_VALIDATION_REGEX);
     }
 }

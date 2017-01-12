@@ -10,12 +10,12 @@ import android.text.InputType;
 public class TextAnswerFormat extends AnswerFormat
 {
     public static final int UNLIMITED_LENGTH = 0;
-    int maximumLength;
-    int minimumLength = 0;
+    private int maximumLength;
+    private int minimumLength = 0;
 
-    boolean isMultipleLines = false;
-    int     inputType       = InputType.TYPE_CLASS_TEXT;
-    String  validationRegex = null;
+    private boolean isMultipleLines = false;
+    private int     inputType       = InputType.TYPE_CLASS_TEXT;
+    private String  validationRegex = null;
 
     /**
      * Creates a TextAnswerFormat with no maximum length
@@ -44,6 +44,14 @@ public class TextAnswerFormat extends AnswerFormat
     public int getMaximumLength()
     {
         return maximumLength;
+    }
+
+    /**
+     * Set the minimum length for the answer, 0 if no minumum set
+     */
+    public void setMaximumLength(int maximumLength)
+    {
+        this.maximumLength = maximumLength;
     }
 
     /**
