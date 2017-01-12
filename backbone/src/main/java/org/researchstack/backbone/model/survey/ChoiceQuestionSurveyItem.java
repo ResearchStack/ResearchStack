@@ -7,4 +7,8 @@ import org.researchstack.backbone.model.Choice;
  */
 
 public class ChoiceQuestionSurveyItem extends QuestionSurveyItem<Choice> {
+    /* Default constructor needed for serilization/deserialization of object */
+    ChoiceQuestionSurveyItem() {
+        super();
+    }
 }

@@ -7,4 +7,9 @@ package org.researchstack.backbone.model.survey;
 public class ActiveStepSurveyItem extends SurveyItem<String> {
     String stepSpokenInstruction;
     String stepFinishedSpokenInstruction;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    ActiveStepSurveyItem() {
+        super();
+    }
 }

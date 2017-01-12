@@ -7,6 +7,7 @@ public class EmailAnswerFormat extends TextAnswerFormat
 {
     private static final int MAX_EMAIL_LENGTH = 255;
 
+    /* Default constructor needed for serilization/deserialization of object */
     public EmailAnswerFormat()
     {
         super(MAX_EMAIL_LENGTH);

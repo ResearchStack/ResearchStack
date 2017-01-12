@@ -13,4 +13,9 @@ public class RangeSurveyItem<T> extends QuestionSurveyItem {
     public T max;
     @SerializedName("defaultValue")
     public T defaultValue;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    RangeSurveyItem() {
+        super();
+    }
 }

@@ -9,6 +9,11 @@ package org.researchstack.backbone.step;
 public class CustomStep extends InstructionStep {
     String customTypeIdentifier;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    CustomStep() {
+        super();
+    }
+
     public CustomStep(String identifier, String title, String detailText) {
         super(identifier, title, detailText);
     }

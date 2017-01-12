@@ -8,4 +8,8 @@ package org.researchstack.backbone.model.survey;
  */
 
 public class ToggleQuestionSurveyItem extends QuestionSurveyItem<BooleanQuestionSurveyItem> {
+    /* Default constructor needed for serilization/deserialization of object */
+    ToggleQuestionSurveyItem() {
+        super();
+    }
 }

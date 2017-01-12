@@ -19,6 +19,11 @@ public class NavigationSubtaskStep extends SubtaskStep implements NavigationStep
     String skipToStepIdentifier;
     boolean skipIfPassed;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    NavigationSubtaskStep() {
+        super();
+    }
+
     public NavigationSubtaskStep(String identifier) {
         super(identifier);
     }

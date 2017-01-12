@@ -2,15 +2,19 @@ package org.researchstack.backbone.model.survey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by TheMDP on 12/31/16.
+ *
+ * Generic Type "T" of survey item must also implement Serializable,
+ * Otherwise you will see a runtime exception
  */
 
-public class SurveyItem<T> {
+public class SurveyItem<T> implements Serializable {
 
     @SerializedName("identifier")
     public String identifier;
@@ -42,6 +46,11 @@ public class SurveyItem<T> {
 
     // TODO: what is this?
     Map<String, Object> options;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    SurveyItem() {
+        super();
+    }
 
     public static class SurveyItemTypeComparator implements Comparator<SurveyItemType> {
 

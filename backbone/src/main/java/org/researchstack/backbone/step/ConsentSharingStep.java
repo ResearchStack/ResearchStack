@@ -9,6 +9,10 @@ import org.researchstack.backbone.ui.step.body.SingleChoiceQuestionBody;
  */
 public class ConsentSharingStep extends QuestionStep
 {
+    /* Default constructor needed for serilization/deserialization of object */
+    ConsentSharingStep() {
+        super();
+    }
 
     public ConsentSharingStep(String identifier)
     {

@@ -80,6 +80,11 @@ public class ConsentDocument implements Serializable
     @SerializedName("requiresBirthdate")
     private boolean requiresBirthdate = true;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    ConsentDocument() {
+        super();
+    }
+
     /**
      * True if consent must require the user's signature
      */

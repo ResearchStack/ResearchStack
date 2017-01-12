@@ -20,6 +20,11 @@ public class FormStep extends QuestionStep
 {
     List<QuestionStep> formSteps;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    FormStep() {
+        super();
+    }
+
     public FormStep(String identifier, String title, String text)
     {
         super(identifier, title, new FormAnswerFormat());
@@ -49,25 +54,5 @@ public class FormStep extends QuestionStep
     public void setFormSteps(QuestionStep... formSteps)
     {
         setFormSteps(Arrays.asList(formSteps));
-    }
-
-    // Methods for GsonSerializablePolymorphism
-
-    @Override
-    public Data<Step> getPolymorphismData() {
-        List<DataPair> dataPairs = new ArrayList<>();
-
-        // Add any Form Step polymorphisms
-        if (formSteps != null) {
-            for (QuestionStep step : formSteps) {
-                Data<Step> questionData = step.getPolymorphismData();
-                dataPairs.addAll(questionData.baseSubClassPairs);
-            }
-        }
-
-        // Build new one with AnswerFormat first in the List
-        Data<Step> superData = super.getPolymorphismData();
-        dataPairs.addAll(new ArrayList<>(superData.baseSubClassPairs));
-        return new Data<>(superData.baseClass, dataPairs);
     }
 }

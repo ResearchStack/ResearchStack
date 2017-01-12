@@ -1,7 +1,10 @@
 package org.researchstack.backbone.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * Created by TheMDP on 12/29/16.
@@ -9,31 +12,26 @@ import com.google.gson.GsonBuilder;
 
 public class ObjectUtils {
 
-    /*
-     * Performs a deep copy on the object of type using Gson
-     * Object type must have a default constructor to work properly
-     *
-     * NOTE: this does not work with Polymorphism
-     * Use GsonSerializablePolymorphism class instead
+    /**
+     * @param copyObject the Object to copy, which must implement interface Serializable
+     *                   and all classes, subclasses, and member field classes must
+     *                   implement a default package-level constructor, or exception will be thrown
+     * @return deep object copy
      */
-    public static <T> T deepCopy(Object object, Class<T> type) {
-        return deepCopy(object, type, new Gson());
-    }
-
-    /*
-    * Performs a deep copy on the object of type using Gson
-    * Object type must have a default constructor to work properly
-    *
-    * NOTE: this does not work with Polymorphism
-    * Use GsonSerializablePolymorphism class instead
-    */
-    public static <T> T deepCopy(Object object, Class<T> type, Gson gson) {
+    public static Object clone(Object copyObject) {
         try {
-            String copyJson = gson.toJson(object, type);
-            return gson.fromJson(copyJson, type);
-        } catch (Exception e) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream(4096);
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(copyObject);
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            Object deepCopy = ois.readObject();
+            return deepCopy;
+        } catch (IOException e) {
             e.printStackTrace();
-            return null;
+        } catch(ClassNotFoundException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }

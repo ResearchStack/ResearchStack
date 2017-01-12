@@ -3,6 +3,7 @@ package org.researchstack.backbone.step;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,11 @@ public class QuestionStep extends Step
     private AnswerFormat answerFormat;
 
     private String placeholder;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    QuestionStep() {
+        super();
+    }
 
     /**
      * Returns a new question step that includes the specified identifier.
@@ -153,23 +159,5 @@ public class QuestionStep extends Step
     public void setPlaceholder(String placeholder)
     {
         this.placeholder = placeholder;
-    }
-
-    // Methods for GsonSerializablePolymorphism
-
-    @Override
-    public Data<Step> getPolymorphismData() {
-        List<DataPair> dataPairs = new ArrayList<>();
-
-        // Add any AnswerFormat polymorphism
-        if (answerFormat != null) {
-            Data<AnswerFormat> answerData = answerFormat.getPolymorphismData();
-            dataPairs.addAll(answerData.baseSubClassPairs);
-        }
-
-        // Build new one with AnswerFormat first in the List
-        Data<Step> superData = super.getPolymorphismData();
-        dataPairs.addAll(new ArrayList<>(superData.baseSubClassPairs));
-        return new Data<>(superData.baseClass, dataPairs);
     }
 }

@@ -14,6 +14,7 @@ public class PasswordAnswerFormat extends TextAnswerFormat {
 
     /**
      * Creates a TextAnswerFormat with no maximum length
+     * Also, default constructor needed for serilization/deserialization of object
      */
     public PasswordAnswerFormat()
     {

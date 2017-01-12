@@ -20,6 +20,11 @@ public class QuestionSurveyItem<T extends Object> extends SurveyItem<T> {
     @SerializedName("expectedAnswer")
     public boolean expectedAnswer; // Does this need to be a generic type?
 
+    /* Default constructor needed for serilization/deserialization of object */
+    QuestionSurveyItem() {
+        super();
+    }
+
     public boolean isValidQuestionItem() {
         return identifier != null && type.isQuestionSubtype();
     }

@@ -11,4 +11,9 @@ import com.google.gson.annotations.SerializedName;
 public class ScaleQuestionSurveyItem extends IntegerRangeSurveyItem {
     @SerializedName("step")
     public int step;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    ScaleQuestionSurveyItem() {
+        super();
+    }
 }

@@ -5,4 +5,8 @@ package org.researchstack.backbone.model.survey;
  */
 
 public class FloatRangeSurveyItem extends RangeSurveyItem<Float> {
+    /* Default constructor needed for serilization/deserialization of object */
+    FloatRangeSurveyItem() {
+        super();
+    }
 }

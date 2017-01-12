@@ -5,4 +5,8 @@ package org.researchstack.backbone.model.survey;
  */
 
 public class IntegerRangeSurveyItem extends RangeSurveyItem<Integer> {
+    /* Default constructor needed for serilization/deserialization of object */
+    IntegerRangeSurveyItem() {
+        super();
+    }
 }

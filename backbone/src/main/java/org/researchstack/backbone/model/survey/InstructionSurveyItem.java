@@ -26,4 +26,9 @@ public class InstructionSurveyItem extends SurveyItem<String> {
 
     @SerializedName("learnMoreHTMLContentURL")
     public String learnMoreHTMLContentURL;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    InstructionSurveyItem() {
+        super();
+    }
 }

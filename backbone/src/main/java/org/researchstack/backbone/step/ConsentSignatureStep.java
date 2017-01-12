@@ -8,6 +8,11 @@ public class ConsentSignatureStep extends Step
 {
     private String signatureDateFormat;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    ConsentSignatureStep() {
+        super();
+    }
+
     public ConsentSignatureStep(String identifier)
     {
         super(identifier);

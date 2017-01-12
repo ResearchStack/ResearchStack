@@ -17,6 +17,11 @@ public class NavigationQuestionStep extends QuestionStep implements NavigationSt
     String skipToStepIdentifier;
     boolean skipIfPassed;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    NavigationQuestionStep() {
+        super();
+    }
+
     public NavigationQuestionStep(String identifier) {
         super(identifier);
     }

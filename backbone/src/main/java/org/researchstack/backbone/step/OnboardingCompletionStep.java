@@ -7,6 +7,12 @@ import org.researchstack.backbone.ui.step.layout.OnboardingCompletionStepLayout;
  */
 
 public class OnboardingCompletionStep extends InstructionStep {
+
+    /* Default constructor needed for serilization/deserialization of object */
+    OnboardingCompletionStep() {
+        super();
+    }
+
     public OnboardingCompletionStep(String identifier, String title, String detailText) {
         super(identifier, title, detailText);
     }

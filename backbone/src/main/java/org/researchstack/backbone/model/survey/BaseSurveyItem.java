@@ -5,4 +5,8 @@ package org.researchstack.backbone.model.survey;
  */
 
 public class BaseSurveyItem extends SurveyItem<Object> {
+    /* Default constructor needed for serilization/deserialization of object */
+    BaseSurveyItem() {
+        super();
+    }
 }

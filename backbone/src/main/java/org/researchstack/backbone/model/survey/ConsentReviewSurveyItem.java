@@ -5,4 +5,8 @@ package org.researchstack.backbone.model.survey;
  */
 
 public class ConsentReviewSurveyItem extends ProfileSurveyItem {
+    /* Default constructor needed for serilization/deserialization of object */
+    ConsentReviewSurveyItem() {
+        super();
+    }
 }

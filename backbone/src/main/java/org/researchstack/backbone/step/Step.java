@@ -1,11 +1,9 @@
 package org.researchstack.backbone.step;
 
-import org.researchstack.backbone.model.GsonSerializablePolymorphism;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.utils.ObjectUtils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Step is the base class for the steps that can compose a task for presentation in an {@link
@@ -23,7 +21,7 @@ import java.util.Arrays;
  * To implement a new type of step, subclass Step and add your additional properties. Separately,
  * subclass StepLayout and implement your user interface.
  */
-public class Step extends GsonSerializablePolymorphism<Step> implements Serializable
+public class Step implements Serializable
 {
     private String identifier;
 
@@ -46,8 +44,10 @@ public class Step extends GsonSerializablePolymorphism<Step> implements Serializ
     private boolean allowsBackNavigation;
     private boolean useSurveyMode;
 
-    /* Default identifier for serilization/deserialization */
-    Step() {}
+    /* Default constructor needed for serilization/deserialization of object */
+    Step() {
+        super();
+    }
 
     /**
      * Returns a new step initialized with the specified identifier.
@@ -219,7 +219,7 @@ public class Step extends GsonSerializablePolymorphism<Step> implements Serializ
      * @return cloned step using Gson but with different identifier
      */
     public Step deepCopy(String newIdentifier) {
-        Step clonedStep = deepCopy();
+        Step clonedStep = (Step)ObjectUtils.clone(this);
         clonedStep.identifier = newIdentifier;
         return clonedStep;
     }
@@ -248,14 +248,5 @@ public class Step extends GsonSerializablePolymorphism<Step> implements Serializ
         }
 
         return identifier.equals(rhs.identifier);
-    }
-
-    // Methods for GsonSerializablePolymorphism
-
-    @Override
-    public Data<Step> getPolymorphismData() {
-        return new Data<>(Step.class, Arrays.asList(new DataPair[] {
-                new DataPair(Step.class, getClass())
-        }));
     }
 }

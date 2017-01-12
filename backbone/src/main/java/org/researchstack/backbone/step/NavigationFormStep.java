@@ -19,6 +19,11 @@ public class NavigationFormStep extends FormStep implements NavigationStep {
     String skipToStepIdentifier;
     boolean skipIfPassed;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    NavigationFormStep() {
+        super();
+    }
+
     public NavigationFormStep(String identifier, String title, String text) {
         super(identifier, title, text);
     }

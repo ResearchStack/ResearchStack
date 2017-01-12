@@ -7,4 +7,8 @@ import java.util.Date;
  */
 
 public class DateRangeSurveyItem extends RangeSurveyItem<Date> {
+    /* Default constructor needed for serilization/deserialization of object */
+    DateRangeSurveyItem() {
+        super();
+    }
 }

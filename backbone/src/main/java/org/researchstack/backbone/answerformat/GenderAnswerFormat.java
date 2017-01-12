@@ -14,6 +14,12 @@ import java.util.List;
 
 public class GenderAnswerFormat extends ChoiceAnswerFormat {
 
+    /* Default constructor needed for serilization/deserialization of object */
+    GenderAnswerFormat()
+    {
+        super();
+    }
+
     public GenderAnswerFormat(Context context) {
         super(ChoiceAnswerStyle.SingleChoice, createChoices(context));
     }

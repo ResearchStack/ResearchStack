@@ -11,6 +11,11 @@ import java.util.List;
 
 public class LoginStep extends ProfileStep {
 
+    /* Default constructor needed for serilization/deserialization of object */
+    LoginStep() {
+        super();
+    }
+
     public LoginStep(String identifier, String title, String text, List<ProfileInfoOption> options, List<QuestionStep> steps) {
         super(identifier, title, text, options, steps);
     }

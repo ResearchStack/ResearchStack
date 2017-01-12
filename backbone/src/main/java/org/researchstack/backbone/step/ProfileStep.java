@@ -19,6 +19,11 @@ public class ProfileStep extends FormStep {
         return profileInfoOptions;
     }
 
+    /* Default constructor needed for serilization/deserialization of object */
+    ProfileStep() {
+        super();
+    }
+
     public ProfileStep(
             String identifier, String title, String text,
             List<ProfileInfoOption> options,

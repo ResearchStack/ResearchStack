@@ -6,6 +6,11 @@ package org.researchstack.backbone.step;
 
 public class PermissionsStep extends Step {
 
+    /* Default constructor needed for serilization/deserialization of object */
+    PermissionsStep() {
+        super();
+    }
+
     public PermissionsStep(String identifier, String title, String text) {
         super(identifier, title);
         setText(text);

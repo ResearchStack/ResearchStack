@@ -19,6 +19,7 @@ public class TextAnswerFormat extends AnswerFormat
 
     /**
      * Creates a TextAnswerFormat with no maximum length
+     * Also, default constructor needed for serilization/deserialization of object
      */
     public TextAnswerFormat()
     {

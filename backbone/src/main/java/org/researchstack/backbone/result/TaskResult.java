@@ -81,29 +81,7 @@ public class TaskResult extends Result
      * @param identifier the Step and StepResult's identifier
      * @param stepResult the StepResult for this identifier
      */
-    public void setStepResultForStepIdentifier(String identifier, StepResult stepResult)
-    {
+    public void setStepResultForStepIdentifier(String identifier, StepResult stepResult) {
         results.put(identifier, stepResult);
-    }
-
-    // Methods for GsonSerializablePolymorphism
-
-    @Override
-    public Data<Result> getPolymorphismData() {
-        List<DataPair> dataPairs = new ArrayList<>();
-
-        // Add any Form Step polymorphisms
-        if (results != null && !results.isEmpty()) {
-
-            for (String key : results.keySet()) {
-                Data<Result> resultData = results.get(key).getPolymorphismData();
-                dataPairs.addAll(resultData.baseSubClassPairs);
-            }
-        }
-
-        // Build new one with AnswerFormat first in the List
-        Data<Result> superData = super.getPolymorphismData();
-        dataPairs.addAll(new ArrayList<>(superData.baseSubClassPairs));
-        return new Data<>(superData.baseClass, dataPairs);
     }
 }

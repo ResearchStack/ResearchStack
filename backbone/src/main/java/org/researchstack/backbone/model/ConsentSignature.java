@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class ConsentSignature implements Serializable, Cloneable
+public class ConsentSignature implements Serializable
 {
 
     /**
@@ -68,6 +68,7 @@ public class ConsentSignature implements Serializable, Cloneable
      */
     private String signatureDateFormatString;
 
+    /* Default identifier for serilization/deserialization */
     public ConsentSignature()
     {
         this.requiresName = true;

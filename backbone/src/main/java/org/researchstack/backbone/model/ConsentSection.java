@@ -106,6 +106,11 @@ public class ConsentSection implements Serializable
     @SerializedName("sectionAnimationUrl")
     private String customAnimationURL;
 
+    /* Default identifier for serilization/deserialization */
+    ConsentSection() {
+        super();
+    }
+
     /**
      * Returns an initialized consent section using the specified type.
      *

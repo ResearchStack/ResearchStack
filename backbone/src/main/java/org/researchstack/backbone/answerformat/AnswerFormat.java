@@ -1,7 +1,5 @@
 package org.researchstack.backbone.answerformat;
 
-import org.researchstack.backbone.model.GsonSerializablePolymorphism;
-import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.step.body.DateQuestionBody;
 import org.researchstack.backbone.ui.step.body.DecimalQuestionBody;
 import org.researchstack.backbone.ui.step.body.DurationQuestionBody;
@@ -13,7 +11,6 @@ import org.researchstack.backbone.ui.step.body.SingleChoiceQuestionBody;
 import org.researchstack.backbone.ui.step.body.TextQuestionBody;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  * The AnswerFormat class is the abstract base class for classes that describe the format in which a
@@ -25,12 +22,9 @@ import java.util.Arrays;
  * question step or form item. Incorporate the resulting step into a task, and present the task with
  * a {@link org.researchstack.backbone.ui.ViewTaskActivity}.
  */
-public class AnswerFormat extends GsonSerializablePolymorphism<AnswerFormat> implements Serializable
+public class AnswerFormat implements Serializable
 {
-    /**
-     * Default constructor. The appropriate subclass of AnswerFormat should be used instead of this
-     * directly.
-     */
+    /* Default constructor needed for serilization/deserialization of object */
     public AnswerFormat()
     {
     }
@@ -122,14 +116,5 @@ public class AnswerFormat extends GsonSerializablePolymorphism<AnswerFormat> imp
         DateAndTime,
         Date,
         TimeOfDay
-    }
-
-    // Methods for GsonSerializablePolymorphism
-
-    @Override
-    public Data<AnswerFormat> getPolymorphismData() {
-        return new Data<>(AnswerFormat.class, Arrays.asList(new DataPair[] {
-                new DataPair(AnswerFormat.class, getClass())
-        }));
     }
 }

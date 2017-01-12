@@ -8,6 +8,7 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.result.TaskResultSource;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.utils.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -25,6 +26,11 @@ public class SubtaskStep extends Step {
     Task subtask;
     public Task getSubtask() {
         return subtask;
+    }
+
+    /* Default constructor needed for serilization/deserialization of object */
+    SubtaskStep() {
+        super();
     }
 
     public SubtaskStep(String identifier) {
@@ -80,7 +86,7 @@ public class SubtaskStep extends Step {
 
     private TaskResult filteredTaskResult(TaskResult inputResult) {
         // create a mutated copy of the results that includes only the subtask results
-        TaskResult subtaskResult = (TaskResult)inputResult.deepCopy();
+        TaskResult subtaskResult = (TaskResult) ObjectUtils.clone(inputResult);
         Map<String, StepResult> stepResults = subtaskResult.getResults();
         if (stepResults != null && !stepResults.keySet().isEmpty()) {
             Map<String, StepResult> subtaskResults = filteredStepResults(stepResults);
@@ -167,22 +173,5 @@ public class SubtaskStep extends Step {
             return ((TaskResultSource)subtask).getStepResult(substepIdentifier);
         }
         return null;
-    }
-
-    // GsonSerializablePolymorphism method
-
-    @Override
-    public Data<Step> getPolymorphismData() {
-        List<DataPair> dataPairs = new ArrayList<>();
-
-        // Add any Task polymorphisms
-        if (subtask != null) {
-            dataPairs.add(new DataPair(Task.class, subtask.getClass()));
-        }
-
-        // Build new one with Task first in the list before the super ones
-        Data<Step> superData = super.getPolymorphismData();
-        dataPairs.addAll(new ArrayList<>(superData.baseSubClassPairs));
-        return new Data<>(superData.baseClass, dataPairs);
     }
 }

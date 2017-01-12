@@ -8,6 +8,11 @@ import java.util.List;
 
 public class ToggleFormStep extends NavigationFormStep {
 
+    /* Default constructor needed for serilization/deserialization of object */
+    ToggleFormStep() {
+        super();
+    }
+
     public ToggleFormStep(String identifier, String title, String text) {
         super(identifier, title, text);
     }

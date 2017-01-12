@@ -6,6 +6,11 @@ package org.researchstack.backbone.model.survey;
 
 public class CompoundQuestionSurveyItem extends QuestionSurveyItem<QuestionSurveyItem> {
 
+    /* Default constructor needed for serilization/deserialization of object */
+    CompoundQuestionSurveyItem() {
+        super();
+    }
+
     /**
      * @return false by default, true if any of the sub-questions use navigation
      */

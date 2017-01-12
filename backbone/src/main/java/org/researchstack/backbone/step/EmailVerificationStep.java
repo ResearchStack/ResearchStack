@@ -5,6 +5,11 @@ package org.researchstack.backbone.step;
  */
 
 public class EmailVerificationStep extends InstructionStep {
+    /* Default constructor needed for serilization/deserialization of object */
+    EmailVerificationStep() {
+        super();
+    }
+
     public EmailVerificationStep(String identifier, String title, String detailText) {
         super(identifier, title, detailText);
     }

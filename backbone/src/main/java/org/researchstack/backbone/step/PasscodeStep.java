@@ -6,6 +6,11 @@ package org.researchstack.backbone.step;
 
 public class PasscodeStep extends Step {
 
+    /* Default constructor needed for serilization/deserialization of object */
+    PasscodeStep() {
+        super();
+    }
+
     public PasscodeStep(String identifier, String title, String text) {
         super(identifier, title);
         setText(text);

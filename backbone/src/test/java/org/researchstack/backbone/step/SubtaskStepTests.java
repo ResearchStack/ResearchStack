@@ -44,8 +44,8 @@ public class SubtaskStepTests {
     public void testMutatedResultSet() throws Exception
     {
         SubtaskStepAndSteps subtaskStepAndSteps = createSubtaskStep();
-        Step firstStep = subtaskStepAndSteps.steps.get(0).deepCopy();
-        Step lastStep = subtaskStepAndSteps.steps.get(subtaskStepAndSteps.steps.size()-1).deepCopy();
+        Step firstStep = (Step)ObjectUtils.clone(subtaskStepAndSteps.steps.get(0));
+        Step lastStep = (Step)ObjectUtils.clone(subtaskStepAndSteps.steps.get(subtaskStepAndSteps.steps.size()-1));
         List<Step> navSteps = new ArrayList<>();
         navSteps.add(firstStep);
         navSteps.add(subtaskStepAndSteps.subtaskStep);

@@ -66,6 +66,11 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
      */
     String nextStepIdentifier;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    InstructionStep() {
+        super();
+    }
+
     public InstructionStep(String identifier, String title, String detailText)
     {
         super(identifier, title);

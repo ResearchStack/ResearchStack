@@ -209,4 +209,9 @@ public class SurveyFactoryTests {
         assertTrue(factory.getSteps().get(26) instanceof InstructionStep);
         assertEquals("consentCompletion", factory.getSteps().get(26).getIdentifier());
     }
+
+    @Test
+    public void testSerialization() {
+        
+    }
 }
