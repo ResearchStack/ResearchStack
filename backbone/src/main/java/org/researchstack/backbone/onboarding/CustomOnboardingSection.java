@@ -12,7 +12,7 @@ public class CustomOnboardingSection extends OnboardingSection {
 
     @Override
     public String getOnboardingSectionIdentifier() {
-        if (onboardingType == OnboardingSectionType.CUSTUM) {
+        if (onboardingType == OnboardingSectionType.CUSTOM) {
             return customOnboardingType;
         }
         return super.getOnboardingSectionIdentifier();

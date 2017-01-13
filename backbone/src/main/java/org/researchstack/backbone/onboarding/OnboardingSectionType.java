@@ -26,7 +26,7 @@ public enum OnboardingSectionType {
     @SerializedName(OnboardingSection.COMPLETION_IDENTIFIER)
     COMPLETION(OnboardingSection.COMPLETION_IDENTIFIER),
     // Custom onboarding section, identifier should be set in OnboardingSection class
-    CUSTUM(null);
+    CUSTOM(null);
 
     OnboardingSectionType(String identifier) {
         this.identifier = identifier;

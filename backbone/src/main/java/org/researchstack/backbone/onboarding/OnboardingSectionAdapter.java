@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
@@ -13,7 +12,6 @@ import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.survey.SurveyItem;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +34,7 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
 
         // setup custom type
         if (type == null) {
-            type = OnboardingSectionType.CUSTUM;
+            type = OnboardingSectionType.CUSTOM;
         }
 
         JsonElement resourceName = json.getAsJsonObject().get(OnboardingSection.ONBOARDING_RESOURCE_NAME_GSON);
@@ -56,7 +54,7 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
             ConsentOnboardingSection consentSection = new ConsentOnboardingSection();
             consentSection.consentDocument = context.deserialize(json, ConsentDocument.class);
             section = consentSection;
-        } else if (type == OnboardingSectionType.CUSTUM) {
+        } else if (type == OnboardingSectionType.CUSTOM) {
             section = new CustomOnboardingSection(typeJson.getAsString());
         } else {  // otherwise make the base onboarding section class
             section = new OnboardingSection();

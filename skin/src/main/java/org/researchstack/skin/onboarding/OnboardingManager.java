@@ -145,7 +145,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
             OnboardingSectionType rhsType = rhs.getOnboardingSectionType();
 
             // If there is a CUSTOM type, just return same, or 0, so it does not shift positions
-            if (lhsType == OnboardingSectionType.CUSTUM || rhsType == OnboardingSectionType.CUSTUM) {
+            if (lhsType == OnboardingSectionType.CUSTOM || rhsType == OnboardingSectionType.CUSTOM) {
                 return 0;
             }
 
