@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class SubtaskStep extends Step {
 
-    static final String LOG_TAG = SubtaskStep.class.getCanonicalName();
+    private static final String LOG_TAG = SubtaskStep.class.getCanonicalName();
 
     Task subtask;
     public Task getSubtask() {
