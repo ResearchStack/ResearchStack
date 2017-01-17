@@ -5,8 +5,7 @@ import android.preference.PreferenceManager;
 
 import org.researchstack.skin.ui.fragment.SettingsFragment;
 
-public class AppPrefs
-{
+public class AppPrefs {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Statics
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -28,7 +27,17 @@ public class AppPrefs
         instance = new AppPrefs(context);
     }
 
-    public static synchronized AppPrefs getInstance()
+    @Deprecated
+    public static synchronized AppPrefs getInstance(Context context)
+    {
+        if(instance == null)
+        {
+            instance = new AppPrefs(context);
+        }
+        return instance;
+    }
+
+    public static AppPrefs getInstance()
     {
         if(instance == null)
         {
