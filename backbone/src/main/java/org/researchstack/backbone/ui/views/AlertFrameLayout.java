@@ -46,6 +46,9 @@ public class AlertFrameLayout extends FrameLayout {
      * Helper method for ProfileSteps that need to make calls to the web
      */
     protected void showLoadingDialog(String title) {
+        if (getContext() == null) {
+            return;
+        }
         hideLoadingDialog();  // just in case these are showing
         hideAlertDialog();
         progressDialog = ProgressDialog.show(getContext(), "", title);
@@ -65,6 +68,9 @@ public class AlertFrameLayout extends FrameLayout {
      * @param message message that will be show with alert
      */
     protected void showOkAlertDialog(String message) {
+        if (getContext() == null) {
+            return;
+        }
         hideLoadingDialog();  // just in case these are showing
         hideAlertDialog();
         alertDialog = new AlertDialog.Builder(getContext())

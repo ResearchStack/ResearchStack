@@ -24,7 +24,6 @@ import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.NavigableOrderedTask;
-import org.researchstack.skin.AppPrefs;
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.skin.ResourceManager;
