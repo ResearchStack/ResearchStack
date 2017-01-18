@@ -458,7 +458,6 @@ public class AssetVideoView extends SurfaceView implements MediaController.Media
              */
             if(getWindowToken() != null)
             {
-                Resources r = getContext().getResources();
                 int messageId;
 
                 if(framework_err == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK)
