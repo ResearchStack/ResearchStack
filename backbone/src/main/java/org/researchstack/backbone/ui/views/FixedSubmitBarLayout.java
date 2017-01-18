@@ -13,8 +13,11 @@ import android.widget.ScrollView;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 
-public abstract class FixedSubmitBarLayout extends FrameLayout implements StepLayout
+public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements StepLayout
 {
+    protected LayoutInflater layoutInflater;
+    protected SubmitBar submitBar;
+
     public FixedSubmitBarLayout(Context context)
     {
         super(context);
@@ -45,17 +48,17 @@ public abstract class FixedSubmitBarLayout extends FrameLayout implements StepLa
     private void init()
     {
         // Init root
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.rsb_layout_fixed_submit_bar, this, true);
+        layoutInflater = LayoutInflater.from(getContext());
+        layoutInflater.inflate(R.layout.rsb_layout_fixed_submit_bar, this, true);
 
         // Add contentContainer to the layout
         ViewGroup contentContainer = (ViewGroup) findViewById(R.id.rsb_content_container);
-        View content = inflater.inflate(getContentResourceId(), contentContainer, false);
+        View content = layoutInflater.inflate(getContentResourceId(), contentContainer, false);
         contentContainer.addView(content, 0);
 
         // Init scrollview and submit bar guide positioning
         final View submitBarGuide = findViewById(R.id.rsb_submit_bar_guide);
-        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         ObservableScrollView scrollView = (ObservableScrollView) findViewById(R.id.rsb_content_container_scrollview);
         scrollView.setScrollListener(scrollY -> onScrollChanged(scrollView, submitBarGuide, submitBar));
         scrollView.getViewTreeObserver()
