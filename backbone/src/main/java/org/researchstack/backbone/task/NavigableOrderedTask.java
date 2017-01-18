@@ -2,25 +2,23 @@ package org.researchstack.backbone.task;
 
 import android.util.Log;
 
-import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.result.TaskResultSource;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by TheMDP on 12/29/16.
  *
- * TODO this class needs expanded to support
- * TODO SBANavigationRule, SBAConditionalRule, and SBANavigationSkipRule in the near-future.
+ * NavigableOrderedTask is meant for controlling a list of steps
+ * that can be SubtaskSteps, or any other normal step that may or may not
+ * implement and of the interfaces defined in this class...
+ * Which are NavigationRule, ConditionalRule, NavigationSkipRule
  */
 
-public class NavigableOrderedTask extends OrderedTask implements TaskResultSource {
+public class NavigableOrderedTask extends OrderedTask {
 
     static final String LOG_TAG = NavigableOrderedTask.class.getCanonicalName();
 
@@ -180,7 +178,7 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
         if (previousIdentifier != null) {
             idx = orderedStepIdentifiers.indexOf(previousIdentifier);
             if (idx >= 0 && idx < (orderedStepIdentifiers.size() - 1)) {
-                orderedStepIdentifiers = orderedStepIdentifiers.subList(0, idx + 1);
+                orderedStepIdentifiers = new ArrayList<>(orderedStepIdentifiers.subList(0, idx + 1));
             }
         }
 
@@ -192,7 +190,7 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
         if (identifier != null) {
             int indexOfId = orderedStepIdentifiers.indexOf(identifier);
             if (indexOfId >= 0) {
-                orderedStepIdentifiers = orderedStepIdentifiers.subList(0, indexOfId);
+                orderedStepIdentifiers = new ArrayList<>(orderedStepIdentifiers.subList(0, indexOfId));
             } else {
                 orderedStepIdentifiers.add(identifier);
             }
@@ -278,106 +276,16 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
 //        }
 //        for step in self.steps {
 //            // Check if the step is a subtask step and validate parameters
-//            if let subtaskStep = step as? SBASubtaskStep,
-//                    let subRet = subtaskStep.subtask.providesBackgroundAudioPrompts , subRet {
+//            if let substepListStep = step as? SBASubtaskStep,
+//                    let subRet = substepListStep.subtask.providesBackgroundAudioPrompts , subRet {
 //                return true
 //            }
 //        }
 //        return false
 //    }
 
-
-    // MARK: TaskResultSource overrides
-    TaskResult initialResult;
-
-    public Map<String, StepResult> getStoredTaskResults() {
-        if (initialResult == null) {
-            initialResult = new TaskResult(getIdentifier());
-            initialResult.setResults(new HashMap<>());
-        }
-        return initialResult.getResults();
-    }
-
-    public void appendInitialResults(StepResult result) {
-        Map<String, StepResult> results = getStoredTaskResults();
-        results.put(result.getIdentifier(), result);
-        initialResult.setResults(results);
-    }
-
-    public void appendInitialResults(Map<String, StepResult> contentsOf) {
-        Map<String, StepResult> results = getStoredTaskResults();
-        results.putAll(contentsOf);
-        initialResult.setResults(results);
-    }
-
-    public StepResult getStepResult(String stepIdentifier) {
-        // If there is an initial result then return that
-        if (initialResult != null) {
-            StepResult result = initialResult.getStepResult(stepIdentifier);
-            if (result != null) {
-                return result;
-            }
-        }
-        // Otherwise, look at the substeps
-        SubtaskStep subtaskStep = subtaskStep(stepIdentifier);
-        if (subtaskStep == null) {
-            return null;
-        }
-        return subtaskStep.getStepResult(stepIdentifier);
-    }
-
-    // TODO: do we need all this?
-    // MARK: NSCopy
-//
-//    override open func copy(with zone: NSZone? = nil) -> Any {
-//        let copy = super.copy(with: zone)
-//        guard let task = copy as? SBANavigableOrderedTask else { return copy }
-//        task.additionalTaskResults = self.additionalTaskResults
-//        task.orderedStepIdentifiers = self.orderedStepIdentifiers
-//        task.conditionalRule = self.conditionalRule
-//        task.initialResult = self.initialResult
-//        return task
-//    }
-//
-    // MARK: NSCoding
-//
-//    required public init(coder aDecoder: NSCoder) {
-//        self.additionalTaskResults = aDecoder.decodeObject(forKey: #keyPath(additionalTaskResults)) as? [ORKTaskResult]
-//        self.orderedStepIdentifiers = aDecoder.decodeObject(forKey: #keyPath(orderedStepIdentifiers)) as! [String]
-//        self.conditionalRule = aDecoder.decodeObject(forKey: #keyPath(conditionalRule)) as? SBAConditionalRule
-//        self.initialResult = aDecoder.decodeObject(forKey: #keyPath(initialResult)) as? ORKTaskResult
-//        super.init(coder: aDecoder);
-//    }
-//
-//    override open func encode(with aCoder: NSCoder) {
-//        super.encode(with: aCoder)
-//        aCoder.encode(self.additionalTaskResults, forKey: #keyPath(additionalTaskResults))
-//        aCoder.encode(self.conditionalRule, forKey: #keyPath(conditionalRule))
-//        aCoder.encode(self.orderedStepIdentifiers, forKey: #keyPath(orderedStepIdentifiers))
-//        aCoder.encode(self.initialResult, forKey: #keyPath(initialResult))
-//    }
-//
-//    // MARK: Equality
-//
-//    override open func isEqual(_ object: Any?) -> Bool {
-//        guard let object = object as? SBANavigableOrderedTask else { return false }
-//        return super.isEqual(object) &&
-//                SBAObjectEquality(self.additionalTaskResults, object.additionalTaskResults) &&
-//                SBAObjectEquality(self.orderedStepIdentifiers, object.orderedStepIdentifiers) &&
-//                SBAObjectEquality(self.conditionalRule as? NSObject, object.conditionalRule as? NSObject) &&
-//                SBAObjectEquality(self.initialResult, self.initialResult)
-//    }
-//
-//    override open var hash: Int {
-//        return super.hash ^
-//                SBAObjectHash(self.additionalTaskResults) ^
-//                SBAObjectHash(self.orderedStepIdentifiers) ^
-//                SBAObjectHash(self.conditionalRule) ^
-//                SBAObjectHash(self.initialResult)
-//    }
-
     /**
-     * Define the navigation rule as a protocol to allow for protocol-oriented extention (multiple inheritance).
+     * Define the navigation rule as an interface to allow for protocol-oriented extention (multiple inheritance).
      * Currently defined usage is to allow the SBANavigableOrderedTask to check if a step has a navigation rule.
      */
     public interface NavigationRule {

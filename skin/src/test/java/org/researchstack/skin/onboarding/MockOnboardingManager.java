@@ -2,11 +2,7 @@ package org.researchstack.skin.onboarding;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-
-import org.researchstack.backbone.onboarding.ResourceNameJsonProvider;
-
-import java.util.Collections;
+import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
 
 /**
  * Created by TheMDP on 1/12/17.
@@ -18,11 +14,11 @@ public class MockOnboardingManager extends OnboardingManager {
     private boolean isRegistered = false;
     private boolean hasPasscode = false;
 
-    MockOnboardingManager(Context context, String onboardingResourceName, ResourceNameJsonProvider jsonProvider) {
+    MockOnboardingManager(Context context, String onboardingResourceName, ResourceNameToStringConverter jsonProvider) {
         super(context, onboardingResourceName, jsonProvider);
     }
 
-    MockOnboardingManager(String onboardingResourceName, ResourceNameJsonProvider jsonProvider) {
+    MockOnboardingManager(String onboardingResourceName, ResourceNameToStringConverter jsonProvider) {
         super(null, onboardingResourceName, jsonProvider);
     }
 

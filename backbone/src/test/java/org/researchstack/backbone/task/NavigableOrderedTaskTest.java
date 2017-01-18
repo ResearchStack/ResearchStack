@@ -1,21 +1,29 @@
 package org.researchstack.backbone.task;
+import com.google.gson.reflect.TypeToken;
+
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.researchstack.backbone.model.survey.SurveyItem;
+import org.researchstack.backbone.model.survey.factory.ResourceParserHelper;
+import org.researchstack.backbone.model.survey.factory.SurveyFactory;
+import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
+import org.researchstack.backbone.step.ToggleFormStep;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -24,6 +32,16 @@ import static junit.framework.Assert.assertTrue;
  */
 public class NavigableOrderedTaskTest
 {
+    ResourceParserHelper mParserHelper;
+    SurveyFactoryHelper mSurveyFactoryHelper;
+
+    @Before
+    public void setUp() throws Exception
+    {
+        mSurveyFactoryHelper = new SurveyFactoryHelper();
+        mParserHelper = new ResourceParserHelper();
+    }
+
     @Test
     public void testNavigationWithSubtasks() {
         // Note: This test checks basic subtask navigation forward and backward
@@ -178,6 +196,79 @@ public class NavigableOrderedTaskTest
             // Lop off the last result
             taskResult.getResults().remove(previousStepId);
         }
+    }
+
+    @Test
+    public void testNavigationExpectedAnswerRulesPassed() {
+        Type listType = new TypeToken<List<SurveyItem>>() {
+        }.getType();
+        String eligibilityJson = mParserHelper.getJsonStringForResourceName("eligibilityrequirements");
+        List<SurveyItem> surveyItemList = mSurveyFactoryHelper.gson.fromJson(eligibilityJson, listType);
+
+        SurveyFactory factory = new SurveyFactory(mSurveyFactoryHelper.mockContext, surveyItemList);
+
+        String taskId = "Parent Task";
+        NavigableOrderedTask task = new NavigableOrderedTask(taskId, factory.getSteps());
+        TaskResult result = new TaskResult(taskId);
+
+        Step step = task.getStepAfterStep(null, result);
+        assertTrue(step instanceof ToggleFormStep);
+        ToggleFormStep toggleFormStep = (ToggleFormStep)step;
+
+        StepResult<Boolean> question1Result = new StepResult<>(toggleFormStep.getFormSteps().get(0));
+        question1Result.setResult(true);
+        result.getResults().put(toggleFormStep.getFormSteps().get(0).getIdentifier(), question1Result);
+
+        StepResult<Boolean> question2Result = new StepResult<>(toggleFormStep.getFormSteps().get(1));
+        question2Result.setResult(true);
+        result.getResults().put(toggleFormStep.getFormSteps().get(1).getIdentifier(), question2Result);
+
+        StepResult<Boolean> question3Result = new StepResult<>(toggleFormStep.getFormSteps().get(2));
+        question3Result.setResult(true);
+        result.getResults().put(toggleFormStep.getFormSteps().get(2).getIdentifier(), question3Result);
+
+        // Since we answered all the questions with the correct "expectedAnswer"
+        // We should see the eligible instruction
+        step = task.getStepAfterStep(step, result);
+        assertEquals("eligibleInstruction", step.getIdentifier());
+    }
+
+    @Test
+    public void testNavigationExpectedAnswerRulesFailed() {
+        Type listType = new TypeToken<List<SurveyItem>>() {
+        }.getType();
+        String eligibilityJson = mParserHelper.getJsonStringForResourceName("eligibilityrequirements");
+        List<SurveyItem> surveyItemList = mSurveyFactoryHelper.gson.fromJson(eligibilityJson, listType);
+
+        SurveyFactory factory = new SurveyFactory(mSurveyFactoryHelper.mockContext, surveyItemList);
+
+        String taskId = "Parent Task";
+        NavigableOrderedTask task = new NavigableOrderedTask(taskId, factory.getSteps());
+        TaskResult result = new TaskResult(taskId);
+
+        Step step = task.getStepAfterStep(null, result);
+        assertTrue(step instanceof ToggleFormStep);
+        ToggleFormStep toggleFormStep = (ToggleFormStep)step;
+
+        StepResult<Boolean> question1Result = new StepResult<>(toggleFormStep.getFormSteps().get(0));
+        question1Result.setResult(true);
+        result.getResults().put(toggleFormStep.getFormSteps().get(0).getIdentifier(), question1Result);
+
+        StepResult<Boolean> question2Result = new StepResult<>(toggleFormStep.getFormSteps().get(1));
+        question2Result.setResult(false);
+        result.getResults().put(toggleFormStep.getFormSteps().get(1).getIdentifier(), question2Result);
+
+        StepResult<Boolean> question3Result = new StepResult<>(toggleFormStep.getFormSteps().get(2));
+        question3Result.setResult(true);
+        result.getResults().put(toggleFormStep.getFormSteps().get(2).getIdentifier(), question3Result);
+
+        // Since we answered all the questions with the correct "expectedAnswer"
+        // We should see the eligible instruction
+        step = task.getStepAfterStep(step, result);
+        assertEquals("ineligibleInstruction", step.getIdentifier());
+
+        step = task.getStepAfterStep(step, result);
+        assertNull(step);
     }
 
     // Helper methods for the unit tests

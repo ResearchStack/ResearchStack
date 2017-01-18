@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.annotation.StringRes;
 import android.text.InputType;
 
-import com.google.gson.JsonDeserializer;
-
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
@@ -22,7 +20,6 @@ import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.BooleanQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.CompoundQuestionSurveyItem;
-import org.researchstack.backbone.model.survey.CustomInstructionSurveyItem;
 import org.researchstack.backbone.model.survey.CustomSurveyItem;
 import org.researchstack.backbone.model.survey.DateRangeSurveyItem;
 import org.researchstack.backbone.model.survey.FloatRangeSurveyItem;
@@ -30,18 +27,17 @@ import org.researchstack.backbone.model.survey.IntegerRangeSurveyItem;
 import org.researchstack.backbone.model.survey.ProfileSurveyItem;
 import org.researchstack.backbone.model.survey.ScaleQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.InstructionSurveyItem;
-import org.researchstack.backbone.model.survey.NavigationStep;
 import org.researchstack.backbone.model.survey.QuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SubtaskQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
 import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
-import org.researchstack.backbone.step.CustomInstructionStep;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
+import org.researchstack.backbone.step.NavigationFormStep;
 import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.ProfileStep;
@@ -64,6 +60,10 @@ public class SurveyFactory {
 
     // The rest of them use the toString of ProfileInfoOption
     public static final String PASSWORD_CONFIRMATION_IDENTIFIER = "confirmation";
+    public static final String CONSENT_SHARING_IDENTIFIER = "consentSharingOptions";
+
+    // When set, this will be used
+    CustomStepCreator customStepCreator;
 
     List<Step> steps;
     /*
@@ -71,6 +71,15 @@ public class SurveyFactory {
      * @param List<SurveyItem>
      */
     public SurveyFactory(Context context, List<SurveyItem> surveyItems) {
+        this(context, surveyItems, null);
+    }
+
+    /*
+     * @param Context is used to localize default true and false string values
+     * @param List<SurveyItem>
+     */
+    public SurveyFactory(Context context, List<SurveyItem> surveyItems, CustomStepCreator customStepCreator) {
+        this.customStepCreator = customStepCreator;
         steps = createSteps(context, surveyItems, false);
     }
 
@@ -171,8 +180,12 @@ public class SurveyFactory {
                 if (!(item instanceof CustomSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, CUSTOM types must be CustomSurveyItem");
                 }
+                CustomSurveyItem customItem = (CustomSurveyItem)item;
                 // To override a custom step from survey item mapping,
-                // You need to override the
+                // You need to override the CustomStepCreator
+                if (customStepCreator != null) {
+                    return customStepCreator.createCustomStep(customItem, this);
+                }
                 return createCustomStep((CustomSurveyItem)item);
         }
 
@@ -656,8 +669,32 @@ public class SurveyFactory {
     /*
      * Transfers the QuestionSurveyItem nav properties over to NavigationStep
      */
-    void transferNavigationRules(QuestionSurveyItem item, NavigationStep toStep) {
+    void transferNavigationRules(QuestionSurveyItem item, NavigationQuestionStep toStep) {
         toStep.setSkipIfPassed(item.skipIfPassed);
         toStep.setSkipToStepIdentifier(item.skipIdentifier);
+        toStep.setExpectedAnswer(item.expectedAnswer);
+    }
+
+    /*
+     * Transfers the QuestionSurveyItem nav properties over to NavigationStep
+     */
+    void transferNavigationRules(QuestionSurveyItem item, NavigationFormStep toStep) {
+        toStep.setSkipIfPassed(item.skipIfPassed);
+        toStep.setSkipToStepIdentifier(item.skipIdentifier);
+    }
+
+    /*
+     * Transfers the QuestionSurveyItem nav properties over to NavigationStep
+     */
+    void transferNavigationRules(QuestionSurveyItem item, NavigationSubtaskStep toStep) {
+        toStep.setSkipIfPassed(item.skipIfPassed);
+        toStep.setSkipToStepIdentifier(item.skipIdentifier);
+    }
+
+    /**
+     * This can be used by another class to implement custom conversion from a CustomSurveyItem to a CustomStep
+     */
+    public interface CustomStepCreator {
+        CustomStep createCustomStep(CustomSurveyItem item, SurveyFactory factory);
     }
 }

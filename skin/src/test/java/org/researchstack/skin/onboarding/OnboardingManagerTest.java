@@ -13,7 +13,7 @@ import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.onboarding.OnboardingSectionType;
 import org.researchstack.backbone.onboarding.OnboardingTaskType;
-import org.researchstack.backbone.onboarding.ResourceNameJsonProvider;
+import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.Step;
@@ -38,7 +38,7 @@ import static junit.framework.Assert.assertTrue;
 
 public class OnboardingManagerTest {
 
-    ResourceNameJsonProvider mFullResourceProvider;
+    ResourceNameToStringConverter mFullResourceProvider;
     OnboardingManager mOnboardingManager;
     MockOnboardingManager mMockOnboardingManager;
     SurveyFactoryHelper mSurveyFactoryHelper;
@@ -72,8 +72,10 @@ public class OnboardingManagerTest {
         OnboardingSection eligibilty = mOnboardingManager.getSections().get(1);
         assertEquals(3, eligibilty.surveyItems.size());
         assertEquals(SurveyItemType.QUESTION_TOGGLE, eligibilty.surveyItems.get(0).type);
-        assertEquals("eligibleInstruction",          eligibilty.surveyItems.get(0).skipIdentifier);
-        assertTrue(eligibilty.surveyItems.get(0).skipIfPassed);
+        assertTrue(eligibilty.surveyItems.get(0) instanceof ToggleQuestionSurveyItem);
+        ToggleQuestionSurveyItem toggleItem = (ToggleQuestionSurveyItem)eligibilty.surveyItems.get(0);
+        assertEquals("eligibleInstruction", toggleItem.skipIdentifier);
+        assertTrue(toggleItem.skipIfPassed);
         assertEquals(3, eligibilty.surveyItems.get(0).items.size());
         assertTrue(eligibilty.surveyItems.get(0) instanceof ToggleQuestionSurveyItem);
         ToggleQuestionSurveyItem toggle = (ToggleQuestionSurveyItem) eligibilty.surveyItems.get(0);
@@ -97,7 +99,7 @@ public class OnboardingManagerTest {
         ChoiceQuestionSurveyItem singleChoice = (ChoiceQuestionSurveyItem)consentQuiz.items.get(1);
         assertEquals(2, singleChoice.items.size());
         assertTrue(singleChoice.items.get(0) instanceof Choice);
-        assertTrue(singleChoice.expectedAnswer);
+        assertEquals(true, singleChoice.expectedAnswer);
 
         assertTrue(consent.surveyItems.get(3) instanceof InstructionSurveyItem);
         InstructionSurveyItem consentFailedQuiz = (InstructionSurveyItem)consent.surveyItems.get(3);
@@ -357,7 +359,7 @@ public class OnboardingManagerTest {
         return null;
     }
 
-    class FullTestResourceProvider implements ResourceNameJsonProvider {
+    class FullTestResourceProvider implements ResourceNameToStringConverter {
 
         @Override
         public String getJsonStringForResourceName(String resourceName) {
@@ -365,6 +367,11 @@ public class OnboardingManagerTest {
             InputStream jsonStream = getClass().getClassLoader().getResourceAsStream(resourceName+".json");
             String json = convertStreamToString(jsonStream);
             return json;
+        }
+
+        @Override
+        public String getHtmlStringForResourceName(String resourceName) {
+            return resourceName; // dont convert
         }
 
         String convertStreamToString(InputStream is) {

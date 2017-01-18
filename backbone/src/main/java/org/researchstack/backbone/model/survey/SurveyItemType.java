@@ -2,6 +2,8 @@ package org.researchstack.backbone.model.survey;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.researchstack.backbone.model.survey.factory.SurveyFactory;
+
 /**
  * Created by TheMDP on 12/31/16.
  */
@@ -47,8 +49,8 @@ public enum SurveyItemType {
     @SerializedName("timingRange")
     QUESTION_TIMING_RANGE       ("timingRange"),            // Timing Range: ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
     // Consent subtypes
-    @SerializedName("consentSharingOptions")
-    CONSENT_SHARING_OPTIONS     ("consentSharingOptions"),  // ConsentSharingStep
+    @SerializedName(SurveyFactory.CONSENT_SHARING_IDENTIFIER)
+    CONSENT_SHARING_OPTIONS     (SurveyFactory.CONSENT_SHARING_IDENTIFIER),  // ConsentSharingStep
     @SerializedName("consentReview")
     CONSENT_REVIEW              ("consentReview"),          // ConsentReviewStep
     @SerializedName("consentVisual")

@@ -31,4 +31,8 @@ public class InstructionSurveyItem extends SurveyItem<String> {
     InstructionSurveyItem() {
         super();
     }
+
+    public boolean usesNavigation() {
+        return nextIdentifier != null;
+    }
 }

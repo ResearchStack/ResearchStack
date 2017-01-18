@@ -30,4 +30,8 @@ public class CustomInstructionSurveyItem extends CustomSurveyItem {
     CustomInstructionSurveyItem() {
         super();
     }
+
+    public boolean usesNavigation() {
+        return nextIdentifier != null;
+    }
 }

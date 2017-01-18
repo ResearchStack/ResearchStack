@@ -160,7 +160,7 @@ public class SurveyFactoryTests {
         String consentItemsJson = resourceHelper.getJsonStringForResourceName("consent");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(consentItemsJson, listType);
 
-        ConsentDocumentFactory factory = new ConsentDocumentFactory(helper.mockContext, surveyItemList, consentDoc);
+        ConsentDocumentFactory factory = new ConsentDocumentFactory(helper.mockContext, surveyItemList, consentDoc, helper.converter);
 
         assertNotNull(factory.getSteps());
         assertTrue(factory.getSteps().size() > 0);

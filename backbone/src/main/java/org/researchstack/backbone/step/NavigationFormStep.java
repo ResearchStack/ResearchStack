@@ -1,11 +1,11 @@
 package org.researchstack.backbone.step;
 
-import org.researchstack.backbone.model.survey.NavigationStep;
+import android.util.Log;
+
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.FormStep;
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.task.NavigableOrderedTask;
+import org.researchstack.backbone.utils.StepHelper;
 
 import java.util.List;
 
@@ -13,11 +13,12 @@ import java.util.List;
  * Created by TheMDP on 1/3/17.
  */
 
-public class NavigationFormStep extends FormStep implements NavigationStep {
+public class NavigationFormStep extends FormStep implements NavigableOrderedTask.NavigationRule {
 
-    // MARK: Stuff you can't extend on a protocol
-    String skipToStepIdentifier;
-    boolean skipIfPassed;
+    private static final String LOG_TAG = NavigationFormStep.class.getSimpleName();
+
+    private String skipToStepIdentifier;
+    private boolean skipIfPassed;
 
     /* Default constructor needed for serilization/deserialization of object */
     NavigationFormStep() {
@@ -32,23 +33,25 @@ public class NavigationFormStep extends FormStep implements NavigationStep {
         super(identifier, title, text, steps);
     }
 
-    @Override
     public String getSkipToStepIdentifier() {
         return skipToStepIdentifier;
     }
 
-    @Override
     public void setSkipToStepIdentifier(String identifier) {
         skipToStepIdentifier = identifier;
     }
 
-    @Override
     public boolean getSkipIfPassed() {
         return skipIfPassed;
     }
 
-    @Override
     public void setSkipIfPassed(boolean skipIfPassed) {
         this.skipIfPassed = skipIfPassed;
+    }
+
+    @Override
+    public String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
+        return StepHelper.navigationFormStepSkipIdentifier(
+                skipToStepIdentifier, skipIfPassed, formSteps, result, additionalTaskResults);
     }
 }
