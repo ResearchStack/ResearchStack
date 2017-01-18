@@ -1,4 +1,4 @@
-package org.researchstack.skin;
+package org.researchstack.backbone;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
@@ -8,7 +8,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 
-import org.researchstack.skin.ui.layout.PermissionStepLayout;
+import org.researchstack.backbone.ui.step.layout.PermissionStepLayout;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -15,6 +15,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ConsentVisualStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
@@ -46,7 +47,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
+    public void initialize(Step step, StepResult result, TaskResult taskResult)
     {
         this.step = (ConsentVisualStep) step;
         initializeStep();
@@ -146,7 +147,12 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         }
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-        submitBar.setPositiveTitle(step.getNextButtonString());
+        String nextButtonTitle = getContext().getString(R.string.rsb_next);
+        // Support for deprecated method
+        if (step.getNextButtonString() != null) {
+            nextButtonTitle = step.getNextButtonString();
+        }
+        submitBar.setPositiveTitle(nextButtonTitle);
         submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                         step,
                         null));

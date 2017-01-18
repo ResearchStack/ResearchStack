@@ -1,4 +1,4 @@
-package org.researchstack.skin.model;
+package org.researchstack.backbone.model;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -25,7 +25,7 @@ public class Step implements Serializable
 {
     private String identifier;
 
-    private Class stepLayoutClass;
+    protected Class stepLayoutClass;
 
     private int stepTitle;
 

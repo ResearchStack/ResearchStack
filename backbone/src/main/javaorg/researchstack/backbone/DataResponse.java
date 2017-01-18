@@ -1,4 +1,4 @@
-package org.researchstack.skin;
+package org.researchstack.backbone;
 
 public class DataResponse
 {

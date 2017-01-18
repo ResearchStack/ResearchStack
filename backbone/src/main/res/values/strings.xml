@@ -130,9 +130,11 @@
     <string name="rsb_format_step_title">Step %1$s of %2$s</string>
     <string name="rsb_hours">Hours</string>
     <string name="rsb_minutes">Minutes</string>
+    <string name="rsb_loading_ellipses">Loading...</string>
+    <string name="rsb_forgot_password">Forgot your Password?</string>
 
     <!-- Step Errors -->
-    <string name="rsb_error_data_failed">Failed to load encrypted data, try again!</string>
+    <string name="rsb_error_data_failed">FailedP to load encrypted data, try again!</string>
     <string name="rsb_error_invalid_signature">Signature Invalid</string>
     <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
     <string name="rsb_invalid_answer_date_over">Invalid answer, date must be before %1$s</string>
@@ -175,4 +177,68 @@
     <string name="rsb_error_assetvideoview_unknown">Can\'t play this video.</string>
     <!-- Button to close error alert when a video cannot be played -->
     <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Passcode -->
+    <string name="rsb_passcode_change_title">Change Passcode</string>
+    <string name="rsb_passcode">Passcode</string>
+    <string name="rsb_passcode_create_title">Choose a passcode</string>
+    <string name="rsb_passcode_create_summary">Enter a secure, %1$d-%2$s code to protect your data and log in
+        faster.
+    </string>
+    <string name="rsb_passcode_confirm_title">Confirm your passcode</string>
+    <string name="rsb_passcode_confirm_summary">Enter your %1$d-%2$s code one more time to confirm.</string>
+    <string name="rsb_passcode_confirm_error">That code doesn’t match the one you entered. Try again
+        or go back to choose a different %1$d-%2$s code.
+    </string>
+
+    <!-- Permissions -->
+    <string name="rsb_permissions">Permissions</string>
+    <string name="rsb_permission_location_title">Location</string>
+    <string name="rsb_permission_location_desc">The app needs location permissions to show accurate
+        location-based data</string>
+    <string name="rsb_permission_notification_title">Notifications</string>
+    <string name="rsb_permission_notification_desc">The app needs your permission in order to show
+    notifications when you complete surveys. This permission is optional and can be enabled in
+    the App\'s Settings screen.</string>
+    <string name="rsb_permission_notification_desc_long">This activity is serving as an example of
+        how you would implement outside auth. In other words, this activity represents an 3rd party
+        auth process like ones found in Google+, Google Drive, or Google Fit. This example is simple
+        and the result only controls whether notifications will show .\n\nYou can still enable app
+        notifications via the settings screen. The button for this screen is in the upper right hand
+        corner of the main screen (gear icon).</string>
+    <string name="rsb_permission_disclaimer">Participation in the study requires some permissions
+        from your device.
+    </string>
+    <string name="rsb_permission_continue_invalid">Please allow %1$s permissions to continue.
+    </string>
+    <string name="rsb_allow">Allow</string>
+    <string name="rsb_granted">Granted</string>
+    <string name="rsb_optional">Optional</string>
+
+    <!-- ProfileStepLayout -->
+
+    <string name="rsb_error_invalid_password">Invalid Password</string>
+    <string name="rsb_error_invalid_email">Invalid Email</string>
+    <string name="rsb_error_invalid_name">Invalid Name</string>
+
+    <!-- Email Verif -->
+    <string name="rsb_confirm">Confirm</string>
+    <string name="rsb_confirm_title">Check your email</string>
+    <string name="rsb_confirm_summary">We’ve emailed %1$s with a link to confirm your account. After
+        visiting the link, come back and touch “continue” below.
+    </string>
+    <string name="rsb_confirm_diff">ENTER A DIFFERENT EMAIL</string>
+    <string name="rsb_confirm_resend_email">Resend</string>
+
+    <string name="rsb_wrong_email">Wrong email address? Tap here.</string>
+    <string name="rsb_once_verified">Once verified, tap below</string>
+    <string name="rsb_continue">Continue</string>
+    <string name="rsb_resend_email">Resend Verification Email</string>
+    <string name="rsb_email_verification_body">%1$s has send you a verification email at %2$s
+    </string>
+    <string name="rsb_email_not_verified">Please check your email to verify your account before
+        continuing
+    </string>
+    <string name="rsb_change_email">Change Email</string>
+
 </resources>
