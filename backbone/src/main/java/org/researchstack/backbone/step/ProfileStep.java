@@ -1,6 +1,7 @@
 package org.researchstack.backbone.step;
 
 import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.ui.step.layout.ProfileStepLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +35,7 @@ public class ProfileStep extends FormStep {
     }
 
     @Override
-    public Class<?> getStepBodyClass()
-    {
-        // TODO: need custom ProfileStepLayout
-        // TODO: that will be able to set same basic user stuff like name, gender, profileImage, etc
-        return super.getStepBodyClass();
+    public Class getStepLayoutClass() {
+        return ProfileStepLayout.class;
     }
 }
