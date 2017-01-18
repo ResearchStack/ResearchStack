@@ -71,8 +71,8 @@ public class AppPrefs
     public void setOnboardingComplete(boolean complete)
     {
         prefs.edit().putBoolean(KEY_ONBOARDING_COMPLETE, complete).apply();
-        if(complete) prefs.edit().putLong(KEY_ONBOARDING_COMPLETE_TIME, new Date().getTime());
-        else prefs.edit().putLong(KEY_ONBOARDING_COMPLETE_TIME, 0);
+        if(complete) prefs.edit().putLong(KEY_ONBOARDING_COMPLETE_TIME, new Date().getTime()).apply();
+        else prefs.edit().putLong(KEY_ONBOARDING_COMPLETE_TIME, 0).apply();
     }
 
     /**
@@ -99,8 +99,8 @@ public class AppPrefs
     public void setEmailVerfied(boolean verified)
     {
         prefs.edit().putBoolean(KEY_EMAIL_VERIFIED, verified).apply();
-        if(verified) prefs.edit().putLong(KEY_EMAIL_VERIFIED_TIME, new Date().getTime());
-        else prefs.edit().putLong(KEY_EMAIL_VERIFIED_TIME, 0);
+        if(verified) prefs.edit().putLong(KEY_EMAIL_VERIFIED_TIME, new Date().getTime()).apply();
+        else prefs.edit().putLong(KEY_EMAIL_VERIFIED_TIME, 0).apply();
     }
 
     /**
