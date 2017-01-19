@@ -2,20 +2,17 @@ package org.researchstack.skin.ui.layout;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import org.researchstack.backbone.model.ConsentSignature;
 import org.researchstack.backbone.model.DocumentProperties;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
@@ -30,9 +27,6 @@ import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.task.SignInTask;
 import org.researchstack.skin.ui.adapter.TextWatcherAdapter;
-
-import java.math.BigInteger;
-import java.security.SecureRandom;
 
 public class SignInStepLayout extends RelativeLayout implements StepLayout {
     private Context ctx;
@@ -71,7 +65,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout {
                 .getConsentSections()
                 .create(ctx);
         DocumentProperties properties = data.getDocumentProperties();
-        passwordLength = properties.passwordLenght();
+        passwordLength = properties.passwordLength();
 
         progress = layout.findViewById(R.id.progress);
 

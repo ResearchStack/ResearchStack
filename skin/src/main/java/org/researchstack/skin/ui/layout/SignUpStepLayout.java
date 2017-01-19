@@ -2,7 +2,6 @@ package org.researchstack.skin.ui.layout;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -70,7 +69,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout {
                 .create(ctx);
         DocumentProperties properties = data.getDocumentProperties();
         generatePassword = properties.generatePassword();
-        passwordLength = properties.passwordLenght();
+        passwordLength = properties.passwordLength();
 
         View layout = LayoutInflater.from(getContext())
                 .inflate(R.layout.rss_layout_sign_up, this, true);
