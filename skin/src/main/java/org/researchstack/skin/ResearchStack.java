@@ -52,6 +52,8 @@ public abstract class ResearchStack
     {
         instance = concreteResearchStack;
 
+        AppPrefs.init(context);
+
         ResourceManager.init(concreteResearchStack.createResourceManagerImplementation(context));
 
         UiManager.init(concreteResearchStack.createUiManagerImplementation(context));
