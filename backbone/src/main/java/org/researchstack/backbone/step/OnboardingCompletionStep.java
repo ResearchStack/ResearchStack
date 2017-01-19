@@ -3,7 +3,7 @@ package org.researchstack.backbone.step;
 import org.researchstack.backbone.ui.step.layout.OnboardingCompletionStepLayout;
 
 /**
- * Created by TheMDP on 12/31/16.
+ * Created by TheMDP on 1/18/17.
  */
 
 public class OnboardingCompletionStep extends InstructionStep {
@@ -13,17 +13,13 @@ public class OnboardingCompletionStep extends InstructionStep {
         super();
     }
 
-    public OnboardingCompletionStep(String identifier, String title, String detailText) {
+    public OnboardingCompletionStep(String identifier, String title, String detailText)
+    {
         super(identifier, title, detailText);
+        setOptional(false);
     }
 
-//    public OnboardingCompletionStep(InstructionSurveyItem item) {
-//        super(item);
-//    }
-
-    @Override
-    public Class getStepLayoutClass()
-    {
+    public Class getStepLayoutClass() {
         return OnboardingCompletionStepLayout.class;
     }
 }

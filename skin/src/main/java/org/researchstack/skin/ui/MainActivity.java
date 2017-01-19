@@ -19,7 +19,7 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.UiThreadContext;
 import org.researchstack.skin.ActionItem;
-import org.researchstack.skin.DataProvider;
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;

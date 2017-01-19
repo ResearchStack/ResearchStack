@@ -2,6 +2,7 @@ package org.researchstack.backbone.step;
 
 
 import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.ui.step.layout.LoginStepLayout;
 
 import java.util.List;
 
@@ -21,9 +22,7 @@ public class LoginStep extends ProfileStep {
     }
 
     @Override
-    public Class<?> getStepBodyClass()
-    {
-        // TODO: need custom LoginStepLayout, one exists as SignInStepLayout, but is in Skin module
-        return super.getStepBodyClass();
+    public Class getStepLayoutClass() {
+        return LoginStepLayout.class;
     }
 }

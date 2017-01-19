@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
@@ -21,8 +23,7 @@ import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ThemeUtils;
-import org.researchstack.skin.PermissionRequestManager;
-import org.researchstack.skin.R;
+import org.researchstack.backbone.R;
 
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
+    public void initialize(Step step, StepResult result, TaskResult taskResult)
     {
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;
@@ -85,10 +86,10 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
         // Inflate step UI
-        inflater.inflate(R.layout.rss_layout_permission, this, true);
+        inflater.inflate(R.layout.rsb_layout_permission, this, true);
 
         // Add Sub-items to our ScrollView
-        LinearLayout permissionContainer = (LinearLayout) findViewById(R.id.container_permission_items);
+        LinearLayout permissionContainer = (LinearLayout) findViewById(R.id.rsb_container_permission_items);
 
         List<PermissionRequestManager.PermissionRequest> items = PermissionRequestManager.getInstance()
                 .getPermissionRequests();
@@ -97,7 +98,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
         {
             boolean isGranted = PermissionRequestManager.getInstance().hasPermission(getContext(), item.getId());
 
-            View child = inflater.inflate(R.layout.rss_item_permission_content,
+            View child = inflater.inflate(R.layout.rsb_item_permission_content,
                     permissionContainer,
                     false);
 
@@ -108,19 +109,19 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
             Drawable icon = ContextCompat.getDrawable(getContext(), item.getIcon());
             icon = DrawableCompat.wrap(icon);
             DrawableCompat.setTint(icon, ThemeUtils.getAccentColor(getContext()));
-            ((ImageView) child.findViewById(R.id.permission_icon)).setImageDrawable(icon);
+            ((ImageView) child.findViewById(R.id.rsb_permission_icon)).setImageDrawable(icon);
 
             // Set title
-            ((TextView) child.findViewById(R.id.permission_title)).setText(item.getTitle());
+            ((TextView) child.findViewById(R.id.rsb_permission_title)).setText(item.getTitle());
 
             // Set details
-            ((TextView) child.findViewById(R.id.permission_details)).setText(item.getText());
+            ((TextView) child.findViewById(R.id.rsb_permission_details)).setText(item.getText());
 
             // Text action
-            TextView action = (TextView) child.findViewById(R.id.permission_button);
+            TextView action = (TextView) child.findViewById(R.id.rsb_permission_button);
             action.setText(isGranted
-                    ? R.string.rss_granted
-                    : item.isBlockingPermission() ? R.string.rss_allow : R.string.rss_optional);
+                    ? R.string.rsb_granted
+                    : item.isBlockingPermission() ? R.string.rsb_allow : R.string.rsb_optional);
             RxView.clicks(action).subscribe(o -> {
                 permissionCallback.onRequestPermission(item.getId());
             });
@@ -158,10 +159,10 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
 
             View parent = findViewWithTag(item.getId());
 
-            TextView action = (TextView) parent.findViewById(R.id.permission_button);
+            TextView action = (TextView) parent.findViewById(R.id.rsb_permission_button);
             action.setText(isGranted
-                    ? R.string.rss_granted
-                    : item.isBlockingPermission() ? R.string.rss_allow : R.string.rss_optional);
+                    ? R.string.rsb_granted
+                    : item.isBlockingPermission() ? R.string.rsb_allow : R.string.rsb_optional);
             action.setEnabled(!isGranted);
         }
     }
@@ -186,7 +187,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
             {
                 String permissionName = getResources().getString(item.getTitle());
                 String formattedError = getResources().getString(
-                        R.string.rss_permission_continue_invalid, permissionName.toLowerCase());
+                        R.string.rsb_permission_continue_invalid, permissionName.toLowerCase());
                 Toast.makeText(getContext(), formattedError, Toast.LENGTH_SHORT).show();
                 return false;
             }

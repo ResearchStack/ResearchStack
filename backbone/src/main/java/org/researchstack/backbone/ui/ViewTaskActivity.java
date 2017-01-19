@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -13,13 +14,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.ui.callbacks.ActivityCallback;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
+import org.researchstack.backbone.utils.StepLayoutHelper;
 
 import java.lang.reflect.Constructor;
 import java.util.Date;
@@ -32,12 +36,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     private StepSwitcher root;
 
-    private Step       currentStep;
-    private Task       task;
+    private Step currentStep;
+    protected Task task;
     public Task getTask() {
         return task;
     }
-    private TaskResult taskResult;
+    protected TaskResult taskResult;
 
     public static Intent newIntent(Context context, Task task)
     {
@@ -61,7 +65,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         if(savedInstanceState == null)
         {
-            task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
+            task = (Task) getIntent() .getSerializableExtra(EXTRA_TASK);
             taskResult = new TaskResult(task.getIdentifier());
             taskResult.setStartDate(new Date());
         }
@@ -112,7 +116,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         }
     }
 
-    private void showStep(Step step)
+    protected void showStep(Step step)
     {
         int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult)
                 .getCurrent();
@@ -137,26 +141,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         StepResult result = taskResult.getStepResult(step.getIdentifier());
 
         // Return the Class & constructor
-        StepLayout stepLayout = createLayoutFromStep(step);
-        stepLayout.initialize(step, result);
+        StepLayout stepLayout = StepLayoutHelper.createLayoutFromStep(step, this);
+        stepLayout.initialize(step, result, taskResult);
         stepLayout.setCallbacks(this);
 
         return stepLayout;
-    }
-
-    @NonNull
-    private StepLayout createLayoutFromStep(Step step)
-    {
-        try
-        {
-            Class cls = step.getStepLayoutClass();
-            Constructor constructor = cls.getConstructor(Context.class);
-            return (StepLayout) constructor.newInstance(this);
-        }
-        catch(Exception e)
-        {
-            throw new RuntimeException(e);
-        }
     }
 
     private void saveAndFinish()
@@ -281,7 +270,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         }
     }
 
-    private void hideKeyboard()
+    protected void hideKeyboard()
     {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         if(imm.isActive() && imm.isAcceptingText())

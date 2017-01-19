@@ -1,5 +1,6 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
@@ -22,23 +24,25 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     private StepCallbacks callbacks;
     private Step          step;
 
-    public InstructionStepLayout(Context context)
-    {
+    public InstructionStepLayout(Context context) {
         super(context);
     }
 
-    public InstructionStepLayout(Context context, AttributeSet attrs)
-    {
+    public InstructionStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public InstructionStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public InstructionStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
+    @TargetApi(21)
+    public InstructionStepLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
     @Override
-    public void initialize(Step step, StepResult result)
+    public void initialize(Step step, StepResult result, TaskResult taskResult)
     {
         this.step = step;
         initializeStep();
@@ -106,9 +110,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             // Set Next / Skip
             SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
             submitBar.setPositiveTitle(R.string.rsb_next);
-            submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                    step,
-                    null));
+            submitBar.setPositiveAction(v -> onComplete());
 
             if(step.isOptional())
             {
@@ -125,5 +127,9 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
         }
+    }
+
+    protected void onComplete() {
+        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
     }
 }

@@ -25,9 +25,9 @@ import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
-import org.researchstack.skin.DataProvider;
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
-import org.researchstack.skin.model.SchedulesAndTasksModel;
+import org.researchstack.backbone.model.SchedulesAndTasksModel;
 import org.researchstack.skin.ui.views.DividerItemDecoration;
 
 import java.util.ArrayList;

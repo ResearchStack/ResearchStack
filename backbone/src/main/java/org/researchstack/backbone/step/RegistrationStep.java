@@ -1,6 +1,8 @@
 package org.researchstack.backbone.step;
 
 import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.ui.step.layout.RegistrationStepLayout;
+import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 
 import java.util.List;
 
@@ -20,10 +22,7 @@ public class RegistrationStep extends ProfileStep {
     }
 
     @Override
-    public Class<?> getStepBodyClass()
-    {
-        // TODO: need custom RegistrationStepLayout
-        // TODO: name, email, password, etc. and can make call to web to register account
-        return super.getStepBodyClass();
+    public Class getStepLayoutClass() {
+        return RegistrationStepLayout.class;
     }
 }

@@ -6,16 +6,13 @@ import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.FormStep;
-import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.skin.PermissionRequestManager;
+import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.TaskProvider;
-import org.researchstack.skin.UiManager;
-import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.model.InclusionCriteriaModel;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
 import org.researchstack.skin.ui.layout.SignUpIneligibleStepLayout;
@@ -25,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Deprecated // use OnboardingManager.launchOnboarding(... TaskType.REGISTRATION)
 public class SignUpTask extends OnboardingTask
 {
     private boolean hasPasscode;

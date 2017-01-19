@@ -47,7 +47,7 @@ public class TextAnswerFormat extends AnswerFormat
     }
 
     /**
-     * Set the minimum length for the answer, 0 if no minumum set
+     * Set the maximum length for the answer, 0 if no maximum set
      */
     public void setMaximumLength(int maximumLength)
     {
