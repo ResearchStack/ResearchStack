@@ -101,7 +101,7 @@ public class DocumentProperties
         this.generatePassword = generate;
     }
 
-    public int passwordLenght()
+    public int passwordLength()
     {
         return passwordLength;
     }
