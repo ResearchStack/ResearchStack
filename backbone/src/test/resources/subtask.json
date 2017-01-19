@@ -1,0 +1,27 @@
+[
+   {
+      "identifier": "intruction",
+      "title": "This is a test",
+      "type": "instruction"
+   },
+   {
+      "identifier": "question1",
+      "type": "singleChoiceText",
+      "title": "Question 1?",
+      "items" : [
+         {"text" :"a", "value" : "a"},
+         {"text" :"b", "value" : "b"},
+         {"text" :"c", "value" : "c"}
+      ]
+   },
+   {
+      "identifier": "question2",
+      "type": "boolean",
+      "title": "Are you older than 18?"
+   },
+   {
+      "identifier": "completion",
+      "title": "You are done.",
+      "type": "completion"
+   }
+ ]

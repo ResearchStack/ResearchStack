@@ -22,12 +22,9 @@ import java.io.Serializable;
  * question step or form item. Incorporate the resulting step into a task, and present the task with
  * a {@link org.researchstack.backbone.ui.ViewTaskActivity}.
  */
-public abstract class AnswerFormat implements Serializable
+public class AnswerFormat implements Serializable
 {
-    /**
-     * Default constructor. The appropriate subclass of AnswerFormat should be used instead of this
-     * directly.
-     */
+    /* Default constructor needed for serilization/deserialization of object */
     public AnswerFormat()
     {
     }

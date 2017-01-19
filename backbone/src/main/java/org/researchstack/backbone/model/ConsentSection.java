@@ -1,4 +1,6 @@
 package org.researchstack.backbone.model;
+import android.support.annotation.StringRes;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.R;
@@ -15,8 +17,10 @@ public class ConsentSection implements Serializable
      * The value of this property indicates whether a predefined image, title, and animation are
      * present.
      */
-    @SerializedName("sectionType")
+    public static final String SECTION_TYPE_GSON = "sectionType";
+    @SerializedName(SECTION_TYPE_GSON)
     private Type   type;
+
     /**
      * The title of the consent section in a localized string.
      * <p>
@@ -103,6 +107,16 @@ public class ConsentSection implements Serializable
     private String customAnimationURL;
 
     /**
+     * Used for storing custom type identifer when type is CUSTOM eum
+     */
+    transient String customTypeIdentifier;
+
+    /* Default identifier for serilization/deserialization */
+    ConsentSection() {
+        super();
+    }
+
+    /**
      * Returns an initialized consent section using the specified type.
      *
      * @param type The consent section type.
@@ -132,6 +146,9 @@ public class ConsentSection implements Serializable
     {
         return type;
     }
+    void setType(Type type) {
+        this.type = type;
+    }
 
     public String getHtmlContent()
     {
@@ -146,6 +163,10 @@ public class ConsentSection implements Serializable
     public String getCustomImageName()
     {
         return customImageName;
+    }
+
+    void setCustomImageName(String imageName) {
+        customImageName = imageName;
     }
 
     public String getContent()
@@ -185,6 +206,19 @@ public class ConsentSection implements Serializable
         return customLearnMoreButtonTitle;
     }
 
+    public void setCustomLearnMoreButtonTitle(String customLearnMoreButtonTitle)
+    {
+        this.customLearnMoreButtonTitle = customLearnMoreButtonTitle;
+    }
+
+    public String getTypeIdentifier() {
+        if (type == Type.Custom) {
+            return customTypeIdentifier;
+        }
+        return type.getIdentifier();
+    }
+
+    public static final int UNDEFINED_RES = -1;
     public enum Type implements Serializable
     {
         /**
@@ -194,7 +228,11 @@ public class ConsentSection implements Serializable
          * general background information on the purpose of the study.
          */
         @SerializedName("overview")
-        Overview(),
+        Overview(
+                "overview",
+                R.string.rsb_consent_section_welcome,
+                R.string.rsb_consent_section_more_info_welcome,
+                null),
 
         /**
          * A section informing the user that sensor data will be collected.
@@ -203,7 +241,11 @@ public class ConsentSection implements Serializable
          * purpose.
          */
         @SerializedName("dataGathering")
-        DataGathering(),
+        DataGathering(
+                "dataGathering",
+                R.string.rsb_consent_section_data_gathering,
+                R.string.rsb_consent_section_more_info_data_gathering,
+                "rsb_consent_section_data_gathering"),
 
         /**
          * A section describing the privacy policies for the study.
@@ -214,7 +256,11 @@ public class ConsentSection implements Serializable
          * involved.
          */
         @SerializedName("privacy")
-        Privacy(),
+        Privacy(
+                "privacy",
+                R.string.rsb_consent_section_privacy,
+                R.string.rsb_consent_section_more_info_privacy,
+                "rsb_consent_section_privacy"),
 
         /**
          * A section describing how the collected data will be used.
@@ -224,7 +270,11 @@ public class ConsentSection implements Serializable
          * over the data after it is collected.
          */
         @SerializedName("dataUse")
-        DataUse(),
+        DataUse(
+                "dataUse",
+                R.string.rsb_consent_section_data_use,
+                R.string.rsb_consent_section_more_info_data_use,
+                "rsb_consent_section_data_use"),
 
         /**
          * A section describing how much time is required for the study.
@@ -232,7 +282,11 @@ public class ConsentSection implements Serializable
          * This content can help users understand what to expect as they participate in the study.
          */
         @SerializedName("timeCommitment")
-        TimeCommitment(),
+        TimeCommitment(
+                "timeCommitment",
+                R.string.rsb_consent_section_time_commitment,
+                R.string.rsb_consent_section_more_info_time_commitment,
+                "rsb_consent_section_time_commitment"),
 
         /**
          * A section describing active task use in the study.
@@ -241,7 +295,11 @@ public class ConsentSection implements Serializable
          * what purpose. Any risks that are involved can also be communicated in this section.
          */
         @SerializedName("studyTasks")
-        StudyTasks(),
+        StudyTasks(
+                "studyTasks",
+                R.string.rsb_consent_section_study_tasks,
+                R.string.rsb_consent_section_more_info_study_tasks,
+                "rsb_consent_section_study_tasks"),
 
         /**
          * A section describing survey use in the study.
@@ -250,7 +308,11 @@ public class ConsentSection implements Serializable
          * clear to what extent participation is optional.
          */
         @SerializedName("studySurvey")
-        StudySurvey(),
+        StudySurvey(
+                "studySurvey",
+                R.string.rsb_consent_section_study_survey,
+                R.string.rsb_consent_section_more_info_study_survey,
+                "rsb_consent_section_study_survey"),
 
         /**
          * A section describing how to withdraw from the study.
@@ -259,7 +321,11 @@ public class ConsentSection implements Serializable
          * to withdraw.
          */
         @SerializedName("withdrawing")
-        Withdrawing(),
+        Withdrawing(
+                "withdrawing",
+                R.string.rsb_consent_section_withdrawing,
+                R.string.rsb_consent_section_more_info_withdrawing,
+                "rsb_consent_section_withdrawing"),
 
         /**
          * A custom section.
@@ -268,7 +334,7 @@ public class ConsentSection implements Serializable
          * consent document may have as many or as few custom sections as needed.
          */
         @SerializedName("custom")
-        Custom,
+        Custom("custom", UNDEFINED_RES, R.string.rsb_consent_section_more_info, null),
 
         /**
          * Document-only sections.
@@ -278,81 +344,37 @@ public class ConsentSection implements Serializable
          * property).
          */
         @SerializedName("onlyInDocument")
-        OnlyInDocument;
+        OnlyInDocument("onlyInDocument", UNDEFINED_RES, R.string.rsb_consent_section_more_info, null);
 
-        public int getTitleResId()
+        Type(
+            String identifier,
+            @StringRes int titleRes,
+            @StringRes int moreInfoRes,
+            String imageName)
         {
-            switch(this)
-            {
-                case Overview:
-                    return R.string.rsb_consent_section_welcome;
-                case DataGathering:
-                    return R.string.rsb_consent_section_data_gathering;
-                case Privacy:
-                    return R.string.rsb_consent_section_privacy;
-                case DataUse:
-                    return R.string.rsb_consent_section_data_use;
-                case TimeCommitment:
-                    return R.string.rsb_consent_section_time_commitment;
-                case StudySurvey:
-                    return R.string.rsb_consent_section_study_survey;
-                case StudyTasks:
-                    return R.string.rsb_consent_section_study_tasks;
-                case Withdrawing:
-                    return R.string.rsb_consent_section_withdrawing;
-                default:
-                    return - 1;
-            }
+            this.identifier = identifier;
+            this.titleRes = titleRes;
+            this.moreInfoRes = moreInfoRes;
+            this.imageName = imageName;
         }
 
-        public String getImageName()
-        {
-            switch(this)
-            {
-                case DataGathering:
-                    return "rsb_consent_section_data_gathering";
-                case Privacy:
-                    return "rsb_consent_section_privacy";
-                case DataUse:
-                    return "rsb_consent_section_data_use";
-                case TimeCommitment:
-                    return "rsb_consent_section_time_commitment";
-                case StudySurvey:
-                    return "rsb_consent_section_study_survey";
-                case StudyTasks:
-                    return "rsb_consent_section_study_tasks";
-                case Withdrawing:
-                    return "rsb_consent_section_withdrawing";
-                default:
-                    return null;
-            }
-        }
+        String identifier;
+        String imageName;
+        @StringRes int titleRes;
+        @StringRes int moreInfoRes;
 
-        public int getMoreInfoResId()
-        {
-            switch(this)
-            {
-                case Overview:
-                    return R.string.rsb_consent_section_more_info_welcome;
-                case DataGathering:
-                    return R.string.rsb_consent_section_more_info_data_gathering;
-                case Privacy:
-                    return R.string.rsb_consent_section_more_info_privacy;
-                case DataUse:
-                    return R.string.rsb_consent_section_more_info_data_use;
-                case TimeCommitment:
-                    return R.string.rsb_consent_section_more_info_time_commitment;
-                case StudySurvey:
-                    return R.string.rsb_consent_section_more_info_study_survey;
-                case StudyTasks:
-                    return R.string.rsb_consent_section_more_info_study_tasks;
-                case Withdrawing:
-                    return R.string.rsb_consent_section_more_info_withdrawing;
-                default:
-                    return R.string.rsb_consent_section_more_info;
-            }
+        public int getTitleResId() {
+            return titleRes;
         }
-
+        public String getImageName() {
+            return imageName;
+        }
+        public int getMoreInfoResId() {
+            return moreInfoRes;
+        }
+        private String getIdentifier() {
+            return identifier;
+        }
     }
 
 }

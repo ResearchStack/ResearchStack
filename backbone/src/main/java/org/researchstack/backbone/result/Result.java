@@ -1,5 +1,7 @@
 package org.researchstack.backbone.result;
 
+import org.researchstack.backbone.utils.ObjectUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,7 +25,7 @@ import java.util.Date;
  */
 public class Result implements Serializable
 {
-    private String identifier;
+    String identifier;
 
     private Date startDate;
 
@@ -31,6 +33,11 @@ public class Result implements Serializable
 
     // unimplemented but exists in RK, implement or delete if not needed
     private boolean saveable;
+
+    /* Default identifier for serilization/deserialization */
+    Result() {
+        super();
+    }
 
     /**
      * Returns an initialized result using the specified identifier.
@@ -104,4 +111,13 @@ public class Result implements Serializable
         this.endDate = endDate;
     }
 
+    /**
+     * @param newIdentifier
+     * @return a deep copy of this object, and its polymorphism, with a new identifier set
+     */
+    public Result deepCopy(String newIdentifier) {
+        Result copy = (Result)ObjectUtils.clone(this);
+        copy.identifier = newIdentifier;
+        return copy;
+    }
 }

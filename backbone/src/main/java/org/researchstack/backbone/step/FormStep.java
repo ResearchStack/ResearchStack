@@ -1,6 +1,8 @@
 package org.researchstack.backbone.step;
+import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.FormAnswerFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,12 +18,22 @@ import java.util.List;
  */
 public class FormStep extends QuestionStep
 {
-    private List<QuestionStep> formSteps;
+    List<QuestionStep> formSteps;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    FormStep() {
+        super();
+    }
 
     public FormStep(String identifier, String title, String text)
     {
         super(identifier, title, new FormAnswerFormat());
         setText(text);
+    }
+
+    public FormStep(String identifier, String title, String text, List<QuestionStep> steps) {
+        this(identifier, title, text);
+        formSteps = steps;
     }
 
     /**

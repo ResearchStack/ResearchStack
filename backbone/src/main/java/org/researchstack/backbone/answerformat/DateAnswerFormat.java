@@ -20,6 +20,12 @@ public class DateAnswerFormat extends AnswerFormat
 
     private Date maximumDate;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    DateAnswerFormat()
+    {
+        super();
+    }
+
     public DateAnswerFormat(DateAnswerStyle style)
     {
         this.style = style;

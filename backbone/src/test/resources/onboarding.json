@@ -1,0 +1,34 @@
+[
+  {
+    "identifier"   : "login",
+    "type"         : "login"
+  },
+  {
+    "identifier"    : "registration",
+    "type"          : "registration",
+    "title"         : "Registration",
+    "text"          : "Please provide a unique email address and password to create a secure account.",
+    "footnote"      : "Sage Bionetworks, a non-profit biomedical research institute, is helping to collect data for this study and distribute it to the study investigators and other researchers.",
+    "items"         : ["name", "email", "password"]
+  },
+  {
+    "identifier"   : "passcode",
+    "type"         : "passcodeType6Digit",
+    "title"        : "Identification",
+    "text"         : "Select a 6-digit passcode. Setting up a passcode will help provide quick and secure access to this application."
+  },
+  {
+    "identifier"   : "emailVerification",
+    "type"         : "emailVerification"
+  },
+  {
+    "identifier"   : "permissions",
+    "type"         : "permissions"
+  },
+  {
+    "identifier"   : "onboardingCompletion",
+    "type"         : "onboardingCompletion",
+    "title"        : "Thank You!",
+    "text"         : "You are all set."
+  }
+]

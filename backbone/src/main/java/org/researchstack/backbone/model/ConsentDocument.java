@@ -1,6 +1,8 @@
 package org.researchstack.backbone.model;
 import android.support.annotation.StringRes;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +68,28 @@ public class ConsentDocument implements Serializable
      */
     private String htmlReviewContent;
 
+    /**
+     * True if consent must require the user's name
+     */
+    @SerializedName("requiresName")
+    private boolean requiresName = true;
+
+    /**
+     * True if consent must require the user's birthdate
+     */
+    @SerializedName("requiresBirthdate")
+    private boolean requiresBirthdate = true;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    public ConsentDocument() {
+        super();
+    }
+
+    /**
+     * True if consent must require the user's signature
+     */
+    @SerializedName("requiresSignature")
+    private boolean requiresSignature = true;
 
     public void setTitle(String title)
     {
@@ -124,4 +148,33 @@ public class ConsentDocument implements Serializable
         this.htmlReviewContent = htmlReviewContent;
     }
 
+    public boolean getRequiresName()
+    {
+        return requiresName;
+    }
+
+    public void setRequiresName(boolean requiresName)
+    {
+        this.requiresName = requiresName;
+    }
+
+    public boolean getRequiresBirthdate()
+    {
+        return requiresBirthdate;
+    }
+
+    public void setRequiresBirthdate(boolean requiresBirthdate)
+    {
+        this.requiresBirthdate = requiresName;
+    }
+
+    public boolean getRequiresSignature()
+    {
+        return requiresSignature;
+    }
+
+    public void setRequiresSignature(boolean requiresSignature)
+    {
+        this.requiresSignature = requiresSignature;
+    }
 }

@@ -7,11 +7,10 @@ package org.researchstack.backbone.answerformat;
  */
 public class FormAnswerFormat extends AnswerFormat
 {
-    /**
-     * Default constructor
-     */
+    /* Default constructor needed for serilization/deserialization of object */
     public FormAnswerFormat()
     {
+        super();
     }
 
     @Override
