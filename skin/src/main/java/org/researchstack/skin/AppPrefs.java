@@ -5,8 +5,7 @@ import android.preference.PreferenceManager;
 
 import org.researchstack.skin.ui.fragment.SettingsFragment;
 
-public class AppPrefs
-{
+public class AppPrefs {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Statics
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -24,12 +23,26 @@ public class AppPrefs
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    // TODO: switch from lazy singleton, dont need to provide Context every time
+    public static void init(Context context) {
+        instance = new AppPrefs(context);
+    }
+
+    @Deprecated
     public static synchronized AppPrefs getInstance(Context context)
     {
         if(instance == null)
         {
             instance = new AppPrefs(context);
+        }
+        return instance;
+    }
+
+    public static AppPrefs getInstance()
+    {
+        if(instance == null)
+        {
+            throw new RuntimeException(
+                    "AppPrefs instance is null. Make sure it is initialized in ResearchStack before calling.");
         }
         return instance;
     }

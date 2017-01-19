@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.notification.TaskNotificationReceiver;
 import org.researchstack.skin.ui.fragment.ShareFragment;
 
@@ -86,7 +87,7 @@ public abstract class UiManager
      * contains expected answers which will be used to determine if the inclusion criteria is valid.
      *
      * @param result StepResult object that contains the answers of the InclusionCriteria step
-     * @return true if the user is elligible for the study
+     * @return <code>true</code> if the user is elligible for the study
      */
     @Deprecated
     public abstract boolean isInclusionCriteriaValid(StepResult result);
@@ -103,6 +104,15 @@ public abstract class UiManager
     public boolean isConsentSkippable()
     {
         return false;
+    }
+
+    /**
+     * Returns <code>true</code> if the password supplied by the user in the sign up step is valid.
+     * @param password the password to validate
+     * @return <code>true</code> if the password is valid, <code>false</code> otherwise
+     */
+    public boolean isValidPassword(String password) {
+        return ! TextUtils.isEmpty(password);
     }
 
     /**

@@ -254,8 +254,8 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         {
             finish();
 
-            AppPrefs.getInstance(this).setSkippedOnboarding(false);
-            AppPrefs.getInstance(this).setOnboardingComplete(true);
+            AppPrefs.getInstance().setSkippedOnboarding(false);
+            AppPrefs.getInstance().setOnboardingComplete(true);
 
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String email = (String) result.getStepResult(OnboardingTask.SignInStepIdentifier)
@@ -281,8 +281,8 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
 
             finish();
 
-            AppPrefs.getInstance(this).setSkippedOnboarding(false);
-            AppPrefs.getInstance(this).setOnboardingComplete(true);
+            AppPrefs.getInstance().setSkippedOnboarding(false);
+            AppPrefs.getInstance().setOnboardingComplete(true);
 
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String email = (String) result.getStepResult(OnboardingTask.SignUpStepIdentifier)
@@ -311,7 +311,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
 
     private void skipToMainActivity()
     {
-        AppPrefs.getInstance(this).setSkippedOnboarding(true);
+        AppPrefs.getInstance().setSkippedOnboarding(true);
         startMainActivity();
     }
 
@@ -321,7 +321,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         // to MainActivity even if we haven't signed in. We want to set this true in every case so
         // the user is really only forced through Onboarding once. If they leave the study, they must
         // re-enroll in Settings, which starts OnboardingActivty.
-        AppPrefs.getInstance(this).setOnboardingComplete(true);
+        AppPrefs.getInstance().setOnboardingComplete(true);
 
         // Start MainActivity w/ clear_top and single_top flags. MainActivity may
         // already be on the activity-task. We want to re-use that activity instead

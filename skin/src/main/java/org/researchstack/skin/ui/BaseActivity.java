@@ -59,7 +59,7 @@ public class BaseActivity extends PinCodeActivity
         {
             LogExt.i(getClass(), "errorBroadcastReceiver()");
 
-            if(AppPrefs.getInstance(context).skippedOnboarding())
+            if(AppPrefs.getInstance().skippedOnboarding())
             {
                 // We don't want to bother a user that has skipped sign-up with the signed out
                 // or consent messages. Short-circuiting until we have an approved message to show
