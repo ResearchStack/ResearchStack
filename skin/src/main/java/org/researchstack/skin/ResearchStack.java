@@ -5,6 +5,7 @@ import android.content.Context;
 
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.PermissionRequestManager;
+import org.researchstack.backbone.ResourceManager;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.storage.database.AppDatabase;
 import org.researchstack.backbone.storage.file.EncryptionProvider;

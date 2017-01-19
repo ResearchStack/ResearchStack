@@ -24,7 +24,7 @@ import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.R;
-import org.researchstack.skin.ResourceManager;
+import org.researchstack.backbone.ResourceManager;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
 import org.researchstack.skin.model.StudyOverviewModel;

@@ -11,7 +11,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.skin.R;
-import org.researchstack.skin.ResourceManager;
+import org.researchstack.backbone.ResourceManager;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.model.InclusionCriteriaModel;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;

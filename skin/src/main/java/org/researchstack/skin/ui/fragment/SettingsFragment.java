@@ -34,7 +34,7 @@ import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
-import org.researchstack.skin.ResourceManager;
+import org.researchstack.backbone.ResourceManager;
 import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.notification.TaskAlertReceiver;
 import org.researchstack.backbone.step.PassCodeCreationStep;

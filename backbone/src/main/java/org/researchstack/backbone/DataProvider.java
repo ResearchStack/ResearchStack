@@ -1,4 +1,4 @@
-package org.researchstack.skin;
+package org.researchstack.backbone;
 import android.app.Application;
 import android.content.Context;
 

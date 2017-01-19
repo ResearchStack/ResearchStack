@@ -26,7 +26,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
-import org.researchstack.skin.ResourceManager;
+import org.researchstack.backbone.ResourceManager;
 import org.researchstack.skin.ui.OnboardingTaskActivity;
 
 import java.lang.reflect.InvocationTargetException;
