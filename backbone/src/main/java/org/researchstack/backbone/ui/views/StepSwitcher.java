@@ -171,6 +171,19 @@ public class StepSwitcher extends FrameLayout
         });
     }
 
+    /**
+     *  Adds a new step to the view hierarchy. If a step is currently showing, the direction
+     * parameter is used to indicate which direction(x-axis) that the views should animate to.
+     *
+     * @param stepLayout the step you want to switch to
+     * @param direction  the direction of the animation in the x direction. This values can either be
+     *                   {@link StepSwitcher#SHIFT_LEFT} or {@link StepSwitcher#SHIFT_RIGHT}
+     */
+    public void show(StepLayout stepLayout, int direction)
+    {
+        show(stepLayout, direction, null);
+    }
+
     private LayoutParams getLayoutParams(StepLayout stepLayout)
     {
         LayoutParams lp = (LayoutParams) stepLayout.getLayout().getLayoutParams();
