@@ -4,12 +4,10 @@ package org.researchstack.backbone.step;
  * This class represents the final step in the consent process, collecting the signature from the
  * study participant.
  */
-public class ConsentSignatureStep extends Step
-{
+public class ConsentSignatureStep extends Step {
     private String signatureDateFormat;
 
-    public ConsentSignatureStep(String identifier)
-    {
+    public ConsentSignatureStep(String identifier) {
         super(identifier);
         setOptional(false);
     }
@@ -23,8 +21,7 @@ public class ConsentSignatureStep extends Step
      *
      * @return the date format string
      */
-    public String getSignatureDateFormat()
-    {
+    public String getSignatureDateFormat() {
         return signatureDateFormat;
     }
 
@@ -37,8 +34,7 @@ public class ConsentSignatureStep extends Step
      *
      * @param signatureDateFormat a string representing the date format
      */
-    public void setSignatureDateFormat(String signatureDateFormat)
-    {
+    public void setSignatureDateFormat(String signatureDateFormat) {
         this.signatureDateFormat = signatureDateFormat;
     }
 }

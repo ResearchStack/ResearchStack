@@ -31,8 +31,7 @@ import java.util.List;
 import rx.Observable;
 
 
-public class MainActivity extends BaseActivity
-{
+public class MainActivity extends BaseActivity {
     private static final int REQUEST_CODE_INITIAL_TASK = 1010;
 
     private MainPagerAdapter pagerAdapter;
@@ -40,8 +39,7 @@ public class MainActivity extends BaseActivity
     private boolean failedToFinishInitialTask;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogExt.d(getClass(), "onCreate");
 
@@ -51,8 +49,7 @@ public class MainActivity extends BaseActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
 
-        if(pagerAdapter == null)
-        {
+        if (pagerAdapter == null) {
             List<ActionItem> items = UiManager.getInstance().getMainTabBarItems();
             pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), items);
 
@@ -62,18 +59,15 @@ public class MainActivity extends BaseActivity
             viewPager.setPageMarginDrawable(new ColorDrawable(Color.LTGRAY));
 
             IconTabLayout tabLayout = (IconTabLayout) findViewById(R.id.tabLayout);
-            tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter()
-            {
+            tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter() {
                 @Override
-                public void onTabSelected(TabLayout.Tab tab)
-                {
+                public void onTabSelected(TabLayout.Tab tab) {
                     int index = tabLayout.getSelectedTabPosition();
                     viewPager.setCurrentItem(index);
                 }
             });
 
-            for(ActionItem item : items)
-            {
+            for (ActionItem item : items) {
                 tabLayout.addIconTab(
                         item.getTitle(),
                         item.getIcon(),
@@ -90,22 +84,19 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    protected void onNewIntent(Intent intent)
-    {
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         LogExt.d(getClass(), "onNewIntent");
 
         handleNotificationIntent(intent);
     }
 
-    private void handleNotificationIntent(Intent intent)
-    {
+    private void handleNotificationIntent(Intent intent) {
         LogExt.d(getClass(), "handleNotificationIntent");
 
-        if(intent != null && intent.hasExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID))
-        {
+        if (intent != null && intent.hasExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID)) {
             // Get the notif-id from the incoming intent
-            int notificationId = intent.getIntExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, - 1);
+            int notificationId = intent.getIntExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, -1);
 
             // Create a delete intent w/ notif-id
             Intent deleteTaskIntent = TaskAlertReceiver.createDeleteIntent(notificationId);
@@ -118,32 +109,23 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if(requestCode == REQUEST_CODE_INITIAL_TASK)
-        {
-            if(resultCode == RESULT_OK)
-            {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_INITIAL_TASK) {
+            if (resultCode == RESULT_OK) {
                 TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
                 StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
                 DataProvider.getInstance().processInitialTaskResult(this, taskResult);
-            }
-            else
-            {
+            } else {
                 failedToFinishInitialTask = true;
             }
-        }
-        else
-        {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        for(ActionItem item : UiManager.getInstance().getMainActionBarItems())
-        {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        for (ActionItem item : UiManager.getInstance().getMainActionBarItems()) {
             MenuItem menuItem = menu.add(item.getGroupId(),
                     item.getId(),
                     item.getOrder(),
@@ -157,24 +139,20 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onDataReady()
-    {
+    public void onDataReady() {
         super.onDataReady();
 
         // Check if we need to run initial Task
-        if(! failedToFinishInitialTask)
-        {
+        if (!failedToFinishInitialTask) {
             Observable.defer(() -> {
                 UiThreadContext.assertBackgroundThread();
 
-                if(! DataProvider.getInstance().isSignedIn(MainActivity.this))
-                {
+                if (!DataProvider.getInstance().isSignedIn(MainActivity.this)) {
                     LogExt.d(getClass(), "User not signed in, skipping initial survey");
                     return Observable.empty();
                 }
@@ -184,12 +162,10 @@ public class MainActivity extends BaseActivity
                         .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
                 return Observable.just(result == null);
             }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
-                if(needsInitialSurvey)
-                {
+                if (needsInitialSurvey) {
                     Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
 
-                    if(task == null)
-                    {
+                    if (task == null) {
                         LogExt.d(getClass(), "No initial survey provided in TaskProvider");
                         return;
                     }
@@ -202,8 +178,7 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void onDataFailed()
-    {
+    public void onDataFailed() {
         super.onDataFailed();
 
         throw new RuntimeException("Registering FileAccess has failed");

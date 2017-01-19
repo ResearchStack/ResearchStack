@@ -17,8 +17,7 @@ import java.util.UUID;
  * <p>
  * The <code>results</code> property contains the step results for the task.
  */
-public class TaskResult extends Result
-{
+public class TaskResult extends Result {
     private Map<String, StepResult> results;
 
     // unimplemented but exists in RK, implement or delete if not needed
@@ -27,8 +26,7 @@ public class TaskResult extends Result
     // unimplemented but exists in RK, implement or delete if not needed
     private Uri outputDirectory;
 
-    public TaskResult(String identifier)
-    {
+    public TaskResult(String identifier) {
         super(identifier);
         this.results = new HashMap<>();
     }
@@ -38,8 +36,7 @@ public class TaskResult extends Result
      *
      * @return a Map of the StepResults
      */
-    public Map<String, StepResult> getResults()
-    {
+    public Map<String, StepResult> getResults() {
         return results;
     }
 
@@ -49,8 +46,7 @@ public class TaskResult extends Result
      * @param identifier The identifier for which to search.
      * @return The result for the specified step, or {@link nil} for none.
      */
-    public StepResult getStepResult(String identifier)
-    {
+    public StepResult getStepResult(String identifier) {
         return results.get(identifier);
     }
 
@@ -60,8 +56,7 @@ public class TaskResult extends Result
      * @param identifier the Step and StepResult's identifier
      * @param stepResult the StepResult for this identifier
      */
-    public void setStepResultForStepIdentifier(String identifier, StepResult stepResult)
-    {
+    public void setStepResultForStepIdentifier(String identifier, StepResult stepResult) {
         results.put(identifier, stepResult);
     }
 }

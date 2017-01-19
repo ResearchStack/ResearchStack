@@ -21,18 +21,15 @@ import org.researchstack.skin.model.SectionModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LearnFragment extends Fragment
-{
+public class LearnFragment extends Fragment {
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.rss_fragment_learn, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(org.researchstack.skin.R.id.recycler_view);
@@ -40,26 +37,22 @@ public class LearnFragment extends Fragment
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
     }
 
-    private SectionModel loadSections()
-    {
+    private SectionModel loadSections() {
         return ResourceManager.getInstance().getLearnSections().create(getActivity());
     }
 
-    public static class LearnAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-    {
+    public static class LearnAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private static final int VIEW_TYPE_HEADER = 0;
-        private static final int VIEW_TYPE_ITEM   = 1;
+        private static final int VIEW_TYPE_ITEM = 1;
 
-        private List<Object>   items;
+        private List<Object> items;
         private LayoutInflater inflater;
 
-        public LearnAdapter(Context context, SectionModel sections)
-        {
+        public LearnAdapter(Context context, SectionModel sections) {
             super();
             items = new ArrayList<>();
-            for(SectionModel.Section section : sections.getSections())
-            {
+            for (SectionModel.Section section : sections.getSections()) {
                 items.add(section.getTitle());
                 items.addAll(section.getItems());
 
@@ -68,25 +61,19 @@ public class LearnFragment extends Fragment
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            if(viewType == VIEW_TYPE_HEADER)
-            {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (viewType == VIEW_TYPE_HEADER) {
                 View view = inflater.inflate(R.layout.preference_category_material, parent, false);
                 return new HeaderViewHolder(view);
-            }
-            else
-            {
+            } else {
                 View view = inflater.inflate(R.layout.rss_item_row_learn, parent, false);
                 return new ViewHolder(view);
             }
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder hldr, int position)
-        {
-            if(hldr instanceof ViewHolder)
-            {
+        public void onBindViewHolder(RecyclerView.ViewHolder hldr, int position) {
+            if (hldr instanceof ViewHolder) {
                 ViewHolder holder = (ViewHolder) hldr;
 
                 //Offset for header
@@ -102,9 +89,7 @@ public class LearnFragment extends Fragment
                             path);
                     v.getContext().startActivity(intent);
                 });
-            }
-            else
-            {
+            } else {
                 HeaderViewHolder holder = (HeaderViewHolder) hldr;
                 String title = (String) items.get(position);
                 holder.title.setText(title);
@@ -112,37 +97,31 @@ public class LearnFragment extends Fragment
         }
 
         @Override
-        public int getItemViewType(int position)
-        {
+        public int getItemViewType(int position) {
             Object item = items.get(position);
             return item instanceof String ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
         }
 
         @Override
-        public int getItemCount()
-        {
+        public int getItemCount() {
             // Size of items + header
             return items.size();
         }
 
-        public static class HeaderViewHolder extends RecyclerView.ViewHolder
-        {
+        public static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
             TextView title;
 
-            public HeaderViewHolder(View itemView)
-            {
+            public HeaderViewHolder(View itemView) {
                 super(itemView);
                 title = (TextView) itemView;
             }
         }
 
-        public static class ViewHolder extends RecyclerView.ViewHolder
-        {
+        public static class ViewHolder extends RecyclerView.ViewHolder {
             AppCompatTextView title;
 
-            public ViewHolder(View itemView)
-            {
+            public ViewHolder(View itemView) {
                 super(itemView);
                 title = (AppCompatTextView) itemView.findViewById(R.id.learn_item_title);
             }

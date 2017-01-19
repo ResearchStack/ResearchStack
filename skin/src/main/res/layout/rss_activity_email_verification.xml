@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
->
+    android:layout_height="match_parent">
 
-    <include layout="@layout/rsb_layout_toolbar"/>
+    <include layout="@layout/rsb_layout_toolbar" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/toolbar"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
-        android:layout_below="@+id/toolbar"
-        android:textSize="20sp"
-        android:textColor="?attr/colorAccent"
+        android:layout_marginTop="20dp"
         android:text="@string/rss_confirm_title"
-    />
+        android:textColor="?attr/colorAccent"
+        android:textSize="20sp" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/email_verification_body"
@@ -28,27 +25,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:layout_marginTop="36dp"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
-        tools:text="@string/lorem_medium"
-    />
+        android:layout_marginTop="36dp"
+        tools:text="@string/lorem_medium" />
 
     <android.support.v7.widget.AppCompatTextView
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:id="@+id/email_verification_wrong_email"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:textColor="?attr/colorAccent"
         android:layout_below="@+id/email_verification_body"
-        android:paddingLeft="0dp"
-        android:layout_marginTop="@dimen/rsb_padding_medium"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_left"
+        android:layout_marginTop="@dimen/rsb_padding_medium"
+        android:background="@android:color/transparent"
         android:gravity="left|center_vertical"
+        android:paddingLeft="0dp"
         android:text="@string/rss_confirm_diff"
-    />
+        android:textColor="?attr/colorAccent" />
 
 
     <org.researchstack.backbone.ui.views.SubmitBar
@@ -56,15 +51,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:positiveActionTitle="@string/rss_continue"
-        app:negativeActionTitle="@string/rss_confirm_resend_email"/>
+        app:negativeActionTitle="@string/rss_confirm_resend_email"
+        app:positiveActionTitle="@string/rss_continue" />
 
     <include
         android:id="@+id/progress"
-        android:visibility="gone"
-        tools:visibility="gone"
         layout="@layout/rsb_progress"
-    />
+        android:visibility="gone"
+        tools:visibility="gone" />
 
 </RelativeLayout>
 

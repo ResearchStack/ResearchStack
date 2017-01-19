@@ -1,10 +1,10 @@
 package org.researchstack.backbone.task;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.researchstack.backbone.step.Step;
 
 import java.util.List;
-
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -12,24 +12,21 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
 
-public class OrderedTaskTest
-{
+public class OrderedTaskTest {
 
     OrderedTask testTask;
-    private Step stepOne     = new Step("idOne");
-    private Step stepTwo     = new Step("idTwo");
-    private Step stepThree   = new Step("idThree");
+    private Step stepOne = new Step("idOne");
+    private Step stepTwo = new Step("idTwo");
+    private Step stepThree = new Step("idThree");
     private Step stepOneDupe = new Step("idOne");
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         testTask = new OrderedTask("id", stepOne, stepTwo, stepThree);
     }
 
     @Test
-    public void testGetStepAfterStep() throws Exception
-    {
+    public void testGetStepAfterStep() throws Exception {
         Step nextStep = testTask.getStepAfterStep(stepOne, null);
         assertEquals("Returns the next sequential step in the task", stepTwo, nextStep);
         nextStep = testTask.getStepAfterStep(stepThree, null);
@@ -37,8 +34,7 @@ public class OrderedTaskTest
     }
 
     @Test
-    public void testGetStepBeforeStep() throws Exception
-    {
+    public void testGetStepBeforeStep() throws Exception {
         Step previousStep = testTask.getStepBeforeStep(stepThree, null);
         assertEquals("Returns the previous sequential step in the task", stepTwo, previousStep);
         previousStep = testTask.getStepBeforeStep(stepOne, null);
@@ -46,8 +42,7 @@ public class OrderedTaskTest
     }
 
     @Test
-    public void testGetStepWithIdentifier() throws Exception
-    {
+    public void testGetStepWithIdentifier() throws Exception {
         Step foundStep = testTask.getStepWithIdentifier("idOne");
         assertEquals("Finds step if it is in the task", stepOne, foundStep);
         foundStep = testTask.getStepWithIdentifier("non-existent");
@@ -55,8 +50,7 @@ public class OrderedTaskTest
     }
 
     @Test
-    public void testGetProgressOfCurrentStep() throws Exception
-    {
+    public void testGetProgressOfCurrentStep() throws Exception {
         Task.TaskProgress progress = testTask.getProgressOfCurrentStep(stepOne, null);
         assertEquals("Current is accurate for first step (0)", 0, progress.getCurrent());
         progress = testTask.getProgressOfCurrentStep(stepTwo, null);
@@ -65,22 +59,19 @@ public class OrderedTaskTest
     }
 
     @Test(expected = Task.InvalidTaskException.class)
-    public void testValidateParametersDuplicate() throws Exception
-    {
+    public void testValidateParametersDuplicate() throws Exception {
         Task invalidTask = new OrderedTask("id", stepOne, stepTwo, stepOneDupe);
         invalidTask.validateParameters();
     }
 
     @Test
-    public void testValidateParametersValid() throws Exception
-    {
+    public void testValidateParametersValid() throws Exception {
         // exception will be thrown if this is not valid and fail the test
         testTask.validateParameters();
     }
 
     @Test
-    public void testGetSteps() throws Exception
-    {
+    public void testGetSteps() throws Exception {
         List<Step> steps = testTask.getSteps();
         assertEquals("Returns list of proper length", 3, steps.size());
         assertTrue("Contains expected step", steps.contains(stepTwo));

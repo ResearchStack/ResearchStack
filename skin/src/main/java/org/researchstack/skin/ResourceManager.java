@@ -1,19 +1,18 @@
 package org.researchstack.skin;
+
 import org.researchstack.backbone.ResourcePathManager;
 
 /**
  * This class is responsible for returning paths of resources defined in the assets folder. This
  * class has more structure and expects certain assets to be defined for use within the framework.
  */
-public abstract class ResourceManager extends ResourcePathManager
-{
+public abstract class ResourceManager extends ResourcePathManager {
     /**
      * Returns a singleton static instance of the ResourceManager class
      *
      * @return A singleton static instance of the ResourceManager class
      */
-    public static ResourceManager getInstance()
-    {
+    public static ResourceManager getInstance() {
         return (ResourceManager) ResourcePathManager.getInstance();
     }
 

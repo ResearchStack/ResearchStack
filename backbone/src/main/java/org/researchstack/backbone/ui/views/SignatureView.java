@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.views;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -27,11 +28,10 @@ import java.util.List;
 /**
  * Note: For save-state to work, the view MUST have an ID
  */
-public class SignatureView extends View
-{
+public class SignatureView extends View {
 
     private static final boolean DEBUG = false;
-    private static final String  TAG   = SignatureView.class.getSimpleName();
+    private static final String TAG = SignatureView.class.getSimpleName();
 
     private SignatureCallbacks callbacks;
 
@@ -40,36 +40,33 @@ public class SignatureView extends View
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private List<LinePathPoint> sigPoints = new ArrayList<>();
 
-    private Path  sigPath    = new Path();
-    private Paint sigPaint   = new Paint();
-    private Paint hintPaint  = new Paint();
-    private Rect  drawBounds = new Rect();
+    private Path sigPath = new Path();
+    private Paint sigPaint = new Paint();
+    private Paint hintPaint = new Paint();
+    private Rect drawBounds = new Rect();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Properties
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private String hintText;
-    private int    guidelineMargin;
-    private int    guidelineHeight;
-    private int    hintTextColor;
-    private int    guidelineColor;
-    private int    sigPrintColor;
+    private int guidelineMargin;
+    private int guidelineHeight;
+    private int hintTextColor;
+    private int guidelineColor;
+    private int sigPrintColor;
 
-    public SignatureView(Context context)
-    {
+    public SignatureView(Context context) {
         super(context);
         init(context, null, 0);
     }
 
-    public SignatureView(Context context, AttributeSet attrs)
-    {
+    public SignatureView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs, 0);
     }
 
 
-    public SignatureView(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public SignatureView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, 0);
     }
@@ -77,8 +74,7 @@ public class SignatureView extends View
     /**
      * Init all paint objects
      */
-    private void init(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.SignatureView,
                 defStyleAttr,
@@ -128,18 +124,15 @@ public class SignatureView extends View
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
+    public boolean onTouchEvent(MotionEvent event) {
         int x = (int) event.getX();
         int y = (int) event.getY();
 
-        switch(event.getAction())
-        {
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 sigPoints.add(new LinePathPoint(x, y, LinePathPoint.TYPE_LINE_START));
 
-                if(sigPath.isEmpty())
-                {
+                if (sigPath.isEmpty()) {
                     callbacks.onSignatureStarted();
                 }
 
@@ -152,8 +145,7 @@ public class SignatureView extends View
 
                 int hSize = event.getHistorySize();
 
-                for(int i = 0; i < hSize; i++)
-                {
+                for (int i = 0; i < hSize; i++) {
                     int hX = (int) event.getHistoricalX(i);
                     int hY = (int) event.getHistoricalY(i);
                     sigPath.lineTo(hX, hY);
@@ -171,8 +163,7 @@ public class SignatureView extends View
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh)
-    {
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         drawBounds.left = getPaddingLeft();
         drawBounds.top = getPaddingTop();
@@ -181,8 +172,7 @@ public class SignatureView extends View
     }
 
     @Override
-    protected void onDraw(Canvas canvas)
-    {
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -198,21 +188,17 @@ public class SignatureView extends View
         //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         // Draw signature or hint text
         //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        if(sigPath.isEmpty())
-        {
+        if (sigPath.isEmpty()) {
             hintPaint.setColor(hintTextColor);
             int baselineY = drawBounds.bottom - guidelineMargin - guidelineHeight;
             canvas.drawText(hintText, drawBounds.left, baselineY, hintPaint);
-        }
-        else
-        {
+        } else {
             canvas.drawPath(sigPath, sigPaint);
         }
     }
 
     @Override
-    public Parcelable onSaveInstanceState()
-    {
+    public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
         SignatureSavedState ss = new SignatureSavedState(superState);
         ss.points = sigPoints;
@@ -220,10 +206,8 @@ public class SignatureView extends View
     }
 
     @Override
-    public void onRestoreInstanceState(Parcelable state)
-    {
-        if(! (state instanceof SignatureSavedState))
-        {
+    public void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof SignatureSavedState)) {
             super.onRestoreInstanceState(state);
             return;
         }
@@ -234,39 +218,31 @@ public class SignatureView extends View
         sigPoints = ss.points;
         sigPath.rewind();
 
-        for(LinePathPoint point : sigPoints)
-        {
-            if(point.isStartPoint())
-            {
+        for (LinePathPoint point : sigPoints) {
+            if (point.isStartPoint()) {
                 sigPath.moveTo(point.x, point.y);
-            }
-            else
-            {
+            } else {
                 sigPath.lineTo(point.x, point.y);
             }
         }
     }
 
-    public void clearSignature()
-    {
+    public void clearSignature() {
         sigPath.rewind();
         sigPoints.clear();
 
         ViewCompat.postInvalidateOnAnimation(this);
 
-        if(callbacks != null)
-        {
+        if (callbacks != null) {
             callbacks.onSignatureCleared();
         }
     }
 
-    public boolean isSignatureDrawn()
-    {
-        return ! sigPath.isEmpty();
+    public boolean isSignatureDrawn() {
+        return !sigPath.isEmpty();
     }
 
-    public void setCallbacks(SignatureCallbacks callbacks)
-    {
+    public void setCallbacks(SignatureCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 
@@ -276,8 +252,7 @@ public class SignatureView extends View
      * <p>
      * 2. Scale bitmap down. Currently drawing at density of device.
      */
-    public Bitmap createSignatureBitmap()
-    {
+    public Bitmap createSignatureBitmap() {
 
         Paint bitmapSigPaint = new Paint(sigPaint);
         bitmapSigPaint.setColor(sigPrintColor);
@@ -285,8 +260,7 @@ public class SignatureView extends View
         RectF sigBounds = new RectF();
         sigPath.computeBounds(sigBounds, true);
 
-        if(sigBounds.width() != 0 && sigBounds.height() != 0)
-        {
+        if (sigBounds.width() != 0 && sigBounds.height() != 0) {
             float density = getResources().getDisplayMetrics().density;
             int dipWidth = (int) (sigBounds.width() / density);
             int dipHeight = (int) (sigBounds.height() / density);
@@ -297,13 +271,12 @@ public class SignatureView extends View
             float minX = Integer.MAX_VALUE;
             float minY = Integer.MAX_VALUE;
 
-            for(LinePathPoint point : sigPoints)
-            {
+            for (LinePathPoint point : sigPoints) {
                 minX = Math.min(minX, point.x);
                 minY = Math.min(minY, point.y);
             }
 
-            sigPath.offset(- minX, - minY);
+            sigPath.offset(-minX, -minY);
 
             PathShape pathShape = new PathShape(sigPath, sigBounds.width(), sigBounds.height());
             pathShape.resize(dipWidth, dipHeight);
@@ -317,59 +290,47 @@ public class SignatureView extends View
         return null;
     }
 
-    private static class SignatureSavedState extends BaseSavedState
-    {
+    private static class SignatureSavedState extends BaseSavedState {
 
         //required field that makes Parcelables from a Parcel
-        public static final Parcelable.Creator<SignatureSavedState> CREATOR = new Parcelable.Creator<SignatureSavedState>()
-        {
-            public SignatureSavedState createFromParcel(Parcel in)
-            {
+        public static final Parcelable.Creator<SignatureSavedState> CREATOR = new Parcelable.Creator<SignatureSavedState>() {
+            public SignatureSavedState createFromParcel(Parcel in) {
                 return new SignatureSavedState(in);
             }
 
-            public SignatureSavedState[] newArray(int size)
-            {
+            public SignatureSavedState[] newArray(int size) {
                 return new SignatureSavedState[size];
             }
         };
         List<LinePathPoint> points;
 
-        SignatureSavedState(Parcelable superState)
-        {
+        SignatureSavedState(Parcelable superState) {
             super(superState);
         }
 
-        private SignatureSavedState(Parcel in)
-        {
+        private SignatureSavedState(Parcel in) {
             super(in);
             this.points = new ArrayList<>();
             in.readList(points, LinePathPoint.class.getClassLoader());
         }
 
         @Override
-        public void writeToParcel(Parcel out, int flags)
-        {
+        public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
             out.writeList(points);
         }
     }
 
-    public static class LinePathPoint extends Point
-    {
+    public static class LinePathPoint extends Point {
 
         public static final int TYPE_LINE_START = 0;
 
         public static final int TYPE_LINE_POINT = 1;
-
-        private int type;
-        public static final Parcelable.Creator<LinePathPoint> CREATOR = new Parcelable.Creator<LinePathPoint>()
-        {
+        public static final Parcelable.Creator<LinePathPoint> CREATOR = new Parcelable.Creator<LinePathPoint>() {
             /**
              * Return a new point from the data in the specified parcel.
              */
-            public LinePathPoint createFromParcel(Parcel in)
-            {
+            public LinePathPoint createFromParcel(Parcel in) {
                 LinePathPoint r = new LinePathPoint();
                 r.readFromParcel(in);
                 return r;
@@ -378,45 +339,39 @@ public class SignatureView extends View
             /**
              * Return an array of rectangles of the specified size.
              */
-            public LinePathPoint[] newArray(int size)
-            {
+            public LinePathPoint[] newArray(int size) {
                 return new LinePathPoint[size];
             }
         };
+        private int type;
 
-        public LinePathPoint()
-        {
+        public LinePathPoint() {
         }
 
-        public LinePathPoint(int x, int y, int type)
-        {
+        public LinePathPoint(int x, int y, int type) {
             this.x = x;
             this.y = y;
             this.type = type;
         }
 
-        public LinePathPoint(LinePathPoint src)
-        {
+        public LinePathPoint(LinePathPoint src) {
             this.x = src.x;
             this.y = src.y;
             this.type = src.type;
         }
 
-        public boolean isStartPoint()
-        {
+        public boolean isStartPoint() {
             return type == TYPE_LINE_START;
         }
 
         @Override
-        public void writeToParcel(Parcel out, int flags)
-        {
+        public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
             out.writeInt(type);
         }
 
         @Override
-        public void readFromParcel(Parcel in)
-        {
+        public void readFromParcel(Parcel in) {
             super.readFromParcel(in);
             type = in.readInt();
         }

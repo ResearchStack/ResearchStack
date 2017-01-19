@@ -1,4 +1,5 @@
 package org.researchstack.skin.ui.layout;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -26,45 +27,38 @@ import org.researchstack.skin.R;
 
 import java.util.List;
 
-public class PermissionStepLayout extends LinearLayout implements StepLayout, StepPermissionRequest
-{
+public class PermissionStepLayout extends LinearLayout implements StepLayout, StepPermissionRequest {
     private Step step;
-    private StepResult<Boolean>     result;
-    private StepCallbacks           callbacks;
-    private ActivityCallback        permissionCallback;
+    private StepResult<Boolean> result;
+    private StepCallbacks callbacks;
+    private ActivityCallback permissionCallback;
 
-    private SubmitBar  submitBar;
+    private SubmitBar submitBar;
 
-    public PermissionStepLayout(Context context)
-    {
+    public PermissionStepLayout(Context context) {
         this(context, null);
     }
 
-    public PermissionStepLayout(Context context, AttributeSet attrs)
-    {
+    public PermissionStepLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PermissionStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public PermissionStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
     }
 
     @Override
-    protected void onAttachedToWindow()
-    {
+    protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        if(getContext() instanceof ActivityCallback)
-        {
+        if (getContext() instanceof ActivityCallback) {
             permissionCallback = (ActivityCallback) getContext();
         }
     }
 
     @Override
-    protected void onDetachedFromWindow()
-    {
+    protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
         permissionCallback = null;
@@ -72,16 +66,14 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
+    public void initialize(Step step, StepResult result) {
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;
 
         initializeStep();
     }
 
-    public void initializeStep()
-    {
+    public void initializeStep() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
         // Inflate step UI
@@ -93,8 +85,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
         List<PermissionRequestManager.PermissionRequest> items = PermissionRequestManager.getInstance()
                 .getPermissionRequests();
 
-        for(PermissionRequestManager.PermissionRequest item : items)
-        {
+        for (PermissionRequestManager.PermissionRequest item : items) {
             boolean isGranted = PermissionRequestManager.getInstance().hasPermission(getContext(), item.getId());
 
             View child = inflater.inflate(R.layout.rss_item_permission_content,
@@ -133,8 +124,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
         submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveTitle(R.string.rsb_next);
         submitBar.setPositiveAction(v -> {
-            if (isAnswerValid())
-            {
+            if (isAnswerValid()) {
                 onNext(true);
             }
         });
@@ -142,18 +132,15 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
     }
 
     @Override
-    public void onUpdateForPermissionResult()
-    {
+    public void onUpdateForPermissionResult() {
         updatePermissionItems();
     }
 
-    private void updatePermissionItems()
-    {
+    private void updatePermissionItems() {
         List<PermissionRequestManager.PermissionRequest> items = PermissionRequestManager.getInstance()
                 .getPermissionRequests();
 
-        for(PermissionRequestManager.PermissionRequest item : items)
-        {
+        for (PermissionRequestManager.PermissionRequest item : items) {
             boolean isGranted = PermissionRequestManager.getInstance().hasPermission(getContext(), item.getId());
 
             View parent = findViewWithTag(item.getId());
@@ -166,24 +153,20 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
         }
     }
 
-    private void onNext(boolean answerCorrect)
-    {
+    private void onNext(boolean answerCorrect) {
         // Save the result and go to the next question
         result.setResult(answerCorrect);
         callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
     }
 
-    public boolean isAnswerValid()
-    {
+    public boolean isAnswerValid() {
         List<PermissionRequestManager.PermissionRequest> items = PermissionRequestManager.getInstance()
                 .getPermissionRequests();
 
-        for(PermissionRequestManager.PermissionRequest item : items)
-        {
+        for (PermissionRequestManager.PermissionRequest item : items) {
             boolean isGranted = PermissionRequestManager.getInstance().hasPermission(getContext(), item.getId());
 
-            if (!isGranted && item.isBlockingPermission())
-            {
+            if (!isGranted && item.isBlockingPermission()) {
                 String permissionName = getResources().getString(item.getTitle());
                 String formattedError = getResources().getString(
                         R.string.rss_permission_continue_invalid, permissionName.toLowerCase());
@@ -196,21 +179,18 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
     @Override
-    public boolean isBackEventConsumed()
-    {
+    public boolean isBackEventConsumed() {
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
     @Override
-    public void setCallbacks(StepCallbacks callbacks)
-    {
+    public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 

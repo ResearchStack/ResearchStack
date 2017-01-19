@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.graph;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -18,43 +19,38 @@ import org.researchstack.backbone.R;
 
 import java.text.NumberFormat;
 
-public class PieChartCard extends CardView
-{
-    private TextView     titleTextView;
-    private PieChart     chart;
+public class PieChartCard extends CardView {
+    private TextView titleTextView;
+    private PieChart chart;
     private LinearLayout rowContainer;
 
     private NumberFormat numberFormat;
 
-    private int    valueTextFormat;
+    private int valueTextFormat;
     private String titleText;
-    private int    titleTextColor;
-    private float  titleTextSize;
+    private int titleTextColor;
+    private float titleTextSize;
     private String titleTextTypeface;
 
-    public PieChartCard(Context context)
-    {
+    public PieChartCard(Context context) {
         super(context);
         initializeRoot(null, R.attr.pieChartCardStyle);
         initializeViews();
     }
 
-    public PieChartCard(Context context, AttributeSet attrs)
-    {
+    public PieChartCard(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializeRoot(attrs, R.attr.pieChartCardStyle);
         initializeViews();
     }
 
-    public PieChartCard(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public PieChartCard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initializeRoot(attrs, defStyleAttr);
         initializeViews();
     }
 
-    private void initializeRoot(AttributeSet attrs, int defStyleAttr)
-    {
+    private void initializeRoot(AttributeSet attrs, int defStyleAttr) {
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_pie, this, true);
 
         numberFormat = NumberFormat.getInstance();
@@ -75,8 +71,7 @@ public class PieChartCard extends CardView
         a.recycle();
     }
 
-    private void initializeViews()
-    {
+    private void initializeViews() {
         titleTextView = (TextView) findViewById(R.id.view_chart_pie_title);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(titleTextColor);
@@ -95,19 +90,16 @@ public class PieChartCard extends CardView
         rowContainer = (LinearLayout) findViewById(R.id.view_chart_pie_rows);
     }
 
-    public void setTitle(@StringRes int titleResId)
-    {
+    public void setTitle(@StringRes int titleResId) {
         String title = getContext().getString(titleResId);
         setTitle(title);
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         titleTextView.setText(title);
     }
 
-    public void setData(PieData data)
-    {
+    public void setData(PieData data) {
         chart.setData(data);
         chart.notifyDataSetChanged();
         chart.invalidate();
@@ -115,8 +107,7 @@ public class PieChartCard extends CardView
         rowContainer.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
-        for(int i = 0, size = data.getXVals().size(); i < size; i++)
-        {
+        for (int i = 0, size = data.getXVals().size(); i < size; i++) {
             String xVal = data.getXVals().get(i);
             float entryValue = data.getDataSet().getEntryForIndex(i).getVal();
 
@@ -134,8 +125,7 @@ public class PieChartCard extends CardView
         }
     }
 
-    public PieChart getChart()
-    {
+    public PieChart getChart() {
         return chart;
     }
 }

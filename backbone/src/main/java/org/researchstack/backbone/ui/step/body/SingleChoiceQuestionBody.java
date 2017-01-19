@@ -17,19 +17,17 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 
-public class SingleChoiceQuestionBody <T> implements StepBody
-{
+public class SingleChoiceQuestionBody<T> implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private QuestionStep       step;
-    private StepResult<T>      result;
+    private QuestionStep step;
+    private StepResult<T> result;
     private ChoiceAnswerFormat format;
-    private Choice<T>[]        choices;
-    private T                  currentSelected;
+    private Choice<T>[] choices;
+    private T currentSelected;
 
-    public SingleChoiceQuestionBody(Step step, StepResult result)
-    {
+    public SingleChoiceQuestionBody(Step step, StepResult result) {
         this.step = (QuestionStep) step;
         this.result = result == null ? new StepResult<>(step) : result;
         this.format = (ChoiceAnswerFormat) this.step.getAnswerFormat();
@@ -37,12 +35,9 @@ public class SingleChoiceQuestionBody <T> implements StepBody
 
         // Restore results
         T resultValue = this.result.getResult();
-        if(resultValue != null)
-        {
-            for(Choice<T> choice : choices)
-            {
-                if(choice.getValue().equals(resultValue))
-                {
+        if (resultValue != null) {
+            for (Choice<T> choice : choices) {
+                if (choice.getValue().equals(resultValue)) {
                     currentSelected = choice.getValue();
                 }
             }
@@ -50,8 +45,7 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     }
 
     @Override
-    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
-    {
+    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         View view = getViewForType(viewType, inflater, parent);
 
         Resources res = parent.getResources();
@@ -64,31 +58,23 @@ public class SingleChoiceQuestionBody <T> implements StepBody
         return view;
     }
 
-    private View getViewForType(int viewType, LayoutInflater inflater, ViewGroup parent)
-    {
-        if(viewType == VIEW_TYPE_DEFAULT)
-        {
+    private View getViewForType(int viewType, LayoutInflater inflater, ViewGroup parent) {
+        if (viewType == VIEW_TYPE_DEFAULT) {
             return initViewDefault(inflater, parent);
-        }
-        else if(viewType == VIEW_TYPE_COMPACT)
-        {
+        } else if (viewType == VIEW_TYPE_COMPACT) {
             return initViewCompact(inflater, parent);
-        }
-        else
-        {
+        } else {
             throw new IllegalArgumentException("Invalid View Type");
         }
     }
 
-    private View initViewDefault(LayoutInflater inflater, ViewGroup parent)
-    {
+    private View initViewDefault(LayoutInflater inflater, ViewGroup parent) {
         RadioGroup radioGroup = new RadioGroup(parent.getContext());
         radioGroup.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         radioGroup.setDividerDrawable(ContextCompat.getDrawable(parent.getContext(),
                 R.drawable.rsb_divider_empty_8dp));
 
-        for(int i = 0; i < choices.length; i++)
-        {
+        for (int i = 0; i < choices.length; i++) {
             Choice choice = choices[i];
             RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.rsb_item_radio,
                     radioGroup,
@@ -96,8 +82,7 @@ public class SingleChoiceQuestionBody <T> implements StepBody
             radioButton.setText(choice.getText());
             radioButton.setId(i);
 
-            if(currentSelected != null)
-            {
+            if (currentSelected != null) {
                 radioButton.setChecked(currentSelected.equals(choice.getValue()));
             }
 
@@ -112,8 +97,7 @@ public class SingleChoiceQuestionBody <T> implements StepBody
         return radioGroup;
     }
 
-    private View initViewCompact(LayoutInflater inflater, ViewGroup parent)
-    {
+    private View initViewCompact(LayoutInflater inflater, ViewGroup parent) {
         ViewGroup compactView = (ViewGroup) initViewDefault(inflater, parent);
 
         TextView label = (TextView) inflater.inflate(R.layout.rsb_item_text_view_title_compact,
@@ -127,14 +111,10 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     }
 
     @Override
-    public StepResult getStepResult(boolean skipped)
-    {
-        if(skipped)
-        {
+    public StepResult getStepResult(boolean skipped) {
+        if (skipped) {
             result.setResult(null);
-        }
-        else
-        {
+        } else {
             result.setResult(currentSelected);
         }
 
@@ -142,14 +122,10 @@ public class SingleChoiceQuestionBody <T> implements StepBody
     }
 
     @Override
-    public BodyAnswer getBodyAnswerState()
-    {
-        if (currentSelected == null)
-        {
+    public BodyAnswer getBodyAnswerState() {
+        if (currentSelected == null) {
             return new BodyAnswer(false, R.string.rsb_invalid_answer_choice);
-        }
-        else
-        {
+        } else {
             return BodyAnswer.VALID;
         }
     }

@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.views;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
@@ -16,8 +17,7 @@ import org.researchstack.backbone.utils.ThemeUtils;
 
 import rx.functions.Action1;
 
-public class SubmitBar extends LinearLayout
-{
+public class SubmitBar extends LinearLayout {
     private TextView positiveView;
     private TextView negativeView;
 
@@ -29,8 +29,7 @@ public class SubmitBar extends LinearLayout
         this(context, attrs, R.attr.submitbarStyle);
     }
 
-    public SubmitBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
-    {
+    public SubmitBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_submitbar, this, true);
@@ -59,23 +58,19 @@ public class SubmitBar extends LinearLayout
     // Positive Action Helper Methods
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-    public void setPositiveTitle(int title)
-    {
+    public void setPositiveTitle(int title) {
         setPositiveTitle(getResources().getString(title));
     }
 
-    public void setPositiveTitle(String title)
-    {
+    public void setPositiveTitle(String title) {
         positiveView.setText(title);
     }
 
-    public void setPositiveAction(Action1 submit)
-    {
+    public void setPositiveAction(Action1 submit) {
         RxView.clicks(this.positiveView).subscribe(submit);
     }
 
-    public View getPositiveActionView()
-    {
+    public View getPositiveActionView() {
         return positiveView;
     }
 
@@ -84,23 +79,19 @@ public class SubmitBar extends LinearLayout
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
-    public void setNegativeTitle(int title)
-    {
+    public void setNegativeTitle(int title) {
         setNegativeTitle(getResources().getString(title));
     }
 
-    public void setNegativeTitle(String title)
-    {
+    public void setNegativeTitle(String title) {
         negativeView.setText(title);
     }
 
-    public void setNegativeAction(Action1 submit)
-    {
+    public void setNegativeAction(Action1 submit) {
         RxView.clicks(this.negativeView).subscribe(submit);
     }
 
-    public View getNegativeActionView()
-    {
+    public View getNegativeActionView() {
         return negativeView;
     }
 

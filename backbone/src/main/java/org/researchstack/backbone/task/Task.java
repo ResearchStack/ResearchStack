@@ -25,8 +25,7 @@ import java.io.Serializable;
  * which corresponds to a single screen that displays multiple questions or items for which
  * participants provide information, such as first name, last name, and birth date.
  */
-public abstract class Task implements Serializable
-{
+public abstract class Task implements Serializable {
     private String identifier;
 
     /**
@@ -34,8 +33,7 @@ public abstract class Task implements Serializable
      *
      * @param identifier the task identifier, see {@link #getIdentifier()}
      */
-    public Task(String identifier)
-    {
+    public Task(String identifier) {
         this.identifier = identifier;
     }
 
@@ -54,8 +52,7 @@ public abstract class Task implements Serializable
      *
      * @return the task identifier
      */
-    public String getIdentifier()
-    {
+    public String getIdentifier() {
         return identifier;
     }
 
@@ -72,8 +69,7 @@ public abstract class Task implements Serializable
      * @param step    the current step
      * @return the title to display
      */
-    public String getTitleForStep(Context context, Step step)
-    {
+    public String getTitleForStep(Context context, Step step) {
         return step.getStepTitle() != 0 ? context.getString(step.getStepTitle()) : "";
     }
 
@@ -156,78 +152,16 @@ public abstract class Task implements Serializable
     public abstract void validateParameters();
 
     /**
-     * A structure that represents how far a task has progressed.
-     * <p>
-     * Objects that extend Task return the task progress structure to indicate to the {@link
-     * org.researchstack.backbone.ui.ViewTaskActivity} how far the task has progressed.
-     * <p>
-     * Note that the values in an {@link TaskProgress} structure are used only for display; you
-     * don't use the values to access the steps in a task.
+     * Function that can be overridden in order to access the low level changes in the view.
+     * The function is called at Activity lifecycle events (creation, pause, resume, stop and whenever
+     * the content of the activity is changed, according to the step.
+     *
+     * @param type        lifecycle event
+     * @param activity    current activity
+     * @param currentStep the current step being shown
      */
-    public static class TaskProgress
-    {
+    public void onViewChange(ViewChangeType type, ViewTaskActivity activity, Step currentStep) {
 
-        private final int current;
-
-        private final int total;
-
-        /**
-         * Constructor specifying current index and total number of steps in the task.
-         *
-         * @param current current step number, zero-based
-         * @param total   number of steps in the task
-         */
-        public TaskProgress(int current, int total)
-        {
-            this.current = current;
-            this.total = total;
-        }
-
-        /**
-         * Gets the current step number in the task, zero-based.
-         *
-         * @return current step number
-         */
-        public int getCurrent()
-        {
-            return current;
-        }
-
-        /**
-         * Gets the current total number of steps in the task.
-         *
-         * @return the total number of steps
-         */
-        public int getTotal()
-        {
-            return total;
-        }
-    }
-
-    /**
-     * Runtime exception that is thrown by {@link Task} subclasses in {@link #validateParameters()}.
-     */
-    public static class InvalidTaskException extends RuntimeException
-    {
-        public InvalidTaskException()
-        {
-            super();
-        }
-
-        public InvalidTaskException(String detailMessage)
-        {
-            super(detailMessage);
-        }
-
-        public InvalidTaskException(String detailMessage, Throwable throwable)
-        {
-            super(detailMessage, throwable);
-        }
-
-        public InvalidTaskException(Throwable throwable)
-        {
-            super(throwable);
-        }
     }
 
     public static enum ViewChangeType {
@@ -239,14 +173,68 @@ public abstract class Task implements Serializable
     }
 
     /**
-     * Function that can be overridden in order to access the low level changes in the view.
-     * The function is called at Activity lifecycle events (creation, pause, resume, stop and whenever
-     * the content of the activity is changed, according to the step.
-     * @param type lifecycle event
-     * @param activity current activity
-     * @param currentStep the current step being shown
+     * A structure that represents how far a task has progressed.
+     * <p>
+     * Objects that extend Task return the task progress structure to indicate to the {@link
+     * org.researchstack.backbone.ui.ViewTaskActivity} how far the task has progressed.
+     * <p>
+     * Note that the values in an {@link TaskProgress} structure are used only for display; you
+     * don't use the values to access the steps in a task.
      */
-    public void onViewChange(ViewChangeType type, ViewTaskActivity activity, Step currentStep){
+    public static class TaskProgress {
 
+        private final int current;
+
+        private final int total;
+
+        /**
+         * Constructor specifying current index and total number of steps in the task.
+         *
+         * @param current current step number, zero-based
+         * @param total   number of steps in the task
+         */
+        public TaskProgress(int current, int total) {
+            this.current = current;
+            this.total = total;
+        }
+
+        /**
+         * Gets the current step number in the task, zero-based.
+         *
+         * @return current step number
+         */
+        public int getCurrent() {
+            return current;
+        }
+
+        /**
+         * Gets the current total number of steps in the task.
+         *
+         * @return the total number of steps
+         */
+        public int getTotal() {
+            return total;
+        }
+    }
+
+    /**
+     * Runtime exception that is thrown by {@link Task} subclasses in {@link #validateParameters()}.
+     */
+    public static class InvalidTaskException extends RuntimeException {
+        public InvalidTaskException() {
+            super();
+        }
+
+        public InvalidTaskException(String detailMessage) {
+            super(detailMessage);
+        }
+
+        public InvalidTaskException(String detailMessage, Throwable throwable) {
+            super(detailMessage, throwable);
+        }
+
+        public InvalidTaskException(Throwable throwable) {
+            super(throwable);
+        }
     }
 }

@@ -1,4 +1,5 @@
 package org.researchstack.skin.task;
+
 import android.content.Context;
 import android.content.res.Resources;
 
@@ -36,27 +37,24 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class ConsentTask extends OrderedTask
-{
-    public static final String ID_VISUAL                        = "ID_VISUAL";
-    public static final String ID_FIRST_QUESTION                = "question_1";
-    public static final String ID_QUIZ_RESULT                   = "ID_QUIZ_RESULT";
-    public static final String ID_SHARING                       = "ID_SHARING";
-    public static final String ID_CONSENT_DOC                   = "consent_review_doc";
-    public static final String ID_FORM                          = "ID_FORM";
-    public static final String ID_FORM_NAME                     = "ID_FORM_NAME";
-    public static final String ID_FORM_DOB                      = "ID_FORM_DOB";
-    public static final String ID_FORM_BIRTHDATE                = "ID_FORM_BIRTHDATE";
-    public static final String ID_SIGNATURE                     = "ID_SIGNATURE";
-    public static final String INVALID_ARGUMENT_CANNOT_BE_NULL  = "Invalid argument, cannot be null";
+public class ConsentTask extends OrderedTask {
+    public static final String ID_VISUAL = "ID_VISUAL";
+    public static final String ID_FIRST_QUESTION = "question_1";
+    public static final String ID_QUIZ_RESULT = "ID_QUIZ_RESULT";
+    public static final String ID_SHARING = "ID_SHARING";
+    public static final String ID_CONSENT_DOC = "consent_review_doc";
+    public static final String ID_FORM = "ID_FORM";
+    public static final String ID_FORM_NAME = "ID_FORM_NAME";
+    public static final String ID_FORM_DOB = "ID_FORM_DOB";
+    public static final String ID_FORM_BIRTHDATE = "ID_FORM_BIRTHDATE";
+    public static final String ID_SIGNATURE = "ID_SIGNATURE";
+    public static final String INVALID_ARGUMENT_CANNOT_BE_NULL = "Invalid argument, cannot be null";
 
-    private ConsentTask(String taskId, List<Step> steps)
-    {
+    private ConsentTask(String taskId, List<Step> steps) {
         super(taskId, steps);
     }
 
-    public static ConsentTask create(Context context, String taskId)
-    {
+    public static ConsentTask create(Context context, String taskId) {
         Resources r = context.getResources();
 
         List<Step> steps = new ArrayList<>();
@@ -99,24 +97,20 @@ public class ConsentTask extends OrderedTask
         return new ConsentTask(taskId, steps);
     }
 
-    private static void initConsentSharingStep(Resources r, ConsentSectionModel data, List<Step> steps)
-    {
+    private static void initConsentSharingStep(Resources r, ConsentSectionModel data, List<Step> steps) {
         String investigatorShortDesc = data.getDocumentProperties()
                 .getInvestigatorShortDescription();
-        if(TextUtils.isEmpty(investigatorShortDesc))
-        {
+        if (TextUtils.isEmpty(investigatorShortDesc)) {
             throw new IllegalArgumentException(INVALID_ARGUMENT_CANNOT_BE_NULL);
         }
 
         String investigatorLongDesc = data.getDocumentProperties().getInvestigatorLongDescription();
-        if(TextUtils.isEmpty(investigatorLongDesc))
-        {
+        if (TextUtils.isEmpty(investigatorLongDesc)) {
             throw new IllegalArgumentException(INVALID_ARGUMENT_CANNOT_BE_NULL);
         }
 
         String localizedLearnMoreHTMLContent = data.getDocumentProperties().getHtmlContent();
-        if(TextUtils.isEmpty(localizedLearnMoreHTMLContent))
-        {
+        if (TextUtils.isEmpty(localizedLearnMoreHTMLContent)) {
             throw new IllegalArgumentException(INVALID_ARGUMENT_CANNOT_BE_NULL);
         }
 
@@ -146,14 +140,11 @@ public class ConsentTask extends OrderedTask
         steps.add(sharingStep);
     }
 
-    private static void initVisualSteps(Context ctx, ConsentDocument doc, List<Step> steps)
-    {
-        for(int i = 0, size = doc.getSections().size(); i < size; i++)
-        {
+    private static void initVisualSteps(Context ctx, ConsentDocument doc, List<Step> steps) {
+        for (int i = 0, size = doc.getSections().size(); i < size; i++) {
             ConsentSection section = doc.getSections().get(i);
 
-            if(! TextUtils.isEmpty(section.getHtmlContent()))
-            {
+            if (!TextUtils.isEmpty(section.getHtmlContent())) {
                 String htmlFilePath = ResourceManager.getInstance()
                         .generatePath(ResourceManager.Resource.TYPE_HTML, section.getHtmlContent());
                 section.setHtmlContent(ResourceManager.getResourceAsString(ctx, htmlFilePath));
@@ -163,12 +154,9 @@ public class ConsentTask extends OrderedTask
             step.setSection(section);
 
             String nextString = ctx.getString(R.string.rsb_next);
-            if(section.getType() == ConsentSection.Type.Overview)
-            {
+            if (section.getType() == ConsentSection.Type.Overview) {
                 nextString = ctx.getString(R.string.rsb_get_started);
-            }
-            else if(i == size - 1)
-            {
+            } else if (i == size - 1) {
                 nextString = ctx.getString(R.string.rsb_done);
             }
             step.setNextButtonString(nextString);
@@ -177,22 +165,18 @@ public class ConsentTask extends OrderedTask
         }
     }
 
-    private static void initQuizSteps(Context ctx, ConsentQuizModel model, List<Step> steps)
-    {
-        if(model == null)
-        {
+    private static void initQuizSteps(Context ctx, ConsentQuizModel model, List<Step> steps) {
+        if (model == null) {
             LogExt.d(ConsentTask.class, "No quiz specified in consent json, skipping");
             return;
         }
 
-        for(int i = 0; i < model.getQuestions().size(); i++)
-        {
+        for (int i = 0; i < model.getQuestions().size(); i++) {
             ConsentQuizModel.QuizQuestion question = model.getQuestions().get(i);
 
             // We need to overwrite the id of the first question to later find it in our internal
             // map later on. This is done to clear and attain the incorrect question count.
-            if(i == 0)
-            {
+            if (i == 0) {
                 question.setIdentifier(ID_FIRST_QUESTION);
             }
 
@@ -205,8 +189,7 @@ public class ConsentTask extends OrderedTask
         steps.add(evaluationStep);
     }
 
-    private static void initConsentReviewSteps(Context ctx, ConsentDocument doc, List<Step> steps)
-    {
+    private static void initConsentReviewSteps(Context ctx, ConsentDocument doc, List<Step> steps) {
         // Add ConsentReviewDocumentStep (view html version of the PDF doc)
         StringBuilder docBuilder = new StringBuilder(
                 "</br><div style=\"padding: 10px 10px 10px 10px;\" class='header'>");
@@ -227,11 +210,9 @@ public class ConsentTask extends OrderedTask
         // Add full-name input
         boolean requiresName = doc.getSignature(0).requiresName();
         boolean requiresBirthDate = doc.getSignature(0).requiresBirthDate();
-        if(requiresName || requiresBirthDate)
-        {
+        if (requiresName || requiresBirthDate) {
             List<QuestionStep> formSteps = new ArrayList<>();
-            if(requiresName)
-            {
+            if (requiresName) {
                 TextAnswerFormat format = new TextAnswerFormat();
                 format.setIsMultipleLines(false);
 
@@ -241,10 +222,9 @@ public class ConsentTask extends OrderedTask
                 formSteps.add(new QuestionStep(ID_FORM_NAME, nameText, format));
             }
 
-            if(requiresBirthDate)
-            {
+            if (requiresBirthDate) {
                 Calendar maxDate = Calendar.getInstance();
-                maxDate.add(Calendar.YEAR, - 18);
+                maxDate.add(Calendar.YEAR, -18);
                 DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
                 String dobText = ctx.getResources().getString(R.string.rsb_consent_dob_full);
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
@@ -259,8 +239,7 @@ public class ConsentTask extends OrderedTask
         }
 
         // Add signature input
-        if(doc.getSignature(0).requiresSignatureImage())
-        {
+        if (doc.getSignature(0).requiresSignatureImage()) {
             ConsentSignatureStep signatureStep = new ConsentSignatureStep(ID_SIGNATURE);
             signatureStep.setStepTitle(R.string.rsb_consent);
             signatureStep.setTitle(ctx.getString(R.string.rsb_consent_signature_title));
@@ -274,18 +253,14 @@ public class ConsentTask extends OrderedTask
     }
 
     @Override
-    public Step getStepAfterStep(Step step, TaskResult result)
-    {
-        if(step != null)
-        {
+    public Step getStepAfterStep(Step step, TaskResult result) {
+        if (step != null) {
             // If we are on a question step, and the next step is an ConsentQuizEvaluationStep,
             // calculate and set the number of incorrect answers on ConsentQuizEvaluationStep.
-            if(step instanceof ConsentQuizQuestionStep)
-            {
+            if (step instanceof ConsentQuizQuestionStep) {
                 Step nextStep = super.getStepAfterStep(step, result);
 
-                if(nextStep instanceof ConsentQuizEvaluationStep)
-                {
+                if (nextStep instanceof ConsentQuizEvaluationStep) {
                     ConsentQuizQuestionStep firstQuestion = (ConsentQuizQuestionStep) getStepWithIdentifier(
                             ID_FIRST_QUESTION);
                     int incorrectAnswers = getQuestionIncorrectCount(result, firstQuestion, 0);
@@ -301,24 +276,19 @@ public class ConsentTask extends OrderedTask
             // or failed the quiz. If they have have failed, AND it was their first attempt, let the
             // user retake the quiz. If attempts > 1, they must go through the visual consent steps
             // another time.
-            else if(step instanceof ConsentQuizEvaluationStep)
-            {
+            else if (step instanceof ConsentQuizEvaluationStep) {
                 ConsentQuizEvaluationStep evaluationStep = (ConsentQuizEvaluationStep) step;
 
-                if(! evaluationStep.isQuizPassed())
-                {
+                if (!evaluationStep.isQuizPassed()) {
                     // Reset incorrect count on the QuizQuestionSteps.
                     Step firstQuestion = getStepWithIdentifier(ID_FIRST_QUESTION);
                     clearQuestionIncorrectCount(result, firstQuestion);
 
-                    if(evaluationStep.isOverMaxAttempts())
-                    {
+                    if (evaluationStep.isOverMaxAttempts()) {
                         evaluationStep.setAttempt(0);
                         //Return to first visual step
                         return getSteps().get(0);
-                    }
-                    else
-                    {
+                    } else {
                         evaluationStep.setAttempt(1);
                         return firstQuestion;
                     }
@@ -335,20 +305,16 @@ public class ConsentTask extends OrderedTask
      * @param result the result object where {@link ConsentQuizQuestionStep} are stored
      * @param step   the first ConsentQuizQuestionStep within the task
      */
-    private void clearQuestionIncorrectCount(TaskResult result, Step step)
-    {
-        if(step != null)
-        {
+    private void clearQuestionIncorrectCount(TaskResult result, Step step) {
+        if (step != null) {
             boolean isQuestion = step instanceof ConsentQuizQuestionStep;
             boolean isEvaluation = step instanceof ConsentQuizEvaluationStep;
 
-            if(isQuestion || isEvaluation)
-            {
+            if (isQuestion || isEvaluation) {
                 // Remove the result
                 result.setStepResultForStepIdentifier(step.getIdentifier(), null);
 
-                if(isQuestion)
-                {
+                if (isQuestion) {
                     // Clear the next step
                     Step next = super.getStepAfterStep(step, result);
                     clearQuestionIncorrectCount(result, next);
@@ -365,13 +331,10 @@ public class ConsentTask extends OrderedTask
      * @param count  the initial count of the how many incorrect answers exist, default to 0
      * @return integer representing how many incorrect answers currently exist
      */
-    private int getQuestionIncorrectCount(TaskResult result, Step step, int count)
-    {
-        if(step != null && step instanceof ConsentQuizQuestionStep)
-        {
+    private int getQuestionIncorrectCount(TaskResult result, Step step, int count) {
+        if (step != null && step instanceof ConsentQuizQuestionStep) {
             StepResult stepResult = result.getStepResult(step.getIdentifier());
-            if(stepResult != null)
-            {
+            if (stepResult != null) {
                 boolean correct = (boolean) stepResult.getResult();
                 Step next = super.getStepAfterStep(step, result);
                 return getQuestionIncorrectCount(result, next, count + (correct ? 0 : 1));

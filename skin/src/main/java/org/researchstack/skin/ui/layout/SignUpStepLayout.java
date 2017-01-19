@@ -22,35 +22,30 @@ import org.researchstack.skin.R;
 import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.adapter.TextWatcherAdapter;
 
-public class SignUpStepLayout extends RelativeLayout implements StepLayout
-{
+public class SignUpStepLayout extends RelativeLayout implements StepLayout {
     private StepCallbacks callbacks;
 
     private StepResult<String> result;
-    private Step               step;
+    private Step step;
 
-    private View              progress;
+    private View progress;
     private AppCompatEditText email;
     private AppCompatEditText password;
 
-    public SignUpStepLayout(Context context)
-    {
+    public SignUpStepLayout(Context context) {
         super(context);
     }
 
-    public SignUpStepLayout(Context context, AttributeSet attrs)
-    {
+    public SignUpStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SignUpStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public SignUpStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
+    public void initialize(Step step, StepResult result) {
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;
 
@@ -60,34 +55,27 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
         progress = layout.findViewById(R.id.progress);
 
         email = (AppCompatEditText) layout.findViewById(R.id.email);
-        email.addTextChangedListener(new TextWatcherAdapter()
-        {
+        email.addTextChangedListener(new TextWatcherAdapter() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                if(! TextUtils.isEmpty(email.getError()))
-                {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(email.getError())) {
                     email.setError(null);
                 }
             }
         });
 
         password = (AppCompatEditText) layout.findViewById(R.id.password);
-        password.addTextChangedListener(new TextWatcherAdapter()
-        {
+        password.addTextChangedListener(new TextWatcherAdapter() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                if(! TextUtils.isEmpty(password.getError()))
-                {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(password.getError())) {
                     password.setError(null);
                 }
             }
         });
         password.setOnEditorActionListener((v, actionId, event) -> {
-            if((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
-                    (actionId == EditorInfo.IME_ACTION_DONE))
-            {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
+                    (actionId == EditorInfo.IME_ACTION_DONE)) {
                 signUp();
                 return true;
             }
@@ -99,10 +87,8 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
         submitBar.getNegativeActionView().setVisibility(GONE);
     }
 
-    private void signUp()
-    {
-        if(isAnswerValid())
-        {
+    private void signUp() {
+        if (isAnswerValid()) {
             final String email = this.email.getText().toString();
             final String password = this.password.getText().toString();
 
@@ -116,15 +102,12 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
                             .signUp(getContext(), email, null, password)
                             .compose(ObservableUtils.applyDefault())
                             .subscribe(dataResponse -> {
-                                if(dataResponse.isSuccess())
-                                {
+                                if (dataResponse.isSuccess()) {
                                     // Save Email, Username, and Password in memory
                                     result.setResultForIdentifier(SignUpTask.ID_EMAIL, email);
                                     result.setResultForIdentifier(SignUpTask.ID_PASSWORD, password);
                                     callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
-                                }
-                                else
-                                {
+                                } else {
                                     handleError(dataResponse.getMessage());
                                 }
 
@@ -136,8 +119,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
         }
     }
 
-    private void handleError(String message)
-    {
+    private void handleError(String message) {
         progress.animate().alpha(0).withEndAction(() -> progress.setVisibility(View.GONE));
 
         // Convert errorBody to JSON-String, convert json-string to object
@@ -146,49 +128,41 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    public boolean isAnswerValid()
-    {
-        if(! isEmailValid())
-        {
+    public boolean isAnswerValid() {
+        if (!isEmailValid()) {
             email.setError(getResources().getString(R.string.rss_error_invalid_email));
         }
 
-        if(! isPasswordValid())
-        {
+        if (!isPasswordValid()) {
             password.setError(getResources().getString(R.string.rss_error_invalid_password));
         }
 
         return TextUtils.isEmpty(email.getError()) && TextUtils.isEmpty(password.getError());
     }
 
-    public boolean isEmailValid()
-    {
+    public boolean isEmailValid() {
         CharSequence target = email.getText();
         return TextUtils.isValidEmail(target);
     }
 
-    public boolean isPasswordValid()
-    {
+    public boolean isPasswordValid() {
         CharSequence target = password.getText();
-        return ! TextUtils.isEmpty(target);
+        return !TextUtils.isEmpty(target);
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
     @Override
-    public boolean isBackEventConsumed()
-    {
+    public boolean isBackEventConsumed() {
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
     @Override
-    public void setCallbacks(StepCallbacks callbacks)
-    {
+    public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 }

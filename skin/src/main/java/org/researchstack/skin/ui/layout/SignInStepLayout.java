@@ -25,34 +25,29 @@ import org.researchstack.skin.R;
 import org.researchstack.skin.task.SignInTask;
 import org.researchstack.skin.ui.adapter.TextWatcherAdapter;
 
-public class SignInStepLayout extends RelativeLayout implements StepLayout
-{
-    private View               progress;
-    private AppCompatEditText  email;
-    private AppCompatEditText  password;
-    private TextView           forgotPassword;
-    private Step               step;
+public class SignInStepLayout extends RelativeLayout implements StepLayout {
+    private View progress;
+    private AppCompatEditText email;
+    private AppCompatEditText password;
+    private TextView forgotPassword;
+    private Step step;
     private StepResult<String> result;
-    private StepCallbacks      callbacks;
+    private StepCallbacks callbacks;
 
-    public SignInStepLayout(Context context)
-    {
+    public SignInStepLayout(Context context) {
         super(context);
     }
 
-    public SignInStepLayout(Context context, AttributeSet attrs)
-    {
+    public SignInStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SignInStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public SignInStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
+    public void initialize(Step step, StepResult result) {
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;
 
@@ -61,34 +56,27 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
         progress = layout.findViewById(R.id.progress);
 
         email = (AppCompatEditText) layout.findViewById(R.id.username);
-        email.addTextChangedListener(new TextWatcherAdapter()
-        {
+        email.addTextChangedListener(new TextWatcherAdapter() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                if(! TextUtils.isEmpty(email.getError()))
-                {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(email.getError())) {
                     email.setError(null);
                 }
             }
         });
 
         password = (AppCompatEditText) layout.findViewById(R.id.password);
-        password.addTextChangedListener(new TextWatcherAdapter()
-        {
+        password.addTextChangedListener(new TextWatcherAdapter() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                if(! TextUtils.isEmpty(password.getError()))
-                {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(password.getError())) {
                     password.setError(null);
                 }
             }
         });
         password.setOnEditorActionListener((v, actionId, event) -> {
-            if((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
-                    (actionId == EditorInfo.IME_ACTION_DONE))
-            {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
+                    (actionId == EditorInfo.IME_ACTION_DONE)) {
                 signIn();
                 return true;
             }
@@ -97,8 +85,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
 
         forgotPassword = (TextView) layout.findViewById(R.id.forgot_password);
         RxView.clicks(forgotPassword).subscribe(v -> {
-            if(! isEmailValid())
-            {
+            if (!isEmailValid()) {
                 Toast.makeText(getContext(), R.string.rss_error_invalid_email, Toast.LENGTH_SHORT)
                         .show();
                 return;
@@ -118,10 +105,8 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
         submitBar.getNegativeActionView().setVisibility(GONE);
     }
 
-    private void signIn()
-    {
-        if(isAnswerValid())
-        {
+    private void signIn() {
+        if (isAnswerValid()) {
             final String username = this.email.getText().toString();
             final String password = this.password.getText().toString();
 
@@ -133,12 +118,9 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
                         .signIn(getContext(), username, password)
                         .compose(ObservableUtils.applyDefault())
                         .subscribe(dataResponse -> {
-                            if(dataResponse.isSuccess())
-                            {
+                            if (dataResponse.isSuccess()) {
                                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
-                            }
-                            else
-                            {
+                            } else {
                                 handleError(dataResponse.getMessage(), username, password);
                             }
                         }, throwable -> {
@@ -148,12 +130,10 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
         }
     }
 
-    private void handleError(String message, String username, String password)
-    {
+    private void handleError(String message, String username, String password) {
         progress.animate().alpha(0).withEndAction(() -> progress.setVisibility(View.GONE));
 
-        if(username.equals(DataProvider.getInstance().getUserEmail(getContext())))
-        {
+        if (username.equals(DataProvider.getInstance().getUserEmail(getContext()))) {
             // Sign in returns 404 if they haven't verified email. If the email
             // matches the one they used to sign up, go to verification activity
             result.setResultForIdentifier(SignInTask.ID_EMAIL, username);
@@ -168,49 +148,41 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    public boolean isAnswerValid()
-    {
-        if(! isEmailValid())
-        {
+    public boolean isAnswerValid() {
+        if (!isEmailValid()) {
             email.setError(getResources().getString(R.string.rss_error_invalid_email));
         }
 
-        if(! isPasswordValid())
-        {
+        if (!isPasswordValid()) {
             password.setError(getResources().getString(R.string.rss_error_invalid_password));
         }
 
         return TextUtils.isEmpty(email.getError()) && TextUtils.isEmpty(password.getError());
     }
 
-    public boolean isEmailValid()
-    {
+    public boolean isEmailValid() {
         CharSequence target = email.getText();
         return TextUtils.isValidEmail(target);
     }
 
-    public boolean isPasswordValid()
-    {
+    public boolean isPasswordValid() {
         CharSequence target = password.getText();
-        return ! TextUtils.isEmpty(target);
+        return !TextUtils.isEmpty(target);
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
     @Override
-    public boolean isBackEventConsumed()
-    {
+    public boolean isBackEventConsumed() {
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
     @Override
-    public void setCallbacks(StepCallbacks callbacks)
-    {
+    public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 

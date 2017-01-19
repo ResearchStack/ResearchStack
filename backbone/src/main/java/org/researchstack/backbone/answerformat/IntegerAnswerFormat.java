@@ -12,8 +12,7 @@ import org.researchstack.backbone.utils.TextUtils;
  * the {@link org.researchstack.backbone.ui.step.body.IntegerQuestionBody} does not allow navigation
  * until the participant provides a value that is within the valid range.
  */
-public class IntegerAnswerFormat extends AnswerFormat
-{
+public class IntegerAnswerFormat extends AnswerFormat {
     private int maxValue;
     private int minValue;
 
@@ -23,15 +22,13 @@ public class IntegerAnswerFormat extends AnswerFormat
      * @param minValue minimum allowed value
      * @param maxValue maximum allowed value, 0 if no max
      */
-    public IntegerAnswerFormat(int minValue, int maxValue)
-    {
+    public IntegerAnswerFormat(int minValue, int maxValue) {
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
 
     @Override
-    public QuestionType getQuestionType()
-    {
+    public QuestionType getQuestionType() {
         return Type.Integer;
     }
 
@@ -40,8 +37,7 @@ public class IntegerAnswerFormat extends AnswerFormat
      *
      * @return the max value, 0 if no max
      */
-    public int getMaxValue()
-    {
+    public int getMaxValue() {
         return maxValue;
     }
 
@@ -50,32 +46,23 @@ public class IntegerAnswerFormat extends AnswerFormat
      *
      * @return returns the minimum allowed value for the question
      */
-    public int getMinValue()
-    {
+    public int getMinValue() {
         return minValue;
     }
 
-    public BodyAnswer validateAnswer(String inputString)
-    {
+    public BodyAnswer validateAnswer(String inputString) {
 
         // If no answer is recorded
-        if(TextUtils.isEmpty(inputString))
-        {
+        if (TextUtils.isEmpty(inputString)) {
             return BodyAnswer.INVALID;
-        }
-        else
-        {
+        } else {
             // Parse value from editText
             Integer intAnswer = Integer.valueOf(inputString);
-            if(intAnswer < getMinValue())
-            {
+            if (intAnswer < getMinValue()) {
                 return new BodyAnswer(false,
                         R.string.rsb_invalid_answer_integer_under,
                         String.valueOf(getMinValue()));
-            }
-
-            else if(intAnswer > getMaxValue())
-            {
+            } else if (intAnswer > getMaxValue()) {
                 return new BodyAnswer(false,
                         R.string.rsb_invalid_answer_integer_over,
                         String.valueOf(getMaxValue()));

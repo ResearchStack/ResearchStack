@@ -14,15 +14,13 @@ import org.researchstack.skin.notification.NotificationConfig;
  * Research stack is a singleton which controls all the major components of the ResearchStack
  * framework. It is best to initialize within your Apps {@link Application#onCreate()} method.
  */
-public abstract class ResearchStack
-{
+public abstract class ResearchStack {
     protected static ResearchStack instance;
 
     /**
      * Default Constructor
      */
-    public ResearchStack()
-    {
+    public ResearchStack() {
     }
 
     /**
@@ -30,10 +28,8 @@ public abstract class ResearchStack
      *
      * @return the singleton instance of this class
      */
-    public synchronized static ResearchStack getInstance()
-    {
-        if(instance == null)
-        {
+    public synchronized static ResearchStack getInstance() {
+        if (instance == null) {
             throw new RuntimeException(
                     "ResearchStack instance is null. Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
@@ -48,8 +44,7 @@ public abstract class ResearchStack
      * @param context               android context, preferably application context.
      * @param concreteResearchStack implementation of ResearchStack class
      */
-    public static void init(Context context, ResearchStack concreteResearchStack)
-    {
+    public static void init(Context context, ResearchStack concreteResearchStack) {
         instance = concreteResearchStack;
 
         ResourceManager.init(concreteResearchStack.createResourceManagerImplementation(context));

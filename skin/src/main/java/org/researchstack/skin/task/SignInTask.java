@@ -8,52 +8,35 @@ import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.TaskProvider;
 
 
-public class SignInTask extends OnboardingTask
-{
+public class SignInTask extends OnboardingTask {
+    public static final int MINIMUM_STEPS = 0;
+    public static final String ID_EMAIL = "ID_EMAIL";
+    public static final String ID_PASSWORD = "ID_PASSWORD";
     private boolean hasPasscode;
 
-    public static final int    MINIMUM_STEPS = 0;
-    public static final String ID_EMAIL      = "ID_EMAIL";
-    public static final String ID_PASSWORD   = "ID_PASSWORD";
-
-    public SignInTask(Context context)
-    {
+    public SignInTask(Context context) {
         super(TaskProvider.TASK_ID_SIGN_IN);
     }
 
     @Override
-    public Step getStepAfterStep(Step step, TaskResult result)
-    {
+    public Step getStepAfterStep(Step step, TaskResult result) {
         Step nextStep = null;
 
-        if(step == null)
-        {
-            if(! hasPasscode)
-            {
+        if (step == null) {
+            if (!hasPasscode) {
                 nextStep = getPassCodeCreationStep();
-            }
-            else if (! PermissionRequestManager.getInstance().getPermissionRequests().isEmpty())
-            {
+            } else if (!PermissionRequestManager.getInstance().getPermissionRequests().isEmpty()) {
                 nextStep = getPermissionStep();
-            }
-            else
-            {
+            } else {
                 nextStep = getSignInStep();
             }
-        }
-        else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
-        {
-            if (! PermissionRequestManager.getInstance().getPermissionRequests().isEmpty())
-            {
+        } else if (step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier)) {
+            if (!PermissionRequestManager.getInstance().getPermissionRequests().isEmpty()) {
                 nextStep = getPermissionStep();
-            }
-            else
-            {
+            } else {
                 nextStep = getSignInStep();
             }
-        }
-        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
-        {
+        } else if (step.getIdentifier().equals(SignUpPermissionsStepIdentifier)) {
             nextStep = getSignInStep();
         }
 
@@ -61,20 +44,17 @@ public class SignInTask extends OnboardingTask
     }
 
     @Override
-    public Step getStepBeforeStep(Step step, TaskResult result)
-    {
+    public Step getStepBeforeStep(Step step, TaskResult result) {
         // go back to onboarding
         return null;
     }
 
     @Override
-    public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
-    {
+    public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result) {
         return new TaskProgress(0, MINIMUM_STEPS);
     }
 
-    public void setHasPasscode(boolean hasPasscode)
-    {
+    public void setHasPasscode(boolean hasPasscode) {
         this.hasPasscode = hasPasscode;
     }
 }

@@ -1,23 +1,20 @@
 package org.researchstack.backbone.answerformat;
+
 import org.junit.Before;
 import org.junit.Test;
-
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
-public class AnswerFormatTest
-{
+public class AnswerFormatTest {
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
 
     }
 
     @Test
-    public void testTestValidEmailAnswerFormat() throws Exception
-    {
+    public void testTestValidEmailAnswerFormat() throws Exception {
         EmailAnswerFormat format = new EmailAnswerFormat();
         // Test email regex validation with correct input.
         assertTrue(format.isAnswerValid("someone@researchkit.org"));
@@ -29,8 +26,7 @@ public class AnswerFormatTest
     }
 
     @Test
-    public void testTestInvalidEmailAnswerFormat() throws Exception
-    {
+    public void testTestInvalidEmailAnswerFormat() throws Exception {
         EmailAnswerFormat format = new EmailAnswerFormat();
         // Test email regex validation with incorrect input.
         assertFalse(format.isAnswerValid("emailtest"));

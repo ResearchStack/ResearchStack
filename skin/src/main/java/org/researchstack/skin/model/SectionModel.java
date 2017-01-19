@@ -1,40 +1,35 @@
 package org.researchstack.skin.model;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class SectionModel
-{
+public class SectionModel {
 
     @SerializedName("items")
     private List<Section> sections;
 
-    public List<Section> getSections()
-    {
+    public List<Section> getSections() {
         return sections;
     }
 
-    public static class Section
-    {
+    public static class Section {
         @SerializedName("section_title")
         String title;
 
         @SerializedName("row_items")
         private List<SectionRow> items;
 
-        public List<SectionRow> getItems()
-        {
+        public List<SectionRow> getItems() {
             return items;
         }
 
-        public String getTitle()
-        {
+        public String getTitle() {
             return title;
         }
     }
 
-    public static class SectionRow
-    {
+    public static class SectionRow {
         @SerializedName("title")
         String title;
 
@@ -48,43 +43,35 @@ public class SectionModel
         String tintColor;
 
 
-        public String getTitle()
-        {
+        public String getTitle() {
             return title;
         }
 
-        public void setTitle(String title)
-        {
+        public void setTitle(String title) {
             this.title = title;
         }
 
-        public String getDetails()
-        {
+        public String getDetails() {
             return details;
         }
 
-        public void setDetails(String details)
-        {
+        public void setDetails(String details) {
             this.details = details;
         }
 
-        public String getIconImage()
-        {
+        public String getIconImage() {
             return iconImage;
         }
 
-        public void setIconImage(String iconImage)
-        {
+        public void setIconImage(String iconImage) {
             this.iconImage = iconImage;
         }
 
-        public String getTintColor()
-        {
+        public String getTintColor() {
             return tintColor;
         }
 
-        public void setTintColor(String tintColor)
-        {
+        public void setTintColor(String tintColor) {
             this.tintColor = tintColor;
         }
     }

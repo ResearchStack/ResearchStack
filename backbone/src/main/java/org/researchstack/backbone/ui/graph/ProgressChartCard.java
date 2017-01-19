@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.graph;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -26,53 +27,48 @@ import java.util.List;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class ProgressChartCard extends CardView
-{
-    private PieChart  chart;
+public class ProgressChartCard extends CardView {
+    private PieChart chart;
     private TabLayout tabLayout;
-    private TextView  titleTextView;
-    private TextView  finishView;
+    private TextView titleTextView;
+    private TextView finishView;
     private Subscription finishSub;
 
     private String titleText;
-    private int    titleTextColor;
-    private float  titleTextSize;
+    private int titleTextColor;
+    private float titleTextSize;
     private String titleTextTypeface;
     private String finishText;
-    private int    finishTextColor;
+    private int finishTextColor;
     private String centerTextFormat;
-    private int    centerTextColor;
-    private float  centerTextSize;
+    private int centerTextColor;
+    private float centerTextSize;
     private String centerTextTypeface;
-    private int    tabIndicatorColor;
-    private int    tabTextColor;
-    private int    tabSelectedTextColor;
+    private int tabIndicatorColor;
+    private int tabTextColor;
+    private int tabSelectedTextColor;
 
     private NumberFormat numberFormat;
 
-    public ProgressChartCard(Context context)
-    {
+    public ProgressChartCard(Context context) {
         super(context);
         initializeRoot(null, R.attr.progressChartCardStyle);
         initializeViews();
     }
 
-    public ProgressChartCard(Context context, AttributeSet attrs)
-    {
+    public ProgressChartCard(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializeRoot(attrs, R.attr.progressChartCardStyle);
         initializeViews();
     }
 
-    public ProgressChartCard(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public ProgressChartCard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initializeRoot(attrs, defStyleAttr);
         initializeViews();
     }
 
-    private void initializeRoot(AttributeSet attrs, int defStyleAttr)
-    {
+    private void initializeRoot(AttributeSet attrs, int defStyleAttr) {
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_progress, this, true);
 
         numberFormat = NumberFormat.getInstance();
@@ -102,8 +98,7 @@ public class ProgressChartCard extends CardView
         a.recycle();
     }
 
-    private void initializeViews()
-    {
+    private void initializeViews() {
         titleTextView = (TextView) findViewById(R.id.view_chart_progress_title);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(titleTextColor);
@@ -130,46 +125,38 @@ public class ProgressChartCard extends CardView
         chart.setCenterTextTypeface(Typeface.create(centerTextTypeface, Typeface.NORMAL));
     }
 
-    public void setTitle(@StringRes int titleResId)
-    {
+    public void setTitle(@StringRes int titleResId) {
         String title = getContext().getString(titleResId);
         setTitle(title);
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         titleTextView.setText(title);
     }
 
-    public void setFinishAction(Action1<Object> action)
-    {
+    public void setFinishAction(Action1<Object> action) {
         finishView.setVisibility(action == null ? View.GONE : View.VISIBLE);
 
-        if(finishSub != null)
-        {
+        if (finishSub != null) {
             finishSub.unsubscribe();
         }
 
-        if(action != null)
-        {
+        if (action != null) {
             finishSub = RxView.clicks(finishView).subscribe(action);
         }
     }
 
-    public void setData(List<PieData> dataSet)
-    {
+    public void setData(List<PieData> dataSet) {
         tabLayout.removeAllTabs();
 
-        for(int i = 0, size = dataSet.size(); i < size; i++)
-        {
+        for (int i = 0, size = dataSet.size(); i < size; i++) {
             PieData data = dataSet.get(i);
             TabLayout.Tab newTab = tabLayout.newTab();
             newTab.setText(data.getDataSet().getLabel());
             newTab.setTag(data.getDataSet().getEntryForIndex(0).getVal());
             tabLayout.addTab(newTab, 0);
 
-            if(i == size - 1)
-            {
+            if (i == size - 1) {
                 post(() -> {
                     int lastIndex = tabLayout.getTabCount() - 1;
                     int right = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(lastIndex)
@@ -180,11 +167,9 @@ public class ProgressChartCard extends CardView
             }
         }
 
-        tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter()
-        {
+        tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab)
-            {
+            public void onTabSelected(TabLayout.Tab tab) {
                 PieData data = dataSet.get(tab.getPosition());
                 float complete = data.getDataSet().getEntryForIndex(0).getVal();
                 float incomplete = data.getDataSet().getEntryForIndex(1).getVal();
@@ -197,16 +182,14 @@ public class ProgressChartCard extends CardView
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab)
-            {
+            public void onTabReselected(TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onTabSelected(tab);
             }
         });
     }
 
-    public PieChart getChart()
-    {
+    public PieChart getChart() {
         return chart;
     }
 }

@@ -21,8 +21,7 @@ import org.researchstack.backbone.ui.views.SubmitBar;
  * {@link #stepResult}
  * {@link #confirmationDialogBody}
  */
-public class ConsentDocumentStepLayout extends LinearLayout implements StepLayout
-{
+public class ConsentDocumentStepLayout extends LinearLayout implements StepLayout {
     private StepCallbacks callbacks;
 
     private String confirmationDialogBody;
@@ -31,31 +30,26 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     private ConsentDocumentStep step;
     private StepResult<Boolean> stepResult;
 
-    public ConsentDocumentStepLayout(Context context)
-    {
+    public ConsentDocumentStepLayout(Context context) {
         super(context);
     }
 
-    public ConsentDocumentStepLayout(Context context, AttributeSet attrs)
-    {
+    public ConsentDocumentStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ConsentDocumentStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public ConsentDocumentStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
+    public void initialize(Step step, StepResult result) {
         this.step = (ConsentDocumentStep) step;
         this.confirmationDialogBody = ((ConsentDocumentStep) step).getConfirmMessage();
         this.htmlContent = ((ConsentDocumentStep) step).getConsentHTML();
         this.stepResult = result;
 
-        if(stepResult == null)
-        {
+        if (stepResult == null) {
             stepResult = new StepResult<>(step);
         }
 
@@ -63,27 +57,23 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
     @Override
-    public boolean isBackEventConsumed()
-    {
+    public boolean isBackEventConsumed() {
         stepResult.setResult(false);
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, stepResult);
         return false;
     }
 
     @Override
-    public void setCallbacks(StepCallbacks callbacks)
-    {
+    public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 
-    private void initializeStep()
-    {
+    private void initializeStep() {
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);
 
@@ -95,8 +85,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         submitBar.setNegativeAction(v -> callbacks.onCancelStep());
     }
 
-    private void showDialog()
-    {
+    private void showDialog() {
         new AlertDialog.Builder(getContext()).setTitle(R.string.rsb_consent_review_alert_title)
                 .setMessage(confirmationDialogBody)
                 .setCancelable(false)
