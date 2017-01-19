@@ -276,8 +276,8 @@ public class NavigableOrderedTask extends OrderedTask {
 //        }
 //        for step in self.steps {
 //            // Check if the step is a subtask step and validate parameters
-//            if let substepListStep = step as? SBASubtaskStep,
-//                    let subRet = substepListStep.subtask.providesBackgroundAudioPrompts , subRet {
+//            if let subtaskStep = step as? SBASubtaskStep,
+//                    let subRet = subtaskStep.subtask.providesBackgroundAudioPrompts , subRet {
 //                return true
 //            }
 //        }

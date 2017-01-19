@@ -29,10 +29,10 @@ import java.util.Set;
 /**
  * Created by TheMDP on 1/14/17.
  *
- * @class ProfileStepLayout is used to display fields that relate to a user's profile
- *        and the QuestionSteps were created from
- *        @see {@link org.researchstack.backbone.model.ProfileInfoOption} objects,
- *        which can be found in the @see {@link org.researchstack.backbone.step.ProfileStep}
+ * ProfileStepLayout is used to display fields that relate to a user's profile
+ * and the QuestionSteps were created from
+ * @see {@link org.researchstack.backbone.model.ProfileInfoOption} objects,
+ * which can be found in the @see {@link org.researchstack.backbone.step.ProfileStep}
  */
 
 public class ProfileStepLayout extends FormStepLayout {

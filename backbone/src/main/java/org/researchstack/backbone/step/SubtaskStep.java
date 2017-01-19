@@ -168,9 +168,4 @@ public class SubtaskStep extends Step {
         // And finally return the replacement step
         return replacementStep(nextStep);
     }
-
-    @Override
-    public Class getStepLayoutClass() {
-        return ViewPagerSubstepListStepLayout.class;
-    }
 }

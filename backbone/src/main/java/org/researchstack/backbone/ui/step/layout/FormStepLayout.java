@@ -39,11 +39,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Data used to initializeLayout and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // Main Question Step will either be a QuestionStep, when there is only 1 question in the survey
-    // And it will be a FormStep when there is more than 1 QuestionStep in the survey
     protected FormStep formStep;
-    // subQuestionSteps will either be a list of 1 when mainQuestionStep is just a single QuestionStep
-    // And it will be a list of all List<QuestionStep> formSteps when mainQuestionStep is a FormStep
+    // subQuestionSteps will be a map with keys of all List<QuestionStep> formSteps,
+    // and the values will be the StepBody's
     protected LinkedHashMap<QuestionStep, StepBody> subQuestionSteps;
     protected StepResult<StepResult> stepResult;
 
