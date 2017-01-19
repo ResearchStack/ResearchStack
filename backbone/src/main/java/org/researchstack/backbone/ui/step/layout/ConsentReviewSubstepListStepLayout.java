@@ -4,10 +4,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import org.researchstack.backbone.DataProvider;
+import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.model.User;
 import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
+import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.utils.ObservableUtils;
@@ -88,12 +91,21 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
         String usersName = getStringResult(ProfileInfoOption.NAME.getIdentifier(), stepResult, taskResult);
         Date usersBirthdate = getDateResult(ProfileInfoOption.BIRTHDATE.getIdentifier(), stepResult, taskResult);
 
-        // Grab sharing scope from TaskREsult
-        String sharingScope = getStringResult(ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER, stepResult, taskResult);
+        // Grab sharing scope from TaskResult
+        // The identifier comes from this particular step being a subtask step
+        String scopeSharingId = OnboardingSection.CONSENT_IDENTIFIER + "." +
+                ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER;
+        Boolean sharingScope = getBooleanResult(scopeSharingId, stepResult, taskResult);
+        String stringSharingScope;
+        if (sharingScope == true) {
+            stringSharingScope = User.DataSharingScope.ALL.getIdentifier();
+        } else {
+            stringSharingScope = User.DataSharingScope.STUDY.getIdentifier();
+        }
 
         // Save Consent Information
         // User is not signed in yet, so we need to save consent info to disk for later upload
-        return new ConsentSignatureBody(studyId, usersName, usersBirthdate, base64Image, "image/png", sharingScope);
+        return new ConsentSignatureBody(studyId, usersName, usersBirthdate, base64Image, "image/png", stringSharingScope);
     }
 
     /**
@@ -104,7 +116,7 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
         StepResult result = StepResultHelper.findStepResult(stepResult, stepIdentifier);
         if (result == null && taskResult != null && !taskResult.getResults().isEmpty()) {
             for (StepResult taskStepResult : taskResult.getResults().values()) {
-                if (result != null) {
+                if (taskStepResult != null && result == null) {
                     result = StepResultHelper.findStepResult(taskStepResult, stepIdentifier);
                 }
             }
@@ -122,6 +134,21 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
             Object resultValue = idStepResult.getResult();
             if (resultValue instanceof String) {
                 return (String) resultValue;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param stepIdentifier for result
+     * @return String object if exists, empty string otherwise
+     */
+    protected static Boolean getBooleanResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
+        StepResult idStepResult = getResult(stepIdentifier, stepResult, taskResult);
+        if (idStepResult != null) {
+            Object resultValue = idStepResult.getResult();
+            if (resultValue instanceof Boolean) {
+                return (Boolean) resultValue;
             }
         }
         return null;

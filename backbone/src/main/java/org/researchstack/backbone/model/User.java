@@ -68,9 +68,9 @@ public class User implements Serializable
      * ALL   - The user has consented to sharing their de-identified data for current and future research, which may or may not involve the same institutions or investigators.
      */
     public enum DataSharingScope {
-        NONE("none"),
-        STUDY("study"),
-        ALL("all");
+        NONE("no_sharing"),
+        STUDY("sponsors_and_partners"),
+        ALL("all_qualified_researchers");
 
         private String identifier;
 
