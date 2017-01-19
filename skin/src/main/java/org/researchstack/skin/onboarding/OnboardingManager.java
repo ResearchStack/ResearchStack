@@ -194,12 +194,12 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
             case CONSENT:
                 // All types *except* email verification include consent
                 return (taskType != OnboardingTaskType.REGISTRATION) ||
-                        !AppPrefs.getInstance(context).isOnboardingComplete();
+                        !AppPrefs.getInstance().isOnboardingComplete();
             case ELIGIBILITY:
             case REGISTRATION:
                 // Intro, eligibility and registration are only included in registration
                 return (taskType == OnboardingTaskType.REGISTRATION) ||
-                        !AppPrefs.getInstance(context).isOnboardingComplete();
+                        !AppPrefs.getInstance().isOnboardingComplete();
             case PASSCODE:
                 // Passcode is included if it has not already been set
                 return !hasPasscode();
