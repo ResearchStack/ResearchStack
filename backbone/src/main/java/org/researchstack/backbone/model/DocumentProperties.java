@@ -18,6 +18,8 @@ public class DocumentProperties
     private boolean requiresSignature;
     private boolean requiresName;
     private boolean requiresBirthdate;
+    private boolean generatePassword;
+    private int passwordLength;
 
     public String getHtmlDocument()
     {
@@ -87,5 +89,25 @@ public class DocumentProperties
     public void setRequiresBirthdate(boolean requiresBirthdate)
     {
         this.requiresBirthdate = requiresBirthdate;
+    }
+
+    public boolean generatePassword()
+    {
+        return generatePassword;
+    }
+
+    public void setGeneratePassword(boolean generate)
+    {
+        this.generatePassword = generate;
+    }
+
+    public int passwordLength()
+    {
+        return passwordLength;
+    }
+
+    public void setPasswordLength(int length)
+    {
+        this.passwordLength = length;
     }
 }

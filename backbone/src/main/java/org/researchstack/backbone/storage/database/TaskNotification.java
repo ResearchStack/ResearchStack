@@ -17,4 +17,10 @@ public class TaskNotification implements Serializable
 
     @DatabaseField
     public String chronTime;
+
+    @DatabaseField
+    public String delay;
+
+    @DatabaseField
+    public String interval;
 }

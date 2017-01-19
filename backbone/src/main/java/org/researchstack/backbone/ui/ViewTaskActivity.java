@@ -18,6 +18,7 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.ui.callbacks.StepViewCallback;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
 
@@ -35,6 +36,16 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private Step       currentStep;
     private Task       task;
     private TaskResult taskResult;
+
+    StepViewCallback stepviewcbk;
+
+    /**
+     * Sets a step view callback for this activity.
+     * @param cbk an @{@link StepViewCallback}
+     */
+    public void setStepViewCallback(StepViewCallback cbk){
+        this.stepviewcbk = cbk;
+    }
 
     public static Intent newIntent(Context context, Task task)
     {
@@ -71,7 +82,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         task.validateParameters();
 
-        task.onViewChange(Task.ViewChangeType.ActivityCreate, this, currentStep);
+        task.setActivity(this);
     }
 
     /**
@@ -96,6 +107,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         }
     }
 
+
     protected void showPreviousStep()
     {
         Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
@@ -109,7 +121,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         }
     }
 
-    private void showStep(Step step)
+    public void showStep(Step step)
     {
         int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult)
                 .getCurrent();
@@ -120,7 +132,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
                         ? StepSwitcher.SHIFT_LEFT
-                        : StepSwitcher.SHIFT_RIGHT);
+                        : StepSwitcher.SHIFT_RIGHT, new Runnable() {
+                    @Override
+                    public void run() {
+                        if(stepviewcbk != null)
+                            stepviewcbk.onStepShown(ViewTaskActivity.this, step);
+                    }
+                });
         currentStep = step;
     }
 
@@ -156,7 +174,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         }
     }
 
-    private void saveAndFinish()
+    public void saveAndFinish()
     {
         taskResult.setEndDate(new Date());
         Intent resultIntent = new Intent();
@@ -170,20 +188,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     {
         hideKeyboard();
         super.onPause();
-
-        task.onViewChange(Task.ViewChangeType.ActivityPause, this, currentStep);
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        task.onViewChange(Task.ViewChangeType.ActivityResume, this, currentStep);
-    }
-
-    @Override
-    protected void onStop(){
-        super.onStop();
-        task.onViewChange(Task.ViewChangeType.ActivityStop, this, currentStep);
     }
 
     @Override
@@ -240,6 +244,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         finish();
     }
 
+    // called when the step is completed
     @Override
     public void onSaveStep(int action, Step step, StepResult result)
     {

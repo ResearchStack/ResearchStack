@@ -38,7 +38,6 @@ import java.util.List;
 
 public class ConsentTask extends OrderedTask
 {
-    public static final String ID_VISUAL                        = "ID_VISUAL";
     public static final String ID_FIRST_QUESTION                = "question_1";
     public static final String ID_QUIZ_RESULT                   = "ID_QUIZ_RESULT";
     public static final String ID_SHARING                       = "ID_SHARING";
@@ -46,7 +45,6 @@ public class ConsentTask extends OrderedTask
     public static final String ID_FORM                          = "ID_FORM";
     public static final String ID_FORM_NAME                     = "ID_FORM_NAME";
     public static final String ID_FORM_DOB                      = "ID_FORM_DOB";
-    public static final String ID_FORM_BIRTHDATE                = "ID_FORM_BIRTHDATE";
     public static final String ID_SIGNATURE                     = "ID_SIGNATURE";
     public static final String INVALID_ARGUMENT_CANNOT_BE_NULL  = "Invalid argument, cannot be null";
 

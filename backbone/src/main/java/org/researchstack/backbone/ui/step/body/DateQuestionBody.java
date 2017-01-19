@@ -51,7 +51,7 @@ public class DateQuestionBody implements StepBody
         } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.Date){
             this.dateformatter = FormatHelper.getFormat(DateFormat.MEDIUM, FormatHelper.NONE);
         } else if(format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay){
-            this.dateformatter = FormatHelper.getFormat(FormatHelper.NONE, DateFormat.MEDIUM);
+            this.dateformatter = FormatHelper.getFormat(FormatHelper.NONE, DateFormat.SHORT);
         }
 
         // First check the result and restore last picked date

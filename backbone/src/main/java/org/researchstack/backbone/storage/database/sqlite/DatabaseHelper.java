@@ -82,7 +82,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase
             taskRecord.completed = taskResult.getEndDate();
             getDao(TaskRecord.class).create(taskRecord);
 
-            Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601).create();
+            Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_RFC_822).create();
             Dao<StepRecord> stepResultDao = getDao(StepRecord.class);
 
             for(StepResult stepResult : taskResult.getResults().values())

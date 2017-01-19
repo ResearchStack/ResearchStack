@@ -23,6 +23,7 @@ public abstract class DataProvider
 {
     public final static String ERROR_NOT_AUTHENTICATED = "ERROR_NOT_AUTHENTICATED";
     public final static String ERROR_CONSENT_REQUIRED  = "ERROR_CONSENT_REQUIRED";
+    public final static String ERROR_REPEAT_SIGNUP = "ERROR_REPEAT_SIGNUP";
 
     private static DataProvider instance;
 
@@ -86,7 +87,7 @@ public abstract class DataProvider
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
      */
-    public abstract Observable<DataResponse> signIn(Context context, String username, String password);
+    public abstract Observable<DataResponse> signIn(Context context, String email, String password);
 
     /**
      * Currently not used within the framework
@@ -105,7 +106,7 @@ public abstract class DataProvider
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
      */
-    public abstract Observable<DataResponse> resendEmailVerification(Context context, String email);
+    public abstract Observable<DataResponse> resendEmailVerification(Context context, String email, String password);
 
     /**
      * Returns true if user is currently signed up

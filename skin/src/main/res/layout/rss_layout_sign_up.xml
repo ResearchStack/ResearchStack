@@ -67,6 +67,7 @@
 
 
         <TableRow
+            android:id="@+id/passwordrow"
             android:gravity="center_vertical"
             android:minHeight="@dimen/rsb_item_size_default"
         >

@@ -11,6 +11,7 @@ import org.researchstack.backbone.storage.database.TaskNotification;
 import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
+import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.UiManager;
 import org.researchstack.skin.schedule.ScheduleHelper;
 
@@ -110,6 +111,9 @@ public class TaskAlertReceiver extends BroadcastReceiver
 
         // Generate the time the intent will fire
         Date nextExecuteTime = ScheduleHelper.nextSchedule(taskNotification.chronTime,
+                taskNotification.delay,
+                taskNotification.interval,
+                AppPrefs.getInstance(context).getEmailVerifiedTime(),
                 taskNotification.endDate);
 
         // Create alert
