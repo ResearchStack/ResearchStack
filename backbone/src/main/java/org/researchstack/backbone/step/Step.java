@@ -1,6 +1,7 @@
 package org.researchstack.backbone.step;
 
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.utils.ObjectUtils;
 
 import java.io.Serializable;
 
@@ -24,7 +25,7 @@ public class Step implements Serializable
 {
     private String identifier;
 
-    private Class stepLayoutClass;
+    protected Class stepLayoutClass;
 
     private int stepTitle;
 
@@ -42,6 +43,11 @@ public class Step implements Serializable
     private boolean showsProgress;
     private boolean allowsBackNavigation;
     private boolean useSurveyMode;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    Step() {
+        super();
+    }
 
     /**
      * Returns a new step initialized with the specified identifier.
@@ -206,5 +212,41 @@ public class Step implements Serializable
     public void setStepLayoutClass(Class stepLayoutClass)
     {
         this.stepLayoutClass = stepLayoutClass;
+    }
+
+    /**
+     * @param newIdentifier to use instead of cloned step's identifier
+     * @return cloned step using Gson but with different identifier
+     */
+    public Step deepCopy(String newIdentifier) {
+        Step clonedStep = (Step)ObjectUtils.clone(this);
+        clonedStep.identifier = newIdentifier;
+        return clonedStep;
+    }
+
+    @Override
+    public int hashCode() {
+        if (identifier == null) {
+            return super.hashCode();
+        }
+        return identifier.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Step)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+
+        Step rhs = (Step) obj;
+
+        if (identifier == null || rhs.identifier == null) {
+            return false;
+        }
+
+        return identifier.equals(rhs.identifier);
     }
 }

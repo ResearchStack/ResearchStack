@@ -1,13 +1,23 @@
 package org.researchstack.backbone.ui.step.layout;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 
 public interface StepLayout
 {
-    void initialize(Step step, StepResult result);
+    /**
+     * @param step Step to be related to this StepLayout
+     * @param result the StepResult for this step, if one already exists
+     * @param taskResult The TaskResult object, if this StepLayout belongs to a Task
+     */
+    void initialize(@NonNull Step step,
+                    @Nullable StepResult result,
+                    @Nullable TaskResult taskResult);
 
     View getLayout();
 

@@ -19,7 +19,7 @@
         android:layout_below="@+id/toolbar"
         android:textSize="20sp"
         android:textColor="?attr/colorAccent"
-        android:text="@string/rss_confirm_title"
+        android:text="@string/rsb_confirm_title"
     />
 
     <android.support.v7.widget.AppCompatTextView
@@ -47,7 +47,7 @@
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_left"
         android:gravity="left|center_vertical"
-        android:text="@string/rss_confirm_diff"
+        android:text="@string/rsb_confirm_diff"
     />
 
 
@@ -56,8 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:positiveActionTitle="@string/rss_continue"
-        app:negativeActionTitle="@string/rss_confirm_resend_email"/>
+        app:positiveActionTitle="@string/rsb_continue"
+        app:negativeActionTitle="@string/rsb_confirm_resend_email"/>
 
     <include
         android:id="@+id/progress"

@@ -13,4 +13,11 @@ public class ConsentSharingOptionsSurveyItem extends SurveyItem<Choice<Boolean>>
     public String investigatorShortDescription;
     @SerializedName("investigatorLongDescription")
     public String investigatorLongDescription;
+    @SerializedName("learnMoreHTMLContentURL")
+    public String learnMoreHTMLContentURL;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    ConsentSharingOptionsSurveyItem() {
+        super();
+    }
 }

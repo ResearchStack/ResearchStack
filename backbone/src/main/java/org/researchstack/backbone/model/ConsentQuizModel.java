@@ -18,6 +18,10 @@ public class ConsentQuizModel implements Serializable
     private String incorrectIcon = "rsb_quiz_retry";
     private String correctIcon   = "rss_ic_quiz_valid";
 
+    ConsentQuizModel() {
+        super();
+    }
+
     public String getFailureTitle()
     {
         return failureTitle;

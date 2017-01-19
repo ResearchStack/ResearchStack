@@ -4,15 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.survey.SurveyItem;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,9 +20,9 @@ import java.util.List;
 
 public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSection> {
 
-    ResourceNameJsonProvider mResourceNameConverter;
+    ResourceNameToStringConverter mResourceNameConverter;
 
-    public OnboardingSectionAdapter(ResourceNameJsonProvider converter) {
+    public OnboardingSectionAdapter(ResourceNameToStringConverter converter) {
         mResourceNameConverter = converter;
     }
 
@@ -32,6 +31,11 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
 
         JsonElement typeJson = json.getAsJsonObject().get(OnboardingSection.ONBOARDING_TYPE_GSON);
         OnboardingSectionType type = context.deserialize(typeJson, OnboardingSectionType.class);
+
+        // setup custom type
+        if (type == null) {
+            type = OnboardingSectionType.CUSTOM;
+        }
 
         JsonElement resourceName = json.getAsJsonObject().get(OnboardingSection.ONBOARDING_RESOURCE_NAME_GSON);
         if (resourceName != null) {
@@ -44,7 +48,17 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
             json = nestedSectionElement;
         }
 
-        OnboardingSection section = new OnboardingSection();
+        OnboardingSection section;
+        // Consent section also has a consent document with it, try and parse it if we have that type
+        if (type == OnboardingSectionType.CONSENT) {
+            ConsentOnboardingSection consentSection = new ConsentOnboardingSection();
+            consentSection.consentDocument = context.deserialize(json, ConsentDocument.class);
+            section = consentSection;
+        } else if (type == OnboardingSectionType.CUSTOM) {
+            section = new CustomOnboardingSection(typeJson.getAsString());
+        } else {  // otherwise make the base onboarding section class
+            section = new OnboardingSection();
+        }
         section.onboardingType = type;
 
         List<SurveyItem> surveyItems = context.deserialize(

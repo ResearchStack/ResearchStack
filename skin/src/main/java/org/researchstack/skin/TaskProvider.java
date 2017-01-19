@@ -6,6 +6,7 @@ import org.researchstack.backbone.task.Task;
 /**
  * TaskProvider is used as a way for the Framework to get Tasks needed throughout the onboarding
  * process. This allows you to implement your own Tasks if needed.
+ * @deprecated use org.researchstack.skin.onboarding.OnboardingManager instead
  */
 public abstract class TaskProvider
 {
@@ -37,6 +38,7 @@ public abstract class TaskProvider
      * Application#onCreate()} method.
      *
      * @param manager an implementation of ResourcePathManager
+     * @deprecated use org.researchstack.skin.onboarding.OnboardingManager instead
      */
     public static void init(TaskProvider manager)
     {

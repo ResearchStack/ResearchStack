@@ -2,6 +2,8 @@ package org.researchstack.backbone.model.survey;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.researchstack.backbone.model.survey.factory.SurveyFactory;
+
 /**
  * Created by TheMDP on 12/31/16.
  */
@@ -16,7 +18,7 @@ public enum SurveyItemType {
     @SerializedName("instruction")
     INSTRUCTION                 ("instruction"),            // InstructionStep
     @SerializedName("completion")
-    INSTRUCTION_COMPLETION      ("completion"),             // CompletionStep
+    INSTRUCTION_COMPLETION      ("completion"),             // OnboardingCompletionStep
     // Question, aka Form, Subtypes
     @SerializedName("compound")
     QUESTION_COMPOUND           ("compound"),               // QuestionSteps > 1
@@ -47,15 +49,15 @@ public enum SurveyItemType {
     @SerializedName("timingRange")
     QUESTION_TIMING_RANGE       ("timingRange"),            // Timing Range: ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
     // Consent subtypes
-    @SerializedName("consentSharingOptions")
-    CONSENT_SHARING_OPTIONS     ("consentSharingOptions"),  // ConsentSharingStep
+    @SerializedName(SurveyFactory.CONSENT_SHARING_IDENTIFIER)
+    CONSENT_SHARING_OPTIONS     (SurveyFactory.CONSENT_SHARING_IDENTIFIER),  // ConsentSharingStep
     @SerializedName("consentReview")
     CONSENT_REVIEW              ("consentReview"),          // ConsentReviewStep
     @SerializedName("consentVisual")
     CONSENT_VISUAL              ("consentVisual"),          // VisualConsentStep
     // Account subtypes
     @SerializedName("registration")
-    ACCOUNT_REGISTRATION        ("registration"        ),   // RegistrationStep
+    ACCOUNT_REGISTRATION        ("registration"        ),   // ProfileStep
     @SerializedName("login")
     ACCOUNT_LOGIN               ("login"               ),   // LoginStep
     @SerializedName("emailVerification")
@@ -71,21 +73,16 @@ public enum SurveyItemType {
     @SerializedName("profile")
     ACCOUNT_PROFILE             ("profile"),                // ProfileQuestionStep or ProfileFormStep
     // Passcode subtypes
-    @SerializedName("passcodeType4Digit")
-    PASSCODE                    ("passcodeType4Digit");     // iOS has 6 digit too, but for now only support 4 digit
+    @SerializedName(value="PASSCODE", alternate={"passcodeType4Digit", "passcodeType6Digit"})
+    PASSCODE                    ("passcode");               // iOS has 6 digit too, but for now only support 4 digit
 
     SurveyItemType(String rawValue) {
         value = rawValue;
     }
 
-    String value;
-    public String getValue() {
+    private String value;
+    String getValue() {
         return value;
-    }
-    public void setCustomValue(String customValue) {
-        if (value == null) {  // Is a custom identifier
-            value = customValue;
-        }
     }
 
     public boolean isQuestionSubtype() {

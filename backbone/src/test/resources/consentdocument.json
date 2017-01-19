@@ -1,0 +1,127 @@
+{
+  "documentProperties" :
+  {
+    "htmlDocument" : "PD_fullconsent",
+    "investigatorShortDescription": "Sage Bionetworks",
+    "investigatorLongDescription": "Sage Bionetworks and its partners",
+    "htmlContent": "consent_19sharing_rsch",
+    "requiresSignature": true,
+    "requiresName": true,
+    "requiresBirthdate": true
+  },
+  "sections":
+  [
+    {
+      "sectionType" : "onlyInDocument",
+      "sectionHtmlContent" : "consent_full"
+    },
+    {
+      "sectionType" : "overview",
+      "sectionTitle" : "Welcome",
+      "sectionSummary" : "This overview explains the research study. After you learn about the study, you can choose if you would like to participate. This may take about 20 minutes to complete.",
+      "sectionHtmlContent" : "consent_1welcome"
+    },
+    {
+      "sectionType" : "understanding",
+      "sectionTitle": "We'll Test Your Understanding",
+      "sectionSummary": "It is important to know what this study is about and what is involved. Before you can join, we will ask you to take a short quiz to test your understanding.",
+      "sectionHtmlContent" : "consent_2quiz_headsup"
+    },
+    {
+      "sectionType" : "activities",
+      "sectionTitle": "Activities & Surveys",
+      "sectionSummary": "To understand changes in your health, we will ask you to complete surveys and simple activities daily and weekly. We will look for patterns over time.",
+      "sectionHtmlContent" : "consent_3activities"
+    },
+    {
+      "sectionType" : "sensorData",
+      "sectionTitle": "Sensor Data",
+      "sectionSummary": "The sensors on your phone will collect data when you use the app. Some people wear fitness trackers. We will ask your permission to add the data from the sensors on your fitness tracker to the study. You do not have to agree.",
+      "sectionHtmlContent" : "consent_4sensordata"
+    },
+    {
+      "sectionType" : "dataGathering",
+      "sectionTitle": "View Your Data Trends",
+      "sectionSummary" : "You can view your data at any time. When you look at your data you may notice patterns. Seeing health patterns can generate a wide range of emotions.",
+      "sectionHtmlContent" : "consent_5dataprocessing"
+    },
+    {
+      "sectionType" : "privacy",
+      "sectionTitle": "Your Privacy",
+      "sectionSummary": "We will protect your privacy to the best of our ability. Your data will be encrypted on your phone. We will replace your name with a random code and store your coded study data on a secure cloud server.  But we cannot promise total privacy.",
+      "sectionHtmlContent" : "consent_6protectingdata"
+    },
+    {
+      "sectionType" : "dataUse",
+      "sectionTitle": "Data Use",
+      "sectionSummary": "Your coded study data will be used for research. It will be combined with data from other volunteers. It will be transferred to an analysis platform in the United States.",
+      "sectionHtmlContent" : "consent_7datause"
+    },
+    {
+      "sectionType" : "timeCommitment",
+      "sectionTitle" : "Time Commitment",
+      "sectionSummary": "This study will take about 20 minutes per day. Monthly reviews may take an additional 5 minutes once a month.\n\nThe time you spend on the app may count against your mobile data plan. You can set up the app to use Wi-Fi connections instead.",
+      "sectionHtmlContent" : "consent_8time"
+    },
+    {
+      "sectionType" : "studySurvey",
+      "sectionTitle" : "Study Surveys",
+      "sectionSummary": "Surveys are an important part of this research study. We will ask you to complete weekly and monthly surveys about your health.",
+      "sectionHtmlContent" : "consent_9study_survey"
+    },
+    {
+      "sectionType" : "studyTasks",
+      "sectionTitle" : "Potential Benefits",
+      "sectionSummary": "Your participation in this study could help researchers understand SAMPLE better. You may or may not benefit from this research study.",
+      "sectionHtmlContent" : "consent_10study_task"
+    },
+    {
+      "sectionType" : "potentialRisks",
+      "sectionTitle" : "Potential Risks",
+      "sectionSummary" : "If you participate in this study, your privacy may be at risk. There may be other risks to participating that we do not know about yet.",
+      "sectionHtmlContent" : "consent_11potential_risk"
+    },
+    {
+      "sectionType" : "medicalCare",
+      "sectionTitle": "NOT Medical Care",
+      "sectionSummary": "SAMPLE is not used for medical care. It is a research study. The SAMPLE app is not a diagnosis tool. We do not give medical advice or treatment recommendations.",
+      "sectionHtmlContent" : "consent_12medical_care"
+    },
+    {
+      "sectionType" : "followUp",
+      "sectionTitle": "Follow Up",
+      "sectionSummary": "We might want to reach out to you.\n\nYou can opt out of these follow up notifications at any time.",
+      "sectionHtmlContent" : "consent_13follow_up"
+    },
+    {
+      "sectionType" : "exitArrow",
+      "sectionTitle": "Pause or Quit",
+      "sectionSummary": "Your participation is voluntary. You can pause your participation or you can leave the study at any time.",
+      "sectionHtmlContent" : "consent_14withdrawl"
+    },
+    {
+      "sectionType" : "thinkItOver",
+      "sectionTitle": "Think It Over",
+      "sectionSummary": "Your participation is voluntary. Take time to think it over and ask questions.",
+      "sectionHtmlContent" : "consent_15think"
+    },
+    {
+      "sectionType" : "futureResearch",
+      "sectionTitle": "Future Independent Research",
+      "sectionSummary": "Your coded study data is valuable. In addition to this study, it could be used for other research. You get to decide whether or not to share your data for other research. These screens explain more about this option.",
+      "sectionHtmlContent" : "consent_16future"
+    },
+    {
+      "sectionType" : "dataSharing",
+      "sectionTitle": "Sharable Data",
+      "sectionSummary": "Only coded study data are sharable. Coded study data do not include your name or email address. A random code is used instead.",
+      "sectionHtmlContent" : "consent_17data_sharing"
+    },
+    {
+      "sectionType" : "qualifiedResearchers",
+      "sectionTitle": "Qualified Researchers",
+      "sectionSummary": "With your permission, we will share your coded study data with qualified researchers worldwide. We have rules to qualify researchers. However, we do not control the research that they do with the shared data.",
+      "sectionHtmlContent" : "consent_18researchers"
+    }
+  ]
+}

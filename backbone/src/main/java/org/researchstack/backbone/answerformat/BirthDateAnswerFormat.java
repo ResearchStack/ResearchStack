@@ -10,6 +10,14 @@ public class BirthDateAnswerFormat extends DateAnswerFormat
     private final int minAge;
     private final int maxAge;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    BirthDateAnswerFormat()
+    {
+        super();
+        minAge = 0;
+        maxAge = Integer.MAX_VALUE;
+    }
+
     private static Date dateFromAge(int age)
     {
         Calendar calendar = Calendar.getInstance();

@@ -7,7 +7,7 @@ import java.io.Serializable;
  * They typically have an integer or string value, always with a string text representation of the
  * choice for the user.
  *
- * @param <T> the type of value for the choice, usually Integer or String
+ * @param <T> the type of value for the choice, usually Integer or String, but must implement Serializable
  */
 public class Choice <T> implements Serializable
 {
@@ -16,6 +16,11 @@ public class Choice <T> implements Serializable
     private T value;
 
     private String detailText;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    Choice() {
+        super();
+    }
 
     /**
      * Creates a choice object with the provided text and value, detailtext is null

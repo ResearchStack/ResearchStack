@@ -10,12 +10,13 @@ import android.view.inputmethod.InputMethodManager;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.PinCodeLayout;
 import org.researchstack.backbone.utils.ThemeUtils;
-import org.researchstack.skin.R;
+import org.researchstack.backbone.R;
 import org.researchstack.skin.step.PassCodeCreationStep;
 
 public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements StepLayout
@@ -53,7 +54,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
+    public void initialize(Step step, StepResult result, TaskResult taskResult)
     {
         this.step = (PassCodeCreationStep) step;
         this.result = result == null ? new StepResult<>(step) : result;
@@ -156,16 +157,16 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
         switch(state)
         {
             case CONFIRM:
-                pinCodeTitle = res.getString(R.string.rss_passcode_confirm_title);
-                pinCodeInstructions = res.getString(R.string.rss_passcode_confirm_summary,
+                pinCodeTitle = res.getString(R.string.rsb_passcode_confirm_title);
+                pinCodeInstructions = res.getString(R.string.rsb_passcode_confirm_summary,
                         pinLength,
                         characterType);
                 summaryColor = ThemeUtils.getTextColorPrimary(getContext());
                 break;
 
             case RETRY:
-                pinCodeTitle = res.getString(R.string.rss_passcode_confirm_title);
-                pinCodeInstructions = res.getString(R.string.rss_passcode_confirm_error,
+                pinCodeTitle = res.getString(R.string.rsb_passcode_confirm_title);
+                pinCodeInstructions = res.getString(R.string.rsb_passcode_confirm_error,
                         pinLength,
                         characterType);
                 summaryColor = ContextCompat.getColor(getContext(), R.color.rsb_error);
@@ -173,8 +174,8 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
 
             case CREATE:
             default:
-                pinCodeTitle = res.getString(R.string.rss_passcode_create_title);
-                pinCodeInstructions = res.getString(R.string.rss_passcode_create_summary,
+                pinCodeTitle = res.getString(R.string.rsb_passcode_create_title);
+                pinCodeInstructions = res.getString(R.string.rsb_passcode_create_summary,
                         pinLength,
                         characterType);
                 summaryColor = ThemeUtils.getTextColorPrimary(getContext());

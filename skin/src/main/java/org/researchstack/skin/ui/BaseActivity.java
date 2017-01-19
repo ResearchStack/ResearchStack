@@ -19,7 +19,7 @@ import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.AppPrefs;
-import org.researchstack.skin.DataProvider;
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.task.OnboardingTask;
@@ -93,7 +93,7 @@ public class BaseActivity extends PinCodeActivity
                                 .get(TaskProvider.TASK_ID_SIGN_IN);
                         task.setHasPasscode(hasPinCode);
                         startActivityForResult(SignUpTaskActivity.newIntent(BaseActivity.this,
-                                task), OnboardingActivity.REQUEST_CODE_SIGN_IN);
+                                task), OverviewActivity.REQUEST_CODE_SIGN_IN);
                     };
                     break;
             }
@@ -155,7 +155,7 @@ public class BaseActivity extends PinCodeActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == OnboardingActivity.REQUEST_CODE_SIGN_IN && resultCode == RESULT_OK)
+        if(requestCode == OverviewActivity.REQUEST_CODE_SIGN_IN && resultCode == RESULT_OK)
         {
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String email = (String) result.getStepResult(OnboardingTask.SignInStepIdentifier)

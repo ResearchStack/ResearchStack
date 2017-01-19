@@ -2,7 +2,14 @@ package org.researchstack.backbone.result;
 
 import android.net.Uri;
 
+import org.researchstack.backbone.step.QuestionStep;
+import org.researchstack.backbone.step.Step;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,10 +34,24 @@ public class TaskResult extends Result
     // unimplemented but exists in RK, implement or delete if not needed
     private Uri outputDirectory;
 
+    /* Default identifier for serilization/deserialization */
+    TaskResult() {
+        super();
+        this.results = new LinkedHashMap<>();
+    }
+
     public TaskResult(String identifier)
     {
         super(identifier);
-        this.results = new HashMap<>();
+        this.results = new LinkedHashMap<>();
+    }
+
+    /**
+     * Set the Map of all of the StepResults in the task.
+     */
+    public void setResults(Map<String, StepResult> newResults)
+    {
+        results = newResults;
     }
 
     /**
@@ -60,8 +81,7 @@ public class TaskResult extends Result
      * @param identifier the Step and StepResult's identifier
      * @param stepResult the StepResult for this identifier
      */
-    public void setStepResultForStepIdentifier(String identifier, StepResult stepResult)
-    {
+    public void setStepResultForStepIdentifier(String identifier, StepResult stepResult) {
         results.put(identifier, stepResult);
     }
 }

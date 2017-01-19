@@ -12,6 +12,11 @@ import org.researchstack.backbone.model.Choice;
  */
 public class BooleanAnswerFormat extends ChoiceAnswerFormat
 {
+    /* Default constructor needed for serilization/deserialization of object */
+    BooleanAnswerFormat()
+    {
+        super();
+    }
 
     /**
      * Constructs a single choice question with true/false values, using the specified strings to

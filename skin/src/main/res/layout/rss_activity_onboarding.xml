@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="org.researchstack.skin.ui.OnboardingActivity"
+    tools:context="org.researchstack.skin.ui.OverviewActivity"
 >
 
     <ScrollView

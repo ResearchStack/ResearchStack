@@ -19,6 +19,7 @@ import android.widget.Toast;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ConsentQuestionType;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
@@ -62,7 +63,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
+    public void initialize(Step step, StepResult result, TaskResult taskResult)
     {
         this.step = (ConsentQuizQuestionStep) step;
         this.result = result == null ? new StepResult<>(step) : result;

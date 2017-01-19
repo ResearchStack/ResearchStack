@@ -3,12 +3,15 @@ package org.researchstack.skin;
 import android.app.Application;
 import android.content.Context;
 
+import org.researchstack.backbone.DataProvider;
+import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.storage.database.AppDatabase;
 import org.researchstack.backbone.storage.file.EncryptionProvider;
 import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.storage.file.PinCodeConfig;
 import org.researchstack.skin.notification.NotificationConfig;
+import org.researchstack.skin.onboarding.OnboardingManager;
 
 /**
  * Research stack is a singleton which controls all the major components of the ResearchStack
@@ -70,6 +73,10 @@ public abstract class ResearchStack
 
         PermissionRequestManager.init(concreteResearchStack.createPermissionRequestManagerImplementation(
                 context));
+
+        // OnboardingManager is not a singleton, so that in the future,
+        // there can potentially be multiple onboarding flows depending
+        instance.createOnboardingManager(context);
     }
 
     /**
@@ -95,6 +102,17 @@ public abstract class ResearchStack
      * @return concrete implementation of {@link EncryptionProvider}
      */
     protected abstract EncryptionProvider getEncryptionProvider(Context context);
+
+    /**
+     * @return concrete implementation of {@link OnboardingManager}
+     */
+    public abstract OnboardingManager getOnboardingManager();
+
+    /**
+     * Called within {@link #init(Context, ResearchStack)} to initialize {@link OnboardingManager} implementation
+     * @return concrete implementation of {@link OnboardingManager}
+     */
+    public abstract void createOnboardingManager(Context context);
 
     /**
      * Called within {@link #init(Context, ResearchStack)} to initialize {@link FileAccess} implementation
@@ -133,6 +151,8 @@ public abstract class ResearchStack
      *
      * @param context android Contenxt
      * @return concrete implementation of {@link TaskProvider}
+     *
+     * @deprecated use org.researchstack.skin.onboarding.OnboardingManager instead
      */
     protected abstract TaskProvider createTaskProviderImplementation(Context context);
 
@@ -151,5 +171,4 @@ public abstract class ResearchStack
      * @return concrete implementation of {@link PermissionRequestManager}
      */
     protected abstract PermissionRequestManager createPermissionRequestManagerImplementation(Context context);
-
 }

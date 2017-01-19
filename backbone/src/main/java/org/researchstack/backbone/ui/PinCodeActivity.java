@@ -145,6 +145,10 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         LogExt.e(getClass(), "onDataAuth()");
         storageAccessUnregister();
 
+        if (!shouldShowPinCode()) {
+            return;
+        }
+
         // Show pincode layout
         PinCodeConfig config = StorageAccess.getInstance().getPinCodeConfig();
 
@@ -207,5 +211,12 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
         // Show keyboard, needs to be delayed, not sure why
         pinCodeLayout.postDelayed(() -> toggleKeyboardAction.call(true), 300);
+    }
+
+    /**
+     * @return true if pincode should show before task view activity, false otherwise
+     */
+    public boolean shouldShowPinCode() {
+        return StorageAccess.getInstance().hasPinCode(this);
     }
 }

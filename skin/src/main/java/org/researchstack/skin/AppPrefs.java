@@ -24,6 +24,7 @@ public class AppPrefs
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
+    // TODO: switch from lazy singleton, dont need to provide Context every time
     public static synchronized AppPrefs getInstance(Context context)
     {
         if(instance == null)

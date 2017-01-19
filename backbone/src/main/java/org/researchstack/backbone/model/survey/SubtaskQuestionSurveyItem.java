@@ -6,4 +6,8 @@ package org.researchstack.backbone.model.survey;
 
 public class SubtaskQuestionSurveyItem extends QuestionSurveyItem<SurveyItem> {
 
+    /* Default constructor needed for serilization/deserialization of object */
+    SubtaskQuestionSurveyItem() {
+        super();
+    }
 }
