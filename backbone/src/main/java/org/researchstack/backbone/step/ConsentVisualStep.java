@@ -1,4 +1,5 @@
 package org.researchstack.backbone.step;
+
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
 
@@ -8,27 +9,23 @@ import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
  * In the ResearchStack framework, an {@link ConsentVisualStep} object is used to present a simple
  * graphic to help study participants understand the content of an informed consent document.
  */
-public class ConsentVisualStep extends Step
-{
+public class ConsentVisualStep extends Step {
     private ConsentSection section;
 
     @Deprecated
     private String nextButtonString;
 
-    public ConsentVisualStep(String identifier)
-    {
+    public ConsentVisualStep(String identifier) {
         super(identifier);
     }
 
     @Override
-    public int getStepTitle()
-    {
+    public int getStepTitle() {
         return org.researchstack.backbone.R.string.rsb_consent;
     }
 
     @Override
-    public Class getStepLayoutClass()
-    {
+    public Class getStepLayoutClass() {
         return ConsentVisualStepLayout.class;
     }
 
@@ -37,8 +34,7 @@ public class ConsentVisualStep extends Step
      *
      * @return the consent section for this step
      */
-    public ConsentSection getSection()
-    {
+    public ConsentSection getSection() {
         return section;
     }
 
@@ -49,20 +45,17 @@ public class ConsentVisualStep extends Step
      *
      * @param section the consent section
      */
-    public void setSection(ConsentSection section)
-    {
+    public void setSection(ConsentSection section) {
         this.section = section;
     }
 
     @Deprecated
-    public String getNextButtonString()
-    {
+    public String getNextButtonString() {
         return nextButtonString;
     }
 
     @Deprecated
-    public void setNextButtonString(String nextButtonString)
-    {
+    public void setNextButtonString(String nextButtonString) {
         this.nextButtonString = nextButtonString;
     }
 }

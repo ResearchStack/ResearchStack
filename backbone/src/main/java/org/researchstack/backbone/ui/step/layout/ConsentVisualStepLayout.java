@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.step.layout;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -24,88 +25,75 @@ import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
-public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements StepLayout
-{
+public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
-    private StepCallbacks     callbacks;
+    private StepCallbacks callbacks;
     private ConsentVisualStep step;
 
-    public ConsentVisualStepLayout(Context context)
-    {
+    public ConsentVisualStepLayout(Context context) {
         super(context);
     }
 
-    public ConsentVisualStepLayout(Context context, AttributeSet attrs)
-    {
+    public ConsentVisualStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ConsentVisualStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public ConsentVisualStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
+    public void initialize(Step step, StepResult result) {
         this.step = (ConsentVisualStep) step;
         initializeStep();
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
     @Override
-    public boolean isBackEventConsumed()
-    {
+    public boolean isBackEventConsumed() {
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, null);
         return false;
     }
 
     @Override
-    public void setCallbacks(StepCallbacks callbacks)
-    {
+    public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 
     @Override
-    public int getContentResourceId()
-    {
+    public int getContentResourceId() {
         return R.layout.rsb_step_layout_consent_visual;
     }
 
-    private void initializeStep()
-    {
+    private void initializeStep() {
         ConsentSection data = step.getSection();
 
         // Set Image
         TypedValue typedValue = new TypedValue();
         TypedArray a = getContext().obtainStyledAttributes(typedValue.data,
-                new int[] {R.attr.colorAccent});
+                new int[]{R.attr.colorAccent});
         int accentColor = a.getColor(0, 0);
         a.recycle();
 
         ImageView imageView = (ImageView) findViewById(R.id.image);
 
-        String imageName = ! TextUtils.isEmpty(data.getCustomImageName())
+        String imageName = !TextUtils.isEmpty(data.getCustomImageName())
                 ? data.getCustomImageName()
                 : data.getType().getImageName();
 
         int imageResId = ResUtils.getDrawableResourceId(getContext(), imageName);
 
-        if(imageResId != 0)
-        {
+        if (imageResId != 0) {
             Drawable drawable = getResources().getDrawable(imageResId);
             drawable = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(drawable, accentColor);
             imageView.setImageDrawable(drawable);
             imageView.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             imageView.setVisibility(View.GONE);
         }
 
@@ -122,14 +110,10 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         // Set more info
         TextView moreInfoView = (TextView) findViewById(R.id.more_info);
 
-        if(! TextUtils.isEmpty(data.getHtmlContent()))
-        {
-            if(! TextUtils.isEmpty(data.getCustomLearnMoreButtonTitle()))
-            {
+        if (!TextUtils.isEmpty(data.getHtmlContent())) {
+            if (!TextUtils.isEmpty(data.getCustomLearnMoreButtonTitle())) {
                 moreInfoView.setText(data.getCustomLearnMoreButtonTitle());
-            }
-            else
-            {
+            } else {
                 moreInfoView.setText(data.getType().getMoreInfoResId());
             }
 
@@ -139,17 +123,15 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
                         TextUtils.isEmpty(data.getContent()) ? data.getHtmlContent() : data.getContent());
                 getContext().startActivity(webDoc);
             });
-        }
-        else
-        {
+        } else {
             moreInfoView.setVisibility(View.GONE);
         }
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveTitle(step.getNextButtonString());
         submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                        step,
-                        null));
+                step,
+                null));
         submitBar.getNegativeActionView().setVisibility(View.GONE);
     }
 }

@@ -1,12 +1,12 @@
 package org.researchstack.backbone.model;
+
 import android.support.annotation.StringRes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsentDocument implements Serializable
-{
+public class ConsentDocument implements Serializable {
 
     /**
      * The document's title in a localized string.
@@ -67,25 +67,21 @@ public class ConsentDocument implements Serializable
     private String htmlReviewContent;
 
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         this.title = title;
     }
 
     @StringRes
-    public int getSignaturePageTitle()
-    {
+    public int getSignaturePageTitle() {
         return signaturePageTitle;
     }
 
-    public void setSignaturePageTitle(@StringRes int signaturePageTitle)
-    {
+    public void setSignaturePageTitle(@StringRes int signaturePageTitle) {
         this.signaturePageTitle = signaturePageTitle;
     }
 
     @Deprecated
-    public void setSignaturePageContent(String signaturePageContent)
-    {
+    public void setSignaturePageContent(String signaturePageContent) {
         this.signaturePageContent = signaturePageContent;
     }
 
@@ -94,33 +90,27 @@ public class ConsentDocument implements Serializable
      *
      * @param signature The signature object to add to the document.
      */
-    public void addSignature(ConsentSignature signature)
-    {
+    public void addSignature(ConsentSignature signature) {
         signatures.add(signature);
     }
 
-    public ConsentSignature getSignature(int location)
-    {
+    public ConsentSignature getSignature(int location) {
         return signatures.get(location);
     }
 
-    public List<ConsentSection> getSections()
-    {
+    public List<ConsentSection> getSections() {
         return sections;
     }
 
-    public void setSections(List<ConsentSection> sections)
-    {
+    public void setSections(List<ConsentSection> sections) {
         this.sections = sections;
     }
 
-    public String getHtmlReviewContent()
-    {
+    public String getHtmlReviewContent() {
         return htmlReviewContent;
     }
 
-    public void setHtmlReviewContent(String htmlReviewContent)
-    {
+    public void setHtmlReviewContent(String htmlReviewContent) {
         this.htmlReviewContent = htmlReviewContent;
     }
 

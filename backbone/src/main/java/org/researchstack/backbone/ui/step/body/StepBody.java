@@ -6,8 +6,7 @@ import android.view.ViewGroup;
 
 import org.researchstack.backbone.result.StepResult;
 
-public interface StepBody
-{
+public interface StepBody {
     int VIEW_TYPE_DEFAULT = 0;
 
     int VIEW_TYPE_COMPACT = 1;

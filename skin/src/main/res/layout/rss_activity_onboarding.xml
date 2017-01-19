@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="org.researchstack.skin.ui.OnboardingActivity"
->
+    tools:context="org.researchstack.skin.ui.OnboardingActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/intro_buttons"
-        android:background="@android:color/white"
-    >
+        android:background="@android:color/white">
 
         <LinearLayout
             android:id="@+id/layout_studyoverview_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-        >
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/layout_studyoverview_landing_logo"
@@ -33,8 +29,7 @@
                 android:minHeight="80dp"
                 android:minWidth="80dp"
                 android:scaleType="center"
-                tools:src="@mipmap/ic_launcher"
-            />
+                tools:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/layout_studyoverview_landing_title"
@@ -47,8 +42,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
-                tools:text="@string/lorem_name"
-            />
+                tools:text="@string/lorem_name" />
 
             <TextView
                 android:id="@+id/layout_studyoverview_landing_subtitle"
@@ -57,8 +51,7 @@
                 android:padding="16dp"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                tools:text="@string/lorem_long"
-            />
+                tools:text="@string/lorem_long" />
         </LinearLayout>
     </ScrollView>
 
@@ -67,8 +60,7 @@
         android:layout_height="96dp"
         android:layout_alignParentBottom="true"
         android:layout_alignTop="@+id/intro_buttons"
-        android:background="@color/rsb_submit_bar_gray"
-    />
+        android:background="@color/rsb_submit_bar_gray" />
 
     <FrameLayout
         android:id="@+id/pager_frame"
@@ -76,8 +68,8 @@
         android:layout_height="match_parent"
         android:background="@color/rss_black_60"
         android:visibility="gone"
-        tools:visibility="visible"
-    >
+        tools:visibility="visible">
+
         <android.support.v7.widget.LinearLayoutCompat
             android:id="@+id/pager_container"
             android:layout_width="match_parent"
@@ -97,15 +89,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                app:tabMode="scrollable" android:fillViewport="false"/>
+                android:fillViewport="false"
+                app:tabMode="scrollable" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"
-                app:elevation="16dp"
-            />
+                app:elevation="16dp" />
         </android.support.v7.widget.LinearLayoutCompat>
     </FrameLayout>
 
@@ -116,7 +108,9 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal">
 
-        <Space android:layout_width="16dp" android:layout_height="match_parent"/>
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="match_parent" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_skip"
@@ -125,15 +119,17 @@
             android:text="@string/rss_skip_signup"
             android:visibility="gone"
             app:backgroundTint="@color/rsb_submit_bar_negative"
-            tools:visibility="visible"
-        />
+            tools:visibility="visible" />
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_sign_up"
             style="@style/Button.Skin.Onboarding"
             android:onClick="onSignUpClicked"
-            android:text="@string/rss_join_study"
-        />
-        <Space android:layout_width="16dp" android:layout_height="match_parent"/>
+            android:text="@string/rss_join_study" />
+
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <android.support.v7.widget.AppCompatButton
@@ -149,6 +145,5 @@
         android:text="@string/rss_already_participating"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
-        android:textSize="12sp"
-    />
+        android:textSize="12sp" />
 </RelativeLayout>

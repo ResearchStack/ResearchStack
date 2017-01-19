@@ -1,4 +1,5 @@
 package org.researchstack.skin.utils;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,13 +20,12 @@ import java.io.InputStream;
 
 import rx.Observable;
 
-public class ConsentFormUtils
-{
+public class ConsentFormUtils {
 
-    private ConsentFormUtils() {}
+    private ConsentFormUtils() {
+    }
 
-    public static void viewConsentForm(Context context)
-    {
+    public static void viewConsentForm(Context context) {
         String path = ResourceManager.getInstance().getConsentHtml().getAbsolutePath();
         String title = context.getString(R.string.rsb_consent);
         Intent intent = ViewWebDocumentActivity.newIntentForPath(context, title, path);
@@ -33,8 +33,7 @@ public class ConsentFormUtils
     }
 
     @Deprecated
-    public static void shareConsentForm(Context context)
-    {
+    public static void shareConsentForm(Context context) {
         Observable.create(subscriber -> {
             File consentFile = ConsentFormUtils.getConsentFormFileFromExternalStorage(context);
             subscriber.onNext(consentFile);
@@ -59,8 +58,7 @@ public class ConsentFormUtils
      */
     @NonNull
     @Deprecated
-    public static File getConsentFormFileFromExternalStorage(Context context)
-    {
+    public static File getConsentFormFileFromExternalStorage(Context context) {
         LogExt.d(ConsentFormUtils.class, "getConsentFormFileFromExternalStorage() - - - - - - ");
         String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
         String basepath = extStorageDirectory + "/" + ResUtils.getExternalSDAppFolder();
@@ -71,20 +69,16 @@ public class ConsentFormUtils
         File consentFile = new File(basepath, fileName);
         LogExt.d(ConsentFormUtils.class, "File Path: " + consentFile.getAbsolutePath());
 
-        if(! consentFile.exists())
-        {
+        if (!consentFile.exists()) {
             LogExt.d(ConsentFormUtils.class, "File does not exist");
 
             consentFile.getParentFile().mkdirs();
             LogExt.d(ConsentFormUtils.class, "Created file directory on external storage");
 
-            try
-            {
+            try {
                 copy(ResourceManager.getInstance().getConsentHtml().open(context), consentFile);
                 LogExt.d(ConsentFormUtils.class, "File copied to external storage");
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -92,14 +86,12 @@ public class ConsentFormUtils
     }
 
     @Deprecated
-    private static void copy(InputStream in, File dst) throws IOException
-    {
+    private static void copy(InputStream in, File dst) throws IOException {
         FileOutputStream out = new FileOutputStream(dst);
         byte[] buf = new byte[1024];
         int len;
 
-        while((len = in.read(buf)) > 0)
-        {
+        while ((len = in.read(buf)) > 0) {
             out.write(buf, 0, len);
         }
 

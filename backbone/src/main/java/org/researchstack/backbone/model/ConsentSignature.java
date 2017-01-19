@@ -1,11 +1,11 @@
 package org.researchstack.backbone.model;
+
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-public class ConsentSignature implements Serializable, Cloneable
-{
+public class ConsentSignature implements Serializable, Cloneable {
 
     /**
      * A Boolean value indicating whether the user needs to enter their name during consent review.
@@ -68,8 +68,7 @@ public class ConsentSignature implements Serializable, Cloneable
      */
     private String signatureDateFormatString;
 
-    public ConsentSignature()
-    {
+    public ConsentSignature() {
         this.requiresName = true;
         this.requiresSignatureImage = true;
         this.identifier = UUID.randomUUID().toString();
@@ -83,8 +82,7 @@ public class ConsentSignature implements Serializable, Cloneable
      * @param signatureImage An image of the signature.
      * @param signatureDate  The date on which the signature was obtained, represented as a string.
      */
-    public ConsentSignature(@NonNull String identifier, String title, String dateFormat, String fullName, String signatureImage, String signatureDate)
-    {
+    public ConsentSignature(@NonNull String identifier, String title, String dateFormat, String fullName, String signatureImage, String signatureDate) {
         this();
         this.identifier = identifier;
         this.title = title;
@@ -99,83 +97,67 @@ public class ConsentSignature implements Serializable, Cloneable
      * @param dateFormat The format string to use when formatting the date of signature.
      * @param identifier The identifier of the signature, unique within this document.
      */
-    public ConsentSignature(@NonNull String identifier, String title, String dateFormat)
-    {
+    public ConsentSignature(@NonNull String identifier, String title, String dateFormat) {
         this(identifier, title, dateFormat, null, null, null);
     }
 
-    public String getIdentifier()
-    {
+    public String getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(@NonNull String identifier)
-    {
+    public void setIdentifier(@NonNull String identifier) {
         this.identifier = identifier;
     }
 
-    public boolean requiresName()
-    {
+    public boolean requiresName() {
         return requiresName;
     }
 
-    public void setRequiresName(boolean requiresName)
-    {
+    public void setRequiresName(boolean requiresName) {
         this.requiresName = requiresName;
     }
 
-    public boolean requiresSignatureImage()
-    {
+    public boolean requiresSignatureImage() {
         return requiresSignatureImage;
     }
 
-    public void setRequiresSignatureImage(boolean requiresSignatureImage)
-    {
+    public void setRequiresSignatureImage(boolean requiresSignatureImage) {
         this.requiresSignatureImage = requiresSignatureImage;
     }
 
-    public boolean requiresBirthDate()
-    {
+    public boolean requiresBirthDate() {
         return requiresBirthDate;
     }
 
-    public void setRequiresBirthDate(boolean requiresBirthDate)
-    {
+    public void setRequiresBirthDate(boolean requiresBirthDate) {
         this.requiresBirthDate = requiresBirthDate;
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public String getFullName()
-    {
+    public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(String fullName)
-    {
+    public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    public String getSignatureImage()
-    {
+    public String getSignatureImage() {
         return signatureImage;
     }
 
-    public void setSignatureImage(String signatureImage)
-    {
+    public void setSignatureImage(String signatureImage) {
         this.signatureImage = signatureImage;
     }
 
-    public String getSignatureDate()
-    {
+    public String getSignatureDate() {
         return signatureDate;
     }
 
-    public String getSignatureDateFormatString()
-    {
+    public String getSignatureDateFormatString() {
         return signatureDateFormatString;
     }
 

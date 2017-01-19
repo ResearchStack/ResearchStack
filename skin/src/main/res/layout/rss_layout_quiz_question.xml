@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
->
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/text"
@@ -16,28 +14,25 @@
         android:layout_marginTop="0dp"
         android:paddingBottom="@dimen/rsb_padding_wedge"
         android:text="@string/rss_quiz_question_disclamer"
-        android:visibility="visible"
-    />
+        android:visibility="visible" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-    />
+        android:background="?android:attr/listDivider" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-    >
+        android:layout_weight="1">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-        >
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/title"
                 style="@style/Backbone.Survey.Title"
@@ -45,35 +40,33 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/rsb_padding_wedge"
                 android:paddingTop="@dimen/rsb_padding_wedge"
-                tools:text="@string/lorem_short"
-            />
+                tools:text="@string/lorem_short" />
+
             <TextView
                 android:id="@+id/instruction_text"
                 style="@style/Backbone.Survey.Summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
                 android:paddingBottom="@dimen/rsb_padding_wedge"
                 android:paddingTop="@dimen/rsb_padding_wedge"
-                android:layout_below="@+id/title"
                 android:visibility="gone"
-                tools:text="@string/lorem_short"
-            />
+                tools:text="@string/lorem_short" />
 
             <View
                 android:id="@+id/quiz_result_item_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/rsb_item_size_default"
-                android:background="@android:color/holo_red_light"
                 android:layout_alignTop="@+id/radio_group"
-                android:visibility="gone"/>
+                android:background="@android:color/holo_red_light"
+                android:minHeight="@dimen/rsb_item_size_default"
+                android:visibility="gone" />
 
             <RadioGroup
                 android:id="@+id/radio_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/instruction_text"
-            />
+                android:layout_below="@+id/instruction_text" />
 
 
             <TextView
@@ -81,13 +74,12 @@
                 style="@style/Backbone.Survey.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/radio_group"
                 android:paddingBottom="@dimen/rsb_padding_wedge"
                 android:paddingTop="@dimen/rsb_padding_wedge"
-                android:layout_below="@+id/radio_group"
                 android:visibility="gone"
                 tools:text="@string/lorem_name"
-                tools:visibility="visible"
-            />
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/quiz_result_summary"
@@ -100,8 +92,7 @@
                 android:paddingTop="@dimen/rsb_padding_small"
                 android:text="@string/lorem_long"
                 android:visibility="gone"
-                tools:visibility="visible"
-            />
+                tools:visibility="visible" />
 
         </RelativeLayout>
 
@@ -111,9 +102,9 @@
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:positiveActionTitle="@string/rsb_submit"
         app:negativeActionTitle="@string/rsb_exit"
+        app:positiveActionTitle="@string/rsb_submit"
 
-    />
+        />
 
 </LinearLayout>

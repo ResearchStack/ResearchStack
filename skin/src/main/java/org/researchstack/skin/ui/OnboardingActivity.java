@@ -35,21 +35,19 @@ import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.adapter.OnboardingPagerAdapter;
 
 
-public class OnboardingActivity extends PinCodeActivity implements View.OnClickListener
-{
-    public static final int REQUEST_CODE_SIGN_UP  = 21473;
-    public static final int REQUEST_CODE_SIGN_IN  = 31473;
+public class OnboardingActivity extends PinCodeActivity implements View.OnClickListener {
+    public static final int REQUEST_CODE_SIGN_UP = 21473;
+    public static final int REQUEST_CODE_SIGN_IN = 31473;
     public static final int REQUEST_CODE_PASSCODE = 41473;
-    private View      pagerFrame;
-    private View      pagerContainer;
+    private View pagerFrame;
+    private View pagerContainer;
     private TabLayout tabStrip;
-    private Button    skip;
-    private Button    signUp;
-    private TextView  signIn;
+    private Button skip;
+    private Button signUp;
+    private TextView signIn;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.rss_activity_onboarding);
 
@@ -65,26 +63,21 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
 
         titleView.setText(welcomeQuestion.getTitle());
 
-        if(! TextUtils.isEmpty(welcomeQuestion.getDetails()))
-        {
+        if (!TextUtils.isEmpty(welcomeQuestion.getDetails())) {
             subtitleView.setText(welcomeQuestion.getDetails());
-        }
-        else
-        {
+        } else {
             subtitleView.setVisibility(View.GONE);
         }
 
         // add Read Consent option to list and tabbed dialog
-        if("yes".equals(welcomeQuestion.getShowConsent()))
-        {
+        if ("yes".equals(welcomeQuestion.getShowConsent())) {
             StudyOverviewModel.Question consent = new StudyOverviewModel.Question();
             consent.setTitle(getString(R.string.rss_read_consent_doc));
             consent.setDetails(ResourceManager.getInstance().getConsentHtml().getName());
             model.getQuestions().add(0, consent);
         }
 
-        for(int i = 0; i < model.getQuestions().size(); i++)
-        {
+        for (int i = 0; i < model.getQuestions().size(); i++) {
             AppCompatButton button = (AppCompatButton) LayoutInflater.from(this)
                     .inflate(R.layout.rss_button_study_overview, linearLayout, false);
             button.setText(model.getQuestions().get(i).getTitle());
@@ -122,31 +115,25 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
     }
 
     @Override
-    public void onDataAuth()
-    {
-        if(StorageAccess.getInstance().hasPinCode(this))
-        {
+    public void onDataAuth() {
+        if (StorageAccess.getInstance().hasPinCode(this)) {
             super.onDataAuth();
-        }
-        else // allow onboarding if no pincode
+        } else // allow onboarding if no pincode
         {
             onDataReady();
         }
     }
 
-    private StudyOverviewModel parseStudyOverviewModel()
-    {
+    private StudyOverviewModel parseStudyOverviewModel() {
         return ResourceManager.getInstance().getStudyOverview().create(this);
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         showPager((int) v.getTag());
     }
 
-    private void showPager(int index)
-    {
+    private void showPager(int index) {
         pagerFrame.animate().alpha(1)
                 .setDuration(150)
                 .withStartAction(() -> pagerFrame.setVisibility(View.VISIBLE))
@@ -170,8 +157,7 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         colorAnimation.start();
     }
 
-    private void hidePager()
-    {
+    private void hidePager() {
         pagerContainer.animate()
                 .translationY(48)
                 .alpha(0)
@@ -196,20 +182,15 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
     }
 
     @Override
-    public void onBackPressed()
-    {
-        if(pagerFrame.getVisibility() == View.VISIBLE)
-        {
+    public void onBackPressed() {
+        if (pagerFrame.getVisibility() == View.VISIBLE) {
             hidePager();
-        }
-        else
-        {
+        } else {
             super.onBackPressed();
         }
     }
 
-    public void onSignUpClicked(View view)
-    {
+    public void onSignUpClicked(View view) {
         hidePager();
 
         boolean hasPin = StorageAccess.getInstance().hasPinCode(this);
@@ -219,26 +200,21 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
         startActivityForResult(SignUpTaskActivity.newIntent(this, task), REQUEST_CODE_SIGN_UP);
     }
 
-    public void onSkipClicked(View view)
-    {
+    public void onSkipClicked(View view) {
         hidePager();
         boolean hasPasscode = StorageAccess.getInstance().hasPinCode(this);
-        if(! hasPasscode)
-        {
+        if (!hasPasscode) {
             PassCodeCreationStep step = new PassCodeCreationStep(OnboardingTask.SignUpPassCodeCreationStepIdentifier,
                     R.string.rss_passcode);
             OrderedTask task = new OrderedTask("PasscodeTask", step);
             startActivityForResult(ConsentTaskActivity.newIntent(this, task),
                     REQUEST_CODE_PASSCODE);
-        }
-        else
-        {
+        } else {
             skipToMainActivity();
         }
     }
 
-    public void onSignInClicked(View view)
-    {
+    public void onSignInClicked(View view) {
         hidePager();
         boolean hasPasscode = StorageAccess.getInstance().hasPinCode(this);
 
@@ -248,10 +224,8 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if(requestCode == REQUEST_CODE_SIGN_IN && resultCode == RESULT_OK)
-        {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_SIGN_IN && resultCode == RESULT_OK) {
             finish();
 
             AppPrefs.getInstance(this).setSkippedOnboarding(false);
@@ -263,21 +237,16 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             String password = (String) result.getStepResult(OnboardingTask.SignInStepIdentifier)
                     .getResultForIdentifier(SignInTask.ID_PASSWORD);
 
-            if(email == null || password == null)
-            {
+            if (email == null || password == null) {
                 startMainActivity();
-            }
-            else
-            {
+            } else {
                 Intent intent = new Intent(this, EmailVerificationActivity.class);
                 intent.putExtra(EmailVerificationActivity.EXTRA_EMAIL, email);
                 intent.putExtra(EmailVerificationActivity.EXTRA_PASSWORD, password);
                 startActivity(intent);
             }
 
-        }
-        else if(requestCode == REQUEST_CODE_SIGN_UP && resultCode == RESULT_OK)
-        {
+        } else if (requestCode == REQUEST_CODE_SIGN_UP && resultCode == RESULT_OK) {
 
             finish();
 
@@ -293,30 +262,24 @@ public class OnboardingActivity extends PinCodeActivity implements View.OnClickL
             intent.putExtra(EmailVerificationActivity.EXTRA_EMAIL, email);
             intent.putExtra(EmailVerificationActivity.EXTRA_PASSWORD, password);
             startActivity(intent);
-        }
-        else if(requestCode == REQUEST_CODE_PASSCODE && resultCode == RESULT_OK)
-        {
+        } else if (requestCode == REQUEST_CODE_PASSCODE && resultCode == RESULT_OK) {
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String passcode = (String) result.getStepResult(OnboardingTask.SignUpPassCodeCreationStepIdentifier)
                     .getResult();
             StorageAccess.getInstance().createPinCode(this, passcode);
 
             skipToMainActivity();
-        }
-        else
-        {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    private void skipToMainActivity()
-    {
+    private void skipToMainActivity() {
         AppPrefs.getInstance(this).setSkippedOnboarding(true);
         startMainActivity();
     }
 
-    private void startMainActivity()
-    {
+    private void startMainActivity() {
         // Onboarding completion is checked in splash activity. The check allows us to pass through
         // to MainActivity even if we haven't signed in. We want to set this true in every case so
         // the user is really only forced through Onboarding once. If they leave the study, they must

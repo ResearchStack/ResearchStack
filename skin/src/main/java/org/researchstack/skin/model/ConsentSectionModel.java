@@ -1,4 +1,5 @@
 package org.researchstack.skin.model;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.model.ConsentSection;
@@ -6,8 +7,7 @@ import org.researchstack.backbone.model.DocumentProperties;
 
 import java.util.List;
 
-public class ConsentSectionModel
-{
+public class ConsentSectionModel {
 
     @SerializedName("documentProperties")
     DocumentProperties properties;
@@ -17,18 +17,15 @@ public class ConsentSectionModel
     @SerializedName("sections")
     List<ConsentSection> sections;
 
-    public List<ConsentSection> getSections()
-    {
+    public List<ConsentSection> getSections() {
         return sections;
     }
 
-    public DocumentProperties getDocumentProperties()
-    {
+    public DocumentProperties getDocumentProperties() {
         return properties;
     }
 
-    public ConsentQuizModel getQuiz()
-    {
+    public ConsentQuizModel getQuiz() {
         return quiz;
     }
 }

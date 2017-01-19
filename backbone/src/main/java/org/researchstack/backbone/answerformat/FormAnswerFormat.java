@@ -5,18 +5,15 @@ package org.researchstack.backbone.answerformat;
  * needs to use the individual QuestionSteps inside the form step to build the ui and validate
  * answers.
  */
-public class FormAnswerFormat extends AnswerFormat
-{
+public class FormAnswerFormat extends AnswerFormat {
     /**
      * Default constructor
      */
-    public FormAnswerFormat()
-    {
+    public FormAnswerFormat() {
     }
 
     @Override
-    public QuestionType getQuestionType()
-    {
+    public QuestionType getQuestionType() {
         return Type.Form;
     }
 }

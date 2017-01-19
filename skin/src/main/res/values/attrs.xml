@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:ignore="ResourceName">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
     <declare-styleable name="TextColorPreference">
-        <attr name="preferenceTextColor" format="color"/>
+        <attr name="preferenceTextColor" format="color" />
     </declare-styleable>
 
 </resources>

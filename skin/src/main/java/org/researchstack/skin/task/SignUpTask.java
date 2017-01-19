@@ -9,18 +9,14 @@ import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
 
 
-public class SignUpTask extends OnboardingTask
-{
+public class SignUpTask extends OnboardingTask {
+    public static final int MINIMUM_STEPS = 2;
+    public static final String ID_EMAIL = "ID_EMAIL";
+    public static final String ID_PASSWORD = "ID_PASSWORD";
     private boolean hasPasscode;
     private Step inclusionCriteriaStep;
 
-    public static final int MINIMUM_STEPS = 2;
-
-    public static final String ID_EMAIL    = "ID_EMAIL";
-    public static final String ID_PASSWORD = "ID_PASSWORD";
-
-    public SignUpTask(Context context)
-    {
+    public SignUpTask(Context context) {
         super(TaskProvider.TASK_ID_SIGN_UP);
         // creating here so it has access to context
         inclusionCriteriaStep = UiManager.getInstance().getInclusionCriteriaStep(context);
@@ -28,53 +24,32 @@ public class SignUpTask extends OnboardingTask
     }
 
     @Override
-    public Step getStepAfterStep(Step step, TaskResult result)
-    {
+    public Step getStepAfterStep(Step step, TaskResult result) {
         Step nextStep = null;
 
-        if(step == null)
-        {
+        if (step == null) {
             nextStep = inclusionCriteriaStep;
-        }
-        else if(step.getIdentifier().equals(SignUpInclusionCriteriaStepIdentifier))
-        {
-            if(UiManager.getInstance().isInclusionCriteriaValid(result.getStepResult(step.getIdentifier())))
-            {
+        } else if (step.getIdentifier().equals(SignUpInclusionCriteriaStepIdentifier)) {
+            if (UiManager.getInstance().isInclusionCriteriaValid(result.getStepResult(step.getIdentifier()))) {
                 nextStep = getEligibleStep();
-            }
-            else
-            {
+            } else {
                 nextStep = getIneligibleStep();
             }
-        }
-        else if(step.getIdentifier().equals(SignUpEligibleStepIdentifier))
-        {
-            if(! hasPasscode)
-            {
+        } else if (step.getIdentifier().equals(SignUpEligibleStepIdentifier)) {
+            if (!hasPasscode) {
                 nextStep = getPassCodeCreationStep();
-            }
-            else if (! PermissionRequestManager.getInstance().getPermissionRequests().isEmpty())
-            {
+            } else if (!PermissionRequestManager.getInstance().getPermissionRequests().isEmpty()) {
                 nextStep = getPermissionStep();
-            }
-            else
-            {
+            } else {
                 nextStep = getSignUpStep();
             }
-        }
-        else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
-        {
-            if (! PermissionRequestManager.getInstance().getPermissionRequests().isEmpty())
-            {
+        } else if (step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier)) {
+            if (!PermissionRequestManager.getInstance().getPermissionRequests().isEmpty()) {
                 nextStep = getPermissionStep();
-            }
-            else
-            {
+            } else {
                 nextStep = getSignUpStep();
             }
-        }
-        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
-        {
+        } else if (step.getIdentifier().equals(SignUpPermissionsStepIdentifier)) {
             nextStep = getSignUpStep();
         }
 
@@ -82,53 +57,33 @@ public class SignUpTask extends OnboardingTask
     }
 
     @Override
-    public Step getStepBeforeStep(Step step, TaskResult result)
-    {
+    public Step getStepBeforeStep(Step step, TaskResult result) {
         Step prevStep = null;
 
-        if(step.getIdentifier().equals(SignUpInclusionCriteriaStepIdentifier))
-        {
+        if (step.getIdentifier().equals(SignUpInclusionCriteriaStepIdentifier)) {
             prevStep = null;
-        }
-        else if(step.getIdentifier().equals(SignUpEligibleStepIdentifier))
-        {
+        } else if (step.getIdentifier().equals(SignUpEligibleStepIdentifier)) {
             prevStep = inclusionCriteriaStep;
 
-        }
-        else if(step.getIdentifier().equals(SignUpIneligibleStepIdentifier))
-        {
+        } else if (step.getIdentifier().equals(SignUpIneligibleStepIdentifier)) {
             prevStep = inclusionCriteriaStep;
 
-        }
-        else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
-        {
+        } else if (step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier)) {
             prevStep = getEligibleStep();
-        }
-        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
-        {
-            if(hasPasscode)
-            {
+        } else if (step.getIdentifier().equals(SignUpPermissionsStepIdentifier)) {
+            if (hasPasscode) {
                 // Force user to create a new pin
                 prevStep = getPassCodeCreationStep();
-            }
-            else
-            {
+            } else {
                 prevStep = getEligibleStep();
             }
-        }
-        else if(step.getIdentifier().equals(SignUpStepIdentifier))
-        {
-            if (! PermissionRequestManager.getInstance().getPermissionRequests().isEmpty())
-            {
+        } else if (step.getIdentifier().equals(SignUpStepIdentifier)) {
+            if (!PermissionRequestManager.getInstance().getPermissionRequests().isEmpty()) {
                 prevStep = getPermissionStep();
-            }
-            else if(hasPasscode)
-            {
+            } else if (hasPasscode) {
                 // Force user to create a new pin
                 prevStep = getPassCodeCreationStep();
-            }
-            else
-            {
+            } else {
                 prevStep = getEligibleStep();
             }
         }
@@ -137,36 +92,24 @@ public class SignUpTask extends OnboardingTask
     }
 
     @Override
-    public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
-    {
+    public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result) {
         int stepPosition = 0;
 
-        if(step == null || step.getIdentifier().equals(SignUpInclusionCriteriaStepIdentifier))
-        {
+        if (step == null || step.getIdentifier().equals(SignUpInclusionCriteriaStepIdentifier)) {
             stepPosition = 0;
-        }
-        else if(step.getIdentifier().equals(SignUpEligibleStepIdentifier))
-        {
+        } else if (step.getIdentifier().equals(SignUpEligibleStepIdentifier)) {
             stepPosition = 1;
 
-        }
-        else if(step.getIdentifier().equals(SignUpIneligibleStepIdentifier))
-        {
+        } else if (step.getIdentifier().equals(SignUpIneligibleStepIdentifier)) {
             stepPosition = 1;
 
-        }
-        else if(step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier))
-        {
+        } else if (step.getIdentifier().equals(SignUpPassCodeCreationStepIdentifier)) {
             stepPosition = 2;
 
-        }
-        else if(step.getIdentifier().equals(SignUpPermissionsStepIdentifier))
-        {
+        } else if (step.getIdentifier().equals(SignUpPermissionsStepIdentifier)) {
             stepPosition = 3;
 
-        }
-        else if(step.getIdentifier().equals(SignUpStepIdentifier))
-        {
+        } else if (step.getIdentifier().equals(SignUpStepIdentifier)) {
             stepPosition = 4;
 
         }
@@ -174,8 +117,7 @@ public class SignUpTask extends OnboardingTask
         return new TaskProgress(stepPosition, MINIMUM_STEPS);
     }
 
-    public void setHasPasscode(boolean hasPasscode)
-    {
+    public void setHasPasscode(boolean hasPasscode) {
         this.hasPasscode = hasPasscode;
     }
 }
