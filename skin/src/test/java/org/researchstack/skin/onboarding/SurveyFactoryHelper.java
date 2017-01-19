@@ -11,6 +11,7 @@ import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ConsentSectionAdapter;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
+import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
 
 /**
  * Created by TheMDP on 1/6/17.
@@ -83,7 +84,20 @@ public class SurveyFactoryHelper {
 
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
-        builder.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(mockContext));
+        builder.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(mockContext, new MockResourceNameConverter()));
         gson = builder.create();
+    }
+
+    class MockResourceNameConverter implements ResourceNameToStringConverter {
+
+        @Override
+        public String getJsonStringForResourceName(String resourceName) {
+            return resourceName;
+        }
+
+        @Override
+        public String getHtmlStringForResourceName(String resourceName) {
+            return resourceName;
+        }
     }
 }

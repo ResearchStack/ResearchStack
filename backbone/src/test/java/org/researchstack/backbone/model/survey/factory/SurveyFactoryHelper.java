@@ -11,6 +11,7 @@ import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ConsentSectionAdapter;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
+import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
 
 /**
  * Created by TheMDP on 1/6/17.
@@ -19,6 +20,7 @@ import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 public class SurveyFactoryHelper {
     public Gson gson;
     public Context mockContext;
+    public MockResourceNameConverter converter;
 
     static final String PRIVACY_TITLE = "Privacy";
     static final String PRIVACY_LEARN_MORE = "Learn more about how your privacy and identity are protected";
@@ -81,9 +83,24 @@ public class SurveyFactoryHelper {
         Mockito.when(mockContext.getString(R.string.rsb_consent_section_more_info_study_tasks)) .thenReturn("Learn more about the tasks involved");
         Mockito.when(mockContext.getString(R.string.rsb_consent_section_more_info_withdrawing)) .thenReturn("Learn more about withdrawing");
 
+        converter = new MockResourceNameConverter();
+
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
-        builder.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(mockContext));
+        builder.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(mockContext, converter));
         gson = builder.create();
+    }
+
+    class MockResourceNameConverter implements ResourceNameToStringConverter {
+
+        @Override
+        public String getJsonStringForResourceName(String resourceName) {
+            return resourceName;
+        }
+
+        @Override
+        public String getHtmlStringForResourceName(String resourceName) {
+            return resourceName;
+        }
     }
 }

@@ -35,18 +35,6 @@ public class SurveyItem<T> implements Serializable {
     @SerializedName("items")
     public List<T> items;
 
-    @SerializedName("skipIdentifier")
-    public String skipIdentifier;
-
-    @SerializedName("skipIfPassed")
-    public boolean skipIfPassed;
-
-    // TODO: implement this?
-    public String rulePredicate;  // this is an NSPredicate on iOS, how do we convert?
-
-    // TODO: what is this?
-    Map<String, Object> options;
-
     /* Default constructor needed for serilization/deserialization of object */
     SurveyItem() {
         super();
