@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.ProfileInfoOption;
-import org.researchstack.backbone.model.User;
+import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
@@ -14,6 +14,7 @@ import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by TheMDP on 1/16/17.
@@ -37,7 +38,7 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
         if (DataProvider.getInstance().isSignedIn(getContext())) {
             uploadConsent(consentSignatureBody);
         } else {
-            DataProvider.getInstance().saveConsent(getContext(), consentSignatureBody);
+            DataProvider.getInstance().saveLocalConsent(getContext(), consentSignatureBody);
             super.onComplete();
         }
     }
@@ -68,16 +69,31 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
     protected static ConsentSignatureBody createConsentSignatureBody(StepResult stepResult, TaskResult taskResult) {
 
         String studyId = DataProvider.getInstance().getStudyId();
-        String signatureDate = getNonNullStringResult(ConsentSignatureStepLayout.KEY_SIGNATURE_DATE, stepResult, taskResult);
-        String base64Image = getNonNullStringResult(ConsentSignatureStepLayout.KEY_SIGNATURE, stepResult, taskResult);
-        String usersName = getNonNullStringResult(ProfileInfoOption.NAME.getIdentifier(), stepResult, taskResult);
-        Date usersBirthdate = getNonNullDateResult(ProfileInfoOption.BIRTHDATE.getIdentifier(), stepResult, taskResult);
-        String sharingScope = getNonNullStringResult(SurveyFactory.CONSENT_SHARING_IDENTIFIER, stepResult, taskResult);
+
+        // Grab signature from step result
+        String base64Image = null;
+        StepResult signatureResult = getResult(ConsentDocumentFactory.CONSENT_SIGNATURE_IDENTIFIER, stepResult, taskResult);
+        if (signatureResult != null) {
+            Map<String, Object> signatureData = signatureResult.getResults();
+            for (String stepKey : signatureData.keySet()) {
+                switch (stepKey) {
+                    case ConsentSignatureStepLayout.KEY_SIGNATURE:
+                        base64Image = (String)signatureData.get(stepKey);
+                        break;
+                }
+            }
+        }
+
+        // Grab user's name and birthday from step result
+        String usersName = getStringResult(ProfileInfoOption.NAME.getIdentifier(), stepResult, taskResult);
+        Date usersBirthdate = getDateResult(ProfileInfoOption.BIRTHDATE.getIdentifier(), stepResult, taskResult);
+
+        // Grab sharing scope from TaskREsult
+        String sharingScope = getStringResult(ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER, stepResult, taskResult);
 
         // Save Consent Information
         // User is not signed in yet, so we need to save consent info to disk for later upload
-        return new ConsentSignatureBody(studyId, usersName, usersBirthdate, base64Image,
-                "image/png", sharingScope);
+        return new ConsentSignatureBody(studyId, usersName, usersBirthdate, base64Image, "image/png", sharingScope);
     }
 
     /**
@@ -100,7 +116,7 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
      * @param stepIdentifier for result
      * @return String object if exists, empty string otherwise
      */
-    protected static String getNonNullStringResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
+    protected static String getStringResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
         StepResult idStepResult = getResult(stepIdentifier, stepResult, taskResult);
         if (idStepResult != null) {
             Object resultValue = idStepResult.getResult();
@@ -108,14 +124,14 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
                 return (String) resultValue;
             }
         }
-        return "";
+        return null;
     }
 
     /**
      * @param stepIdentifier for result
      * @return String object if exists, empty string otherwise
      */
-    protected static Date getNonNullDateResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
+    protected static Date getDateResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
         StepResult idStepResult = getResult(stepIdentifier, stepResult, taskResult);
         if (idStepResult != null) {
             Object resultValue = idStepResult.getResult();
@@ -123,6 +139,6 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
                 return new Date((Long)resultValue);
             }
         }
-        return new Date(System.currentTimeMillis());
+        return null;
     }
 }

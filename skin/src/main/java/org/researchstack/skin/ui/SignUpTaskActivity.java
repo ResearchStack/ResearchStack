@@ -129,7 +129,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
     private void saveConsentResultInfo()
     {
-        DataProvider.getInstance().saveConsent(this, consentResult);
+        DataProvider.getInstance().saveLocalConsent(this, consentResult);
     }
 
     @TargetApi(Build.VERSION_CODES.M)

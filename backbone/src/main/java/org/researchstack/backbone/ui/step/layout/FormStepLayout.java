@@ -3,9 +3,12 @@ package org.researchstack.backbone.ui.step.layout;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Parcelable;
+import android.support.annotation.MainThread;
 import android.support.annotation.StringRes;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -44,6 +48,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     // and the values will be the StepBody's
     protected LinkedHashMap<QuestionStep, StepBody> subQuestionSteps;
     protected StepResult<StepResult> stepResult;
+    protected TaskResult taskResult;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Communicate w/ host
@@ -90,6 +95,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         if (result == null) {
             stepResult = new StepResult<>(step);
         }
+        this.taskResult = taskResult;
         subQuestionSteps = new LinkedHashMap<>();
         formStep = (FormStep) step;
 
@@ -108,10 +114,11 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         initStepLayout(formStep);
         // Fill up the step map
         for (QuestionStep subStep : questionSteps) {
-            StepResult subStepResult = subQuestionResult(subStep);
+            StepResult subStepResult = subQuestionResult(subStep.getIdentifier(), stepResult, taskResult);
             StepBody stepBody = SurveyStepLayout.createStepBody(subStep, subStepResult);
             subQuestionSteps.put(subStep, stepBody);
-            initStepBodyHolder(subStep, stepBody);
+            View surveyStepView = initStepBodyHolder(layoutInflater, stepBodyContainer, subStep, stepBody);
+            stepBodyContainer.addView(surveyStepView);
         }
         // refresh skip/next bar
         refreshSubmitBar();
@@ -187,25 +194,29 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     }
 
     /**
+     * @param layoutInflater used to create StepLayout UI for QuestionStep
+     * @param stepBodyContainer container that will hold the returned View
      * @param step the question step to use for the title and summary
      * @param stepBody the step body to use for creating the step body view
+     * @return StepLayout View object container StepBody View and title, and text
      */
-    protected void initStepBodyHolder(QuestionStep step, StepBody stepBody)
+    @MainThread
+    protected static View initStepBodyHolder(LayoutInflater layoutInflater, ViewGroup stepBodyContainer, QuestionStep step, StepBody stepBody)
     {
-        LogExt.i(getClass(), "initStepLayout()");
+        LogExt.i(TAG, "initStepLayout()");
 
         View surveyStepView = layoutInflater.inflate(R.layout.rsb_step_layout, stepBodyContainer, false);
 
         // Setup title and summary
         TextView title = (TextView) surveyStepView.findViewById(R.id.rsb_survey_title);
         TextView summary = (TextView) surveyStepView.findViewById(R.id.rsb_survey_text);
-        SurveyStepLayout.setupTitleLayout(getContext(), step, title, summary);
+        SurveyStepLayout.setupTitleLayout(layoutInflater.getContext(), step, title, summary);
 
         LinearLayout surveyStepContainer = (LinearLayout)surveyStepView.findViewById(R.id.rsb_survey_content_container);
         View bodyView = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, layoutInflater, surveyStepContainer);
         SurveyStepLayout.replaceStepBodyView(surveyStepContainer, bodyView);
 
-        stepBodyContainer.addView(surveyStepView);
+        return surveyStepView;
     }
 
     @Override
@@ -347,12 +358,11 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         return firstStepEntry.getValue();
     }
 
-    protected StepResult subQuestionResult(QuestionStep subStep) {
-        for (String subStepId : stepResult.getResults().keySet()) {
-            if (subStepId.equals(subStep.getIdentifier())) {
-                return stepResult.getResults().get(subStepId);
-            }
+    protected StepResult subQuestionResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
+        StepResult subQuestionResult = StepResultHelper.findStepResult(stepResult, stepIdentifier);
+        if (subQuestionResult == null) {
+            subQuestionResult = StepResultHelper.findStepResult(taskResult, stepIdentifier);
         }
-        return null;
+        return subQuestionResult;
     }
 }

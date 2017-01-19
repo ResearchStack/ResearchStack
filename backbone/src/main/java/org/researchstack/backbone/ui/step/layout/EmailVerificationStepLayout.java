@@ -4,25 +4,35 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.answerformat.PasswordAnswerFormat;
+import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
+import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.ui.step.body.StepBody;
+import org.researchstack.backbone.ui.step.body.TextQuestionBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ObservableUtils;
+import org.researchstack.backbone.utils.StepLayoutHelper;
 import org.researchstack.backbone.utils.StepResultHelper;
 import org.researchstack.backbone.utils.ThemeUtils;
 
@@ -41,6 +51,12 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
 
     protected TaskResult taskResult;
     protected StepResult<StepResult> stepResult;
+
+    /**
+     * This is only created if the user's app crashed or they forced closed the app
+     * while they were going through the sign up process
+     */
+    @Nullable StepBody passwordStepBody;
 
     public EmailVerificationStepLayout(Context context) {
         super(context);
@@ -81,7 +97,13 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
 
         updateEmailText();
 
-        RxView.clicks(findViewById(R.id.email_verification_wrong_email)).subscribe(v -> changeEmail());
+        RxView.clicks(findViewById(R.id.rsb_email_verification_wrong_email)).subscribe(v -> changeEmail());
+
+        // If the the password isn't in the TaskResult, we have to make the user re-enter their's
+        if (getPassword(taskResult) == null) {
+            RelativeLayout container = (RelativeLayout)findViewById(R.id.rsb_email_verification_container);
+            createValidatePasswordStepBody(container);
+        }
     }
 
     // TODO: switch over to reading text from Step, and doing this in SurveyFactory
@@ -93,13 +115,12 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
         final String email = getEmail(taskResult);
         String formattedSummary = getContext().getString(R.string.rsb_confirm_summary,
                 "<font color=\"" + accentColorString + "\">" + email + "</font>");
-        ((AppCompatTextView) findViewById(R.id.email_verification_body)).setText(Html.fromHtml(
+        ((AppCompatTextView) findViewById(R.id.rsb_email_verification_body)).setText(Html.fromHtml(
                 formattedSummary));
     }
 
     @Override
-    public Parcelable onSaveInstanceState()
-    {
+    public Parcelable onSaveInstanceState() {
         callbacks.onSaveStep(StepCallbacks.ACTION_NONE, emailStep, stepResult);
         return super.onSaveInstanceState();
     }
@@ -124,8 +145,7 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
      * @return a boolean indication whether the back event is consumed
      */
     @Override
-    public boolean isBackEventConsumed()
-    {
+    public boolean isBackEventConsumed() {
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, emailStep, stepResult);
         return false;
     }
@@ -139,8 +159,7 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
         Toast.makeText(getContext(), "TODO: implement change email screen", Toast.LENGTH_SHORT).show();
     }
 
-    protected void resendVerificationEmail()
-    {
+    protected void resendVerificationEmail() {
         showLoadingDialog();
         final String email = getEmail(taskResult);
         DataProvider.getInstance()
@@ -158,23 +177,73 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
                 });
     }
 
-    protected void attemptSignIn()
-    {
+    protected void attemptSignIn() {
+        final String password = getPassword(taskResult);
+        if (password == null || password.isEmpty()) {
+            Toast.makeText(getContext(), R.string.rsb_error_invalid_password, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         showLoadingDialog();
         DataProvider.getInstance()
-                .verifyEmail(getContext())
+                .verifyEmail(getContext(), password)
+                .compose(ObservableUtils.applyDefault())
+                .subscribe(dataResponse -> {
+                    hideLoadingDialog();
+                    if(dataResponse.isSuccess()) {
+                        uploadConsent();
+                    } else {
+                        showOkAlertDialog(dataResponse.getMessage());
+                    }
+                }, error -> {
+                    hideLoadingDialog();
+                    showOkAlertDialog(error.getMessage());
+                });
+    }
+
+    /**
+     * At this point in the Onboarding flow, consent is only saved locally within DataProvider
+     * So we must upload the consent doc after a succssful login
+     */
+    protected void uploadConsent() {
+        showLoadingDialog();
+        ConsentSignatureBody signature = DataProvider.getInstance().loadLocalConsent(getContext());
+        DataProvider.getInstance()
+                .uploadConsent(getContext(), signature)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(dataResponse -> {
                     hideLoadingDialog();
                     if(dataResponse.isSuccess()) {
                         callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, emailStep, stepResult);
                     } else {
-                        Toast.makeText(getContext(), R.string.rsb_email_not_verified, Toast.LENGTH_LONG).show();
+                        showOkAlertDialog(dataResponse.getMessage());
                     }
                 }, error -> {
                     hideLoadingDialog();
-                    Toast.makeText(getContext(), R.string.rsb_email_not_verified, Toast.LENGTH_LONG).show();
+                    showOkAlertDialog(error.getMessage());
                 });
+    }
+
+    /**
+     * If the app has crashed, or user has force closed it, we will need them to re-enter their password
+     * Since they will be essentially signing in again
+     */
+    protected void createValidatePasswordStepBody(RelativeLayout container) {
+        // Create a verify password step
+        QuestionStep verifyPasswordStep = new QuestionStep(ProfileInfoOption.PASSWORD.getIdentifier());
+        verifyPasswordStep.setAnswerFormat(new PasswordAnswerFormat());
+        verifyPasswordStep.setPlaceholder(getContext().getString(R.string.rsb_password_placeholder));
+        verifyPasswordStep.setTitle(getContext().getString(R.string.rsb_verify_password));
+
+        // Use FormStepLayout logic to create the StepLayout for verifyPasswordStep
+        passwordStepBody = SurveyStepLayout.createStepBody(verifyPasswordStep, null);
+        View verifyPasswordView = FormStepLayout.initStepBodyHolder(layoutInflater, container, verifyPasswordStep, passwordStepBody);
+
+        // Replace Space with password view
+        View oldPasswordSpace = findViewById(R.id.rsb_email_verify_reenter_password_space);
+        verifyPasswordView.setLayoutParams(oldPasswordSpace.getLayoutParams());
+        container.removeView(oldPasswordSpace);
+        container.addView(verifyPasswordView);
     }
 
     protected String getEmail(TaskResult taskResult) {
@@ -182,7 +251,12 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
     }
 
     protected String getPassword(TaskResult taskResult) {
-        return getStringResult(taskResult, ProfileInfoOption.PASSWORD.getIdentifier());
+        if (passwordStepBody == null) {
+            return getStringResult(taskResult, ProfileInfoOption.PASSWORD.getIdentifier());
+        } else {
+            StepResult result = passwordStepBody.getStepResult(false);
+            return (String)result.getResult();
+        }
     }
 
     protected String getStringResult(TaskResult taskResult, String stepIdentifier) {

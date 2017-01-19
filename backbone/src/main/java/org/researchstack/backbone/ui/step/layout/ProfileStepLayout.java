@@ -1,7 +1,5 @@
 package org.researchstack.backbone.ui.step.layout;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,12 +13,9 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.utils.StepHelper;
-import org.researchstack.backbone.utils.StepResultHelper;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +64,11 @@ public class ProfileStepLayout extends FormStepLayout {
     public void initialize(Step step, StepResult result, TaskResult taskResult) {
         validateStep(step);  // also sets formStep variable
         initializeErrorMap();
-        prePopulateUserProfileResults(step, result);
+        // needed to have object passed in by reference in method below
+        if (result == null) {
+            result = new StepResult<StepResult>(step);
+        }
+        prePopulateUserProfileResults(step, result, taskResult);
         super.initialize(step, result, taskResult);
     }
 
@@ -84,17 +83,14 @@ public class ProfileStepLayout extends FormStepLayout {
     /**
      * @param result to add pre-populated user profile results that are create from the User object
      */
-    protected void prePopulateUserProfileResults(Step step, StepResult result) {
+    protected void prePopulateUserProfileResults(Step step, StepResult result, TaskResult taskResult) {
         user = DataProvider.getInstance().getUser(getContext());
         if (user == null) {
             user = new User();  // first time controlling the user object
         }
-        if (result == null) {
-            result = new StepResult<StepResult>(step);
-        }
         for (ProfileInfoOption option : getProfileStep().getProfileInfoOptions()) {
             // Look to see if the step result for this profile option already exists
-            StepResult profileResult = StepResultHelper.findStepResult(result, option.getIdentifier());
+            StepResult profileResult = subQuestionResult(option.getIdentifier(), result, taskResult);
             // If it doesn't exist, create one matching the profile info option type from User object
             if (profileResult == null) {
                 Step profileStep = StepHelper.getStepWithIdentifier(formStep.getFormSteps(), option.getIdentifier());

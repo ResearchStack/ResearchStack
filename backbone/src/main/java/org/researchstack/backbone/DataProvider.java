@@ -106,13 +106,14 @@ public abstract class DataProvider
 
     /**
      * Called to verify the user's email address
-     * Behind the scenes this calls signIn with securely stored username and password
+     * Behind the scenes this calls signIn with securely stored email and param password
      *
      * @param context android context
+     * @param password the user's password
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if verifyEmail was successful
      */
-    public abstract Observable<DataResponse> verifyEmail(Context context);
+    public abstract Observable<DataResponse> verifyEmail(Context context, String password);
 
     /**
      * Returns true if user is currently signed up
@@ -178,6 +179,14 @@ public abstract class DataProvider
     public abstract Observable<DataResponse> uploadConsent(Context context, ConsentSignatureBody signature);
 
     /**
+     * Loads consent from local storage
+     * @param context android context
+     * @return null if no call has been made to saveLocalConsent, otherwise
+     *         it will return the ConsentSignatureBody from the call to saveLocalConsent
+     */
+    public abstract ConsentSignatureBody loadLocalConsent(Context context);
+
+    /**
      * This method is responsible in saving user consent information (e.g. Name, Birthdate,
      * Signature) locally.
      * <p>
@@ -185,7 +194,7 @@ public abstract class DataProvider
      *
      * @param context android context
      */
-    public abstract void saveConsent(Context context, TaskResult consentResult);
+    public abstract void saveLocalConsent(Context context, TaskResult consentResult);
 
     /**
      * This method is responsible in saving user consent information (e.g. Name, Birthdate,
@@ -194,7 +203,7 @@ public abstract class DataProvider
      * @param context android context
      * @param consentSignatureBody object which will be saved
      */
-    public abstract void saveConsent(Context context, ConsentSignatureBody consentSignatureBody);
+    public abstract void saveLocalConsent(Context context, ConsentSignatureBody consentSignatureBody);
 
     /**
      * Returns the user object that contains any sort of information. This information can be

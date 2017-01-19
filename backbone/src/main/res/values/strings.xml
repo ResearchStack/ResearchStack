@@ -240,5 +240,6 @@
         continuing
     </string>
     <string name="rsb_change_email">Change Email</string>
+    <string name="rsb_verify_password">To verify email</string>
 
 </resources>

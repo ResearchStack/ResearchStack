@@ -41,6 +41,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
     public static final String RECONSENT_IDENTIFIER_PREFIX = "reconsent";
     public static final String CONSENT_SIGNATURE_IDENTIFIER = "consentSignature";
     public static final String CONSENT_REVIEW_PROFILE_IDENTIFIER = "consentReviewProfile";
+    public static final String CONSENT_SHARING_IDENTIFIER = "consentSharingOptions";
 
     ConsentDocument consentDocument;
     ResourceNameToStringConverter resourceConverter;
@@ -200,9 +201,9 @@ public class ConsentDocumentFactory extends SurveyFactory {
         }
         ConsentSharingStep step;
         if (format == null) {
-            step = new ConsentSharingStep(item.identifier);
+            step = new ConsentSharingStep(CONSENT_SHARING_IDENTIFIER);
         } else {
-            step = new ConsentSharingStep(item.identifier, item.title, format);
+            step = new ConsentSharingStep(CONSENT_SHARING_IDENTIFIER, item.title, format);
         }
 
         if (item.title == null) {

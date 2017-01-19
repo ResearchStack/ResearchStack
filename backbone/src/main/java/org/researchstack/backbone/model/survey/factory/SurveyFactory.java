@@ -60,7 +60,6 @@ public class SurveyFactory {
 
     // The rest of them use the toString of ProfileInfoOption
     public static final String PASSWORD_CONFIRMATION_IDENTIFIER = "confirmation";
-    public static final String CONSENT_SHARING_IDENTIFIER = "consentSharingOptions";
 
     // When set, this will be used
     CustomStepCreator customStepCreator;
@@ -483,7 +482,6 @@ public class SurveyFactory {
      * @return QuestionStep used for gathering user's password
      */
     public QuestionStep createPasswordQuestionStep(Context context, ProfileInfoOption profileOption) {
-        // TODO: how do we designate the error message for AnswerFormat like in iOS?
         return createGenericQuestionStep(context,
                 profileOption.getIdentifier(),
                 R.string.rsb_password,
