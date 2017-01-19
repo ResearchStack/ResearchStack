@@ -7,14 +7,13 @@ import android.content.res.Resources;
 import android.os.Build;
 
 import org.researchstack.backbone.PermissionRequestManager;
-import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
-import org.researchstack.skin.R;
+import org.researchstack.backbone.R;
 
 /**
  * Created by TheMDP on 1/14/17.
@@ -85,6 +84,7 @@ public class OnboardingTaskActivity extends ViewTaskActivity implements Activity
     }
 
     @Override
+    @Deprecated
     public void startConsentTask() {
         // deprecated
     }

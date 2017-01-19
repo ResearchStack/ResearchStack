@@ -16,7 +16,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.PinCodeLayout;
 import org.researchstack.backbone.utils.ThemeUtils;
-import org.researchstack.skin.R;
+import org.researchstack.backbone.R;
 import org.researchstack.skin.step.PassCodeCreationStep;
 
 public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements StepLayout
