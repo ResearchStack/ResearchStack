@@ -12,7 +12,8 @@ public interface TaskResultSource {
      * the results obtained on a previous run of the same task, by passing a
      * `TaskResult` object (which itself implements this protocol).
      * <p>
-     * @param  stepIdentifier The identifier for which to search.
+     *
+     * @param stepIdentifier The identifier for which to search.
      * @return The result for the specified step, or `null` for none.
      */
     StepResult getStepResult(String stepIdentifier);

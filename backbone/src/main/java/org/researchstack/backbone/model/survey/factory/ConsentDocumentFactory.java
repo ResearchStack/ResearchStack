@@ -14,17 +14,16 @@ import org.researchstack.backbone.model.survey.CustomInstructionSurveyItem;
 import org.researchstack.backbone.model.survey.CustomSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.onboarding.OnboardingSection;
-import org.researchstack.backbone.onboarding.OnboardingSectionType;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.ConsentVisualStep;
 import org.researchstack.backbone.step.CustomInstructionStep;
 import org.researchstack.backbone.step.CustomStep;
+import org.researchstack.backbone.step.NavigationSubtaskStep;
 import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
-import org.researchstack.backbone.step.NavigationSubtaskStep;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +60,13 @@ public class ConsentDocumentFactory extends SurveyFactory {
                     if (consentDocument == null) {
                         throw new IllegalStateException("Consent document cannot be null!");
                     }
-                    steps.addAll(createConsentReviewSteps(context, (ConsentReviewSurveyItem)item));
+                    steps.addAll(createConsentReviewSteps(context, (ConsentReviewSurveyItem) item));
                     break;
                 case CONSENT_SHARING_OPTIONS:
                     if (!(item instanceof ConsentSharingOptionsSurveyItem)) {
                         throw new IllegalStateException("Error in json parsing, CONSENT_SHARING_OPTIONS types must be ConsentSharingOptionsSurveyItem");
                     }
-                    steps.add(createConsentSharingStep((ConsentSharingOptionsSurveyItem)item));
+                    steps.add(createConsentSharingStep((ConsentSharingOptionsSurveyItem) item));
                     break;
                 case CONSENT_VISUAL:
                     if (consentDocument == null) {
@@ -87,8 +86,9 @@ public class ConsentDocumentFactory extends SurveyFactory {
     /**
      * Creates consent review steps, which can be a total of name, birthdate step,
      * SignatureStep, but always a consent doc review step
+     *
      * @param context
-     * @param item ConsentReviewSurveyItem used to create steps
+     * @param item    ConsentReviewSurveyItem used to create steps
      * @return
      */
     public List<Step> createConsentReviewSteps(Context context, ConsentReviewSurveyItem item) {
@@ -175,6 +175,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
     /**
      * After all survey items have been processed into steps, use this method to get all
      * ConsentVisualSteps
+     *
      * @return list of all the ConsentVisualStep
      */
     public List<Step> visualConsentSteps() {
@@ -227,8 +228,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
         List<Step> steps = new ArrayList<>();
         for (Step step : getSteps()) {
             if (!(step instanceof CustomStep) &&
-                ((CustomStep)step).getCustomTypeIdentifier().startsWith(RECONSENT_IDENTIFIER_PREFIX))
-            {
+                    ((CustomStep) step).getCustomTypeIdentifier().startsWith(RECONSENT_IDENTIFIER_PREFIX)) {
                 steps.add(step);
             }
         }
@@ -242,7 +242,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
     @Override
     public CustomStep createCustomStep(CustomSurveyItem item) {
         if (item instanceof CustomInstructionSurveyItem) {
-            return createCustomInstructionStep((CustomInstructionSurveyItem)item);
+            return createCustomInstructionStep((CustomInstructionSurveyItem) item);
         } else {
             return super.createCustomStep(item);
         }

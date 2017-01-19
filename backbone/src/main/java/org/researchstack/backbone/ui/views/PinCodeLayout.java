@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.views;
+
 import android.content.Context;
 import android.support.annotation.CallSuper;
 import android.text.InputFilter;
@@ -17,37 +18,32 @@ import org.researchstack.backbone.utils.ViewUtils;
 
 import java.util.Arrays;
 
-public class PinCodeLayout extends RelativeLayout
-{
+public class PinCodeLayout extends RelativeLayout {
     protected InputMethodManager imm;
-    protected PinCodeConfig      config;
+    protected PinCodeConfig config;
 
     protected TextView summary;
     protected TextView title;
     protected EditText editText;
-    protected View     progress;
+    protected View progress;
 
-    public PinCodeLayout(Context context)
-    {
+    public PinCodeLayout(Context context) {
         super(context);
         init();
     }
 
-    public PinCodeLayout(Context context, AttributeSet attrs)
-    {
+    public PinCodeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public PinCodeLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public PinCodeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @CallSuper
-    protected void init()
-    {
+    protected void init() {
         config = StorageAccess.getInstance().getPinCodeConfig();
         imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -76,8 +72,7 @@ public class PinCodeLayout extends RelativeLayout
         progress = findViewById(R.id.progress);
     }
 
-    public void resetSummaryText()
-    {
+    public void resetSummaryText() {
         summary = (TextView) findViewById(R.id.text);
         String characterType = getContext().getString(config.getPinType().getInputTypeStringId());
         String pinCodeInstructions = getContext().getString(R.string.rsb_pincode_enter_summary,
@@ -86,8 +81,7 @@ public class PinCodeLayout extends RelativeLayout
         summary.setText(pinCodeInstructions);
     }
 
-    public void showProgress(boolean show)
-    {
+    public void showProgress(boolean show) {
         progress.setVisibility(show ? VISIBLE : GONE);
     }
 

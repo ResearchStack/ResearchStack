@@ -17,21 +17,21 @@ public class CustomInstructionStep extends CustomStep implements NavigableOrdere
     String moreDetailText;
 
     /**
-     Additional text to display for the step in a localized string at the bottom of the view.
-
-     The footnote is displayed in a smaller font below the continue button. It is intended to be used
-     in order to include disclaimer, copyright, etc. that is important to display in the step but
-     should not distract from the main purpose of the step.
+     * Additional text to display for the step in a localized string at the bottom of the view.
+     * <p>
+     * The footnote is displayed in a smaller font below the continue button. It is intended to be used
+     * in order to include disclaimer, copyright, etc. that is important to display in the step but
+     * should not distract from the main purpose of the step.
      */
     String footnote;
 
 
     /**
-     An image that provides visual context for the instruction.
-
-     The image is displayed with aspect fit. Depending on the device, the screen area
-     available for this image can vary. For exact
-     metrics, see `ORKScreenMetricIllustrationHeight`.
+     * An image that provides visual context for the instruction.
+     * <p>
+     * The image is displayed with aspect fit. Depending on the device, the screen area
+     * available for this image can vary. For exact
+     * metrics, see `ORKScreenMetricIllustrationHeight`.
      */
     String image;
 
@@ -48,7 +48,7 @@ public class CustomInstructionStep extends CustomStep implements NavigableOrdere
 
 
     /**
-     Optional icon image to show above the title and text.
+     * Optional icon image to show above the title and text.
      */
     String iconImage;
 
@@ -63,52 +63,55 @@ public class CustomInstructionStep extends CustomStep implements NavigableOrdere
         super();
     }
 
-    public CustomInstructionStep(String identifier, String title, String text, String customTypeIdentifier)
-    {
+    public CustomInstructionStep(String identifier, String title, String text, String customTypeIdentifier) {
         super(identifier, title, customTypeIdentifier);
         setText(text);
         setOptional(false);
     }
 
     @Override
-    public Class getStepLayoutClass()
-    {
+    public Class getStepLayoutClass() {
         return InstructionStepLayout.class;
+    }
+
+    public String getMoreDetailText() {
+        return moreDetailText;
     }
 
     public void setMoreDetailText(String detailText) {
         moreDetailText = detailText;
     }
-    public String getMoreDetailText() {
-        return moreDetailText;
+
+    public String getFootnote() {
+        return footnote;
     }
 
     public void setFootnote(String newFootnote) {
         footnote = newFootnote;
     }
-    public String getFootnote() {
-        return footnote;
+
+    public String getImage() {
+        return image;
     }
 
     public void setImage(String newImage) {
         image = newImage;
     }
-    public String getImage() {
-        return image;
+
+    public String getIconImage() {
+        return iconImage;
     }
 
     public void setIconImage(String image) {
         iconImage = image;
     }
-    public String getIconImage() {
-        return iconImage;
+
+    public String getNextStepIdentifier() {
+        return nextStepIdentifier;
     }
 
     public void setNextStepIdentifier(String identifier) {
         nextStepIdentifier = identifier;
-    }
-    public String getNextStepIdentifier() {
-        return nextStepIdentifier;
     }
 
     @Override

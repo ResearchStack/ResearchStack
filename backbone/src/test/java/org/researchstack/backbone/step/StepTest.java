@@ -1,29 +1,26 @@
 package org.researchstack.backbone.step;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 
-public class StepTest
-{
+public class StepTest {
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
 
     }
 
     @Ignore
     @Test
-    public void testFormStep() throws Exception
-    {
+    public void testFormStep() throws Exception {
 
     }
 
     @Ignore
     @Test
-    public void testReactionTimeStep() throws Exception
-    {
+    public void testReactionTimeStep() throws Exception {
 
     }
 }

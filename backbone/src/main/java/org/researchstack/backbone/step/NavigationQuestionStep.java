@@ -2,11 +2,6 @@ package org.researchstack.backbone.step;
 
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.model.survey.NavigationStep;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.QuestionStep;
-
-import java.util.List;
 
 /**
  * Created by TheMDP on 12/31/16.

@@ -14,24 +14,22 @@ import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ProfileInfoOption;
-import org.researchstack.backbone.model.survey.CustomInstructionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.ConsentVisualStep;
 import org.researchstack.backbone.step.CustomInstructionStep;
-import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
+import org.researchstack.backbone.step.NavigationSubtaskStep;
 import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.ToggleFormStep;
-import org.researchstack.backbone.step.NavigationSubtaskStep;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -47,12 +45,11 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class SurveyFactoryTests {
 
-    SurveyFactoryHelper  helper;
+    SurveyFactoryHelper helper;
     ResourceParserHelper resourceHelper;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         helper = new SurveyFactoryHelper();
         resourceHelper = new ResourceParserHelper();
     }
@@ -98,8 +95,7 @@ public class SurveyFactoryTests {
     }
 
     @Test
-    public void testSurveyFactory()
-    {
+    public void testSurveyFactory() {
         Type listType = new TypeToken<List<SurveyItem>>() {
         }.getType();
         String eligibilityJson = resourceHelper.getJsonStringForResourceName("onboarding");
@@ -115,7 +111,7 @@ public class SurveyFactoryTests {
         assertEquals("login", factory.getSteps().get(0).getIdentifier());
         LoginStep loginStep = (LoginStep) factory.getSteps().get(0);
         assertEquals(2, loginStep.getProfileInfoOptions().size());
-        assertEquals(ProfileInfoOption.EMAIL,    loginStep.getProfileInfoOptions().get(0));
+        assertEquals(ProfileInfoOption.EMAIL, loginStep.getProfileInfoOptions().get(0));
         assertEquals(ProfileInfoOption.PASSWORD, loginStep.getProfileInfoOptions().get(1));
         assertEquals(2, loginStep.getFormSteps().size());
         assertTrue(loginStep.getFormSteps().get(0).getAnswerFormat() instanceof EmailAnswerFormat);
@@ -151,12 +147,12 @@ public class SurveyFactoryTests {
     }
 
     @Test
-    public void testConsentDocumentFactory()
-    {
+    public void testConsentDocumentFactory() {
         String consentDocJson = resourceHelper.getJsonStringForResourceName("consentdocument");
         ConsentDocument consentDoc = helper.gson.fromJson(consentDocJson, ConsentDocument.class);
 
-        Type listType = new TypeToken<List<SurveyItem>>() {}.getType();
+        Type listType = new TypeToken<List<SurveyItem>>() {
+        }.getType();
         String consentItemsJson = resourceHelper.getJsonStringForResourceName("consent");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(consentItemsJson, listType);
 
@@ -169,7 +165,7 @@ public class SurveyFactoryTests {
         assertEquals(27, factory.getSteps().size());
 
         assertTrue(factory.getSteps().get(0) instanceof CustomInstructionStep);
-        CustomInstructionStep customStep = (CustomInstructionStep)factory.getSteps().get(0);
+        CustomInstructionStep customStep = (CustomInstructionStep) factory.getSteps().get(0);
         assertEquals("reconsentIntroduction", customStep.getIdentifier());
         assertEquals("reconsent.instruction", customStep.getCustomTypeIdentifier());
 
@@ -179,7 +175,7 @@ public class SurveyFactoryTests {
         }
 
         assertTrue(factory.getSteps().get(19) instanceof NavigationSubtaskStep);
-        NavigationSubtaskStep quizStep = (NavigationSubtaskStep)factory.getSteps().get(19);
+        NavigationSubtaskStep quizStep = (NavigationSubtaskStep) factory.getSteps().get(19);
         assertEquals("consentPassedQuiz", quizStep.getSkipToStepIdentifier());
         assertTrue(quizStep.getSkipIfPassed());
 
@@ -190,10 +186,10 @@ public class SurveyFactoryTests {
         assertEquals("consentPassedQuiz", factory.getSteps().get(21).getIdentifier());
 
         assertTrue(factory.getSteps().get(22) instanceof ConsentSharingStep);
-        ConsentSharingStep sharingStep = (ConsentSharingStep)factory.getSteps().get(22);
+        ConsentSharingStep sharingStep = (ConsentSharingStep) factory.getSteps().get(22);
         assertEquals("consentSharingOptions", sharingStep.getIdentifier());
         assertTrue(sharingStep.getAnswerFormat() instanceof ChoiceAnswerFormat);
-        ChoiceAnswerFormat sharingFormat = (ChoiceAnswerFormat)sharingStep.getAnswerFormat();
+        ChoiceAnswerFormat sharingFormat = (ChoiceAnswerFormat) sharingStep.getAnswerFormat();
         assertEquals("Yes. Share my coded study data with qualified researchers worldwide.", (sharingFormat.getChoices()[0]).getText());
         assertEquals(true, (sharingFormat.getChoices()[0]).getValue());
 
@@ -205,7 +201,7 @@ public class SurveyFactoryTests {
         assertTrue(factory.getSteps().get(24) instanceof ConsentSignatureStep);
 
         assertTrue(factory.getSteps().get(25) instanceof ConsentDocumentStep);
-        ConsentDocumentStep documentStep = (ConsentDocumentStep)factory.getSteps().get(25);
+        ConsentDocumentStep documentStep = (ConsentDocumentStep) factory.getSteps().get(25);
         assertEquals("consent_full", documentStep.getConsentHTML());
 
         assertTrue(factory.getSteps().get(26) instanceof InstructionStep);
@@ -213,8 +209,7 @@ public class SurveyFactoryTests {
     }
 
     @Test
-    public void testCustomConsentDocument()
-    {
+    public void testCustomConsentDocument() {
         String consentDocJson = resourceHelper.getJsonStringForResourceName("custom_consentdocument");
         ConsentDocument consentDoc = helper.gson.fromJson(consentDocJson, ConsentDocument.class);
 

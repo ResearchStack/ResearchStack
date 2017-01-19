@@ -9,11 +9,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DataResponseTest
-{
+public class DataResponseTest {
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
 
     }
 

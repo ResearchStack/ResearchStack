@@ -5,81 +5,73 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class ConsentQuizModel implements Serializable
-{
-    private String             failureTitle;
-    private String             failureMessage;
-    private String             successTitle;
-    private String             successMessage;
-    private int                allowedFailures;
+public class ConsentQuizModel implements Serializable {
+    private String failureTitle;
+    private String failureMessage;
+    private String successTitle;
+    private String successMessage;
+    private int allowedFailures;
     private List<QuizQuestion> questions;
 
     // fields with defaults
     private String incorrectIcon = "rsb_quiz_retry";
-    private String correctIcon   = "rss_ic_quiz_valid";
+    private String correctIcon = "rss_ic_quiz_valid";
 
     ConsentQuizModel() {
         super();
     }
 
-    public String getFailureTitle()
-    {
+    public String getFailureTitle() {
         return failureTitle;
     }
 
-    public String getFailureMessage()
-    {
+    public String getFailureMessage() {
         return failureMessage;
     }
 
-    public String getSuccessTitle()
-    {
+    public String getSuccessTitle() {
         return successTitle;
     }
 
-    public String getSuccessMessage()
-    {
+    public String getSuccessMessage() {
         return successMessage;
     }
 
-    public int getAllowedFailures()
-    {
+    public int getAllowedFailures() {
         return allowedFailures;
     }
 
-    public List<QuizQuestion> getQuestions()
-    {
+    public List<QuizQuestion> getQuestions() {
         return questions;
     }
 
-    public String getIncorrectIcon()
-    {
+    public String getIncorrectIcon() {
         return incorrectIcon;
     }
 
-    public String getCorrectIcon()
-    {
+    public String getCorrectIcon() {
         return correctIcon;
     }
 
-    public class QuizQuestion implements Serializable
-    {
-        private String       identifier;
+    public class QuizQuestion implements Serializable {
+        private String identifier;
 
-        /** iOS named it "title" but Android named it prompt, so allow for parsing of both */
-        @SerializedName(value="prompt", alternate = {"title"})
-        private String       prompt;
+        /**
+         * iOS named it "title" but Android named it prompt, so allow for parsing of both
+         */
+        @SerializedName(value = "prompt", alternate = {"title"})
+        private String prompt;
 
         private ConsentQuestionType type;
-        private String       expectedAnswer;
-        private String       text;
-        private String       positiveFeedback;
-        private String       negativeFeedback;
+        private String expectedAnswer;
+        private String text;
+        private String positiveFeedback;
+        private String negativeFeedback;
 
         /**
          * There are multiple ways you can provide the options for a quiz question:
          * textChoices - a simple String list of choices for the user, the answer
-         *               format will be the index in the array of the selected item
+         * format will be the index in the array of the selected item
          */
         private List<String> textChoices;
         /**
@@ -88,38 +80,31 @@ public class ConsentQuizModel implements Serializable
          */
         private List<Choice> items;
 
-        public String getIdentifier()
-        {
+        public String getIdentifier() {
             return identifier;
         }
 
-        public void setIdentifier(String identifier)
-        {
+        public void setIdentifier(String identifier) {
             this.identifier = identifier;
         }
 
-        public String getPrompt()
-        {
+        public String getPrompt() {
             return prompt;
         }
 
-        public ConsentQuestionType getType()
-        {
+        public ConsentQuestionType getType() {
             return type;
         }
 
-        public String getExpectedAnswer()
-        {
+        public String getExpectedAnswer() {
             return expectedAnswer;
         }
 
-        public String getText()
-        {
+        public String getText() {
             return text;
         }
 
-        public List<String> getTextChoices()
-        {
+        public List<String> getTextChoices() {
             return textChoices;
         }
 
@@ -127,13 +112,11 @@ public class ConsentQuizModel implements Serializable
             return items;
         }
 
-        public String getPositiveFeedback()
-        {
+        public String getPositiveFeedback() {
             return positiveFeedback == null ? "" : positiveFeedback;
         }
 
-        public String getNegativeFeedback()
-        {
+        public String getNegativeFeedback() {
             return negativeFeedback == null ? "" : negativeFeedback;
         }
     }

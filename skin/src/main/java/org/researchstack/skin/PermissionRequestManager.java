@@ -1,4 +1,5 @@
 package org.researchstack.skin;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
@@ -26,14 +27,14 @@ import java.util.Map;
  * The PermissionRequest objects are then presented in {@link PermissionStepLayout} for denile /
  * approval
  */
-public abstract class PermissionRequestManager
-{
+public abstract class PermissionRequestManager {
     /**
      * Request code for handling a system permission on 6.0+
      */
     public static final int PERMISSION_REQUEST_CODE = 142;
 
     private static PermissionRequestManager instance;
+    private Map<String, PermissionRequest> permissionRequests = new HashMap<>();
 
     /**
      * Initializes the UiManager singleton. It is best to call this method inside your {@link
@@ -41,8 +42,7 @@ public abstract class PermissionRequestManager
      *
      * @param manager an implementation of ResourcePathManager
      */
-    public static void init(PermissionRequestManager manager)
-    {
+    public static void init(PermissionRequestManager manager) {
         PermissionRequestManager.instance = manager;
     }
 
@@ -51,10 +51,8 @@ public abstract class PermissionRequestManager
      *
      * @return A singleton static instance of the this class
      */
-    public static PermissionRequestManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static PermissionRequestManager getInstance() {
+        if (instance == null) {
             throw new RuntimeException(
                     "PermissionRequestManager instance is null. Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
@@ -62,15 +60,12 @@ public abstract class PermissionRequestManager
         return instance;
     }
 
-    private Map<String, PermissionRequest> permissionRequests = new HashMap<>();
-
     /**
      * Returns a list of permission requests
      *
      * @return list of permission requests
      */
-    public List<PermissionRequest> getPermissionRequests()
-    {
+    public List<PermissionRequest> getPermissionRequests() {
         return new ArrayList<>(permissionRequests.values());
     }
 
@@ -80,8 +75,7 @@ public abstract class PermissionRequestManager
      *
      * @param permissionRequests list of permission requests
      */
-    public void setPermissionRequests(List<PermissionRequest> permissionRequests)
-    {
+    public void setPermissionRequests(List<PermissionRequest> permissionRequests) {
         this.permissionRequests.clear();
         addPermissions(permissionRequests);
     }
@@ -91,10 +85,8 @@ public abstract class PermissionRequestManager
      *
      * @param permissionRequests collection of PermissionRequests
      */
-    public void addPermissions(Collection<PermissionRequest> permissionRequests)
-    {
-        for(PermissionRequest permissionRequest : permissionRequests)
-        {
+    public void addPermissions(Collection<PermissionRequest> permissionRequests) {
+        for (PermissionRequest permissionRequest : permissionRequests) {
             addPermission(permissionRequest);
         }
     }
@@ -104,10 +96,8 @@ public abstract class PermissionRequestManager
      *
      * @param permissionRequests array of PermissionRequests
      */
-    public void addPermissions(PermissionRequest... permissionRequests)
-    {
-        for(PermissionRequest permissionRequest : permissionRequests)
-        {
+    public void addPermissions(PermissionRequest... permissionRequests) {
+        for (PermissionRequest permissionRequest : permissionRequests) {
             addPermission(permissionRequest);
         }
     }
@@ -118,8 +108,7 @@ public abstract class PermissionRequestManager
      *
      * @param permissionRequest the permission you seek to be granted
      */
-    public void addPermission(PermissionRequest permissionRequest)
-    {
+    public void addPermission(PermissionRequest permissionRequest) {
         this.permissionRequests.put(permissionRequest.getId(), permissionRequest);
     }
 
@@ -131,11 +120,10 @@ public abstract class PermissionRequestManager
      * @return true if the permission is a non-system permission. This means that its a permission
      * that is not handled by the system grant flow.
      */
-    public boolean isNonSystemPermission(String permissionId)
-    {
-        return ! permissionRequests.isEmpty() &&
+    public boolean isNonSystemPermission(String permissionId) {
+        return !permissionRequests.isEmpty() &&
                 permissionRequests.get(permissionId) != null &&
-                ! permissionRequests.get(permissionId).isSystemPermission();
+                !permissionRequests.get(permissionId).isSystemPermission();
     }
 
     /**
@@ -173,8 +161,7 @@ public abstract class PermissionRequestManager
     /**
      * Class represents a permission that the user needs to grant
      */
-    public static class PermissionRequest
-    {
+    public static class PermissionRequest {
         private String id;
 
         private int iconRes;
@@ -195,8 +182,7 @@ public abstract class PermissionRequestManager
          * @param titleRes the title used to display a UI in the {@link PermissionStepLayout}
          * @param textRes  the explanation used to display a UI in the {@link PermissionStepLayout}
          */
-        public PermissionRequest(String id, @DrawableRes int iconRes, @StringRes int titleRes, @StringRes int textRes)
-        {
+        public PermissionRequest(String id, @DrawableRes int iconRes, @StringRes int titleRes, @StringRes int textRes) {
             this.id = id;
             this.iconRes = iconRes;
             this.titleRes = titleRes;
@@ -209,8 +195,7 @@ public abstract class PermissionRequestManager
          *
          * @return id of the permission
          */
-        public String getId()
-        {
+        public String getId() {
             return id;
         }
 
@@ -220,8 +205,7 @@ public abstract class PermissionRequestManager
          * @return drawable resource id
          */
         @DrawableRes
-        public int getIcon()
-        {
+        public int getIcon() {
             return iconRes;
         }
 
@@ -231,8 +215,7 @@ public abstract class PermissionRequestManager
          * @return string resource id
          */
         @StringRes
-        public int getTitle()
-        {
+        public int getTitle() {
             return titleRes;
         }
 
@@ -242,8 +225,7 @@ public abstract class PermissionRequestManager
          * @return string resource id
          */
         @StringRes
-        public int getText()
-        {
+        public int getText() {
             return textRes;
         }
 
@@ -254,8 +236,7 @@ public abstract class PermissionRequestManager
          *
          * @param blocking true if the user needs to take action on this permission
          */
-        public void setIsBlockingPermission(boolean blocking)
-        {
+        public void setIsBlockingPermission(boolean blocking) {
             this.blocking = blocking;
         }
 
@@ -264,8 +245,7 @@ public abstract class PermissionRequestManager
          *
          * @return true if the permission needs to be granted in {@link PermissionStepLayout}
          */
-        public boolean isBlockingPermission()
-        {
+        public boolean isBlockingPermission() {
             return blocking;
         }
 
@@ -274,8 +254,7 @@ public abstract class PermissionRequestManager
          *
          * @param system true if this is a system permission
          */
-        public void setIsSystemPermission(boolean system)
-        {
+        public void setIsSystemPermission(boolean system) {
             this.system = system;
         }
 
@@ -284,8 +263,7 @@ public abstract class PermissionRequestManager
          *
          * @return true if PermissionRequest should be handled by the system grant flow
          */
-        public boolean isSystemPermission()
-        {
+        public boolean isSystemPermission() {
             return system;
         }
     }

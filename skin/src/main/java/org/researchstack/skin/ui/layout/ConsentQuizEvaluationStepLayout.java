@@ -1,4 +1,5 @@
 package org.researchstack.skin.ui.layout;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,31 +16,26 @@ import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 
-public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implements StepLayout
-{
+public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
     private ConsentQuizEvaluationStep step;
-    private StepResult<Boolean>       result;
-    private StepCallbacks             callbacks;
+    private StepResult<Boolean> result;
+    private StepCallbacks callbacks;
 
-    public ConsentQuizEvaluationStepLayout(Context context)
-    {
+    public ConsentQuizEvaluationStepLayout(Context context) {
         super(context);
     }
 
-    public ConsentQuizEvaluationStepLayout(Context context, AttributeSet attrs)
-    {
+    public ConsentQuizEvaluationStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ConsentQuizEvaluationStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public ConsentQuizEvaluationStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
+    public void initialize(Step step, StepResult result) {
         this.step = (ConsentQuizEvaluationStep) step;
         this.result = result == null ? new StepResult<>(step) : result;
 
@@ -47,13 +43,11 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
     }
 
     @Override
-    public int getContentResourceId()
-    {
+    public int getContentResourceId() {
         return R.layout.rss_layout_consent_evaluation;
     }
 
-    private void initializeStep()
-    {
+    private void initializeStep() {
         ImageView image = (ImageView) findViewById(R.id.rss_quiz_eval_image);
         TextView title = (TextView) findViewById(R.id.rss_quiz_eval_title);
         TextView summary = (TextView) findViewById(R.id.rss_quiz_eval_summary);
@@ -65,41 +59,33 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
                 result));
 
         // We have failed
-        if(! step.isQuizPassed())
-        {
+        if (!step.isQuizPassed()) {
             int iconResId = ResUtils.getDrawableResourceId(getContext(),
                     step.getQuizModel().getIncorrectIcon());
 
             image.setImageResource(iconResId);
             title.setText(R.string.rsb_quiz_evaluation_try_again);
 
-            if(! step.isOverMaxAttempts())
-            {
+            if (!step.isOverMaxAttempts()) {
                 summary.setText(step.getQuizModel().getFailureMessage());
                 submitBar.setPositiveTitle(R.string.rsb_quiz_evaluation_retake);
-            }
-            else
-            {
+            } else {
                 summary.setText(step.getQuizModel().getFailureMessage());
                 submitBar.setPositiveTitle(R.string.rsb_quiz_evaluation_review_consent);
             }
         }
 
         // We have passed
-        else
-        {
+        else {
             int iconResId = ResUtils.getDrawableResourceId(getContext(),
                     step.getQuizModel().getCorrectIcon());
 
             image.setImageResource(iconResId);
             title.setText(R.string.rsb_quiz_evaluation_great_job);
 
-            if(step.getIncorrect() == 0)
-            {
+            if (step.getIncorrect() == 0) {
                 summary.setText(step.getQuizModel().getSuccessMessage());
-            }
-            else
-            {
+            } else {
                 summary.setText(step.getQuizModel().getSuccessMessage());
             }
 
@@ -108,21 +94,18 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
     @Override
-    public boolean isBackEventConsumed()
-    {
+    public boolean isBackEventConsumed() {
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
     @Override
-    public void setCallbacks(StepCallbacks callbacks)
-    {
+    public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 }

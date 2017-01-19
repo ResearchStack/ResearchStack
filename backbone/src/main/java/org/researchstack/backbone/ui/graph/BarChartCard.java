@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.graph;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -24,45 +25,40 @@ import org.researchstack.backbone.R;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class BarChartCard extends CardView
-{
-    private TextView     titleTextView;
-    private ImageView    expand;
+public class BarChartCard extends CardView {
+    private TextView titleTextView;
+    private ImageView expand;
     private Subscription expandSub;
-    private BarChart     chart;
+    private BarChart chart;
 
     private String titleText;
-    private int    titleTextColor;
-    private float  titleTextSize;
+    private int titleTextColor;
+    private float titleTextSize;
     private String titleTextTypeface;
-    private float  chartXAxisTextSize;
-    private int    chartXAxisTextColor;
+    private float chartXAxisTextSize;
+    private int chartXAxisTextColor;
     private String chartXAxisTextTypeface;
-    private int    expandTintColor;
+    private int expandTintColor;
 
-    public BarChartCard(Context context)
-    {
+    public BarChartCard(Context context) {
         super(context);
         initializeRoot(null, R.attr.barChartCardStyle);
         initializeViews();
     }
 
-    public BarChartCard(Context context, AttributeSet attrs)
-    {
+    public BarChartCard(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializeRoot(attrs, R.attr.barChartCardStyle);
         initializeViews();
     }
 
-    public BarChartCard(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public BarChartCard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initializeRoot(attrs, defStyleAttr);
         initializeViews();
     }
 
-    private void initializeRoot(AttributeSet attrs, int defStyleAttr)
-    {
+    private void initializeRoot(AttributeSet attrs, int defStyleAttr) {
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_bar, this, true);
 
         final TypedArray a = getContext().obtainStyledAttributes(attrs,
@@ -83,8 +79,7 @@ public class BarChartCard extends CardView
         a.recycle();
     }
 
-    private void initializeViews()
-    {
+    private void initializeViews() {
         titleTextView = (TextView) findViewById(R.id.view_chart_bar_title);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(titleTextColor);
@@ -92,8 +87,7 @@ public class BarChartCard extends CardView
         titleTextView.setTypeface(Typeface.create(titleTextTypeface, Typeface.NORMAL));
 
         expand = (ImageView) findViewById(R.id.view_chart_line_expand);
-        if(expandTintColor != 0)
-        {
+        if (expandTintColor != 0) {
             Drawable drawable = expand.getDrawable();
             drawable = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(drawable, expandTintColor);
@@ -139,28 +133,23 @@ public class BarChartCard extends CardView
         yAxisRight.setDrawLabels(false);
     }
 
-    public void setTitle(@StringRes int titleResId)
-    {
+    public void setTitle(@StringRes int titleResId) {
         String title = getContext().getString(titleResId);
         setTitle(title);
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         titleTextView.setText(title);
     }
 
-    public void setExpandAction(Action1<Object> action)
-    {
+    public void setExpandAction(Action1<Object> action) {
         expand.setVisibility(action == null ? View.GONE : View.VISIBLE);
 
-        if(expandSub != null)
-        {
+        if (expandSub != null) {
             expandSub.unsubscribe();
         }
 
-        if(action != null)
-        {
+        if (action != null) {
             expandSub = RxView.clicks(expand).subscribe(action);
         }
     }
@@ -170,8 +159,7 @@ public class BarChartCard extends CardView
      * @param stacked work around for setting yOffset of xAxis. Having a stacked dataset adds stack
      *                label spacing. To prevent this, we set 0 offset if dataset is stacked
      */
-    public void setData(BarData data, boolean stacked)
-    {
+    public void setData(BarData data, boolean stacked) {
         float maxOffset = data.getYMax() + (data.getYMax() * .05f);
 
         chart.setData(data);
@@ -182,8 +170,7 @@ public class BarChartCard extends CardView
         chart.invalidate();
     }
 
-    public BarChart getChart()
-    {
+    public BarChart getChart() {
         return chart;
     }
 }

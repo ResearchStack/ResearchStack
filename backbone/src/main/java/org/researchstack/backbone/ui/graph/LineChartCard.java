@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.graph;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -24,48 +25,43 @@ import org.researchstack.backbone.R;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class LineChartCard extends CardView
-{
-    private TextView     titleTextView;
-    private ImageView    expand;
+public class LineChartCard extends CardView {
+    private TextView titleTextView;
+    private ImageView expand;
     private Subscription expandSub;
-    private LineChart    chart;
+    private LineChart chart;
 
     private String titleText;
-    private int    titleTextColor;
-    private float  titleTextSize;
+    private int titleTextColor;
+    private float titleTextSize;
     private String titleTextTypeface;
-    private int    chartXAxisTextColor;
-    private float  chartXAxisTextSize;
+    private int chartXAxisTextColor;
+    private float chartXAxisTextSize;
     private String chartXAxisTextTypeface;
-    private int    chartYAxisTextColor;
-    private float  chartYAxisTextSize;
+    private int chartYAxisTextColor;
+    private float chartYAxisTextSize;
     private String chartYAxisTextTypeface;
-    private int    expandTintColor;
+    private int expandTintColor;
 
-    public LineChartCard(Context context)
-    {
+    public LineChartCard(Context context) {
         super(context);
         initializeRoot(null, R.attr.lineChartCardStyle);
         initializeViews();
     }
 
-    public LineChartCard(Context context, AttributeSet attrs)
-    {
+    public LineChartCard(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializeRoot(attrs, R.attr.lineChartCardStyle);
         initializeViews();
     }
 
-    public LineChartCard(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public LineChartCard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initializeRoot(attrs, defStyleAttr);
         initializeViews();
     }
 
-    private void initializeRoot(AttributeSet attrs, int defStyleAttr)
-    {
+    private void initializeRoot(AttributeSet attrs, int defStyleAttr) {
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_line, this, true);
 
         final TypedArray a = getContext().obtainStyledAttributes(attrs,
@@ -90,8 +86,7 @@ public class LineChartCard extends CardView
         a.recycle();
     }
 
-    private void initializeViews()
-    {
+    private void initializeViews() {
         titleTextView = (TextView) findViewById(R.id.view_chart_line_title);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(titleTextColor);
@@ -99,8 +94,7 @@ public class LineChartCard extends CardView
         titleTextView.setTypeface(Typeface.create(titleTextTypeface, Typeface.NORMAL));
 
         expand = (ImageView) findViewById(R.id.view_chart_line_expand);
-        if(expandTintColor != 0)
-        {
+        if (expandTintColor != 0) {
             Drawable drawable = expand.getDrawable();
             drawable = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(drawable, expandTintColor);
@@ -148,47 +142,39 @@ public class LineChartCard extends CardView
         yAxisRight.setSpaceTop(0);
     }
 
-    public void setTitle(@StringRes int titleResId)
-    {
+    public void setTitle(@StringRes int titleResId) {
         String title = getContext().getString(titleResId);
         setTitle(title);
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         titleTextView.setText(title);
     }
 
-    public void setExpandAction(Action1<Object> action)
-    {
+    public void setExpandAction(Action1<Object> action) {
         expand.setVisibility(action == null ? View.GONE : View.VISIBLE);
 
-        if(expandSub != null)
-        {
+        if (expandSub != null) {
             expandSub.unsubscribe();
         }
 
-        if(action != null)
-        {
+        if (action != null) {
             expandSub = RxView.clicks(expand).subscribe(action);
         }
     }
 
-    public void setData(LineData data)
-    {
+    public void setData(LineData data) {
         setData(data, 0, 0);
     }
 
-    public void setData(LineData data, int viewportStart, int viewPortEnd)
-    {
+    public void setData(LineData data, int viewportStart, int viewPortEnd) {
         float maxOffset = data.getYMax() + (data.getYMax() * .05f);
 
         chart.setData(data);
         chart.getAxisLeft().setAxisMaxValue(maxOffset);
         chart.getAxisRight().setAxisMaxValue(maxOffset);
 
-        if(viewportStart != viewPortEnd)
-        {
+        if (viewportStart != viewPortEnd) {
             chart.setVisibleXRange(viewportStart, viewPortEnd);
         }
 
@@ -196,8 +182,7 @@ public class LineChartCard extends CardView
         chart.invalidate();
     }
 
-    public LineChart getChart()
-    {
+    public LineChart getChart() {
         return chart;
     }
 }

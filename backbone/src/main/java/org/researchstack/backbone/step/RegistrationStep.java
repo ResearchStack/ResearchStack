@@ -20,8 +20,7 @@ public class RegistrationStep extends ProfileStep {
     }
 
     @Override
-    public Class<?> getStepBodyClass()
-    {
+    public Class<?> getStepBodyClass() {
         // TODO: need custom RegistrationStepLayout
         // TODO: name, email, password, etc. and can make call to web to register account
         return super.getStepBodyClass();

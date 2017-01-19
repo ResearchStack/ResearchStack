@@ -8,12 +8,12 @@ import java.util.List;
 
 /**
  * Created by TheMDP on 1/4/17.
- *
+ * <p>
  * Used by several differnt Step types to designate re-usable QuestionStep types
  * that collect user profile info
  */
 
-public enum  ProfileInfoOption {
+public enum ProfileInfoOption {
     @SerializedName("email")
     EMAIL("email"),
     @SerializedName("password")
@@ -49,13 +49,9 @@ public enum  ProfileInfoOption {
         this.identifier = identifier;
     }
 
-    public String getIdentifier() {
-        return identifier;
-    }
-
     public static List<ProfileInfoOption> toProfileInfoOptions(List<String> identifiers) {
         List<ProfileInfoOption> options = new ArrayList<>();
-        for(String identifier : identifiers) {
+        for (String identifier : identifiers) {
             ProfileInfoOption option = toProfileInfoOption(identifier);
             if (option != null) {
                 options.add(option);
@@ -69,5 +65,9 @@ public enum  ProfileInfoOption {
             gson = new Gson();
         }
         return gson.fromJson(identifier, ProfileInfoOption.class);
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 }

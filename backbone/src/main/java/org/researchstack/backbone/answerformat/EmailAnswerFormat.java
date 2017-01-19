@@ -3,8 +3,7 @@ package org.researchstack.backbone.answerformat;
 
 import org.researchstack.backbone.utils.TextUtils;
 
-public class EmailAnswerFormat extends TextAnswerFormat
-{
+public class EmailAnswerFormat extends TextAnswerFormat {
     private static final int MAX_EMAIL_LENGTH = 255;
 
     /* Default constructor needed for serilization/deserialization of object */
@@ -14,8 +13,7 @@ public class EmailAnswerFormat extends TextAnswerFormat
     }
 
     @Override
-    public boolean isAnswerValid(String text)
-    {
+    public boolean isAnswerValid(String text) {
         return super.isAnswerValid(text) && TextUtils.isValidEmail(text);
     }
 }

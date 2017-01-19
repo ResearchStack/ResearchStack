@@ -2,11 +2,7 @@ package org.researchstack.skin.onboarding;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-
 import org.researchstack.backbone.onboarding.ResourceNameJsonProvider;
-
-import java.util.Collections;
 
 /**
  * Created by TheMDP on 1/12/17.

@@ -10,7 +10,6 @@ import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.utils.ObjectUtils;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +23,6 @@ public class SubtaskStep extends Step {
     private static final String LOG_TAG = SubtaskStep.class.getCanonicalName();
 
     Task subtask;
-    public Task getSubtask() {
-        return subtask;
-    }
 
     /* Default constructor needed for serilization/deserialization of object */
     SubtaskStep() {
@@ -49,6 +45,10 @@ public class SubtaskStep extends Step {
     public SubtaskStep(Task task) {
         this(task.getIdentifier());
         subtask = task;
+    }
+
+    public Task getSubtask() {
+        return subtask;
     }
 
     private String substepIdentifier(String identifier) {
@@ -100,19 +100,19 @@ public class SubtaskStep extends Step {
         String prefix = subtask.getIdentifier() + ".";
         for (String identifier : inputResults.keySet()) {
             if (identifier.startsWith(prefix)) {
-                
+
                 Map<String, Object> newResultMap = new LinkedHashMap<>();
                 String newIdentifier = identifier.substring(prefix.length());
-                StepResult stepResult = (StepResult)inputResults.get(identifier).deepCopy(newIdentifier);
+                StepResult stepResult = (StepResult) inputResults.get(identifier).deepCopy(newIdentifier);
 
                 // Search results of the step for non-subtask identifiers as well
                 if (stepResult.getResults() != null) {
                     for (Object stepResultIdentifierObj : stepResult.getResults().keySet()) {
                         if (stepResultIdentifierObj instanceof String) {
-                            String stepResultIdentifier = (String)stepResultIdentifierObj;
+                            String stepResultIdentifier = (String) stepResultIdentifierObj;
                             Object stepResultObject = stepResult.getResults().get(stepResultIdentifierObj);
                             if (stepResultObject instanceof Result) {
-                                Result newResult = ((Result)stepResultObject).deepCopy(stepResultIdentifier);
+                                Result newResult = ((Result) stepResultObject).deepCopy(stepResultIdentifier);
                                 newResultMap.put(stepResultIdentifier, newResult);
                             } else {
                                 newResultMap.put(stepResultIdentifier, stepResultObject);
@@ -170,7 +170,7 @@ public class SubtaskStep extends Step {
             return null;
         }
         if (subtask instanceof TaskResultSource) {
-            return ((TaskResultSource)subtask).getStepResult(substepIdentifier);
+            return ((TaskResultSource) subtask).getStepResult(substepIdentifier);
         }
         return null;
     }

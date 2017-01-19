@@ -22,8 +22,7 @@ public class OnboardingCompletionStep extends InstructionStep {
 //    }
 
     @Override
-    public Class getStepLayoutClass()
-    {
+    public Class getStepLayoutClass() {
         return OnboardingCompletionStepLayout.class;
     }
 }

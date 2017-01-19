@@ -1,11 +1,11 @@
 package org.researchstack.backbone.storage.file;
+
 /**
  * Callback for data access.  This will change a lot soon.
  * <p>
  * Created by kgalligan on 11/25/15.
  */
-public interface StorageAccessListener
-{
+public interface StorageAccessListener {
     /**
      * Data access is ready.  You should be able to read/write directly now.
      */

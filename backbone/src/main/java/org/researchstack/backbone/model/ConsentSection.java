@@ -1,4 +1,5 @@
 package org.researchstack.backbone.model;
+
 import android.support.annotation.StringRes;
 
 import com.google.gson.annotations.SerializedName;
@@ -8,8 +9,7 @@ import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.Serializable;
 
-public class ConsentSection implements Serializable
-{
+public class ConsentSection implements Serializable {
 
     /**
      * The type of section. (read-only)
@@ -18,9 +18,13 @@ public class ConsentSection implements Serializable
      * present.
      */
     public static final String SECTION_TYPE_GSON = "sectionType";
+    public static final int UNDEFINED_RES = -1;
+    /**
+     * Used for storing custom type identifer when type is CUSTOM eum
+     */
+    transient String customTypeIdentifier;
     @SerializedName(SECTION_TYPE_GSON)
-    private Type   type;
-
+    private Type type;
     /**
      * The title of the consent section in a localized string.
      * <p>
@@ -106,11 +110,6 @@ public class ConsentSection implements Serializable
     @SerializedName("sectionAnimationUrl")
     private String customAnimationURL;
 
-    /**
-     * Used for storing custom type identifer when type is CUSTOM eum
-     */
-    transient String customTypeIdentifier;
-
     /* Default identifier for serilization/deserialization */
     ConsentSection() {
         super();
@@ -121,47 +120,40 @@ public class ConsentSection implements Serializable
      *
      * @param type The consent section type.
      */
-    public ConsentSection(Type type)
-    {
+    public ConsentSection(Type type) {
         this.type = type;
         this.summary = null;
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getFormalTitle()
-    {
+    public String getFormalTitle() {
         return formalTitle;
     }
 
-    public Type getType()
-    {
+    public Type getType() {
         return type;
     }
+
     void setType(Type type) {
         this.type = type;
     }
 
-    public String getHtmlContent()
-    {
+    public String getHtmlContent() {
         return htmlContent;
     }
 
-    public void setHtmlContent(String htmlContent)
-    {
+    public void setHtmlContent(String htmlContent) {
         this.htmlContent = htmlContent;
     }
 
-    public String getCustomImageName()
-    {
+    public String getCustomImageName() {
         return customImageName;
     }
 
@@ -169,45 +161,37 @@ public class ConsentSection implements Serializable
         customImageName = imageName;
     }
 
-    public String getContent()
-    {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(String content)
-    {
+    public void setContent(String content) {
         this.content = content;
         this.escapedContent = null;
     }
 
-    public String getSummary()
-    {
+    public String getSummary() {
         return summary;
     }
 
-    public void setSummary(String summary)
-    {
+    public void setSummary(String summary) {
         this.summary = summary;
     }
 
-    public String getEscapedContent()
-    {
+    public String getEscapedContent() {
         // If its null, return that. If not, escape/replace chars in var content
-        if(TextUtils.isEmpty(content))
-        {
+        if (TextUtils.isEmpty(content)) {
             return content;
         }
 
         return escapedContent;
     }
 
-    public String getCustomLearnMoreButtonTitle()
-    {
+    public String getCustomLearnMoreButtonTitle() {
         return customLearnMoreButtonTitle;
     }
 
-    public void setCustomLearnMoreButtonTitle(String customLearnMoreButtonTitle)
-    {
+    public void setCustomLearnMoreButtonTitle(String customLearnMoreButtonTitle) {
         this.customLearnMoreButtonTitle = customLearnMoreButtonTitle;
     }
 
@@ -218,9 +202,7 @@ public class ConsentSection implements Serializable
         return type.getIdentifier();
     }
 
-    public static final int UNDEFINED_RES = -1;
-    public enum Type implements Serializable
-    {
+    public enum Type implements Serializable {
         /**
          * Overview of the informed consent process.
          * <p>
@@ -346,32 +328,35 @@ public class ConsentSection implements Serializable
         @SerializedName("onlyInDocument")
         OnlyInDocument("onlyInDocument", UNDEFINED_RES, R.string.rsb_consent_section_more_info, null);
 
+        String identifier;
+        String imageName;
+        @StringRes
+        int titleRes;
+        @StringRes
+        int moreInfoRes;
         Type(
-            String identifier,
-            @StringRes int titleRes,
-            @StringRes int moreInfoRes,
-            String imageName)
-        {
+                String identifier,
+                @StringRes int titleRes,
+                @StringRes int moreInfoRes,
+                String imageName) {
             this.identifier = identifier;
             this.titleRes = titleRes;
             this.moreInfoRes = moreInfoRes;
             this.imageName = imageName;
         }
 
-        String identifier;
-        String imageName;
-        @StringRes int titleRes;
-        @StringRes int moreInfoRes;
-
         public int getTitleResId() {
             return titleRes;
         }
+
         public String getImageName() {
             return imageName;
         }
+
         public int getMoreInfoResId() {
             return moreInfoRes;
         }
+
         private String getIdentifier() {
             return identifier;
         }

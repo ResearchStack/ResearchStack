@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Change to RelativeLayout for preview to work -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!-- Change to RelativeLayout for preview to work -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
->
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/rss_quiz_eval_image"
@@ -13,23 +10,21 @@
         android:layout_height="180dp"
         android:layout_centerHorizontal="true"
         android:scaleType="center"
-        tools:src="@drawable/rsb_debug_gray"
-    />
+        tools:src="@drawable/rsb_debug_gray" />
 
     <TextView
         android:id="@+id/rss_quiz_eval_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rss_quiz_eval_image"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
+        android:layout_marginTop="20dp"
 
-        android:textSize="20sp"
         android:textColor="?attr/colorAccent"
+        android:textSize="20sp"
 
-        tools:text="@string/lorem_name"
-    />
+        tools:text="@string/lorem_name" />
 
     <TextView
         android:id="@+id/rss_quiz_eval_summary"
@@ -37,10 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rss_quiz_eval_title"
-        android:layout_marginTop="36dp"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
-        tools:text="@string/lorem_medium"
-    />
+        android:layout_marginTop="36dp"
+        tools:text="@string/lorem_medium" />
 
 </RelativeLayout>

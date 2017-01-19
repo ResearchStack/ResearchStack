@@ -1,4 +1,5 @@
 package org.researchstack.backbone.storage.database.sqlite;
+
 import android.content.Context;
 
 import com.google.gson.Gson;
@@ -35,37 +36,30 @@ import co.touchlab.squeaky.table.TableUtils;
  * 'co.touchlab.squeaky:squeaky-processor:0.4.0'` to your dependencies and add android-apt:
  * https://bitbucket.org/hvisser/android-apt)
  */
-public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDatabase
-{
-    public static final String DEFAULT_NAME    = "appdb";
-    public static final int    DEFAULT_VERSION = 1;
+public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
+    public static final String DEFAULT_NAME = "appdb";
+    public static final int DEFAULT_VERSION = 1;
 
     private final UpdatablePassphraseProvider passphraseProvider;
 
-    public SqlCipherDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, UpdatablePassphraseProvider passphraseProvider)
-    {
+    public SqlCipherDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, UpdatablePassphraseProvider passphraseProvider) {
         super(context, name, factory, version, passphraseProvider);
         this.passphraseProvider = passphraseProvider;
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase)
-    {
-        try
-        {
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        try {
             TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase),
                     TaskRecord.class,
                     StepRecord.class);
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
-    {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         // handle future db upgrades here
     }
 
@@ -74,12 +68,10 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
     @Override
-    public void saveTaskResult(TaskResult taskResult)
-    {
+    public void saveTaskResult(TaskResult taskResult) {
         LogExt.d(getClass(), "saveTaskResult() id: " + taskResult.getIdentifier());
 
-        try
-        {
+        try {
             TaskRecord taskRecord = new TaskRecord();
             taskRecord.taskId = taskResult.getIdentifier();
             taskRecord.started = taskResult.getStartDate();
@@ -89,42 +81,34 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
             Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601).create();
             Dao<StepRecord> stepResultDao = getDao(StepRecord.class);
 
-            for(StepResult stepResult : taskResult.getResults().values())
-            {
-                if(stepResult != null)
-                {
+            for (StepResult stepResult : taskResult.getResults().values()) {
+                if (stepResult != null) {
                     StepRecord stepRecord = new StepRecord();
                     stepRecord.taskRecordId = taskRecord.id;
                     stepRecord.taskId = taskResult.getIdentifier();
                     stepRecord.stepId = stepResult.getIdentifier();
                     stepRecord.completed = stepResult.getEndDate();
-                    if(! stepResult.getResults().isEmpty())
-                    {
+                    if (!stepResult.getResults().isEmpty()) {
                         stepRecord.result = gson.toJson(stepResult.getResults());
                     }
 
                     stepResultDao.createOrUpdate(stepRecord);
                 }
             }
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public TaskResult loadLatestTaskResult(String taskIdentifier)
-    {
+    public TaskResult loadLatestTaskResult(String taskIdentifier) {
         LogExt.d(getClass(), "loadTaskResults() id: " + taskIdentifier);
 
-        try
-        {
+        try {
             List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
                     taskIdentifier).orderBy(TaskRecord.COMPLETED + " DESC").limit(1).list();
 
-            if(taskRecords.isEmpty())
-            {
+            if (taskRecords.isEmpty()) {
                 return null;
             }
 
@@ -132,26 +116,21 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
             List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.TASK_RECORD_ID,
                     record.id).list();
             return TaskRecord.toTaskResult(record, stepRecords);
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public List<TaskResult> loadTaskResults(String taskIdentifier)
-    {
+    public List<TaskResult> loadTaskResults(String taskIdentifier) {
         LogExt.d(getClass(), "loadTaskResults() id: " + taskIdentifier);
 
-        try
-        {
+        try {
             List<TaskResult> results = new ArrayList<>();
             List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
                     taskIdentifier).list();
 
-            for(TaskRecord record : taskRecords)
-            {
+            for (TaskRecord record : taskRecords) {
                 List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.TASK_RECORD_ID,
                         record.id).list();
                 TaskResult result = TaskRecord.toTaskResult(record, stepRecords);
@@ -159,47 +138,38 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
             }
 
             return results;
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public List<StepResult> loadStepResults(String stepIdentifier)
-    {
+    public List<StepResult> loadStepResults(String stepIdentifier) {
         LogExt.d(getClass(), "loadStepResults() id: " + stepIdentifier);
 
-        try
-        {
+        try {
             List<StepResult> results = new ArrayList<>();
             List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.STEP_ID,
                     stepIdentifier).list();
 
-            for(StepRecord stepRecord : stepRecords)
-            {
+            for (StepRecord stepRecord : stepRecords) {
                 StepResult result = StepRecord.toStepResult(stepRecord);
                 results.add(result);
             }
 
             return results;
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public <D extends Dao<T>, T> D getDao(Class<T> clazz)
-    {
+    public <D extends Dao<T>, T> D getDao(Class<T> clazz) {
         return super.getDao(clazz);
     }
 
     @Override
-    public void setEncryptionKey(String key)
-    {
+    public void setEncryptionKey(String key) {
         passphraseProvider.setPassphrase(key);
     }
 

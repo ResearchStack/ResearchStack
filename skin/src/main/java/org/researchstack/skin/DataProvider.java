@@ -1,4 +1,5 @@
 package org.researchstack.skin;
+
 import android.app.Application;
 import android.content.Context;
 
@@ -19,18 +20,16 @@ import rx.Observable;
  * Class used to as a buffer between the network layer and UI layer. The implementation allows the
  * framework to be backend-agnostic
  */
-public abstract class DataProvider
-{
+public abstract class DataProvider {
     public final static String ERROR_NOT_AUTHENTICATED = "ERROR_NOT_AUTHENTICATED";
-    public final static String ERROR_CONSENT_REQUIRED  = "ERROR_CONSENT_REQUIRED";
+    public final static String ERROR_CONSENT_REQUIRED = "ERROR_CONSENT_REQUIRED";
 
     private static DataProvider instance;
 
     /**
      * Default Constructor
      */
-    public DataProvider()
-    {
+    public DataProvider() {
     }
 
     /**
@@ -38,10 +37,8 @@ public abstract class DataProvider
      *
      * @return the singleton instance of this class
      */
-    public static DataProvider getInstance()
-    {
-        if(instance == null)
-        {
+    public static DataProvider getInstance() {
+        if (instance == null) {
             throw new RuntimeException(
                     "DataProvider instance is null. Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
@@ -55,8 +52,7 @@ public abstract class DataProvider
      *
      * @param instance an implementation of DataProvider
      */
-    public static void init(DataProvider instance)
-    {
+    public static void init(DataProvider instance) {
         DataProvider.instance = instance;
     }
 
@@ -217,7 +213,7 @@ public abstract class DataProvider
      * inflating a Task from assets folder
      *
      * @param context android context
-     * @param task the TaskScheduleModel model
+     * @param task    the TaskScheduleModel model
      * @return a Task object with defined sub-steps
      */
     public abstract Task loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task);
@@ -225,10 +221,10 @@ public abstract class DataProvider
     /**
      * This initial task may include profile items such as height and weight that may need to be
      * processed differently than a normal task result.
-     *
+     * <p>
      * This task is presented to the user when initially entering the {@link MainActivity}
      *
-     * @param context android context
+     * @param context    android context
      * @param taskResult initial TaskResult object to process
      */
     public abstract void processInitialTaskResult(Context context, TaskResult taskResult);
@@ -238,7 +234,7 @@ public abstract class DataProvider
      * call to notify the backend.
      *
      * @param context android context
-     * @param email email of the user
+     * @param email   email of the user
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if forgitpassword request was successful
      */

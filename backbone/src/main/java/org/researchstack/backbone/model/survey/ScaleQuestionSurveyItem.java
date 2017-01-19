@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by TheMDP on 1/3/17.
- *
+ * <p>
  * Represents a slider that can go from integer min to integer high, at a certain step value
  */
 

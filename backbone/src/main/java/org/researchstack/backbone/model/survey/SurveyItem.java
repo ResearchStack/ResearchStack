@@ -9,17 +9,16 @@ import java.util.Map;
 
 /**
  * Created by TheMDP on 12/31/16.
- *
+ * <p>
  * Generic Type "T" of survey item must also implement Serializable,
  * Otherwise you will see a runtime exception
  */
 
 public class SurveyItem<T> implements Serializable {
 
+    static final String TYPE_GSON = "type";
     @SerializedName("identifier")
     public String identifier;
-
-    static final String TYPE_GSON = "type";
     @SerializedName(TYPE_GSON)
     public SurveyItemType type;
 
@@ -52,15 +51,6 @@ public class SurveyItem<T> implements Serializable {
         super();
     }
 
-    public static class SurveyItemTypeComparator implements Comparator<SurveyItemType> {
-
-        @Override
-        public int compare(SurveyItemType lhs, SurveyItemType rhs) {
-
-            return 0;
-        }
-    }
-
     public String getTypeIdentifier() {
         return type.getValue();
     }
@@ -89,5 +79,14 @@ public class SurveyItem<T> implements Serializable {
         }
 
         return identifier.equals(rhs.identifier);
+    }
+
+    public static class SurveyItemTypeComparator implements Comparator<SurveyItemType> {
+
+        @Override
+        public int compare(SurveyItemType lhs, SurveyItemType rhs) {
+
+            return 0;
+        }
     }
 }

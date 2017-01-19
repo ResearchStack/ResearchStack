@@ -63,7 +63,8 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
 
         List<SurveyItem> surveyItems = context.deserialize(
                 json.getAsJsonObject().get(OnboardingSection.ONBOARDING_SURVEY_ITEMS_GSON),
-                new TypeToken<List<SurveyItem>>() {}.getType());
+                new TypeToken<List<SurveyItem>>() {
+                }.getType());
         section.surveyItems = surveyItems;
 
         return section;

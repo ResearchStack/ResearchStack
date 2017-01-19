@@ -29,7 +29,7 @@ public class ObjectUtils {
             return deepCopy;
         } catch (IOException e) {
             e.printStackTrace();
-        } catch(ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;

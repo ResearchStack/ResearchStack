@@ -17,8 +17,7 @@ public class PasscodeStep extends Step {
     }
 
     @Override
-    public Class getStepLayoutClass()
-    {
+    public Class getStepLayoutClass() {
         // TODO: need custom CreatePasscodeStepLayout, one exists, but is in Skin module
         return super.getStepLayoutClass();
     }

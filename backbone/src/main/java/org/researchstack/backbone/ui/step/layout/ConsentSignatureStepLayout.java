@@ -28,34 +28,29 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ConsentSignatureStepLayout extends RelativeLayout implements StepLayout
-{
-    public static final String KEY_SIGNATURE      = "ConsentSignatureStep.Signature";
+public class ConsentSignatureStepLayout extends RelativeLayout implements StepLayout {
+    public static final String KEY_SIGNATURE = "ConsentSignatureStep.Signature";
     public static final String KEY_SIGNATURE_DATE = "ConsentSignatureStep.Signature.Date";
 
-    private SignatureView      signatureView;
-    private StepCallbacks      callbacks;
-    private Step               step;
+    private SignatureView signatureView;
+    private StepCallbacks callbacks;
+    private Step step;
     private StepResult<String> result;
 
-    public ConsentSignatureStepLayout(Context context)
-    {
+    public ConsentSignatureStepLayout(Context context) {
         super(context);
     }
 
-    public ConsentSignatureStepLayout(Context context, AttributeSet attrs)
-    {
+    public ConsentSignatureStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ConsentSignatureStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public ConsentSignatureStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
+    public void initialize(Step step, StepResult result) {
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;
 
@@ -63,27 +58,23 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
     @Override
-    public boolean isBackEventConsumed()
-    {
+    public boolean isBackEventConsumed() {
         setDataToResult();
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, result);
         return false;
     }
 
     @Override
-    public void setCallbacks(StepCallbacks callbacks)
-    {
+    public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 
-    private void initializeStep()
-    {
+    private void initializeStep() {
         LayoutInflater.from(getContext())
                 .inflate(R.layout.rsb_step_layout_consent_signature, this, true);
 
@@ -96,18 +87,15 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         View clear = findViewById(R.id.layout_consent_review_signature_clear);
 
         signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
-        signatureView.setCallbacks(new SignatureCallbacks()
-        {
+        signatureView.setCallbacks(new SignatureCallbacks() {
             @Override
-            public void onSignatureStarted()
-            {
+            public void onSignatureStarted() {
                 clear.setClickable(true);
                 clear.animate().alpha(1);
             }
 
             @Override
-            public void onSignatureCleared()
-            {
+            public void onSignatureCleared() {
                 clear.setClickable(false);
                 clear.animate().alpha(0);
             }
@@ -125,22 +113,18 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.getNegativeActionView().setVisibility(View.GONE);
         submitBar.setPositiveAction(v -> {
-            if(signatureView.isSignatureDrawn())
-            {
+            if (signatureView.isSignatureDrawn()) {
                 setDataToResult();
                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
-            }
-            else
-            {
+            } else {
                 Toast.makeText(getContext(), R.string.rsb_error_invalid_signature, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void setDataToResult()
-    {
+    private void setDataToResult() {
         String format = ((ConsentSignatureStep) step).getSignatureDateFormat();
-        DateFormat signatureDateFormat = ! TextUtils.isEmpty(format)
+        DateFormat signatureDateFormat = !TextUtils.isEmpty(format)
                 ? new SimpleDateFormat(format)
                 : FormatHelper.getSignatureFormat();
         String formattedSignDate = signatureDateFormat.format(new Date());
@@ -149,19 +133,15 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         result.setResultForIdentifier(KEY_SIGNATURE_DATE, formattedSignDate);
     }
 
-    private String getBase64EncodedImage()
-    {
+    private String getBase64EncodedImage() {
         Bitmap bitmap = signatureView.createSignatureBitmap();
 
-        if(bitmap != null)
-        {
+        if (bitmap != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
             return Base64.encodeToString(byteArray, Base64.DEFAULT);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }

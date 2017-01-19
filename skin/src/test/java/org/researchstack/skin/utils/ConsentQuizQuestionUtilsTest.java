@@ -28,8 +28,7 @@ public class ConsentQuizQuestionUtilsTest {
     ConsentQuizModel.QuizQuestion mockQuestion;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         mockContext = Mockito.mock(Context.class);
         Mockito.when(mockContext.getString(org.researchstack.skin.R.string.rss_btn_true)).thenReturn("True");
         Mockito.when(mockContext.getString(org.researchstack.skin.R.string.rss_btn_false)).thenReturn("False");
@@ -91,7 +90,7 @@ public class ConsentQuizQuestionUtilsTest {
 
         for (int i = 0; i < expected.size(); i++) {
             Choice expectedChoice = expected.get(i);
-            Choice actualChoice   = actual.get(i);
+            Choice actualChoice = actual.get(i);
             assertEquals(expectedChoice.getText(), actualChoice.getText());
             assertEquals(expectedChoice.getValue(), actualChoice.getValue());
             assertEquals(expectedChoice.getDetailText(), actualChoice.getDetailText());

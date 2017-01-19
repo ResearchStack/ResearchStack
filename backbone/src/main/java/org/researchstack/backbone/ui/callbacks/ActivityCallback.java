@@ -1,6 +1,6 @@
 package org.researchstack.backbone.ui.callbacks;
-public interface ActivityCallback
-{
+
+public interface ActivityCallback {
     public void onRequestPermission(String id);
 
     @Deprecated

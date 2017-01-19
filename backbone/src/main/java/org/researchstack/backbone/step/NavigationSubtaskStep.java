@@ -1,11 +1,6 @@
 package org.researchstack.backbone.step;
 
 import org.researchstack.backbone.model.survey.NavigationStep;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.task.Task;
 
 import java.util.List;

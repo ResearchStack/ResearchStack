@@ -8,39 +8,34 @@ import android.view.MenuItem;
 import org.researchstack.skin.UiManager;
 
 
-public class ShareActivity extends BaseActivity
-{
-  @Override
-  protected void onCreate(Bundle savedInstanceState)
-  {
-    super.onCreate(savedInstanceState);
-    setContentView(org.researchstack.skin.R.layout.rss_activity_fragment);
+public class ShareActivity extends BaseActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(org.researchstack.skin.R.layout.rss_activity_fragment);
 
-    Toolbar toolbar = (Toolbar) findViewById(org.researchstack.skin.R.id.toolbar);
-    setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(org.researchstack.skin.R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-    ActionBar actionBar = getSupportActionBar();
-    actionBar.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-    if(savedInstanceState == null)
-    {
-      getSupportFragmentManager().beginTransaction()
-              .add(org.researchstack.skin.R.id.container, UiManager.getInstance().getShareFragment())
-              .commit();
-    }
-  }
-
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    if(item.getItemId() == android.R.id.home)
-    {
-      onBackPressed();
-      return true;
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(org.researchstack.skin.R.id.container, UiManager.getInstance().getShareFragment())
+                    .commit();
+        }
     }
 
-    return super.onOptionsItemSelected(item);
-  }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }

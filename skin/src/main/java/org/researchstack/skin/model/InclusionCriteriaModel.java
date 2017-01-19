@@ -9,11 +9,32 @@ public class InclusionCriteriaModel {
     public static final String INELIGIBLE_INSTRUCTION_IDENTIFIER = "ineligibleInstruction";
     public static final String ELIGIBLE_INSTRUCTION_IDENTIFIER = "eligibleInstruction";
     @SerializedName("steps")
-    public  List<Step> steps;
+    public List<Step> steps;
 
 
-    public static class Step
-    {
+    public enum StepType {
+
+        @SerializedName("instruction")
+        INSTRUCTION("instruction"),
+        @SerializedName("compound")
+        COMPOUND("compound"),
+        @SerializedName("toggle")
+        TOGGLE("toggle"),
+        @SerializedName("share")
+        SHARE("share");
+
+        String type;
+
+        StepType(String type) {
+            type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+    }
+
+    public static class Step {
         @SerializedName("identifier")
         public String identifier;
 
@@ -43,29 +64,7 @@ public class InclusionCriteriaModel {
 
     }
 
-    public enum StepType {
-
-        @SerializedName("instruction")
-        INSTRUCTION("instruction"),
-        @SerializedName("compound")
-        COMPOUND("compound"),
-        @SerializedName("toggle")
-        TOGGLE("toggle"),
-        @SerializedName("share")
-        SHARE("share");
-
-        StepType(String type) {
-            type = type;
-        }
-
-        String type;
-        public String getType() {
-            return type;
-        }
-    }
-
-    public static class Item
-    {
+    public static class Item {
         @SerializedName("identifier")
         public String identifier;
 

@@ -2,7 +2,6 @@ package org.researchstack.backbone.model;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -12,10 +11,9 @@ import static org.junit.Assert.assertEquals;
 public class ProfileInfoOptionsTest {
 
     @Test
-    public void testToProfileInfoOption()
-    {
-        assertEquals(ProfileInfoOption.NAME,  ProfileInfoOption.toProfileInfoOption("name"));
+    public void testToProfileInfoOption() {
+        assertEquals(ProfileInfoOption.NAME, ProfileInfoOption.toProfileInfoOption("name"));
         assertEquals(ProfileInfoOption.EMAIL, ProfileInfoOption.toProfileInfoOption("email"));
-        assertEquals(null,  ProfileInfoOption.toProfileInfoOption("fake_name"));
+        assertEquals(null, ProfileInfoOption.toProfileInfoOption("fake_name"));
     }
 }

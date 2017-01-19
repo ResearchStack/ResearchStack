@@ -17,8 +17,7 @@ public class PermissionsStep extends Step {
     }
 
     @Override
-    public Class getStepLayoutClass()
-    {
+    public Class getStepLayoutClass() {
         // TODO: need custom PermissionStepLayout, one exists, but is in Skin module
         return super.getStepLayoutClass();
     }

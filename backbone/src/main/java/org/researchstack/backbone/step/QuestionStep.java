@@ -3,11 +3,6 @@ package org.researchstack.backbone.step;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * The {@link QuestionStep} class is a concrete subclass of {@link Step} that represents a step in
  * which a single question is presented to the user.
@@ -25,8 +20,7 @@ import java.util.List;
  * <p>
  * The result of a question step is an {@link org.researchstack.backbone.result.StepResult} object.
  */
-public class QuestionStep extends Step
-{
+public class QuestionStep extends Step {
     private AnswerFormat answerFormat;
 
     private String placeholder;
@@ -42,8 +36,7 @@ public class QuestionStep extends Step
      * @param identifier The identifier of the step (a step identifier should be unique within the
      *                   task).
      */
-    public QuestionStep(String identifier)
-    {
+    public QuestionStep(String identifier) {
         super(identifier);
     }
 
@@ -54,8 +47,7 @@ public class QuestionStep extends Step
      *                   task).
      * @param title      A localized string that represents the primary text of the question.
      */
-    public QuestionStep(String identifier, String title)
-    {
+    public QuestionStep(String identifier, String title) {
         super(identifier, title);
     }
 
@@ -68,8 +60,7 @@ public class QuestionStep extends Step
      * @param title      A localized string that represents the primary text of the question.
      * @param format     The format in which the answer is expected.
      */
-    public QuestionStep(String identifier, String title, AnswerFormat format)
-    {
+    public QuestionStep(String identifier, String title, AnswerFormat format) {
         super(identifier, title);
         this.answerFormat = format;
     }
@@ -84,8 +75,7 @@ public class QuestionStep extends Step
      * @return the StepLayout to be used for general QuestionSteps
      */
     @Override
-    public Class getStepLayoutClass()
-    {
+    public Class getStepLayoutClass() {
         return SurveyStepLayout.class;
     }
 
@@ -102,8 +92,7 @@ public class QuestionStep extends Step
      *
      * @return the StepBody implementation for this question step.
      */
-    public Class<?> getStepBodyClass()
-    {
+    public Class<?> getStepBodyClass() {
         return answerFormat.getQuestionType().getStepBodyClass();
     }
 
@@ -117,8 +106,7 @@ public class QuestionStep extends Step
      *
      * @return the answer format for this question step
      */
-    public AnswerFormat getAnswerFormat()
-    {
+    public AnswerFormat getAnswerFormat() {
         return answerFormat;
     }
 
@@ -128,8 +116,7 @@ public class QuestionStep extends Step
      * @param answerFormat the answer format for this question step
      * @see #getAnswerFormat()
      */
-    public void setAnswerFormat(AnswerFormat answerFormat)
-    {
+    public void setAnswerFormat(AnswerFormat answerFormat) {
         this.answerFormat = answerFormat;
     }
 
@@ -142,8 +129,7 @@ public class QuestionStep extends Step
      *
      * @return the placeholder string
      */
-    public String getPlaceholder()
-    {
+    public String getPlaceholder() {
         return placeholder;
     }
 
@@ -156,8 +142,7 @@ public class QuestionStep extends Step
      *
      * @param placeholder the placeholder string
      */
-    public void setPlaceholder(String placeholder)
-    {
+    public void setPlaceholder(String placeholder) {
         this.placeholder = placeholder;
     }
 }

@@ -1,4 +1,5 @@
 package org.researchstack.backbone.model;
+
 import android.support.annotation.StringRes;
 
 import com.google.gson.annotations.SerializedName;
@@ -7,8 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsentDocument implements Serializable
-{
+public class ConsentDocument implements Serializable {
 
     /**
      * The document's title in a localized string.
@@ -79,37 +79,32 @@ public class ConsentDocument implements Serializable
      */
     @SerializedName("requiresBirthdate")
     private boolean requiresBirthdate = true;
-
-    /* Default constructor needed for serilization/deserialization of object */
-    public ConsentDocument() {
-        super();
-    }
-
     /**
      * True if consent must require the user's signature
      */
     @SerializedName("requiresSignature")
     private boolean requiresSignature = true;
 
-    public void setTitle(String title)
-    {
+    /* Default constructor needed for serilization/deserialization of object */
+    public ConsentDocument() {
+        super();
+    }
+
+    public void setTitle(String title) {
         this.title = title;
     }
 
     @StringRes
-    public int getSignaturePageTitle()
-    {
+    public int getSignaturePageTitle() {
         return signaturePageTitle;
     }
 
-    public void setSignaturePageTitle(@StringRes int signaturePageTitle)
-    {
+    public void setSignaturePageTitle(@StringRes int signaturePageTitle) {
         this.signaturePageTitle = signaturePageTitle;
     }
 
     @Deprecated
-    public void setSignaturePageContent(String signaturePageContent)
-    {
+    public void setSignaturePageContent(String signaturePageContent) {
         this.signaturePageContent = signaturePageContent;
     }
 
@@ -118,63 +113,51 @@ public class ConsentDocument implements Serializable
      *
      * @param signature The signature object to add to the document.
      */
-    public void addSignature(ConsentSignature signature)
-    {
+    public void addSignature(ConsentSignature signature) {
         signatures.add(signature);
     }
 
-    public ConsentSignature getSignature(int location)
-    {
+    public ConsentSignature getSignature(int location) {
         return signatures.get(location);
     }
 
-    public List<ConsentSection> getSections()
-    {
+    public List<ConsentSection> getSections() {
         return sections;
     }
 
-    public void setSections(List<ConsentSection> sections)
-    {
+    public void setSections(List<ConsentSection> sections) {
         this.sections = sections;
     }
 
-    public String getHtmlReviewContent()
-    {
+    public String getHtmlReviewContent() {
         return htmlReviewContent;
     }
 
-    public void setHtmlReviewContent(String htmlReviewContent)
-    {
+    public void setHtmlReviewContent(String htmlReviewContent) {
         this.htmlReviewContent = htmlReviewContent;
     }
 
-    public boolean getRequiresName()
-    {
+    public boolean getRequiresName() {
         return requiresName;
     }
 
-    public void setRequiresName(boolean requiresName)
-    {
+    public void setRequiresName(boolean requiresName) {
         this.requiresName = requiresName;
     }
 
-    public boolean getRequiresBirthdate()
-    {
+    public boolean getRequiresBirthdate() {
         return requiresBirthdate;
     }
 
-    public void setRequiresBirthdate(boolean requiresBirthdate)
-    {
+    public void setRequiresBirthdate(boolean requiresBirthdate) {
         this.requiresBirthdate = requiresName;
     }
 
-    public boolean getRequiresSignature()
-    {
+    public boolean getRequiresSignature() {
         return requiresSignature;
     }
 
-    public void setRequiresSignature(boolean requiresSignature)
-    {
+    public void setRequiresSignature(boolean requiresSignature) {
         this.requiresSignature = requiresSignature;
     }
 }

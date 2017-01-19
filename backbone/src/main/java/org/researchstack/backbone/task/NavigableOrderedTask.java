@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * Created by TheMDP on 12/29/16.
- *
+ * <p>
  * TODO this class needs expanded to support
  * TODO SBANavigationRule, SBAConditionalRule, and SBANavigationSkipRule in the near-future.
  */
@@ -23,6 +23,11 @@ import java.util.Map;
 public class NavigableOrderedTask extends OrderedTask implements TaskResultSource {
 
     static final String LOG_TAG = NavigableOrderedTask.class.getCanonicalName();
+    List<TaskResult> additionalTaskResults;
+    ConditionalRule conditionalRule;
+    // MARK: TaskResultSource overrides
+    TaskResult initialResult;
+    private List<String> orderedStepIdentifiers;
 
     public NavigableOrderedTask(String identifier, List<Step> steps) {
         super(identifier, steps);
@@ -33,11 +38,6 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
         super(identifier, steps);
         orderedStepIdentifiers = new ArrayList<>();
     }
-
-    List<TaskResult> additionalTaskResults;
-    ConditionalRule  conditionalRule;
-
-    private List<String> orderedStepIdentifiers;
 
     private SubtaskStep subtaskStep(String identifier) {
         // Look for a period in the range of the string
@@ -56,10 +56,12 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
         String subtaskStepIdentifier = identifier.substring(0, indexOfPeriod);
         Step subtaskStep = super.getStepWithIdentifier(subtaskStepIdentifier);
         if (subtaskStep instanceof SubtaskStep) {
-            return (SubtaskStep)subtaskStep;
+            return (SubtaskStep) subtaskStep;
         }
         return null; // Wasnt an instance of SubtaskStep
     }
+
+    // MARK: ORKOrderedTask overrides
 
     private Step superStepAfterStep(Step step, TaskResult result) {
         // Check the conditional rule to see if it returns a next step for the given previous
@@ -79,7 +81,7 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
             do {
 
                 if (previousStep instanceof NavigationRule) {
-                    NavigationRule navigableStep = (NavigationRule)previousStep;
+                    NavigationRule navigableStep = (NavigationRule) previousStep;
                     String nextStepIdentifier = navigableStep.nextStepIdentifier(result, additionalTaskResults);
                     // If this is a step that conforms to the SBANavigableStep protocol and
                     // the next step identifier is non-nil then get the next step by looking within
@@ -97,8 +99,7 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
 
                 // Check if this is a skip-able step
                 if (returnStep instanceof NavigationSkipRule &&
-                   ((NavigationSkipRule)returnStep).shouldSkipStep(result, additionalTaskResults))
-                {
+                        ((NavigationSkipRule) returnStep).shouldSkipStep(result, additionalTaskResults)) {
                     shouldSkip = true;
                     previousStep = returnStep;
                 } else {
@@ -111,7 +112,7 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
             // Since it is possible that the subtask will return an empty task (all steps are invalid) then
             // need to also check that the return is non-nil
             while (returnStep instanceof SubtaskStep) {
-                SubtaskStep subtaskStep = (SubtaskStep)returnStep;
+                SubtaskStep subtaskStep = (SubtaskStep) returnStep;
                 Step subtaskReturnStep = subtaskStep.getStepAfterStep(null, result);
                 if (subtaskReturnStep != null) {
                     returnStep = subtaskReturnStep;
@@ -128,7 +129,7 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
             }
 
             if (!shouldSkip && returnStep instanceof NavigationSkipRule) {
-                shouldSkip = ((NavigationSkipRule)returnStep).shouldSkipStep(result, additionalTaskResults);
+                shouldSkip = ((NavigationSkipRule) returnStep).shouldSkipStep(result, additionalTaskResults);
             }
 
             if (shouldSkip) {
@@ -145,7 +146,6 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
         return returnStep;
     }
 
-    // MARK: ORKOrderedTask overrides
     /**
      * Returns the next step immediately after the passed in step in the list of steps, or null
      *
@@ -154,8 +154,7 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
      * @return the next step in <code>steps</code> after the passed in step, or null if at the end
      */
     @Override
-    public Step getStepAfterStep(Step step, TaskResult result)
-    {
+    public Step getStepAfterStep(Step step, TaskResult result) {
         Step returnStep;
 
         String stepIdentifier = step != null ? step.getIdentifier() : null;
@@ -255,21 +254,6 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
         return super.getProgressOfCurrentStep(step, result);
     }
 
-    /**
-     * Validates that there are no duplicate identifiers in the list of steps
-     * @throws org.researchstack.backbone.task.Task.InvalidTaskException
-     */
-    @Override
-    public void validateParameters() {
-        super.validateParameters();
-        for (Step step : steps) {
-            // Check if the step is a subtask step and validate parameters
-            if (step instanceof SubtaskStep) {
-                ((SubtaskStep)step).getSubtask().validateParameters();
-            }
-        }
-    }
-
 // TODO: may need this when we add audio support
 //    override open var providesBackgroundAudioPrompts: Bool {
 //        let superRet = super.providesBackgroundAudioPrompts
@@ -286,9 +270,21 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
 //        return false
 //    }
 
-
-    // MARK: TaskResultSource overrides
-    TaskResult initialResult;
+    /**
+     * Validates that there are no duplicate identifiers in the list of steps
+     *
+     * @throws org.researchstack.backbone.task.Task.InvalidTaskException
+     */
+    @Override
+    public void validateParameters() {
+        super.validateParameters();
+        for (Step step : steps) {
+            // Check if the step is a subtask step and validate parameters
+            if (step instanceof SubtaskStep) {
+                ((SubtaskStep) step).getSubtask().validateParameters();
+            }
+        }
+    }
 
     public Map<String, StepResult> getStoredTaskResults() {
         if (initialResult == null) {
@@ -397,6 +393,7 @@ public class NavigableOrderedTask extends OrderedTask implements TaskResultSourc
      */
     public interface ConditionalRule {
         boolean shouldSkip(Step step, TaskResult result);
+
         Step nextStep(Step previousStep, Step nextStep, TaskResult result);
     }
 }
