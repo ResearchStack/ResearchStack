@@ -24,7 +24,7 @@ import java.util.Date;
  * subclass.
  */
 public class Result implements Serializable {
-    String identifier;
+    private String identifier;
 
     private Date startDate;
 

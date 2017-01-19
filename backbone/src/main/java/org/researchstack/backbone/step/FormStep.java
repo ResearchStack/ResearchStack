@@ -16,7 +16,7 @@ import java.util.List;
  * includes a child StepResult object for each form item.
  */
 public class FormStep extends QuestionStep {
-    List<QuestionStep> formSteps;
+    private List<QuestionStep> formSteps;
 
     /* Default constructor needed for serilization/deserialization of object */
     FormStep() {

@@ -28,7 +28,7 @@ public class AppPrefs {
     }
 
     @Deprecated
-    public static synchronized AppPrefs getInstance(Context context) {
+    public static AppPrefs getInstance(Context context) {
         if (instance == null) {
             instance = new AppPrefs(context);
         }
