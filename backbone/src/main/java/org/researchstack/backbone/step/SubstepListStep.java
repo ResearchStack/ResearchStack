@@ -19,10 +19,14 @@ public class SubstepListStep extends Step {
     public SubstepListStep(String identifier, List<Step> stepList) {
         super(identifier);
         this.stepList = stepList;
-        stepLayoutClass = ViewPagerSubstepListStepLayout.class;
     }
 
     public List<Step> getStepList() {
         return stepList;
+    }
+
+    @Override
+    public Class getStepLayoutClass() {
+        return ViewPagerSubstepListStepLayout.class;
     }
 }

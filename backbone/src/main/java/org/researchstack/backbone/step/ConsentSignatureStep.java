@@ -1,8 +1,6 @@
 package org.researchstack.backbone.step;
 
-import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
-import org.researchstack.backbone.ui.step.layout.FormStepLayout;
 
 /**
  * This class represents the final step in the consent process, collecting the signature from the
@@ -15,14 +13,12 @@ public class ConsentSignatureStep extends Step
     /* Default constructor needed for serilization/deserialization of object */
     ConsentSignatureStep() {
         super();
-        stepLayoutClass = ConsentSignatureStepLayout.class;
         setOptional(false);
     }
 
     public ConsentSignatureStep(String identifier)
     {
         super(identifier);
-        stepLayoutClass = ConsentSignatureStepLayout.class;
         setOptional(false);
     }
 
@@ -57,5 +53,10 @@ public class ConsentSignatureStep extends Step
      */
     public void setSignatureDateFormat(String signatureDateFormat) {
         this.signatureDateFormat = signatureDateFormat;
+    }
+
+    @Override
+    public Class getStepLayoutClass() {
+        return ConsentSignatureStepLayout.class;
     }
 }

@@ -13,15 +13,14 @@ public class ConsentReviewSubstepListStep extends SubstepListStep {
     /* Default constructor needed for serilization/deserialization of object */
     ConsentReviewSubstepListStep() {
         super();
-        init();
     }
 
     public ConsentReviewSubstepListStep(String identifier, List<Step> stepList) {
         super(identifier, stepList);
-        init();
     }
 
-    protected void init() {
-        stepLayoutClass = ConsentReviewSubstepListStepLayout.class;
+    @Override
+    public Class getStepLayoutClass() {
+        return ConsentReviewSubstepListStepLayout.class;
     }
 }
