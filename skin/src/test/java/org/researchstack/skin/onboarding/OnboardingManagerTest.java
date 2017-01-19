@@ -3,10 +3,10 @@ package org.researchstack.skin.onboarding;
 import org.junit.Before;
 import org.junit.Test;
 import org.researchstack.backbone.model.Choice;
+import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.ConsentReviewSurveyItem;
 import org.researchstack.backbone.model.survey.ConsentSharingOptionsSurveyItem;
 import org.researchstack.backbone.model.survey.InstructionSurveyItem;
-import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SubtaskQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
 import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
@@ -44,8 +44,7 @@ public class OnboardingManagerTest {
     SurveyFactoryHelper mSurveyFactoryHelper;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         mSurveyFactoryHelper = new SurveyFactoryHelper();
         mFullResourceProvider = new FullTestResourceProvider();
         mOnboardingManager = new OnboardingManager(mSurveyFactoryHelper.mockContext, "onboarding", mFullResourceProvider);
@@ -59,54 +58,54 @@ public class OnboardingManagerTest {
         assertEquals(8, mOnboardingManager.getSections().size());
 
         // Sections assertions
-        assertEquals(OnboardingSectionType.LOGIN,               mOnboardingManager.getSections().get(0).getOnboardingSectionType());
-        assertEquals(OnboardingSectionType.ELIGIBILITY,         mOnboardingManager.getSections().get(1).getOnboardingSectionType());
-        assertEquals(OnboardingSectionType.CONSENT,             mOnboardingManager.getSections().get(2).getOnboardingSectionType());
-        assertEquals(OnboardingSectionType.REGISTRATION,        mOnboardingManager.getSections().get(3).getOnboardingSectionType());
-        assertEquals(OnboardingSectionType.PASSCODE,            mOnboardingManager.getSections().get(4).getOnboardingSectionType());
-        assertEquals(OnboardingSectionType.EMAIL_VERIFICATION,  mOnboardingManager.getSections().get(5).getOnboardingSectionType());
-        assertEquals(OnboardingSectionType.PERMISSIONS,         mOnboardingManager.getSections().get(6).getOnboardingSectionType());
-        assertEquals(OnboardingSectionType.COMPLETION,          mOnboardingManager.getSections().get(7).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.LOGIN, mOnboardingManager.getSections().get(0).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.ELIGIBILITY, mOnboardingManager.getSections().get(1).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.CONSENT, mOnboardingManager.getSections().get(2).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.REGISTRATION, mOnboardingManager.getSections().get(3).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.PASSCODE, mOnboardingManager.getSections().get(4).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.EMAIL_VERIFICATION, mOnboardingManager.getSections().get(5).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.PERMISSIONS, mOnboardingManager.getSections().get(6).getOnboardingSectionType());
+        assertEquals(OnboardingSectionType.COMPLETION, mOnboardingManager.getSections().get(7).getOnboardingSectionType());
 
         // Eligibility assertions
         OnboardingSection eligibilty = mOnboardingManager.getSections().get(1);
         assertEquals(3, eligibilty.surveyItems.size());
         assertEquals(SurveyItemType.QUESTION_TOGGLE, eligibilty.surveyItems.get(0).type);
-        assertEquals("eligibleInstruction",          eligibilty.surveyItems.get(0).skipIdentifier);
+        assertEquals("eligibleInstruction", eligibilty.surveyItems.get(0).skipIdentifier);
         assertTrue(eligibilty.surveyItems.get(0).skipIfPassed);
         assertEquals(3, eligibilty.surveyItems.get(0).items.size());
         assertTrue(eligibilty.surveyItems.get(0) instanceof ToggleQuestionSurveyItem);
         ToggleQuestionSurveyItem toggle = (ToggleQuestionSurveyItem) eligibilty.surveyItems.get(0);
         assertEquals(SurveyItemType.QUESTION_BOOLEAN, toggle.items.get(0).type);
-        assertEquals(SurveyItemType.INSTRUCTION,     eligibilty.surveyItems.get(1).type);
-        assertEquals(SurveyItemType.INSTRUCTION,     eligibilty.surveyItems.get(1).type);
+        assertEquals(SurveyItemType.INSTRUCTION, eligibilty.surveyItems.get(1).type);
+        assertEquals(SurveyItemType.INSTRUCTION, eligibilty.surveyItems.get(1).type);
 
         // Consent assertions
         OnboardingSection consent = mOnboardingManager.getSections().get(2);
         assertEquals(8, consent.surveyItems.size());
-        assertEquals(SurveyItemType.CUSTOM,         consent.surveyItems.get(0).type);
-        assertEquals("reconsent.instruction",       consent.surveyItems.get(0).getTypeIdentifier());
+        assertEquals(SurveyItemType.CUSTOM, consent.surveyItems.get(0).type);
+        assertEquals("reconsent.instruction", consent.surveyItems.get(0).getTypeIdentifier());
         assertEquals(SurveyItemType.CONSENT_VISUAL, consent.surveyItems.get(1).type);
-        assertEquals(SurveyItemType.SUBTASK,        consent.surveyItems.get(2).type);
-        assertEquals(5,                             consent.surveyItems.get(2).items.size());
+        assertEquals(SurveyItemType.SUBTASK, consent.surveyItems.get(2).type);
+        assertEquals(5, consent.surveyItems.get(2).items.size());
 
         assertTrue(consent.surveyItems.get(2) instanceof SubtaskQuestionSurveyItem);
-        SubtaskQuestionSurveyItem consentQuiz = (SubtaskQuestionSurveyItem)consent.surveyItems.get(2);
+        SubtaskQuestionSurveyItem consentQuiz = (SubtaskQuestionSurveyItem) consent.surveyItems.get(2);
 
         assertEquals(consentQuiz.items.get(1).type, SurveyItemType.QUESTION_SINGLE_CHOICE);
-        ChoiceQuestionSurveyItem singleChoice = (ChoiceQuestionSurveyItem)consentQuiz.items.get(1);
+        ChoiceQuestionSurveyItem singleChoice = (ChoiceQuestionSurveyItem) consentQuiz.items.get(1);
         assertEquals(2, singleChoice.items.size());
         assertTrue(singleChoice.items.get(0) instanceof Choice);
         assertTrue(singleChoice.expectedAnswer);
 
         assertTrue(consent.surveyItems.get(3) instanceof InstructionSurveyItem);
-        InstructionSurveyItem consentFailedQuiz = (InstructionSurveyItem)consent.surveyItems.get(3);
-        assertEquals("consent_2quiz_headsup",   consentFailedQuiz.learnMoreHTMLContentURL);
-        assertEquals("icon_retry",              consentFailedQuiz.image);
+        InstructionSurveyItem consentFailedQuiz = (InstructionSurveyItem) consent.surveyItems.get(3);
+        assertEquals("consent_2quiz_headsup", consentFailedQuiz.learnMoreHTMLContentURL);
+        assertEquals("icon_retry", consentFailedQuiz.image);
 
         assertEquals(SurveyItemType.INSTRUCTION_COMPLETION, consent.surveyItems.get(4).type);
         assertTrue(consent.surveyItems.get(4) instanceof InstructionSurveyItem);
-        InstructionSurveyItem consentPassed = (InstructionSurveyItem)consent.surveyItems.get(4);
+        InstructionSurveyItem consentPassed = (InstructionSurveyItem) consent.surveyItems.get(4);
         assertEquals("You answered all of the questions correctly.", consentPassed.text);
         assertEquals("Great Job!", consentPassed.title);
         assertEquals("Tap Next to continue.", consentPassed.detailText);
@@ -122,7 +121,7 @@ public class OnboardingManagerTest {
     public void testShouldInclude() {
         resetMockToDefaults();
 
-        ShouldIncludeData[] shouldIncludeData = new ShouldIncludeData[] {
+        ShouldIncludeData[] shouldIncludeData = new ShouldIncludeData[]{
                 new ShouldIncludeData(
                         OnboardingSectionType.LOGIN,
                         OnboardingTaskType.LOGIN),
@@ -196,11 +195,11 @@ public class OnboardingManagerTest {
         mMockOnboardingManager.setHasPasscode(true);
         mMockOnboardingManager.setIsRegistered(true);
 
-        OnboardingTaskType[] taskTypes = new OnboardingTaskType[] {
+        OnboardingTaskType[] taskTypes = new OnboardingTaskType[]{
                 OnboardingTaskType.REGISTRATION, OnboardingTaskType.RECONSENT
         };
 
-        ShouldIncludeData[] shouldIncludeData = new ShouldIncludeData[] {
+        ShouldIncludeData[] shouldIncludeData = new ShouldIncludeData[]{
                 new ShouldIncludeData(
                         OnboardingSectionType.LOGIN,
                         OnboardingTaskType.LOGIN),
@@ -335,19 +334,6 @@ public class OnboardingManagerTest {
         mMockOnboardingManager.setIsLoginVerified(false);
     }
 
-    class ShouldIncludeData {
-        OnboardingSectionType sectionType;
-        List<OnboardingTaskType> taskTypesIncluded;
-        ShouldIncludeData(OnboardingSectionType type, OnboardingTaskType... taskTypes) {
-            sectionType = type;
-            taskTypesIncluded = Arrays.asList(taskTypes);
-        }
-        ShouldIncludeData(OnboardingSectionType type) {
-            sectionType = type;
-            taskTypesIncluded = new ArrayList<>();
-        }
-    }
-
     ShouldIncludeData findType(OnboardingSectionType type, ShouldIncludeData[] data) {
         for (ShouldIncludeData shouldIncludeData : data) {
             if (shouldIncludeData.sectionType == type) {
@@ -357,12 +343,27 @@ public class OnboardingManagerTest {
         return null;
     }
 
+    class ShouldIncludeData {
+        OnboardingSectionType sectionType;
+        List<OnboardingTaskType> taskTypesIncluded;
+
+        ShouldIncludeData(OnboardingSectionType type, OnboardingTaskType... taskTypes) {
+            sectionType = type;
+            taskTypesIncluded = Arrays.asList(taskTypes);
+        }
+
+        ShouldIncludeData(OnboardingSectionType type) {
+            sectionType = type;
+            taskTypesIncluded = new ArrayList<>();
+        }
+    }
+
     class FullTestResourceProvider implements ResourceNameJsonProvider {
 
         @Override
         public String getJsonStringForResourceName(String resourceName) {
             // Resources are in src/test/resources
-            InputStream jsonStream = getClass().getClassLoader().getResourceAsStream(resourceName+".json");
+            InputStream jsonStream = getClass().getClassLoader().getResourceAsStream(resourceName + ".json");
             String json = convertStreamToString(jsonStream);
             return json;
         }

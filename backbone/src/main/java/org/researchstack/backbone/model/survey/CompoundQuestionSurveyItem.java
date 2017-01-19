@@ -25,7 +25,7 @@ public class CompoundQuestionSurveyItem extends QuestionSurveyItem<QuestionSurve
         }
         for (SurveyItem item : items) {
             if (item instanceof QuestionSurveyItem) {
-                usesNavigation = ((QuestionSurveyItem)item).usesNavigation();
+                usesNavigation = ((QuestionSurveyItem) item).usesNavigation();
                 if (usesNavigation) {
                     return true;
                 }

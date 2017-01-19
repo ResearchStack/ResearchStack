@@ -1,18 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Change to RelativeLayout for preview to work -->
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!-- Change to RelativeLayout for preview to work -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools"
->
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/title"
         style="@style/Backbone.Survey.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/rsb_pincode_enter_title"
-    />
+        android:text="@string/rsb_pincode_enter_title" />
 
     <TextView
         android:id="@+id/text"
@@ -20,29 +17,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
+        android:minHeight="52dp"
         android:paddingTop="@dimen/rsb_padding_small"
         android:text="@string/rsb_pincode_enter_summary"
-        android:textColorLink="?attr/colorAccent"
-        android:minHeight="52dp"
-    />
+        android:textColorLink="?attr/colorAccent" />
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/pincode"
         android:layout_width="match_parent"
         android:layout_height="@dimen/rsb_item_size_default"
-        android:singleLine="true"
         android:layout_below="@+id/text"
-        android:imeOptions="actionNone"
-        android:textSize="20sp"
         android:background="@null"
+        android:gravity="center"
+        android:imeOptions="actionNone"
         android:letterSpacing=".25"
-        android:gravity="center"/>
+        android:singleLine="true"
+        android:textSize="20sp" />
 
     <include
         android:id="@+id/progress"
-        android:visibility="gone"
-        tools:visibility="gone"
         layout="@layout/rsb_progress"
-    />
+        android:visibility="gone"
+        tools:visibility="gone" />
 
 </merge>

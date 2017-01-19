@@ -15,7 +15,7 @@ public class ResourceParserHelper {
 
     public String getJsonStringForResourceName(String resourceName) {
         // Resources are in src/test/resources
-        InputStream jsonStream = getClass().getClassLoader().getResourceAsStream(resourceName+".json");
+        InputStream jsonStream = getClass().getClassLoader().getResourceAsStream(resourceName + ".json");
         String json = convertStreamToString(jsonStream);
         return json;
     }

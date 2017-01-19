@@ -30,22 +30,20 @@ import static junit.framework.Assert.assertTrue;
 
 public class SubtaskStepTests {
 
-    SurveyFactoryHelper  helper;
+    SurveyFactoryHelper helper;
     ResourceParserHelper resourceHelper;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         helper = new SurveyFactoryHelper();
         resourceHelper = new ResourceParserHelper();
     }
 
     @Test
-    public void testMutatedResultSet() throws Exception
-    {
+    public void testMutatedResultSet() throws Exception {
         SubtaskStepAndSteps subtaskStepAndSteps = createSubtaskStep();
-        Step firstStep = (Step)ObjectUtils.clone(subtaskStepAndSteps.steps.get(0));
-        Step lastStep = (Step)ObjectUtils.clone(subtaskStepAndSteps.steps.get(subtaskStepAndSteps.steps.size()-1));
+        Step firstStep = (Step) ObjectUtils.clone(subtaskStepAndSteps.steps.get(0));
+        Step lastStep = (Step) ObjectUtils.clone(subtaskStepAndSteps.steps.get(subtaskStepAndSteps.steps.size() - 1));
         List<Step> navSteps = new ArrayList<>();
         navSteps.add(firstStep);
         navSteps.add(subtaskStepAndSteps.subtaskStep);
@@ -86,15 +84,6 @@ public class SubtaskStepTests {
 
     // Helper methods for test class
 
-    class SubtaskStepAndSteps {
-        SubtaskStep subtaskStep;
-        List<Step> steps;
-        SubtaskStepAndSteps(SubtaskStep subtaskStep, List<Step> steps) {
-            this.subtaskStep = subtaskStep;
-            this.steps = steps;
-        }
-    }
-
     SubtaskStepAndSteps createSubtaskStep() {
         Type listType = new TypeToken<List<SurveyItem>>() {
         }.getType();
@@ -105,6 +94,16 @@ public class SubtaskStepTests {
         MutatedResultTask mutatedResultTask = new MutatedResultTask("Mutating Task", factory.getSteps());
         SubtaskStep subtaskStep = new SubtaskStep(mutatedResultTask);
         return new SubtaskStepAndSteps(subtaskStep, factory.getSteps());
+    }
+
+    class SubtaskStepAndSteps {
+        SubtaskStep subtaskStep;
+        List<Step> steps;
+
+        SubtaskStepAndSteps(SubtaskStep subtaskStep, List<Step> steps) {
+            this.subtaskStep = subtaskStep;
+            this.steps = steps;
+        }
     }
 
     class MutatedResultTask extends OrderedTask {
@@ -120,7 +119,7 @@ public class SubtaskStepTests {
         @Override
         public Step getStepAfterStep(Step step, TaskResult result) {
             if (step instanceof QuestionStep) {
-                QuestionStep previousStep = (QuestionStep)step;
+                QuestionStep previousStep = (QuestionStep) step;
                 StepResult stepResult = result.getStepResult(previousStep.getIdentifier());
                 if (stepResult != null && stepResult.getResults() != null) {
                     String addedId = previousStep.getIdentifier() + "addedResult";

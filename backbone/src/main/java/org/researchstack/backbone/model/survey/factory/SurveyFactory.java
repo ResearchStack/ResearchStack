@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.annotation.StringRes;
 import android.text.InputType;
 
-import com.google.gson.JsonDeserializer;
-
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
@@ -22,26 +20,26 @@ import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.BooleanQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.CompoundQuestionSurveyItem;
-import org.researchstack.backbone.model.survey.CustomInstructionSurveyItem;
 import org.researchstack.backbone.model.survey.CustomSurveyItem;
 import org.researchstack.backbone.model.survey.DateRangeSurveyItem;
 import org.researchstack.backbone.model.survey.FloatRangeSurveyItem;
-import org.researchstack.backbone.model.survey.IntegerRangeSurveyItem;
-import org.researchstack.backbone.model.survey.ProfileSurveyItem;
-import org.researchstack.backbone.model.survey.ScaleQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.InstructionSurveyItem;
+import org.researchstack.backbone.model.survey.IntegerRangeSurveyItem;
 import org.researchstack.backbone.model.survey.NavigationStep;
+import org.researchstack.backbone.model.survey.ProfileSurveyItem;
 import org.researchstack.backbone.model.survey.QuestionSurveyItem;
+import org.researchstack.backbone.model.survey.ScaleQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SubtaskQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
 import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
-import org.researchstack.backbone.step.CustomInstructionStep;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
+import org.researchstack.backbone.step.NavigationQuestionStep;
+import org.researchstack.backbone.step.NavigationSubtaskStep;
 import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.ProfileStep;
@@ -50,8 +48,6 @@ import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
-import org.researchstack.backbone.step.NavigationQuestionStep;
-import org.researchstack.backbone.step.NavigationSubtaskStep;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +62,7 @@ public class SurveyFactory {
     public static final String PASSWORD_CONFIRMATION_IDENTIFIER = "confirmation";
 
     List<Step> steps;
+
     /*
      * @param Context is used to localize default true and false string values
      * @param List<SurveyItem>
@@ -100,12 +97,12 @@ public class SurveyFactory {
                 if (!(item instanceof InstructionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, INSTRUCTION types must be InstructionSurveyItems");
                 }
-                return createInstructionStep((InstructionSurveyItem)item);
+                return createInstructionStep((InstructionSurveyItem) item);
             case SUBTASK:
                 if (!(item instanceof SubtaskQuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, SUBTASK types must be SubtaskQuestionSurveyItem");
                 }
-                return createSubtaskStep(context, ((SubtaskQuestionSurveyItem)item));
+                return createSubtaskStep(context, ((SubtaskQuestionSurveyItem) item));
             case QUESTION_BOOLEAN:
             case QUESTION_DATE:
             case QUESTION_DATE_TIME:
@@ -121,44 +118,44 @@ public class SurveyFactory {
                 if (!(item instanceof QuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_* types must be QuestionSurveyItem");
                 }
-                return createQuestionStep(context, (QuestionSurveyItem)item);
+                return createQuestionStep(context, (QuestionSurveyItem) item);
             case QUESTION_TOGGLE:
                 if (!(item instanceof ToggleQuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_TOGGLE types must be ToggleQuestionSurveyItem");
                 }
-                return createToggleFormStep(context, (ToggleQuestionSurveyItem)item);
+                return createToggleFormStep(context, (ToggleQuestionSurveyItem) item);
             case QUESTION_COMPOUND:
                 if (!(item instanceof CompoundQuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_COMPOUND types must be CompoundQuestionSurveyItem");
                 }
-                return createCompoundStep(context, (CompoundQuestionSurveyItem)item);
+                return createCompoundStep(context, (CompoundQuestionSurveyItem) item);
             case ACCOUNT_REGISTRATION:
                 if (!(item instanceof ProfileSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, ACCOUNT_REGISTRATION types must be ProfileSurveyItem");
                 }
-                return createRegistrationStep(context, (ProfileSurveyItem)item);
+                return createRegistrationStep(context, (ProfileSurveyItem) item);
             case ACCOUNT_PROFILE:
                 if (!(item instanceof ProfileSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, ACCOUNT_PROFILE types must be ProfileSurveyItem");
                 }
-                return createProfileStep(context, (ProfileSurveyItem)item);
+                return createProfileStep(context, (ProfileSurveyItem) item);
             case ACCOUNT_LOGIN:
                 if (!(item instanceof ProfileSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, ACCOUNT_LOGIN types must be ProfileSurveyItem");
                 }
-                return createLoginStep(context, (ProfileSurveyItem)item);
+                return createLoginStep(context, (ProfileSurveyItem) item);
             case ACCOUNT_COMPLETION:
                 // TODO: finish the completion step layout, for now just use a simple instruction
                 // TODO: should show the cool check mark animation, see iOS
                 if (!(item instanceof InstructionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, ACCOUNT_COMPLETION types must be InstructionSurveyItem");
                 }
-                return createInstructionStep((InstructionSurveyItem)item);
+                return createInstructionStep((InstructionSurveyItem) item);
             case ACCOUNT_EMAIL_VERIFICATION:
                 if (!(item instanceof InstructionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, ACCOUNT_EMAIL_VERIFICATION types must be InstructionSurveyItem");
                 }
-                return createEmailVerificationStep((InstructionSurveyItem)item);
+                return createEmailVerificationStep((InstructionSurveyItem) item);
             case ACCOUNT_PERMISSIONS:
                 return createPermissionsStep(item);
             case ACCOUNT_DATA_GROUPS:
@@ -173,7 +170,7 @@ public class SurveyFactory {
                 }
                 // To override a custom step from survey item mapping,
                 // You need to override the
-                return createCustomStep((CustomSurveyItem)item);
+                return createCustomStep((CustomSurveyItem) item);
         }
 
         // Handled by ConsentDocumentFactory subclass
@@ -194,7 +191,9 @@ public class SurveyFactory {
         return step;
     }
 
-    /** helper to display to dev that this step is not implemented yet */
+    /**
+     * helper to display to dev that this step is not implemented yet
+     */
     InstructionStep createNotImplementedStep(SurveyItem item) {
         return new InstructionStep(
                 item.identifier,
@@ -202,7 +201,9 @@ public class SurveyFactory {
                 "Type of step not implemented yet.");
     }
 
-    /** Helper method for instruction steps */
+    /**
+     * Helper method for instruction steps
+     */
     void fillInstructionStep(InstructionStep step, InstructionSurveyItem item) {
         step.setFootnote(item.footnote);
         step.setNextStepIdentifier(item.nextIdentifier);
@@ -268,7 +269,7 @@ public class SurveyFactory {
                 if (!(item instanceof BooleanQuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_BOOLEAN types must be BooleanQuestionSurveyItem");
                 }
-                BooleanQuestionSurveyItem boolItem = (BooleanQuestionSurveyItem)item;
+                BooleanQuestionSurveyItem boolItem = (BooleanQuestionSurveyItem) item;
                 String yes = null, no = null;
                 // First try and get the true / value choices from the BooleanQuestionSurveyItem
                 // Since it may sometimes, but not always provided
@@ -295,8 +296,8 @@ public class SurveyFactory {
                 if (!(item instanceof DateRangeSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_DATE types must be DateRangeSurveyItem");
                 }
-                DateRangeSurveyItem dateSurveyItem = (DateRangeSurveyItem)item;
-                DateRangeSurveyItem dateItem = (DateRangeSurveyItem)item;
+                DateRangeSurveyItem dateSurveyItem = (DateRangeSurveyItem) item;
+                DateRangeSurveyItem dateItem = (DateRangeSurveyItem) item;
                 AnswerFormat.DateAnswerStyle style = AnswerFormat.DateAnswerStyle.Date;
                 if (dateSurveyItem.type == SurveyItemType.QUESTION_DATE_TIME) {
                     style = AnswerFormat.DateAnswerStyle.DateAndTime;
@@ -310,14 +311,14 @@ public class SurveyFactory {
                 if (!(item instanceof FloatRangeSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_DECIMAL types must be FloatRangeSurveyItem");
                 }
-                FloatRangeSurveyItem floatItem = (FloatRangeSurveyItem)item;
+                FloatRangeSurveyItem floatItem = (FloatRangeSurveyItem) item;
                 format = new DecimalAnswerFormat(floatItem.min, floatItem.max);
                 break;
             case QUESTION_INTEGER:
                 if (!(item instanceof IntegerRangeSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_INTEGER types must be IntegerRangeSurveyItem");
                 }
-                IntegerRangeSurveyItem intItem = (IntegerRangeSurveyItem)item;
+                IntegerRangeSurveyItem intItem = (IntegerRangeSurveyItem) item;
                 format = new IntegerAnswerFormat(intItem.min, intItem.max);
                 break;
             case QUESTION_DURATION:
@@ -329,7 +330,7 @@ public class SurveyFactory {
                 if (!(item instanceof ScaleQuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_SCALE types must be ScaleQuestionSurveyItem");
                 }
-                ScaleQuestionSurveyItem scaleItem = (ScaleQuestionSurveyItem)item;
+                ScaleQuestionSurveyItem scaleItem = (ScaleQuestionSurveyItem) item;
                 // TODO: create scale answer formats, see iOS versions
                 format = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
                         new Choice<>("TODO: Scale (integer, continuous, text) survey not implemented", true));
@@ -341,7 +342,7 @@ public class SurveyFactory {
                 if (!(item instanceof ChoiceQuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, this type must be ChoiceQuestionSurveyItem");
                 }
-                ChoiceQuestionSurveyItem singleItem = (ChoiceQuestionSurveyItem)item;
+                ChoiceQuestionSurveyItem singleItem = (ChoiceQuestionSurveyItem) item;
                 if (singleItem.items == null || singleItem.items.isEmpty()) {
                     throw new IllegalStateException("ChoiceQuestionSurveyItem must have choices");
                 }
@@ -384,6 +385,7 @@ public class SurveyFactory {
     /**
      * Toggles are actually a FormStep, since they are a list of other QuestionSteps
      * Similar to a subtask step, but only as it relates to QuestionSurveyItems
+     *
      * @param item ToggleQuestionSurveyItem from JSON, that has nested boolean QuestionSurveyItems
      * @return a ToggleFormStep which is a form step that is also a NavigationStep
      */
@@ -410,8 +412,7 @@ public class SurveyFactory {
     public List<QuestionStep> createQuestionSteps(
             Context context,
             List<ProfileInfoOption> profileInfoOptions,
-            boolean addConfirmPasswordOption)
-    {
+            boolean addConfirmPasswordOption) {
         List<QuestionStep> questionSteps = new ArrayList<>();
         for (ProfileInfoOption profileInfo : profileInfoOptions) {
             switch (profileInfo) {
@@ -452,7 +453,7 @@ public class SurveyFactory {
     }
 
     /**
-     * @param context used to generate title and placeholder title for step
+     * @param context       used to generate title and placeholder title for step
      * @param profileOption used to set step identifier
      * @return QuestionStep used for gathering user's email
      */
@@ -465,7 +466,7 @@ public class SurveyFactory {
     }
 
     /**
-     * @param context used to generate title and placeholder title for step
+     * @param context       used to generate title and placeholder title for step
      * @param profileOption used to set step identifier
      * @return QuestionStep used for gathering user's password
      */
@@ -479,7 +480,7 @@ public class SurveyFactory {
     }
 
     /**
-     * @param context used to generate title and placeholder title for step
+     * @param context       used to generate title and placeholder title for step
      * @param profileOption used to set step identifier
      * @return QuestionStep used for gathering user's password
      */
@@ -533,6 +534,7 @@ public class SurveyFactory {
 
     /**
      * a helper method to make a re-usable generic method for creating question steps
+     *
      * @return QuestionStep with title, placeholder, and format all filled in
      */
     QuestionStep createGenericQuestionStep(
@@ -540,8 +542,7 @@ public class SurveyFactory {
             String identifier,
             @StringRes int titleRes,
             @StringRes int placeholderRes,
-            AnswerFormat format)
-    {
+            AnswerFormat format) {
         String title = context.getString(titleRes);
         QuestionStep step = new QuestionStep(identifier, title, format);
         String placeholder = context.getString(placeholderRes);
@@ -583,12 +584,13 @@ public class SurveyFactory {
                 options, createQuestionSteps(context, options, false)); // false = dont create ConfirmPassword step
     }
 
-    /** Helper for determining which profile info options to use */
+    /**
+     * Helper for determining which profile info options to use
+     */
     List<ProfileInfoOption> createProfileInfoOptions(
             Context context,
             ProfileSurveyItem item,
-            List<ProfileInfoOption> defaultOptions)
-    {
+            List<ProfileInfoOption> defaultOptions) {
         List<ProfileInfoOption> options = defaultOptions;
         // Use profile info options that were provided in the JSON if available
         if (item.items != null && !item.items.isEmpty()) {

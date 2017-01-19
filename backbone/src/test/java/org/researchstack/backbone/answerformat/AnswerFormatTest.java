@@ -1,23 +1,20 @@
 package org.researchstack.backbone.answerformat;
+
 import org.junit.Before;
 import org.junit.Test;
-
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
-public class AnswerFormatTest
-{
+public class AnswerFormatTest {
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
 
     }
 
     @Test
-    public void testTestValidEmailAnswerFormat() throws Exception
-    {
+    public void testTestValidEmailAnswerFormat() throws Exception {
         EmailAnswerFormat format = new EmailAnswerFormat();
         // Test email regex validation with correct input.
         assertTrue(format.isAnswerValid("someone@researchkit.org"));
@@ -29,8 +26,7 @@ public class AnswerFormatTest
     }
 
     @Test
-    public void testTestInvalidEmailAnswerFormat() throws Exception
-    {
+    public void testTestInvalidEmailAnswerFormat() throws Exception {
         EmailAnswerFormat format = new EmailAnswerFormat();
         // Test email regex validation with incorrect input.
         assertFalse(format.isAnswerValid("emailtest"));
@@ -41,8 +37,7 @@ public class AnswerFormatTest
     }
 
     @Test
-    public void testTextMinMaxRegexAnswerFormat()
-    {
+    public void testTextMinMaxRegexAnswerFormat() {
         TextAnswerFormat format = new TextAnswerFormat();
         format.setValidationRegex("^\\w{4,16}$");
         assertFalse(format.isAnswerValid("Abc"));               // less than 3 characters invalid
@@ -52,8 +47,7 @@ public class AnswerFormatTest
     }
 
     @Test
-    public void testPasswordAnswerFormat()
-    {
+    public void testPasswordAnswerFormat() {
         PasswordAnswerFormat format = new PasswordAnswerFormat();
         assertTrue(format.isAnswerValid("Abcd1234"));           // normal password valid
         assertTrue(format.isAnswerValid("Abcd"));               // 4 characters is valid up to
@@ -61,8 +55,7 @@ public class AnswerFormatTest
     }
 
     @Test
-    public void testInvalidTextRegexAnswerFormat()
-    {
+    public void testInvalidTextRegexAnswerFormat() {
         PasswordAnswerFormat format = new PasswordAnswerFormat();
         assertFalse(format.isAnswerValid("Ãbcd1234"));          // non-asciii character, Ã, not allowed
         assertFalse(format.isAnswerValid("Abc"));               // less than 3 characters invalid

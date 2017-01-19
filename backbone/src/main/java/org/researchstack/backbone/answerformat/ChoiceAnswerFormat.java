@@ -7,14 +7,12 @@ import org.researchstack.backbone.model.Choice;
  * The ChoiceAnswerFormat class represents an answer format that lets participants choose from a
  * fixed set of text choices in a multiple or single choice question.
  */
-public class ChoiceAnswerFormat extends AnswerFormat
-{
+public class ChoiceAnswerFormat extends AnswerFormat {
     private AnswerFormat.ChoiceAnswerStyle answerStyle;
-    private Choice[]                       choices;
+    private Choice[] choices;
 
     /* Default constructor needed for serilization/deserialization of object */
-    ChoiceAnswerFormat()
-    {
+    ChoiceAnswerFormat() {
         super();
     }
 
@@ -25,8 +23,7 @@ public class ChoiceAnswerFormat extends AnswerFormat
      * @param answerStyle either MultipleChoice or SingleChoice
      * @param choices     an array of {@link Choice} objects, all of the same type
      */
-    public ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle answerStyle, Choice... choices)
-    {
+    public ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle answerStyle, Choice... choices) {
         this.answerStyle = answerStyle;
         this.choices = choices.clone();
     }
@@ -38,8 +35,7 @@ public class ChoiceAnswerFormat extends AnswerFormat
      * @return the question type for this answer format
      */
     @Override
-    public QuestionType getQuestionType()
-    {
+    public QuestionType getQuestionType() {
         return answerStyle == ChoiceAnswerStyle.MultipleChoice
                 ? Type.MultipleChoice
                 : Type.SingleChoice;
@@ -50,8 +46,7 @@ public class ChoiceAnswerFormat extends AnswerFormat
      *
      * @return a copy of the choices for this question
      */
-    public Choice[] getChoices()
-    {
+    public Choice[] getChoices() {
         return choices.clone();
     }
 }

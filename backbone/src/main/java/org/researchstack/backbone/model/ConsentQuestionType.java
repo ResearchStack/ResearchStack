@@ -15,11 +15,12 @@ public enum ConsentQuestionType {
     @SerializedName("instruction")
     INSTRUCTION("instruction");
 
+    String mIdentifier;
+
     ConsentQuestionType(String questionId) {
         mIdentifier = questionId;
     }
 
-    String mIdentifier;
     public String getIdentifier() {
         return mIdentifier;
     }

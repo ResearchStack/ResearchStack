@@ -3,16 +3,16 @@ package org.researchstack.skin.utils;
 import android.content.Context;
 import android.util.Log;
 
-import org.researchstack.skin.R;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ConsentQuizModel;
+import org.researchstack.skin.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by TheMDP on 12/15/16.
- *
+ * <p>
  * This class the business logic of interacting with the ConsentQuizModel object
  */
 
@@ -21,7 +21,7 @@ public class ConsentQuizQuestionUtils {
     static final String LOG_TAG = ConsentQuizQuestionUtils.class.getCanonicalName();
 
     /**
-     * @param ctx - Used to access String resources when building question Strings
+     * @param ctx      - Used to access String resources when building question Strings
      * @param question - Question to create choices from
      * @return A list of choices which can be fabricated in various ways
      */

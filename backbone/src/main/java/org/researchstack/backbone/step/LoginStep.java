@@ -21,8 +21,7 @@ public class LoginStep extends ProfileStep {
     }
 
     @Override
-    public Class<?> getStepBodyClass()
-    {
+    public Class<?> getStepBodyClass() {
         // TODO: need custom LoginStepLayout, one exists as SignInStepLayout, but is in Skin module
         return super.getStepBodyClass();
     }

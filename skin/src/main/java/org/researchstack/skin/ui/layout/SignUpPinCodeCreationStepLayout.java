@@ -1,4 +1,5 @@
 package org.researchstack.skin.ui.layout;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
@@ -18,90 +19,67 @@ import org.researchstack.backbone.utils.ThemeUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.step.PassCodeCreationStep;
 
-public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements StepLayout
-{
+public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements StepLayout {
     public static final String RESULT_OLD_PIN = "PassCodeCreationStep.oldPin";
 
-    protected StepCallbacks        callbacks;
+    protected StepCallbacks callbacks;
     protected PassCodeCreationStep step;
-    protected StepResult<String>   result;
+    protected StepResult<String> result;
 
     private CharSequence currentPin = null;
-    private State        state      = State.CREATE;
+    private State state = State.CREATE;
 
-    public enum State
-    {
-        CHANGE,
-        CREATE,
-        CONFIRM,
-        RETRY
-    }
-
-    public SignUpPinCodeCreationStepLayout(Context context)
-    {
+    public SignUpPinCodeCreationStepLayout(Context context) {
         super(context);
     }
 
-    public SignUpPinCodeCreationStepLayout(Context context, AttributeSet attrs)
-    {
+    public SignUpPinCodeCreationStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SignUpPinCodeCreationStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public SignUpPinCodeCreationStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
+    public void initialize(Step step, StepResult result) {
         this.step = (PassCodeCreationStep) step;
         this.result = result == null ? new StepResult<>(step) : result;
 
-        if(this.step.getStateOrdinal() != - 1)
-        {
+        if (this.step.getStateOrdinal() != -1) {
             this.state = State.values()[this.step.getStateOrdinal()];
         }
 
         initializeLayout();
     }
 
-    private void initializeLayout()
-    {
+    private void initializeLayout() {
         refreshState();
 
         RxTextView.textChanges(editText)
-                .map(CharSequence:: toString)
+                .map(CharSequence::toString)
                 .filter(pin -> pin.length() == config.getPinLength())
                 .subscribe(pin -> {
-                    if(state == State.CHANGE)
-                    {
+                    if (state == State.CHANGE) {
                         result.setResultForIdentifier(RESULT_OLD_PIN, pin);
 
                         currentPin = pin;
                         editText.setText("");
                         state = State.CREATE;
                         refreshState();
-                    }
-                    else if(state == State.CREATE)
-                    {
+                    } else if (state == State.CREATE) {
                         currentPin = pin;
                         editText.setText("");
                         state = State.CONFIRM;
                         refreshState();
-                    }
-                    else
-                    {
-                        if(pin.equals(currentPin))
-                        {
+                    } else {
+                        if (pin.equals(currentPin)) {
                             new Handler().postDelayed(() -> {
                                 imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                                 result.setResult(pin);
                                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
                             }, 300);
-                        }
-                        else
-                        {
+                        } else {
                             state = State.RETRY;
                             editText.setText("");
                             refreshState();
@@ -114,15 +92,11 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     }
 
     @Override
-    public boolean isBackEventConsumed()
-    {
-        if(state == State.CREATE)
-        {
+    public boolean isBackEventConsumed() {
+        if (state == State.CREATE) {
             callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, null);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-        }
-        else
-        {
+        } else {
             // pressed back while confirming, go back to creation state
             currentPin = null;
             editText.setText("");
@@ -133,19 +107,16 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
     @Override
-    public void setCallbacks(StepCallbacks callbacks)
-    {
+    public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 
-    private void refreshState()
-    {
+    private void refreshState() {
         String pinCodeTitle;
         String pinCodeInstructions;
         int summaryColor;
@@ -153,8 +124,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
         Resources res = getResources();
         int pinLength = config.getPinLength();
         String characterType = res.getString(config.getPinType().getInputTypeStringId());
-        switch(state)
-        {
+        switch (state) {
             case CONFIRM:
                 pinCodeTitle = res.getString(R.string.rss_passcode_confirm_title);
                 pinCodeInstructions = res.getString(R.string.rss_passcode_confirm_summary,
@@ -192,11 +162,17 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
         updateText(pinCodeTitle, pinCodeInstructions, summaryColor);
     }
 
-    private void updateText(String titleString, String textString, int color)
-    {
+    private void updateText(String titleString, String textString, int color) {
         title.setText(titleString);
         summary.setText(textString);
         summary.setTextColor(color);
+    }
+
+    public enum State {
+        CHANGE,
+        CREATE,
+        CONFIRM,
+        RETRY
     }
 
 }

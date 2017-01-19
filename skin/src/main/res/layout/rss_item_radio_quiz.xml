@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.AppCompatRadioButton
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.AppCompatRadioButton xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/rsb_margin_left"
+    android:layout_marginRight="@dimen/rsb_margin_right"
     android:gravity="center_vertical"
     android:minHeight="@dimen/rsb_item_size_default"
     android:padding="8dp"
-    tools:text="@string/lorem_name"
-    android:layout_marginLeft="@dimen/rsb_margin_left"
-    android:layout_marginRight="@dimen/rsb_margin_right"
-/>
+    tools:text="@string/lorem_name" />

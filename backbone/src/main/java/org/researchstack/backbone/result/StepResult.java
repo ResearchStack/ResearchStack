@@ -3,14 +3,9 @@ package org.researchstack.backbone.result;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.ObjectUtils;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,8 +19,7 @@ import java.util.Map;
  * For example, an {@link QuestionStep} object produces a result of type <code>T</code> that becomes
  * a child of the {@link StepResult} object.
  */
-public class StepResult <T> extends Result
-{
+public class StepResult<T> extends Result {
     /**
      * When StepResult only has a single value, pair that value with the following key
      */
@@ -49,13 +43,11 @@ public class StepResult <T> extends Result
      *
      * @param step the step from which to create the StepResult
      */
-    public StepResult(Step step)
-    {
+    public StepResult(Step step) {
         super(step.getIdentifier());
         this.results = new LinkedHashMap<>();
 
-        if(step instanceof QuestionStep)
-        {
+        if (step instanceof QuestionStep) {
             answerFormat = ((QuestionStep) step).getAnswerFormat();
         }
         setStartDate(new Date());
@@ -63,13 +55,11 @@ public class StepResult <T> extends Result
         setEndDate(new Date());
     }
 
-    public Map<String, T> getResults()
-    {
+    public Map<String, T> getResults() {
         return results;
     }
 
-    public void setResults(Map<String, T> results)
-    {
+    public void setResults(Map<String, T> results) {
         this.results = results;
     }
 
@@ -78,8 +68,7 @@ public class StepResult <T> extends Result
      *
      * @return the result with the default identifier
      */
-    public T getResult()
-    {
+    public T getResult() {
         return getResultForIdentifier(DEFAULT_KEY);
     }
 
@@ -88,8 +77,7 @@ public class StepResult <T> extends Result
      *
      * @param result the result to save with the default key
      */
-    public void setResult(T result)
-    {
+    public void setResult(T result) {
         setResultForIdentifier(DEFAULT_KEY, result);
         setEndDate(new Date());
     }
@@ -101,8 +89,7 @@ public class StepResult <T> extends Result
      * @param identifier the identifier used as the key for storing this result
      * @return the result for the given identifier
      */
-    public T getResultForIdentifier(String identifier)
-    {
+    public T getResultForIdentifier(String identifier) {
         return results.get(identifier);
     }
 
@@ -114,8 +101,7 @@ public class StepResult <T> extends Result
      * @param identifier the identifier for the result
      * @param result     the result to save
      */
-    public void setResultForIdentifier(String identifier, T result)
-    {
+    public void setResultForIdentifier(String identifier, T result) {
         results.put(identifier, result);
     }
 
@@ -125,8 +111,7 @@ public class StepResult <T> extends Result
      *
      * @return the answer format associated with the step
      */
-    public AnswerFormat getAnswerFormat()
-    {
+    public AnswerFormat getAnswerFormat() {
         return answerFormat;
     }
 }

@@ -29,7 +29,7 @@ public class ConsentSectionAdapter implements JsonDeserializer<ConsentSection> {
     @Override
     public ConsentSection deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
-        JsonObject jsonObject =  json.getAsJsonObject();
+        JsonObject jsonObject = json.getAsJsonObject();
         JsonElement typeJson = jsonObject.get(ConsentSection.SECTION_TYPE_GSON);
 
         ConsentSection.Type type = context.deserialize(typeJson, ConsentSection.Type.class);

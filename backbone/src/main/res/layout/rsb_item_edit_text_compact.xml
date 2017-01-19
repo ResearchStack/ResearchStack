@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
->
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:minHeight="@dimen/rsb_item_size_default"
         android:textColor="?attr/colorAccent"
         android:textSize="16sp"
-        android:gravity="center_vertical"
-        tools:text="title"
-    />
+        tools:text="title" />
 
     <EditText
         android:id="@+id/value"
@@ -29,7 +26,6 @@
         android:singleLine="true"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="14sp"
-        tools:text="Value"
-    />
+        tools:text="Value" />
 
 </LinearLayout>

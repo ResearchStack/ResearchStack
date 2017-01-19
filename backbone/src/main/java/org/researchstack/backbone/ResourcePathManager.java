@@ -1,4 +1,5 @@
 package org.researchstack.backbone;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -26,8 +27,7 @@ import java.nio.charset.Charset;
  * The necessity of defining a file type is needed to keep compatibility with assets define in
  * ResearchKit™ applications
  */
-public abstract class ResourcePathManager
-{
+public abstract class ResourcePathManager {
     private static Gson gson = new GsonBuilder().setDateFormat("MMM yyyy").create();
 
     private static ResourcePathManager instance;
@@ -38,8 +38,7 @@ public abstract class ResourcePathManager
      *
      * @param manager an implementation of ResourcePathManager
      */
-    public static void init(ResourcePathManager manager)
-    {
+    public static void init(ResourcePathManager manager) {
         ResourcePathManager.instance = manager;
     }
 
@@ -48,15 +47,99 @@ public abstract class ResourcePathManager
      *
      * @return the singleton instance of this class
      */
-    public static ResourcePathManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static ResourcePathManager getInstance() {
+        if (instance == null) {
             throw new RuntimeException(
                     "ResourceManager instance is null. Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
 
         return instance;
+    }
+
+    /**
+     * Load resource from a file-path and turns contents to a String for consumption
+     *
+     * @param context  android context
+     * @param filePath relative file path
+     * @return String representation of the file
+     */
+    public static String getResourceAsString(Context context, String filePath) {
+        return new String(getResourceAsBytes(context, filePath), Charset.forName("UTF-8"));
+    }
+
+    /**
+     * Load resource from a file-path and turns contents to a byte[] for consumption
+     *
+     * @param context  android context
+     * @param filePath relative file path
+     * @return byte [] representation of the asset
+     */
+    public static byte[] getResourceAsBytes(Context context, String filePath) {
+        InputStream is = getResouceAsInputStream(context, filePath);
+        ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
+
+        byte[] readBuffer = new byte[4 * 1024];
+
+        try {
+            int read;
+            do {
+                read = is.read(readBuffer, 0, readBuffer.length);
+                if (read == -1) {
+                    break;
+                }
+                byteOutput.write(readBuffer, 0, read);
+            }
+            while (true);
+
+            return byteOutput.toByteArray();
+        } catch (IOException e) {
+            LogExt.e(ResourcePathManager.class, e);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                LogExt.e(ResourcePathManager.class, e);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Load resource from a file-path and turns contents to a InputStream for consumption
+     *
+     * @param context  android context
+     * @param filePath relative file path
+     * @return InputStream representation of the asset
+     */
+    public static InputStream getResouceAsInputStream(Context context, String filePath) {
+        AssetManager assetManager = context.getAssets();
+        InputStream inputStream = null;
+        try {
+            return assetManager.open(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Load resource from a file-path and turns contents to a objects, of type T, for consumption
+     *
+     * @param <T>      object type
+     * @param context  android context
+     * @param clazz    the class of T
+     * @param filePath relative file path
+     * @return Class representation of the asset
+     */
+    public static <T> T getResourceAsClass(Context context, Class<T> clazz, String filePath) {
+        InputStream stream = getResouceAsInputStream(context, filePath);
+        Reader reader = null;
+        try {
+            reader = new InputStreamReader(stream, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return gson.fromJson(reader, clazz);
     }
 
     /**
@@ -79,8 +162,7 @@ public abstract class ResourcePathManager
      * @param name the name of the file
      * @return an absolute path for a file
      */
-    public String generateAbsolutePath(int type, String name)
-    {
+    public String generateAbsolutePath(int type, String name) {
         return new StringBuilder("file:///android_asset/").append(generatePath(type, name))
                 .toString();
     }
@@ -91,10 +173,8 @@ public abstract class ResourcePathManager
      *             cases
      * @return file extension of a file type
      */
-    public String getFileExtension(int type)
-    {
-        switch(type)
-        {
+    public String getFileExtension(int type) {
+        switch (type) {
             case Resource.TYPE_HTML:
                 return "html";
             case Resource.TYPE_JSON:
@@ -109,125 +189,18 @@ public abstract class ResourcePathManager
     }
 
     /**
-     * Load resource from a file-path and turns contents to a String for consumption
-     *
-     * @param context  android context
-     * @param filePath relative file path
-     * @return String representation of the file
-     */
-    public static String getResourceAsString(Context context, String filePath)
-    {
-        return new String(getResourceAsBytes(context, filePath), Charset.forName("UTF-8"));
-    }
-
-    /**
-     * Load resource from a file-path and turns contents to a byte[] for consumption
-     *
-     * @param context  android context
-     * @param filePath relative file path
-     * @return byte [] representation of the asset
-     */
-    public static byte[] getResourceAsBytes(Context context, String filePath)
-    {
-        InputStream is = getResouceAsInputStream(context, filePath);
-        ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
-
-        byte[] readBuffer = new byte[4 * 1024];
-
-        try
-        {
-            int read;
-            do
-            {
-                read = is.read(readBuffer, 0, readBuffer.length);
-                if(read == - 1)
-                {
-                    break;
-                }
-                byteOutput.write(readBuffer, 0, read);
-            }
-            while(true);
-
-            return byteOutput.toByteArray();
-        }
-        catch(IOException e)
-        {
-            LogExt.e(ResourcePathManager.class, e);
-        }
-        finally
-        {
-            try
-            {
-                is.close();
-            }
-            catch(IOException e)
-            {
-                LogExt.e(ResourcePathManager.class, e);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Load resource from a file-path and turns contents to a InputStream for consumption
-     *
-     * @param context  android context
-     * @param filePath relative file path
-     * @return InputStream representation of the asset
-     */
-    public static InputStream getResouceAsInputStream(Context context, String filePath)
-    {
-        AssetManager assetManager = context.getAssets();
-        InputStream inputStream = null;
-        try
-        {
-            return assetManager.open(filePath);
-        }
-        catch(IOException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Load resource from a file-path and turns contents to a objects, of type T, for consumption
-     *
-     * @param <T> object type
-     * @param context  android context
-     * @param clazz    the class of T
-     * @param filePath relative file path
-     * @return Class representation of the asset
-     */
-    public static <T> T getResourceAsClass(Context context, Class<T> clazz, String filePath)
-    {
-        InputStream stream = getResouceAsInputStream(context, filePath);
-        Reader reader = null;
-        try
-        {
-            reader = new InputStreamReader(stream, "UTF-8");
-        }
-        catch(UnsupportedEncodingException e)
-        {
-            throw new RuntimeException(e);
-        }
-
-        return gson.fromJson(reader, clazz);
-    }
-
-    /**
      * Class represents one asset within the assets folder.
      */
-    public static class Resource
-    {
+    public static class Resource {
         public static final int TYPE_HTML = 0;
         public static final int TYPE_JSON = 1;
-        public static final int TYPE_PDF  = 2;
-        public static final int TYPE_MP4  = 3;
+        public static final int TYPE_PDF = 2;
+        public static final int TYPE_MP4 = 3;
 
-        private final int    type;
+        private final int type;
         private final String dir;
         private final String name;
-        private       Class  clazz;
+        private Class clazz;
 
         /**
          * Initializes this Resource object
@@ -236,8 +209,7 @@ public abstract class ResourcePathManager
          * @param dir  the sub directory of the fiel
          * @param name the name of the file (excluding extension)
          */
-        public Resource(int type, String dir, String name)
-        {
+        public Resource(int type, String dir, String name) {
             this(type, dir, name, null);
         }
 
@@ -249,8 +221,7 @@ public abstract class ResourcePathManager
          * @param name  the name of the file (excluding extension)
          * @param clazz the class file that this file is represented as
          */
-        public Resource(int type, String dir, String name, Class clazz)
-        {
+        public Resource(int type, String dir, String name, Class clazz) {
             this.type = type;
             this.dir = dir;
             this.name = name;
@@ -262,8 +233,7 @@ public abstract class ResourcePathManager
          *
          * @return The dir path of the file
          */
-        public String getDir()
-        {
+        public String getDir() {
             return dir;
         }
 
@@ -272,8 +242,7 @@ public abstract class ResourcePathManager
          *
          * @return the name, excluding extension, of the file
          */
-        public String getName()
-        {
+        public String getName() {
             return name;
         }
 
@@ -282,8 +251,7 @@ public abstract class ResourcePathManager
          *
          * @return The dir path of the file
          */
-        public int getType()
-        {
+        public int getType() {
             return type;
         }
 
@@ -291,12 +259,11 @@ public abstract class ResourcePathManager
          * Create this Resource into an Object of type T. This method will only work for Json
          * files.
          *
-         * @param <T> object type
+         * @param <T>     object type
          * @param context android context
          * @return object of type T
          */
-        public <T> T create(Context context)
-        {
+        public <T> T create(Context context) {
             String path = getRelativePath();
             return ResourcePathManager.getResourceAsClass(context, (Class<T>) clazz, path);
         }
@@ -307,8 +274,7 @@ public abstract class ResourcePathManager
          * @param context android context
          * @return InputStream of the resource
          */
-        public InputStream open(Context context)
-        {
+        public InputStream open(Context context) {
             String path = getRelativePath();
             return getResouceAsInputStream(context, path);
         }
@@ -318,8 +284,7 @@ public abstract class ResourcePathManager
          *
          * @return the absolute path of this Resource
          */
-        public String getAbsolutePath()
-        {
+        public String getAbsolutePath() {
             return new StringBuilder("file:///android_asset/").append(getRelativePath()).toString();
         }
 
@@ -328,11 +293,9 @@ public abstract class ResourcePathManager
          *
          * @return the relative path of this Resource
          */
-        public String getRelativePath()
-        {
+        public String getRelativePath() {
             StringBuilder path = new StringBuilder();
-            if(! TextUtils.isEmpty(dir))
-            {
+            if (!TextUtils.isEmpty(dir)) {
                 path.append(dir).append("/");
             }
 
@@ -344,8 +307,7 @@ public abstract class ResourcePathManager
          *
          * @return the file extension of this Resource
          */
-        public String getFileExtension()
-        {
+        public String getFileExtension() {
             return ResourcePathManager.getInstance().getFileExtension(type);
         }
     }

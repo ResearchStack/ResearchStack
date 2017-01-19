@@ -1,4 +1,5 @@
 package org.researchstack.skin;
+
 import android.app.Application;
 import android.content.Context;
 
@@ -14,8 +15,7 @@ import java.util.List;
  * UiManager is responsible for providing an a way to define certain aspects of the UI that cannot
  * be provided / genreated by the framework.
  */
-public abstract class UiManager
-{
+public abstract class UiManager {
     private static UiManager instance;
 
     /**
@@ -24,8 +24,7 @@ public abstract class UiManager
      *
      * @param manager an implementation of UiManager
      */
-    public static void init(UiManager manager)
-    {
+    public static void init(UiManager manager) {
         UiManager.instance = manager;
     }
 
@@ -34,10 +33,8 @@ public abstract class UiManager
      *
      * @return A singleton static instance of the this class
      */
-    public static UiManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static UiManager getInstance() {
+        if (instance == null) {
             throw new RuntimeException(
                     "UiManager instance is null. Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
@@ -68,7 +65,7 @@ public abstract class UiManager
      * Inclusion Criteria Step is one of the first Steps the user will come in contact with. It is
      * a question / form of questions whos result is used to see if the user elligible or
      * inelligible for the study.
-     *
+     * <p>
      * This method is now deprecated and Inclusion Criteria will now be loaded from a JSON file as
      * defined  {@link org.researchstack.skin.ResourceManager#getInclusionCriteria()}.
      *
@@ -81,7 +78,7 @@ public abstract class UiManager
     /**
      * Method used by the framework to show if the user the result of the {@link
      * #getInclusionCriteriaStep(Context)}.
-     *
+     * <p>
      * This method is now deprecated and Inclusion Criteria will now be loaded from a JSON file as
      * defined  {@link org.researchstack.skin.ResourceManager#getInclusionCriteria()}.  The JSON file
      * contains expected answers which will be used to determine if the inclusion criteria is valid.
@@ -98,21 +95,20 @@ public abstract class UiManager
      * All data will still be collected and uploaded when the user successfully signs up for the
      * first time Defaults to false.
      *
-     *
      * @return true if consent is skippable
      */
-    public boolean isConsentSkippable()
-    {
+    public boolean isConsentSkippable() {
         return false;
     }
 
     /**
      * Returns <code>true</code> if the password supplied by the user in the sign up step is valid.
+     *
      * @param password the password to validate
      * @return <code>true</code> if the password is valid, <code>false</code> otherwise
      */
     public boolean isValidPassword(String password) {
-        return ! TextUtils.isEmpty(password);
+        return !TextUtils.isEmpty(password);
     }
 
     /**
@@ -121,8 +117,7 @@ public abstract class UiManager
      *
      * @return BroadCastReceiver class responsible for consuming alarms for triggering Notifications
      */
-    public Class<?> getTaskNotificationReceiver()
-    {
+    public Class<?> getTaskNotificationReceiver() {
         return TaskNotificationReceiver.class;
     }
 
@@ -132,8 +127,7 @@ public abstract class UiManager
      *
      * @return The ShareFragment to use.
      */
-    public ShareFragment getShareFragment()
-    {
+    public ShareFragment getShareFragment() {
         return new ShareFragment();
     }
 }

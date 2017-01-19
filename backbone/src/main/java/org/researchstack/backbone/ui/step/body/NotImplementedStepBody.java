@@ -10,21 +10,18 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 
 @Deprecated
-public class NotImplementedStepBody implements StepBody
-{
+public class NotImplementedStepBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private QuestionStep step;
 
-    public NotImplementedStepBody(QuestionStep step, StepResult result)
-    {
+    public NotImplementedStepBody(QuestionStep step, StepResult result) {
         this.step = step;
     }
 
     @Override
-    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
-    {
+    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         Context ctx = parent.getContext();
 
         TextView textView = new TextView(ctx);
@@ -35,14 +32,12 @@ public class NotImplementedStepBody implements StepBody
     }
 
     @Override
-    public StepResult getStepResult(boolean skipped)
-    {
+    public StepResult getStepResult(boolean skipped) {
         return null;
     }
 
     @Override
-    public BodyAnswer getBodyAnswerState()
-    {
+    public BodyAnswer getBodyAnswerState() {
         return BodyAnswer.VALID;
     }
 

@@ -28,11 +28,12 @@ public enum OnboardingSectionType {
     // Custom onboarding section, identifier should be set in OnboardingSection class
     CUSTOM(null);
 
+    private String identifier;
+
     OnboardingSectionType(String identifier) {
         this.identifier = identifier;
     }
 
-    private String identifier;
     String getIdentifier() {
         return identifier;
     }

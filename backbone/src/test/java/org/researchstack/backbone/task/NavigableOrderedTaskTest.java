@@ -1,7 +1,7 @@
 package org.researchstack.backbone.task;
+
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
@@ -9,7 +9,6 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +21,7 @@ import static junit.framework.Assert.assertTrue;
  * NavigableOrderedTask is a class in RK that does many of the same things as
  * SmartSurveyTask. In the future it would be nice to implement this to replace SmartSurveyTask.
  */
-public class NavigableOrderedTaskTest
-{
+public class NavigableOrderedTaskTest {
     @Test
     public void testNavigationWithSubtasks() {
         // Note: This test checks basic subtask navigation forward and backward
@@ -40,9 +38,9 @@ public class NavigableOrderedTaskTest
 
         NavigableOrderedTask task = new NavigableOrderedTask("base", steps);
 
-        String[] expectedOrder = new String[] {
+        String[] expectedOrder = new String[]{
                 "step1", "step2", "A.step1", "A.step2", "A.step3",
-                "B.step1", "B.step2", "step3", "step4", "step5" };
+                "B.step1", "B.step2", "step3", "step4", "step5"};
 
         int idx = 0;
         Step step = null;
@@ -72,7 +70,8 @@ public class NavigableOrderedTaskTest
             assertNotNull(step);
             assertEquals(step.getIdentifier(), expectedIdentifier);
 
-        } while (step != null && step.getIdentifier().equals(expectedIdentifier) && ++idx < expectedOrder.length);
+        }
+        while (step != null && step.getIdentifier().equals(expectedIdentifier) && ++idx < expectedOrder.length);
 
         // Check that exited while loop for expected reason
         assertNotNull(step);
@@ -116,8 +115,8 @@ public class NavigableOrderedTaskTest
 
         NavigableOrderedTask task = new NavigableOrderedTask("base", steps);
 
-        String[] expectedOrder = new String[] {
-                "step1", "step2", "stepA.1", "stepB.1", "stepB.2", "stepA.2" };
+        String[] expectedOrder = new String[]{
+                "step1", "step2", "stepA.1", "stepB.1", "stepB.2", "stepA.2"};
 
         int idx = 0;
         Step step = null;
@@ -152,7 +151,8 @@ public class NavigableOrderedTaskTest
             assertNotNull(step);
             assertEquals(step.getIdentifier(), expectedIdentifier);
 
-        } while (step != null && step.getIdentifier().equals(expectedIdentifier) && ++idx < expectedOrder.length);
+        }
+        while (step != null && step.getIdentifier().equals(expectedIdentifier) && ++idx < expectedOrder.length);
 
         // Check that exited while loop for expected reason
         assertNotNull(step);

@@ -28,14 +28,19 @@ public class OnboardingSection {
     public static final String PERMISSIONS_IDENTIFIER = "permissions";
     public static final String PROFILE_IDENTIFIER = "profile";
     public static final String COMPLETION_IDENTIFIER = "completion";
-
+    static final String ONBOARDING_TYPE_GSON = "onboardingType";
+    static final String ONBOARDING_SURVEY_ITEMS_GSON = "steps";
+    // Isnt deserialized into a field, but is used in the deserialization process
+    static final String ONBOARDING_RESOURCE_NAME_GSON = "resourceName";
+    @SerializedName(ONBOARDING_SURVEY_ITEMS_GSON)
+    public List<SurveyItem> surveyItems;
+    @SerializedName(ONBOARDING_TYPE_GSON)
+    OnboardingSectionType onboardingType;
+    transient SurveyFactory surveyFactory;
     public OnboardingSection() {
         super();
     }
 
-    static final String ONBOARDING_TYPE_GSON = "onboardingType";
-    @SerializedName(ONBOARDING_TYPE_GSON)
-    OnboardingSectionType onboardingType;
     public OnboardingSectionType getOnboardingSectionType() {
         return onboardingType;
     }
@@ -44,14 +49,6 @@ public class OnboardingSection {
         return onboardingType.getIdentifier();
     }
 
-    static final String ONBOARDING_SURVEY_ITEMS_GSON = "steps";
-    @SerializedName(ONBOARDING_SURVEY_ITEMS_GSON)
-    public List<SurveyItem> surveyItems;
-
-    // Isnt deserialized into a field, but is used in the deserialization process
-    static final String ONBOARDING_RESOURCE_NAME_GSON = "resourceName";
-
-    transient SurveyFactory surveyFactory;
     public SurveyFactory getDefaultOnboardingSurveyFactory(Context context) {
         if (surveyFactory != null) {
             return surveyFactory;

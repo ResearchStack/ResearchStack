@@ -6,6 +6,12 @@ package org.researchstack.backbone.onboarding;
 
 public class CustomOnboardingSection extends OnboardingSection {
 
+    /**
+     * Since Enums cannot have multiple instances of of an Enum with different member variables
+     * We must store the custom identifier elsewhere
+     */
+    transient String customOnboardingType;
+
     CustomOnboardingSection(String customOnboardingType) {
         this.customOnboardingType = customOnboardingType;
     }
@@ -17,10 +23,4 @@ public class CustomOnboardingSection extends OnboardingSection {
         }
         return super.getOnboardingSectionIdentifier();
     }
-
-    /**
-     * Since Enums cannot have multiple instances of of an Enum with different member variables
-     * We must store the custom identifier elsewhere
-     */
-    transient String customOnboardingType;
 }

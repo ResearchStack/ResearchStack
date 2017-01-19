@@ -3,63 +3,37 @@
 
     <!-- activated state -->
 
-    <item android:state_pressed="true" android:state_enabled="true" android:state_activated="true">
+    <item android:state_activated="true" android:state_enabled="true" android:state_pressed="true">
         <set>
-            <objectAnimator android:propertyName="translationZ"
-                            android:duration="@integer/rss_btn_pressed_animation_duration"
-                            android:valueTo="@dimen/rss_btn_active_pressed_z_material"
-                            android:valueType="floatType"/>
+            <objectAnimator android:duration="@integer/rss_btn_pressed_animation_duration" android:propertyName="translationZ" android:valueTo="@dimen/rss_btn_active_pressed_z_material" android:valueType="floatType" />
 
-            <objectAnimator android:propertyName="elevation"
-                            android:duration="0"
-                            android:valueTo="@dimen/rss_btn_active_elevation_material"
-                            android:valueType="floatType"/>
+            <objectAnimator android:duration="0" android:propertyName="elevation" android:valueTo="@dimen/rss_btn_active_elevation_material" android:valueType="floatType" />
         </set>
     </item>
 
-    <item android:state_enabled="true" android:state_activated="true">
+    <item android:state_activated="true" android:state_enabled="true">
         <set>
-            <objectAnimator android:propertyName="translationZ"
-                            android:duration="@integer/rss_btn_pressed_animation_duration"
-                            android:valueTo="0"
-                            android:startDelay="@integer/rss_btn_pressed_animation_delay"
-                            android:valueType="floatType"/>
+            <objectAnimator android:duration="@integer/rss_btn_pressed_animation_duration" android:propertyName="translationZ" android:startDelay="@integer/rss_btn_pressed_animation_delay" android:valueTo="0" android:valueType="floatType" />
 
-            <objectAnimator android:propertyName="elevation"
-                            android:duration="0"
-                            android:valueTo="@dimen/rss_btn_active_elevation_material"
-                            android:valueType="floatType" />
+            <objectAnimator android:duration="0" android:propertyName="elevation" android:valueTo="@dimen/rss_btn_active_elevation_material" android:valueType="floatType" />
         </set>
     </item>
 
     <!-- base state -->
 
-    <item android:state_pressed="true" android:state_enabled="true">
+    <item android:state_enabled="true" android:state_pressed="true">
         <set>
-            <objectAnimator android:propertyName="translationZ"
-                            android:duration="@integer/rss_btn_pressed_animation_duration"
-                            android:valueTo="@dimen/rss_btn_pressed_z_material"
-                            android:valueType="floatType"/>
+            <objectAnimator android:duration="@integer/rss_btn_pressed_animation_duration" android:propertyName="translationZ" android:valueTo="@dimen/rss_btn_pressed_z_material" android:valueType="floatType" />
 
-            <objectAnimator android:propertyName="elevation"
-                            android:duration="0"
-                            android:valueTo="@dimen/rss_btn_elevation_material"
-                            android:valueType="floatType"/>
+            <objectAnimator android:duration="0" android:propertyName="elevation" android:valueTo="@dimen/rss_btn_elevation_material" android:valueType="floatType" />
         </set>
     </item>
 
     <item android:state_enabled="true">
         <set>
-            <objectAnimator android:propertyName="translationZ"
-                            android:duration="@integer/rss_btn_pressed_animation_duration"
-                            android:valueTo="0"
-                            android:startDelay="@integer/rss_btn_pressed_animation_delay"
-                            android:valueType="floatType"/>
+            <objectAnimator android:duration="@integer/rss_btn_pressed_animation_duration" android:propertyName="translationZ" android:startDelay="@integer/rss_btn_pressed_animation_delay" android:valueTo="0" android:valueType="floatType" />
 
-            <objectAnimator android:propertyName="elevation"
-                            android:duration="0"
-                            android:valueTo="@dimen/rss_btn_elevation_material"
-                            android:valueType="floatType" />
+            <objectAnimator android:duration="0" android:propertyName="elevation" android:valueTo="@dimen/rss_btn_elevation_material" android:valueType="floatType" />
         </set>
     </item>
 
@@ -67,15 +41,9 @@
 
     <item>
         <set>
-            <objectAnimator android:propertyName="translationZ"
-                            android:duration="0"
-                            android:valueTo="0"
-                            android:valueType="floatType"/>
+            <objectAnimator android:duration="0" android:propertyName="translationZ" android:valueTo="0" android:valueType="floatType" />
 
-            <objectAnimator android:propertyName="elevation"
-                            android:duration="0"
-                            android:valueTo="0"
-                            android:valueType="floatType"/>
+            <objectAnimator android:duration="0" android:propertyName="elevation" android:valueTo="0" android:valueType="floatType" />
         </set>
     </item>
 </selector>

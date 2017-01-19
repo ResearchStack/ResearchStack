@@ -39,8 +39,8 @@ public class QuestionSurveyItem<T extends Object> extends SurveyItem<T> {
 
     /**
      * @return false by default, true if this question survey item
-     *         can be used to create a QuestionStep that will implement
-     *         the interface NavigationStep
+     * can be used to create a QuestionStep that will implement
+     * the interface NavigationStep
      */
     public boolean usesNavigation() {
         if (skipIdentifier != null || rulePredicate != null) {

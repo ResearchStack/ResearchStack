@@ -25,7 +25,7 @@ public class SubtaskQuestionSurveyItem extends QuestionSurveyItem<SurveyItem> {
         }
         for (SurveyItem item : items) {
             if (item instanceof QuestionSurveyItem) {
-                usesNavigation = ((QuestionSurveyItem)item).usesNavigation();
+                usesNavigation = ((QuestionSurveyItem) item).usesNavigation();
                 if (usesNavigation) {
                     return true;
                 }

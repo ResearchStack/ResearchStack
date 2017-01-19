@@ -11,74 +11,75 @@ public enum SurveyItemType {
     CUSTOM(null),
     // Subtask subtypes
     @SerializedName("subtask")
-    SUBTASK                     ("subtask"),                // SubtaskStep
+    SUBTASK("subtask"),                // SubtaskStep
     // Instruction subtypes
     @SerializedName("instruction")
-    INSTRUCTION                 ("instruction"),            // InstructionStep
+    INSTRUCTION("instruction"),            // InstructionStep
     @SerializedName("completion")
-    INSTRUCTION_COMPLETION      ("completion"),             // OnboardingCompletionStep
+    INSTRUCTION_COMPLETION("completion"),             // OnboardingCompletionStep
     // Question, aka Form, Subtypes
     @SerializedName("compound")
-    QUESTION_COMPOUND           ("compound"),               // QuestionSteps > 1
+    QUESTION_COMPOUND("compound"),               // QuestionSteps > 1
     @SerializedName("toggle")
-    QUESTION_TOGGLE             ("toggle"),                 // SBABooleanToggleFormStep
+    QUESTION_TOGGLE("toggle"),                 // SBABooleanToggleFormStep
     @SerializedName("boolean")
-    QUESTION_BOOLEAN            ("boolean"),                // ORKBooleanAnswerFormat
+    QUESTION_BOOLEAN("boolean"),                // ORKBooleanAnswerFormat
     @SerializedName("singleChoiceText")
-    QUESTION_SINGLE_CHOICE      ("singleChoiceText"),       // ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
+    QUESTION_SINGLE_CHOICE("singleChoiceText"),       // ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
     @SerializedName("multipleChoiceText")
-    QUESTION_MULTIPLE_CHOICE    ("multipleChoiceText"),     // ORKTextChoiceAnswerFormat of style MultipleChoiceTextQuestion
+    QUESTION_MULTIPLE_CHOICE("multipleChoiceText"),     // ORKTextChoiceAnswerFormat of style MultipleChoiceTextQuestion
     @SerializedName("textfield")
-    QUESTION_TEXT               ("textfield"),              // ORKTextAnswerFormat
+    QUESTION_TEXT("textfield"),              // ORKTextAnswerFormat
     @SerializedName("datePicker")
-    QUESTION_DATE               ("datePicker"),             // ORKDateAnswerFormat of style Date
+    QUESTION_DATE("datePicker"),             // ORKDateAnswerFormat of style Date
     @SerializedName("timeAndDatePicker")
-    QUESTION_DATE_TIME          ("timeAndDatePicker"),      // ORKDateAnswerFormat of style DateTime
+    QUESTION_DATE_TIME("timeAndDatePicker"),      // ORKDateAnswerFormat of style DateTime
     @SerializedName("timePicker")
-    QUESTION_TIME               ("timePicker"),             // ORKTimeOfDayAnswerFormat
+    QUESTION_TIME("timePicker"),             // ORKTimeOfDayAnswerFormat
     @SerializedName("timeInterval")
-    QUESTION_DURATION           ("timeInterval"),           // ORKTimeIntervalAnswerFormat
+    QUESTION_DURATION("timeInterval"),           // ORKTimeIntervalAnswerFormat
     @SerializedName("numericInteger")
-    QUESTION_INTEGER            ("numericInteger"),         // ORKNumericAnswerFormat of style Integer
+    QUESTION_INTEGER("numericInteger"),         // ORKNumericAnswerFormat of style Integer
     @SerializedName("numericDecimal")
-    QUESTION_DECIMAL            ("numericDecimal"),         // ORKNumericAnswerFormat of style Decimal
+    QUESTION_DECIMAL("numericDecimal"),         // ORKNumericAnswerFormat of style Decimal
     @SerializedName("scaleInteger")
-    QUESTION_SCALE              ("scaleInteger"),           // ORKScaleAnswerFormat
+    QUESTION_SCALE("scaleInteger"),           // ORKScaleAnswerFormat
     @SerializedName("timingRange")
-    QUESTION_TIMING_RANGE       ("timingRange"),            // Timing Range: ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
+    QUESTION_TIMING_RANGE("timingRange"),            // Timing Range: ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
     // Consent subtypes
     @SerializedName("consentSharingOptions")
-    CONSENT_SHARING_OPTIONS     ("consentSharingOptions"),  // ConsentSharingStep
+    CONSENT_SHARING_OPTIONS("consentSharingOptions"),  // ConsentSharingStep
     @SerializedName("consentReview")
-    CONSENT_REVIEW              ("consentReview"),          // ConsentReviewStep
+    CONSENT_REVIEW("consentReview"),          // ConsentReviewStep
     @SerializedName("consentVisual")
-    CONSENT_VISUAL              ("consentVisual"),          // VisualConsentStep
+    CONSENT_VISUAL("consentVisual"),          // VisualConsentStep
     // Account subtypes
     @SerializedName("registration")
-    ACCOUNT_REGISTRATION        ("registration"        ),   // ProfileStep
+    ACCOUNT_REGISTRATION("registration"),   // ProfileStep
     @SerializedName("login")
-    ACCOUNT_LOGIN               ("login"               ),   // LoginStep
+    ACCOUNT_LOGIN("login"),   // LoginStep
     @SerializedName("emailVerification")
-    ACCOUNT_EMAIL_VERIFICATION  ("emailVerification"   ),   // EmailVerificationStep
+    ACCOUNT_EMAIL_VERIFICATION("emailVerification"),   // EmailVerificationStep
     @SerializedName("externalID")
-    ACCOUNT_EXTERNAL_ID         ("externalID"          ),   // ExternalIDStep
+    ACCOUNT_EXTERNAL_ID("externalID"),   // ExternalIDStep
     @SerializedName("permissions")
-    ACCOUNT_PERMISSIONS         ("permissions"         ),   // PermissionsStep
+    ACCOUNT_PERMISSIONS("permissions"),   // PermissionsStep
     @SerializedName("onboardingCompletion")
-    ACCOUNT_COMPLETION          ("onboardingCompletion"),   // OnboardingCompletionStep
+    ACCOUNT_COMPLETION("onboardingCompletion"),   // OnboardingCompletionStep
     @SerializedName("dataGroups")
-    ACCOUNT_DATA_GROUPS         ("dataGroups"),             // DataGroupsStep
+    ACCOUNT_DATA_GROUPS("dataGroups"),             // DataGroupsStep
     @SerializedName("profile")
-    ACCOUNT_PROFILE             ("profile"),                // ProfileQuestionStep or ProfileFormStep
+    ACCOUNT_PROFILE("profile"),                // ProfileQuestionStep or ProfileFormStep
     // Passcode subtypes
-    @SerializedName(value="PASSCODE", alternate={"passcodeType4Digit", "passcodeType6Digit"})
-    PASSCODE                    ("passcode");               // iOS has 6 digit too, but for now only support 4 digit
+    @SerializedName(value = "PASSCODE", alternate = {"passcodeType4Digit", "passcodeType6Digit"})
+    PASSCODE("passcode");               // iOS has 6 digit too, but for now only support 4 digit
+
+    private String value;
 
     SurveyItemType(String rawValue) {
         value = rawValue;
     }
 
-    private String value;
     String getValue() {
         return value;
     }

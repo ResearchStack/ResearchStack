@@ -21,8 +21,7 @@ import java.io.Serializable;
  * To implement a new type of step, subclass Step and add your additional properties. Separately,
  * subclass StepLayout and implement your user interface.
  */
-public class Step implements Serializable
-{
+public class Step implements Serializable {
     private String identifier;
 
     private Class stepLayoutClass;
@@ -38,7 +37,7 @@ public class Step implements Serializable
     // The following fields are in RK but not implemented in ResearchStack
     // These options can be developed as needed or removed if we find they are not necessary
     private boolean restorable;
-    private Task    task;
+    private Task task;
     private boolean shouldTintImages;
     private boolean showsProgress;
     private boolean allowsBackNavigation;
@@ -54,8 +53,7 @@ public class Step implements Serializable
      *
      * @param identifier The unique identifier of the step.
      */
-    public Step(String identifier)
-    {
+    public Step(String identifier) {
         this.identifier = identifier;
     }
 
@@ -65,8 +63,7 @@ public class Step implements Serializable
      * @param identifier The unique identifier of the step.
      * @param title      The primary text to display for this step.
      */
-    public Step(String identifier, String title)
-    {
+    public Step(String identifier, String title) {
         this.identifier = identifier;
         this.title = title;
     }
@@ -84,8 +81,7 @@ public class Step implements Serializable
      *
      * @return a short string that uniquely identifies the step
      */
-    public String getIdentifier()
-    {
+    public String getIdentifier() {
         return identifier;
     }
 
@@ -100,8 +96,7 @@ public class Step implements Serializable
      *
      * @return a boolean indicating whether the step is skippable
      */
-    public boolean isOptional()
-    {
+    public boolean isOptional() {
         return optional;
     }
 
@@ -111,8 +106,7 @@ public class Step implements Serializable
      * @param optional a boolean indicating whether the step is skippable
      * @see #isOptional()
      */
-    public void setOptional(boolean optional)
-    {
+    public void setOptional(boolean optional) {
         this.optional = optional;
     }
 
@@ -124,8 +118,7 @@ public class Step implements Serializable
      *
      * @return the primary text for the question
      */
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
@@ -135,8 +128,7 @@ public class Step implements Serializable
      * @param title the primary text for the question.
      * @see #getTitle()
      */
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -149,8 +141,7 @@ public class Step implements Serializable
      *
      * @return the additional text to display
      */
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
@@ -160,8 +151,7 @@ public class Step implements Serializable
      * @param text the detail text for the step
      * @see #getText()
      */
-    public void setText(String text)
-    {
+    public void setText(String text) {
         this.text = text;
     }
 
@@ -170,8 +160,7 @@ public class Step implements Serializable
      *
      * @return the id for the title to display in the action bar
      */
-    public int getStepTitle()
-    {
+    public int getStepTitle() {
         return stepTitle;
     }
 
@@ -180,8 +169,7 @@ public class Step implements Serializable
      *
      * @param stepTitle the Android resource id for the title
      */
-    public void setStepTitle(int stepTitle)
-    {
+    public void setStepTitle(int stepTitle) {
         this.stepTitle = stepTitle;
     }
 
@@ -198,8 +186,7 @@ public class Step implements Serializable
      * @return the class of the {@link org.researchstack.backbone.ui.step.layout.StepLayout} for
      * this step
      */
-    public Class getStepLayoutClass()
-    {
+    public Class getStepLayoutClass() {
         return stepLayoutClass;
     }
 
@@ -209,8 +196,7 @@ public class Step implements Serializable
      * @param stepLayoutClass the {@link org.researchstack.backbone.ui.step.layout.StepLayout} class
      *                        to be used to display this step
      */
-    public void setStepLayoutClass(Class stepLayoutClass)
-    {
+    public void setStepLayoutClass(Class stepLayoutClass) {
         this.stepLayoutClass = stepLayoutClass;
     }
 
@@ -219,7 +205,7 @@ public class Step implements Serializable
      * @return cloned step using Gson but with different identifier
      */
     public Step deepCopy(String newIdentifier) {
-        Step clonedStep = (Step)ObjectUtils.clone(this);
+        Step clonedStep = (Step) ObjectUtils.clone(this);
         clonedStep.identifier = newIdentifier;
         return clonedStep;
     }

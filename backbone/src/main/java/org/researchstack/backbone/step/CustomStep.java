@@ -2,7 +2,7 @@ package org.researchstack.backbone.step;
 
 /**
  * Created by TheMDP on 1/5/17.
- *
+ * <p>
  * This is simply used to keep track of if a Step is a CustomStep
  */
 
@@ -16,8 +16,9 @@ public class CustomStep extends Step {
 
     /**
      * Returns a new step initialized with the specified identifier and title.
-     * @param identifier The unique identifier of the step.
-     * @param title      The primary text to display for this step.
+     *
+     * @param identifier           The unique identifier of the step.
+     * @param title                The primary text to display for this step.
      * @param customTypeIdentifier the value of deserialized "type" field
      */
     public CustomStep(String identifier, String title, String customTypeIdentifier) {

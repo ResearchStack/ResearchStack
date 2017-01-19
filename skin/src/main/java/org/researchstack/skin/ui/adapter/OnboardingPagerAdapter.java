@@ -1,4 +1,5 @@
 package org.researchstack.skin.ui.adapter;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import org.researchstack.backbone.ui.ViewVideoActivity;
 import org.researchstack.backbone.ui.views.LocalWebView;
-import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
@@ -19,26 +19,22 @@ import org.researchstack.skin.model.StudyOverviewModel;
 import java.util.List;
 
 
-public class OnboardingPagerAdapter extends PagerAdapter
-{
+public class OnboardingPagerAdapter extends PagerAdapter {
     private final List<StudyOverviewModel.Question> items;
-    private final LayoutInflater                    inflater;
+    private final LayoutInflater inflater;
 
-    public OnboardingPagerAdapter(Context context, List<StudyOverviewModel.Question> items)
-    {
+    public OnboardingPagerAdapter(Context context, List<StudyOverviewModel.Question> items) {
         this.items = items;
         this.inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public CharSequence getPageTitle(int position)
-    {
+    public CharSequence getPageTitle(int position) {
         return items.get(position).getTitle();
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return items.size();
     }
 
@@ -55,12 +51,10 @@ public class OnboardingPagerAdapter extends PagerAdapter
      * To discuss.
      */
     @Override
-    public Object instantiateItem(ViewGroup container, int position)
-    {
+    public Object instantiateItem(ViewGroup container, int position) {
         StudyOverviewModel.Question item = items.get(position);
 
-        if(! TextUtils.isEmpty(item.getVideoName()))
-        {
+        if (!TextUtils.isEmpty(item.getVideoName())) {
             View layout = inflater.inflate(R.layout.rss_layout_study_html, container, false);
             container.addView(layout);
 
@@ -78,9 +72,7 @@ public class OnboardingPagerAdapter extends PagerAdapter
             });
 
             return layout;
-        }
-        else
-        {
+        } else {
             LocalWebView layout = new LocalWebView(container.getContext());
             String path = ResourceManager.getInstance().generateAbsolutePath(
                     ResourceManager.Resource.TYPE_HTML, item.getDetails());
@@ -91,14 +83,12 @@ public class OnboardingPagerAdapter extends PagerAdapter
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object)
-    {
+    public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object)
-    {
+    public boolean isViewFromObject(View view, Object object) {
         return view == object;
     }
 

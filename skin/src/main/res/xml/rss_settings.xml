@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="rss_settings_profile"
@@ -8,23 +8,22 @@
 
         <Preference
             android:key="rss_settings_profile_name"
-            android:title="@string/rss_settings_profile_name"
-            android:summary=" "/>
+            android:summary=" "
+            android:title="@string/rss_settings_profile_name" />
 
         <Preference
             android:key="rss_settings_profile_birthdate"
-            android:title="@string/rss_settings_profile_birthdate"
-            android:summary=" "/>
+            android:summary=" "
+            android:title="@string/rss_settings_profile_birthdate" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/rss_settings_reminders">
+    <PreferenceCategory android:title="@string/rss_settings_reminders">
         <SwitchPreference
+            android:defaultValue="true"
             android:key="rss_settings_reminders"
-            android:title="@string/rss_settings_reminders_title"
             android:summary="@string/rss_settings_reminders_summary"
-            android:defaultValue="true"/>
+            android:title="@string/rss_settings_reminders_title" />
 
     </PreferenceCategory>
 
@@ -34,67 +33,67 @@
 
         <Preference
             android:key="rss_settings_privacy_sharing_options"
-            android:title="@string/rss_settings_privacy_sharing_options"
-            android:summary="@string/rss_settings_privacy_sharing_options_ph"/>
+            android:summary="@string/rss_settings_privacy_sharing_options_ph"
+            android:title="@string/rss_settings_privacy_sharing_options" />
 
         <Preference
             android:key="rss_settings_privacy_review_consent"
-            android:title="@string/rss_settings_privacy_review_consent"/>
+            android:title="@string/rss_settings_privacy_review_consent" />
 
         <Preference
             android:key="rss_settings_privacy_policy"
-            android:title="@string/rss_settings_privacy_policy"/>
+            android:title="@string/rss_settings_privacy_policy" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/rss_settings_security">
 
         <SwitchPreference
-            android:key="rss_settings_auto_lock_on_exit"
             android:defaultValue="true"
+            android:key="rss_settings_auto_lock_on_exit"
             android:summary="@string/rss_settings_security_auto_lock_summary"
-            android:title="@string/rss_settings_security_auto_lock"/>
+            android:title="@string/rss_settings_security_auto_lock" />
 
         <ListPreference
             android:defaultValue="@string/rss_settings_security_auto_lock_time_default"
+            android:dependency="rss_settings_auto_lock_on_exit"
             android:entries="@array/rss_settings_array_auto_lock_times"
             android:entryValues="@array/rss_settings_array_auto_lock_times_values"
-            android:dependency="rss_settings_auto_lock_on_exit"
             android:key="rss_settings_auto_lock_time"
             android:summary="@string/rss_settings_security_auto_lock_time_summary"
-            android:title="@string/rss_settings_security_auto_lock_time"/>
+            android:title="@string/rss_settings_security_auto_lock_time" />
 
         <Preference
             android:key="rss_settings_security_change_passcode"
-            android:title="@string/rss_settings_security_change_passcode"/>
+            android:title="@string/rss_settings_security_change_passcode" />
 
     </PreferenceCategory>
 
 
     <PreferenceCategory
-        android:title="@string/rss_settings_general"
-        android:key="rss_settings_general">
+        android:key="rss_settings_general"
+        android:title="@string/rss_settings_general">
 
         <org.researchstack.skin.ui.preference.TextColorPreference
             android:key="rss_settings_general_join_study"
             android:order="0"
-            android:title="@string/rss_settings_general_join_study"/>
+            android:title="@string/rss_settings_general_join_study" />
 
         <Preference
             android:key="rss_settings_general_software_notices"
             android:order="1"
-            android:title="@string/rss_settings_general_software_notices"/>
+            android:title="@string/rss_settings_general_software_notices" />
 
         <org.researchstack.skin.ui.preference.TextColorPreference
             android:key="rss_settings_general_leave_study"
-            android:title="@string/rss_settings_general_leave_study"
             android:order="2"
-            app:preferenceTextColor="@color/rsb_error"/>
+            android:title="@string/rss_settings_general_leave_study"
+            app:preferenceTextColor="@color/rsb_error" />
 
     </PreferenceCategory>
 
     <Preference
         android:key="rss_settings_version"
-        android:summary="@string/rss_settings_version"/>
+        android:summary="@string/rss_settings_version" />
 
 </PreferenceScreen>

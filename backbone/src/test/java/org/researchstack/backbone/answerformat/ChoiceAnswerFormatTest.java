@@ -1,15 +1,14 @@
 package org.researchstack.backbone.answerformat;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.researchstack.backbone.model.Choice;
 
-
 import static junit.framework.TestCase.assertEquals;
 
 
-public class ChoiceAnswerFormatTest
-{
+public class ChoiceAnswerFormatTest {
 
     Choice<String> c1 = new Choice<>("choice 01", "c1");
     Choice<String> c2 = new Choice<>("choice 02", "c2");
@@ -18,8 +17,7 @@ public class ChoiceAnswerFormatTest
     private ChoiceAnswerFormat format;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         format = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
                 c1,
                 c2,
@@ -28,8 +26,7 @@ public class ChoiceAnswerFormatTest
     }
 
     @Test
-    public void testCount() throws Exception
-    {
+    public void testCount() throws Exception {
         assertEquals("Correctly returns the count of the choices", 4, format.getChoices().length);
 
         format = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice, c1, c2, c3);
@@ -39,30 +36,26 @@ public class ChoiceAnswerFormatTest
     }
 
     @Test
-    public void testTextChoice() throws Exception
-    {
+    public void testTextChoice() throws Exception {
         assertEquals("Maintains the correct order of the choices", c1, format.getChoices()[0]);
         assertEquals("Maintains the correct order of the choices", c3, format.getChoices()[2]);
     }
 
     @Ignore
     @Test
-    public void testImageChoice() throws Exception
-    {
+    public void testImageChoice() throws Exception {
         // Image choices not implemented
     }
 
     @Ignore
     @Test
-    public void testAnswerForSelectedIndexes() throws Exception
-    {
+    public void testAnswerForSelectedIndexes() throws Exception {
         // we don't have the ChoiceFormatHelper class in RS, probably don't need this test
     }
 
     @Ignore
     @Test
-    public void testSelectedIndexesForAnswer() throws Exception
-    {
+    public void testSelectedIndexesForAnswer() throws Exception {
         // we don't have the ChoiceFormatHelper class in RS, probably don't need this test
     }
 }

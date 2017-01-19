@@ -12,14 +12,12 @@ import org.researchstack.backbone.utils.TextUtils;
  * the DecimalQuestionBody does not allow navigation until the participant provides a value that is
  * within the valid range.
  */
-public class DecimalAnswerFormat extends AnswerFormat
-{
+public class DecimalAnswerFormat extends AnswerFormat {
     private float minValue;
     private float maxValue;
 
     /* Default constructor needed for serilization/deserialization of object */
-    DecimalAnswerFormat()
-    {
+    DecimalAnswerFormat() {
         super();
     }
 
@@ -29,15 +27,13 @@ public class DecimalAnswerFormat extends AnswerFormat
      * @param minValue the minimum allowed value
      * @param maxValue the maximum allowed value, or 0f for unlimited
      */
-    public DecimalAnswerFormat(float minValue, float maxValue)
-    {
+    public DecimalAnswerFormat(float minValue, float maxValue) {
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
 
     @Override
-    public QuestionType getQuestionType()
-    {
+    public QuestionType getQuestionType() {
         return Type.Decimal;
     }
 
@@ -46,8 +42,7 @@ public class DecimalAnswerFormat extends AnswerFormat
      *
      * @return returns the min value
      */
-    public float getMinValue()
-    {
+    public float getMinValue() {
         return minValue;
     }
 
@@ -56,26 +51,21 @@ public class DecimalAnswerFormat extends AnswerFormat
      *
      * @return returns the max value, or 0f for no maximum
      */
-    public float getMaxValue()
-    {
+    public float getMaxValue() {
         return maxValue;
     }
 
-    public BodyAnswer validateAnswer(String inputString)
-    {
+    public BodyAnswer validateAnswer(String inputString) {
         // If no answer is recorded
-        if(inputString == null || TextUtils.isEmpty(inputString)) {
+        if (inputString == null || TextUtils.isEmpty(inputString)) {
             return BodyAnswer.INVALID;
-        }
-        else {
+        } else {
             // Parse value from editText
             Float floatAnswer = Float.valueOf(inputString);
-            if(floatAnswer < minValue) {
+            if (floatAnswer < minValue) {
                 return new BodyAnswer(false,
                         R.string.rsb_invalid_answer_integer_under, String.valueOf(getMinValue()));
-            }
-
-            else if(floatAnswer > maxValue) {
+            } else if (floatAnswer > maxValue) {
                 return new BodyAnswer(false,
                         R.string.rsb_invalid_answer_integer_over, String.valueOf(getMaxValue()));
             }

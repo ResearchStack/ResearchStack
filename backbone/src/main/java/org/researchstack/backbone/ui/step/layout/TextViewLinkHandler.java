@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.step.layout;
+
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
@@ -6,13 +7,10 @@ import android.text.style.URLSpan;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
-public abstract class TextViewLinkHandler extends LinkMovementMethod
-{
+public abstract class TextViewLinkHandler extends LinkMovementMethod {
 
-    public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event)
-    {
-        if(event.getAction() != MotionEvent.ACTION_UP)
-        {
+    public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event) {
+        if (event.getAction() != MotionEvent.ACTION_UP) {
             return super.onTouchEvent(widget, buffer, event);
         }
 
@@ -30,8 +28,7 @@ public abstract class TextViewLinkHandler extends LinkMovementMethod
         int off = layout.getOffsetForHorizontal(line, x);
 
         URLSpan[] link = buffer.getSpans(off, off, URLSpan.class);
-        if(link.length != 0)
-        {
+        if (link.length != 0) {
             onLinkClick(link[0].getURL());
         }
         return true;

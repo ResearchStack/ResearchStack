@@ -22,11 +22,9 @@ import java.io.Serializable;
  * question step or form item. Incorporate the resulting step into a task, and present the task with
  * a {@link org.researchstack.backbone.ui.ViewTaskActivity}.
  */
-public class AnswerFormat implements Serializable
-{
+public class AnswerFormat implements Serializable {
     /* Default constructor needed for serilization/deserialization of object */
-    public AnswerFormat()
-    {
+    public AnswerFormat() {
     }
 
     /**
@@ -34,19 +32,8 @@ public class AnswerFormat implements Serializable
      *
      * @return the question type
      */
-    public QuestionType getQuestionType()
-    {
+    public QuestionType getQuestionType() {
         return Type.None;
-    }
-
-    /**
-     * Interface that {@link Type} implements. Since you cannot add a value to an existing enum, you
-     * may implement this interface instead to provide your own QuestionType that provides a {@link
-     * org.researchstack.backbone.ui.step.body.StepBody} class.
-     */
-    public interface QuestionType
-    {
-        Class<?> getStepBodyClass();
     }
 
     /**
@@ -56,8 +43,7 @@ public class AnswerFormat implements Serializable
      * type of question. A custom StepLayout implementation may provide it's own StepBody rather
      * than using the default provided by this AnswerFormat.
      */
-    public enum Type implements QuestionType
-    {
+    public enum Type implements QuestionType {
         None(NotImplementedStepBody.class),
         Scale(NotImplementedStepBody.class),
         SingleChoice(SingleChoiceQuestionBody.class),
@@ -77,14 +63,12 @@ public class AnswerFormat implements Serializable
 
         private Class<?> stepBodyClass;
 
-        Type(Class<?> stepBodyClass)
-        {
+        Type(Class<?> stepBodyClass) {
             this.stepBodyClass = stepBodyClass;
         }
 
         @Override
-        public Class<?> getStepBodyClass()
-        {
+        public Class<?> getStepBodyClass() {
             return stepBodyClass;
         }
 
@@ -93,8 +77,7 @@ public class AnswerFormat implements Serializable
     /**
      * The style of the question (that is, single or multiple choice).
      */
-    public enum ChoiceAnswerStyle
-    {
+    public enum ChoiceAnswerStyle {
         SingleChoice,
         MultipleChoice
     }
@@ -102,8 +85,7 @@ public class AnswerFormat implements Serializable
     /**
      * An enumeration of the format styles available for scale answers.
      */
-    public enum NumberFormattingStyle
-    {
+    public enum NumberFormattingStyle {
         Default,
         Percent
     }
@@ -111,10 +93,18 @@ public class AnswerFormat implements Serializable
     /**
      * The style of date picker to use in an {@link DateAnswerFormat} object.
      */
-    public enum DateAnswerStyle
-    {
+    public enum DateAnswerStyle {
         DateAndTime,
         Date,
         TimeOfDay
+    }
+
+    /**
+     * Interface that {@link Type} implements. Since you cannot add a value to an existing enum, you
+     * may implement this interface instead to provide your own QuestionType that provides a {@link
+     * org.researchstack.backbone.ui.step.body.StepBody} class.
+     */
+    public interface QuestionType {
+        Class<?> getStepBodyClass();
     }
 }

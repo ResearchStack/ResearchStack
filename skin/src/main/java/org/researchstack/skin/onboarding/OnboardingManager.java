@@ -6,9 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
 
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.StorageAccess;
@@ -17,9 +15,10 @@ import org.researchstack.backbone.model.ConsentSectionAdapter;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
+import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.onboarding.OnboardingSection;
-import org.researchstack.backbone.onboarding.OnboardingSectionType;
 import org.researchstack.backbone.onboarding.OnboardingSectionAdapter;
+import org.researchstack.backbone.onboarding.OnboardingSectionType;
 import org.researchstack.backbone.onboarding.OnboardingTaskType;
 import org.researchstack.backbone.onboarding.ResourceNameJsonProvider;
 import org.researchstack.backbone.step.Step;
@@ -27,12 +26,10 @@ import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.skin.DataProvider;
-import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.skin.ResourceManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,17 +42,8 @@ import java.util.List;
 public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider {
 
     static final String LOG_TAG = OnboardingManager.class.getCanonicalName();
-
-    /**
-     * Class used for easy deserialization of sections list
-     */
-    class SectionsGsonHolder {
-        @SerializedName("sections")
-        List<OnboardingSection> sections;
-    }
     SectionsGsonHolder mSectionsGsonHolder;
     Gson mGson;
-
     /*
      * Always initalize using this class
      * @param Context used in reference to the ResourceManager to load JSON resources to construct
@@ -64,8 +52,8 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
      */
     public OnboardingManager(Context context) {
         this(context,
-             ResourceManager.getInstance().getOnboardingManager().getName(),
-             new ResourceManagerResourceNameJsonProvider(context));
+                ResourceManager.getInstance().getOnboardingManager().getName(),
+                new ResourceManagerResourceNameJsonProvider(context));
     }
 
     /*
@@ -77,8 +65,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
      */
     OnboardingManager(Context context,
                       String onboardingResourceName,
-                      ResourceNameJsonProvider jsonProvider)
-    {
+                      ResourceNameJsonProvider jsonProvider) {
         mGson = buildGson(context, jsonProvider);
         String onboardingJson = jsonProvider.getJsonStringForResourceName(onboardingResourceName);
 
@@ -123,40 +110,8 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
     }
 
     /**
-     * When initializing an onboarding manager with a json file,
-     * the sections list will be sorted according to this class. By default,
-     * this sort function will ensure that the sections conforming to `OnboardingSectionType` field
-     * are ordered as needed to ensure the proper sequence of login, consent and registration according
-     * to their ordinal position. All custom sections are left in the order they were included in the
-     * original List.
-     **/
-    static class SectionComparator implements Comparator<OnboardingSection> {
-        @Override
-        public int compare(OnboardingSection lhs, OnboardingSection rhs) {
-            if (lhs == null && rhs == null) {
-                return 0;
-            } else if (lhs == null) {
-                return 1;
-            }  else if (rhs == null) {
-                return -1;
-            }
-
-            OnboardingSectionType lhsType = lhs.getOnboardingSectionType();
-            OnboardingSectionType rhsType = rhs.getOnboardingSectionType();
-
-            // If there is a CUSTOM type, just return same, or 0, so it does not shift positions
-            if (lhsType == OnboardingSectionType.CUSTOM || rhsType == OnboardingSectionType.CUSTOM) {
-                return 0;
-            }
-
-            Integer lhsOrdinal = lhsType.ordinal();
-            Integer rhsOrdinal = rhsType.ordinal();
-            return lhsOrdinal.compareTo(rhsOrdinal);
-        }
-    }
-
-    /**
      * This is the method that developers should be calling to start off any onboarding process
+     *
      * @param taskType the type of onboarding process that should be kicked off
      *                 currently, it is either login, registration, or reconsent
      * @param context  used to transition app to the new onboarding activity
@@ -188,10 +143,11 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
     }
 
     /**
-     Get the steps that should be included for a given `SBAOnboardingSection` and `SBAOnboardingTaskType`.
-     By default, this will return the steps created using the default onboarding survey factory for that section
-     or nil if the steps for that section should not be included for the given task.
-     @return    Optional array of `ORKStep`
+     * Get the steps that should be included for a given `SBAOnboardingSection` and `SBAOnboardingTaskType`.
+     * By default, this will return the steps created using the default onboarding survey factory for that section
+     * or nil if the steps for that section should not be included for the given task.
+     *
+     * @return Optional array of `ORKStep`
      */
     public List<Step> steps(Context context, OnboardingSection section, OnboardingTaskType taskType) {
 
@@ -209,7 +165,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
         // or not the user needs to reconsent. Returned this way because the steps in a subclass of ORKOrderedTask
         // are immutable but can be skipped using navigation rules.
         if (factory instanceof ConsentDocumentFactory) {
-            ConsentDocumentFactory consentFactory = (ConsentDocumentFactory)factory;
+            ConsentDocumentFactory consentFactory = (ConsentDocumentFactory) factory;
             List<Step> steps = new ArrayList<>();
             switch (taskType) {
                 case REGISTRATION:
@@ -230,8 +186,9 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
     }
 
     /**
-     Define the rules for including a given section in a given task type.
-     @return    `true` if the `SBAOnboardingSection` should be included for this `SBAOnboardingTaskType`
+     * Define the rules for including a given section in a given task type.
+     *
+     * @return `true` if the `SBAOnboardingSection` should be included for this `SBAOnboardingTaskType`
      */
     boolean shouldInclude(Context context, OnboardingSectionType sectionType, OnboardingTaskType taskType) {
         switch (sectionType) {
@@ -259,7 +216,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
             case COMPLETION:
                 // Permissions and completion are included for login and registration
                 return taskType == OnboardingTaskType.REGISTRATION ||
-                       taskType == OnboardingTaskType.LOGIN;
+                        taskType == OnboardingTaskType.LOGIN;
         }
         return false;
     }
@@ -267,7 +224,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
     /**
      * @param context used to access if login is verified
      * @return true when the user has successfully signed in, false otherwise
-     *         also, returns false on special case is if the user has signed up but not signed in yet
+     * also, returns false on special case is if the user has signed up but not signed in yet
      */
     boolean isLoginVerified(Context context) {
         return DataProvider.getInstance().isSignedIn(context);
@@ -289,6 +246,39 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
         return StorageAccess.getInstance().hasPinCode(context);
     }
 
+    /**
+     * When initializing an onboarding manager with a json file,
+     * the sections list will be sorted according to this class. By default,
+     * this sort function will ensure that the sections conforming to `OnboardingSectionType` field
+     * are ordered as needed to ensure the proper sequence of login, consent and registration according
+     * to their ordinal position. All custom sections are left in the order they were included in the
+     * original List.
+     **/
+    static class SectionComparator implements Comparator<OnboardingSection> {
+        @Override
+        public int compare(OnboardingSection lhs, OnboardingSection rhs) {
+            if (lhs == null && rhs == null) {
+                return 0;
+            } else if (lhs == null) {
+                return 1;
+            } else if (rhs == null) {
+                return -1;
+            }
+
+            OnboardingSectionType lhsType = lhs.getOnboardingSectionType();
+            OnboardingSectionType rhsType = rhs.getOnboardingSectionType();
+
+            // If there is a CUSTOM type, just return same, or 0, so it does not shift positions
+            if (lhsType == OnboardingSectionType.CUSTOM || rhsType == OnboardingSectionType.CUSTOM) {
+                return 0;
+            }
+
+            Integer lhsOrdinal = lhsType.ordinal();
+            Integer rhsOrdinal = rhsType.ordinal();
+            return lhsOrdinal.compareTo(rhsOrdinal);
+        }
+    }
+
     static class ResourceManagerResourceNameJsonProvider implements ResourceNameJsonProvider {
 
         Context context;
@@ -306,7 +296,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
                     try {
                         Object resourceObj = method.invoke(ResourceManager.getInstance(), method);
                         if (resourceObj instanceof ResourcePathManager.Resource) {
-                            ResourcePathManager.Resource resource = (ResourcePathManager.Resource)resourceObj;
+                            ResourcePathManager.Resource resource = (ResourcePathManager.Resource) resourceObj;
                             if (resourceName.equals(resource.getName())) {
                                 // Resource name match, return its contents as a JSON string
                                 return ResourceManager.getResourceAsString(context, resource.getAbsolutePath());
@@ -323,6 +313,14 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider 
             Log.e(LOG_TAG, "No resource with name " + resourceName + " found");
             return null;
         }
+    }
+
+    /**
+     * Class used for easy deserialization of sections list
+     */
+    class SectionsGsonHolder {
+        @SerializedName("sections")
+        List<OnboardingSection> sections;
     }
 }
 
