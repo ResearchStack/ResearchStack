@@ -28,7 +28,7 @@ import org.researchstack.backbone.ResourceManager;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
 import org.researchstack.skin.model.StudyOverviewModel;
-import org.researchstack.skin.step.PassCodeCreationStep;
+import org.researchstack.backbone.step.PassCodeCreationStep;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.task.SignInTask;
 import org.researchstack.skin.task.SignUpTask;

@@ -10,12 +10,10 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
-import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.PassCodeCreationStep;
 import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;

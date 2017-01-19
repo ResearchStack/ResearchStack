@@ -1,6 +1,6 @@
-package org.researchstack.skin.step;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
+package org.researchstack.backbone.step;
+
+import org.researchstack.backbone.ui.step.layout.SignUpPinCodeCreationStepLayout;
 
 public class PassCodeCreationStep extends Step
 {

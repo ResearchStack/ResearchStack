@@ -2,16 +2,13 @@ package org.researchstack.backbone;
 import android.app.Application;
 import android.content.Context;
 
+import org.researchstack.backbone.model.ConsentSignature;
+import org.researchstack.backbone.model.ConsentSignatureBody;
+import org.researchstack.backbone.model.SchedulesAndTasksModel;
+import org.researchstack.backbone.model.User;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.task.Task;
-import org.researchstack.skin.model.SchedulesAndTasksModel;
-import org.researchstack.skin.model.User;
-import org.researchstack.skin.ui.EmailVerificationActivity;
-import org.researchstack.skin.ui.MainActivity;
-import org.researchstack.skin.ui.SplashActivity;
-import org.researchstack.skin.ui.fragment.SettingsFragment;
-import org.researchstack.skin.ui.layout.SignUpStepLayout;
 
 import rx.Observable;
 
@@ -61,7 +58,7 @@ public abstract class DataProvider
     }
 
     /**
-     * Called in {@link SplashActivity} to initialize the state of the app. The state includes if
+     * Called to initialize the state of the app. The state includes if
      * the user is not signed in/up, not consented, etc..
      *
      * @param context android context
@@ -71,7 +68,7 @@ public abstract class DataProvider
     public abstract Observable<DataResponse> initialize(Context context);
 
     /**
-     * Called in {@link SignUpStepLayout} to sign the user up to the backend service
+     * Called to sign the user up to the backend service
      *
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
@@ -80,7 +77,7 @@ public abstract class DataProvider
     public abstract Observable<DataResponse> signUp(Context context, String email, String username, String password);
 
     /**
-     * Called in {@link SignUpStepLayout} to sign the user in to the backend service
+     * Called to sign the user in to the backend service
      *
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
@@ -98,7 +95,7 @@ public abstract class DataProvider
     public abstract Observable<DataResponse> signOut(Context context);
 
     /**
-     * Called in {@link EmailVerificationActivity} to alert the backend to resend a vertification
+     * Called to alert the backend to resend a vertification
      * email
      *
      * @param context android context
@@ -106,6 +103,16 @@ public abstract class DataProvider
      * returning true if signIn was successful
      */
     public abstract Observable<DataResponse> resendEmailVerification(Context context, String email);
+
+    /**
+     * Called to verify the user's email address
+     * Behind the scenes this calls signIn with securely stored username and password
+     *
+     * @param context android context
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
+     * returning true if verifyEmail was successful
+     */
+    public abstract Observable<DataResponse> verifyEmail(Context context);
 
     /**
      * Returns true if user is currently signed up
@@ -128,11 +135,21 @@ public abstract class DataProvider
      *
      * @param context android context
      * @return true if user is currently consented
+     *
+     * @Deprecated use isConsented() no params instead
      */
-    public abstract boolean isConsented(Context context);
+    @Deprecated
+    public boolean isConsented(Context context) {
+        return false;
+    }
 
     /**
-     * Called in {@link SettingsFragment} to alert the backend that the user wants to withdraw from
+     * @return true if user is currently consented to the study
+     */
+    public abstract boolean isConsented();
+
+    /**
+     * Called to alert the backend that the user wants to withdraw from
      * the study
      *
      * @param context android context
@@ -143,11 +160,22 @@ public abstract class DataProvider
 
     /**
      * This method is responsible in uploading the user consent information (e.g. Name, Birthdate,
-     * Signature) to the backend
+     * Signature) to the backend.  Usually, this is done by looking into the TaskResult
+     * object and filling up the ConsentSignature and then calling the method below this
+     * with the signature parameter
      *
      * @param context android context
      */
     public abstract void uploadConsent(Context context, TaskResult consentResult);
+
+    /**
+     * This method is responsible in uploading the user consent information (e.g. Name, Birthdate,
+     * Signature) to the backend.
+     *
+     * @param context android context
+     * @param signature Valid ConsentSignature object
+     */
+    public abstract Observable<DataResponse> uploadConsent(Context context, ConsentSignatureBody signature);
 
     /**
      * This method is responsible in saving user consent information (e.g. Name, Birthdate,
@@ -160,6 +188,15 @@ public abstract class DataProvider
     public abstract void saveConsent(Context context, TaskResult consentResult);
 
     /**
+     * This method is responsible in saving user consent information (e.g. Name, Birthdate,
+     * Signature) locally for use after the user successfully signs in
+     *
+     * @param context android context
+     * @param consentSignatureBody object which will be saved
+     */
+    public abstract void saveConsent(Context context, ConsentSignatureBody consentSignatureBody);
+
+    /**
      * Returns the user object that contains any sort of information. This information can be
      * collected in the inital survey and sorted using this object
      *
@@ -167,6 +204,13 @@ public abstract class DataProvider
      * @return User object
      */
     public abstract User getUser(Context context);
+
+    /**
+     * Saves the user object
+     * @param context android context
+     * @param user User object to save
+     */
+    public abstract void setUser(Context context, User user);
 
     /**
      * Gets the current sharing scope of the user.
@@ -204,8 +248,7 @@ public abstract class DataProvider
     public abstract void uploadTaskResult(Context context, TaskResult taskResult);
 
     /**
-     * Loads the SchedulesAndTasksModel object, this should be used in conjunction with the {@link
-     * ResourceManager} if inflating the TaskAndSchedules object from assets folder
+     * Loads the SchedulesAndTasksModel object
      *
      * @param context android context
      * @return a SchedulesAndTasksModel object
@@ -213,8 +256,7 @@ public abstract class DataProvider
     public abstract SchedulesAndTasksModel loadTasksAndSchedules(Context context);
 
     /**
-     * Loads a Task object, this should be used in conjunction with the {@link ResourceManager} if
-     * inflating a Task from assets folder
+     * Loads a Task object
      *
      * @param context android context
      * @param task the TaskScheduleModel model
@@ -225,8 +267,6 @@ public abstract class DataProvider
     /**
      * This initial task may include profile items such as height and weight that may need to be
      * processed differently than a normal task result.
-     *
-     * This task is presented to the user when initially entering the {@link MainActivity}
      *
      * @param context android context
      * @param taskResult initial TaskResult object to process
@@ -243,4 +283,9 @@ public abstract class DataProvider
      * returning true if forgitpassword request was successful
      */
     public abstract Observable<DataResponse> forgotPassword(Context context, String email);
+
+    /**
+     * @return the Study ID for the study
+     */
+    public abstract String getStudyId();
 }
