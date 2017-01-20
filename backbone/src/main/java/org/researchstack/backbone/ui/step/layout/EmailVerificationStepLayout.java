@@ -91,7 +91,7 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
         // Setup submit bar actions and titles
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveTitle(getContext().getString(R.string.rsb_continue));
-        submitBar.setPositiveAction(v -> attemptSignIn());
+        submitBar.setPositiveAction(v -> signIn());
         submitBar.setNegativeAction(v -> resendVerificationEmail());
         submitBar.setNegativeTitle(getContext().getString(R.string.rsb_resend_email));
 
@@ -177,7 +177,7 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
                 });
     }
 
-    protected void attemptSignIn() {
+    protected void signIn() {
         final String password = getPassword(taskResult);
         if (password == null || password.isEmpty()) {
             Toast.makeText(getContext(), R.string.rsb_error_invalid_password, Toast.LENGTH_SHORT).show();
@@ -191,36 +191,18 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
                 .subscribe(dataResponse -> {
                     hideLoadingDialog();
                     if(dataResponse.isSuccess()) {
-                        uploadConsent();
-                    } else {
-                        showOkAlertDialog(dataResponse.getMessage());
-                    }
-                }, error -> {
-                    hideLoadingDialog();
-                    showOkAlertDialog(error.getMessage());
-                });
-    }
-
-    /**
-     * At this point in the Onboarding flow, consent is only saved locally within DataProvider
-     * So we must upload the consent doc after a succssful login
-     */
-    protected void uploadConsent() {
-        showLoadingDialog();
-        ConsentSignatureBody signature = DataProvider.getInstance().loadLocalConsent(getContext());
-        DataProvider.getInstance()
-                .uploadConsent(getContext(), signature)
-                .compose(ObservableUtils.applyDefault())
-                .subscribe(dataResponse -> {
-                    hideLoadingDialog();
-                    if(dataResponse.isSuccess()) {
                         callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, emailStep, stepResult);
                     } else {
                         showOkAlertDialog(dataResponse.getMessage());
                     }
                 }, error -> {
                     hideLoadingDialog();
-                    showOkAlertDialog(error.getMessage());
+                    // TODO: fix this once the BridgeDataProvider is fixed
+                    if (error.toString().toLowerCase().contains("ConsentRequired".toLowerCase())) {
+                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, emailStep, stepResult);
+                    } else {
+                        showOkAlertDialog(error.getMessage());
+                    }
                 });
     }
 

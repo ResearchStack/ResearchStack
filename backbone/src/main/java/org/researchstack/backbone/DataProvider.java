@@ -106,7 +106,9 @@ public abstract class DataProvider
 
     /**
      * Called to verify the user's email address
-     * Behind the scenes this calls signIn with securely stored email and param password
+     * Behind the scenes this calls signIn with securely stored email and passed in param password
+     * Afterwords, it the implementation must also upload the consent doc that was
+     * previously stored using saveLocalConsent
      *
      * @param context android context
      * @param password the user's password
