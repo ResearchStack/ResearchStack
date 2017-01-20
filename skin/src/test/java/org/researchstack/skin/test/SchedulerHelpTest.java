@@ -100,4 +100,14 @@ public class SchedulerHelpTest {
         assertEquals(2016, next.getYear());
     }
 
+    @Test
+    public void testExpired() {
+        DateTime twodaysago = new DateTime().minusDays(2);
+        String expires1day = "P1D";
+        String expires3days = "P3D";
+
+        assertEquals(true, ScheduleHelper.isExpired(twodaysago.toDate(), expires1day));
+        assertEquals(false, ScheduleHelper.isExpired(twodaysago.toDate(), expires3days));
+    }
+
 }

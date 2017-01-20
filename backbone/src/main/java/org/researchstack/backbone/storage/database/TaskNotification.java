@@ -22,5 +22,8 @@ public class TaskNotification implements Serializable
     public String delay;
 
     @DatabaseField
+    public String expires;
+
+    @DatabaseField
     public String interval;
 }

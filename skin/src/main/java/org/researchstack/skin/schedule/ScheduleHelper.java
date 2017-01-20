@@ -51,4 +51,19 @@ public class ScheduleHelper
         }
         else return start.toDate();
     }
+
+    /**
+     * Tells if a date has expired, according to a time period.
+     * @param date the date we are querying about
+     * @param expires period of time, in ISO 8601, from when the scheduling was originally due, after which there must be no more executions
+     * @return
+     */
+    public static boolean isExpired(Date date, String expires) {
+        if(!TextUtils.isEmpty(expires)) {
+            Period expiresp = Period.parse(expires);
+            DateTime dtt = new DateTime(date);
+            dtt = dtt.plus(expiresp);
+            return dtt.isBeforeNow();
+        } else return false;
+    }
 }

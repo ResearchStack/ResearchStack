@@ -116,8 +116,10 @@ public class TaskAlertReceiver extends BroadcastReceiver
                 AppPrefs.getInstance(context).getEmailVerifiedTime(),
                 taskNotification.endDate);
 
-        // Create alert
-        createAlert(context, pendingIntent, nextExecuteTime);
+        if(!ScheduleHelper.isExpired(nextExecuteTime, taskNotification.expires)) {
+            // Create alert
+            createAlert(context, pendingIntent, nextExecuteTime);
+        }
     }
 
     private PendingIntent createNotificationIntent(Context context, int taskNotificationId)
