@@ -63,7 +63,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         this.step = (ConsentQuizQuestionStep) step;
         this.result = result == null ? new StepResult<>(step) : result;

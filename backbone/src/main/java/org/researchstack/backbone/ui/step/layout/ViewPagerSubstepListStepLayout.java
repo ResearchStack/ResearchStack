@@ -35,7 +35,6 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
 
     protected SubstepListStep substepListStep;
 
-    protected TaskResult taskResult;
     protected StepResult<StepResult> stepResult;
 
     SwipeDisabledViewPager viewPager;
@@ -59,10 +58,8 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult) {
+    public void initialize(Step step, StepResult result) {
         validateStepAndResult(step, result);
-
-        this.taskResult = taskResult;
 
         // Adds the view pager, and the view pager will create the substep step layouts
         viewPager = new SwipeDisabledViewPager(getContext());
@@ -175,7 +172,7 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
             // Build ViewPager views based off of Step's StepLayouts, similar to what ViewTaskActivity does
             StepLayout stepLayout = StepLayoutHelper.createLayoutFromStep(step, getContext());
             StepResult subStepResult = StepResultHelper.findStepResult(stepResult, step.getIdentifier());
-            stepLayout.initialize(step, subStepResult, taskResult);
+            stepLayout.initialize(step, subStepResult);
             stepLayout.setCallbacks(ViewPagerSubstepListStepLayout.this);
             stepLayouts.add(stepLayout);
 

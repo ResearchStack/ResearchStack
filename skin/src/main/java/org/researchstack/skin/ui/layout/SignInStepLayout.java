@@ -52,7 +52,7 @@ public class SignInStepLayout extends RelativeLayout implements StepLayout
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;

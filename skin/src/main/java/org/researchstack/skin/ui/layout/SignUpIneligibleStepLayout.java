@@ -38,7 +38,7 @@ public class SignUpIneligibleStepLayout extends LinearLayout implements StepLayo
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         this.step = step;
         initializeStep();

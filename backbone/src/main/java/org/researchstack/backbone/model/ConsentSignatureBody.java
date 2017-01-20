@@ -3,6 +3,11 @@ package org.researchstack.backbone.model;
 import java.util.Date;
 
 public class ConsentSignatureBody {
+
+  public ConsentSignatureBody() {
+    // Default constructor
+  }
+
   /**
    * The identifier for the study under which the user is signing in
    */

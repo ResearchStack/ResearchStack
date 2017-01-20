@@ -48,7 +48,6 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     // and the values will be the StepBody's
     protected LinkedHashMap<QuestionStep, StepBody> subQuestionSteps;
     protected StepResult<StepResult> stepResult;
-    protected TaskResult taskResult;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Communicate w/ host
@@ -83,11 +82,11 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
     public void initialize(Step step)
     {
-        initialize(step, null, null);
+        initialize(step, null);
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         validateStep(step);  // Also sets formStep member variable
 
@@ -95,7 +94,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         if (result == null) {
             stepResult = new StepResult<>(step);
         }
-        this.taskResult = taskResult;
+
         subQuestionSteps = new LinkedHashMap<>();
         formStep = (FormStep) step;
 
@@ -114,7 +113,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         initStepLayout(formStep);
         // Fill up the step map
         for (QuestionStep subStep : questionSteps) {
-            StepResult subStepResult = subQuestionResult(subStep.getIdentifier(), stepResult, taskResult);
+            StepResult subStepResult = subQuestionResult(subStep.getIdentifier(), stepResult);
             StepBody stepBody = SurveyStepLayout.createStepBody(subStep, subStepResult);
             subQuestionSteps.put(subStep, stepBody);
             View surveyStepView = initStepBodyHolder(layoutInflater, stepBodyContainer, subStep, stepBody);
@@ -358,11 +357,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         return firstStepEntry.getValue();
     }
 
-    protected StepResult subQuestionResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
-        StepResult subQuestionResult = StepResultHelper.findStepResult(stepResult, stepIdentifier);
-        if (subQuestionResult == null) {
-            subQuestionResult = StepResultHelper.findStepResult(taskResult, stepIdentifier);
-        }
-        return subQuestionResult;
+    protected StepResult subQuestionResult(String stepIdentifier, StepResult stepResult) {
+        return StepResultHelper.findStepResult(stepResult, stepIdentifier);
     }
 }

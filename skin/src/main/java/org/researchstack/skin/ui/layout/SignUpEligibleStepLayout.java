@@ -42,7 +42,7 @@ public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayo
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         this.step = step;
         this.result = result;

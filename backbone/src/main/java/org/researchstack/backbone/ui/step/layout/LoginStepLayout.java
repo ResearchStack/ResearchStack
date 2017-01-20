@@ -39,9 +39,9 @@ public class LoginStepLayout extends ProfileStepLayout {
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
-        super.initialize(step, result, taskResult);
+        super.initialize(step, result);
 
         // Add the Forgot Password UI below the login form
         submitBar.getNegativeActionView().setVisibility(View.VISIBLE);

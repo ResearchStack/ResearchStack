@@ -54,7 +54,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         this.step = (PassCodeCreationStep) step;
         this.result = result == null ? new StepResult<>(step) : result;

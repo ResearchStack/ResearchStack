@@ -48,7 +48,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         this.step = (ConsentDocumentStep) step;
         this.confirmationDialogBody = ((ConsentDocumentStep) step).getConfirmMessage();

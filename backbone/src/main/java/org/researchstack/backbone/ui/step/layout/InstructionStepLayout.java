@@ -42,7 +42,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         this.step = step;
         initializeStep();

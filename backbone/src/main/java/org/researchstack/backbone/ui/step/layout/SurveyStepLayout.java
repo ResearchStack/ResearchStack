@@ -38,7 +38,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     // Data used to initializeLayout and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private QuestionStep questionStep;
-    private StepResult   stepResult;
+    protected StepResult stepResult;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Communicate w/ host
@@ -68,11 +68,11 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     public void initialize(Step step)
     {
-        initialize(step, null, null);
+        initialize(step, null);
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         if(! (step instanceof QuestionStep))
         {
@@ -238,10 +238,14 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         }
         else
         {
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                    getStep(),
-                    stepBody.getStepResult(false));
+            onComplete();
         }
+    }
+
+    protected void onComplete() {
+        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+                getStep(),
+                stepBody.getStepResult(false));
     }
 
     public void onSkipClicked()

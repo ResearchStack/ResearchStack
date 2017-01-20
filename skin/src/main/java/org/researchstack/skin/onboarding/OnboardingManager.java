@@ -195,9 +195,30 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
 
         String identifier = taskType.toString();
 
-        NavigableOrderedTask task = new NavigableOrderedTask(identifier, steps);
-        Intent taskIntent = OnboardingTaskActivity.newIntent(context, task);
-        context.startActivity(taskIntent);
+        NavigableOrderedTask task = createOnboardingTask(identifier, steps);
+        Intent onboardingTaskIntent = createOnboardingTaskActivityIntent(context, task);
+        context.startActivity(onboardingTaskIntent);
+    }
+
+    /**
+     * Can be overridden by a sub-class to inject their own Task
+     *
+     * @param identifier Task Identifier
+     * @param stepList to make NavigableOrderedTask
+     * @return NavigableOrderedTask with step list
+     */
+    public NavigableOrderedTask createOnboardingTask(String identifier, List<Step> stepList) {
+        return new NavigableOrderedTask(identifier, stepList);
+    }
+
+    /**
+     * Intent must contain class of type OnboardingTaskActivity, otherwise it may not operate correctly
+     *
+     * @param context used to launch activity
+     * @param task to be sent to OnboardingTaskActivity or sub-class Activity
+     */
+    public Intent createOnboardingTaskActivityIntent(Context context, NavigableOrderedTask task) {
+        return OnboardingTaskActivity.newIntent(context, task);
     }
 
     /**

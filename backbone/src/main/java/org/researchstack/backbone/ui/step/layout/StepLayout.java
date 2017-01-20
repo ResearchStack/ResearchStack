@@ -13,11 +13,8 @@ public interface StepLayout
     /**
      * @param step Step to be related to this StepLayout
      * @param result the StepResult for this step, if one already exists
-     * @param taskResult The TaskResult object, if this StepLayout belongs to a Task
      */
-    void initialize(@NonNull Step step,
-                    @Nullable StepResult result,
-                    @Nullable TaskResult taskResult);
+    void initialize(Step step, StepResult result);
 
     View getLayout();
 

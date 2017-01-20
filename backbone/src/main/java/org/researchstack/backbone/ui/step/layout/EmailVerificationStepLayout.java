@@ -20,6 +20,7 @@ import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.PasswordAnswerFormat;
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.model.User;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
@@ -49,14 +50,20 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
 
     protected EmailVerificationStep emailStep;
 
-    protected TaskResult taskResult;
     protected StepResult<StepResult> stepResult;
+
+    /**
+     * If this is set, the EmailVerificationStepLayout will not create a field for the user
+     * to enter their password.
+     */
+    @Nullable protected String password;
 
     /**
      * This is only created if the user's app crashed or they forced closed the app
      * while they were going through the sign up process
      */
     @Nullable StepBody passwordStepBody;
+    @Nullable View     passwordVerifyView;
 
     public EmailVerificationStepLayout(Context context) {
         super(context);
@@ -81,12 +88,10 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult) {
+    public void initialize(Step step, StepResult result) {
         validateStepAndResult(step);
 
-        this.taskResult = taskResult;
         this.stepResult = result;
-        this.taskResult = taskResult;
 
         // Setup submit bar actions and titles
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
@@ -100,9 +105,8 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
         RxView.clicks(findViewById(R.id.rsb_email_verification_wrong_email)).subscribe(v -> changeEmail());
 
         // If the the password isn't in the TaskResult, we have to make the user re-enter their's
-        if (getPassword(taskResult) == null) {
-            RelativeLayout container = (RelativeLayout)findViewById(R.id.rsb_email_verification_container);
-            createValidatePasswordStepBody(container);
+        if (getPassword() == null) {
+            createValidatePasswordStepBody(container());
         }
     }
 
@@ -112,7 +116,7 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
         String accentColorString = "#" + Integer.toHexString(Color.red(accentColor)) +
                 Integer.toHexString(Color.green(accentColor)) +
                 Integer.toHexString(Color.blue(accentColor));
-        final String email = getEmail(taskResult);
+        final String email = getEmail();
         String formattedSummary = getContext().getString(R.string.rsb_confirm_summary,
                 "<font color=\"" + accentColorString + "\">" + email + "</font>");
         ((AppCompatTextView) findViewById(R.id.rsb_email_verification_body)).setText(Html.fromHtml(
@@ -161,7 +165,7 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
 
     protected void resendVerificationEmail() {
         showLoadingDialog();
-        final String email = getEmail(taskResult);
+        final String email = getEmail();
         DataProvider.getInstance()
                 .resendEmailVerification(getContext(), email)
                 .compose(ObservableUtils.applyDefault())
@@ -178,7 +182,7 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
     }
 
     protected void signIn() {
-        final String password = getPassword(taskResult);
+        final String password = getPassword();
         if (password == null || password.isEmpty()) {
             Toast.makeText(getContext(), R.string.rsb_error_invalid_password, Toast.LENGTH_SHORT).show();
             return;
@@ -206,6 +210,10 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
                 });
     }
 
+    protected RelativeLayout container() {
+        return (RelativeLayout)findViewById(R.id.rsb_email_verification_container);
+    }
+
     /**
      * If the app has crashed, or user has force closed it, we will need them to re-enter their password
      * Since they will be essentially signing in again
@@ -219,22 +227,34 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
 
         // Use FormStepLayout logic to create the StepLayout for verifyPasswordStep
         passwordStepBody = SurveyStepLayout.createStepBody(verifyPasswordStep, null);
-        View verifyPasswordView = FormStepLayout.initStepBodyHolder(layoutInflater, container, verifyPasswordStep, passwordStepBody);
+        passwordVerifyView = FormStepLayout.initStepBodyHolder(layoutInflater, container, verifyPasswordStep, passwordStepBody);
 
         // Replace Space with password view
         View oldPasswordSpace = findViewById(R.id.rsb_email_verify_reenter_password_space);
-        verifyPasswordView.setLayoutParams(oldPasswordSpace.getLayoutParams());
+        passwordVerifyView.setLayoutParams(oldPasswordSpace.getLayoutParams());
         container.removeView(oldPasswordSpace);
-        container.addView(verifyPasswordView);
+        container.addView(passwordVerifyView);
     }
 
-    protected String getEmail(TaskResult taskResult) {
-        return getStringResult(taskResult, ProfileInfoOption.EMAIL.getIdentifier());
+    protected String getEmail() {
+        User user = DataProvider.getInstance().getUser(getContext());
+        if (user == null || user.getEmail() == null) {
+            throw new IllegalStateException("Email must be set on user at this point");
+        }
+        return user.getEmail();
     }
 
-    protected String getPassword(TaskResult taskResult) {
+    public void setPassword(String password) {
+        if (passwordVerifyView != null) {
+            container().removeView(passwordVerifyView);
+            passwordStepBody = null;
+        }
+        this.password = password;
+    }
+
+    protected String getPassword() {
         if (passwordStepBody == null) {
-            return getStringResult(taskResult, ProfileInfoOption.PASSWORD.getIdentifier());
+            return password;
         } else {
             StepResult result = passwordStepBody.getStepResult(false);
             return (String)result.getResult();

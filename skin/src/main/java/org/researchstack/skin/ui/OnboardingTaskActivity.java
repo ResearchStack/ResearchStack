@@ -7,13 +7,17 @@ import android.content.res.Resources;
 import android.os.Build;
 
 import org.researchstack.backbone.PermissionRequestManager;
+import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
+import org.researchstack.backbone.ui.step.layout.EmailVerificationStepLayout;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.utils.StepResultHelper;
 
 /**
  * Created by TheMDP on 1/14/17.
@@ -48,14 +52,32 @@ public class OnboardingTaskActivity extends ViewTaskActivity implements Activity
     {
         StepLayout superStepLayout = super.getLayoutForStep(step);
 
-        // Onboarding Tasks use Step's title for the title
+        // Onboarding Tasks use Step's title for the title, or a lookup table for Titles
         try {
             setActionBarTitle(getString(step.getStepTitle()));
         } catch (Resources.NotFoundException e) {
-            setActionBarTitle("");
+            setActionBarTitle(stepTitleForIdentifier(step.getIdentifier()));
         }
 
+        setupCustomStepLayouts(superStepLayout);
+
         return superStepLayout;
+    }
+
+    /**
+     * Injects TaskResult information into StepLayouts that need more information
+     * @param stepLayout step layout that has just been instantiated
+     */
+    public void setupCustomStepLayouts(StepLayout stepLayout) {
+        // Check here for StepLayouts that need results fed into them
+        if (stepLayout instanceof EmailVerificationStepLayout) {
+            EmailVerificationStepLayout emailStepLayout = (EmailVerificationStepLayout)stepLayout;
+            StepResult passwordResult = StepResultHelper
+                    .findStepResult(taskResult, ProfileInfoOption.PASSWORD.getIdentifier());
+            if (passwordResult != null) {
+                emailStepLayout.setPassword((String)passwordResult.getResult());
+            }
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -87,5 +109,12 @@ public class OnboardingTaskActivity extends ViewTaskActivity implements Activity
     @Deprecated
     public void startConsentTask() {
         // deprecated
+    }
+
+    public String stepTitleForIdentifier(String identifier) {
+        switch (identifier) {
+            //case
+        }
+        return "";
     }
 }

@@ -47,7 +47,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         this.step = (ConsentVisualStep) step;
         initializeStep();

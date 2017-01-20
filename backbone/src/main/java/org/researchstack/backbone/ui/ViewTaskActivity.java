@@ -142,7 +142,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         // Return the Class & constructor
         StepLayout stepLayout = StepLayoutHelper.createLayoutFromStep(step, this);
-        stepLayout.initialize(step, result, taskResult);
+        stepLayout.initialize(step, result);
         stepLayout.setCallbacks(this);
 
         return stepLayout;

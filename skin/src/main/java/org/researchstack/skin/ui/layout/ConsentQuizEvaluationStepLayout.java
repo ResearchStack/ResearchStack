@@ -39,7 +39,7 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult)
+    public void initialize(Step step, StepResult result)
     {
         this.step = (ConsentQuizEvaluationStep) step;
         this.result = result == null ? new StepResult<>(step) : result;

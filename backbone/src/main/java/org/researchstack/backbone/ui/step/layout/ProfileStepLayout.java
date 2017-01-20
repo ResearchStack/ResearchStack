@@ -61,15 +61,15 @@ public class ProfileStepLayout extends FormStepLayout {
     }
 
     @Override
-    public void initialize(Step step, StepResult result, TaskResult taskResult) {
+    public void initialize(Step step, StepResult result) {
         validateStep(step);  // also sets formStep variable
         initializeErrorMap();
         // needed to have object passed in by reference in method below
         if (result == null) {
             result = new StepResult<StepResult>(step);
         }
-        prePopulateUserProfileResults(step, result, taskResult);
-        super.initialize(step, result, taskResult);
+        prePopulateUserProfileResults(step, result);
+        super.initialize(step, result);
     }
 
     protected void initializeErrorMap() {
@@ -83,14 +83,14 @@ public class ProfileStepLayout extends FormStepLayout {
     /**
      * @param result to add pre-populated user profile results that are create from the User object
      */
-    protected void prePopulateUserProfileResults(Step step, StepResult result, TaskResult taskResult) {
+    protected void prePopulateUserProfileResults(Step step, StepResult result) {
         user = DataProvider.getInstance().getUser(getContext());
         if (user == null) {
             user = new User();  // first time controlling the user object
         }
         for (ProfileInfoOption option : getProfileStep().getProfileInfoOptions()) {
             // Look to see if the step result for this profile option already exists
-            StepResult profileResult = subQuestionResult(option.getIdentifier(), result, taskResult);
+            StepResult profileResult = subQuestionResult(option.getIdentifier(), result);
             // If it doesn't exist, create one matching the profile info option type from User object
             if (profileResult == null) {
                 Step profileStep = StepHelper.getStepWithIdentifier(formStep.getFormSteps(), option.getIdentifier());
