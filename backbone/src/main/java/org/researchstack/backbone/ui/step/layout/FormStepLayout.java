@@ -9,29 +9,29 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
 import org.researchstack.backbone.ui.step.body.StepBody;
+import org.researchstack.backbone.ui.step.body.TextQuestionBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
-import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepResultHelper;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by TheMDP on 1/14/17.
@@ -44,9 +44,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     // Data used to initializeLayout and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     protected FormStep formStep;
-    // subQuestionSteps will be a map with keys of all List<QuestionStep> formSteps,
-    // and the values will be the StepBody's
-    protected LinkedHashMap<QuestionStep, StepBody> subQuestionSteps;
+    protected List<FormStepData> subQuestionStepData;
     protected StepResult<StepResult> stepResult;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -88,53 +86,100 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     @Override
     public void initialize(Step step, StepResult result)
     {
-        validateStep(step);  // Also sets formStep member variable
+        validateStepAndResult(step, result);  // Also sets formStep member variable
 
-        stepResult = result;
-        if (result == null) {
-            stepResult = new StepResult<>(step);
-        }
-
-        subQuestionSteps = new LinkedHashMap<>();
+        subQuestionStepData = new ArrayList<>();
         formStep = (FormStep) step;
 
         // Add all relevant questions steps
         List<QuestionStep> questionSteps = new ArrayList<>();
-        if (step instanceof FormStep) {
-            FormStep formStep = (FormStep)step;
-            for (QuestionStep questionStep : formStep.getFormSteps()) {
-                questionSteps.add(questionStep);
-            }
-        } else {  // Normal QuestionStep
-            questionSteps.add((QuestionStep) step);
+        for (QuestionStep questionStep : formStep.getFormSteps()) {
+            questionSteps.add(questionStep);
         }
 
         // Initialize the UI for title and summary, etc
         initStepLayout(formStep);
         // Fill up the step map
         for (QuestionStep subStep : questionSteps) {
-            StepResult subStepResult = subQuestionResult(subStep.getIdentifier(), stepResult);
+            StepResult subStepResult = StepResultHelper.findStepResult(stepResult, subStep.getIdentifier());
             StepBody stepBody = SurveyStepLayout.createStepBody(subStep, subStepResult);
-            subQuestionSteps.put(subStep, stepBody);
             View surveyStepView = initStepBodyHolder(layoutInflater, stepBodyContainer, subStep, stepBody);
+            subQuestionStepData.add(new FormStepData(subStep, stepBody, surveyStepView));
             stepBodyContainer.addView(surveyStepView);
         }
         // refresh skip/next bar
         refreshSubmitBar();
+        setupEditTextImeOptions();
     }
 
     /**
      * @param step to validate it's state
      */
-    protected void validateStep(Step step) {
+    @SuppressWarnings("unchecked")  // needed for StepResult<StepResult> cast
+    protected void validateStepAndResult(Step step, StepResult stepResult) {
         if(step != null && step instanceof FormStep)
         {
             formStep = (FormStep)step;
+
+            if (stepResult == null || stepResult.getResults() == null || stepResult.getResults().isEmpty()) {
+                this.stepResult = new StepResult<>(formStep);
+            } else {
+                for (Object resultObj : stepResult.getResults().values()) {
+                    if (!(resultObj instanceof StepResult)) {
+                        throw new RuntimeException("StepResult must be StepResult<StepResult>");
+                    }
+                }
+                this.stepResult = stepResult;
+            }
         }
         else
         {
             throw new RuntimeException("Step being used in FormStepLayout is not a FormStep or is null");
         }
+    }
+
+    /**
+     * Assign the correct flow for next button to the next EditText
+     */
+    protected void setupEditTextImeOptions() {
+        EditText nextEditText = null;
+        EditText previousEditText;
+        for (FormStepData stepData : subQuestionStepData) {
+            EditText editText = findEditText(stepData);
+            if (editText != null) {
+                previousEditText = nextEditText;
+                nextEditText = editText;
+                if (previousEditText != null) {
+                    final EditText nextFocus = nextEditText;
+                    previousEditText.setOnEditorActionListener((v, actionId, event) -> {
+                        if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                            nextFocus.requestFocus();
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+            }
+        }
+        // Assign the last EditText a Done button, which should automatically hide keyboard
+        if (nextEditText != null) {
+            nextEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        }
+    }
+
+    /**
+     * @param stepData that contains a TextQuestionBody as the stepBody member variable
+     * @return EditText for this FormStepData if one exists and we can find it, null otherwise
+     */
+    protected EditText findEditText(FormStepData stepData) {
+        if (stepData.view != null) {
+            // R.id.value is the EditText from TextQuestionBody
+            View viewObj = stepData.view.get().findViewById(R.id.value);
+            if (viewObj instanceof EditText) {
+                return (EditText)viewObj;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -169,8 +214,8 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         submitBar.setPositiveAction(v -> onNextClicked());
         submitBar.setNegativeTitle(R.string.rsb_step_skip);
         submitBar.setNegativeAction(v -> onSkipClicked());
-        for (QuestionStep step : subQuestionSteps.keySet()) {
-            if(!step.isOptional())
+        for (FormStepData stepData : subQuestionStepData) {
+            if(!stepData.step.isOptional())
             {
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
@@ -227,10 +272,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     }
 
     protected void updateAllQuestionSteps(boolean skipped) {
-        for (QuestionStep step : subQuestionSteps.keySet()) {
-            StepBody stepBody = subQuestionSteps.get(step);
-            StepResult result = stepBody.getStepResult(skipped);
-            stepResult.getResults().put(step.getIdentifier(), result);
+        for (FormStepData stepData : subQuestionStepData) {
+            StepResult result = stepData.stepBody.getStepResult(skipped);
+            stepResult.getResults().put(stepData.step.getIdentifier(), result);
         }
     }
 
@@ -249,21 +293,21 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      * @return true if subQuestionSteps steps are valid, false if one or more answers are invalid
      */
     protected boolean isAnswerValid(boolean showErrorAlertOnInvalid) {
-        return isAnswerValid(subQuestionSteps.keySet(), showErrorAlertOnInvalid, null);
+        return isAnswerValid(subQuestionStepData, showErrorAlertOnInvalid, null);
     }
 
     /**
-     * @param questionSteps the set of question steps to analyze if they are valid or not
+     * @param stepDataList the list of FormStepData to analyze if they are valid or not
      * @param showErrorAlertOnInvalid if true, error toast is shown if return false, no toast otherwise
      * @param identifierErrorMap key is the step identifier, value is the error message when it is not valid
      * @return true if ALL question steps are valid, false if one or more answers are invalid
      */
-    protected boolean isAnswerValid(Set<QuestionStep> questionSteps, boolean showErrorAlertOnInvalid, Map<String, String> identifierErrorMap) {
+    protected boolean isAnswerValid(List<FormStepData> stepDataList, boolean showErrorAlertOnInvalid, Map<String, String> identifierErrorMap) {
         boolean isAnswerValid = true;
         List<String> invalidReasons = new ArrayList<>();
 
-        for (QuestionStep step : questionSteps) {
-            BodyAnswer bodyAnswer = subQuestionSteps.get(step).getBodyAnswerState();
+        for (FormStepData stepData : stepDataList) {
+            BodyAnswer bodyAnswer = stepData.stepBody.getBodyAnswerState();
             if (bodyAnswer == null || !bodyAnswer.isValid()) {
                 isAnswerValid = false;
 
@@ -271,7 +315,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
                 // This can override error messages to make it easier for the StepLayout
                 // to control the error message for the StepBody
                 if (identifierErrorMap != null) {
-                    invalidReason = identifierErrorMap.get(step.getIdentifier());
+                    invalidReason = identifierErrorMap.get(stepData.step.getIdentifier());
                 }
 
                 // This is the main way to get an error message, it is based off of the StepBody
@@ -294,12 +338,16 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     }
 
     /**
-     * @param stepToFind uses step to match find step body
-     * @return null if stepToFind does not have a corresponding StepBody in subQuestionsStep,
-     *         the StepBody object matching stepToFind otherwise
+     * @param stepIdToFind finds Question step in subQuestionSteps with this String
+     * @return QuestionStep with stepIdToFind, or null if one does not exist
      */
-    protected StepBody getStepBody(QuestionStep stepToFind) {
-        return getStepBody(stepToFind.getIdentifier());
+    protected FormStepData getFormStepData(String stepIdToFind) {
+        for (FormStepData stepData : subQuestionStepData) {
+            if (stepData.step.getIdentifier().equals(stepIdToFind)) {
+                return stepData;
+            }
+        }
+        return null;
     }
 
     /**
@@ -308,9 +356,10 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      *         the StepBody object matching stepIdToFind otherwise
      */
     protected StepBody getStepBody(String stepIdToFind) {
-        QuestionStep step = getQuestionStep(stepIdToFind);
-        if (step != null) {
-            return subQuestionSteps.get(step);
+        for (FormStepData stepData : subQuestionStepData) {
+            if (stepData.step.getIdentifier().equals(stepIdToFind)) {
+                return stepData.stepBody;
+            }
         }
         return null;
     }
@@ -320,9 +369,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      * @return QuestionStep with stepIdToFind, or null if one does not exist
      */
     protected QuestionStep getQuestionStep(String stepIdToFind) {
-        for (QuestionStep questionStep : subQuestionSteps.keySet()) {
-            if (questionStep.getIdentifier().equals(stepIdToFind)) {
-                return questionStep;
+        for (FormStepData stepData : subQuestionStepData) {
+            if (stepData.step.getIdentifier().equals(stepIdToFind)) {
+                return stepData.step;
             }
         }
         return null;
@@ -347,17 +396,15 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         return getResources().getString(stringResId);
     }
 
-    protected QuestionStep getFirstQuestionStep() {
-        Map.Entry<QuestionStep, StepBody> firstStepEntry = subQuestionSteps.entrySet().iterator().next();
-        return firstStepEntry.getKey();
-    }
+    protected class FormStepData {
+        QuestionStep step;
+        StepBody stepBody;
+        WeakReference<View> view;
 
-    protected StepBody getFirstStepBody() {
-        Map.Entry<QuestionStep, StepBody> firstStepEntry = subQuestionSteps.entrySet().iterator().next();
-        return firstStepEntry.getValue();
-    }
-
-    protected StepResult subQuestionResult(String stepIdentifier, StepResult stepResult) {
-        return StepResultHelper.findStepResult(stepResult, stepIdentifier);
+        FormStepData(QuestionStep step, StepBody stepBody, View view) {
+            this.step = step;
+            this.stepBody = stepBody;
+            this.view = new WeakReference<>(view);
+        }
     }
 }

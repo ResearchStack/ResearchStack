@@ -7,13 +7,16 @@ import android.view.View;
 
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.ObservableUtils;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -51,7 +54,7 @@ public class LoginStepLayout extends ProfileStepLayout {
 
     @Override
     protected void onNextClicked() {
-        boolean isAnswerValid = isAnswerValid(subQuestionSteps.keySet(), true);
+        boolean isAnswerValid = isAnswerValid(subQuestionStepData, true);
         if (isAnswerValid) {
             showLoadingDialog();
 
@@ -77,8 +80,8 @@ public class LoginStepLayout extends ProfileStepLayout {
 
     protected void forgotPasswordClicked() {
         // Forgot password button only needs a valid email
-        Set<QuestionStep> validSteps = new HashSet<>();
-        validSteps.add(getEmailStep());
+        List<FormStepData> validSteps = new ArrayList<>();
+        validSteps.add(getFormStepData(ProfileInfoOption.EMAIL.getIdentifier()));
         boolean isEmailValid = isAnswerValid(validSteps, true);
         if (isEmailValid) {
             showLoadingDialog();

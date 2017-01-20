@@ -8,6 +8,7 @@ import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.User;
+import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ProfileStep;
@@ -15,9 +16,11 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.utils.StepHelper;
+import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,7 +65,7 @@ public class ProfileStepLayout extends FormStepLayout {
 
     @Override
     public void initialize(Step step, StepResult result) {
-        validateStep(step);  // also sets formStep variable
+        validateStepAndResult(step, result);  // also sets formStep variable
         initializeErrorMap();
         // needed to have object passed in by reference in method below
         if (result == null) {
@@ -90,7 +93,7 @@ public class ProfileStepLayout extends FormStepLayout {
         }
         for (ProfileInfoOption option : getProfileStep().getProfileInfoOptions()) {
             // Look to see if the step result for this profile option already exists
-            StepResult profileResult = subQuestionResult(option.getIdentifier(), result);
+            StepResult profileResult = StepResultHelper.findStepResult(result, option.getIdentifier());
             // If it doesn't exist, create one matching the profile info option type from User object
             if (profileResult == null) {
                 Step profileStep = StepHelper.getStepWithIdentifier(formStep.getFormSteps(), option.getIdentifier());
@@ -160,8 +163,8 @@ public class ProfileStepLayout extends FormStepLayout {
         }
     }
 
-    protected boolean isAnswerValid(Set<QuestionStep> questionSteps, boolean showErrorAlertOnInvalid) {
-        return super.isAnswerValid(questionSteps, showErrorAlertOnInvalid, identifierErrorMap);
+    protected boolean isAnswerValid(List<FormStepData> stepDataList, boolean showErrorAlertOnInvalid) {
+        return super.isAnswerValid(stepDataList, showErrorAlertOnInvalid, identifierErrorMap);
     }
 
                                     /**
@@ -190,6 +193,13 @@ public class ProfileStepLayout extends FormStepLayout {
      */
     protected String getPassword() {
         return getTextAnswer(ProfileInfoOption.PASSWORD.getIdentifier());
+    }
+
+    /**
+     * @return Confirm Password if this profile form step has it, null otherwise
+     */
+    protected String getConfirmPassword() {
+        return getTextAnswer(SurveyFactory.PASSWORD_CONFIRMATION_IDENTIFIER);
     }
 
     /**
