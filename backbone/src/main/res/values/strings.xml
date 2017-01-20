@@ -218,6 +218,7 @@
     <!-- ProfileStepLayout -->
 
     <string name="rsb_error_invalid_password">Invalid Password</string>
+    <string name="rsb_error_passwords_do_not_match">Passwords do not match</string>
     <string name="rsb_error_invalid_email">Invalid Email</string>
     <string name="rsb_error_invalid_name">Invalid Name</string>
 
