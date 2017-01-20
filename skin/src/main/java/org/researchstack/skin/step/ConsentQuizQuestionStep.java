@@ -5,6 +5,7 @@ import org.researchstack.skin.R;
 import org.researchstack.backbone.model.ConsentQuizModel;
 import org.researchstack.skin.ui.layout.ConsentQuizQuestionStepLayout;
 
+@Deprecated // Use NavigationFormStep or NavigationSubtaskStep instead
 public class ConsentQuizQuestionStep extends Step
 {
     private ConsentQuizModel.QuizQuestion question;

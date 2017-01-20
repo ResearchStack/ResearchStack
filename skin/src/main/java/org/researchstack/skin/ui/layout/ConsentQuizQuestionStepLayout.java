@@ -32,6 +32,7 @@ import org.researchstack.skin.step.ConsentQuizQuestionStep;
 
 import java.util.List;
 
+@Deprecated // Use FormStepLayout instead
 public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepLayout
 {
     static final String LOG_TAG = ConsentQuizQuestionStepLayout.class.getCanonicalName();

@@ -16,6 +16,7 @@ import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 
+@Deprecated // use FormStepLayout instead
 public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implements StepLayout
 {
 

@@ -16,6 +16,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.skin.R;
 
+@Deprecated // use OnboardingManager.getInstance().launchOnboarding(OnboardingTaskType.REGISTRATION, this);
 public class SignUpIneligibleStepLayout extends LinearLayout implements StepLayout
 {
     private StepCallbacks callbacks;

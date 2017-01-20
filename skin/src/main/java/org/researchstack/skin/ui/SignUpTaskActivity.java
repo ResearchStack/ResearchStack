@@ -24,6 +24,7 @@ import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
 
+@Deprecated // use OnboardingManager.getInstance().launchOnboarding(OnboardingTaskType.REGISTRATION, this);
 public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCallback
 {
 
@@ -129,7 +130,7 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
 
     private void saveConsentResultInfo()
     {
-        DataProvider.getInstance().saveLocalConsent(this, consentResult);
+        DataProvider.getInstance().saveConsent(this, consentResult);
     }
 
     @TargetApi(Build.VERSION_CODES.M)

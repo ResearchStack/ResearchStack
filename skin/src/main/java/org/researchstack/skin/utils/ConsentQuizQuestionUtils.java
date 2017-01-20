@@ -16,6 +16,7 @@ import java.util.List;
  * This class the business logic of interacting with the ConsentQuizModel object
  */
 
+@Deprecated // We no long need this class now that we have deprecated ConsentQuizModel
 public class ConsentQuizQuestionUtils {
 
     static final String LOG_TAG = ConsentQuizQuestionUtils.class.getCanonicalName();

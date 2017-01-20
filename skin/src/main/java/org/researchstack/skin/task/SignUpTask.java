@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Deprecated // use OnboardingManager.launchOnboarding(... TaskType.REGISTRATION)
+@Deprecated // use OnboardingManager.getInstance().launchOnboarding(context, TaskType.REGISTRATION);
 public class SignUpTask extends OnboardingTask
 {
     private boolean hasPasscode;

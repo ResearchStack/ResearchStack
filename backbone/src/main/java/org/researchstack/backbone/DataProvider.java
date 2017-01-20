@@ -170,6 +170,7 @@ public abstract class DataProvider
      *
      * @param context android context
      */
+    @Deprecated // use uploadConsent(Context context, ConsentSignatureBody signature) instead
     public abstract void uploadConsent(Context context, TaskResult consentResult);
 
     /**
@@ -197,7 +198,8 @@ public abstract class DataProvider
      *
      * @param context android context
      */
-    public abstract void saveLocalConsent(Context context, TaskResult consentResult);
+    @Deprecated // use saveLocalConsent(Context context, ConsentSignatureBody signature) instead
+    public abstract void saveConsent(Context context, TaskResult consentResult);
 
     /**
      * This method is responsible in saving user consent information (e.g. Name, Birthdate,

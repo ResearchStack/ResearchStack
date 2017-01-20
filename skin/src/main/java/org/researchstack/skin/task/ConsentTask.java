@@ -36,6 +36,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@Deprecated
+/**
+ * use OnboardingManager.getInstance().launchOnboarding(context, TaskType.REGISTRATION);
+ * use OnboardingManager.getInstance().launchOnboarding(context, TaskType.LOGIN); or...
+ * use OnboardingManager.getInstance().launchOnboarding(context, TaskType.RECONSENT);
+ */
 public class ConsentTask extends OrderedTask
 {
     public static final String ID_VISUAL                        = "ID_VISUAL";

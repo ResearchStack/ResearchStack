@@ -7,6 +7,7 @@ import org.researchstack.backbone.model.DocumentProperties;
 
 import java.util.List;
 
+@Deprecated // No longer needed with new OnboardingManager
 public class ConsentSectionModel
 {
 

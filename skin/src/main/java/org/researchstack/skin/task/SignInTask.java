@@ -7,7 +7,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.skin.TaskProvider;
 
-
+@Deprecated // use OnboardingManager.getInstance().launchOnboarding(OnboardingTaskType.LOGIN, this);
 public class SignInTask extends OnboardingTask
 {
     private boolean hasPasscode;
