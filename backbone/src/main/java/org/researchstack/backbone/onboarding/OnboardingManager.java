@@ -1,13 +1,15 @@
-package org.researchstack.skin.onboarding;
+package org.researchstack.backbone.onboarding;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.StringRes;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.model.ConsentSection;
@@ -16,18 +18,14 @@ import org.researchstack.backbone.model.survey.CustomSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
-import org.researchstack.backbone.onboarding.OnboardingSection;
-import org.researchstack.backbone.onboarding.OnboardingSectionType;
-import org.researchstack.backbone.onboarding.OnboardingSectionAdapter;
-import org.researchstack.backbone.onboarding.OnboardingTaskType;
-import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.ResourceManager;
-import org.researchstack.skin.ui.OnboardingTaskActivity;
+import org.researchstack.backbone.ui.OnboardingTaskActivity;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -189,6 +187,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
         for (OnboardingSection section : getSections()) {
             List<Step> subSteps = steps(context, section, taskType);
             if (subSteps != null) {
+                setStepTitles(section, subSteps);
                 steps.addAll(subSteps);
             }
         }
@@ -377,6 +376,46 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
     public CustomStep createCustomStep(CustomSurveyItem item, SurveyFactory factory) {
         // Go with default implementation of this SurveyFactory
         return factory.createCustomStep(item);
+    }
+
+    /**
+     * @param section that these steps belong to
+     * @param stepList the list of steps created from this section and the JSON
+     */
+    public void setStepTitles(OnboardingSection section, List<Step> stepList) {
+        for (Step step : stepList) {
+            if (step.getStepTitle() == 0) {
+                switch (section.getOnboardingSectionType()) {
+                    case LOGIN:
+                        step.setStepTitle(R.string.rsb_login_step_title);
+                        break;
+                    case PASSCODE:
+                        step.setStepTitle(R.string.rsb_passcode);
+                        break;
+                    case REGISTRATION:
+                        step.setStepTitle(R.string.rsb_registration_step_title);
+                        break;
+                    case PERMISSIONS:
+                        step.setStepTitle(R.string.rsb_permissions_step_title);
+                        break;
+                    case PROFILE:
+                        step.setStepTitle(R.string.rsb_profile_step_title);
+                        break;
+                    case CONSENT:
+                        step.setStepTitle(R.string.rsb_consent_step_title);
+                        break;
+                    case EMAIL_VERIFICATION:
+                        step.setStepTitle(R.string.rsb_email_verification_step_title);
+                        break;
+                    case ELIGIBILITY:
+                        step.setStepTitle(R.string.rsb_eligibility_step_title);
+                        break;
+                    case COMPLETION:
+                        step.setStepTitle(R.string.rsb_completion_step_title);
+                        break;
+                }
+            }
+        }
     }
 }
 
