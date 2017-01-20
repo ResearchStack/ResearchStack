@@ -16,6 +16,7 @@ import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.skin.R;
 
+@Deprecated // No longer needed with new OnboardingManager
 public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayout
 {
 

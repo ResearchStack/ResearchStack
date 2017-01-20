@@ -11,6 +11,7 @@ import org.researchstack.backbone.ui.step.layout.PermissionStepLayout;
 import org.researchstack.skin.ui.layout.SignInStepLayout;
 import org.researchstack.skin.ui.layout.SignUpStepLayout;
 
+@Deprecated // No longer needed with new OnboardingManager
 public abstract class OnboardingTask extends Task
 {
     public static final String SignUpInclusionCriteriaStepIdentifier = "InclusionCriteria";

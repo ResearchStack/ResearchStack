@@ -26,6 +26,7 @@ import org.researchstack.skin.R;
 import org.researchstack.skin.task.SignInTask;
 import org.researchstack.skin.ui.adapter.TextWatcherAdapter;
 
+@Deprecated // No longer needed with new OnboardingManager
 public class SignInStepLayout extends RelativeLayout implements StepLayout
 {
     private View               progress;

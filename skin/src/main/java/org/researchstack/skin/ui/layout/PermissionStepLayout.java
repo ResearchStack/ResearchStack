@@ -27,6 +27,7 @@ import org.researchstack.backbone.R;
 
 import java.util.List;
 
+@Deprecated // No longer needed with new OnboardingManager
 public class PermissionStepLayout extends LinearLayout implements StepLayout, StepPermissionRequest
 {
     private Step step;

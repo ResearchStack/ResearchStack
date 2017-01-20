@@ -24,6 +24,7 @@ import org.researchstack.skin.UiManager;
 import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.adapter.TextWatcherAdapter;
 
+@Deprecated // No longer needed with new OnboardingManager
 public class SignUpStepLayout extends RelativeLayout implements StepLayout
 {
     private StepCallbacks callbacks;
