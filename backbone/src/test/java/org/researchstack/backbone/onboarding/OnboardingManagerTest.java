@@ -1,12 +1,8 @@
-package org.researchstack.skin.onboarding;
+package org.researchstack.backbone.onboarding;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.researchstack.backbone.onboarding.OnboardingManager;
-import org.researchstack.backbone.onboarding.OnboardingSection;
-import org.researchstack.backbone.onboarding.OnboardingSectionType;
-import org.researchstack.backbone.onboarding.OnboardingTaskType;
-import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
+import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.Step;

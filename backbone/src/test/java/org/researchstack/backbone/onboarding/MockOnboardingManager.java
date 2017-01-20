@@ -1,4 +1,4 @@
-package org.researchstack.skin.onboarding;
+package org.researchstack.backbone.onboarding;
 
 import android.content.Context;
 

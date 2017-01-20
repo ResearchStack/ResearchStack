@@ -86,7 +86,8 @@ public abstract class DataProvider
     public abstract Observable<DataResponse> signIn(Context context, String username, String password);
 
     /**
-     * Currently not used within the framework
+     * Sign out the user.  This will possibly involve a call to the server,
+     * and also clear all relevant local data that relates to the User, User Session, or Consent
      *
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}

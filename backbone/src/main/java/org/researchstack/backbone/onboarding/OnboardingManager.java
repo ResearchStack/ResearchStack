@@ -206,8 +206,8 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
      * @param stepList to make NavigableOrderedTask
      * @return NavigableOrderedTask with step list
      */
-    public NavigableOrderedTask createOnboardingTask(String identifier, List<Step> stepList) {
-        return new NavigableOrderedTask(identifier, stepList);
+    public OnboardingManagerTask createOnboardingTask(String identifier, List<Step> stepList) {
+        return new OnboardingManagerTask(identifier, stepList);
     }
 
     /**

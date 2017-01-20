@@ -74,18 +74,16 @@ public class OnboardingTaskActivity extends ViewTaskActivity implements Activity
     {
         StepLayout superStepLayout = super.getLayoutForStep(step);
 
-        // Onboarding Tasks use Step's title for the title, or a lookup table for Titles
-        if (step.getStepTitle() != 0) {
-            previousStepTitle = getString(step.getStepTitle());
+        // Onboarding Tasks will keep the previous step title if none is available
+        String title = task.getTitleForStep(this, step);
+        if (title == null) {
+            setActionBarTitle(previousStepTitle);
         } else {
-            String newStepTitle = getStepTitle(step);
-            if (newStepTitle != null) {
-                previousStepTitle = newStepTitle;
-            }
+            previousStepTitle = title;
         }
-        setActionBarTitle(previousStepTitle);
 
         setupCustomStepLayouts(superStepLayout);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(shouldShowBackButton(step));
 
         return superStepLayout;
     }
@@ -182,26 +180,13 @@ public class OnboardingTaskActivity extends ViewTaskActivity implements Activity
         // deprecated
     }
 
-    /**
-     * @param step to find title for
-     * @return null if no step title is found, step title otherwise
-     */
-    public String getStepTitle(Step step) {
-
-        @StringRes int stepTitleRes = -1;
-        // All these are Subtasks, so identifier will be in the form of id.[question_id]
-        if (step.getIdentifier().contains(SurveyFactory.CONSENT_QUIZ_IDENTIFIER)) {
-            stepTitleRes = R.string.rsb_consent_quiz_step_title;
-        } else if (step.getIdentifier().contains(ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER)) {
-            stepTitleRes = R.string.rsb_consent_review_step_title;
-        } else if (step.getIdentifier().contains(ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER)) {
-            stepTitleRes = R.string.rsb_consent_review_step_title;
+    public boolean shouldShowBackButton(Step step) {
+        switch (step.getIdentifier()) {
+            case OnboardingSection.EMAIL_VERIFICATION_IDENTIFIER:
+                return false;
+            case OnboardingSection.REGISTRATION_IDENTIFIER:
+                return false;
         }
-
-        if (stepTitleRes != -1) {
-            return getString(stepTitleRes);
-        }
-
-        return null;
+        return true;
     }
 }

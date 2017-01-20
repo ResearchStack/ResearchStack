@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import org.researchstack.backbone.result.StepResult;
@@ -91,6 +92,11 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
         if (stepResult == null) {
             stepResult = new StepResult<>(substepListStep);
         }
+    }
+
+    protected void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindowToken(), 0);
     }
 
     @Override
@@ -186,12 +192,14 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
         }
 
         boolean moveNext() {
+            hideKeyboard();
             int previousIndex = viewPager.getCurrentItem();
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
             return previousIndex != viewPager.getCurrentItem();
         }
 
         boolean movePrevious() {
+            hideKeyboard();
             int previousIndex = viewPager.getCurrentItem();
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
             return previousIndex != viewPager.getCurrentItem();
