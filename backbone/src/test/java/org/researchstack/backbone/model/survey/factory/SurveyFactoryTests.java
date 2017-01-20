@@ -64,7 +64,7 @@ public class SurveyFactoryTests {
     public void testEligibilitySurveyFactory() {
         Type listType = new TypeToken<List<SurveyItem>>() {
         }.getType();
-        String eligibilityJson = resourceHelper.getJsonStringForResourceName("eligibilityrequirements");
+        String eligibilityJson = resourceHelper.getJsonStringForResourceName("survey_factory_eligibilityrequirements");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(eligibilityJson, listType);
 
         SurveyFactory factory = new SurveyFactory(helper.mockContext, surveyItemList);
@@ -105,7 +105,7 @@ public class SurveyFactoryTests {
     {
         Type listType = new TypeToken<List<SurveyItem>>() {
         }.getType();
-        String eligibilityJson = resourceHelper.getJsonStringForResourceName("onboarding");
+        String eligibilityJson = resourceHelper.getJsonStringForResourceName("survey_factory_onboarding");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(eligibilityJson, listType);
 
         SurveyFactory factory = new SurveyFactory(helper.mockContext, surveyItemList);
@@ -160,7 +160,7 @@ public class SurveyFactoryTests {
         ConsentDocument consentDoc = helper.gson.fromJson(consentDocJson, ConsentDocument.class);
 
         Type listType = new TypeToken<List<SurveyItem>>() {}.getType();
-        String consentItemsJson = resourceHelper.getJsonStringForResourceName("consent");
+        String consentItemsJson = resourceHelper.getJsonStringForResourceName("survey_factory_consent");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(consentItemsJson, listType);
 
         ConsentDocumentFactory factory = new ConsentDocumentFactory(helper.mockContext, surveyItemList, consentDoc, helper.converter);

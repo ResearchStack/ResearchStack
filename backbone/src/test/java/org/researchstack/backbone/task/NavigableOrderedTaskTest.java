@@ -8,6 +8,7 @@ import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.factory.ResourceParserHelper;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
+import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
@@ -200,12 +201,10 @@ public class NavigableOrderedTaskTest
 
     @Test
     public void testNavigationExpectedAnswerRulesPassed() {
-        Type listType = new TypeToken<List<SurveyItem>>() {
-        }.getType();
         String eligibilityJson = mParserHelper.getJsonStringForResourceName("eligibilityrequirements");
-        List<SurveyItem> surveyItemList = mSurveyFactoryHelper.gson.fromJson(eligibilityJson, listType);
+        OnboardingSection section = mSurveyFactoryHelper.gson.fromJson(eligibilityJson, OnboardingSection.class);
 
-        SurveyFactory factory = new SurveyFactory(mSurveyFactoryHelper.mockContext, surveyItemList);
+        SurveyFactory factory = new SurveyFactory(mSurveyFactoryHelper.mockContext, section.surveyItems);
 
         String taskId = "Parent Task";
         NavigableOrderedTask task = new NavigableOrderedTask(taskId, factory.getSteps());
@@ -235,12 +234,10 @@ public class NavigableOrderedTaskTest
 
     @Test
     public void testNavigationExpectedAnswerRulesFailed() {
-        Type listType = new TypeToken<List<SurveyItem>>() {
-        }.getType();
         String eligibilityJson = mParserHelper.getJsonStringForResourceName("eligibilityrequirements");
-        List<SurveyItem> surveyItemList = mSurveyFactoryHelper.gson.fromJson(eligibilityJson, listType);
+        OnboardingSection section = mSurveyFactoryHelper.gson.fromJson(eligibilityJson, OnboardingSection.class);
 
-        SurveyFactory factory = new SurveyFactory(mSurveyFactoryHelper.mockContext, surveyItemList);
+        SurveyFactory factory = new SurveyFactory(mSurveyFactoryHelper.mockContext, section.surveyItems);
 
         String taskId = "Parent Task";
         NavigableOrderedTask task = new NavigableOrderedTask(taskId, factory.getSteps());
