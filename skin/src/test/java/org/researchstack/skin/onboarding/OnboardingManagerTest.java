@@ -2,14 +2,7 @@ package org.researchstack.skin.onboarding;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.researchstack.backbone.model.Choice;
-import org.researchstack.backbone.model.survey.ConsentReviewSurveyItem;
-import org.researchstack.backbone.model.survey.ConsentSharingOptionsSurveyItem;
-import org.researchstack.backbone.model.survey.InstructionSurveyItem;
-import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
-import org.researchstack.backbone.model.survey.SubtaskQuestionSurveyItem;
-import org.researchstack.backbone.model.survey.SurveyItemType;
-import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
+import org.researchstack.backbone.onboarding.OnboardingManager;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.onboarding.OnboardingSectionType;
 import org.researchstack.backbone.onboarding.OnboardingTaskType;

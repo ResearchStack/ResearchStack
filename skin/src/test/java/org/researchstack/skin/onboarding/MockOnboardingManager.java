@@ -2,6 +2,7 @@ package org.researchstack.skin.onboarding;
 
 import android.content.Context;
 
+import org.researchstack.backbone.onboarding.OnboardingManager;
 import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
 
 /**

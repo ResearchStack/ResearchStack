@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -14,18 +12,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.ui.callbacks.ActivityCallback;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
 import org.researchstack.backbone.utils.StepLayoutHelper;
 
-import java.lang.reflect.Constructor;
 import java.util.Date;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
@@ -35,6 +30,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
 
     private StepSwitcher root;
+    protected Toolbar toolbar;
 
     private Step currentStep;
     protected Task task;
@@ -57,7 +53,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         super.setResult(RESULT_CANCELED);
         super.setContentView(R.layout.rsb_activity_step_switcher);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -92,6 +88,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     protected void showNextStep()
     {
+        hideKeyboard();
         Step nextStep = task.getStepAfterStep(currentStep, taskResult);
         if(nextStep == null)
         {

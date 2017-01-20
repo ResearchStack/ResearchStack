@@ -37,7 +37,12 @@ public enum OnboardingSectionType {
     }
 
     private String identifier;
-    String getIdentifier() {
+
+    /**
+     * @return identifier for OnboardingSectionStep, only to be used for comparison
+     *         outside of the OnboardingManager
+     */
+    public String getIdentifier() {
         return identifier;
     }
 }

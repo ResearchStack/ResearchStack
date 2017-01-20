@@ -242,4 +242,19 @@
     <string name="rsb_change_email">Change Email</string>
     <string name="rsb_verify_password">To verify email</string>
 
+    <!-- Onboarding -->
+    <string name="rsb_login_step_title">Login</string>
+    <string name="rsb_registration_step_title">Registration</string>
+    <string name="rsb_consent_step_title">Consent</string>
+    <string name="rsb_consent_quiz_step_title">Consent Quiz</string>
+    <string name="rsb_consent_review_step_title">Consent Review</string>
+    <string name="rsb_eligibility_step_title">Eligibility</string>
+    <string name="rsb_permissions_step_title">Permissions</string>
+    <string name="rsb_email_verification_step_title">Verify Email</string>
+    <string name="rsb_profile_step_title">Profile</string>
+    <string name="rsb_completion_step_title">Onboarding Complete</string>
+
+    <string name="rsb_are_you_sure">Are you sure?</string>
+    <string name="rsb_discard_results">Discard Results</string>
+
 </resources>

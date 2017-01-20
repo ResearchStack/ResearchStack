@@ -52,8 +52,8 @@ public enum SurveyItemType {
     // Consent subtypes
     @SerializedName(ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER)
     CONSENT_SHARING_OPTIONS     (ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER),  // ConsentSharingStep
-    @SerializedName("consentReview")
-    CONSENT_REVIEW              ("consentReview"),          // ConsentReviewStep
+    @SerializedName(ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER)
+    CONSENT_REVIEW              (ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER),          // ConsentReviewStep
     @SerializedName("consentVisual")
     CONSENT_VISUAL              ("consentVisual"),          // VisualConsentStep
     // Account subtypes

@@ -12,7 +12,7 @@ import org.researchstack.backbone.storage.file.EncryptionProvider;
 import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.storage.file.PinCodeConfig;
 import org.researchstack.skin.notification.NotificationConfig;
-import org.researchstack.skin.onboarding.OnboardingManager;
+import org.researchstack.backbone.onboarding.OnboardingManager;
 
 /**
  * Research stack is a singleton which controls all the major components of the ResearchStack
@@ -155,7 +155,7 @@ public abstract class ResearchStack
      * @param context android Contenxt
      * @return concrete implementation of {@link TaskProvider}
      *
-     * @deprecated use org.researchstack.skin.onboarding.OnboardingManager instead
+     * @deprecated use org.researchstack.backbone.onboarding.OnboardingManager instead
      */
     protected abstract TaskProvider createTaskProviderImplementation(Context context);
 

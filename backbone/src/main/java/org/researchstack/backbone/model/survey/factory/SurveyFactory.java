@@ -32,6 +32,7 @@ import org.researchstack.backbone.model.survey.SubtaskQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
 import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
+import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.FormStep;
@@ -60,6 +61,7 @@ public class SurveyFactory {
 
     // The rest of them use the toString of ProfileInfoOption
     public static final String PASSWORD_CONFIRMATION_IDENTIFIER = "confirmation";
+    public static final String CONSENT_QUIZ_IDENTIFIER = "consentQuiz";
 
     // When set, this will be used
     CustomStepCreator customStepCreator;
