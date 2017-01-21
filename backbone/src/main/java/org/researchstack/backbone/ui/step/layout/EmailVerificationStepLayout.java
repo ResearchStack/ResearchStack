@@ -150,8 +150,7 @@ public class EmailVerificationStepLayout extends FixedSubmitBarLayout implements
      */
     @Override
     public boolean isBackEventConsumed() {
-        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, emailStep, stepResult);
-        return false;
+        return true;  // can't move backwards from this step layout
     }
 
     public void setCallbacks(StepCallbacks callbacks) {

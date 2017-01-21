@@ -3,6 +3,7 @@ package org.researchstack.backbone.utils;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -55,6 +56,51 @@ public class StepResultHelper {
                         return recursiveStepResult;
                     }
                 }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param stepIdentifier for result
+     * @return String object if exists, empty string otherwise
+     */
+    public static String findStringResult(String stepIdentifier, StepResult stepResult) {
+        StepResult idStepResult = findStepResult(stepResult, stepIdentifier);
+        if (idStepResult != null) {
+            Object resultValue = idStepResult.getResult();
+            if (resultValue instanceof String) {
+                return (String) resultValue;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param stepIdentifier for result
+     * @return String object if exists, empty string otherwise
+     */
+    public static Boolean findBooleanResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
+        StepResult idStepResult = findStepResult(stepResult, stepIdentifier);
+        if (idStepResult != null) {
+            Object resultValue = idStepResult.getResult();
+            if (resultValue instanceof Boolean) {
+                return (Boolean) resultValue;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param stepIdentifier for result
+     * @return String object if exists, empty string otherwise
+     */
+    public static Date findDateResult(String stepIdentifier, StepResult stepResult) {
+        StepResult idStepResult = findStepResult(stepResult, stepIdentifier);
+        if (idStepResult != null) {
+            Object resultValue = idStepResult.getResult();
+            if (resultValue instanceof Long) {
+                return new Date((Long)resultValue);
             }
         }
         return null;

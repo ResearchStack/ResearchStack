@@ -4,16 +4,19 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import org.researchstack.backbone.DataProvider;
+import org.researchstack.backbone.DataResponse;
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.utils.ObservableUtils;
+import org.researchstack.backbone.utils.StepLayoutHelper;
 import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.util.Date;
 import java.util.Map;
+
+import rx.Observable;
 
 /**
  * Created by TheMDP on 1/16/17.
@@ -43,20 +46,14 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
     }
 
     protected void uploadConsent(ConsentSignatureBody consentSignatureBody) {
-        DataProvider.getInstance()
+        Observable<DataResponse> uploadConsent = DataProvider.getInstance()
                 .uploadConsent(getContext(), consentSignatureBody)
-                .compose(ObservableUtils.applyDefault())
-                .subscribe(dataResponse -> {
-                    hideLoadingDialog();
-                    if(dataResponse.isSuccess()) {
-                        super.onComplete();
-                    } else {
-                        showOkAlertDialog(dataResponse.getMessage());
-                    }
-                }, throwable -> {
-                    hideLoadingDialog();
-                    showOkAlertDialog(throwable.getMessage());
-                });
+                .compose(ObservableUtils.applyDefault());
+
+        // Only gives a callback to response on success, the rest is handled by StepLayoutHelper
+        StepLayoutHelper.safePerformWithAlerts(uploadConsent, this, response ->
+                super.onComplete()
+        );
     }
 
     /**
@@ -72,7 +69,9 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
         }
 
         // Grab signature from step result
-        StepResult signatureResult = getResult(ConsentDocumentFactory.CONSENT_SIGNATURE_IDENTIFIER, stepResult);
+        StepResult signatureResult = StepResultHelper.findStepResult(
+                stepResult, ConsentDocumentFactory.CONSENT_SIGNATURE_IDENTIFIER);
+
         if (signatureResult != null) {
             Map<String, Object> signatureData = signatureResult.getResults();
             for (String stepKey : signatureData.keySet()) {
@@ -88,13 +87,13 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
             throw new IllegalStateException("Image data needs to be accessable at this point for StepLayout to work");
         }
 
-        String usersName = getStringResult(ProfileInfoOption.NAME.getIdentifier(), stepResult);
+        String usersName = StepResultHelper.findStringResult(ProfileInfoOption.NAME.getIdentifier(), stepResult);
         if (usersName == null) {
             throw new IllegalStateException("Names needs to be accessable at this point for StepLayout to work");
         }
         body.name = usersName;
 
-        Date usersBirthday = getDateResult(ProfileInfoOption.BIRTHDATE.getIdentifier(), stepResult);
+        Date usersBirthday = StepResultHelper.findDateResult(ProfileInfoOption.BIRTHDATE.getIdentifier(), stepResult);
         if (usersBirthday == null) {
             throw new IllegalStateException("Birthdate needs to be accessable at this point for StepLayout to work");
         }
@@ -103,58 +102,5 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
         // Save Consent Information
         // User is not signed in yet, so we need to save consent info to disk for later upload
         return body;
-    }
-
-    /**
-     * @param stepIdentifier for result
-     * @return Object result if exists, null otherwise
-     */
-    protected static StepResult getResult(String stepIdentifier, StepResult stepResult) {
-        return StepResultHelper.findStepResult(stepResult, stepIdentifier);
-    }
-
-    /**
-     * @param stepIdentifier for result
-     * @return String object if exists, empty string otherwise
-     */
-    protected static String getStringResult(String stepIdentifier, StepResult stepResult) {
-        StepResult idStepResult = getResult(stepIdentifier, stepResult);
-        if (idStepResult != null) {
-            Object resultValue = idStepResult.getResult();
-            if (resultValue instanceof String) {
-                return (String) resultValue;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @param stepIdentifier for result
-     * @return String object if exists, empty string otherwise
-     */
-    protected static Boolean getBooleanResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
-        StepResult idStepResult = getResult(stepIdentifier, stepResult);
-        if (idStepResult != null) {
-            Object resultValue = idStepResult.getResult();
-            if (resultValue instanceof Boolean) {
-                return (Boolean) resultValue;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @param stepIdentifier for result
-     * @return String object if exists, empty string otherwise
-     */
-    protected static Date getDateResult(String stepIdentifier, StepResult stepResult) {
-        StepResult idStepResult = getResult(stepIdentifier, stepResult);
-        if (idStepResult != null) {
-            Object resultValue = idStepResult.getResult();
-            if (resultValue instanceof Long) {
-                return new Date((Long)resultValue);
-            }
-        }
-        return null;
     }
 }

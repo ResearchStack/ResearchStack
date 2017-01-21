@@ -38,14 +38,14 @@ public class AlertLinearLayout extends LinearLayout {
      * Helper method for ProfileSteps that need to make calls to the web
      * Uses default localization of "Loading..."
      */
-    protected void showLoadingDialog() {
+    public void showLoadingDialog() {
         showLoadingDialog(getContext().getString(R.string.rsb_loading_ellipses));
     }
 
     /**
      * Helper method for ProfileSteps that need to make calls to the web
      */
-    protected void showLoadingDialog(String title) {
+    public void showLoadingDialog(String title) {
         hideLoadingDialog();  // just in case these are showing
         hideAlertDialog();
         progressDialog = ProgressDialog.show(getContext(), "", title);
@@ -54,7 +54,7 @@ public class AlertLinearLayout extends LinearLayout {
     /**
      * Helper method for ProfileSteps that need to make calls to the web
      */
-    protected void hideLoadingDialog() {
+    public void hideLoadingDialog() {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
@@ -64,7 +64,7 @@ public class AlertLinearLayout extends LinearLayout {
      * Helper method for showing an error alert
      * @param message message that will be show with alert
      */
-    protected void showOkAlertDialog(String message) {
+    public void showOkAlertDialog(String message) {
         hideLoadingDialog();  // just in case these are showing
         hideAlertDialog();
         alertDialog = new AlertDialog.Builder(getContext())
@@ -74,7 +74,7 @@ public class AlertLinearLayout extends LinearLayout {
         alertDialog.show();
     }
 
-    protected void hideAlertDialog() {
+    public void hideAlertDialog() {
         if (alertDialog != null) {
             alertDialog.dismiss();
         }

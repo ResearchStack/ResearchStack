@@ -7,8 +7,12 @@ import android.widget.Toast;
 
 import org.researchstack.backbone.DataProvider;
 
+import org.researchstack.backbone.DataResponse;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.utils.ObservableUtils;
+import org.researchstack.backbone.utils.StepLayoutHelper;
+
+import rx.Observable;
 
 /**
  * Created by TheMDP on 1/15/17.
@@ -33,6 +37,11 @@ public class RegistrationStepLayout extends ProfileStepLayout {
     }
 
     @Override
+    public boolean isBackEventConsumed() {
+        return true;  // can't move backwards from this step layout
+    }
+
+    @Override
     protected void onNextClicked() {
         boolean isAnswerValid = isAnswerValid(subQuestionStepData, true);
         if (isAnswerValid) {
@@ -46,22 +55,15 @@ public class RegistrationStepLayout extends ProfileStepLayout {
                 return;
             }
 
-            showLoadingDialog();
-            DataProvider.getInstance()
+            Observable<DataResponse> registration =DataProvider.getInstance()
                     // As of right now, username is unused in and email is only supported
                     .signUp(getContext(), email, email, password)
-                    .compose(ObservableUtils.applyDefault())
-                    .subscribe(dataResponse -> {
-                        hideLoadingDialog();
-                        if(dataResponse.isSuccess()) {
-                            super.onNextClicked();
-                        } else {
-                            showOkAlertDialog(dataResponse.getMessage());
-                        }
-                    }, throwable -> {
-                        hideLoadingDialog();
-                        showOkAlertDialog(throwable.getMessage());
-                    });
+                    .compose(ObservableUtils.applyDefault());
+
+            // Only gives a callback to response on success, the rest is handled by StepLayoutHelper
+            StepLayoutHelper.safePerformWithAlerts(registration, this, response ->
+                    super.onNextClicked()
+            );
         }
     }
 }
