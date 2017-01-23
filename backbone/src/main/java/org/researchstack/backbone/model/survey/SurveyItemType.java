@@ -2,6 +2,9 @@ package org.researchstack.backbone.model.survey;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
+import org.researchstack.backbone.model.survey.factory.SurveyFactory;
+
 /**
  * Created by TheMDP on 12/31/16.
  */
@@ -16,7 +19,7 @@ public enum SurveyItemType {
     @SerializedName("instruction")
     INSTRUCTION                 ("instruction"),            // InstructionStep
     @SerializedName("completion")
-    INSTRUCTION_COMPLETION      ("completion"),             // OnboardingCompletionStep
+    INSTRUCTION_COMPLETION      ("completion"),             // CompletionStep
     // Question, aka Form, Subtypes
     @SerializedName("compound")
     QUESTION_COMPOUND           ("compound"),               // QuestionSteps > 1
@@ -47,10 +50,10 @@ public enum SurveyItemType {
     @SerializedName("timingRange")
     QUESTION_TIMING_RANGE       ("timingRange"),            // Timing Range: ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
     // Consent subtypes
-    @SerializedName("consentSharingOptions")
-    CONSENT_SHARING_OPTIONS     ("consentSharingOptions"),  // ConsentSharingStep
-    @SerializedName("consentReview")
-    CONSENT_REVIEW              ("consentReview"),          // ConsentReviewStep
+    @SerializedName(ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER)
+    CONSENT_SHARING_OPTIONS     (ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER),  // ConsentSharingStep
+    @SerializedName(ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER)
+    CONSENT_REVIEW              (ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER),          // ConsentReviewStep
     @SerializedName("consentVisual")
     CONSENT_VISUAL              ("consentVisual"),          // VisualConsentStep
     // Account subtypes

@@ -52,12 +52,16 @@ public class OnboardingSection {
     static final String ONBOARDING_RESOURCE_NAME_GSON = "resourceName";
 
     transient SurveyFactory surveyFactory;
-    public SurveyFactory getDefaultOnboardingSurveyFactory(Context context) {
+    public SurveyFactory getDefaultOnboardingSurveyFactory(
+            Context context,
+            ResourceNameToStringConverter converter,
+            SurveyFactory.CustomStepCreator customStepCreator)
+    {
         if (surveyFactory != null) {
             return surveyFactory;
         }
 
-        surveyFactory = new SurveyFactory(context, surveyItems);
+        surveyFactory = new SurveyFactory(context, surveyItems, customStepCreator);
         return surveyFactory;
     }
 }

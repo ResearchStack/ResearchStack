@@ -6,6 +6,7 @@ import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 
+@Deprecated // No longer needed since ConsentTask is deprecated
 public class ConsentTaskActivity extends ViewTaskActivity
 {
     public static Intent newIntent(Context context, Task task)

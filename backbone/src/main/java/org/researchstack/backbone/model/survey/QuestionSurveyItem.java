@@ -18,7 +18,13 @@ public class QuestionSurveyItem<T extends Object> extends SurveyItem<T> {
     public RangeSurveyItem range;
 
     @SerializedName("expectedAnswer")
-    public boolean expectedAnswer; // Does this need to be a generic type?
+    public Object expectedAnswer;
+
+    @SerializedName("skipIdentifier")
+    public String skipIdentifier;
+
+    @SerializedName("skipIfPassed")
+    public boolean skipIfPassed;
 
     /* Default constructor needed for serilization/deserialization of object */
     QuestionSurveyItem() {
@@ -40,10 +46,10 @@ public class QuestionSurveyItem<T extends Object> extends SurveyItem<T> {
     /**
      * @return false by default, true if this question survey item
      *         can be used to create a QuestionStep that will implement
-     *         the interface NavigationStep
+     *         an interface in NavigableOrderedTask
      */
     public boolean usesNavigation() {
-        if (skipIdentifier != null || rulePredicate != null) {
+        if (skipIdentifier != null || expectedAnswer != null) {
             return true;
         }
         return false;

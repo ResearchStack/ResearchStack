@@ -20,9 +20,9 @@ import java.util.List;
 
 public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSection> {
 
-    ResourceNameJsonProvider mResourceNameConverter;
+    ResourceNameToStringConverter mResourceNameConverter;
 
-    public OnboardingSectionAdapter(ResourceNameJsonProvider converter) {
+    public OnboardingSectionAdapter(ResourceNameToStringConverter converter) {
         mResourceNameConverter = converter;
     }
 

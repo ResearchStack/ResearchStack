@@ -19,6 +19,7 @@ import android.widget.Toast;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ConsentQuestionType;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
@@ -31,6 +32,7 @@ import org.researchstack.skin.step.ConsentQuizQuestionStep;
 
 import java.util.List;
 
+@Deprecated // Use FormStepLayout instead
 public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepLayout
 {
     static final String LOG_TAG = ConsentQuizQuestionStepLayout.class.getCanonicalName();

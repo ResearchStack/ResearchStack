@@ -32,19 +32,18 @@ import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.AppPrefs;
-import org.researchstack.skin.DataProvider;
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
-import org.researchstack.skin.ResourceManager;
+import org.researchstack.backbone.ResourceManager;
 import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.notification.TaskAlertReceiver;
-import org.researchstack.skin.step.PassCodeCreationStep;
+import org.researchstack.backbone.step.PassCodeCreationStep;
 import org.researchstack.skin.task.ConsentTask;
-import org.researchstack.skin.ui.OnboardingActivity;
-import org.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
+import org.researchstack.skin.ui.OverviewActivity;
+import org.researchstack.backbone.ui.step.layout.SignUpPinCodeCreationStepLayout;
 import org.researchstack.skin.utils.ConsentFormUtils;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Date;
 
 import rx.Observable;
@@ -178,19 +177,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                                 KEY_PROFILE_BIRTHDATE);
                         if(profile.getBirthDate() != null)
                         {
-                            try
-                            {
-                                // The incoming date is formated in "yyyy-MM-dd", clean it up to "MMM dd, yyyy"
-                                Date birthdate = FormatHelper.SIMPLE_FORMAT_DATE.parse(profile.getBirthDate());
-                                DateFormat format = FormatHelper.getFormat(DateFormat.LONG,
-                                        FormatHelper.NONE);
-                                birthdatePref.setSummary(format.format(birthdate));
-                            }
-                            catch(ParseException e)
-                            {
-                                LogExt.e(SettingsFragment.class, e);
-                                birthdatePref.setSummary(profile.getBirthDate());
-                            }
+                            // The incoming date is formated in "yyyy-MM-dd", clean it up to "MMM dd, yyyy"
+                            Date birthdate = profile.getBirthDate();
+                            DateFormat format = FormatHelper.getFormat(DateFormat.LONG,
+                                    FormatHelper.NONE);
+                            birthdatePref.setSummary(format.format(birthdate));
                         }
                         else
                         {
@@ -253,7 +244,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
                 case KEY_CHANGE_PASSCODE:
                     PassCodeCreationStep step = new PassCodeCreationStep(PASSCODE,
-                            R.string.rss_passcode_change_title);
+                            R.string.rsb_passcode_change_title);
                     step.setStateOrdinal(SignUpPinCodeCreationStepLayout.State.CHANGE.ordinal());
                     OrderedTask passcodeTask = new OrderedTask("task_rss_settings_passcode", step);
                     Intent passcodeIntent = ViewTaskActivity.newIntent(getContext(), passcodeTask);
@@ -339,7 +330,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     return true;
 
                 case KEY_JOIN_STUDY:
-                    startActivity(new Intent(getActivity(), OnboardingActivity.class));
+                    startActivity(new Intent(getActivity(), OverviewActivity.class));
                     getActivity().finish();
                     return true;
 

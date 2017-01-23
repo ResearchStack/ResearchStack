@@ -20,7 +20,7 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.R;
-import org.researchstack.skin.ResourceManager;
+import org.researchstack.backbone.ResourceManager;
 import org.researchstack.skin.model.SectionModel;
 import org.researchstack.skin.ui.ShareActivity;
 

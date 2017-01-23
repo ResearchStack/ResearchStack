@@ -9,6 +9,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
+
 import java.lang.reflect.Type;
 
 /**
@@ -21,9 +23,11 @@ public class ConsentSectionAdapter implements JsonDeserializer<ConsentSection> {
      * Used to convert ConsentSections
      */
     Context androidContext;
+    ResourceNameToStringConverter resourceConverter;
 
-    public ConsentSectionAdapter(Context context) {
+    public ConsentSectionAdapter(Context context, ResourceNameToStringConverter convertor) {
         androidContext = context;
+        resourceConverter = convertor;
     }
 
     @Override
@@ -46,18 +50,26 @@ public class ConsentSectionAdapter implements JsonDeserializer<ConsentSection> {
 
         // If we have a non-custom type, we can auto-populate title, learn more, and image name
         // if they weren't specifically provided by the JSON
-        if (type != ConsentSection.Type.Custom && androidContext != null) {
-            if (consentSection.getTitle() == null && type.getTitleResId() != ConsentSection.UNDEFINED_RES) {
-                consentSection.setTitle(androidContext.getString(type.getTitleResId()));
-            }
-            if (consentSection.getCustomLearnMoreButtonTitle() == null && type.getMoreInfoResId() != ConsentSection.UNDEFINED_RES) {
-                consentSection.setCustomLearnMoreButtonTitle(androidContext.getString(type.getMoreInfoResId()));
+        if (type != ConsentSection.Type.Custom) {
+            if (androidContext != null) {
+                if (consentSection.getTitle() == null && type.getTitleResId() != ConsentSection.UNDEFINED_RES) {
+                    consentSection.setTitle(androidContext.getString(type.getTitleResId()));
+                }
+                if (consentSection.getCustomLearnMoreButtonTitle() == null && type.getMoreInfoResId() != ConsentSection.UNDEFINED_RES) {
+                    consentSection.setCustomLearnMoreButtonTitle(androidContext.getString(type.getMoreInfoResId()));
+                }
             }
             if (consentSection.getCustomImageName() == null) {
                 consentSection.setCustomImageName(type.getImageName());
             }
         } else {
             consentSection.customTypeIdentifier = typeJson.getAsString();
+        }
+
+        // Convert HTML content from filename to actual HTML content
+        if (resourceConverter != null) {
+            String htmlContent = resourceConverter.getHtmlStringForResourceName(consentSection.getHtmlContent());
+            consentSection.setHtmlContent(htmlContent);
         }
 
         return consentSection;

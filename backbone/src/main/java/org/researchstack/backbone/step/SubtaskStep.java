@@ -5,12 +5,11 @@ import android.util.Log;
 import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.result.TaskResultSource;
-import org.researchstack.backbone.task.OrderedTask;
+import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.ui.step.layout.ViewPagerSubstepListStepLayout;
 import org.researchstack.backbone.utils.ObjectUtils;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class SubtaskStep extends Step {
 
     public SubtaskStep(String identifier, List<Step> steps) {
         this(identifier);
-        subtask = new OrderedTask(identifier, steps);
+        subtask = new NavigableOrderedTask(identifier, steps);
     }
 
     public SubtaskStep(Task task) {
@@ -51,7 +50,11 @@ public class SubtaskStep extends Step {
         subtask = task;
     }
 
-    private String substepIdentifier(String identifier) {
+    /**
+     * @param identifier full identifier, i.e. "consent.step1"
+     * @return identifier with subtask identifier stripped out, i.e. "step1"
+     */
+    protected String substepIdentifier(String identifier) {
         if (subtask == null) {
             Log.e(LOG_TAG, "Subtask is null subtask step");
             return null;
@@ -84,7 +87,7 @@ public class SubtaskStep extends Step {
         return replacementStep;
     }
 
-    private TaskResult filteredTaskResult(TaskResult inputResult) {
+    protected TaskResult filteredTaskResult(TaskResult inputResult) {
         // create a mutated copy of the results that includes only the subtask results
         TaskResult subtaskResult = (TaskResult) ObjectUtils.clone(inputResult);
         Map<String, StepResult> stepResults = subtaskResult.getResults();
@@ -103,26 +106,28 @@ public class SubtaskStep extends Step {
                 
                 Map<String, Object> newResultMap = new LinkedHashMap<>();
                 String newIdentifier = identifier.substring(prefix.length());
-                StepResult stepResult = (StepResult)inputResults.get(identifier).deepCopy(newIdentifier);
+                if (inputResults.get(identifier) != null) {
+                    StepResult stepResult = (StepResult) inputResults.get(identifier).deepCopy(newIdentifier);
 
-                // Search results of the step for non-subtask identifiers as well
-                if (stepResult.getResults() != null) {
-                    for (Object stepResultIdentifierObj : stepResult.getResults().keySet()) {
-                        if (stepResultIdentifierObj instanceof String) {
-                            String stepResultIdentifier = (String)stepResultIdentifierObj;
-                            Object stepResultObject = stepResult.getResults().get(stepResultIdentifierObj);
-                            if (stepResultObject instanceof Result) {
-                                Result newResult = ((Result)stepResultObject).deepCopy(stepResultIdentifier);
-                                newResultMap.put(stepResultIdentifier, newResult);
-                            } else {
-                                newResultMap.put(stepResultIdentifier, stepResultObject);
+                    // Search results of the step for non-subtask identifiers as well
+                    if (stepResult.getResults() != null) {
+                        for (Object stepResultIdentifierObj : stepResult.getResults().keySet()) {
+                            if (stepResultIdentifierObj instanceof String) {
+                                String stepResultIdentifier = (String) stepResultIdentifierObj;
+                                Object stepResultObject = stepResult.getResults().get(stepResultIdentifierObj);
+                                if (stepResultObject instanceof Result) {
+                                    Result newResult = ((Result) stepResultObject).deepCopy(stepResultIdentifier);
+                                    newResultMap.put(stepResultIdentifier, newResult);
+                                } else {
+                                    newResultMap.put(stepResultIdentifier, stepResultObject);
+                                }
                             }
                         }
+                        stepResult.setResults(newResultMap);
                     }
-                    stepResult.setResults(newResultMap);
-                }
 
-                subtaskResults.put(newIdentifier, stepResult);
+                    subtaskResults.put(newIdentifier, stepResult);
+                }
             }
         }
         return subtaskResults;
@@ -162,16 +167,5 @@ public class SubtaskStep extends Step {
 
         // And finally return the replacement step
         return replacementStep(nextStep);
-    }
-
-    public StepResult getStepResult(String stepIdentifier) {
-        String substepIdentifier = substepIdentifier(stepIdentifier);
-        if (substepIdentifier == null) {
-            return null;
-        }
-        if (subtask instanceof TaskResultSource) {
-            return ((TaskResultSource)subtask).getStepResult(substepIdentifier);
-        }
-        return null;
     }
 }

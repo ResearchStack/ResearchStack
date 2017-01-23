@@ -6,13 +6,12 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.step.body.NotImplementedStepBody;
 import org.researchstack.skin.R;
-import org.researchstack.skin.step.PassCodeCreationStep;
-import org.researchstack.skin.ui.layout.PermissionStepLayout;
+import org.researchstack.backbone.step.PassCodeCreationStep;
+import org.researchstack.backbone.ui.step.layout.PermissionStepLayout;
 import org.researchstack.skin.ui.layout.SignInStepLayout;
-import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
-import org.researchstack.skin.ui.layout.SignUpIneligibleStepLayout;
 import org.researchstack.skin.ui.layout.SignUpStepLayout;
 
+@Deprecated // No longer needed with new OnboardingManager
 public abstract class OnboardingTask extends Task
 {
     public static final String SignUpInclusionCriteriaStepIdentifier = "InclusionCriteria";
@@ -109,7 +108,7 @@ public abstract class OnboardingTask extends Task
         if(passcodeCreationStep == null)
         {
             passcodeCreationStep = new PassCodeCreationStep(SignUpPassCodeCreationStepIdentifier,
-                    R.string.rss_passcode);
+                    R.string.rsb_passcode);
         }
         return passcodeCreationStep;
     }
@@ -130,7 +129,7 @@ public abstract class OnboardingTask extends Task
         if(permissionsStep == null)
         {
             permissionsStep = new Step(SignUpPermissionsStepIdentifier);
-            permissionsStep.setStepTitle(R.string.rss_permissions);
+            permissionsStep.setStepTitle(R.string.rsb_permissions);
             permissionsStep.setStepLayoutClass(PermissionStepLayout.class);
         }
         return permissionsStep;

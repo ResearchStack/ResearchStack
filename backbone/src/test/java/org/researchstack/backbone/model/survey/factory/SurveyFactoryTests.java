@@ -17,6 +17,7 @@ import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.CustomInstructionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.step.ConsentDocumentStep;
+import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.ConsentVisualStep;
@@ -30,6 +31,8 @@ import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.RegistrationStep;
+import org.researchstack.backbone.step.SubstepListStep;
+import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
 
@@ -61,7 +64,7 @@ public class SurveyFactoryTests {
     public void testEligibilitySurveyFactory() {
         Type listType = new TypeToken<List<SurveyItem>>() {
         }.getType();
-        String eligibilityJson = resourceHelper.getJsonStringForResourceName("eligibilityrequirements");
+        String eligibilityJson = resourceHelper.getJsonStringForResourceName("survey_factory_eligibilityrequirements");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(eligibilityJson, listType);
 
         SurveyFactory factory = new SurveyFactory(helper.mockContext, surveyItemList);
@@ -102,7 +105,7 @@ public class SurveyFactoryTests {
     {
         Type listType = new TypeToken<List<SurveyItem>>() {
         }.getType();
-        String eligibilityJson = resourceHelper.getJsonStringForResourceName("onboarding");
+        String eligibilityJson = resourceHelper.getJsonStringForResourceName("survey_factory_onboarding");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(eligibilityJson, listType);
 
         SurveyFactory factory = new SurveyFactory(helper.mockContext, surveyItemList);
@@ -157,59 +160,59 @@ public class SurveyFactoryTests {
         ConsentDocument consentDoc = helper.gson.fromJson(consentDocJson, ConsentDocument.class);
 
         Type listType = new TypeToken<List<SurveyItem>>() {}.getType();
-        String consentItemsJson = resourceHelper.getJsonStringForResourceName("consent");
+        String consentItemsJson = resourceHelper.getJsonStringForResourceName("survey_factory_consent");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(consentItemsJson, listType);
 
-        ConsentDocumentFactory factory = new ConsentDocumentFactory(helper.mockContext, surveyItemList, consentDoc);
+        ConsentDocumentFactory factory = new ConsentDocumentFactory(helper.mockContext, surveyItemList, consentDoc, helper.converter);
 
         assertNotNull(factory.getSteps());
         assertTrue(factory.getSteps().size() > 0);
 
         // 19 consent visual steps, 8 other steps
-        assertEquals(27, factory.getSteps().size());
+        assertEquals(factory.getSteps().size(), 8);
 
         assertTrue(factory.getSteps().get(0) instanceof CustomInstructionStep);
         CustomInstructionStep customStep = (CustomInstructionStep)factory.getSteps().get(0);
         assertEquals("reconsentIntroduction", customStep.getIdentifier());
         assertEquals("reconsent.instruction", customStep.getCustomTypeIdentifier());
 
-        // Steps 1-18 are Visual Consent Steps
-        for (int i = 1; i <= 18; i++) {
-            assertTrue(factory.getSteps().get(i) instanceof ConsentVisualStep);
-        }
+        // Steps 1 are Visual Consent Steps
+        assertTrue(factory.getSteps().get(1) instanceof SubtaskStep);
 
-        assertTrue(factory.getSteps().get(19) instanceof NavigationSubtaskStep);
-        NavigationSubtaskStep quizStep = (NavigationSubtaskStep)factory.getSteps().get(19);
+        assertTrue(factory.getSteps().get(2) instanceof NavigationSubtaskStep);
+        NavigationSubtaskStep quizStep = (NavigationSubtaskStep)factory.getSteps().get(2);
         assertEquals("consentPassedQuiz", quizStep.getSkipToStepIdentifier());
         assertTrue(quizStep.getSkipIfPassed());
 
-        assertTrue(factory.getSteps().get(20) instanceof InstructionStep);
-        assertEquals("consentFailedQuiz", factory.getSteps().get(20).getIdentifier());
+        assertTrue(factory.getSteps().get(3) instanceof InstructionStep);
+        assertEquals("consentFailedQuiz", factory.getSteps().get(3).getIdentifier());
 
-        assertTrue(factory.getSteps().get(21) instanceof InstructionStep);
-        assertEquals("consentPassedQuiz", factory.getSteps().get(21).getIdentifier());
+        assertTrue(factory.getSteps().get(4) instanceof InstructionStep);
+        assertEquals("consentPassedQuiz", factory.getSteps().get(4).getIdentifier());
 
-        assertTrue(factory.getSteps().get(22) instanceof ConsentSharingStep);
-        ConsentSharingStep sharingStep = (ConsentSharingStep)factory.getSteps().get(22);
+        assertTrue(factory.getSteps().get(5) instanceof ConsentSharingStep);
+        ConsentSharingStep sharingStep = (ConsentSharingStep)factory.getSteps().get(5);
         assertEquals("consentSharingOptions", sharingStep.getIdentifier());
         assertTrue(sharingStep.getAnswerFormat() instanceof ChoiceAnswerFormat);
         ChoiceAnswerFormat sharingFormat = (ChoiceAnswerFormat)sharingStep.getAnswerFormat();
         assertEquals("Yes. Share my coded study data with qualified researchers worldwide.", (sharingFormat.getChoices()[0]).getText());
         assertEquals(true, (sharingFormat.getChoices()[0]).getValue());
 
-        assertTrue(factory.getSteps().get(23) instanceof ProfileStep);
-        ProfileStep consentProfileStep = (ProfileStep) factory.getSteps().get(23);
+        assertTrue(factory.getSteps().get(6) instanceof ConsentReviewSubstepListStep);
+
+        ConsentReviewSubstepListStep substepListStep = (ConsentReviewSubstepListStep) factory.getSteps().get(6);
+        ProfileStep consentProfileStep = (ProfileStep)substepListStep.getStepList().get(0);
         assertEquals(ProfileInfoOption.NAME, consentProfileStep.getProfileInfoOptions().get(0));
         assertEquals(ProfileInfoOption.BIRTHDATE, consentProfileStep.getProfileInfoOptions().get(1));
 
-        assertTrue(factory.getSteps().get(24) instanceof ConsentSignatureStep);
+        assertTrue(substepListStep.getStepList().get(1) instanceof ConsentSignatureStep);
 
-        assertTrue(factory.getSteps().get(25) instanceof ConsentDocumentStep);
-        ConsentDocumentStep documentStep = (ConsentDocumentStep)factory.getSteps().get(25);
+        assertTrue(substepListStep.getStepList().get(2) instanceof ConsentDocumentStep);
+        ConsentDocumentStep documentStep = (ConsentDocumentStep)substepListStep.getStepList().get(2);
         assertEquals("consent_full", documentStep.getConsentHTML());
 
-        assertTrue(factory.getSteps().get(26) instanceof InstructionStep);
-        assertEquals("consentCompletion", factory.getSteps().get(26).getIdentifier());
+        assertTrue(factory.getSteps().get(7) instanceof InstructionStep);
+        assertEquals("consentCompletion", factory.getSteps().get(7).getIdentifier());
     }
 
     @Test

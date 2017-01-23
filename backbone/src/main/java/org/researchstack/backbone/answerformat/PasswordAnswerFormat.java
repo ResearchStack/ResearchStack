@@ -21,7 +21,7 @@ public class PasswordAnswerFormat extends TextAnswerFormat {
         super();
         setMinumumLength(DEFAULT_PASSWORD_MIN_LENGTH);
         setMaximumLength(DEFAULT_PASSWORD_MAX_LENGTH);
-        setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         setIsMultipleLines(false);
         setValidationRegex(PASSWORD_VALIDATION_REGEX);
     }

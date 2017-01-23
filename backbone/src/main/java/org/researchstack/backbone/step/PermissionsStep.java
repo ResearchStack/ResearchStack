@@ -1,5 +1,7 @@
 package org.researchstack.backbone.step;
 
+import org.researchstack.backbone.ui.step.layout.PermissionStepLayout;
+
 /**
  * Created by TheMDP on 1/4/17.
  */
@@ -17,9 +19,7 @@ public class PermissionsStep extends Step {
     }
 
     @Override
-    public Class getStepLayoutClass()
-    {
-        // TODO: need custom PermissionStepLayout, one exists, but is in Skin module
-        return super.getStepLayoutClass();
+    public Class getStepLayoutClass() {
+        return PermissionStepLayout.class;
     }
 }

@@ -1,6 +1,8 @@
 package org.researchstack.backbone.answerformat;
 
 
+import android.text.InputType;
+
 import org.researchstack.backbone.utils.TextUtils;
 
 public class EmailAnswerFormat extends TextAnswerFormat
@@ -11,6 +13,7 @@ public class EmailAnswerFormat extends TextAnswerFormat
     public EmailAnswerFormat()
     {
         super(MAX_EMAIL_LENGTH);
+        setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
     }
 
     @Override

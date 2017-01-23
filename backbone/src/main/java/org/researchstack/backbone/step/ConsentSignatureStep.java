@@ -1,5 +1,7 @@
 package org.researchstack.backbone.step;
 
+import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
+
 /**
  * This class represents the final step in the consent process, collecting the signature from the
  * study participant.
@@ -11,12 +13,19 @@ public class ConsentSignatureStep extends Step
     /* Default constructor needed for serilization/deserialization of object */
     ConsentSignatureStep() {
         super();
+        setOptional(false);
     }
 
     public ConsentSignatureStep(String identifier)
     {
         super(identifier);
         setOptional(false);
+    }
+
+    public ConsentSignatureStep(String identifier, String title, String text) {
+        this(identifier);
+        setTitle(title);
+        setText(text);
     }
 
     /**
@@ -42,8 +51,12 @@ public class ConsentSignatureStep extends Step
      *
      * @param signatureDateFormat a string representing the date format
      */
-    public void setSignatureDateFormat(String signatureDateFormat)
-    {
+    public void setSignatureDateFormat(String signatureDateFormat) {
         this.signatureDateFormat = signatureDateFormat;
+    }
+
+    @Override
+    public Class getStepLayoutClass() {
+        return ConsentSignatureStepLayout.class;
     }
 }

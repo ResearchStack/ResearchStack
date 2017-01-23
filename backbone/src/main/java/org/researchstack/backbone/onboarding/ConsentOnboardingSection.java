@@ -15,12 +15,17 @@ public class ConsentOnboardingSection extends OnboardingSection {
     // Serialization must be done manually in OnboardingSectionAdapter
     ConsentDocument consentDocument;
 
-    public SurveyFactory getDefaultOnboardingSurveyFactory(Context context) {
+    @Override
+    public SurveyFactory getDefaultOnboardingSurveyFactory(
+            Context context,
+            ResourceNameToStringConverter converter,
+            SurveyFactory.CustomStepCreator customStepCreator)
+    {
         if (surveyFactory != null) {
             return surveyFactory;
         }
 
-        surveyFactory = new ConsentDocumentFactory(context, surveyItems, consentDocument);
+        surveyFactory = new ConsentDocumentFactory(context, surveyItems, consentDocument, converter, customStepCreator);
         return surveyFactory;
     }
 }

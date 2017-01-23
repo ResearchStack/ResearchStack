@@ -1,0 +1,94 @@
+[
+     {
+         "identifier": "reconsentIntroduction",
+         "title": "Thank you for participating in the SAMPLE study.",
+         "text": "We heard your requests and updated the study. We added new features, new surveys and new activities.",
+         "detailText": "The next screens describe the study. Please review the study information and re-affirm that you want to participate.",
+         "type": "reconsent.instruction"
+     },
+     {
+         "identifier": "consentVisual",
+         "type": "consentVisual"
+     },
+     {
+         "identifier": "consentQuiz",
+         "type": "subtask",
+         "skipIdentifier": "consentPassedQuiz",
+         "skipIfPassed": true,
+         "items":
+         [
+          {
+              "identifier": "comprehension",
+              "title": "Comprehension",
+              "text": "Let's do a quick and simple test of your understanding of this study.",
+              "type": "instruction"
+          },
+          {
+              "identifier": "purpose",
+              "title": "What is the purpose of this study?",
+              "type": "singleChoiceText",
+              "items":[
+                       {"text" :"Understand the fluctuations of SAMPLE symptoms", "value" : true},
+                       {"text" :"Give medical advice and diagnose people with SAMPLE", "value": false}
+                       ],
+              "expectedAnswer": true
+          },
+          {
+              "identifier": "deidentified",
+              "title": "My name will be stored with my study data.",
+              "type": "boolean",
+              "expectedAnswer": false
+          },
+          {
+              "identifier": "retraction",
+              "title": "I decide to share my data with qualified researchers. Then I change my mind. Can my data be deleted from their studies?",
+              "type": "boolean",
+              "expectedAnswer": false
+          },
+          {
+              "identifier": "stressLevel",
+              "title": "The survey questions may be stressful for some people.",
+              "type": "boolean",
+              "expectedAnswer": true
+          }
+          ]
+     },
+     {
+         "identifier": "consentFailedQuiz",
+         "title": "Try Again",
+         "text": "You answered one or more questions wrong. We want to make sure you understand what this study is about and what is involved. Review the information screens and try again.",
+         "image": "icon_retry",
+         "type": "instruction",
+         "nextIdentifier" : "consentVisual",
+         "learnMoreHTMLContentURL": "consent_2quiz_headsup"
+     },
+     {
+         "identifier": "consentPassedQuiz",
+         "type": "completion",
+         "title": "Great Job!",
+         "text": "You answered all of the questions correctly.",
+         "detailText": "Tap Next to continue."
+     },
+     {
+         "identifier": "consentSharingOptions",
+         "type": "consentSharingOptions",
+         "investigatorShortDescription": "Sage Bionetworks",
+         "investigatorLongDescription": "Sage Bionetworks and its partners",
+         "learnMoreHTMLContentURL": "consent_19sharing_rsch",
+         "items":[
+                  {"text" :"Yes. Share my coded study data with qualified researchers worldwide.", "value" : true},
+                  {"text" :"No. Only use my coded study data for SAMPLE research.", "value": false}
+                  ]
+     },
+     {
+         "identifier"   : "consentReview",
+         "type"         : "consentReview",
+         "items"        : ["name", "birthdate"]
+     },
+     {
+         "identifier": "consentCompletion",
+         "type": "instruction",
+         "title": "Thank You!",
+         "text": "Your participation in this study is helping us to better understand the symptoms of SAMPLE."
+     }
+]

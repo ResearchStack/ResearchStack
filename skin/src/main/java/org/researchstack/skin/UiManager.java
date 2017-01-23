@@ -2,6 +2,7 @@ package org.researchstack.skin;
 import android.app.Application;
 import android.content.Context;
 
+import org.researchstack.backbone.ResourceManager;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.TextUtils;
@@ -70,7 +71,7 @@ public abstract class UiManager
      * inelligible for the study.
      *
      * This method is now deprecated and Inclusion Criteria will now be loaded from a JSON file as
-     * defined  {@link org.researchstack.skin.ResourceManager#getInclusionCriteria()}.
+     * defined  {@link ResourceManager#getInclusionCriteria()}.
      *
      * @param context android context
      * @return a Step used for Eligibility within the onboarding process
@@ -83,7 +84,7 @@ public abstract class UiManager
      * #getInclusionCriteriaStep(Context)}.
      *
      * This method is now deprecated and Inclusion Criteria will now be loaded from a JSON file as
-     * defined  {@link org.researchstack.skin.ResourceManager#getInclusionCriteria()}.  The JSON file
+     * defined  {@link ResourceManager#getInclusionCriteria()}.  The JSON file
      * contains expected answers which will be used to determine if the inclusion criteria is valid.
      *
      * @param result StepResult object that contains the answers of the InclusionCriteria step

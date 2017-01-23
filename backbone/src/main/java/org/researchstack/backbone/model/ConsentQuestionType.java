@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by TheMDP on 12/15/16.
  */
 
+@Deprecated // no longer needed since ConsentQuizModel is deprecated
 public enum ConsentQuestionType {
 
     @SerializedName("boolean")

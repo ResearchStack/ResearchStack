@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Deprecated // No longer needed with new OnboardingManager
 public class InclusionCriteriaModel {
 
     public static final String INELIGIBLE_INSTRUCTION_IDENTIFIER = "ineligibleInstruction";

@@ -55,6 +55,7 @@ public class TextQuestionBody implements StepBody
 
         TextView title = (TextView) body.findViewById(R.id.label);
 
+        // TODO: naming is confusing... compact means less, but this adds a view -MDP
         if(viewType == VIEW_TYPE_COMPACT)
         {
             title.setText(step.getTitle());
@@ -87,6 +88,8 @@ public class TextQuestionBody implements StepBody
             InputFilter[] filters = ViewUtils.addFilter(editText.getFilters(), maxLengthFilter);
             editText.setFilters(filters);
         }
+
+        editText.setInputType(format.getInputType());
 
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,

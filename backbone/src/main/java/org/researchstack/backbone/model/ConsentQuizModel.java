@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
+@Deprecated // Use NavigationFormStep or NavigationSubtaskStep instead
 public class ConsentQuizModel implements Serializable
 {
     private String             failureTitle;
