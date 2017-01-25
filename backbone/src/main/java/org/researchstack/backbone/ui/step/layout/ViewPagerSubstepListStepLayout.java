@@ -201,6 +201,13 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
      * @return the StepLayout at index in the ViewPager
      */
     protected StepLayout getStepLayout(int index) {
+        if (viewPagerAdapter == null ||
+            viewPagerAdapter.stepLayouts == null ||
+            viewPagerAdapter.stepLayouts.isEmpty() ||
+            viewPagerAdapter.stepLayouts.size() <= index)
+        {
+            return null;
+        }
         return viewPagerAdapter.stepLayouts.get(index);
     }
 

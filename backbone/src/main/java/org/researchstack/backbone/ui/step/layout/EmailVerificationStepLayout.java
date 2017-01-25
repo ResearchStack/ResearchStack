@@ -333,7 +333,7 @@ public class EmailVerificationStepLayout extends ViewPagerSubstepListStepLayout 
                     .compose(ObservableUtils.applyDefault());
 
             // Only gives a callback to response on success, the rest is handled by StepLayoutHelper
-            safePerformWithAlerts(resend, this, response ->
+            StepLayoutHelper.safePerformWithAlerts(resend, this, response ->
             { // loading dialog will dismiss indicating success
             });
         }
@@ -349,7 +349,7 @@ public class EmailVerificationStepLayout extends ViewPagerSubstepListStepLayout 
                     .verifyEmail(getContext(), password)
                     .compose(ObservableUtils.applyDefault());
 
-            safePerformWithOnlyLoadingAlerts(verify, this, new WebCallback() {
+            StepLayoutHelper.safePerformWithOnlyLoadingAlerts(verify, this, new StepLayoutHelper.WebCallback() {
                 @Override
                 public void onSuccess(DataResponse response) {
                     if(response.isSuccess()) {

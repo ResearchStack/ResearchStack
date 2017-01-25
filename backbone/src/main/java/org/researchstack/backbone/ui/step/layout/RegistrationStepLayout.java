@@ -61,7 +61,7 @@ public class RegistrationStepLayout extends ProfileStepLayout {
                     .compose(ObservableUtils.applyDefault());
 
             // Only gives a callback to response on success, the rest is handled by StepLayoutHelper
-            safePerformWithAlerts(registration, this, response ->
+            StepLayoutHelper.safePerformWithAlerts(registration, this, response ->
                     super.onNextClicked()
             );
         }
