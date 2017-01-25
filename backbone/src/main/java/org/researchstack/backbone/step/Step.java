@@ -204,16 +204,6 @@ public class Step implements Serializable
     }
 
     /**
-     * @return the class of the {@link org.researchstack.backbone.ui.step.layout.StepLayout} for
-     * this step
-     */
-    public Class getInnerClassClass()
-    {
-        return stepLayoutClass;
-    }
-
-
-    /**
      * Sets the class that should be used to display this step
      *
      * @param stepLayoutClass the {@link org.researchstack.backbone.ui.step.layout.StepLayout} class
