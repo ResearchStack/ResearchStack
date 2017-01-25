@@ -7,7 +7,7 @@
     android:id="@+id/rsb_email_verification_container">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/rsb_step_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -22,7 +22,7 @@
         style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/rsb_step_title"
         android:layout_marginTop="36dp"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"

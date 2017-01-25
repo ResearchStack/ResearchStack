@@ -14,16 +14,13 @@ import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ProfileInfoOption;
-import org.researchstack.backbone.model.survey.CustomInstructionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
-import org.researchstack.backbone.step.ConsentVisualStep;
 import org.researchstack.backbone.step.CustomInstructionStep;
-import org.researchstack.backbone.step.CustomStep;
-import org.researchstack.backbone.step.EmailVerificationStep;
+import org.researchstack.backbone.step.EmailVerificationSubStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
 import org.researchstack.backbone.step.PasscodeStep;
@@ -31,7 +28,6 @@ import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.RegistrationStep;
-import org.researchstack.backbone.step.SubstepListStep;
 import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
@@ -143,7 +139,7 @@ public class SurveyFactoryTests {
         assertTrue(factory.getSteps().get(2) instanceof PasscodeStep);
         assertEquals("passcode", factory.getSteps().get(2).getIdentifier());
 
-        assertTrue(factory.getSteps().get(3) instanceof EmailVerificationStep);
+        assertTrue(factory.getSteps().get(3) instanceof EmailVerificationSubStep);
         assertEquals("emailVerification", factory.getSteps().get(3).getIdentifier());
 
         assertTrue(factory.getSteps().get(4) instanceof PermissionsStep);

@@ -70,7 +70,7 @@ public class LoginStepLayout extends ProfileStepLayout {
                     .compose(ObservableUtils.applyDefault());
 
             // Only gives a callback to response on success, the rest is handled by StepLayoutHelper
-            StepLayoutHelper.safePerformWithAlerts(login, this, response ->
+            safePerformWithAlerts(login, this, response ->
                     super.onNextClicked()
             );
         }
@@ -88,7 +88,7 @@ public class LoginStepLayout extends ProfileStepLayout {
                     .compose(ObservableUtils.applyDefault());
 
             // Only gives a callback to response on success, the rest is handled by StepLayoutHelper
-            StepLayoutHelper.safePerformWithAlerts(forgotPassword, this, response ->
+            safePerformWithAlerts(forgotPassword, this, response ->
                     showOkAlertDialog(response.getMessage())
             );
         }

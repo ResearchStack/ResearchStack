@@ -35,6 +35,7 @@ import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
+import org.researchstack.backbone.step.EmailVerificationSubStep;
 import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
@@ -60,6 +61,7 @@ import java.util.List;
 public class SurveyFactory {
 
     // The rest of them use the toString of ProfileInfoOption
+    public static final String EMAIL_VERIFICATION_SUBSTEP_IDENTIFIER = "emailVerificationSubstep";
     public static final String PASSWORD_CONFIRMATION_IDENTIFIER = "confirmation";
     public static final String CONSENT_QUIZ_IDENTIFIER = "consentQuiz";
 
@@ -84,7 +86,12 @@ public class SurveyFactory {
         steps = createSteps(context, surveyItems, false);
     }
 
-    SurveyFactory() {
+    /**
+     * Can be used to make a SurveyFactor and take advantage of its SurveyItem to Step methods
+     */
+    public SurveyFactory() {
+        super();
+        steps = new ArrayList<>();
         // Default constructor, mainly used for subclasses
     }
 
@@ -168,7 +175,7 @@ public class SurveyFactory {
                 if (!(item instanceof InstructionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, ACCOUNT_EMAIL_VERIFICATION types must be InstructionSurveyItem");
                 }
-                return createEmailVerificationStep((InstructionSurveyItem)item);
+                return createEmailVerificationStep(context, (InstructionSurveyItem)item);
             case ACCOUNT_PERMISSIONS:
                 return createPermissionsStep(item);
             case ACCOUNT_DATA_GROUPS:
@@ -587,7 +594,7 @@ public class SurveyFactory {
 
     /**
      * @param item InstructionSurveyItem from JSON
-     * @return valid EmailVerificationStep matching the InstructionSurveyItem
+     * @return valid EmailVerificationSubStep matching the InstructionSurveyItem
      */
     public LoginStep createLoginStep(Context context, ProfileSurveyItem item) {
         List<ProfileInfoOption> options = createProfileInfoOptions(context, item, defaultLoginOptions());
@@ -632,12 +639,21 @@ public class SurveyFactory {
 
     /**
      * @param item InstructionSurveyItem from JSON
-     * @return valid EmailVerificationStep matching the InstructionSurveyItem
+     * @return valid EmailVerificationSubStep matching the InstructionSurveyItem
      */
-    public EmailVerificationStep createEmailVerificationStep(InstructionSurveyItem item) {
-        EmailVerificationStep step = new EmailVerificationStep(item.identifier, item.title, item.text);
-        fillInstructionStep(step, item);
-        return step;
+    public EmailVerificationStep createEmailVerificationStep(Context context, InstructionSurveyItem item) {
+        EmailVerificationSubStep emailSubstep = new EmailVerificationSubStep(
+                EMAIL_VERIFICATION_SUBSTEP_IDENTIFIER, item.title, item.text);
+        fillInstructionStep(emailSubstep, item);
+
+        String changeEmailTitle = context.getString(R.string.rsb_change_email_title);
+        RegistrationStep registrationStep = new RegistrationStep(
+                context, this, OnboardingSection.REGISTRATION_IDENTIFIER, changeEmailTitle, null);
+
+        EmailVerificationStep emailVerificationStep = new EmailVerificationStep(
+                item.identifier, emailSubstep, registrationStep);
+
+        return emailVerificationStep;
     }
 
     /**
@@ -669,7 +685,7 @@ public class SurveyFactory {
     /*
      * Transfers the QuestionSurveyItem nav properties over to NavigationStep
      */
-    void transferNavigationRules(QuestionSurveyItem item, NavigationQuestionStep toStep) {
+    private void transferNavigationRules(QuestionSurveyItem item, NavigationQuestionStep toStep) {
         toStep.setSkipIfPassed(item.skipIfPassed);
         toStep.setSkipToStepIdentifier(item.skipIdentifier);
         toStep.setExpectedAnswer(item.expectedAnswer);
@@ -678,7 +694,7 @@ public class SurveyFactory {
     /*
      * Transfers the QuestionSurveyItem nav properties over to NavigationStep
      */
-    void transferNavigationRules(QuestionSurveyItem item, NavigationFormStep toStep) {
+    private void transferNavigationRules(QuestionSurveyItem item, NavigationFormStep toStep) {
         toStep.setSkipIfPassed(item.skipIfPassed);
         toStep.setSkipToStepIdentifier(item.skipIdentifier);
     }
@@ -686,7 +702,7 @@ public class SurveyFactory {
     /*
      * Transfers the QuestionSurveyItem nav properties over to NavigationStep
      */
-    void transferNavigationRules(QuestionSurveyItem item, NavigationSubtaskStep toStep) {
+    private void transferNavigationRules(QuestionSurveyItem item, NavigationSubtaskStep toStep) {
         toStep.setSkipIfPassed(item.skipIfPassed);
         toStep.setSkipToStepIdentifier(item.skipIdentifier);
     }

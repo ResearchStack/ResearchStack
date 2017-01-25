@@ -51,7 +51,7 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
                 .compose(ObservableUtils.applyDefault());
 
         // Only gives a callback to response on success, the rest is handled by StepLayoutHelper
-        StepLayoutHelper.safePerformWithAlerts(uploadConsent, this, response ->
+        safePerformWithAlerts(uploadConsent, this, response ->
                 super.onComplete()
         );
     }

@@ -240,6 +240,7 @@
     <string name="rsb_email_not_verified">Please check your email to verify your account before
         continuing
     </string>
+    <string name="rsb_change">Change</string>
     <string name="rsb_change_email">Change Email</string>
     <string name="rsb_verify_password">To verify email</string>
 
@@ -257,5 +258,7 @@
 
     <string name="rsb_are_you_sure">Are you sure?</string>
     <string name="rsb_discard_results">Discard Results</string>
+
+    <string name="rsb_change_email_title">Enter a different email</string>
 
 </resources>
