@@ -97,6 +97,9 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
             int translationY = guidePosition - yLimit;
             ViewCompat.setTranslationY(submitBar, translationY);
         }
+    }
 
+    public SubmitBar getSubmitBar() {
+        return submitBar;
     }
 }

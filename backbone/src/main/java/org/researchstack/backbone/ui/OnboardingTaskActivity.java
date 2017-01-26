@@ -3,27 +3,22 @@ package org.researchstack.backbone.ui;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.StringRes;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.backbone.model.ProfileInfoOption;
-import org.researchstack.backbone.model.survey.SurveyItemType;
-import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
-import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.onboarding.OnboardingSection;
-import org.researchstack.backbone.onboarding.OnboardingSectionType;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
@@ -32,8 +27,6 @@ import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.utils.StepResultHelper;
-
-import java.util.List;
 
 /**
  * Created by TheMDP on 1/14/17.
@@ -82,24 +75,63 @@ public class OnboardingTaskActivity extends ViewTaskActivity implements Activity
             previousStepTitle = title;
         }
 
-        setupCustomStepLayouts(superStepLayout);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(shouldShowBackButton(step));
+        setupCustomStepLayouts(step, superStepLayout);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(shouldShowBackButton(step));
+        }
 
         return superStepLayout;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")  // needed for unchecked StepResult generic type casting
+    public void onSaveStep(int action, Step step, StepResult result) {
+        if (step instanceof EmailVerificationStep) {
+            StepResult passwordResult = StepResultHelper
+                    .findStepResult(result, ProfileInfoOption.PASSWORD.getIdentifier());
+
+            // If there is a new password from the EmailVerificationStep,
+            // that means that the user has changed their email and password,
+            // and we need to replace the password result from the previous RegistrationStep's step result
+            if (passwordResult != null) {
+                StepResult originalPasswordResult = StepResultHelper
+                        .findStepResult(taskResult, ProfileInfoOption.PASSWORD.getIdentifier());
+                if (originalPasswordResult != null) {
+                    originalPasswordResult.setResult(passwordResult.getResult());
+                }
+            }
+        }
+
+        super.onSaveStep(action, step, result);
     }
 
     /**
      * Injects TaskResult information into StepLayouts that need more information
      * @param stepLayout step layout that has just been instantiated
      */
-    public void setupCustomStepLayouts(StepLayout stepLayout) {
+    public void setupCustomStepLayouts(Step step, StepLayout stepLayout) {
         // Check here for StepLayouts that need results fed into them
         if (stepLayout instanceof EmailVerificationStepLayout) {
             EmailVerificationStepLayout emailStepLayout = (EmailVerificationStepLayout)stepLayout;
-            StepResult passwordResult = StepResultHelper
-                    .findStepResult(taskResult, ProfileInfoOption.PASSWORD.getIdentifier());
-            if (passwordResult != null) {
-                emailStepLayout.setPassword((String)passwordResult.getResult());
+            // Try and find the password step result, but exclude the EmailVerificationStep
+            // as a source for the password, since it will be handled internally by that class
+            if (taskResult != null) {
+                StepResult emailStepResult = taskResult.getResults().get(step.getIdentifier());
+                if (emailStepResult != null) {
+                    taskResult.getResults().remove(step.getIdentifier());
+                }
+
+                StepResult passwordResult = StepResultHelper
+                        .findStepResult(taskResult, ProfileInfoOption.PASSWORD.getIdentifier());
+                if (passwordResult != null) {
+                    emailStepLayout.setPassword((String) passwordResult.getResult());
+                }
+
+                // Re-add email step task result
+                if (emailStepResult != null) {
+                    taskResult.getResults().put(step.getIdentifier(), emailStepResult);
+                }
             }
         }
     }
@@ -160,7 +192,7 @@ public class OnboardingTaskActivity extends ViewTaskActivity implements Activity
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == PermissionRequestManager.PERMISSION_REQUEST_CODE) {
             updateStepLayoutForPermission();

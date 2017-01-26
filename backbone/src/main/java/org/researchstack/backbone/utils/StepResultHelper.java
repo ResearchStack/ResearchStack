@@ -43,8 +43,8 @@ public class StepResultHelper {
         if (result.getIdentifier().equals(stepResultKey)) {
             return result;
         }
-        Map<String, Object> results = result.getResults();
-        for (String stepId : results.keySet()) {
+        Map results = result.getResults();
+        for (Object stepId : results.keySet()) {
             Object stepResultObj = results.get(stepId);
             if (stepResultObj instanceof StepResult) {
                 StepResult stepResult = (StepResult)stepResultObj;

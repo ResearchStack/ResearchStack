@@ -99,6 +99,36 @@ public class StepLayoutHelper {
         });
     }
 
+    /**
+     * This is the same as safePerform except all loading dialogs are shown automatically
+     *
+     * @param observable that is performing a web call, or asynchronous operation
+     * @param viewPerforming the view that is making the observable call
+     * @param callback will be invoked if the observable is invoked, and the view is in a valid state
+     */
+    @MainThread
+    public static void safePerformWithOnlyLoadingAlerts(
+            Observable<DataResponse> observable,
+            AlertFrameLayout viewPerforming,
+            final WebCallback callback)
+    {
+        viewPerforming.showLoadingDialog();
+        final WeakReference<AlertFrameLayout> weakView = new WeakReference<>(viewPerforming);
+        safePerform(observable, viewPerforming, new WebCallback() {
+            @Override
+            public void onSuccess(DataResponse response) {
+                weakView.get().hideLoadingDialog();
+                callback.onSuccess(response);
+            }
+
+            @Override
+            public void onFail(Throwable throwable) {
+                weakView.get().hideLoadingDialog();
+                callback.onFail(throwable);
+            }
+        });
+    }
+
     public interface WebCallback {
         void onSuccess(DataResponse response);
         void onFail(Throwable throwable);

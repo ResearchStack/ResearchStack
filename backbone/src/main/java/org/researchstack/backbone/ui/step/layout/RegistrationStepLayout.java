@@ -55,7 +55,7 @@ public class RegistrationStepLayout extends ProfileStepLayout {
                 return;
             }
 
-            Observable<DataResponse> registration =DataProvider.getInstance()
+            Observable<DataResponse> registration = DataProvider.getInstance()
                     // As of right now, username is unused in and email is only supported
                     .signUp(getContext(), email, email, password)
                     .compose(ObservableUtils.applyDefault());

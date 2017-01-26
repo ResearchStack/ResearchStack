@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -244,6 +245,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      * @param stepBody the step body to use for creating the step body view
      * @return StepLayout View object container StepBody View and title, and text
      */
+    @NonNull
     @MainThread
     protected static View initStepBodyHolder(LayoutInflater layoutInflater, ViewGroup stepBodyContainer, QuestionStep step, StepBody stepBody)
     {
