@@ -20,6 +20,7 @@ import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.CustomInstructionStep;
+import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.EmailVerificationSubStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
@@ -139,7 +140,7 @@ public class SurveyFactoryTests {
         assertTrue(factory.getSteps().get(2) instanceof PasscodeStep);
         assertEquals("passcode", factory.getSteps().get(2).getIdentifier());
 
-        assertTrue(factory.getSteps().get(3) instanceof EmailVerificationSubStep);
+        assertTrue(factory.getSteps().get(3) instanceof EmailVerificationStep);
         assertEquals("emailVerification", factory.getSteps().get(3).getIdentifier());
 
         assertTrue(factory.getSteps().get(4) instanceof PermissionsStep);
