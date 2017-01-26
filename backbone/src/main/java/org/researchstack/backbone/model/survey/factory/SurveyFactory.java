@@ -77,9 +77,10 @@ public class SurveyFactory {
         this(context, surveyItems, null);
     }
 
-    /*
-     * @param Context is used to localize default true and false string values
-     * @param List<SurveyItem>
+    /**
+     * @param context can be any context, activity or application, used to access string resources
+     * @param surveyItems usually from parsing JSON
+     * @param customStepCreator used to control which step a custom survey item becomes
      */
     public SurveyFactory(Context context, List<SurveyItem> surveyItems, CustomStepCreator customStepCreator) {
         this.customStepCreator = customStepCreator;
@@ -639,7 +640,7 @@ public class SurveyFactory {
 
     /**
      * @param item InstructionSurveyItem from JSON
-     * @return valid EmailVerificationSubStep matching the InstructionSurveyItem
+     * @return valid EmailVerificationStep matching the InstructionSurveyItem
      */
     public EmailVerificationStep createEmailVerificationStep(Context context, InstructionSurveyItem item) {
         EmailVerificationSubStep emailSubstep = new EmailVerificationSubStep(
