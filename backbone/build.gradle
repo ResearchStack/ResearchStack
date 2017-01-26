@@ -43,8 +43,6 @@ android {
 Properties properties = new Properties()
 if (project.rootProject.file('local.properties').exists()) {
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-} else if (project.rootProject.file('local.properties.bintray').exists()) {
-    properties.load(project.rootProject.file('local.properties.bintray').newDataInputStream())
 }
 
 ext {
