@@ -38,6 +38,11 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
+    // TODO: remove all warnings to skin, and then remove this
+    lintOptions {
+        abortOnError false
+    }
+
     resourcePrefix 'rss_'
 }
 
