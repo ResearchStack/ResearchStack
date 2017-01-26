@@ -28,6 +28,7 @@ import org.researchstack.backbone.model.survey.ProfileSurveyItem;
 import org.researchstack.backbone.model.survey.ScaleQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.InstructionSurveyItem;
 import org.researchstack.backbone.model.survey.QuestionSurveyItem;
+import org.researchstack.backbone.model.survey.ShareTheAppSurveyItem;
 import org.researchstack.backbone.model.survey.SubtaskQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
@@ -45,6 +46,7 @@ import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.RegistrationStep;
+import org.researchstack.backbone.step.ShareTheAppStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
@@ -185,6 +187,11 @@ public class SurveyFactory {
                 return createNotImplementedStep(item);
             case PASSCODE:
                 return createPasscodeStep(item);
+            case SHARE_THE_APP:
+                if (!(item instanceof ShareTheAppSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, SHARE_THE_APP types must be ShareTheAppSurveyItem");
+                }
+                return createShareTheAppStep(context, (ShareTheAppSurveyItem)item);
             case CUSTOM:
                 if (!(item instanceof CustomSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, CUSTOM types must be CustomSurveyItem");
@@ -671,6 +678,24 @@ public class SurveyFactory {
      */
     public PasscodeStep createPasscodeStep(SurveyItem item) {
         return new PasscodeStep(item.identifier, item.title, item.text);
+    }
+
+    public ShareTheAppStep createShareTheAppStep(Context context, ShareTheAppSurveyItem item) {
+        ShareTheAppStep step = new ShareTheAppStep(item.identifier, item.title, item.text);
+
+        if (item.items != null && !item.items.isEmpty()) {
+            step.setShareTypeList(ShareTheAppStep.ShareType.toShareTypeList(item.items));
+        }
+
+        if (step.getTitle() == null) {
+            step.setTitle(context.getString(R.string.rsb_share_the_app_title));
+        }
+
+        if (step.getText() == null) {
+            step.setText(context.getString(R.string.rsb_share_the_app_text));
+        }
+
+        return step;
     }
 
     /**

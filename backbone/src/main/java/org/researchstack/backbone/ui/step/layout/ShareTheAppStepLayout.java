@@ -1,31 +1,38 @@
-package org.researchstack.skin.ui.fragment;
+package org.researchstack.backbone.ui.step.layout;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.researchstack.backbone.R;
+import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.step.ShareTheAppStep;
+import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.ui.views.AlertFrameLayout;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.backbone.utils.ThemeUtils;
-import org.researchstack.skin.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated // use ShareTheAppStep which loads ShareTheAppStepLayout instead
-public class ShareFragment extends Fragment
-{
+/**
+ * Created by TheMDP on 1/26/17.
+ */
+
+public class ShareTheAppStepLayout extends AlertFrameLayout implements StepLayout {
+
     protected static final String FACEBOOK_SHARE_URL = "https://www.facebook.com/sharer/sharer.php?u=";
     protected static final String TWITTER_SHARE_URL = "https://twitter.com/intent/tweet?source=webclient&text=";
     protected static final String SMS_MIME_TYPE = "vnd.android-dir/mms-sms";
@@ -33,59 +40,94 @@ public class ShareFragment extends Fragment
     protected static final String SMS_BODY_KEY = "sms_body";
     protected static final String MAILTO_SCHEME = "mailto";
 
-    public static enum Type
-    {
-        TWITTER,
-        FACEBOOK,
-        SMS,
-        EMAIL
+    protected TextView titleTextView;
+    protected TextView textTextView;
+    protected RecyclerView recyclerView;
+
+    protected ShareTheAppStep step;
+    protected StepCallbacks callbacks;
+
+    public ShareTheAppStepLayout(Context context) {
+        super(context);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        return inflater.inflate(R.layout.rss_fragment_share, container, false);
+    public ShareTheAppStepLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public ShareTheAppStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(21)
+    public ShareTheAppStepLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
-    {
-        super.onViewCreated(view, savedInstanceState);
+    public void initialize(Step step, StepResult result) {
+        validateStep(step);
 
-        ImageView logoView = (ImageView) view.findViewById(R.id.share_logo_view);
+        View root = inflate(getContext(), R.layout.rsb_step_layout_share_the_app, this);
+        titleTextView = (TextView)root.findViewById(R.id.rsb_share_title_view);
+        titleTextView.setText(step.getTitle());
+        textTextView  = (TextView)root.findViewById(R.id.rsb_share_view_text);
+        textTextView.setText(step.getText());
+
+        ImageView logoView = (ImageView)root.findViewById(R.id.rsb_share_logo_view);
         // look for a logo to show, otherwise hide it
-        int logoId = ResUtils.getDrawableResourceId(getActivity(), "logo_disease");
-        if(logoId > 0)
-        {
+        int logoId = ResUtils.getDrawableResourceId(getContext(), ResUtils.LOGO_DISEASE);
+        if(logoId > 0) {
             logoView.setImageResource(logoId);
             logoView.setVisibility(View.VISIBLE);
+        } else {
+            logoView.setVisibility(View.GONE);
         }
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(org.researchstack.skin.R.id.share_recycler_view);
-        recyclerView.setAdapter(new ShareFragment.ShareAdapter(getContext(), loadItems()));
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView = (RecyclerView)root.findViewById(R.id.rsb_share_recycler_view);
 
     }
 
-    /**
-     * Return a list of Share Type Item objects.
-     *
-     * @return
-     */
+    protected void validateStep(Step step) {
+        if (!(step instanceof ShareTheAppStep)) {
+            throw new IllegalStateException("ShareTheAppStepLayout only works with ShareTheAppStep");
+        }
+        this.step = (ShareTheAppStep)step;
+    }
+
+    @Override
+    public View getLayout() {
+        return this;
+    }
+
+    @Override
+    public boolean isBackEventConsumed() {
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, null);
+        return true;
+    }
+
+    @Override
+    public void setCallbacks(StepCallbacks callbacks) {
+        this.callbacks = callbacks;
+    }
+
     protected List<ShareItem> loadItems() {
         List<ShareItem> items = new ArrayList<>();
 
-        ShareItem twitter = new ShareItem(ResUtils.TWITTER_ICON, getString(R.string.rsb_share_twitter), Type.TWITTER);
+        ShareItem twitter = new ShareItem(ResUtils.TWITTER_ICON,
+                getContext().getString(R.string.rsb_share_twitter), ShareTheAppStep.ShareType.TWITTER);
         items.add(twitter);
 
-        ShareItem facebook = new ShareItem(ResUtils.FACEBOOK_ICON, getString(R.string.rsb_share_facebook), Type.FACEBOOK);
+        ShareItem facebook = new ShareItem(ResUtils.FACEBOOK_ICON,
+                getContext().getString(R.string.rsb_share_facebook), ShareTheAppStep.ShareType.FACEBOOK);
         items.add(facebook);
 
-        ShareItem sms = new ShareItem(ResUtils.SMS_ICON, getString(R.string.rsb_share_sms), Type.SMS);
+        ShareItem sms = new ShareItem(ResUtils.SMS_ICON,
+                getContext().getString(R.string.rsb_share_sms), ShareTheAppStep.ShareType.SMS);
         items.add(sms);
 
-        ShareItem email = new ShareItem(ResUtils.EMAIL_ICON, getString(R.string.rsb_share_email), Type.EMAIL);
+        ShareItem email = new ShareItem(ResUtils.EMAIL_ICON,
+                getContext().getString(R.string.rsb_share_email), ShareTheAppStep.ShareType.EMAIL);
         items.add(email);
 
         return items;
@@ -94,24 +136,22 @@ public class ShareFragment extends Fragment
     private class ShareItem {
         public String icon;
         public String text;
-        public Type type;
+        public ShareTheAppStep.ShareType type;
 
-        public ShareItem(String i, String t, Type ty) {
+        public ShareItem(String i, String t, ShareTheAppStep.ShareType ty) {
             icon = i;
             text = t;
             type = ty;
         }
     }
 
-    public class ShareAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-    {
+    public class ShareAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private Context context;
-        private List<ShareItem>   items;
+        private List<ShareItem> items;
         private LayoutInflater inflater;
 
-        public ShareAdapter(Context ctx, List<ShareItem> itemList)
-        {
+        public ShareAdapter(Context ctx, List<ShareItem> itemList) {
             super();
             context = ctx;
             items = itemList;
@@ -119,17 +159,15 @@ public class ShareFragment extends Fragment
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            View view = inflater.inflate(R.layout.rss_item_row_share, parent, false);
-            return new ShareFragment.ShareAdapter.ViewHolder(view);
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = inflater.inflate(R.layout.rsb_row_icon_text, parent, false);
+            return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder hldr, int position)
-        {
+        public void onBindViewHolder(RecyclerView.ViewHolder hldr, int position) {
 
-            ShareFragment.ShareAdapter.ViewHolder holder = (ShareFragment.ShareAdapter.ViewHolder) hldr;
+            ViewHolder holder = (ViewHolder) hldr;
             ShareItem item = items.get(position);
 
             holder.title.setText(item.text);
@@ -141,13 +179,10 @@ public class ShareFragment extends Fragment
             int colorId = ThemeUtils.getAccentColor(context);
             holder.icon.setColorFilter(colorId, PorterDuff.Mode.SRC_IN);
 
-
-
             holder.itemView.setOnClickListener(v -> {
                 Intent intent = null;
                 String message = context.getString(R.string.rsb_share_the_app_message);
-                switch(item.type)
-                {
+                switch(item.type) {
                     case TWITTER:
                         intent = getShareTwitterIntent(message);
                         break;
@@ -169,21 +204,18 @@ public class ShareFragment extends Fragment
         }
 
         @Override
-        public int getItemCount()
-        {
+        public int getItemCount() {
             return items.size();
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder
-        {
+        public class ViewHolder extends RecyclerView.ViewHolder {
             TextView title;
             ImageView icon;
 
-            public ViewHolder(View itemView)
-            {
+            public ViewHolder(View itemView) {
                 super(itemView);
-                title = (TextView) itemView.findViewById(R.id.share_item_title);
-                icon = (ImageView) itemView.findViewById(R.id.share_item_icon);
+                title = (TextView) itemView.findViewById(R.id.rsb_share_item_title);
+                icon = (ImageView) itemView.findViewById(R.id.rsb_share_item_icon);
             }
         }
     }
@@ -196,8 +228,8 @@ public class ShareFragment extends Fragment
      */
     protected Intent getShareEmailIntent(String message) {
         Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-            MAILTO_SCHEME, "", null));
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.rsb_share_email_subject));
+                MAILTO_SCHEME, "", null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, getContext().getString(R.string.rsb_share_email_subject));
         intent.putExtra(Intent.EXTRA_TEXT, message);
         return intent;
     }
@@ -235,19 +267,19 @@ public class ShareFragment extends Fragment
      * @return  The share intent.
      */
     protected Intent getShareFacebookIntent(String message) {
-        String urlToShare = getString(R.string.rsb_share_app_url);
+        String urlToShare = getContext().getString(R.string.rsb_share_app_url);
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType(TEXT_MIME_TYPE);
         intent.putExtra(Intent.EXTRA_TEXT, urlToShare);
 
         // See if official Facebook app is found
         boolean facebookAppFound = false;
-        List<ResolveInfo> matches = getActivity().getPackageManager().queryIntentActivities(intent, 0);
+        List<ResolveInfo> matches = getContext().getPackageManager().queryIntentActivities(intent, 0);
         for (ResolveInfo info : matches)
         {
-            String facebookKey = getString(R.string.rsb_share_facebook_key);
+            String facebookKey = getContext().getString(R.string.rsb_share_facebook_key);
             if (info.activityInfo.packageName.toLowerCase().contains(facebookKey) ||
-                info.activityInfo.name.toLowerCase().contains(facebookKey))
+                    info.activityInfo.name.toLowerCase().contains(facebookKey))
             {
                 intent.setPackage(info.activityInfo.packageName);
                 facebookAppFound = true;
@@ -264,5 +296,4 @@ public class ShareFragment extends Fragment
 
         return intent;
     }
-
 }

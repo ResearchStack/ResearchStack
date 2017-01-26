@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
@@ -10,23 +9,16 @@
     android:layout_gravity="center_vertical">
 
     <ImageView
-        android:id="@+id/share_item_icon"
+        android:id="@+id/rsb_share_item_icon"
         style="@style/RsbLearnItemLogo"
-        android:layout_gravity="center_vertical"
-        />
+        android:layout_gravity="center_vertical" />
 
     <TextView
-        android:id="@+id/share_item_title"
+        android:id="@+id/rsb_share_item_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:focusable="true"
         android:gravity="center_vertical"
-        android:singleLine="true"
-        android:textAppearance="@style/Preference_TextAppearanceMaterialSubhead"
-        tools:text="@string/lorem_name"
-        />
+        android:maxLines="1"
+        android:textAppearance="@style/Preference_TextAppearanceMaterialSubhead"/>
+
 </LinearLayout>
-
-
-
