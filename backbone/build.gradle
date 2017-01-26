@@ -38,9 +38,12 @@ android {
 }
 
 // Reading in data from local.properties is used here to grab key/value pairs used below in ext
-// Any local.properties file will be used, even ones entitled local.properties.some_other_qualifier
+// Originally, it read the local.properties, but this file should never be committed to vcs,
+// So check if it exists first, because some projects may not care about it
 Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+if (project.rootProject.file('local.properties').exists()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
 
 ext {
     bintrayRepo = 'ResearchStack'
