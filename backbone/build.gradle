@@ -39,7 +39,7 @@ android {
 
 // Reading in data from local.properties is used here to grab key/value pairs used below in ext
 // Originally, it read the local.properties, but this file should never be committed to vcs,
-// so it created an odd scenario, so allow for a file named local.properties.bintray instead
+// So check if it exists first, because some projects may not care about it
 Properties properties = new Properties()
 if (project.rootProject.file('local.properties').exists()) {
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
