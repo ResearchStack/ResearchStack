@@ -37,6 +37,8 @@ android {
     resourcePrefix 'rsb_'
 }
 
+// Reading in data from local.properties is used here to grab key/value pairs used below in ext
+// Any local.properties file will be used, even ones entitled local.properties.some_other_qualifier
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
@@ -55,6 +57,8 @@ ext {
 
     libraryVersion = version
 
+    // This grabs the key/value pairs from local.properties and assigns them to variables that
+    // can be used in gradle, and specifically, the mavenInstaller below
     userOrgName = 'researchstack'
     developerId = properties.getProperty("bintray.user")
     developerName = properties.getProperty("bintray.developerName")
