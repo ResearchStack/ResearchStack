@@ -139,10 +139,8 @@ public abstract class DataProvider
      *
      * @param context android context
      * @return true if user is currently consented
-     *
-     * @Deprecated use isConsented() no params instead
      */
-    @Deprecated
+    @Deprecated // isConsented() no params instead
     public boolean isConsented(Context context) {
         return false;
     }

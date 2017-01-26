@@ -29,7 +29,7 @@ import java.util.Set;
  *
  * ProfileStepLayout is used to display fields that relate to a user's profile
  * and the QuestionSteps were created from
- * @see {@link org.researchstack.backbone.model.ProfileInfoOption} objects,
+ * see {@link org.researchstack.backbone.model.ProfileInfoOption} objects,
  * which can be found in the @see {@link org.researchstack.backbone.step.ProfileStep}
  */
 
