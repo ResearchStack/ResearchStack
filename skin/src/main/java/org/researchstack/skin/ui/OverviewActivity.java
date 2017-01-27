@@ -103,10 +103,13 @@ public class OverviewActivity extends PinCodeActivity implements View.OnClickLis
         }
 
         signUp = (Button) findViewById(R.id.intro_sign_up);
+        signUp.setOnClickListener(this::onSignUpClicked);  // lamba to call internal method, IDE threw warning until I switched to it
         signIn = (TextView) findViewById(R.id.intro_sign_in);
+        signIn.setOnClickListener(this::onSignInClicked);
 
         skip = (Button) findViewById(R.id.intro_skip);
         skip.setVisibility(UiManager.getInstance().isConsentSkippable() ? View.VISIBLE : View.GONE);
+        skip.setOnClickListener(this::onSkipClicked);
 
         int resId = ResUtils.getDrawableResourceId(this, model.getLogoName());
         logoView.setImageResource(resId);
