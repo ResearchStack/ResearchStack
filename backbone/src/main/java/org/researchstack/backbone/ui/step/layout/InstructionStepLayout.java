@@ -166,7 +166,9 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                             AnimatedVectorDrawableCompat animatedVector =
                                     AnimatedVectorDrawableCompat.create(getContext(), drawableInt);
                             imageView.setImageDrawable(animatedVector);
-                            animatedVector.start();
+                            if (animatedVector != null) {
+                                animatedVector.start();
+                            }
                         } else {
                             imageView.setImageResource(drawableInt);
                         }
