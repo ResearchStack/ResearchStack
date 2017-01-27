@@ -13,6 +13,12 @@ import java.nio.charset.Charset;
 
 public class ResUtils
 {
+    public static final String LOGO_DISEASE = "logo_disease";
+
+    public static final String TWITTER_ICON = "rsb_ic_twitter_icon";
+    public static final String FACEBOOK_ICON = "rsb_ic_facebook_icon";
+    public static final String EMAIL_ICON = "rsb_ic_email_icon";
+    public static final String SMS_ICON = "rsb_ic_sms_icon";
 
     private ResUtils() {}
 

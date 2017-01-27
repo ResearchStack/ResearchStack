@@ -11,7 +11,7 @@
 
     <ImageView
         android:id="@+id/learn_item_icon"
-        style="@style/LearnItemLogo"
+        style="@style/RsbLearnItemLogo"
         android:layout_gravity="center_vertical"
         />
 

@@ -45,6 +45,7 @@ import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.RegistrationStep;
+import org.researchstack.backbone.step.ShareTheAppStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
@@ -185,6 +186,11 @@ public class SurveyFactory {
                 return createNotImplementedStep(item);
             case PASSCODE:
                 return createPasscodeStep(item);
+            case SHARE_THE_APP:
+                if (!(item instanceof InstructionSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, SHARE_THE_APP types must be InstructionSurveyItem");
+                }
+                return createShareTheAppStep(context, (InstructionSurveyItem)item);
             case CUSTOM:
                 if (!(item instanceof CustomSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, CUSTOM types must be CustomSurveyItem");
@@ -671,6 +677,25 @@ public class SurveyFactory {
      */
     public PasscodeStep createPasscodeStep(SurveyItem item) {
         return new PasscodeStep(item.identifier, item.title, item.text);
+    }
+
+    public ShareTheAppStep createShareTheAppStep(Context context, InstructionSurveyItem item) {
+        ShareTheAppStep step = new ShareTheAppStep(item.identifier, item.title, item.text);
+        fillInstructionStep(step, item);
+
+        if (item.items != null && !item.items.isEmpty()) {
+            step.setShareTypeList(ShareTheAppStep.ShareType.toShareTypeList(item.items));
+        }
+
+        if (step.getTitle() == null) {
+            step.setTitle(context.getString(R.string.rsb_share_the_app_title));
+        }
+
+        if (step.getText() == null) {
+            step.setText(context.getString(R.string.rsb_share_the_app_text));
+        }
+
+        return step;
     }
 
     /**

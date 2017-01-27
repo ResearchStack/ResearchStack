@@ -73,6 +73,8 @@ public enum SurveyItemType {
     ACCOUNT_DATA_GROUPS         ("dataGroups"),             // DataGroupsStep
     @SerializedName("profile")
     ACCOUNT_PROFILE             ("profile"),                // ProfileQuestionStep or ProfileFormStep
+    @SerializedName("shareApp")
+    SHARE_THE_APP               ("shareApp"),               // ShareTheAppStep
     // Passcode subtypes
     @SerializedName(value="PASSCODE", alternate={"passcodeType4Digit", "passcodeType6Digit"})
     PASSCODE                    ("passcode");               // iOS has 6 digit too, but for now only support 4 digit

@@ -261,4 +261,17 @@
 
     <string name="rsb_change_email_title">Enter a different email</string>
 
+    <!-- Share -->
+    <string name="rsb_share">Spread the Word</string>
+    <string name="rsb_share_the_app_title">Help us spread the word</string>
+    <string name="rsb_share_the_app_text">Please help us find study participants by sharing information about the study</string>
+    <string name="rsb_share_the_app_message">Please override rsb_share_the_app_message string resource to write your own share message</string>
+    <string name="rsb_share_app_url">Enter google play app url for string resource rsb_share_app_url</string>
+    <string name="rsb_share_twitter">Share on Twitter</string>
+    <string name="rsb_share_facebook">Share on Facebook</string>
+    <string name="rsb_share_sms">Share via SMS</string>
+    <string name="rsb_share_email">Share via Email</string>
+    <string name="rsb_share_facebook_key">facebook</string>
+    <string name="rsb_share_email_subject">Subject</string>
+
 </resources>
