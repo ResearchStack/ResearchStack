@@ -43,6 +43,11 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
      */
     String image;
 
+    /**
+     * True if this drawable should be loaded using AnimatedVectorDrawableCompat
+     * false, if this drawable should be loaded like any other image
+     */
+    boolean isImageAnimated;
 
     /**
      An image that provides visual context for the instruction that will allow for showing
@@ -96,6 +101,13 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
     }
     public String getFootnote() {
         return footnote;
+    }
+
+    public void setIsImageAnimated(boolean isImageAnimated) {
+        this.isImageAnimated = isImageAnimated;
+    }
+    public boolean getIsImageAnimated() {
+        return isImageAnimated;
     }
 
     public void setImage(String newImage) {

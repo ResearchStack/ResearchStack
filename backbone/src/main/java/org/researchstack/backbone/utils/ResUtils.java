@@ -13,12 +13,16 @@ import java.nio.charset.Charset;
 
 public class ResUtils
 {
-    public static final String LOGO_DISEASE = "logo_disease";
-
-    public static final String TWITTER_ICON = "rsb_ic_twitter_icon";
-    public static final String FACEBOOK_ICON = "rsb_ic_facebook_icon";
-    public static final String EMAIL_ICON = "rsb_ic_email_icon";
-    public static final String SMS_ICON = "rsb_ic_sms_icon";
+    /**
+     * Since we cannot reference R.drawable.X integer references from JSON
+     * The Drawable resource must also be available by String lookup
+     */
+    public static final String LOGO_DISEASE             = "logo_disease";
+    public static final String TWITTER_ICON             = "rsb_ic_twitter_icon";
+    public static final String FACEBOOK_ICON            = "rsb_ic_facebook_icon";
+    public static final String EMAIL_ICON               = "rsb_ic_email_icon";
+    public static final String SMS_ICON                 = "rsb_ic_sms_icon";
+    public static final String ANIMATED_CHECK_MARK_ID   = "rsb_animated_check";
 
     private ResUtils() {}
 

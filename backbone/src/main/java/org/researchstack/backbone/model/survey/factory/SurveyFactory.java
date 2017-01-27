@@ -33,6 +33,7 @@ import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
 import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
 import org.researchstack.backbone.onboarding.OnboardingSection;
+import org.researchstack.backbone.step.CompletionStep;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.EmailVerificationSubStep;
@@ -118,6 +119,9 @@ public class SurveyFactory {
             case INSTRUCTION_COMPLETION:
                 if (!(item instanceof InstructionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, INSTRUCTION types must be InstructionSurveyItems");
+                }
+                if (item.type == SurveyItemType.INSTRUCTION_COMPLETION) {
+                    return createInstructionCompletionStep((InstructionSurveyItem)item);
                 }
                 return createInstructionStep((InstructionSurveyItem)item);
             case SUBTASK:
@@ -216,8 +220,18 @@ public class SurveyFactory {
      * @param item InstructionSurveyItem from JSON
      * @return valid InstructionStep matching the InstructionSurveyItem
      */
-    InstructionStep createInstructionStep(InstructionSurveyItem item) {
+    public InstructionStep createInstructionStep(InstructionSurveyItem item) {
         InstructionStep step = new InstructionStep(item.identifier, item.title, item.text);
+        fillInstructionStep(step, item);
+        return step;
+    }
+
+    /**
+     * @param item InstructionSurveyItem from JSON
+     * @return valid CompletionStep matching the InstructionSurveyItem
+     */
+    public CompletionStep createInstructionCompletionStep(InstructionSurveyItem item) {
+        CompletionStep step = new CompletionStep(item.identifier, item.title, item.text);
         fillInstructionStep(step, item);
         return step;
     }
@@ -232,11 +246,21 @@ public class SurveyFactory {
 
     /** Helper method for instruction steps */
     void fillInstructionStep(InstructionStep step, InstructionSurveyItem item) {
-        step.setFootnote(item.footnote);
-        step.setNextStepIdentifier(item.nextIdentifier);
-        step.setMoreDetailText(item.detailText);
-        step.setImage(item.image);
-        step.setIconImage(item.iconImage);
+        if (item.footnote != null) {
+            step.setFootnote(item.footnote);
+        }
+        if (item.nextIdentifier != null) {
+            step.setNextStepIdentifier(item.nextIdentifier);
+        }
+        if (item.detailText != null) {
+            step.setMoreDetailText(item.detailText);
+        }
+        if (item.image != null) {
+            step.setImage(item.image);
+        }
+        if (item.iconImage != null) {
+            step.setIconImage(item.iconImage);
+        }
     }
 
     /**
