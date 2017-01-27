@@ -188,7 +188,7 @@ public class SurveyFactory {
                 return createPasscodeStep(item);
             case SHARE_THE_APP:
                 if (!(item instanceof InstructionSurveyItem)) {
-                    throw new IllegalStateException("Error in json parsing, SHARE_THE_APP types must be ShareTheAppSurveyItem");
+                    throw new IllegalStateException("Error in json parsing, SHARE_THE_APP types must be InstructionSurveyItem");
                 }
                 return createShareTheAppStep(context, (InstructionSurveyItem)item);
             case CUSTOM:
