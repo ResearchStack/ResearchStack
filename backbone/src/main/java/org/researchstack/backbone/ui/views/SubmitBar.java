@@ -103,5 +103,4 @@ public class SubmitBar extends LinearLayout
     {
         return negativeView;
     }
-
 }

@@ -92,7 +92,7 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
             case PASSCODE:
                 break;
             case SHARE_THE_APP:
-                return context.deserialize(json, ShareTheAppSurveyItem.class);
+                return context.deserialize(json, InstructionSurveyItem.class);
             case CUSTOM:
                 CustomSurveyItem item = context.deserialize(json, getCustomClass(customTypeString));
                 item.type = surveyItemType; // need to set CUSTOM type for surveyItem, since it is a special case

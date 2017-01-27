@@ -57,60 +57,60 @@ public class SignUpTask extends OnboardingTask
                 .create(context);
 
         for(InclusionCriteriaModel.Step s: model.steps) {
-            switch(s.type)
-            {
-                case INSTRUCTION:
-                    Step instruction = null;
-                    switch(s.identifier)
-                    {
-                        case InclusionCriteriaModel.INELIGIBLE_INSTRUCTION_IDENTIFIER:
-                            instruction = new Step(SignUpIneligibleStepIdentifier, s.text);
-                            instruction.setText(s.detailText);
-                            instruction.setStepTitle(R.string.rss_eligibility);
-                            instruction.setStepLayoutClass(SignUpIneligibleStepLayout.class);
-                            break;
-                        case InclusionCriteriaModel.ELIGIBLE_INSTRUCTION_IDENTIFIER:
-                            instruction = new Step(SignUpEligibleStepIdentifier, s.text);
-                            instruction.setText(s.detailText);
-                            instruction.setStepTitle(R.string.rss_eligibility);
-                            instruction.setStepLayoutClass(SignUpEligibleStepLayout.class);
-                            break;
-                        default:
-                            instruction.setStepTitle(R.string.rss_eligibility);
-                            instruction = new Step(s.identifier, s.text);
-                            instruction.setText(s.detailText);
-                    }
-
-                    stepMap.put(instruction.getIdentifier(), instruction);
-                    break;
-                // TODO: not sure what the differences are between compound/toggle or is compound obsolete?
-                case COMPOUND:
-                case TOGGLE:
-                    FormStep form = new FormStep(SignUpInclusionCriteriaStepIdentifier, s.text, s.detailText);
-                    List<QuestionStep> questions = new ArrayList<>();
-
-                    if(s.items != null)
-                    {
-                        // TODO: extend the json to include (yes/no)?
-                        BooleanAnswerFormat booleanAnswerFormat =
-                                new BooleanAnswerFormat(context.getString(R.string.rsb_yes), context.getString(R.string.rsb_no));
-                        for (InclusionCriteriaModel.Item item : s.items) {
-                            QuestionStep question = new QuestionStep(item.identifier, item.text, booleanAnswerFormat);
-                            answerMap.put(item.identifier, item.expectedAnswer);
-                            questions.add(question);
+            // step can be null with addition of new OnboardingManager steps, so just ignore them
+            if (s != null && s.type != null) {
+                switch (s.type) {
+                    case INSTRUCTION:
+                        Step instruction = null;
+                        switch (s.identifier) {
+                            case InclusionCriteriaModel.INELIGIBLE_INSTRUCTION_IDENTIFIER:
+                                instruction = new Step(SignUpIneligibleStepIdentifier, s.text);
+                                instruction.setText(s.detailText);
+                                instruction.setStepTitle(R.string.rss_eligibility);
+                                instruction.setStepLayoutClass(SignUpIneligibleStepLayout.class);
+                                break;
+                            case InclusionCriteriaModel.ELIGIBLE_INSTRUCTION_IDENTIFIER:
+                                instruction = new Step(SignUpEligibleStepIdentifier, s.text);
+                                instruction.setText(s.detailText);
+                                instruction.setStepTitle(R.string.rss_eligibility);
+                                instruction.setStepLayoutClass(SignUpEligibleStepLayout.class);
+                                break;
+                            default:
+                                instruction.setStepTitle(R.string.rss_eligibility);
+                                instruction = new Step(s.identifier, s.text);
+                                instruction.setText(s.detailText);
                         }
-                        form.setFormSteps(questions);
-                    }
-                    form.setStepTitle(R.string.rss_eligibility);
-                    form.setOptional(false);
-                    stepMap.put(form.getIdentifier(), form);
-                    break;
-                case SHARE:
-                    Step step = new Step(s.identifier);
-                    stepMap.put(step.getIdentifier(), step);
-                    break;
-                default:
-                    LogExt.i(getClass(), "Unrecognized InclusionCriteriaModel.Step: " + s.type);
+
+                        stepMap.put(instruction.getIdentifier(), instruction);
+                        break;
+                    // TODO: not sure what the differences are between compound/toggle or is compound obsolete?
+                    case COMPOUND:
+                    case TOGGLE:
+                        FormStep form = new FormStep(SignUpInclusionCriteriaStepIdentifier, s.text, s.detailText);
+                        List<QuestionStep> questions = new ArrayList<>();
+
+                        if (s.items != null) {
+                            // TODO: extend the json to include (yes/no)?
+                            BooleanAnswerFormat booleanAnswerFormat =
+                                    new BooleanAnswerFormat(context.getString(R.string.rsb_yes), context.getString(R.string.rsb_no));
+                            for (InclusionCriteriaModel.Item item : s.items) {
+                                QuestionStep question = new QuestionStep(item.identifier, item.text, booleanAnswerFormat);
+                                answerMap.put(item.identifier, item.expectedAnswer);
+                                questions.add(question);
+                            }
+                            form.setFormSteps(questions);
+                        }
+                        form.setStepTitle(R.string.rss_eligibility);
+                        form.setOptional(false);
+                        stepMap.put(form.getIdentifier(), form);
+                        break;
+                    case SHARE:
+                        Step step = new Step(s.identifier);
+                        stepMap.put(step.getIdentifier(), step);
+                        break;
+                    default:
+                        LogExt.i(getClass(), "Unrecognized InclusionCriteriaModel.Step: " + s.type);
+                }
             }
         }
     }

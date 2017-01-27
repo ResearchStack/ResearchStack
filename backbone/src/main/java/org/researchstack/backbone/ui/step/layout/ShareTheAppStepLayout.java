@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import org.researchstack.backbone.step.ShareTheAppStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.AlertFrameLayout;
+import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.backbone.utils.ThemeUtils;
@@ -27,11 +29,13 @@ import org.researchstack.backbone.utils.ThemeUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.functions.Action1;
+
 /**
  * Created by TheMDP on 1/26/17.
  */
 
-public class ShareTheAppStepLayout extends AlertFrameLayout implements StepLayout {
+public class ShareTheAppStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
     protected static final String FACEBOOK_SHARE_URL = "https://www.facebook.com/sharer/sharer.php?u=";
     protected static final String TWITTER_SHARE_URL = "https://twitter.com/intent/tweet?source=webclient&text=";
@@ -65,16 +69,20 @@ public class ShareTheAppStepLayout extends AlertFrameLayout implements StepLayou
     }
 
     @Override
+    public int getContentResourceId() {
+        return R.layout.rsb_step_layout_share_the_app;
+    }
+
+    @Override
     public void initialize(Step step, StepResult result) {
         validateStep(step);
 
-        View root = inflate(getContext(), R.layout.rsb_step_layout_share_the_app, this);
-        titleTextView = (TextView)root.findViewById(R.id.rsb_share_title_view);
+        titleTextView = (TextView)contentContainer.findViewById(R.id.rsb_share_title_view);
         titleTextView.setText(step.getTitle());
-        textTextView  = (TextView)root.findViewById(R.id.rsb_share_view_text);
+        textTextView  = (TextView)contentContainer.findViewById(R.id.rsb_share_view_text);
         textTextView.setText(step.getText());
 
-        ImageView logoView = (ImageView)root.findViewById(R.id.rsb_share_logo_view);
+        ImageView logoView = (ImageView)contentContainer.findViewById(R.id.rsb_share_logo_view);
         // look for a logo to show, otherwise hide it
         int logoId = ResUtils.getDrawableResourceId(getContext(), ResUtils.LOGO_DISEASE);
         if(logoId > 0) {
@@ -84,8 +92,13 @@ public class ShareTheAppStepLayout extends AlertFrameLayout implements StepLayou
             logoView.setVisibility(View.GONE);
         }
 
-        recyclerView = (RecyclerView)root.findViewById(R.id.rsb_share_recycler_view);
+        recyclerView = (RecyclerView)contentContainer.findViewById(R.id.rsb_share_recycler_view);
+        recyclerView.setAdapter(new ShareAdapter(getContext(), loadItems()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        submitBar.setPositiveTitle(R.string.rsb_done);
+        submitBar.setPositiveAction(o -> { callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null); });
+        submitBar.getNegativeActionView().setVisibility(View.GONE);
     }
 
     protected void validateStep(Step step) {
@@ -138,7 +151,7 @@ public class ShareTheAppStepLayout extends AlertFrameLayout implements StepLayou
         public String text;
         public ShareTheAppStep.ShareType type;
 
-        public ShareItem(String i, String t, ShareTheAppStep.ShareType ty) {
+        private ShareItem(String i, String t, ShareTheAppStep.ShareType ty) {
             icon = i;
             text = t;
             type = ty;
@@ -151,7 +164,7 @@ public class ShareTheAppStepLayout extends AlertFrameLayout implements StepLayou
         private List<ShareItem> items;
         private LayoutInflater inflater;
 
-        public ShareAdapter(Context ctx, List<ShareItem> itemList) {
+        private ShareAdapter(Context ctx, List<ShareItem> itemList) {
             super();
             context = ctx;
             items = itemList;
@@ -187,7 +200,7 @@ public class ShareTheAppStepLayout extends AlertFrameLayout implements StepLayou
                         intent = getShareTwitterIntent(message);
                         break;
                     case FACEBOOK:
-                        intent = getShareFacebookIntent(message);
+                        intent = getShareFacebookIntent();
                         break;
                     case SMS:
                         intent = getShareSmsIntent(message);
@@ -208,11 +221,11 @@ public class ShareTheAppStepLayout extends AlertFrameLayout implements StepLayou
             return items.size();
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        private class ViewHolder extends RecyclerView.ViewHolder {
             TextView title;
             ImageView icon;
 
-            public ViewHolder(View itemView) {
+            private ViewHolder(View itemView) {
                 super(itemView);
                 title = (TextView) itemView.findViewById(R.id.rsb_share_item_title);
                 icon = (ImageView) itemView.findViewById(R.id.rsb_share_item_icon);
@@ -262,11 +275,10 @@ public class ShareTheAppStepLayout extends AlertFrameLayout implements StepLayou
 
     /**
      * Return an intent for sharing by Facebook.
-     *
-     * @param message The message to share.
+     * Facebook API does not let you post a message to share, user must type it themselves
      * @return  The share intent.
      */
-    protected Intent getShareFacebookIntent(String message) {
+    protected Intent getShareFacebookIntent() {
         String urlToShare = getContext().getString(R.string.rsb_share_app_url);
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType(TEXT_MIME_TYPE);

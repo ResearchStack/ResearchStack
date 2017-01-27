@@ -17,6 +17,7 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
 {
     protected LayoutInflater layoutInflater;
     protected SubmitBar submitBar;
+    protected ViewGroup contentContainer;
 
     public FixedSubmitBarLayout(Context context)
     {
@@ -52,7 +53,7 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
         layoutInflater.inflate(R.layout.rsb_layout_fixed_submit_bar, this, true);
 
         // Add contentContainer to the layout
-        ViewGroup contentContainer = (ViewGroup) findViewById(R.id.rsb_content_container);
+        contentContainer = (ViewGroup) findViewById(R.id.rsb_content_container);
         View content = layoutInflater.inflate(getContentResourceId(), contentContainer, false);
         contentContainer.addView(content, 0);
 

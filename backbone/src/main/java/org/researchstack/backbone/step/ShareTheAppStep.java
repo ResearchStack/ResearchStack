@@ -10,7 +10,7 @@ import java.util.List;
  * Created by TheMDP on 1/26/17.
  */
 
-public class ShareTheAppStep extends Step {
+public class ShareTheAppStep extends InstructionStep {
 
     private static final String TWITTER_ID  = "twitter";
     private static final String FACEBOOK_ID = "facebook";
@@ -31,8 +31,7 @@ public class ShareTheAppStep extends Step {
      * @param text of step
      */
     public ShareTheAppStep(String identifier, String title, String text) {
-        super(identifier, title);
-        setText(text);
+        super(identifier, title, text);
         shareTypeList = Arrays.asList(ShareType.values());
     }
 
@@ -43,8 +42,7 @@ public class ShareTheAppStep extends Step {
      * @param shareTypeList list of share type to be included in step layout
      */
     public ShareTheAppStep(String identifier, String title, String text, List<ShareType> shareTypeList) {
-        super(identifier, title);
-        setText(text);
+        super(identifier, title, text);
         this.shareTypeList = shareTypeList;
     }
 
