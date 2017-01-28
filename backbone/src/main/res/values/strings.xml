@@ -132,6 +132,7 @@
     <string name="rsb_minutes">Minutes</string>
     <string name="rsb_loading_ellipses">Loading...</string>
     <string name="rsb_forgot_password">Forgot your Password?</string>
+    <string name="rsb_log_out">Log out</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_data_failed">FailedP to load encrypted data, try again!</string>
@@ -190,6 +191,9 @@
     <string name="rsb_passcode_confirm_error">That code doesn’t match the one you entered. Try again
         or go back to choose a different %1$d-%2$s code.
     </string>
+    <string name="rsb_forgot_passcode">Forgot your Passcode?</string>
+    <string name="rsb_reset_passcode">Reset Passcode</string>
+    <string name="rsb_reset_passcode_message">In order to reset your passcode, you\'ll need to log out of the app completely and log back in using your email and password.</string>
 
     <!-- Permissions -->
     <string name="rsb_permissions">Permissions</string>

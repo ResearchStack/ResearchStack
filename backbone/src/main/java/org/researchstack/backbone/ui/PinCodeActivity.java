@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextThemeWrapper;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.storage.file.PinCodeConfig;
@@ -152,6 +155,9 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         pinCodeLayout = new PinCodeLayout(new ContextThemeWrapper(this, theme));
         pinCodeLayout.setBackgroundColor(Color.WHITE);
 
+        pinCodeLayout.getForgotPasscodeButton().setVisibility(View.VISIBLE);
+        pinCodeLayout.getForgotPasscodeButton().setOnClickListener(this::forgotPasscodeClicked);
+
         int errorColor = getResources().getColor(R.color.rsb_error);
 
         TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
@@ -195,10 +201,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
             }
             else
             {
-                getWindowManager().removeView(pinCodeLayout);
-                pinCodeLayout = null;
-                // authenticate() no longer calls notifyReady(), call this after auth
-                requestStorageAccess();
+                transitionToNextState();
             }
         });
 
@@ -207,5 +210,40 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
         // Show keyboard, needs to be delayed, not sure why
         pinCodeLayout.postDelayed(() -> toggleKeyboardAction.call(true), 300);
+    }
+
+    /**
+     * Since all data in the app is protected by a passcode, we must remove all the data
+     * that currently exists, so that we can set the user up with a new passcode
+     *
+     * This alert dialog should provide sufficient warning to the user before all their local data is removed
+     *
+     * @param v button that was tapped
+     */
+    public void forgotPasscodeClicked(View v) {
+        new AlertDialog.Builder(this).setTitle(R.string.rsb_reset_passcode)
+                .setMessage(R.string.rsb_reset_passcode_message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.rsb_log_out, (dialogInterface, i) -> signOut())
+                .setNegativeButton(R.string.rsb_cancel, null)
+                .show();
+    }
+
+    private void signOut() {
+        // Signs the user out of the app, so they have to start from scratch
+        DataProvider.getInstance().signOut(this);
+        StorageAccess.getInstance().removePinCode(this);
+        transitionToNextState();
+    }
+
+    /**
+     * By removing the pincode layout and re-requesting storage access, we force the
+     * activity to re-evaluate its pincode state and move on to the next screen
+     */
+    private void transitionToNextState() {
+        getWindowManager().removeView(pinCodeLayout);
+        pinCodeLayout = null;
+        // authenticate() no longer calls notifyReady(), call this after auth
+        requestStorageAccess();
     }
 }
