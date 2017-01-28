@@ -251,7 +251,7 @@ public class SmartSurveyTask extends Task implements Serializable
      *
      * @param context for fetching resources
      * @param step    the current step
-     * @return
+     * @return the title that should be displayed for this step
      */
     @Override
     public String getTitleForStep(Context context, Step step)

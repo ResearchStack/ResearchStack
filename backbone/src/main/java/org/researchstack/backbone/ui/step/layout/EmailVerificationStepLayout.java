@@ -378,6 +378,7 @@ public class EmailVerificationStepLayout extends ViewPagerSubstepListStepLayout 
         /**
          * If the app has crashed, or user has force closed it, we will need them to re-enter their password
          * Since they will be essentially signing in again
+         * @param container container to add the step body view to
          */
         protected void createValidatePasswordStepBody(RelativeLayout container) {
             // Create a verify password step

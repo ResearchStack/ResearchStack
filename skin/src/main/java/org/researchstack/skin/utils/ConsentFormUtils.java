@@ -55,6 +55,7 @@ public class ConsentFormUtils
     }
 
     /**
+     * @param context can be activity or application
      * @return Consent form pdf
      */
     @NonNull

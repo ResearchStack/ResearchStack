@@ -71,7 +71,7 @@ public class ShareFragment extends Fragment
     /**
      * Return a list of Share Type Item objects.
      *
-     * @return
+     * @return list of share items to be displayed in adapter
      */
     protected List<ShareItem> loadItems() {
         List<ShareItem> items = new ArrayList<>();

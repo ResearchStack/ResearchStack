@@ -108,6 +108,7 @@ public class OnboardingTaskActivity extends ViewTaskActivity implements Activity
 
     /**
      * Injects TaskResult information into StepLayouts that need more information
+     * @param step the step that is about to be displayed
      * @param stepLayout step layout that has just been instantiated
      */
     public void setupCustomStepLayouts(Step step, StepLayout stepLayout) {

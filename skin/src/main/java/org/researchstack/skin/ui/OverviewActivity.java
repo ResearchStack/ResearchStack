@@ -40,8 +40,8 @@ import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.adapter.OnboardingPagerAdapter;
 
 /**
- * @class OverviewActivity is the landing page for a user who is not signed up or signed in
- *        it gives an overview of the study, as well as buttons to sign in or sign up
+ * OverviewActivity is the landing page for a user who is not signed up or signed in
+ * it gives an overview of the study, as well as buttons to sign in or sign up
  */
 public class OverviewActivity extends PinCodeActivity implements View.OnClickListener
 {

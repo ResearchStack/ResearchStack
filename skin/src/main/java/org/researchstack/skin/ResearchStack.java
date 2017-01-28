@@ -113,7 +113,7 @@ public abstract class ResearchStack
 
     /**
      * Called within {@link #init(Context, ResearchStack)} to initialize {@link OnboardingManager} implementation
-     * @return concrete implementation of {@link OnboardingManager}
+     * @param context can be activity or application context, only used for resources
      */
     public abstract void createOnboardingManager(Context context);
 

@@ -16,6 +16,7 @@ public class StepResultHelper {
 
     /**
      * @param taskResult the TaskResult to search within
+     * @param stepResultKey the identifier of the step to find
      * @return a StepResult object within taskResult that has map key stepResultKey, null otherwise
      */
     public static StepResult findStepResult(TaskResult taskResult, String stepResultKey) {
@@ -63,6 +64,7 @@ public class StepResultHelper {
 
     /**
      * @param stepIdentifier for result
+     * @param stepResult the step result to try and find the String result in
      * @return String object if exists, empty string otherwise
      */
     public static String findStringResult(String stepIdentifier, StepResult stepResult) {
@@ -78,6 +80,8 @@ public class StepResultHelper {
 
     /**
      * @param stepIdentifier for result
+     * @param stepResult the step result to try and find the boolean result in
+     * @param taskResult the task result to try and find the boolean result in
      * @return String object if exists, empty string otherwise
      */
     public static Boolean findBooleanResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
@@ -93,6 +97,7 @@ public class StepResultHelper {
 
     /**
      * @param stepIdentifier for result
+     * @param stepResult the step result to try and find the date result in
      * @return String object if exists, empty string otherwise
      */
     public static Date findDateResult(String stepIdentifier, StepResult stepResult) {
