@@ -35,12 +35,8 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    // TODO: remove all warnings to backbone, and then remove this
-    lintOptions {
-        abortOnError false
-    }
-
-    resourcePrefix 'rsb_'
+    // This is causing errors on build on "R" class
+    //resourcePrefix 'rsb_'
 }
 
 // Reading in data from local.properties is used here to grab key/value pairs used below in ext

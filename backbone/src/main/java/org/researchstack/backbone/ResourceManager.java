@@ -91,6 +91,7 @@ public abstract class ResourceManager extends ResourcePathManager
      * Returns a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing a
      * individual task file
      *
+     * @param taskFileName the filename for th task
      * @return a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing a
      * individual task file
      */

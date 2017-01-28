@@ -112,7 +112,7 @@ public class Result implements Serializable
     }
 
     /**
-     * @param newIdentifier
+     * @param newIdentifier new identifier for result
      * @return a deep copy of this object, and its polymorphism, with a new identifier set
      */
     public Result deepCopy(String newIdentifier) {

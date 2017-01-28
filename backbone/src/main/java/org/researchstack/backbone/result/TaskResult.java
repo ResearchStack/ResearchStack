@@ -48,6 +48,7 @@ public class TaskResult extends Result
 
     /**
      * Set the Map of all of the StepResults in the task.
+     * @param newResults set the results object
      */
     public void setResults(Map<String, StepResult> newResults)
     {

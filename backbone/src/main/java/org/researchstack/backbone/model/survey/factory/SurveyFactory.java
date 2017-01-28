@@ -72,7 +72,7 @@ public class SurveyFactory {
 
     List<Step> steps;
     /*
-     * @param Context is used to localize default true and false string values
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param List<SurveyItem>
      */
     public SurveyFactory(Context context, List<SurveyItem> surveyItems) {
@@ -80,7 +80,7 @@ public class SurveyFactory {
     }
 
     /**
-     * @param context can be any context, activity or application, used to access string resources
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param surveyItems usually from parsing JSON
      * @param customStepCreator used to control which step a custom survey item becomes
      */
@@ -456,7 +456,9 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param profileInfoOptions type of profile item that should be included in profile form step
+     * @param addConfirmPasswordOption true if confirm password should be added with password, false otherwise
      * @return a QuestionStep that can be used to get the correct data type for ProfileInfoOption
      */
     public List<QuestionStep> createQuestionSteps(
@@ -560,6 +562,7 @@ public class SurveyFactory {
 
     /**
      * @param context used to generate title and placeholder title for step
+     * @param profileOption that will be associated with this QuestionStep
      * @return QuestionStep used for gathering user's password
      */
     public QuestionStep createBirthdateQuestionStep(Context context, ProfileInfoOption profileOption) {
@@ -571,7 +574,8 @@ public class SurveyFactory {
     }
 
     /**
-     * @param context used to generate title and placeholder title for step
+     * @param context can be any context, activity or application, used to access "R" resources
+     * @param profileOption that will be associated with this QuestionStep
      * @return QuestionStep used for gathering user's password
      */
     public QuestionStep createGenderQuestionStep(Context context, ProfileInfoOption profileOption) {
@@ -602,6 +606,7 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item ProfileSurveyItem from JSON
      * @return valid RegistrationStep matching the ProfileSurveyItem
      */
@@ -613,6 +618,7 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item ProfileSurveyItem from JSON
      * @return valid ProfileStep matching the ProfileSurveyItem
      */
@@ -624,6 +630,7 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item InstructionSurveyItem from JSON
      * @return valid EmailVerificationSubStep matching the InstructionSurveyItem
      */
@@ -669,6 +676,7 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item InstructionSurveyItem from JSON
      * @return valid EmailVerificationStep matching the InstructionSurveyItem
      */

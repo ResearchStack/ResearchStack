@@ -115,6 +115,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
     /**
      * @param step to validate it's state
+     * @param stepResult step result to validate
      */
     @SuppressWarnings("unchecked")  // needed for StepResult<StepResult> cast
     protected void validateStepAndResult(Step step, StepResult stepResult) {

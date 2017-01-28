@@ -38,12 +38,8 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    // TODO: remove all warnings to skin, and then remove this
-    lintOptions {
-        abortOnError false
-    }
-
-    resourcePrefix 'rss_'
+    // This is causing errors on build on "R" class
+    //resourcePrefix 'rss_'
 }
 
 // Reading in data from local.properties is used here to grab key/value pairs used below in ext

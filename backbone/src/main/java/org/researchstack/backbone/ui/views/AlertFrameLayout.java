@@ -44,6 +44,7 @@ public class AlertFrameLayout extends FrameLayout {
 
     /**
      * Helper method for ProfileSteps that need to make calls to the web
+     * @param title title of the alert dialog
      */
     public void showLoadingDialog(String title) {
         if (getContext() == null) {
