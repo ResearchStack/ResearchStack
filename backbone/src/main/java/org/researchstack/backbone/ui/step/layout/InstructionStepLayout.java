@@ -3,6 +3,12 @@ package org.researchstack.backbone.ui.step.layout;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
@@ -18,6 +24,7 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
 public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout
@@ -144,6 +151,35 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             {
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
+
+            // Setup the Imageview, is compatible with normal, vector, and animated drawables
+            AppCompatImageView imageView = (AppCompatImageView)findViewById(R.id.rsb_image_view);
+            if (imageView != null) {
+                if (step.getImage() != null) {
+                    int drawableInt = ResUtils.getDrawableResourceId(getContext(), step.getImage());
+                    if (drawableInt != 0) {
+
+                        // TODO: is there anyway to automatically check if an image is animatible
+                        // TODO: other than setting a flag on the Step?
+                        // TODO: catch exceptions maybe?
+                        if (step.getIsImageAnimated()) {
+                            AnimatedVectorDrawableCompat animatedVector =
+                                    AnimatedVectorDrawableCompat.create(getContext(), drawableInt);
+                            imageView.setImageDrawable(animatedVector);
+                            if (animatedVector != null) {
+                                animatedVector.start();
+                            }
+                        } else {
+                            imageView.setImageResource(drawableInt);
+                        }
+
+                        imageView.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    imageView.setVisibility(View.GONE);
+                }
+            }
+
         }
     }
 

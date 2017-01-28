@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="rsb_config_mediumAnimTime">300</integer>
+
+    <integer name="rsb_config_anim_time_check_mark">@integer/rsb_config_mediumAnimTime</integer>
 </resources>

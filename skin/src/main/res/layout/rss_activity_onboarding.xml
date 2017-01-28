@@ -121,7 +121,6 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_skip"
             style="@style/Button.Skin.Onboarding"
-            android:onClick="onSkipClicked"
             android:text="@string/rss_skip_signup"
             android:visibility="gone"
             app:backgroundTint="@color/rsb_submit_bar_negative"
@@ -130,7 +129,6 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_sign_up"
             style="@style/Button.Skin.Onboarding"
-            android:onClick="onSignUpClicked"
             android:text="@string/rss_join_study"
         />
         <Space android:layout_width="16dp" android:layout_height="match_parent"/>
@@ -145,7 +143,6 @@
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:gravity="center_vertical"
-        android:onClick="onSignInClicked"
         android:text="@string/rss_already_participating"
         android:textAllCaps="false"
         android:textColor="@android:color/black"

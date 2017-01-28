@@ -14,6 +14,9 @@ public class InstructionSurveyItem extends SurveyItem<String> {
     @SerializedName("image")
     public String image;
 
+    @SerializedName("isImageAnimated")
+    public boolean isImageAnimated;
+
     @SerializedName("iconImage")
     public String iconImage;
 
