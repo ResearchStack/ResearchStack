@@ -28,6 +28,7 @@
     <string name="rsb_consent_section_study_tasks">Study Tasks</string>
     <string name="rsb_consent_section_withdrawing">Withdrawing</string>
     <string name="rsb_consent_learn_more">Learn More</string>
+    <string name="rsb_consent_document_review_message">By agreeing you confirm that you read the consent and that you wish to take part in this research study.</string>
 
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">Learn more</string>
