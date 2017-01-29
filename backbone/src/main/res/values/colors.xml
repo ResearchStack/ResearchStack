@@ -23,4 +23,6 @@
     <color name="rsb_check_mark_foreground">@color/rsb_white</color>
     <color name="rsb_check_mark_background">@color/rsb_green</color>
 
+    <color name="rsb_forgot_passcode_text_color">@color/rsb_submit_bar_negative</color>
+
 </resources>
