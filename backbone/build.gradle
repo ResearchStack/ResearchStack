@@ -35,8 +35,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    // This is causing errors on build on "R" class
-    //resourcePrefix 'rsb_'
+    resourcePrefix 'rsb_'
 }
 
 // Reading in data from local.properties is used here to grab key/value pairs used below in ext
