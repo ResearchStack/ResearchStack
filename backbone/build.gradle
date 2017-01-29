@@ -35,11 +35,6 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    // TODO: remove all warnings to backbone, and then remove this
-    lintOptions {
-        abortOnError false
-    }
-
     resourcePrefix 'rsb_'
 }
 

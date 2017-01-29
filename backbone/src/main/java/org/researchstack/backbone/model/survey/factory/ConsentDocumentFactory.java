@@ -124,9 +124,9 @@ public class ConsentDocumentFactory extends SurveyFactory {
     /**
      * Creates consent review steps, which can be a total of name, birthdate step,
      * SignatureStep, but always a consent doc review step
-     * @param context
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item ConsentReviewSurveyItem used to create steps
-     * @return
+     * @return ConsentReviewSubstepListStep used for consent review
      */
     public ConsentReviewSubstepListStep createConsentReviewSteps(Context context, ConsentReviewSurveyItem item) {
         List<Step> stepList = new ArrayList<>();
@@ -184,6 +184,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item ConsentSharingOptionsSurveyItem that may have Sharing option choices
      * @return ConsentSharingStep for designating how to share the user's data
      */
@@ -225,6 +226,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
     }
 
     /**
+     * @param item the survey item to be converted into a step
      * @param sections used to create the ConsentVisualSteps
      * @return Ordered list of ConsentVisualSteps
      */
@@ -249,6 +251,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item used to create signature step
      * @return ConsentSignatureStep
      */
@@ -295,7 +298,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
     }
 
     /**
-     * Return subtask step with only the steps required for consent or reconsent on login
+     * @return subtask step with only the steps required for consent or reconsent on login
      */
     public Step loginConsentStep() {
         // Strip out the registration steps, and only leave the consent steps
@@ -311,6 +314,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
 
     /**
      * Return subtask step with only the steps required for initial registration
+     * @return the consent step that is applicable during registration
      */
     public Step registrationConsentStep() {
         // If this is a step that conforms to the custom step protocol and the custom step type is

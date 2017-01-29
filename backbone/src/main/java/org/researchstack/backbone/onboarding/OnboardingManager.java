@@ -215,6 +215,8 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
      *
      * @param context used to launch activity
      * @param task to be sent to OnboardingTaskActivity or sub-class Activity
+     *
+     * @return an intent holding a reference to OnboardingTaskActivity or a sub-class of it
      */
     public Intent createOnboardingTaskActivityIntent(Context context, NavigableOrderedTask task) {
         return OnboardingTaskActivity.newIntent(context, task);

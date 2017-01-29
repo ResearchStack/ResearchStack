@@ -70,6 +70,9 @@ public abstract class DataProvider
     /**
      * Called to sign the user up to the backend service
      *
+     * @param email the user's email
+     * @param username the user's username
+     * @param password the user's password
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signUp was successful
@@ -79,6 +82,8 @@ public abstract class DataProvider
     /**
      * Called to sign the user in to the backend service
      *
+     * @param username the user's username
+     * @param password the user's password
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
@@ -99,6 +104,7 @@ public abstract class DataProvider
      * Called to alert the backend to resend a vertification
      * email
      *
+     * @param email user's email
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
@@ -154,6 +160,7 @@ public abstract class DataProvider
      * Called to alert the backend that the user wants to withdraw from
      * the study
      *
+     * @param reason the reason for withdrawal, can be any string
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if withdrawl was successful
@@ -167,6 +174,7 @@ public abstract class DataProvider
      * with the signature parameter
      *
      * @param context android context
+     * @param consentResult the TaskResult map containing hard-coded key/value data
      */
     @Deprecated // use uploadConsent(Context context, ConsentSignatureBody signature) instead
     public abstract void uploadConsent(Context context, TaskResult consentResult);
@@ -177,6 +185,7 @@ public abstract class DataProvider
      *
      * @param context android context
      * @param signature Valid ConsentSignature object
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()} if successful
      */
     public abstract Observable<DataResponse> uploadConsent(Context context, ConsentSignatureBody signature);
 
@@ -194,6 +203,7 @@ public abstract class DataProvider
      * <p>
      * Please use {@link FileAccess} class to encrypt user information when saving.
      *
+     * @param consentResult the TaskResult map containing hard-coded key/value data
      * @param context android context
      */
     @Deprecated // use saveLocalConsent(Context context, ConsentSignatureBody signature) instead

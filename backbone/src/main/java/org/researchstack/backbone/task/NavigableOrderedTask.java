@@ -255,7 +255,7 @@ public class NavigableOrderedTask extends OrderedTask {
 
     /**
      * Validates that there are no duplicate identifiers in the list of steps
-     * @throws org.researchstack.backbone.task.Task.InvalidTaskException
+     * @throws org.researchstack.backbone.task.Task.InvalidTaskException if parameters are invalid
      */
     @Override
     public void validateParameters() {

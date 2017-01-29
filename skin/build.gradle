@@ -37,12 +37,7 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
-
-    // TODO: remove all warnings to skin, and then remove this
-    lintOptions {
-        abortOnError false
-    }
-
+    
     resourcePrefix 'rss_'
 }
 
@@ -140,6 +135,8 @@ if (project.hasProperty("android")) { // Android libraries
     }
 
     task javadoc(type: Javadoc) {
+        // Something about building JavaDocs through Gradle fires off a bunch of errors
+        // I haven't figured it out, but we need failOnError false, so the errors do not break CI
         failOnError false
         source = android.sourceSets.main.java.srcDirs
         classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
