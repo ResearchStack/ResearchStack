@@ -52,6 +52,9 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     {
         this.step = (ConsentDocumentStep) step;
         this.confirmationDialogBody = ((ConsentDocumentStep) step).getConfirmMessage();
+        if (confirmationDialogBody == null) {
+            confirmationDialogBody = getContext().getString(R.string.rsb_consent_document_review_message);
+        }
         this.htmlContent = ((ConsentDocumentStep) step).getConsentHTML();
         this.stepResult = result;
 

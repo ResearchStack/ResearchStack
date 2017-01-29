@@ -45,4 +45,15 @@
         layout="@layout/rsb_progress"
     />
 
+    <android.support.v7.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:id="@+id/rsb_forgot_passcode_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/rsb_forgot_passcode_text_color"
+        android:text="@string/rsb_forgot_passcode"
+        android:visibility="gone"/>
+
 </merge>
