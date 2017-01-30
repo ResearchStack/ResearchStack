@@ -1,4 +1,5 @@
 package org.researchstack.backbone.storage.file;
+
 import android.content.Context;
 
 import org.researchstack.backbone.storage.file.aes.Encrypter;
@@ -24,8 +25,7 @@ import org.researchstack.backbone.storage.file.aes.Encrypter;
  * <p>
  * Created by kgalligan on 11/24/15.
  */
-public interface FileAccess
-{
+public interface FileAccess {
     /**
      * Save data.  Do not call this before you init or you'll get an exception.  Also, networked
      * storage has the high probability of network based exceptions.  Use extra caution in those
@@ -50,7 +50,6 @@ public interface FileAccess
     byte[] readData(Context context, String path);
 
     /**
-     *
      * @param context Can be Application context, but we'll be careful not to store, so don't worry too much.
      * @param fromPath The current path relative to the implementation's root store. Must start with '/'.  No relative paths.
      * @param toPath The new path relative to the implementation's root store. Must start with '/'.  No relative paths.

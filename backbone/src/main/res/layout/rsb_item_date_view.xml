@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
->
+    android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/label"
@@ -15,19 +13,17 @@
         android:minHeight="@dimen/rsb_item_size_default"
         android:textColor="?attr/colorAccent"
         android:textSize="16sp"
-        tools:text="title"
-    />
+        tools:text="title" />
 
     <android.support.v7.widget.AppCompatTextView
-        style="?attr/editTextStyle"
         android:id="@+id/value"
+        style="?attr/editTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/rsb_item_size_default"
-        android:textSize="14sp"
-        android:textColor="?android:attr/textColorPrimary"
         android:singleLine="true"
-        tools:text="value"
-    />
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="14sp"
+        tools:text="value" />
 
 </LinearLayout>

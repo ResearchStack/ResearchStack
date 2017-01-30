@@ -1,4 +1,5 @@
 package org.researchstack.skin.notification;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -21,28 +22,31 @@ import java.util.List;
 import rx.Observable;
 
 
-public class TaskAlertReceiver extends BroadcastReceiver
-{
+public class TaskAlertReceiver extends BroadcastReceiver {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Intent Actions
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    public static final String ALERT_CREATE     = "org.researchstack.skin.notification.ALERT_CREATE";
+    public static final String ALERT_CREATE = "org.researchstack.skin.notification.ALERT_CREATE";
     public static final String ALERT_CREATE_ALL = "org.researchstack.skin.notification.ALERT_CREATE_ALL";
-    public static final String ALERT_DELETE     = "org.researchstack.skin.notification.ALERT_DELETE";
+    public static final String ALERT_DELETE = "org.researchstack.skin.notification.ALERT_DELETE";
     public static final String ALERT_DELETE_ALL = "org.researchstack.skin.notification.ALERT_DELETE_ALL";
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Intent Keys
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    public static final String KEY_NOTIFICATION    = "CreateAlertReceiver.KEY_NOTIFICATION";
+    public static final String KEY_NOTIFICATION = "CreateAlertReceiver.KEY_NOTIFICATION";
     public static final String KEY_NOTIFICATION_ID = "CreateAlertReceiver.KEY_NOTIFICATION_ID";
 
-    public void onReceive(Context context, Intent intent)
-    {
+    public static Intent createDeleteIntent(int notificationId) {
+        Intent deleteTaskIntent = new Intent(TaskAlertReceiver.ALERT_DELETE);
+        deleteTaskIntent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, notificationId);
+        return deleteTaskIntent;
+    }
+
+    public void onReceive(Context context, Intent intent) {
         Log.i("CreateAlertReceiver", "onReceive() _ " + intent.getAction());
 
-        switch(intent.getAction())
-        {
+        switch (intent.getAction()) {
             case ALERT_CREATE:
                 TaskNotification taskNotification = (TaskNotification) intent.getSerializableExtra(
                         KEY_NOTIFICATION);
@@ -60,7 +64,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
                 break;
 
             case ALERT_DELETE:
-                int taskNotificationId = intent.getIntExtra(KEY_NOTIFICATION_ID, - 1);
+                int taskNotificationId = intent.getIntExtra(KEY_NOTIFICATION_ID, -1);
                 deleteNotificationAndRemoveAlert(context, taskNotificationId);
                 break;
 
@@ -79,11 +83,9 @@ public class TaskAlertReceiver extends BroadcastReceiver
         }
     }
 
-    private void deleteNotificationAndRemoveAlert(Context context, int taskNotificationId)
-    {
+    private void deleteNotificationAndRemoveAlert(Context context, int taskNotificationId) {
         Observable.create(subscriber -> {
-            if(taskNotificationId != - 1)
-            {
+            if (taskNotificationId != -1) {
                 // Delete from database
                 NotificationHelper.getInstance(context).deleteTaskNotification(taskNotificationId);
 
@@ -92,9 +94,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
 
                 // Call onNext and remove alert
                 subscriber.onNext(null);
-            }
-            else
-            {
+            } else {
                 LogExt.e(TaskAlertReceiver.class,
                         "TaskNotification Delete failed, invalid id " + taskNotificationId);
             }
@@ -103,8 +103,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
         });
     }
 
-    private void postNotificationToAlertManager(Context context, TaskNotification taskNotification)
-    {
+    private void postNotificationToAlertManager(Context context, TaskNotification taskNotification) {
         // Get our pending intent wrapper for our taskNotification
         PendingIntent pendingIntent = createNotificationIntent(context, taskNotification.id);
 
@@ -116,8 +115,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
         createAlert(context, pendingIntent, nextExecuteTime);
     }
 
-    private PendingIntent createNotificationIntent(Context context, int taskNotificationId)
-    {
+    private PendingIntent createNotificationIntent(Context context, int taskNotificationId) {
         // Create out intent that is sent to TaskNotificationReceiver
         Intent taskNotificationIntent = new Intent(context,
                 UiManager.getInstance().getTaskNotificationReceiver());
@@ -131,8 +129,7 @@ public class TaskAlertReceiver extends BroadcastReceiver
         return pendingIntent;
     }
 
-    private void createAlert(Context context, PendingIntent pendingIntent, Date nextExecuteTime)
-    {
+    private void createAlert(Context context, PendingIntent pendingIntent, Date nextExecuteTime) {
         // Add Alarm
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC, nextExecuteTime.getTime(), pendingIntent);
@@ -142,20 +139,12 @@ public class TaskAlertReceiver extends BroadcastReceiver
                 "Alarm  Created. Executing on or near " + format.format(nextExecuteTime));
     }
 
-    private void cancelAlert(Context context, int taskNotificationId)
-    {
+    private void cancelAlert(Context context, int taskNotificationId) {
         // Get our pending intent wrapper for our taskNotification
         PendingIntent pendingIntent = createNotificationIntent(context, taskNotificationId);
 
         // Remove pending intent if one already exists
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
-    }
-
-    public static Intent createDeleteIntent(int notificationId)
-    {
-        Intent deleteTaskIntent = new Intent(TaskAlertReceiver.ALERT_DELETE);
-        deleteTaskIntent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, notificationId);
-        return deleteTaskIntent;
     }
 }

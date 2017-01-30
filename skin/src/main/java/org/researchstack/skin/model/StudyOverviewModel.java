@@ -1,11 +1,11 @@
 package org.researchstack.skin.model;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
 
-public class StudyOverviewModel
-{
+public class StudyOverviewModel {
 
     @SerializedName("disease_name")
     private String diseaseName;
@@ -22,18 +22,15 @@ public class StudyOverviewModel
     @SerializedName("questions")
     private List<Question> questions;
 
-    public List<Question> getQuestions()
-    {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public String getLogoName()
-    {
+    public String getLogoName() {
         return logoName;
     }
 
-    public static class Question
-    {
+    public static class Question {
         @SerializedName("title")
         String title;
 
@@ -54,44 +51,36 @@ public class StudyOverviewModel
         @SerializedName("video_name")
         String videoName;
 
-        public String getTitle()
-        {
+        public String getTitle() {
             return title;
         }
 
-        public String getDetails()
-        {
-            return details;
-        }
-
-        public String getShowConsent()
-        {
-            return showConsent;
-        }
-
-        public String getIconImage()
-        {
-            return iconImage;
-        }
-
-        public String getTintColor()
-        {
-            return tintColor;
-        }
-
-        public String getVideoName()
-        {
-            return videoName;
-        }
-
-        public void setTitle(String title)
-        {
+        public void setTitle(String title) {
             this.title = title;
         }
 
-        public void setDetails(String details)
-        {
+        public String getDetails() {
+            return details;
+        }
+
+        public void setDetails(String details) {
             this.details = details;
+        }
+
+        public String getShowConsent() {
+            return showConsent;
+        }
+
+        public String getIconImage() {
+            return iconImage;
+        }
+
+        public String getTintColor() {
+            return tintColor;
+        }
+
+        public String getVideoName() {
+            return videoName;
         }
     }
 }

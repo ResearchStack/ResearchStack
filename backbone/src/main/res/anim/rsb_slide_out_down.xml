@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /* //device/apps/common/res/anim/slide_in_left.xml
 **
 ** Copyright 2007, The Android Open Source Project
@@ -19,13 +18,13 @@
 -->
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-     android:interpolator="@android:interpolator/accelerate_cubic">
+    android:interpolator="@android:interpolator/accelerate_cubic">
     <translate
         android:duration="@integer/rsb_config_mediumAnimTime"
         android:fromYDelta="0"
-        android:toYDelta="50%p"/>
+        android:toYDelta="50%p" />
     <alpha
         android:duration="@integer/rsb_config_mediumAnimTime"
         android:fromAlpha="1.0"
-        android:toAlpha="0.0"/>
+        android:toAlpha="0.0" />
 </set>

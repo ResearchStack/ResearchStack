@@ -1,34 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Change to LinearLayout for preview to work -->
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!-- Change to LinearLayout for preview to work -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="56dp"
     android:gravity="center_vertical"
->
+    android:minHeight="56dp">
 
     <Space
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-    />
+        android:layout_weight="1" />
 
     <android.support.v7.widget.AppCompatTextView
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:id="@+id/bar_submit_negative"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="EXIT"
-    />
+        tools:text="EXIT" />
 
     <android.support.v7.widget.AppCompatTextView
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:id="@+id/bar_submit_postitive"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Submit"
-    />
+        tools:text="Submit" />
 
 </merge>

@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class TaskModel
-{
+public class TaskModel {
     @SerializedName("identifier")
     public String identifier;
 
@@ -23,8 +22,7 @@ public class TaskModel
     @SerializedName("elements")
     public List<StepModel> elements;
 
-    public static class StepModel
-    {
+    public static class StepModel {
         @SerializedName("identifier")
         public String identifier;
 
@@ -53,8 +51,7 @@ public class TaskModel
         public boolean optional = true;
     }
 
-    public static class ConstraintsModel implements Serializable
-    {
+    public static class ConstraintsModel implements Serializable {
 
         @SerializedName("dataType")
         public String dataType;
@@ -93,8 +90,7 @@ public class TaskModel
         public Validation validation;
     }
 
-    public static class EnumerationModel implements Serializable
-    {
+    public static class EnumerationModel implements Serializable {
         @SerializedName("type")
         public String type;
 
@@ -105,8 +101,7 @@ public class TaskModel
         public String label;
     }
 
-    public static class RuleModel implements Serializable
-    {
+    public static class RuleModel implements Serializable {
         @SerializedName("operator")
         public String operator;
 
@@ -121,8 +116,7 @@ public class TaskModel
 
     }
 
-    public static class Validation implements Serializable
-    {
+    public static class Validation implements Serializable {
         @SerializedName("answer")
         public String answer;
     }

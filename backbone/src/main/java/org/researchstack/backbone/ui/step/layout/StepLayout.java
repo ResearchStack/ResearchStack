@@ -8,8 +8,7 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 
-public interface StepLayout
-{
+public interface StepLayout {
     /**
      * @param step Step to be related to this StepLayout
      * @param result the StepResult for this step, if one already exists

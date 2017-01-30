@@ -1,4 +1,5 @@
 package org.researchstack.skin.notification;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,11 +12,9 @@ import android.util.Log;
 import org.researchstack.skin.ui.MainActivity;
 
 
-public class TaskNotificationReceiver extends BroadcastReceiver
-{
+public class TaskNotificationReceiver extends BroadcastReceiver {
 
-    public void onReceive(Context context, Intent intent)
-    {
+    public void onReceive(Context context, Intent intent) {
         Log.i("TaskNotifReceiver", "onReceive()");
 
         int notificationId = intent.getIntExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, 0);

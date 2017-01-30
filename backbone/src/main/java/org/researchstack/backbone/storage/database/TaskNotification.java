@@ -7,8 +7,7 @@ import co.touchlab.squeaky.field.DatabaseField;
 import co.touchlab.squeaky.table.DatabaseTable;
 
 @DatabaseTable
-public class TaskNotification implements Serializable
-{
+public class TaskNotification implements Serializable {
     @DatabaseField(generatedId = true)
     public int id;
 

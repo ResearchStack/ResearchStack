@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ResourceName">
 
@@ -15,7 +14,7 @@
             style="@style/Widget.Backbone.Chart.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Amount of pie eaten"/>
+            tools:text="Amount of pie eaten" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/view_chart_pie"
@@ -23,14 +22,14 @@
             android:layout_height="128dp"
             android:layout_below="@+id/view_chart_pie_title"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp" />
 
         <LinearLayout
             android:id="@+id/view_chart_pie_rows"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@+id/view_chart_pie"/>
+            android:layout_below="@+id/view_chart_pie"
+            android:orientation="vertical" />
 
     </RelativeLayout>
 

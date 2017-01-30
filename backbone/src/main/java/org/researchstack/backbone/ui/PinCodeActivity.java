@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,20 +32,17 @@ import java.util.List;
 import rx.Observable;
 import rx.functions.Action1;
 
-public class PinCodeActivity extends AppCompatActivity implements StorageAccessListener
-{
-    private PinCodeLayout    pinCodeLayout;
+public class PinCodeActivity extends AppCompatActivity implements StorageAccessListener {
+    private PinCodeLayout pinCodeLayout;
     private Action1<Boolean> toggleKeyboardAction;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         LogExt.i(getClass(), "logAccessTime()");
         StorageAccess.getInstance().logAccessTime();
@@ -57,38 +55,33 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
 
         requestStorageAccess();
     }
 
-    protected void requestStorageAccess()
-    {
+    protected void requestStorageAccess() {
         LogExt.i(getClass(), "requestStorageAccess()");
         StorageAccess storageAccess = StorageAccess.getInstance();
         storageAccessRegister();
         storageAccess.requestStorageAccess(this);
     }
 
-    protected void storageAccessRegister()
-    {
+    protected void storageAccessRegister() {
         LogExt.i(getClass(), "storageAccessRegister()");
         StorageAccess storageAccess = StorageAccess.getInstance();
         storageAccess.register(this);
     }
 
-    protected void storageAccessUnregister()
-    {
+    protected void storageAccessUnregister() {
         LogExt.i(getClass(), "storageAccessUnregister()");
         StorageAccess storageAccess = StorageAccess.getInstance();
         storageAccess.unregister(this);
     }
 
     @Override
-    public void onDataReady()
-    {
+    public void onDataReady() {
         LogExt.i(getClass(), "onDataReady()");
 
         storageAccessUnregister();
@@ -97,15 +90,12 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         // need a more permanent solution for notifying fragments of onDataReady() after creation
         new Handler().post(() -> {
             List<Fragment> fragments = getSupportFragmentManager().getFragments();
-            if(fragments != null)
-            {
+            if (fragments != null) {
                 LogExt.i(getClass(),
                         "Fragments found on stack. Checking for StorageAccessListener.");
 
-                for(Fragment fragment : fragments)
-                {
-                    if(fragment instanceof StorageAccessListener)
-                    {
+                for (Fragment fragment : fragments) {
+                    if (fragment instanceof StorageAccessListener) {
                         LogExt.i(getClass(), "Notifying " + fragment.getClass().getSimpleName() +
                                 " of onDataReady");
 
@@ -117,22 +107,18 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     }
 
     @Override
-    public void onDataFailed()
-    {
+    public void onDataFailed() {
         LogExt.e(getClass(), "onDataFailed()");
 
         storageAccessUnregister();
 
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
-        if(fragments != null)
-        {
+        if (fragments != null) {
             LogExt.i(getClass(), "Fragments found on stack. Checking for StorageAccessListener.");
 
-            for(Fragment fragment : fragments)
-            {
-                if(fragment instanceof StorageAccessListener)
-                {
+            for (Fragment fragment : fragments) {
+                if (fragment instanceof StorageAccessListener) {
                     LogExt.i(getClass(), "Notifying " + fragment.getClass().getSimpleName() +
                             " of onDataFailed");
 
@@ -143,8 +129,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     }
 
     @Override
-    public void onDataAuth()
-    {
+    public void onDataAuth() {
         LogExt.e(getClass(), "onDataAuth()");
         storageAccessUnregister();
 
@@ -167,16 +152,14 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
             pincode.setEnabled(enable);
             pincode.setText("");
             pincode.requestFocus();
-            if(enable)
-            {
+            if (enable) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(pincode, InputMethodManager.SHOW_FORCED);
             }
         };
 
-        RxTextView.textChanges(pincode).map(CharSequence:: toString).doOnNext(pin -> {
-            if(summary.getCurrentTextColor() == errorColor)
-            {
+        RxTextView.textChanges(pincode).map(CharSequence::toString).doOnNext(pin -> {
+            if (summary.getCurrentTextColor() == errorColor) {
                 summary.setTextColor(ThemeUtils.getTextColorPrimary(PinCodeActivity.this));
                 pinCodeLayout.resetSummaryText();
             }
@@ -195,12 +178,9 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         }).onErrorResumeNext(throwable1 -> {
             return Observable.empty();
         })).subscribe(success -> {
-            if(! success)
-            {
+            if (!success) {
                 toggleKeyboardAction.call(true);
-            }
-            else
-            {
+            } else {
                 transitionToNextState();
             }
         });

@@ -28,20 +28,18 @@ import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.layout.SignUpStepLayout;
 
 
-public class EmailVerificationActivity extends PinCodeActivity
-{
-    public static final  String EXTRA_EMAIL          = "EXTRA_EMAIL";
-    public static final  String EXTRA_PASSWORD       = "EXTRA_PASSWORD";
-    private static final String CHANGE_EMAIL_ID      = "CHANGE_EMAIL_ID";
-    private static final int    REQUEST_CHANGE_EMAIL = 0;
+public class EmailVerificationActivity extends PinCodeActivity {
+    public static final String EXTRA_EMAIL = "EXTRA_EMAIL";
+    public static final String EXTRA_PASSWORD = "EXTRA_PASSWORD";
+    private static final String CHANGE_EMAIL_ID = "CHANGE_EMAIL_ID";
+    private static final int REQUEST_CHANGE_EMAIL = 0;
 
     private String email;
     private String password;
-    private View   progress;
+    private View progress;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rss_activity_email_verification);
         progress = findViewById(R.id.progress);
@@ -52,10 +50,8 @@ public class EmailVerificationActivity extends PinCodeActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == android.R.id.home)
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -64,8 +60,7 @@ public class EmailVerificationActivity extends PinCodeActivity
     }
 
     @Override
-    public void onDataReady()
-    {
+    public void onDataReady() {
         super.onDataReady();
 
         email = getIntent().getStringExtra(EXTRA_EMAIL);
@@ -81,8 +76,7 @@ public class EmailVerificationActivity extends PinCodeActivity
         submitBar.setNegativeAction(v -> resendVerificationEmail());
     }
 
-    private void updateEmailText()
-    {
+    private void updateEmailText() {
         int accentColor = ThemeUtils.getAccentColor(this);
         String accentColorString = "#" + Integer.toHexString(Color.red(accentColor)) +
                 Integer.toHexString(Color.green(accentColor)) +
@@ -94,10 +88,8 @@ public class EmailVerificationActivity extends PinCodeActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if(requestCode == REQUEST_CHANGE_EMAIL && resultCode == RESULT_OK)
-        {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CHANGE_EMAIL && resultCode == RESULT_OK) {
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             StepResult stepResult = taskResult.getStepResult(OnboardingTask.SignUpStepIdentifier);
 
@@ -108,15 +100,12 @@ public class EmailVerificationActivity extends PinCodeActivity
             Intent intent = getIntent();
             intent.putExtra(EXTRA_EMAIL, newEmail);
             intent.putExtra(EXTRA_PASSWORD, newPassword);
-        }
-        else
-        {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    private void changeEmail()
-    {
+    private void changeEmail() {
         Step signUpStep = new Step(OnboardingTask.SignUpStepIdentifier);
         signUpStep.setStepTitle(R.string.rss_sign_up);
         signUpStep.setStepLayoutClass(SignUpStepLayout.class);
@@ -127,8 +116,7 @@ public class EmailVerificationActivity extends PinCodeActivity
         startActivityForResult(intent, REQUEST_CHANGE_EMAIL);
     }
 
-    private void resendVerificationEmail()
-    {
+    private void resendVerificationEmail() {
         progress.animate().alpha(1).withStartAction(() -> {
             progress.setVisibility(View.VISIBLE);
             progress.setAlpha(0);
@@ -153,8 +141,7 @@ public class EmailVerificationActivity extends PinCodeActivity
                 });
     }
 
-    private void attemptSignIn()
-    {
+    private void attemptSignIn() {
         progress.animate().alpha(1).withStartAction(() -> {
             progress.setVisibility(View.VISIBLE);
             progress.setAlpha(0);
@@ -164,8 +151,7 @@ public class EmailVerificationActivity extends PinCodeActivity
                 .signIn(this, email, password)
                 .compose(ObservableUtils.applyDefault())
                 .subscribe(dataResponse -> {
-                    if(dataResponse.isSuccess())
-                    {
+                    if (dataResponse.isSuccess()) {
                         // Start MainActivity w/ clear_top and single_top flags. MainActivity may
                         // already be on the activity-task. We want to re-use that activity instead
                         // of creating a new instance and have two instance active.
@@ -174,9 +160,7 @@ public class EmailVerificationActivity extends PinCodeActivity
                                 Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                         finish();
-                    }
-                    else
-                    {
+                    } else {
                         progress.animate()
                                 .alpha(0)
                                 .withEndAction(() -> progress.setVisibility(View.GONE));

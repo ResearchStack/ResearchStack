@@ -10,8 +10,7 @@ import org.researchstack.backbone.model.Choice;
  * You may pass in the strings to display for true and false for the user, but the values will
  * always be true/false.
  */
-public class BooleanAnswerFormat extends ChoiceAnswerFormat
-{
+public class BooleanAnswerFormat extends ChoiceAnswerFormat {
     /* Default constructor needed for serilization/deserialization of object */
     BooleanAnswerFormat()
     {
@@ -25,16 +24,14 @@ public class BooleanAnswerFormat extends ChoiceAnswerFormat
      * @param trueString  a string representing <code>true</code> ("Yes", "True", "OK", etc)
      * @param falseString a string representing <code>false</code> ("No", "False", etc)
      */
-    public BooleanAnswerFormat(String trueString, String falseString)
-    {
+    public BooleanAnswerFormat(String trueString, String falseString) {
         super(ChoiceAnswerStyle.SingleChoice,
                 new Choice<>(trueString, true),
                 new Choice<>(falseString, false));
     }
 
     @Override
-    public QuestionType getQuestionType()
-    {
+    public QuestionType getQuestionType() {
         return Type.Boolean;
     }
 }

@@ -169,8 +169,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
                     String path = ResourcePathManager.getInstance().
                             generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
                     Intent intent = ViewWebDocumentActivity.newIntentForPath(context,
-                            questionStep.getTitle(),
-                            path);
+                                                                             questionStep.getTitle(),
+                                                                             path);
                     context.startActivity(intent);
                 }
             });
@@ -231,10 +231,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         if(bodyAnswer == null || ! bodyAnswer.isValid())
         {
             Toast.makeText(getContext(),
-                    bodyAnswer == null
-                            ? BodyAnswer.INVALID.getString(getContext())
-                            : bodyAnswer.getString(getContext()),
-                    Toast.LENGTH_SHORT).show();
+                           bodyAnswer == null
+                                   ? BodyAnswer.INVALID.getString(getContext())
+                                   : bodyAnswer.getString(getContext()),
+                           Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -244,8 +244,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     protected void onComplete() {
         callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                getStep(),
-                stepBody.getStepResult(false));
+                             getStep(),
+                             stepBody.getStepResult(false));
     }
 
     public void onSkipClicked()
@@ -254,8 +254,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         {
             // empty step result when skipped
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                    getStep(),
-                    stepBody.getStepResult(true));
+                                 getStep(),
+                                 stepBody.getStepResult(true));
         }
     }
 

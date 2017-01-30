@@ -27,8 +27,7 @@ import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
-public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout
-{
+public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout {
     protected StepCallbacks callbacks;
     protected InstructionStep step;
 
@@ -50,8 +49,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
+    public void initialize(Step step, StepResult result) {
         validateAndSetStep(step);
         initializeStep();
     }
@@ -64,34 +62,28 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
     @Override
-    public boolean isBackEventConsumed()
-    {
+    public boolean isBackEventConsumed() {
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, step, null);
         return false;
     }
 
     @Override
-    public void setCallbacks(StepCallbacks callbacks)
-    {
+    public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 
     @Override
-    public int getContentResourceId()
-    {
+    public int getContentResourceId() {
         return R.layout.rsb_step_layout_instruction;
     }
 
-    private void initializeStep()
-    {
-        if(step != null)
-        {
+    private void initializeStep() {
+        if (step != null) {
             String title = step.getTitle();
             String text  = step.getText();
 
@@ -104,25 +96,21 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             }
 
             // Set Title
-            if (! TextUtils.isEmpty(title))
-            {
+            if (! TextUtils.isEmpty(title)) {
                 TextView titleTv = (TextView) findViewById(R.id.rsb_intruction_title);
                 titleTv.setVisibility(View.VISIBLE);
                 titleTv.setText(title);
             }
 
             // Set Summary
-            if(! TextUtils.isEmpty(text))
-            {
+            if(! TextUtils.isEmpty(text)) {
                 TextView summary = (TextView) findViewById(R.id.rsb_intruction_text);
                 summary.setVisibility(View.VISIBLE);
                 summary.setText(Html.fromHtml(text));
                 final String htmlDocTitle = title;
-                summary.setMovementMethod(new TextViewLinkHandler()
-                {
+                summary.setMovementMethod(new TextViewLinkHandler() {
                     @Override
-                    public void onLinkClick(String url)
-                    {
+                    public void onLinkClick(String url) {
                         String path = ResourcePathManager.getInstance().
                                 generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
                         Intent intent = ViewWebDocumentActivity.newIntentForPath(
@@ -137,18 +125,14 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             submitBar.setPositiveTitle(R.string.rsb_next);
             submitBar.setPositiveAction(v -> onComplete());
 
-            if(step.isOptional())
-            {
+            if (step.isOptional()) {
                 submitBar.setNegativeTitle(R.string.rsb_step_skip);
                 submitBar.setNegativeAction(v -> {
-                    if(callbacks != null)
-                    {
+                    if (callbacks != null) {
                         callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
                     }
                 });
-            }
-            else
-            {
+            } else {
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
 

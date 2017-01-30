@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -23,27 +22,27 @@
             <org.researchstack.backbone.ui.graph.ProgressChartCard
                 android:id="@+id/dashboard_chart_progress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <org.researchstack.backbone.ui.graph.PieChartCard
                 android:id="@+id/dashboard_chart_pie"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <org.researchstack.backbone.ui.graph.BarChartCard
                 android:id="@+id/dashboard_chart_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <org.researchstack.backbone.ui.graph.BarChartCard
                 android:id="@+id/dashboard_chart_bar_stacked"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <org.researchstack.backbone.ui.graph.LineChartCard
                 android:id="@+id/dashboard_chart_line"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -54,6 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:visibility="gone"/>
+        tools:visibility="gone" />
 
 </FrameLayout>

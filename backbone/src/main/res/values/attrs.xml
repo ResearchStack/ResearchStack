@@ -2,121 +2,108 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
     <declare-styleable name="Backbone">
-        <attr name="passcodeTheme" format="reference"/>
-        <attr name="toolbarTheme" format="reference"/>
-        <attr name="submitbarStyle" format="reference"/>
-        <attr name="icontablayoutStyle" format="reference"/>
-        <attr name="emptyviewStyle" format="reference"/>
-        <attr name="signatureviewStyle" format="reference"/>
-        <attr name="progressChartCardStyle" format="reference"/>
-        <attr name="pieChartCardStyle" format="reference"/>
-        <attr name="lineChartCardStyle" format="reference"/>
-        <attr name="barChartCardStyle" format="reference"/>
+        <attr name="passcodeTheme" format="reference" />
+        <attr name="toolbarTheme" format="reference" />
+        <attr name="submitbarStyle" format="reference" />
+        <attr name="icontablayoutStyle" format="reference" />
+        <attr name="emptyviewStyle" format="reference" />
+        <attr name="signatureviewStyle" format="reference" />
+        <attr name="progressChartCardStyle" format="reference" />
+        <attr name="pieChartCardStyle" format="reference" />
+        <attr name="lineChartCardStyle" format="reference" />
+        <attr name="barChartCardStyle" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="IconTabLayout">
-        <attr name="android:background"/>
-        <attr name="android:minHeight"/>
-        <attr name="tabIconColor" format="color"/>
-        <attr name="tabIconIndicatorColor" format="color"/>
-        <attr name="tabTextColor"/>
+        <attr name="android:background" />
+        <attr name="android:minHeight" />
+        <attr name="tabIconColor" format="color" />
+        <attr name="tabIconIndicatorColor" format="color" />
+        <attr name="tabTextColor" />
     </declare-styleable>
 
     <declare-styleable name="EmptyView">
-        <attr name="android:background"/>
-        <attr name="emptyIcon" format="reference"/>
-        <attr name="emptyIconTint" format="color"/>
-        <attr name="emptyText" format="string"/>
-        <attr name="emptyTextAppearance" format="reference"/>
+        <attr name="android:background" />
+        <attr name="emptyIcon" format="reference" />
+        <attr name="emptyIconTint" format="color" />
+        <attr name="emptyText" format="string" />
+        <attr name="emptyTextAppearance" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="SubmitBar">
-        <attr name="android:background"/>
-        <attr name="positiveActionTitle"
-              format="string"/>
-        <attr name="negativeActionTitle"
-              format="string"/>
-        <attr name="positiveActionColor"
-              format="color"/>
-        <attr name="negativeActionColor"
-              format="color"/>
+        <attr name="android:background" />
+        <attr name="positiveActionTitle" format="string" />
+        <attr name="negativeActionTitle" format="string" />
+        <attr name="positiveActionColor" format="color" />
+        <attr name="negativeActionColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="SignatureView">
-        <attr name="signatureColor"
-              format="color"/>
-        <attr name="signaturePrintColor"
-              format="color"/>
-        <attr name="signatureStrokeSize"
-              format="dimension"/>
-        <attr name="hintText"
-              format="string"/>
-        <attr name="hintTextColor"
-              format="color"/>
-        <attr name="hintTextSize"
-              format="dimension"/>
-        <attr name="guidelineColor"
-              format="color"/>
-        <attr name="guidelineMargin"
-              format="dimension"/>
-        <attr name="guidelineHeight"
-              format="dimension"/>
+        <attr name="signatureColor" format="color" />
+        <attr name="signaturePrintColor" format="color" />
+        <attr name="signatureStrokeSize" format="dimension" />
+        <attr name="hintText" format="string" />
+        <attr name="hintTextColor" format="color" />
+        <attr name="hintTextSize" format="dimension" />
+        <attr name="guidelineColor" format="color" />
+        <attr name="guidelineMargin" format="dimension" />
+        <attr name="guidelineHeight" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="ChartCard">
-        <attr name="titleText" format="string"/>
-        <attr name="titleTextColor"/>
-        <attr name="titleTextSize" format="dimension"/>
-        <attr name="titleTextTypeface" format="string"/>
+        <attr name="titleText" format="string" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="titleTextTypeface" format="string" />
     </declare-styleable>
 
     <declare-styleable name="ProgressChartCard">
-        <attr name="centerTextFormat" format="reference"/>
-        <attr name="centerTextColor" format="color"/>
-        <attr name="centerTextSize" format="dimension"/>
-        <attr name="centerTextTypeface" format="string"/>
-        <attr name="titleText"/>
-        <attr name="titleTextColor"/>
-        <attr name="titleTextSize"/>
-        <attr name="titleTextTypeface"/>
-        <attr name="finishText" format="string"/>
-        <attr name="finishTextColor" format="color"/>
-        <attr name="tabIndicatorColor"/>
-        <attr name="tabTextColor"/>
-        <attr name="tabSelectedTextColor"/>
+        <attr name="centerTextFormat" format="reference" />
+        <attr name="centerTextColor" format="color" />
+        <attr name="centerTextSize" format="dimension" />
+        <attr name="centerTextTypeface" format="string" />
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleTextTypeface" />
+        <attr name="finishText" format="string" />
+        <attr name="finishTextColor" format="color" />
+        <attr name="tabIndicatorColor" />
+        <attr name="tabTextColor" />
+        <attr name="tabSelectedTextColor" />
     </declare-styleable>
 
     <declare-styleable name="PieChartCard">
-        <attr name="valueTextFormat" format="reference"/>
-        <attr name="titleText"/>
-        <attr name="titleTextColor"/>
-        <attr name="titleTextSize"/>
-        <attr name="titleTextTypeface"/>
+        <attr name="valueTextFormat" format="reference" />
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleTextTypeface" />
     </declare-styleable>
 
     <declare-styleable name="LineChartCard">
-        <attr name="chartXAxisTextColor" format="color"/>
-        <attr name="chartXAxisTextSize" format="dimension"/>
-        <attr name="chartXAxisTextTypeface" format="string"/>
-        <attr name="chartYAxisTextColor" format="color"/>
-        <attr name="chartYAxisTextSize" format="dimension"/>
-        <attr name="chartYAxisTextTypeface" format="string"/>
-        <attr name="expandTintColor" format="color"/>
-        <attr name="titleText"/>
-        <attr name="titleTextColor"/>
-        <attr name="titleTextSize"/>
-        <attr name="titleTextTypeface"/>
+        <attr name="chartXAxisTextColor" format="color" />
+        <attr name="chartXAxisTextSize" format="dimension" />
+        <attr name="chartXAxisTextTypeface" format="string" />
+        <attr name="chartYAxisTextColor" format="color" />
+        <attr name="chartYAxisTextSize" format="dimension" />
+        <attr name="chartYAxisTextTypeface" format="string" />
+        <attr name="expandTintColor" format="color" />
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleTextTypeface" />
     </declare-styleable>
 
     <declare-styleable name="BarChartCard">
-        <attr name="chartXAxisTextColor"/>
-        <attr name="chartXAxisTextSize"/>
-        <attr name="chartXAxisTextTypeface"/>
-        <attr name="expandTintColor"/>
-        <attr name="titleText"/>
-        <attr name="titleTextColor"/>
-        <attr name="titleTextSize"/>
-        <attr name="titleTextTypeface"/>
+        <attr name="chartXAxisTextColor" />
+        <attr name="chartXAxisTextSize" />
+        <attr name="chartXAxisTextTypeface" />
+        <attr name="expandTintColor" />
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleTextTypeface" />
     </declare-styleable>
 
 </resources>

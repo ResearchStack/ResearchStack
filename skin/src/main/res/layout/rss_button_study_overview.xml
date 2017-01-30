@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.AppCompatButton
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:text="@string/rss_email_consent_doc"
-    style="@style/StudyOverviewItem"/>
+<android.support.v7.widget.AppCompatButton xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/StudyOverviewItem"
+    android:text="@string/rss_email_consent_doc" />
 
