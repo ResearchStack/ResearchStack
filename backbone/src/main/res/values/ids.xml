@@ -2,10 +2,8 @@
 <resources>
 
     <!-- These ID's are used when adding and removing child steps in ViewTaskActivity -->
-    <item name="rsb_current_step"
-          type="id"/>
+    <item name="rsb_current_step" type="id" />
 
-    <item name="rsb_step_layout_id"
-          type="id"/>
+    <item name="rsb_step_layout_id" type="id" />
 
 </resources>

@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="56dp"
     android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
->
+    android:minHeight="56dp"
+    android:orientation="horizontal">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/daily_indicator"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_margin="8dp"
-        android:src="@drawable/rss_ic_circle_16dp"
         android:clickable="false"
-    />
+        android:src="@drawable/rss_ic_circle_16dp" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/task_title"
@@ -26,7 +23,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:textColor="@color/rsb_black"
-        tools:text="Asthma history\n13 questions"
-    />
+        tools:text="Asthma history\n13 questions" />
 
 </LinearLayout>

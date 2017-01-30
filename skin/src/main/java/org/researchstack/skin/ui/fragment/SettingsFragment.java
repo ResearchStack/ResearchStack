@@ -153,7 +153,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             generalCategory.removePreference(joinStudy);
 
             Observable.defer(() -> Observable.just(DataProvider.getInstance()
-                    .getUser(getActivity())))
+                                                           .getUser(getActivity())))
                     .compose(ObservableUtils.applyDefault())
                     .subscribe(profile -> {
                         if(profile == null)
@@ -180,7 +180,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                             // The incoming date is formated in "yyyy-MM-dd", clean it up to "MMM dd, yyyy"
                             Date birthdate = profile.getBirthDate();
                             DateFormat format = FormatHelper.getFormat(DateFormat.LONG,
-                                    FormatHelper.NONE);
+                                                                       FormatHelper.NONE);
                             birthdatePref.setSummary(format.format(birthdate));
                         }
                         else
@@ -191,13 +191,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
             // Load Consent Data and set sharing scope
             Observable.defer(() -> Observable.just(ResourceManager.getInstance()
-                    .getConsentSections()
-                    .create(getActivity()))).flatMap((consentData) -> {
+                                                           .getConsentSections()
+                                                           .create(getActivity()))).flatMap((consentData) -> {
                 this.data = (ConsentSectionModel) consentData;
 
                 // Load and set sharing scope
                 return Observable.just(DataProvider.getInstance()
-                        .getUserSharingScope(getContext()));
+                                               .getUserSharingScope(getContext()));
             }).compose(ObservableUtils.applyDefault()).subscribe(scope -> {
                 sharingScope.setSummary(formatSharingOption(scope));
             });
@@ -244,7 +244,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
                 case KEY_CHANGE_PASSCODE:
                     PassCodeCreationStep step = new PassCodeCreationStep(PASSCODE,
-                            R.string.rsb_passcode_change_title);
+                                                                         R.string.rsb_passcode_change_title);
                     step.setStateOrdinal(SignUpPinCodeCreationStepLayout.State.CHANGE.ordinal());
                     OrderedTask passcodeTask = new OrderedTask("task_rss_settings_passcode", step);
                     Intent passcodeIntent = ViewTaskActivity.newIntent(getContext(), passcodeTask);
@@ -266,25 +266,25 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     sharingStep.setStepTitle(R.string.rss_settings_privacy_sharing_options);
 
                     String shareWidely = getString(R.string.rsb_consent_share_widely,
-                            investigatorLongDesc);
+                                                   investigatorLongDesc);
                     Choice<String> shareWidelyChoice = new Choice<>(shareWidely,
-                            "sponsors_and_partners",
-                            null);
+                                                                    "sponsors_and_partners",
+                                                                    null);
 
                     String shareRestricted = getString(R.string.rsb_consent_share_only,
-                            investigatorShortDesc);
+                                                       investigatorShortDesc);
                     Choice<String> shareRestrictedChoice = new Choice<>(shareRestricted,
-                            "all_qualified_researchers",
-                            null);
+                                                                        "all_qualified_researchers",
+                                                                        null);
 
                     sharingStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-                            shareWidelyChoice,
-                            shareRestrictedChoice));
+                                                                       shareWidelyChoice,
+                                                                       shareRestrictedChoice));
 
                     sharingStep.setTitle(getString(R.string.rsb_consent_share_title));
                     sharingStep.setText(getString(R.string.rsb_consent_share_description,
-                            investigatorLongDesc,
-                            localizedLearnMoreHTMLContent));
+                                                  investigatorLongDesc,
+                                                  localizedLearnMoreHTMLContent));
 
                     Task task = new OrderedTask("SharingStepTask", sharingStep);
                     Intent intent = ViewTaskActivity.newIntent(getContext(), task);
@@ -295,36 +295,36 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     new AlertDialog.Builder(getActivity()).setTitle(R.string.rss_settings_general_leave_study)
                             .setMessage(R.string.rss_settings_dialog_leave_study)
                             .setPositiveButton(R.string.rss_settings_general_leave_study,
-                                    (dialog, which) -> {
+                                               (dialog, which) -> {
 
-                                        progress.setVisibility(View.VISIBLE);
+                                                   progress.setVisibility(View.VISIBLE);
 
-                                        DataProvider.getInstance()
-                                                .withdrawConsent(getActivity(), null)
-                                                .subscribe(response -> {
-                                                    progress.setVisibility(View.GONE);
+                                                   DataProvider.getInstance()
+                                                           .withdrawConsent(getActivity(), null)
+                                                           .subscribe(response -> {
+                                                               progress.setVisibility(View.GONE);
 
-                                                    if(response.isSuccess())
-                                                    {
-                                                        Toast.makeText(getActivity(),
-                                                                R.string.rss_network_result_consent_withdraw_success,
-                                                                Toast.LENGTH_SHORT).show();
+                                                               if(response.isSuccess())
+                                                               {
+                                                                   Toast.makeText(getActivity(),
+                                                                                  R.string.rss_network_result_consent_withdraw_success,
+                                                                                  Toast.LENGTH_SHORT).show();
 
-                                                        isInitializedForConsent = false;
-                                                        initPreferenceForConsent();
-                                                    }
-                                                    else
-                                                    {
-                                                        Toast.makeText(getActivity(),
-                                                                R.string.rss_network_error_consent_withdraw_failed,
-                                                                Toast.LENGTH_SHORT).show();
-                                                    }
+                                                                   isInitializedForConsent = false;
+                                                                   initPreferenceForConsent();
+                                                               }
+                                                               else
+                                                               {
+                                                                   Toast.makeText(getActivity(),
+                                                                                  R.string.rss_network_error_consent_withdraw_failed,
+                                                                                  Toast.LENGTH_SHORT).show();
+                                                               }
 
-                                                }, error -> {
-                                                    LogExt.e(getClass(), error);
-                                                    progress.setVisibility(View.GONE);
-                                                });
-                                    })
+                                                           }, error -> {
+                                                               LogExt.e(getClass(), error);
+                                                               progress.setVisibility(View.GONE);
+                                                           });
+                                               })
                             .setNegativeButton(R.string.rsb_cancel, null)
                             .show();
                     return true;
@@ -379,13 +379,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 return null;
             }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
                 Toast.makeText(getActivity(),
-                        R.string.rss_local_result_passcode_changed,
-                        Toast.LENGTH_SHORT).show();
+                               R.string.rss_local_result_passcode_changed,
+                               Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             }, e -> {
                 Toast.makeText(getActivity(),
-                        R.string.rss_local_error_passcode_failed,
-                        Toast.LENGTH_SHORT).show();
+                               R.string.rss_local_error_passcode_failed,
+                               Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             });
         }
@@ -461,8 +461,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     {
         String path = ResourceManager.getInstance().getPrivacyPolicy().getAbsolutePath();
         Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
-                getString(R.string.rss_settings_privacy_policy),
-                path);
+                                                                 getString(R.string.rss_settings_privacy_policy),
+                                                                 path);
         startActivity(intent);
     }
 
@@ -470,8 +470,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     {
         String path = ResourceManager.getInstance().getSoftwareNotices().getAbsolutePath();
         Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
-                getString(R.string.rss_settings_general_software_notices),
-                path);
+                                                                 getString(R.string.rss_settings_general_software_notices),
+                                                                 path);
         startActivity(intent);
     }
 

@@ -17,8 +17,7 @@ import java.util.List;
  * introductory content, instructions in the middle of a task, or a final message at the completion
  * of a task.
  */
-public class InstructionStep extends Step implements NavigableOrderedTask.NavigationRule
-{
+public class InstructionStep extends Step implements NavigableOrderedTask.NavigationRule {
     /*
      * Additional detailed text to display
      */
@@ -84,8 +83,7 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
     }
 
     @Override
-    public Class getStepLayoutClass()
-    {
+    public Class getStepLayoutClass() {
         return InstructionStepLayout.class;
     }
 

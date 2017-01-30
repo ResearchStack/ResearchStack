@@ -1,36 +1,32 @@
 package org.researchstack.backbone.step;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 
-public class ConsentTest
-{
+public class ConsentTest {
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
 
     }
 
     @Ignore
     @Test
-    public void testContentEscaping() throws Exception
-    {
+    public void testContentEscaping() throws Exception {
 
     }
 
     @Ignore
     @Test
-    public void testHtmlForSection() throws Exception
-    {
+    public void testHtmlForSection() throws Exception {
 
     }
 
     @Ignore
     @Test
-    public void testSignatureNameRequirements() throws Exception
-    {
+    public void testSignatureNameRequirements() throws Exception {
 
     }
 }

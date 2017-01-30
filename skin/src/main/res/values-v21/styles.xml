@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Button.Skin.Onboarding" parent="@style/Base.Button.Skin.Onboarding"
-           tools:ignore="ResourceName">
+    <style name="Button.Skin.Onboarding" parent="@style/Base.Button.Skin.Onboarding" tools:ignore="ResourceName">
         <item name="android:stateListAnimator">@drawable/rss_btn_state_onboarding_anim</item>
     </style>
 

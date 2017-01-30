@@ -2,15 +2,12 @@ package org.researchstack.backbone.answerformat;
 
 
 @Deprecated
-public class UnknownAnswerFormat extends AnswerFormat
-{
-    public UnknownAnswerFormat()
-    {
+public class UnknownAnswerFormat extends AnswerFormat {
+    public UnknownAnswerFormat() {
     }
 
     @Override
-    public QuestionType getQuestionType()
-    {
+    public QuestionType getQuestionType() {
         return Type.None;
     }
 }

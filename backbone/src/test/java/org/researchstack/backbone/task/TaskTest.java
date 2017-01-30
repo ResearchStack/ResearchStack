@@ -1,4 +1,5 @@
 package org.researchstack.backbone.task;
+
 import android.content.Context;
 
 import org.junit.Before;
@@ -10,21 +11,17 @@ import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 
-
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TaskTest
-{
+public class TaskTest {
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
 
     }
 
     @Test
-    public void testGetTitleForStep() throws Exception
-    {
+    public void testGetTitleForStep() throws Exception {
         Task task = new TaskImpl("id");
 
         Context mockContext = Mockito.mock(Context.class);
@@ -42,40 +39,33 @@ public class TaskTest
         assertEquals("Gets empty string when no title id on step", "", noTitle);
     }
 
-    private static class TaskImpl extends Task
-    {
-        public TaskImpl(String identifier)
-        {
+    private static class TaskImpl extends Task {
+        public TaskImpl(String identifier) {
             super(identifier);
         }
 
         @Override
-        public Step getStepAfterStep(Step step, TaskResult result)
-        {
+        public Step getStepAfterStep(Step step, TaskResult result) {
             return null;
         }
 
         @Override
-        public Step getStepBeforeStep(Step step, TaskResult result)
-        {
+        public Step getStepBeforeStep(Step step, TaskResult result) {
             return null;
         }
 
         @Override
-        public Step getStepWithIdentifier(String identifier)
-        {
+        public Step getStepWithIdentifier(String identifier) {
             return null;
         }
 
         @Override
-        public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
-        {
+        public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result) {
             return null;
         }
 
         @Override
-        public void validateParameters()
-        {
+        public void validateParameters() {
 
         }
     }

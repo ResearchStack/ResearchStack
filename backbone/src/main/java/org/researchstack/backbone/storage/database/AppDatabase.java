@@ -1,4 +1,5 @@
 package org.researchstack.backbone.storage.database;
+
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 
@@ -9,8 +10,7 @@ import java.util.List;
  * {@link TaskResult} and {@link StepResult}. It also provides a method for setting the encryption
  * key of the database, for encrypted databases (do nothing if your database is not encrypted).
  */
-public interface AppDatabase
-{
+public interface AppDatabase {
     /**
      * Saves the TaskResult to the database, along with its child StepResults
      *

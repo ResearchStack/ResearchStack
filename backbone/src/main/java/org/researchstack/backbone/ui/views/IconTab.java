@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.views;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -19,39 +20,33 @@ import android.widget.Toast;
 import org.researchstack.backbone.R;
 
 
-public class IconTab extends RelativeLayout implements View.OnLongClickListener
-{
-    private TextView  title;
+public class IconTab extends RelativeLayout implements View.OnLongClickListener {
+    private TextView title;
     private ImageView icon;
     private ImageView indicator;
 
-    public IconTab(Context context)
-    {
+    public IconTab(Context context) {
         super(context);
         init();
     }
 
-    public IconTab(Context context, AttributeSet attrs)
-    {
+    public IconTab(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public IconTab(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public IconTab(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @TargetApi(21)
-    public IconTab(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
+    public IconTab(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
-    private void init()
-    {
+    private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_icon_tab, this, true);
 
         title = (TextView) findViewById(R.id.title);
@@ -66,22 +61,17 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener
     }
 
     @Override
-    public void dispatchSetSelected(boolean selected)
-    {
+    public void dispatchSetSelected(boolean selected) {
         super.dispatchSetSelected(selected);
         adjustSelectedView();
     }
 
-    private void adjustSelectedView()
-    {
-        if (getParent() == null)
-        {
+    private void adjustSelectedView() {
+        if (getParent() == null) {
             icon.setAlpha(isSelected() ? 1f : 0f);
             title.setAlpha(isSelected() ? 0 : 1);
             adjustIndicatorPosition();
-        }
-        else
-        {
+        } else {
             indicator.animate().setStartDelay(0).alpha(0).withEndAction(() -> {
                 adjustIndicatorPosition();
                 indicator.animate().setStartDelay(200).alpha(1);
@@ -102,8 +92,7 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener
         }
     }
 
-    private void adjustIndicatorPosition()
-    {
+    private void adjustIndicatorPosition() {
         View anchor = isSelected() ? icon : title;
         LayoutParams params = (LayoutParams) indicator.getLayoutParams();
         params.addRule(ALIGN_TOP, anchor.getId());
@@ -111,41 +100,34 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener
         indicator.requestLayout();
     }
 
-    public void setText(@StringRes int textResId)
-    {
+    public void setText(@StringRes int textResId) {
         title.setText(textResId);
     }
 
-    public void setTextColor(int textColor)
-    {
+    public void setTextColor(int textColor) {
         title.setTextColor(textColor);
     }
 
-    public void setIcon(@DrawableRes int iconResId)
-    {
+    public void setIcon(@DrawableRes int iconResId) {
         icon.setImageResource(iconResId);
     }
 
-    public void setIcon(Drawable drawable)
-    {
+    public void setIcon(Drawable drawable) {
         icon.setImageDrawable(drawable);
     }
 
-    public void setIconTint(int iconTint)
-    {
+    public void setIconTint(int iconTint) {
         Drawable drawable = icon.getDrawable();
         drawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(drawable, iconTint);
         icon.setImageDrawable(drawable);
     }
 
-    public void setIsIndicatorShow(boolean visible)
-    {
+    public void setIsIndicatorShow(boolean visible) {
         indicator.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
-    public void setIndicatorTint(int indicatorTint)
-    {
+    public void setIndicatorTint(int indicatorTint) {
         Drawable drawable = indicator.getDrawable();
         drawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(drawable, indicatorTint);
@@ -153,10 +135,8 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener
     }
 
     @Override
-    public boolean onLongClick(View v)
-    {
-        if(isSelected())
-        {
+    public boolean onLongClick(View v) {
+        if (isSelected()) {
             final int[] screenPos = new int[2];
             getLocationOnScreen(screenPos);
 

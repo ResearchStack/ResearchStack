@@ -93,7 +93,7 @@ public class BaseActivity extends PinCodeActivity
                                 .get(TaskProvider.TASK_ID_SIGN_IN);
                         task.setHasPasscode(hasPinCode);
                         startActivityForResult(SignUpTaskActivity.newIntent(BaseActivity.this,
-                                task), OverviewActivity.REQUEST_CODE_SIGN_IN);
+                                                                            task), OverviewActivity.REQUEST_CODE_SIGN_IN);
                     };
                     break;
             }
@@ -107,7 +107,7 @@ public class BaseActivity extends PinCodeActivity
             }
             snackbar.getView().setOnClickListener(v -> snackbar.dismiss());
             snackbar.setActionTextColor(ContextCompat.getColor(BaseActivity.this,
-                    R.color.rss_snackbar_action_color));
+                                                               R.color.rss_snackbar_action_color));
             TextView messageView = getSnackBarMessageView(snackbar);
             if (messageView != null)
             {

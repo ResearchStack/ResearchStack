@@ -13,24 +13,22 @@ public class DurationAnswerFormat extends AnswerFormat {
         super();
     }
 
-    public DurationAnswerFormat(int step, String unit)
-    {
+    public DurationAnswerFormat(int step, String unit) {
         this.step = step;
         this.unit = unit;
     }
 
     @Override
-    public QuestionType getQuestionType()
-    {
+    public QuestionType getQuestionType() {
         return Type.Duration;
     }
 
     /**
      * Returns the step of the duration
+     *
      * @return the step
      */
-    public int getStep()
-    {
+    public int getStep() {
         return step;
     }
 
@@ -39,8 +37,7 @@ public class DurationAnswerFormat extends AnswerFormat {
      *
      * @return returns the unit
      */
-    public String egtUnit()
-    {
+    public String egtUnit() {
         return unit;
     }
 
