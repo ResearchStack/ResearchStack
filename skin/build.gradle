@@ -9,7 +9,7 @@ version = '2.0.0-SNAPSHOT'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
 
     lintOptions {
         warning "InvalidPackage"
@@ -37,7 +37,11 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
-    
+
+    lintOptions {
+        abortOnError false
+    }
+
     resourcePrefix 'rss_'
 }
 
@@ -86,6 +90,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta3'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
 
+    compile 'com.android.support:support-annotations:25.1.0'
 }
 
 // this could be a script, since it is used in two places
