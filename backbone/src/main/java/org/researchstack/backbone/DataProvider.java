@@ -2,7 +2,6 @@ package org.researchstack.backbone;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.AnyThread;
 
 import org.researchstack.backbone.model.ConsentSignature;
 import org.researchstack.backbone.model.ConsentSignatureBody;

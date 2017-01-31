@@ -35,11 +35,6 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    // TODO: remove all warnings to backbone, and then remove this
-    lintOptions {
-        abortOnError false
-    }
-
     resourcePrefix 'rsb_'
 }
 
@@ -65,7 +60,7 @@ ext {
     gitUrl = 'https://github.com/ResearchStack/ResearchStack.git'
 
     libraryVersion = version
-24
+
     // This grabs the key/value pairs from local.properties and assigns them to variables that
     // can be used in gradle, and specifically, the mavenInstaller below
     userOrgName = 'researchstack'
