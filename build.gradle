@@ -13,8 +13,12 @@ buildscript {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+        // workaround lint bug concerning lombok (used by retrolambda)
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         classpath "com.neenbedankt.gradle.plugins:android-apt:1.4"
 
+        // Exclude the lombok version that the android plugin depends on.
+        configurations.classpath.exclude group: 'com.android.tools.external.lombok'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
