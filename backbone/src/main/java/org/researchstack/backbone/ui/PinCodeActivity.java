@@ -22,7 +22,7 @@ import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.FingerprintStep;
+import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.storage.file.PinCodeConfig;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
@@ -155,7 +155,8 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         fingerprintLayout = new FingerprintStepLayout(new ContextThemeWrapper(this, theme));
         fingerprintLayout.setBackgroundColor(Color.WHITE);
 
-        FingerprintStep step = new FingerprintStep("FingerprintStep", null, null, false);
+        PasscodeStep step = new PasscodeStep("FingerprintStep", null, null);
+        step.setUseFingerprint(true);
         fingerprintLayout.initialize(step, null);
         fingerprintLayout.setCallbacks(new StepCallbacks() {
             @Override

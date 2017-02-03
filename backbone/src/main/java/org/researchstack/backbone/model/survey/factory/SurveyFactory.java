@@ -7,6 +7,7 @@ import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.InputType;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
@@ -39,7 +40,6 @@ import org.researchstack.backbone.step.CompletionStep;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.EmailVerificationSubStep;
-import org.researchstack.backbone.step.FingerprintStep;
 import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
@@ -55,6 +55,7 @@ import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationQuestionStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
+import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -713,20 +714,23 @@ public class SurveyFactory {
      */
     public Step createPasscodeStep(Context context, SurveyItem item) {
 
+        PasscodeStep step = new PasscodeStep(item.identifier, item.title, item.text);
+        step.setStateOrdinal(PasscodeCreationStepLayout.State.CREATE.ordinal());
+
         // Fingerprint API was added with api 23
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             FingerprintManagerCompat fingerprintManager = FingerprintManagerCompat.from(context);
 
             // This is by far the most secure way to store data, so if the user has it,
-            // we will make them take advantage of it
+            // we will make them take advantage of it; however, they can switch to passcode from the step layout
             if (fingerprintManager.isHardwareDetected() &&
                 fingerprintManager.hasEnrolledFingerprints())
             {
-                return new FingerprintStep(item.identifier, null, null, true);
+                step.setUseFingerprint(true);
             }
         }
 
-        return new PasscodeStep(item.identifier, item.title, item.text);
+        return step;
     }
 
     public ShareTheAppStep createShareTheAppStep(Context context, InstructionSurveyItem item) {

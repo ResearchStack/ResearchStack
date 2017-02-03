@@ -163,6 +163,8 @@
     <string name="rsb_fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
     <string name="rsb_fingerprint_success">Fingerprint recognized</string>
     <string name="rsb_fingerprint_invalidated">Device fingerprint has either changed or been removed.  You must login again to continue.</string>
+    <string name="rsb_fingerprint_use_passcode">A passcode is less secure; however, it may be more convenient given your usage requirements.</string>
+    <string name="rsb_use_passcode">Use passcode</string>
 
     <!-- Body Hints -->
     <string name="rsb_hint_step_body_int">Enter a number %1$d-%2$d</string>

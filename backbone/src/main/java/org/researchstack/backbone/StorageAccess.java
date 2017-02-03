@@ -329,9 +329,9 @@ public class StorageAccess {
      * Removes any history of using fingerprint for authentication
      * @param context can be android or application
      */
-    public void removeUsesFingerprint(Context context) {
+    protected void removeSharedPreference(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
-        prefs.edit().remove(USES_FINGERPRINT_KEY).apply();
+        prefs.edit().clear().apply();
     }
 
     /**
@@ -341,7 +341,7 @@ public class StorageAccess {
      */
     public void removePinCode(Context context) {
         encryptionProvider.removePinCode(context);
-        removeUsesFingerprint(context);
+        removeSharedPreference(context);
     }
 
     private void injectEncrypter() {

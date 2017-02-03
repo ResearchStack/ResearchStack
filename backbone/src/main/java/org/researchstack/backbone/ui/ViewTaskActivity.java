@@ -115,6 +115,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     protected void showStep(Step step)
     {
+        showStep(step, false);
+    }
+
+    protected void showStep(Step step, boolean alwaysReplaceView)
+    {
         int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult)
                 .getCurrent();
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
@@ -124,8 +129,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
                         ? StepSwitcher.SHIFT_LEFT
-                        : StepSwitcher.SHIFT_RIGHT);
+                        : StepSwitcher.SHIFT_RIGHT, alwaysReplaceView);
         currentStep = step;
+    }
+
+    protected void refreshCurrentStep()
+    {
+        showStep(currentStep, true);
     }
 
     protected StepLayout getLayoutForStep(Step step)
@@ -259,6 +269,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         else if(action == StepCallbacks.ACTION_NONE)
         {
             // Used when onSaveInstanceState is called of a view. No action is taken.
+        }
+        else if(action == StepCallbacks.ACTION_REFRESH)
+        {
+            refreshCurrentStep();
         }
         else
         {

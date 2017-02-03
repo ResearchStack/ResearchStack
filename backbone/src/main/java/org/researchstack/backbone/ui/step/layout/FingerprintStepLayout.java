@@ -3,9 +3,6 @@ package org.researchstack.backbone.ui.step.layout;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyPermanentlyInvalidatedException;
-import android.security.keystore.KeyProperties;
 import android.support.annotation.AnyThread;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.os.CancellationSignal;
@@ -17,32 +14,16 @@ import android.view.View;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.FingerprintStep;
 import org.researchstack.backbone.step.InstructionStep;
+import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.storage.file.KeystoreEncryptionHelper;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.utils.ResUtils;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
+
+import rx.functions.Action1;
 
 /**
  * Created by TheMDP on 1/31/17.
@@ -71,7 +52,7 @@ public class FingerprintStepLayout extends InstructionStepLayout {
     // Does not need customized
     private static final long DEFAULT_EXIT_REGISTRATION_DELAY_MILLIS = 20;
 
-    private FingerprintStep fingerprintStep;
+    private PasscodeStep fingerprintStep;
 
     /** Hook into all things fingerprint */
     private FingerprintManagerCompat fingerprintManager;
@@ -118,22 +99,22 @@ public class FingerprintStepLayout extends InstructionStepLayout {
     public void initialize(Step step, StepResult result) {
         validateAndSetStep(step);
 
-        InstructionStep instructionStep = this.step;
-
-        if (instructionStep.getTitle() == null) {
-            instructionStep.setTitle(getContext().getString(R.string.rsb_fingerprint_title));
-        }
-
-        if (instructionStep.getText() == null) {
-            instructionStep.setTitle(getContext().getString(R.string.rsb_fingerprint_text));
-        }
-
         initFingerPrintManager();
-
         super.initialize(step, result);
+        setupSubmitBar();
+        initInstructionStep();
 
-        submitBar.setVisibility(View.GONE);
+        startScanFingerprintAnimation();
+    }
 
+    private void initInstructionStep() {
+        titleTextView.setVisibility(View.VISIBLE);
+        titleTextView.setText(getContext().getString(R.string.rsb_fingerprint_title));
+        textTextView.setVisibility(View.VISIBLE);
+        textTextView.setText(getContext().getString(R.string.rsb_fingerprint_text));
+    }
+
+    private void startScanFingerprintAnimation() {
         refreshDetailText(
                 getContext().getString(R.string.rsb_fingerprint_hint),
                 getContext().getColor(R.color.rsb_hint));
@@ -151,16 +132,40 @@ public class FingerprintStepLayout extends InstructionStepLayout {
         post(fingerprintAnimationRunnable);
     }
 
+    private void setupSubmitBar() {
+        if (isCreationStep()) {
+            submitBar.getPositiveActionView().setVisibility(View.GONE);
+            submitBar.getNegativeActionView().setVisibility(View.VISIBLE);
+            submitBar.setNegativeTitle(R.string.rsb_use_passcode);
+            submitBar.setNegativeAction(new Action1() {
+                @Override
+                public void call(Object o) {
+                    showUsePasscodeAlert();
+                }
+            });
+        } else {
+            submitBar.getPositiveActionView().setVisibility(View.GONE);
+            submitBar.getNegativeActionView().setVisibility(View.VISIBLE);
+            submitBar.setNegativeTitle(R.string.rsb_log_out);
+            submitBar.setNegativeAction(new Action1() {
+                @Override
+                public void call(Object o) {
+                    showLogoutAlert();
+                }
+            });
+        }
+    }
+
     private void initFingerPrintManager() {
         fingerprintManager = FingerprintManagerCompat.from(getContext());
         // We already have a fingerprint set, and this steplayout will be dismissed once
         // the callbacks are set
-        if (fingerprintStep.isCreationStep() && StorageAccess.getInstance().hasPinCode(getContext())) {
+        if (isCreationStep() && StorageAccess.getInstance().hasPinCode(getContext())) {
             return;
         }
 
         // Create the correct cipher depending on if we are doing encryption or decryption
-        if (fingerprintStep.isCreationStep()) {
+        if (isCreationStep()) {
             cipher = KeystoreEncryptionHelper.initCipherForEncryption(KEY_NAME);
         } else {
             String base64EncryptedPin = StorageAccess.getInstance().getFingerprint(getContext());
@@ -187,11 +192,11 @@ public class FingerprintStepLayout extends InstructionStepLayout {
     protected void validateAndSetStep(Step step) {
         super.validateAndSetStep(step);
 
-        if (!(step instanceof FingerprintStep)) {
+        if (!(step instanceof PasscodeStep)) {
             throw new IllegalStateException("FingerprintStepLayout expects a FingerprintStep");
         }
 
-        fingerprintStep = (FingerprintStep)step;
+        fingerprintStep = (PasscodeStep) step;
     }
 
     protected FingerprintManagerCompat.AuthenticationCallback authCallbacks = new FingerprintManagerCompat.AuthenticationCallback() {
@@ -283,7 +288,7 @@ public class FingerprintStepLayout extends InstructionStepLayout {
     };
 
     protected void handleFingerprintSuccess() {
-        if (fingerprintStep.isCreationStep()) {
+        if (isCreationStep()) {
             generateAndEncryptPin();
             saveIv();  // saves the IV for use in decryption
         } else {
@@ -334,7 +339,7 @@ public class FingerprintStepLayout extends InstructionStepLayout {
     @Override
     public void setCallbacks(StepCallbacks callbacks) {
         super.setCallbacks(callbacks);
-        if (fingerprintStep.isCreationStep() && StorageAccess.getInstance().hasPinCode(getContext())) {
+        if (isCreationStep() && StorageAccess.getInstance().hasPinCode(getContext())) {
             // A delay is needed so that the Displaying task has time to complete it's
             // view rendering, and can properly handle the callback state
             postDelayed(new Runnable() {
@@ -385,6 +390,34 @@ public class FingerprintStepLayout extends InstructionStepLayout {
         postDelayed(fingerprintAnimationRunnable, animTimeErrorMsgDelay);
     }
 
+    private void showUsePasscodeAlert() {
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.rsb_are_you_sure)
+                .setMessage(R.string.rsb_fingerprint_use_passcode)
+                .setNegativeButton(R.string.rsb_no, null)
+                .setPositiveButton(R.string.rsb_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        fingerprintStep.setUseFingerprint(false);
+                        callbacks.onSaveStep(StepCallbacks.ACTION_REFRESH, fingerprintStep, null);
+                    }
+                })
+                .create().show();
+    }
+
+    private void showLogoutAlert() {
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.rsb_are_you_sure)
+                .setNegativeButton(R.string.rsb_no, null)
+                .setPositiveButton(R.string.rsb_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        callbacks.onCancelStep();
+                    }
+                })
+                .create().show();
+    }
+
     /**
      * Should only be called after encryption cipher is initialized
      */
@@ -402,5 +435,9 @@ public class FingerprintStepLayout extends InstructionStepLayout {
         String base64Iv = getContext().getSharedPreferences(FINGERPRINT_IV_SHARED_PREFS, Context.MODE_PRIVATE)
                 .getString(IV_SHARED_PREFS_KEY, "");
         return Base64.decode(base64Iv, Base64.DEFAULT);
+    }
+
+    private boolean isCreationStep() {
+        return fingerprintStep.getStateOrdinal() == PasscodeCreationStepLayout.State.CREATE.ordinal();
     }
 }
