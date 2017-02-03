@@ -27,11 +27,22 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/rsb_image_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/rsb_step_layout_image_height"
         android:layout_marginTop="@dimen/rsb_padding_medium"
         android:layout_gravity="center"
         android:scaleType="centerInside"
-        app:srcCompat="@drawable/rsb_animated_check"/>
+        app:srcCompat="@drawable/rsb_animated_check_delayed"/>
+
+    <TextView
+        android:id="@+id/rsb_instruction_more_detail_text"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/rsb_padding_large"
+        android:textAlignment="center"
+        android:layout_gravity="center_horizontal"
+        android:textColorLink="?attr/colorAccent"
+        android:visibility="gone" />
 
 </LinearLayout>
