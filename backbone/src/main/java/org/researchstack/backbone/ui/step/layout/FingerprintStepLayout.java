@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
+import android.support.annotation.AnyThread;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.os.CancellationSignal;
 import android.support.v7.app.AlertDialog;
@@ -68,15 +69,19 @@ public class FingerprintStepLayout extends InstructionStepLayout {
 
     private static final String UTF_8    = "UTF-8";
 
+    /** Used to stor Intialization Vector the encryption uses so we can properly decrypt */
     private static final String SHARED_PREFS_KEY = "FingerprintStepLayoutSharedPrefs";
     private static final String IV_KEY = "IvForDecryption";
 
     /** Used when generating a random pincode */
     private static final int RANDOM_PINCODE_LENGTH = 32;
 
-    private static final long DEFAULT_FINGERPRINT_ANIMATION_MILLIS = 2000;
-    private static final long DEFAULT_TOO_MANYATTEMPTS_MILLIS = 2500;
-    private static final long DEFAULT_ERROR_TIMEOUT_MILLIS = 1600;
+    /** Animation durations can be customized int R.integer */
+    private long animTimeFingerprintFrequency;
+    private long animTimeTooManyAttemptsDelay;
+    private long animTimeErrorMsgDelay;
+
+    // Does not need customized
     private static final long DEFAULT_EXIT_REGISTRATION_DELAY_MILLIS = 20;
 
     private FingerprintStep fingerprintStep;
@@ -90,24 +95,33 @@ public class FingerprintStepLayout extends InstructionStepLayout {
     /** Used to cancel fingerprint scanning, when this view is detached or no longer valid for any reason */
     private CancellationSignal cancellationSignal;
     boolean mSelfCancelled;
-
     private Runnable fingerprintAnimationRunnable;
 
     public FingerprintStepLayout(Context context) {
         super(context);
+        init();
     }
 
     public FingerprintStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public FingerprintStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     @TargetApi(21)
     public FingerprintStepLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
+
+    private void init() {
+        animTimeFingerprintFrequency = getContext().getResources().getInteger(R.integer.rsb_config_anim_time_fingerprint_frequency);
+        animTimeTooManyAttemptsDelay = getContext().getResources().getInteger(R.integer.rsb_config_anim_time_fingerprint_too_many_attempts_delay);
+        animTimeErrorMsgDelay = getContext().getResources().getInteger(R.integer.rsb_config_anim_time_fingerprint_error_delay);
     }
 
     @Override
@@ -141,7 +155,7 @@ public class FingerprintStepLayout extends InstructionStepLayout {
                         getContext().getString(R.string.rsb_fingerprint_hint),
                         getContext().getResources().getColor(R.color.rsb_hint, null));
                 refreshImage(ResUtils.ANIMATED_FINGERPRINT, true);
-                postDelayed(fingerprintAnimationRunnable, DEFAULT_FINGERPRINT_ANIMATION_MILLIS);
+                postDelayed(fingerprintAnimationRunnable, animTimeFingerprintFrequency);
             }
         };
         post(fingerprintAnimationRunnable);
@@ -172,20 +186,26 @@ public class FingerprintStepLayout extends InstructionStepLayout {
     }
 
     protected FingerprintManagerCompat.AuthenticationCallback authCallbacks = new FingerprintManagerCompat.AuthenticationCallback() {
+        /**
+         * This is the error code for when the hardware shuts off due to too many attempts
+         * At this point the sensor will not work for some amount of time,
+         * so we should show the error message, and then kick the user from the screen
+         */
+        static final int ERROR_CODE_TOO_MANY_ATTEMPTS = 7;
 
-        static final int ERROR_MSG_TOO_MANY_ATTEMPTS = 7;
-
+        /** This is called on another thread for some device manufacturers */
         @Override
+        @AnyThread
         public void onAuthenticationError(final int errMsgId, final CharSequence errString) {
-            // Callback is not on the main thread, so send it to the main thread
-            removeCallbacks(fingerprintAnimationRunnable);
             post(new Runnable() {
                 @Override
                 public void run() {
+                    // Callback is not on the main thread, so send it to the main thread
+                    removeCallbacks(fingerprintAnimationRunnable);
                     if (!mSelfCancelled) {
                         showError(errString);
                     }
-                    if (errMsgId == ERROR_MSG_TOO_MANY_ATTEMPTS) {
+                    if (errMsgId == ERROR_CODE_TOO_MANY_ATTEMPTS) {
                         // post delay to change the text back to hint text
                         removeCallbacks(fingerprintAnimationRunnable);
                         fingerprintAnimationRunnable = new Runnable() {
@@ -194,31 +214,35 @@ public class FingerprintStepLayout extends InstructionStepLayout {
                                 callbacks.onSaveStep(StepCallbacks.ACTION_END, fingerprintStep, null);
                             }
                         };
-                        postDelayed(fingerprintAnimationRunnable, DEFAULT_TOO_MANYATTEMPTS_MILLIS);
+                        postDelayed(fingerprintAnimationRunnable, animTimeTooManyAttemptsDelay);
                     }
                 }
             });
         }
 
+        /** This is called on another thread for some device manufacturers */
         @Override
+        @AnyThread
         public void onAuthenticationHelp(final int helpMsgId, final CharSequence helpString) {
-            // Callback is not on the main thread, so send it to the main thread
-            removeCallbacks(fingerprintAnimationRunnable);
             post(new Runnable() {
                 @Override
                 public void run() {
+                    // Callback is not on the main thread, so send it to the main thread
+                    removeCallbacks(fingerprintAnimationRunnable);
                     showError(helpString);
                 }
             });
         }
 
+        /** This is called on another thread for some device manufacturers */
         @Override
+        @AnyThread
         public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
-            // Callback is not on the main thread, so send it to the main thread
-            removeCallbacks(fingerprintAnimationRunnable);
             post(new Runnable() {
                 @Override
                 public void run() {
+                    // Callback is not on the main thread, so send it to the main thread
+                    removeCallbacks(fingerprintAnimationRunnable);
                     refreshImage(ResUtils.ANIMATED_CHECK_MARK, true);
                     refreshDetailText(
                             getContext().getResources().getString(R.string.rsb_fingerprint_success),
@@ -234,13 +258,15 @@ public class FingerprintStepLayout extends InstructionStepLayout {
             });
         }
 
+        /** This is called on another thread for some device manufacturers */
         @Override
+        @AnyThread
         public void onAuthenticationFailed() {
             // Callback is not on the main thread, so send it to the main thread
-            removeCallbacks(fingerprintAnimationRunnable);
             post(new Runnable() {
                 @Override
                 public void run() {
+                    removeCallbacks(fingerprintAnimationRunnable);
                     showError(getContext().getResources().getString(R.string.rsb_fingerprint_not_recognized));
                 }
             });
@@ -317,7 +343,7 @@ public class FingerprintStepLayout extends InstructionStepLayout {
                 public void run() {
                     showUnrecoverableEntryAlert();
                 }
-            }, DEFAULT_ERROR_TIMEOUT_MILLIS);
+            }, animTimeErrorMsgDelay);
             return false;
         } catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
                 | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException |
@@ -474,6 +500,6 @@ public class FingerprintStepLayout extends InstructionStepLayout {
         refreshImage(ResUtils.ERROR_ICON, false);
 
         // post delay to change the text back to hint text
-        postDelayed(fingerprintAnimationRunnable, DEFAULT_ERROR_TIMEOUT_MILLIS);
+        postDelayed(fingerprintAnimationRunnable, animTimeErrorMsgDelay);
     }
 }
