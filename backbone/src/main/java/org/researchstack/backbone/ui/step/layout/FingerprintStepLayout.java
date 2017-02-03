@@ -310,7 +310,14 @@ public class FingerprintStepLayout extends InstructionStepLayout {
             }
             return true;
         } catch (KeyPermanentlyInvalidatedException e) {
-            showUnrecoverableEntryAlert();
+            // A delay is needed so that the Displaying task has time to complete it's
+            // view rendering, and can properly handle the callback state
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showUnrecoverableEntryAlert();
+                }
+            }, DEFAULT_ERROR_TIMEOUT_MILLIS);
             return false;
         } catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
                 | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException |
