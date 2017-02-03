@@ -32,7 +32,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private StepSwitcher root;
     protected Toolbar toolbar;
 
-    private Step currentStep;
+    protected Step currentStep;
     protected Task task;
     public Task getTask() {
         return task;
@@ -278,13 +278,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     private void showConfirmExitDialog()
     {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
-                "Are you sure you want to exit?")
-                .setMessage(R.string.lorem_medium)
-                .setPositiveButton("End Task", (dialog, which) -> finish())
-                .setNegativeButton("Cancel", null)
-                .create();
-        alertDialog.show();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.rsb_are_you_sure)
+                .setPositiveButton(R.string.rsb_discard_results, (dialog, i) -> finish())
+                .setNegativeButton(R.string.rsb_cancel, null).create().show();
     }
 
     @Override
