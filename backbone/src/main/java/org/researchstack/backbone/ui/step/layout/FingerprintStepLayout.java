@@ -20,6 +20,7 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.FingerprintStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.storage.file.KeystoreEncryptionHelper;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.utils.ResUtils;
 
@@ -55,26 +56,12 @@ import javax.crypto.spec.IvParameterSpec;
 @TargetApi(android.os.Build.VERSION_CODES.M) // api 23, or Android 6.0
 public class FingerprintStepLayout extends InstructionStepLayout {
 
-    /** Reference to Android Key Store */
-    private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
-
     /** Alias for our key in the Android Key Store */
-    private static final String KEY_NAME = "researchstack_data_key";
+    private static final String KEY_NAME = "fingerprint_researchstack_secret_key";
 
-    /** Encryption type used for key generation */
-    private static final String AES_MODE =
-                    KeyProperties.KEY_ALGORITHM_AES + "/" +
-                    KeyProperties.BLOCK_MODE_CBC + "/" +
-                    KeyProperties.ENCRYPTION_PADDING_PKCS7;
-
-    private static final String UTF_8    = "UTF-8";
-
-    /** Used to stor Intialization Vector the encryption uses so we can properly decrypt */
-    private static final String SHARED_PREFS_KEY = "FingerprintStepLayoutSharedPrefs";
-    private static final String IV_KEY = "IvForDecryption";
-
-    /** Used when generating a random pincode */
-    private static final int RANDOM_PINCODE_LENGTH = 32;
+    /** Shared Prefs to store the initialization vectors */
+    private static final String FINGERPRINT_IV_SHARED_PREFS = "FINGERPRINT_IV_SHARED_PREFS";
+    private static final String IV_SHARED_PREFS_KEY = "IV_SHARED_PREFS_KEY";
 
     /** Animation durations can be customized int R.integer */
     private long animTimeFingerprintFrequency;
@@ -119,9 +106,12 @@ public class FingerprintStepLayout extends InstructionStepLayout {
     }
 
     private void init() {
-        animTimeFingerprintFrequency = getContext().getResources().getInteger(R.integer.rsb_config_anim_time_fingerprint_frequency);
-        animTimeTooManyAttemptsDelay = getContext().getResources().getInteger(R.integer.rsb_config_anim_time_fingerprint_too_many_attempts_delay);
-        animTimeErrorMsgDelay = getContext().getResources().getInteger(R.integer.rsb_config_anim_time_fingerprint_error_delay);
+        animTimeFingerprintFrequency = getContext().getResources().getInteger(
+                R.integer.rsb_config_anim_time_fingerprint_frequency);
+        animTimeTooManyAttemptsDelay = getContext().getResources().getInteger(
+                R.integer.rsb_config_anim_time_fingerprint_too_many_attempts_delay);
+        animTimeErrorMsgDelay = getContext().getResources().getInteger(
+                R.integer.rsb_config_anim_time_fingerprint_error_delay);
     }
 
     @Override
@@ -168,9 +158,28 @@ public class FingerprintStepLayout extends InstructionStepLayout {
         if (fingerprintStep.isCreationStep() && StorageAccess.getInstance().hasPinCode(getContext())) {
             return;
         }
-        if (initCipher()) {
+
+        // Create the correct cipher depending on if we are doing encryption or decryption
+        if (fingerprintStep.isCreationStep()) {
+            cipher = KeystoreEncryptionHelper.initCipherForEncryption(KEY_NAME);
+        } else {
+            String base64EncryptedPin = StorageAccess.getInstance().getFingerprint(getContext());
+            cipher = KeystoreEncryptionHelper.initCipherForDecryption(
+                    getContext(), KEY_NAME, base64EncryptedPin, loadIv());
+        }
+
+        if (cipher != null) {
             cryptoObject = new FingerprintManagerCompat.CryptoObject(cipher);
             startListening(cryptoObject);
+        } else {
+            // A delay is needed so that the Displaying task has time to complete it's
+            // view rendering, and can properly handle the callback state
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showUnrecoverableEntryAlert();
+                }
+            }, animTimeErrorMsgDelay);
         }
     }
 
@@ -276,80 +285,12 @@ public class FingerprintStepLayout extends InstructionStepLayout {
     protected void handleFingerprintSuccess() {
         if (fingerprintStep.isCreationStep()) {
             generateAndEncryptPin();
+            saveIv();  // saves the IV for use in decryption
         } else {
             injectPin();
         }
         stopListening();
         callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, fingerprintStep, null);
-    }
-
-    /**
-     * Creates a symmetric key in the Android Key Store, which can only be used after the user has
-     * authenticated with fingerprint.
-     */
-    private void createKey() {
-        // The enrolling flow for fingerprint. This is where you ask the user to set up fingerprint
-        // for your flow. Use of keys is necessary if you need to know if the set of
-        // enrolled fingerprints has changed.
-        try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEYSTORE);
-            keyGenerator.init(
-                    new KeyGenParameterSpec.Builder(KEY_NAME,
-                            KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-                            .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
-                            // we know our pincode is securely random, since we generate it ourselves,
-                            // so we do not need an Initialization Vector (IV)
-                            .setRandomizedEncryptionRequired(false)
-                            .setUserAuthenticationRequired(true)
-                            .build());
-            keyGenerator.generateKey();
-
-        } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | NoSuchProviderException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Initialize the {@link Cipher} instance with the created key in the {@link #createKey()}
-     * method.
-     *
-     * @return {@code true} if initialization is successful, {@code false} if the lock screen has
-     * been disabled or reset after the key was generated, or if a fingerprint got enrolled after
-     * the key was generated, which in all cases we must ask the user to sign back in with their DataProvider credentials
-     */
-    private boolean initCipher() {
-        try {
-            if (fingerprintStep.isCreationStep()) {
-                createKey();
-            }
-
-            KeyStore keyStore = KeyStore.getInstance(ANDROID_KEYSTORE);
-            keyStore.load(null);
-            SecretKey key = (SecretKey) keyStore.getKey(KEY_NAME, null);
-            cipher = Cipher.getInstance(AES_MODE);
-            if (fingerprintStep.isCreationStep()) {
-                cipher.init(Cipher.ENCRYPT_MODE, key);
-            } else {
-                // Here we need to load the initialization vector that was used to encrypt the data
-                cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(loadIv()));
-            }
-            return true;
-        } catch (KeyPermanentlyInvalidatedException e) {
-            // A delay is needed so that the Displaying task has time to complete it's
-            // view rendering, and can properly handle the callback state
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    showUnrecoverableEntryAlert();
-                }
-            }, animTimeErrorMsgDelay);
-            return false;
-        } catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
-                | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException |
-                InvalidAlgorithmParameterException e) {
-            throw new RuntimeException("Failed to init Cipher", e);
-        }
     }
 
     private void showUnrecoverableEntryAlert() {
@@ -367,81 +308,22 @@ public class FingerprintStepLayout extends InstructionStepLayout {
                 .create().show();
     }
 
-    /**
-     * The initialization vector is handled by Android FingerprintManager, but we still need
-     * to save it, because it is used in decryption
-     * This can only be saved once fingerprint is verified
-     */
-    private void saveIv() {
-        byte[] decodedIv = cipher.getIV();
-        String base64Iv = Base64.encodeToString(decodedIv, Base64.DEFAULT);
-        getContext().getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE)
-                .edit().putString(IV_KEY, base64Iv).apply();
-    }
-
-    /**
-     * @return a byte[] that should be plugged into the decryption cipher initialization
-     */
-    private byte[] loadIv() {
-        String base64Iv = getContext().getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE).getString(IV_KEY, "");
-        byte[] decodedIv = Base64.decode(base64Iv, Base64.DEFAULT);
-        return decodedIv;
-    }
-
     private void generateAndEncryptPin() {
-        // The AndroidKeyStore can be used to help secure sensitive data,
-        // but it doesn't actually store the sensitive data, so we need to
-        // generate and store the encrypted secret ourselves
-        RandomStringGenerator pinGenerator = new RandomStringGenerator();
-        String rawPin = pinGenerator.randomString(RANDOM_PINCODE_LENGTH);
-
-        byte[] encodedBytes;
-        try {
-            byte[] decodedBytes = rawPin.getBytes(UTF_8);
-            encodedBytes = cipher.doFinal(decodedBytes);
-        } catch (UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
-            throw new RuntimeException("Failed to do encryption", e);
-        }
-        String encryptedBase64EncodedPincode = Base64.encodeToString(encodedBytes, Base64.DEFAULT);
-
+        String rawPin = KeystoreEncryptionHelper.generateSecureRandomPin();
         StorageAccess.getInstance().createPinCode(getContext(), rawPin);
-        StorageAccess.getInstance().setUsesFingerprint(getContext(), encryptedBase64EncodedPincode);
 
-        saveIv(); // this will be used for decrypting the secure pin later
-    }
-
-    private final class RandomStringGenerator {
-        static final String AB = "%+\\/'!#$^?:,.(){}[]~-_0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        SecureRandom rnd = new SecureRandom();
-
-        String randomString( int len ) {
-            StringBuilder sb = new StringBuilder( len );
-            for( int i = 0; i < len; i++ )
-                sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
-            return sb.toString();
-        }
+        String encryptedBase64EncodedPin = KeystoreEncryptionHelper.encryptSecret(getContext(), cipher, rawPin);
+        StorageAccess.getInstance().setUsesFingerprint(getContext(), encryptedBase64EncodedPin);
     }
 
     private void injectPin() {
-        try {
-            String encryptedPincode = StorageAccess.getInstance().getFingerprint(getContext());
-            byte[] encrypted = Base64.decode(encryptedPincode, Base64.DEFAULT);
-            byte[] decodedBytes = cipher.doFinal(encrypted);
-            String fingerprintPin = new String(decodedBytes, UTF_8);
-
-            StorageAccess.getInstance().authenticate(getContext(), fingerprintPin);
-        } catch (IOException | BadPaddingException | IllegalBlockSizeException e) {
-            throw new RuntimeException("Failed to do decryption " + e);
-        }
-    }
-
-    public boolean isFingerprintAuthAvailable() {
-        return fingerprintManager.isHardwareDetected()
-                && fingerprintManager.hasEnrolledFingerprints();
+        String encryptedPincode = StorageAccess.getInstance().getFingerprint(getContext());
+        String fingerprintPin = KeystoreEncryptionHelper.decryptPin(cipher, encryptedPincode);
+        StorageAccess.getInstance().authenticate(getContext(), fingerprintPin);
     }
 
     public void startListening(FingerprintManagerCompat.CryptoObject cryptoObject) {
-        if (!isFingerprintAuthAvailable()) {
+        if (!KeystoreEncryptionHelper.isFingerprintAuthAvailable(fingerprintManager)) {
             return;
         }
         cancellationSignal = new CancellationSignal();
@@ -478,7 +360,7 @@ public class FingerprintStepLayout extends InstructionStepLayout {
         super.onAttachedToWindow();
         // Since we have created the fingerprint auth, it has been removed
         if (StorageAccess.getInstance().usesFingerprint(getContext()) &&
-            !isFingerprintAuthAvailable())
+            !KeystoreEncryptionHelper.isFingerprintAuthAvailable(fingerprintManager))
         {
             showUnrecoverableEntryAlert();
         }
@@ -501,5 +383,24 @@ public class FingerprintStepLayout extends InstructionStepLayout {
 
         // post delay to change the text back to hint text
         postDelayed(fingerprintAnimationRunnable, animTimeErrorMsgDelay);
+    }
+
+    /**
+     * Should only be called after encryption cipher is initialized
+     */
+    private void saveIv() {
+        String base64Iv = Base64.encodeToString(cipher.getIV(), Base64.DEFAULT);
+        getContext().getSharedPreferences(FINGERPRINT_IV_SHARED_PREFS, Context.MODE_PRIVATE)
+                .edit().putString(IV_SHARED_PREFS_KEY, base64Iv).apply();
+    }
+
+    /**
+     * Should only be used while decrypting
+     * @return the Initialization Vector (IV) used by the encryptor
+     */
+    private byte[] loadIv() {
+        String base64Iv = getContext().getSharedPreferences(FINGERPRINT_IV_SHARED_PREFS, Context.MODE_PRIVATE)
+                .getString(IV_SHARED_PREFS_KEY, "");
+        return Base64.decode(base64Iv, Base64.DEFAULT);
     }
 }
