@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.PermissionRequestManager;
+import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.result.StepResult;
@@ -179,6 +180,7 @@ public class OnboardingTaskActivity extends ViewTaskActivity implements Activity
     protected void discardResultsAndFinish() {
         taskResult.getResults().clear();
         DataProvider.getInstance().signOut(this);
+        StorageAccess.getInstance().removePinCode(this);
         finish();
     }
 

@@ -32,7 +32,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private StepSwitcher root;
     protected Toolbar toolbar;
 
-    private Step currentStep;
+    protected Step currentStep;
     protected Task task;
     public Task getTask() {
         return task;
@@ -115,6 +115,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     protected void showStep(Step step)
     {
+        showStep(step, false);
+    }
+
+    protected void showStep(Step step, boolean alwaysReplaceView)
+    {
         int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult)
                 .getCurrent();
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
@@ -124,8 +129,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
                         ? StepSwitcher.SHIFT_LEFT
-                        : StepSwitcher.SHIFT_RIGHT);
+                        : StepSwitcher.SHIFT_RIGHT, alwaysReplaceView);
         currentStep = step;
+    }
+
+    protected void refreshCurrentStep()
+    {
+        showStep(currentStep, true);
     }
 
     protected StepLayout getLayoutForStep(Step step)
@@ -260,6 +270,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         {
             // Used when onSaveInstanceState is called of a view. No action is taken.
         }
+        else if(action == StepCallbacks.ACTION_REFRESH)
+        {
+            refreshCurrentStep();
+        }
         else
         {
             throw new IllegalArgumentException("Action with value " + action + " is invalid. " +
@@ -278,13 +292,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     private void showConfirmExitDialog()
     {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
-                "Are you sure you want to exit?")
-                .setMessage(R.string.lorem_medium)
-                .setPositiveButton("End Task", (dialog, which) -> finish())
-                .setNegativeButton("Cancel", null)
-                .create();
-        alertDialog.show();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.rsb_are_you_sure)
+                .setPositiveButton(R.string.rsb_discard_results, (dialog, i) -> finish())
+                .setNegativeButton(R.string.rsb_cancel, null).create().show();
     }
 
     @Override

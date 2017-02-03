@@ -21,7 +21,7 @@ public class CompletionStep extends InstructionStep {
     }
 
     private void commonInit() {
-        setImage(ResUtils.ANIMATED_CHECK_MARK_ID);
+        setImage(ResUtils.ANIMATED_CHECK_MARK_DELAYED);
         setIsImageAnimated(true);
     }
 

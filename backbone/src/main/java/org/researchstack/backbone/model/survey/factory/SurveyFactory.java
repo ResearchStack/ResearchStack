@@ -1,10 +1,13 @@
 package org.researchstack.backbone.model.survey.factory;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.StringRes;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.InputType;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
@@ -52,6 +55,7 @@ import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationQuestionStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
+import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,7 +193,7 @@ public class SurveyFactory {
             case ACCOUNT_EXTERNAL_ID:
                 return createNotImplementedStep(item);
             case PASSCODE:
-                return createPasscodeStep(item);
+                return createPasscodeStep(context, item);
             case SHARE_THE_APP:
                 if (!(item instanceof InstructionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, SHARE_THE_APP types must be InstructionSurveyItem");
@@ -704,11 +708,29 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item SurveyItem from JSON
      * @return valid PasscodeStep matching the SurveyItem
      */
-    public PasscodeStep createPasscodeStep(SurveyItem item) {
-        return new PasscodeStep(item.identifier, item.title, item.text);
+    public Step createPasscodeStep(Context context, SurveyItem item) {
+
+        PasscodeStep step = new PasscodeStep(item.identifier, item.title, item.text);
+        step.setStateOrdinal(PasscodeCreationStepLayout.State.CREATE.ordinal());
+
+        // Fingerprint API was added with api 23
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            FingerprintManagerCompat fingerprintManager = FingerprintManagerCompat.from(context);
+
+            // This is by far the most secure way to store data, so if the user has it,
+            // we will make them take advantage of it; however, they can switch to passcode from the step layout
+            if (fingerprintManager.isHardwareDetected() &&
+                fingerprintManager.hasEnrolledFingerprints())
+            {
+                step.setUseFingerprint(true);
+            }
+        }
+
+        return step;
     }
 
     public ShareTheAppStep createShareTheAppStep(Context context, InstructionSurveyItem item) {

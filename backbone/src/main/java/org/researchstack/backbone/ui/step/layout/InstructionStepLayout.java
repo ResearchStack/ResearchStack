@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -12,6 +13,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.researchstack.backbone.R;
@@ -30,6 +32,11 @@ import org.researchstack.backbone.utils.TextUtils;
 public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout {
     protected StepCallbacks callbacks;
     protected InstructionStep step;
+
+    protected TextView titleTextView;
+    protected TextView textTextView;
+    protected AppCompatImageView imageView;
+    protected TextView moreDetailTextView;
 
     public InstructionStepLayout(Context context) {
         super(context);
@@ -83,6 +90,12 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     private void initializeStep() {
+
+        titleTextView       = (TextView)findViewById(R.id.rsb_intruction_title);
+        textTextView        = (TextView)findViewById(R.id.rsb_intruction_text);
+        imageView           = (AppCompatImageView) findViewById(R.id.rsb_image_view);
+        moreDetailTextView  = (TextView)findViewById(R.id.rsb_instruction_more_detail_text);
+
         if (step != null) {
             String title = step.getTitle();
             String text  = step.getText();
@@ -97,18 +110,16 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
             // Set Title
             if (! TextUtils.isEmpty(title)) {
-                TextView titleTv = (TextView) findViewById(R.id.rsb_intruction_title);
-                titleTv.setVisibility(View.VISIBLE);
-                titleTv.setText(title);
+                titleTextView.setVisibility(View.VISIBLE);
+                titleTextView.setText(title);
             }
 
             // Set Summary
             if(! TextUtils.isEmpty(text)) {
-                TextView summary = (TextView) findViewById(R.id.rsb_intruction_text);
-                summary.setVisibility(View.VISIBLE);
-                summary.setText(Html.fromHtml(text));
+                textTextView.setVisibility(View.VISIBLE);
+                textTextView.setText(Html.fromHtml(text));
                 final String htmlDocTitle = title;
-                summary.setMovementMethod(new TextViewLinkHandler() {
+                textTextView.setMovementMethod(new TextViewLinkHandler() {
                     @Override
                     public void onLinkClick(String url) {
                         String path = ResourcePathManager.getInstance().
@@ -121,7 +132,6 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             }
 
             // Set Next / Skip
-            SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
             submitBar.setPositiveTitle(R.string.rsb_next);
             submitBar.setPositiveAction(v -> onComplete());
 
@@ -136,35 +146,44 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
 
-            // Setup the Imageview, is compatible with normal, vector, and animated drawables
-            AppCompatImageView imageView = (AppCompatImageView)findViewById(R.id.rsb_image_view);
-            if (imageView != null) {
-                if (step.getImage() != null) {
-                    int drawableInt = ResUtils.getDrawableResourceId(getContext(), step.getImage());
-                    if (drawableInt != 0) {
+            refreshImage(step.getImage(), step.getIsImageAnimated());
+            refreshDetailText(step.getMoreDetailText(), moreDetailTextView.getCurrentTextColor());
+        }
+    }
 
-                        // TODO: is there anyway to automatically check if an image is animatible
-                        // TODO: other than setting a flag on the Step?
-                        // TODO: catch exceptions maybe?
-                        if (step.getIsImageAnimated()) {
-                            AnimatedVectorDrawableCompat animatedVector =
-                                    AnimatedVectorDrawableCompat.create(getContext(), drawableInt);
-                            imageView.setImageDrawable(animatedVector);
-                            if (animatedVector != null) {
-                                animatedVector.start();
-                            }
-                        } else {
-                            imageView.setImageResource(drawableInt);
-                        }
+    protected void refreshImage(String imageName, boolean isAnimated) {
+        // Setup the Imageview, is compatible with normal, vector, and animated drawables
+        if (imageName != null) {
+            int drawableInt = ResUtils.getDrawableResourceId(getContext(), imageName);
+            if (drawableInt != 0) {
 
-                        imageView.setVisibility(View.VISIBLE);
+                // TODO: is there anyway to automatically check if an image is animatible
+                // TODO: other than setting a flag on the Step?
+                // TODO: catch exceptions maybe?
+                if (isAnimated) {
+                    AnimatedVectorDrawableCompat animatedVector =
+                            AnimatedVectorDrawableCompat.create(getContext(), drawableInt);
+                    imageView.setImageDrawable(animatedVector);
+                    if (animatedVector != null) {
+                        animatedVector.start();
                     }
                 } else {
-                    imageView.setVisibility(View.GONE);
+                    imageView.setImageResource(drawableInt);
                 }
-            }
 
+                imageView.setVisibility(View.VISIBLE);
+            }
+        } else {
+            imageView.setVisibility(View.GONE);
         }
+    }
+
+    protected void refreshDetailText(String detailText, int detailTextColor) {
+        moreDetailTextView.setVisibility(detailText == null ? View.GONE : View.VISIBLE);
+        if (detailText != null) {
+            moreDetailTextView.setText(detailText);
+        }
+        moreDetailTextView.setTextColor(detailTextColor);
     }
 
     protected void onComplete() {

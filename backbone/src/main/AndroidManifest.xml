@@ -1,1 +1,8 @@
-<manifest package="org.researchstack.backbone" />
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.researchstack.backbone">
+
+    <!-- We allow users to secure their data using their fingerprint see -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+
+</manifest>

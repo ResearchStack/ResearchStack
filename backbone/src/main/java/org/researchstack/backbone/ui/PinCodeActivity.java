@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,8 +21,13 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
+import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.step.PasscodeStep;
+import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.storage.file.PinCodeConfig;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
+import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.ui.step.layout.FingerprintStepLayout;
 import org.researchstack.backbone.ui.views.PinCodeLayout;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
@@ -34,6 +40,7 @@ import rx.functions.Action1;
 
 public class PinCodeActivity extends AppCompatActivity implements StorageAccessListener {
     private PinCodeLayout pinCodeLayout;
+    private FingerprintStepLayout fingerprintLayout;
     private Action1<Boolean> toggleKeyboardAction;
 
     @Override
@@ -48,9 +55,12 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         StorageAccess.getInstance().logAccessTime();
 
         storageAccessUnregister();
-        if(pinCodeLayout != null)
-        {
+        if(pinCodeLayout != null) {
             getWindowManager().removeView(pinCodeLayout);
+        }
+        if(fingerprintLayout != null) {
+            fingerprintLayout.stopListening();
+            getWindowManager().removeView(fingerprintLayout);
         }
     }
 
@@ -133,6 +143,46 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         LogExt.e(getClass(), "onDataAuth()");
         storageAccessUnregister();
 
+        if (StorageAccess.getInstance().usesFingerprint(this)) {
+            initFingerprintLayout();
+        } else {
+            initPincodeLayout();
+        }
+    }
+
+    private void initFingerprintLayout() {
+        int theme = ThemeUtils.getPassCodeTheme(this);
+        fingerprintLayout = new FingerprintStepLayout(new ContextThemeWrapper(this, theme));
+        fingerprintLayout.setBackgroundColor(Color.WHITE);
+
+        PasscodeStep step = new PasscodeStep("FingerprintStep", null, null);
+        step.setUseFingerprint(true);
+        fingerprintLayout.initialize(step, null);
+        fingerprintLayout.setCallbacks(new StepCallbacks() {
+            @Override
+            public void onSaveStep(int action, Step step, StepResult result) {
+                // is the way the FingerprintStepLayout signals that we should end the activity
+                if (action == ACTION_END) {
+                    finish();
+                } else {
+                    // Move to the next state, which signals a successful data auth
+                    transitionToNextState();
+                }
+            }
+
+            @Override
+            public void onCancelStep() {
+                // the cancel step signals to the pin code activity the FingerprintStepLayout needs setup again
+                signOut();
+                transitionToNextState();
+            }
+        });
+
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+        getWindowManager().addView(fingerprintLayout, params);
+    }
+
+    private void initPincodeLayout() {
         // Show pincode layout
         PinCodeConfig config = StorageAccess.getInstance().getPinCodeConfig();
 
@@ -204,7 +254,13 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         new AlertDialog.Builder(this).setTitle(R.string.rsb_reset_passcode)
                 .setMessage(R.string.rsb_reset_passcode_message)
                 .setCancelable(false)
-                .setPositiveButton(R.string.rsb_log_out, (dialogInterface, i) -> signOut())
+                .setPositiveButton(R.string.rsb_log_out, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        signOut();
+                        transitionToNextState();
+                    }
+                })
                 .setNegativeButton(R.string.rsb_cancel, null)
                 .show();
     }
@@ -213,7 +269,6 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         // Signs the user out of the app, so they have to start from scratch
         DataProvider.getInstance().signOut(this);
         StorageAccess.getInstance().removePinCode(this);
-        transitionToNextState();
     }
 
     /**
@@ -221,8 +276,14 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
      * activity to re-evaluate its pincode state and move on to the next screen
      */
     private void transitionToNextState() {
-        getWindowManager().removeView(pinCodeLayout);
-        pinCodeLayout = null;
+        if (pinCodeLayout != null) {
+            getWindowManager().removeView(pinCodeLayout);
+            pinCodeLayout = null;
+        }
+        if (fingerprintLayout != null) {
+            getWindowManager().removeView(fingerprintLayout);
+            fingerprintLayout = null;
+        }
         // authenticate() no longer calls notifyReady(), call this after auth
         requestStorageAccess();
     }

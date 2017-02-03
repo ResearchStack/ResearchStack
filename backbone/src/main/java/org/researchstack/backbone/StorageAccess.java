@@ -2,6 +2,7 @@ package org.researchstack.backbone;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.MainThread;
@@ -39,6 +40,9 @@ public class StorageAccess {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     private static final boolean CHECK_THREADS = false;
+
+    private static final String SHARED_PREFS_KEY = "StorageAccessSharedPrefsKey";
+    private static final String USES_FINGERPRINT_KEY = "UsesFingerprintKey";
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Static Fields
@@ -125,7 +129,6 @@ public class StorageAccess {
     public boolean hasPinCode(Context context) {
         return encryptionProvider.hasPinCode(context);
     }
-
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Storage Access request and notification
@@ -295,12 +298,50 @@ public class StorageAccess {
     }
 
     /**
+     * @param context can be android or application
+     * @return true if pin code is backed by fingerprint, false if it is user created
+     */
+    public boolean usesFingerprint(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        return prefs.getString(USES_FINGERPRINT_KEY, null) != null;
+    }
+
+    /**
+     * @param context can be android or application
+     * @return the fingerprint data encrypted
+     */
+    public String getFingerprint(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        return prefs.getString(USES_FINGERPRINT_KEY, null);
+    }
+
+    /**
+     * Method must be called and set to true if the user registers their fingerprint
+     * @param context can be android or application
+     * @param encryptedKey the key used for storage, MUST BE ENCRYPTED and the encryption key for it backed by keystore
+     */
+    public void setUsesFingerprint(Context context, String encryptedKey) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        prefs.edit().putString(USES_FINGERPRINT_KEY, encryptedKey).apply();
+    }
+
+    /**
+     * Removes any history of using fingerprint for authentication
+     * @param context can be android or application
+     */
+    protected void removeSharedPreference(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        prefs.edit().clear().apply();
+    }
+
+    /**
      * Removes the pin code if one exists.
      *
      * @param context android context
      */
     public void removePinCode(Context context) {
         encryptionProvider.removePinCode(context);
+        removeSharedPreference(context);
     }
 
     private void injectEncrypter() {

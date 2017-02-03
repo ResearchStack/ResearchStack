@@ -148,7 +148,6 @@
     <string name="rsb_birth_date_too_old">You must be %1$s years or younger</string>
     <string name="rsb_birth_date_too_young">You must be at least %1$s years old</string>
 
-
     <!-- Pin Code -->
     <string name="rsb_pincode_enter_title">Enter your passcode</string>
     <string name="rsb_pincode_enter_summary">Enter your %1$d-%2$s code to confirm your identity.</string>
@@ -156,6 +155,16 @@
     <string name="rsb_pincode_enter_letter">letter</string>
     <string name="rsb_pincode_enter_character">character</string>
     <string name="rsb_pincode_enter_error">That code doesn’t match the one you entered, Try again!</string>
+
+    <!-- Fingerprint -->
+    <string name="rsb_fingerprint_title">Protect your data</string>
+    <string name="rsb_fingerprint_text">Use your device\'s fingerprint sensor to confirm your identity.</string>
+    <string name="rsb_fingerprint_hint">Touch sensor</string>
+    <string name="rsb_fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
+    <string name="rsb_fingerprint_success">Fingerprint recognized</string>
+    <string name="rsb_fingerprint_invalidated">Device fingerprint has either changed or been removed.  You must login again to continue.</string>
+    <string name="rsb_fingerprint_use_passcode">A passcode is less secure; however, it may be more convenient given your usage requirements.</string>
+    <string name="rsb_use_passcode">Use passcode</string>
 
     <!-- Body Hints -->
     <string name="rsb_hint_step_body_int">Enter a number %1$d-%2$d</string>
@@ -260,10 +269,8 @@
     <string name="rsb_email_verification_step_title">Verify Email</string>
     <string name="rsb_profile_step_title">Profile</string>
     <string name="rsb_completion_step_title">Onboarding Complete</string>
-
     <string name="rsb_are_you_sure">Are you sure?</string>
     <string name="rsb_discard_results">Discard Results</string>
-
     <string name="rsb_change_email_title">Enter a different email</string>
 
     <!-- Share -->
