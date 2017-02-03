@@ -1,7 +1,9 @@
 package org.researchstack.backbone.model.survey.factory;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.StringRes;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.InputType;
 
 import org.researchstack.backbone.R;
@@ -37,6 +39,7 @@ import org.researchstack.backbone.step.CompletionStep;
 import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.EmailVerificationSubStep;
+import org.researchstack.backbone.step.FingerprintStep;
 import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
@@ -189,7 +192,7 @@ public class SurveyFactory {
             case ACCOUNT_EXTERNAL_ID:
                 return createNotImplementedStep(item);
             case PASSCODE:
-                return createPasscodeStep(item);
+                return createPasscodeStep(context, item);
             case SHARE_THE_APP:
                 if (!(item instanceof InstructionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, SHARE_THE_APP types must be InstructionSurveyItem");
@@ -704,10 +707,25 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item SurveyItem from JSON
      * @return valid PasscodeStep matching the SurveyItem
      */
-    public PasscodeStep createPasscodeStep(SurveyItem item) {
+    public Step createPasscodeStep(Context context, SurveyItem item) {
+
+        // Fingerprint API was added with api 23
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            FingerprintManagerCompat fingerprintManager = FingerprintManagerCompat.from(context);
+
+            // This is by far the most secure way to store data, so if the user has it,
+            // we will make them take advantage of it
+            if (fingerprintManager.isHardwareDetected() &&
+                fingerprintManager.hasEnrolledFingerprints())
+            {
+                return new FingerprintStep(item.identifier, null, null, true);
+            }
+        }
+
         return new PasscodeStep(item.identifier, item.title, item.text);
     }
 
