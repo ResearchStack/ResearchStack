@@ -3,10 +3,7 @@ package org.researchstack.backbone.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -192,7 +189,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         // Create Menu which has an "X" or cancel icon
-        getMenuInflater().inflate(R.menu.rsb_onboarding_menu, menu);
+        getMenuInflater().inflate(R.menu.rsb_task_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
