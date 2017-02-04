@@ -3,10 +3,14 @@ package org.researchstack.backbone.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -186,15 +190,34 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == android.R.id.home)
-        {
+    public boolean onCreateOptionsMenu(Menu menu){
+        // Create Menu which has an "X" or cancel icon
+        getMenuInflater().inflate(R.menu.rsb_onboarding_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.rsb_clear_menu_item) {
+            showConfirmExitDialog();
+            return true;
+        } else if(item.getItemId() == android.R.id.home) {
             notifyStepOfBackPress();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Clear out all the data that has been saved by this Activity
+     * And push user back to the Overview screen, or whatever screen was below this Activity
+     */
+    protected void discardResultsAndFinish() {
+        taskResult.getResults().clear();
+        taskResult = null;
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 
     @Override
@@ -290,19 +313,21 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         }
     }
 
+    /**
+     * Make sure user is 100% wanting to cancel, since their data will be discarded
+     */
     private void showConfirmExitDialog()
     {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.rsb_are_you_sure)
-                .setPositiveButton(R.string.rsb_discard_results, (dialog, i) -> finish())
+                .setPositiveButton(R.string.rsb_discard_results, (dialog, i) -> discardResultsAndFinish())
                 .setNegativeButton(R.string.rsb_cancel, null).create().show();
     }
 
     @Override
     public void onCancelStep()
     {
-        setResult(Activity.RESULT_CANCELED);
-        finish();
+        discardResultsAndFinish();
     }
 
     public void setActionBarTitle(String title)
