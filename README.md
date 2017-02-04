@@ -139,7 +139,6 @@ com.jakewharton.rxbinding:rxbinding
 - RxJava binding APIs for Android UI widgets from the platform and support libraries. Provides helper methods that wrap API methods and returns Rx Observables
 
 <b>
-com.squareup.okhttp3:logging-interceptor
 com.squareup.retrofit2:adapter-rxjava
 com.squareup.retrofit2:converter-gson
 com.squareup.retrofit2:retrofit
