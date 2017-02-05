@@ -51,11 +51,7 @@
 
     <!-- Consent sharing step -->
     <string name="rsb_consent_share_title">Sharing Options</string>
-    <string name="rsb_consent_share_widely">Share my data with %1$s and qualified researchers
-        worldwide
-    </string>
     <string name="rsb_consent_share_no">Not sharing your data</string>
-    <string name="rsb_consent_share_only">Only share my data with %1$s</string>
     <string name="rsb_consent_share_description"><![CDATA[%1$s will receive your study data from your
         participation in this study. \n\nSharing your coded study data more broadly (without
         information such as your name) may benefit this and future research.<br/><br/><a href="%2$s">
@@ -325,9 +321,9 @@
     <string name="rsb_LEARN_MORE_WITHDRAWING">Learn more about withdrawing</string>
     <!-- Consent sharing step -->
     <string name="rsb_CONSENT_SHARING_TITLE">Sharing Options</string>
-    <string name="rsb_CONSENT_SHARE_WIDELY">Share my data with %s and qualified researchers worldwide</string>
-    <string name="rsb_CONSENT_SHARE_ONLY">Only share my data with %s</string>
-    <string name="rsb_CONSENT_SHARING_DESCRIPTION">%s will receive your study data from your participation in this study.\n\nSharing your coded study data more broadly (without information such as your name) may benefit this and future research.</string>
+    <string name="rsb_consent_share_widely">Share my data with %s and qualified researchers worldwide</string>
+    <string name="rsb_consent_share_only">Only share my data with %s</string>
+    <string name="rsb_consent_sharing_description">%s will receive your study data from your participation in this study.\n\nSharing your coded study data more broadly (without information such as your name) may benefit this and future research.</string>
     <string name="rsb_LEARN_MORE_CONSENT_SHARING">Learn more about data sharing</string>
     <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
     <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%s\'s Name (printed)</string>
@@ -755,6 +751,7 @@
     <string name="rsb_AX_IMAGE_CAPTURE_LABEL">Capture preview</string>
     <string name="rsb_AX_IMAGE_CAPTURED_LABEL">Captured image</string>
     <string name="rsb_AX_VIDEO_CAPTURE_LABEL">Video capture preview</string>
+    <string name="rsb_AX_VIDEO_CAPTURED_LABEL">Video capture preview</string>
     <string name="rsb_AX_VIDEO_CAPTURE_COMPLETE">Video capture complete</string>
     <string name="rsb_AX_TOWER_OF_HANOI_INVALID_MOVE_FORMAT">Unable to place disk with size %1$s on disk with size %2$s</string>
     <string name="rsb_AX_TOWER_OF_HANOI_TARGET_DISK">Target</string>
