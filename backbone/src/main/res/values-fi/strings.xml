@@ -34,13 +34,13 @@
     <string name="rsb_LEARN_MORE_WITHDRAWING">Lisätietoja peruuttamisesta</string>
     <!-- Consent sharing step -->
     <string name="rsb_CONSENT_SHARING_TITLE">Jakovalinnat</string>
-    <string name="rsb_consent_share_widely">Jaa datani kohteen %s ja hyväksyttyjen tutkijoiden kanssa maailmanlaajuisesti</string>
-    <string name="rsb_consent_share_only">Jaa datani vain kohteen %s kanssa</string>
-    <string name="rsb_consent_sharing_description">%s vastaanottaa tutkimusdatasi tästä tutkimuksesta.\n\nKoodatun tutkimusdatan jakaminen laajemmalle käyttäjäkunnalle (ilman nimi ym. tietoja) voi edesauttaa tätä ja tulevia tutkimuksia.</string>
+    <string name="rsb_consent_share_widely">Jaa datani kohteen %1$s ja hyväksyttyjen tutkijoiden kanssa maailmanlaajuisesti</string>
+    <string name="rsb_consent_share_only">Jaa datani vain kohteen %1$s kanssa</string>
+    <string name="rsb_consent_sharing_description">%1$s vastaanottaa tutkimusdatasi tästä tutkimuksesta.\n\nKoodatun tutkimusdatan jakaminen laajemmalle käyttäjäkunnalle (ilman nimi ym. tietoja) voi edesauttaa tätä ja tulevia tutkimuksia.</string>
     <string name="rsb_LEARN_MORE_CONSENT_SHARING">Lisätietoja datajaosta</string>
     <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
-    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%s – nimi tekstattuna</string>
-    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%s – allekirjoitus</string>
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%1$s – nimi tekstattuna</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%1$s – allekirjoitus</string>
     <string name="rsb_CONSENT_DOC_LINE_DATE">Päivämäärä</string>
     <!-- Progress indication (in navigation bar). -->
     <string name="rsb_STEP_PROGRESS_FORMAT">Vaihe %1$s / %2$s</string>
@@ -48,9 +48,9 @@
     <string name="rsb_RANGE_ALERT_TITLE">Virheellinen arvo</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s ylittää sallitun enimmäisarvon (%2$s).</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s on alle sallitun vähimmäisarvon (%2$s).</string>
-    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%s ei ole kelvollinen arvo.</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s ei ole kelvollinen arvo.</string>
     <!-- Alert for invalid email address value -->
-    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Virheellinen sähköpostiosoite: %s</string>
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Virheellinen sähköpostiosoite: %1$s</string>
     <!-- Alerts for invalid location coordinates -->
     <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Syötä osoite</string>
     <string name="rsb_LOCATION_ERROR_TITLE">Määritettyä osoitetta ei löydy</string>
@@ -59,7 +59,7 @@
     <string name="rsb_LOCATION_ERROR_GEOCODE">Syötetyllä osoitteella ei löydy tuloksia. Varmista, että osoite on oikein.</string>
     <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">Joko et ole yhteydessä internetiin tai olet ylittänyt osoitehakupyyntöjen enimmäismäärän. Jos et ole yhteydessä internetiin, laita Wi-Fi päälle vastataksesi tähän kysymykseen, ohita tämä kysymys (jos ohituspainike on käytettävissä), tai palaa kyselyyn, kun olet internet-yhteydessä. Muussa tapauksessa yritä muutaman minuutin päästä uudelleen.</string>
     <!-- Alert for exceeding length limit in text answer -->
-    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Tekstisisältö ylittää maksimipituuden: %s</string>
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Tekstisisältö ylittää maksimipituuden: %1$s</string>
     <!-- Camera not available during multitasking -->
     <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">Kamera ei ole käytettävissä jaetulla näytöllä.</string>
     <!-- Registration step -->
@@ -154,7 +154,7 @@
     <string name="rsb_COUNTDOWN_LABEL">Aktiviteetti alkaa</string>
     <string name="rsb_TASK_COMPLETE_TITLE">Aktiviteetti valmis</string>
     <string name="rsb_TASK_COMPLETE_TEXT">Datasi analysoidaan ja sinulle ilmoitetaan, kun tuloksesi ovat valmiina.</string>
-    <string name="rsb_countdown_spoken_remaining">%s sekuntia jäljellä.</string>
+    <string name="rsb_countdown_spoken_remaining">%1$s sekuntia jäljellä.</string>
     <!-- Image capture step. -->
     <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Kaappaa kuva</string>
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Kaappaa kuva uudelleen</string>
@@ -168,26 +168,26 @@
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Kaappaa video uudelleen</string>
     <!-- Fitness active task. -->
     <string name="rsb_FITNESS_TASK_TITLE">Kuntoilu</string>
-    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Matka (%s)</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Matka (%1$s)</string>
     <string name="rsb_FITNESS_HEARTRATE_TITLE">Syke (bpm)</string>
-    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Istu %s.</string>
-    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Kävele niin nopeasti kuin voit %s.</string>
-    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Tämä aktiviteetti seuraa sykettäsi ja mittaa kuinka kauas voit kävellä, kun aikaa on %s.</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Istu %1$s.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Kävele niin nopeasti kuin voit %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Tämä aktiviteetti seuraa sykettäsi ja mittaa kuinka kauas voit kävellä, kun aikaa on %1$s.</string>
     <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Kävele ulkona kovinta mahdollista vauhtia %1$s. Kun olet valmis, istu ja lepää %2$s. Aloita napauttamalla Aloita.</string>
     <!-- Short walk active task. -->
     <string name="rsb_WALK_TASK_TITLE">Askeleet ja tasapaino</string>
     <string name="rsb_WALK_INTRO_TEXT">Tämä aktiviteetti arvioi askellustasi ja tasapainoasi, kun kävelet tasaisesti ja seisot. Älä jatka, jos et pysty turvallisesti kävelemään avustamatta.</string>
-    <string name="rsb_walk_intro_2_text_ld">Etsi paikka, jossa voit turvallisesti kävellä avustamatta noin %ld askelta suoraan.</string>
+    <string name="rsb_walk_intro_2_text_ld">Etsi paikka, jossa voit turvallisesti kävellä avustamatta noin %1$d askelta suoraan.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL">Laita puhelin taskuun tai laukkuun ja seuraa ääniohjeita.</string>
-    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Seiso nyt paikoillaan %s.</string>
-    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Seiso paikoillaan %s.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Seiso nyt paikoillaan %1$s.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Seiso paikoillaan %1$s.</string>
     <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Käänny ympäri ja kävele takaisin alkupisteeseen.</string>
-    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Kävele enintään %ld askelta suoraan.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Kävele enintään %1$d askelta suoraan.</string>
     <!-- Short walk back and forth. -->
     <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Etsi paikka, jossa voit turvallisesti kävellä suoraa reittiä edestakaisin. Yritä kävellä jatkuvasti kääntyen reitin päissä ikään kuin kiertäisit liikenteenohjainta.\n\nSeuraavaksi sinua pyydetään kääntymään ympäri täysi kierros, ja sitten seisomaan paikallasi kädet sivuilla ja jalat noin hartianleveyden etäisyydellä toisistaan.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Kun olet valmis, napauta Aloita.\nLaita sitten puhelin taskuun tai laukkuun ja seuraa ääniohjeita.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Kävele suoraa reittiä edestakaisin %s. Kävele, kuten kävelisit tavallisesti.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Käänny kokonaan ympäri ja seiso paikallasi %s.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Kävele suoraa reittiä edestakaisin %1$s. Kävele, kuten kävelisit tavallisesti.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Käänny kokonaan ympäri ja seiso paikallasi %1$s.</string>
     <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Aktiviteetti on suoritettu.</string>
     <!-- Tapping active task. -->
     <string name="rsb_TAPPING_TASK_TITLE">Napautusnopeus</string>
@@ -200,7 +200,7 @@
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Käytä vasemman käden kahta sormea näytön painikkeiden napauttamiseen vuorotellen.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Suorita nyt sama testi oikealla kädellä.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Suorita nyt sama testi vasemmalla kädellä.</string>
-    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Napauta yhtä sormea ja sitten toista. Yritä ajoittaa napautukset mahdollisimman tasaisesti. Napauttele %s.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Napauta yhtä sormea ja sitten toista. Yritä ajoittaa napautukset mahdollisimman tasaisesti. Napauttele %1$s.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION">Aloita napauttamalla Aloita-painiketta.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Aloita napauttamalla Seuraava.</string>
     <string name="rsb_TAP_BUTTON_TITLE">Napauta</string>
@@ -227,21 +227,21 @@
     <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Aloita napauttamalla Aloita-painiketta.</string>
     <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Sinun pitäisi nyt kuulla ääni. Säädä voimakkuutta laitteen sivussa olevilla säätimillä.\n\nNapauta painiketta kun olet valmis aloittamaan.</string>
     <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Napauta painiketta heti, kun alat kuulla äänen.</string>
-    <string name="rsb_tone_label_left">%s Hz, vasen</string>
-    <string name="rsb_tone_label_right">%s Hz, oikea</string>
+    <string name="rsb_tone_label_left">%1$s Hz, vasen</string>
+    <string name="rsb_tone_label_right">%1$s Hz, oikea</string>
     <!-- Spatial span memory active task. -->
     <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Avaruudellinen muisti</string>
-    <string name="rsb_spatial_span_memory_intro_text">Tämä aktiiviteetti mittaa lyhytaikaista avaruudellista muistiasi. Toista järjestys, jossa %s syttyy.</string>
+    <string name="rsb_spatial_span_memory_intro_text">Tämä aktiiviteetti mittaa lyhytaikaista avaruudellista muistiasi. Toista järjestys, jossa %1$s syttyy.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">kukkia</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">kukkia</string>
     <string name="rsb_spatial_span_memory_intro_2_text">Näet yksi kerrallaan syttyviä %1$s. Napauta %2$s samassa järjestyksessä kuin ne syttyivät.</string>
     <string name="rsb_spatial_span_memory_intro_2_text_reverse">Näet yksi kerrallaan syttyviä %1$s. Napauta %2$s käänteisessä syttymisjärjestyksessä.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Aloita napauttamalla Aloita ja katso tarkasti.</string>
-    <string name="rsb_memory_game_item_count_title">%s</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
     <string name="rsb_MEMORY_GAME_SCORE_TITLE">Tulos</string>
-    <string name="rsb_memory_game_playback_title">Katso %s, kun niihin syttyy valo.</string>
-    <string name="rsb_memory_game_gameplay_title">Napauta %s siinä järjestyksessä, kun ne syttyivät</string>
-    <string name="rsb_memory_game_gameplay_reverse_title">Napauta %s käänteisessä järjestyksessä</string>
+    <string name="rsb_memory_game_playback_title">Katso %1$s, kun niihin syttyy valo.</string>
+    <string name="rsb_memory_game_gameplay_title">Napauta %1$s siinä järjestyksessä, kun ne syttyivät</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Napauta %1$s käänteisessä järjestyksessä</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Jakso valmis</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Jatka napauttamalla Seuraava</string>
     <string name="rsb_MEMORY_GAME_FAILED_TITLE">Yritä uudelleen</string>
@@ -269,7 +269,7 @@
     <!-- Timed walk active task. -->
     <string name="rsb_TIMED_WALK_TITLE">Ajoitettu kävely</string>
     <string name="rsb_TIMED_WALK_INTRO_DETAIL">Tämä aktiviteetti mittaa alaraajojen toimintaa.</string>
-    <string name="rsb_timed_walk_intro_2_text">Etsi mieluiten ulkoa paikka, jossa voit turvallisesti kävellä suoraan noin %s niin nopeasti kuin mahdollista. Älä hidasta ennen kuin olet ylittänyt maaliviivan.</string>
+    <string name="rsb_timed_walk_intro_2_text">Etsi mieluiten ulkoa paikka, jossa voit turvallisesti kävellä suoraan noin %1$s niin nopeasti kuin mahdollista. Älä hidasta ennen kuin olet ylittänyt maaliviivan.</string>
     <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Aloita napauttamalla Seuraava.</string>
     <string name="rsb_TIMED_WALK_FORM_TITLE">Apuväline</string>
     <string name="rsb_TIMED_WALK_FORM_TEXT">Käytä samaa apuvälinettä kaikissa testeissä.</string>
@@ -282,7 +282,7 @@
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Kaksi kävelykeppiä</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Kaksi kainalosauvaa</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Kävelytuki/rollaattori</string>
-    <string name="rsb_timed_walk_instruction">Kävele %s suoraan.</string>
+    <string name="rsb_timed_walk_instruction">Kävele %1$s suoraan.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_2">Käänny ympäri ja kävele takaisin alkupisteeseen.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Kun se on tehty, napauta Valmis.</string>
     <!-- PSAT active task. -->
@@ -292,14 +292,14 @@
     <string name="rsb_PASAT_INTRO_TEXT">PASAT-testi (Paced Auditory Serial Addition Test) mittaa kuullun informaation käsittelynopeuttasi ja laskutaitoasi.</string>
     <string name="rsb_PVSAT_INTRO_TEXT">PVSAT-testi (Paced Visual Serial Addition Test) mittaa nähdyn informaation käsittelynopeuttasi ja laskutaitoasi.</string>
     <string name="rsb_PAVSAT_INTRO_TEXT">PAVSAT-testi (Paced Auditory and Visual Serial Addition Test) mittaa kuullun ja nähdyn informaation käsittelynopeuttasi ja laskutaitoasi.</string>
-    <string name="rsb_psat_intro_text_2">Yksittäisiä numeroita näytetään %s sekunnin välein.\nKukin uusi numero on lisättävä sitä edeltäneeseen.\nHuomaa, että ei ole tarkoitus laskea jatkuvaa summaa, vaan vain kahden viimeisen numeron summa.</string>
+    <string name="rsb_psat_intro_text_2">Yksittäisiä numeroita näytetään %1$s sekunnin välein.\nKukin uusi numero on lisättävä sitä edeltäneeseen.\nHuomaa, että ei ole tarkoitus laskea jatkuvaa summaa, vaan vain kahden viimeisen numeron summa.</string>
     <string name="rsb_PSAT_CALL_TO_ACTION">Aloita napauttamalla Aloita-painiketta.</string>
     <string name="rsb_PSAT_INITIAL_INSTRUCTION">Muista tämä ensimmäinen numero.</string>
     <string name="rsb_PSAT_INSTRUCTION">Lisää tämä uusi numero edelliseen.</string>
     <string name="rsb_PSAT_NO_DIGIT">-</string>
     <!-- Hole peg test active task. -->
-    <string name="rsb_hole_peg_test_title">%s reiän palikkatesti</string>
-    <string name="rsb_hole_peg_test_intro_text">Tämä aktiviteetti mittaa yläraajojen toimintaa pyytämällä sinua asettamaan palikan reikään. Tämä toistetaan %s kertaa.</string>
+    <string name="rsb_hole_peg_test_title">%1$s reiän palikkatesti</string>
+    <string name="rsb_hole_peg_test_intro_text">Tämä aktiviteetti mittaa yläraajojen toimintaa pyytämällä sinua asettamaan palikan reikään. Tämä toistetaan %1$s kertaa.</string>
     <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">Sekä vasen että oikea käsi testataan.\nSinun on poimittava palikka mahdollisimman nopeasti, asetettava se reikään, ja tehtyäsi tämän %1$s kertaa, poistettava se jälleen %2$s kertaa.</string>
     <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">Sekä oikea että vasen käsi testataan.\nSinun on poimittava palikka mahdollisimman nopeasti, asetettava se reikään, ja tehtyäsi tämän %1$s kertaa, poistettava se jälleen %2$s kertaa.</string>
     <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Aloita napauttamalla Aloita-painiketta.</string>
@@ -315,7 +315,7 @@
     <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Pidä puhelinta alla olevan kuvan mukaisesti kädessä, jossa vaikutus on voimakkaampi.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Pidä puhelinta alla olevan kuvan mukaisesti OIKEASSA kädessä.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Pidä puhelinta alla olevan kuvan mukaisesti VASEMMASSA kädessä.</string>
-    <string name="rsb_tremor_test_intro_2_detail_default">Sinua pyydetään suorittamaan %s puhelin kädessä istuen.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Sinua pyydetään suorittamaan %1$s puhelin kädessä istuen.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">tehtävä</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">kaksi tehtävää</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">kolme tehtävää</string>
@@ -325,28 +325,28 @@
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Valmistaudu pitämään puhelinta sylissäsi.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Valmistaudu pitämään puhelinta sylissäsi VASEMMALLA kädellä.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Valmistaudu pitämään puhelinta sylissäsi OIKEALLA kädellä.</string>
-    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Pidä puhelinta sylissäsi %ld sekuntia.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Pidä puhelinta sylissäsi %1$d sekuntia.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Pidä puhelinta nyt käsi suorana olkapään korkeudella.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Pidä puhelinta nyt VASEN käsi suorana olkapään korkeudella.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Pidä puhelinta nyt OIKEA käsi suorana olkapään korkeudella.</string>
-    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Pidä puhelinta käsi suorana %ld sekuntia.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Pidä puhelinta käsi suorana %1$d sekuntia.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Pidä puhelinta nyt olkapään korkeudella kyynärpää taivutettuna.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Pidä puhelinta nyt VASEMMALLA kädellä olkapään korkeudella kyynärpää taivutettuna.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Pidä puhelinta nyt OIKEALLA kädellä olkapään korkeudella kyynärpää taivutettuna.</string>
-    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Pidä puhelinta kyynärpää taivutettuna %ld sekuntia</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Pidä puhelinta kyynärpää taivutettuna %1$d sekuntia</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Kosketa nyt puhelimella nenääsi toistuvasti pitäen kyynärpäätä taivutettuna.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Kosketa nyt puhelimella nenääsi toistuvasti pitäen puhelinta VASEMMASSA kädessä ja kyynärpäätä taivutettuna.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Kosketa nyt puhelimella nenääsi toistuvasti pitäen puhelinta OIKEASSA kädessä ja kyynärpäätä taivutettuna.</string>
-    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Kosketa puhelimella nenääsi toistuvasti %ld sekuntia</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Kosketa puhelimella nenääsi toistuvasti %1$d sekuntia</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Valmistaudu vilkuttamaan kuninkaallisesti (vilkuttamaan rannetta pyörittämällä).</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Valmistaudu puhelin VASEMMASSA kädessä vilkuttamaan kuninkaallisesti (vilkuttamaan rannetta pyörittämällä).</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Valmistaudu puhelin OIKEASSA kädessä vilkuttamaan kuninkaallisesti (vilkuttamaan rannetta pyörittämällä).</string>
-    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Vilkuta kuninkaallisesti %ld sekuntia.</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Vilkuta kuninkaallisesti %1$d sekuntia.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Vaihda puhelin nyt VASEMPAAN käteen ja jatka seuraavaan tehtävään.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Vaihda puhelin nyt OIKEAAN käteen ja jatka seuraavaan tehtävään.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Jatka seuraavaan tehtävään.</string>
     <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Aktiviteetti valmis.</string>
-    <string name="rsb_tremor_test_skip_question_both_hands">Sinua pyydetään suorittamaan %s istuen, ensin puhelin toisessa kädessä ja sitten toisessa.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Sinua pyydetään suorittamaan %1$s istuen, ensin puhelin toisessa kädessä ja sitten toisessa.</string>
     <string name="rsb_TREMOR_SKIP_LEFT_HAND">En voi suorittaa tätä aktiviteettia VASEMMALLA kädellä.</string>
     <string name="rsb_TREMOR_SKIP_RIGHT_HAND">En voi suorittaa tätä aktiviteettia OIKEALLA kädellä.</string>
     <string name="rsb_TREMOR_SKIP_NEITHER">Voin suorittaa tämän aktiviteetin molemmilla käsillä.</string>
@@ -362,7 +362,7 @@
     <string name="rsb_CHART_NO_DATA_TEXT">Ei dataa</string>
     <!-- Accessibility -->
     <string name="rsb_AX_BUTTON_BACK">Takaisin</string>
-    <string name="rsb_AX_IMAGE_ILLUSTRATION">Kuvassa %s</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">Kuvassa %1$s</string>
     <string name="rsb_AX_SIGNVIEW_LABEL">Määritetty allekirjoituskenttä</string>
     <string name="rsb_AX_SIGNVIEW_HINT">Allekirjoita koskettamalla näyttöä ja liikuttamalla sormea</string>
     <string name="rsb_AX_SIGNVIEW_SIGNED">Allekirjoitettu</string>
@@ -386,11 +386,11 @@
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Torni</string>
     <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Aseta levy kaksoisnapauttamalla</string>
     <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Valitse päällimmäinen levy kaksoisnapauttamalla</string>
-    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Sisältää levyjä, joiden koko on %s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Sisältää levyjä, joiden koko on %1$s</string>
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Tyhjä</string>
     <string name="rsb_ax_graph_range_format">Alue välillä %1$s–%2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Pino, joka koostuu arvoista</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">ja</string>
-    <string name="rsb_ax_graph_point">Piste: %s</string>
+    <string name="rsb_ax_graph_point">Piste: %1$s</string>
     
 </resources>

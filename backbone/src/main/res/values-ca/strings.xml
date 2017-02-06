@@ -34,13 +34,13 @@
     <string name="rsb_LEARN_MORE_WITHDRAWING">Més informació sobre l’abandonament</string>
     <!-- Consent sharing step -->
     <string name="rsb_CONSENT_SHARING_TITLE">Opcions de compartir</string>
-    <string name="rsb_consent_share_widely">Compartir les meves dades amb %s i investigadors qualificats de tot el món</string>
-    <string name="rsb_consent_share_only">Compartir només les meves dades amb %s</string>
-    <string name="rsb_consent_sharing_description">%s rebrà les teves dades de participació en aquest estudi.\n\nCompartir les dades codificades d’una manera més àmplia (sense informació com el nom) pot ser d’ajut en aquesta investigació i d’altres de futures.</string>
+    <string name="rsb_consent_share_widely">Compartir les meves dades amb %1$s i investigadors qualificats de tot el món</string>
+    <string name="rsb_consent_share_only">Compartir només les meves dades amb %1$s</string>
+    <string name="rsb_consent_sharing_description">%1$s rebrà les teves dades de participació en aquest estudi.\n\nCompartir les dades codificades d’una manera més àmplia (sense informació com el nom) pot ser d’ajut en aquesta investigació i d’altres de futures.</string>
     <string name="rsb_LEARN_MORE_CONSENT_SHARING">Més informació sobre com compartir dades</string>
     <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
-    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">Nom de: %s (imprès)</string>
-    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">Signatura de: %s</string>
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">Nom de: %1$s (imprès)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">Signatura de: %1$s</string>
     <string name="rsb_CONSENT_DOC_LINE_DATE">Data</string>
     <!-- Progress indication (in navigation bar). -->
     <string name="rsb_STEP_PROGRESS_FORMAT">Pas %1$s de %2$s</string>
@@ -48,9 +48,9 @@
     <string name="rsb_RANGE_ALERT_TITLE">Valor no vàlid</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s supera el valor màxim permès (%2$s).</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s és menys que el valor mínim permès (%2$s).</string>
-    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%s no és un valor vàlid.</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s no és un valor vàlid.</string>
     <!-- Alert for invalid email address value -->
-    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Adreça electrònica no vàlida: %s</string>
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Adreça electrònica no vàlida: %1$s</string>
     <!-- Alerts for invalid location coordinates -->
     <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Escriu una adreça</string>
     <string name="rsb_LOCATION_ERROR_TITLE">No s’ha trobat l‘adreça especificada</string>
@@ -59,7 +59,7 @@
     <string name="rsb_LOCATION_ERROR_GEOCODE">No s’ha trobat cap resultat per a l’adreça especificada. Comprova que sigui vàlida.</string>
     <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">O no tens connexió a Internet o has superat el nombre màxim de peticions de cerca d’adreces. Si no tens connexió a Internet, activa la Wi-Fi per contestar aquesta pregunta, passa aquesta pregunta si hi ha disponible un botó d’omissió o recupera l’enquesta quan et puguis connectar a Internet. També pots tornar-ho a provar d’aquí a una mica.</string>
     <!-- Alert for exceeding length limit in text answer -->
-    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">El contingut del text supera la llargada màxima: %s</string>
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">El contingut del text supera la llargada màxima: %1$s</string>
     <!-- Camera not available during multitasking -->
     <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">La càmera no està disponible amb la pantalla dividida.</string>
     <!-- Registration step -->
@@ -154,7 +154,7 @@
     <string name="rsb_COUNTDOWN_LABEL">Iniciant l’activitat en</string>
     <string name="rsb_TASK_COMPLETE_TITLE">Activitat completada</string>
     <string name="rsb_TASK_COMPLETE_TEXT">S’analitzaran les dades i rebràs una notificació quan tinguis els resultats a punt.</string>
-    <string name="rsb_countdown_spoken_remaining">Queden %s segons.</string>
+    <string name="rsb_countdown_spoken_remaining">Queden %1$s segons.</string>
     <!-- Image capture step. -->
     <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Capturar la imatge</string>
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Tornar a capturar la imatge</string>
@@ -168,26 +168,26 @@
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Tornar a capturar el vídeo</string>
     <!-- Fitness active task. -->
     <string name="rsb_FITNESS_TASK_TITLE">Activitat física</string>
-    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Distància (%s)</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Distància (%1$s)</string>
     <string name="rsb_FITNESS_HEARTRATE_TITLE">Ritme cardíac (bpm)</string>
-    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Seu còmodament %s.</string>
-    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Camina tan ràpid com puguis durant %s.</string>
-    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Aquesta activitat controla la freqüència cardíaca i mesura la distància que pots caminar en %s.</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Seu còmodament %1$s.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Camina tan ràpid com puguis durant %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Aquesta activitat controla la freqüència cardíaca i mesura la distància que pots caminar en %1$s.</string>
     <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Camina a l’aire lliure al ritme més alt que puguis durant %1$s. Quan acabis, seu i descansa còmodament %2$s. Per començar, prem Començar.</string>
     <!-- Short walk active task. -->
     <string name="rsb_WALK_TASK_TITLE">Marxa i equilibri</string>
     <string name="rsb_WALK_INTRO_TEXT">Aquesta activitat valora la marxa i l’equilibri quan camines i quan estàs quiet. No continuïs si no pots caminar sol de manera segura.</string>
-    <string name="rsb_walk_intro_2_text_ld">Busca un lloc on puguis caminar sense assistència de manera seguida uns %ld passos en línia recta.</string>
+    <string name="rsb_walk_intro_2_text_ld">Busca un lloc on puguis caminar sense assistència de manera seguida uns %1$d passos en línia recta.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL">Posa’t el telèfon a la butxaca o a la bossa i segueix les instruccions d’àudio.</string>
-    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Ara estigues quiet %s.</string>
-    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Estigues quiet %s.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Ara estigues quiet %1$s.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Estigues quiet %1$s.</string>
     <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Fes mitja volta i torna allà on has començat.</string>
-    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Camina fins a %ld passos en línia recta.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Camina fins a %1$d passos en línia recta.</string>
     <!-- Short walk back and forth. -->
     <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Busca un lloc on puguis anar i tornar caminant en línia recta de forma segura. Camina sense parar i gira al final del camí com si estiguessis vorejant un con.\n\nA continuació, se’t demanarà que giris fent un cercle complet i que et quedis quiet amb els braços als costats i els peus separats més o menys per la mateixa distància que hi ha entre espatlla i espatlla.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Quan estiguis a punt per començar, prem Començar.\nLlavors, posa’t el mòbil a la butxaca o a la bossa i segueix les instruccions d’àudio.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Vés i torna caminant en línia recta durant %s. Camina naturalment.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Gira fent un cercle complet i llavors queda’t quiet durant %s.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Vés i torna caminant en línia recta durant %1$s. Camina naturalment.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Gira fent un cercle complet i llavors queda’t quiet durant %1$s.</string>
     <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Has completat l’activitat.</string>
     <!-- Tapping active task. -->
     <string name="rsb_TAPPING_TASK_TITLE">Velocitat de premuda</string>
@@ -200,7 +200,7 @@
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Prem els botons de la pantalla alternant dos dits de la mà esquerra.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Ara repeteix la mateixa operació amb la mà dreta.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Ara repeteix la mateixa operació amb la mà esquerra.</string>
-    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Prem amb un dit, i després amb l’altre. Intenta que el ritme de premuda sigui constant. Prem durant %s.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Prem amb un dit, i després amb l’altre. Intenta que el ritme de premuda sigui constant. Prem durant %1$s.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION">Per iniciar, prem Començar.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Prem Següent per continuar.</string>
     <string name="rsb_TAP_BUTTON_TITLE">Prem</string>
@@ -227,21 +227,21 @@
     <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Per iniciar, prem Començar.</string>
     <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Ara hauries d’escoltar un to. Ajusta el volum amb els controls de la part lateral del dispositiu.\n\nPrem el botó quan estiguis a punt per començar.</string>
     <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Prem el botó cada vegada que comencis a escoltar un so.</string>
-    <string name="rsb_tone_label_left">%s Hz, esquerra</string>
-    <string name="rsb_tone_label_right">%s Hz, dreta</string>
+    <string name="rsb_tone_label_left">%1$s Hz, esquerra</string>
+    <string name="rsb_tone_label_right">%1$s Hz, dreta</string>
     <!-- Spatial span memory active task. -->
     <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Memòria espacial</string>
-    <string name="rsb_spatial_span_memory_intro_text">Aquesta activitat mesura la memòria espacial a curt termini demanant-te que repeteixis l’ordre en què s’il·luminen les %s.</string>
+    <string name="rsb_spatial_span_memory_intro_text">Aquesta activitat mesura la memòria espacial a curt termini demanant-te que repeteixis l’ordre en què s’il·luminen les %1$s.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">flors</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">flors</string>
     <string name="rsb_spatial_span_memory_intro_2_text">Algunes de les %1$s s’il·luminaran d’una en una. Prem les %2$s en qüestió en l’ordre en què s’hagin il·luminat.</string>
     <string name="rsb_spatial_span_memory_intro_2_text_reverse">Algunes de les %1$s s’il·luminaran d’una en una. Prem les %2$s en qüestió en l’ordre invers en què s’hagin il·luminat.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Per començar, prem Començar i mira atentament.</string>
-    <string name="rsb_memory_game_item_count_title">%s</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
     <string name="rsb_MEMORY_GAME_SCORE_TITLE">Puntuació</string>
-    <string name="rsb_memory_game_playback_title">Mira com s’il·luminen les imatges de %s</string>
-    <string name="rsb_memory_game_gameplay_title">Prem les %s en l’ordre en què s’han il·luminat</string>
-    <string name="rsb_memory_game_gameplay_reverse_title">Prem les %s en ordre invers</string>
+    <string name="rsb_memory_game_playback_title">Mira com s’il·luminen les imatges de %1$s</string>
+    <string name="rsb_memory_game_gameplay_title">Prem les %1$s en l’ordre en què s’han il·luminat</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Prem les %1$s en ordre invers</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Seqüència completa</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Per continuar, prem Següent</string>
     <string name="rsb_MEMORY_GAME_FAILED_TITLE">Reintentar</string>
@@ -269,7 +269,7 @@
     <!-- Timed walk active task. -->
     <string name="rsb_TIMED_WALK_TITLE">Caminada cronometrada</string>
     <string name="rsb_TIMED_WALK_INTRO_DETAIL">Aquesta activitat mesura la funcionalitat de les teves extremitats inferiors.</string>
-    <string name="rsb_timed_walk_intro_2_text">Busca un lloc, preferiblement a l’aire lliure, on puguis caminar aproximadament %s en línia recta tan ràpid com puguis, amb total seguretat. No abaixis el ritme fins que no hagis passat la línia d’arribada.</string>
+    <string name="rsb_timed_walk_intro_2_text">Busca un lloc, preferiblement a l’aire lliure, on puguis caminar aproximadament %1$s en línia recta tan ràpid com puguis, amb total seguretat. No abaixis el ritme fins que no hagis passat la línia d’arribada.</string>
     <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Prem Següent per continuar.</string>
     <string name="rsb_TIMED_WALK_FORM_TITLE">Tipus d’assistència</string>
     <string name="rsb_TIMED_WALK_FORM_TEXT">Utilitza el mateix tipus d’assistència per a cada prova.</string>
@@ -282,7 +282,7 @@
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Dos bastons</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Dues crosses</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Caminador</string>
-    <string name="rsb_timed_walk_instruction">Camina fins a %s en línia recta.</string>
+    <string name="rsb_timed_walk_instruction">Camina fins a %1$s en línia recta.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_2">Fes mitja volta i torna allà on has començat.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Prem Fet quan hagis acabat.</string>
     <!-- PSAT active task. -->
@@ -292,14 +292,14 @@
     <string name="rsb_PASAT_INTRO_TEXT">El PAST (test auditiu de suma en sèrie a ritme) mesura la teva velocitat de processament d’informació auditiva i la teva habilitat de càlcul.</string>
     <string name="rsb_PVSAT_INTRO_TEXT">El PAVT (test visual de suma en sèrie a ritme) mesura la teva velocitat de processament d’informació visual i la teva habilitat de càlcul.</string>
     <string name="rsb_PAVSAT_INTRO_TEXT">El PAVST (test visual i auditiu de suma en sèrie a ritme) mesura la teva velocitat de processament d’informació auditiva i visual i la teva habilitat de càlcul.</string>
-    <string name="rsb_psat_intro_text_2">Es presenten números solts cada %s segons.\nHas de sumar cada nou número al número immediatament anterior.\nAtenció: no has d’anar calculant la suma total, sinó només la suma dels dos últims números.</string>
+    <string name="rsb_psat_intro_text_2">Es presenten números solts cada %1$s segons.\nHas de sumar cada nou número al número immediatament anterior.\nAtenció: no has d’anar calculant la suma total, sinó només la suma dels dos últims números.</string>
     <string name="rsb_PSAT_CALL_TO_ACTION">Per iniciar, prem Començar.</string>
     <string name="rsb_PSAT_INITIAL_INSTRUCTION">Recorda aquest primer dígit.</string>
     <string name="rsb_PSAT_INSTRUCTION">Suma aquest número a l’anterior.</string>
     <string name="rsb_PSAT_NO_DIGIT">-</string>
     <!-- Hole peg test active task. -->
-    <string name="rsb_hole_peg_test_title">Test de la clavilla amb %s forats</string>
-    <string name="rsb_hole_peg_test_intro_text">Aquesta activitat mesura la funcionalitat de les teves extremitats superiors demanant-te que fiquis una clavilla dins d’un forat. Ho hauràs de fer %s cops.</string>
+    <string name="rsb_hole_peg_test_title">Test de la clavilla amb %1$s forats</string>
+    <string name="rsb_hole_peg_test_intro_text">Aquesta activitat mesura la funcionalitat de les teves extremitats superiors demanant-te que fiquis una clavilla dins d’un forat. Ho hauràs de fer %1$s cops.</string>
     <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">S’avaluaran la mà esquerra i la dreta.\nHas d’agafar la clavilla tan ràpid com puguis, posar-la al forat i, un cop fet %1$s cops, tornar-la a treure %2$s cops.</string>
     <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">S’avaluaran la mà dreta i l’esquerra.\nHas d’agafar la clavilla tan ràpid com puguis, posar-la al forat i, un cop fet %1$s cops, tornar-la a treure %2$s cops.</string>
     <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Per iniciar, prem Començar.</string>
@@ -315,7 +315,7 @@
     <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Agafa el mòbil amb la mà més afectada, tal com es mostra a la imatge de sota.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Agafa el mòbil amb la mà DRETA, tal com es mostra a la imatge de sota.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Agafa el mòbil amb la mà ESQUERRA, tal com es mostra a la imatge de sota.</string>
-    <string name="rsb_tremor_test_intro_2_detail_default">Quan estiguis assegut i amb el mòbil a la mà, se’t demanarà que completis %s.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Quan estiguis assegut i amb el mòbil a la mà, se’t demanarà que completis %1$s.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">una tasca</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">dues tasques</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">tres tasques</string>
@@ -325,28 +325,28 @@
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Prepara’t per agafar el mòbil i recolzar la mà sobre la falda.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Prepara’t per agafar el mòbil amb la mà ESQUERRA i recolzar aquesta mà sobre la falda.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Prepara’t per agafar el mòbil amb la mà DRETA i recolzar aquesta mà sobre la falda.</string>
-    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Agafa el mòbil i recolza la mà sobre la falda durant %ld segons.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Agafa el mòbil i recolza la mà sobre la falda durant %1$d segons.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Ara agafa el mòbil i mantén el braç estirat cap enfora a l’altura de l’espatlla.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Ara agafa el mòbil amb la mà ESQUERRA i mantén el braç esquerre estirat cap enfora a l’altura de l’espatlla.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Ara agafa el mòbil amb la mà DRETA i mantén el braç dret estirat cap enfora a l’altura de l’espatlla.</string>
-    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Agafa el mòbil i mantén el braç estirat cap enfora durant %ld segons.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Agafa el mòbil i mantén el braç estirat cap enfora durant %1$d segons.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Ara agafa el mòbil i mantén la mà a l’altura de l’espatlla amb el colze doblegat.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Ara agafa el mòbil i mantén la mà ESQUERRA a l’altura de l’espatlla amb el colze doblegat.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Ara agafa el mòbil i mantén la mà DRETA a l’altura de l’espatlla amb el colze doblegat.</string>
-    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Agafa el mòbil i mantén el colze doblegat durant %ld segons.</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Agafa el mòbil i mantén el colze doblegat durant %1$d segons.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Ara, amb el colze doblegat, toca el mòbil amb el nas repetidament.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Ara, amb el colze doblegat i el mòbil a la mà ESQUERRA, toca el mòbil amb el nas repetidament.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Ara, amb el colze doblegat i el mòbil a la mà DRETA, toca el mòbil amb el nas repetidament.</string>
-    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Toca el mòbil amb el nas durant %ld segons.</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Toca el mòbil amb el nas durant %1$d segons.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Prepara’t per fer una salutació reial fent girar el canell amb el mòbil a la mà.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Prepara’t per fer una salutació reial fent girar el canell amb el mòbil a la mà ESQUERRA.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Prepara’t per fer una salutació reial fent girar el canell amb el mòbil a la mà DRETA.</string>
-    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Fes una salutació reial durant %ld segons.</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Fes una salutació reial durant %1$d segons.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Ara agafa el mòbil amb la mà ESQUERRA i avança a la tasca següent.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Ara agafa el mòbil amb la mà DRETA i avança a la tasca següent.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Avança a la tasca següent.</string>
     <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Activitat completada.</string>
-    <string name="rsb_tremor_test_skip_question_both_hands">Quan estiguis assegut i amb el mòbil a la mà, se’t demanarà que completis %s, primer amb una mà i després amb l’altra.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Quan estiguis assegut i amb el mòbil a la mà, se’t demanarà que completis %1$s, primer amb una mà i després amb l’altra.</string>
     <string name="rsb_TREMOR_SKIP_LEFT_HAND">No puc completar l’activitat amb la mà ESQUERRA.</string>
     <string name="rsb_TREMOR_SKIP_RIGHT_HAND">No puc completar l’activitat amb la mà DRETA.</string>
     <string name="rsb_TREMOR_SKIP_NEITHER">Puc completar l’activitat amb les dues mans.</string>
@@ -362,7 +362,7 @@
     <string name="rsb_CHART_NO_DATA_TEXT">Sense dades</string>
     <!-- Accessibility -->
     <string name="rsb_AX_BUTTON_BACK">Enrere</string>
-    <string name="rsb_AX_IMAGE_ILLUSTRATION">Il·lustració de: %s</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">Il·lustració de: %1$s</string>
     <string name="rsb_AX_SIGNVIEW_LABEL">Camp designat de signatura</string>
     <string name="rsb_AX_SIGNVIEW_HINT">Toca la pantalla i mou el dit per signar</string>
     <string name="rsb_AX_SIGNVIEW_SIGNED">Signat</string>
@@ -386,11 +386,11 @@
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Torre</string>
     <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Prem dos cops per situar el disc</string>
     <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Prem dos cops per seleccionar el disc superior</string>
-    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Té disc amb mides %s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Té disc amb mides %1$s</string>
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Buidar</string>
     <string name="rsb_ax_graph_range_format">Interval de %1$s a %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Pila composta per</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">i</string>
-    <string name="rsb_ax_graph_point">Punt: %s</string>
+    <string name="rsb_ax_graph_point">Punt: %1$s</string>
     
 </resources>

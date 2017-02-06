@@ -34,13 +34,13 @@
     <string name="rsb_LEARN_MORE_WITHDRAWING">철회하기에 관하여 더 알아보기</string>
     <!-- Consent sharing step -->
     <string name="rsb_CONSENT_SHARING_TITLE">공유 옵션</string>
-    <string name="rsb_consent_share_widely">나의 데이터를 %s 및 전세계의 인증된 연구원에게 공유</string>
-    <string name="rsb_consent_share_only">나의 데이터를 %s에게만 공유</string>
-    <string name="rsb_consent_sharing_description">사용자가 참여한 이 연구 조사의 데이터가 %s(으)로 보내집니다.\n\n코드화된 사용자의 연구 데이터를 더 광범위하게 공유할수록(사용자 이름 등의 정보는 제외) 현재 및 향후 실시될 연구에 도움이 됩니다.</string>
+    <string name="rsb_consent_share_widely">나의 데이터를 %1$s 및 전세계의 인증된 연구원에게 공유</string>
+    <string name="rsb_consent_share_only">나의 데이터를 %1$s에게만 공유</string>
+    <string name="rsb_consent_sharing_description">사용자가 참여한 이 연구 조사의 데이터가 %1$s(으)로 보내집니다.\n\n코드화된 사용자의 연구 데이터를 더 광범위하게 공유할수록(사용자 이름 등의 정보는 제외) 현재 및 향후 실시될 연구에 도움이 됩니다.</string>
     <string name="rsb_LEARN_MORE_CONSENT_SHARING">데이터 공유에 관하여 더 알아보기</string>
     <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
-    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%s의 이름 (인쇄됨)</string>
-    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%s의 서명</string>
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%1$s의 이름 (인쇄됨)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%1$s의 서명</string>
     <string name="rsb_CONSENT_DOC_LINE_DATE">날짜</string>
     <!-- Progress indication (in navigation bar). -->
     <string name="rsb_STEP_PROGRESS_FORMAT">%1$s/%2$s단계</string>
@@ -48,9 +48,9 @@
     <string name="rsb_RANGE_ALERT_TITLE">유효하지 않은 값</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s은(는) 최대 허용 값을 초과합니다(%2$s).</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s은(는) 최소 허용 값보다 작습니다(%2$s).</string>
-    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%s은(는) 유효한 값이 아닙니다.</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s은(는) 유효한 값이 아닙니다.</string>
     <!-- Alert for invalid email address value -->
-    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">이메일 주소가 유효하지 않음: %s</string>
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">이메일 주소가 유효하지 않음: %1$s</string>
     <!-- Alerts for invalid location coordinates -->
     <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">주소 입력</string>
     <string name="rsb_LOCATION_ERROR_TITLE">지정된 주소를 찾을 수 없음</string>
@@ -59,7 +59,7 @@
     <string name="rsb_LOCATION_ERROR_GEOCODE">입력한 주소에 대한 결과를 찾을 수 없습니다. 주소가 유효한지 확인하십시오.</string>
     <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">인터넷에 연결되어 있지 않거나 주소 검색을 요청할 수 있는 최대치를 초과하였습니다. 인터넷에 연결되어 있지 않으면 Wi-Fi를 켜고 질문에 답하십시오. 건너뛰기 버튼을 사용할 수 있는 경우 질문을 건너뛸 수 있습니다. 그렇지 않으면 인터넷에 연결되어 있을 때 다시 설문 조사를 재개하거나 몇 분 후에 다시 시도해 보십시오.</string>
     <!-- Alert for exceeding length limit in text answer -->
-    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">텍스트 내용이 최대 길이를 초과함: %s</string>
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">텍스트 내용이 최대 길이를 초과함: %1$s</string>
     <!-- Camera not available during multitasking -->
     <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">분할된 화면에서는 카메라를 사용할 수 없습니다.</string>
     <!-- Registration step -->
@@ -154,7 +154,7 @@
     <string name="rsb_COUNTDOWN_LABEL">실험 시작까지</string>
     <string name="rsb_TASK_COMPLETE_TITLE">실험 완료</string>
     <string name="rsb_TASK_COMPLETE_TEXT">데이터를 분석하여 결과가 준비되면 통보합니다.</string>
-    <string name="rsb_countdown_spoken_remaining">%s초 남았습니다.</string>
+    <string name="rsb_countdown_spoken_remaining">%1$s초 남았습니다.</string>
     <!-- Image capture step. -->
     <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">이미지 캡처</string>
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">이미지 다시 캡처</string>
@@ -168,26 +168,26 @@
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">비디오 다시 캡처</string>
     <!-- Fitness active task. -->
     <string name="rsb_FITNESS_TASK_TITLE">피트니스</string>
-    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">거리(%s)</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">거리(%1$s)</string>
     <string name="rsb_FITNESS_HEARTRATE_TITLE">심박수(bpm)</string>
-    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">%s 동안 편하게 앉아 있으십시오.</string>
-    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">%s 동안 최대한 빨리 걸으십시오.</string>
-    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">이 실험은 사용자의 심박수를 모니터하고 %s 동안 얼마나 멀리 걸을 수 있는지를 측정합니다.</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">%1$s 동안 편하게 앉아 있으십시오.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">%1$s 동안 최대한 빨리 걸으십시오.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">이 실험은 사용자의 심박수를 모니터하고 %1$s 동안 얼마나 멀리 걸을 수 있는지를 측정합니다.</string>
     <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">실외에서 최대한 빠른 페이스로 %1$s 동안 걸으십시오. 걷기가 끝나면 편하게 앉아서 %2$s 동안 휴식하십시오. 시작하려면 시작하기를 탭하십시오.</string>
     <!-- Short walk active task. -->
     <string name="rsb_WALK_TASK_TITLE">보행 및 균형</string>
     <string name="rsb_WALK_INTRO_TEXT">이 실험은 사용자가 걸을 때와 가만히 서 있을 때의 보행 및 균형 능력을 측정합니다. 도움 없이 안전하게 걸을 수 있는 상황이 아닌 경우 이 실험을 중단하십시오.</string>
-    <string name="rsb_walk_intro_2_text_ld">다른 도움 없이 일직선으로 안전하게 약 %ld보를 걸을 수 있는 장소를 찾으십시오.</string>
+    <string name="rsb_walk_intro_2_text_ld">다른 도움 없이 일직선으로 안전하게 약 %1$d보를 걸을 수 있는 장소를 찾으십시오.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL">전화를 주머니 또는 가방에 넣고 오디오 지침을 따르십시오.</string>
-    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">이제 %s 동안 가만히 서 있으십시오.</string>
-    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">%s 동안 가만히 서 있으십시오.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">이제 %1$s 동안 가만히 서 있으십시오.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">%1$s 동안 가만히 서 있으십시오.</string>
     <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">뒤로 돌아서 시작한 지점으로 되돌아가십시오.</string>
-    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">일직선으로 최대 %ld보를 걸으십시오.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">일직선으로 최대 %1$d보를 걸으십시오.</string>
     <!-- Short walk back and forth. -->
     <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">일직선으로 안전하게 왔다 갔다 할 수 있는 공간을 찾으십시오. 계속 걷다가 반환점에서 마치 원뿔형 도로 표지가 있는 것처럼 주변을 돌아서 되돌아갑니다.\n\n그런 다음, 원을 그리며 돌아서서 양팔을 옆구리에 대고 발은 어깨너비만큼 벌린 채 서 있으십시오.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">시작할 준비가 되면 시작하기를 탭하십시오.\n그런 다음 전화기를 주머니나 가방에 넣고 오디오 지침을 따르십시오.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">%s 동안 일직선으로 왔다 갔다 걸으십시오. 평상시 걷는 것처럼 걸으면 됩니다.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">원을 그리며 돌아선 다음 %s 동안 가만히 서 있으십시오.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">%1$s 동안 일직선으로 왔다 갔다 걸으십시오. 평상시 걷는 것처럼 걸으면 됩니다.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">원을 그리며 돌아선 다음 %1$s 동안 가만히 서 있으십시오.</string>
     <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">이 실험을 완료했습니다.</string>
     <!-- Tapping active task. -->
     <string name="rsb_TAPPING_TASK_TITLE">탭하기 속도</string>
@@ -200,7 +200,7 @@
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">왼손의 두 손가락으로 화면의 버튼을 번갈아 탭하십시오.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">이제 오른손으로 동일한 테스트를 반복하십시오.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">이제 왼손으로 동일한 테스트를 반복하십시오.</string>
-    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">한 손가락을 탭하고 다른 손가락을 탭하십시오. 탭 간격이 거의 없도록 연속으로 탭하십시오. %s를 계속 탭하십시오.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">한 손가락을 탭하고 다른 손가락을 탭하십시오. 탭 간격이 거의 없도록 연속으로 탭하십시오. %1$s를 계속 탭하십시오.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION">시작하려면 시작하기를 탭하십시오.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">시작하려면 다음을 탭하십시오.</string>
     <string name="rsb_TAP_BUTTON_TITLE">탭</string>
@@ -227,21 +227,21 @@
     <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">시작하려면 시작하기를 탭하십시오.</string>
     <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">이제 소리가 들립니다. 기기 측면에 있는 제어기를 사용하여 음량을 조절하십시오.\n\n시작할 준비가 되었으면 버튼을 탭하십시오.</string>
     <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">사운드가 들리기 시작할 때마다 버튼을 탭하십시오.</string>
-    <string name="rsb_tone_label_left">%sHz, 왼쪽</string>
-    <string name="rsb_tone_label_right">%sHz, 오른쪽</string>
+    <string name="rsb_tone_label_left">%1$sHz, 왼쪽</string>
+    <string name="rsb_tone_label_right">%1$sHz, 오른쪽</string>
     <!-- Spatial span memory active task. -->
     <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">공간 기억</string>
-    <string name="rsb_spatial_span_memory_intro_text">이 실험은 %s에 불이 들어오는 순서를 반복하도록 하여 사용자의 단기 공간 기억 능력을 측정합니다.</string>
+    <string name="rsb_spatial_span_memory_intro_text">이 실험은 %1$s에 불이 들어오는 순서를 반복하도록 하여 사용자의 단기 공간 기억 능력을 측정합니다.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">꽃</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">꽃</string>
     <string name="rsb_spatial_span_memory_intro_2_text">일부 %1$s에 한 번에 하나씩 불이 들어옵니다. 이 %2$s을(를) 불이 들어온 순서와 같은 순서로 탭하십시오.</string>
     <string name="rsb_spatial_span_memory_intro_2_text_reverse">일부 %1$s에 한 번에 하나씩 불이 들어옵니다. 이 %2$s을(를) 불이 들어온 순서와 반대로 탭하십시오.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">시작하려면 시작하기를 탭한 다음 주의깊게 보십시오.</string>
-    <string name="rsb_memory_game_item_count_title">%s</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
     <string name="rsb_MEMORY_GAME_SCORE_TITLE">점수</string>
-    <string name="rsb_memory_game_playback_title">%s에 불이 들어오는 것을 잘 보십시오.</string>
-    <string name="rsb_memory_game_gameplay_title">%s을(를) 불이 들어온 순서대로 탭하십시오</string>
-    <string name="rsb_memory_game_gameplay_reverse_title">%s을(를) 반대 순서대로 탭하십시오.</string>
+    <string name="rsb_memory_game_playback_title">%1$s에 불이 들어오는 것을 잘 보십시오.</string>
+    <string name="rsb_memory_game_gameplay_title">%1$s을(를) 불이 들어온 순서대로 탭하십시오</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">%1$s을(를) 반대 순서대로 탭하십시오.</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">순서 완료</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">계속하려면 다음을 탭하십시오.</string>
     <string name="rsb_MEMORY_GAME_FAILED_TITLE">다시 시도</string>
@@ -269,7 +269,7 @@
     <!-- Timed walk active task. -->
     <string name="rsb_TIMED_WALK_TITLE">보행 테스트</string>
     <string name="rsb_TIMED_WALK_INTRO_DETAIL">이 실험은 사용자의 하지 기능을 측정합니다.</string>
-    <string name="rsb_timed_walk_intro_2_text">되도록 실외로 장소를 골라서 안전하면서도 최대한 빨리 일직선으로 약 %s를 걸으십시오. 결승선을 지나기 전에는 속도를 늦추지 마십시오.</string>
+    <string name="rsb_timed_walk_intro_2_text">되도록 실외로 장소를 골라서 안전하면서도 최대한 빨리 일직선으로 약 %1$s를 걸으십시오. 결승선을 지나기 전에는 속도를 늦추지 마십시오.</string>
     <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">시작하려면 다음을 탭하십시오.</string>
     <string name="rsb_TIMED_WALK_FORM_TITLE">보조 기구</string>
     <string name="rsb_TIMED_WALK_FORM_TEXT">매 테스트에 동일한 보조 기구를 사용하십시오.</string>
@@ -282,7 +282,7 @@
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">양측 지팡이</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">양측 목발</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">워커/롤레이터</string>
-    <string name="rsb_timed_walk_instruction">일직선으로 %s까지 걸으십시오.</string>
+    <string name="rsb_timed_walk_instruction">일직선으로 %1$s까지 걸으십시오.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_2">뒤로 돌아서 시작한 지점으로 되돌아가십시오.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">완료하면 완료를 탭하십시오.</string>
     <!-- PSAT active task. -->
@@ -292,14 +292,14 @@
     <string name="rsb_PASAT_INTRO_TEXT">PASAT 테스트(Paced Auditory Serial Addition Test)는 사용자의 청각 정보 처리 속도 및 계산 능력을 측정합니다.</string>
     <string name="rsb_PVSAT_INTRO_TEXT">PVSAT 테스트(Paced Visual Serial Addition Test)는 사용자의 시각 정보 처리 속도 및 계산 능력을 측정합니다.</string>
     <string name="rsb_PAVSAT_INTRO_TEXT">PAVSAT 테스트(Paced Auditory and Visual Serial Addition Test)는 사용자의 청각 및 시각 정보 처리 속도 및 계산 능력을 측정합니다.</string>
-    <string name="rsb_psat_intro_text_2">한 자릿수의 숫자가 %s초마다 제시됩니다.\n새로운 숫자가 제시될 때마다 직전에 제시된 숫자에 더하십시오.\n총 누계를 계산하지 않도록 주의하십시오. 직전에 제시된 두 개의 숫자만 더하십시오.</string>
+    <string name="rsb_psat_intro_text_2">한 자릿수의 숫자가 %1$s초마다 제시됩니다.\n새로운 숫자가 제시될 때마다 직전에 제시된 숫자에 더하십시오.\n총 누계를 계산하지 않도록 주의하십시오. 직전에 제시된 두 개의 숫자만 더하십시오.</string>
     <string name="rsb_PSAT_CALL_TO_ACTION">시작하려면 시작하기를 탭하십시오.</string>
     <string name="rsb_PSAT_INITIAL_INSTRUCTION">아래 첫 번째 숫자를 기억하십시오.</string>
     <string name="rsb_PSAT_INSTRUCTION">아래 새로운 숫자를 이전 숫자에 더하십시오.</string>
     <string name="rsb_PSAT_NO_DIGIT">-</string>
     <!-- Hole peg test active task. -->
-    <string name="rsb_hole_peg_test_title">%s-홀 페그 테스트</string>
-    <string name="rsb_hole_peg_test_intro_text">이 실험은 페그를 구멍에 넣는 동작을 통해 사용자의 상지 기능을 측정합니다. 이 동작을 %s번 해야 합니다.</string>
+    <string name="rsb_hole_peg_test_title">%1$s-홀 페그 테스트</string>
+    <string name="rsb_hole_peg_test_intro_text">이 실험은 페그를 구멍에 넣는 동작을 통해 사용자의 상지 기능을 측정합니다. 이 동작을 %1$s번 해야 합니다.</string>
     <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">왼손과 오른손을 모두 테스트합니다.\n페그를 최대한 빨리 집어서 구멍에 넣으십시오. 이 동작을 %1$s번 완료하면, 페그를 제거하는 동작을 다시 %2$s번 하십시오.</string>
     <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">오른손과 왼손을 모두 테스트합니다.\n페그를 최대한 빨리 집어서 구멍에 넣으십시오. 이 동작을 %1$s번 완료하면, 페그를 제거하는 동작을 다시 %2$s번 하십시오.</string>
     <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">시작하려면 시작하기를 탭하십시오.</string>
@@ -315,7 +315,7 @@
     <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">아래 그림처럼 전화기를 더 자주 사용하는 손에 들고 있으십시오.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">아래 그림처럼 전화기를 오른손에 들고 있으십시오.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">아래 그림처럼 전화기를 왼손에 들고 있으십시오.</string>
-    <string name="rsb_tremor_test_intro_2_detail_default">전화를 손에 든 채로 앉아있는 동안 %s를 수행해야 합니다.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">전화를 손에 든 채로 앉아있는 동안 %1$s를 수행해야 합니다.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">한 건의 과제</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">두 건의 과제</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">세 건의 과제</string>
@@ -325,28 +325,28 @@
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">전화기를 무릎에 두는 동작을 준비하십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">왼손으로 전화기를 쥐고 무릎에 두는 동작을 준비하십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">오른손으로 전화기를 쥐고 무릎에 두는 동작을 준비하십시오.</string>
-    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">전화기를 %ld초 동안 무릎에 두십시오.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">전화기를 %1$d초 동안 무릎에 두십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">이제 전화기를 어깨 높이로 들고 있으십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">이제 전화기를 왼손에 어깨 높이로 들고 있으십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">이제 전화기를 오른손에 어깨 높이로 들고 있으십시오.</string>
-    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">%ld초 동안 손을 내민 채로 전화기를 들고 있으십시오.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">%1$d초 동안 손을 내민 채로 전화기를 들고 있으십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">이제 팔꿈치를 굽히고 전화기를 어깨 높이에 들고 있으십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">이제 왼쪽 팔꿈치를 굽히고 왼손으로 전화기를 어깨 높이에 들고 있으십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">이제 오른쪽 팔꿈치를 굽히고 오른손으로 전화기를 어깨 높이에 들고 있으십시오.</string>
-    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">%ld초 동안 팔꿈치를 굽힌 채로 전화기를 들고 있으십시오.</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">%1$d초 동안 팔꿈치를 굽힌 채로 전화기를 들고 있으십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">이제 팔꿈치를 굽히고 전화기를 코에 반복적으로 대십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">이제 왼쪽 팔꿈치를 굽히고 왼손으로 전화기를 든 다음 전화기를 코에 반복적으로 대십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">이제 오른쪽 팔꿈치를 굽히고 오른손으로 전화기를 든 다음 전화기를 코에 반복적으로 대십시오.</string>
-    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">전화기를 %ld초 동안 코에 대고 있으십시오.</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">전화기를 %1$d초 동안 코에 대고 있으십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">반짝반짝 율동을 취할 준비를 하십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">왼손으로 전화기를 들고 반짝반짝 율동을 취할 준비를 하십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">오른손으로 전화기를 들고 반짝반짝 율동을 취할 준비를 하십시오.</string>
-    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">%ld초 동안 반짝반짝 율동을 수행하십시오.</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">%1$d초 동안 반짝반짝 율동을 수행하십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">이제 전화기를 왼손으로 바꿔 들고 다음 과제를 진행하십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">이제 전화기를 오른손으로 바꿔 들고 다음 과제를 진행하십시오.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">다음 과제를 진행합니다.</string>
     <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">실험이 완료되었습니다.</string>
-    <string name="rsb_tremor_test_skip_question_both_hands">전화를 한 손에 먼저 들었다가 다른 손으로 들면서 %s를 수행해야 합니다.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">전화를 한 손에 먼저 들었다가 다른 손으로 들면서 %1$s를 수행해야 합니다.</string>
     <string name="rsb_TREMOR_SKIP_LEFT_HAND">저는 이 과제를 왼손으로 수행할 수 없습니다.</string>
     <string name="rsb_TREMOR_SKIP_RIGHT_HAND">저는 이 과제를 오른손으로 수행할 수 없습니다.</string>
     <string name="rsb_TREMOR_SKIP_NEITHER">저는 이 과제를 양손으로 수행할 수 있습니다.</string>
@@ -362,7 +362,7 @@
     <string name="rsb_CHART_NO_DATA_TEXT">데이터 없음</string>
     <!-- Accessibility -->
     <string name="rsb_AX_BUTTON_BACK">뒤로</string>
-    <string name="rsb_AX_IMAGE_ILLUSTRATION">%s의 그림</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">%1$s의 그림</string>
     <string name="rsb_AX_SIGNVIEW_LABEL">지정된 서명 필드</string>
     <string name="rsb_AX_SIGNVIEW_HINT">화면을 터치하고 손가락을 움직여서 서명하십시오.</string>
     <string name="rsb_AX_SIGNVIEW_SIGNED">서명됨</string>
@@ -386,12 +386,12 @@
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER">탑</string>
     <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">디스크를 놓으려면 이중 탭하십시오.</string>
     <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">가장 위에 있는 디스크를 선택하려면 이중 탭하십시오.</string>
-    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">%s 크기의 디스크가 있음</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">%1$s 크기의 디스크가 있음</string>
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">비어 있음</string>
     <string name="rsb_ax_graph_range_format">%1$s에서 %2$s까지의 범위</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">다음으로 구성된 스택</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">및</string>
-    <string name="rsb_ax_graph_point">포인트: %s</string>
+    <string name="rsb_ax_graph_point">포인트: %1$s</string>
 
 
 </resources>

@@ -34,13 +34,13 @@
     <string name="rsb_LEARN_MORE_WITHDRAWING">Läs mer om tillbakadragning</string>
     <!-- Consent sharing step -->
     <string name="rsb_CONSENT_SHARING_TITLE">Delningsalternativ</string>
-    <string name="rsb_consent_share_widely">Dela mina data med %s och kvalificerade forskare över hela världen</string>
-    <string name="rsb_consent_share_only">Dela mina data endast med %s</string>
-    <string name="rsb_consent_sharing_description">%s kommer att få dina studiedata från deltagandet i den här studien.\n\nGenom att dela dina kodade studiedata mer brett (utan information som ditt namn) kan vi gagna både denna och framtida forskning.</string>
+    <string name="rsb_consent_share_widely">Dela mina data med %1$s och kvalificerade forskare över hela världen</string>
+    <string name="rsb_consent_share_only">Dela mina data endast med %1$s</string>
+    <string name="rsb_consent_sharing_description">%1$s kommer att få dina studiedata från deltagandet i den här studien.\n\nGenom att dela dina kodade studiedata mer brett (utan information som ditt namn) kan vi gagna både denna och framtida forskning.</string>
     <string name="rsb_LEARN_MORE_CONSENT_SHARING">Läs mer om datadelning</string>
     <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
-    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%ss namn (tryckt)</string>
-    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%ss signatur</string>
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%1$ss namn (tryckt)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%1$ss signatur</string>
     <string name="rsb_CONSENT_DOC_LINE_DATE">Datum</string>
     <!-- Progress indication (in navigation bar). -->
     <string name="rsb_STEP_PROGRESS_FORMAT">Steg %1$s av %2$s</string>
@@ -48,9 +48,9 @@
     <string name="rsb_RANGE_ALERT_TITLE">Ogiltigt värde</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s överskrider det högsta tillåtna värdet (%2$s).</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s är mindre än det minsta tillåtna värdet (%2$s).</string>
-    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%s är inte ett giltigt värde.</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s är inte ett giltigt värde.</string>
     <!-- Alert for invalid email address value -->
-    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Ogiltig e-postadress: %s</string>
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Ogiltig e-postadress: %1$s</string>
     <!-- Alerts for invalid location coordinates -->
     <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Ange en adress</string>
     <string name="rsb_LOCATION_ERROR_TITLE">Kunde inte hitta den angivna adressen</string>
@@ -59,7 +59,7 @@
     <string name="rsb_LOCATION_ERROR_GEOCODE">Det gick inte att hitta något resultat för den angivna adressen. Kontrollera att adressen är giltig.</string>
     <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">Antingen är du inte ansluten till internet eller så har du överskridit det maximala antalet addressökbegäranden. Om du inte är ansluten till internet aktiverar du Wi-Fi så att du kan svara på frågan, hoppa över frågan om en sådan knapp är tillgänglig eller gå tillbaka till enkäten när du är ansluten till internet. I annat fall försöker du igen om några minuter.</string>
     <!-- Alert for exceeding length limit in text answer -->
-    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Textinnehållet överskrider maximal längd: %s</string>
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Textinnehållet överskrider maximal längd: %1$s</string>
     <!-- Camera not available during multitasking -->
     <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">Kamera inte tillgänglig i delad skärm.</string>
     <!-- Registration step -->
@@ -154,7 +154,7 @@
     <string name="rsb_COUNTDOWN_LABEL">Startar aktivitet om</string>
     <string name="rsb_TASK_COMPLETE_TITLE">Aktiviteten är klar</string>
     <string name="rsb_TASK_COMPLETE_TEXT">Dina data kommer att analyseras, och du blir meddelad när resultaten är klara.</string>
-    <string name="rsb_countdown_spoken_remaining">%s sekunder återstår.</string>
+    <string name="rsb_countdown_spoken_remaining">%1$s sekunder återstår.</string>
     <!-- Image capture step. -->
     <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Spara bild</string>
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Spara bild igen</string>
@@ -168,26 +168,26 @@
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Spela in video igen</string>
     <!-- Fitness active task. -->
     <string name="rsb_FITNESS_TASK_TITLE">Motion</string>
-    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Distans (%s)</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Distans (%1$s)</string>
     <string name="rsb_FITNESS_HEARTRATE_TITLE">Puls – slag/minut</string>
-    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Sitt bekvämt under %s.</string>
-    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Gå så fort du kan under %s.</string>
-    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Den här aktiviteten registrerar din puls och mäter hur långt du kan gå på %s.</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Sitt bekvämt under %1$s.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Gå så fort du kan under %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Den här aktiviteten registrerar din puls och mäter hur långt du kan gå på %1$s.</string>
     <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Gå utomhus i snabbast möjliga takt under %1$s. När du är klar sitter du och vilar bekvämt under %2$s. Tryck på Kom igång för att börja.</string>
     <!-- Short walk active task. -->
     <string name="rsb_WALK_TASK_TITLE">Gång och balans</string>
     <string name="rsb_WALK_INTRO_TEXT">Den här aktiviteten mäter din gångstil och balans medan du går och står still. Fortsätt endast om du säkert kan gå utan hjälp.</string>
-    <string name="rsb_walk_intro_2_text_ld">Hitta en plats där du säkert kan gå ungefär %ld steg i en rak linje utan hjälp.</string>
+    <string name="rsb_walk_intro_2_text_ld">Hitta en plats där du säkert kan gå ungefär %1$d steg i en rak linje utan hjälp.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL">Placera telefonen i en ficka eller väska och följ de talade anvisningarna.</string>
-    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Stå nu stilla under %s.</string>
-    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Stå stilla under %s.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Stå nu stilla under %1$s.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Stå stilla under %1$s.</string>
     <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Vänd om och gå tillbaka till utgångsplatsen.</string>
-    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Gå upp till %ld steg i en rak linje.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Gå upp till %1$d steg i en rak linje.</string>
     <!-- Short walk back and forth. -->
     <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Hitta en plats där du tryggt kan gå fram och tillbaka i en rät linje. Försök att gå kontinuerligt genom att vända dig om vid slutet av linjen, som om du gick runt en kon.\nDärefter blir du ombedd att vända dig ett helt varv och sedan stå stilla med armarna längs sidorna och fötterna i ungefär axelbredd.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Tryck på Kom igång när du är redo att börja.\nPlacera sedan telefonen i en ficka eller väska och följ de talade anvisningarna.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Gå fram och tillbaka i en rät linje under %s. Gå som du vanligtvis gör.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Vänd dig ett helt varv och stå sedan stilla under %s.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Gå fram och tillbaka i en rät linje under %1$s. Gå som du vanligtvis gör.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Vänd dig ett helt varv och stå sedan stilla under %1$s.</string>
     <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Du har slutfört aktiviteten.</string>
     <!-- Tapping active task. -->
     <string name="rsb_TAPPING_TASK_TITLE">Tryckhastighet</string>
@@ -200,7 +200,7 @@
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Använd två fingrar på vänstra handen till att omväxlande trycka på knapparna på skärmen.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Nu upprepar du samma test med högra handen.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Nu upprepar du samma test med vänstra handen.</string>
-    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Tryck med ett finger och sedan det andra. Försök att trycka i en så jämn takt som möjligt. Fortsätt trycka under %s.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Tryck med ett finger och sedan det andra. Försök att trycka i en så jämn takt som möjligt. Fortsätt trycka under %1$s.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION">Tryck på Kom igång för att börja.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Tryck på Nästa för att börja.</string>
     <string name="rsb_TAP_BUTTON_TITLE">Tryck</string>
@@ -227,21 +227,21 @@
     <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Tryck på Kom igång för att börja.</string>
     <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Nu bör du höra en ton. Justera volymen med reglagen på sidan av enheten.\n\nTryck på knappen när du är redo att börja.</string>
     <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Tryck på knappen varje gång du börjar höra ett ljud.</string>
-    <string name="rsb_tone_label_left">%s Hz, vänster</string>
-    <string name="rsb_tone_label_right">%s Hz, höger</string>
+    <string name="rsb_tone_label_left">%1$s Hz, vänster</string>
+    <string name="rsb_tone_label_right">%1$s Hz, höger</string>
     <!-- Spatial span memory active task. -->
     <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Spatialt minne</string>
-    <string name="rsb_spatial_span_memory_intro_text">Den här aktiviteten mäter ditt spatiala korttidsminne genom att be dig upprepa den ordning i vilken %s lyser upp.</string>
+    <string name="rsb_spatial_span_memory_intro_text">Den här aktiviteten mäter ditt spatiala korttidsminne genom att be dig upprepa den ordning i vilken %1$s lyser upp.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">blommor</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">blommor</string>
     <string name="rsb_spatial_span_memory_intro_2_text">En del av %1$sna kommer att lysa upp en i taget. Tryck på de %2$sna i samma ordning som de lyser upp.</string>
     <string name="rsb_spatial_span_memory_intro_2_text_reverse">En del av %1$sna kommer att lysa upp en i taget. Tryck på de %2$sna i omvänd ordning jämfört med hur de lyser upp.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Tryck på Kom igång för att börja och titta noggrant.</string>
-    <string name="rsb_memory_game_item_count_title">%s</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
     <string name="rsb_MEMORY_GAME_SCORE_TITLE">Poäng</string>
-    <string name="rsb_memory_game_playback_title">Se när %s lyser upp</string>
-    <string name="rsb_memory_game_gameplay_title">Tryck på %s i den ordning de lyser upp</string>
-    <string name="rsb_memory_game_gameplay_reverse_title">Tryck på %s i omvänd ordning</string>
+    <string name="rsb_memory_game_playback_title">Se när %1$s lyser upp</string>
+    <string name="rsb_memory_game_gameplay_title">Tryck på %1$s i den ordning de lyser upp</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Tryck på %1$s i omvänd ordning</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Sekvensen är klar</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Tryck på Nästa när du vill fortsätta</string>
     <string name="rsb_MEMORY_GAME_FAILED_TITLE">Försök igen</string>
@@ -269,7 +269,7 @@
     <!-- Timed walk active task. -->
     <string name="rsb_TIMED_WALK_TITLE">Gång med tidtagning</string>
     <string name="rsb_TIMED_WALK_INTRO_DETAIL">Den här aktiviteten mäter benfunktionen.</string>
-    <string name="rsb_timed_walk_intro_2_text">Hitta en plats, helst utomhus, där du kan gå ungefär %s i en rät linje så fort som möjligt (men fortfarande säkert). Sakta inte ned förrän du har passerat mållinjen.</string>
+    <string name="rsb_timed_walk_intro_2_text">Hitta en plats, helst utomhus, där du kan gå ungefär %1$s i en rät linje så fort som möjligt (men fortfarande säkert). Sakta inte ned förrän du har passerat mållinjen.</string>
     <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Tryck på Nästa för att börja.</string>
     <string name="rsb_TIMED_WALK_FORM_TITLE">Hjälpmedel</string>
     <string name="rsb_TIMED_WALK_FORM_TEXT">Använd samma hjälpmedel för alla test.</string>
@@ -282,7 +282,7 @@
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Dubbelsidig käpp</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Dubbelsidig krycka</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Gåstativ/rollator</string>
-    <string name="rsb_timed_walk_instruction">Gå upp till %s i en rät linje.</string>
+    <string name="rsb_timed_walk_instruction">Gå upp till %1$s i en rät linje.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_2">Vänd om och gå tillbaka till utgångsplatsen.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Tryck på Klar när du är färdig.</string>
     <!-- PSAT active task. -->
@@ -292,14 +292,14 @@
     <string name="rsb_PASAT_INTRO_TEXT">PASAT (Paced Auditory Serial Addition Test) mäter din auditiva bearbetningshastighet och beräkningsförmåga.</string>
     <string name="rsb_PVSAT_INTRO_TEXT">PVSAT (Paced Visual Serial Addition Test) mäter din visuella bearbetningshastighet och beräkningsförmåga.</string>
     <string name="rsb_PAVSAT_INTRO_TEXT">PAVSAT (Paced Auditory and Visual Serial Addition Test) mäter din auditiva och visuella bearbetningshastighet och beräkningsförmåga.</string>
-    <string name="rsb_psat_intro_text_2">Ensiffriga tal visas med intervall på %s sekunder.\nDu måste addera varje nytt tal till talet som visades omedelbart före det.\nObs! Du ska inte beräkna en löpande totalsumma, utan bara summan av de senaste två talen.</string>
+    <string name="rsb_psat_intro_text_2">Ensiffriga tal visas med intervall på %1$s sekunder.\nDu måste addera varje nytt tal till talet som visades omedelbart före det.\nObs! Du ska inte beräkna en löpande totalsumma, utan bara summan av de senaste två talen.</string>
     <string name="rsb_PSAT_CALL_TO_ACTION">Tryck på Kom igång för att börja.</string>
     <string name="rsb_PSAT_INITIAL_INSTRUCTION">Kom ihåg den första siffran.</string>
     <string name="rsb_PSAT_INSTRUCTION">Addera det nya talet till det föregående.</string>
     <string name="rsb_PSAT_NO_DIGIT">–</string>
     <!-- Hole peg test active task. -->
-    <string name="rsb_hole_peg_test_title">%s-håls pegtest</string>
-    <string name="rsb_hole_peg_test_intro_text">Den här aktiviteten mäter funktionen för dina övre extremiteter genom att be dig placera en pinne i ett hål. Du uppmanas att göra detta %s gånger.</string>
+    <string name="rsb_hole_peg_test_title">%1$s-håls pegtest</string>
+    <string name="rsb_hole_peg_test_intro_text">Den här aktiviteten mäter funktionen för dina övre extremiteter genom att be dig placera en pinne i ett hål. Du uppmanas att göra detta %1$s gånger.</string>
     <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">Både din vänstra och högra hand kommer att testas.\nDu måste plocka upp pinnen så snabbt som möjligt och stoppa in den i hålet. När du har gjort det %1$s gånger tar du bort den igen %2$s gånger.</string>
     <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">Både din högra och vänstra hand kommer att testas.\nDu måste plocka upp pinnen så snabbt som möjligt och stoppa in den i hålet. När du har gjort det %1$s gånger tar du bort den igen %2$s gånger.</string>
     <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Tryck på Kom igång för att börja.</string>
@@ -315,7 +315,7 @@
     <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Håll telefonen i den mer påverkade handen enligt bilden nedan.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Håll telefonen i den HÖGRA handen enligt bilden nedan.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Håll telefonen i den VÄNSTRA handen enligt bilden nedan.</string>
-    <string name="rsb_tremor_test_intro_2_detail_default">Du blir ombedd att utföra %s medan du sitter med telefonen i handen.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Du blir ombedd att utföra %1$s medan du sitter med telefonen i handen.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">en åtgärd</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">två åtgärder</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">tre åtgärder</string>
@@ -325,28 +325,28 @@
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Förbered dig på att hålla telefonen i knät.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Förbered dig på att hålla telefonen i knät med den VÄNSTRA handen.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Förbered dig på att hålla telefonen i knät med den HÖGRA handen.</string>
-    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Fortsätt hålla telefonen i knät under %ld sekunder.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Fortsätt hålla telefonen i knät under %1$d sekunder.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Håll nu telefonen med handen utsträckt i axelhöjd.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Håll nu telefonen med den VÄNSTRA handen utsträckt i axelhöjd.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Håll nu telefonen med den HÖGRA handen utsträckt i axelhöjd.</string>
-    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Fortsätt hålla telefonen med handen utsträckt under %ld sekunder.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Fortsätt hålla telefonen med handen utsträckt under %1$d sekunder.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Håll nu telefonen i axelhöjd med armbågen böjd.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Håll nu telefonen med den VÄNSTRA handen i axelhöjd med armbågen böjd.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Håll nu telefonen med den HÖGRA handen i axelhöjd med armbågen böjd.</string>
-    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Fortsätt hålla telefonen med armbågen böjd under %ld sekunder</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Fortsätt hålla telefonen med armbågen böjd under %1$d sekunder</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Nu ska du hålla armbågen böjd och röra vid näsan med telefonen flera gånger.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Nu ska du hålla armbågen böjd med telefonen i den VÄNSTRA handen och röra vid näsan med telefonen flera gånger.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Nu ska du hålla armbågen böjd med telefonen i den HÖGRA handen och röra vid näsan med telefonen flera gånger.</string>
-    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Fortsätt röra vid näsan med telefonen under %ld sekunder</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Fortsätt röra vid näsan med telefonen under %1$d sekunder</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Förbered dig på att vinka kungligt (vinka genom att vrida på handleden).</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Förbered dig på att vinka kungligt med telefonen i den VÄNSTRA handen (vinka genom att vrida på handleden).</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Förbered dig på att vinka kungligt med telefonen i den HÖGRA handen (vinka genom att vrida på handleden).</string>
-    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Fortsätt utföra en kunglig vinkning under %ld sekunder.</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Fortsätt utföra en kunglig vinkning under %1$d sekunder.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Flytta nu telefonen till den VÄNSTRA handen och fortsätt med nästa åtgärd.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Flytta nu telefonen till den HÖGRA handen och fortsätt med nästa åtgärd.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Fortsätt till nästa åtgärd.</string>
     <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Aktiviteten är klar.</string>
-    <string name="rsb_tremor_test_skip_question_both_hands">Du blir ombedd att utföra %s medan du sitter med telefonen i ena handen, och sedan en gång till med den andra handen.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Du blir ombedd att utföra %1$s medan du sitter med telefonen i ena handen, och sedan en gång till med den andra handen.</string>
     <string name="rsb_TREMOR_SKIP_LEFT_HAND">Jag kan inte utföra den här aktiviteten med VÄNSTRA handen.</string>
     <string name="rsb_TREMOR_SKIP_RIGHT_HAND">Jag kan inte utföra den här aktiviteten med HÖGRA handen.</string>
     <string name="rsb_TREMOR_SKIP_NEITHER">Jag kan utföra den här aktiviteten med båda händerna.</string>
@@ -362,7 +362,7 @@
     <string name="rsb_CHART_NO_DATA_TEXT">Inga data</string>
     <!-- Accessibility -->
     <string name="rsb_AX_BUTTON_BACK">Tillbaka</string>
-    <string name="rsb_AX_IMAGE_ILLUSTRATION">Illustration av %s</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">Illustration av %1$s</string>
     <string name="rsb_AX_SIGNVIEW_LABEL">Tilldelat signaturfält</string>
     <string name="rsb_AX_SIGNVIEW_HINT">Rör vid skärmen och signera genom att röra fingret</string>
     <string name="rsb_AX_SIGNVIEW_SIGNED">Signerat</string>
@@ -386,11 +386,11 @@
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Torn</string>
     <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Tryck snabbt två gånger för att placera skivan</string>
     <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Tryck snabbt två gånger för att markera den översta skivan</string>
-    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Har skivor med storlekarna %s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Har skivor med storlekarna %1$s</string>
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Tomt</string>
     <string name="rsb_ax_graph_range_format">Intervall från %1$s till %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Trave som består av</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">och</string>
-    <string name="rsb_ax_graph_point">Punkt: %s</string>
+    <string name="rsb_ax_graph_point">Punkt: %1$s</string>
 
 </resources>

@@ -34,13 +34,13 @@
     <string name="rsb_LEARN_MORE_WITHDRAWING">Saznajte više o povlačenju pristanka</string>
     <!-- Consent sharing step -->
     <string name="rsb_CONSENT_SHARING_TITLE">Opcije dijeljenja</string>
-    <string name="rsb_consent_share_widely">Dijeli moje podatke sa sveučilištem %s i kvalificiranim istraživačima diljem svijeta</string>
-    <string name="rsb_consent_share_only">Dijeli moje podatke samo sa sveučilištem %s</string>
-    <string name="rsb_consent_sharing_description">%s će primiti vaše istraživačke podatke od sudjelovanja u ovom istraživanju.\n\nMožete pomoći ovom i budućim istraživanjima tako da podijelite vaše kodirane istraživačke podatke na širi način (bez informacija kao što je vaše ime).</string>
+    <string name="rsb_consent_share_widely">Dijeli moje podatke sa sveučilištem %1$s i kvalificiranim istraživačima diljem svijeta</string>
+    <string name="rsb_consent_share_only">Dijeli moje podatke samo sa sveučilištem %1$s</string>
+    <string name="rsb_consent_sharing_description">%1$s će primiti vaše istraživačke podatke od sudjelovanja u ovom istraživanju.\n\nMožete pomoći ovom i budućim istraživanjima tako da podijelite vaše kodirane istraživačke podatke na širi način (bez informacija kao što je vaše ime).</string>
     <string name="rsb_LEARN_MORE_CONSENT_SHARING">Saznajte više o dijeljenju podataka</string>
     <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
-    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%s: ime (tiskano)</string>
-    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%s: potpis</string>
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%1$s: ime (tiskano)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%1$s: potpis</string>
     <string name="rsb_CONSENT_DOC_LINE_DATE">Datum</string>
     <!-- Progress indication (in navigation bar). -->
     <string name="rsb_STEP_PROGRESS_FORMAT">Korak %1$s od %2$s</string>
@@ -48,9 +48,9 @@
     <string name="rsb_RANGE_ALERT_TITLE">Nevažeća vrijednost</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s prekoračuje maksimalnu dozvoljenu vrijednost (%2$s).</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s je manje od minimalne dozvoljene vrijednosti (%2$s).</string>
-    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%s nije važeća vrijednost.</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s nije važeća vrijednost.</string>
     <!-- Alert for invalid email address value -->
-    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Nevažeća e-mail adresa: %s</string>
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Nevažeća e-mail adresa: %1$s</string>
     <!-- Alerts for invalid location coordinates -->
     <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Unesite adresu</string>
     <string name="rsb_LOCATION_ERROR_TITLE">Navedena adresa nije pronađena</string>
@@ -59,7 +59,7 @@
     <string name="rsb_LOCATION_ERROR_GEOCODE">Nije moguće naći rezultat za unesenu adresu. Molimo provjerite je li adresa valjana.</string>
     <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">Niste spojeni na internet ili ste prekoračili maksimalan broj zahtjeva za traženje adresa. Ako niste spojeni na internet, uključite Wi-Fi kako biste odgovorili na ovo pitanje, preskočite pitanje ako je dostupna tipka za preskakanje ili se vratite na anketu kad ste spojeni na internet. U suprotnom, probajte ponovno za nekoliko minuta.</string>
     <!-- Alert for exceeding length limit in text answer -->
-    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Tekstualni sadržaj prekoračuje maksimalnu duljinu: %s</string>
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Tekstualni sadržaj prekoračuje maksimalnu duljinu: %1$s</string>
     <!-- Camera not available during multitasking -->
     <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">Kamera nije dostupna u razdvojenom zaslonu.</string>
     <!-- Registration step -->
@@ -154,7 +154,7 @@
     <string name="rsb_COUNTDOWN_LABEL">Započinjanje aktivnosti za</string>
     <string name="rsb_TASK_COMPLETE_TITLE">Aktivnost je dovršena</string>
     <string name="rsb_TASK_COMPLETE_TEXT">Vaši podaci će se analizirati i bit ćete obaviješteni kad rezultati budu spremni.</string>
-    <string name="rsb_countdown_spoken_remaining">%s s preostalo.</string>
+    <string name="rsb_countdown_spoken_remaining">%1$s s preostalo.</string>
     <!-- Image capture step. -->
     <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Snimi sliku</string>
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Ponovno snimi sliku</string>
@@ -168,26 +168,26 @@
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Ponovno snimi video</string>
     <!-- Fitness active task. -->
     <string name="rsb_FITNESS_TASK_TITLE">Kondicija</string>
-    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Udaljenost (%s)</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Udaljenost (%1$s)</string>
     <string name="rsb_FITNESS_HEARTRATE_TITLE">Puls u minuti</string>
-    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Sjedite udobno tijekom %s.</string>
-    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Hodajte što brže možete tijekom %s.</string>
-    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Ova aktivnost prati vašu brzinu otkucaja srca i mjeri koliko možete prehodati unutar %s.</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Sjedite udobno tijekom %1$s.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Hodajte što brže možete tijekom %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Ova aktivnost prati vašu brzinu otkucaja srca i mjeri koliko možete prehodati unutar %1$s.</string>
     <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Hodajte na otvorenom najbrže što možete tijekom %1$s. Kad završite, sjednite i odmarajte tijekom %2$s. Za početak, dodirnite Pokreni.</string>
     <!-- Short walk active task. -->
     <string name="rsb_WALK_TASK_TITLE">Položaj tijela i ravnoteža</string>
     <string name="rsb_WALK_INTRO_TEXT">Ova aktivnost mjeri vaš položaj tijela i ravnotežu dok hodate i stojite mirno. Nemojte nastavljati ako ne možete sigurno hodati bez pomoći.</string>
-    <string name="rsb_walk_intro_2_text_ld">Pronađite mjesto na kojem možete sigurno hodati približno %ld koraka u ravnoj liniji.</string>
+    <string name="rsb_walk_intro_2_text_ld">Pronađite mjesto na kojem možete sigurno hodati približno %1$d koraka u ravnoj liniji.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL">Stavite vaš telefon u džep ili torbu i slijedite audio upute.</string>
-    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Sada stojite mirno %s.</string>
-    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Stojite mirno %s.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Sada stojite mirno %1$s.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Stojite mirno %1$s.</string>
     <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Okrenite se i hodajte natrag do mjesta od kojeg ste krenuli.</string>
-    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Hodajte najviše %ld koraka u ravnoj liniji.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Hodajte najviše %1$d koraka u ravnoj liniji.</string>
     <!-- Short walk back and forth. -->
     <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Pronađite mjesto na kojem možete sigurno hodati naprijed-natrag u ravnoj liniji. Pokušajte kontinuirano hodati tako da se okrenete na kraju putanje, kao da hodate oko čunja.\n\nZatim će se od vas zatražiti da hodate punim krugom, zatim da stojite nepomično s rukama položenim uz tijelo i stopalima razmaknutima u širini ramena.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Dodirnite Pokreni kad budete spremni započeti.\nZatim stavite vaš telefon u džep ili torbu i slijedite audio upute.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Hodajte naprijed-natrag u ravnoj liniji tijekom %s. Hodajte kao i inače.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Okrenite se punim krugom i zatim budite mirni %s.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Hodajte naprijed-natrag u ravnoj liniji tijekom %1$s. Hodajte kao i inače.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Okrenite se punim krugom i zatim budite mirni %1$s.</string>
     <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Dovršili ste aktivnost.</string>
     <!-- Tapping active task. -->
     <string name="rsb_TAPPING_TASK_TITLE">Brzina dodirivanja</string>
@@ -200,7 +200,7 @@
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Koristeći dva prsta lijeve ruke, naizmjence dodirujte tipke na zaslonu.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Sad ponovite isti test desnom rukom.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Sad ponovite isti test lijevom rukom.</string>
-    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Dodirnite jednim prstom, zatim drugim. Pokušajte tempirati dodire kako bi bili ujednačeni. Nastavite dodirivati tijekom %s.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Dodirnite jednim prstom, zatim drugim. Pokušajte tempirati dodire kako bi bili ujednačeni. Nastavite dodirivati tijekom %1$s.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION">Dodirnite Pokreni za početak.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Dodirnite Sljedeće za početak.</string>
     <string name="rsb_TAP_BUTTON_TITLE">Dodirnite</string>
@@ -227,21 +227,21 @@
     <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Dodirnite Pokreni za početak.</string>
     <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Sada biste trebali čuti ton. Podesite glasnoću uz pomoć kontrola s bočne strane uređaja.\n\nDodirnite tipku kada ste spremni za početak.</string>
     <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Dodirnite tipku svaki put kada začujete zvuk.</string>
-    <string name="rsb_tone_label_left">%s Hz, lijevo</string>
-    <string name="rsb_tone_label_right">%s Hz, desno</string>
+    <string name="rsb_tone_label_left">%1$s Hz, lijevo</string>
+    <string name="rsb_tone_label_right">%1$s Hz, desno</string>
     <!-- Spatial span memory active task. -->
     <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Prostorna memorija</string>
-    <string name="rsb_spatial_span_memory_intro_text">Ova aktivnost mjeri vašu kratkotrajnu prostornu memoriju tako što traži da dodirnete %s redoslijedom kojim su zasvijetlili.</string>
+    <string name="rsb_spatial_span_memory_intro_text">Ova aktivnost mjeri vašu kratkotrajnu prostornu memoriju tako što traži da dodirnete %1$s redoslijedom kojim su zasvijetlili.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">cvjetove</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">cvjetovi</string>
     <string name="rsb_spatial_span_memory_intro_2_text">Gledajte %1$s kako će zasvijetliti jedan za drugim. Dodirnite te %2$s istim redoslijedom kojim su zasvijetlili.</string>
     <string name="rsb_spatial_span_memory_intro_2_text_reverse">Gledajte %1$s kako će zasvijetliti jedan za drugim. Dodirnite te %2$s obrnutim redoslijedom od onog kojim su zasvijetlili.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Za početak, dodirnite Pokreni, zatim gledajte pažljivo.</string>
-    <string name="rsb_memory_game_item_count_title">%s</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
     <string name="rsb_MEMORY_GAME_SCORE_TITLE">Rezultat</string>
-    <string name="rsb_memory_game_playback_title">Gledajte %s kako svijetle</string>
-    <string name="rsb_memory_game_gameplay_title">Dodirnite %s redoslijedom kojim su zasvijetlili</string>
-    <string name="rsb_memory_game_gameplay_reverse_title">Dodirnite %s obrnutim redoslijedom</string>
+    <string name="rsb_memory_game_playback_title">Gledajte %1$s kako svijetle</string>
+    <string name="rsb_memory_game_gameplay_title">Dodirnite %1$s redoslijedom kojim su zasvijetlili</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Dodirnite %1$s obrnutim redoslijedom</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Niz je dovršen</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Za nastavak, dodirnite Sljedeće</string>
     <string name="rsb_MEMORY_GAME_FAILED_TITLE">Pokušaj ponovno</string>
@@ -269,7 +269,7 @@
     <!-- Timed walk active task. -->
     <string name="rsb_TIMED_WALK_TITLE">Tempirana šetnja</string>
     <string name="rsb_TIMED_WALK_INTRO_DETAIL">Ova aktivnost mjeri funkcionalnost vaših donjih ekstremiteta.</string>
-    <string name="rsb_timed_walk_intro_2_text">Pronađite mjesto, po mogućnosti vani, gdje možete hodati otprilike %s u ravnoj liniji što brže možete, ali sigurno. Nemojte usporavati sve dok ne prijeđete ciljnu liniju.</string>
+    <string name="rsb_timed_walk_intro_2_text">Pronađite mjesto, po mogućnosti vani, gdje možete hodati otprilike %1$s u ravnoj liniji što brže možete, ali sigurno. Nemojte usporavati sve dok ne prijeđete ciljnu liniju.</string>
     <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Dodirnite Sljedeće za početak.</string>
     <string name="rsb_TIMED_WALK_FORM_TITLE">Pomagalo</string>
     <string name="rsb_TIMED_WALK_FORM_TEXT">Koristite isto pomagalo za svaki test.</string>
@@ -282,7 +282,7 @@
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Dva štapa za hodanje</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Dvije štake</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Hodalica/Guralica</string>
-    <string name="rsb_timed_walk_instruction">Hodajte najviše %s u ravnoj liniji.</string>
+    <string name="rsb_timed_walk_instruction">Hodajte najviše %1$s u ravnoj liniji.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_2">Okrenite se i hodajte natrag do mjesta od kojeg ste krenuli.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Dodirnite OK kad završite.</string>
     <!-- PSAT active task. -->
@@ -292,14 +292,14 @@
     <string name="rsb_PASAT_INTRO_TEXT">Auditivni test tempiranog serijskog zbrajanja (PASAT) mjeri brzinu vaše obrade auditivnih podataka te sposobnost računanja.</string>
     <string name="rsb_PVSAT_INTRO_TEXT">Vizualni test tempiranog serijskog zbrajanja mjeri (PVSAT) brzinu vaše obrade vizualnih podataka te sposobnost računanja.</string>
     <string name="rsb_PAVSAT_INTRO_TEXT">Auditivni i vizualni test tempiranog serijskog zbrajanja (PAVSAT) mjeri brzinu vaše obrade auditivnih i vizualnih podataka te sposobnost računanja.</string>
-    <string name="rsb_psat_intro_text_2">Jednoznamenkasti brojevi prikazuju se svakih %s s.\nSvaku novu znamenku morate zbrojiti s onom koja je neposredno prije nje.\nPažnja, ne smijete izračunavati ukupni iznos, nego samo zbrojiti zadnja dva broja.</string>
+    <string name="rsb_psat_intro_text_2">Jednoznamenkasti brojevi prikazuju se svakih %1$s s.\nSvaku novu znamenku morate zbrojiti s onom koja je neposredno prije nje.\nPažnja, ne smijete izračunavati ukupni iznos, nego samo zbrojiti zadnja dva broja.</string>
     <string name="rsb_PSAT_CALL_TO_ACTION">Dodirnite Pokreni za početak.</string>
     <string name="rsb_PSAT_INITIAL_INSTRUCTION">Zapamtite prvu znamenku.</string>
     <string name="rsb_PSAT_INSTRUCTION">Zbrojite ovu novu znamenku s prethodnom.</string>
     <string name="rsb_PSAT_NO_DIGIT">-</string>
     <!-- Hole peg test active task. -->
-    <string name="rsb_hole_peg_test_title">Test s %s rupa i klinovima</string>
-    <string name="rsb_hole_peg_test_intro_text">Ova aktivnost mjeri funkciju vaših gornjih ekstremiteta tako što traži da stavite klin u rupu. Od vas će se zatražiti da to učinite %s puta.</string>
+    <string name="rsb_hole_peg_test_title">Test s %1$s rupa i klinovima</string>
+    <string name="rsb_hole_peg_test_intro_text">Ova aktivnost mjeri funkciju vaših gornjih ekstremiteta tako što traži da stavite klin u rupu. Od vas će se zatražiti da to učinite %1$s puta.</string>
     <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">Testirat će vam se i lijeva i desna ruka.\nMorate uhvatiti klin što brže možete, staviti ga u rupu i kad to učinite %1$s puta, ponovno ga ukloniti %2$s puta.</string>
     <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">Testirat će vam se i desna i lijeva ruka.\nMorate uhvatiti klin što brže možete, staviti ga u rupu i kad to učinite %1$s puta, ponovno ga ukloniti %2$s puta.</string>
     <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Dodirnite Pokreni za početak.</string>
@@ -315,7 +315,7 @@
     <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Držite telefon u ruci koja vam je više zahvaćena, kako je prikazano na slici ispod.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Držite telefon u DESNOJ ruci kako je prikazano na slici ispod.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Držite telefon u LIJEVOJ ruci kako je prikazano na slici ispod.</string>
-    <string name="rsb_tremor_test_intro_2_detail_default">Od vas će se zatražiti da napravite %s dok sjedite s telefonom u ruci.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Od vas će se zatražiti da napravite %1$s dok sjedite s telefonom u ruci.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">zadatak</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">dva zadatka</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">tri zadatka</string>
@@ -325,28 +325,28 @@
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Pripremite se na držanje telefona u krilu.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Pripremite se na držanje telefona u krilu LIJEVOM rukom.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Pripremite se na držanje telefona u krilu DESNOM rukom.</string>
-    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Nastavite držati telefon u krilu tijekom %ld s.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Nastavite držati telefon u krilu tijekom %1$d s.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Sad držite telefon s ispruženom rukom u visini ramena.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Sad držite telefon u LIJEVOJ šaci s rukom ispruženom u visini ramena.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Sad držite telefon u DESNOJ šaci s rukom ispruženom u visini ramena.</string>
-    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Nastavite držati telefon s ispruženom rukom tijekom %ld s.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Nastavite držati telefon s ispruženom rukom tijekom %1$d s.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Sad držite telefon u visini ramena sa savijenim laktom.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Sad držite telefon LIJEVOM rukom u visini ramena sa savijenim laktom.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Sad držite telefon DESNOM rukom u visini ramena sa savijenim laktom.</string>
-    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Nastavite držati telefon sa savijenim laktom tijekom %ld s</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Nastavite držati telefon sa savijenim laktom tijekom %1$d s</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Sad držite lakat savijen i neprekidno dodirujte nos telefonom.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Sad držite lakat savijen s telefonom u LIJEVOJ ruci i neprekidno dodirujte nos telefonom.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Sad držite lakat savijen s telefonom u DESNOJ ruci i neprekidno dodirujte nos telefonom.</string>
-    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Nastavite dodirivati nos telefonom tijekom %ld s</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Nastavite dodirivati nos telefonom tijekom %1$d s</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Pripremite se za mahanje rotiranjem šake u zapešću (kao što maše engleska kraljica).</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Pripremite se za mahanje rotiranjem šake, s telefonom u LIJEVOJ ruci (kao što maše engleska kraljica).</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Pripremite se za mahanje rotiranjem šake, s telefonom u DESNOJ ruci (kao što maše engleska kraljica).</string>
-    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Nastavite mahati rotiranjem šake tijekom %ld s.</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Nastavite mahati rotiranjem šake tijekom %1$d s.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Sad uzmite telefon u LIJEVU ruku i nastavite na sljedeći zadatak.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Sad uzmite telefon u DESNU ruku i nastavite na sljedeći zadatak.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Nastavite na sljedeći zadatak.</string>
     <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Aktivnost je dovršena.</string>
-    <string name="rsb_tremor_test_skip_question_both_hands">Od vas će se zatražiti da napravite %s dok sjedite s telefonom prvo u jednoj ruci, zatim ponovno u drugoj ruci.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Od vas će se zatražiti da napravite %1$s dok sjedite s telefonom prvo u jednoj ruci, zatim ponovno u drugoj ruci.</string>
     <string name="rsb_TREMOR_SKIP_LEFT_HAND">Ne mogu obaviti ovaj zadatak LIJEVOM rukom.</string>
     <string name="rsb_TREMOR_SKIP_RIGHT_HAND">Ne mogu obaviti ovaj zadatak DESNOM rukom.</string>
     <string name="rsb_TREMOR_SKIP_NEITHER">Mogu obaviti ovaj zadatak s obje ruke.</string>
@@ -362,7 +362,7 @@
     <string name="rsb_CHART_NO_DATA_TEXT">Bez podataka</string>
     <!-- Accessibility -->
     <string name="rsb_AX_BUTTON_BACK">Natrag</string>
-    <string name="rsb_AX_IMAGE_ILLUSTRATION">Slika: %s</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">Slika: %1$s</string>
     <string name="rsb_AX_SIGNVIEW_LABEL">Polje za potpis</string>
     <string name="rsb_AX_SIGNVIEW_HINT">Dodirnite zaslon i pomičite prst za potpisivanje</string>
     <string name="rsb_AX_SIGNVIEW_SIGNED">Potpisano</string>
@@ -386,11 +386,11 @@
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Toranj</string>
     <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Dodirnite dvaput za stavljanje pločice</string>
     <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Dodirnite dvaput za odabir najviše pločice</string>
-    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Ima pločicu veličine %s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Ima pločicu veličine %1$s</string>
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Isprazni</string>
     <string name="rsb_ax_graph_range_format">Raspon od %1$s do %2$s.</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Stog sastavljen od</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">i</string>
-    <string name="rsb_ax_graph_point">Točka: %s</string>
+    <string name="rsb_ax_graph_point">Točka: %1$s</string>
     
 </resources>

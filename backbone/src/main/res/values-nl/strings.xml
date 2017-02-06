@@ -34,13 +34,13 @@
     <string name="rsb_LEARN_MORE_WITHDRAWING">Meer informatie over afzien van deelname</string>
     <!-- Consent sharing step -->
     <string name="rsb_CONSENT_SHARING_TITLE">Opties voor delen</string>
-    <string name="rsb_consent_share_widely">Deel mijn gegevens met %s en gekwalificeerde onderzoekers wereldwijd</string>
-    <string name="rsb_consent_share_only">Deel mijn gegevens alleen met %s</string>
-    <string name="rsb_consent_sharing_description">De resultaten van je deelname aan dit onderzoek worden naar %s gestuurd.\n\nDoor de gecodeerde onderzoeksgegevens met anderen te delen (zonder persoonlijke gegevens zoals je naam) kun je helpen om dit en toekomstig onderzoek te verbeteren.</string>
+    <string name="rsb_consent_share_widely">Deel mijn gegevens met %1$s en gekwalificeerde onderzoekers wereldwijd</string>
+    <string name="rsb_consent_share_only">Deel mijn gegevens alleen met %1$s</string>
+    <string name="rsb_consent_sharing_description">De resultaten van je deelname aan dit onderzoek worden naar %1$s gestuurd.\n\nDoor de gecodeerde onderzoeksgegevens met anderen te delen (zonder persoonlijke gegevens zoals je naam) kun je helpen om dit en toekomstig onderzoek te verbeteren.</string>
     <string name="rsb_LEARN_MORE_CONSENT_SHARING">Meer informatie over het delen van gegevens</string>
     <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
-    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">Naam van %s (voluit)</string>
-    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">Handtekening van %s</string>
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">Naam van %1$s (voluit)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">Handtekening van %1$s</string>
     <string name="rsb_CONSENT_DOC_LINE_DATE">Datum</string>
     <!-- Progress indication (in navigation bar). -->
     <string name="rsb_STEP_PROGRESS_FORMAT">Stap %1$s van %2$s</string>
@@ -48,9 +48,9 @@
     <string name="rsb_RANGE_ALERT_TITLE">Ongeldige waarde</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s is hoger dan de maximaal toegestane waarde (%2$s).</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s is lager dan de minimaal toegestane waarde (%2$s).</string>
-    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%s is geen geldige waarde.</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s is geen geldige waarde.</string>
     <!-- Alert for invalid email address value -->
-    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Ongeldig e‑mailadres: %s</string>
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Ongeldig e‑mailadres: %1$s</string>
     <!-- Alerts for invalid location coordinates -->
     <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Voer een adres in</string>
     <string name="rsb_LOCATION_ERROR_TITLE">Opgegeven adres niet gevonden</string>
@@ -59,7 +59,7 @@
     <string name="rsb_LOCATION_ERROR_GEOCODE">Het ingevoerde adres is niet gevonden. Zorg dat je een geldig adres invoert.</string>
     <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">Je bent niet verbonden met het internet of je hebt te vaak naar een adres gezocht. Zet om deze vraag te beantwoorden Wi‑Fi aan als je niet verbonden bent met het internet. Je kunt deze vraag ook overslaan als er een knop \'Sla over\' is of verdergaan met deze vragenlijst als de internetverbinding actief is. Of je kunt het over een paar minuten opnieuw proberen.</string>
     <!-- Alert for exceeding length limit in text answer -->
-    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Tekst overschrijdt maximale lengte: %s</string>
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Tekst overschrijdt maximale lengte: %1$s</string>
     <!-- Camera not available during multitasking -->
     <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">Camera niet beschikbaar in gedeeld scherm.</string>
     <!-- Registration step -->
@@ -154,7 +154,7 @@
     <string name="rsb_COUNTDOWN_LABEL">Activiteit begint over</string>
     <string name="rsb_TASK_COMPLETE_TITLE">Activiteit voltooid</string>
     <string name="rsb_TASK_COMPLETE_TEXT">Je gegevens worden geanalyseerd. Je ontvangt bericht als de resultaten gereed zijn.</string>
-    <string name="rsb_countdown_spoken_remaining">Nog %s seconden.</string>
+    <string name="rsb_countdown_spoken_remaining">Nog %1$s seconden.</string>
     <!-- Image capture step. -->
     <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Leg afbeelding vast</string>
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Leg afbeelding opnieuw vast</string>
@@ -168,26 +168,26 @@
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Leg video opnieuw vast</string>
     <!-- Fitness active task. -->
     <string name="rsb_FITNESS_TASK_TITLE">Conditie</string>
-    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Afstand (%s)</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Afstand (%1$s)</string>
     <string name="rsb_FITNESS_HEARTRATE_TITLE">Hartslag (spm)</string>
-    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Ga %s gemakkelijk zitten.</string>
-    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Loop %s zo snel als je kunt.</string>
-    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Tijdens deze activiteit wordt je hartslag gemeten en wordt gekeken hoe ver je in %s kunt lopen.</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Ga %1$s gemakkelijk zitten.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Loop %1$s zo snel als je kunt.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Tijdens deze activiteit wordt je hartslag gemeten en wordt gekeken hoe ver je in %1$s kunt lopen.</string>
     <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Loop buiten %1$s zo snel als je kunt. Ga daarna gemakkelijk zitten en rust %2$s uit. Tik op \'Start\' om te beginnen.</string>
     <!-- Short walk active task. -->
     <string name="rsb_WALK_TASK_TITLE">Tred en balans</string>
     <string name="rsb_WALK_INTRO_TEXT">Tijdens deze activiteit worden je tred en balans gemeten terwijl je loopt en stilstaat. Ga niet verder als je niet veilig zelfstandig kunt lopen.</string>
-    <string name="rsb_walk_intro_2_text_ld">Zoek een plek waar je veilig en zelfstandig ongeveer %ld stappen in een rechte lijn kunt zetten.</string>
+    <string name="rsb_walk_intro_2_text_ld">Zoek een plek waar je veilig en zelfstandig ongeveer %1$d stappen in een rechte lijn kunt zetten.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL">Stop je iPhone in je zak of tas en volg de audio-instructies.</string>
-    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Sta nu %s lang stil.</string>
-    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Sta %s stil.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Sta nu %1$s lang stil.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Sta %1$s stil.</string>
     <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Draai om en loop terug naar het beginpunt.</string>
-    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Zet maximaal %ld stappen in een rechte lijn.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Zet maximaal %1$d stappen in een rechte lijn.</string>
     <!-- Short walk back and forth. -->
     <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Zoek een plek waar je veilig in een rechte lijn heen en weer kunt lopen. Maak aan de einden van de looproute een bocht (alsof je om een pylon heenloopt) zodat je niet hoeft te stoppen.\n\nDaarna wordt je gevraagd om één keer om je as te draaien en vervolgens om stil te staan met de armen langs je lichaam en je voeten uit elkaar op schouderbreedte.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Tik op \'Start\' als je klaar bent om te beginnen.\nStop de telefoon vervolgens in je zak of tas en volg de audio-instructies.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Loop %s in een rechte lijn heen en weer. Loop zoals je altijd loopt.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Draai één keer om je as en sta vervolgens %s stil.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Loop %1$s in een rechte lijn heen en weer. Loop zoals je altijd loopt.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Draai één keer om je as en sta vervolgens %1$s stil.</string>
     <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Je hebt de activiteit voltooid.</string>
     <!-- Tapping active task. -->
     <string name="rsb_TAPPING_TASK_TITLE">Tiksnelheid</string>
@@ -200,7 +200,7 @@
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Tik met twee vingers van je linkerhand beurtelings op de knoppen op het scherm.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Voer nu dezelfde test uit met je rechterhand.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Voer nu dezelfde test uit met je linkerhand.</string>
-    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Tik eerst met de ene vinger en dan met de andere. Probeer zo gelijkmatig mogelijk te tikken. Ga %s door met tikken.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Tik eerst met de ene vinger en dan met de andere. Probeer zo gelijkmatig mogelijk te tikken. Ga %1$s door met tikken.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION">Tik op \'Start\' om te beginnen.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Tik op \'Volgende\' om te beginnen.</string>
     <string name="rsb_TAP_BUTTON_TITLE">Tik</string>
@@ -227,21 +227,21 @@
     <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Tik op \'Start\' om te beginnen.</string>
     <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Je moet nu een toon horen. Pas het volume aan met de knoppen aan de zijkant van je apparaat.\n\nTik op de knop wanneer je klaar bent om te beginnen.</string>
     <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Tik op de knop telkens wanneer je een geluid begint te horen.</string>
-    <string name="rsb_tone_label_left">%s Hz, links</string>
-    <string name="rsb_tone_label_right">%s Hz, rechts</string>
+    <string name="rsb_tone_label_left">%1$s Hz, links</string>
+    <string name="rsb_tone_label_right">%1$s Hz, rechts</string>
     <!-- Spatial span memory active task. -->
     <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Ruimtelijk geheugen</string>
-    <string name="rsb_spatial_span_memory_intro_text">Tijdens deze activiteit wordt je ruimtelijk kortetermijngeheugen gemeten door je de volgorde waarin %s oplichten te laten herhalen.</string>
+    <string name="rsb_spatial_span_memory_intro_text">Tijdens deze activiteit wordt je ruimtelijk kortetermijngeheugen gemeten door je de volgorde waarin %1$s oplichten te laten herhalen.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">bloemen</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">bloemen</string>
     <string name="rsb_spatial_span_memory_intro_2_text">Een aantal van de %1$s licht een voor een op. Tik op die %2$s in dezelfde volgorde als waarin ze oplichtten.</string>
     <string name="rsb_spatial_span_memory_intro_2_text_reverse">Een aantal van de %1$s licht een voor een op. Tik op die %2$s in de omgekeerde volgorde als waarin ze oplichtten.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Tik op \'Start\' om te beginnen en kijk goed.</string>
-    <string name="rsb_memory_game_item_count_title">%s</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
     <string name="rsb_MEMORY_GAME_SCORE_TITLE">Score</string>
-    <string name="rsb_memory_game_playback_title">Kijk hoe de %s oplichten</string>
-    <string name="rsb_memory_game_gameplay_title">Tik op de %s in de volgorde waarin ze oplichtten</string>
-    <string name="rsb_memory_game_gameplay_reverse_title">Tik in omgekeerde volgorde op de %s</string>
+    <string name="rsb_memory_game_playback_title">Kijk hoe de %1$s oplichten</string>
+    <string name="rsb_memory_game_gameplay_title">Tik op de %1$s in de volgorde waarin ze oplichtten</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Tik in omgekeerde volgorde op de %1$s</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Volgorde voltooid</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Tik op \'Ga door\' om verder te gaan</string>
     <string name="rsb_MEMORY_GAME_FAILED_TITLE">Probeer het opnieuw</string>
@@ -269,7 +269,7 @@
     <!-- Timed walk active task. -->
     <string name="rsb_TIMED_WALK_TITLE">Lopen met tijdmeting</string>
     <string name="rsb_TIMED_WALK_INTRO_DETAIL">Met deze activiteit wordt het functioneren van je onderlichaam gemeten.</string>
-    <string name="rsb_timed_walk_intro_2_text">Zoek een plek, bij voorkeur buiten, waar je veilig zo snel mogelijk ongeveer %s in een rechte lijn kunt lopen. Vertraag je tempo niet totdat je voorbij de eindstreep bent.</string>
+    <string name="rsb_timed_walk_intro_2_text">Zoek een plek, bij voorkeur buiten, waar je veilig zo snel mogelijk ongeveer %1$s in een rechte lijn kunt lopen. Vertraag je tempo niet totdat je voorbij de eindstreep bent.</string>
     <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Tik op \'Volgende\' om te beginnen.</string>
     <string name="rsb_TIMED_WALK_FORM_TITLE">Loophulpmiddel</string>
     <string name="rsb_TIMED_WALK_FORM_TEXT">Gebruik hetzelfde hulpmiddel voor elke test.</string>
@@ -282,7 +282,7 @@
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Twee wandelstokken</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Twee krukken</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Looprek/Rollator</string>
-    <string name="rsb_timed_walk_instruction">Loop max. %s in een rechte lijn.</string>
+    <string name="rsb_timed_walk_instruction">Loop max. %1$s in een rechte lijn.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_2">Draai om en loop terug naar het beginpunt.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Tik op \'Gereed\' als je klaar bent.</string>
     <!-- PSAT active task. -->
@@ -292,14 +292,14 @@
     <string name="rsb_PASAT_INTRO_TEXT">Met de PASAT (een stapsgewijze auditieve seriële opteltest) wordt gemeten hoe snel je hoorbare informatie verwerkt en hoe goed je kunt rekenen.</string>
     <string name="rsb_PVSAT_INTRO_TEXT">Met de PVSAT (een stapsgewijze visuele seriële opteltest) wordt gemeten hoe snel je zichtbare informatie verwerkt en hoe goed je kunt rekenen.</string>
     <string name="rsb_PAVSAT_INTRO_TEXT">Met de PAVSAT (een stapsgewijze auditieve en visuele seriële opteltest) wordt gemeten hoe snel je hoorbare en zichtbare informatie verwerkt en hoe goed je kunt rekenen.</string>
-    <string name="rsb_psat_intro_text_2">Elke %s seconden ziet en/of hoor je een cijfer.\nJe moet elk nieuw cijfer optellen bij het vorige cijfer.\nLet op: je moet niet het totaal van alle cijfers berekenen, maar alleen de som van de laatste twee cijfers.</string>
+    <string name="rsb_psat_intro_text_2">Elke %1$s seconden ziet en/of hoor je een cijfer.\nJe moet elk nieuw cijfer optellen bij het vorige cijfer.\nLet op: je moet niet het totaal van alle cijfers berekenen, maar alleen de som van de laatste twee cijfers.</string>
     <string name="rsb_PSAT_CALL_TO_ACTION">Tik op \'Start\' om te beginnen.</string>
     <string name="rsb_PSAT_INITIAL_INSTRUCTION">Onthoud dit eerste cijfer.</string>
     <string name="rsb_PSAT_INSTRUCTION">Tel dit nieuwe cijfer op bij het vorige.</string>
     <string name="rsb_PSAT_NO_DIGIT">-</string>
     <!-- Hole peg test active task. -->
-    <string name="rsb_hole_peg_test_title">%s-schijventest</string>
-    <string name="rsb_hole_peg_test_intro_text">Tijdens deze activiteit mee je het functioneren van je bovenste ledematen door een schijfje in een cirkel te plaatsen. Dit moet je %s keer doen.</string>
+    <string name="rsb_hole_peg_test_title">%1$s-schijventest</string>
+    <string name="rsb_hole_peg_test_intro_text">Tijdens deze activiteit mee je het functioneren van je bovenste ledematen door een schijfje in een cirkel te plaatsen. Dit moet je %1$s keer doen.</string>
     <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">Zowel je linker- als rechterhand wordt getest.\nJe moet het schijfje zo snel mogelijk oppakken en in de cirkel plaatsen. Nadat je dit %1$s keer hebt gedaan, moet je het schijfje %2$s keer weer weghalen.</string>
     <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">Zowel je rechter- als linkerhand wordt getest.\nJe moet het schijfje zo snel mogelijk oppakken en in de cirkel plaatsen. Nadat je dit %1$s keer hebt gedaan, moet je het schijfje %2$s keer weer weghalen.</string>
     <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Tik op \'Start\' om te beginnen.</string>
@@ -315,7 +315,7 @@
     <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Houd de telefoon in de hand waarvan je de meeste last heeft, zoals hieronder afgebeeld.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Houd de telefoon in je RECHTERHAND, zoals hieronder afgebeeld.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Houd de telefoon in je LINKERHAND, zoals hieronder afgebeeld.</string>
-    <string name="rsb_tremor_test_intro_2_detail_default">Je wordt gevraagd om %s zittend uit te voeren met de telefoon in je hand.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Je wordt gevraagd om %1$s zittend uit te voeren met de telefoon in je hand.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">een taak</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">twee taken</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">drie taken</string>
@@ -325,28 +325,28 @@
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Bereid je voor om de telefoon in je schoot te houden.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Bereid je voor om de telefoon in je schoot te houden met je LINKERHAND.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Bereid je voor om de telefoon in je schoot te houden met je RECHTERHAND.</string>
-    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Houd de telefoon %ld seconden vast in je schoot.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Houd de telefoon %1$d seconden vast in je schoot.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Houd nu de telefoon op schouderhoogte in je uitgestoken hand.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Houd nu de telefoon op schouderhoogte in je uitgestoken LINKERHAND.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Houd nu de telefoon op schouderhoogte in je uitgestoken RECHTERHAND.</string>
-    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Houd de telefoon %ld seconden vast in je uitgestoken hand.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Houd de telefoon %1$d seconden vast in je uitgestoken hand.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Houd nu de telefoon op schouderhoogte terwijl je je elleboog gebogen houdt.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Houd nu de telefoon op schouderhoogte in je LINKERHAND terwijl je je elleboog gebogen houdt.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Houd nu de telefoon op schouderhoogte in je RECHTERHAND terwijl je je elleboog gebogen houdt.</string>
-    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Houd de telefoon %ld seconden vast terwijl je je elleboog gebogen houdt</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Houd de telefoon %1$d seconden vast terwijl je je elleboog gebogen houdt</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Raak nu je neus herhaaldelijk aan met de telefoon terwijl je je elleboog gebogen houdt.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Houd nu de telefoon in je LINKERHAND en raak je neus herhaaldelijk aan met de telefoon terwijl je je elleboog gebogen houdt.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Houd nu de telefoon in je RECHTERHAND en raak je neus herhaaldelijk aan met de telefoon terwijl je je elleboog gebogen houdt.</string>
-    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Raak %ld seconden je neus aan met de telefoon</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Raak %1$d seconden je neus aan met de telefoon</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Bereid je voor om te wuiven vanuit de pols.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Bereid je voor om te wuiven vanuit de pols met de telefoon in je LINKERHAND.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Bereid je voor om te wuiven vanuit de pols met de telefoon in je RECHTERHAND.</string>
-    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Wuif %ld seconden vanuit de pols.</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Wuif %1$d seconden vanuit de pols.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Neem de telefoon nu in je LINKERHAND en ga door met de volgende taak.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Neem de telefoon nu in je RECHTERHAND en ga door met de volgende taak.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Ga door naar de volgende taak.</string>
     <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Activiteit voltooid.</string>
-    <string name="rsb_tremor_test_skip_question_both_hands">Je wordt gevraagd om %s zittend uit te voeren met de telefoon in de ene hand en daarna opnieuw met de telefoon in de andere hand.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Je wordt gevraagd om %1$s zittend uit te voeren met de telefoon in de ene hand en daarna opnieuw met de telefoon in de andere hand.</string>
     <string name="rsb_TREMOR_SKIP_LEFT_HAND">Ik kan deze activiteit niet met mijn LINKERHAND uitvoeren.</string>
     <string name="rsb_TREMOR_SKIP_RIGHT_HAND">Ik kan deze activiteit niet met mijn RECHTERHAND uitvoeren.</string>
     <string name="rsb_TREMOR_SKIP_NEITHER">Ik kan deze activiteit met beide handen uitvoeren.</string>
@@ -362,7 +362,7 @@
     <string name="rsb_CHART_NO_DATA_TEXT">Geen gegevens</string>
     <!-- Accessibility -->
     <string name="rsb_AX_BUTTON_BACK">Terug</string>
-    <string name="rsb_AX_IMAGE_ILLUSTRATION">Afbeelding van %s</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">Afbeelding van %1$s</string>
     <string name="rsb_AX_SIGNVIEW_LABEL">Veld voor handtekening</string>
     <string name="rsb_AX_SIGNVIEW_HINT">Beweeg je vinger over het scherm om je handtekening te zetten</string>
     <string name="rsb_AX_SIGNVIEW_SIGNED">Ondertekend</string>
@@ -386,11 +386,11 @@
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Toren</string>
     <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Tik dubbel om de schijf te plaatsen</string>
     <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Tik dubbel om de bovenste schijf te selecteren</string>
-    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Heeft schijf met groottes %s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Heeft schijf met groottes %1$s</string>
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Leeg</string>
     <string name="rsb_ax_graph_range_format">Bereik van %1$s tot %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Stack bestaat uit</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">en</string>
-    <string name="rsb_ax_graph_point">Punt: %s</string>
+    <string name="rsb_ax_graph_point">Punt: %1$s</string>
     
 </resources>

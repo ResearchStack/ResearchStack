@@ -34,13 +34,13 @@
     <string name="rsb_LEARN_MORE_WITHDRAWING">Ketahui lebih lanjut tentang menarik diri</string>
     <!-- Consent sharing step -->
     <string name="rsb_CONSENT_SHARING_TITLE">Pilihan Perkongsian</string>
-    <string name="rsb_consent_share_widely">Kongsi data saya dengan %s dan penyelidik yang layak di seluruh dunia</string>
-    <string name="rsb_consent_share_only">Kongsi data saya dengan %s sahaja</string>
-    <string name="rsb_consent_sharing_description">%s akan menerima data kajian anda daripada penyertaan anda dalam kajian ini.\n\nBerkongsi data kajian berkod anda dengan lebih luas (tanpa maklumat seperti nama anda) mungkin memberi manfaat kepada penyelidikan ini dan penyelidikan masa hadapan.</string>
+    <string name="rsb_consent_share_widely">Kongsi data saya dengan %1$s dan penyelidik yang layak di seluruh dunia</string>
+    <string name="rsb_consent_share_only">Kongsi data saya dengan %1$s sahaja</string>
+    <string name="rsb_consent_sharing_description">%1$s akan menerima data kajian anda daripada penyertaan anda dalam kajian ini.\n\nBerkongsi data kajian berkod anda dengan lebih luas (tanpa maklumat seperti nama anda) mungkin memberi manfaat kepada penyelidikan ini dan penyelidikan masa hadapan.</string>
     <string name="rsb_LEARN_MORE_CONSENT_SHARING">Ketahui lebih lanjut tentang perkongsian data</string>
     <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
-    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">Nama %s (bertulis)</string>
-    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">Tandatangan %s</string>
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">Nama %1$s (bertulis)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">Tandatangan %1$s</string>
     <string name="rsb_CONSENT_DOC_LINE_DATE">Tarikh</string>
     <!-- Progress indication (in navigation bar). -->
     <string name="rsb_STEP_PROGRESS_FORMAT">Langkah %1$s daripada %2$s</string>
@@ -48,9 +48,9 @@
     <string name="rsb_RANGE_ALERT_TITLE">Nilai tidak sah</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s melebihi nilai maksimum yang dibenarkan (%2$s).</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s kurang daripada nilai minimum yang dibenarkan (%2$s).</string>
-    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%s bukan nilai yang sah.</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s bukan nilai yang sah.</string>
     <!-- Alert for invalid email address value -->
-    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Alamat e-mel tidak sah: %s</string>
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Alamat e-mel tidak sah: %1$s</string>
     <!-- Alerts for invalid location coordinates -->
     <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Masukkan alamat</string>
     <string name="rsb_LOCATION_ERROR_TITLE">Tidak Menemui Alamat yang Ditentukan</string>
@@ -59,7 +59,7 @@
     <string name="rsb_LOCATION_ERROR_GEOCODE">Gagal mencari hasil untuk alamat yang dimasukkan. Sila pastikan alamat adalah sah.</string>
     <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">Sama ada anda tidak disambungkan ke internet atau anda telah melebihi bilangan maksimum permintaan carian alamat. Jika anda tidak disambungkan ke internet, sila aktifkan Wi-Fi anda untuk menjawab soalan ini, langkau soalan ini jika butang langkau tersedia, atau kembali ke tinjauan apabila anda disambungkan ke internet. Sebaliknya, sila cuba lagi dalam masa beberapa minit.</string>
     <!-- Alert for exceeding length limit in text answer -->
-    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Kandungan teks melebihi panjang maksimum: %s</string>
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Kandungan teks melebihi panjang maksimum: %1$s</string>
     <!-- Camera not available during multitasking -->
     <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">Kamera tidak tersedia dalam skrin terpisah.</string>
     <!-- Registration step -->
@@ -154,7 +154,7 @@
     <string name="rsb_COUNTDOWN_LABEL">Memulakan aktiviti dalam</string>
     <string name="rsb_TASK_COMPLETE_TITLE">Aktiviti Selesai</string>
     <string name="rsb_TASK_COMPLETE_TEXT">Data anda akan dianalisis dan anda akan dimaklumkan apabila keputusan anda tersedia.</string>
-    <string name="rsb_countdown_spoken_remaining">Tinggal %s saat.</string>
+    <string name="rsb_countdown_spoken_remaining">Tinggal %1$s saat.</string>
     <!-- Image capture step. -->
     <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Tangkap Imej</string>
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Tangkap Semula Imej</string>
@@ -168,26 +168,26 @@
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Rakam Semula Video</string>
     <!-- Fitness active task. -->
     <string name="rsb_FITNESS_TASK_TITLE">Kecergasan</string>
-    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Jarak (%s)</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Jarak (%1$s)</string>
     <string name="rsb_FITNESS_HEARTRATE_TITLE">Kadar Denyut Jantung (bpm)</string>
-    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Duduk dengan selesa selama %s.</string>
-    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Jalan selaju yang anda boleh selama %s.</string>
-    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Aktiviti ini memantau kadar denyut jantung anda dan mengukur jarak anda boleh berjalan dalam %s.</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Duduk dengan selesa selama %1$s.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Jalan selaju yang anda boleh selama %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Aktiviti ini memantau kadar denyut jantung anda dan mengukur jarak anda boleh berjalan dalam %1$s.</string>
     <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Jalan di luar bangunan secepat yang anda boleh selama %1$s. Apabila anda selesai, duduk dan berehat dengan selesa selama %2$s. Untuk memulakan, ketik Mulakan.</string>
     <!-- Short walk active task. -->
     <string name="rsb_WALK_TASK_TITLE">Gaya Jalan dan Imbangan</string>
     <string name="rsb_WALK_INTRO_TEXT">Aktiviti ini mengukur gaya jalan dan keseimbangan anda semasa anda berjalan dan berdiri pegun. Jangan teruskan jika anda tidak boleh berjalan dengan selamat tanpa bantuan.</string>
-    <string name="rsb_walk_intro_2_text_ld">Cari tempat yang boleh anda berjalan dengan selamat tanpa bantuan sejauh %ld langkah dalam garis lurus.</string>
+    <string name="rsb_walk_intro_2_text_ld">Cari tempat yang boleh anda berjalan dengan selamat tanpa bantuan sejauh %1$d langkah dalam garis lurus.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL">Masukkan telefon anda ke dalam saku atau beg dan ikuti arahan audio.</string>
-    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Sekarang berdiri pegun selama %s.</string>
-    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Berdiri pegun selama %s.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Sekarang berdiri pegun selama %1$s.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Berdiri pegun selama %1$s.</string>
     <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Pusing dan berjalan balik ke tempat anda bermula.</string>
-    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Jalan sehingga %ld langkah dalam garis lurus.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Jalan sehingga %1$d langkah dalam garis lurus.</string>
     <!-- Short walk back and forth. -->
     <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Cari tempat di mana anda boleh berjalan mundar mandir dalam garis lurus. Cuba berjalan berterusan dengan berpusing di kedua penghujung laluan anda, seperti anda berjalan mengelilingi kon.\n\nSeterusnya anda akan diarahkan untuk berpusing dalam bulatan penuh, kemudian berdiri tegak dengan tangan anda di sisi anda dan kaki anda dibuka selebar bahu.</string>
     <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Ketik Mulakan apabila anda bersedia untuk bermula.\nKemudian letakkan telefon anda di dalam saku atau beg dan ikuti arahan audio.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Berjalan mundar mandir dalam garis lurus selama %s. Jalan seperti biasa anda lakukan.</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Buat pusingan penuh dan kemudian berdiri tegak selama %s.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Berjalan mundar mandir dalam garis lurus selama %1$s. Jalan seperti biasa anda lakukan.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Buat pusingan penuh dan kemudian berdiri tegak selama %1$s.</string>
     <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Anda telah melengkapkan aktiviti.</string>
     <!-- Tapping active task. -->
     <string name="rsb_TAPPING_TASK_TITLE">Kelajuan Ketikan</string>
@@ -200,7 +200,7 @@
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Gunakan dua jari pada tangan kiri anda untuk mengetik butang pada skrin secara berselang-seli.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Sekarang ulang ujian yang sama menggunakan tangan kanan anda.</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Sekarang ulang ujian yang sama menggunakan tangan kiri anda.</string>
-    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Ketik satu jari, kemudian ketik yang lain. Cuba mengetik dengan kadar yang sekata mungkin. Teruskan mengetik selama %s.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Ketik satu jari, kemudian ketik yang lain. Cuba mengetik dengan kadar yang sekata mungkin. Teruskan mengetik selama %1$s.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION">Ketik Mulakan untuk memulakan.</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Ketik Seterusnya untuk bermula.</string>
     <string name="rsb_TAP_BUTTON_TITLE">Ketik</string>
@@ -227,21 +227,21 @@
     <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Ketik Mulakan untuk memulakan.</string>
     <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Anda sepatutnya mendengar nada sekarang. Laraskan kelantangan menggunakan kawalan di sisi peranti anda.\n\nKetik butang apabila anda sedia untuk bermula.</string>
     <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Ketik butang setiap kali anda mula mendengar bunyi.</string>
-    <string name="rsb_tone_label_left">%s Hz, Kiri</string>
-    <string name="rsb_tone_label_right">%s Hz, Kanan</string>
+    <string name="rsb_tone_label_left">%1$s Hz, Kiri</string>
+    <string name="rsb_tone_label_right">%1$s Hz, Kanan</string>
     <!-- Spatial span memory active task. -->
     <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Memori Ruang</string>
-    <string name="rsb_spatial_span_memory_intro_text">Aktiviti ini mengukur memori ruang jangka pendek anda dengan meminta anda mengulangi tertib yang %s bernyala.</string>
+    <string name="rsb_spatial_span_memory_intro_text">Aktiviti ini mengukur memori ruang jangka pendek anda dengan meminta anda mengulangi tertib yang %1$s bernyala.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">bunga</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">bunga</string>
     <string name="rsb_spatial_span_memory_intro_2_text">Sesetengah %1$s akan bernyala satu demi satu. Ketik %2$s tersebut dalam urutan yang sama ia menyala.</string>
     <string name="rsb_spatial_span_memory_intro_2_text_reverse">Sesetengah %1$s akan bernyala satu demi satu. Ketik %2$s tersebut dalam urutan terbalik ia menyala.</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Untuk memulakan, ketik Mulakan, kemudian lihat dengan teliti.</string>
-    <string name="rsb_memory_game_item_count_title">%s</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
     <string name="rsb_MEMORY_GAME_SCORE_TITLE">Skor</string>
-    <string name="rsb_memory_game_playback_title">Lihat %s bernyala</string>
-    <string name="rsb_memory_game_gameplay_title">Ketik %s dalam tertib ia bernyala</string>
-    <string name="rsb_memory_game_gameplay_reverse_title">Ketik %s dalam tertib terbalik</string>
+    <string name="rsb_memory_game_playback_title">Lihat %1$s bernyala</string>
+    <string name="rsb_memory_game_gameplay_title">Ketik %1$s dalam tertib ia bernyala</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Ketik %1$s dalam tertib terbalik</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Jujukan Selesai</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Untuk meneruskan, ketik Seterusnya</string>
     <string name="rsb_MEMORY_GAME_FAILED_TITLE">Cuba Lagi</string>
@@ -269,7 +269,7 @@
     <!-- Timed walk active task. -->
     <string name="rsb_TIMED_WALK_TITLE">Jalan Bermasa</string>
     <string name="rsb_TIMED_WALK_INTRO_DETAIL">Aktiviti ini mengukur fungsi anggota badan bawah anda.</string>
-    <string name="rsb_timed_walk_intro_2_text">Cari sesuatu tempat, lebih baik jika di luar bangunan, yang boleh anda berjalan selama lebih kurang %s dalam garis lurus secepat mungkin, namun dengan selamat. Jangan perlahankan diri sehingga anda melepasi garisan penamat.</string>
+    <string name="rsb_timed_walk_intro_2_text">Cari sesuatu tempat, lebih baik jika di luar bangunan, yang boleh anda berjalan selama lebih kurang %1$s dalam garis lurus secepat mungkin, namun dengan selamat. Jangan perlahankan diri sehingga anda melepasi garisan penamat.</string>
     <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Ketik Seterusnya untuk bermula.</string>
     <string name="rsb_TIMED_WALK_FORM_TITLE">Peranti bantuan</string>
     <string name="rsb_TIMED_WALK_FORM_TEXT">Gunakan peranti bantuan yang sama untuk setiap ujian.</string>
@@ -282,7 +282,7 @@
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Tongkat Dua Tangan</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Topang Dua Tangan</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Pejalan/Rollator</string>
-    <string name="rsb_timed_walk_instruction">Jalan sehingga %s dalam garis lurus.</string>
+    <string name="rsb_timed_walk_instruction">Jalan sehingga %1$s dalam garis lurus.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_2">Pusing dan berjalan balik ke tempat anda bermula.</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Ketik Selesai apabila selesai.</string>
     <!-- PSAT active task. -->
@@ -292,14 +292,14 @@
     <string name="rsb_PASAT_INTRO_TEXT">Ujian Penambahan Bersiri Pendengaran Berkadar mengukur kelajuan pemprosesan maklumat pendengaran dan keupayaan pengiraan anda.</string>
     <string name="rsb_PVSAT_INTRO_TEXT">Ujian Penambahan Bersiri Visual Berkadar mengukur kelajuan pemprosesan maklumat visual dan keupayaan pengiraan anda.</string>
     <string name="rsb_PAVSAT_INTRO_TEXT">Ujian Penambahan Bersiri Pendengaran dan Visual Berkadar mengukur kelajuan pemprosesan maklumat pendengaran dan visual serta keupayaan pengiraan anda.</string>
-    <string name="rsb_psat_intro_text_2">Digit tunggal dipaparkan setiap %s saat.\nAnda mesti menambahkan setiap digit baru dengan digit yang betul-betul sebelumnya.\nHarap maklum, anda tidak boleh mengira jumlah keseluruhan, namun jumlah dua nombor terakhir sahaja.</string>
+    <string name="rsb_psat_intro_text_2">Digit tunggal dipaparkan setiap %1$s saat.\nAnda mesti menambahkan setiap digit baru dengan digit yang betul-betul sebelumnya.\nHarap maklum, anda tidak boleh mengira jumlah keseluruhan, namun jumlah dua nombor terakhir sahaja.</string>
     <string name="rsb_PSAT_CALL_TO_ACTION">Ketik Mulakan untuk memulakan.</string>
     <string name="rsb_PSAT_INITIAL_INSTRUCTION">Ingati digit pertama ini.</string>
     <string name="rsb_PSAT_INSTRUCTION">Tambah digit baru ini pada yang sebelumnya.</string>
     <string name="rsb_PSAT_NO_DIGIT">-</string>
     <!-- Hole peg test active task. -->
-    <string name="rsb_hole_peg_test_title">Ujian Pancang %s Lubang</string>
-    <string name="rsb_hole_peg_test_intro_text">Aktiviti ini mengukur fungsi anggota badan atas anda dengan meminta anda meletakkan pancang ke dalam lubang. Anda akan diminta melakukan ini %s kali.</string>
+    <string name="rsb_hole_peg_test_title">Ujian Pancang %1$s Lubang</string>
+    <string name="rsb_hole_peg_test_intro_text">Aktiviti ini mengukur fungsi anggota badan atas anda dengan meminta anda meletakkan pancang ke dalam lubang. Anda akan diminta melakukan ini %1$s kali.</string>
     <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">Tangan kiri dan kanan anda akan diuji.\nAnda mesti mengutip pancang secepat mungkin, memasukkannya ke dalam lubang dan setelah dilakukan %1$s kali, keluarkannya sekali lagi %2$s kali.</string>
     <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">Tangan kanan dan kiri anda akan diuji.\nAnda mesti mengutip pancang secepat mungkin, memasukkannya ke dalam lubang dan setelah dilakukan %1$s kali, keluarkannya sekali lagi %2$s kali.</string>
     <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Ketik Mulakan untuk memulakan.</string>
@@ -315,7 +315,7 @@
     <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Pegang telefon di tangan anda yang lebih terjejas seperti yang ditunjukkan dalam imej di bawah.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Pegang telefon di tangan KANAN anda seperti yang ditunjukkan dalam imej di bawah.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Pegang telefon di tangan KIRI anda seperti yang ditunjukkan dalam imej di bawah.</string>
-    <string name="rsb_tremor_test_intro_2_detail_default">Anda akan diminta untuk melakukan %s sementara duduk dengan telefon di tangan anda.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Anda akan diminta untuk melakukan %1$s sementara duduk dengan telefon di tangan anda.</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">satu tugas</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">dua tugas</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">tiga tugas</string>
@@ -325,28 +325,28 @@
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Bersedia untuk memegang telefon anda di riba anda.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Bersedia untuk memegang telefon anda di riba anda dengan tangan KIRI anda.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Bersedia untuk memegang telefon anda di riba anda dengan tangan KANAN anda.</string>
-    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Teruskan memegang telefon anda di riba anda selama %ld saat.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Teruskan memegang telefon anda di riba anda selama %1$d saat.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Sekarang pegang telefon anda dengan tangan anda diluruskan pada ketinggian bahu.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Sekarang pegang telefon anda dengan tangan KIRI anda diluruskan pada ketinggian bahu.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Sekarang pegang telefon anda dengan tangan KANAN anda diluruskan pada ketinggian bahu.</string>
-    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Teruskan memegang telefon anda dengan tangan anda diluruskan selama %ld saat.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Teruskan memegang telefon anda dengan tangan anda diluruskan selama %1$d saat.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Sekarang pegang telefon anda pada ketinggian bahu dengan siku anda dibengkokkan.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Sekarang pegang telefon anda dengan tangan KIRI anda pada ketinggian bahu dengan siku anda dibengkokkan.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Sekarang pegang telefon anda dengan tangan KANAN anda pada ketinggian bahu dengan siku anda dibengkokkan.</string>
-    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Teruskan memegang telefon anda dengan siku anda dibengkokkan selama %ld saat</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Teruskan memegang telefon anda dengan siku anda dibengkokkan selama %1$d saat</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Terus bengkokkan siku anda, sentuh telefon anda ke hidung anda berulang kali.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Terus bengkokkan siku anda dengan telefon anda di tangan KIRI anda, sentuh telefon anda ke hidung anda berulang kali.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Terus bengkokkan siku anda dengan telefon anda di tangan KANAN anda, sentuh telefon anda ke hidung anda berulang kali.</string>
-    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Teruskan menyentuh telefon anda ke hidung anda selama %ld saat</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Teruskan menyentuh telefon anda ke hidung anda selama %1$d saat</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Bersedia untuk melakukan lambaian ratu (lambai dengan memusingkan pergelangan tangan anda).</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Bersedia untuk melakukan lambaian ratu dengan telefon anda di tangan KIRI anda (lambai dengan memusingkan pergelangan tangan anda).</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Bersedia untuk melakukan lambaian ratu dengan telefon anda di tangan KANAN anda (lambai dengan memusingkan pergelangan tangan anda).</string>
-    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Terus melakukan lambaian ratu untuk %ld saat.</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Terus melakukan lambaian ratu untuk %1$d saat.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Sekarang tukar telefon ke tangan KIRI anda dan teruskan ke tugas seterusnya.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Sekarang tukar telefon ke tangan KANAN anda dan teruskan ke tugas seterusnya.</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Teruskan ke tugas seterusnya.</string>
     <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Aktiviti selesai.</string>
-    <string name="rsb_tremor_test_skip_question_both_hands">Anda akan diminta untuk melakukan %s sementara duduk dengan telefon di sebelah tangan dahulu, kemudian sekali lagi dengan tangan yang lain.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Anda akan diminta untuk melakukan %1$s sementara duduk dengan telefon di sebelah tangan dahulu, kemudian sekali lagi dengan tangan yang lain.</string>
     <string name="rsb_TREMOR_SKIP_LEFT_HAND">Saya tidak boleh laksanakan aktiviti ini menggunakan tangan KIRI saya.</string>
     <string name="rsb_TREMOR_SKIP_RIGHT_HAND">Saya tidak boleh laksanakan aktiviti ini menggunakan tangan KANAN saya.</string>
     <string name="rsb_TREMOR_SKIP_NEITHER">Saya boleh laksanakan aktiviti ini menggunakan kedua belah tangan.</string>
@@ -362,7 +362,7 @@
     <string name="rsb_CHART_NO_DATA_TEXT">Tiada Data</string>
     <!-- Accessibility -->
     <string name="rsb_AX_BUTTON_BACK">Balik</string>
-    <string name="rsb_AX_IMAGE_ILLUSTRATION">Ilustrasi %s</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">Ilustrasi %1$s</string>
     <string name="rsb_AX_SIGNVIEW_LABEL">Medan tandatangan yang ditetapkan</string>
     <string name="rsb_AX_SIGNVIEW_HINT">Sentuh skrin dan gerakkan jari anda untuk menandatangan</string>
     <string name="rsb_AX_SIGNVIEW_SIGNED">Ditandatangani</string>
@@ -386,11 +386,11 @@
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Menara</string>
     <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Dwiketik untuk menempatkan cakera</string>
     <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Dwiketik untuk memilih cakera teratas</string>
-    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Mempunyai cakera bersaiz %s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Mempunyai cakera bersaiz %1$s</string>
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Kosong</string>
     <string name="rsb_ax_graph_range_format">Julat daripada %1$s hingga %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Tindanan terdiri daripada</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">dan</string>
-    <string name="rsb_ax_graph_point">Titik: %s</string>
+    <string name="rsb_ax_graph_point">Titik: %1$s</string>
     
 </resources>

@@ -34,13 +34,13 @@
     <string name="rsb_LEARN_MORE_WITHDRAWING">เรียนรู้เพิ่มเติมเกี่ยวกับการถอนตัว</string>
     <!-- Consent sharing step -->
     <string name="rsb_CONSENT_SHARING_TITLE">ตัวเลือกการแชร์</string>
-    <string name="rsb_consent_share_widely">แบ่งปันข้อมูลกับ %s และนักวิจัยที่ได้รับการรับรองทั่วโลก</string>
-    <string name="rsb_consent_share_only">แชร์ข้อมูลของฉันกับ %s เท่านั้น</string>
-    <string name="rsb_consent_sharing_description">%s จะได้รับข้อมูลการศึกษาของคุณจากการเข้าร่วมของคุณในการศึกษานี้\n\nการแชร์ข้อมูลการศึกษาของคุณกับผู้อื่น (โดยไม่แชร์ข้อมูลอย่างชื่อของคุณ) อาจช่วยพัฒนาการวิจัยชิ้นนี้และชิ้นอื่นๆ ได้</string>
+    <string name="rsb_consent_share_widely">แบ่งปันข้อมูลกับ %1$s และนักวิจัยที่ได้รับการรับรองทั่วโลก</string>
+    <string name="rsb_consent_share_only">แชร์ข้อมูลของฉันกับ %1$s เท่านั้น</string>
+    <string name="rsb_consent_sharing_description">%1$s จะได้รับข้อมูลการศึกษาของคุณจากการเข้าร่วมของคุณในการศึกษานี้\n\nการแชร์ข้อมูลการศึกษาของคุณกับผู้อื่น (โดยไม่แชร์ข้อมูลอย่างชื่อของคุณ) อาจช่วยพัฒนาการวิจัยชิ้นนี้และชิ้นอื่นๆ ได้</string>
     <string name="rsb_LEARN_MORE_CONSENT_SHARING">เรียนรู้เพิ่มเติมเกี่ยวกับการแชร์ข้อมูล</string>
     <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
-    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">ชื่อของ %s (ตัวพิมพ์)</string>
-    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">ลายเซ็นของ %s</string>
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">ชื่อของ %1$s (ตัวพิมพ์)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">ลายเซ็นของ %1$s</string>
     <string name="rsb_CONSENT_DOC_LINE_DATE">วันที่</string>
     <!-- Progress indication (in navigation bar). -->
     <string name="rsb_STEP_PROGRESS_FORMAT">ขั้นที่ %1$s จาก %2$s</string>
@@ -48,9 +48,9 @@
     <string name="rsb_RANGE_ALERT_TITLE">ค่าไม่ถูกต้อง</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s เกินจำนวนค่าสูงสุดที่อนุญาต (%2$s)</string>
     <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s น้อยกว่าค่าต่ำสุดที่อนุญาต (%2$s)</string>
-    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%s ไม่ใช่ค่าที่ถูกต้อง</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s ไม่ใช่ค่าที่ถูกต้อง</string>
     <!-- Alert for invalid email address value -->
-    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">ที่อยู่อีเมลที่ไม่ถูกต้อง: %s</string>
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">ที่อยู่อีเมลที่ไม่ถูกต้อง: %1$s</string>
     <!-- Alerts for invalid location coordinates -->
     <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">ป้อนที่อยู่</string>
     <string name="rsb_LOCATION_ERROR_TITLE">ไม่สามารถหาที่อยู่ที่ระบุได้</string>
@@ -59,7 +59,7 @@
     <string name="rsb_LOCATION_ERROR_GEOCODE">ไม่มีผลการค้นหาสำหรับที่อยู่ที่ป้อน กรุณาตรวจสอบให้แน่ใจว่าที่อยู่ถูกต้อง</string>
     <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">คุณไม่ได้เชื่อมต่อกับอินเทอร์เน็ตหรือจำนวนที่อยู่เต็มแล้ว ถ้าคุณไม่ได้เชื่อมต่อกับอินเทอร์เน็ต กรุณาเปิดใช้งาน Wi-Fi ของคุณเพื่อตอบคำถามนี้ หากมีปุ่มข้ามคุณจะสามารถข้ามคำถามนี้ได้ หรือกลับมาที่แบบสำรวจนี้เมื่อคุณเชื่อมต่อกับอินเทอร์เน็ต หรือกรุณารอสักครู่หนึ่งแล้วลองอีกครั้ง</string>
     <!-- Alert for exceeding length limit in text answer -->
-    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">เนื้อหาข้อความที่เกินจำนวนสูงสุด: %s</string>
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">เนื้อหาข้อความที่เกินจำนวนสูงสุด: %1$s</string>
     <!-- Camera not available during multitasking -->
     <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">ไม่สามารถใช้งานกล้องในหน้าจอแบบแยกได้</string>
     <!-- Registration step -->
@@ -154,7 +154,7 @@
     <string name="rsb_COUNTDOWN_LABEL">กำลังจะเริ่มกิจกรรมใน</string>
     <string name="rsb_TASK_COMPLETE_TITLE">กิจกรรมเสร็จสมบูรณ์</string>
     <string name="rsb_TASK_COMPLETE_TEXT">ข้อมูลของคุณจะได้รับการวินิจฉัยและคุณจะได้รับแจ้งเมื่อได้ผลลัพธ์ของคุณแล้ว</string>
-    <string name="rsb_countdown_spoken_remaining">เหลืออีก %s วินาที</string>
+    <string name="rsb_countdown_spoken_remaining">เหลืออีก %1$s วินาที</string>
     <!-- Image capture step. -->
     <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">จับภาพ</string>
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">จับภาพอีกครั้ง</string>
@@ -168,26 +168,26 @@
     <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">ถ่ายวิดีโออีกครั้ง</string>
     <!-- Fitness active task. -->
     <string name="rsb_FITNESS_TASK_TITLE">ฟิตเนส</string>
-    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">ระยะทาง (%s)</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">ระยะทาง (%1$s)</string>
     <string name="rsb_FITNESS_HEARTRATE_TITLE">อัตราการเต้นของหัวใจ (bpm)</string>
-    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">นั่งสบายๆ นาน %s</string>
-    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">เดินให้เร็วที่สุดเท่าที่คุณทำได้นาน %s</string>
-    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">กิจกรรมนี้จะตรวจสอบอัตราการเต้นของหัวใจของคุณและวัดระยะทางที่คุณสามารถเดินได้ภายใน %s</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">นั่งสบายๆ นาน %1$s</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">เดินให้เร็วที่สุดเท่าที่คุณทำได้นาน %1$s</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">กิจกรรมนี้จะตรวจสอบอัตราการเต้นของหัวใจของคุณและวัดระยะทางที่คุณสามารถเดินได้ภายใน %1$s</string>
     <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">เดินกลางแจ้งด้วยอัตราการเดินที่เร็วที่สุดที่คุณทำได้นาน %1$s เมื่อคุณเดินเสร็จแล้ว ให้นั่งพักสบายๆ นาน %2$s ในการเริ่มต้น ให้แตะเริ่มต้นใช้งาน</string>
     <!-- Short walk active task. -->
     <string name="rsb_WALK_TASK_TITLE">ท่าเดินและความสมดุล</string>
     <string name="rsb_WALK_INTRO_TEXT">กิจกรรมนี้จะวัดท่าเดินและความสมดุลของคุณในขณะที่คุณเดินและยืนนิ่งๆ อย่าดำเนินการต่อหากคุณไม่สามารถเดินได้อย่างปลอดภัยโดยไม่มีตัวช่วย</string>
-    <string name="rsb_walk_intro_2_text_ld">ค้นหาที่ที่คุณสามารถเดินเป็นเส้นตรงได้ไกลประมาณ %ld ก้าวได้อย่างปลอดภัยโดยไม่ต้องมีสิ่งช่วยเหลือ</string>
+    <string name="rsb_walk_intro_2_text_ld">ค้นหาที่ที่คุณสามารถเดินเป็นเส้นตรงได้ไกลประมาณ %1$d ก้าวได้อย่างปลอดภัยโดยไม่ต้องมีสิ่งช่วยเหลือ</string>
     <string name="rsb_WALK_INTRO_2_DETAIL">ใส่โทรศัพท์ไว้ในกระเป๋ากางเกงหรือกระเป๋าแล้วทำตามคำแนะนำด้วยเสียง</string>
-    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">ตอนนี้ให้ยืนนิ่งๆ นาน %s</string>
-    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">ยืนนิ่งๆ นาน %s</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">ตอนนี้ให้ยืนนิ่งๆ นาน %1$s</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">ยืนนิ่งๆ นาน %1$s</string>
     <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">หันหลัง แล้วเดินกลับไปจุดเริ่มต้น</string>
-    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">เดินตรงขึ้นไป %ld ก้าว</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">เดินตรงขึ้นไป %1$d ก้าว</string>
     <!-- Short walk back and forth. -->
     <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">หาสถานที่ที่คุณสามารถเดินไปมาเป็นเส้นตรงได้อย่างปลอดภัย ให้ลองเดินไปเรื่อยๆ จนสุดทางแล้วเดินกลับ เสมือนคุณเดินวนรอบกรวย\n\nจากนั้นระบบจะแนะนำให้คุณกลับหลังหัน แล้วยืนนิ่งๆ โดยแนบแขนไว้ข้างลำตัวและวางเท้าให้ห่างกันเท่ากับความกว้างของหัวไหล่</string>
     <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">แตะเริ่มต้น เมื่อคุณพร้อมที่จะเริ่มใช้งาน\nจากนั้นใส่โทรศัพท์ของคุณไว้ในกระเป๋ากางเกงหรือกระเป๋าถือ แล้วทำตามคำแนะนำด้วยเสียง</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">เดินไปมาเป็นเส้นตรงนาน %s โดยให้คุณเดินตามปกติ</string>
-    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">กลับหลังหันแล้วยืนนิ่งๆ นาน %s</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">เดินไปมาเป็นเส้นตรงนาน %1$s โดยให้คุณเดินตามปกติ</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">กลับหลังหันแล้วยืนนิ่งๆ นาน %1$s</string>
     <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">คุณทำกิจกรรมเสร็จสมบูรณ์แล้ว</string>
     <!-- Tapping active task. -->
     <string name="rsb_TAPPING_TASK_TITLE">ความเร็วของการแตะ</string>
@@ -200,7 +200,7 @@
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">ใช้นิ้วมือข้างซ้ายสองนิ้วแตะสลับกันที่ปุ่มบนหน้าจอ</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">ตอนนี้ให้ทดสอบแบบเดียวกันซ้ำอีกครั้งโดยใช้มือขวา</string>
     <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">ตอนนี้ให้ทดสอบแบบเดียวกันซ้ำอีกครั้งโดยใช้มือซ้าย</string>
-    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">แตะหนึ่งนิ้ว แล้วตามด้วยอีกนิ้ว ลองจับเวลาการแตะของคุณโดยให้มีจังหวะเท่ากันมากที่สุด แตะต่อไปเรื่อยๆ เป็นเวลา %s</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">แตะหนึ่งนิ้ว แล้วตามด้วยอีกนิ้ว ลองจับเวลาการแตะของคุณโดยให้มีจังหวะเท่ากันมากที่สุด แตะต่อไปเรื่อยๆ เป็นเวลา %1$s</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION">แตะเริ่มต้นใช้งานเพื่อเริ่ม</string>
     <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">แตะถัดไปเพื่อเริ่ม</string>
     <string name="rsb_TAP_BUTTON_TITLE">แตะ</string>
@@ -227,21 +227,21 @@
     <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">แตะเริ่มต้นใช้งานเพื่อเริ่ม</string>
     <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">ตอนนี้คุณจะได้ยินเสียงเตือน ให้ปรับความดังโดยใช้ตัวควบคุมที่อยู่ด้านข้างอุปกรณ์ของคุณ\n\nแตะปุ่มเมื่อคุณพร้อมที่จะเริ่ม</string>
     <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">แตะที่ปุ่มทุกครั้งที่คุณเริ่มได้ยินเสียง</string>
-    <string name="rsb_tone_label_left">%s Hz ซ้าย</string>
-    <string name="rsb_tone_label_right">%s Hz ขวา</string>
+    <string name="rsb_tone_label_left">%1$s Hz ซ้าย</string>
+    <string name="rsb_tone_label_right">%1$s Hz ขวา</string>
     <!-- Spatial span memory active task. -->
     <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">ความจำเชิงพื้นที่</string>
-    <string name="rsb_spatial_span_memory_intro_text">กิจกรรมนี้จะวัดความจำเชิงพื้นที่ระยะสั้นของคุณโดยจะขอให้คุณทวนลำดับการสว่างขึ้นของ%s</string>
+    <string name="rsb_spatial_span_memory_intro_text">กิจกรรมนี้จะวัดความจำเชิงพื้นที่ระยะสั้นของคุณโดยจะขอให้คุณทวนลำดับการสว่างขึ้นของ%1$s</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">ดอกไม้</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">ดอกไม้</string>
     <string name="rsb_spatial_span_memory_intro_2_text">%1$sบางตัวจะสว่างขึ้นครั้งละหนึ่งตัว ให้แตะ%2$sเหล่านั้นแบบตามลำดับการสว่าง</string>
     <string name="rsb_spatial_span_memory_intro_2_text_reverse">%1$sบางตัวจะสว่างขึ้นครั้งละหนึ่งตัว ให้แตะ%2$sเหล่านั้นแบบย้อนลำดับการสว่าง</string>
     <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">ในการเริ่มต้น ให้แตะเริ่มต้นใช้งาน แล้วจับตาดูอย่างใกล้ชิด</string>
-    <string name="rsb_memory_game_item_count_title">%s</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
     <string name="rsb_MEMORY_GAME_SCORE_TITLE">คะแนน</string>
-    <string name="rsb_memory_game_playback_title">ดู%sสว่างขึ้น</string>
-    <string name="rsb_memory_game_gameplay_title">แตะ%sตามลำดับการสว่างขึ้น</string>
-    <string name="rsb_memory_game_gameplay_reverse_title">แตะ%sแบบย้อนกลับลำดับ</string>
+    <string name="rsb_memory_game_playback_title">ดู%1$sสว่างขึ้น</string>
+    <string name="rsb_memory_game_gameplay_title">แตะ%1$sตามลำดับการสว่างขึ้น</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">แตะ%1$sแบบย้อนกลับลำดับ</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">ลำดับเสร็จสมบูรณ์</string>
     <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">ในการดำเนินการต่อ ให้แตะถัดไป</string>
     <string name="rsb_MEMORY_GAME_FAILED_TITLE">ลองอีกครั้ง</string>
@@ -269,7 +269,7 @@
     <!-- Timed walk active task. -->
     <string name="rsb_TIMED_WALK_TITLE">การเดินแบบจับเวลา</string>
     <string name="rsb_TIMED_WALK_INTRO_DETAIL">กิจกรรมนี้จะประเมินการทำหน้าที่ของรยางค์ล่างของคุณ</string>
-    <string name="rsb_timed_walk_intro_2_text">ค้นหาสถานที่ โดยเฉพาะบริเวณกลางแจ้ง ซึ่งคุณสามารถเดินเป็นเส้นตรงในระยะทางประมาณ %s ได้เร็วที่สุดเท่าที่จะทำได้อย่างปลอดภัย อย่าลดความเร็วลงจนกว่าคุณจะเดินผ่านจุดสิ้นสุด</string>
+    <string name="rsb_timed_walk_intro_2_text">ค้นหาสถานที่ โดยเฉพาะบริเวณกลางแจ้ง ซึ่งคุณสามารถเดินเป็นเส้นตรงในระยะทางประมาณ %1$s ได้เร็วที่สุดเท่าที่จะทำได้อย่างปลอดภัย อย่าลดความเร็วลงจนกว่าคุณจะเดินผ่านจุดสิ้นสุด</string>
     <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">แตะถัดไปเพื่อเริ่ม</string>
     <string name="rsb_TIMED_WALK_FORM_TITLE">อุปกรณ์ช่วยเหลือ</string>
     <string name="rsb_TIMED_WALK_FORM_TEXT">ใช้อุปกรณ์ช่วยเหลืออันเดียวกันสำหรับการทดสอบแต่ละครั้ง</string>
@@ -282,7 +282,7 @@
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">ไม้เท้าแบบสองข้าง</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">ไม้ค้ำยันแบบสองข้าง</string>
     <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">วอล์กเกอร์/รถเข็นหัดเดิน</string>
-    <string name="rsb_timed_walk_instruction">เดินเป็นเส้นตรงในระยะทางไม่เกิน %s</string>
+    <string name="rsb_timed_walk_instruction">เดินเป็นเส้นตรงในระยะทางไม่เกิน %1$s</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_2">หันหลัง แล้วเดินกลับไปจุดเริ่มต้น</string>
     <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">แตะเสร็จสิ้นเมื่อทำเสร็จ</string>
     <!-- PSAT active task. -->
@@ -292,14 +292,14 @@
     <string name="rsb_PASAT_INTRO_TEXT">การทดสอบความสามารถผ่านการบวกเลขตามความเร็วที่ได้ยินจะประเมินข้อมูลด้านการได้ยินของคุณโดยการประมวลผลความเร็วและความสามารถด้านการคิดคำนวณ</string>
     <string name="rsb_PVSAT_INTRO_TEXT">การทดสอบความสามารถผ่านการบวกเลขตามความเร็วที่มองเห็นจะประเมินข้อมูลด้านการมองเห็นของคุณโดยการประมวลผลความเร็วและความสามารถด้านการคิดคำนวณ</string>
     <string name="rsb_PAVSAT_INTRO_TEXT">การทดสอบความสามารถผ่านการบวกเลขตามความเร็วที่ได้ยินและมองเห็นจะประเมินข้อมูลด้านการได้ยินและการมองเห็นของคุณโดยการประมวลผลความเร็วและความสามารถด้านการคิดคำนวณ</string>
-    <string name="rsb_psat_intro_text_2">ตัวเลขหนึ่งหลักจะปรากฏขึ้นทุก %s วินาที\nคุณต้องเพิ่มตัวเลขใหม่แต่ละตัวไปที่ตัวเลขก่อนหน้านั้นทันที\nโปรดทราบว่าคุณต้องไม่คำนวณผลรวมสะสม แต่ให้คำนวณเฉพาะผลรวมของตัวเลขสองตัวสุดท้ายเท่านั้น</string>
+    <string name="rsb_psat_intro_text_2">ตัวเลขหนึ่งหลักจะปรากฏขึ้นทุก %1$s วินาที\nคุณต้องเพิ่มตัวเลขใหม่แต่ละตัวไปที่ตัวเลขก่อนหน้านั้นทันที\nโปรดทราบว่าคุณต้องไม่คำนวณผลรวมสะสม แต่ให้คำนวณเฉพาะผลรวมของตัวเลขสองตัวสุดท้ายเท่านั้น</string>
     <string name="rsb_PSAT_CALL_TO_ACTION">แตะเริ่มต้นใช้งานเพื่อเริ่ม</string>
     <string name="rsb_PSAT_INITIAL_INSTRUCTION">จดจำตัวเลขตัวแรกนี้</string>
     <string name="rsb_PSAT_INSTRUCTION">เพิ่มตัวเลขตัวใหม่นี้ไปที่ตัวเลขก่อนหน้า</string>
     <string name="rsb_PSAT_NO_DIGIT">-</string>
     <!-- Hole peg test active task. -->
-    <string name="rsb_hole_peg_test_title">การทดสอบวางหมุด %s ครั้ง</string>
-    <string name="rsb_hole_peg_test_intro_text">การกระทำนี้จะวัดความสามารถของการใช้นิ้วมือของคุณโดยที่คุณจะต้องวางหมุดลงในช่อง คุณจะต้องทำการวางหมุด %s ครั้ง</string>
+    <string name="rsb_hole_peg_test_title">การทดสอบวางหมุด %1$s ครั้ง</string>
+    <string name="rsb_hole_peg_test_intro_text">การกระทำนี้จะวัดความสามารถของการใช้นิ้วมือของคุณโดยที่คุณจะต้องวางหมุดลงในช่อง คุณจะต้องทำการวางหมุด %1$s ครั้ง</string>
     <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">ทั้งมือซ้ายและมือขวาของคุณจะถูกทดสอบ\nคุณจะต้องหยิบหมุดให้ไวที่สุดเท่าที่จะทำได้ แล้ววางหมุดลงในช่อง ทำซ้ำ %1$s ครั้ง จากนั้นให้หยิบหมุดออกจากช่อง %2$s ครั้ง</string>
     <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">ทั้งมือขวาและมือซ้ายของคุณจะถูกทดสอบ\nคุณต้องหยิบหมุดให้ไวที่สุดเท่าที่จะทำได้ แล้ววางหมุดลงในช่อง ทำซ้ำ %1$s ครั้ง จากนั้นให้หยิบหมุดออกจากช่อง %2$s ครั้ง</string>
     <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">แตะเริ่มต้นใช้งานเพื่อเริ่ม</string>
@@ -315,7 +315,7 @@
     <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">ถือโทรศัพท์ไว้ในมือข้างที่มีอาการสั่นมากกว่าตามที่แสดงในรูปภาพด้านล่าง</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">ถือโทรศัพท์ไว้ในมือขวาตามที่แสดงในรูปภาพด้านล่าง</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">ถือโทรศัพท์ไว้ในมือซ้ายตามที่แสดงในรูปภาพด้านล่าง</string>
-    <string name="rsb_tremor_test_intro_2_detail_default">ระบบจะขอให้คุณทำ%sในระหว่างที่นั่งถือโทรศัพท์ไว้ในมือ</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">ระบบจะขอให้คุณทำ%1$sในระหว่างที่นั่งถือโทรศัพท์ไว้ในมือ</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">หนึ่งบททดสอบ</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">สองบททดสอบ</string>
     <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">สามบททดสอบ</string>
@@ -325,28 +325,28 @@
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">เตรียมถือโทรศัพท์ของคุณไว้บนตัก</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">เตรียมถือโทรศัพท์ของคุณไว้บนตักโดยใช้มือซ้าย</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">เตรียมถือโทรศัพท์ของคุณไว้บนตักโดยใช้มือขวา</string>
-    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">ถือโทรศัพท์ของคุณไว้นิ่งๆ บนตักนาน %ld วินาที</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">ถือโทรศัพท์ของคุณไว้นิ่งๆ บนตักนาน %1$d วินาที</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">ตอนนี้ให้วางโทรศัพท์ของคุณบนฝ่ามือแล้วถือไว้นิ่งๆ ที่ความสูงระดับไหล่</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">ตอนนี้ให้วางโทรศัพท์ของคุณบนฝ่ามือข้างซ้ายแล้วถือไว้นิ่งๆ ที่ความสูงระดับไหล่</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">ตอนนี้ให้วางโทรศัพท์ของคุณบนฝ่ามือข้างขวาแล้วถือไว้นิ่งๆ ที่ความสูงระดับไหล่</string>
-    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">วางโทรศัพท์ของคุณบนฝ่ามือแล้วถือไว้นิ่งๆ นาน %ld วินาที</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">วางโทรศัพท์ของคุณบนฝ่ามือแล้วถือไว้นิ่งๆ นาน %1$d วินาที</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">ตอนนี้ให้ถือโทรศัพท์ที่ความสูงระดับไหล่โดยงอข้อศอกของคุณไว้</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">ตอนนี้ให้ใช้มือซ้ายถือโทรศัพท์ที่ความสูงระดับไหล่โดยงอข้อศอกของคุณไว้</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">ตอนนี้ให้ใช้มือขวาถือโทรศัพท์ที่ความสูงระดับไหล่โดยงอข้อศอกของคุณไว้</string>
-    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">ถือโทรศัพท์ของคุณไว้นิ่งๆ โดยงอข้อศอกนาน %ld วินาที</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">ถือโทรศัพท์ของคุณไว้นิ่งๆ โดยงอข้อศอกนาน %1$d วินาที</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">ตอนนี้ให้งอข้อศอกของคุณไว้นิ่งๆ แล้วเอาโทรศัพท์มาแตะที่จมูกแบบสลับไปมาซ้ำๆ</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">ตอนนี้ให้ใช้มือซ้ายถือโทรศัพท์และงอข้อศอกของคุณไว้นิ่งๆ แล้วเอาโทรศัพท์มาแตะที่จมูกแบบสลับไปมาซ้ำๆ</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">ตอนนี้ให้ใช้มือขวาถือโทรศัพท์และงอข้อศอกของคุณไว้นิ่งๆ แล้วเอาโทรศัพท์มาแตะที่จมูกแบบสลับไปมาซ้ำๆ</string>
-    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">เอาโทรศัพท์ของคุณมาแตะที่จมูกแบบสลับไปมานาน %ld วินาที</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">เอาโทรศัพท์ของคุณมาแตะที่จมูกแบบสลับไปมานาน %1$d วินาที</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">เตรียมทำท่าโบกมือเบาๆ (โบกมือโดยขยับแค่ข้อมือ)</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">เตรียมทำท่าโบกมือเบาๆ โดยใช้มือซ้ายที่ถือโทรศัพท์ไว้ (โบกมือโดยขยับแค่ข้อมือ)</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">เตรียมทำท่าโบกมือเบาๆ โดยใช้มือขวาที่ถือโทรศัพท์ไว้ (โบกมือโดยขยับแค่ข้อมือ)</string>
-    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">ทำท่าโบกมือเบาๆ นาน %ld วินาที</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">ทำท่าโบกมือเบาๆ นาน %1$d วินาที</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">ตอนนี้ให้สลับไปใช้มือซ้ายถือโทรศัพท์แล้วทำบททดสอบถัดไปต่อ</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">ตอนนี้ให้สลับไปใช้มือขวาถือโทรศัพท์แล้วทำบททดสอบถัดไปต่อ</string>
     <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">ทำบททดสอบถัดไปต่อ</string>
     <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">กิจกรรมเสร็จสมบูรณ์แล้ว</string>
-    <string name="rsb_tremor_test_skip_question_both_hands">ระบบจะขอให้คุณทำ%sในระหว่างที่นั่งถือโทรศัพท์ไว้ในมือข้างหนึ่ง แล้วเปลี่ยนไปถือในมืออีกข้างหนึ่ง</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">ระบบจะขอให้คุณทำ%1$sในระหว่างที่นั่งถือโทรศัพท์ไว้ในมือข้างหนึ่ง แล้วเปลี่ยนไปถือในมืออีกข้างหนึ่ง</string>
     <string name="rsb_TREMOR_SKIP_LEFT_HAND">ฉันไม่สามารถทำกิจกรรมนี้ได้โดยใช้มือซ้าย</string>
     <string name="rsb_TREMOR_SKIP_RIGHT_HAND">ฉันไม่สามารถทำกิจกรรมนี้ได้โดยใช้มือขวา</string>
     <string name="rsb_TREMOR_SKIP_NEITHER">ฉันสามารถทำกิจกรรมนี้ได้โดยใช้มือทั้งสองข้าง</string>
@@ -362,7 +362,7 @@
     <string name="rsb_CHART_NO_DATA_TEXT">ไม่มีข้อมูล</string>
     <!-- Accessibility -->
     <string name="rsb_AX_BUTTON_BACK">ย้อนกลับ</string>
-    <string name="rsb_AX_IMAGE_ILLUSTRATION">ภาพประกอบของ %s</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">ภาพประกอบของ %1$s</string>
     <string name="rsb_AX_SIGNVIEW_LABEL">ช่องสำหรับลายเซ็นที่กำหนด</string>
     <string name="rsb_AX_SIGNVIEW_HINT">แตะหน้าจอแล้วเลื่อนนิ้วของคุณเพื่อเซ็นชื่อ</string>
     <string name="rsb_AX_SIGNVIEW_SIGNED">เซ็นชื่อแล้ว</string>
@@ -386,11 +386,11 @@
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER">หอคอย</string>
     <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">แตะสองครั้งเพื่อวางจาน</string>
     <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">แตะสองครั้งเพื่อเลือกจานที่อยู่ด้านบนสุด</string>
-    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">มีจานที่มีขนาด %s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">มีจานที่มีขนาด %1$s</string>
     <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">ว่างเปล่า</string>
     <string name="rsb_ax_graph_range_format">ช่วงตั้งแต่ %1$s ถึง %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">สแต็คประกอบด้วย</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">และ</string>
-    <string name="rsb_ax_graph_point">จุด: %s</string>
+    <string name="rsb_ax_graph_point">จุด: %1$s</string>
 
 </resources>
