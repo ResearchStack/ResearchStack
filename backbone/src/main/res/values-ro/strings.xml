@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Informed consent process. -->
+    <string name="rsb_CONSENT_NAME_TITLE">Consimțământ</string>
+    <string name="rsb_CONSENT_NAME_GIVEN">Prenume</string>
+    <string name="rsb_CONSENT_NAME_FAMILY">Nume de familie</string>
+    <string name="rsb_CONSENT_NAME_PLACEHOLDER">Obligatoriu</string>
+    <string name="rsb_CONSENT_REVIEW_TITLE">Recapitulare</string>
+    <string name="rsb_CONSENT_REVIEW_INSTRUCTION">Recapitulați formularul de mai jos și apăsați “De acord” dacă sunteți gata să continuați.</string>
+    <string name="rsb_CONSENT_REVIEW_ALERT_TITLE">Recapitulare</string>
+    <string name="rsb_CONSENT_SIGNATURE_TITLE">Semnătura</string>
+    <string name="rsb_CONSENT_SIGNATURE_INSTRUCTION">Semnați-vă folosind un deget pe linia de mai jos</string>
+    <string name="rsb_CONSENT_SIGNATURE_PLACEHOLDER">Semnați aici</string>
+    <string name="rsb_CONSENT_PAGE_NUMBER_FORMAT">Pagina %1$ld din %2$ld</string>
+    <!-- Consent section titles. -->
+    <string name="rsb_CONSENT_SECTION_WELCOME">Bun venit</string>
+    <string name="rsb_CONSENT_SECTION_DATA_GATHERING">Colectarea datelor</string>
+    <string name="rsb_CONSENT_SECTION_PRIVACY">Intimitate</string>
+    <string name="rsb_CONSENT_SECTION_DATA_USE">Utilizarea datelor</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_SURVEY">Chestionar studiu</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_TASKS">Sarcini studiu</string>
+    <string name="rsb_CONSENT_SECTION_TIME_COMMITMENT">Alocarea timpului</string>
+    <string name="rsb_CONSENT_SECTION_WITHDRAWING">Retragere</string>
+    <string name="rsb_CONSENT_LEARN_MORE_TITLE">Aflați mai multe</string>
+    <!-- Consent section learn more -->
+    <string name="rsb_LEARN_MORE_DATA_GATHERING">Aflați mai multe despre colectarea datelor</string>
+    <string name="rsb_LEARN_MORE_DATA_USE">Aflați mai multe despre utilizarea datelor</string>
+    <string name="rsb_LEARN_MORE_PRIVACY">Aflați mai multe despre protejarea intimității și identității dvs.</string>
+    <string name="rsb_LEARN_MORE_WELCOME">Mai întâi, aflați mai multe despre studiu</string>
+    <string name="rsb_LEARN_MORE_STUDY_SURVEY">Aflați mai multe despre chestionarul studiului</string>
+    <string name="rsb_LEARN_MORE_TIME_COMMITMENT">Aflați mai multe despre impactul studiului asupra timpului dvs.</string>
+    <string name="rsb_LEARN_MORE_TASKS">Aflați mai multe despre sarcinile implicate</string>
+    <string name="rsb_LEARN_MORE_WITHDRAWING">Aflați mai multe despre retragere</string>
+    <!-- Consent sharing step -->
+    <string name="rsb_CONSENT_SHARING_TITLE">Opțiuni de partajare</string>
+    <string name="rsb_consent_share_widely">Partajați datele dvs. cu %1$s și cercetători calificați din întreaga lume</string>
+    <string name="rsb_consent_share_only">Partajați datele dvs. doar cu %1$s</string>
+    <string name="rsb_consent_sharing_description">Datele rezultate în urma participării dvs. la acest studiu vor fi trimise la %1$s .\n\nPartajarea pe o scară mai largă a datelor dvs. codificate (fără a include informații precum numele dvs.) poate fi utilă pentru acest studiu de cercetare și pentru altele viitoare.</string>
+    <string name="rsb_LEARN_MORE_CONSENT_SHARING">Mai multe despre partajarea datelor</string>
+    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">Nume %1$s (tipărit)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">Semnătură %1$s</string>
+    <string name="rsb_CONSENT_DOC_LINE_DATE">Data</string>
+    <!-- Progress indication (in navigation bar). -->
+    <string name="rsb_STEP_PROGRESS_FORMAT">Pasul %1$s din %2$s</string>
+    <!-- Alert for out of range values. -->
+    <string name="rsb_RANGE_ALERT_TITLE">Valoare nevalidă</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">Valoarea “%1$s” depășește maximul permis (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">Valoarea “%1$s” este mai mică decât minimul permis (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s nu este o valoare validă.</string>
+    <!-- Alert for invalid email address value -->
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Adresă de e-mail nevalidă: %1$s</string>
+    <!-- Alerts for invalid location coordinates -->
+    <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Introduceți o adresă</string>
+    <string name="rsb_LOCATION_ERROR_TITLE">Adresa specificată nu a putut fi găsită</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_LOCATION_UNKNOWN">Imposibil de rezolvat localizarea dvs. actuală. Introduceți o adresă sau mergeți într-un loc cu semnal GPS mai bun dacă este cazul.</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_DENIED">Accesul la serviciile de localizare a fost refuzat. Acordați acestei aplicații permisiunea de a utiliza serviciile de localizare din Configurări.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE">Imposibil de găsit un rezultat pentru adresa introdusă. Asigurați-vă că adresa este validă.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">Nu dispuneți de o conexiune la Internet sau ați depășit numărul maxim al solicitărilor de identificare a adreselor. Dacă nu dispuneți de conexiune la Internet, activați Wi-Fi pentru a răspunde la această întrebare, omiteți întrebarea dacă butonul de omitere este disponibil sau reveniți la chestionar după ce vă conectați la Internet. În caz contrar, reîncercați peste câteva minute.</string>
+    <!-- Alert for exceeding length limit in text answer -->
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Conținutul de text depășește lungimea maximă: %1$s</string>
+    <!-- Camera not available during multitasking -->
+    <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">Camera nu este disponibilă în ecranul divizat.</string>
+    <!-- Registration step -->
+    <string name="rsb_EMAIL_FORM_ITEM_TITLE">E-mail</string>
+    <string name="rsb_EMAIL_FORM_ITEM_PLACEHOLDER">ioanapopa@example.com</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_TITLE">Parolă</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_PLACEHOLDER">Introduceți parola</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_TITLE">Confirmați</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_PLACEHOLDER">Introduceți din nou parola</string>
+    <string name="rsb_CONFIRM_PASSWORD_ERROR_MESSAGE">Parolele nu coincid.</string>
+    <string name="rsb_ADDITIONAL_INFO_SECTION_TITLE">Informații suplimentare</string>
+    <string name="rsb_GIVEN_NAME_ITEM_PLACEHOLDER">Ioana</string>
+    <string name="rsb_FAMILY_NAME_ITEM_PLACEHOLDER">Popescu</string>
+    <string name="rsb_GENDER_FORM_ITEM_TITLE">Sex</string>
+    <string name="rsb_GENDER_FORM_ITEM_PLACEHOLDER">Alegeți o opțiune</string>
+    <string name="rsb_DOB_FORM_ITEM_TITLE">Data nașterii</string>
+    <string name="rsb_DOB_FORM_ITEM_PLACEHOLDER">Alegeți o dată</string>
+    <!-- Verification step -->
+    <string name="rsb_VERIFICATION_NAV_TITLE">Verificare</string>
+    <string name="rsb_VERIFICATION_STEP_TITLE">Verificați-vă e‑mailul</string>
+    <string name="rsb_RESEND_EMAIL_LABEL_MESSAGE">Apăsați pe linkul de mai jos dacă nu ați primit un e‑mail de verificare și ați dori retrimiterea acestuia.</string>
+    <string name="rsb_RESEND_EMAIL_BUTTON_TITLE">Retrimiteți e‑mailul de verificare</string>
+    <!-- Login step -->
+    <string name="rsb_LOGIN_CONTINUE_BUTTON_TITLE">Login</string>
+    <string name="rsb_FORGOT_PASSWORD_BUTTON_TITLE">Ați uitat parola?</string>
+    <!-- Passcode step -->
+    <string name="rsb_PASSCODE_PROMPT_MESSAGE">Introduceți codul</string>
+    <string name="rsb_PASSCODE_CONFIRM_MESSAGE">Confirmare cod</string>
+    <string name="rsb_PASSCODE_SAVED_MESSAGE">Cod salvat</string>
+    <string name="rsb_PASSCODE_AUTHENTICATED_MESSAGE">Cod autentificat</string>
+    <string name="rsb_PASSCODE_OLD_ENTRY_MESSAGE">Introduceți codul vechi</string>
+    <string name="rsb_PASSCODE_NEW_ENTRY_MESSAGE">Introduceți codul nou</string>
+    <string name="rsb_PASSCODE_CONFIRM_NEW_ENTRY_MESSAGE">Confirmați noul cod</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_TITLE">Cod incorect</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_MESSAGE">Codurile nu coincid. Reîncercați.</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_MESSAGE">Autentificați-vă cu Touch ID</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_ERROR_ALERT_TITLE">Eroare Touch ID</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_INVALID_INPUT_MESSAGE">Sunt permise doar caractere numerice.</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILITY_LABEL">Indicator de progres pentru introducerea codului</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILTIY_VALUE">%1$s din %2$s cifre introduse</string>
+    <string name="rsb_PASSCODE_FORGOT_BUTTON_TITLE">Ați uitat codul de acces?</string>
+    <!-- Keychain wrapper -->
+    <string name="rsb_KEYCHAIN_ADD_ERROR_MESSAGE">Imposibil de adăugat articolul din portchei.</string>
+    <string name="rsb_KEYCHAIN_UPDATE_ERROR_MESSAGE">Imposibil de actualizat articolul din portchei.</string>
+    <string name="rsb_KEYCHAIN_DELETE_ERROR_MESSAGE">Imposibil de șters articolul din portchei.</string>
+    <string name="rsb_KEYCHAIN_FIND_ERROR_MESSAGE">Imposibil de găsit articolul din portchei.</string>
+    <!-- Blood types -->
+    <string name="rsb_blood_type_a_plus">A+</string>
+    <string name="rsb_BLOOD_TYPE_A_">A-</string>
+    <string name="rsb_blood_type_ab_plus">AB+</string>
+    <string name="rsb_BLOOD_TYPE_AB_">AB-</string>
+    <string name="rsb_blood_type_b_plus">B+</string>
+    <string name="rsb_BLOOD_TYPE_B_">B-</string>
+    <string name="rsb_blood_type_o_plus">0+</string>
+    <string name="rsb_BLOOD_TYPE_O_">0-</string>
+    <!-- Gender values. -->
+    <string name="rsb_GENDER_FEMALE">Feminin</string>
+    <string name="rsb_GENDER_MALE">Masculin</string>
+    <string name="rsb_GENDER_OTHER">Altul</string>
+    <!-- Boolean answer strings -->
+    <string name="rsb_BOOL_NO">Nu</string>
+    <string name="rsb_BOOL_YES">Da</string>
+    <!-- Measuring unit abbreviations -->
+    <string name="rsb_MEASURING_UNIT_CM">cm</string>
+    <string name="rsb_MEASURING_UNIT_FT">ft</string>
+    <string name="rsb_MEASURING_UNIT_IN">in</string>
+    <!-- Default placeholders to request answers in a questionnaire. -->
+    <string name="rsb_PLACEHOLDER_TEXT_OR_NUMBER">Apăsați pentru a răspunde</string>
+    <string name="rsb_NULL_ANSWER">Selectați un răspuns</string>
+    <string name="rsb_PLACEHOLDER_IMAGE_CHOICES">Apăsați pentru a selecta</string>
+    <string name="rsb_PLACEHOLDER_LONG_TEXT">Apăsați pentru a scrie</string>
+    <!-- Button titles -->
+    <string name="rsb_BUTTON_AGREE">De acord</string>
+    <string name="rsb_BUTTON_CANCEL">Anulați</string>
+    <string name="rsb_BUTTON_OK">OK</string>
+    <string name="rsb_BUTTON_CLEAR">Degajați</string>
+    <string name="rsb_BUTTON_DISAGREE">Nu sunt de acord</string>
+    <string name="rsb_BUTTON_DONE">OK</string>
+    <string name="rsb_BUTTON_GET_STARTED">Start</string>
+    <string name="rsb_BUTTON_LEARN_MORE">Aflați mai multe</string>
+    <string name="rsb_BUTTON_NEXT">Înainte</string>
+    <string name="rsb_BUTTON_SKIP">Omiteți</string>
+    <string name="rsb_BUTTON_SKIP_QUESTION">Omiteți această întrebare</string>
+    <string name="rsb_BUTTON_START_TIMER">Porniți temporizatorul</string>
+    <string name="rsb_BUTTON_OPTION_SAVE">Salvați pentru mai târziu</string>
+    <string name="rsb_BUTTON_OPTION_DISCARD">Abandonați rezultatele</string>
+    <string name="rsb_BUTTON_OPTION_STOP_TASK">Încheiați sarcina</string>
+    <string name="rsb_BUTTON_SAVE">Salvați</string>
+    <string name="rsb_BUTTON_CLEAR_ANSWER">Degajați răspunsul</string>
+    <string name="rsb_BUTTON_READ_ONLY_MODE">Acest răspuns nu poate fi modificat.</string>
+    <!-- General active tasks. -->
+    <string name="rsb_COUNTDOWN_LABEL">Activitatea începe peste</string>
+    <string name="rsb_TASK_COMPLETE_TITLE">Activitate finalizată</string>
+    <string name="rsb_TASK_COMPLETE_TEXT">Datele dvs. vor fi analizate și veți primi o notificare atunci când rezultatele vor fi disponibile.</string>
+    <string name="rsb_countdown_spoken_remaining">timp rămas: %1$s secunde.</string>
+    <!-- Image capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Capturați imaginea</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Recapturați imaginea</string>
+    <string name="rsb_CAPTURE_ERROR_CAMERA_NOT_FOUND">Nicio cameră găsită. Această etapă nu poate fi finalizată.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_PERMISSIONS">Pentru a finaliza această etapă, acordați acestei aplicații acces la cameră în Configurări.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_OUTPUT_DIRECTORY">Nu a fost specificat un director de ieșire pentru imaginile capturate.</string>
+    <string name="rsb_CAPTURE_ERROR_CANNOT_WRITE_FILE">Imaginea capturată nu a putut fi salvată.</string>
+    <!-- Video capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_VIDEO">Porniți înregistrarea</string>
+    <string name="rsb_CAPTURE_BUTTON_STOP_CAPTURE_VIDEO">Opriți înregistrarea</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Recapturați clipul video</string>
+    <!-- Fitness active task. -->
+    <string name="rsb_FITNESS_TASK_TITLE">Fitness</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Distanță (%1$s)</string>
+    <string name="rsb_FITNESS_HEARTRATE_TITLE">Ritm cardiac (bpm)</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Așezați-vă confortabil timp de %1$s.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Mergeți cât de repede puteți timp de %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Această activitate vă monitorizează ritmul cardiac și măsoară cât de mult puteți merge în %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Mergeți în aer liber cu viteza maximă posibilă timp de %1$s. Când sunteți gata, așezați-vă și stați confortabil timp de %2$s. Pentru a începe, apăsați “Start”.</string>
+    <!-- Short walk active task. -->
+    <string name="rsb_WALK_TASK_TITLE">Mers și echilibru</string>
+    <string name="rsb_WALK_INTRO_TEXT">Această activitate vă măsoară mersul și echilibrul în timp ce mergeți și stați în repaus. Nu continuați dacă nu puteți merge în siguranță, fără a necesita asistență.</string>
+    <string name="rsb_walk_intro_2_text_ld">Găsiți un loc unde să puteți merge în siguranță, fără a necesita asistență, aproximativ %1$d pași în linie dreaptă.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL">Puneți-vă telefonul într-un buzunar sau într-o geantă și urmați instrucțiunile audio.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Acum nu vă mișcați timp de %1$s.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Nu vă mișcați timp de %1$s.</string>
+    <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Întorceți-vă și mergeți înapoi la locul de pornire.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Mergeți până la %1$d pași în linie dreaptă.</string>
+    <!-- Short walk back and forth. -->
+    <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Găsiți un loc unde să puteți merge în siguranță pe un traseu, înainte și înapoi, în linie dreaptă. Încercați să mergeți continuu, întorcându‑vă la capătul traseului ca și cum ați ocoli un jalon.\n\nÎn continuare, vi se va solicita să vă întoarceți descriind un cerc complet, apoi să stați în repaus cu brațele întinse și picioarele depărtate la o distanță aproximativ egală cu lățimea umerilor.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Apăsați “Start” când sunteți gata să începeți.\nPuneți apoi telefonul în buzunar sau în geantă și urmați instrucțiunile audio.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Mergeți înainte și înapoi în linie dreaptă timp de %1$s. Mergeți așa cum o ați face‑o în mod normal.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Întoarceți‑vă descriind un cerc complet, apoi stați în repaus timp de %1$s.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Ați finalizat activitatea.</string>
+    <!-- Tapping active task. -->
+    <string name="rsb_TAPPING_TASK_TITLE">Viteză de apăsare</string>
+    <string name="rsb_TAPPING_TASK_TITLE_RIGHT">Mâna dreaptă</string>
+    <string name="rsb_TAPPING_TASK_TITLE_LEFT">Mâna stângă</string>
+    <string name="rsb_TAPPING_INTRO_TEXT">Această activitate vă măsoară viteza de apăsare cu degetele.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_REST_PHONE">Puneți‑vă telefonul pe o suprafață plată.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_MOST_AFFECTED">Folosiți două degete de la aceeași mână pentru a apăsa alternativ butoanele de pe ecran.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_FIRST">Folosiți două degete de la mâna dreaptă pentru a apăsa alternativ butoanele de pe ecran.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Folosiți două degete de la mâna stângă pentru a apăsa alternativ butoanele de pe ecran.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Acum, repetați același test folosind mâna dreaptă.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Acum, repetați același test folosind mâna stângă.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Apăsați cu un deget, apoi cu celălalt. Încercați ca apăsările să se succeadă cât regulat cu putință. Continuați să apăsați timp de %1$s.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION">Apăsați “Start” pentru a începe.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Apăsați “Înainte” pentru a începe.</string>
+    <string name="rsb_TAP_BUTTON_TITLE">Apăsați</string>
+    <string name="rsb_TOTAL_TAPS_LABEL">Total apăsări</string>
+    <string name="rsb_TAPPING_INSTRUCTION">Apăsați butoanele cât de consecvent puteți folosind două degete.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_RIGHT">Apăsați butoanele folosind mâna DREAPTĂ.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_LEFT">Apăsați butoanele folosind mâna STÂNGĂ.</string>
+    <string name="rsb_TAPPING_SKIP_TITLE">Omiteți această mână</string>
+    <!-- Audio active task. -->
+    <string name="rsb_AUDIO_TASK_TITLE">Voce</string>
+    <string name="rsb_AUDIO_CALL_TO_ACTION">Apăsați “Start” pentru a începe.</string>
+    <string name="rsb_AUDIO_INSTRUCTION">Spuneți “Aaaaah” în microfon cât de mult timp puteți.</string>
+    <string name="rsb_AUDIO_INTRO_TEXT">Inspirați adânc și spuneți “Aaaaah” în microfon cât de mult timp puteți. Mențineți un volum vocal constant, astfel încât barele audio să rămână albastre.</string>
+    <string name="rsb_AUDIO_INTENDED_USE">Această activitate vă evaluează vocea prin înregistrarea acesteia cu microfonul din partea de jos a telefonului dvs.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_LABEL">Prea tare</string>
+    <string name="rsb_AUDIO_GENERIC_ERROR_LABEL">Imposibil de înregistrat audio</string>
+    <string name="rsb_AUDIO_LEVEL_CHECK_LABEL">Așteptați să se verifice nivel zgomotului de fundal.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_MESSAGE">Nivelul zgomotului ambiental este prea puternic pentru a vă înregistra vocea. Mutați‑vă într‑un loc mai liniștit și reîncercați.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_ACTION_NEXT">Apăsați “Înainte” când sunteți gata.</string>
+    <!-- Tone audiometry active task. -->
+    <string name="rsb_TONE_AUDIOMETRY_TASK_TITLE">Audiometrie tonală</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTENDED_USE">Această activitate vă măsoară capacitatea de a auzi diferite sunete.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTRO_TEXT">Înainte de a începe, conectați și puneți‑vă căștile.</string>
+    <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Apăsați “Start” pentru a începe.</string>
+    <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Ar trebui să auziți un ton acum. Reglați volumul folosind comenzile de pe partea laterală a dispozitivului.\n\nApăsați butonul când sunteți gata să începeți.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Apăsați butonul de fiecare dată când începeți să auziți un sunet.</string>
+    <string name="rsb_tone_label_left">%1$s Hz, stânga</string>
+    <string name="rsb_tone_label_right">%1$s Hz, dreapta</string>
+    <!-- Spatial span memory active task. -->
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Memorie spațială</string>
+    <string name="rsb_spatial_span_memory_intro_text">Această activitate vă măsoară memoria spațială pe termen scurt, solicitându-vă să repetați ordinea în care se aprind simbolurile reprezentând %1$s.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">flori</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">flori</string>
+    <string name="rsb_spatial_span_memory_intro_2_text">Unele dintre simbolurile de %1$s se vor aprinde pe rând. Apăsați pe %2$s în ordinea în care s‑au aprins.</string>
+    <string name="rsb_spatial_span_memory_intro_2_text_reverse">Unele dintre simbolurile de %1$s se vor aprinde pe rând. Apăsați pe %2$s în ordinea inversă aprinderii lor.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Pentru a începe, apăsați “Start”, apoi priviți cu atenție.</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
+    <string name="rsb_MEMORY_GAME_SCORE_TITLE">Scor</string>
+    <string name="rsb_memory_game_playback_title">Priviți cum se aprind simbolurile de %1$s</string>
+    <string name="rsb_memory_game_gameplay_title">Apăsați pe %1$s în ordinea în care s‑au aprins</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Apăsați pe %1$s în ordine inversă</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Secvență finalizată</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Pentru a continua, apăsați “Înainte”</string>
+    <string name="rsb_MEMORY_GAME_FAILED_TITLE">Reîncercați</string>
+    <string name="rsb_MEMORY_GAME_FAILED_MESSAGE">Nu ați reușit să vă încadrați în timpul alocat. Apăsați “Înainte” pentru a repeta.</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_TITLE">Timpul a expirat</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_MESSAGE">Ați epuizat timpul.\nApăsați “Înainte” pentru a continua.</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE">Joc finalizat</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_TITLE">Suspendat</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_MESSAGE">Pentru a continua, apăsați “Înainte”</string>
+    <!-- Reaction time active task. -->
+    <string name="rsb_REACTION_TIME_TASK_TITLE">Timp de reacție</string>
+    <string name="rsb_REACTION_TIME_TASK_INTENDED_USE">Această activitate evaluează timpul de care aveți nevoie pentru a răspunde la un stimul vizual.</string>
+    <string name="rsb_REACTION_TIME_TASK_INTRO_TEXT_FORMAT">Agitați dispozitivul în orice direcție imediat ce apare punctul albastru pe ecran. Va trebui să repetați acțiunea de %D ori.</string>
+    <string name="rsb_REACTION_TIME_TASK_CALL_TO_ACTION">Apăsați “Start” pentru a începe.</string>
+    <string name="rsb_REACTION_TIME_TASK_ATTEMPTS_FORMAT">Încercarea %1$s din %2$s</string>
+    <string name="rsb_REACTION_TIME_TASK_ACTIVE_STEP_TITLE">Agitați rapid dispozitivul atunci când apare cercul albastru</string>
+    <!-- Tower of Hanoi active task -->
+    <string name="rsb_TOWER_OF_HANOI_TASK_TITLE">Turnul din Hanoi</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTENDED_USE">Această activitate evaluează aptitudinile dvs. de rezolvare a puzzle‑urilor</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTRO_TEXT">Mutați toată stiva pe platforma evidențiată din cât mai puține mișcări posibil.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_TASK_CALL_TO_ACTION">Apăsați “Start” pentru a începe</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_INTRO_TEXT">Rezolvați puzzle‑ul</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_PROGRESS_TEXT">Număr de mutări: %1$s \n %2$s</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_SKIP_BUTTON_TITLE">Nu pot rezolva acest puzzle</string>
+    <!-- Timed walk active task. -->
+    <string name="rsb_TIMED_WALK_TITLE">Mers cronometrat</string>
+    <string name="rsb_TIMED_WALK_INTRO_DETAIL">Această activitate măsoară funcționarea extremităților dvs. inferioare.</string>
+    <string name="rsb_timed_walk_intro_2_text">Găsiți un loc, preferabil afară, unde să puteți merge aproximativ %1$s în linie dreaptă cât de repede posibil, dar în siguranță. Nu încetiniți decât după ce treceți linia de sosire.</string>
+    <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Apăsați “Înainte” pentru a începe.</string>
+    <string name="rsb_TIMED_WALK_FORM_TITLE">Dispozitiv asistiv</string>
+    <string name="rsb_TIMED_WALK_FORM_TEXT">Utilizați același dispozitiv asistiv pentru fiecare test.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_TEXT">Purtați o orteză de gleznă?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TITLE">Utilizați un dispozitiv asistiv?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TEXT">Apăsați aici pentru un răspuns.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE">Nu</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_2">Baston unilateral</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_3">Cârjă unilaterală</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Bastoane bilaterale</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Cârje bilaterale</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Cadru de mers/cu rotile</string>
+    <string name="rsb_timed_walk_instruction">Mergeți până la %1$s în linie dreaptă.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_2">Întorceți-vă și mergeți înapoi la locul de pornire.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Apăsați OK când terminați.</string>
+    <!-- PSAT active task. -->
+    <string name="rsb_PASAT_TITLE">PASAT</string>
+    <string name="rsb_PVSAT_TITLE">PVSAT</string>
+    <string name="rsb_PAVSAT_TITLE">PAVSAT</string>
+    <string name="rsb_PASAT_INTRO_TEXT">Testul PAVSAT (testul auditiv pe etape de adunare în serie) măsoară aptitudinile dvs. de calcul și viteza de procesare a informațiilor auditive.</string>
+    <string name="rsb_PVSAT_INTRO_TEXT">Testul PAVSAT (testul vizual pe etape de adunare în serie) măsoară aptitudinile dvs. de calcul și viteza de procesare a informațiilor vizuale.</string>
+    <string name="rsb_PAVSAT_INTRO_TEXT">Testul PAVSAT (testul auditiv și vizual pe etape de adunare în serie) măsoară aptitudinile dvs. de calcul și viteza de procesare a informațiilor auditive și vizuale.</string>
+    <string name="rsb_psat_intro_text_2">Pe ecran va fi afișată câte o cifră la fiecare %1$s secunde.\nTrebuie să adunați fiecare cifră nouă cu cea imediat precedentă acesteia.\nAtenție, nu trebuie să calculați un total cumulat, ci doar suma ultimelor două numere.</string>
+    <string name="rsb_PSAT_CALL_TO_ACTION">Apăsați “Start” pentru a începe.</string>
+    <string name="rsb_PSAT_INITIAL_INSTRUCTION">Rețineți această primă cifră.</string>
+    <string name="rsb_PSAT_INSTRUCTION">Adăugați această nouă cifră la cea anterioară.</string>
+    <string name="rsb_PSAT_NO_DIGIT">-</string>
+    <!-- Hole peg test active task. -->
+    <string name="rsb_hole_peg_test_title">Testul cu %1$s cercuri</string>
+    <string name="rsb_hole_peg_test_intro_text">Această activitate vă măsoară funcționalitatea extremităților superioare, solicitându‑vă să plasați un cerc într‑un orificiu. Va trebui să repetați acțiunea de %1$s ori.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">Vor fi testate atât mâna dvs. stângă, cât și cea dreaptă.\nTrebuie să ridicați cercul cât mai repede posibil, să îl puneți în orificiu și, după ce repetați acțiunea de %1$s ori, să îl eliminați din nou de %2$s ori.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">Vor fi testate atât mâna dvs. dreaptă, cât și cea stângă.\nTrebuie să ridicați cercul cât mai repede posibil, să îl puneți în orificiu și, după ce repetați acțiunea de %1$s ori, să îl eliminați din nou de %2$s ori.</string>
+    <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Apăsați “Start” pentru a începe.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_LEFT_HAND">Puneți cercul în orificiu folosind mâna stângă.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_RIGHT_HAND">Puneți cercul în orificiu folosind mâna dreaptă.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_LEFT_HAND">Puneți cercul după linie folosind mâna stângă.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_RIGHT_HAND">Puneți cercul după linie folosind mâna dreaptă.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT">Ridicați cercul folosind două degete.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT_2">Ridicați degetele pentru a elibera cercul.</string>
+    <!-- Tremor test active task. -->
+    <string name="rsb_TREMOR_TEST_TITLE">Activitate referitoare la tremor</string>
+    <string name="rsb_TREMOR_TEST_INTRO_1_DETAIL">Această activitate vă măsoară tremorul mâinilor în diverse poziții. Găsiți un loc unde să puteți sta confortabil pe durata activității.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Țineți telefonul în mâna mai afectată, ca în imaginea de mai jos.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Țineți telefonul în mâna DREAPTĂ, ca în imaginea de mai jos.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Țineți telefonul în mâna STÂNGĂ, ca în imaginea de mai jos.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Vi se va solicita să efectuați %1$s stând cu telefonul în mână.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">o sarcină</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">două sarcini</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">trei sarcini</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_4_TASK">patru sarcini</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_5_TASK">cinci sarcini</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT">Apăsați “Înainte” pentru a continua.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Pregătiți‑vă să țineți telefonul pe genunchi.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Pregătiți‑vă să țineți telefonul pe genunchi cu mâna STÂNGĂ.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Pregătiți‑vă să țineți telefonul pe genunchi cu mâna DREAPTĂ.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Continuați să țineți telefonul pe genunchi timp de %1$d secunde.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Acum, țineți telefonul cu mâna întinsă la înălțimea umărului.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Acum, țineți telefonul cu mâna STÂNGĂ întinsă la înălțimea umărului.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Acum, țineți telefonul cu mâna DREAPTĂ întinsă la înălțimea umărului.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Continuați să țineți telefonul cu mâna întinsă timp de %1$d secunde.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Acum, țineți telefonul la înălțimea umărului, cu cotul îndoit.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Acum, țineți telefonul cu mâna STÂNGĂ la înălțimea umărului, cu cotul îndoit.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Acum, țineți telefonul cu mâna DREAPTĂ la înălțimea umărului, cu cotul îndoit.</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Continuați să țineți telefonul cu cotul îndoit timp de %1$d secunde.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Acum, ținându‑vă cotul îndoit, atingeți‑vă nasul cu telefonul în mod repetat.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Acum, ținându‑vă telefonul în mâna STÂNGĂ cu cotul îndoit, atingeți‑vă nasul cu telefonul în mod repetat.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Acum, ținându‑vă telefonul în mâna DREAPTĂ cu cotul îndoit, atingeți‑vă nasul cu telefonul în mod repetat.</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Continuați să vă atingeți nasul cu telefonul timp de %1$d secunde.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Pregătiți‑vă să fluturați mâna, răsucind din încheietură.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Pregătiți‑vă să fluturați mâna STÂNGĂ, ținând telefonul în aceasta și răsucind din încheietură.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Pregătiți‑vă să fluturați mâna DREAPTĂ, ținând telefonul în aceasta și răsucind din încheietură.</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Continuați să fluturați mâna timp de %1$d secunde.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Acum, treceți telefonul în mâna STÂNGĂ și continuați cu sarcina următoare.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Acum, treceți telefonul în mâna DREAPTĂ și continuați cu sarcina următoare.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Continuați cu sarcina următoare.</string>
+    <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Activitate finalizată.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Vi se va solicita să efectuați %1$s stând mai întâi cu telefonul într‑o mână, apoi în cealaltă.</string>
+    <string name="rsb_TREMOR_SKIP_LEFT_HAND">Nu pot efectua această activitate cu mâna STÂNGĂ.</string>
+    <string name="rsb_TREMOR_SKIP_RIGHT_HAND">Nu pot efectua această activitate cu mâna DREAPTĂ.</string>
+    <string name="rsb_TREMOR_SKIP_NEITHER">Pot efectua această activitate cu ambele mâini.</string>
+    <!-- Potentially user visible error messages. -->
+    <string name="rsb_ERROR_DATALOGGER_CREATE_FILE">Fișierul nu a putut fi creat</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_FREE_SPACE">Nu au putut fi eliminate suficiente fișiere jurnal pentru atingerea pragului admis</string>
+    <string name="rsb_ERROR_DATALOGGER_SET_ATTRIBUTE">Eroare la definirea atributului</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_MAORK">Fișierul nu a fost marcat drept șters (nu a fost marcat drept încărcat)</string>
+    <string name="rsb_ERROR_DATALOGGER_MULTIPLE">Mai multe erori la eliminarea jurnalelor</string>
+    <string name="rsb_ERROR_RECORDER_NO_DATA">Nu au fost găsite date colectate.</string>
+    <string name="rsb_ERROR_RECORDER_NO_OUTPUT_DIRECTORY">Nu a fost specificat un director de ieșire</string>
+    <!-- Charts -->
+    <string name="rsb_CHART_NO_DATA_TEXT">Nu există date</string>
+    <!-- Accessibility -->
+    <string name="rsb_AX_BUTTON_BACK">Înapoi</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">Ilustrație reprezentând %1$s</string>
+    <string name="rsb_AX_SIGNVIEW_LABEL">Câmp de semnătură desemnat</string>
+    <string name="rsb_AX_SIGNVIEW_HINT">Atingeți ecranul și deplasați-vă degetul pentru a semna</string>
+    <string name="rsb_AX_SIGNVIEW_SIGNED">Semnat</string>
+    <string name="rsb_AX_SIGNVIEW_UNSIGNED">Nesemnat</string>
+    <string name="rsb_AX_SELECTED">Selectat</string>
+    <string name="rsb_AX_UNSELECTED">Neselectat</string>
+    <string name="rsb_AX_SLIDER_LABEL">Glisor de răspuns. Variază de la %1$s la %2$s</string>
+    <string name="rsb_AX_UNLABELED_IMAGE">Imagine neetichetată</string>
+    <string name="rsb_AX_ANNOUNCE_BEGIN_TASK">Începeți sarcina</string>
+    <string name="rsb_AX_MEMORY_TILE_ACTIVE">activ</string>
+    <string name="rsb_AX_MEMORY_TILE_CORRECT">corect</string>
+    <string name="rsb_AX_MEMORY_TILE_INCORRECT">incorect</string>
+    <string name="rsb_AX_MEMORY_TILE_QUIESCENT">pasiv</string>
+    <string name="rsb_AX_MEMORY_TILE_LABEL">Piesă joc memorie</string>
+    <string name="rsb_AX_IMAGE_CAPTURE_LABEL">Previzualizare captură</string>
+    <string name="rsb_AX_IMAGE_CAPTURED_LABEL">Imagine capturată</string>
+    <string name="rsb_AX_VIDEO_CAPTURE_LABEL">Previzualizare captură video</string>
+    <string name="rsb_AX_VIDEO_CAPTURED_LABEL">Clip video capturat</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_INVALID_MOVE_FORMAT">Nu se poate plasa un disc de mărimea %1$s pe un disc de mărimea %2$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TARGET_DISK">Țintă</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Turn</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Apăsați dublu pentru a plasa discul</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Apăsați dublu pentru a selecta discul cel mai de sus</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Are disc de mărime %1$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Gol</string>
+    <string name="rsb_ax_graph_range_format">Interval de la %1$s la %2$s</string>
+    <string name="rsb_AX_GRAPH_STACK_PREFIX">Stiva compusă din</string>
+    <string name="rsb_AX_GRAPH_AND_SEPARATOR">și</string>
+    <string name="rsb_ax_graph_point">Punctul: %1$s</string>
+    
+</resources>

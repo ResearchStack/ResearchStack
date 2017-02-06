@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Informed consent process. -->
+    <string name="rsb_CONSENT_NAME_TITLE">Согласие</string>
+    <string name="rsb_CONSENT_NAME_GIVEN">Имя</string>
+    <string name="rsb_CONSENT_NAME_FAMILY">Фамилия</string>
+    <string name="rsb_CONSENT_NAME_PLACEHOLDER">Обязательно</string>
+    <string name="rsb_CONSENT_REVIEW_TITLE">Проверка</string>
+    <string name="rsb_CONSENT_REVIEW_INSTRUCTION">Проверьте приведенную ниже форму и коснитесь «Принимаю», если Вы готовы продолжить.</string>
+    <string name="rsb_CONSENT_REVIEW_ALERT_TITLE">Проверка</string>
+    <string name="rsb_CONSENT_SIGNATURE_TITLE">Подпись</string>
+    <string name="rsb_CONSENT_SIGNATURE_INSTRUCTION">Распишитесь пальцем над приведенной ниже линией.</string>
+    <string name="rsb_CONSENT_SIGNATURE_PLACEHOLDER">Место для подписи</string>
+    <string name="rsb_CONSENT_PAGE_NUMBER_FORMAT">Стр. %1$ld из %2$ld</string>
+    <!-- Consent section titles. -->
+    <string name="rsb_CONSENT_SECTION_WELCOME">Добро пожаловать!</string>
+    <string name="rsb_CONSENT_SECTION_DATA_GATHERING">Сбор данных</string>
+    <string name="rsb_CONSENT_SECTION_PRIVACY">Личные данные</string>
+    <string name="rsb_CONSENT_SECTION_DATA_USE">Использование данных</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_SURVEY">Опрос</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_TASKS">Задачи</string>
+    <string name="rsb_CONSENT_SECTION_TIME_COMMITMENT">Соглашение о времени</string>
+    <string name="rsb_CONSENT_SECTION_WITHDRAWING">Отказ от участия</string>
+    <string name="rsb_CONSENT_LEARN_MORE_TITLE">Подробнее</string>
+    <!-- Consent section learn more -->
+    <string name="rsb_LEARN_MORE_DATA_GATHERING">Подробнее о сборе данных</string>
+    <string name="rsb_LEARN_MORE_DATA_USE">Подробнее об использовании данных</string>
+    <string name="rsb_LEARN_MORE_PRIVACY">Подробнее о конфиденциальности и защите личной информации</string>
+    <string name="rsb_LEARN_MORE_WELCOME">Подробнее об исследовании</string>
+    <string name="rsb_LEARN_MORE_STUDY_SURVEY">Подробнее об опросе</string>
+    <string name="rsb_LEARN_MORE_TIME_COMMITMENT">Подробнее о том, сколько времени занимает исследование</string>
+    <string name="rsb_LEARN_MORE_TASKS">Подробнее о задачах, включенных в исследование</string>
+    <string name="rsb_LEARN_MORE_WITHDRAWING">Подробнее об отказе от участия</string>
+    <!-- Consent sharing step -->
+    <string name="rsb_CONSENT_SHARING_TITLE">Параметры предоставления данных</string>
+    <string name="rsb_consent_share_widely">Предоставлять мои данные %1$s и мировому научному сообществу.</string>
+    <string name="rsb_consent_share_only">Предоставлять мои данные только %1$s</string>
+    <string name="rsb_consent_sharing_description">%1$s получат данные о Вашем участии в этом исследовании.\n\nПредоставление этих данных (без Вашей личной информации) научному сообществу может помочь усовершенствовать это и будущие исследования.</string>
+    <string name="rsb_LEARN_MORE_CONSENT_SHARING">Подробнее о предоставлении данных</string>
+    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%1$s (расшифровка подписи)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%1$s (подпись)</string>
+    <string name="rsb_CONSENT_DOC_LINE_DATE">Дата</string>
+    <!-- Progress indication (in navigation bar). -->
+    <string name="rsb_STEP_PROGRESS_FORMAT">Шаг %1$s из %2$s</string>
+    <!-- Alert for out of range values. -->
+    <string name="rsb_RANGE_ALERT_TITLE">Недопустимое значение</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s превышает максимально допустимое значение (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s меньше минимально допустимого значения (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">Недопустимое значение: %1$s.</string>
+    <!-- Alert for invalid email address value -->
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Недействительный адрес e-mail: %1$s</string>
+    <!-- Alerts for invalid location coordinates -->
+    <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Введите адрес</string>
+    <string name="rsb_LOCATION_ERROR_TITLE">Указанный адрес не найден</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_LOCATION_UNKNOWN">Не удается устранить проблему с текущей геопозицией. Введите адрес или переместитесь в геопозицию с лучшим GPS‑сигналом, если возможно.</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_DENIED">В доступе к службам геолокации отказано. Разрешите этой программе использовать службы геолокации в Настройках.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE">Не удается найти результат по введенному адресу. Убедитесь, что адрес действителен.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">Вы не подключены к Интернету или превысили максимальное количество запросов на поиск адресов. Если Вы не подключены к Интернету, включите Wi‑Fi, чтобы ответить на это вопрос; пропустите этот вопрос, если кнопка «Пропустить» доступна; или вернитесь к опросу после подключения к Интернету. В противном случае, повторите попытку через несколько минут.</string>
+    <!-- Alert for exceeding length limit in text answer -->
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Превышены максимальная длина текста: %1$s</string>
+    <!-- Camera not available during multitasking -->
+    <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">Камера недоступна в разделенном экране.</string>
+    <!-- Registration step -->
+    <string name="rsb_EMAIL_FORM_ITEM_TITLE">Е‑mail</string>
+    <string name="rsb_EMAIL_FORM_ITEM_PLACEHOLDER">jappleseed@example.com</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_TITLE">Пароль</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_PLACEHOLDER">Введите пароль</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_TITLE">Подтверждение</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_PLACEHOLDER">Введите пароль снова</string>
+    <string name="rsb_CONFIRM_PASSWORD_ERROR_MESSAGE">Пароли не совпадают.</string>
+    <string name="rsb_ADDITIONAL_INFO_SECTION_TITLE">Дополнительная информация</string>
+    <string name="rsb_GIVEN_NAME_ITEM_PLACEHOLDER">Иван</string>
+    <string name="rsb_FAMILY_NAME_ITEM_PLACEHOLDER">Арсентьев</string>
+    <string name="rsb_GENDER_FORM_ITEM_TITLE">Пол</string>
+    <string name="rsb_GENDER_FORM_ITEM_PLACEHOLDER">Выберите пол</string>
+    <string name="rsb_DOB_FORM_ITEM_TITLE">Дата рождения</string>
+    <string name="rsb_DOB_FORM_ITEM_PLACEHOLDER">Выберите дату</string>
+    <!-- Verification step -->
+    <string name="rsb_VERIFICATION_NAV_TITLE">Проверка</string>
+    <string name="rsb_VERIFICATION_STEP_TITLE">Проверка e‑mail</string>
+    <string name="rsb_RESEND_EMAIL_LABEL_MESSAGE">Нажмите ссылку ниже, если Вы не получили e‑mail с подтверждением и хотите, чтобы он был отправлен повторно.</string>
+    <string name="rsb_RESEND_EMAIL_BUTTON_TITLE">Повторно отправить e‑mail</string>
+    <!-- Login step -->
+    <string name="rsb_LOGIN_CONTINUE_BUTTON_TITLE">Вход</string>
+    <string name="rsb_FORGOT_PASSWORD_BUTTON_TITLE">Забыли пароль?</string>
+    <!-- Passcode step -->
+    <string name="rsb_PASSCODE_PROMPT_MESSAGE">Введите код‑пароль</string>
+    <string name="rsb_PASSCODE_CONFIRM_MESSAGE">Подтвердите код‑пароль</string>
+    <string name="rsb_PASSCODE_SAVED_MESSAGE">Код‑пароль сохранен</string>
+    <string name="rsb_PASSCODE_AUTHENTICATED_MESSAGE">Код‑пароль аутентифицирован</string>
+    <string name="rsb_PASSCODE_OLD_ENTRY_MESSAGE">Введите старый код‑пароль</string>
+    <string name="rsb_PASSCODE_NEW_ENTRY_MESSAGE">Введите новый код‑пароль</string>
+    <string name="rsb_PASSCODE_CONFIRM_NEW_ENTRY_MESSAGE">Подтвердите новый код-пароль</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_TITLE">Неверный код‑пароль</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_MESSAGE">Код‑пароли не совпали. Повторите попытку.</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_MESSAGE">Выполните аутентификацию с Touch ID</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_ERROR_ALERT_TITLE">Ошибка Touch ID</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_INVALID_INPUT_MESSAGE">Можно использовать только цифры.</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILITY_LABEL">Индикатор хода ввода код‑пароля</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILTIY_VALUE">Введено цифр: %1$s из %2$s</string>
+    <string name="rsb_PASSCODE_FORGOT_BUTTON_TITLE">Забыли код‑пароль?</string>
+    <!-- Keychain wrapper -->
+    <string name="rsb_KEYCHAIN_ADD_ERROR_MESSAGE">Не удалось добавить объект связки ключей.</string>
+    <string name="rsb_KEYCHAIN_UPDATE_ERROR_MESSAGE">Не удалось обновить объект связки ключей.</string>
+    <string name="rsb_KEYCHAIN_DELETE_ERROR_MESSAGE">Не удалось удалить объект связки ключей.</string>
+    <string name="rsb_KEYCHAIN_FIND_ERROR_MESSAGE">Не удалось найти объект связки ключей.</string>
+    <!-- Blood types -->
+    <string name="rsb_blood_type_a_plus">A(II)Rh+</string>
+    <string name="rsb_BLOOD_TYPE_A_">A(II)Rh‑</string>
+    <string name="rsb_blood_type_ab_plus">AB(IV)Rh+</string>
+    <string name="rsb_BLOOD_TYPE_AB_">AB(IV)Rh‑</string>
+    <string name="rsb_blood_type_b_plus">B(III)Rh+</string>
+    <string name="rsb_BLOOD_TYPE_B_">B(III)Rh‑</string>
+    <string name="rsb_blood_type_o_plus">0(I)Rh+</string>
+    <string name="rsb_BLOOD_TYPE_O_">0(I)Rh‑</string>
+    <!-- Gender values. -->
+    <string name="rsb_GENDER_FEMALE">Женский</string>
+    <string name="rsb_GENDER_MALE">Мужской</string>
+    <string name="rsb_GENDER_OTHER">Другой</string>
+    <!-- Boolean answer strings -->
+    <string name="rsb_BOOL_NO">Нет</string>
+    <string name="rsb_BOOL_YES">Да</string>
+    <!-- Measuring unit abbreviations -->
+    <string name="rsb_MEASURING_UNIT_CM">см</string>
+    <string name="rsb_MEASURING_UNIT_FT">фт</string>
+    <string name="rsb_MEASURING_UNIT_IN">дюйм.</string>
+    <!-- Default placeholders to request answers in a questionnaire. -->
+    <string name="rsb_PLACEHOLDER_TEXT_OR_NUMBER">Коснитесь, чтобы ответить</string>
+    <string name="rsb_NULL_ANSWER">Выберите ответ</string>
+    <string name="rsb_PLACEHOLDER_IMAGE_CHOICES">Коснитесь, чтобы выбрать</string>
+    <string name="rsb_PLACEHOLDER_LONG_TEXT">Коснитесь, чтобы написать</string>
+    <!-- Button titles -->
+    <string name="rsb_BUTTON_AGREE">Принимаю</string>
+    <string name="rsb_BUTTON_CANCEL">Отменить</string>
+    <string name="rsb_BUTTON_OK">ОК</string>
+    <string name="rsb_BUTTON_CLEAR">Очистить</string>
+    <string name="rsb_BUTTON_DISAGREE">Не принимаю</string>
+    <string name="rsb_BUTTON_DONE">Готово</string>
+    <string name="rsb_BUTTON_GET_STARTED">Начать</string>
+    <string name="rsb_BUTTON_LEARN_MORE">Подробнее</string>
+    <string name="rsb_BUTTON_NEXT">Далее</string>
+    <string name="rsb_BUTTON_SKIP">Пропустить</string>
+    <string name="rsb_BUTTON_SKIP_QUESTION">Пропустить этот вопрос</string>
+    <string name="rsb_BUTTON_START_TIMER">Запустить таймер</string>
+    <string name="rsb_BUTTON_OPTION_SAVE">Сохранить на потом</string>
+    <string name="rsb_BUTTON_OPTION_DISCARD">Сбросить результаты</string>
+    <string name="rsb_BUTTON_OPTION_STOP_TASK">Завершить</string>
+    <string name="rsb_BUTTON_SAVE">Сохранить</string>
+    <string name="rsb_BUTTON_CLEAR_ANSWER">Очистить ответ</string>
+    <string name="rsb_BUTTON_READ_ONLY_MODE">Этот ответ нельзя изменить.</string>
+    <!-- General active tasks. -->
+    <string name="rsb_COUNTDOWN_LABEL">Задача начинается через</string>
+    <string name="rsb_TASK_COMPLETE_TITLE">Задача выполнена</string>
+    <string name="rsb_TASK_COMPLETE_TEXT">Данные будут проанализированы. Вы получите уведомление, когда результаты будут готовы.</string>
+    <string name="rsb_countdown_spoken_remaining">Осталось %1$s с.</string>
+    <!-- Image capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Захват изображения</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Повторный захват изображения</string>
+    <string name="rsb_CAPTURE_ERROR_CAMERA_NOT_FOUND">Камера не найдена. Невозможно завершить этот шаг.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_PERMISSIONS">Для выполнения этого шага необходимо в Настройках разрешить этой программе доступ к камере.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_OUTPUT_DIRECTORY">Не указана папка для сохранения полученных изображений.</string>
+    <string name="rsb_CAPTURE_ERROR_CANNOT_WRITE_FILE">Не удается сохранить полученное изображение.</string>
+    <!-- Video capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_VIDEO">Начать запись</string>
+    <string name="rsb_CAPTURE_BUTTON_STOP_CAPTURE_VIDEO">Остановить запись</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Снять видео еще раз</string>
+    <!-- Fitness active task. -->
+    <string name="rsb_FITNESS_TASK_TITLE">Выносливость</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Расстояние (%1$s)</string>
+    <string name="rsb_FITNESS_HEARTRATE_TITLE">Пульс (уд/мин)</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Сядьте поудобнее и сидите: %1$s.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Идите с максимальной скоростью: %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Во время выполнения этой задачи программа следит за частотой Вашего пульса и измеряет расстояние, которое Вы пройдете за %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Идите по улице с максимальной скоростью: %1$s. После этого удобно сядьте и отдыхайте: %2$s. Коснитесь «Начать», чтобы приступить.</string>
+    <!-- Short walk active task. -->
+    <string name="rsb_WALK_TASK_TITLE">Координация движений</string>
+    <string name="rsb_WALK_INTRO_TEXT">В этой задаче проверяется координация движений при ходьбе и в положении стоя. Не выполняйте эту задачу, если Вы не можете передвигаться без посторонней помощи.</string>
+    <string name="rsb_walk_intro_2_text_ld">Найдите место, где Вы можете безопасно пройти %1$d шагов по прямой линии без посторонней помощи.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL">Поместите телефон в карман или сумку и следуйте звуковым указаниям.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Теперь стойте спокойно: %1$s.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Стойте спокойно: %1$s.</string>
+    <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Развернитесь и пройдите до исходного местоположения.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Пройдите прямо %1$d шагов.</string>
+    <!-- Short walk back and forth. -->
+    <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Найдите место, где бы Вы могли ходить по прямой линии в обоих направлениях. Постарайтесь идти непрерывно, разворачиваясь на концах линии так, как будто обходите острый угол.\n\nЗатем Вы получите указание развернуться на 360 градусов и стоять спокойно, опустив руки вдоль тела и выставив ноги на ширине плеч.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Коснитесь «Начать», когда будете готовы приступить к выполнению задания.\nЗатем положите телефон в карман или сумку и следуйте звуковым указаниям.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Походите по прямой вперед и назад в течение %1$s. Идите нормальной походкой.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Развернитесь на 360 градусов и стойте спокойно %1$s.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Вы выполнили задачу.</string>
+    <!-- Tapping active task. -->
+    <string name="rsb_TAPPING_TASK_TITLE">Скорость касания</string>
+    <string name="rsb_TAPPING_TASK_TITLE_RIGHT">Правая рука</string>
+    <string name="rsb_TAPPING_TASK_TITLE_LEFT">Левая рука</string>
+    <string name="rsb_TAPPING_INTRO_TEXT">В этой задаче оценивается скорость касания пальцами.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_REST_PHONE">Положите телефон на ровную поверхность.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_MOST_AFFECTED">Двумя пальцами одной руки попеременно касайтесь появляющихся кнопок на экране.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_FIRST">Двумя пальцами правой руки попеременно касайтесь появляющихся кнопок на экране.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Двумя пальцами левой руки попеременно касайтесь появляющихся кнопок на экране.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Теперь повторите это упражнение правой рукой.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Теперь повторите это упражнение левой рукой.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Коснитесь одним пальцем, затем другим. Старайтесь, чтобы касания были максимально регулярными. Продолжайте в течение %1$s.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION">Чтобы приступить, коснитесь «Начать».</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Чтобы начать, коснитесь «Далее».</string>
+    <string name="rsb_TAP_BUTTON_TITLE">Коснитесь</string>
+    <string name="rsb_TOTAL_TAPS_LABEL">Всего касаний</string>
+    <string name="rsb_TAPPING_INSTRUCTION">Касайтесь кнопок двумя пальцами с одинаковой скоростью.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_RIGHT">Касайтесь кнопок пальцами ПРАВОЙ руки.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_LEFT">Касайтесь кнопок пальцами ЛЕВОЙ руки.</string>
+    <string name="rsb_TAPPING_SKIP_TITLE">Пропустить эту руку</string>
+    <!-- Audio active task. -->
+    <string name="rsb_AUDIO_TASK_TITLE">Голос</string>
+    <string name="rsb_AUDIO_CALL_TO_ACTION">Чтобы приступить, коснитесь «Начать».</string>
+    <string name="rsb_AUDIO_INSTRUCTION">Произносите «Ааааа» в микрофон как можно дольше.</string>
+    <string name="rsb_AUDIO_INTRO_TEXT">Сделайте глубокий вдох и произнесите «Ааааа» в микрофон как можно дольше. Сохраняйте такую громкость голоса, чтобы полоски звука на диаграмме оставались синими.</string>
+    <string name="rsb_AUDIO_INTENDED_USE">Во время выполнения этой задачи программа записывает Вашу речь через микрофон телефона и затем оценивает характеристики Вашего голоса.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_LABEL">Слишком громко</string>
+    <string name="rsb_AUDIO_GENERIC_ERROR_LABEL">Не удается записать аудио.</string>
+    <string name="rsb_AUDIO_LEVEL_CHECK_LABEL">Подождите, пока устройство измерит уровень фонового шума.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_MESSAGE">Уровень фонового шума слишком большой и не позволяет записать Ваш голос. Найдите более тихое место и повторите попытку.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_ACTION_NEXT">Коснитесь «Далее», когда будете готовы.</string>
+    <!-- Tone audiometry active task. -->
+    <string name="rsb_TONE_AUDIOMETRY_TASK_TITLE">Аудиометрия</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTENDED_USE">В этой задаче оценивается Ваша способность слышать различные звуки.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTRO_TEXT">Перед началом подключите наушники и наденьте их.</string>
+    <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Чтобы приступить, коснитесь «Начать».</string>
+    <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Сейчас Вы услышите звук. Настройте громкость с помощью регулятора на боковой панели устройства.\n\nКоснитесь кнопки, когда будете готовы.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Касайтесь кнопки каждый раз, когда будете слышать звук.</string>
+    <string name="rsb_tone_label_left">%1$s Гц, левый</string>
+    <string name="rsb_tone_label_right">%1$s Гц, правый</string>
+    <!-- Spatial span memory active task. -->
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Пространственная память</string>
+    <string name="rsb_spatial_span_memory_intro_text">Во время выполнения этой задачи оцениваются возможности Вашей кратковременной пространственной памяти. Программа попросит Вас повторить последовательность, в которой подсвечиваются %1$s.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">цветы</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">цветы</string>
+    <string name="rsb_spatial_span_memory_intro_2_text">Некоторые %1$s будут подсвечиваться поочередно в определенном порядке. Коснитесь этих %2$s в том же порядке.</string>
+    <string name="rsb_spatial_span_memory_intro_2_text_reverse">Некоторые %1$s будут подсвечиваться поочередно в определенном порядке. Коснитесь этих %2$s в обратном порядке.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Чтобы приступить, коснитесь «Начать» и внимательно смотрите на экран.</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
+    <string name="rsb_MEMORY_GAME_SCORE_TITLE">Счет</string>
+    <string name="rsb_memory_game_playback_title">Следите за тем, как подсвечиваются %1$s</string>
+    <string name="rsb_memory_game_gameplay_title">Коснитесь изображений (%1$s) в том порядке, в котором они подсвечивались</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Коснитесь изображений (%1$s) в обратном порядке</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Последовательность выполнена</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Нажмите «Далее», чтобы продолжить</string>
+    <string name="rsb_MEMORY_GAME_FAILED_TITLE">Повторить</string>
+    <string name="rsb_MEMORY_GAME_FAILED_MESSAGE">В этот раз Вы не совсем справились с заданием. Коснитесь «Далее», чтобы продолжить.</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_TITLE">Время истекло</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_MESSAGE">Вам не хватило времени.\nНажмите «Далее», чтобы продолжить.</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE">Игра завершена</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_TITLE">Пауза</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_MESSAGE">Нажмите «Далее», чтобы продолжить</string>
+    <!-- Reaction time active task. -->
+    <string name="rsb_REACTION_TIME_TASK_TITLE">Время реакции</string>
+    <string name="rsb_REACTION_TIME_TASK_INTENDED_USE">В этой задаче измеряется время реакции на визуальный сигнал.</string>
+    <string name="rsb_REACTION_TIME_TASK_INTRO_TEXT_FORMAT">Как только на экране появится синяя точка, встряхните устройство в любом направлении. Количество повторений этого задания: %D.</string>
+    <string name="rsb_REACTION_TIME_TASK_CALL_TO_ACTION">Чтобы приступить, коснитесь «Начать».</string>
+    <string name="rsb_REACTION_TIME_TASK_ATTEMPTS_FORMAT">Попытка %1$s из %2$s</string>
+    <string name="rsb_REACTION_TIME_TASK_ACTIVE_STEP_TITLE">При появлении синего круга быстро встряхните устройство</string>
+    <!-- Tower of Hanoi active task -->
+    <string name="rsb_TOWER_OF_HANOI_TASK_TITLE">Ханойская башня</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTENDED_USE">В этой задаче проверяется способность решать сложные вопросы.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTRO_TEXT">Переместите всю стопку на отмеченное цветом место за наименьшее число ходов.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_TASK_CALL_TO_ACTION">Чтобы приступить, коснитесь «Начать»</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_INTRO_TEXT">Решить задачу</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_PROGRESS_TEXT">Число ходов: %1$s \n %2$s</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_SKIP_BUTTON_TITLE">Я не могу решить эту задачу</string>
+    <!-- Timed walk active task. -->
+    <string name="rsb_TIMED_WALK_TITLE">Ходьба на время</string>
+    <string name="rsb_TIMED_WALK_INTRO_DETAIL">В этой задаче проверяется работоспособность нижних конечностей.</string>
+    <string name="rsb_timed_walk_intro_2_text">Найдите место, предпочтительно снаружи, где Вы смогли бы безопасно идти %1$s по прямой линии с максимальной скоростью. Не замедляйте шаг, пока не дойдете до финиша.</string>
+    <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Чтобы начать, коснитесь «Далее».</string>
+    <string name="rsb_TIMED_WALK_FORM_TITLE">Вспомогательные приспособления</string>
+    <string name="rsb_TIMED_WALK_FORM_TEXT">Используйте одно и тоже вспомогательное приспособление для всех упражнений.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_TEXT">Вы носите голеностопный ортез?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TITLE">Вы пользуетесь вспомогательными приспособлениями?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TEXT">Коснитесь, чтобы выбрать ответ.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE">Нет</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_2">Одна трость</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_3">Один костыль</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Трости</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Костыли</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Ходунки/ролятор</string>
+    <string name="rsb_timed_walk_instruction">Пройдите прямо %1$s.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_2">Развернитесь и пройдите до исходного местоположения.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Коснитесь «Готово» после завершения.</string>
+    <!-- PSAT active task. -->
+    <string name="rsb_PASAT_TITLE">PASAT</string>
+    <string name="rsb_PVSAT_TITLE">PVSAT</string>
+    <string name="rsb_PAVSAT_TITLE">PAVSAT</string>
+    <string name="rsb_PASAT_INTRO_TEXT">В слуховом тесте на сложение с заданным темпом измеряются способность обрабатывать аудиальную информацию, а также способность к вычислениям.</string>
+    <string name="rsb_PVSAT_INTRO_TEXT">В визуальном тесте на сложение с заданным темпом измеряются способность обрабатывать визуальную информацию, а также способность к вычислениям.</string>
+    <string name="rsb_PAVSAT_INTRO_TEXT">В слуховом и визуальном тестах на сложение с заданным темпом измеряются способности обрабатывать аудиальную и визуальную информацию, а также способность к вычислениям.</string>
+    <string name="rsb_psat_intro_text_2">Каждые %1$s с будет показано однозначное число.\nВам необходимо прибавить каждое новое число к предыдущему.\nВнимание! Общую сумму вычислять не нужно, только сумму последних двух чисел.</string>
+    <string name="rsb_PSAT_CALL_TO_ACTION">Чтобы приступить, коснитесь «Начать».</string>
+    <string name="rsb_PSAT_INITIAL_INSTRUCTION">Запомните эту первую цифру.</string>
+    <string name="rsb_PSAT_INSTRUCTION">Прибавьте это новое число к предыдущему.</string>
+    <string name="rsb_PSAT_NO_DIGIT">-</string>
+    <!-- Hole peg test active task. -->
+    <string name="rsb_hole_peg_test_title">Тест «Вставляем %1$s колышков»</string>
+    <string name="rsb_hole_peg_test_intro_text">В этой задаче проверяется работоспособность верхних конечностей. Вам предложат поместить колышек в лунку %1$s раз(а).</string>
+    <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">Проверены будут обе руки: левая и правая.\nВам потребуется поднять колышек как можно быстрее, поместить его в лунку, а затем, повторив упражнение %1$s раз(а), удалить его снова %2$s раз(а).</string>
+    <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">Проверены будут обе руки: правая и левая.\nВам потребуется поднять колышек как можно быстрее, поместить его в лунку, а затем, повторив упражнение %1$s раз(а), удалить его снова %2$s раз(а).</string>
+    <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Чтобы приступить, коснитесь «Начать».</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_LEFT_HAND">Поместите колышек в лунку левой рукой.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_RIGHT_HAND">Поместите колышек в лунку правой рукой.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_LEFT_HAND">Поместите колышек за линию левой рукой.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_RIGHT_HAND">Поместите колышек за линию правой рукой.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT">Поднимите колышек двумя пальцами.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT_2">Приподнимите пальцы, чтобы бросить колышек.</string>
+    <!-- Tremor test active task. -->
+    <string name="rsb_TREMOR_TEST_TITLE">Измерение дрожания рук</string>
+    <string name="rsb_TREMOR_TEST_INTRO_1_DETAIL">В этой задаче измеряется величина дрожания рук в различных положения. Найдите место, где бы Вы могли сидеть спокойно во время выполнения задачи.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Держите телефон рукой с более выраженными симптомами, как показано на изображении ниже.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Держите телефон ПРАВОЙ рукой, как показано на изображении ниже.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Держите телефон ЛЕВОЙ рукой, как показано на изображении ниже.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Вам нужно будет выполнить %1$s в сидячем положении, держа телефон в руке.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">одно задание</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">два задания</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">три задания</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_4_TASK">четыре задания</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_5_TASK">пять заданий</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT">Коснитесь «Далее», чтобы продолжить.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Приготовьтесь держать телефон на коленях.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Приготовьтесь держать телефон на коленях в ЛЕВОЙ руке.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Приготовьтесь держать телефон на коленях в ПРАВОЙ руке.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Держите телефон на коленях в течение %1$d с.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Теперь держите телефон в вытянутой руке на уровне плеч.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Теперь держите телефон в вытянутой ЛЕВОЙ руке на уровне плеч.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Теперь держите телефон в вытянутой ПРАВОЙ руке на уровне плеч.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Удерживайте телефон в вытянутой руке в течение %1$d с.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Теперь держите телефон в согнутой в локте руке на уровне плеч.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Теперь держите телефон в согнутой в локте ЛЕВОЙ руке на уровне плеч.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Теперь держите телефон в согнутой в локте ПРАВОЙ руке на уровне плеч.</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Удерживайте телефон в руке, согнутой в локте, в течение %1$d с.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Теперь держите телефон в согнутой в локте руке и несколько раз коснитесь им своего носа.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Теперь держите телефон в согнутой в локте ЛЕВОЙ руке и несколько раз коснитесь им своего носа.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Теперь держите телефон в согнутой в локте ПРАВОЙ руке и несколько раз коснитесь им своего носа.</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Касайтесь телефоном своего носа в течение %1$d с.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Подготовьтесь выполнить махание рукой (сгибая руку в запястье).</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Подготовьтесь выполнить махание ЛЕВОЙ рукой, держа в ней телефон (сгибая руку в запястье).</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Подготовьтесь выполнить махание ПРАВОЙ рукой, держа в ней телефон (сгибая руку в запястье).</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Продолжайте махать рукой в течение %1$d с.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Теперь возьмите телефон ЛЕВОЙ рукой и перейдите к следующему заданию.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Теперь возьмите телефон ПРАВОЙ рукой и перейдите к следующему заданию.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Перейдите к следующему заданию.</string>
+    <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Задача выполнена.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Вам нужно будет выполнить %1$s в сидячем положении, держа телефон сначала в одной руке, затем в другой.</string>
+    <string name="rsb_TREMOR_SKIP_LEFT_HAND">Я не могу выполнить эту задачу ЛЕВОЙ рукой.</string>
+    <string name="rsb_TREMOR_SKIP_RIGHT_HAND">Я не могу выполнить эту задачу ПРАВОЙ рукой.</string>
+    <string name="rsb_TREMOR_SKIP_NEITHER">Я могу выполнить эту задачу обеими руками.</string>
+    <!-- Potentially user visible error messages. -->
+    <string name="rsb_ERROR_DATALOGGER_CREATE_FILE">Не удалось создать файл</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_FREE_SPACE">Не удалось удалить файлы журналов, чтобы освободить достаточно места</string>
+    <string name="rsb_ERROR_DATALOGGER_SET_ATTRIBUTE">Ошибка при установке атрибута</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_MAORK">Файл не помечен как удаленный (выгруженный)</string>
+    <string name="rsb_ERROR_DATALOGGER_MULTIPLE">Несколько ошибок при удалении журналов</string>
+    <string name="rsb_ERROR_RECORDER_NO_DATA">Собранные данные не найдены.</string>
+    <string name="rsb_ERROR_RECORDER_NO_OUTPUT_DIRECTORY">Не указан каталог для выходных данных</string>
+    <!-- Charts -->
+    <string name="rsb_CHART_NO_DATA_TEXT">Нет данных</string>
+    <!-- Accessibility -->
+    <string name="rsb_AX_BUTTON_BACK">Назад</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">Изображение (%1$s)</string>
+    <string name="rsb_AX_SIGNVIEW_LABEL">Место для подписи</string>
+    <string name="rsb_AX_SIGNVIEW_HINT">Прикоснитесь к экрану и проведите по нему пальцем, чтобы оставить подпись</string>
+    <string name="rsb_AX_SIGNVIEW_SIGNED">Подписано</string>
+    <string name="rsb_AX_SIGNVIEW_UNSIGNED">Неподписано</string>
+    <string name="rsb_AX_SELECTED">Выбрано</string>
+    <string name="rsb_AX_UNSELECTED">Не выбрано</string>
+    <string name="rsb_AX_SLIDER_LABEL">Бегунок ответа. Диапазон от %1$s до %2$s</string>
+    <string name="rsb_AX_UNLABELED_IMAGE">Изображение без подписи</string>
+    <string name="rsb_AX_ANNOUNCE_BEGIN_TASK">Приступить</string>
+    <string name="rsb_AX_MEMORY_TILE_ACTIVE">активно</string>
+    <string name="rsb_AX_MEMORY_TILE_CORRECT">верно</string>
+    <string name="rsb_AX_MEMORY_TILE_INCORRECT">неверно</string>
+    <string name="rsb_AX_MEMORY_TILE_QUIESCENT">неподвижно</string>
+    <string name="rsb_AX_MEMORY_TILE_LABEL">Игра на проверку памяти</string>
+    <string name="rsb_AX_IMAGE_CAPTURE_LABEL">Просмотр изображения</string>
+    <string name="rsb_AX_IMAGE_CAPTURED_LABEL">Отснятое изображение</string>
+    <string name="rsb_AX_VIDEO_CAPTURE_LABEL">Просмотр записанного видео</string>
+    <string name="rsb_AX_VIDEO_CAPTURED_LABEL">Снятое видео</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_INVALID_MOVE_FORMAT">Нельзя положить кольцо размера %1$s на кольцо размера %2$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TARGET_DISK">Цель</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Башня</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Коснитесь дважды, чтобы положить кольцо</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Коснитесь дважды, чтобы выбрать самое верхнее кольцо</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Содержит кольцо размеров: %1$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Пусто</string>
+    <string name="rsb_ax_graph_range_format">Диапазон от %1$s до %2$s</string>
+    <string name="rsb_AX_GRAPH_STACK_PREFIX">Стопка из</string>
+    <string name="rsb_AX_GRAPH_AND_SEPARATOR">и</string>
+    <string name="rsb_ax_graph_point">Точка: %d</string>
+    
+</resources>

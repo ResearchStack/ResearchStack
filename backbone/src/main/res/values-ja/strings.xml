@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Informed consent process. -->
+    <string name="rsb_CONSENT_NAME_TITLE">同意</string>
+    <string name="rsb_CONSENT_NAME_GIVEN">名</string>
+    <string name="rsb_CONSENT_NAME_FAMILY">姓</string>
+    <string name="rsb_CONSENT_NAME_PLACEHOLDER">必須</string>
+    <string name="rsb_CONSENT_REVIEW_TITLE">確認</string>
+    <string name="rsb_CONSENT_REVIEW_INSTRUCTION">下記のフォームを確認して、続ける場合は“同意する”をタップしてください。</string>
+    <string name="rsb_CONSENT_REVIEW_ALERT_TITLE">確認</string>
+    <string name="rsb_CONSENT_SIGNATURE_TITLE">署名</string>
+    <string name="rsb_CONSENT_SIGNATURE_INSTRUCTION">下の線の上に指で署名してください。</string>
+    <string name="rsb_CONSENT_SIGNATURE_PLACEHOLDER">ここに署名</string>
+    <string name="rsb_CONSENT_PAGE_NUMBER_FORMAT">ページ%1$ld/%2$ld</string>
+    <!-- Consent section titles. -->
+    <string name="rsb_CONSENT_SECTION_WELCOME">ようこそ</string>
+    <string name="rsb_CONSENT_SECTION_DATA_GATHERING">データの収集</string>
+    <string name="rsb_CONSENT_SECTION_PRIVACY">プライバシー</string>
+    <string name="rsb_CONSENT_SECTION_DATA_USE">データの使用方法</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_SURVEY">調査アンケート</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_TASKS">調査タスク</string>
+    <string name="rsb_CONSENT_SECTION_TIME_COMMITMENT">所要時間</string>
+    <string name="rsb_CONSENT_SECTION_WITHDRAWING">同意の撤回</string>
+    <string name="rsb_CONSENT_LEARN_MORE_TITLE">詳しい情報</string>
+    <!-- Consent section learn more -->
+    <string name="rsb_LEARN_MORE_DATA_GATHERING">データの収集方法についての詳しい情報を表示します</string>
+    <string name="rsb_LEARN_MORE_DATA_USE">データの使用方法についての詳しい情報を表示します</string>
+    <string name="rsb_LEARN_MORE_PRIVACY">プライバシーおよび個人を特定する情報の保護方法についての詳しい情報を表示します</string>
+    <string name="rsb_LEARN_MORE_WELCOME">まず調査についての詳しい情報を表示します</string>
+    <string name="rsb_LEARN_MORE_STUDY_SURVEY">調査アンケートについての詳しい情報を表示します</string>
+    <string name="rsb_LEARN_MORE_TIME_COMMITMENT">調査にかかる時間についての詳しい情報を表示します</string>
+    <string name="rsb_LEARN_MORE_TASKS">必要なタスクについての詳しい情報を表示します</string>
+    <string name="rsb_LEARN_MORE_WITHDRAWING">同意の撤回についての詳しい情報を表示します</string>
+    <!-- Consent sharing step -->
+    <string name="rsb_CONSENT_SHARING_TITLE">共有オプション</string>
+    <string name="rsb_consent_share_widely">自分のデータを%1$sおよび資格を持つ世界中の研究者と共有します</string>
+    <string name="rsb_consent_share_only">自分のデータを%1$sとのみ共有します</string>
+    <string name="rsb_consent_sharing_description">%1$sは、この調査に参加したあなたの調査データを受信します。\n\n名前などの情報を含まない、大まかにコード化された調査データを共有すると、今回と将来の調査に役立てることができます。</string>
+    <string name="rsb_LEARN_MORE_CONSENT_SHARING">データ共有についての詳しい情報を表示します</string>
+    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%1$sさんの名前（活字体）</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%1$sさんの署名</string>
+    <string name="rsb_CONSENT_DOC_LINE_DATE">日付</string>
+    <!-- Progress indication (in navigation bar). -->
+    <string name="rsb_STEP_PROGRESS_FORMAT">ステップ%1$s/%2$s</string>
+    <!-- Alert for out of range values. -->
+    <string name="rsb_RANGE_ALERT_TITLE">値が無効です</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$sは許容される最大値（%2$s）を超えています。</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$sは許容される最小値（%2$s）より小さいです。</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$sは無効な値です。</string>
+    <!-- Alert for invalid email address value -->
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">メールアドレスが無効です: %1$s</string>
+    <!-- Alerts for invalid location coordinates -->
+    <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">住所を入力</string>
+    <string name="rsb_LOCATION_ERROR_TITLE">指定した住所が見つかりませんでした</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_LOCATION_UNKNOWN">現在地を確認できません。住所を入力するか、GPS信号の受信状況が良好な場所に移動してください。</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_DENIED">位置情報サービスへのアクセスが拒否されました。“設定”でこのAppに位置情報サービスの使用を許可してください。</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE">入力した住所の結果が見つかりません。住所が正しいことを確認してください。</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">インターネットに接続されていないか、住所検索要求の最大数に達しました。インターネットに接続されていない場合は、Wi-Fiをオンにしてこの質問に回答するか、この質問をスキップするか（スキップボタンが表示されている場合）、またはインターネットに接続されているときにアンケートをやり直してください。インターネットに接続されている場合は、数分待ってからやり直してください。</string>
+    <!-- Alert for exceeding length limit in text answer -->
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">文字数が最大許容数を超えています: %1$s</string>
+    <!-- Camera not available during multitasking -->
+    <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">分割画面ではカメラを使用できません。</string>
+    <!-- Registration step -->
+    <string name="rsb_EMAIL_FORM_ITEM_TITLE">メール</string>
+    <string name="rsb_EMAIL_FORM_ITEM_PLACEHOLDER">hiro_sato@example.com</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_TITLE">パスワード</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_PLACEHOLDER">パスワードを入力</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_TITLE">確認</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_PLACEHOLDER">パスワードを再入力</string>
+    <string name="rsb_CONFIRM_PASSWORD_ERROR_MESSAGE">パスワードが一致しません。</string>
+    <string name="rsb_ADDITIONAL_INFO_SECTION_TITLE">追加情報</string>
+    <string name="rsb_GIVEN_NAME_ITEM_PLACEHOLDER">John</string>
+    <string name="rsb_FAMILY_NAME_ITEM_PLACEHOLDER">Appleseed</string>
+    <string name="rsb_GENDER_FORM_ITEM_TITLE">性別</string>
+    <string name="rsb_GENDER_FORM_ITEM_PLACEHOLDER">性別を選択</string>
+    <string name="rsb_DOB_FORM_ITEM_TITLE">生年月日</string>
+    <string name="rsb_DOB_FORM_ITEM_PLACEHOLDER">日付を選択</string>
+    <!-- Verification step -->
+    <string name="rsb_VERIFICATION_NAV_TITLE">確認</string>
+    <string name="rsb_VERIFICATION_STEP_TITLE">メールを確認</string>
+    <string name="rsb_RESEND_EMAIL_LABEL_MESSAGE">確認メールが届いておらず、送信し直したい場合は、下のリンクをタップしてください。</string>
+    <string name="rsb_RESEND_EMAIL_BUTTON_TITLE">確認メールを再送信</string>
+    <!-- Login step -->
+    <string name="rsb_LOGIN_CONTINUE_BUTTON_TITLE">ログイン</string>
+    <string name="rsb_FORGOT_PASSWORD_BUTTON_TITLE">パスワードをお忘れですか?</string>
+    <!-- Passcode step -->
+    <string name="rsb_PASSCODE_PROMPT_MESSAGE">パスコードを入力してください</string>
+    <string name="rsb_PASSCODE_CONFIRM_MESSAGE">パスコードを確認してください</string>
+    <string name="rsb_PASSCODE_SAVED_MESSAGE">パスコードが保存されました</string>
+    <string name="rsb_PASSCODE_AUTHENTICATED_MESSAGE">パスコードが認証されました</string>
+    <string name="rsb_PASSCODE_OLD_ENTRY_MESSAGE">古いパスコードを入力してください</string>
+    <string name="rsb_PASSCODE_NEW_ENTRY_MESSAGE">新しいパスコードを入力してください</string>
+    <string name="rsb_PASSCODE_CONFIRM_NEW_ENTRY_MESSAGE">新しいパスコードを確認してください</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_TITLE">パスコードが正しくありません</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_MESSAGE">パスコードが一致しません。もう一度入力してください。</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_MESSAGE">Touch IDで認証してください</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_ERROR_ALERT_TITLE">Touch IDエラー</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_INVALID_INPUT_MESSAGE">入力できるのは数字のみです。</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILITY_LABEL">パスコード入力の進行状況インジケータ</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILTIY_VALUE">%1$s/%2$s桁を入力しました</string>
+    <string name="rsb_PASSCODE_FORGOT_BUTTON_TITLE">パスコードをお忘れですか?</string>
+    <!-- Keychain wrapper -->
+    <string name="rsb_KEYCHAIN_ADD_ERROR_MESSAGE">キーチェーン項目を追加できませんでした。</string>
+    <string name="rsb_KEYCHAIN_UPDATE_ERROR_MESSAGE">キーチェーン項目をアップデートできませんでした。</string>
+    <string name="rsb_KEYCHAIN_DELETE_ERROR_MESSAGE">キーチェーン項目を削除できませんでした。</string>
+    <string name="rsb_KEYCHAIN_FIND_ERROR_MESSAGE">キーチェーン項目が見つかりませんでした。</string>
+    <!-- Blood types -->
+    <string name="rsb_blood_type_a_plus">A+</string>
+    <string name="rsb_BLOOD_TYPE_A_">A-</string>
+    <string name="rsb_blood_type_ab_plus">AB+</string>
+    <string name="rsb_BLOOD_TYPE_AB_">AB-</string>
+    <string name="rsb_blood_type_b_plus">B+</string>
+    <string name="rsb_BLOOD_TYPE_B_">B-</string>
+    <string name="rsb_blood_type_o_plus">O+</string>
+    <string name="rsb_BLOOD_TYPE_O_">O-</string>
+    <!-- Gender values. -->
+    <string name="rsb_GENDER_FEMALE">女性</string>
+    <string name="rsb_GENDER_MALE">男性</string>
+    <string name="rsb_GENDER_OTHER">その他</string>
+    <!-- Boolean answer strings -->
+    <string name="rsb_BOOL_NO">いいえ</string>
+    <string name="rsb_BOOL_YES">はい</string>
+    <!-- Measuring unit abbreviations -->
+    <string name="rsb_MEASURING_UNIT_CM">cm</string>
+    <string name="rsb_MEASURING_UNIT_FT">ft</string>
+    <string name="rsb_MEASURING_UNIT_IN">in</string>
+    <!-- Default placeholders to request answers in a questionnaire. -->
+    <string name="rsb_PLACEHOLDER_TEXT_OR_NUMBER">タップで回答</string>
+    <string name="rsb_NULL_ANSWER">答えを選択してください</string>
+    <string name="rsb_PLACEHOLDER_IMAGE_CHOICES">タップで選択</string>
+    <string name="rsb_PLACEHOLDER_LONG_TEXT">タップで書き込む</string>
+    <!-- Button titles -->
+    <string name="rsb_BUTTON_AGREE">同意する</string>
+    <string name="rsb_BUTTON_CANCEL">キャンセル</string>
+    <string name="rsb_BUTTON_OK">OK</string>
+    <string name="rsb_BUTTON_CLEAR">消去</string>
+    <string name="rsb_BUTTON_DISAGREE">同意しない</string>
+    <string name="rsb_BUTTON_DONE">完了</string>
+    <string name="rsb_BUTTON_GET_STARTED">開始</string>
+    <string name="rsb_BUTTON_LEARN_MORE">詳しい情報</string>
+    <string name="rsb_BUTTON_NEXT">次へ</string>
+    <string name="rsb_BUTTON_SKIP">スキップ</string>
+    <string name="rsb_BUTTON_SKIP_QUESTION">この質問をスキップ</string>
+    <string name="rsb_BUTTON_START_TIMER">タイマーを開始</string>
+    <string name="rsb_BUTTON_OPTION_SAVE">後で使用するために保存</string>
+    <string name="rsb_BUTTON_OPTION_DISCARD">結果を破棄</string>
+    <string name="rsb_BUTTON_OPTION_STOP_TASK">タスクを終了</string>
+    <string name="rsb_BUTTON_SAVE">保存</string>
+    <string name="rsb_BUTTON_CLEAR_ANSWER">答えを消去</string>
+    <string name="rsb_BUTTON_READ_ONLY_MODE">この答えは変更できません。</string>
+    <!-- General active tasks. -->
+    <string name="rsb_COUNTDOWN_LABEL">アクティビティ開始まで</string>
+    <string name="rsb_TASK_COMPLETE_TITLE">アクティビティ完了</string>
+    <string name="rsb_TASK_COMPLETE_TEXT">データは分析され、結果の準備ができると通知されます。</string>
+    <string name="rsb_countdown_spoken_remaining">残り%1$s秒です。</string>
+    <!-- Image capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">イメージを取り込む</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">再度イメージを取り込む</string>
+    <string name="rsb_CAPTURE_ERROR_CAMERA_NOT_FOUND">カメラが見つからないため、この手順を完了できません。</string>
+    <string name="rsb_CAPTURE_ERROR_NO_PERMISSIONS">この手順を完了するには、“設定”でこのAppがカメラにアクセスすることを許可してください。</string>
+    <string name="rsb_CAPTURE_ERROR_NO_OUTPUT_DIRECTORY">取り込んだイメージの出力ディレクトリが指定されていません。</string>
+    <string name="rsb_CAPTURE_ERROR_CANNOT_WRITE_FILE">取り込んだイメージを保存できませんでした。</string>
+    <!-- Video capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_VIDEO">録画を開始</string>
+    <string name="rsb_CAPTURE_BUTTON_STOP_CAPTURE_VIDEO">録画を停止</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">再度ビデオを取り込む</string>
+    <!-- Fitness active task. -->
+    <string name="rsb_FITNESS_TASK_TITLE">体力</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">距離（%1$s）</string>
+    <string name="rsb_FITNESS_HEARTRATE_TITLE">心拍数（bpm）</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">%1$s間楽な姿勢で座ってください。</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">できるだけ速く%1$s間歩いてください。</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">このアクティビティでは、心拍数をモニタし、%1$sで歩ける距離を測定します。</string>
+    <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">屋外でできるだけ速いペースで%1$s間歩いてください。終わったら座って、%2$s間楽にしてください。始めるには、“開始”をタップしてください。</string>
+    <!-- Short walk active task. -->
+    <string name="rsb_WALK_TASK_TITLE">歩行/バランス</string>
+    <string name="rsb_WALK_INTRO_TEXT">このアクティビティでは、歩行中とじっと立っているときの歩行/バランスを測定します。介助なしで安全に歩行できない場合は、続行しないでください。</string>
+    <string name="rsb_walk_intro_2_text_ld">介助なしで安全に、まっすぐに%1$d歩程度歩ける場所を見つけてください。</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL">電話をポケットまたはバッグに入れて、音声による指示に従ってください。</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">ここで%1$s間じっと立っていてください。</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">%1$s間じっと立っていてください。</string>
+    <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">後ろを向いて、元の場所まで歩いて戻ってください。</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">まっすぐに%1$d歩まで歩いてください。</string>
+    <!-- Short walk back and forth. -->
+    <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">安全にまっすぐ行ったり来たり歩ける場所を見つけてください。進路の終わりまで来たら、コーンを回るように折り返して歩き続けます。\n\n次に、完全な円を描いて回るように指示されます。その後、両腕を脇につけ、足を肩幅くらいに開いてじっと立ってください。</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">開始の準備ができたら、“開始”をタップしてください。\n次に、電話をポケットまたはバッグに入れて、音声による指示に従ってください。</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">まっすぐ行ったり来たりして%1$s間歩きます。いつもと同じように歩いてください。</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">完全な円を描いて歩いてから、%1$s間じっと立ってください。</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">アクティビティが完了しました。</string>
+    <!-- Tapping active task. -->
+    <string name="rsb_TAPPING_TASK_TITLE">タップの速度</string>
+    <string name="rsb_TAPPING_TASK_TITLE_RIGHT">右手</string>
+    <string name="rsb_TAPPING_TASK_TITLE_LEFT">左手</string>
+    <string name="rsb_TAPPING_INTRO_TEXT">このアクティビティでは、タップの速度を測定します。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_REST_PHONE">電話を平らな面に置いてください。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_MOST_AFFECTED">同じ手の2本の指を使って、画面上のボタンを交互にタップします。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_FIRST">右手の2本の指を使って、画面上のボタンを交互にタップしてください。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">左手の2本の指を使って、画面上のボタンを交互にタップしてください。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">次に、右手で同じテストを繰り返します。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">次に、左手で同じテストを繰り返します。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">一方の指でタップしてから、他方の指でタップします。できるだけ一定の時間間隔でタップしてください。%1$s間タップし続けます。</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION">始めるには、“開始”をタップしてください。</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">始めるには、“次へ”をタップしてください。</string>
+    <string name="rsb_TAP_BUTTON_TITLE">タップ</string>
+    <string name="rsb_TOTAL_TAPS_LABEL">合計タップ回数</string>
+    <string name="rsb_TAPPING_INSTRUCTION">2本の指を使って、できるだけ一定の速度でボタンをタップしてください。</string>
+    <string name="rsb_TAPPING_INSTRUCTION_RIGHT">右手を使ってボタンをタップしてください。</string>
+    <string name="rsb_TAPPING_INSTRUCTION_LEFT">左手を使ってボタンをタップしてください。</string>
+    <string name="rsb_TAPPING_SKIP_TITLE">この手をスキップ</string>
+    <!-- Audio active task. -->
+    <string name="rsb_AUDIO_TASK_TITLE">声</string>
+    <string name="rsb_AUDIO_CALL_TO_ACTION">始めるには、“開始”をタップしてください。</string>
+    <string name="rsb_AUDIO_INSTRUCTION">マイクに向かってできるだけ長く「あーーーー」と声を出してください。</string>
+    <string name="rsb_AUDIO_INTRO_TEXT">大きく息を吸ってから、マイクに向かってできるだけ長く「あーーーー」と声を出してください。声の大きさを一定に保って、オーディオバーを青色のままにしてください。</string>
+    <string name="rsb_AUDIO_INTENDED_USE">このアクティビティでは、電話の下部にあるマイクで録音することで、あなたの声を評価します。</string>
+    <string name="rsb_AUDIO_TOO_LOUD_LABEL">大きすぎる</string>
+    <string name="rsb_AUDIO_GENERIC_ERROR_LABEL">声を録音できません</string>
+    <string name="rsb_AUDIO_LEVEL_CHECK_LABEL">背景ノイズのレベルを確認中です。しばらくお待ちください。</string>
+    <string name="rsb_AUDIO_TOO_LOUD_MESSAGE">周囲のノイズが大きすぎるため、声を録音できません。静かな場所に移動してやり直してください。</string>
+    <string name="rsb_AUDIO_TOO_LOUD_ACTION_NEXT">準備ができたら“次へ”をタップしてください。</string>
+    <!-- Tone audiometry active task. -->
+    <string name="rsb_TONE_AUDIOMETRY_TASK_TITLE">聴力検査</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTENDED_USE">このアクティビティでは、さまざまな音がどのように聞こえるかが測定されます。</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTRO_TEXT">始める前にヘッドフォンを接続し、装着してください。</string>
+    <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">始めるには、“開始”をタップしてください。</string>
+    <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">すると音が聞こえてくるはずです。デバイスの横にあるコントロールで音量を調整してください。\n\n始める準備ができたらボタンをタップしてください。</string>
+    <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">音が聞こえるたびにボタンをタップしてください。</string>
+    <string name="rsb_tone_label_left">%1$s Hz、左</string>
+    <string name="rsb_tone_label_right">%1$s Hz、右</string>
+    <!-- Spatial span memory active task. -->
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">空間記憶</string>
+    <string name="rsb_spatial_span_memory_intro_text">このアクティビティでは、%1$sが明るく表示される順番を再現することで、短期空間記憶を測定します。</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">花</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">花</string>
+    <string name="rsb_spatial_span_memory_intro_2_text">%1$sのいくつかが1つずつ明るく表示されます。それらの%2$sを明るく表示された順番と同じ順番でタップしてください。</string>
+    <string name="rsb_spatial_span_memory_intro_2_text_reverse">%1$sのいくつかが1つずつ明るく表示されます。それらの%2$sを明るく表示された順番と逆の順番でタップしてください。</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">始めるには、“開始”をタップしてから、じっと見てください。</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
+    <string name="rsb_MEMORY_GAME_SCORE_TITLE">スコア</string>
+    <string name="rsb_memory_game_playback_title">明るく表示される%1$sに注意してください</string>
+    <string name="rsb_memory_game_gameplay_title">明るく表示された順番で%1$sをタップしてください</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">逆の順番で%1$sをタップしてください</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">シーケンス完了</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">続けるには、“次へ”をタップしてください</string>
+    <string name="rsb_MEMORY_GAME_FAILED_TITLE">やり直す</string>
+    <string name="rsb_MEMORY_GAME_FAILED_MESSAGE">うまくできませんでした。\n続けるには、“次へ”をタップしてください。</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_TITLE">タイムアップ</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_MESSAGE">時間がなくなりました。\n続けるには、“次へ”をタップしてください。</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE">ゲーム完了</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_TITLE">一時停止</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_MESSAGE">続けるには、“次へ”をタップしてください</string>
+    <!-- Reaction time active task. -->
+    <string name="rsb_REACTION_TIME_TASK_TITLE">反応時間</string>
+    <string name="rsb_REACTION_TIME_TASK_INTENDED_USE">このアクティビティでは、視覚的な合図に反応するまでの時間が測定されます。</string>
+    <string name="rsb_REACTION_TIME_TASK_INTRO_TEXT_FORMAT">画面に青い点が表示されたらすぐにデバイスを振ってください。測定は%D回行います。</string>
+    <string name="rsb_REACTION_TIME_TASK_CALL_TO_ACTION">始めるには、“開始”をタップしてください。</string>
+    <string name="rsb_REACTION_TIME_TASK_ATTEMPTS_FORMAT">%1$s/%2$s回</string>
+    <string name="rsb_REACTION_TIME_TASK_ACTIVE_STEP_TITLE">青い円が表示されたら、すぐにデバイスを振ってください</string>
+    <!-- Tower of Hanoi active task -->
+    <string name="rsb_TOWER_OF_HANOI_TASK_TITLE">ハノイの塔</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTENDED_USE">このアクティビティでは、パズルの解決力を評価します。</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTRO_TEXT">塔全体を色の付いた台にできるだけ少ない回数で移動してください。</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_TASK_CALL_TO_ACTION">始めるには、“開始”をタップしてください</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_INTRO_TEXT">パズルを解く</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_PROGRESS_TEXT">移動回数: %1$s \n %2$s</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_SKIP_BUTTON_TITLE">降参</string>
+    <!-- Timed walk active task. -->
+    <string name="rsb_TIMED_WALK_TITLE">歩行時間</string>
+    <string name="rsb_TIMED_WALK_INTRO_DETAIL">このアクティビティでは、下肢の機能を測定します。</string>
+    <string name="rsb_timed_walk_intro_2_text">約%1$sを安全にまっすぐ歩ける場所を見つけてください。できれば屋外が良いでしょう。このアクティビティでは安全にできるだけ速く歩いていただきます。ゴールを過ぎるまで速度を落とさないでください。</string>
+    <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">始めるには、“次へ”をタップしてください。</string>
+    <string name="rsb_TIMED_WALK_FORM_TITLE">補助器具</string>
+    <string name="rsb_TIMED_WALK_FORM_TEXT">すべてのテストで同じ補助器具を使用してください。</string>
+    <string name="rsb_TIMED_WALK_QUESTION_TEXT">短下肢装具をお付けになりますか?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TITLE">補助器具をお使いになりますか?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TEXT">ここをタップして答えを選択。</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE">なし</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_2">片側ケイン</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_3">片側クラッチ</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">両側ケイン</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">両側クラッチ</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">歩行器</string>
+    <string name="rsb_timed_walk_instruction">まっすぐ%1$s歩いてください。</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_2">後ろを向いて、元の場所まで歩いて戻ってください。</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">完了したら、“完了”をタップしてください。</string>
+    <!-- PSAT active task. -->
+    <string name="rsb_PASAT_TITLE">PASAT</string>
+    <string name="rsb_PVSAT_TITLE">PVSAT</string>
+    <string name="rsb_PAVSAT_TITLE">PAVSAT</string>
+    <string name="rsb_PASAT_INTRO_TEXT">PASAT（定速聴覚的連続加算）では、聴覚による情報処理速度と計算能力を測定します。</string>
+    <string name="rsb_PVSAT_INTRO_TEXT">PVSAT（定速視覚的連続加算）では、視覚による情報処理速度と計算能力を測定します。</string>
+    <string name="rsb_PAVSAT_INTRO_TEXT">PAVSAT（定速聴覚および視覚的連続加算）では、聴覚および視覚による情報処理速度と計算能力を測定します。</string>
+    <string name="rsb_psat_intro_text_2">%1$s秒ごとに1つの数字が表示されます。\n表示された数字を、直前に表示された数字と足してください。\nすべての数字を足すのではありません。常に、表示された数字とその直前の数字の2つだけを足してください。</string>
+    <string name="rsb_PSAT_CALL_TO_ACTION">始めるには、“開始”をタップしてください。</string>
+    <string name="rsb_PSAT_INITIAL_INSTRUCTION">この最初の数字を覚えておいてください。</string>
+    <string name="rsb_PSAT_INSTRUCTION">この数字を直前の数字と足してください。</string>
+    <string name="rsb_PSAT_NO_DIGIT">-</string>
+    <!-- Hole peg test active task. -->
+    <string name="rsb_hole_peg_test_title">%1$sホールペグテスト</string>
+    <string name="rsb_hole_peg_test_intro_text">このアクティビティでは、円を穴に入れる動作で上肢機能を測定します。測定は%1$s回行います。</string>
+    <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">左手と右手の両方をテストします。\n円をできるだけすばやくつかんでください。穴に入れる動作を%1$s回繰り返したら、今度は穴から円を取り出す動作を%2$s回繰り返します。</string>
+    <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">右手と左手の両方をテストします。\n円をできるだけすばやくつかんでください。穴に入れる動作を%1$s回繰り返したら、今度は穴から円を取り出す動作を%2$s回繰り返します。</string>
+    <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">始めるには、“開始”をタップしてください。</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_LEFT_HAND">左手で円を穴に置いてください。</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_RIGHT_HAND">右手で円を穴に置いてください。</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_LEFT_HAND">左手で円を線の向こう側に置いてください。</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_RIGHT_HAND">右手で円を線の向こう側に置いてください。</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT">2本の指で円をつまんでください。</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT_2">指で円を持ち上げて移動させ落としてください。</string>
+    <!-- Tremor test active task. -->
+    <string name="rsb_TREMOR_TEST_TITLE">震え測定アクティビティ</string>
+    <string name="rsb_TREMOR_TEST_INTRO_1_DETAIL">このアクティビティでは、さまざまな位置で手の震えを測定します。このアクティビティが終わるまで楽な姿勢で座っていられる場所を見つけてください。</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">下の図のように、震えの大きい方の手で電話を持ってください。</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">下の図のように、右手で電話を持ってください。</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">下の図のように、左手で電話を持ってください。</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">電話を手に持って座ったまま、%1$sを行うように求められます。</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">1つのタスク</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">2つのタスク</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">3つのタスク</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_4_TASK">4つのタスク</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_5_TASK">5つのタスク</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT">続けるには、“次へ”をタップします。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">電話を膝の上で持つ準備をしてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">左手を使って電話を膝の上で持つ準備をしてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">右手を使って電話を膝の上で持つ準備をしてください。</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">電話を膝の上で%1$d秒間持ち続けてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">次に、手を伸ばして電話を肩の高さに持ってください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">次に、左手を伸ばして電話を肩の高さに持ってください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">次に、右手を伸ばして電話を肩の高さに持ってください。</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">手を伸ばして、%1$d秒間電話を持ち続けてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">肘を曲げて、電話を肩の高さに持ってください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">肘を曲げて、電話を左手で肩の高さに持ってください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">肘を曲げて、電話を右手で肩の高さに持ってください。</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">肘を曲げて%1$d秒間電話を持ち続けてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">次に、肘を曲げて電話で繰り返し鼻に触れてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">次に、電話を左手に持って肘を曲げたまま、電話で繰り返し鼻に触れてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">次に、電話を右手に持って肘を曲げたまま、電話で繰り返し鼻に触れてください。</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">電話で%1$d秒間鼻に触れ続けてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">手首を回すように手を振る準備をしてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">電話を左手に持って手首を回すように手を振る準備をしてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">電話を右手に持って手首を回すように手を振る準備をしてください。</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">%1$d秒間、手を振り続けてください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">電話を左手に持ち替えて、次のタスクに進んでください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">電話を右手に持ち替えて、次のタスクに進んでください。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">次のタスクに進んでください。</string>
+    <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">アクティビティが完了しました。</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">最初に一方の手、次に他方の手で電話を持って座ったまま、%1$sを行うように求められます。</string>
+    <string name="rsb_TREMOR_SKIP_LEFT_HAND">左手ではこのアクティビティができません。</string>
+    <string name="rsb_TREMOR_SKIP_RIGHT_HAND">右手ではこのアクティビティができません。</string>
+    <string name="rsb_TREMOR_SKIP_NEITHER">どちらの手でもこのアクティビティができます。</string>
+    <!-- Potentially user visible error messages. -->
+    <string name="rsb_ERROR_DATALOGGER_CREATE_FILE">ファイルを作成できませんでした</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_FREE_SPACE">しきい値に達するのに十分なログファイルを削除できませんでした</string>
+    <string name="rsb_ERROR_DATALOGGER_SET_ATTRIBUTE">属性の設定中にエラーが起きました</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_MAORK">ファイルが削除済みとマークされていません（アップロード済みとマークされていません）</string>
+    <string name="rsb_ERROR_DATALOGGER_MULTIPLE">ログ削除時に複数のエラー</string>
+    <string name="rsb_ERROR_RECORDER_NO_DATA">収集したデータが見つかりませんでした。</string>
+    <string name="rsb_ERROR_RECORDER_NO_OUTPUT_DIRECTORY">出力ディレクトリが指定されていません</string>
+    <!-- Charts -->
+    <string name="rsb_CHART_NO_DATA_TEXT">データなし</string>
+    <!-- Accessibility -->
+    <string name="rsb_AX_BUTTON_BACK">戻る</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">%1$sのイラスト</string>
+    <string name="rsb_AX_SIGNVIEW_LABEL">指定された署名フィールド</string>
+    <string name="rsb_AX_SIGNVIEW_HINT">画面をタッチしながら指を動かして署名します</string>
+    <string name="rsb_AX_SIGNVIEW_SIGNED">署名済み</string>
+    <string name="rsb_AX_SIGNVIEW_UNSIGNED">未署名</string>
+    <string name="rsb_AX_SELECTED">選択</string>
+    <string name="rsb_AX_UNSELECTED">選択解除</string>
+    <string name="rsb_AX_SLIDER_LABEL">応答スライダ。範囲は%1$sから%2$sです</string>
+    <string name="rsb_AX_UNLABELED_IMAGE">ラベルなしイメージ</string>
+    <string name="rsb_AX_ANNOUNCE_BEGIN_TASK">タスクを開始します</string>
+    <string name="rsb_AX_MEMORY_TILE_ACTIVE">動いている</string>
+    <string name="rsb_AX_MEMORY_TILE_CORRECT">正解</string>
+    <string name="rsb_AX_MEMORY_TILE_INCORRECT">不正解</string>
+    <string name="rsb_AX_MEMORY_TILE_QUIESCENT">止まっている</string>
+    <string name="rsb_AX_MEMORY_TILE_LABEL">記憶ゲームタイル</string>
+    <string name="rsb_AX_IMAGE_CAPTURE_LABEL">プレビューを取り込む</string>
+    <string name="rsb_AX_IMAGE_CAPTURED_LABEL">取り込んだイメージ</string>
+    <string name="rsb_AX_VIDEO_CAPTURE_LABEL">ビデオ取り込みのプレビュー</string>
+    <string name="rsb_AX_VIDEO_CAPTURED_LABEL">取り込んだビデオ</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_INVALID_MOVE_FORMAT">サイズ%1$sの円盤をサイズ%2$sの円盤の上に置くことはできません</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TARGET_DISK">ターゲット</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER">塔</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">ダブルタップして円盤を置く</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">ダブルタップして一番上の円盤を選択</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">%1$sのサイズの円盤があります</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">空</string>
+    <string name="rsb_ax_graph_range_format">範囲%1$s〜%2$s</string>
+    <string name="rsb_AX_GRAPH_STACK_PREFIX">次の内容のスタック:</string>
+    <string name="rsb_AX_GRAPH_AND_SEPARATOR">と</string>
+    <string name="rsb_ax_graph_point">ポイント: %1$s</string>
+    
+</resources>

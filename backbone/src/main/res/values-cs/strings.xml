@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Informed consent process. -->
+    <string name="rsb_CONSENT_NAME_TITLE">Souhlas</string>
+    <string name="rsb_CONSENT_NAME_GIVEN">Jméno</string>
+    <string name="rsb_CONSENT_NAME_FAMILY">Příjmení</string>
+    <string name="rsb_CONSENT_NAME_PLACEHOLDER">Požadováno</string>
+    <string name="rsb_CONSENT_REVIEW_TITLE">Kontrola</string>
+    <string name="rsb_CONSENT_REVIEW_INSTRUCTION">Projděte si níže uvedený formulář a pokud budete chtít pokračovat, klepněte na Souhlasím.</string>
+    <string name="rsb_CONSENT_REVIEW_ALERT_TITLE">Kontrola</string>
+    <string name="rsb_CONSENT_SIGNATURE_TITLE">Podpis</string>
+    <string name="rsb_CONSENT_SIGNATURE_INSTRUCTION">Na lince níže se prstem podepište.</string>
+    <string name="rsb_CONSENT_SIGNATURE_PLACEHOLDER">Zde se podepište</string>
+    <string name="rsb_CONSENT_PAGE_NUMBER_FORMAT">Stránka %1$ld z %2$ld</string>
+    <!-- Consent section titles. -->
+    <string name="rsb_CONSENT_SECTION_WELCOME">Vítejte</string>
+    <string name="rsb_CONSENT_SECTION_DATA_GATHERING">Shromažďování dat</string>
+    <string name="rsb_CONSENT_SECTION_PRIVACY">Soukromí</string>
+    <string name="rsb_CONSENT_SECTION_DATA_USE">Využití dat</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_SURVEY">Studijní průzkum</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_TASKS">Studijní úkoly</string>
+    <string name="rsb_CONSENT_SECTION_TIME_COMMITMENT">Věnovaný čas</string>
+    <string name="rsb_CONSENT_SECTION_WITHDRAWING">Odstoupení</string>
+    <string name="rsb_CONSENT_LEARN_MORE_TITLE">Další informace</string>
+    <!-- Consent section learn more -->
+    <string name="rsb_LEARN_MORE_DATA_GATHERING">Informace o shromažďování dat</string>
+    <string name="rsb_LEARN_MORE_DATA_USE">Informace o způsobech využití dat</string>
+    <string name="rsb_LEARN_MORE_PRIVACY">Informace o ochraně soukromí a identity</string>
+    <string name="rsb_LEARN_MORE_WELCOME">Úvodní informace o studii</string>
+    <string name="rsb_LEARN_MORE_STUDY_SURVEY">Informace o realizaci průzkumu</string>
+    <string name="rsb_LEARN_MORE_TIME_COMMITMENT">Informace o dopadu studie na váš čas</string>
+    <string name="rsb_LEARN_MORE_TASKS">Informace o úkolech obsažených ve studii</string>
+    <string name="rsb_LEARN_MORE_WITHDRAWING">Informace o odstoupení od studie</string>
+    <!-- Consent sharing step -->
+    <string name="rsb_CONSENT_SHARING_TITLE">Volby sdílení</string>
+    <string name="rsb_consent_share_widely">Sdílet data se společností %1$s a kvalifikovanými výzkumnými pracovišti na celém světě</string>
+    <string name="rsb_consent_share_only">Sdílet data pouze se společností %1$s</string>
+    <string name="rsb_consent_sharing_description">Data z vaší účasti ve studii budou předána společnosti %1$s.\n\nPro tento i budoucí výzkumy by mohlo být přínosné, kdyby byla zakódovaná data z vaší studie (bez údajů, jako je vaše jméno) sdílena ve větší šíři.</string>
+    <string name="rsb_LEARN_MORE_CONSENT_SHARING">Další informace o sdílení dat</string>
+    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%1$s - jméno</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%1$s - podpis</string>
+    <string name="rsb_CONSENT_DOC_LINE_DATE">Datum</string>
+    <!-- Progress indication (in navigation bar). -->
+    <string name="rsb_STEP_PROGRESS_FORMAT">Krok %1$s z %2$s</string>
+    <!-- Alert for out of range values. -->
+    <string name="rsb_RANGE_ALERT_TITLE">Neplatná hodnota</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s přesahuje maximální povolenou hodnotu (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s nedosahuje minimální povolené hodnoty (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s není platná hodnota.</string>
+    <!-- Alert for invalid email address value -->
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Neplatná e‑mailová adresa: %1$s</string>
+    <!-- Alerts for invalid location coordinates -->
+    <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Zadejte adresu</string>
+    <string name="rsb_LOCATION_ERROR_TITLE">Zadanou adresu se nepodařilo najít</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_LOCATION_UNKNOWN">Vaši aktuální polohu nelze zjistit. Zadejte adresu nebo se přesuňte na místo s lepším GPS signálem, je‑li to možné.</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_DENIED">Přístup k polohovým službám byl odepřen. Přejděte do Nastavení a udělte této aplikaci oprávnění k používání polohových služeb.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE">Pro zadanou adresu se nepodařilo najít výsledek. Ověřte správnost adresy.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">Nejste připojeni k internetu nebo jste překročili maximální počet žádostí o vyhledání adresy. Pokud nejste připojeni k internetu a chcete tuto otázku zodpovědět, zapněte Wi-Fi. Je-li k dispozici tlačítko přeskočit, můžete otázku přeskočit nebo se můžete k průzkumu vrátit, až bude internet dostupný. Případně to můžete zkusit za několik minut znovu.</string>
+    <!-- Alert for exceeding length limit in text answer -->
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Text překračuje maximální délku: %1$s</string>
+    <!-- Camera not available during multitasking -->
+    <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">Fotoaparát není na rozdělené obrazovce k dispozici.</string>
+    <!-- Registration step -->
+    <string name="rsb_EMAIL_FORM_ITEM_TITLE">E‑mail</string>
+    <string name="rsb_EMAIL_FORM_ITEM_PLACEHOLDER">jnovak@example.com</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_TITLE">Heslo</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_PLACEHOLDER">Zadejte heslo</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_TITLE">Potvrzení</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_PLACEHOLDER">Zadejte heslo ještě jednou</string>
+    <string name="rsb_CONFIRM_PASSWORD_ERROR_MESSAGE">Hesla se neshodují.</string>
+    <string name="rsb_ADDITIONAL_INFO_SECTION_TITLE">Doplňující informace</string>
+    <string name="rsb_GIVEN_NAME_ITEM_PLACEHOLDER">Jan</string>
+    <string name="rsb_FAMILY_NAME_ITEM_PLACEHOLDER">Novák</string>
+    <string name="rsb_GENDER_FORM_ITEM_TITLE">Pohlaví</string>
+    <string name="rsb_GENDER_FORM_ITEM_PLACEHOLDER">Vyberte pohlaví</string>
+    <string name="rsb_DOB_FORM_ITEM_TITLE">Datum narození</string>
+    <string name="rsb_DOB_FORM_ITEM_PLACEHOLDER">Vyberte datum</string>
+    <!-- Verification step -->
+    <string name="rsb_VERIFICATION_NAV_TITLE">Ověření</string>
+    <string name="rsb_VERIFICATION_STEP_TITLE">Ověřte svůj e-mail</string>
+    <string name="rsb_RESEND_EMAIL_LABEL_MESSAGE">Pokud jste neobdrželi ověřovací e‑mail a chcete, abychom vám ho zaslali znovu, klepněte na odkaz níže.</string>
+    <string name="rsb_RESEND_EMAIL_BUTTON_TITLE">Znovu odeslat ověřovací e‑mail</string>
+    <!-- Login step -->
+    <string name="rsb_LOGIN_CONTINUE_BUTTON_TITLE">Přihlásit se</string>
+    <string name="rsb_FORGOT_PASSWORD_BUTTON_TITLE">Zapomněli jste heslo?</string>
+    <!-- Passcode step -->
+    <string name="rsb_PASSCODE_PROMPT_MESSAGE">Zadejte kód</string>
+    <string name="rsb_PASSCODE_CONFIRM_MESSAGE">Potvrďte kód</string>
+    <string name="rsb_PASSCODE_SAVED_MESSAGE">Kód byl uložen</string>
+    <string name="rsb_PASSCODE_AUTHENTICATED_MESSAGE">Kód byl ověřen</string>
+    <string name="rsb_PASSCODE_OLD_ENTRY_MESSAGE">Zadejte starý kód</string>
+    <string name="rsb_PASSCODE_NEW_ENTRY_MESSAGE">Zadejte nový kód</string>
+    <string name="rsb_PASSCODE_CONFIRM_NEW_ENTRY_MESSAGE">Potvrďte nový kód</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_TITLE">Nesprávný kód</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_MESSAGE">Kódy se neshodují. Zkuste to znovu.</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_MESSAGE">Použijte ověření pomocí Touch ID</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_ERROR_ALERT_TITLE">Chyba Touch ID</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_INVALID_INPUT_MESSAGE">Jsou povoleny jen číselné znaky.</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILITY_LABEL">Indikátor průběhu zadávání kódu</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILTIY_VALUE">Zadané číslice: %1$s z %2$s</string>
+    <string name="rsb_PASSCODE_FORGOT_BUTTON_TITLE">Zapomněli jste kód?</string>
+    <!-- Keychain wrapper -->
+    <string name="rsb_KEYCHAIN_ADD_ERROR_MESSAGE">Nepodařilo se přidat položku do svazku klíčů.</string>
+    <string name="rsb_KEYCHAIN_UPDATE_ERROR_MESSAGE">Nepodařilo se aktualizovat položku ve svazku klíčů.</string>
+    <string name="rsb_KEYCHAIN_DELETE_ERROR_MESSAGE">Nepodařilo se smazat položku ze svazku klíčů.</string>
+    <string name="rsb_KEYCHAIN_FIND_ERROR_MESSAGE">Nepodařilo se najít položku ve svazku klíčů.</string>
+    <!-- Blood types -->
+    <string name="rsb_blood_type_a_plus">A+</string>
+    <string name="rsb_BLOOD_TYPE_A_">A-</string>
+    <string name="rsb_blood_type_ab_plus">AB+</string>
+    <string name="rsb_BLOOD_TYPE_AB_">AB-</string>
+    <string name="rsb_blood_type_b_plus">B+</string>
+    <string name="rsb_BLOOD_TYPE_B_">B-</string>
+    <string name="rsb_blood_type_o_plus">0+</string>
+    <string name="rsb_BLOOD_TYPE_O_">0-</string>
+    <!-- Gender values. -->
+    <string name="rsb_GENDER_FEMALE">Žena</string>
+    <string name="rsb_GENDER_MALE">Muž</string>
+    <string name="rsb_GENDER_OTHER">Jiné</string>
+    <!-- Boolean answer strings -->
+    <string name="rsb_BOOL_NO">Ne</string>
+    <string name="rsb_BOOL_YES">Ano</string>
+    <!-- Measuring unit abbreviations -->
+    <string name="rsb_MEASURING_UNIT_CM">cm</string>
+    <string name="rsb_MEASURING_UNIT_FT">ft</string>
+    <string name="rsb_MEASURING_UNIT_IN">in</string>
+    <!-- Default placeholders to request answers in a questionnaire. -->
+    <string name="rsb_PLACEHOLDER_TEXT_OR_NUMBER">Odpověď</string>
+    <string name="rsb_NULL_ANSWER">Vyberte odpověď</string>
+    <string name="rsb_PLACEHOLDER_IMAGE_CHOICES">Chcete‑li vybrat, klepněte</string>
+    <string name="rsb_PLACEHOLDER_LONG_TEXT">Chcete-li psát, klepněte</string>
+    <!-- Button titles -->
+    <string name="rsb_BUTTON_AGREE">Souhlasím</string>
+    <string name="rsb_BUTTON_CANCEL">Zrušit</string>
+    <string name="rsb_BUTTON_OK">OK</string>
+    <string name="rsb_BUTTON_CLEAR">Smazat</string>
+    <string name="rsb_BUTTON_DISAGREE">Nesouhlasím</string>
+    <string name="rsb_BUTTON_DONE">Hotovo</string>
+    <string name="rsb_BUTTON_GET_STARTED">Začít</string>
+    <string name="rsb_BUTTON_LEARN_MORE">Další informace</string>
+    <string name="rsb_BUTTON_NEXT">Další</string>
+    <string name="rsb_BUTTON_SKIP">Přeskočit</string>
+    <string name="rsb_BUTTON_SKIP_QUESTION">Tuto otázku přeskočit</string>
+    <string name="rsb_BUTTON_START_TIMER">Spustit odpočet</string>
+    <string name="rsb_BUTTON_OPTION_SAVE">Nechat na později</string>
+    <string name="rsb_BUTTON_OPTION_DISCARD">Zahodit výsledky</string>
+    <string name="rsb_BUTTON_OPTION_STOP_TASK">Konec úlohy</string>
+    <string name="rsb_BUTTON_SAVE">Uložit</string>
+    <string name="rsb_BUTTON_CLEAR_ANSWER">Smazat odpověď</string>
+    <string name="rsb_BUTTON_READ_ONLY_MODE">Tuto odpověď nelze změnit.</string>
+    <!-- General active tasks. -->
+    <string name="rsb_COUNTDOWN_LABEL">Aktivita se spustí za</string>
+    <string name="rsb_TASK_COMPLETE_TITLE">Aktivita byla dokončena</string>
+    <string name="rsb_TASK_COMPLETE_TEXT">Data budou analyzována a jakmile budou k dispozici výsledky, obdržíte oznámení.</string>
+    <string name="rsb_countdown_spoken_remaining">Zbývá %1$s s.</string>
+    <!-- Image capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Pořídit obrázek</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Pořídit obrázek znovu</string>
+    <string name="rsb_CAPTURE_ERROR_CAMERA_NOT_FOUND">Fotoaparát nebyl nalezen. Tento krok nelze dokončit.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_PERMISSIONS">Před dokončením tohoto kroku musíte v Nastavení povolit této aplikaci přístup k fotoaparátu.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_OUTPUT_DIRECTORY">Nebyl určen žádný výstupní adresář pro pořízené obrázky.</string>
+    <string name="rsb_CAPTURE_ERROR_CANNOT_WRITE_FILE">Pořízený obrázek se nepodařilo uložit.</string>
+    <!-- Video capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_VIDEO">Začít nahrávat</string>
+    <string name="rsb_CAPTURE_BUTTON_STOP_CAPTURE_VIDEO">Zastavit nahrávání</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Znovu nahrát video</string>
+    <!-- Fitness active task. -->
+    <string name="rsb_FITNESS_TASK_TITLE">Kondice</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Vzdálenost (%1$s)</string>
+    <string name="rsb_FITNESS_HEARTRATE_TITLE">Srdeční tep (bpm)</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Po %1$s pohodlně seďte.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Po %1$s co nejrychleji kráčejte.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Tato aktivita změří váš srdeční tep a vzdálenost, kterou ujdete za %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Po %1$s se procházejte venku nejvyšším možným tempem. Poté po %2$s v pohodlné pozici odpočívejte. Chcete-li začít, klepněte na Začít.</string>
+    <!-- Short walk active task. -->
+    <string name="rsb_WALK_TASK_TITLE">Chůze a rovnováha</string>
+    <string name="rsb_WALK_INTRO_TEXT">Tato aktivita změří váš krok a rovnováhu při chůzi a stání. Pokud nedokážete bezpečně chodit bez pomoci, v tomto testu nepokračujte.</string>
+    <string name="rsb_walk_intro_2_text_ld">Najděte si místo, kde můžete bezpečně bez asistence ujít přibližně %1$d kroků v přímém směru.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL">Uložte telefon do kapsy nebo do tašky či batohu a postupujte podle zvukových instrukcí.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Nyní po %1$s klidně stůjte.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Po %1$s klidně stůjte.</string>
+    <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Obraťte se a jděte zpátky na začátek.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Ujděte až %1$d kroků v přímém směru.</string>
+    <!-- Short walk back and forth. -->
+    <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Najděte si místo, na kterém můžete bezpečně přecházet sem a tam po přímé linii. Zkuste chodit bez přestávek a na konci se vždy otočte, jako byste obcházeli kužel.\n\nNásledně dostanete pokyn abyste se otočili kolem své osy a zůstali stát s rukama podél těla a nohama rozkročenýma na šířku ramen.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Až budete připraveni, klepněte na Začít.\nPak uložte telefon do kapsy nebo tašky a postupujte podle zvukových pokynů.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Po %1$s se procházejte sem a tam po přímé linii. Jděte normálním krokem.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Otočte se kolem své osy a pak po %1$s klidně stůjte.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Dokončili jste aktivitu.</string>
+    <!-- Tapping active task. -->
+    <string name="rsb_TAPPING_TASK_TITLE">Rychlost klepání</string>
+    <string name="rsb_TAPPING_TASK_TITLE_RIGHT">Pravá ruka</string>
+    <string name="rsb_TAPPING_TASK_TITLE_LEFT">Levá ruka</string>
+    <string name="rsb_TAPPING_INTRO_TEXT">Tato aktivita změří vaši rychlost klepání.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_REST_PHONE">Položte telefon na rovný povrch.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_MOST_AFFECTED">Dvěma prsty jedné ruky střídavě klepejte na tlačítka na obrazovce.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_FIRST">Dvěma prsty pravé ruky střídavě klepejte na tlačítka na obrazovce.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Dvěma prsty levé ruky střídavě klepejte na tlačítka na obrazovce.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Nyní test zopakujte pravou rukou.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Nyní test zopakujte levou rukou.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Klepněte jedním prstem a potom druhým. Zkuste klepat co nejvíc rovnoměrně. Pokračujte v klepání po %1$s.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION">Začněte klepnutím na Začít.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Začněte klepnutím na Další.</string>
+    <string name="rsb_TAP_BUTTON_TITLE">Klepněte</string>
+    <string name="rsb_TOTAL_TAPS_LABEL">Počet klepnutí</string>
+    <string name="rsb_TAPPING_INSTRUCTION">Dvěma prsty co nejrovnoměrněji klepejte na tlačítka.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_RIGHT">Klepejte na tlačítka PRAVOU rukou.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_LEFT">Klepejte na tlačítka LEVOU rukou.</string>
+    <string name="rsb_TAPPING_SKIP_TITLE">Tuto ruku vynechat</string>
+    <!-- Audio active task. -->
+    <string name="rsb_AUDIO_TASK_TITLE">Hlas</string>
+    <string name="rsb_AUDIO_CALL_TO_ACTION">Začněte klepnutím na Začít.</string>
+    <string name="rsb_AUDIO_INSTRUCTION">Řekněte \"Ááááá\" do mikrofonu a vydržte co nejdéle.</string>
+    <string name="rsb_AUDIO_INTRO_TEXT">Hluboce se nadechněte a při výdechu hlasitě a co nejdéle do mikrofonu vyslovujte \"Ááááá\". Udržujte konstantní úroveň hlasitosti, při které budou proužky zbarvené modře.</string>
+    <string name="rsb_AUDIO_INTENDED_USE">Tato aktivita vyhodnotí váš hlas, který bude zaznamenán pomocí mikrofonu u dolního okraje telefonu.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_LABEL">Příliš nahlas</string>
+    <string name="rsb_AUDIO_GENERIC_ERROR_LABEL">Nelze zaznamenávat zvuk</string>
+    <string name="rsb_AUDIO_LEVEL_CHECK_LABEL">Počkejte, než otestujeme úroveň okolního hluku.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_MESSAGE">Úroveň okolního hluku je pro nahrání vašeho hlasu příliš vysoká. Přesuňte se na klidnější místo a zkuste to znovu.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_ACTION_NEXT">Až budete připraveni, klepněte na Další.</string>
+    <!-- Tone audiometry active task. -->
+    <string name="rsb_TONE_AUDIOMETRY_TASK_TITLE">Tónová audiometrie</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTENDED_USE">Tato aktivita měří vaši schopnost slyšet různé zvuky.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTRO_TEXT">Než začnete, zapněte sluchátka a nasaďte si je.</string>
+    <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Začněte klepnutím na Začít.</string>
+    <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Nyní byste měli slyšet tón. Nastavte hlasitost pomocí ovládacích prvků po straně zařízení.\n\nAž budete připraveni začít, klepněte na tlačítko.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Jakmile uslyšíte zvuk, klepněte na tlačítko.</string>
+    <string name="rsb_tone_label_left">%1$s Hz, vlevo</string>
+    <string name="rsb_tone_label_right">%1$s Hz, vpravo</string>
+    <!-- Spatial span memory active task. -->
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Prostorová paměť</string>
+    <string name="rsb_spatial_span_memory_intro_text">Tato aktivita změří vaši krátkodobou prostorovou paměť. Budete požádáni o zopakování pořadí, ve kterém se budou rozsvěcovat %1$s.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">květiny</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">květiny</string>
+    <string name="rsb_spatial_span_memory_intro_2_text">Některé %1$s se postupně rozsvítí. Klepejte na %2$s v pořadí, ve kterém se rozsvěcovaly.</string>
+    <string name="rsb_spatial_span_memory_intro_2_text_reverse">Některé %1$s se postupně rozsvítí. Klepejte na %2$s v obráceném pořadí rozsvěcování.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Chcete-li začít, klepněte na Začít a pozorně se dívejte.</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
+    <string name="rsb_MEMORY_GAME_SCORE_TITLE">Skóre</string>
+    <string name="rsb_memory_game_playback_title">Sledujte, jak se %1$s rozsvítí</string>
+    <string name="rsb_memory_game_gameplay_title">Klepejte na %1$s v pořadí, ve kterém se budou rozsvěcovat</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Klepejte na %1$s v obráceném pořadí</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Sekvence byla dokončena</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Pokračujte klepnutím na Další.</string>
+    <string name="rsb_MEMORY_GAME_FAILED_TITLE">Zkusit znovu</string>
+    <string name="rsb_MEMORY_GAME_FAILED_MESSAGE">Úplně se vám to tentokrát nepodařilo. Pokračujte klepnutím na Další.</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_TITLE">Čas vypršel</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_MESSAGE">Došel vám čas.\nPokračujte klepnutím na Další.</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE">Hra byla dokončena</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_TITLE">Pozastaveno</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_MESSAGE">Pokračujte klepnutím na Další.</string>
+    <!-- Reaction time active task. -->
+    <string name="rsb_REACTION_TIME_TASK_TITLE">Reakční doba</string>
+    <string name="rsb_REACTION_TIME_TASK_INTENDED_USE">Tato aktivita zjišťuje, jak dlouho vám trvá, než zareagujete na vizuální podnět.</string>
+    <string name="rsb_REACTION_TIME_TASK_INTRO_TEXT_FORMAT">Jakmile se na displeji objeví modrá tečka, zatřeste zařízením v libovolném směru. Budete k tomu vyzváni celkem %Dx.</string>
+    <string name="rsb_REACTION_TIME_TASK_CALL_TO_ACTION">Začněte klepnutím na Začít.</string>
+    <string name="rsb_REACTION_TIME_TASK_ATTEMPTS_FORMAT">Pokus %1$s z %2$s</string>
+    <string name="rsb_REACTION_TIME_TASK_ACTIVE_STEP_TITLE">Jakmile se objeví modrý kroužek, krátce zařízením zatřeste</string>
+    <!-- Tower of Hanoi active task -->
+    <string name="rsb_TOWER_OF_HANOI_TASK_TITLE">Hanojské věže</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTENDED_USE">Tato aktivita vyhodnotí vaši schopnost řešit hlavolamy.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTRO_TEXT">Přesuňte celou sadu na zvýrazněnou podložku s využitím co nejmenšího počtu kroků.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_TASK_CALL_TO_ACTION">Začněte klepnutím na Začít</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_INTRO_TEXT">Vyřešte hlavolam</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_PROGRESS_TEXT">Počet kroků: %1$s \n %2$s</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_SKIP_BUTTON_TITLE">Tento hlavolam nedokážu vyřešit</string>
+    <!-- Timed walk active task. -->
+    <string name="rsb_TIMED_WALK_TITLE">Chůze na čas</string>
+    <string name="rsb_TIMED_WALK_INTRO_DETAIL">Tato aktivita změří funkci vašich dolních končetin.</string>
+    <string name="rsb_timed_walk_intro_2_text">Najděte si místo (nejlépe venku), kde můžete co nejrychleji a bezpečně ujít přibližně %1$s v přímém směru. Nezpomalujte, dokud nepřekročíte cílovou čáru.</string>
+    <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Začněte klepnutím na Další.</string>
+    <string name="rsb_TIMED_WALK_FORM_TITLE">Asistenční zařízení</string>
+    <string name="rsb_TIMED_WALK_FORM_TEXT">Při všech testech používejte při chůzi tutéž oporu.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_TEXT">Používáte kotníkovou ortézu?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TITLE">Používáte při chůzi oporu?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TEXT">Klepněte a vyberte odpověď.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE">Ne</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_2">Jedna hůl</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_3">Jedna berla</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Dvě hole</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Dvě berle</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Chodítko</string>
+    <string name="rsb_timed_walk_instruction">Ujděte až %1$s v přímém směru.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_2">Obraťte se a jděte zpátky na začátek.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Po dokončení klepněte na Hotovo.</string>
+    <!-- PSAT active task. -->
+    <string name="rsb_PASAT_TITLE">PASAT</string>
+    <string name="rsb_PVSAT_TITLE">PVSAT</string>
+    <string name="rsb_PAVSAT_TITLE">PAVSAT</string>
+    <string name="rsb_PASAT_INTRO_TEXT">Paced Auditory a Serial Addition Test měří vaši rychlost a počtářské dovednosti při zpracovávání sluchových informací.</string>
+    <string name="rsb_PVSAT_INTRO_TEXT">Paced Visual Serial Addition Test měří vaši rychlost a počtářské dovednosti při zpracovávání zrakových informací.</string>
+    <string name="rsb_PAVSAT_INTRO_TEXT">Paced Auditory a Visual Serial Addition Test měří vaši rychlost a počtářské dovednosti při zpracovávání sluchových a zrakových informací.</string>
+    <string name="rsb_psat_intro_text_2">Vždy po %1$s sekundách se vám zobrazí jedno číslo.\nKaždé číslo musíte přičíst k bezprostředně předchozímu.\nPozor, nesčítejte všechna čísla, vždy jen dvě poslední.</string>
+    <string name="rsb_PSAT_CALL_TO_ACTION">Začněte klepnutím na Začít.</string>
+    <string name="rsb_PSAT_INITIAL_INSTRUCTION">Zapamatujte si toto první číslo.</string>
+    <string name="rsb_PSAT_INSTRUCTION">Přičtěte toto číslo k předchozímu.</string>
+    <string name="rsb_PSAT_NO_DIGIT">-</string>
+    <!-- Hole peg test active task. -->
+    <string name="rsb_hole_peg_test_title">%1$skolíkový test</string>
+    <string name="rsb_hole_peg_test_intro_text">Tato aktivita otestuje motoriku vašich horních končetin. Požádáme vás o zasunutí kolíku do otvoru. Budete k tomu vyzváni celkem %1$s×.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">Budeme testovat vaši levou i pravou ruku.\nCo nejrychleji uchopte kolík, %1$s× ho zasuňte do otvoru a poté ho %2$s× vytáhněte.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">Budeme testovat vaši pravou i levou ruku.\nCo nejrychleji uchopte kolík, %1$s× ho zasuňte do otvoru a poté ho %2$s× vytáhněte.</string>
+    <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Začněte klepnutím na Začít.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_LEFT_HAND">Zasuňte kolík do otvoru levou rukou.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_RIGHT_HAND">Zasuňte kolík do otvoru pravou rukou.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_LEFT_HAND">Umístěte kolík za čáru levou rukou.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_RIGHT_HAND">Umístěte kolík za čáru pravou rukou.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT">Uchopte kolík dvěma prsty.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT_2">Zvednutím prstů kolík pusťte.</string>
+    <!-- Tremor test active task. -->
+    <string name="rsb_TREMOR_TEST_TITLE">Třes rukou</string>
+    <string name="rsb_TREMOR_TEST_INTRO_1_DETAIL">Tato aktivita měří třas rukou v různých polohách. Najděte si místo, na kterém budete moct po celou dobu aktivity pohodlně sedět.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Podržte telefon ve více postižené ruce tak, jak vidíte na obrázku.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Podržte telefon v PRAVÉ ruce tak, jak vidíte na obrázku.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Podržte telefon v LEVÉ ruce tak, jak vidíte na obrázku.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Budete požádáni o %1$s při sezení s telefonem v ruce.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">úkol</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">dva úkoly</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">tři úkoly</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_4_TASK">čtyři úkoly</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_5_TASK">pět úkolů</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT">Pokračujte klepnutím na Další.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Připravte se držet telefon na klíně.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Připravte se držet telefon LEVOU rukou na klíně.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Připravte se držet telefon PRAVOU rukou na klíně.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Držte telefon na klíně po %1$d s.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Nyní držte telefon rukou nataženou ve výši ramen.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Nyní držte telefon LEVOU rukou nataženou ve výši ramen.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Nyní držte telefon PRAVOU rukou nataženou ve výši ramen.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">S nataženou rukou držte telefon po %1$d s.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Nyní ohněte ruku v lokti a držte telefon ve výši ramen.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Nyní držte telefon ve výši ramen LEVOU rukou ohnutou v lokti.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Nyní držte telefon ve výši ramen PRAVOU rukou ohnutou v lokti.</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">S rukou ohnutou v lokti držte telefon po %1$d s.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Nyní se s rukou ohnutou v lokti opakovaně dotýkejte telefonem nosu.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Nyní držte telefon ve výši ramen LEVOU rukou ohnutou v lokti a dotýkejte se jím opakovaně nosu.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Nyní držte telefon ve výši ramen PRAVOU rukou ohnutou v lokti a dotýkejte se jím opakovaně nosu.</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Dotýkejte se telefonem nosu po %1$d s.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Připravte se zamávat otáčením zápěstí.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Připravte se zamávat otáčením zápěstí s telefonem v LEVÉ ruce.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Připravte se zamávat otáčením zápěstí s telefonem v PRAVÉ ruce.</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Mávejte otáčením zápěstí po %1$d s.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Nyní vezměte telefon do LEVÉ ruky a pokračujte dalším úkolem.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Nyní vezměte telefon do PRAVÉ ruky a pokračujte dalším úkolem.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Pokračujte další úlohou.</string>
+    <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Aktivita byla dokončena.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Budete požádáni o %1$s při sezení s telefonem nejprve v jedné a pak v druhé ruce.</string>
+    <string name="rsb_TREMOR_SKIP_LEFT_HAND">Tuto aktivitu nemůžu provádět LEVOU rukou.</string>
+    <string name="rsb_TREMOR_SKIP_RIGHT_HAND">Tuto aktivitu nemůžu provádět PRAVOU rukou.</string>
+    <string name="rsb_TREMOR_SKIP_NEITHER">Tuto aktivitu můžu provádět oběma rukama.</string>
+    <!-- Potentially user visible error messages. -->
+    <string name="rsb_ERROR_DATALOGGER_CREATE_FILE">Soubor nelze vytvořit</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_FREE_SPACE">Nepodařilo se odstranit dostatečné množství protokolů pro dosažení prahové hodnoty</string>
+    <string name="rsb_ERROR_DATALOGGER_SET_ATTRIBUTE">Chyba nastavení atributu</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_MAORK">Soubor není označen jako smazaný (není označen jako odeslaný)</string>
+    <string name="rsb_ERROR_DATALOGGER_MULTIPLE">Při odstraňování protokolů došlo k více chybám</string>
+    <string name="rsb_ERROR_RECORDER_NO_DATA">Nebyla nalezena žádná shromážděná data.</string>
+    <string name="rsb_ERROR_RECORDER_NO_OUTPUT_DIRECTORY">Nebyl určen výstupní adresář</string>
+    <!-- Charts -->
+    <string name="rsb_CHART_NO_DATA_TEXT">Žádná data</string>
+    <!-- Accessibility -->
+    <string name="rsb_AX_BUTTON_BACK">Zpět</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">%1$s - ilustrace</string>
+    <string name="rsb_AX_SIGNVIEW_LABEL">Vyhrazené pole pro podpis</string>
+    <string name="rsb_AX_SIGNVIEW_HINT">Chcete-li se podepsat, dotkněte se obrazovky a pohybujte prstem</string>
+    <string name="rsb_AX_SIGNVIEW_SIGNED">Podepsáno</string>
+    <string name="rsb_AX_SIGNVIEW_UNSIGNED">Nepodepsáno</string>
+    <string name="rsb_AX_SELECTED">Vybráno</string>
+    <string name="rsb_AX_UNSELECTED">Nevybráno</string>
+    <string name="rsb_AX_SLIDER_LABEL">Jezdec odpovědi. Rozsah od %1$s do %2$s</string>
+    <string name="rsb_AX_UNLABELED_IMAGE">Obrázek bez štítku</string>
+    <string name="rsb_AX_ANNOUNCE_BEGIN_TASK">Spustit úlohu</string>
+    <string name="rsb_AX_MEMORY_TILE_ACTIVE">aktivní</string>
+    <string name="rsb_AX_MEMORY_TILE_CORRECT">správně</string>
+    <string name="rsb_AX_MEMORY_TILE_INCORRECT">nesprávně</string>
+    <string name="rsb_AX_MEMORY_TILE_QUIESCENT">klid</string>
+    <string name="rsb_AX_MEMORY_TILE_LABEL">Kostka paměťové hry</string>
+    <string name="rsb_AX_IMAGE_CAPTURE_LABEL">Náhled</string>
+    <string name="rsb_AX_IMAGE_CAPTURED_LABEL">Pořízený obrázek</string>
+    <string name="rsb_AX_VIDEO_CAPTURE_LABEL">Náhled nahraného videa</string>
+    <string name="rsb_AX_VIDEO_CAPTURED_LABEL">Nahrané video</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_INVALID_MOVE_FORMAT">Disk o velikosti %1$s nelze umístit na disk o velikosti %2$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TARGET_DISK">Cíl</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Věž</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Poklepáním umístíte disk</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Poklepáním vyberte vrchní disk</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Obsahuje disky o velikosti %1$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Prázdné</string>
+    <string name="rsb_ax_graph_range_format">Rozmezí od %1$s do %2$s</string>
+    <string name="rsb_AX_GRAPH_STACK_PREFIX">Sada se skládá z</string>
+    <string name="rsb_AX_GRAPH_AND_SEPARATOR">a </string>
+    <string name="rsb_ax_graph_point">Bod: %1$s</string>
+
+
+</resources>

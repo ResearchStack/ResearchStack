@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Informed consent process. -->
+    <string name="rsb_CONSENT_NAME_TITLE">موافقة</string>
+    <string name="rsb_CONSENT_NAME_GIVEN">الاسم الأول</string>
+    <string name="rsb_CONSENT_NAME_FAMILY">اسم العائلة</string>
+    <string name="rsb_CONSENT_NAME_PLACEHOLDER">مطلوب</string>
+    <string name="rsb_CONSENT_REVIEW_TITLE">مراجعة</string>
+    <string name="rsb_CONSENT_REVIEW_INSTRUCTION">قم بمراجعة النموذج التالي واضغط على \"موافقة\" إذا كنت جاهزًا للمتابعة.</string>
+    <string name="rsb_CONSENT_REVIEW_ALERT_TITLE">مراجعة</string>
+    <string name="rsb_CONSENT_SIGNATURE_TITLE">التوقيع</string>
+    <string name="rsb_CONSENT_SIGNATURE_INSTRUCTION">الرجاء التوقيع باستخدام إصبعك على السطر التالي.</string>
+    <string name="rsb_CONSENT_SIGNATURE_PLACEHOLDER">التوقيع هنا</string>
+    <string name="rsb_CONSENT_PAGE_NUMBER_FORMAT">صفحة %1$ld من %2$ld</string>
+    <!-- Consent section titles. -->
+    <string name="rsb_CONSENT_SECTION_WELCOME">مرحبًا</string>
+    <string name="rsb_CONSENT_SECTION_DATA_GATHERING">جمع البيانات</string>
+    <string name="rsb_CONSENT_SECTION_PRIVACY">الخصوصية</string>
+    <string name="rsb_CONSENT_SECTION_DATA_USE">استخدام البيانات</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_SURVEY">استطلاع الدراسة</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_TASKS">مهام الدراسة</string>
+    <string name="rsb_CONSENT_SECTION_TIME_COMMITMENT">التزام الوقت</string>
+    <string name="rsb_CONSENT_SECTION_WITHDRAWING">الانسحاب</string>
+    <string name="rsb_CONSENT_LEARN_MORE_TITLE">معرفة المزيد</string>
+    <!-- Consent section learn more -->
+    <string name="rsb_LEARN_MORE_DATA_GATHERING">معرفة المزيد عن كيفية جمع البيانات</string>
+    <string name="rsb_LEARN_MORE_DATA_USE">معرفة المزيد عن كيفية استخدام البيانات</string>
+    <string name="rsb_LEARN_MORE_PRIVACY">معرفة المزيد عن كيفية حماية خصوصيتك وهويتك</string>
+    <string name="rsb_LEARN_MORE_WELCOME">معرفة المزيد عن الدراسة أولاً</string>
+    <string name="rsb_LEARN_MORE_STUDY_SURVEY">معرفة المزيد عن استطلاع الدراسة</string>
+    <string name="rsb_LEARN_MORE_TIME_COMMITMENT">معرفة المزيد عن أثر الدراسة على وقتك</string>
+    <string name="rsb_LEARN_MORE_TASKS">معرفة المزيد عن المهام المتضمنة</string>
+    <string name="rsb_LEARN_MORE_WITHDRAWING">معرفة المزيد عن الانسحاب</string>
+    <!-- Consent sharing step -->
+    <string name="rsb_CONSENT_SHARING_TITLE">خيارات المشاركة</string>
+    <string name="rsb_consent_share_widely">مشاركة بياناتي مع %1$s والباحثين المؤهلين حول العالم</string>
+    <string name="rsb_consent_share_only">مشاركة بياناتي مع %1$s فقط</string>
+    <string name="rsb_consent_sharing_description">سيتلقى %1$s بيانات دراستك من مشاركتك في هذه الدراسة.\n\nمشاركة بيانات دراستك التي تم ترميزها بشكل أوسع (دون أن تتضمن معلومات مثل اسمك) قد تكون مفيدة لهذا البحث والأبحاث المستقبلية.</string>
+    <string name="rsb_LEARN_MORE_CONSENT_SHARING">معرفة المزيد عن مشاركة البيانات</string>
+    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">اسم %1$s (مطبوعًا)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">توقيع %1$s</string>
+    <string name="rsb_CONSENT_DOC_LINE_DATE">التاريخ</string>
+    <!-- Progress indication (in navigation bar). -->
+    <string name="rsb_STEP_PROGRESS_FORMAT">الخطوة %1$s من %2$s</string>
+    <!-- Alert for out of range values. -->
+    <string name="rsb_RANGE_ALERT_TITLE">القيمة غير صالحة</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">‏%1$s تتخطى القيمة القصوى المسموح بها (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">‏%1$s أقل من القيمة الدنيا المسموح بها (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">‏%1$s قيمة غير صالحة.</string>
+    <!-- Alert for invalid email address value -->
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">عنوان البريد الإلكتروني غير صالح: %1$s</string>
+    <!-- Alerts for invalid location coordinates -->
+    <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">أدخل عنوان</string>
+    <string name="rsb_LOCATION_ERROR_TITLE">تعذر العثور على العنوان المحدد</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_LOCATION_UNKNOWN">غير قادر على حل موقعك الحالي. يرجى كتابة العنوان أو الانتقال إلى موقع فيه إشارة GPS أفضل إن وجد.</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_DENIED">تم رفض الوصول إلى خدمات الموقع. يرجي منح هذا التطبيق الإذن لاستخدام خدمات الموقع في الإعدادات.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE">تعذر العثور على نتيجة للعنوان الذي تم إدخاله. يرجى التأكد من أن العنوان صالح.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">إما أنك غير متصل بالإنترنت أو أنك تجاوزت الحد الأقصى من طلبات البحث عن العنوان. إذا لم تكن متصلًا بالإنترنت، يرجى تشغيل الـ Wi-Fi للإجابة على هذا السؤال، قم بتخطي هذا السؤال إذا كان زر التخطي متاحاً، أو العودة للاستبيان عندما تكون متصلًا بالإنترنت. خلاف ذلك، يرجى المحاولة مرة أخرى خلال بضع دقائق.</string>
+    <!-- Alert for exceeding length limit in text answer -->
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">المحتوى النصي يتجاوز الحد الأقصى للطول: %1$s</string>
+    <!-- Camera not available during multitasking -->
+    <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">الكاميرا غير متوفرة في العرض المقسم.</string>
+    <!-- Registration step -->
+    <string name="rsb_EMAIL_FORM_ITEM_TITLE">البريد الإلكتروني</string>
+    <string name="rsb_EMAIL_FORM_ITEM_PLACEHOLDER">jappleseed@example.com</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_TITLE">كلمة السر</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_PLACEHOLDER">أدخل كلمة السر</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_TITLE">تأكيد</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_PLACEHOLDER">أدخل كلمة السر مرة أخرى</string>
+    <string name="rsb_CONFIRM_PASSWORD_ERROR_MESSAGE">كلمتا السر غير متطابقتين.</string>
+    <string name="rsb_ADDITIONAL_INFO_SECTION_TITLE">معلومات إضافية</string>
+    <string name="rsb_GIVEN_NAME_ITEM_PLACEHOLDER">باسل</string>
+    <string name="rsb_FAMILY_NAME_ITEM_PLACEHOLDER">أسعد</string>
+    <string name="rsb_GENDER_FORM_ITEM_TITLE">الجنس</string>
+    <string name="rsb_GENDER_FORM_ITEM_PLACEHOLDER">اختيار الجنس</string>
+    <string name="rsb_DOB_FORM_ITEM_TITLE">تاريخ الميلاد</string>
+    <string name="rsb_DOB_FORM_ITEM_PLACEHOLDER">اختيار تاريخ</string>
+    <!-- Verification step -->
+    <string name="rsb_VERIFICATION_NAV_TITLE">التحقق</string>
+    <string name="rsb_VERIFICATION_STEP_TITLE">التحقق من البريد الإلكتروني</string>
+    <string name="rsb_RESEND_EMAIL_LABEL_MESSAGE">اضغط على الرابط أدناه إذا كنت لم تستلم بريد التحقق، وترغب بإرساله لك مرة أخرى.</string>
+    <string name="rsb_RESEND_EMAIL_BUTTON_TITLE">إعادة إرسال بريد التحقق</string>
+    <!-- Login step -->
+    <string name="rsb_LOGIN_CONTINUE_BUTTON_TITLE">تسجيل الدخول</string>
+    <string name="rsb_FORGOT_PASSWORD_BUTTON_TITLE">هل نسيت كلمة السر؟</string>
+    <!-- Passcode step -->
+    <string name="rsb_PASSCODE_PROMPT_MESSAGE">أدخل رمز الدخول</string>
+    <string name="rsb_PASSCODE_CONFIRM_MESSAGE">تأكيد رمز الدخول</string>
+    <string name="rsb_PASSCODE_SAVED_MESSAGE">تم حفظ رمز الدخول</string>
+    <string name="rsb_PASSCODE_AUTHENTICATED_MESSAGE">رمز الدخول غير مصدّق</string>
+    <string name="rsb_PASSCODE_OLD_ENTRY_MESSAGE">أدخل رمز الدخول القديم</string>
+    <string name="rsb_PASSCODE_NEW_ENTRY_MESSAGE">أدخل رمز الدخول الجديد</string>
+    <string name="rsb_PASSCODE_CONFIRM_NEW_ENTRY_MESSAGE">تأكيد رمز الدخول الجديد</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_TITLE">رمز الدخول غير صحيح</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_MESSAGE">رمزي الدخول غير متطابقين. حاول مجدداً.</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_MESSAGE">الرجاء المصادقة باستخدام Touch ID</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_ERROR_ALERT_TITLE">خطأ في Touch ID</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_INVALID_INPUT_MESSAGE">فقط الأرقام مسموح بها.</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILITY_LABEL">مؤشر تقدم إدخال رمز الدخول</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILTIY_VALUE">تم إدخال %1$s من %2$s من الأرقام</string>
+    <string name="rsb_PASSCODE_FORGOT_BUTTON_TITLE">هل نسيت رمز الدخول؟</string>
+    <!-- Keychain wrapper -->
+    <string name="rsb_KEYCHAIN_ADD_ERROR_MESSAGE">تعذر إضافة عنصر سلسلة المفاتيح.</string>
+    <string name="rsb_KEYCHAIN_UPDATE_ERROR_MESSAGE">تعذر تحديث عنصر سلسلة المفاتيح.</string>
+    <string name="rsb_KEYCHAIN_DELETE_ERROR_MESSAGE">تعذر حذف عنصر سلسلة المفاتيح.</string>
+    <string name="rsb_KEYCHAIN_FIND_ERROR_MESSAGE">تعذر العثور على عنصر سلسلة المفاتيح.</string>
+    <!-- Blood types -->
+    <string name="rsb_blood_type_a_plus">‎A+</string>
+    <string name="rsb_BLOOD_TYPE_A_">‎A-</string>
+    <string name="rsb_blood_type_ab_plus">‎AB+</string>
+    <string name="rsb_BLOOD_TYPE_AB_">‎AB-</string>
+    <string name="rsb_blood_type_b_plus">‎B+</string>
+    <string name="rsb_BLOOD_TYPE_B_">‎B-</string>
+    <string name="rsb_blood_type_o_plus">‎O+</string>
+    <string name="rsb_BLOOD_TYPE_O_">‎O-</string>
+    <!-- Gender values. -->
+    <string name="rsb_GENDER_FEMALE">أنثى</string>
+    <string name="rsb_GENDER_MALE">ذكر</string>
+    <string name="rsb_GENDER_OTHER">غير ذلك</string>
+    <!-- Boolean answer strings -->
+    <string name="rsb_BOOL_NO">لا</string>
+    <string name="rsb_BOOL_YES">نعم</string>
+    <!-- Measuring unit abbreviations -->
+    <string name="rsb_MEASURING_UNIT_CM">سم</string>
+    <string name="rsb_MEASURING_UNIT_FT">قدم</string>
+    <string name="rsb_MEASURING_UNIT_IN">بوصة</string>
+    <!-- Default placeholders to request answers in a questionnaire. -->
+    <string name="rsb_PLACEHOLDER_TEXT_OR_NUMBER">اضغط للإجابة</string>
+    <string name="rsb_NULL_ANSWER">قم بتحديد إجابة</string>
+    <string name="rsb_PLACEHOLDER_IMAGE_CHOICES">اضغط للتحديد</string>
+    <string name="rsb_PLACEHOLDER_LONG_TEXT">اضغط للكتابة</string>
+    <!-- Button titles -->
+    <string name="rsb_BUTTON_AGREE">موافقة</string>
+    <string name="rsb_BUTTON_CANCEL">إلغاء</string>
+    <string name="rsb_BUTTON_OK">موافق</string>
+    <string name="rsb_BUTTON_CLEAR">مسح</string>
+    <string name="rsb_BUTTON_DISAGREE">عدم الموافقة</string>
+    <string name="rsb_BUTTON_DONE">تم</string>
+    <string name="rsb_BUTTON_GET_STARTED">البدء</string>
+    <string name="rsb_BUTTON_LEARN_MORE">معرفة المزيد</string>
+    <string name="rsb_BUTTON_NEXT">التالي</string>
+    <string name="rsb_BUTTON_SKIP">تخطي</string>
+    <string name="rsb_BUTTON_SKIP_QUESTION">تخطي هذا السؤال</string>
+    <string name="rsb_BUTTON_START_TIMER">بدء تشغيل المؤقت</string>
+    <string name="rsb_BUTTON_OPTION_SAVE">حفظ لما بعد</string>
+    <string name="rsb_BUTTON_OPTION_DISCARD">تجاهل النتائج</string>
+    <string name="rsb_BUTTON_OPTION_STOP_TASK">إنهاء المهمة</string>
+    <string name="rsb_BUTTON_SAVE">حفظ</string>
+    <string name="rsb_BUTTON_CLEAR_ANSWER">مسح الإجابة</string>
+    <string name="rsb_BUTTON_READ_ONLY_MODE">لا يمكن تعديل هذه الإجابة.</string>
+    <!-- General active tasks. -->
+    <string name="rsb_COUNTDOWN_LABEL">بدء النشاط خلال</string>
+    <string name="rsb_TASK_COMPLETE_TITLE">اكتمل النشاط</string>
+    <string name="rsb_TASK_COMPLETE_TEXT">سيتم تحليل بياناتك وسيتم إعلامك عندما تصبح النتائج جاهزة.</string>
+    <string name="rsb_countdown_spoken_remaining">متبقٍ %1$s من الثواني.</string>
+    <!-- Image capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">التقاط صورة</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">إعادة التقاط الصورة</string>
+    <string name="rsb_CAPTURE_ERROR_CAMERA_NOT_FOUND">لم يتم العثور على كاميرا.\u0020\u0020لا يمكن إكمال هذه الخطوة.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_PERMISSIONS">لإكمال هذه الخطوة، اسمح لهذا التطبيق بالوصول إلى الكاميرا في الإعدادات.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_OUTPUT_DIRECTORY">لم يتم تحديد دليل إخراج للصور الملتقطة.</string>
+    <string name="rsb_CAPTURE_ERROR_CANNOT_WRITE_FILE">لا يمكن حفظ الصورة الملتقطة.</string>
+    <!-- Video capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_VIDEO">بدء التسجيل</string>
+    <string name="rsb_CAPTURE_BUTTON_STOP_CAPTURE_VIDEO">إيقاف التسجيل</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">إعادة التقاط الفيديو</string>
+    <!-- Fitness active task. -->
+    <string name="rsb_FITNESS_TASK_TITLE">اللياقة</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">المسافة ‏(%1$s)</string>
+    <string name="rsb_FITNESS_HEARTRATE_TITLE">معدل نبض القلب (bpm)</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">خذ استراحة لمدة %1$s.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">قم بالمشي بأقصى سرعة لديك لمدة %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">يعمل هذا النشاط على مراقبة معدل نبض القلب لديك وقياس المسافة التي يمكنك أن تمشيها خلال %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">قم بالمشي في الخارج بأقصى سرعة ممكنة لديك لمدة %1$s. عندما تنتهي، اجلس وخذ استراحة لمدة %2$s. للبدء، اضغط على البدء.</string>
+    <!-- Short walk active task. -->
+    <string name="rsb_WALK_TASK_TITLE">سرعة المشي والتوازن</string>
+    <string name="rsb_WALK_INTRO_TEXT">يقيس هذا النشاط سرعة مشيتك وتوازنك أثناء المشي والوقوف ثابتًا. لا تقم بالمتابعة إذا لم تكن قادرًا على المشي دون مساعدة.</string>
+    <string name="rsb_walk_intro_2_text_ld">اعثر على مكان يمكنك المشي فيه بصورة آمنة دون مساعدة لمسافة %1$d من الخطوات تقريبًا في خط مستقيم.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL">ضع هاتفك في جيبك أو في حقيبة واتبع التعليمات الصوتية.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">الآن قف ثابتًا لمدة %1$s.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">قف ثابتًا لمدة %1$s.</string>
+    <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">قم بالدوران والمشي رجوعًا إلى نقطة بدايتك.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">قم بمشي حوالي %1$d خطوة في خط مستقيم.</string>
+    <!-- Short walk back and forth. -->
+    <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">ابحث عن مكان يمكنك المشي فيه ذهابًا وإيابًا في خط مستقيم بشكل آمن. حاول أن تسير بشكل مستمر عن طريق الدوران في نهايات مسارك، كما لو كنت تسير حول مخروط.\n\nبعد ذلك، سيتم إرشادك لتقوم بالدوران في دائرة كاملة، ثم الوقوف ثابتًا مع وضع ذراعيك إلى جانبيك وقدميك متباعدتين بمقدار عرض الكتف تقريبًا.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">اضغط على البدء عندما تكون مستعدًا للبدء.\nثم ضع هاتفك في جيبك أو في حقيبة واتبع التعليمات الصوتية.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">قم بالمشي ذهابًا وإيابًا في خط مستقيم %1$s. قم بالمشي كما تفعل عادة.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">استدر بمقدار دائرة كاملة ثم قف ثابتًا لمدة %1$s.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">لقد أكملت النشاط.</string>
+    <!-- Tapping active task. -->
+    <string name="rsb_TAPPING_TASK_TITLE">سرعة الضغط</string>
+    <string name="rsb_TAPPING_TASK_TITLE_RIGHT">اليد اليمنى</string>
+    <string name="rsb_TAPPING_TASK_TITLE_LEFT">اليد اليسرى</string>
+    <string name="rsb_TAPPING_INTRO_TEXT">يقيس هذا النشاط سرعتك في الضغط.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_REST_PHONE">ضع هاتفك على سطح مستوٍ.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_MOST_AFFECTED">استخدم إصبعين من نفس اليد للضغط بالتبادل على الزرين على الشاشة.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_FIRST">استخدم إصبعين من يدك اليمنى للضغط بالتبادل على الزرين على الشاشة.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">استخدم إصبعين من يدك اليسرى للضغط بالتبادل على الزرين على الشاشة.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">الآن، كرر نفس الاختبار باستخدام يدك اليمنى.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">الآن، كرر نفس الاختبار باستخدام يدك اليسرى.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">اضغط بإصبع، ثم بالإصبع الآخر. حاول ضبط وقت ضغطاتك ليكون متساويًا قدر الإمكان. واستمر في الضغط لمدة %1$s.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION">اضغط على البدء لكي تبدأ.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">اضغط على التالي للبدء.</string>
+    <string name="rsb_TAP_BUTTON_TITLE">الضغط</string>
+    <string name="rsb_TOTAL_TAPS_LABEL">إجمالي الضغطات</string>
+    <string name="rsb_TAPPING_INSTRUCTION">اضغط على الزرين بتوافق قدر الإمكان باستخدام إصبعين.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_RIGHT">اضغط على الزرين باستخدام يدك اليمنى.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_LEFT">اضغط على الزرين باستخدام يدك اليسرى.</string>
+    <string name="rsb_TAPPING_SKIP_TITLE">تخطي هذه اليد</string>
+    <!-- Audio active task. -->
+    <string name="rsb_AUDIO_TASK_TITLE">الصوت</string>
+    <string name="rsb_AUDIO_CALL_TO_ACTION">اضغط على البدء لكي تبدأ.</string>
+    <string name="rsb_AUDIO_INSTRUCTION">انطق \"آااااه\" في الميكروفون لأطول فترة ممكنة بالنسبة إليك.</string>
+    <string name="rsb_AUDIO_INTRO_TEXT">خذ نفسًا عميقًا وانطق \"آااااه\" في الميكروفون لأطول فترة ممكنة بالنسبة إليك. حافظ على ثبات مستوى صوتك حتى تظل أشرطة الصوت باللون الأزرق.</string>
+    <string name="rsb_AUDIO_INTENDED_USE">يعمل هذا النشاط على تقييم صوتك من خلال تسجيله بالميكروفون الموجود في أسفل هاتفك.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_LABEL">عالٍ جدًا</string>
+    <string name="rsb_AUDIO_GENERIC_ERROR_LABEL">غير قادر على تسجيل الصوت</string>
+    <string name="rsb_AUDIO_LEVEL_CHECK_LABEL">الرجاء الانتظار حتى يتم التحقق من مستوى الضوضاء في الخلفية.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_MESSAGE">مستوى الضوضاء المحيطة عالٍ جدًا بحيث لا يمكن تسجيل صوتك. الرجاء الانتقال إلى مكان أكثر هدوءًا والمحاولة مرة أخرى.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_ACTION_NEXT">اضغط على التالي عندما تكون مستعدًا.</string>
+    <!-- Tone audiometry active task. -->
+    <string name="rsb_TONE_AUDIOMETRY_TASK_TITLE">قياس سمع النغمة</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTENDED_USE">يقيس هذا النشاط قدرتك على سماع الأصوات المختلفة.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTRO_TEXT">قبل البدء، قم بتوصيل سماعات الرأس وارتدائها.</string>
+    <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">اضغط على البدء لكي تبدأ.</string>
+    <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">من المفترض أن تسمع نغمة الآن. قم بضبط مستوى الصوت باستخدام عناصر التحكم في جانب الجهاز.\n\nاضغط على الزر عندما تكون مستعدًا للبدء.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">اضغط على الزر في كل مرة تبدأ في سماع صوت فيها.</string>
+    <string name="rsb_tone_label_left">‏%1$s هرتز، يسار</string>
+    <string name="rsb_tone_label_right">‏%1$s هرتز، يمين</string>
+    <!-- Spatial span memory active task. -->
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">الذاكرة المكانية</string>
+    <string name="rsb_spatial_span_memory_intro_text">يقيس هذا النشاط ذاكرتك المكانية قصيرة المدى من خلال مطالبتك بتكرار نفس ترتيب إضاءة %1$s.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">زهور</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">زهور</string>
+    <string name="rsb_spatial_span_memory_intro_2_text">ستضيء بعض %1$s كلٌ على حدة. اضغط على هذه الـ %2$s بنفس ترتيب إضاءتها.</string>
+    <string name="rsb_spatial_span_memory_intro_2_text_reverse">ستضيء بعض %1$s كلٌ على حدة. اضغط على هذه الـ %2$s بعكس ترتيب إضاءتها.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">للبدء، اضغط على البدء ثم قم بالمشاهدة عن قُرب.</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
+    <string name="rsb_MEMORY_GAME_SCORE_TITLE">النتيجة</string>
+    <string name="rsb_memory_game_playback_title">شاهد %1$s تتم إضاءتها</string>
+    <string name="rsb_memory_game_gameplay_title">اضغط على %1$s لكي تتم إضاءتها</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">اضغط على %1$s بترتيب عكسي</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">اكتمل التتابع</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">للمتابعة اضغط على التالي.</string>
+    <string name="rsb_MEMORY_GAME_FAILED_TITLE">المحاولة مرة أخرى</string>
+    <string name="rsb_MEMORY_GAME_FAILED_MESSAGE">لم يحالفك التوفيق تلك المرة. اضغط على التالي للمتابعة.</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_TITLE">انتهى الوقت</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_MESSAGE">نفد الوقت المخصص لك.\nاضغط على التالي للمتابعة.</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE">اكتملت اللعبة</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_TITLE">تم الإيقاف مؤقتاً</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_MESSAGE">للمتابعة اضغط على التالي.</string>
+    <!-- Reaction time active task. -->
+    <string name="rsb_REACTION_TIME_TASK_TITLE">زمن رد الفعل</string>
+    <string name="rsb_REACTION_TIME_TASK_INTENDED_USE">يعمل هذا النشاط على تقييم الوقت الذي تستغرقه في الاستجابة للتلميح البصري.</string>
+    <string name="rsb_REACTION_TIME_TASK_INTRO_TEXT_FORMAT">قم بهز الجهاز في أي اتجاه فور ظهور النقطة الزرقاء على الشاشة. سيُطلب منك فعل ذلك %D من المرات.</string>
+    <string name="rsb_REACTION_TIME_TASK_CALL_TO_ACTION">اضغط على البدء لكي تبدأ.</string>
+    <string name="rsb_REACTION_TIME_TASK_ATTEMPTS_FORMAT">المحاولة %1$s من %2$s</string>
+    <string name="rsb_REACTION_TIME_TASK_ACTIVE_STEP_TITLE">قم بهز الجهاز سريعًا عندما تظهر الدائرة الزرقاء</string>
+    <!-- Tower of Hanoi active task -->
+    <string name="rsb_TOWER_OF_HANOI_TASK_TITLE">برج هانوي</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTENDED_USE">يقيّم هذا النشاط مهاراتك في حل الألغاز.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTRO_TEXT">انقل الكومة بالكامل إلى المنصة المميزة في أقل عدد ممكن من الحركات.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_TASK_CALL_TO_ACTION">اضغط على البدء لكي تبدأ</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_INTRO_TEXT">حل اللغز</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_PROGRESS_TEXT">عدد الحركات: %1$s \n %2$s</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_SKIP_BUTTON_TITLE">لا أستطيع حل هذا اللغز</string>
+    <!-- Timed walk active task. -->
+    <string name="rsb_TIMED_WALK_TITLE">المشي المحدد بوقت</string>
+    <string name="rsb_TIMED_WALK_INTRO_DETAIL">يقيس هذا النشاط وظيفة الطرف السفلي لديك.</string>
+    <string name="rsb_timed_walk_intro_2_text">ابحث عن مكان، يفضل أن يكون بالخارج، يمكنك المشي فيه %1$s تقريبًا في خط مستقيم بأقصى سرعة ممكنة، لكن بأمان. لا تبطئ من سرعتك قبل أن تجتاز خط النهاية.</string>
+    <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">اضغط على التالي للبدء.</string>
+    <string name="rsb_TIMED_WALK_FORM_TITLE">الجهاز المساعد</string>
+    <string name="rsb_TIMED_WALK_FORM_TEXT">استخدم نفس الجهاز المساعد لكل اختبار.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_TEXT">هل ترتدي مقوام قدم وكاحل؟</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TITLE">هل تستخدم جهازًا مساعدًا؟</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TEXT">اضغط هنا لتحديد إجابة.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE">لا شيء</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_2">عصا أحادية</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_3">عكاز أحادي</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">عصا ثنائية</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">عكاز ثنائي</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">مشاية</string>
+    <string name="rsb_timed_walk_instruction">قم بالمشي حتى %1$s في خط مستقيم.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_2">قم بالدوران والمشي رجوعًا إلى نقطة بدايتك.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">اضغط على تم عند الانتهاء.</string>
+    <!-- PSAT active task. -->
+    <string name="rsb_PASAT_TITLE">PASAT</string>
+    <string name="rsb_PVSAT_TITLE">PVSAT</string>
+    <string name="rsb_PAVSAT_TITLE">PAVSAT</string>
+    <string name="rsb_PASAT_INTRO_TEXT">يقيس اختبار الجمع المتوالى السمعى المتواتر سرعة معالجة المعلومات السمعية والقدرة الحسابية.</string>
+    <string name="rsb_PVSAT_INTRO_TEXT">يقيس اختبار الجمع المتوالى البصري المتواتر سرعة معالجة المعلومات المرئية والقدرة الحسابية.</string>
+    <string name="rsb_PAVSAT_INTRO_TEXT">يقيس اختبار الجمع المتوالى السمعى البصري المتواتر سرعة معالجة المعلومات السمعية والمرئية والقدرة الحسابية.</string>
+    <string name="rsb_psat_intro_text_2">يتم تقديم الأعداد الفردية كل %1$s من الثواني.\nيجب أن تجمع كل عدد جديد على العدد الذي يسبقه مباشرةً.\nانتبه، لا ينبغي أن تحسب مجموع السلسلة المستمرة، لكن احسب فقط مجموع آخر رقمين.</string>
+    <string name="rsb_PSAT_CALL_TO_ACTION">اضغط على البدء لكي تبدأ.</string>
+    <string name="rsb_PSAT_INITIAL_INSTRUCTION">تذكر هذا العدد الأول.</string>
+    <string name="rsb_PSAT_INSTRUCTION">اجمع هذا العدد الجديد على العدد السابق.</string>
+    <string name="rsb_PSAT_NO_DIGIT">-</string>
+    <!-- Hole peg test active task. -->
+    <string name="rsb_hole_peg_test_title">‏%1$s-فحص العقدة والحفرة</string>
+    <string name="rsb_hole_peg_test_intro_text">هذا النشاط يقيس وظيفة الطرف العلوي عن طريق الطلب منك بأن تضع العقدة في حفرة. سوف يطلب منك أن تفعل هذا %1$s مرات.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">سيتم فحص كلا اليدين اليسرى واليمنى.\nيجب عليك التقاط العقدة في أسرع وقت ممكن، ووضعها في الحفرة، وبعد إنهاء %1$s مرات، قم بإزالتها مرة أخرى %2$s مرات.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">سيتم فحص كلا اليدين اليمنى واليسرى.\nيجب عليك التقاط العقدة في أسرع وقت ممكن، ووضعها في الحفرة، وبعد إنهاء %1$s مرات، قم بإزالتها مرة أخرى %2$s مرات.</string>
+    <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">اضغط على البدء لكي تبدأ.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_LEFT_HAND">قم بوضع العقدة في الحفرة باستخدام اليد اليسرى.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_RIGHT_HAND">قم بوضع العقدة في الحفرة باستخدام اليد اليمنى.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_LEFT_HAND">قم بوضع العقدة خلف السطر باستخدام اليد اليسرى.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_RIGHT_HAND">قم بوضع العقدة خلف السطر باستخدام اليد اليمنى.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT">رفع العقدة باستخدام اصبعين.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT_2">ارفع الأصابع لإسقاط العقدة.</string>
+    <!-- Tremor test active task. -->
+    <string name="rsb_TREMOR_TEST_TITLE">نشاط الرُعاش</string>
+    <string name="rsb_TREMOR_TEST_INTRO_1_DETAIL">يقيس هذا النشاط مقدار رُعاش يديك بمختلف الأوضاع. ابحث عن مكان يمكنك الجلوس فيه بشكل مريح أثناء مدة هذا النشاط.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">أمسك الهاتف في يدك الأكثر تأثرًا كما يظهر في الصورة أدناه.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">أمسك الهاتف في يدك اليمنى كما يظهر في الصورة أدناه.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">أمسك الهاتف في يدك اليسرى كما يظهر في الصورة أدناه.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">سيُطلب منك تنفيذ %1$s أثناء الجلوس مع الإمساك بالهاتف في يديك.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">مهمة واحدة</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">مهمتان</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">ثلاث مهام</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_4_TASK">أربع مهام</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_5_TASK">خمس مهام</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT">اضغط على التالي للمتابعة.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">استعد لإمساك هاتفك في حِجرك.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">استعد لإمساك هاتفك في حِجرك بيدك اليسرى.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">استعد لإمساك هاتفك في حِجرك بيدك اليمنى.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">استمر في إمساك هاتفك في حِجرك لمدة %1$d من الثواني.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">الآن، أمسك هاتفك ويدك ممدودة في مستوى الكتف.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">الآن، أمسك هاتفك ويدك اليسرى ممدودة في مستوى الكتف.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">الآن، أمسك هاتفك ويدك اليمنى ممدودة في مستوى الكتف.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">استمر في إمساك هاتفك ويدك ممدودة لمدة %1$d من الثواني.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">الآن، أمسك هاتفك في مستوى الكتف مع ثني مرفقك.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">الآن، أمسك هاتفك ويدك اليسرى في مستوى الكتف مع ثني مرفقك.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">الآن، أمسك هاتفك ويدك اليمنى في مستوى الكتف مع ثني مرفقك.</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">استمر في إمساك هاتفك مع ثني مرفقك لمدة %1$d من الثواني</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">الآن، مع الاستمرار في ثني مرفقك، المس الهاتف بأنفك بشكل متكرر.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">الآن، مع الاستمرار في ثني مرفقك والإمساك بالهاتف في يدك اليسرى، المس الهاتف بأنفك بشكل متكرر.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">الآن، مع الاستمرار في ثني مرفقك والإمساك بالهاتف في يدك اليمنى، المس الهاتف بأنفك بشكل متكرر.</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">استمر في لمس الهاتف بأنفك لمدة %1$d من الثواني</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">استعد للتلويح كالملوك (التلويح عن طريق تدوير معصمك).</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">استعد للتلويح كالملوك مع إمساك هاتفك في يدك اليسرى (التلويح عن طريق تدوير معصمك).</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">استعد للتلويح كالملوك مع إمساك هاتفك في يدك اليمنى (التلويح عن طريق تدوير معصمك).</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">استمر في التلويح كالملوك لمدة %1$d من الثواني.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">الآن، انقل الهاتف إلى يدك اليسرى وتابع إلى المهمة التالية.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">الآن، انقل الهاتف إلى يدك اليمنى وتابع إلى المهمة التالية.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">تابع إلى المهمة التالية.</string>
+    <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">اكتمل النشاط.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">سيُطلب منك تنفيذ %1$s أثناء الجلوس مع الإمساك بالهاتف في إحدى يديك، ثم تكرار ذلك باليد الأخرى.</string>
+    <string name="rsb_TREMOR_SKIP_LEFT_HAND">لا يمكنني القيام بهذا النشاط بيدي اليسرى.</string>
+    <string name="rsb_TREMOR_SKIP_RIGHT_HAND">لا يمكنني القيام بهذا النشاط بيدي اليمنى.</string>
+    <string name="rsb_TREMOR_SKIP_NEITHER">يمكنني القيام بهذا النشاط بكلتا يدي.</string>
+    <!-- Potentially user visible error messages. -->
+    <string name="rsb_ERROR_DATALOGGER_CREATE_FILE">تعذر إنشاء الملف</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_FREE_SPACE">تعذر إزالة ملفات السجل الكافية للوصول إلى الحد</string>
+    <string name="rsb_ERROR_DATALOGGER_SET_ATTRIBUTE">حدث خطأ في تعيين السمة</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_MAORK">لم يتم تمييز الملف كمحذوف (لم يتم التمييز كـ \"تم التحميل\")</string>
+    <string name="rsb_ERROR_DATALOGGER_MULTIPLE">حدثت عدة أخطاء أثناء إزالة السجلات</string>
+    <string name="rsb_ERROR_RECORDER_NO_DATA">لم يتم العثور على أي بيانات تم جمعها.</string>
+    <string name="rsb_ERROR_RECORDER_NO_OUTPUT_DIRECTORY">لم يتم تحديد دليل إخراج</string>
+    <!-- Charts -->
+    <string name="rsb_CHART_NO_DATA_TEXT">لا توجد بيانات</string>
+    <!-- Accessibility -->
+    <string name="rsb_AX_BUTTON_BACK">السابق</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">توضيح %1$s</string>
+    <string name="rsb_AX_SIGNVIEW_LABEL">حقل التوقيع المخصص</string>
+    <string name="rsb_AX_SIGNVIEW_HINT">قم بلمس الشاشة وتحريك إصبعك للتوقيع</string>
+    <string name="rsb_AX_SIGNVIEW_SIGNED">موقّع</string>
+    <string name="rsb_AX_SIGNVIEW_UNSIGNED">غير موقّع</string>
+    <string name="rsb_AX_SELECTED">محددة</string>
+    <string name="rsb_AX_UNSELECTED">غير محددة</string>
+    <string name="rsb_AX_SLIDER_LABEL">شريط تمرير الاستجابة. النطاق من %1$s إلى %2$s</string>
+    <string name="rsb_AX_UNLABELED_IMAGE">صورة بلا تسمية</string>
+    <string name="rsb_AX_ANNOUNCE_BEGIN_TASK">بدء المهمة</string>
+    <string name="rsb_AX_MEMORY_TILE_ACTIVE">نشط</string>
+    <string name="rsb_AX_MEMORY_TILE_CORRECT">صحيحة</string>
+    <string name="rsb_AX_MEMORY_TILE_INCORRECT">غير صحيحة</string>
+    <string name="rsb_AX_MEMORY_TILE_QUIESCENT">هادئ</string>
+    <string name="rsb_AX_MEMORY_TILE_LABEL">عنوان لعبة الذاكرة</string>
+    <string name="rsb_AX_IMAGE_CAPTURE_LABEL">معاينة الالتقاط</string>
+    <string name="rsb_AX_IMAGE_CAPTURED_LABEL">تم التقاط الصورة</string>
+    <string name="rsb_AX_VIDEO_CAPTURE_LABEL">معاينة التقاط الفيديو</string>
+    <string name="rsb_AX_VIDEO_CAPTURED_LABEL">الفيديو الملتقط</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_INVALID_MOVE_FORMAT">غير قادر على وضع القرص بحجم %1$s على القرص بحجم %2$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TARGET_DISK">الهدف</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER">برج</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">اضغط مرتين لوضع القرص</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">اضغط مرتين لتحديد أعلى قرص</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">يحتوي على أقراص بأحجام %1$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">فارغ</string>
+    <string name="rsb_ax_graph_range_format">يتراوح من %1$s إلى %2$s</string>
+    <string name="rsb_AX_GRAPH_STACK_PREFIX">مجموعة تتكون من</string>
+    <string name="rsb_AX_GRAPH_AND_SEPARATOR">و</string>
+    <string name="rsb_ax_graph_point">النقطة: %1$s</string>
+    
+</resources>
