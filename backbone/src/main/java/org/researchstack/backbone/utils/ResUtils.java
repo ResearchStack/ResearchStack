@@ -18,6 +18,21 @@ public class ResUtils {
     public static final String ERROR_ICON                   = "rsb_error";
     public static final String IC_FINGERPRINT               = "rsb_fingerprint";
 
+    public static final String TREMOR_TEST_1                = "rsb_tremortest1";
+    public static final String TREMOR_TEST_2                = "rsb_tremortest2";
+    public static final String TREMOR_TEST_3                = "rsb_tremortest3";
+    public static final String TREMOR_TEST_4                = "rsb_tremortest4";
+    public static final String TREMOR_TEST_5                = "rsb_tremortest5";
+    public static final String TREMOR_TEST_6                = "rsb_tremortest6";
+    public static final String TREMOR_TEST_7                = "rsb_tremortest7";
+    public static final String TREMOR_TEST_1_FLIPPED        = "rsb_tremortest1_flipped";
+    public static final String TREMOR_TEST_2_FLIPPED        = "rsb_tremortest2_flipped";
+    public static final String TREMOR_TEST_3_FLIPPED        = "rsb_tremortest3_flipped";
+    public static final String TREMOR_TEST_4_FLIPPED        = "rsb_tremortest4_flipped";
+    public static final String TREMOR_TEST_5_FLIPPED        = "rsb_tremortest5_flipped";
+    public static final String TREMOR_TEST_6_FLIPPED        = "rsb_tremortest6_flipped";
+    public static final String TREMOR_TEST_7_FLIPPED        = "rsb_tremortest7_flipped";
+
     // AnimatedVectorDrawable 's
     public static final String ANIMATED_CHECK_MARK_DELAYED  = "rsb_animated_check_delayed";
     public static final String ANIMATED_CHECK_MARK          = "rsb_animated_check";

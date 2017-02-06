@@ -11,4 +11,7 @@
     <integer name="rsb_config_anim_time_fingerprint_too_many_attempts_delay">2500</integer>
     <integer name="rsb_config_anim_time_fingerprint_error_delay">1600</integer>
 
+    <!-- The frequency of sensor collection, in Hz -->
+    <integer name="rsb_sensor_frequency_default">100</integer>
+
 </resources>
