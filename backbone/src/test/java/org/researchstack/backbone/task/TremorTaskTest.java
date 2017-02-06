@@ -196,9 +196,6 @@ public class TremorTaskTest {
                 if (!step.getIdentifier().contains(OrderedTaskFactory.Instruction1StepIdentifier) &&
                     !step.getIdentifier().contains(OrderedTaskFactory.ConclusionStepIdentifier))
                 {
-                    if (step instanceof InstructionStep) {
-                        int i = 0;
-                    }
                     assertFalse(step instanceof InstructionStep);
                 }
             }
