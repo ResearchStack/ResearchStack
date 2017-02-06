@@ -7,7 +7,6 @@ import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.InputType;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
@@ -53,7 +52,7 @@ import org.researchstack.backbone.step.ShareTheAppStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
-import org.researchstack.backbone.step.NavigationQuestionStep;
+import org.researchstack.backbone.step.NavigationExpectedAnswerQuestionStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
 import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 
@@ -423,7 +422,7 @@ public class SurveyFactory {
         QuestionStep step = null;
         // Attach the navigation components to the step if there are any
         if (item.usesNavigation()) {
-            NavigationQuestionStep navStep = new NavigationQuestionStep(item.identifier, item.title, format);
+            NavigationExpectedAnswerQuestionStep navStep = new NavigationExpectedAnswerQuestionStep(item.identifier, item.title, format);
             transferNavigationRules(item, navStep);
             step = navStep;
         } else {
@@ -765,7 +764,7 @@ public class SurveyFactory {
     /*
      * Transfers the QuestionSurveyItem nav properties over to NavigationStep
      */
-    private void transferNavigationRules(QuestionSurveyItem item, NavigationQuestionStep toStep) {
+    private void transferNavigationRules(QuestionSurveyItem item, NavigationExpectedAnswerQuestionStep toStep) {
         toStep.setSkipIfPassed(item.skipIfPassed);
         toStep.setSkipToStepIdentifier(item.skipIdentifier);
         toStep.setExpectedAnswer(item.expectedAnswer);

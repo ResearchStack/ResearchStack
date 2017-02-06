@@ -1,9 +1,6 @@
 package org.researchstack.backbone.step;
 
-import android.util.Log;
-
 import org.researchstack.backbone.answerformat.AnswerFormat;
-import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.utils.StepHelper;
@@ -13,11 +10,14 @@ import java.util.List;
 
 /**
  * Created by TheMDP on 12/31/16.
+ *
+ * This QuestionStep works by having a specific expected answer that must be correct or incorrect to
+ * move to the skipToStepIdentifier, with the correct/incorrect status depending on skipIfPassed
  */
 
-public class NavigationQuestionStep extends QuestionStep implements NavigableOrderedTask.NavigationRule {
+public class NavigationExpectedAnswerQuestionStep extends QuestionStep implements NavigableOrderedTask.NavigationRule {
 
-    private static final String LOG_TAG = NavigationQuestionStep.class.getCanonicalName();
+    private static final String LOG_TAG = NavigationExpectedAnswerQuestionStep.class.getCanonicalName();
 
     String skipToStepIdentifier;
     boolean skipIfPassed;
@@ -26,19 +26,19 @@ public class NavigationQuestionStep extends QuestionStep implements NavigableOrd
     private Object expectedAnswer;
 
     /* Default constructor needed for serilization/deserialization of object */
-    NavigationQuestionStep() {
+    NavigationExpectedAnswerQuestionStep() {
         super();
     }
 
-    public NavigationQuestionStep(String identifier) {
+    public NavigationExpectedAnswerQuestionStep(String identifier) {
         super(identifier);
     }
 
-    public NavigationQuestionStep(String identifier, String title) {
+    public NavigationExpectedAnswerQuestionStep(String identifier, String title) {
         super(identifier, title);
     }
 
-    public NavigationQuestionStep(String identifier, String title, AnswerFormat format) {
+    public NavigationExpectedAnswerQuestionStep(String identifier, String title, AnswerFormat format) {
         super(identifier, title, format);
     }
 
