@@ -1,17 +1,11 @@
 package org.researchstack.backbone.ui;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.PermissionRequestManager;
@@ -138,50 +132,15 @@ public class OnboardingTaskActivity extends ViewTaskActivity implements Activity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        // Create Onboarding Menu which has an "X" or cancel icon
-        getMenuInflater().inflate(R.menu.rsb_onboarding_menu, menu);
-
-        // Use DrawableCompat to change menu item color to white
-        // DrawableCompat is necessary since the icon is a Vector Drawable
-        Drawable drawable = menu.findItem(R.id.rsb_clear_menu_item).getIcon();
-        drawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.rsb_white));
-        menu.findItem(R.id.rsb_clear_menu_item).setIcon(drawable);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.rsb_clear_menu_item) {
-            showCancelAlert();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Make sure user is 100% wanting to cancel, since their data will be discarded
-     */
-    protected void showCancelAlert() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.rsb_are_you_sure)
-                .setPositiveButton(R.string.rsb_discard_results, (dialog, i) -> discardResultsAndFinish())
-                .setNegativeButton(R.string.rsb_cancel, null).create().show();
-    }
-
     /**
      * Clear out all the data that has been saved by this Activity
      * And push user back to the Overview screen, or whatever screen was below this Activity
      */
+    @Override
     protected void discardResultsAndFinish() {
-        taskResult.getResults().clear();
         DataProvider.getInstance().signOut(this);
         StorageAccess.getInstance().removePinCode(this);
-        finish();
+        super.discardResultsAndFinish();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
