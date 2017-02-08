@@ -22,7 +22,7 @@ public class AccelerometerRecorderConfig extends RecorderConfig {
 
     @Override
     public Recorder recorderForStep(Step step, File outputDirectory) {
-        return new AccelerometerRecorder(getIdentifier(), step, outputDirectory);
+        return new AccelerometerRecorder(frequency, getIdentifier(), step, outputDirectory);
     }
 
     public double getFrequency() {

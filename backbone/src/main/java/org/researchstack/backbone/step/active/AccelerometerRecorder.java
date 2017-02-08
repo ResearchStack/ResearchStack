@@ -1,43 +1,62 @@
 package org.researchstack.backbone.step.active;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+
+import com.google.gson.JsonObject;
+
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by TheMDP on 2/5/17.
+ *
+ * This class uses the JsonArrayDataRecorder class to save the Accelerometer sensor's data as
+ * an array of accelerometer json objects with timestamp, ax, ay, and az
  */
 
-public class AccelerometerRecorder extends Recorder {
-    /**
-     * The frequency of accelerometer data collection in samples per second (Hz).
-     */
-    private double frequency;
+public class AccelerometerRecorder extends SensorRecorder {
+
+    public static final String TIMESTAMP_KEY        = "timestamp";
+    public static final String ACCELERATION_X_KEY   = "x";
+    public static final String ACCELERATION_Y_KEY   = "y";
+    public static final String ACCELERATION_Z_KEY   = "z";
+
+    private JsonObject jsonObject;
 
     /** Default constructor for serialization/deserialization */
     AccelerometerRecorder() {
         super();
     }
 
-    AccelerometerRecorder(String identifier, Step step, File outputDirectory) {
-        super(identifier, step, outputDirectory);
+    AccelerometerRecorder(double frequency, String identifier, Step step, File outputDirectory) {
+        super(frequency, identifier, step, outputDirectory);
     }
 
     @Override
-    public void start() {
-        // TODO: implement
+    protected List<Integer> getSensorTypeList() {
+        return Collections.singletonList(Sensor.TYPE_ACCELEROMETER);
     }
 
     @Override
-    public void stop() {
-        // TODO: implement
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            if (jsonObject == null) {
+                jsonObject = new JsonObject();
+            }
+            jsonObject.addProperty(TIMESTAMP_KEY, sensorEvent.timestamp);
+            jsonObject.addProperty(ACCELERATION_X_KEY, sensorEvent.values[0]);
+            jsonObject.addProperty(ACCELERATION_Y_KEY, sensorEvent.values[1]);
+            jsonObject.addProperty(ACCELERATION_Z_KEY, sensorEvent.values[2]);
+            writeJson(jsonObject);
+        }
     }
 
-    public double getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(double frequency) {
-        this.frequency = frequency;
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+        // NO-OP
     }
 }

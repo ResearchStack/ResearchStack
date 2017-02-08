@@ -1,8 +1,13 @@
 package org.researchstack.backbone.step.active;
 
+import android.content.Context;
+
+import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.Serializable;
 
 /**
@@ -67,7 +72,7 @@ public abstract class Recorder implements Serializable {
      * @return `true` if the recorder is recording; otherwise, `false`.
      */
     private boolean isRecording;
-
+    
     /**
      * Used to communicate with the listener if the recording completed successfully or failed
      */
@@ -89,9 +94,10 @@ public abstract class Recorder implements Serializable {
      * Starts data recording.
      *
      * If an error occurs when recording starts, it is returned through the delegate.
+     *
+     * @param context can be app or activity, used for starting sensor
      */
-    // TODO: should we do what iOS does here and make a new thread for this?
-    public abstract void start();
+    public abstract void start(Context context);
 
     /**
      * Stops data recording, which generally triggers the return of results.
@@ -147,5 +153,31 @@ public abstract class Recorder implements Serializable {
 
     public void setRecorderListener(RecorderListener recorderListener) {
         this.recorderListener = recorderListener;
+    }
+
+    protected void onRecorderCompleted(Result result) {
+        if (recorderListener != null) {
+            recorderListener.onComplete(this, result);
+        }
+    }
+
+    protected void onRecorderFailed(String error) {
+        if (recorderListener != null) {
+            recorderListener.onFail(this, new Throwable(error));
+        }
+    }
+
+    protected void onRecorderFailed(Throwable throwable) {
+        if (recorderListener != null) {
+            recorderListener.onFail(this, throwable);
+        }
+    }
+
+    protected void openFileOutputStream() {
+        try {
+            FileOutputStream fOut = new FileOutputStream(outputDirectory);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -22,7 +22,7 @@ public class DeviceMotionRecorderConfig extends RecorderConfig {
 
     @Override
     public Recorder recorderForStep(Step step, File outputDirectory) {
-        return new DeviceMotionRecorder(getIdentifier(), step, outputDirectory);
+        return new DeviceMotionRecorder(frequency, getIdentifier(), step, outputDirectory);
     }
 
     public double getFrequency() {
