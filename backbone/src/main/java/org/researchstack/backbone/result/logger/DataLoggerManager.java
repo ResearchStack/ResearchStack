@@ -7,6 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,7 +46,9 @@ public class DataLoggerManager {
 
     @MainThread
     public static void initialize(Context context) {
-        instance = new DataLoggerManager(context);
+        if (instance == null) {
+            instance = new DataLoggerManager(context);
+        }
     }
 
     private DataLoggerManager(Context context) {
@@ -108,6 +114,52 @@ public class DataLoggerManager {
         if (!success) {
             Log.e(getClass().getCanonicalName(), "Failed to delete data logger file");
         }
+    }
+
+    /**
+     * This will loop through all the data logger files that exist in storage and
+     * remove any that are "dirty".  A "dirty" file is any file that has not been zipped
+     * up and attempted to be uploaded yet.
+     *
+     * Examples of dirty data logger files are ones that were written before and app crashed
+     * or was force closed, or files that were written and then the user cancelled the active task
+     * that was responsible for creating them
+     */
+    public void deteleAllDirtyFiles() {
+        Map<String, ?> fileStatusMap = sharedPrefs.getAll();
+
+        List<String> prefKeysToDelete  = new ArrayList<>();
+        List<String> filePathsToDelete = new ArrayList<>();
+
+        // Loop through all the potential file status and find ones that are dirty
+        for (String key : fileStatusMap.keySet()) {
+            Object fileStatusObj = fileStatusMap.get(key);
+            if (fileStatusObj instanceof String) {
+                DataLoggerFileStatus fileStatus = gson.fromJson((String)fileStatusObj, DataLoggerFileStatus.class);
+                if (fileStatus.isDirty) {
+                    prefKeysToDelete.add(key);
+                    filePathsToDelete.add(fileStatus.filePath);
+                }
+            }
+        }
+
+        // remove all dirt files
+        for (String filePath : filePathsToDelete) {
+            File file = new File(filePath);
+            if (file.exists()) {
+                boolean success = file.delete();
+                if (!success) {
+                    Log.e(getClass().getCanonicalName(), "Failed to delete dirty file " + filePath);
+                }
+            }
+        }
+
+        // remove dirty shared prefs
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        for (String prefsKey : prefKeysToDelete) {
+            editor.remove(prefsKey);
+        }
+        editor.apply();
     }
 
     /**
