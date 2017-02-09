@@ -188,6 +188,7 @@ public class ActiveStep extends Step {
 
     public ActiveStep(String identifier) {
         super(identifier);
+        setOptional(false);
     }
 
     public ActiveStep(String identifier, String title, String detailText) {
@@ -241,7 +242,7 @@ public class ActiveStep extends Step {
         return shouldStartTimerAutomatically;
     }
 
-    public boolean isShouldPlaySoundOnStart() {
+    public boolean getShouldPlaySoundOnStart() {
         return shouldPlaySoundOnStart;
     }
 
@@ -249,7 +250,7 @@ public class ActiveStep extends Step {
         this.shouldPlaySoundOnStart = shouldPlaySoundOnStart;
     }
 
-    public boolean isShouldPlaySoundOnFinish() {
+    public boolean getShouldPlaySoundOnFinish() {
         return shouldPlaySoundOnFinish;
     }
 
@@ -257,7 +258,7 @@ public class ActiveStep extends Step {
         this.shouldPlaySoundOnFinish = shouldPlaySoundOnFinish;
     }
 
-    public boolean isShouldVibrateOnStart() {
+    public boolean getShouldVibrateOnStart() {
         return shouldVibrateOnStart;
     }
 
@@ -265,7 +266,7 @@ public class ActiveStep extends Step {
         this.shouldVibrateOnStart = shouldVibrateOnStart;
     }
 
-    public boolean isShouldVibrateOnFinish() {
+    public boolean getShouldVibrateOnFinish() {
         return shouldVibrateOnFinish;
     }
 
@@ -273,7 +274,7 @@ public class ActiveStep extends Step {
         this.shouldVibrateOnFinish = shouldVibrateOnFinish;
     }
 
-    public boolean isShouldUseNextAsSkipButton() {
+    public boolean getShouldUseNextAsSkipButton() {
         return shouldUseNextAsSkipButton;
     }
 
@@ -281,7 +282,7 @@ public class ActiveStep extends Step {
         this.shouldUseNextAsSkipButton = shouldUseNextAsSkipButton;
     }
 
-    public boolean isShouldContinueOnFinish() {
+    public boolean getShouldContinueOnFinish() {
         return shouldContinueOnFinish;
     }
 

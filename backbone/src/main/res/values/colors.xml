@@ -35,4 +35,8 @@
     <color name="rsb_instruction_step_layout_image_tint_color">@color/rsb_colorPrimary</color>
     <color name="rsb_instruction_step_layout_image_auxillary_tint_color">@color/rsb_light_gray</color>
 
+    <!-- Countdown screen -->
+    <color name="rsb_countdown_step_layout_timer_color">@color/rsb_colorPrimary</color>
+    <color name="rsb_countdown_step_layout_text_color">@color/rsb_black</color>
+
 </resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Change to RelativeLayout for preview to work -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:padding="@dimen/rsb_padding_medium">
+
+        <TextView
+            android:id="@+id/rsb_countdown_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/rsb_text_size_title"
+            android:textColor="@color/rsb_countdown_step_layout_text_color"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/rsb_countdown_timer_textview"
+            android:layout_width="@dimen/rsb_step_layout_countdown_size"
+            android:layout_height="@dimen/rsb_step_layout_countdown_size"
+            android:layout_marginTop="@dimen/rsb_padding_medium"
+            android:layout_gravity="center"
+            android:textColor="@color/rsb_countdown_step_layout_text_color"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

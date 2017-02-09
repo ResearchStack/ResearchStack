@@ -23,6 +23,10 @@
 
     <dimen name="rsb_step_layout_image_height">100dp</dimen>
 
+    <dimen name="rsb_step_layout_countdown_stroke_width">10dp</dimen>
+    <dimen name="rsb_step_layout_countdown_size">200dp</dimen>
+    <dimen name="rsb_step_layout_countdown_text_size">40sp</dimen>
+
     <dimen name="rsb_check_mark_size">@dimen/rsb_step_layout_image_height</dimen>
 
 </resources>

@@ -4,5 +4,7 @@
 
     <!-- We allow users to secure their data using their fingerprint see -->
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+    <!-- ActiveSteps may vibrate the phone on start and on finish -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>

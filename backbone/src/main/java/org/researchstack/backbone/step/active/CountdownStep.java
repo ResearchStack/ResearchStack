@@ -15,6 +15,9 @@ import org.researchstack.backbone.ui.step.layout.CountdownStepLayout;
  */
 
 public class CountdownStep extends ActiveStep {
+
+    public static final int DEFAULT_STEP_DURATION = 5;
+
     /* Default constructor needed for serilization/deserialization of object */
     CountdownStep() {
         super();
@@ -22,10 +25,10 @@ public class CountdownStep extends ActiveStep {
 
     public CountdownStep(String identifier) {
         super(identifier);
-    }
-
-    public CountdownStep(String identifier, String title, String detailText) {
-        super(identifier, title, detailText);
+        setStepDuration(DEFAULT_STEP_DURATION);
+        setShouldStartTimerAutomatically(true);
+        setShouldShowDefaultTimer(false);
+        setShouldContinueOnFinish(true);
     }
 
     @Override
