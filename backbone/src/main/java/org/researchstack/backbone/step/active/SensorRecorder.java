@@ -4,6 +4,10 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
+import android.util.Log;
+
+import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.step.Step;
 
@@ -16,15 +20,28 @@ import java.util.List;
  */
 
 abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEventListener {
+
+    private static final long MILLI_SECONDS_PER_SEC = 1000L;
     private static final long MICRO_SECONDS_PER_SEC = 1000000L;
 
     /**
      * The frequency of accelerometer data collection in samples per second (Hz).
+     * Android Sensors do not allow exact frequency sepcifications, per their documentation,
+     * it is only a HINT, so we must manage it ourselves in a runnable here
      */
     private double frequency;
 
     private SensorManager sensorManager;
     private List<Sensor> sensorList;
+
+    /**
+     * the jsonObject that will be written to the file at frequency desired
+     */
+    protected Handler mainHandler;
+    protected Runnable jsonWriterRunnable;
+    private int  writeCounter;
+    private long writeDelayGoal;
+    private long writeStartTime;
 
     /** Default constructor for serialization/deserialization */
     SensorRecorder() {
@@ -64,18 +81,54 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
         } else {
             super.startJsonDataLogging(frequency);
         }
+
+        // These will be used to moniter periodic writes to get an accurate write frequency
+        writeCounter = 1;
+        writeStartTime = System.currentTimeMillis();
+        writeDelayGoal = calculateDelayBetweenSamplesInMilliSeconds();
+
+        mainHandler = new Handler();
+        jsonWriterRunnable = new Runnable() {
+            @Override
+            public void run() {
+                writeJsonData();
+
+                writeCounter++;
+                // Offset delay from the writeJsonData call to get an accurate write frequency
+                long delayGoal = ((writeStartTime + (writeCounter * writeDelayGoal)) - System.currentTimeMillis());
+                // The device is not fast enough to keep up, so we will get a frequency only
+                // as fast as it can do, so just make the delay goal be the original delay
+                if (delayGoal <= 0) {
+                    delayGoal = 1; // minimal write delay to give the UI thread some time
+                }
+
+                mainHandler.postDelayed(jsonWriterRunnable, delayGoal);
+            }
+        };
+        mainHandler.postDelayed(jsonWriterRunnable, writeDelayGoal);
     }
 
     @Override
     public void stop() {
+        mainHandler.removeCallbacks(jsonWriterRunnable);
         for (Sensor sensor : sensorList) {
             sensorManager.unregisterListener(this, sensor);
         }
         stopJsonDataLogging();
     }
 
+    /**
+     * This is called at the specified frequency so that we get an accurate frequency,
+     * since Android sensors do not allow precise sensor frequency reporting
+     */
+    protected abstract void writeJsonData();
+
+    protected long calculateDelayBetweenSamplesInMilliSeconds() {
+        return (long)((float)MILLI_SECONDS_PER_SEC / frequency);
+    }
+
     protected int calculateDelayBetweenSamplesInMicroSeconds() {
-        return (int)(MICRO_SECONDS_PER_SEC / frequency);
+        return (int)((float)MICRO_SECONDS_PER_SEC / frequency);
     }
 
     public double getFrequency() {

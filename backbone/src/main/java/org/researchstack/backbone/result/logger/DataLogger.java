@@ -20,9 +20,9 @@ public class DataLogger {
     private File file;
 
     /**
-     * The AsyncTask that performs the file writing on another thread
+     * The Thread that performs the file writing
      */
-    private DataLoggerAsyncTask dataLoggerAsyncTask;
+    private DataLoggerFileWriterThread dataLoggerWriterThread;
     private DataWriteListener dataWriteListener;
 
     public DataLogger(File file, DataWriteListener listener) {
@@ -38,14 +38,14 @@ public class DataLogger {
      *                                    if there is data to be written to the file stream
      */
     public void start(String fileHeader, String fileFooter, double estimatedDataWriteFrequency) {
-        if (dataLoggerAsyncTask != null) {
+        if (dataLoggerWriterThread != null) {
             throw new IllegalStateException("Thread was started while another was running, " +
                     "check your application logic, because this is not allowed");
         }
 
-        dataLoggerAsyncTask = new DataLoggerAsyncTask(
+        dataLoggerWriterThread = new DataLoggerFileWriterThread(
                 file, fileHeader, fileFooter,
-                estimatedDataWriteFrequency, new DataWriteListener()
+                new DataWriteListener()
         {
             @Override
             public void onWriteError(Throwable throwable) {
@@ -53,24 +53,25 @@ public class DataLogger {
             }
 
             @Override
-            public void onWriteComplete() {
+            public void onWriteComplete(File file) {
                 DataLoggerManager.getInstance().dataLoggerTaskFinished(DataLogger.this, null);
-                dataWriteListener.onWriteComplete();
-                dataLoggerAsyncTask = null;
+                dataWriteListener.onWriteComplete(file);
+                dataLoggerWriterThread = null;
             }
         });
 
-        DataLoggerManager.getInstance().startNewDataLoggerTask(this, dataLoggerAsyncTask);
+        DataLoggerManager.getInstance().startNewDataLoggerTask(this);
+        dataLoggerWriterThread.start();
     }
 
     /**
      * Call when you are done writing to the data logger
      */
     public void stop() {
-        if (dataLoggerAsyncTask == null) {
+        if (dataLoggerWriterThread == null) {
             throw new IllegalStateException("You need to call start() first");
         }
-        dataLoggerAsyncTask.stop();
+        dataLoggerWriterThread.stop();
     }
 
     /**
@@ -78,22 +79,22 @@ public class DataLogger {
      * @param throwable the error to return to the listener, that happened above this class
      */
     public void cancelDueToError(Throwable throwable) {
-        dataLoggerAsyncTask.cancel(true);
+        dataLoggerWriterThread.cancel();
         dataLoggerFailed(throwable);
     }
 
     private void dataLoggerFailed(Throwable throwable) {
         DataLoggerManager.getInstance().dataLoggerTaskFinished(DataLogger.this, throwable);
         dataWriteListener.onWriteError(throwable);
-        dataLoggerAsyncTask = null;
+        dataLoggerWriterThread = null;
     }
 
     /**
      * @param data to append to the file on a different async task thread
      */
     public void appendData(byte[] data) {
-        if (dataLoggerAsyncTask != null) {
-            dataLoggerAsyncTask.appendData(data);
+        if (dataLoggerWriterThread != null) {
+            dataLoggerWriterThread.appendData(data);
         }
     }
 
@@ -118,6 +119,6 @@ public class DataLogger {
 
     public interface DataWriteListener {
         void onWriteError(Throwable throwable);
-        void onWriteComplete();
+        void onWriteComplete(File file);
     }
 }

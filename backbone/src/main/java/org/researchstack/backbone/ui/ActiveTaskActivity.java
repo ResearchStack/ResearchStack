@@ -36,6 +36,12 @@ public class ActiveTaskActivity extends ViewTaskActivity {
     }
 
     @Override
+    protected void discardResultsAndFinish() {
+        DataLoggerManager.getInstance().deteleAllDirtyFiles();
+        super.discardResultsAndFinish();
+    }
+
+    @Override
     protected void showStep(Step step, boolean alwaysReplaceView) {
         super.showStep(step, alwaysReplaceView);
 

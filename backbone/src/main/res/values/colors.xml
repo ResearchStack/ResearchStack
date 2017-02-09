@@ -30,7 +30,7 @@
 
     <color name="rsb_forgot_passcode_text_color">@color/rsb_submit_bar_negative</color>
     <color name="rsb_fingerprint">@color/rsb_colorPrimary</color>
-    
+
     <!-- Step must also have set "shouldTintImage" to true for this to be used -->
     <color name="rsb_instruction_step_layout_image_tint_color">@color/rsb_colorPrimary</color>
     <color name="rsb_instruction_step_layout_image_auxillary_tint_color">@color/rsb_light_gray</color>
@@ -40,6 +40,5 @@
     <color name="rsb_countdown_step_layout_text_color">@color/rsb_black</color>
 
     <color name="rsb_cancel_menu_icon">@color/rsb_white</color>
-
 
 </resources>

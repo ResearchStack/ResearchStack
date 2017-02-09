@@ -21,12 +21,6 @@ import java.util.concurrent.Executors;
 public class DataLoggerManager {
 
     /**
-     * Used to manage multiple DataLogger AsyncTasks at once
-     * Will not consume any resources after about a minute of inactivity
-     */
-    private ExecutorService threadExecutor;
-
-    /**
      * SharedPreferences are used to keep track of the DataLogger files' status
      * They can be dirty while being written, completed, and uploaded
      */
@@ -52,18 +46,13 @@ public class DataLoggerManager {
     }
 
     private DataLoggerManager(Context context) {
-        // newCachedThreadPool will create new threads as needed, and it will
-        // delete a Thread that hasn't been used for 60 seconds, that way,
-        // if we accidentally leave one running because of a bug, it will destroy itself
-        threadExecutor = Executors.newCachedThreadPool();
         sharedPrefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
         gson = new Gson();
     }
 
     @MainThread
-    protected void startNewDataLoggerTask(DataLogger dataLogger, DataLoggerAsyncTask task) {
+    protected void startNewDataLoggerTask(DataLogger dataLogger) {
         createNewDataLoggerFileStatus(dataLogger);
-        task.executeOnExecutor(threadExecutor);
     }
 
     @MainThread
@@ -71,7 +60,8 @@ public class DataLoggerManager {
         if (error != null) {
             deleteDataLoggerFileStatus(dataLogger);
         } else {
-            completeDataLoggerFileStatus(dataLogger);
+            //
+            //completeDataLoggerFileStatus(dataLogger);
         }
     }
 
@@ -91,9 +81,9 @@ public class DataLoggerManager {
      * This updates the status of the file to not be dirty, but still is not uploaded
      * @param dataLogger to operate upon
      */
-    private void completeDataLoggerFileStatus(DataLogger dataLogger) {
+    private void updateDataLoggerFileStatusToAttemptedUploaded(DataLogger dataLogger) {
         DataLoggerFileStatus fileStatus = new DataLoggerFileStatus(
-                dataLogger.getFile().getAbsolutePath(), false, false);
+                dataLogger.getFile().getAbsolutePath(), false, true);
         String sharedPrefsKey = fileStatus.getSharedPrefsKey();
         String statusJson = gson.toJson(fileStatus);
         sharedPrefs.edit().putString(sharedPrefsKey, statusJson).apply();

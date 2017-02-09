@@ -19,14 +19,12 @@ import java.io.StringWriter;
 abstract class JsonArrayDataRecorder extends Recorder {
 
     public static final String JSON_MIME_CONTENT_TYPE = "application/json";
+    public static final String JSON_FILE_SUFFIX = ".json";
 
     protected boolean isFirstJsonObject;
 
     protected DataLogger dataLogger;
     protected File dataLoggerFile;
-
-    private StringWriter stringWriter;
-    private JsonWriter jsonWriter;
 
     /** Default constructor for serialization/deserialization */
     JsonArrayDataRecorder() {
@@ -39,7 +37,7 @@ abstract class JsonArrayDataRecorder extends Recorder {
 
     protected void startJsonDataLogging(double frequency) {
         if (dataLoggerFile == null) {
-            dataLoggerFile = new File(getOutputDirectory(), getIdentifier());
+            dataLoggerFile = new File(getOutputDirectory(), uniqueFilename + JSON_FILE_SUFFIX);
             dataLogger = new DataLogger(dataLoggerFile, new DataLogger.DataWriteListener() {
                 @Override
                 public void onWriteError(Throwable throwable) {
@@ -47,7 +45,7 @@ abstract class JsonArrayDataRecorder extends Recorder {
                 }
 
                 @Override
-                public void onWriteComplete() {
+                public void onWriteComplete(File file) {
                     FileResult fileResult = new FileResult(getIdentifier(), dataLoggerFile, JSON_MIME_CONTENT_TYPE);
                     getRecorderListener().onComplete(JsonArrayDataRecorder.this, fileResult);
                 }
@@ -55,13 +53,6 @@ abstract class JsonArrayDataRecorder extends Recorder {
         }
 
         setRecording(true);
-
-        // Setup for converting JsonObject to a string
-        if (stringWriter == null) {
-            stringWriter = new StringWriter();
-            jsonWriter = new JsonWriter(stringWriter);
-            jsonWriter.setLenient(true);
-        }
 
         // Since we are writing a JsonArray, have the header and footer be
         dataLogger.start("[", "]", frequency);
@@ -73,20 +64,10 @@ abstract class JsonArrayDataRecorder extends Recorder {
         setRecording(false);
     }
 
-    protected void writeJson(JsonObject jsonObject) {
-        try {
-            Streams.write(jsonObject, jsonWriter);
-
-            // Write the separator for the next json object if it wasn't the first object written
-            if (!isFirstJsonObject) {
-                dataLogger.appendData(",");
-            } else {
-                isFirstJsonObject = false;
-            }
-
-            dataLogger.appendData(stringWriter.toString());
-        } catch (IOException e) {
-            dataLogger.cancelDueToError(e);
-        }
+    protected void writeJsonObjectToFile(JsonObject jsonObject) {
+        // append optional comma for array separation
+        String jsonString = (!isFirstJsonObject ? "," : "") + jsonObject.toString();
+        dataLogger.appendData(jsonString);
+        isFirstJsonObject = false;
     }
 }

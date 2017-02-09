@@ -1,5 +1,6 @@
 package org.researchstack.backbone.step.active;
 
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 
@@ -42,16 +43,25 @@ public class AccelerometerRecorder extends SensorRecorder {
     }
 
     @Override
+    public void start(Context context) {
+        super.start(context);
+        if (isRecording()) {
+            jsonObject = new JsonObject();
+        }
+    }
+
+    @Override
+    protected void writeJsonData() {
+        jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis());
+        writeJsonObjectToFile(jsonObject);
+    }
+
+    @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            if (jsonObject == null) {
-                jsonObject = new JsonObject();
-            }
-            jsonObject.addProperty(TIMESTAMP_KEY, sensorEvent.timestamp);
             jsonObject.addProperty(ACCELERATION_X_KEY, sensorEvent.values[0]);
             jsonObject.addProperty(ACCELERATION_Y_KEY, sensorEvent.values[1]);
             jsonObject.addProperty(ACCELERATION_Z_KEY, sensorEvent.values[2]);
-            writeJson(jsonObject);
         }
     }
 

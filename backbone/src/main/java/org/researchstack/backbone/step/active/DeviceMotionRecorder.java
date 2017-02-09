@@ -33,9 +33,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
     public static final String Z_KEY    = "z";
     public static final String W_KEY    = "w";
 
-    private Handler mMainThreadHandler;
-    private Runnable mWriterRunnable;
-
     private JsonObject jsonObject;
     private JsonObject attitudeJsonObject;
     private JsonObject gyroscopeJsonObject;
@@ -63,36 +60,21 @@ public class DeviceMotionRecorder extends SensorRecorder {
             accelJsonObject = new JsonObject();
             linAccelJsonObject = new JsonObject();
             magneticJsonObject = new JsonObject();
-
-            final int writeDelay = calculateDelayBetweenSamplesInMicroSeconds();
-            mMainThreadHandler = new Handler();
-            mWriterRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    // Update the main json object
-                    jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis());
-                    jsonObject.add(ACCELEROMETER_KEY, accelJsonObject);
-                    jsonObject.add(LINEAR_ACCELEROMETER_KEY, linAccelJsonObject);
-                    jsonObject.add(GYROSCOPE_KEY, gyroscopeJsonObject);
-                    jsonObject.add(MAGNETIC_FIELD_KEY, magneticJsonObject);
-                    jsonObject.add(ROTATION_VECTOR_KEY, attitudeJsonObject);
-
-                    // Write the main json object
-                    writeJson(jsonObject);
-
-                    // Delay until next write
-                    mMainThreadHandler.postDelayed(mWriterRunnable, writeDelay);
-                }
-            };
-            mMainThreadHandler.postDelayed(mWriterRunnable, writeDelay);
         }
     }
 
     @Override
-    public void stop() {
-        if (mMainThreadHandler != null) {
-            mMainThreadHandler.removeCallbacks(mWriterRunnable);
-        }
+    protected void writeJsonData() {
+        // Update the main json object
+        jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis());
+        jsonObject.add(ACCELEROMETER_KEY, accelJsonObject);
+        jsonObject.add(LINEAR_ACCELEROMETER_KEY, linAccelJsonObject);
+        jsonObject.add(GYROSCOPE_KEY, gyroscopeJsonObject);
+        jsonObject.add(MAGNETIC_FIELD_KEY, magneticJsonObject);
+        jsonObject.add(ROTATION_VECTOR_KEY, attitudeJsonObject);
+
+        // Write the main json object
+        writeJsonObjectToFile(jsonObject);
     }
 
     @Override

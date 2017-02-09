@@ -1,6 +1,7 @@
 package org.researchstack.backbone.step.active;
 
 import android.content.Context;
+import android.support.annotation.MainThread;
 
 import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.step.Step;
@@ -9,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * Created by TheMDP on 2/5/17.
@@ -78,6 +80,11 @@ public abstract class Recorder implements Serializable {
      */
     private RecorderListener recorderListener;
 
+    /**
+     * a unique filename for this Recorder
+     */
+    protected String uniqueFilename;
+
     /** Default constructor for serialization/deserialization */
     Recorder() {
         super();
@@ -88,6 +95,7 @@ public abstract class Recorder implements Serializable {
         setIdentifier(identifier);
         setStep(step);
         setOutputDirectory(outputDirectory);
+        uniqueFilename = generateUniqueFileName();
     }
 
     /**
@@ -97,6 +105,7 @@ public abstract class Recorder implements Serializable {
      *
      * @param context can be app or activity, used for starting sensor
      */
+    @MainThread
     public abstract void start(Context context);
 
     /**
@@ -105,6 +114,7 @@ public abstract class Recorder implements Serializable {
      * If an error occurs when stopping the recorder, it is returned through the delegate.
      * Subclasses should call `finishRecordingWithError:` rather than calling super.
      */
+    @MainThread
     public abstract void stop();
 
     public String getIdentifier() {
@@ -173,11 +183,7 @@ public abstract class Recorder implements Serializable {
         }
     }
 
-    protected void openFileOutputStream() {
-        try {
-            FileOutputStream fOut = new FileOutputStream(outputDirectory);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    private String generateUniqueFileName() {
+        return UUID.randomUUID().toString();
     }
 }

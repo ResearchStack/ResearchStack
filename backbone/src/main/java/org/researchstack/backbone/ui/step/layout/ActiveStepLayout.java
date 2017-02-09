@@ -73,6 +73,13 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     private static final int DEFAULT_VIBRATION_AND_SOUND_DURATION = 500; // in milliseconds
 
+    /**
+     * When this is true, files will be saved externally so you can read them
+     * Reading internal files requires root access
+     * You must add WRITE_EXTERNAL_STORAGE permission to manifest as well
+     */
+    private static final boolean DEBUG_SAVE_FILES_EXTERNALLY = false;
+
     private TextToSpeech tts;
 
     private WeakReference<Activity> weakActivity;
@@ -182,6 +189,9 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
 
         recorderList = new ArrayList<>();
         File outputDir = getContext().getFilesDir();
+        if (DEBUG_SAVE_FILES_EXTERNALLY) {
+            outputDir = getContext().getExternalFilesDir(null);
+        }
         for (RecorderConfig config : step.getRecorderConfigurationList()) {
             Recorder recorder = config.recorderForStep(step, outputDir);
             recorder.setRecorderListener(this);
