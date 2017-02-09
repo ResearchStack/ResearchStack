@@ -80,22 +80,15 @@ class DataLoggerAsyncTask extends AsyncTask<Void, Void, Throwable> {
         super.onPreExecute();
 
         stopSignal = new AtomicBoolean(false);
-
-        try {
-            pipedOutputStream = new PipedOutputStream();
-            pipedInputStream = new PipedInputStream(pipedOutputStream);
-            fileOutputStream = new FileOutputStream(file, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-            writeListener.onWriteError(e);
-            cancel(true);
-        }
+        pipedOutputStream = new PipedOutputStream();
     }
 
     @Override
     protected Throwable doInBackground(Void... voids) {
 
         try {
+            pipedInputStream = new PipedInputStream(pipedOutputStream);
+            fileOutputStream = new FileOutputStream(file, true);
 
             // Write fileHeader if there is one
             if (fileHeader != null) {

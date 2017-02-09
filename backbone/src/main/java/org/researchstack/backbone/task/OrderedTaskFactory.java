@@ -6,10 +6,8 @@ import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.model.Choice;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.CompletionStep;
-import org.researchstack.backbone.step.NavigationCustomQuestionStep;
+import org.researchstack.backbone.step.NavigationQuestionStep;
 import org.researchstack.backbone.step.active.AccelerometerRecorderConfig;
 import org.researchstack.backbone.step.active.ActiveStep;
 import org.researchstack.backbone.step.active.CountdownStep;
@@ -18,10 +16,10 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.DeviceMotionRecorderConfig;
 import org.researchstack.backbone.step.active.NavigationActiveStep;
 import org.researchstack.backbone.utils.ResUtils;
-import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -80,6 +78,7 @@ public class OrderedTaskFactory {
      * In a tremor assessment task, the participant is asked to hold the device with their most affected
      * hand in various positions while accelerometer and motion data are captured.
      *
+     * @param context                can be app or activity, used for resources
      * @param identifier             The task identifier to use for this task, appropriate to the study.
      * @param intendedUseDescription A localized string describing the intended use of the data
      *                               collected. If the value of this parameter is null, none will be used
@@ -100,10 +99,25 @@ public class OrderedTaskFactory {
             HandOptions handOption,
             List<TaskExcludeOption> taskOptionList)
     {
+        // Coin toss for which hand first (in case we're doing both)
+        final boolean leftFirstIfDoingBoth = (new Random()).nextBoolean();
+        return tremorTask(context, identifier, intendedUseDescription, activeStepDuration,
+                tremorOptionList, handOption, taskOptionList, leftFirstIfDoingBoth);
+    }
+
+    // This method is separate mainly for unit testing purposes, to eliminate randomness
+    protected static NavigableOrderedTask tremorTask(
+            Context context,
+            String identifier,
+            String intendedUseDescription,
+            int activeStepDuration,
+            List<TremorTaskExcludeOption> tremorOptionList,
+            HandOptions handOption,
+            List<TaskExcludeOption> taskOptionList,
+            boolean leftFirstIfDoingBoth)
+    {
         List<Step> stepList = new ArrayList<>();
 
-        // Coin toos for which hand first (in case we're doing both)
-        final boolean leftFirstIfDoingBoth = (new Random()).nextBoolean();
         final boolean doingBoth = handOption == HandOptions.BOTH;
         final boolean firstIsLeft = (leftFirstIfDoingBoth && doingBoth) || (!doingBoth && handOption == HandOptions.LEFT);
 
@@ -137,7 +151,7 @@ public class OrderedTaskFactory {
                 context.getString(R.string.rsb_tremor_test_intro_2_detail_default);
         String detailText = String.format(detailFormat, detailStringForNumberOfTasks[actualTasksIndex]);
 
-        NavigationCustomQuestionStep handQuestionStep = null;
+        NavigationQuestionStep handQuestionStep = null;
         if (doingBoth) {
             // If doing both hands then ask the user if they need to skip one of the hands
             ChoiceAnswerFormat answerFormat = new ChoiceAnswerFormat(
@@ -148,7 +162,7 @@ public class OrderedTaskFactory {
             );
 
             String title = context.getString(R.string.rsb_TREMOR_TEST_TITLE);
-            handQuestionStep = new NavigationCustomQuestionStep(ActiveTaskSkipHandStepIdentifier, title, answerFormat);
+            handQuestionStep = new NavigationQuestionStep(ActiveTaskSkipHandStepIdentifier, title, answerFormat);
             handQuestionStep.setText(detailText);
             handQuestionStep.setOptional(false);
 
@@ -200,56 +214,14 @@ public class OrderedTaskFactory {
             final NavigationActiveStep lastStepOfFirstHands = (NavigationActiveStep)firstHandStepList.get(firstHandStepList.size()-1);
 
             // The question step can be used to skip the first steps if we need to
-            handQuestionStep.setCustomRule(new NavigableOrderedTask.NavigationRule() {
-                @Override
-                public String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
-                    StepResult handQuestionResult = StepResultHelper.findStepResult(result, ActiveTaskSkipHandStepIdentifier);
-                    if (handQuestionResult != null && handQuestionResult.getResult() instanceof String) {
-                        switch ((String)handQuestionResult.getResult()) {
-                            case ActiveTaskRightHandIdentifier: // skip right hand
-                                if (!firstIsLeft) { // skip first set of steps which is right hand
-                                    return secondHandStepId;
-                                } else { // otherwise we will be skipping later, and we can adjust the step finished spoken words here
-                                    lastStepOfFirstHands.setFinishedSpokenInstruction(
-                                            context.getString(R.string.rsb_TREMOR_TEST_COMPLETED_INSTRUCTION));
-                                }
-                                break;
-                            case ActiveTaskLeftHandIdentifier:  // skip left hand
-                                if (firstIsLeft) {  // skip first set of steps which is left hand
-                                    return secondHandStepId;
-                                } else { // otherwise we will be skipping later, and we can adjust the step finished spoken words here
-                                    lastStepOfFirstHands.setFinishedSpokenInstruction(
-                                            context.getString(R.string.rsb_TREMOR_TEST_COMPLETED_INSTRUCTION));
-                                }
-                                break;
-                        }
-                    }
-                    return null;
-                }
-            });
+            String handResultString = firstIsLeft ? ActiveTaskLeftHandIdentifier : ActiveTaskRightHandIdentifier;
+            handQuestionStep.setCustomRules(Collections.singletonList(new NavigableOrderedTask.ObjectEqualsNavigationRule(
+                    handResultString, secondHandStepId, ActiveTaskSkipHandStepIdentifier)));
 
             // Next add a navigation rule to the end of the first set of hand steps to potentially skip the second steps
-            lastStepOfFirstHands.setCustomRule(new NavigableOrderedTask.NavigationRule() {
-                @Override
-                public String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
-                    StepResult handQuestionResult = StepResultHelper.findStepResult(result, ActiveTaskSkipHandStepIdentifier);
-                    if (handQuestionResult != null && handQuestionResult.getResult() instanceof String) {
-                        switch ((String)handQuestionResult.getResult()) {
-                            case ActiveTaskRightHandIdentifier: // skip right hand
-                                if (firstIsLeft) { // skip second set of steps which is right hand
-                                    return completionStepId;
-                                }
-                                break;
-                            case ActiveTaskLeftHandIdentifier:  // skip left hand
-                                if (!firstIsLeft) {  // skip second set of steps which is left hand
-                                    return completionStepId;
-                                }
-                                break;
-                        }
-                    }
-                    return null;
-                }
-            });
+            String lastStepResultString = firstIsLeft ? ActiveTaskRightHandIdentifier : ActiveTaskLeftHandIdentifier;
+            lastStepOfFirstHands.setCustomRules(Collections.singletonList(new NavigableOrderedTask.ObjectEqualsNavigationRule(
+                    lastStepResultString, completionStepId, ActiveTaskSkipHandStepIdentifier)));
         }
 
         return task;
@@ -339,6 +311,7 @@ public class OrderedTaskFactory {
                         new DeviceMotionRecorderConfig(DeviceMotion1ConfigIdentifier, sensorFreq)
                 ));
                 String title = String.format(titleFormat, activeStepDuration);
+                step.setTitle(title);
                 step.setSpokenInstruction(title);
                 step.setFinishedSpokenInstruction(stepFinishedInstruction);
                 step.setStepDuration(activeStepDuration);
@@ -388,6 +361,7 @@ public class OrderedTaskFactory {
                         new DeviceMotionRecorderConfig(DeviceMotion2ConfigIdentifier, sensorFreq)
                 ));
                 String title = String.format(titleFormat, activeStepDuration);
+                step.setTitle(title);
                 step.setSpokenInstruction(title);
                 step.setFinishedSpokenInstruction(stepFinishedInstruction);
                 step.setStepDuration(activeStepDuration);
@@ -443,6 +417,7 @@ public class OrderedTaskFactory {
                         new DeviceMotionRecorderConfig(DeviceMotion3ConfigIdentifier, sensorFreq)
                 ));
                 String title = String.format(titleFormat, activeStepDuration);
+                step.setTitle(title);
                 step.setSpokenInstruction(title);
                 step.setFinishedSpokenInstruction(stepFinishedInstruction);
                 step.setStepDuration(activeStepDuration);
@@ -492,6 +467,7 @@ public class OrderedTaskFactory {
                         new DeviceMotionRecorderConfig(DeviceMotion4ConfigIdentifier, sensorFreq)
                 ));
                 String title = String.format(titleFormat, activeStepDuration);
+                step.setTitle(title);
                 step.setSpokenInstruction(title);
                 step.setFinishedSpokenInstruction(stepFinishedInstruction);
                 step.setStepDuration(activeStepDuration);
@@ -541,6 +517,7 @@ public class OrderedTaskFactory {
                         new DeviceMotionRecorderConfig(DeviceMotion5ConfigIdentifier, sensorFreq)
                 ));
                 String title = String.format(titleFormat, activeStepDuration);
+                step.setTitle(title);
                 step.setSpokenInstruction(title);
                 step.setFinishedSpokenInstruction(stepFinishedInstruction);
                 step.setStepDuration(activeStepDuration);
@@ -568,7 +545,10 @@ public class OrderedTaskFactory {
         return stepList;
     }
 
-    public static String stepIdentifierWithHandId(String stepId, String handId) {
+    protected static String stepIdentifierWithHandId(String stepId, String handId) {
+        if (handId == null) {
+            return stepId;
+        }
         return String.format("%s.%s", stepId, handId);
     }
 

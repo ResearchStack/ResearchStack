@@ -32,6 +32,11 @@ public class OrderedTask extends Task implements Serializable {
 
     protected List<Step> steps;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    public OrderedTask() {
+        super();
+    }
+
     /**
      * Returns an initialized ordered task using the specified identifier and array of steps.
      *

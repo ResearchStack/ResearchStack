@@ -15,6 +15,11 @@ public class AccelerometerRecorderConfig extends RecorderConfig {
      */
     private double frequency;
 
+    /** Default constructor used for serialization/deserialization */
+    AccelerometerRecorderConfig() {
+        super();
+    }
+
     public AccelerometerRecorderConfig(String identifier, double frequency) {
         super(identifier);
         this.frequency = frequency;

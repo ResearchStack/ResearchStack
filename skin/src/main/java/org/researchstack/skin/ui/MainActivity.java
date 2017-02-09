@@ -12,7 +12,10 @@ import android.view.MenuItem;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.task.NavigableOrderedTask;
+import org.researchstack.backbone.task.OrderedTaskFactory;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.views.IconTabLayout;
 import org.researchstack.backbone.utils.LogExt;
@@ -26,6 +29,7 @@ import org.researchstack.skin.UiManager;
 import org.researchstack.skin.notification.TaskAlertReceiver;
 import org.researchstack.skin.ui.adapter.MainPagerAdapter;
 
+import java.util.Arrays;
 import java.util.List;
 
 import rx.Observable;
@@ -148,33 +152,41 @@ public class MainActivity extends BaseActivity {
         super.onDataReady();
 
         // Check if we need to run initial Task
-        if (!failedToFinishInitialTask) {
-            Observable.defer(() -> {
-                UiThreadContext.assertBackgroundThread();
+//        if (!failedToFinishInitialTask) {
+//            Observable.defer(() -> {
+//                UiThreadContext.assertBackgroundThread();
+//
+//                if (!DataProvider.getInstance().isSignedIn(MainActivity.this)) {
+//                    LogExt.d(getClass(), "User not signed in, skipping initial survey");
+//                    return Observable.empty();
+//                }
+//
+//                TaskResult result = StorageAccess.getInstance()
+//                        .getAppDatabase()
+//                        .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
+//                return Observable.just(result == null);
+//            }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
+//                if (needsInitialSurvey) {
+//                    Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
+//
+//                    if (task == null) {
+//                        LogExt.d(getClass(), "No initial survey provided in TaskProvider");
+//                        return;
+//                    }
+//
+//                    Intent intent = ViewTaskActivity.newIntent(this, task);
+//                    startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
+//                }
+//            });
+//        }
+        NavigableOrderedTask task = OrderedTaskFactory.tremorTask(
+                this, "tremorttaskid", "intendedUseDescription", 10,
+                Arrays.asList(new OrderedTaskFactory.TremorTaskExcludeOption[] {}),
+                OrderedTaskFactory.HandOptions.BOTH,
+                Arrays.asList(new OrderedTaskFactory.TaskExcludeOption[] {}));
 
-                if (!DataProvider.getInstance().isSignedIn(MainActivity.this)) {
-                    LogExt.d(getClass(), "User not signed in, skipping initial survey");
-                    return Observable.empty();
-                }
-
-                TaskResult result = StorageAccess.getInstance()
-                        .getAppDatabase()
-                        .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
-                return Observable.just(result == null);
-            }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
-                if (needsInitialSurvey) {
-                    Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
-
-                    if (task == null) {
-                        LogExt.d(getClass(), "No initial survey provided in TaskProvider");
-                        return;
-                    }
-
-                    Intent intent = ViewTaskActivity.newIntent(this, task);
-                    startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
-                }
-            });
-        }
+        Intent intent = ActiveTaskActivity.newIntent(this, task);
+        startActivity(intent);
     }
 
     @Override

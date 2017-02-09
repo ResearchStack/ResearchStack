@@ -15,6 +15,11 @@ public class DeviceMotionRecorderConfig extends RecorderConfig {
      */
     private double frequency;
 
+    /** Default constructor used for serialization/deserialization */
+    DeviceMotionRecorderConfig() {
+        super();
+    }
+
     public DeviceMotionRecorderConfig(String identifier, double frequency) {
         super(identifier);
         this.frequency = frequency;

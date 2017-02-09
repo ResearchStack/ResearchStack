@@ -2,10 +2,13 @@ package org.researchstack.backbone.task;
 
 import android.util.Log;
 
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
+import org.researchstack.backbone.utils.StepResultHelper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +24,11 @@ import java.util.List;
 public class NavigableOrderedTask extends OrderedTask {
 
     static final String LOG_TAG = NavigableOrderedTask.class.getCanonicalName();
+
+    /* Default constructor needed for serilization/deserialization of object */
+    public NavigableOrderedTask() {
+        super();
+    }
 
     public NavigableOrderedTask(String identifier, List<Step> steps) {
         super(identifier, steps);
@@ -288,14 +296,14 @@ public class NavigableOrderedTask extends OrderedTask {
      * Define the navigation rule as an interface to allow for protocol-oriented extention (multiple inheritance).
      * Currently defined usage is to allow the SBANavigableOrderedTask to check if a step has a navigation rule.
      */
-    public interface NavigationRule {
+    public interface NavigationRule extends Serializable {
         String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults);
     }
 
     /**
      * A navigation skip rule applies to this step to allow that step to be skipped.
      */
-    public interface NavigationSkipRule {
+    public interface NavigationSkipRule extends Serializable {
         boolean shouldSkipStep(TaskResult result, List<TaskResult> additionalTaskResults);
     }
 
@@ -303,9 +311,60 @@ public class NavigableOrderedTask extends OrderedTask {
      * A conditional rule is appended to the navigable task to check a secondary source for whether or not the
      * step should be displayed.
      */
-    public interface ConditionalRule {
+    public interface ConditionalRule extends Serializable {
         boolean shouldSkip(Step step, TaskResult result);
         Step nextStep(Step previousStep, Step nextStep, TaskResult result);
+    }
+
+    /**
+     * This class is used to enable a simple navigation pattern for Steps
+     * The standard usage is to apply a TaskResult to it and look for the nextIdentifier
+     */
+    public static class ObjectEqualsNavigationRule implements NavigationRule {
+        private Object navigationResult;
+        private String navigationIdentifier;
+        private String resultIdentifier;
+
+        /**
+         * @param navigationResult the expected result to enable navigation
+         * @param navigationIdentifier the navigation step identifier to go to if result is matched
+         * @param resultIdentifier the identifier of the result to find
+         */
+        public ObjectEqualsNavigationRule(
+                Object navigationResult,
+                String navigationIdentifier,
+                String resultIdentifier)
+        {
+            this.navigationResult = navigationResult;
+            this.navigationIdentifier = navigationIdentifier;
+            this.resultIdentifier = resultIdentifier;
+        }
+
+        public Object getNavigationResult() {
+            return navigationResult;
+        }
+
+        public String getNavigationIdentifier() {
+            return navigationIdentifier;
+        }
+
+        public String getResultIdentifier() {
+            return resultIdentifier;
+        }
+
+        @Override
+        public String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
+            if (navigationResult != null && navigationIdentifier != null && resultIdentifier != null) {
+                StepResult stepResult = StepResultHelper.findStepResult(result, resultIdentifier);
+                if (stepResult != null &&
+                    stepResult.getResult() != null &&
+                    stepResult.getResult().equals(navigationResult))
+                {
+                    return navigationIdentifier;
+                }
+            }
+            return null;
+        }
     }
 }
 

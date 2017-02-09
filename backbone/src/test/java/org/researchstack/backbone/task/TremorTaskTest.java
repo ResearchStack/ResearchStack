@@ -21,6 +21,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static org.researchstack.backbone.task.OrderedTaskFactory.*;
 
 /**
  * Created by TheMDP on 2/5/17.
@@ -89,33 +90,33 @@ public class TremorTaskTest {
 
     @Test
     public void testTremorTaskBothHandsNoSkipping() {
-        NavigableOrderedTask task = OrderedTaskFactory.tremorTask(
+        NavigableOrderedTask task = tremorTask(
                 mockContext, "tremorttaskid", "intendedUseDescription", 10000,
-                Arrays.asList(new OrderedTaskFactory.TremorTaskExcludeOption[] {}),
-                OrderedTaskFactory.HandOptions.BOTH,
-                Arrays.asList(new OrderedTaskFactory.TaskExcludeOption[] {}));
+                Arrays.asList(new TremorTaskExcludeOption[] {}),
+                HandOptions.BOTH,
+                Arrays.asList(new TaskExcludeOption[] {}), true);
 
-        String[] stepIds = getFullTremorStepIds(true);
+        String[] stepIds = getFullTremorStepIds(true, true);
         Step step = null;
         int i = 0;
         do {
             step = task.getStepAfterStep(step, null);
             if (step != null) {
-                assertTrue(step.getIdentifier().contains(stepIds[i]));
+                assertEquals(step.getIdentifier(), stepIds[i]);
                 i++;
             }
         } while (step != null);
     }
 
     @Test
-    public void testTremorTaskBothHandsExcludeRightHand() {
-        NavigableOrderedTask task = OrderedTaskFactory.tremorTask(
+    public void testTremorTaskBothHandsExcludeRightHandLeftHandFirst() {
+        NavigableOrderedTask task = tremorTask(
                 mockContext, "tremorttaskid", "intendedUseDescription", 10000,
-                Arrays.asList(new OrderedTaskFactory.TremorTaskExcludeOption[] {}),
-                OrderedTaskFactory.HandOptions.BOTH,
-                Arrays.asList(new OrderedTaskFactory.TaskExcludeOption[] {}));
+                Arrays.asList(new TremorTaskExcludeOption[] {}),
+                HandOptions.BOTH,
+                Arrays.asList(new TaskExcludeOption[] {}), true);
 
-        String[] stepIds = getFullTremorStepIds(false);
+        String[] stepIds = getFullTremorStepIds(false, true);
         Step step = null;
         int i = 0;
         TaskResult result = new TaskResult("tremorttaskid");
@@ -124,20 +125,58 @@ public class TremorTaskTest {
 
             if (step != null) {
                 // Set hand result when we get to it, and it will imply skipping the right hand
-                if (step.getIdentifier().equals(OrderedTaskFactory.ActiveTaskSkipHandStepIdentifier)) {
+                if (step.getIdentifier().equals(ActiveTaskSkipHandStepIdentifier)) {
                     StepResult<String> handResult = new StepResult<>(step);
-                    handResult.setResult(OrderedTaskFactory.ActiveTaskRightHandIdentifier);
+                    handResult.setResult(ActiveTaskRightHandIdentifier);
                     result.setStepResultForStepIdentifier(step.getIdentifier(), handResult);
                 }
 
+                // This is no longer a condition
                 // When we skip a hand, we edit the spoken text of the last hand test to be activity completed
-                if (step.getIdentifier().equals(OrderedTaskFactory.TremorTestTurnWristStepIdentifier)) {
-                    assertTrue(step instanceof ActiveStep);
-                    ActiveStep activeStep = (ActiveStep)step;
-                    assertEquals(activeStep.getFinishedSpokenInstruction(), "Activity Completed");
+//                if (step.getIdentifier().equals(TremorTestTurnWristStepIdentifier)) {
+//                    assertTrue(step instanceof ActiveStep);
+//                    ActiveStep activeStep = (ActiveStep)step;
+//                    assertEquals(activeStep.getFinishedSpokenInstruction(), "Activity Completed");
+//                }
+
+                assertEquals(step.getIdentifier(), stepIds[i]);
+                i++;
+            }
+        } while (step != null);
+    }
+
+    @Test
+    public void testTremorTaskBothHandsExcludeRightHandRightHandFirst() {
+        NavigableOrderedTask task = tremorTask(
+                mockContext, "tremorttaskid", "intendedUseDescription", 10000,
+                Arrays.asList(new TremorTaskExcludeOption[] {}),
+                HandOptions.BOTH,
+                Arrays.asList(new TaskExcludeOption[] {}), false);
+
+        String[] stepIds = getFullTremorStepIds(false, true);
+        Step step = null;
+        int i = 0;
+        TaskResult result = new TaskResult("tremorttaskid");
+        do {
+            step = task.getStepAfterStep(step, result);
+
+            if (step != null) {
+                // Set hand result when we get to it, and it will imply skipping the right hand
+                if (step.getIdentifier().equals(ActiveTaskSkipHandStepIdentifier)) {
+                    StepResult<String> handResult = new StepResult<>(step);
+                    handResult.setResult(ActiveTaskRightHandIdentifier);
+                    result.setStepResultForStepIdentifier(step.getIdentifier(), handResult);
                 }
 
-                assertTrue(step.getIdentifier().contains(stepIds[i]));
+                // This is no longer a condition
+                // When we skip a hand, we edit the spoken text of the last hand test to be activity completed
+//                if (step.getIdentifier().equals(TremorTestTurnWristStepIdentifier)) {
+//                    assertTrue(step instanceof ActiveStep);
+//                    ActiveStep activeStep = (ActiveStep)step;
+//                    assertEquals(activeStep.getFinishedSpokenInstruction(), "Activity Completed");
+//                }
+
+                assertEquals(step.getIdentifier(), stepIds[i]);
                 i++;
             }
         } while (step != null);
@@ -146,30 +185,30 @@ public class TremorTaskTest {
     @Test
     public void testTremorTaskBothHandExcludeTremorTasks() {
         List<OrderedTaskFactory.TremorTaskExcludeOption> excludeOptionList =
-                Arrays.asList(OrderedTaskFactory.TremorTaskExcludeOption.values());
+                Arrays.asList(TremorTaskExcludeOption.values());
         List<String> excludeIdentifierList = Arrays.asList(
-                OrderedTaskFactory.TremorTestInLapStepIdentifier,
-                OrderedTaskFactory.TremorTestExtendArmStepIdentifier,
-                OrderedTaskFactory.TremorTestBendArmStepIdentifier,
-                OrderedTaskFactory.TremorTestTouchNoseStepIdentifier,
-                OrderedTaskFactory.TremorTestTurnWristStepIdentifier
+                TremorTestInLapStepIdentifier,
+                TremorTestExtendArmStepIdentifier,
+                TremorTestBendArmStepIdentifier,
+                TremorTestTouchNoseStepIdentifier,
+                TremorTestTurnWristStepIdentifier
         );
 
         for (int i = 0; i < excludeOptionList.size(); i++) {
-            NavigableOrderedTask task = OrderedTaskFactory.tremorTask(
+            NavigableOrderedTask task = tremorTask(
                     mockContext, "tremorttaskid", "intendedUseDescription", 10000,
                     Collections.singletonList(excludeOptionList.get(i)),
-                    OrderedTaskFactory.HandOptions.BOTH,
-                    Arrays.asList(new OrderedTaskFactory.TaskExcludeOption[] {}));
+                    HandOptions.BOTH,
+                    Arrays.asList(new TaskExcludeOption[] {}));
 
             Step step = null;
             do {
                 step = task.getStepAfterStep(step, null);
                 if (step != null) {
                     // We must make sure that known of the steps included are our excluded type
-                    if (excludeIdentifierList.get(i).equals(OrderedTaskFactory.TremorTestExtendArmStepIdentifier)) {
+                    if (excludeIdentifierList.get(i).equals(TremorTestExtendArmStepIdentifier)) {
                         // special case where handAtShouldLength is contained within another identifier
-                        if (!step.getIdentifier().contains(OrderedTaskFactory.TremorTestBendArmStepIdentifier)) {
+                        if (!step.getIdentifier().contains(TremorTestBendArmStepIdentifier)) {
                             assertFalse(step.getIdentifier().contains(excludeIdentifierList.get(i)));
                         }
                     } else {
@@ -182,19 +221,19 @@ public class TremorTaskTest {
 
     @Test
     public void testTremorTaskBothHandsExcludeInstructions() {
-        NavigableOrderedTask task = OrderedTaskFactory.tremorTask(
+        NavigableOrderedTask task = tremorTask(
                 mockContext, "tremorttaskid", "intendedUseDescription", 10000,
-                Arrays.asList(new OrderedTaskFactory.TremorTaskExcludeOption[] {}),
-                OrderedTaskFactory.HandOptions.BOTH,
-                Collections.singletonList(OrderedTaskFactory.TaskExcludeOption.INSTRUCTIONS));
+                Arrays.asList(new TremorTaskExcludeOption[] {}),
+                HandOptions.BOTH,
+                Collections.singletonList(TaskExcludeOption.INSTRUCTIONS));
 
         Step step = null;
         do {
             step = task.getStepAfterStep(step, null);
             if (step != null) {
                 // We allow this one instruction always
-                if (!step.getIdentifier().contains(OrderedTaskFactory.Instruction1StepIdentifier) &&
-                    !step.getIdentifier().contains(OrderedTaskFactory.ConclusionStepIdentifier))
+                if (!step.getIdentifier().contains(Instruction1StepIdentifier) &&
+                    !step.getIdentifier().contains(ConclusionStepIdentifier))
                 {
                     assertFalse(step instanceof InstructionStep);
                 }
@@ -202,38 +241,40 @@ public class TremorTaskTest {
         } while (step != null);
     }
 
-    private String[] getFullTremorStepIds(boolean bothHands) {
+    private String[] getFullTremorStepIds(boolean bothHands, boolean leftIsFirst) {
         List<String> stringIdList = new ArrayList<>();
         stringIdList.addAll(Arrays.asList(
-                OrderedTaskFactory.Instruction0StepIdentifier,
-                OrderedTaskFactory.ActiveTaskSkipHandStepIdentifier));
+                Instruction0StepIdentifier,
+                ActiveTaskSkipHandStepIdentifier));
 
-        stringIdList.addAll(getOneHandTremorStepIds());
+        stringIdList.addAll(getOneHandTremorStepIds(leftIsFirst ?
+                ActiveTaskLeftHandIdentifier : ActiveTaskRightHandIdentifier));
         if (bothHands) {
-            stringIdList.addAll(getOneHandTremorStepIds());
+            stringIdList.addAll(getOneHandTremorStepIds(!leftIsFirst ?
+                    ActiveTaskLeftHandIdentifier : ActiveTaskRightHandIdentifier));
         }
 
-        stringIdList.add(OrderedTaskFactory.ConclusionStepIdentifier);
+        stringIdList.add(ConclusionStepIdentifier);
         return stringIdList.toArray(new String[stringIdList.size()]);
     }
 
-    private List<String> getOneHandTremorStepIds() {
+    private List<String> getOneHandTremorStepIds(String handId) {
         return Arrays.asList(
-                OrderedTaskFactory.Instruction1StepIdentifier,
-                OrderedTaskFactory.Instruction2StepIdentifier,
-                OrderedTaskFactory.Countdown1StepIdentifier,
-                OrderedTaskFactory.TremorTestInLapStepIdentifier,
-                OrderedTaskFactory.Instruction4StepIdentifier,
-                OrderedTaskFactory.Countdown2StepIdentifier,
-                OrderedTaskFactory.TremorTestExtendArmStepIdentifier,
-                OrderedTaskFactory.Instruction5StepIdentifier,
-                OrderedTaskFactory.Countdown3StepIdentifier,
-                OrderedTaskFactory.TremorTestBendArmStepIdentifier,
-                OrderedTaskFactory.Instruction6StepIdentifier,
-                OrderedTaskFactory.Countdown4StepIdentifier,
-                OrderedTaskFactory.TremorTestTouchNoseStepIdentifier,
-                OrderedTaskFactory.Instruction7StepIdentifier,
-                OrderedTaskFactory.Countdown5StepIdentifier,
-                OrderedTaskFactory.TremorTestTurnWristStepIdentifier);
+                stepIdentifierWithHandId(Instruction1StepIdentifier, handId),
+                stepIdentifierWithHandId(Instruction2StepIdentifier, handId),
+                stepIdentifierWithHandId(Countdown1StepIdentifier, handId),
+                stepIdentifierWithHandId(TremorTestInLapStepIdentifier, handId),
+                stepIdentifierWithHandId(Instruction4StepIdentifier, handId),
+                stepIdentifierWithHandId(Countdown2StepIdentifier, handId),
+                stepIdentifierWithHandId(TremorTestExtendArmStepIdentifier, handId),
+                stepIdentifierWithHandId(Instruction5StepIdentifier, handId),
+                stepIdentifierWithHandId(Countdown3StepIdentifier, handId),
+                stepIdentifierWithHandId(TremorTestBendArmStepIdentifier, handId),
+                stepIdentifierWithHandId(Instruction6StepIdentifier, handId),
+                stepIdentifierWithHandId(Countdown4StepIdentifier, handId),
+                stepIdentifierWithHandId(TremorTestTouchNoseStepIdentifier, handId),
+                stepIdentifierWithHandId(Instruction7StepIdentifier, handId),
+                stepIdentifierWithHandId(Countdown5StepIdentifier, handId),
+                stepIdentifierWithHandId(TremorTestTurnWristStepIdentifier, handId));
     }
 }

@@ -45,7 +45,9 @@ public abstract class RecorderConfig implements Serializable {
     private String identifier;
 
     /** Default constructor used for serialization/deserialization */
-    RecorderConfig() {}
+    RecorderConfig() {
+        super();
+    }
 
     RecorderConfig(String identifier) {
         super();

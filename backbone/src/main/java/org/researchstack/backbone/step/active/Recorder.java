@@ -119,7 +119,7 @@ public abstract class Recorder implements Serializable {
         return isRecording;
     }
 
-    public void setRecording(boolean recording) {
+    protected void setRecording(boolean recording) {
         isRecording = recording;
     }
 
@@ -127,7 +127,7 @@ public abstract class Recorder implements Serializable {
         return config;
     }
 
-    public void setConfig(RecorderConfig config) {
+    protected void setConfig(RecorderConfig config) {
         this.config = config;
     }
 
