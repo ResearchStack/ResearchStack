@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -59,9 +60,6 @@ public class DataLoggerManager {
     protected void dataLoggerTaskFinished(DataLogger dataLogger, Throwable error) {
         if (error != null) {
             deleteDataLoggerFileStatus(dataLogger);
-        } else {
-            //
-            //completeDataLoggerFileStatus(dataLogger);
         }
     }
 
@@ -71,19 +69,7 @@ public class DataLoggerManager {
      */
     private void createNewDataLoggerFileStatus(DataLogger dataLogger) {
         DataLoggerFileStatus fileStatus = new DataLoggerFileStatus(
-                dataLogger.getFile().getAbsolutePath(), true, false);
-        String sharedPrefsKey = fileStatus.getSharedPrefsKey();
-        String statusJson = gson.toJson(fileStatus);
-        sharedPrefs.edit().putString(sharedPrefsKey, statusJson).apply();
-    }
-
-    /**
-     * This updates the status of the file to not be dirty, but still is not uploaded
-     * @param dataLogger to operate upon
-     */
-    private void updateDataLoggerFileStatusToAttemptedUploaded(DataLogger dataLogger) {
-        DataLoggerFileStatus fileStatus = new DataLoggerFileStatus(
-                dataLogger.getFile().getAbsolutePath(), false, true);
+                fullFilePathAndName(dataLogger.getFile()), true, false);
         String sharedPrefsKey = fileStatus.getSharedPrefsKey();
         String statusJson = gson.toJson(fileStatus);
         sharedPrefs.edit().putString(sharedPrefsKey, statusJson).apply();
@@ -95,7 +81,7 @@ public class DataLoggerManager {
      */
     private void deleteDataLoggerFileStatus(DataLogger dataLogger) {
         DataLoggerFileStatus fileStatus = new DataLoggerFileStatus(
-                dataLogger.getFile().getAbsolutePath(), true, false);
+                fullFilePathAndName(dataLogger.getFile()), true, false);
         String sharedPrefsKey = fileStatus.getSharedPrefsKey();
 
         sharedPrefs.edit().remove(sharedPrefsKey).apply();
@@ -150,6 +136,41 @@ public class DataLoggerManager {
             editor.remove(prefsKey);
         }
         editor.apply();
+    }
+
+    /**
+     * Removes the "dirty" status from the files, as they are now complete and should
+     * be kept around until they are successfully uploaded
+     * @param fileList list of files to change status of
+     */
+    public void updateFileListToAttemptedUploadStatus(List<File> fileList) {
+        Map<String, ?> fileStatusMap = sharedPrefs.getAll();
+        Map<String, String> updateMap = new HashMap<>();
+        // Loop through all the potential file status and find ones that are dirty
+        for (String key : fileStatusMap.keySet()) {
+            Object fileStatusObj = fileStatusMap.get(key);
+            if (fileStatusObj instanceof String) {
+                DataLoggerFileStatus fileStatus = gson.fromJson((String)fileStatusObj, DataLoggerFileStatus.class);
+                for (File file : fileList) {
+                    String filePath = fullFilePathAndName(file);
+                    if (fileStatus.filePath.equals(filePath)) {
+                        DataLoggerFileStatus updateStatus = new DataLoggerFileStatus(filePath, false, false);
+                        updateMap.put(updateStatus.getSharedPrefsKey(), gson.toJson(updateStatus));
+                    }
+                }
+            }
+        }
+
+        // Update the shared pref refs
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        for (String prefsKey : updateMap.keySet()) {
+            editor.putString(prefsKey, updateMap.get(prefsKey));
+        }
+        editor.apply();
+    }
+
+    private String fullFilePathAndName(File file) {
+        return file.getAbsolutePath() + file.getName();
     }
 
     /**

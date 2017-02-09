@@ -152,41 +152,44 @@ public class MainActivity extends BaseActivity {
         super.onDataReady();
 
         // Check if we need to run initial Task
-//        if (!failedToFinishInitialTask) {
-//            Observable.defer(() -> {
-//                UiThreadContext.assertBackgroundThread();
-//
-//                if (!DataProvider.getInstance().isSignedIn(MainActivity.this)) {
-//                    LogExt.d(getClass(), "User not signed in, skipping initial survey");
-//                    return Observable.empty();
-//                }
-//
-//                TaskResult result = StorageAccess.getInstance()
-//                        .getAppDatabase()
-//                        .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
-//                return Observable.just(result == null);
-//            }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
-//                if (needsInitialSurvey) {
-//                    Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
-//
-//                    if (task == null) {
-//                        LogExt.d(getClass(), "No initial survey provided in TaskProvider");
-//                        return;
-//                    }
-//
-//                    Intent intent = ViewTaskActivity.newIntent(this, task);
-//                    startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
-//                }
-//            });
-//        }
-        NavigableOrderedTask task = OrderedTaskFactory.tremorTask(
-                this, "tremorttaskid", "intendedUseDescription", 10,
-                Arrays.asList(new OrderedTaskFactory.TremorTaskExcludeOption[] {}),
-                OrderedTaskFactory.HandOptions.BOTH,
-                Arrays.asList(new OrderedTaskFactory.TaskExcludeOption[] {}));
+        if (!failedToFinishInitialTask) {
+            Observable.defer(() -> {
+                UiThreadContext.assertBackgroundThread();
 
-        Intent intent = ActiveTaskActivity.newIntent(this, task);
-        startActivity(intent);
+                if (!DataProvider.getInstance().isSignedIn(MainActivity.this)) {
+                    LogExt.d(getClass(), "User not signed in, skipping initial survey");
+                    return Observable.empty();
+                }
+
+                TaskResult result = StorageAccess.getInstance()
+                        .getAppDatabase()
+                        .loadLatestTaskResult(TaskProvider.TASK_ID_INITIAL);
+                return Observable.just(result == null);
+            }).compose(ObservableUtils.applyDefault()).subscribe(needsInitialSurvey -> {
+                if (needsInitialSurvey) {
+                    Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_INITIAL);
+
+                    if (task == null) {
+                        LogExt.d(getClass(), "No initial survey provided in TaskProvider");
+                        return;
+                    }
+
+                    Intent intent = ViewTaskActivity.newIntent(this, task);
+                    startActivityForResult(intent, MainActivity.REQUEST_CODE_INITIAL_TASK);
+                }
+            });
+        }
+
+    // TODO: integrate this into the Scheduled Activities
+    // TODO: for now, uncomment this to run/test the Tremor Task
+//        NavigableOrderedTask task = OrderedTaskFactory.tremorTask(
+//                this, "tremorttaskid", "We collect sensor data to measure your hand tremor", 10,
+//                Arrays.asList(new OrderedTaskFactory.TremorTaskExcludeOption[] {}),
+//                OrderedTaskFactory.HandOptions.BOTH,
+//                Arrays.asList(new OrderedTaskFactory.TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
     }
 
     @Override

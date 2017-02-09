@@ -156,7 +156,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         return stepLayout;
     }
 
-    private void saveAndFinish()
+    protected void saveAndFinish()
     {
         taskResult.setEndDate(new Date());
         Intent resultIntent = new Intent();
