@@ -55,11 +55,19 @@ public class ActiveTaskActivity extends ViewTaskActivity {
 
     @Override
     protected void showStep(Step step, boolean alwaysReplaceView) {
-        super.showStep(step, alwaysReplaceView);
+        // ActiveSteps have a particular lifecycle to where they should not be re-created
+        // unnecessarily, so if it already exists and is showing, then do not re-show the StepLayout
+        if (!isStepAnAlreadyShowingActiveStep(step)) {
+            super.showStep(step, alwaysReplaceView);
+        }
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(!(step instanceof ActiveStep));
         }
+    }
+
+    private boolean isStepAnAlreadyShowingActiveStep(Step step) {
+        return step instanceof ActiveStep && step.equals(currentStep);
     }
 
     @Override
