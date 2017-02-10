@@ -99,31 +99,37 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            accelJsonObject.addProperty(X_KEY, sensorEvent.values[0]);
-            accelJsonObject.addProperty(Y_KEY, sensorEvent.values[1]);
-            accelJsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
-        } else if (sensorEvent.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
-            linAccelJsonObject.addProperty(X_KEY, sensorEvent.values[0]);
-            linAccelJsonObject.addProperty(Y_KEY, sensorEvent.values[1]);
-            linAccelJsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
-        } else if (sensorEvent.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-            gyroscopeJsonObject.addProperty(X_KEY, sensorEvent.values[0]);
-            gyroscopeJsonObject.addProperty(Y_KEY, sensorEvent.values[1]);
-            gyroscopeJsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
-        } else if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-            magneticJsonObject.addProperty(X_KEY, sensorEvent.values[0]);
-            magneticJsonObject.addProperty(Y_KEY, sensorEvent.values[1]);
-            magneticJsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
-        } else if (sensorEvent.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
-            attitudeJsonObject.addProperty(X_KEY, sensorEvent.values[0]);
-            attitudeJsonObject.addProperty(Y_KEY, sensorEvent.values[1]);
-            attitudeJsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
-            // I read about a bug on some devices where the 4th element doesn't exist
-            // so this is just a precaution so this does not crash
-            if (sensorEvent.values.length > 3) {
-                attitudeJsonObject.addProperty(W_KEY, sensorEvent.values[3]);
-            }
+        switch (sensorEvent.sensor.getType()) {
+            case Sensor.TYPE_ACCELEROMETER:
+                accelJsonObject.addProperty(X_KEY, sensorEvent.values[0]);
+                accelJsonObject.addProperty(Y_KEY, sensorEvent.values[1]);
+                accelJsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
+                break;
+            case Sensor.TYPE_LINEAR_ACCELERATION:
+                linAccelJsonObject.addProperty(X_KEY, sensorEvent.values[0]);
+                linAccelJsonObject.addProperty(Y_KEY, sensorEvent.values[1]);
+                linAccelJsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
+                break;
+            case Sensor.TYPE_GYROSCOPE:
+                gyroscopeJsonObject.addProperty(X_KEY, sensorEvent.values[0]);
+                gyroscopeJsonObject.addProperty(Y_KEY, sensorEvent.values[1]);
+                gyroscopeJsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
+                break;
+            case Sensor.TYPE_MAGNETIC_FIELD:
+                magneticJsonObject.addProperty(X_KEY, sensorEvent.values[0]);
+                magneticJsonObject.addProperty(Y_KEY, sensorEvent.values[1]);
+                magneticJsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
+                break;
+            case Sensor.TYPE_ROTATION_VECTOR:
+                attitudeJsonObject.addProperty(X_KEY, sensorEvent.values[0]);
+                attitudeJsonObject.addProperty(Y_KEY, sensorEvent.values[1]);
+                attitudeJsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
+                // I read about a bug on some devices where the 4th element doesn't exist
+                // so this is just a precaution so this does not crash
+                if (sensorEvent.values.length > 3) {
+                    attitudeJsonObject.addProperty(W_KEY, sensorEvent.values[3]);
+                }
+                break;
         }
     }
 

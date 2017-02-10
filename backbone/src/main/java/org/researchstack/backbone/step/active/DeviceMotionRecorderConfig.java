@@ -11,7 +11,7 @@ import java.io.File;
 public class DeviceMotionRecorderConfig extends RecorderConfig {
 
     /**
-     * The frequency of accelerometer data collection in samples per second (Hz).
+     * The frequency of sensor data collection in samples per second (Hz).
      */
     private double frequency;
 

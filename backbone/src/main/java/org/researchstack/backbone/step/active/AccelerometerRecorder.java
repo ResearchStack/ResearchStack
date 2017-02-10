@@ -61,10 +61,12 @@ public class AccelerometerRecorder extends SensorRecorder {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            jsonObject.addProperty(ACCELERATION_X_KEY, sensorEvent.values[0]);
-            jsonObject.addProperty(ACCELERATION_Y_KEY, sensorEvent.values[1]);
-            jsonObject.addProperty(ACCELERATION_Z_KEY, sensorEvent.values[2]);
+        switch (sensorEvent.sensor.getType()) {
+            case Sensor.TYPE_ACCELEROMETER:
+                jsonObject.addProperty(ACCELERATION_X_KEY, sensorEvent.values[0]);
+                jsonObject.addProperty(ACCELERATION_Y_KEY, sensorEvent.values[1]);
+                jsonObject.addProperty(ACCELERATION_Z_KEY, sensorEvent.values[2]);
+                break;
         }
     }
 

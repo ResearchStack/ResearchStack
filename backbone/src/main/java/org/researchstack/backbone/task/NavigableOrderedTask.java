@@ -320,10 +320,15 @@ public class NavigableOrderedTask extends OrderedTask {
      * This class is used to enable a simple navigation pattern for Steps
      * The standard usage is to apply a TaskResult to it and look for the nextIdentifier
      */
-    public static class ObjectEqualsNavigationRule implements NavigationRule {
+    public static class ObjectEqualsNavigationRule implements NavigationRule, Serializable {
         private Object navigationResult;
         private String navigationIdentifier;
         private String resultIdentifier;
+
+        /** Default constructor needed for serializable interface */
+        ObjectEqualsNavigationRule() {
+            super();
+        }
 
         /**
          * @param navigationResult the expected result to enable navigation
