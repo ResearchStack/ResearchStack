@@ -1,25 +1,26 @@
 package org.researchstack.backbone.step.active;
 
 import com.google.gson.JsonObject;
-import com.google.gson.internal.Streams;
-import com.google.gson.stream.JsonWriter;
 
 import org.researchstack.backbone.result.FileResult;
 import org.researchstack.backbone.result.logger.DataLogger;
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
 
 /**
  * Created by TheMDP on 2/7/17.
+ *
+ * The JsonArrayDataRecorder class is set up to be able to save a JsonArray to a DataLogger file
+ * It coordinates the file header and footer of "[" and "]" and injects a separator ","
+ * in between individual json object writes, so that the format of the file is correct
  */
 
 abstract class JsonArrayDataRecorder extends Recorder {
 
     public static final String JSON_MIME_CONTENT_TYPE = "application/json";
     public static final String JSON_FILE_SUFFIX = ".json";
+    public static final String JSON_OBJECT_SEPARATOR = ",";
 
     protected boolean isFirstJsonObject;
 
@@ -56,7 +57,7 @@ abstract class JsonArrayDataRecorder extends Recorder {
 
         // Since we are writing a JsonArray, have the header and footer be
         dataLogger.start("[", "]", frequency);
-        isFirstJsonObject = true;
+        isFirstJsonObject = true; // will avoid comma separator on write object write
     }
 
     protected void stopJsonDataLogging() {
@@ -66,7 +67,7 @@ abstract class JsonArrayDataRecorder extends Recorder {
 
     protected void writeJsonObjectToFile(JsonObject jsonObject) {
         // append optional comma for array separation
-        String jsonString = (!isFirstJsonObject ? "," : "") + jsonObject.toString();
+        String jsonString = (!isFirstJsonObject ? JSON_OBJECT_SEPARATOR : "") + jsonObject.toString();
         dataLogger.appendData(jsonString);
         isFirstJsonObject = false;
     }

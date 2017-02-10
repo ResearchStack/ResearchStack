@@ -50,6 +50,9 @@ public class AccelerometerRecorder extends SensorRecorder {
         }
     }
 
+    /**
+     * Called by the base class at the Recorder's frequency
+     */
     @Override
     protected void writeJsonData() {
         jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis());

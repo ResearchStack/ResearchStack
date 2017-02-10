@@ -3,7 +3,6 @@ package org.researchstack.backbone.step.active;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.os.Handler;
 
 import com.google.gson.JsonObject;
 
@@ -15,6 +14,13 @@ import java.util.List;
 
 /**
  * Created by TheMDP on 2/5/17.
+ *
+ * The DeviceMotionRecorder incorporates a bunch of sensor fusion sensor readings
+ * together to paint a broad picture of the device's orientation and movement over time
+ *
+ * This class is an attempt at mimicing iOS' device motion class which has all of these
+ * sensor values updated at the same time.  However, on Android, we need to collect
+ * them all in parrallel and write the group at a frequency separate of onSensorValueChanged
  */
 
 public class DeviceMotionRecorder extends SensorRecorder {
@@ -63,6 +69,9 @@ public class DeviceMotionRecorder extends SensorRecorder {
         }
     }
 
+    /**
+     * Called by the base class at the Recorder's frequency
+     */
     @Override
     protected void writeJsonData() {
         // Update the main json object

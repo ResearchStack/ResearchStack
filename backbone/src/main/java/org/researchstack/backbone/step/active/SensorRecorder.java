@@ -5,9 +5,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
-import android.util.Log;
-
-import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.step.Step;
 
@@ -17,6 +14,12 @@ import java.util.List;
 
 /**
  * Created by TheMDP on 2/7/17.
+ *
+ * The SensorRecorder is an abstract class that greatly reduces the amount of work required
+ * to write sensor data to a DataLogger json file
+ *
+ * Any Android sensor is compatible with this class as long as you correctly implement
+ * the two abstract methods, getSensorTypeList, and writeJsonData
  */
 
 abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEventListener {
@@ -37,8 +40,8 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
     /**
      * the jsonObject that will be written to the file at frequency desired
      */
-    protected Handler mainHandler;
-    protected Runnable jsonWriterRunnable;
+    private Handler mainHandler;
+    private Runnable jsonWriterRunnable;
     private int  writeCounter;
     private long writeDelayGoal;
     private long writeStartTime;
@@ -59,6 +62,14 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
      *         Collections.singletonList(Sensor.TYPE_ACCELEROMETER)
      */
     protected abstract List<Integer> getSensorTypeList();
+
+    /**
+     * This is called at the specified frequency so that we get an accurate frequency,
+     * since Android sensors do not allow precise sensor frequency reporting
+     *
+     * Subclasses should call writeJsonObjectToFile() from within this method
+     */
+    protected abstract void writeJsonData();
 
     @Override
     public void start(Context context) {
@@ -99,7 +110,9 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
                 // The device is not fast enough to keep up, so we will get a frequency only
                 // as fast as it can do, so just make the delay goal be the original delay
                 if (delayGoal <= 0) {
-                    delayGoal = 1; // minimal write delay to give the UI thread some time
+                    // minimal write delay to give the UI thread some time to catch up
+                    // and hopefully get the frequency back up to the desired one
+                    delayGoal = 1;
                 }
 
                 mainHandler.postDelayed(jsonWriterRunnable, delayGoal);
@@ -116,12 +129,6 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
         }
         stopJsonDataLogging();
     }
-
-    /**
-     * This is called at the specified frequency so that we get an accurate frequency,
-     * since Android sensors do not allow precise sensor frequency reporting
-     */
-    protected abstract void writeJsonData();
 
     protected long calculateDelayBetweenSamplesInMilliSeconds() {
         return (long)((float)MILLI_SECONDS_PER_SEC / frequency);

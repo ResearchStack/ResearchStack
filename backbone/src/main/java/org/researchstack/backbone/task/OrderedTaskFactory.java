@@ -274,6 +274,9 @@ public class OrderedTaskFactory {
             stepList.add(step);
         }
 
+        // Obtain sensor frequency for Tremor Task recorders
+        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_tremor_task);
+
         /*********************************************************************************************
          * Hand in lap
          *********************************************************************************************/
@@ -305,7 +308,6 @@ public class OrderedTaskFactory {
                 String titleFormat = context.getString(R.string.rsb_tremor_test_active_step_in_lap_instruction_ld);
                 String stepIdentifier = stepIdentifierWithHandId(TremorTestInLapStepIdentifier, handIdentifier);
                 NavigationActiveStep step = new NavigationActiveStep(stepIdentifier);
-                double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_default);
                 step.setRecorderConfigurationList(Arrays.asList(
                         new AccelerometerRecorderConfig(Accelerometer1ConfigIdentifier, sensorFreq),
                         new DeviceMotionRecorderConfig(DeviceMotion1ConfigIdentifier, sensorFreq)
@@ -355,7 +357,6 @@ public class OrderedTaskFactory {
                 String titleFormat = context.getString(R.string.rsb_tremor_test_active_step_extend_arm_instruction_ld);
                 String stepIdentifier = stepIdentifierWithHandId(TremorTestExtendArmStepIdentifier, handIdentifier);
                 NavigationActiveStep step = new NavigationActiveStep(stepIdentifier);
-                double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_default);
                 step.setRecorderConfigurationList(Arrays.asList(
                         new AccelerometerRecorderConfig(Accelerometer2ConfigIdentifier, sensorFreq),
                         new DeviceMotionRecorderConfig(DeviceMotion2ConfigIdentifier, sensorFreq)
@@ -411,7 +412,6 @@ public class OrderedTaskFactory {
                 String titleFormat = context.getString(R.string.rsb_tremor_test_active_step_bend_arm_instruction_ld);
                 String stepIdentifier = stepIdentifierWithHandId(TremorTestBendArmStepIdentifier, handIdentifier);
                 NavigationActiveStep step = new NavigationActiveStep(stepIdentifier);
-                double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_default);
                 step.setRecorderConfigurationList(Arrays.asList(
                         new AccelerometerRecorderConfig(Accelerometer3ConfigIdentifier, sensorFreq),
                         new DeviceMotionRecorderConfig(DeviceMotion3ConfigIdentifier, sensorFreq)
@@ -461,7 +461,6 @@ public class OrderedTaskFactory {
                 String titleFormat = context.getString(R.string.rsb_tremor_test_active_step_touch_nose_instruction_ld);
                 String stepIdentifier = stepIdentifierWithHandId(TremorTestTouchNoseStepIdentifier, handIdentifier);
                 NavigationActiveStep step = new NavigationActiveStep(stepIdentifier);
-                double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_default);
                 step.setRecorderConfigurationList(Arrays.asList(
                         new AccelerometerRecorderConfig(Accelerometer4ConfigIdentifier, sensorFreq),
                         new DeviceMotionRecorderConfig(DeviceMotion4ConfigIdentifier, sensorFreq)
@@ -511,7 +510,6 @@ public class OrderedTaskFactory {
                 String titleFormat = context.getString(R.string.rsb_tremor_test_active_step_turn_wrist_instruction_ld);
                 String stepIdentifier = stepIdentifierWithHandId(TremorTestTurnWristStepIdentifier, handIdentifier);
                 NavigationActiveStep step = new NavigationActiveStep(stepIdentifier);
-                double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_default);
                 step.setRecorderConfigurationList(Arrays.asList(
                         new AccelerometerRecorderConfig(Accelerometer5ConfigIdentifier, sensorFreq),
                         new DeviceMotionRecorderConfig(DeviceMotion5ConfigIdentifier, sensorFreq)

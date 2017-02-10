@@ -296,14 +296,14 @@ public class NavigableOrderedTask extends OrderedTask {
      * Define the navigation rule as an interface to allow for protocol-oriented extention (multiple inheritance).
      * Currently defined usage is to allow the SBANavigableOrderedTask to check if a step has a navigation rule.
      */
-    public interface NavigationRule extends Serializable {
+    public interface NavigationRule {
         String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults);
     }
 
     /**
      * A navigation skip rule applies to this step to allow that step to be skipped.
      */
-    public interface NavigationSkipRule extends Serializable {
+    public interface NavigationSkipRule {
         boolean shouldSkipStep(TaskResult result, List<TaskResult> additionalTaskResults);
     }
 
@@ -311,7 +311,7 @@ public class NavigableOrderedTask extends OrderedTask {
      * A conditional rule is appended to the navigable task to check a secondary source for whether or not the
      * step should be displayed.
      */
-    public interface ConditionalRule extends Serializable {
+    public interface ConditionalRule {
         boolean shouldSkip(Step step, TaskResult result);
         Step nextStep(Step previousStep, Step nextStep, TaskResult result);
     }

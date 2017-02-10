@@ -13,5 +13,6 @@
 
     <!-- The frequency of sensor collection, in Hz -->
     <integer name="rsb_sensor_frequency_default">100</integer>
+    <integer name="rsb_sensor_frequency_tremor_task">@integer/rsb_sensor_frequency_default</integer>
 
 </resources>

@@ -17,6 +17,14 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by TheMDP on 2/7/17.
+ *
+ * The DataLoggerManager class is central station for the DataLogger file's life cycle
+ *
+ * It works by associating a "FileStatus" with each DataLogger file that is created
+ * The FileStatus can be "dirty", which means it is either being created or has not reached
+ * the stage of attempted upload.  Once the FileStatus is attempted upload, it will exist
+ * until it is uploaded.  After it is uploaded, the necessary parts of the file needed by
+ * the app can be stored, but the underlying data will be removed.
  */
 
 public class DataLoggerManager {
@@ -119,7 +127,7 @@ public class DataLoggerManager {
             }
         }
 
-        // remove all dirt files
+        // remove all dirty files
         for (String filePath : filePathsToDelete) {
             File file = new File(filePath);
             if (file.exists()) {
