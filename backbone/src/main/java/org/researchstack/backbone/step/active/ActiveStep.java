@@ -158,14 +158,6 @@ public class ActiveStep extends Step {
     private String finishedSpokenInstruction;
 
     /**
-     * An image to be displayed below the instructions for the step.
-     *
-     * The image can be stretched to fit the available space. When choosing a size
-     * for this asset, be sure to take into account the variations in device form factors.
-     */
-    private String image;
-
-    /**
      * An array of recorder configurations that define the parameters for recorders to be
      * run during a step to collect sensor or other data.
      *
@@ -304,14 +296,6 @@ public class ActiveStep extends Step {
 
     public void setFinishedSpokenInstruction(String finishedSpokenInstruction) {
         this.finishedSpokenInstruction = finishedSpokenInstruction;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public boolean startsFinished() {

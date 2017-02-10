@@ -366,12 +366,6 @@ public class OrderedTaskFactory {
                 step.setSpokenInstruction(title);
                 step.setFinishedSpokenInstruction(stepFinishedInstruction);
                 step.setStepDuration(activeStepDuration);
-
-                step.setImage(ResUtils.TREMOR_TEST_4);
-                if (leftHand) {
-                    step.setImage(ResUtils.TREMOR_TEST_4_FLIPPED);
-                }
-
                 step.setShouldPlaySoundOnStart(true);
                 step.setShouldVibrateOnStart(true);
                 step.setShouldPlaySoundOnFinish(true);
