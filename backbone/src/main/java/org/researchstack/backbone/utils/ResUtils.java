@@ -18,6 +18,23 @@ public class ResUtils {
     public static final String ERROR_ICON                   = "rsb_error";
     public static final String IC_FINGERPRINT               = "rsb_fingerprint";
 
+    public static class Tremor {
+        public static final String IN_HAND                  = "rsb_tremor_in_hand";
+        public static final String IN_HAND_2                = "rsb_tremor_in_hand_2";
+        public static final String HAND_IN_LAP              = "rsb_tremor_hand_in_lap";
+        public static final String HAND_OUT                 = "rsb_tremor_hand_out";
+        public static final String ELBOW_BENT               = "rsb_tremor_elbow_bent";
+        public static final String HAND_TO_NOSE             = "rsb_tremor_hand_to_nose";
+        public static final String QUEEN_WAVE               = "rsb_tremor_queen_wave";
+        public static final String IN_HAND_FLIPPED          = "rsb_tremor_in_hand_flipped";
+        public static final String IN_HAND_2_FLIPPED        = "rsb_tremor_in_hand_2_flipped";
+        public static final String HAND_IN_LAP_FLIPPED      = "rsb_tremor_hand_in_lap_flipped";
+        public static final String HAND_OUT_FLIPPED         = "rsb_tremor_hand_out_flipped";
+        public static final String ELBOW_BENT_FLIPPED       = "rsb_tremor_elbow_bent_flipped";
+        public static final String HAND_TO_NOSE_FLIPPED     = "rsb_tremor_hand_to_nose_flipped";
+        public static final String QUEEN_WAVE_FLIPPED       = "rsb_tremor_queen_wave_flipped";
+    }
+
     // AnimatedVectorDrawable 's
     public static final String ANIMATED_CHECK_MARK_DELAYED  = "rsb_animated_check_delayed";
     public static final String ANIMATED_CHECK_MARK          = "rsb_animated_check";

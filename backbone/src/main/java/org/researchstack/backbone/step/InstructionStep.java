@@ -32,7 +32,6 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
      */
     String footnote;
 
-
     /**
      An image that provides visual context for the instruction.
 
@@ -47,17 +46,6 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
      * false, if this drawable should be loaded like any other image
      */
     boolean isImageAnimated;
-
-    /**
-     An image that provides visual context for the instruction that will allow for showing
-     a two-part composite image where the `image` is tinted and the `auxiliaryImage` is
-     shown with light grey.
-
-     The image is displayed with the same frame as the `image` so both the `auxiliaryImage`
-     and `image` should have transparently to allow for overlay.
-     */
-    // int auxiliaryImageRes; // TODO: do we need this? Also does Android easily support this?
-
 
     /**
      Optional icon image to show above the title and text.

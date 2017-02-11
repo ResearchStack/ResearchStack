@@ -156,7 +156,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         return stepLayout;
     }
 
-    private void saveAndFinish()
+    protected void saveAndFinish()
     {
         taskResult.setEndDate(new Date());
         Intent resultIntent = new Intent();
@@ -232,7 +232,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         outState.putSerializable(EXTRA_STEP, currentStep);
     }
 
-    private void notifyStepOfBackPress()
+    protected void notifyStepOfBackPress()
     {
         StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
         currentStepLayout.isBackEventConsumed();
@@ -269,7 +269,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     protected void onSaveStepResult(String id, StepResult result)
     {
-        taskResult.setStepResultForStepIdentifier(id, result);
+        if (result != null) {
+            taskResult.setStepResultForStepIdentifier(id, result);
+        }
     }
 
     protected void onExecuteStepAction(int action)

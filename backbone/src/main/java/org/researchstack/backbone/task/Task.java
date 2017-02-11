@@ -29,6 +29,11 @@ import java.io.Serializable;
 public abstract class Task implements Serializable {
     private String identifier;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    public Task() {
+        super();
+    }
+
     /**
      * Class constructor specifying a unique identifier.
      *

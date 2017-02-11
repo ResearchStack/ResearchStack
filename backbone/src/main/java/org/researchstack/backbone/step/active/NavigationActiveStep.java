@@ -1,9 +1,9 @@
-package org.researchstack.backbone.step;
+package org.researchstack.backbone.step.active;
 
-import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;
+import org.researchstack.backbone.utils.StepHelper;
 import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.util.List;
@@ -11,29 +11,24 @@ import java.util.List;
 /**
  * Created by TheMDP on 2/5/17.
  *
- * The NavigationQuestionStep class allows the developer to implement any custom navigation rule
- * by allowing them to pass in the interface themselves for determining the nextStepIdentifier
+ * Class enabled an ActiveStep to be navigable with a custom NavigationRule
  */
 
-public class NavigationQuestionStep extends QuestionStep implements NavigableOrderedTask.NavigationRule {
+public class NavigationActiveStep extends ActiveStep implements NavigableOrderedTask.NavigationRule {
 
     private List<NavigableOrderedTask.ObjectEqualsNavigationRule> customRules;
 
     /* Default constructor needed for serilization/deserialization of object */
-    NavigationQuestionStep() {
+    NavigationActiveStep() {
         super();
     }
 
-    public NavigationQuestionStep(String identifier) {
+    public NavigationActiveStep(String identifier) {
         super(identifier);
     }
 
-    public NavigationQuestionStep(String identifier, String title) {
-        super(identifier, title);
-    }
-
-    public NavigationQuestionStep(String identifier, String title, AnswerFormat format) {
-        super(identifier, title, format);
+    public NavigationActiveStep(String identifier, String title, String detailText) {
+        super(identifier, title, detailText);
     }
 
     public void setCustomRules(List<NavigableOrderedTask.ObjectEqualsNavigationRule> customRules) {

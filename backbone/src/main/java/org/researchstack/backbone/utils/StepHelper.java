@@ -2,16 +2,13 @@ package org.researchstack.backbone.utils;
 
 import android.util.Log;
 
-import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.NavigationQuestionStep;
+import org.researchstack.backbone.step.NavigationExpectedAnswerQuestionStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by TheMDP on 1/15/17.
@@ -47,8 +44,8 @@ public class StepHelper {
         boolean allPassed = true;
         for (QuestionStep step : formSteps) {
             // Only perform search on navigation question steps that have expected answers
-            if (step instanceof NavigationQuestionStep) {
-                NavigationQuestionStep navStep = (NavigationQuestionStep)step;
+            if (step instanceof NavigationExpectedAnswerQuestionStep) {
+                NavigationExpectedAnswerQuestionStep navStep = (NavigationExpectedAnswerQuestionStep)step;
                 boolean navStepPassed = containsMatchingAnswer(
                         navStep.getExpectedAnswer(), navStep.getIdentifier(),
                         result, additionalTaskResults);

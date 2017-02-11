@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/rsb_active_step_layout_title"
+        style="@style/Backbone.Survey.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/rsb_active_step_layout_text"
+        style="@style/Backbone.Survey.Summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/rsb_active_step_layout_countdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="@dimen/rsb_step_layout_countdown_text_size"
+        android:textColor="@color/rsb_countdown_step_layout_text_color"/>
+
+</LinearLayout>

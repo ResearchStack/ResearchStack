@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextThemeWrapper;
@@ -280,10 +281,12 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
             getWindowManager().removeView(pinCodeLayout);
             pinCodeLayout = null;
         }
-        if (fingerprintLayout != null) {
+
+        if (fingerprintLayout != null && ViewCompat.isAttachedToWindow(fingerprintLayout)) {
             getWindowManager().removeView(fingerprintLayout);
             fingerprintLayout = null;
         }
+
         // authenticate() no longer calls notifyReady(), call this after auth
         requestStorageAccess();
     }

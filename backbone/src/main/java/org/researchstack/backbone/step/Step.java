@@ -44,7 +44,7 @@ public class Step implements Serializable {
     private boolean useSurveyMode;
 
     /* Default constructor needed for serilization/deserialization of object */
-    Step() {
+    public Step() {
         super();
     }
 
