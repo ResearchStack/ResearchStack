@@ -50,7 +50,7 @@ public class ArcDrawable extends Drawable {
                 halfStrokeWidth,
                 canvas.getWidth() - halfStrokeWidth,
                 canvas.getHeight() - halfStrokeWidth);
-        canvas.drawArc(rect, mStartAngle, mSweepingAngle, false, mPaint);
+        canvas.drawArc(rect, mStartAngle, -mSweepingAngle, false, mPaint);
     }
 
     @Override
