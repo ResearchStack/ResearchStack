@@ -30,7 +30,7 @@ import java.util.Random;
  * OrderedTask class.  However, I think they belong in this Factory class
  */
 
-public class OrderedTaskFactory {
+public class TremorTaskFactory {
 
     // Recorder Config Identifiers
     public static final String Accelerometer1ConfigIdentifier   = "ac1_acc";
