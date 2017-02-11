@@ -20,8 +20,6 @@ import android.widget.TextView;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.logger.DataLogger;
-import org.researchstack.backbone.result.logger.DataLoggerManager;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.ActiveStep;
 import org.researchstack.backbone.step.active.Recorder;
@@ -44,7 +42,7 @@ import rx.functions.Action1;
  *
  * /**
  * The `ActiveStepLayout` class is the base class for displaying `ActiveStep`
- * subclasses. The predefined active tasks defined in `OrderedTaskFactory` all make use
+ * subclasses. The predefined active tasks defined in `TremorTaskFactory` all make use
  * of subclasses of `ActiveStep`, paired with `ActiveStepLayout` subclasses.
  *
  * Active steps generally include some form of sensor-driven data collection,
@@ -69,36 +67,39 @@ import rx.functions.Action1;
  * save and restore, and during UIKit's UI state restoration.
  */
 
-public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout, RecorderListener, TextToSpeech.OnInitListener {
+public class ActiveStepLayout extends FixedSubmitBarLayout
+        implements StepLayout, RecorderListener, TextToSpeech.OnInitListener {
 
     private static final int DEFAULT_VIBRATION_AND_SOUND_DURATION = 500; // in milliseconds
 
     /**
      * When this is true, files will be saved externally so you can read them
-     * Reading internal files requires root access
+     * since reading internal files requires root access.
      * You must add WRITE_EXTERNAL_STORAGE permission to manifest as well
      */
     private static final boolean DEBUG_SAVE_FILES_EXTERNALLY = false;
 
     private TextToSpeech tts;
 
+    /** Weak Reference to the activity for locking screen and device orientation */
     private WeakReference<Activity> weakActivity;
-    private StepCallbacks callbacks;
+
+    protected StepCallbacks callbacks;
 
     private List<Recorder> recorderList;
 
-    private StepResult<Result> stepResult;
+    protected StepResult<Result> stepResult;
 
-    private Handler  mainHandler;
-    private Runnable animationRunnable;
-    private long startTime;
-    private int  secondsLeft;
+    protected Handler  mainHandler;
+    protected Runnable animationRunnable;
+    protected long startTime;
+    protected int  secondsLeft;
 
-    private ActiveStep step;
+    protected ActiveStep activeStep;
 
-    private TextView titleTextview;
-    private TextView textTextview;
-    private TextView timerTextview;
+    protected TextView titleTextview;
+    protected TextView textTextview;
+    protected TextView timerTextview;
 
     public ActiveStepLayout(Context context) {
         super(context);
@@ -126,22 +127,24 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
     public void initialize(Step step, StepResult result) {
         validateStep(step);
 
-        setupViews();
+        mainHandler = new Handler();
+        setupActiveViews();
         setupSubmitBar();
 
+        // We don't allow this activeStep to have it's state saved
         stepResult = new StepResult<>(step);
 
-        if (this.step.hasVoice()) {
+        if (activeStep.hasVoice()) {
             tts = new TextToSpeech(getContext(), this);
         }
 
-        if (this.step.getShouldStartTimerAutomatically()) {
+        if (activeStep.getShouldStartTimerAutomatically()) {
             start();
         }
     }
 
     protected void setupSubmitBar() {
-        if (step.isOptional()) {
+        if (activeStep.isOptional()) {
             submitBar.getNegativeActionView().setVisibility(View.VISIBLE);
             submitBar.setNegativeAction(new Action1() {
                 @Override
@@ -153,7 +156,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
             submitBar.getNegativeActionView().setVisibility(View.GONE);
         }
 
-        if (this.step.getShouldStartTimerAutomatically()) {
+        if (activeStep.getShouldStartTimerAutomatically()) {
             submitBar.setPositiveActionViewEnabled(false);
         } else {
             submitBar.setPositiveTitle(R.string.rsb_BUTTON_GET_STARTED);
@@ -168,19 +171,19 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     protected void start() {
-        if (step.startsFinished()) {
+        if (activeStep.startsFinished()) {
             return;
         }
 
-        if (step.getShouldVibrateOnStart()) {
+        if (activeStep.getShouldVibrateOnStart()) {
             vibrate();
         }
 
-        if (step.getShouldPlaySoundOnStart()) {
+        if (activeStep.getShouldPlaySoundOnStart()) {
             playSound();
         }
 
-        if (step.hasCountDown()) {
+        if (activeStep.hasCountDown()) {
             timerTextview.setVisibility(View.VISIBLE);
             startAnimation();
         } else {
@@ -192,39 +195,47 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
         if (DEBUG_SAVE_FILES_EXTERNALLY) {
             outputDir = getContext().getExternalFilesDir(null);
         }
-        for (RecorderConfig config : step.getRecorderConfigurationList()) {
-            Recorder recorder = config.recorderForStep(step, outputDir);
-            recorder.setRecorderListener(this);
-            recorderList.add(recorder);
-            recorder.start(getContext());
+
+        if (activeStep.getRecorderConfigurationList() != null) {
+            for (RecorderConfig config : activeStep.getRecorderConfigurationList()) {
+                Recorder recorder = config.recorderForStep(activeStep, outputDir);
+                recorder.setRecorderListener(this);
+                recorderList.add(recorder);
+                recorder.start(getContext());
+            }
         }
     }
 
     protected void stop() {
-        if (step.getShouldVibrateOnFinish()) {
+        if (activeStep.getShouldVibrateOnFinish()) {
             vibrate();
         }
 
-        if (step.getShouldPlaySoundOnFinish()) {
+        if (activeStep.getShouldPlaySoundOnFinish()) {
             playSound();
         }
 
-        if (step.getFinishedSpokenInstruction() != null) {
-            speakText(step.getFinishedSpokenInstruction());
+        if (activeStep.getFinishedSpokenInstruction() != null) {
+            speakText(activeStep.getFinishedSpokenInstruction());
         }
+
+        boolean noRecordersActive = recorderList.isEmpty();
 
         for (Recorder recorder : recorderList) {
             recorder.stop();
         }
 
-        if (!step.getShouldContinueOnFinish()) {
+        if (!activeStep.getShouldContinueOnFinish()) {
             submitBar.setPositiveActionViewEnabled(true);
             submitBar.setPositiveAction(new Action1() {
                 @Override
                 public void call(Object o) {
-                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
                 }
             });
+        } else if (noRecordersActive) {
+            // There will be no recorders onComplete callbacks to wait for, so just go to next activeStep
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
         }
     }
 
@@ -244,22 +255,22 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
             recorder.stop();
         }
         recorderList.clear();
-        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
+        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, null);
     }
 
-    private void startAnimation() {
-        mainHandler = new Handler();
+    protected void startAnimation() {
         startTime = System.currentTimeMillis();
-        secondsLeft = step.getStepDuration();
+        secondsLeft = activeStep.getStepDuration();
 
         animationRunnable = new Runnable() {
             @Override
             public void run() {
-                timerTextview.setText(toMinuteSecondsString(secondsLeft));
+                doUIAnimationPerSecond();
+
                 secondsLeft--;
 
                 // These calculations will remove any lag from the seconds timer
-                long timeToPast = (step.getStepDuration() - secondsLeft) * 1000;
+                long timeToPast = (activeStep.getStepDuration() - secondsLeft) * 1000;
                 long nextSecond = startTime + timeToPast;
                 long timeUntilNextSecond = nextSecond - System.currentTimeMillis();
 
@@ -273,20 +284,24 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
         mainHandler.post(animationRunnable);
     }
 
+    protected void doUIAnimationPerSecond() {
+        timerTextview.setText(toMinuteSecondsString(secondsLeft));
+    }
+
     private String toMinuteSecondsString(int seconds) {
         int mins = seconds / 60;
         int secs = seconds - mins * 60;
         return String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
     }
 
-    private void setupViews() {
+    protected void setupActiveViews() {
         titleTextview = (TextView) contentContainer.findViewById(R.id.rsb_active_step_layout_title);
-        titleTextview.setText(step.getTitle());
-        titleTextview.setVisibility(step.getTitle() == null ? View.GONE : View.VISIBLE);
+        titleTextview.setText(activeStep.getTitle());
+        titleTextview.setVisibility(activeStep.getTitle() == null ? View.GONE : View.VISIBLE);
 
         textTextview = (TextView) contentContainer.findViewById(R.id.rsb_active_step_layout_text);
-        textTextview.setText(step.getText());
-        textTextview.setVisibility(step.getText() == null ? View.GONE : View.VISIBLE);
+        textTextview.setText(activeStep.getText());
+        textTextview.setVisibility(activeStep.getText() == null ? View.GONE : View.VISIBLE);
 
         timerTextview = (TextView) contentContainer.findViewById(R.id.rsb_active_step_layout_countdown);
     }
@@ -295,7 +310,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
         if (!(step instanceof ActiveStep)) {
             throw new IllegalStateException("ActiveStepLayout must have an ActiveStep");
         }
-        this.step = (ActiveStep)step;
+        activeStep = (ActiveStep)step;
     }
 
     @Override
@@ -305,14 +320,14 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     @Override
     public boolean isBackEventConsumed() {
-        // You cannot go back during an active step, you can only cancel
+        // You cannot go back during an active activeStep, you can only cancel
         return true;
     }
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mainHandler.removeCallbacks(animationRunnable);
+        mainHandler.removeCallbacksAndMessages(null);
         unlockOrientation();
         unlockScreenOn();
     }
@@ -413,7 +428,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void ttsGreater21(String text) {
-        String utteranceId = this.hashCode() + "";
+        String utteranceId = String.valueOf(hashCode());
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
     }
 
@@ -422,14 +437,14 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
         stepResult.setResultForIdentifier(recorder.getIdentifier(), result);
         recorderList.remove(recorder);
         if (recorderList.isEmpty()) {
-            if (step.getShouldContinueOnFinish()) {
-                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+            if (activeStep.getShouldContinueOnFinish()) {
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
             } else {
                 submitBar.getPositiveActionView().setEnabled(true);
                 submitBar.setPositiveAction(new Action1() {
                     @Override
                     public void call(Object o) {
-                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
                     }
                 });
             }
@@ -449,8 +464,8 @@ public class ActiveStepLayout extends FixedSubmitBarLayout implements StepLayout
             // >= 0 means LANG_AVAILABLE, LANG_COUNTRY_AVAILABLE, or LANG_COUNTRY_VAR_AVAILABLE
             if (languageAvailable >= 0) {
                 tts.setLanguage(Locale.getDefault());
-                if (ActiveStepLayout.this.step.getSpokenInstruction() != null) {
-                    speakText(ActiveStepLayout.this.step.getSpokenInstruction());
+                if (ActiveStepLayout.this.activeStep.getSpokenInstruction() != null) {
+                    speakText(ActiveStepLayout.this.activeStep.getSpokenInstruction());
                 }
             } else {
                 tts = null;
