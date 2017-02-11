@@ -109,7 +109,7 @@ public class DataLoggerManager {
      * or was force closed, or files that were written and then the user cancelled the active task
      * that was responsible for creating them
      */
-    public void deteleAllDirtyFiles() {
+    public void deleteAllDirtyFiles() {
         Map<String, ?> fileStatusMap = sharedPrefs.getAll();
 
         List<String> prefKeysToDelete  = new ArrayList<>();
