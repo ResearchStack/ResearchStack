@@ -269,7 +269,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     protected void onSaveStepResult(String id, StepResult result)
     {
-        taskResult.setStepResultForStepIdentifier(id, result);
+        if (result != null) {
+            taskResult.setStepResultForStepIdentifier(id, result);
+        }
     }
 
     protected void onExecuteStepAction(int action)
