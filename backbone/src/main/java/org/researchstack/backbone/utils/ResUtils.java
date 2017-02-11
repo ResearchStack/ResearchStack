@@ -18,20 +18,22 @@ public class ResUtils {
     public static final String ERROR_ICON                   = "rsb_error";
     public static final String IC_FINGERPRINT               = "rsb_fingerprint";
 
-    public static final String TREMOR_TEST_1                = "rsb_tremortest1";
-    public static final String TREMOR_TEST_2                = "rsb_tremortest2";
-    public static final String TREMOR_TEST_3                = "rsb_tremortest3";
-    public static final String TREMOR_TEST_4                = "rsb_tremortest4";
-    public static final String TREMOR_TEST_5                = "rsb_tremortest5";
-    public static final String TREMOR_TEST_6                = "rsb_tremortest6";
-    public static final String TREMOR_TEST_7                = "rsb_tremortest7";
-    public static final String TREMOR_TEST_1_FLIPPED        = "rsb_tremortest1_flipped";
-    public static final String TREMOR_TEST_2_FLIPPED        = "rsb_tremortest2_flipped";
-    public static final String TREMOR_TEST_3_FLIPPED        = "rsb_tremortest3_flipped";
-    public static final String TREMOR_TEST_4_FLIPPED        = "rsb_tremortest4_flipped";
-    public static final String TREMOR_TEST_5_FLIPPED        = "rsb_tremortest5_flipped";
-    public static final String TREMOR_TEST_6_FLIPPED        = "rsb_tremortest6_flipped";
-    public static final String TREMOR_TEST_7_FLIPPED        = "rsb_tremortest7_flipped";
+    public static class Tremor {
+        public static final String IN_HAND                  = "rsb_tremor_in_hand";
+        public static final String IN_HAND_2                = "rsb_tremor_in_hand_2";
+        public static final String HAND_IN_LAP              = "rsb_tremor_hand_in_lap";
+        public static final String HAND_OUT                 = "rsb_tremor_hand_out";
+        public static final String ELBOW_BENT               = "rsb_tremor_elbow_bent";
+        public static final String HAND_TO_NOSE             = "rsb_tremor_hand_to_nose";
+        public static final String QUEEN_WAVE               = "rsb_tremor_queen_wave";
+        public static final String IN_HAND_FLIPPED          = "rsb_tremor_in_hand_flipped";
+        public static final String IN_HAND_2_FLIPPED        = "rsb_tremor_in_hand_2_flipped";
+        public static final String HAND_IN_LAP_FLIPPED      = "rsb_tremor_hand_in_lap_flipped";
+        public static final String HAND_OUT_FLIPPED         = "rsb_tremor_hand_out_flipped";
+        public static final String ELBOW_BENT_FLIPPED       = "rsb_tremor_elbow_bent_flipped";
+        public static final String HAND_TO_NOSE_FLIPPED     = "rsb_tremor_hand_to_nose_flipped";
+        public static final String QUEEN_WAVE_FLIPPED       = "rsb_tremor_queen_wave_flipped";
+    }
 
     // AnimatedVectorDrawable 's
     public static final String ANIMATED_CHECK_MARK_DELAYED  = "rsb_animated_check_delayed";

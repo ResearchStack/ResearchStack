@@ -127,9 +127,9 @@ public class TremorTaskFactory {
             String detailText = context.getString(R.string.rsb_TREMOR_TEST_INTRO_1_DETAIL);
             InstructionStep step = new InstructionStep(Instruction0StepIdentifier, title, text);
             step.setMoreDetailText(detailText);
-            step.setImage(ResUtils.TREMOR_TEST_1);
+            step.setImage(ResUtils.Tremor.IN_HAND);
             if (firstIsLeft) {
-                step.setImage(ResUtils.TREMOR_TEST_1_FLIPPED);
+                step.setImage(ResUtils.Tremor.IN_HAND_FLIPPED);
             }
             stepList.add(step);
         }
@@ -266,9 +266,9 @@ public class TremorTaskFactory {
             InstructionStep step = new InstructionStep(stepIdentifier, title, text);
             step.setMoreDetailText(stepDetailText);
 
-            step.setImage(ResUtils.TREMOR_TEST_2);
+            step.setImage(ResUtils.Tremor.IN_HAND_2);
             if (leftHand) {
-                step.setImage(ResUtils.TREMOR_TEST_2_FLIPPED);
+                step.setImage(ResUtils.Tremor.IN_HAND_2_FLIPPED);
             }
 
             stepList.add(step);
@@ -288,10 +288,10 @@ public class TremorTaskFactory {
 
                 InstructionStep step = new InstructionStep(stepIdentifier, title, text);
 
-                step.setImage(ResUtils.TREMOR_TEST_3);
+                step.setImage(ResUtils.Tremor.HAND_IN_LAP);
                 if (leftHand) {
                     step.setTitle(context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO));
-                    step.setImage(ResUtils.TREMOR_TEST_3_FLIPPED);
+                    step.setImage(ResUtils.Tremor.HAND_IN_LAP_FLIPPED);
                 } else {
                     step.setTitle(context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT));
                 }
@@ -337,10 +337,10 @@ public class TremorTaskFactory {
                 String title = context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO);
                 String text = context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT);
                 InstructionStep step = new InstructionStep(stepIdentifier, title, text);
-                step.setImage(ResUtils.TREMOR_TEST_4);
+                step.setImage(ResUtils.Tremor.HAND_OUT);
                 if (leftHand) {
                     step.setTitle(context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT));
-                    step.setImage(ResUtils.TREMOR_TEST_4_FLIPPED);
+                    step.setImage(ResUtils.Tremor.HAND_OUT_FLIPPED);
                 } else {
                     step.setTitle(context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT));
                 }
@@ -386,10 +386,10 @@ public class TremorTaskFactory {
                 String title = context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO);
                 String text = context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT);
                 InstructionStep step = new InstructionStep(stepIdentifier, title, text);
-                step.setImage(ResUtils.TREMOR_TEST_5);
+                step.setImage(ResUtils.Tremor.ELBOW_BENT);
                 if (leftHand) {
                     step.setTitle(context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT));
-                    step.setImage(ResUtils.TREMOR_TEST_5_FLIPPED);
+                    step.setImage(ResUtils.Tremor.ELBOW_BENT_FLIPPED);
                 } else {
                     step.setTitle(context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT));
                 }
@@ -435,10 +435,10 @@ public class TremorTaskFactory {
                 String title = context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO);
                 String text = context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT);
                 InstructionStep step = new InstructionStep(stepIdentifier, title, text);
-                step.setImage(ResUtils.TREMOR_TEST_6);
+                step.setImage(ResUtils.Tremor.HAND_TO_NOSE);
                 if (leftHand) {
                     step.setTitle(context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT));
-                    step.setImage(ResUtils.TREMOR_TEST_6_FLIPPED);
+                    step.setImage(ResUtils.Tremor.HAND_TO_NOSE_FLIPPED);
                 } else {
                     step.setTitle(context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT));
                 }
@@ -484,10 +484,10 @@ public class TremorTaskFactory {
                 String title = context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO);
                 String text = context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT);
                 InstructionStep step = new InstructionStep(stepIdentifier, title, text);
-                step.setImage(ResUtils.TREMOR_TEST_7);
+                step.setImage(ResUtils.Tremor.QUEEN_WAVE);
                 if (leftHand) {
                     step.setTitle(context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT));
-                    step.setImage(ResUtils.TREMOR_TEST_7_FLIPPED);
+                    step.setImage(ResUtils.Tremor.QUEEN_WAVE_FLIPPED);
                 } else {
                     step.setTitle(context.getString(R.string.rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT));
                 }
