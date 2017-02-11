@@ -11,7 +11,6 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.active.ActiveStep;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +20,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.researchstack.backbone.task.OrderedTaskFactory.*;
+import static org.researchstack.backbone.task.TremorTaskFactory.*;
 
 /**
  * Created by TheMDP on 2/5/17.
@@ -184,7 +183,7 @@ public class TremorTaskTest {
 
     @Test
     public void testTremorTaskBothHandExcludeTremorTasks() {
-        List<OrderedTaskFactory.TremorTaskExcludeOption> excludeOptionList =
+        List<TremorTaskFactory.TremorTaskExcludeOption> excludeOptionList =
                 Arrays.asList(TremorTaskExcludeOption.values());
         List<String> excludeIdentifierList = Arrays.asList(
                 TremorTestInLapStepIdentifier,

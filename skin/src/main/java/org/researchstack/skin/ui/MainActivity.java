@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;
-import org.researchstack.backbone.task.OrderedTaskFactory;
+import org.researchstack.backbone.task.TremorTaskFactory;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
@@ -182,14 +182,14 @@ public class MainActivity extends BaseActivity {
 
     // TODO: integrate this into the Scheduled Activities
     // TODO: for now, uncomment this to run/test the Tremor Task
-//        NavigableOrderedTask task = OrderedTaskFactory.tremorTask(
-//                this, "tremorttaskid", "We collect sensor data to measure your hand tremor", 10,
-//                Arrays.asList(new OrderedTaskFactory.TremorTaskExcludeOption[] {}),
-//                OrderedTaskFactory.HandOptions.BOTH,
-//                Arrays.asList(new OrderedTaskFactory.TaskExcludeOption[] {}));
-//
-//        Intent intent = ActiveTaskActivity.newIntent(this, task);
-//        startActivity(intent);
+        NavigableOrderedTask task = TremorTaskFactory.tremorTask(
+                this, "tremorttaskid", "We collect sensor data to measure your hand tremor", 10,
+                Arrays.asList(new TremorTaskFactory.TremorTaskExcludeOption[] {}),
+                TremorTaskFactory.HandOptions.BOTH,
+                Arrays.asList(new TremorTaskFactory.TaskExcludeOption[] {}));
+
+        Intent intent = ActiveTaskActivity.newIntent(this, task);
+        startActivity(intent);
     }
 
     @Override

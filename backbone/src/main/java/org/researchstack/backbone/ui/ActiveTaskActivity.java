@@ -47,28 +47,30 @@ public class ActiveTaskActivity extends ViewTaskActivity {
 
     protected void init() {
         DataLoggerManager.initialize(this);
-        DataLoggerManager.getInstance().deteleAllDirtyFiles();
+        DataLoggerManager.getInstance().deleteAllDirtyFiles();
     }
 
     @Override
     protected void discardResultsAndFinish() {
-        DataLoggerManager.getInstance().deteleAllDirtyFiles();
+        DataLoggerManager.getInstance().deleteAllDirtyFiles();
         super.discardResultsAndFinish();
     }
 
     @Override
     protected void showStep(Step step, boolean alwaysReplaceView) {
+
+        // compute back button status while currentStep is actually the previousStep at this point
+        isBackButtonEnabled =
+                (!(step instanceof ActiveStep) || (step instanceof CountdownStep)) &&
+                        !(currentStep instanceof ActiveStep); // currentStep is one previously showing at this point
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(isBackButtonEnabled);
+        }
+
         // ActiveSteps have a particular lifecycle to where they should not be re-created
         // unnecessarily, so if it already exists and is showing, then do not re-show the StepLayout
         if (!isStepAnAlreadyShowingActiveStep(step)) {
             super.showStep(step, alwaysReplaceView);
-        }
-
-        isBackButtonEnabled =
-                (!(step instanceof ActiveStep) || (step instanceof CountdownStep)) &&
-                !(currentStep instanceof ActiveStep); // currentStep is one previously showing at this point
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(isBackButtonEnabled);
         }
     }
 
