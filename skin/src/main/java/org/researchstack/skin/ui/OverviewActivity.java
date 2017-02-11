@@ -138,7 +138,9 @@ public class OverviewActivity extends PinCodeActivity implements View.OnClickLis
     @Override
     public void onResume() {
         super.onResume();
-        if (DataProvider.getInstance().isSignedIn(this)) {
+        // We shouldn't be able to get here if the user is signed in and consented,
+        // Go to MainActivity instead
+        if (DataProvider.getInstance().isSignedIn(this) && DataProvider.getInstance().isConsented()) {
             startActivity(new Intent(this, MainActivity.class));
         }
     }

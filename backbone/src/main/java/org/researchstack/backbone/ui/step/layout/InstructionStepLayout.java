@@ -21,6 +21,7 @@ import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
+import org.researchstack.backbone.step.InstructionStepInterface;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
@@ -31,7 +32,9 @@ import org.researchstack.backbone.utils.TextUtils;
 
 public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout {
     protected StepCallbacks callbacks;
-    protected InstructionStep step;
+
+    protected InstructionStepInterface instructionStepInterface;
+    protected Step step;
 
     protected TextView titleTextView;
     protected TextView textTextView;
@@ -62,10 +65,11 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     protected void validateAndSetStep(Step step) {
-        if (!(step instanceof InstructionStep)) {
-            throw new IllegalStateException("InstructionStepLayout only works with InstructionStep");
+        if (!(step instanceof InstructionStepInterface)) {
+            throw new IllegalStateException("InstructionStepLayout only works with InstructionStepInterface");
         }
-        this.step = (InstructionStep)step;
+        this.instructionStepInterface = (InstructionStepInterface)step;
+        this.step = step;
     }
 
     @Override
@@ -101,11 +105,11 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             String text  = step.getText();
 
             if (TextUtils.isEmpty(title) &&
-                !TextUtils.isEmpty(text) && !TextUtils.isEmpty(step.getMoreDetailText()))
+                !TextUtils.isEmpty(text) && !TextUtils.isEmpty(instructionStepInterface.getMoreDetailText()))
             {
                 // With no Title, we can assume text and detail text is equla to title and text
                 title = text;
-                text = step.getMoreDetailText();
+                text = instructionStepInterface.getMoreDetailText();
             }
 
             // Set Title
@@ -132,6 +136,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             }
 
             // Set Next / Skip
+            submitBar.setVisibility(View.VISIBLE);
             submitBar.setPositiveTitle(R.string.rsb_next);
             submitBar.setPositiveAction(v -> onComplete());
 
@@ -146,8 +151,8 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
 
-            refreshImage(step.getImage(), step.getIsImageAnimated());
-            refreshDetailText(step.getMoreDetailText(), moreDetailTextView.getCurrentTextColor());
+            refreshImage(instructionStepInterface.getImage(), instructionStepInterface.getIsImageAnimated());
+            refreshDetailText(instructionStepInterface.getMoreDetailText(), moreDetailTextView.getCurrentTextColor());
         }
     }
 

@@ -29,7 +29,8 @@ public class SplashActivity extends PinCodeActivity {
                 .subscribe(response -> {
 
                     if(AppPrefs.getInstance().isOnboardingComplete() ||
-                            DataProvider.getInstance().isSignedIn(this)) {
+                      (DataProvider.getInstance().isSignedIn(this) && DataProvider.getInstance().isConsented()))
+                    {
                         launchMainActivity();
                     } else {
                         launchOnboardingActivity();
