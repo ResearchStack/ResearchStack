@@ -10,7 +10,7 @@ import java.util.List;
  * Created by TheMDP on 1/12/17.
  */
 
-public class CustomInstructionStep extends CustomStep implements NavigableOrderedTask.NavigationRule {
+public class CustomInstructionStep extends CustomStep implements NavigableOrderedTask.NavigationRule, InstructionStepInterface {
     /*
      * Additional detailed text to display
      */
@@ -25,7 +25,6 @@ public class CustomInstructionStep extends CustomStep implements NavigableOrdere
      */
     String footnote;
 
-
     /**
      An image that provides visual context for the instruction.
 
@@ -35,17 +34,11 @@ public class CustomInstructionStep extends CustomStep implements NavigableOrdere
      */
     String image;
 
-
     /**
-     An image that provides visual context for the instruction that will allow for showing
-     a two-part composite image where the `image` is tinted and the `auxiliaryImage` is
-     shown with light grey.
-
-     The image is displayed with the same frame as the `image` so both the `auxiliaryImage`
-     and `image` should have transparently to allow for overlay.
+     * True if this drawable should be loaded using AnimatedVectorDrawableCompat
+     * false, if this drawable should be loaded like any other image
      */
-    // int auxiliaryImageRes; // TODO: do we need this? Also does Android easily support this?
-
+    boolean isImageAnimated;
 
     /**
      Optional icon image to show above the title and text.
@@ -109,6 +102,16 @@ public class CustomInstructionStep extends CustomStep implements NavigableOrdere
     }
     public String getNextStepIdentifier() {
         return nextStepIdentifier;
+    }
+
+    @Override
+    public void setIsImageAnimated(boolean isImageAnimated) {
+        this.isImageAnimated = isImageAnimated;
+    }
+
+    @Override
+    public boolean getIsImageAnimated() {
+        return isImageAnimated;
     }
 
     @Override

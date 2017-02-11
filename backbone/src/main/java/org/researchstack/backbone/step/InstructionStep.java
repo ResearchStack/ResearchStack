@@ -17,7 +17,7 @@ import java.util.List;
  * introductory content, instructions in the middle of a task, or a final message at the completion
  * of a task.
  */
-public class InstructionStep extends Step implements NavigableOrderedTask.NavigationRule {
+public class InstructionStep extends Step implements NavigableOrderedTask.NavigationRule, InstructionStepInterface {
     /*
      * Additional detailed text to display
      */
