@@ -182,14 +182,14 @@ public class MainActivity extends BaseActivity {
 
     // TODO: integrate this into the Scheduled Activities
     // TODO: for now, uncomment this to run/test the Tremor Task
-        NavigableOrderedTask task = TremorTaskFactory.tremorTask(
-                this, "tremorttaskid", "We collect sensor data to measure your hand tremor", 10,
-                Arrays.asList(new TremorTaskFactory.TremorTaskExcludeOption[] {}),
-                TremorTaskFactory.HandOptions.BOTH,
-                Arrays.asList(new TremorTaskFactory.TaskExcludeOption[] {}));
-
-        Intent intent = ActiveTaskActivity.newIntent(this, task);
-        startActivity(intent);
+//        NavigableOrderedTask task = TremorTaskFactory.tremorTask(
+//                this, "tremorttaskid", "We collect sensor data to measure your hand tremor", 10,
+//                Arrays.asList(new TremorTaskFactory.TremorTaskExcludeOption[] {}),
+//                TremorTaskFactory.HandOptions.BOTH,
+//                Arrays.asList(new TremorTaskFactory.TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
     }
 
     @Override
