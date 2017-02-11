@@ -9,6 +9,7 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.logger.DataLoggerManager;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.ActiveStep;
+import org.researchstack.backbone.step.active.CountdownStep;
 import org.researchstack.backbone.task.Task;
 
 import java.io.File;
@@ -26,6 +27,8 @@ import java.util.Map;
  */
 
 public class ActiveTaskActivity extends ViewTaskActivity {
+
+    private boolean isBackButtonEnabled;
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ActiveTaskActivity.class);
@@ -61,8 +64,19 @@ public class ActiveTaskActivity extends ViewTaskActivity {
             super.showStep(step, alwaysReplaceView);
         }
 
+        isBackButtonEnabled =
+                (!(step instanceof ActiveStep) || (step instanceof CountdownStep)) &&
+                !(currentStep instanceof ActiveStep); // currentStep is one previously showing at this point
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(!(step instanceof ActiveStep));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(isBackButtonEnabled);
+        }
+    }
+
+    @Override
+    public void notifyStepOfBackPress() {
+        // intercept and block any back buttons
+        if (isBackButtonEnabled) {
+            super.notifyStepOfBackPress();
         }
     }
 
