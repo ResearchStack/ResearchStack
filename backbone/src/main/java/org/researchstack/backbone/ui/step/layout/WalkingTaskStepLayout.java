@@ -70,7 +70,7 @@ public class WalkingTaskStepLayout extends ActiveStepLayout {
                         @Override
                         public void onStepTaken(int stepCount, float distance) {
                             if (walkingTaskStep.getNumberOfStepsPerLeg() > 0 &&
-                               (stepCount > walkingTaskStep.getNumberOfStepsPerLeg()))
+                               (stepCount >= walkingTaskStep.getNumberOfStepsPerLeg()))
                             {
                                 WalkingTaskStepLayout.super.stop();
                             }

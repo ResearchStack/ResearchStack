@@ -58,6 +58,9 @@ public class PedometerRecorder extends SensorRecorder
     protected List<Integer> getSensorTypeList(List<Sensor> availableSensorList) {
         // Step detector is only available for OS kitkat and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // Not all devices even have the pedometer sensor
+            // I haven't found a full list yet but here are some that have it
+            // HTC One M8, Nexus 5x, Nexus 6p, Samsung S6 and S7
             if (hasAvailableType(availableSensorList, Sensor.TYPE_STEP_DETECTOR)) {
                 useAccelerometerDetector = false;
                 return Collections.singletonList(Sensor.TYPE_STEP_DETECTOR);
