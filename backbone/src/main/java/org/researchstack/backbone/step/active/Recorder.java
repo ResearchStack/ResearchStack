@@ -117,6 +117,15 @@ public abstract class Recorder implements Serializable {
     @MainThread
     public abstract void stop();
 
+    /**
+     * A force stop will cause this recorder to be immediately cancelled,
+     * the file it was writing will be deleted,
+     *
+     * and no callback will be invoked
+     */
+    @MainThread
+    public abstract void forceStop();
+
     public String getIdentifier() {
         return identifier;
     }

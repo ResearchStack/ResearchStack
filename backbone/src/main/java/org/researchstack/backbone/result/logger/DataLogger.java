@@ -33,11 +33,8 @@ public class DataLogger {
     /**
      * @param fileHeader the header of the file to write
      * @param fileFooter the footer of the file to write
-     * @param estimatedDataWriteFrequency the estimated frequency in Hz that you will be writing data
-     *                                    this is used to give the thread a break from checking
-     *                                    if there is data to be written to the file stream
      */
-    public void start(String fileHeader, String fileFooter, double estimatedDataWriteFrequency) {
+    public void start(String fileHeader, String fileFooter) {
         if (dataLoggerWriterThread != null) {
             throw new IllegalStateException("Thread was started while another was running, " +
                     "check your application logic, because this is not allowed");
@@ -72,6 +69,15 @@ public class DataLogger {
             throw new IllegalStateException("You need to call start() first");
         }
         dataLoggerWriterThread.stop();
+    }
+
+    /**
+     * Call when you want the data logger file to immediately stop and the file deleted
+     */
+    public void cancel() {
+        if (dataLoggerWriterThread != null) {
+            dataLoggerWriterThread.cancel();
+        }
     }
 
     /**

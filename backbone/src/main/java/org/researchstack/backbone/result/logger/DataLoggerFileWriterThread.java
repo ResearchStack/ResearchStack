@@ -6,6 +6,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.MainThread;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -178,6 +179,10 @@ public class DataLoggerFileWriterThread {
             @Override
             public void run() {
                 thread.quit();
+                boolean success = file.delete();
+                if (!success) {
+                    Log.d(getClass().getSimpleName(), "Failed to delete file " + file.toString());
+                }
             }
         });
     }
