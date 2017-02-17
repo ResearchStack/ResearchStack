@@ -2,7 +2,10 @@ package org.researchstack.backbone.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.Surface;
+import android.view.WindowManager;
 
 import org.researchstack.backbone.result.FileResult;
 import org.researchstack.backbone.result.StepResult;
@@ -11,6 +14,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.ActiveStep;
 import org.researchstack.backbone.step.active.CountdownStep;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -52,6 +56,9 @@ public class ActiveTaskActivity extends ViewTaskActivity {
 
     @Override
     protected void discardResultsAndFinish() {
+        if (currentStepLayout instanceof ActiveStepLayout) {
+            ((ActiveStepLayout) currentStepLayout).forceStop();
+        }
         DataLoggerManager.getInstance().deleteAllDirtyFiles();
         super.discardResultsAndFinish();
     }
@@ -62,7 +69,7 @@ public class ActiveTaskActivity extends ViewTaskActivity {
         // compute back button status while currentStep is actually the previousStep at this point
         isBackButtonEnabled =
                 (!(step instanceof ActiveStep) || (step instanceof CountdownStep)) &&
-                        !(currentStep instanceof ActiveStep); // currentStep is one previously showing at this point
+                 !(currentStep instanceof ActiveStep); // currentStep is one previously showing at this point
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(isBackButtonEnabled);
         }
@@ -71,6 +78,16 @@ public class ActiveTaskActivity extends ViewTaskActivity {
         // unnecessarily, so if it already exists and is showing, then do not re-show the StepLayout
         if (!isStepAnAlreadyShowingActiveStep(step)) {
             super.showStep(step, alwaysReplaceView);
+        }
+
+        // Active steps lock screen on and orientation so that the view is not unnecessarily
+        // destroyed and recreated while the data logger is recording
+        if (step instanceof ActiveStep) {
+            lockScreenOn();
+            lockOrientation();
+        } else {
+            unlockScreenOn();
+            unlockOrientation();
         }
     }
 
@@ -84,6 +101,11 @@ public class ActiveTaskActivity extends ViewTaskActivity {
 
     private boolean isStepAnAlreadyShowingActiveStep(Step step) {
         return step instanceof ActiveStep && step.equals(currentStep);
+    }
+
+    @Override
+    public void setRequestedOrientation(int requestedOrientation) {
+        super.setRequestedOrientation(requestedOrientation);
     }
 
     @Override
@@ -117,5 +139,44 @@ public class ActiveTaskActivity extends ViewTaskActivity {
 
         // TODO: move this to the successful/failure block of the upload web service call
         super.saveAndFinish();
+    }
+
+    /**
+     * Active Steps lock screen to on so it can avoid any interruptions during data logging
+     */
+    private void lockScreenOn() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    private void unlockScreenOn() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    /**
+     * Active Steps lock orientation so it can avoid any interruptions during data logging
+     */
+    private void lockOrientation() {
+        int orientation;
+        int rotation = ((WindowManager) getSystemService(
+                Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                break;
+            case Surface.ROTATION_90:
+                orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                break;
+            case Surface.ROTATION_180:
+                orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
+                break;
+            default:
+                orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+                break;
+        }
+        setRequestedOrientation(orientation);
+    }
+
+    private void unlockOrientation() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 }
