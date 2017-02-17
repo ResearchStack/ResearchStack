@@ -1,4 +1,4 @@
-package org.researchstack.backbone.task;
+package org.researchstack.backbone.task.factory;
 
 import android.content.Context;
 
@@ -15,6 +15,7 @@ import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.DeviceMotionRecorderConfig;
 import org.researchstack.backbone.step.active.NavigationActiveStep;
+import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.utils.ResUtils;
 
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
 /**
  * Created by TheMDP on 2/4/17.
@@ -32,33 +35,6 @@ import java.util.Random;
 
 public class TremorTaskFactory {
 
-    // Recorder Config Identifiers
-    public static final String Accelerometer1ConfigIdentifier   = "ac1_acc";
-    public static final String DeviceMotion1ConfigIdentifier    = "ac1_motion";
-    public static final String Accelerometer2ConfigIdentifier   = "ac2_acc";
-    public static final String DeviceMotion2ConfigIdentifier    = "ac2_motion";
-    public static final String Accelerometer3ConfigIdentifier   = "ac3_acc";
-    public static final String DeviceMotion3ConfigIdentifier    = "ac3_motion";
-    public static final String Accelerometer4ConfigIdentifier   = "ac4_acc";
-    public static final String DeviceMotion4ConfigIdentifier    = "ac4_motion";
-    public static final String Accelerometer5ConfigIdentifier   = "ac5_acc";
-    public static final String DeviceMotion5ConfigIdentifier    = "ac5_motion";
-
-    // Step Identifiers
-    public static final String Instruction0StepIdentifier   = "instruction";
-    public static final String Instruction1StepIdentifier   = "instruction1";
-    public static final String Instruction2StepIdentifier   = "instruction2";
-    public static final String Instruction3StepIdentifier   = "instruction3";
-    public static final String Instruction4StepIdentifier   = "instruction4";
-    public static final String Instruction5StepIdentifier   = "instruction5";
-    public static final String Instruction6StepIdentifier   = "instruction6";
-    public static final String Instruction7StepIdentifier   = "instruction7";
-    public static final String CountdownStepIdentifier      = "countdown";
-    public static final String Countdown1StepIdentifier     = "countdown1";
-    public static final String Countdown2StepIdentifier     = "countdown2";
-    public static final String Countdown3StepIdentifier     = "countdown3";
-    public static final String Countdown4StepIdentifier     = "countdown4";
-    public static final String Countdown5StepIdentifier     = "countdown5";
     // Tremor Step Identifiers
     public static final String TremorTestInLapStepIdentifier        = "tremor.handInLap";
     public static final String TremorTestExtendArmStepIdentifier    = "tremor.handAtShoulderLength";
@@ -69,8 +45,6 @@ public class TremorTaskFactory {
     public static final String ActiveTaskLeftHandIdentifier         = "left";
     public static final String ActiveTaskRightHandIdentifier        = "right";
     public static final String ActiveTaskSkipHandStepIdentifier     = "skipHand";
-    // Conclusion Step Identifiers
-    public static final String ConclusionStepIdentifier     = "conclusion";
 
     /**
      * Returns a predefined task that measures hand tremor.
@@ -123,9 +97,8 @@ public class TremorTaskFactory {
 
         if (!taskOptionList.contains(TaskExcludeOption.INSTRUCTIONS)) {
             String title = context.getString(R.string.rsb_TREMOR_TEST_TITLE);
-            String text = intendedUseDescription;
             String detailText = context.getString(R.string.rsb_TREMOR_TEST_INTRO_1_DETAIL);
-            InstructionStep step = new InstructionStep(Instruction0StepIdentifier, title, text);
+            InstructionStep step = new InstructionStep(Instruction0StepIdentifier, title, intendedUseDescription);
             step.setMoreDetailText(detailText);
             step.setImage(ResUtils.Tremor.IN_HAND);
             if (firstIsLeft) {
@@ -198,7 +171,7 @@ public class TremorTaskFactory {
 
         // iOS has the conclusion step optional, but we can't since we don't support step modifiers
         // However, there should always be a conclusion step, so this really isn't an issue
-        CompletionStep completionStep = makeCompletionStep(context);
+        CompletionStep completionStep = TaskFactory.makeCompletionStep(context);
         stepList.add(completionStep);
         final String completionStepId = completionStep.getIdentifier();
 
@@ -544,13 +517,6 @@ public class TremorTaskFactory {
         return String.format("%s.%s", stepId, handId);
     }
 
-    public static CompletionStep makeCompletionStep(Context context) {
-        String title = context.getString(R.string.rsb_TASK_COMPLETE_TITLE);
-        String text = context.getString(R.string.rsb_TASK_COMPLETE_TEXT);
-        CompletionStep step = new CompletionStep(ConclusionStepIdentifier, title, text);
-        return step;
-    }
-
     /**
      * The `TremorTaskExcludeOption` enum lets you exclude particular steps from the predefined active
      * tasks in the predefined Tremor `OrderedTask`.
@@ -569,34 +535,6 @@ public class TremorTaskFactory {
         HAND_TO_NOSE,
         // Exclude the queen-wave steps.
         QUEEN_WAVE
-    }
-
-    /**
-     * The `TaskExcludeOption` enum lets you exclude particular behaviors from the predefined active
-     * tasks in the predefined category of `OrderedTask`.
-     *
-     * By default, all predefined tasks include instructions and conclusion steps, and may also include
-     * one or more data collection recorder configurations. Although not all predefined tasks include all
-     * of these data collection types, the predefined task enum flags can be used to explicitly specify
-     * that a task option not be included.
-     */
-    public enum TaskExcludeOption {
-        // Exclude the initial instruction steps.
-        INSTRUCTIONS,
-        // Exclude the conclusion step.
-        CONCLUSION,
-        // Exclude accelerometer data collection.
-        ACCELEROMETER,
-        // Exclude device motion data collection.
-        DEVICE_MOTION,
-        // Exclude pedometer data collection.
-        PEDOMETER,
-        // Exclude location data collection.
-        LOCATION,
-        // Exclude heart rate data collection.
-        HEART_RATE,
-        // Exclude audio data collection.
-        AUDIO
     }
 
     /**

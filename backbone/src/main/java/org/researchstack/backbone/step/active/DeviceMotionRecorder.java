@@ -3,12 +3,14 @@ package org.researchstack.backbone.step.active;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.hardware.SensorManager;
 
 import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -87,14 +89,27 @@ public class DeviceMotionRecorder extends SensorRecorder {
     }
 
     @Override
-    protected List<Integer> getSensorTypeList() {
-        return Arrays.asList(
-                Sensor.TYPE_ACCELEROMETER,
-                Sensor.TYPE_LINEAR_ACCELERATION,
-                Sensor.TYPE_GYROSCOPE,
-                Sensor.TYPE_MAGNETIC_FIELD,
-                Sensor.TYPE_ROTATION_VECTOR
-        );
+    protected List<Integer> getSensorTypeList(List<Sensor> availableSensorList) {
+        List<Integer> sensorTypeList = new ArrayList<>();
+
+        // Only add these sensors if the device has them
+        if (hasAvailableType(availableSensorList, Sensor.TYPE_ACCELEROMETER)) {
+            sensorTypeList.add(Sensor.TYPE_ACCELEROMETER);
+        }
+        if (hasAvailableType(availableSensorList, Sensor.TYPE_LINEAR_ACCELERATION)) {
+            sensorTypeList.add(Sensor.TYPE_LINEAR_ACCELERATION);
+        }
+        if (hasAvailableType(availableSensorList, Sensor.TYPE_GYROSCOPE)) {
+            sensorTypeList.add(Sensor.TYPE_GYROSCOPE);
+        }
+        if (hasAvailableType(availableSensorList, Sensor.TYPE_MAGNETIC_FIELD)) {
+            sensorTypeList.add(Sensor.TYPE_MAGNETIC_FIELD);
+        }
+        if (hasAvailableType(availableSensorList, Sensor.TYPE_ROTATION_VECTOR)) {
+            sensorTypeList.add(Sensor.TYPE_ROTATION_VECTOR);
+        }
+
+        return sensorTypeList;
     }
 
     @Override

@@ -282,6 +282,8 @@
     <string name="rsb_share_facebook_key">facebook</string>
     <string name="rsb_share_email_subject">Subject</string>
 
+    <!-- Task Factory -->
+    <string name="rsb_walk_stand_instruction_format">Now stand still. You may resume %1$s.</string>
 
     <!--
     ALL OF THE STRINGS BELOW SHOULD NOT BE EDITED

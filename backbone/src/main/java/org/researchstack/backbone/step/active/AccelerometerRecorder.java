@@ -3,12 +3,14 @@ package org.researchstack.backbone.step.active;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.hardware.SensorManager;
 
 import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,8 +40,11 @@ public class AccelerometerRecorder extends SensorRecorder {
     }
 
     @Override
-    protected List<Integer> getSensorTypeList() {
-        return Collections.singletonList(Sensor.TYPE_ACCELEROMETER);
+    protected List<Integer> getSensorTypeList(List<Sensor> availableSensorList) {
+        if (hasAvailableType(availableSensorList, Sensor.TYPE_ACCELEROMETER)) {
+            return Collections.singletonList(Sensor.TYPE_ACCELEROMETER);
+        }
+        return new ArrayList<>();
     }
 
     @Override

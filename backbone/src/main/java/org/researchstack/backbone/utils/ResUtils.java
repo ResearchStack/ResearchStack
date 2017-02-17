@@ -17,6 +17,7 @@ public class ResUtils {
     public static final String SMS_ICON                     = "rsb_ic_sms_icon";
     public static final String ERROR_ICON                   = "rsb_error";
     public static final String IC_FINGERPRINT               = "rsb_fingerprint";
+    public static final String PHONE_IN_POCKET              = "rsb_phone_in_pocket";
 
     public static class Tremor {
         public static final String IN_HAND                  = "rsb_tremor_in_hand";
