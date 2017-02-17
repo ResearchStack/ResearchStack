@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.researchstack.backbone.R;
@@ -81,12 +82,9 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
 
     private TextToSpeech tts;
 
-    /** Weak Reference to the activity for locking screen and device orientation */
-    private WeakReference<Activity> weakActivity;
-
     protected StepCallbacks callbacks;
 
-    private List<Recorder> recorderList;
+    protected List<Recorder> recorderList;
 
     protected StepResult<Result> stepResult;
 
@@ -100,6 +98,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     protected TextView titleTextview;
     protected TextView textTextview;
     protected TextView timerTextview;
+    protected ProgressBar progressBar;
 
     public ActiveStepLayout(Context context) {
         super(context);
@@ -185,9 +184,12 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
 
         if (activeStep.hasCountDown()) {
             timerTextview.setVisibility(View.VISIBLE);
-            startAnimation();
         } else {
             timerTextview.setVisibility(View.GONE);
+        }
+
+        if (activeStep.getStepDuration() > 0) {
+            startAnimation();
         }
 
         recorderList = new ArrayList<>();
@@ -236,6 +238,19 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         } else if (noRecordersActive) {
             // There will be no recorders onComplete callbacks to wait for, so just go to next activeStep
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
+        }
+
+        mainHandler.removeCallbacksAndMessages(null);
+    }
+
+    /**
+     * A force stop should be called when this step layout is being cancelled
+     */
+    public void forceStop() {
+        if (recorderList != null) {
+            for (Recorder recorder : recorderList) {
+                recorder.forceStop();
+            }
         }
     }
 
@@ -304,6 +319,8 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         textTextview.setVisibility(activeStep.getText() == null ? View.GONE : View.VISIBLE);
 
         timerTextview = (TextView) contentContainer.findViewById(R.id.rsb_active_step_layout_countdown);
+
+        progressBar = (ProgressBar) contentContainer.findViewById(R.id.rsb_active_step_layout_progress);
     }
 
     protected void validateStep(Step step) {
@@ -328,20 +345,10 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mainHandler.removeCallbacksAndMessages(null);
-        unlockOrientation();
-        unlockScreenOn();
     }
 
     @Override
     public void setCallbacks(StepCallbacks callbacks) {
-        if (callbacks instanceof Activity) {
-            weakActivity = new WeakReference<>((Activity)callbacks);
-            lockOrientation();
-            lockScreenOn();
-        } else {
-            throw new IllegalStateException("ActiveStepLayout requires the callbacks to be an Activity" +
-                    "this is so it can lock the screen orientation and keep the screen on");
-        }
         this.callbacks = callbacks;
     }
 
@@ -355,57 +362,6 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         // Play a low and high tone for 500 ms at full volume
         toneG.startTone(ToneGenerator.TONE_CDMA_LOW_L, DEFAULT_VIBRATION_AND_SOUND_DURATION);
         toneG.startTone(ToneGenerator.TONE_CDMA_HIGH_L, DEFAULT_VIBRATION_AND_SOUND_DURATION);
-    }
-
-    /**
-     * Active Steps lock screen to on so it can avoid any interruptions during data logging
-     */
-    private void lockScreenOn() {
-        if (weakActivity.get() == null) {
-            return;
-        }
-        weakActivity.get().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    }
-
-    private void unlockScreenOn() {
-        if (weakActivity.get() == null) {
-            return;
-        }
-        weakActivity.get().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    }
-
-    /**
-     * Active Steps lock orientation so it can avoid any interruptions during data logging
-     */
-    private void lockOrientation() {
-        if (weakActivity.get() == null) {
-            return;
-        }
-        int orientation;
-        int rotation = ((WindowManager) weakActivity.get().getSystemService(
-                Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
-        switch (rotation) {
-            case Surface.ROTATION_0:
-                orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-                break;
-            case Surface.ROTATION_90:
-                orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-                break;
-            case Surface.ROTATION_180:
-                orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
-                break;
-            default:
-                orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
-                break;
-        }
-        weakActivity.get().setRequestedOrientation(orientation);
-    }
-
-    private void unlockOrientation() {
-        if (weakActivity.get() == null) {
-            return;
-        }
-        weakActivity.get().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     protected void speakText(String text) {
