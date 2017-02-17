@@ -200,6 +200,15 @@ public class MainActivity extends BaseActivity {
 //
 //        Intent intent = ActiveTaskActivity.newIntent(this, task);
 //        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the Walk back and forth test
+//        OrderedTask task = WalkingTaskFactory.walkBackAndForthTask(
+//                this, "walkingtaskid", "intendedUseDescription",
+//                30, 10, Arrays.asList(new TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
     }
 
     @Override

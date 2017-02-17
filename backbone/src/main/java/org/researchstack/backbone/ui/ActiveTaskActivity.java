@@ -82,6 +82,7 @@ public class ActiveTaskActivity extends ViewTaskActivity {
 
         // Active steps lock screen on and orientation so that the view is not unnecessarily
         // destroyed and recreated while the data logger is recording
+        // TODO: do we need a partial CPU wake lock here?
         if (step instanceof ActiveStep) {
             lockScreenOn();
             lockOrientation();
@@ -110,6 +111,11 @@ public class ActiveTaskActivity extends ViewTaskActivity {
 
     @Override
     protected void saveAndFinish() {
+
+        // just in case we were locking these
+        unlockScreenOn();
+        unlockOrientation();
+
         taskResult.setEndDate(new Date());
 
         // Loop through and find all the FileResult files
