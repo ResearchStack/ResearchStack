@@ -57,12 +57,12 @@ public class PedometerRecorder extends SensorRecorder
     @Override
     protected List<Integer> getSensorTypeList(List<Sensor> availableSensorList) {
         // Step detector is only available for OS kitkat and above
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            if (hasAvailableType(availableSensorList, Sensor.TYPE_STEP_DETECTOR)) {
-//                useAccelerometerDetector = false;
-//                return Collections.singletonList(Sensor.TYPE_STEP_DETECTOR);
-//            }
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (hasAvailableType(availableSensorList, Sensor.TYPE_STEP_DETECTOR)) {
+                useAccelerometerDetector = false;
+                return Collections.singletonList(Sensor.TYPE_STEP_DETECTOR);
+            }
+        }
         // do a custom pedometer algorithm
         useAccelerometerDetector = true;
         return Collections.singletonList(Sensor.TYPE_ACCELEROMETER);
