@@ -14,11 +14,14 @@ public class User implements Serializable
 
     private Date birthDate;
 
+    private UserHealth userHealth;
+
     /**
      * See description above DataSharingScope inner enum below
      */
     private DataSharingScope dataSharingScope;
 
+    /** Default constructor for Serializable */
     public User()
     {
     }
@@ -59,6 +62,14 @@ public class User implements Serializable
 
     public void setDataSharingScope(DataSharingScope dataSharingScope) {
         this.dataSharingScope = dataSharingScope;
+    }
+
+    public UserHealth getUserHealth() {
+        return userHealth;
+    }
+
+    public void setUserHealth(UserHealth userHealth) {
+        this.userHealth = userHealth;
     }
 
     /*!
