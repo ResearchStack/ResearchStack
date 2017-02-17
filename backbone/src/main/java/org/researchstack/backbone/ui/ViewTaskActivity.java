@@ -33,6 +33,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private StepSwitcher root;
     protected Toolbar toolbar;
 
+    protected StepLayout currentStepLayout;
     protected Step currentStep;
     protected Task task;
     public Task getTask() {
@@ -132,6 +133,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
                         ? StepSwitcher.SHIFT_LEFT
                         : StepSwitcher.SHIFT_RIGHT, alwaysReplaceView);
         currentStep = step;
+        currentStepLayout = stepLayout;
     }
 
     protected void refreshCurrentStep()
