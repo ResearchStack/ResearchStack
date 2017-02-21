@@ -110,7 +110,8 @@ public class AssetVideoView extends SurfaceView implements MediaController.Media
 
     public AssetVideoView(Context context, AttributeSet attrs, int defStyleAttr)
     {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        initVideoView();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
