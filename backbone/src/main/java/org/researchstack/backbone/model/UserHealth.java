@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 public class UserHealth implements Serializable {
 
-    public static final float NO_VALUE = 1.0f;
+    public static final float NO_VALUE = -1.0f;
 
     /**
      * Weight in lbs
