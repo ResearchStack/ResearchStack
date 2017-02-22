@@ -1,21 +1,35 @@
 package org.researchstack.backbone.task.factory;
 
+import android.Manifest;
 import android.content.Context;
-import android.text.format.DateUtils;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.answerformat.AnswerFormat;
+import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
+import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
+import org.researchstack.backbone.model.Choice;
+import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.InstructionStep;
+import org.researchstack.backbone.step.PermissionsStep;
+import org.researchstack.backbone.step.QuestionStep;
+import org.researchstack.backbone.step.RequireSystemFeatureStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.active.AccelerometerRecorderConfig;
+import org.researchstack.backbone.step.active.TimedWalkStep;
+import org.researchstack.backbone.step.active.recorder.AccelerometerRecorderConfig;
 import org.researchstack.backbone.step.active.CountdownStep;
 import org.researchstack.backbone.step.active.FitnessStep;
-import org.researchstack.backbone.step.active.PedometerRecorderConfig;
-import org.researchstack.backbone.step.active.RecorderConfig;
+import org.researchstack.backbone.step.active.recorder.LocationRecorderConfig;
+import org.researchstack.backbone.step.active.recorder.PedometerRecorderConfig;
+import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 import org.researchstack.backbone.step.active.WalkingTaskStep;
 import org.researchstack.backbone.task.OrderedTask;
+import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.ResUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,6 +52,8 @@ public class WalkingTaskFactory {
     private static final int IGNORE_NUMBER_OF_STEPS = Integer.MAX_VALUE;
     private static final int SPEAK_WALK_DURATION_HALFWAY_THRESHOLD = 20; // in seconds
 
+    public static final String GpsFeatureStepIdentifier               = "gpsfeature";
+    public static final String LocationPermissionsStepIdentifier      = "locationpermission";
     public static final String ShortWalkOutboundStepIdentifier        = "walking.outbound";
     public static final String ShortWalkReturnStepIdentifier          = "walking.return";
     public static final String ShortWalkRestStepIdentifier            = "walking.rest";
@@ -340,6 +356,198 @@ public class WalkingTaskFactory {
                     step.setShouldSpeakRemainingTimeAtHalfway(restDuration > SPEAK_WALK_DURATION_HALFWAY_THRESHOLD);
                     stepList.add(step);
                 }
+            }
+        }
+
+        if (!optionList.contains(TaskExcludeOption.CONCLUSION)) {
+            stepList.add(TaskFactory.makeCompletionStep(context));
+        }
+
+        return new OrderedTask(identifier, stepList);
+    }
+
+    /**
+     * Returns a predefined task that consists of a timed walk.
+     *
+     * In a timed walk task, the participant is asked to walk for a specific distance as quickly as
+     * possible, but safely. The task is immediately administered again by having the patient walk back
+     * the same distance.
+     * A timed walk task can be used to measure lower extremity function.
+     *
+     * The presentation of the timed walk task differs from both the fitness check task and the short
+     * walk task in that the distance is fixed. After a first walk, the user is asked to turn and reverse
+     * direction.
+     *
+     * The data collected by this task can include accelerometer, device motion, pedometer data,
+     * and location where available.
+     *
+     * Data collected by the task is in the form of an `TimedWalkResult` object.
+     *
+     * @param context                     Can be app or activity, used to get resources
+     * @param identifier                  The task identifier to use for this task, appropriate to the study.
+     * @param intendedUseDescription      A localized string describing the intended use of the data
+     *                                    collected. If the value of this parameter is `nil`, the default
+     *                                    localized text is displayed.
+     * @param distanceInMeters            The timed walk distance in meters.
+     * @param timeLimit                   The time limit to complete the trials in seconds
+     * @param turnAroundTimeLimit         The turn around time limit in seconds
+     * @param includeAssistiveDeviceForm  A Boolean value that indicates whether to inlude the form step
+     *                                    about the usage of an assistive device.
+     * @param optionList                  Options that affect the features of the predefined task.
+     *
+     * @return An active timed walk task that can be presented with an `ORKTaskViewController` object.
+     */
+    public static OrderedTask timedWalkTask(
+            Context context,
+            String identifier,
+            String intendedUseDescription,
+            double distanceInMeters,
+            int    timeLimit,
+            int    turnAroundTimeLimit,
+            boolean includeAssistiveDeviceForm,
+            List<TaskExcludeOption> optionList)
+    {
+        List<Step> stepList = new ArrayList<>();
+
+        // This isn't in iOS, but in Android we need to check for this so that location permission is granted
+        PackageManager pm = context.getPackageManager();
+        int hasPerm = pm.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, context.getPackageName());
+        if (hasPerm != PackageManager.PERMISSION_GRANTED) {
+            // include a permission request step that requires location
+            String title = context.getString(R.string.rsb_permission_location_title);
+            String text = context.getString(R.string.rsb_permission_location_desc);
+            stepList.add(new PermissionsStep(LocationPermissionsStepIdentifier, title, text));
+        }
+
+        // We also need to check if GPS is turned on, and turn it on if it is not
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            String title = context.getString(R.string.rsb_system_feature_gps_title);
+            String text = context.getString(R.string.rsb_system_feature_gps_text);
+            stepList.add(new RequireSystemFeatureStep(
+                    RequireSystemFeatureStep.SystemFeature.GPS, GpsFeatureStepIdentifier, title, text));
+        }
+
+        if (!optionList.contains(TaskExcludeOption.INSTRUCTIONS)) {
+            String title = context.getString(R.string.rsb_TIMED_WALK_TITLE);
+            InstructionStep step = new InstructionStep(Instruction0StepIdentifier, title, intendedUseDescription);
+            step.setMoreDetailText(context.getString(R.string.rsb_TIMED_WALK_INTRO_DETAIL));
+            stepList.add(step);
+        }
+
+        if (includeAssistiveDeviceForm) {
+
+            BooleanAnswerFormat answerFormat1 = new BooleanAnswerFormat(
+                    context.getString(R.string.rsb_BOOL_YES),
+                    context.getString(R.string.rsb_BOOL_NO));
+            QuestionStep questionStep1 = new QuestionStep(TimedWalkFormAFOStepIdentifier, null, answerFormat1);
+            questionStep1.setText(context.getString(R.string.rsb_TIMED_WALK_QUESTION_TEXT));
+            questionStep1.setOptional(false);
+
+            String choice1Text = context.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE);
+            Choice<String> choice1 = new Choice<>(choice1Text, choice1Text);
+
+            String choice2Text = context.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE_2);
+            Choice<String> choice2 = new Choice<>(choice2Text, choice2Text);
+
+            String choice3Text = context.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE_3);
+            Choice<String> choice3 = new Choice<>(choice3Text, choice3Text);
+
+            String choice4Text = context.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE_4);
+            Choice<String> choice4 = new Choice<>(choice4Text, choice4Text);
+
+            String choice5Text = context.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE_5);
+            Choice<String> choice5 = new Choice<>(choice5Text, choice5Text);
+
+            String choice6Text = context.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE_6);
+            Choice<String> choice6 = new Choice<>(choice6Text, choice6Text);
+
+            ChoiceAnswerFormat answerFormat2 = new ChoiceAnswerFormat(
+                    AnswerFormat.ChoiceAnswerStyle.SingleChoice,
+                    choice1, choice2, choice3, choice4, choice5, choice6);
+
+            QuestionStep questionStep2 = new QuestionStep(TimedWalkFormAssistanceStepIdentifier, null, answerFormat2);
+            questionStep2.setText(context.getString(R.string.rsb_TIMED_WALK_QUESTION_2_TITLE));
+            questionStep2.setPlaceholder(context.getString(R.string.rsb_TIMED_WALK_QUESTION_2_TEXT));
+            questionStep2.setOptional(false);
+
+            String formStepTitle = context.getString(R.string.rsb_TIMED_WALK_FORM_TITLE);
+            String formStepText  = context.getString(R.string.rsb_TIMED_WALK_FORM_TEXT);
+
+            List<QuestionStep> questionStepList = Arrays.asList(questionStep1, questionStep2);
+            FormStep formStep = new FormStep(TimedWalkFormStepIdentifier, formStepTitle, formStepText, questionStepList);
+
+            stepList.add(formStep);
+        }
+
+        String formattedLength = FormatHelper.localizeDistance(context, distanceInMeters, Locale.getDefault());
+
+        if (!optionList.contains(TaskExcludeOption.INSTRUCTIONS)) {
+            String title = context.getString(R.string.rsb_TIMED_WALK_TITLE);
+            String textFormat = context.getString(R.string.rsb_timed_walk_intro_2_text);
+            String text = String.format(textFormat, formattedLength);
+            InstructionStep step = new InstructionStep(Instruction1StepIdentifier, title, text);
+            step.setMoreDetailText(context.getString(R.string.rsb_TIMED_WALK_INTRO_2_DETAIL));
+            step.setImage(ResUtils.TIMER);
+            stepList.add(step);
+        }
+
+        {
+            CountdownStep step = new CountdownStep(CountdownStepIdentifier);
+            step.setStepDuration(DEFAULT_COUNTDOWN_DURATION);
+            stepList.add(step);
+        }
+
+        // Obtain sensor frequency for Walking Task recorders
+        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_tremor_task);
+
+        {
+            List<RecorderConfig> recorderConfigList = new ArrayList<>();
+            if (!optionList.contains(TaskExcludeOption.PEDOMETER)) {
+                recorderConfigList.add(new PedometerRecorderConfig(PedometerRecorderIdentifier));
+            }
+            if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
+                recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
+            }
+            if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
+                recorderConfigList.add(new AccelerometerRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+            }
+            if (!optionList.contains(TaskExcludeOption.LOCATION)) {
+                recorderConfigList.add(new LocationRecorderConfig(LocationRecorderIdentifier));
+            }
+
+            {
+                String titleFormat = context.getString(R.string.rsb_timed_walk_instruction);
+                String title = String.format(titleFormat, formattedLength);
+                String text  = context.getString(R.string.rsb_TIMED_WALK_INSTRUCTION_TEXT);
+                TimedWalkStep step = new TimedWalkStep(TimedWalkTrial1StepIdentifier, title, text, distanceInMeters);
+                step.setSpokenInstruction(title);
+                step.setRecorderConfigurationList(recorderConfigList);
+                step.setStepDuration(timeLimit == 0 ? Integer.MAX_VALUE : timeLimit);
+                step.setImageResName(ResUtils.TIMED_WALKING_MAN_OUTBOUND);
+                stepList.add(step);
+            }
+
+            {
+                String title = context.getString(R.string.rsb_TIMED_WALK_INSTRUCTION_TURN);
+                String text  = context.getString(R.string.rsb_TIMED_WALK_INSTRUCTION_TEXT);
+                TimedWalkStep step = new TimedWalkStep(TimedWalkTurnAroundStepIdentifier, title, text, 1);
+                step.setSpokenInstruction(title);
+                step.setRecorderConfigurationList(recorderConfigList);
+                step.setStepDuration(turnAroundTimeLimit == 0 ? Integer.MAX_VALUE : turnAroundTimeLimit);
+                step.setImageResName(ResUtils.TIMED_WALKING_TURNAROUND);
+                stepList.add(step);
+            }
+
+            {
+                String title = context.getString(R.string.rsb_TIMED_WALK_INSTRUCTION_2);
+                String text  = context.getString(R.string.rsb_TIMED_WALK_INSTRUCTION_TEXT);
+                TimedWalkStep step = new TimedWalkStep(TimedWalkTrial2StepIdentifier, title, text, distanceInMeters);
+                step.setSpokenInstruction(title);
+                step.setRecorderConfigurationList(recorderConfigList);
+                step.setStepDuration(timeLimit == 0 ? Integer.MAX_VALUE : timeLimit);
+                step.setImageResName(ResUtils.TIMED_WALKING_MAN_RETURN);
+                stepList.add(step);
             }
         }
 

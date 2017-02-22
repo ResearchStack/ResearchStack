@@ -1,36 +1,35 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Surface;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TimedWalkResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.ActiveStep;
-import org.researchstack.backbone.step.active.Recorder;
-import org.researchstack.backbone.step.active.RecorderConfig;
-import org.researchstack.backbone.step.active.RecorderListener;
+import org.researchstack.backbone.step.active.recorder.Recorder;
+import org.researchstack.backbone.step.active.recorder.RecorderConfig;
+import org.researchstack.backbone.step.active.recorder.RecorderListener;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
+import org.researchstack.backbone.utils.ResUtils;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,6 +98,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     protected TextView textTextview;
     protected TextView timerTextview;
     protected ProgressBar progressBar;
+    protected AppCompatImageView imageView;
 
     public ActiveStepLayout(Context context) {
         super(context);
@@ -321,6 +321,17 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         timerTextview = (TextView) contentContainer.findViewById(R.id.rsb_active_step_layout_countdown);
 
         progressBar = (ProgressBar) contentContainer.findViewById(R.id.rsb_active_step_layout_progress);
+
+        imageView = (AppCompatImageView) contentContainer.findViewById(R.id.rsb_image_view);
+        if (activeStep.getImageResName() != null) {
+            int drawableInt = ResUtils.getDrawableResourceId(getContext(), activeStep.getImageResName());
+            if (drawableInt != 0) {
+                imageView.setImageResource(drawableInt);
+                imageView.setVisibility(View.VISIBLE);
+            }
+        } else {
+            imageView.setVisibility(View.GONE);
+        }
     }
 
     protected void validateStep(Step step) {
@@ -393,6 +404,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         stepResult.setResultForIdentifier(recorder.getIdentifier(), result);
         recorderList.remove(recorder);
         if (recorderList.isEmpty()) {
+            stepResultFinished();
             if (activeStep.getShouldContinueOnFinish()) {
                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
             } else {
@@ -405,6 +417,10 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
                 });
             }
         }
+    }
+
+    protected void stepResultFinished() {
+        // To be implemented by sub-classes that need to save more info to step result
     }
 
     @Override

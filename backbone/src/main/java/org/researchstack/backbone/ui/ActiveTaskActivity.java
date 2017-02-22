@@ -1,12 +1,17 @@
 package org.researchstack.backbone.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.Surface;
 import android.view.WindowManager;
 
+import org.researchstack.backbone.PermissionRequestManager;
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.FileResult;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.logger.DataLoggerManager;
@@ -14,7 +19,10 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.ActiveStep;
 import org.researchstack.backbone.step.active.CountdownStep;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.ui.callbacks.ActivityCallback;
 import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
+import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,7 +38,7 @@ import java.util.Map;
  * and make sure that they are correctly bundled and uploaded at the end
  */
 
-public class ActiveTaskActivity extends ViewTaskActivity {
+public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCallback {
 
     private boolean isBackButtonEnabled;
 
@@ -184,5 +192,35 @@ public class ActiveTaskActivity extends ViewTaskActivity {
 
     private void unlockOrientation() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermission(String id) {
+        if (PermissionRequestManager.getInstance().isNonSystemPermission(id)) {
+            PermissionRequestManager.getInstance().onRequestNonSystemPermission(this, id);
+        } else {
+            requestPermissions(new String[] {id}, PermissionRequestManager.PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == PermissionRequestManager.PERMISSION_REQUEST_CODE) {
+            updateStepLayoutForPermission();
+        }
+    }
+
+    protected void updateStepLayoutForPermission() {
+        StepLayout stepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
+        if(stepLayout instanceof StepPermissionRequest) {
+            ((StepPermissionRequest) stepLayout).onUpdateForPermissionResult();
+        }
+    }
+
+    @Override
+    public void startConsentTask() {
+        // deprecated
     }
 }

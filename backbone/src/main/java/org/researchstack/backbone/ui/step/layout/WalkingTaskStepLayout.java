@@ -6,8 +6,8 @@ import android.view.View;
 
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.active.PedometerRecorder;
-import org.researchstack.backbone.step.active.Recorder;
+import org.researchstack.backbone.step.active.recorder.PedometerRecorder;
+import org.researchstack.backbone.step.active.recorder.Recorder;
 import org.researchstack.backbone.step.active.WalkingTaskStep;
 
 /**
