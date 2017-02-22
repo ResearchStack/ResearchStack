@@ -1,4 +1,4 @@
-package org.researchstack.backbone.step.active;
+package org.researchstack.backbone.step.active.recorder;
 
 import org.researchstack.backbone.step.Step;
 

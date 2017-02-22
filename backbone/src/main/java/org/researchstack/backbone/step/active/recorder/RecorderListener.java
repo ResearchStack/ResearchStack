@@ -1,6 +1,7 @@
-package org.researchstack.backbone.step.active;
+package org.researchstack.backbone.step.active.recorder;
 
 import org.researchstack.backbone.result.Result;
+import org.researchstack.backbone.step.active.recorder.Recorder;
 
 /**
  * Created by TheMDP on 2/5/17.

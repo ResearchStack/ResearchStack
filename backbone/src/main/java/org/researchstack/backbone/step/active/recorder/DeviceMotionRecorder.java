@@ -1,9 +1,8 @@
-package org.researchstack.backbone.step.active;
+package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorManager;
 
 import com.google.gson.JsonObject;
 
@@ -11,7 +10,6 @@ import org.researchstack.backbone.step.Step;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -47,11 +45,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
     private JsonObject accelJsonObject;
     private JsonObject linAccelJsonObject;
     private JsonObject magneticJsonObject;
-
-    /** Default constructor for serialization/deserialization */
-    DeviceMotionRecorder() {
-        super();
-    }
 
     DeviceMotionRecorder(double frequency, String identifier, Step step, File outputDirectory) {
         super(frequency, identifier, step, outputDirectory);

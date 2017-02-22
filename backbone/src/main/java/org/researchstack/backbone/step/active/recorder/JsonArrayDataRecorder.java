@@ -1,4 +1,4 @@
-package org.researchstack.backbone.step.active;
+package org.researchstack.backbone.step.active.recorder;
 
 import com.google.gson.JsonObject;
 
@@ -26,11 +26,6 @@ abstract class JsonArrayDataRecorder extends Recorder {
 
     protected DataLogger dataLogger;
     protected File dataLoggerFile;
-
-    /** Default constructor for serialization/deserialization */
-    JsonArrayDataRecorder() {
-        super();
-    }
 
     JsonArrayDataRecorder(String identifier, Step step, File outputDirectory) {
         super(identifier, step, outputDirectory);

@@ -1,4 +1,4 @@
-package org.researchstack.backbone.step.active;
+package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -47,11 +47,6 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
     private int  writeCounter;
     private long writeDelayGoal;
     private long writeStartTime;
-
-    /** Default constructor for serialization/deserialization */
-    SensorRecorder() {
-        super();
-    }
 
     SensorRecorder(double frequency, String identifier, Step step, File outputDirectory) {
         super(identifier, step, outputDirectory);
@@ -103,6 +98,10 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
             super.startJsonDataLogging();
         }
 
+        startRunnableForWritingJson();
+    }
+
+    protected void startRunnableForWritingJson() {
         // These will be used to monitor periodic writes to get an accurate write frequency
         mainHandler = new Handler();
         writeCounter = 1;

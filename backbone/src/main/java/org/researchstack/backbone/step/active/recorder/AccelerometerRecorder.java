@@ -1,9 +1,8 @@
-package org.researchstack.backbone.step.active;
+package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorManager;
 
 import com.google.gson.JsonObject;
 
@@ -29,11 +28,6 @@ public class AccelerometerRecorder extends SensorRecorder {
     public static final String ACCELERATION_Z_KEY   = "z";
 
     private JsonObject jsonObject;
-
-    /** Default constructor for serialization/deserialization */
-    AccelerometerRecorder() {
-        super();
-    }
 
     AccelerometerRecorder(double frequency, String identifier, Step step, File outputDirectory) {
         super(frequency, identifier, step, outputDirectory);

@@ -1,4 +1,4 @@
-package org.researchstack.backbone.step.active;
+package org.researchstack.backbone.step.active.recorder;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

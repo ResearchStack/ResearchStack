@@ -1,4 +1,4 @@
-package org.researchstack.backbone.step.active;
+package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
 import android.support.annotation.MainThread;
@@ -7,8 +7,6 @@ import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -35,7 +33,7 @@ import java.util.UUID;
  * receives callbacks when errors occur or when recording is complete.
  */
 
-public abstract class Recorder implements Serializable {
+public abstract class Recorder {
     /**
      * A short string that uniquely identifies the recorder (usually assigned by the recorder configuration).
      *
