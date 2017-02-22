@@ -1,18 +1,24 @@
 package org.researchstack.backbone.task.factory;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.location.LocationManager;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.active.PedometerRecorderConfig;
-import org.researchstack.backbone.step.active.RecorderConfig;
+import org.researchstack.backbone.step.active.ActiveStep;
+import org.researchstack.backbone.step.active.recorder.LocationRecorderConfig;
+import org.researchstack.backbone.step.active.recorder.PedometerRecorderConfig;
+import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 import org.researchstack.backbone.step.active.WalkingTaskStep;
 import org.researchstack.backbone.task.OrderedTask;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -30,13 +36,31 @@ import static org.researchstack.backbone.task.factory.WalkingTaskFactory.*;
 
 public class WalkingTaskTests {
 
+    private static final String PACKAGE_NAME = "org.researchstack.backbone";
+
     private Context mockContext;
+    private LocationManager mockLocationManager;
+    private PackageManager mockPackageManager;
+
     private Resources mockResources;
 
     @Before
     public void setUp() throws Exception {
         mockContext = Mockito.mock(Context.class);
         mockResources = Mockito.mock(Resources.class);
+
+        Mockito.when(mockContext.getPackageName()).thenReturn(PACKAGE_NAME);
+
+        mockLocationManager = Mockito.mock(LocationManager.class);
+        Mockito.when(mockContext.getSystemService(Context.LOCATION_SERVICE)).thenReturn(mockLocationManager);
+        Mockito.when(mockLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)).thenReturn(false);
+
+        mockPackageManager = Mockito.mock(PackageManager.class);
+        Mockito.when(mockContext.getPackageManager()).thenReturn(mockPackageManager);
+        Mockito.when(mockPackageManager.checkPermission(
+                Manifest.permission.ACCESS_FINE_LOCATION, PACKAGE_NAME))
+                .thenReturn(PackageManager.PERMISSION_DENIED);
+
         Mockito.when(mockContext.getResources()).thenReturn(mockResources);
 
         // All the strings that the TremorTask uses
@@ -63,6 +87,38 @@ public class WalkingTaskTests {
         Mockito.when(mockContext.getString(R.string.rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT)).thenReturn("Walk back and forth in a straight line for %1$s. Walk as you would normally.");
         Mockito.when(mockContext.getString(R.string.rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION)).thenReturn("");
         Mockito.when(mockContext.getString(R.string.rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION)).thenReturn("");
+
+        Mockito.when(mockContext.getString(R.string.rsb_distance_meters)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_distance_feet)).thenReturn("");
+
+        Mockito.when(mockContext.getString(R.string.rsb_BOOL_YES)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_BOOL_NO)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_permission_location_title)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_permission_location_desc)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_system_feature_gps_title)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_system_feature_gps_text)).thenReturn("");
+
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_TITLE)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_INTRO_DETAIL)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_QUESTION_TEXT)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE_2)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE_3)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE_4)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE_5)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_QUESTION_2_CHOICE_6)).thenReturn("");
+
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_QUESTION_2_TITLE)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_QUESTION_2_TEXT)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_FORM_TITLE)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_FORM_TEXT)).thenReturn("");
+
+        Mockito.when(mockContext.getString(R.string.rsb_timed_walk_intro_2_text)).thenReturn("walk for about %1$s");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_INTRO_2_DETAIL)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_INSTRUCTION_TEXT)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_timed_walk_instruction)).thenReturn("Walk up to %1$s");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_INSTRUCTION_TURN)).thenReturn("");
+        Mockito.when(mockContext.getString(R.string.rsb_TIMED_WALK_INSTRUCTION_2)).thenReturn("");
 
         Mockito.when(mockResources.getInteger(R.integer.rsb_sensor_frequency_default)).thenReturn(100);
     }
@@ -257,6 +313,142 @@ public class WalkingTaskTests {
         } while (step != null);
     }
 
+    @Test
+    public void testTimedWalk() {
+        OrderedTask task = WalkingTaskFactory.timedWalkTask(
+                mockContext, "walkingtaskid", "intendedUseDescription",
+                50.0, 60, 5, true, new ArrayList<TaskExcludeOption>());
+
+        List<String> stepIds = getTimedWalkStepIds();
+        Step step = null;
+        int i = 0;
+        do {
+            step = task.getStepAfterStep(step, null);
+            if (step != null) {
+                assertEquals(step.getIdentifier(), stepIds.get(i));
+                i++;
+            }
+        } while (step != null);
+    }
+
+    @Test
+    public void testTimedWalkWithoutLocationPermissionStep() {
+
+        Mockito.when(mockPackageManager.checkPermission(
+                Manifest.permission.ACCESS_FINE_LOCATION, PACKAGE_NAME))
+                .thenReturn(PackageManager.PERMISSION_GRANTED);
+
+        OrderedTask task = WalkingTaskFactory.timedWalkTask(
+                mockContext, "walkingtaskid", "intendedUseDescription",
+                50.0, 60, 5, true, new ArrayList<TaskExcludeOption>());
+
+        List<String> stepIds = getTimedWalkStepIds();
+        stepIds.remove(LocationPermissionsStepIdentifier);
+        Step step = null;
+        int i = 0;
+        do {
+            step = task.getStepAfterStep(step, null);
+            if (step != null) {
+                assertEquals(step.getIdentifier(), stepIds.get(i));
+                i++;
+            }
+        } while (step != null);
+
+        Mockito.when(mockPackageManager.checkPermission(
+                Manifest.permission.ACCESS_FINE_LOCATION, PACKAGE_NAME))
+                .thenReturn(PackageManager.PERMISSION_DENIED);
+    }
+
+    @Test
+    public void testTimedWalkGpsOn() {
+        Mockito.when(mockLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)).thenReturn(true);
+
+        OrderedTask task = WalkingTaskFactory.timedWalkTask(
+                mockContext, "walkingtaskid", "intendedUseDescription",
+                50.0, 60, 5, true, new ArrayList<TaskExcludeOption>());
+
+        List<String> stepIds = getTimedWalkStepIds();
+        stepIds.remove(GpsFeatureStepIdentifier);
+        Step step = null;
+        int i = 0;
+        do {
+            step = task.getStepAfterStep(step, null);
+            if (step != null) {
+                assertEquals(step.getIdentifier(), stepIds.get(i));
+                i++;
+            }
+        } while (step != null);
+
+        Mockito.when(mockLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)).thenReturn(false);
+    }
+
+    @Test
+    public void testTimedWalkNoAssistiveDeviceFormStep() {
+        OrderedTask task = WalkingTaskFactory.timedWalkTask(
+                mockContext, "walkingtaskid", "intendedUseDescription",
+                50.0, 60, 5, false, new ArrayList<TaskExcludeOption>());
+
+        List<String> stepIds = getTimedWalkStepIds();
+        stepIds.remove(TimedWalkFormStepIdentifier);
+        Step step = null;
+        int i = 0;
+        do {
+            step = task.getStepAfterStep(step, null);
+            if (step != null) {
+                assertEquals(step.getIdentifier(), stepIds.get(i));
+                i++;
+            }
+        } while (step != null);
+    }
+
+    @Test
+    public void testTimedWalkNoInstructionSteps() {
+        OrderedTask task = WalkingTaskFactory.timedWalkTask(
+                mockContext, "walkingtaskid", "intendedUseDescription",
+                50.0, 60, 5, true, Collections.singletonList(TaskExcludeOption.INSTRUCTIONS));
+
+        List<String> stepIds = getTimedWalkStepIds();
+        stepIds.remove(Instruction0StepIdentifier);
+        stepIds.remove(Instruction1StepIdentifier);
+        Step step = null;
+        int i = 0;
+        do {
+            step = task.getStepAfterStep(step, null);
+            if (step != null) {
+                assertEquals(step.getIdentifier(), stepIds.get(i));
+                i++;
+            }
+        } while (step != null);
+    }
+
+    @Test
+    public void testTimedWalkNoLocationRecorder() {
+        OrderedTask task = WalkingTaskFactory.timedWalkTask(
+                mockContext, "walkingtaskid", "intendedUseDescription",
+                50.0, 60, 5, true, Collections.singletonList(TaskExcludeOption.LOCATION));
+
+        List<String> stepIds = getTimedWalkStepIds();
+        Step step = null;
+        int i = 0;
+        do {
+            step = task.getStepAfterStep(step, null);
+            if (step != null) {
+
+                if (step.getIdentifier().equals(TimedWalkTrial1StepIdentifier) ||
+                    step.getIdentifier().equals(TimedWalkTrial1StepIdentifier))
+                {
+                    ActiveStep activeStep = (ActiveStep)step;
+                    for (RecorderConfig config : activeStep.getRecorderConfigurationList()) {
+                        assertFalse(config instanceof LocationRecorderConfig);
+                    }
+                }
+
+                assertEquals(step.getIdentifier(), stepIds.get(i));
+                i++;
+            }
+        } while (step != null);
+    }
+
     private List<String> getWalkBackAndForthStepIds() {
         return new LinkedList<>(Arrays.asList(
                 Instruction0StepIdentifier,
@@ -275,6 +467,20 @@ public class WalkingTaskTests {
                 ShortWalkOutboundStepIdentifier,
                 ShortWalkReturnStepIdentifier,
                 ShortWalkRestStepIdentifier,
+                ConclusionStepIdentifier));
+    }
+
+    private List<String> getTimedWalkStepIds() {
+        return new LinkedList<>(Arrays.asList(
+                LocationPermissionsStepIdentifier,
+                GpsFeatureStepIdentifier,
+                Instruction0StepIdentifier,
+                TimedWalkFormStepIdentifier,
+                Instruction1StepIdentifier,
+                CountdownStepIdentifier,
+                TimedWalkTrial1StepIdentifier,
+                TimedWalkTurnAroundStepIdentifier,
+                TimedWalkTrial2StepIdentifier,
                 ConclusionStepIdentifier));
     }
 }
