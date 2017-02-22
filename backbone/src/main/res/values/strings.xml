@@ -131,6 +131,9 @@
     <string name="rsb_loading_ellipses">Loading...</string>
     <string name="rsb_forgot_password">Forgot your Password?</string>
     <string name="rsb_log_out">Log out</string>
+    <string name="rsb_enable">Enable</string>
+    <string name="rsb_distance_meters">meters</string>
+    <string name="rsb_distance_feet">feet</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_data_failed">FailedP to load encrypted data, try again!</string>
@@ -225,6 +228,11 @@
     <string name="rsb_allow">Allow</string>
     <string name="rsb_granted">Granted</string>
     <string name="rsb_optional">Optional</string>
+
+    <!-- System Features -->
+    <string name="rsb_system_feature_gps_title">GPS Required</string>
+    <string name="rsb_system_feature_gps_text">The app needs GPS enabled to record accurate
+        location-based data</string>
 
     <!-- ProfileStepLayout -->
 
