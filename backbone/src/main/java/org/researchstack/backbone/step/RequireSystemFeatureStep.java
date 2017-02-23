@@ -6,7 +6,7 @@ import org.researchstack.backbone.ui.step.layout.RequireSystemFeatureStepLayout;
  * Created by TheMDP on 2/21/17.
  *
  * This step forces the user to turn on a system feature before proceeding in the task
- * for not it is just GPS, but this could be expanded to cover Wifi, Cellular, NFC, etc
+ * for now it is just GPS, but this could be expanded to cover Wifi, Cellular, NFC, etc
  */
 
 public class RequireSystemFeatureStep extends InstructionStep {

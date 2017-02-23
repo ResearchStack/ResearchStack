@@ -9,7 +9,7 @@ import org.researchstack.backbone.step.active.FitnessStep;
 /**
  * Created by TheMDP on 2/16/17.
  *
- * This exists in iOS and the class is used to monitor certain special Recrods,
+ * This exists in iOS and the class is used to monitor certain special Recorders,
  * in iOS these special recorders are HeartRate and Pedometer and they feed into HealthKit,
  * But since there is not HealthKit equivalent on Android, I'm not sure this class should
  * really exist
