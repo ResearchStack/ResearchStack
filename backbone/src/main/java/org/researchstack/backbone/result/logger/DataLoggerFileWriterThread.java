@@ -8,6 +8,8 @@ import android.os.Message;
 import android.support.annotation.MainThread;
 import android.util.Log;
 
+import org.researchstack.backbone.utils.LogExt;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -181,7 +183,7 @@ public class DataLoggerFileWriterThread {
                 thread.quit();
                 boolean success = file.delete();
                 if (!success) {
-                    Log.d(getClass().getSimpleName(), "Failed to delete file " + file.toString());
+                    LogExt.d(getClass(), "Failed to delete file " + file.toString());
                 }
             }
         });
