@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.LocationManager;
+import android.os.Build;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,8 @@ import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 import org.researchstack.backbone.step.active.WalkingTaskStep;
 import org.researchstack.backbone.task.OrderedTask;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,6 +49,9 @@ public class WalkingTaskTests {
 
     @Before
     public void setUp() throws Exception {
+
+        // Mocks the static variable SDK_INT to be Android.M so that Location permission checks work
+        setFinalStatic(Build.VERSION.class.getField("SDK_INT"), Build.VERSION_CODES.M);
 
         mockContext = Mockito.mock(Context.class);
         mockResources = Mockito.mock(Resources.class);
@@ -483,5 +489,16 @@ public class WalkingTaskTests {
                 TimedWalkTurnAroundStepIdentifier,
                 TimedWalkTrial2StepIdentifier,
                 ConclusionStepIdentifier));
+    }
+
+    // Cool trick method to change a static field's value
+    static void setFinalStatic(Field field, Object newValue) throws Exception {
+        field.setAccessible(true);
+
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+        field.set(null, newValue);
     }
 }
