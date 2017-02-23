@@ -8,6 +8,7 @@ import android.location.LocationManager;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.step.Step;
@@ -38,14 +39,14 @@ public class WalkingTaskTests {
 
     private static final String PACKAGE_NAME = "org.researchstack.backbone";
 
-    private Context mockContext;
-    private LocationManager mockLocationManager;
-    private PackageManager mockPackageManager;
-
-    private Resources mockResources;
+    @Mock private Context         mockContext;
+    @Mock private LocationManager mockLocationManager;
+    @Mock private PackageManager  mockPackageManager;
+    @Mock private Resources       mockResources;
 
     @Before
     public void setUp() throws Exception {
+
         mockContext = Mockito.mock(Context.class);
         mockResources = Mockito.mock(Resources.class);
 
