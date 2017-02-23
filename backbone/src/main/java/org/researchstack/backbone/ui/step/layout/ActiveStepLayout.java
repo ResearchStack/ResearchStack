@@ -13,6 +13,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -97,7 +98,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     protected TextView textTextview;
     protected TextView timerTextview;
     protected ProgressBar progressBar;
-    protected AppCompatImageView imageView;
+    protected ImageView imageView;
 
     public ActiveStepLayout(Context context) {
         super(context);
@@ -321,7 +322,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
 
         progressBar = (ProgressBar) contentContainer.findViewById(R.id.rsb_active_step_layout_progress);
 
-        imageView = (AppCompatImageView) contentContainer.findViewById(R.id.rsb_image_view);
+        imageView = (ImageView) contentContainer.findViewById(R.id.rsb_image_view);
         if (activeStep.getImageResName() != null) {
             int drawableInt = ResUtils.getDrawableResourceId(getContext(), activeStep.getImageResName());
             if (drawableInt != 0) {

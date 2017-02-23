@@ -25,7 +25,7 @@
         tools:text="@string/lorem_long"
         tools:visibility="visible" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/rsb_image_view"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/rsb_step_layout_image_height"
