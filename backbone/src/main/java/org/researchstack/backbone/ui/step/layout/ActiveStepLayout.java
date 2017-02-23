@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TimedWalkResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.ActiveStep;
 import org.researchstack.backbone.step.active.recorder.Recorder;
@@ -249,7 +247,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     public void forceStop() {
         if (recorderList != null) {
             for (Recorder recorder : recorderList) {
-                recorder.forceStop();
+                recorder.cancel();
             }
         }
     }

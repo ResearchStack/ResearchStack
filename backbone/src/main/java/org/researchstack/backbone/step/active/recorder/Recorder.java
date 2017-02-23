@@ -116,13 +116,13 @@ public abstract class Recorder {
     public abstract void stop();
 
     /**
-     * A force stop will cause this recorder to be immediately cancelled,
-     * the file it was writing will be deleted,
+     * A cancel will cause this recorder to be immediately stopped,
+     * and the file it was writing will be deleted,
      *
-     * and no callback will be invoked
+     * Also, no callback will be invoked
      */
     @MainThread
-    public abstract void forceStop();
+    public abstract void cancel();
 
     public String getIdentifier() {
         return identifier;

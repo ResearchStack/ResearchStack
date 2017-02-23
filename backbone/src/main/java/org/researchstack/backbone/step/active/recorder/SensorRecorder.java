@@ -144,8 +144,8 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
     }
 
     @Override
-    public void forceStop() {
-        super.forceStop();
+    public void cancel() {
+        super.cancel();
         mainHandler.removeCallbacks(jsonWriterRunnable);
         for (Sensor sensor : sensorList) {
             sensorManager.unregisterListener(this, sensor);

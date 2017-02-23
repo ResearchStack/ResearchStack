@@ -32,7 +32,7 @@ abstract class JsonArrayDataRecorder extends Recorder {
     }
 
     @Override
-    public void forceStop() {
+    public void cancel() {
         if (dataLogger != null) {
             dataLogger.cancel();
         }
