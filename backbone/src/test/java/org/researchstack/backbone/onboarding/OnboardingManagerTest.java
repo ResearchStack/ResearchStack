@@ -2,6 +2,7 @@ package org.researchstack.backbone.onboarding;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.PasscodeStep;
@@ -29,7 +30,7 @@ public class OnboardingManagerTest {
 
     ResourceNameToStringConverter mFullResourceProvider;
     OnboardingManager mOnboardingManager;
-    MockOnboardingManager mMockOnboardingManager;
+    @Mock MockOnboardingManager mMockOnboardingManager;
     SurveyFactoryHelper mSurveyFactoryHelper;
 
     @Before
@@ -307,6 +308,8 @@ public class OnboardingManagerTest {
     List<Step> checkOnboardingSteps(OnboardingSectionType sectionType, OnboardingTaskType taskType) {
         OnboardingSection section = getSection(sectionType);
         assertNotNull(section);
+        assertNotNull(mMockOnboardingManager);
+        assertNotNull(mSurveyFactoryHelper);
         List<Step> steps = mMockOnboardingManager.steps(mSurveyFactoryHelper.mockContext, section, taskType);
         assertNotNull(steps);
         return steps;
