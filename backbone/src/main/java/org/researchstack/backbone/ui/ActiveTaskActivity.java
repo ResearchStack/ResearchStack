@@ -51,15 +51,14 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if(savedInstanceState == null) {
-            init();  // for the first time
-        }
+        init();
     }
 
     protected void init() {
-        DataLoggerManager.initialize(this);
-        DataLoggerManager.getInstance().deleteAllDirtyFiles();
+        if (!DataLoggerManager.isInitialized()) {
+            DataLoggerManager.initialize(this);
+            DataLoggerManager.getInstance().deleteAllDirtyFiles();
+        }
     }
 
     @Override
@@ -192,6 +191,17 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
 
     private void unlockOrientation() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+
+    @Override
+    protected void onExecuteStepAction(int action) {
+        // In this case, we cannot complete the Active Task, since one of the ActiveSteps
+        // Requested we end the task, because it couldn't complete for some reason
+        if (action == ACTION_END && currentStep instanceof ActiveStep) {
+            discardResultsAndFinish();
+        } else {
+            super.onExecuteStepAction(action);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.M)

@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Build;
@@ -423,7 +424,15 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
 
     @Override
     public void onFail(Recorder recorder, Throwable error) {
-        super.showOkAlertDialog(error.getMessage());
+        if (tts != null && tts.isSpeaking()) {
+            tts.stop();
+        }
+        super.showOkAlertDialog(error.getMessage(), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                callbacks.onSaveStep(StepCallbacks.ACTION_END, activeStep, null);
+            }
+        });
     }
 
     // TextToSpeech initialization

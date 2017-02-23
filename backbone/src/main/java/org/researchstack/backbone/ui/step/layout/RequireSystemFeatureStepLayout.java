@@ -19,6 +19,7 @@ import rx.functions.Action1;
 
 public class RequireSystemFeatureStepLayout extends InstructionStepLayout {
 
+    protected boolean shouldGoNextOnCallbacksSet;
     protected RequireSystemFeatureStep systemFeatureStep;
 
     public RequireSystemFeatureStepLayout(Context context) {
@@ -54,12 +55,24 @@ public class RequireSystemFeatureStepLayout extends InstructionStepLayout {
         systemFeatureStep = (RequireSystemFeatureStep)step;
     }
 
+    @Override
+    public void setCallbacks(StepCallbacks callbacks) {
+        super.setCallbacks(callbacks);
+        if (shouldGoNextOnCallbacksSet) {
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, systemFeatureStep, null);
+        }
+    }
+
     public void updateSystemFeatureStatus() {
         if (systemFeatureStep.getSystemFeature() == RequireSystemFeatureStep.SystemFeature.GPS) {
             LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
 
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, systemFeatureStep, null);
+                if (callbacks != null) {
+                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, systemFeatureStep, null);
+                } else {
+                    shouldGoNextOnCallbacksSet = true;
+                }
             } else {
                 submitBar.setPositiveTitle(R.string.rsb_enable);
                 submitBar.setPositiveAction(new Action1() {

@@ -212,12 +212,12 @@ public class MainActivity extends BaseActivity {
 
         // TODO: integrate this into the Scheduled Activities
         // TODO: for now, uncomment this to run/test the Walk back and forth test
-//        OrderedTask task = WalkingTaskFactory.timedWalkTask(
-//                this, "walkingtaskid", "intendedUseDescription",
-//                50.0, 30, 10, true, Arrays.asList(new TaskExcludeOption[] {}));
-//
-//        Intent intent = ActiveTaskActivity.newIntent(this, task);
-//        startActivity(intent);
+        OrderedTask task = WalkingTaskFactory.timedWalkTask(
+                this, "walkingtaskid", "intendedUseDescription",
+                50.0, 30, 10, true, Arrays.asList(new TaskExcludeOption[] {}));
+
+        Intent intent = ActiveTaskActivity.newIntent(this, task);
+        startActivity(intent);
     }
 
     @Override

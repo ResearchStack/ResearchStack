@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
@@ -409,14 +410,17 @@ public class WalkingTaskFactory {
     {
         List<Step> stepList = new ArrayList<>();
 
-        // This isn't in iOS, but in Android we need to check for this so that location permission is granted
-        PackageManager pm = context.getPackageManager();
-        int hasPerm = pm.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, context.getPackageName());
-        if (hasPerm != PackageManager.PERMISSION_GRANTED) {
-            // include a permission request step that requires location
-            String title = context.getString(R.string.rsb_permission_location_title);
-            String text = context.getString(R.string.rsb_permission_location_desc);
-            stepList.add(new PermissionsStep(LocationPermissionsStepIdentifier, title, text));
+        // In-app permissions were added in Android 6.0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // This isn't in iOS, but in Android we need to check for this so that location permission is granted
+            PackageManager pm = context.getPackageManager();
+            int hasPerm = pm.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, context.getPackageName());
+            if (hasPerm != PackageManager.PERMISSION_GRANTED) {
+                // include a permission request step that requires location
+                String title = context.getString(R.string.rsb_permission_location_title);
+                String text = context.getString(R.string.rsb_permission_location_desc);
+                stepList.add(new PermissionsStep(LocationPermissionsStepIdentifier, title, text));
+            }
         }
 
         // We also need to check if GPS is turned on, and turn it on if it is not
