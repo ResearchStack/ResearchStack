@@ -287,17 +287,6 @@ public class OnboardingManagerTest {
     }
 
     @Test
-    public void testPasscodeSection() {
-        List<Step> steps = checkOnboardingSteps(OnboardingSectionType.PASSCODE, OnboardingTaskType.REGISTRATION);
-        assertEquals(steps.size(), 1);
-
-        assertEquals(steps.get(0).getIdentifier(), "passcode");
-        assertTrue(steps.get(0) instanceof PasscodeStep);
-        assertEquals(steps.get(0).getText(), "Select a 6-digit passcode. Setting up a passcode will help provide quick and secure access to this application.");
-        assertEquals(steps.get(0).getTitle(), "Identification");
-    }
-
-    @Test
     public void testLoginSection() {
         List<Step> steps = checkOnboardingSteps(OnboardingSectionType.LOGIN, OnboardingTaskType.LOGIN);
         assertEquals(steps.size(), 1);
