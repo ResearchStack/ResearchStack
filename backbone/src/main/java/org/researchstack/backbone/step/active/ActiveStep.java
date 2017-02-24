@@ -1,7 +1,7 @@
 package org.researchstack.backbone.step.active;
 
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.active.RecorderConfig;
+import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
 
 import java.util.List;
@@ -173,6 +173,13 @@ public class ActiveStep extends Step {
      */
     private List<RecorderConfig> recorderConfigurationList;
 
+    /**
+     * An image to be displayed below the instructions for the step.
+     *
+     * It will be loaded from resources with the value of this variable
+     */
+    private String imageResName;
+
     /* Default constructor needed for serilization/deserialization of object */
     ActiveStep() {
         super();
@@ -318,5 +325,13 @@ public class ActiveStep extends Step {
 
     public void setRecorderConfigurationList(List<RecorderConfig> recorderConfigurationList) {
         this.recorderConfigurationList = recorderConfigurationList;
+    }
+
+    public String getImageResName() {
+        return imageResName;
+    }
+
+    public void setImageResName(String imageResName) {
+        this.imageResName = imageResName;
     }
 }

@@ -1,4 +1,4 @@
-package org.researchstack.backbone.step.active;
+package org.researchstack.backbone.step.active.recorder;
 
 import com.google.gson.JsonObject;
 
@@ -27,16 +27,18 @@ abstract class JsonArrayDataRecorder extends Recorder {
     protected DataLogger dataLogger;
     protected File dataLoggerFile;
 
-    /** Default constructor for serialization/deserialization */
-    JsonArrayDataRecorder() {
-        super();
-    }
-
     JsonArrayDataRecorder(String identifier, Step step, File outputDirectory) {
         super(identifier, step, outputDirectory);
     }
 
-    protected void startJsonDataLogging(double frequency) {
+    @Override
+    public void cancel() {
+        if (dataLogger != null) {
+            dataLogger.cancel();
+        }
+    }
+
+    protected void startJsonDataLogging() {
         if (dataLoggerFile == null) {
             dataLoggerFile = new File(getOutputDirectory(), uniqueFilename + JSON_FILE_SUFFIX);
             dataLogger = new DataLogger(dataLoggerFile, new DataLogger.DataWriteListener() {
@@ -56,7 +58,7 @@ abstract class JsonArrayDataRecorder extends Recorder {
         setRecording(true);
 
         // Since we are writing a JsonArray, have the header and footer be
-        dataLogger.start("[", "]", frequency);
+        dataLogger.start("[", "]");
         isFirstJsonObject = true; // will avoid comma separator on write object write
     }
 

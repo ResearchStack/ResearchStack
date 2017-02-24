@@ -25,4 +25,22 @@
         android:textSize="@dimen/rsb_step_layout_countdown_text_size"
         android:textColor="@color/rsb_countdown_step_layout_text_color"/>
 
+    <ProgressBar
+        style="@style/Base.Widget.AppCompat.ProgressBar"
+        android:id="@+id/rsb_active_step_layout_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/rsb_padding_large"
+        android:indeterminate="true"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/rsb_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/rsb_step_layout_image_height"
+        android:layout_marginTop="@dimen/rsb_padding_medium"
+        android:layout_gravity="center"
+        android:scaleType="centerInside" />
+
 </LinearLayout>

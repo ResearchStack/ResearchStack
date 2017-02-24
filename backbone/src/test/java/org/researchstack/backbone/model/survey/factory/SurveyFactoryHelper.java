@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.ConsentSection;
@@ -19,8 +20,8 @@ import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
 
 public class SurveyFactoryHelper {
     public Gson gson;
-    public Context mockContext;
-    public MockResourceNameConverter converter;
+    @Mock public Context mockContext;
+    @Mock public MockResourceNameConverter converter;
 
     static final String PRIVACY_TITLE = "Privacy";
     static final String PRIVACY_LEARN_MORE = "Learn more about how your privacy and identity are protected";

@@ -1,4 +1,4 @@
-package org.researchstack.backbone.task;
+package org.researchstack.backbone.task.factory;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -11,6 +11,7 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.task.NavigableOrderedTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +20,9 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static org.researchstack.backbone.task.TremorTaskFactory.*;
+
+import static org.researchstack.backbone.task.factory.TremorTaskFactory.*;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
 /**
  * Created by TheMDP on 2/5/17.

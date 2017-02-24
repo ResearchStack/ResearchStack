@@ -12,9 +12,10 @@ import android.view.MenuItem;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.task.NavigableOrderedTask;
-import org.researchstack.backbone.task.TremorTaskFactory;
+import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.task.factory.TaskExcludeOption;
+import org.researchstack.backbone.task.factory.WalkingTaskFactory;
 import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.views.IconTabLayout;
@@ -187,6 +188,33 @@ public class MainActivity extends BaseActivity {
 //                Arrays.asList(new TremorTaskFactory.TremorTaskExcludeOption[] {}),
 //                TremorTaskFactory.HandOptions.BOTH,
 //                Arrays.asList(new TremorTaskFactory.TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the Short Walk Task
+//        OrderedTask task = WalkingTaskFactory.shortWalkTask(
+//                this, "walkingtaskid", "intendedUseDescription",
+//                30, 10, Arrays.asList(new TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the Walk back and forth test
+//        OrderedTask task = WalkingTaskFactory.walkBackAndForthTask(
+//                this, "walkingtaskid", "intendedUseDescription",
+//                30, 10, Arrays.asList(new TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the Walk back and forth test
+//        OrderedTask task = WalkingTaskFactory.timedWalkTask(
+//                this, "walkingtaskid", "intendedUseDescription",
+//                50.0, 30, 10, true, Arrays.asList(new TaskExcludeOption[] {}));
 //
 //        Intent intent = ActiveTaskActivity.newIntent(this, task);
 //        startActivity(intent);

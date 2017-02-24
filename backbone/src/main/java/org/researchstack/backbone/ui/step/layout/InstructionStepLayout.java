@@ -3,30 +3,21 @@ package org.researchstack.backbone.ui.step.layout;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorRes;
-import android.support.design.widget.FloatingActionButton;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v7.widget.AppCompatImageView;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.InstructionStepInterface;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
-import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
@@ -36,10 +27,10 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     protected InstructionStepInterface instructionStepInterface;
     protected Step step;
 
-    protected TextView titleTextView;
-    protected TextView textTextView;
-    protected AppCompatImageView imageView;
-    protected TextView moreDetailTextView;
+    protected TextView  titleTextView;
+    protected TextView  textTextView;
+    protected ImageView imageView;
+    protected TextView  moreDetailTextView;
 
     public InstructionStepLayout(Context context) {
         super(context);
@@ -97,7 +88,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
         titleTextView       = (TextView)findViewById(R.id.rsb_intruction_title);
         textTextView        = (TextView)findViewById(R.id.rsb_intruction_text);
-        imageView           = (AppCompatImageView) findViewById(R.id.rsb_image_view);
+        imageView           = (ImageView) findViewById(R.id.rsb_image_view);
         moreDetailTextView  = (TextView)findViewById(R.id.rsb_instruction_more_detail_text);
 
         if (step != null) {

@@ -47,6 +47,13 @@ public class DataLoggerManager {
         return instance;
     }
 
+    /**
+     * @return true if DataLoggerManager is initialized with context, false if not and it needs to be
+     */
+    public static boolean isInitialized() {
+        return instance != null;
+    }
+
     @MainThread
     public static void initialize(Context context) {
         if (instance == null) {

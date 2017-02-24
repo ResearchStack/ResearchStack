@@ -25,14 +25,13 @@
         tools:text="@string/lorem_long"
         tools:visibility="visible" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/rsb_image_view"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/rsb_step_layout_image_height"
         android:layout_marginTop="@dimen/rsb_padding_medium"
         android:layout_gravity="center"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/rsb_animated_check_delayed"/>
+        android:scaleType="centerInside" />
 
     <TextView
         android:id="@+id/rsb_instruction_more_detail_text"

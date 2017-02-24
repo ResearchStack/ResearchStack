@@ -1,4 +1,4 @@
-package org.researchstack.backbone.step.active;
+package org.researchstack.backbone.step.active.recorder;
 
 import org.researchstack.backbone.step.Step;
 
@@ -8,26 +8,26 @@ import java.io.File;
  * Created by TheMDP on 2/5/17.
  */
 
-public class DeviceMotionRecorderConfig extends RecorderConfig {
+public class AccelerometerRecorderConfig extends RecorderConfig {
 
     /**
-     * The frequency of sensor data collection in samples per second (Hz).
+     * The frequency of accelerometer data collection in samples per second (Hz).
      */
     private double frequency;
 
     /** Default constructor used for serialization/deserialization */
-    DeviceMotionRecorderConfig() {
+    AccelerometerRecorderConfig() {
         super();
     }
 
-    public DeviceMotionRecorderConfig(String identifier, double frequency) {
+    public AccelerometerRecorderConfig(String identifier, double frequency) {
         super(identifier);
         this.frequency = frequency;
     }
 
     @Override
     public Recorder recorderForStep(Step step, File outputDirectory) {
-        return new DeviceMotionRecorder(frequency, getIdentifier(), step, outputDirectory);
+        return new AccelerometerRecorder(frequency, getIdentifier(), step, outputDirectory);
     }
 
     public double getFrequency() {

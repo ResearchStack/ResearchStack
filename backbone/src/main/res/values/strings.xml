@@ -127,9 +127,13 @@
     <string name="rsb_format_step_title">Step %1$s of %2$s</string>
     <string name="rsb_hours">Hours</string>
     <string name="rsb_minutes">Minutes</string>
+    <string name="rsb_time_seconds">Seconds</string>
     <string name="rsb_loading_ellipses">Loading...</string>
     <string name="rsb_forgot_password">Forgot your Password?</string>
     <string name="rsb_log_out">Log out</string>
+    <string name="rsb_enable">Enable</string>
+    <string name="rsb_distance_meters">meters</string>
+    <string name="rsb_distance_feet">feet</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_data_failed">FailedP to load encrypted data, try again!</string>
@@ -225,6 +229,11 @@
     <string name="rsb_granted">Granted</string>
     <string name="rsb_optional">Optional</string>
 
+    <!-- System Features -->
+    <string name="rsb_system_feature_gps_title">GPS Required</string>
+    <string name="rsb_system_feature_gps_text">The app needs GPS enabled to record accurate
+        location-based data</string>
+
     <!-- ProfileStepLayout -->
 
     <string name="rsb_error_invalid_password">Invalid Password</string>
@@ -281,7 +290,6 @@
     <string name="rsb_share_email">Share via Email</string>
     <string name="rsb_share_facebook_key">facebook</string>
     <string name="rsb_share_email_subject">Subject</string>
-
 
     <!--
     ALL OF THE STRINGS BELOW SHOULD NOT BE EDITED

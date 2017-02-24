@@ -2,6 +2,7 @@ package org.researchstack.backbone.onboarding;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.PasscodeStep;
@@ -29,7 +30,7 @@ public class OnboardingManagerTest {
 
     ResourceNameToStringConverter mFullResourceProvider;
     OnboardingManager mOnboardingManager;
-    MockOnboardingManager mMockOnboardingManager;
+    @Mock MockOnboardingManager mMockOnboardingManager;
     SurveyFactoryHelper mSurveyFactoryHelper;
 
     @Before
@@ -286,17 +287,6 @@ public class OnboardingManagerTest {
     }
 
     @Test
-    public void testPasscodeSection() {
-        List<Step> steps = checkOnboardingSteps(OnboardingSectionType.PASSCODE, OnboardingTaskType.REGISTRATION);
-        assertEquals(steps.size(), 1);
-
-        assertEquals(steps.get(0).getIdentifier(), "passcode");
-        assertTrue(steps.get(0) instanceof PasscodeStep);
-        assertEquals(steps.get(0).getText(), "Select a 6-digit passcode. Setting up a passcode will help provide quick and secure access to this application.");
-        assertEquals(steps.get(0).getTitle(), "Identification");
-    }
-
-    @Test
     public void testLoginSection() {
         List<Step> steps = checkOnboardingSteps(OnboardingSectionType.LOGIN, OnboardingTaskType.LOGIN);
         assertEquals(steps.size(), 1);
@@ -307,6 +297,8 @@ public class OnboardingManagerTest {
     List<Step> checkOnboardingSteps(OnboardingSectionType sectionType, OnboardingTaskType taskType) {
         OnboardingSection section = getSection(sectionType);
         assertNotNull(section);
+        assertNotNull(mMockOnboardingManager);
+        assertNotNull(mSurveyFactoryHelper);
         List<Step> steps = mMockOnboardingManager.steps(mSurveyFactoryHelper.mockContext, section, taskType);
         assertNotNull(steps);
         return steps;

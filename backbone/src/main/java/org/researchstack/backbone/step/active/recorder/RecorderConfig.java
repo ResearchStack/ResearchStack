@@ -1,6 +1,4 @@
-package org.researchstack.backbone.step.active;
-
-import android.support.annotation.Nullable;
+package org.researchstack.backbone.step.active.recorder;
 
 import org.researchstack.backbone.step.Step;
 
