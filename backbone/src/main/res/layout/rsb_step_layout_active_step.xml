@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/rsb_step_layout_active_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
@@ -25,15 +27,31 @@
         android:textSize="@dimen/rsb_step_layout_countdown_text_size"
         android:textColor="@color/rsb_countdown_step_layout_text_color"/>
 
-    <ProgressBar
-        style="@style/Base.Widget.AppCompat.ProgressBar"
-        android:id="@+id/rsb_active_step_layout_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/rsb_padding_large"
-        android:indeterminate="true"
-        android:visibility="gone"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            style="@style/Base.Widget.AppCompat.ProgressBar"
+            android:id="@+id/rsb_active_step_layout_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/rsb_padding_large"
+            android:indeterminate="true"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            android:id="@+id/rsb_active_step_layout_progress_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/rsb_padding_large"
+            android:indeterminate="false"
+            android:visibility="gone"/>
+
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/rsb_image_view"
@@ -41,6 +59,7 @@
         android:layout_height="@dimen/rsb_step_layout_image_height"
         android:layout_marginTop="@dimen/rsb_padding_medium"
         android:layout_gravity="center"
-        android:scaleType="centerInside" />
+        android:scaleType="centerInside"
+        android:visibility="gone"/>
 
 </LinearLayout>
