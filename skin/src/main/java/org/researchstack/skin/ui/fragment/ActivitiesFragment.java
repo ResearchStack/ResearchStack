@@ -2,22 +2,18 @@ package org.researchstack.skin.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.joda.time.DateTime;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
@@ -28,22 +24,24 @@ import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;
+import org.researchstack.skin.ui.adapter.TaskAdapter;
 import org.researchstack.skin.ui.views.DividerItemDecoration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscription;
-import rx.subjects.PublishSubject;
 
 
 public class ActivitiesFragment extends Fragment implements StorageAccessListener {
+    private static final String LOG_TAG = ActivitiesFragment.class.getCanonicalName();
     private static final int REQUEST_TASK = 1492;
     private TaskAdapter adapter;
     private RecyclerView recyclerView;
     private Subscription subscription;
+    private SwipeRefreshLayout swipeContainer;
+
 
     @Nullable
     @Override
@@ -55,6 +53,16 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // TODO: might need to add logic to prevent multiple requests
+                fetchData();
+            }
+        });
+
     }
 
     @Override
@@ -71,7 +79,6 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
     }
 
     private void setUpAdapter() {
-        unsubscribe();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
@@ -79,6 +86,20 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                 0,
                 false));
 
+        fetchData();
+
+    }
+
+    /**
+     * Override this method to provide a customer adapter for your application.
+     * @return  The adapter for displaying the list of tasks.
+     */
+    protected TaskAdapter createTaskAdapter() {
+        return new TaskAdapter(getActivity());
+    }
+
+    private void fetchData() {
+        LogExt.d(LOG_TAG, "fetchData()");
         Observable.create(subscriber -> {
             SchedulesAndTasksModel model = DataProvider.getInstance()
                     .loadTasksAndSchedules(getActivity());
@@ -87,30 +108,100 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                 .compose(ObservableUtils.applyDefault())
                 .map(o -> (SchedulesAndTasksModel) o)
                 .subscribe(model -> {
-                    adapter = new TaskAdapter(model);
-                    recyclerView.setAdapter(adapter);
+                    swipeContainer.setRefreshing(false);
+                    if(adapter == null) {
+                        unsubscribe();
+                        adapter = createTaskAdapter();
+                        recyclerView.setAdapter(adapter);
 
-                    subscription = adapter.getPublishSubject().subscribe(task -> {
+                        subscription = adapter.getPublishSubject().subscribe(task -> {
+                            LogExt.d(LOG_TAG, "Publish subject subscribe clicked.");
+                            Task newTask = DataProvider.getInstance().loadTask(getContext(), task);
 
-                        Task newTask = DataProvider.getInstance().loadTask(getContext(), task);
+                            if (newTask == null) {
+                                Toast.makeText(getActivity(),
+                                        R.string.rss_local_error_load_task,
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
-                        if (newTask == null) {
-                            Toast.makeText(getActivity(),
-                                    R.string.rss_local_error_load_task,
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
+                            startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask),
+                                    REQUEST_TASK);
+                        });
+                    } else {
+                        adapter.clear();
+                    }
 
-                        startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask),
-                                REQUEST_TASK);
-                    });
+                    adapter.addAll(processResults(model));
+
                 });
+    }
+
+    /**
+     * Process the model to create section groups and section headers
+     * @param model
+     * @return
+     */
+    public List<Object> processResults(SchedulesAndTasksModel model) {
+        List<Object> tasks = new ArrayList<>();
+
+        DateTime now = new DateTime();
+        DateTime startOfDay = new DateTime().withTimeAtStartOfDay().minusSeconds(1);
+        DateTime startOfYesterday = new DateTime().minusDays(1).withTimeAtStartOfDay().minusSeconds(1);
+        DateTime startOfTomorrow = new DateTime().plusDays(1).withTimeAtStartOfDay().minusSeconds(1);
+
+        List<SchedulesAndTasksModel.TaskScheduleModel> yesterdayTasks = new ArrayList<>();
+        List<SchedulesAndTasksModel.TaskScheduleModel> todaysTasks = new ArrayList<>();
+        List<SchedulesAndTasksModel.TaskScheduleModel> optionalTasks = new ArrayList<>();
+
+        for (SchedulesAndTasksModel.ScheduleModel schedule : model.schedules) {
+            DateTime scheduled = (schedule.scheduledOn != null) ? new DateTime(schedule.scheduledOn) : new DateTime();
+            boolean today = (scheduled.isAfter(startOfDay) && scheduled.isBefore(startOfTomorrow));
+            boolean yesterday = (scheduled.isAfter(startOfYesterday) && scheduled.isBefore(startOfDay));
+            for (SchedulesAndTasksModel.TaskScheduleModel task : schedule.tasks) {
+                if(today && task.taskIsOptional) {
+                    optionalTasks.add(task);
+                } else if(today) {
+                    todaysTasks.add(task);
+                } else if(yesterday) {
+                    yesterdayTasks.add(task);
+                } else {
+                    // skipping task
+                    LogExt.d(LOG_TAG, "Skipping task: " + task.taskID);
+                }
+
+            }
+        }
+
+        // todays tasks
+        tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rss_activities_today_header_title,
+                now.dayOfWeek().getAsText(),
+                now.monthOfYear().getAsText(),
+                now.dayOfMonth().getAsText()),
+                getActivity().getString(R.string.rss_activities_today_header_message)));
+        tasks.addAll(todaysTasks);
+
+        // todays optional tasks
+        if(optionalTasks.size() > 0) {
+            tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rss_activities_optional_header_title),
+                    getActivity().getString(R.string.rss_activities_optional_header_message)));
+            tasks.addAll(optionalTasks);
+        }
+
+        // yesterdays tasks
+        if(yesterdayTasks.size() > 0) {
+            tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rss_activities_yesterday_header_title),
+                    getActivity().getString(R.string.rss_activities_yesterday_header_message)));
+            tasks.addAll(yesterdayTasks);
+        }
+
+        return tasks;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_TASK) {
-            LogExt.d(getClass(), "Received task result from task activity");
+            LogExt.d(LOG_TAG, "Received task result from task activity");
 
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
@@ -124,7 +215,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
 
     @Override
     public void onDataReady() {
-        LogExt.i(getClass(), "onDataReady()");
+        LogExt.i(LOG_TAG, "onDataReady()");
 
         setUpAdapter();
     }
@@ -139,76 +230,4 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         // Ignore, activity handles auth
     }
 
-    public static class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
-        List<SchedulesAndTasksModel.TaskScheduleModel> tasks;
-        HashMap<String, Boolean> taskScheduleType;
-
-        PublishSubject<SchedulesAndTasksModel.TaskScheduleModel> publishSubject = PublishSubject.create();
-
-        public TaskAdapter(SchedulesAndTasksModel model) {
-            super();
-
-            tasks = new ArrayList<>();
-            taskScheduleType = new HashMap<>();
-
-            for (SchedulesAndTasksModel.ScheduleModel schedule : model.schedules) {
-                for (SchedulesAndTasksModel.TaskScheduleModel task : schedule.tasks) {
-                    taskScheduleType.put(task.taskID, schedule.scheduleType.equals("once"));
-                    tasks.add(task);
-                }
-            }
-        }
-
-        public PublishSubject<SchedulesAndTasksModel.TaskScheduleModel> getPublishSubject() {
-            return publishSubject;
-        }
-
-        @Override
-        public TaskAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.rss_item_schedule, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(TaskAdapter.ViewHolder holder, int position) {
-            SchedulesAndTasksModel.TaskScheduleModel task = tasks.get(position);
-            boolean isOneTime = taskScheduleType.get(task.taskID);
-
-            Resources res = holder.itemView.getResources();
-            int tintColor = res.getColor(isOneTime
-                    ? R.color.rss_recurring_color
-                    : R.color.rss_one_time_color);
-
-            holder.title.setText(Html.fromHtml("<b>" + task.taskTitle + "</b>"));
-            holder.title.append("\n" + task.taskCompletionTime);
-            holder.title.setTextColor(tintColor);
-
-            Drawable drawable = holder.dailyIndicator.getDrawable();
-            drawable = DrawableCompat.wrap(drawable);
-            DrawableCompat.setTint(drawable, tintColor);
-            holder.dailyIndicator.setImageDrawable(drawable);
-
-            holder.itemView.setOnClickListener(v -> {
-                LogExt.d(getClass(), "Item clicked: " + task.taskID);
-                publishSubject.onNext(task);
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return tasks.size();
-        }
-
-        public static class ViewHolder extends RecyclerView.ViewHolder {
-            ImageView dailyIndicator;
-            AppCompatTextView title;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                dailyIndicator = (ImageView) itemView.findViewById(R.id.daily_indicator);
-                title = (AppCompatTextView) itemView.findViewById(R.id.task_title);
-            }
-        }
-    }
 }

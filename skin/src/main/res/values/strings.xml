@@ -105,5 +105,13 @@
     <string name="rss_local_result_passcode_changed">Passcode Changed</string>
     <string name="rss_local_error_load_task">Unable to load the selected task</string>
     <string name="rss_error_select_answer">Please select an answer</string>
+
+    <!-- Activities -->
+    <string name="rss_activities_today_header_title">Today, %1$s, %2$s %3$s</string>
+    <string name="rss_activities_today_header_message">To start an activity, select from the list below.</string>
+    <string name="rss_activities_yesterday_header_title">Yesterday</string>
+    <string name="rss_activities_yesterday_header_message">Below are your incomplete tasks from yesterday.\nThese are for reference only.</string>
+    <string name="rss_activities_optional_header_title">Keep Going!</string>
+    <string name="rss_activities_optional_header_message">Try one of these activities to enhance your experience in your study.</string>
     
 </resources>
