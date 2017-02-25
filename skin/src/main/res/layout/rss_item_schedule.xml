@@ -22,7 +22,7 @@
         android:layout_margin="16dp"
         android:layout_toRightOf="@id/color_bar"
         android:clickable="false"
-        android:src="@drawable/rss_ic_circle_empty_24dp" />
+        android:src="@drawable/rss_ic_circle_empty" />
 
     <TextView
         android:id="@+id/task_title"

@@ -1,24 +1,16 @@
 package org.researchstack.skin.ui.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
@@ -32,16 +24,14 @@ import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;
+import org.researchstack.skin.ui.adapter.TaskAdapter;
 import org.researchstack.skin.ui.views.DividerItemDecoration;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscription;
-import rx.subjects.PublishSubject;
 
 
 public class ActivitiesFragment extends Fragment implements StorageAccessListener {
@@ -89,7 +79,6 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
     }
 
     private void setUpAdapter() {
-        unsubscribe();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
@@ -101,7 +90,16 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
 
     }
 
+    /**
+     * Override this method to provide a customer adapter for your application.
+     * @return  The adapter for displaying the list of tasks.
+     */
+    protected TaskAdapter createTaskAdapter() {
+        return new TaskAdapter(getActivity());
+    }
+
     private void fetchData() {
+        LogExt.d(LOG_TAG, "fetchData()");
         Observable.create(subscriber -> {
             SchedulesAndTasksModel model = DataProvider.getInstance()
                     .loadTasksAndSchedules(getActivity());
@@ -112,11 +110,12 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                 .subscribe(model -> {
                     swipeContainer.setRefreshing(false);
                     if(adapter == null) {
-                        adapter = new TaskAdapter(getActivity());
+                        unsubscribe();
+                        adapter = createTaskAdapter();
                         recyclerView.setAdapter(adapter);
 
                         subscription = adapter.getPublishSubject().subscribe(task -> {
-
+                            LogExt.d(LOG_TAG, "Publish subject subscribe clicked.");
                             Task newTask = DataProvider.getInstance().loadTask(getContext(), task);
 
                             if (newTask == null) {
@@ -143,7 +142,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
      * @param model
      * @return
      */
-    private List<Object> processResults(SchedulesAndTasksModel model) {
+    public List<Object> processResults(SchedulesAndTasksModel model) {
         List<Object> tasks = new ArrayList<>();
 
         DateTime now = new DateTime();
@@ -231,148 +230,4 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         // Ignore, activity handles auth
     }
 
-    public static class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-        private static final int VIEW_TYPE_HEADER = 0;
-        private static final int VIEW_TYPE_ITEM = 1;
-
-        List<Object> tasks;
-        private LayoutInflater inflater;
-
-        PublishSubject<SchedulesAndTasksModel.TaskScheduleModel> publishSubject = PublishSubject.create();
-
-        public TaskAdapter(Context context) {
-            super();
-
-            tasks = new ArrayList<>();
-            this.inflater = LayoutInflater.from(context);
-        }
-
-        public PublishSubject<SchedulesAndTasksModel.TaskScheduleModel> getPublishSubject() {
-            return publishSubject;
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-            if (viewType == VIEW_TYPE_HEADER) {
-                View view = inflater.inflate(R.layout.rss_item_schedule_header, parent, false);
-                return new ActivitiesFragment.TaskAdapter.HeaderViewHolder(view);
-            } else {
-                View view = inflater.inflate(R.layout.rss_item_schedule, parent, false);
-                return new ActivitiesFragment.TaskAdapter.ViewHolder(view);
-            }
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder hldr, int position) {
-            Object obj = tasks.get(position);
-            if(hldr instanceof ViewHolder) {
-                ViewHolder holder = (ViewHolder) hldr;
-                SchedulesAndTasksModel.TaskScheduleModel task = (SchedulesAndTasksModel.TaskScheduleModel)obj;
-
-                Resources res = holder.itemView.getResources();
-                int tintColor = getColorForTask(res, task.taskID);
-                holder.colorBar.setBackgroundColor(tintColor);
-
-                holder.title.setText(task.taskTitle);
-                holder.subtitle.setText(task.taskCompletionTime);
-
-                holder.itemView.setOnClickListener(v -> {
-                    LogExt.d(LOG_TAG, "Item clicked: " + task.taskID + ", " + task.taskType);
-                    publishSubject.onNext(task);
-                });
-            } else {
-                HeaderViewHolder holder = (HeaderViewHolder) hldr;
-                Header header = (Header)obj;
-                holder.title.setText(header.title);
-                holder.message.setText(header.message);
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return tasks.size();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            Object item = tasks.get(position);
-            return item instanceof Header ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
-        }
-
-        // Clean all elements of the recycler
-        public void clear() {
-            tasks.clear();
-            notifyDataSetChanged();
-        }
-
-        // Add a list of items
-        public void addAll(List<Object> list) {
-            tasks.addAll(list);
-            notifyDataSetChanged();
-        }
-
-        public static class HeaderViewHolder extends RecyclerView.ViewHolder {
-
-            TextView title;
-            TextView message;
-
-            public HeaderViewHolder(View itemView) {
-                super(itemView);
-                title = (TextView) itemView.findViewById(R.id.activity_header_title);
-                message = (TextView) itemView.findViewById(R.id.activity_header_message);
-            }
-        }
-
-        public static class ViewHolder extends RecyclerView.ViewHolder {
-            View colorBar;
-            ImageView dailyIndicator;
-            TextView title;
-            TextView subtitle;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                colorBar = itemView.findViewById(R.id.color_bar);
-                dailyIndicator = (ImageView) itemView.findViewById(R.id.daily_indicator);
-                title = (TextView) itemView.findViewById(R.id.task_title);
-                subtitle = (TextView) itemView.findViewById(R.id.task_subtitle);
-            }
-        }
-
-        public static class Header {
-            String title;
-            String message;
-
-            public Header(String t, String m) {
-                title = t;
-                message = m;
-            }
-        }
-
-        // TODO: this should live somewhere else like ResourceManager?  Cause it will be app specific
-        //       and the constants defined somewhere?
-        private int getColorForTask(Resources resources, String taskId) {
-            int colorId = 0;
-            if(taskId != null) {
-                if (taskId.contains("APHTimedWalking")) {
-                    colorId = resources.getColor(R.color.rss_activity_yellow);
-                } else if (taskId.contains("APHPhonation")) {
-                    colorId = resources.getColor(R.color.rss_activity_blue);
-                } else if (taskId.contains("APHIntervalTapping")) {
-                    colorId = resources.getColor(R.color.rss_activity_purple);
-                } else if (taskId.contains("APHMedicationTracker")) {
-                    colorId = resources.getColor(R.color.rss_activity_red);
-                } else if (taskId.contains("APHTremor")) {
-                    colorId = resources.getColor(R.color.rsb_colorPrimary);
-                } else {
-                    colorId = resources.getColor(R.color.rss_activity_default);
-                }
-            } else {
-                colorId = resources.getColor(R.color.rss_activity_default);
-            }
-
-            return colorId;
-        }
-    }
 }
