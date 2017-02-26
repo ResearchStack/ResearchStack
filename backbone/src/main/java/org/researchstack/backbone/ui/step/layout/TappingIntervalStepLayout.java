@@ -1,16 +1,12 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Size;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,7 +16,6 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TappingIntervalResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.TappingIntervalStep;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,9 +34,9 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
 
     protected TappingIntervalStep tappingIntervalStep;
 
-    protected Rect stepViewRect;
-    protected Rect leftButtonRect;
-    protected Rect rightButtonRect;
+    protected TappingIntervalResult.Rect stepViewRect;
+    protected TappingIntervalResult.Rect leftButtonRect;
+    protected TappingIntervalResult.Rect rightButtonRect;
 
     protected long startTime;
     protected int tapCount;
@@ -91,6 +86,12 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
     }
 
     @Override
+    public void setupSubmitBar() {
+        super.setupSubmitBar();
+        submitBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     protected void setupActiveViews() {
         super.setupActiveViews();
 
@@ -109,6 +110,16 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
 
                 activeStepLayout.addView(tappingStepLayout, new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT, height));
+
+                // Start on a button tap
+                OnClickListener onClickListener = new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        start();
+                    }
+                };
+                leftTappingButton.setOnClickListener(onClickListener);
+                rightTappingButton.setOnClickListener(onClickListener);
             }
         });
     }
@@ -135,23 +146,27 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
         // Calculate view sizes
         int[] activeStepLayoutXY = new int[2];
         activeStepLayout.getLocationOnScreen(activeStepLayoutXY);
-        stepViewRect = new Rect(activeStepLayoutXY[0], activeStepLayoutXY[1],
+        stepViewRect = new TappingIntervalResult.Rect(activeStepLayoutXY[0], activeStepLayoutXY[1],
                 activeStepLayout.getWidth(), activeStepLayout.getHeight());
 
         // Button rects are relative to the stepViewRect
         int[] leftButtonXY = new int[2];
         leftTappingButton.getLocationOnScreen(leftButtonXY);
-        leftButtonRect = new Rect(
+        leftButtonRect = new TappingIntervalResult.Rect(
                 leftButtonXY[0] - activeStepLayoutXY[0],
                 leftButtonXY[1] - activeStepLayoutXY[1],
                 leftTappingButton.getWidth(), leftTappingButton.getHeight());
 
         int[] rightButtonXY = new int[2];
         rightTappingButton.getLocationOnScreen(rightButtonXY);
-        rightButtonRect = new Rect(
+        rightButtonRect = new TappingIntervalResult.Rect(
                 rightButtonXY[0] - activeStepLayoutXY[0],
                 rightButtonXY[1] - activeStepLayoutXY[1],
                 rightTappingButton.getWidth(), rightTappingButton.getHeight());
+
+        // Remove click listeners for start
+        leftTappingButton.setOnClickListener(null);
+        rightTappingButton.setOnClickListener(null);
 
         // Assign and wait for user touches
         setupTouchListener(leftTappingButton, LEFT_BUTTON, TappingButtonIdentifierLeft, true);
@@ -177,7 +192,7 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
                             buttonSamples[idx] = new TappingIntervalResult.Sample();
                             buttonSamples[idx].setTimestamp(motionEvent.getEventTime() - startTime);
                             buttonSamples[idx].setButtonIdentifier(buttonId);
-                            buttonSamples[idx].setLocation(new Point(
+                            buttonSamples[idx].setLocation(new TappingIntervalResult.Point(
                                     (int)(motionEvent.getX() + leftButtonRect.left),
                                     (int)(motionEvent.getY() + leftButtonRect.top)));
                             lastPointerIdx[idx] = motionEvent.getActionMasked();
@@ -243,7 +258,7 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
         tappingResult.setButtonRect1(leftButtonRect);
         tappingResult.setButtonRect2(rightButtonRect);
         tappingResult.setStepViewSize(new TappingIntervalResult.Size(
-                stepViewRect.width(), stepViewRect.height()));
+                stepViewRect.right - stepViewRect.left, stepViewRect.bottom - stepViewRect.top));
 
         stepResult.getResults().put(tappingResult.getIdentifier(), tappingResult);
 
