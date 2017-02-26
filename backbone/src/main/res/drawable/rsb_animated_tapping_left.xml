@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AS throws warning here, but support library supports it -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/rsb_tapping_left">
+
+    <target
+        android:name="left1_1"
+        android:animation="@anim/rsb_show_after_medium_delay"/>
+
+    <target
+        android:name="left1_2"
+        android:animation="@anim/rsb_show_after_medium_delay"/>
+
+    <target
+        android:name="left1_3"
+        android:animation="@anim/rsb_show_after_medium_delay"/>
+
+    <target
+        android:name="left2_1"
+        android:animation="@anim/rsb_hide_after_medium_delay"/>
+
+    <target
+        android:name="left2_2"
+        android:animation="@anim/rsb_hide_after_medium_delay"/>
+
+    <target
+        android:name="left2_3"
+        android:animation="@anim/rsb_hide_after_medium_delay"/>
+
+</animated-vector>

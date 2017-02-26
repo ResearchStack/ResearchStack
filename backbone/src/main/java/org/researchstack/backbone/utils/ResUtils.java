@@ -19,9 +19,18 @@ public class ResUtils {
     public static final String IC_FINGERPRINT               = "rsb_fingerprint";
     public static final String PHONE_IN_POCKET              = "rsb_phone_in_pocket";
     public static final String TIMER                        = "rsb_timer";
-    public static final String TIMED_WALKING_TURNAROUND     = "rsb_timed_walking_turnaround";
-    public static final String TIMED_WALKING_MAN_RETURN     = "rsb_timed_walking_man_return";
-    public static final String TIMED_WALKING_MAN_OUTBOUND   = "rsb_timed_walking_man_outbound";
+
+    public static class Tapping {
+        public static final String PHONE_TAPPING_NO_TAP         = "rsb_tapping_phone_notap_words";
+        public static final String ANIMATED_TAPPING_RIGHT       = "rsb_animated_tapping_right";
+        public static final String ANIMATED_TAPPING_LEFT        = "rsb_animated_tapping_left";
+    }
+
+    public static class TimedWalking {
+        public static final String TURNAROUND     = "rsb_timed_walking_turnaround";
+        public static final String MAN_RETURN     = "rsb_timed_walking_man_return";
+        public static final String MAN_OUTBOUND   = "rsb_timed_walking_man_outbound";
+    }
 
     public static class Tremor {
         public static final String IN_HAND                  = "rsb_tremor_in_hand";
