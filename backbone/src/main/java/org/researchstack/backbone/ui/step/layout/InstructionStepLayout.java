@@ -3,8 +3,10 @@ package org.researchstack.backbone.ui.step.layout;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.text.Html;
+import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,6 +33,9 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     protected TextView  textTextView;
     protected ImageView imageView;
     protected TextView  moreDetailTextView;
+
+    protected Handler mainHandler;
+    protected Runnable animationRepeatRunnbale;
 
     public InstructionStepLayout(Context context) {
         super(context);
@@ -82,6 +87,15 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     @Override
     public int getContentResourceId() {
         return R.layout.rsb_step_layout_instruction;
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        if (mainHandler != null) {
+            mainHandler.removeCallbacksAndMessages(null);
+        }
     }
 
     private void initializeStep() {
@@ -157,11 +171,12 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                 // TODO: other than setting a flag on the Step?
                 // TODO: catch exceptions maybe?
                 if (isAnimated) {
-                    AnimatedVectorDrawableCompat animatedVector =
+                    final AnimatedVectorDrawableCompat animatedVector =
                             AnimatedVectorDrawableCompat.create(getContext(), drawableInt);
                     imageView.setImageDrawable(animatedVector);
                     if (animatedVector != null) {
                         animatedVector.start();
+                        startAnimationRepeat(animatedVector);
                     }
                 } else {
                     imageView.setImageResource(drawableInt);
@@ -171,6 +186,25 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             }
         } else {
             imageView.setVisibility(View.GONE);
+        }
+    }
+
+    protected void startAnimationRepeat(final AnimatedVectorDrawableCompat animatedVector) {
+        if (instructionStepInterface.getAnimationRepeatDuration() > 0) {
+            if (mainHandler == null) {
+                mainHandler = new Handler();
+            }
+            mainHandler.removeCallbacksAndMessages(null);
+            final long repeatDuration = instructionStepInterface.getAnimationRepeatDuration();
+            animationRepeatRunnbale = new Runnable() {
+                @Override
+                public void run() {
+                    animatedVector.stop();
+                    animatedVector.start();
+                    mainHandler.postDelayed(animationRepeatRunnbale, repeatDuration);
+                }
+            };
+            mainHandler.postDelayed(animationRepeatRunnbale, repeatDuration);
         }
     }
 

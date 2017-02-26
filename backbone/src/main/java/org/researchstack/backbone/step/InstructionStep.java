@@ -48,6 +48,11 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
     boolean isImageAnimated;
 
     /**
+     * The duration in between animation repeats in milliseconds
+     */
+    long animationRepeatDuration;
+
+    /**
      Optional icon image to show above the title and text.
      */
     String iconImage;
@@ -115,6 +120,13 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
     }
     public String getNextStepIdentifier() {
         return nextStepIdentifier;
+    }
+
+    public void setAnimationRepeatDuration(long animationRepeatDuration) {
+        this.animationRepeatDuration = animationRepeatDuration;
+    }
+    public long getAnimationRepeatDuration() {
+        return animationRepeatDuration;
     }
 
     @Override
