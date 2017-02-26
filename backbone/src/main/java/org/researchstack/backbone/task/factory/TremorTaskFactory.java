@@ -41,10 +41,6 @@ public class TremorTaskFactory {
     public static final String TremorTestBendArmStepIdentifier      = "tremor.handAtShoulderLengthWithElbowBent";
     public static final String TremorTestTouchNoseStepIdentifier    = "tremor.handToNose";
     public static final String TremorTestTurnWristStepIdentifier    = "tremor.handQueenWave";
-    public static final String ActiveTaskMostAffectedHandIdentifier = "mostAffected";
-    public static final String ActiveTaskLeftHandIdentifier         = "left";
-    public static final String ActiveTaskRightHandIdentifier        = "right";
-    public static final String ActiveTaskSkipHandStepIdentifier     = "skipHand";
 
     /**
      * Returns a predefined task that measures hand tremor.
@@ -79,7 +75,7 @@ public class TremorTaskFactory {
                 tremorOptionList, handOption, taskOptionList, leftFirstIfDoingBoth);
     }
 
-    // This method is separate mainly for unit testing purposes, to eliminate randomness
+    // This method is separate mainly for unit testing purposes, to eliminate hand randomness
     protected static NavigableOrderedTask tremorTask(
             Context context,
             String identifier,
@@ -535,19 +531,5 @@ public class TremorTaskFactory {
         HAND_TO_NOSE,
         // Exclude the queen-wave steps.
         QUEEN_WAVE
-    }
-
-    /**
-     * Values that identify the hand(s) to be used in an active task.
-     *
-     * By default, the participant will be asked to use their most affected hand.
-     */
-    public enum HandOptions {
-        // Task should only test the left hand
-        LEFT,
-        // Task should only test the right hand
-        RIGHT,
-        // Task should test both left and right hands
-        BOTH;
     }
 }

@@ -202,10 +202,10 @@ public class WalkingTaskFactory {
                     FitnessStep step = new FitnessStep(ShortWalkRestStepIdentifier);
 
                     String titleFormat = context.getString(R.string.rsb_WALK_STAND_INSTRUCTION_FORMAT);
-                    String title = String.format(titleFormat, convertDurationToString(context, restDuration));
+                    String title = String.format(titleFormat, TaskFactory.convertDurationToString(context, restDuration));
                     step.setTitle(title);
                     String voiceTitleFormat = context.getString(R.string.rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT);
-                    String voiceTitle = String.format(voiceTitleFormat, convertDurationToString(context, restDuration));
+                    String voiceTitle = String.format(voiceTitleFormat, TaskFactory.convertDurationToString(context, restDuration));
                     step.setSpokenInstruction(voiceTitle);
                     step.setRecorderConfigurationList(recorderConfigList);
                     step.setShouldContinueOnFinish(true);
@@ -314,7 +314,7 @@ public class WalkingTaskFactory {
                 {
                     WalkingTaskStep step = new WalkingTaskStep(ShortWalkOutboundStepIdentifier);
                     String titleFormat = context.getString(R.string.rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT);
-                    String title = String.format(titleFormat, convertDurationToString(context, walkDuration));
+                    String title = String.format(titleFormat, TaskFactory.convertDurationToString(context, walkDuration));
                     step.setTitle(title);
                     step.setSpokenInstruction(title);
                     step.setRecorderConfigurationList(recorderConfigList);
@@ -342,7 +342,7 @@ public class WalkingTaskFactory {
                     FitnessStep step = new FitnessStep(ShortWalkRestStepIdentifier);
 
                     String titleFormat = context.getString(R.string.rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT);
-                    String title = String.format(titleFormat, convertDurationToString(context, restDuration));
+                    String title = String.format(titleFormat, TaskFactory.convertDurationToString(context, restDuration));
                     step.setTitle(title);
                     step.setSpokenInstruction(title);
                     step.setRecorderConfigurationList(recorderConfigList);
@@ -528,7 +528,7 @@ public class WalkingTaskFactory {
                 step.setSpokenInstruction(title);
                 step.setRecorderConfigurationList(recorderConfigList);
                 step.setStepDuration(timeLimit == 0 ? Integer.MAX_VALUE : timeLimit);
-                step.setImageResName(ResUtils.TIMED_WALKING_MAN_OUTBOUND);
+                step.setImageResName(ResUtils.TimedWalking.MAN_OUTBOUND);
                 stepList.add(step);
             }
 
@@ -539,7 +539,7 @@ public class WalkingTaskFactory {
                 step.setSpokenInstruction(title);
                 step.setRecorderConfigurationList(recorderConfigList);
                 step.setStepDuration(turnAroundTimeLimit == 0 ? Integer.MAX_VALUE : turnAroundTimeLimit);
-                step.setImageResName(ResUtils.TIMED_WALKING_TURNAROUND);
+                step.setImageResName(ResUtils.TimedWalking.TURNAROUND);
                 stepList.add(step);
             }
 
@@ -550,7 +550,7 @@ public class WalkingTaskFactory {
                 step.setSpokenInstruction(title);
                 step.setRecorderConfigurationList(recorderConfigList);
                 step.setStepDuration(timeLimit == 0 ? Integer.MAX_VALUE : timeLimit);
-                step.setImageResName(ResUtils.TIMED_WALKING_MAN_RETURN);
+                step.setImageResName(ResUtils.TimedWalking.MAN_RETURN);
                 stepList.add(step);
             }
         }
@@ -560,25 +560,6 @@ public class WalkingTaskFactory {
         }
 
         return new OrderedTask(identifier, stepList);
-    }
-
-    /**
-     * In iOS, this method turns duration into "for X minutes, Y seconds" but in Android,
-     * you can only localize a duration to be  "in X minutes, Y seconds", so use that instead
-     * @param durationInSeconds the duration in seconds
-     * @return a string formatted to "in X minutes, Y seconds" where x & y are from durationInSeconds
-     */
-    private static String convertDurationToString(Context context, int durationInSeconds) {
-        int minutes = durationInSeconds / 60;
-        int seconds = durationInSeconds - minutes * 60;
-        if (minutes > 0) {
-            return String.format(Locale.getDefault(), "%d %s, %d %s",
-                    minutes, context.getString(R.string.rsb_minutes).toLowerCase(),
-                    seconds, context.getString(R.string.rsb_time_seconds).toLowerCase());
-        } else {
-            return String.format(Locale.getDefault(), "%d %s",
-                    seconds, context.getString(R.string.rsb_time_seconds).toLowerCase());
-        }
     }
 
     /**
