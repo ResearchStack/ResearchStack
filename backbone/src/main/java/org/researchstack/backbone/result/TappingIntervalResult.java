@@ -1,8 +1,5 @@
 package org.researchstack.backbone.result;
 
-import android.graphics.Point;
-import android.graphics.Rect;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -156,7 +153,7 @@ public class TappingIntervalResult extends Result {
         TappingButtonIdentifierRight;
     }
 
-    public static final class Size {
+    public static final class Size implements Serializable {
 
         private int width;
         private int height;
@@ -180,6 +177,38 @@ public class TappingIntervalResult extends Result {
 
         public void setHeight(int height) {
             this.height = height;
+        }
+    }
+
+    public static final class Rect implements Serializable {
+        public int bottom;
+        public int left;
+        public int right;
+        public int top;
+
+        public Rect() {
+            throw new RuntimeException("Stub!");
+        }
+
+        public Rect(int left, int top, int right, int bottom) {
+            this.left = left;
+            this.top = top;
+            this.right = right;
+            this.bottom = bottom;
+        }
+    }
+
+    public static final class Point implements Serializable {
+        public int x;
+        public int y;
+
+        public Point() {
+            throw new RuntimeException("Stub!");
+        }
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
     }
 }
