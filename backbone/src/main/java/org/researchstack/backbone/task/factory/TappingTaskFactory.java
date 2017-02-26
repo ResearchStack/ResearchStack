@@ -102,8 +102,8 @@ public class TappingTaskFactory {
                 break;
         }
 
-        // Obtain sensor frequency for Walking Task recorders
-        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_tremor_task);
+        // Obtain sensor frequency for Tapping Task recorders
+        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_tapping_task);
 
         // Make steps for one or both hands
         for (int hand = 1; hand <= handCount; hand++) {

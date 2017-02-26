@@ -105,7 +105,7 @@ public class WalkingTaskFactory {
         List<Step> stepList = new ArrayList<>();
 
         // Obtain sensor frequency for Walking Task recorders
-        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_tremor_task);
+        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_walking_task);
 
         if (!optionList.contains(TaskExcludeOption.INSTRUCTIONS)) {
             {
@@ -272,7 +272,7 @@ public class WalkingTaskFactory {
         List<Step> stepList = new ArrayList<>();
 
         // Obtain sensor frequency for Walking Task recorders
-        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_tremor_task);
+        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_walking_task);
 
         if (!optionList.contains(TaskExcludeOption.INSTRUCTIONS)) {
             {
@@ -503,7 +503,7 @@ public class WalkingTaskFactory {
         }
 
         // Obtain sensor frequency for Walking Task recorders
-        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_tremor_task);
+        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_walking_task);
 
         {
             List<RecorderConfig> recorderConfigList = new ArrayList<>();
