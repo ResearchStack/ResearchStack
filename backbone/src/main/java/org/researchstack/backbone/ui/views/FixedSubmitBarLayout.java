@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.views;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
@@ -7,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
-import org.researchstack.backbone.ui.step.layout.TappingIntervalStepLayout;
 
 public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements StepLayout
 {
