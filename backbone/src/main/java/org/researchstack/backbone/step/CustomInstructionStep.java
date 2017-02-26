@@ -41,6 +41,11 @@ public class CustomInstructionStep extends CustomStep implements NavigableOrdere
     boolean isImageAnimated;
 
     /**
+     * The duration in between animation repeats in milliseconds
+     */
+    long animationRepeatDuration;
+
+    /**
      Optional icon image to show above the title and text.
      */
     String iconImage;
@@ -112,6 +117,13 @@ public class CustomInstructionStep extends CustomStep implements NavigableOrdere
     @Override
     public boolean getIsImageAnimated() {
         return isImageAnimated;
+    }
+
+    public void setAnimationRepeatDuration(long animationRepeatDuration) {
+        this.animationRepeatDuration = animationRepeatDuration;
+    }
+    public long getAnimationRepeatDuration() {
+        return animationRepeatDuration;
     }
 
     @Override

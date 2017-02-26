@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.views;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
@@ -7,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
 import org.researchstack.backbone.R;
@@ -17,7 +17,9 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
 {
     protected LayoutInflater layoutInflater;
     protected SubmitBar submitBar;
+    protected View submitBarGuide;
     protected ViewGroup contentContainer;
+    protected ObservableScrollView scrollView;
 
     public FixedSubmitBarLayout(Context context)
     {
@@ -58,9 +60,9 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
         contentContainer.addView(content, 0);
 
         // Init scrollview and submit bar guide positioning
-        final View submitBarGuide = findViewById(R.id.rsb_submit_bar_guide);
+        submitBarGuide = findViewById(R.id.rsb_submit_bar_guide);
         submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-        ObservableScrollView scrollView = (ObservableScrollView) findViewById(R.id.rsb_content_container_scrollview);
+        scrollView = (ObservableScrollView) findViewById(R.id.rsb_content_container_scrollview);
         scrollView.setScrollListener(scrollY -> onScrollChanged(scrollView, submitBarGuide, submitBar));
         scrollView.getViewTreeObserver()
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
@@ -100,7 +102,41 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
         }
     }
 
+    /**
+     * Calculated the remaining height left in the container, that if filled,
+     * would make the scrollview be "fillviewport"
+     * We avoid fillviewport however because it interferes with the submitbar
+     * @param heightCalculatedListener will be called once height is calculated
+     */
+    protected void remainingHeightOfContainer(final HeightCalculatedListener heightCalculatedListener) {
+        float submitbarY = submitBar.getY();
+        int containerHeight = contentContainer.getHeight();
+
+        // Views have not been laid out yet
+        if (containerHeight <= 0) {
+            submitBar.getViewTreeObserver().addOnGlobalLayoutListener(
+                    new ViewTreeObserver.OnGlobalLayoutListener()
+            {
+                @Override
+                public void onGlobalLayout() {
+                    submitBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    float submitbarY = submitBar.getY();
+                    int containerHeight = contentContainer.getHeight();
+
+                    heightCalculatedListener.heightCalculated((int)submitbarY - containerHeight);
+                }
+            });
+        } else {
+            heightCalculatedListener.heightCalculated((int)submitbarY - containerHeight);
+        }
+    }
+
     public SubmitBar getSubmitBar() {
         return submitBar;
+    }
+
+    public interface HeightCalculatedListener {
+        void heightCalculated(int height);
     }
 }

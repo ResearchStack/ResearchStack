@@ -14,6 +14,8 @@ import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.task.factory.HandOptions;
+import org.researchstack.backbone.task.factory.TappingTaskFactory;
 import org.researchstack.backbone.task.factory.TaskExcludeOption;
 import org.researchstack.backbone.task.factory.WalkingTaskFactory;
 import org.researchstack.backbone.ui.ActiveTaskActivity;
@@ -215,6 +217,15 @@ public class MainActivity extends BaseActivity {
 //        OrderedTask task = WalkingTaskFactory.timedWalkTask(
 //                this, "walkingtaskid", "intendedUseDescription",
 //                50.0, 30, 10, true, Arrays.asList(new TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the Walk back and forth test
+//        OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
+//                this, "walkingtaskid", "intendedUseDescription",
+//                30, HandOptions.BOTH, Arrays.asList(new TaskExcludeOption[] {}));
 //
 //        Intent intent = ActiveTaskActivity.newIntent(this, task);
 //        startActivity(intent);

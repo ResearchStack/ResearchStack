@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -93,10 +94,12 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
 
     protected ActiveStep activeStep;
 
+    protected LinearLayout activeStepLayout;
     protected TextView titleTextview;
     protected TextView textTextview;
     protected TextView timerTextview;
     protected ProgressBar progressBar;
+    protected ProgressBar progressBarHorizontal;
     protected ImageView imageView;
 
     public ActiveStepLayout(Context context) {
@@ -179,12 +182,6 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
 
         if (activeStep.getShouldPlaySoundOnStart()) {
             playSound();
-        }
-
-        if (activeStep.hasCountDown()) {
-            timerTextview.setVisibility(View.VISIBLE);
-        } else {
-            timerTextview.setVisibility(View.GONE);
         }
 
         if (activeStep.getStepDuration() > 0) {
@@ -320,6 +317,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         timerTextview = (TextView) contentContainer.findViewById(R.id.rsb_active_step_layout_countdown);
 
         progressBar = (ProgressBar) contentContainer.findViewById(R.id.rsb_active_step_layout_progress);
+        progressBarHorizontal = (ProgressBar) contentContainer.findViewById(R.id.rsb_active_step_layout_progress_horizontal);
 
         imageView = (ImageView) contentContainer.findViewById(R.id.rsb_image_view);
         if (activeStep.getImageResName() != null) {
@@ -330,6 +328,14 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
             }
         } else {
             imageView.setVisibility(View.GONE);
+        }
+
+        activeStepLayout = (LinearLayout) contentContainer.findViewById(R.id.rsb_step_layout_active_layout);
+
+        if (activeStep.hasCountDown()) {
+            timerTextview.setVisibility(View.VISIBLE);
+        } else {
+            timerTextview.setVisibility(View.GONE);
         }
     }
 

@@ -24,4 +24,7 @@ public interface InstructionStepInterface {
 
     void setIsImageAnimated(boolean isImageAnimated);
     boolean getIsImageAnimated();
+
+    void setAnimationRepeatDuration(long animationRepeatDuration);
+    long getAnimationRepeatDuration();
 }

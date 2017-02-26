@@ -13,6 +13,8 @@
     <dimen name="rsb_item_size_default">@dimen/rsb_item_size_small</dimen>
     <dimen name="rsb_item_size_divider">1dp</dimen>
 
+    <dimen name="rsb_item_size_submit_bar">56dp</dimen>
+
     <!-- Item Margin -->
     <dimen name="rsb_margin_left">48dp</dimen>
     <dimen name="rsb_margin_right">16dp</dimen>
@@ -21,12 +23,16 @@
     <dimen name="rsb_text_size_title">20sp</dimen>
     <dimen name="rsb_text_size_detail">14sp</dimen>
 
-    <dimen name="rsb_step_layout_image_height">200dp</dimen>
-
     <dimen name="rsb_step_layout_countdown_stroke_width">10dp</dimen>
-    <dimen name="rsb_step_layout_countdown_size">@dimen/rsb_step_layout_image_height</dimen>
     <dimen name="rsb_step_layout_countdown_text_size">40sp</dimen>
 
+    <dimen name="rsb_step_layout_tapping_interval_count_text_size">80sp</dimen>
+
+    <!-- Image size -->
+    <dimen name="rsb_step_layout_image_height">200dp</dimen>
     <dimen name="rsb_check_mark_size">@dimen/rsb_step_layout_image_height</dimen>
+    <dimen name="rsb_step_layout_countdown_size">@dimen/rsb_step_layout_image_height</dimen>
+
+    <dimen name="rsb_step_layout_tapping_interval_button_size">100dp</dimen>
 
 </resources>

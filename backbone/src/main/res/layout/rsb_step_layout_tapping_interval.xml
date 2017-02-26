@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/rsb_total_taps_textview"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/rsb_TOTAL_TAPS_LABEL"/>
+
+    <TextView
+        android:id="@+id/rsb_total_taps_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/rsb_step_layout_tapping_interval_count_text_size"
+        android:padding="@dimen/rsb_padding_medium"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/rsb_total_taps_textview"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.FloatingActionButton
+                app:theme="@style/Base.Widget.AppCompat.ImageButton"
+                android:id="@+id/rsb_tapping_interval_button_left"
+                android:layout_width="@dimen/rsb_step_layout_tapping_interval_button_size"
+                android:layout_height="@dimen/rsb_step_layout_tapping_interval_button_size"
+                android:layout_margin="@dimen/rsb_padding_large"/>
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/rsb_TAP_BUTTON_TITLE"
+                android:elevation="16dp"
+                android:textColor="@color/rsb_step_layout_tapping_button_text_color"
+                android:clickable="false"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.FloatingActionButton
+                app:theme="@style/Base.Widget.AppCompat.ImageButton"
+                android:id="@+id/rsb_tapping_interval_button_right"
+                android:layout_width="@dimen/rsb_step_layout_tapping_interval_button_size"
+                android:layout_height="@dimen/rsb_step_layout_tapping_interval_button_size"
+                android:layout_margin="@dimen/rsb_padding_large"/>
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/rsb_TAP_BUTTON_TITLE"
+                android:elevation="16dp"
+                android:textColor="@color/rsb_step_layout_tapping_button_text_color"
+                android:clickable="false"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
