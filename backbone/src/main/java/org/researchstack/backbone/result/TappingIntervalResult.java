@@ -153,6 +153,10 @@ public class TappingIntervalResult extends Result {
         TappingButtonIdentifierRight;
     }
 
+    /**
+     * This is re-created so that it can be Serializable,
+     * and we have control over its serialization
+     */
     public static final class Size implements Serializable {
 
         private int width;
@@ -180,6 +184,10 @@ public class TappingIntervalResult extends Result {
         }
     }
 
+    /**
+     * This is re-created so that it can be Serializable,
+     * and we have control over its serialization
+     */
     public static final class Rect implements Serializable {
         public int bottom;
         public int left;
@@ -198,6 +206,10 @@ public class TappingIntervalResult extends Result {
         }
     }
 
+    /**
+     * This is re-created so that it can be Serializable,
+     * and we have control over its serialization
+     */
     public static final class Point implements Serializable {
         public int x;
         public int y;

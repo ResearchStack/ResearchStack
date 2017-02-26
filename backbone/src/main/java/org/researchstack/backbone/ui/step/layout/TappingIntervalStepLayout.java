@@ -3,7 +3,6 @@ package org.researchstack.backbone.ui.step.layout;
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TappingIntervalResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.TappingIntervalStep;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -196,6 +196,8 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
                                     (int)(motionEvent.getX() + leftButtonRect.left),
                                     (int)(motionEvent.getY() + leftButtonRect.top)));
                             lastPointerIdx[idx] = motionEvent.getActionMasked();
+
+                            LogExt.d(getClass(), "tap down with button idx " + idx);
                         }
                         break;
                     case MotionEvent.ACTION_UP:
@@ -220,8 +222,10 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
                             if (countsAsATap) {
                                 countATap();
                             }
-                            Log.d("TODO_REMOVE", "tap up with idx " + idx);
+
+                            LogExt.d(getClass(), "tap up with button idx " + idx);
                         }
+
                         break;
                 }
 
