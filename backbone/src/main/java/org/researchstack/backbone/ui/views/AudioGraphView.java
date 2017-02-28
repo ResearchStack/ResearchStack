@@ -19,8 +19,8 @@ import java.util.List;
  * Created by TheMDP on 2/27/17.
  *
  * The AudioGraphView is a vertically centered bar graph that begins drawing on the right side
- * of a view and keeps drawing pushing sample to the left so as to appear the audio
- * is moving across the graph as you continue to make calls to addSample
+ * of a view and old samples are pushed to the left so as to appear the audio
+ * is moving across the graph as you continue to make calls to addSample()
  */
 
 public class AudioGraphView extends View {

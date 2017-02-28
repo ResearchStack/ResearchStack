@@ -17,6 +17,9 @@ import org.researchstack.backbone.ui.views.AudioGraphView;
 
 /**
  * Created by TheMDP on 2/27/17.
+ *
+ * The AudioStepLayout class shows a graph in real-time of the user's microphone data
+ * It does this by taking in data from the AudioRecorder and forwarding it to an AudioGraphView
  */
 
 public class AudioStepLayout extends ActiveStepLayout implements AudioRecorder.AudioRecorderListener {

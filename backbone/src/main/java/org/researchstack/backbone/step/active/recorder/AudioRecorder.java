@@ -21,7 +21,7 @@ import java.util.Date;
  * Created by TheMDP on 2/26/17.
  *
  * The AudioRecorder records audio in a format specified by the AudioRecorderSettings
- * It bundles the result in an AudioResult object in which it return in the recorder listener
+ * It bundles the result in an AudioResult object in which it returns in the recorder listener
  */
 
 public class AudioRecorder extends Recorder {
@@ -38,15 +38,14 @@ public class AudioRecorder extends Recorder {
     private AudioRecorderListener audioRecorderListener;
 
     /**
-     * Used to check amplitude of the sample as fast as possible
-     * If 1 millisecond proves too slow, we can use a different thread
+     * Used to check amplitude of the sample at a desired frequency
      */
     private Handler  mainHandler;
     private Runnable sampleMonitorRunnable;
 
     /**
      * The AudioRecorder can give average sample callbacks at any desired frequency
-     * These variables keep track of the running average
+     * These variables keep track of the running average per callback window
      */
     private long sampleSumSinceLastCallback;
     private int samplesSinceLastCallback;
@@ -54,7 +53,8 @@ public class AudioRecorder extends Recorder {
     private long msBetweenCallbacks;
 
     /**
-     * the rolling average of the audio data, will get an overall picture of the audio's background noise
+     * These keep track of the entire rolling average for the entire life-cycle of AudioRecorder
+     * It can be used to get an overall picture of the audio's background noise
      */
     private long totalRollingAvg;
     private int totalRollingAvgSampleCount;

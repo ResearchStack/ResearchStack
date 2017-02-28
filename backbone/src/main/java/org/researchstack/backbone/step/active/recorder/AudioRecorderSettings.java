@@ -22,7 +22,6 @@ public class AudioRecorderSettings implements Serializable {
     /**
      * On Android, not all sample rates are available for all devices,
      * so it is customary to provide a range of sample rates to choose from
-     * this is the sample rate that was chosen as the best compatible one
      */
     private int[] possibleSampleRate;
 

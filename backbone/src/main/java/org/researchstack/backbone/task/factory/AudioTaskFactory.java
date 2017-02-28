@@ -38,7 +38,7 @@ public class AudioTaskFactory {
 
     public static final String AudioStepIdentifier                  = "audio";
     public static final String AudioTooLoudStepIdentifier           = "audio.tooloud";
-    public static final String MicrophonePermissionsStepIdentifier      = "microphonepermission";
+    public static final String MicrophonePermissionsStepIdentifier  = "microphonepermission";
 
     /**
      * Returns a predefined task that enables an audio recording possibly with a check of the audio level.
@@ -96,7 +96,7 @@ public class AudioTaskFactory {
 
         // In-app permissions were added in Android 6.0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // This isn't in iOS, but in Android we need to check for this so that location permission is granted
+            // This isn't in iOS, but in Android we need to check for this so that microphone permission is granted
             PackageManager pm = context.getPackageManager();
             int hasPerm = pm.checkPermission(Manifest.permission.RECORD_AUDIO, context.getPackageName());
             if (hasPerm != PackageManager.PERMISSION_GRANTED) {
