@@ -45,7 +45,7 @@ public class FileResult extends Result {
      */
     private File file;
 
-    /* Default identifier for serilization/deserialization */
+    /* Default identifier for serialization/deserialization */
     FileResult() {
         super();
     }
