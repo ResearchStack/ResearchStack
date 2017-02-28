@@ -210,6 +210,8 @@
     <string name="rsb_permission_location_title">Location</string>
     <string name="rsb_permission_location_desc">The app needs location permissions to show accurate
         location-based data</string>
+    <string name="rsb_permission_microphone_title">Microphone</string>
+    <string name="rsb_permission_microphone_desc">The app needs microphone recording permission to read accurate audio-based data</string>
     <string name="rsb_permission_notification_title">Notifications</string>
     <string name="rsb_permission_notification_desc">The app needs your permission in order to show
     notifications when you complete surveys. This permission is optional and can be enabled in
