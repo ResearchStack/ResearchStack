@@ -139,8 +139,8 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
 
     /**
      * Process the model to create section groups and section headers
-     * @param model
-     * @return
+     * @param model SchedulesAndTasksModel object
+     * @return a list of section groups and section headers
      */
     public List<Object> processResults(SchedulesAndTasksModel model) {
         List<Object> tasks = new ArrayList<>();

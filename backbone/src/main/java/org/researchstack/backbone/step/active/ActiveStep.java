@@ -180,7 +180,7 @@ public class ActiveStep extends Step {
      */
     private String imageResName;
 
-    /* Default constructor needed for serilization/deserialization of object */
+    /* Default constructor needed for serialization/deserialization of object */
     ActiveStep() {
         super();
     }

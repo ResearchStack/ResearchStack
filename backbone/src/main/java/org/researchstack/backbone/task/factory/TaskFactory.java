@@ -33,6 +33,7 @@ public class TaskFactory {
         public static final String PedometerRecorderIdentifier      = "pedometer";
         public static final String DeviceMotionRecorderIdentifier   = "deviceMotion";
         public static final String LocationRecorderIdentifier       = "location";
+        public static final String AudioRecorderIdentifier          = "audio";
 
         // Step Identifiers for instructions
         public static final String Instruction0StepIdentifier = "instruction";

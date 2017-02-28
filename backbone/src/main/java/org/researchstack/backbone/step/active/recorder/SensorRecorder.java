@@ -30,18 +30,15 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
     private static final long MICRO_SECONDS_PER_SEC = 1000000L;
 
     /**
-     * The frequency of accelerometer data collection in samples per second (Hz).
-     * Android Sensors do not allow exact frequency sepcifications, per their documentation,
-     * it is only a HINT, so we must manage it ourselves in a runnable here
+     * The frequency of the sensor data collection in samples per second (Hz).
+     * Android Sensors do not allow exact frequency specifications, per their documentation,
+     * it is only a HINT, so we must manage it ourselves in a posted runnable with delay
      */
     private double frequency;
 
     private SensorManager sensorManager;
     private List<Sensor> sensorList;
 
-    /**
-     * the jsonObject that will be written to the file at frequency desired
-     */
     private Handler mainHandler;
     private Runnable jsonWriterRunnable;
     private int  writeCounter;
