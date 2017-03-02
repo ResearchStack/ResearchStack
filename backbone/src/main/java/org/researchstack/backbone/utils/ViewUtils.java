@@ -6,6 +6,8 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -88,4 +90,13 @@ public class ViewUtils {
         }
     }
 
+    /**
+     * @param context can be app or activity, used for Resources class
+     * @param dp the size in dp as the input
+     * @return the dp converted to px for this device based on its display metrics
+     */
+    public static int dpToPx(Context context, int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, dp, displayMetrics);
+    }
 }

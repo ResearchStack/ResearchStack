@@ -12,8 +12,11 @@ import android.view.MenuItem;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.active.recorder.AudioRecorderSettings;
+import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.task.factory.AudioTaskFactory;
 import org.researchstack.backbone.task.factory.HandOptions;
 import org.researchstack.backbone.task.factory.TappingTaskFactory;
 import org.researchstack.backbone.task.factory.TaskExcludeOption;
@@ -213,7 +216,7 @@ public class MainActivity extends BaseActivity {
 //        startActivity(intent);
 
         // TODO: integrate this into the Scheduled Activities
-        // TODO: for now, uncomment this to run/test the Walk back and forth test
+        // TODO: for now, uncomment this to run/test the timed walk task
 //        OrderedTask task = WalkingTaskFactory.timedWalkTask(
 //                this, "walkingtaskid", "intendedUseDescription",
 //                50.0, 30, 10, true, Arrays.asList(new TaskExcludeOption[] {}));
@@ -222,10 +225,21 @@ public class MainActivity extends BaseActivity {
 //        startActivity(intent);
 
         // TODO: integrate this into the Scheduled Activities
-        // TODO: for now, uncomment this to run/test the Walk back and forth test
+        // TODO: for now, uncomment this to run/test the tapping task
 //        OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
 //                this, "walkingtaskid", "intendedUseDescription",
 //                30, HandOptions.BOTH, Arrays.asList(new TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the Audio task
+//        NavigableOrderedTask task = AudioTaskFactory.audioTask(
+//                this, "audiotaskid", "intendedUseDescription",
+//                "speech description", "short speech description", 30,
+//                AudioRecorderSettings.defaultSettings(), true,
+//                Arrays.asList(new TaskExcludeOption[] {}));
 //
 //        Intent intent = ActiveTaskActivity.newIntent(this, task);
 //        startActivity(intent);

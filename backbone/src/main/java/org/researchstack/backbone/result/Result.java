@@ -33,7 +33,7 @@ public class Result implements Serializable {
     // unimplemented but exists in RK, implement or delete if not needed
     private boolean saveable;
 
-    /* Default identifier for serilization/deserialization */
+    /* Default identifier for serialization/deserialization */
     Result() {
         super();
     }

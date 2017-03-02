@@ -40,7 +40,7 @@ public abstract class RecorderConfig implements Serializable {
      * database; in other cases, it can make sense to make the identifier human
      * readable.
      */
-    private String identifier;
+    protected String identifier;
 
     /** Default constructor used for serialization/deserialization */
     RecorderConfig() {

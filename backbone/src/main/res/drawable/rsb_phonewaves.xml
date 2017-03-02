@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="242dp"
+        android:height="623dp"
+        android:viewportWidth="242.0"
+        android:viewportHeight="623.0">
+    <path
+        android:pathData="M26.4,1c-10.6,2.2 -18.4,8.4 -23,18.3l-2.9,6.2 0,226 0,226 2.8,6c3.6,7.8 8.5,12.7 16.1,16.2l6.1,2.8 95,0c109.9,0 101.1,0.8 111.2,-9.8 10.9,-11.4 9.8,16.4 9.8,-241.7l0,-225.5 -2.6,-5.6c-1.4,-3 -5,-7.8 -7.8,-10.6 -9.5,-9.4 -1.7,-8.8 -107.6,-8.9 -51.1,-0.1 -94.8,0.2 -97.1,0.6zM228,246.5l0,184.5 -107,0 -107,0 0,-184.5 0,-184.5 107,0 107,0 0,184.5zM127.7,448.9c7.6,3.5 12,13.5 9.3,21.5 -2.6,8 -8.9,12.7 -17.1,12.8 -10.2,0 -18.4,-7.7 -18.3,-17.5 0.1,-14.1 13.3,-22.6 26.1,-16.8z"
+        android:strokeColor="@color/rsb_instruction_step_layout_image_tint_color"
+        android:fillColor="@color/rsb_instruction_step_layout_image_tint_color"/>
+    <path
+        android:pathData="M112,452.2c-5.3,3.7 -7.4,7.2 -7.4,12.6 0,8.9 6.3,15.4 14.8,15.4 11.7,0 18.7,-11.1 13.7,-21.4 -3.9,-8.1 -14.1,-11.3 -21.1,-6.6z"
+        android:strokeColor="@color/rsb_instruction_step_layout_image_tint_color"
+        android:fillColor="@color/rsb_instruction_step_layout_image_tint_color"/>
+    <path
+        android:pathData="M101.7,534.5c-20.3,3.9 -39.6,13.3 -54,26.5 -7,6.4 -7.5,9.9 -2,12.8 2.9,1.6 4.8,0.7 11.1,-4.9 10.5,-9.5 26.3,-17.7 41.8,-21.6 10.9,-2.7 35.3,-2.5 46.4,0.5 12.5,3.3 28.9,11.8 38.9,20.2 4.6,3.8 9.2,7 10.2,7 2.5,0 5.9,-3.5 5.9,-5.9 0,-4.9 -15.8,-17.5 -31.4,-25.1 -14.9,-7.3 -26.8,-10.1 -44.6,-10.6 -10.2,-0.2 -16.9,0.1 -22.3,1.1z"
+        android:strokeColor="@color/rsb_instruction_step_layout_image_tint_color"
+        android:fillColor="@color/rsb_instruction_step_layout_image_tint_color"/>
+    <path
+        android:pathData="M104.1,569.5c-13,2.9 -35.2,16.2 -36.7,22.1 -0.8,3 1.9,6.4 4.9,6.4 1.1,0 4.5,-2.1 7.6,-4.6 7,-5.8 17.2,-11 25.3,-12.9 8.2,-1.9 23.8,-1.9 31.3,0 8.4,2.1 19.1,7.6 25.3,12.9 5.9,5 8.9,5.7 11.7,2.6 1.4,-1.6 1.6,-2.6 0.9,-4.4 -2.6,-6.8 -23.1,-18.9 -37.1,-22 -8.7,-1.9 -24.4,-2 -33.2,-0.1z"
+        android:strokeColor="@color/rsb_instruction_step_layout_image_tint_color"
+        android:fillColor="@color/rsb_instruction_step_layout_image_tint_color"/>
+</vector>

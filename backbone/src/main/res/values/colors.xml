@@ -41,6 +41,9 @@
 
     <color name="rsb_cancel_menu_icon">@color/rsb_white</color>
 
+    <!-- Permission screen -->
+    <color name="rsb_permission_icon">@color/rsb_white</color>
+
     <!-- Tapping Screen -->
     <color name="rsb_step_layout_tapping_button_text_color">@color/rsb_white</color>
 

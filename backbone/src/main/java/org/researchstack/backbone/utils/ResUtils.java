@@ -20,6 +20,11 @@ public class ResUtils {
     public static final String PHONE_IN_POCKET              = "rsb_phone_in_pocket";
     public static final String TIMER                        = "rsb_timer";
 
+    public static class Audio {
+        public static final String PHONE_WAVES              = "rsb_phonewaves";
+        public static final String PHONE_SOUND_WAVES        = "rsb_phonesoundwaves";
+    }
+
     public static class Tapping {
         public static final String PHONE_TAPPING_NO_TAP         = "rsb_tapping_phone_notap_words";
         public static final String ANIMATED_TAPPING_RIGHT       = "rsb_animated_tapping_right";
