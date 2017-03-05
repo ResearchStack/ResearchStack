@@ -68,23 +68,23 @@ public class DataLoggerManager {
 
     @MainThread
     protected void startNewDataLoggerTask(DataLogger dataLogger) {
-        createNewDataLoggerFileStatus(dataLogger);
+        createNewDataLoggerFileStatus(dataLogger.getFile());
     }
 
     @MainThread
     protected void dataLoggerTaskFinished(DataLogger dataLogger, Throwable error) {
         if (error != null) {
-            deleteDataLoggerFileStatus(dataLogger);
+            deleteFileStatus(dataLogger.getFile());
         }
     }
 
     /**
      * This creates a new status for the data logger that is is writing and considered "dirty"
-     * @param dataLogger to operate upon
+     * @param file to operate upon
      */
-    private void createNewDataLoggerFileStatus(DataLogger dataLogger) {
+    private void createNewDataLoggerFileStatus(File file) {
         DataLoggerFileStatus fileStatus = new DataLoggerFileStatus(
-                fullFilePathAndName(dataLogger.getFile()), true, false);
+                fullFilePathAndName(file), true, false);
         String sharedPrefsKey = fileStatus.getSharedPrefsKey();
         String statusJson = gson.toJson(fileStatus);
         sharedPrefs.edit().putString(sharedPrefsKey, statusJson).apply();
@@ -92,15 +92,15 @@ public class DataLoggerManager {
 
     /**
      * This method deletes the file and also deletes it's status
-     * @param dataLogger to operate upon
+     * @param file to operate upon
      */
-    private void deleteDataLoggerFileStatus(DataLogger dataLogger) {
+    public void deleteFileStatus(File file) {
         DataLoggerFileStatus fileStatus = new DataLoggerFileStatus(
-                fullFilePathAndName(dataLogger.getFile()), true, false);
+                fullFilePathAndName(file), true, false);
         String sharedPrefsKey = fileStatus.getSharedPrefsKey();
 
         sharedPrefs.edit().remove(sharedPrefsKey).apply();
-        boolean success = dataLogger.getFile().delete();
+        boolean success = file.delete();
 
         if (!success) {
             Log.e(getClass().getCanonicalName(), "Failed to delete data logger file");

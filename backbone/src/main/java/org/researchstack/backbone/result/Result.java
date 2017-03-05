@@ -30,9 +30,6 @@ public class Result implements Serializable {
 
     private Date endDate;
 
-    // unimplemented but exists in RK, implement or delete if not needed
-    private boolean saveable;
-
     /* Default identifier for serialization/deserialization */
     Result() {
         super();

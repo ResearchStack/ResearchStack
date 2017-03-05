@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.view.Surface;
 import android.view.WindowManager;
 
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.FileResult;
@@ -147,10 +148,8 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
         // These files will now stick around until we have successfully uploaded them
         DataLoggerManager.getInstance().updateFileListToAttemptedUploadStatus(fileList);
 
-        // TODO: this is not correct, since we need to know if it succeeded or not
-        //DataProvider.getInstance().uploadTaskResult(this, taskResult);
+        DataProvider.getInstance().uploadTaskResult(this, taskResult);
 
-        // TODO: move this to the successful/failure block of the upload web service call
         super.saveAndFinish();
     }
 
