@@ -84,6 +84,8 @@ public class DataLoggerFileWriterThread {
                         break;
                     case MSG_STOP:
 
+                        // call openFileStreamIfNull to combat an edge case where no write requests were processed
+                        openFileStreamIfNull();
                         closeFileStream();
                         writeCompleteFromThreadToMainThread();
 
