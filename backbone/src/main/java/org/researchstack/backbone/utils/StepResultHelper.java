@@ -8,8 +8,6 @@ import java.util.Map;
 
 /**
  * Created by TheMDP on 1/16/17.
- *
- * TODO: unit tests
  */
 
 public class StepResultHelper {
