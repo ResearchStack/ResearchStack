@@ -22,9 +22,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static org.researchstack.backbone.result.TappingIntervalResult.TappingButtonIdentifier.TappingButtonIdentifierLeft;
-import static org.researchstack.backbone.result.TappingIntervalResult.TappingButtonIdentifier.TappingButtonIdentifierNone;
-import static org.researchstack.backbone.result.TappingIntervalResult.TappingButtonIdentifier.TappingButtonIdentifierRight;
+import static org.researchstack.backbone.result.TappingIntervalResult.TappingButtonIdentifier.TappedButtonLeft;
+import static org.researchstack.backbone.result.TappingIntervalResult.TappingButtonIdentifier.TappedButtonNone;
+import static org.researchstack.backbone.result.TappingIntervalResult.TappingButtonIdentifier.TappedButtonRight;
 
 /**
  * Created by TheMDP on 2/23/17.
@@ -169,9 +169,9 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
         rightTappingButton.setOnClickListener(null);
 
         // Assign and wait for user touches
-        setupTouchListener(leftTappingButton, LEFT_BUTTON, TappingButtonIdentifierLeft, true);
-        setupTouchListener(rightTappingButton, RIGHT_BUTTON, TappingButtonIdentifierRight, true);
-        setupTouchListener(activeStepLayout, NO_BUTTON, TappingButtonIdentifierNone, false);
+        setupTouchListener(leftTappingButton, LEFT_BUTTON, TappedButtonLeft, true);
+        setupTouchListener(rightTappingButton, RIGHT_BUTTON, TappedButtonRight, true);
+        setupTouchListener(activeStepLayout, NO_BUTTON, TappedButtonNone, false);
     }
 
     protected void setupTouchListener(
