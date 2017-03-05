@@ -201,7 +201,7 @@ public class TappingTaskFactory {
         return new OrderedTask(identifier, stepList);
     }
 
-    protected static String stepIdentifierWithHandId(String stepId, String handId) {
+    public static String stepIdentifierWithHandId(String stepId, String handId) {
         if (handId == null) {
             return stepId;
         }

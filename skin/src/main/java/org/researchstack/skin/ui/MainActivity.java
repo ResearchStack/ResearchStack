@@ -20,6 +20,7 @@ import org.researchstack.backbone.task.factory.AudioTaskFactory;
 import org.researchstack.backbone.task.factory.HandOptions;
 import org.researchstack.backbone.task.factory.TappingTaskFactory;
 import org.researchstack.backbone.task.factory.TaskExcludeOption;
+import org.researchstack.backbone.task.factory.TremorTaskFactory;
 import org.researchstack.backbone.task.factory.WalkingTaskFactory;
 import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
@@ -227,7 +228,7 @@ public class MainActivity extends BaseActivity {
         // TODO: integrate this into the Scheduled Activities
         // TODO: for now, uncomment this to run/test the tapping task
 //        OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
-//                this, "walkingtaskid", "intendedUseDescription",
+//                this, "tappingtaskid", "intendedUseDescription",
 //                30, HandOptions.BOTH, Arrays.asList(new TaskExcludeOption[] {}));
 //
 //        Intent intent = ActiveTaskActivity.newIntent(this, task);
@@ -237,7 +238,7 @@ public class MainActivity extends BaseActivity {
         // TODO: for now, uncomment this to run/test the Audio task
 //        NavigableOrderedTask task = AudioTaskFactory.audioTask(
 //                this, "audiotaskid", "intendedUseDescription",
-//                "speech description", "short speech description", 30,
+//                "speech description", "short speech description", 5,
 //                AudioRecorderSettings.defaultSettings(), true,
 //                Arrays.asList(new TaskExcludeOption[] {}));
 //
