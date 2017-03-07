@@ -37,6 +37,12 @@ public class TaskAlertReceiver extends BroadcastReceiver {
     public static final String KEY_NOTIFICATION = "CreateAlertReceiver.KEY_NOTIFICATION";
     public static final String KEY_NOTIFICATION_ID = "CreateAlertReceiver.KEY_NOTIFICATION_ID";
 
+    public static Intent createCreateIntent(TaskNotification notification) {
+        Intent createTaskIntent = new Intent(TaskAlertReceiver.ALERT_CREATE);
+        createTaskIntent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION, notification);
+        return createTaskIntent;
+    }
+    
     public static Intent createDeleteIntent(int notificationId) {
         Intent deleteTaskIntent = new Intent(TaskAlertReceiver.ALERT_DELETE);
         deleteTaskIntent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, notificationId);
