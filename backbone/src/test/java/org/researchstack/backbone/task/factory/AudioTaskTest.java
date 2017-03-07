@@ -5,11 +5,16 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Build;
+import android.util.Log;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.AudioResult;
 import org.researchstack.backbone.result.Result;
@@ -29,8 +34,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
 import static org.researchstack.backbone.task.factory.AudioTaskFactory.*;
 import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
@@ -38,6 +41,8 @@ import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
  * Created by TheMDP on 2/27/17.
  */
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Log.class})
 public class AudioTaskTest {
 
     private static final String PACKAGE_NAME = "org.researchstack.backbone";
@@ -51,6 +56,7 @@ public class AudioTaskTest {
 
         // Mocks the static variable SDK_INT to be Android.M so that Location permission checks work
         setFinalStatic(Build.VERSION.class.getField("SDK_INT"), Build.VERSION_CODES.M);
+        PowerMockito.mockStatic(Log.class);
 
         mockContext = Mockito.mock(Context.class);
         mockResources = Mockito.mock(Resources.class);

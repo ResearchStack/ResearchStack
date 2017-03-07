@@ -49,14 +49,12 @@ public class TimedWalkStepLayout extends ActiveStepLayout {
     protected void stepResultFinished() {
         super.stepResultFinished();
 
-        StepResult<TimedWalkResult> timedWalkStepResult = new StepResult<>(timedWalkStep);
-        TimedWalkResult timedWalkResult = new TimedWalkResult(timedWalkStepResult.getIdentifier());
+        TimedWalkResult timedWalkResult = new TimedWalkResult(timedWalkStep.getIdentifier());
         timedWalkResult.setDistanceInMeters(timedWalkStep.getDistanceInMeters());
         int durationInSeconds = (int)((System.currentTimeMillis() - startTime) / DateUtils.SECOND_IN_MILLIS);
         timedWalkResult.setDuration(durationInSeconds);
         timedWalkResult.setTimeLimit(timedWalkStep.getStepDuration());
-        timedWalkStepResult.setResult(timedWalkResult);
-        stepResult.setResultForIdentifier(timedWalkStepResult.getIdentifier(), timedWalkStepResult);
+        stepResult.setResultForIdentifier(timedWalkResult.getIdentifier(), timedWalkResult);
     }
 
     @Override

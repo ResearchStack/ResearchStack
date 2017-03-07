@@ -1,5 +1,7 @@
 package org.researchstack.backbone.result;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,21 +15,25 @@ public class TappingIntervalResult extends Result {
      * An array of collected samples, in which each item is an `ORKTappingSample` object that represents a
      * tapping event.
      */
+    @SerializedName("TappingSamples")
     private List<Sample> samples;
 
     /**
      * The size of the bounds of the step view containing the tap targets.
      */
+    @SerializedName("TappingViewSize")
     private Size stepViewSize;
 
     /**
      * The frame of the left button, in points, relative to the step view bounds.
      */
+    @SerializedName("ButtonRectLeft")
     private Rect buttonRect1;
 
     /**
      * sThe frame of the right button, in points, relative to the step view bounds.
      */
+    @SerializedName("ButtonRectRight")
     private Rect buttonRect2;
 
     /* Default identifier for serialization/deserialization */
@@ -78,6 +84,7 @@ public class TappingIntervalResult extends Result {
          * The timestamp is relative to the value of `startDate` in the `Result` object that includes this
          * sample.
          */
+        @SerializedName("TapTimeStamp")
         private long timestamp;
 
         /**
@@ -85,6 +92,7 @@ public class TappingIntervalResult extends Result {
          *
          * The duration store time interval between touch down and touch release events.
          */
+        @SerializedName("duration")
         private long duration;
 
         /**
@@ -93,6 +101,7 @@ public class TappingIntervalResult extends Result {
          * If the value of this property is `ORKTappingButtonIdentifierNone`, it indicates that the tap
          * was near, but not inside, one of the target buttons.
          */
+        @SerializedName("TappedButtonId")
         private TappingButtonIdentifier buttonIdentifier;
 
         /**
@@ -101,6 +110,7 @@ public class TappingIntervalResult extends Result {
          * The location coordinates are relative to a rectangle whose size corresponds to
          * the `stepViewSize` in the enclosing `ORKTappingIntervalResult` object.
          */
+        @SerializedName("TapCoordinate")
         private Point location;
 
         /* Default identifier for serialization/deserialization */
@@ -146,11 +156,11 @@ public class TappingIntervalResult extends Result {
      */
     public enum TappingButtonIdentifier {
         // The touch landed outside of the two buttons.
-        TappingButtonIdentifierNone,
+        TappedButtonNone,
         // The touch landed in the left button.
-        TappingButtonIdentifierLeft,
+        TappedButtonLeft,
         // The touch landed in the right button.
-        TappingButtonIdentifierRight;
+        TappedButtonRight;
     }
 
     /**
@@ -158,8 +168,9 @@ public class TappingIntervalResult extends Result {
      * and we have control over its serialization
      */
     public static final class Size implements Serializable {
-
+        @SerializedName("width")
         private int width;
+        @SerializedName("height")
         private int height;
 
         public Size(int width, int height) {
@@ -189,9 +200,13 @@ public class TappingIntervalResult extends Result {
      * and we have control over its serialization
      */
     public static final class Rect implements Serializable {
+        @SerializedName("bottom")
         public int bottom;
+        @SerializedName("left")
         public int left;
+        @SerializedName("right")
         public int right;
+        @SerializedName("top")
         public int top;
 
         public Rect() {
@@ -211,7 +226,9 @@ public class TappingIntervalResult extends Result {
      * and we have control over its serialization
      */
     public static final class Point implements Serializable {
+        @SerializedName("x")
         public int x;
+        @SerializedName("y")
         public int y;
 
         public Point() {

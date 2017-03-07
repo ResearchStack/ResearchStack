@@ -361,6 +361,10 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mainHandler.removeCallbacksAndMessages(null);
+        if (tts != null) {
+            tts.shutdown();
+            tts = null;
+        }
     }
 
     @Override

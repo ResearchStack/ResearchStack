@@ -7,6 +7,7 @@ import org.researchstack.backbone.result.logger.DataLogger;
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * Created by TheMDP on 2/7/17.
@@ -26,6 +27,9 @@ abstract class JsonArrayDataRecorder extends Recorder {
 
     protected DataLogger dataLogger;
     protected File dataLoggerFile;
+
+    protected long startTime;
+    protected long endTime;
 
     JsonArrayDataRecorder(String identifier, Step step, File outputDirectory) {
         super(identifier, step, outputDirectory);
@@ -50,12 +54,16 @@ abstract class JsonArrayDataRecorder extends Recorder {
                 @Override
                 public void onWriteComplete(File file) {
                     FileResult fileResult = new FileResult(getIdentifier(), dataLoggerFile, JSON_MIME_CONTENT_TYPE);
+                    fileResult.setContentType(JSON_MIME_CONTENT_TYPE);
+                    fileResult.setStartDate(new Date(startTime));
+                    fileResult.setEndDate(new Date(endTime));
                     getRecorderListener().onComplete(JsonArrayDataRecorder.this, fileResult);
                 }
             });
         }
 
         setRecording(true);
+        startTime = System.currentTimeMillis();
 
         // Since we are writing a JsonArray, have the header and footer be
         dataLogger.start("[", "]");
@@ -63,8 +71,9 @@ abstract class JsonArrayDataRecorder extends Recorder {
     }
 
     protected void stopJsonDataLogging() {
-        dataLogger.stop();
         setRecording(false);
+        endTime = System.currentTimeMillis();
+        dataLogger.stop();
     }
 
     protected void writeJsonObjectToFile(JsonObject jsonObject) {

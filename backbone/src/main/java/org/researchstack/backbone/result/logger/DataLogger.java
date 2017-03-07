@@ -1,5 +1,7 @@
 package org.researchstack.backbone.result.logger;
 
+import org.researchstack.backbone.utils.LogExt;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 
@@ -90,6 +92,8 @@ public class DataLogger {
     }
 
     private void dataLoggerFailed(Throwable throwable) {
+        LogExt.e(getClass(), "Data logger failed " +
+                throwable.getLocalizedMessage() + throwable.getStackTrace().toString());
         DataLoggerManager.getInstance().dataLoggerTaskFinished(DataLogger.this, throwable);
         dataWriteListener.onWriteError(throwable);
         dataLoggerWriterThread = null;

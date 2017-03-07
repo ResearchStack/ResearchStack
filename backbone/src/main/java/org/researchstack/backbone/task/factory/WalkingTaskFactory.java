@@ -21,6 +21,7 @@ import org.researchstack.backbone.step.active.TimedWalkStep;
 import org.researchstack.backbone.step.active.recorder.AccelerometerRecorderConfig;
 import org.researchstack.backbone.step.active.CountdownStep;
 import org.researchstack.backbone.step.active.FitnessStep;
+import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorderConfig;
 import org.researchstack.backbone.step.active.recorder.LocationRecorderConfig;
 import org.researchstack.backbone.step.active.recorder.PedometerRecorderConfig;
 import org.researchstack.backbone.step.active.recorder.RecorderConfig;
@@ -142,7 +143,7 @@ public class WalkingTaskFactory {
                     recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
                 }
                 if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
-                    recorderConfigList.add(new AccelerometerRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+                    recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                 }
 
                 {
@@ -171,7 +172,7 @@ public class WalkingTaskFactory {
                     recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
                 }
                 if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
-                    recorderConfigList.add(new AccelerometerRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+                    recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                 }
 
                 {
@@ -196,7 +197,7 @@ public class WalkingTaskFactory {
                         recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
                     }
                     if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
-                        recorderConfigList.add(new AccelerometerRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+                        recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                     }
 
                     FitnessStep step = new FitnessStep(ShortWalkRestStepIdentifier);
@@ -308,7 +309,7 @@ public class WalkingTaskFactory {
                     recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
                 }
                 if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
-                    recorderConfigList.add(new AccelerometerRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+                    recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                 }
 
                 {
@@ -336,7 +337,7 @@ public class WalkingTaskFactory {
                         recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
                     }
                     if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
-                        recorderConfigList.add(new AccelerometerRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+                        recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                     }
 
                     FitnessStep step = new FitnessStep(ShortWalkRestStepIdentifier);
@@ -514,7 +515,7 @@ public class WalkingTaskFactory {
                 recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
             }
             if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
-                recorderConfigList.add(new AccelerometerRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+                recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
             }
             if (!optionList.contains(TaskExcludeOption.LOCATION)) {
                 recorderConfigList.add(new LocationRecorderConfig(LocationRecorderIdentifier));

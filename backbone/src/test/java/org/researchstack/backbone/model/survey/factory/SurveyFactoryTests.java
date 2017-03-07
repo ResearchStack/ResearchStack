@@ -1,11 +1,19 @@
 package org.researchstack.backbone.model.survey.factory;
 
+import android.content.Context;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import android.util.Log;
+
 import com.google.gson.reflect.TypeToken;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.EmailAnswerFormat;
@@ -21,7 +29,6 @@ import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.CustomInstructionStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
-import org.researchstack.backbone.step.EmailVerificationSubStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
 import org.researchstack.backbone.step.PasscodeStep;
@@ -44,17 +51,27 @@ import static junit.framework.Assert.assertTrue;
  * Created by TheMDP on 1/5/17.
  */
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({FingerprintManagerCompat.class})
 public class SurveyFactoryTests {
 
     SurveyFactoryHelper  helper;
     ResourceParserHelper resourceHelper;
+
+    @Mock Context mockContext;
+    @Mock FingerprintManagerCompat mockFingerprintManager;
 
     @Before
     public void setUp() throws Exception
     {
         helper = new SurveyFactoryHelper();
         resourceHelper = new ResourceParserHelper();
+
+        mockContext = Mockito.mock(Context.class);
+        mockFingerprintManager = Mockito.mock(FingerprintManagerCompat.class);
+        Mockito.when(mockFingerprintManager.isHardwareDetected()).thenReturn(true);
+        PowerMockito.mockStatic(FingerprintManagerCompat.class);
+        Mockito.when(FingerprintManagerCompat.from(mockContext)).thenReturn(mockFingerprintManager);
     }
 
     @Test
