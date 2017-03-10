@@ -42,8 +42,8 @@ public class TappingTaskFactory {
      *                                localized text will be displayed.
      * @param duration                The length of the count down timer that runs while touch data is
      *                                collected.
-     * @param handOptions             Options for determining which hand(s) to test.
-     * @param optionList              Options that affect the features of the predefined task.
+     * @param handOptions             Hand for determining which hand(s) to test.
+     * @param optionList              Hand that affect the features of the predefined task.
      *
      * @return An active two finger tapping task that can be presented with an `ActiveTaskActivity` object.
      */
@@ -52,7 +52,7 @@ public class TappingTaskFactory {
             String identifier,
             String intendedUseDescription,
             int    duration,
-            HandOptions handOptions,
+            HandTaskOptions.Hand handOptions,
             List<TaskExcludeOption> optionList)
     {
         // Coin toss for which hand first (in case we're doing both
@@ -69,7 +69,7 @@ public class TappingTaskFactory {
             String identifier,
             String intendedUseDescription,
             int    duration,
-            HandOptions handOptions,
+            HandTaskOptions.Hand handOptions,
             List<TaskExcludeOption> optionList,
             boolean leftFirstIfDoingBoth)
     {
@@ -88,7 +88,7 @@ public class TappingTaskFactory {
 
         // Setup which hand to start with and how many hands to add based on the handOptions parameter
         // Hand order is randomly determined.
-        int handCount = handOptions == HandOptions.BOTH ? 2 : 1;  // 2 hands for both, 1 hand for right or left
+        int handCount = handOptions == HandTaskOptions.Hand.BOTH ? 2 : 1;  // 2 hands for both, 1 hand for right or left
         boolean rightHand = false;
         switch (handOptions) {
             case LEFT:

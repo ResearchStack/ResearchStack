@@ -56,6 +56,12 @@ public class CustomInstructionStep extends CustomStep implements NavigableOrdere
      */
     String nextStepIdentifier;
 
+    /**
+     * If not null, the InstructionStepLayout will use this class to add a negative skip action
+     * that when pressed, will skip this step to another step specified by SubmitBarNegativeActionSkipRule
+     */
+    private SubmitBarNegativeActionSkipRule submitBarSkipRule;
+
     /* Default constructor needed for serilization/deserialization of object */
     CustomInstructionStep() {
         super();
@@ -124,6 +130,16 @@ public class CustomInstructionStep extends CustomStep implements NavigableOrdere
     }
     public long getAnimationRepeatDuration() {
         return animationRepeatDuration;
+    }
+
+    @Override
+    public void setSubmitBarNegativeActionSkipRule(String taskIdentifier, String title, String skipIdentifier) {
+        submitBarSkipRule = new SubmitBarNegativeActionSkipRule(taskIdentifier, title, skipIdentifier);
+    }
+
+    @Override
+    public SubmitBarNegativeActionSkipRule getSubmitBarNegativeActionSkipRule() {
+        return submitBarSkipRule;
     }
 
     @Override

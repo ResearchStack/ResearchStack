@@ -2,6 +2,8 @@ package org.researchstack.backbone.task.factory;
 
 import android.content.Context;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
@@ -53,9 +55,9 @@ public class TremorTaskFactory {
      * @param intendedUseDescription A localized string describing the intended use of the data
      *                               collected. If the value of this parameter is null, none will be used
      * @param activeStepDuration     The duration for each active step in the task in seconds
-     * @param tremorOptionList       Options that affect which active steps are presented for this task.
-     * @param handOption             Options for determining which hand(s) to test.
-     * @param taskOptionList             Options that affect the features of the predefined task,
+     * @param tremorOptionList       Hand that affect which active steps are presented for this task.
+     * @param handOption             Hand for determining which hand(s) to test.
+     * @param taskOptionList             Hand that affect the features of the predefined task,
      *                               conclusion option will be ignored at this time.
      *
      * @return An active tremor test task that can be presented with an `ORKTaskViewController` object.
@@ -66,7 +68,7 @@ public class TremorTaskFactory {
             String intendedUseDescription,
             int activeStepDuration,
             List<TremorTaskExcludeOption> tremorOptionList,
-            HandOptions handOption,
+            HandTaskOptions.Hand handOption,
             List<TaskExcludeOption> taskOptionList)
     {
         // Coin toss for which hand first (in case we're doing both)
@@ -82,14 +84,14 @@ public class TremorTaskFactory {
             String intendedUseDescription,
             int activeStepDuration,
             List<TremorTaskExcludeOption> tremorOptionList,
-            HandOptions handOption,
+            HandTaskOptions.Hand handOption,
             List<TaskExcludeOption> taskOptionList,
             boolean leftFirstIfDoingBoth)
     {
         List<Step> stepList = new ArrayList<>();
 
-        final boolean doingBoth = handOption == HandOptions.BOTH;
-        final boolean firstIsLeft = (leftFirstIfDoingBoth && doingBoth) || (!doingBoth && handOption == HandOptions.LEFT);
+        final boolean doingBoth = (handOption == HandTaskOptions.Hand.BOTH);
+        final boolean firstIsLeft = (leftFirstIfDoingBoth && doingBoth) || (!doingBoth && handOption == HandTaskOptions.Hand.LEFT);
 
         if (!taskOptionList.contains(TaskExcludeOption.INSTRUCTIONS)) {
             String title = context.getString(R.string.rsb_TREMOR_TEST_TITLE);
@@ -140,14 +142,14 @@ public class TremorTaskFactory {
 
         // right or most-affected hand
         List<Step> rightSteps = new ArrayList<>();
-        if (handOption == HandOptions.BOTH || handOption == HandOptions.RIGHT) {
+        if (handOption == HandTaskOptions.Hand.BOTH || handOption == HandTaskOptions.Hand.RIGHT) {
             rightSteps = stepsForOneHandTremorTest(context, identifier,
                     activeStepDuration, tremorOptionList, firstIsLeft, false,
                     ActiveTaskRightHandIdentifier, detailText, taskOptionList);
         }
 
         List<Step> leftSteps = new ArrayList<>();
-        if (handOption == HandOptions.BOTH || handOption == HandOptions.LEFT) {
+        if (handOption == HandTaskOptions.Hand.BOTH || handOption == HandTaskOptions.Hand.LEFT) {
             leftSteps = stepsForOneHandTremorTest(context, identifier,
                     activeStepDuration, tremorOptionList, !firstIsLeft, true,
                     ActiveTaskLeftHandIdentifier, detailText, taskOptionList);
@@ -522,14 +524,19 @@ public class TremorTaskFactory {
      */
     public enum TremorTaskExcludeOption {
         // Exclude the hand-in-lap steps.
+        @SerializedName("handInLap")
         HAND_IN_LAP,
         // Exclude the hand-extended-at-shoulder-height steps.
+        @SerializedName("handAtShoulderLength")
         HAND_AT_SHOULDER_HEIGHT,
         // Exclude the hand-extended-at-shoulder-height steps.
+        @SerializedName("elbowBent")
         HAND_AT_SHOULDER_HEIGHT_ELBOW_BENT,
         // Exclude the elbow-bent-touch-nose steps.
+        @SerializedName("touchNose")
         HAND_TO_NOSE,
         // Exclude the queen-wave steps.
+        @SerializedName("handQueenWave")
         QUEEN_WAVE
     }
 }

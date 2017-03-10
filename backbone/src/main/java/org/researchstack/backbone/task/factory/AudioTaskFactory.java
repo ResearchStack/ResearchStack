@@ -69,7 +69,7 @@ public class AudioTaskFactory {
      *                                collected.
      * @param recordingSettings       See class for possible values, all based on MediaRecorder class
      * @param checkAudioLevel         If `true` then add navigational rules to check the background noise level.
-     * @param optionList              Options that affect the features of the predefined task.
+     * @param optionList              Hand that affect the features of the predefined task.
      *
      * @return An active audio task that can be presented with an `ORKTaskViewController` object.
      */
@@ -159,9 +159,9 @@ public class AudioTaskFactory {
         {
             AudioStep step = new AudioStep(AudioStepIdentifier, null, null);
             if (shortSpeechInstruction == null) {
-                step.setText(context.getString(R.string.rsb_AUDIO_INSTRUCTION));
+                step.setTitle(context.getString(R.string.rsb_AUDIO_INSTRUCTION));
             } else {
-                step.setText(shortSpeechInstruction);
+                step.setTitle(shortSpeechInstruction);
             }
             step.setRecorderConfigurationList(Collections.singletonList(new AudioRecorderConfig(
                     recordingSettings, AudioRecorderIdentifier)));
