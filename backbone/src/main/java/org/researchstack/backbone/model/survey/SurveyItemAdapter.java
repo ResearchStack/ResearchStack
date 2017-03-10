@@ -39,7 +39,11 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
         String customTypeString = null;
         if (surveyItemType == null) {
             surveyItemType = SurveyItemType.CUSTOM;
-            customTypeString = typeJson.getAsString();
+            if (typeJson != null) {
+                customTypeString = typeJson.getAsString();
+            } else { // use "identifier" string
+                customTypeString = jsonObject.get(SurveyItem.IDENTIFIER_GSON).getAsString();
+            }
         }
 
         switch (surveyItemType) {
@@ -93,6 +97,8 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
                 break;
             case SHARE_THE_APP:
                 return context.deserialize(json, InstructionSurveyItem.class);
+            case ACTIVE_STEP:
+                return context.deserialize(json, ActiveStepSurveyItem.class);
             case CUSTOM:
                 CustomSurveyItem item = context.deserialize(json, getCustomClass(customTypeString));
                 item.type = surveyItemType; // need to set CUSTOM type for surveyItem, since it is a special case

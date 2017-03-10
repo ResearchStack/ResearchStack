@@ -5,18 +5,14 @@ import android.content.res.Resources;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.task.OrderedTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,8 +27,8 @@ import static org.researchstack.backbone.task.factory.TremorTaskFactory.*;
 
 public class TappingTaskTest {
 
-    private Context mockContext;
-    private Resources mockResources;
+    @Mock private Context mockContext;
+    @Mock private Resources mockResources;
 
     @Before
     public void setUp() throws Exception {
@@ -64,7 +60,7 @@ public class TappingTaskTest {
     public void testTappingTaskBothHandsNoSkipping() {
         OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
                 mockContext, "tappingtaskid", "intendedUseDescription", 10000,
-                HandOptions.BOTH,
+                HandTaskOptions.Hand.BOTH,
                 Arrays.asList(new TaskExcludeOption[] {}), true);
 
         List<String> stepIds = getFullTappingStepIds(true, true);
@@ -83,7 +79,7 @@ public class TappingTaskTest {
     public void testTappingTaskBothHandsExcludeInstructions() {
         OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
                 mockContext, "tappingtaskid", "intendedUseDescription", 10000,
-                HandOptions.BOTH,
+                HandTaskOptions.Hand.BOTH,
                 Arrays.asList(new TaskExcludeOption[] { TaskExcludeOption.INSTRUCTIONS }), true);
 
         List<String> stepIds = getFullTappingStepIds(true, true);
@@ -107,7 +103,7 @@ public class TappingTaskTest {
     public void testTappingTaskBothHandsExcludeConclusion() {
         OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
                 mockContext, "tappingtaskid", "intendedUseDescription", 10000,
-                HandOptions.BOTH,
+                HandTaskOptions.Hand.BOTH,
                 Arrays.asList(new TaskExcludeOption[] { TaskExcludeOption.CONCLUSION }), true);
 
         List<String> stepIds = getFullTappingStepIds(true, true);
@@ -129,7 +125,7 @@ public class TappingTaskTest {
     public void testTappingTaskBothHandsRightIsFirst() {
         OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
                 mockContext, "tappingtaskid", "intendedUseDescription", 10000,
-                HandOptions.BOTH,
+                HandTaskOptions.Hand.BOTH,
                 Arrays.asList(new TaskExcludeOption[] {}), false);
 
         List<String> stepIds = getFullTappingStepIds(true, false);
@@ -149,7 +145,7 @@ public class TappingTaskTest {
     public void testTappingTaskBothHandsRightOnly() {
         OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
                 mockContext, "tappingtaskid", "intendedUseDescription", 10000,
-                HandOptions.RIGHT,
+                HandTaskOptions.Hand.RIGHT,
                 Arrays.asList(new TaskExcludeOption[] {}), false);
 
         List<String> stepIds = getFullTappingStepIds(false, false);
@@ -169,7 +165,7 @@ public class TappingTaskTest {
     public void testTappingTaskBothHandsLeftOnly() {
         OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
                 mockContext, "tappingtaskid", "intendedUseDescription", 10000,
-                HandOptions.LEFT,
+                HandTaskOptions.Hand.LEFT,
                 Arrays.asList(new TaskExcludeOption[] {}), false);
 
         List<String> stepIds = getFullTappingStepIds(false, true);

@@ -54,6 +54,7 @@ import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationExpectedAnswerQuestionStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
+import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 
 import java.util.ArrayList;
@@ -107,10 +108,12 @@ public class SurveyFactory {
 
     public List<Step> createSteps(Context context, List<SurveyItem> surveyItems, boolean isSubtaskStep) {
         List<Step> steps = new ArrayList<>();
-        for (SurveyItem item : surveyItems) {
-            Step step = createSurveyStep(context, item, isSubtaskStep);
-            if (step != null) {
-                steps.add(step);
+        if (surveyItems != null) {
+            for (SurveyItem item : surveyItems) {
+                Step step = createSurveyStep(context, item, isSubtaskStep);
+                if (step != null) {
+                    steps.add(step);
+                }
             }
         }
         return steps;

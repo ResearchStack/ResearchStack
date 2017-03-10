@@ -77,7 +77,10 @@ public enum SurveyItemType {
     SHARE_THE_APP               ("shareApp"),               // ShareTheAppStep
     // Passcode subtypes
     @SerializedName(value="PASSCODE", alternate={"passcodeType4Digit", "passcodeType6Digit"})
-    PASSCODE                    ("passcode");               // iOS has 6 digit too, but for now only support 4 digit
+    PASSCODE                    ("passcode"),               // iOS has 6 digit too, but for now only support 4 digit
+    // Active Step
+    @SerializedName("active")
+    ACTIVE_STEP    ("active");                              // ActiveStep
 
     SurveyItemType(String rawValue) {
         value = rawValue;
