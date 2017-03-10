@@ -145,7 +145,18 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             submitBar.setPositiveTitle(R.string.rsb_next);
             submitBar.setPositiveAction(v -> onComplete());
 
-            if (step.isOptional()) {
+            if (instructionStepInterface.getSubmitBarNegativeActionSkipRule() != null) {
+                final InstructionStepInterface.SubmitBarNegativeActionSkipRule rule =
+                        instructionStepInterface.getSubmitBarNegativeActionSkipRule();
+                submitBar.setNegativeTitle(rule.getTitle());
+                submitBar.setNegativeAction(v -> {
+                    StepResult stepResult = new StepResult(step);
+                    rule.onNegativeActionClicked(instructionStepInterface, stepResult);
+                    if (callbacks != null) {
+                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                    }
+                });
+            } else if (step.isOptional()) {
                 submitBar.setNegativeTitle(R.string.rsb_step_skip);
                 submitBar.setNegativeAction(v -> {
                     if (callbacks != null) {
