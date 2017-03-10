@@ -292,6 +292,10 @@
     <string name="rsb_share_email">Share via Email</string>
     <string name="rsb_share_facebook_key">facebook</string>
     <string name="rsb_share_email_subject">Subject</string>
+    
+    <!-- Instruction Layout -->
+    <string name="rsb_skip_activity_instruction">If you need to skip this activity, then tap the \"Skip this activity\" link below. Otherwise, tap Next to begin.</string>
+    <string name="rsb_skip_activity">Skip this activity</string>
 
     <!--
     ALL OF THE STRINGS BELOW SHOULD NOT BE EDITED
