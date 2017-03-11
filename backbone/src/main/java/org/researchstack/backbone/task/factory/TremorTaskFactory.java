@@ -2,6 +2,7 @@ package org.researchstack.backbone.task.factory;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.R;
@@ -36,6 +37,8 @@ import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
  */
 
 public class TremorTaskFactory {
+
+    static Gson gson;
 
     // Tremor Step Identifiers
     public static final String TremorTestInLapStepIdentifier        = "tremor.handInLap";
@@ -538,5 +541,12 @@ public class TremorTaskFactory {
         // Exclude the queen-wave steps.
         @SerializedName("handQueenWave")
         QUEEN_WAVE
+    }
+
+    public static TremorTaskExcludeOption toTremorExcludeOption(String tremorSerializedName) {
+        if (gson == null) {
+            gson = new Gson();
+        }
+        return gson.fromJson(tremorSerializedName, TremorTaskExcludeOption.class);
     }
 }
