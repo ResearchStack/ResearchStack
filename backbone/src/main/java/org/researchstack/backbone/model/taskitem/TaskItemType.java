@@ -28,6 +28,10 @@ public enum  TaskItemType {
     @SerializedName("walking")
     WALKING        ("walking"),
 
+    // Short Walking Task
+    @SerializedName("shortWalk")
+    SHORT_WALK     ("shortWalk"),
+
     // Tremor Task
     @SerializedName("tremor")
     TREMOR         ("tremor"),

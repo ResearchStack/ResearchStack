@@ -31,6 +31,7 @@ public class TaskItemAdapter implements JsonDeserializer<TaskItem> {
 
         switch (itemType) {
             case WALKING:
+            case SHORT_WALK:
             case VOICE:
             case TAPPING:
             case MOOD_SURVEY:

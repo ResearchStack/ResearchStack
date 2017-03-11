@@ -44,15 +44,17 @@ public class TaskItemFactory extends SurveyFactory {
     public static final int DEFAULT_DURATION                = 10; // in seconds
     public static final int DEFAULT_WALKING_DURATION        = 30; // in seconds
     public static final int DEFAULT_WALKING_REST_DURATION   = 30; // in seconds
+    public static final int DEFAULT_STEPS_PER_LEG           = 100;
 
     private static final String DURATION_KEY                    = "duration";
     private static final String WALK_DURATION_KEY               = "walkDuration";
     private static final String REST_DURATION_KEY               = "restDuration";
     private static final String HAND_OPTIONS_KEY                = "handOptions";
-    private static final String EXCLUDE_POSITIONS_KEY           = "excludePostions";
+    private static final String EXCLUDE_POSITIONS_KEY           = "excludePositions";
     private static final String SPEECH_INSTRUCTIONS_KEY         = "speechInstruction";
     private static final String SHORT_SPEECH_INSTRUCTIONS_KEY   = "shortSpeechInstruction";
     private static final String RECORDING_SETTINGS_KEY          = "recordingSettings";
+    private static final String NUMBER_OF_STEPS_PER_LEG_KEY     = "numberOfStepsPerLeg";
 
     private List<Task> taskList;
 
@@ -100,6 +102,12 @@ public class TaskItemFactory extends SurveyFactory {
                 }
                 task = createWalkingTask(context, (ActiveTaskItem)item);
                 break;
+            case SHORT_WALK:
+                if (!(item instanceof ActiveTaskItem)) {
+                    throw new IllegalStateException("Error in json parsing, SHORT_WALK type must be ActiveTaskItem");
+                }
+                task = createShortWalkTask(context, (ActiveTaskItem)item);
+                break;
             case MOOD_SURVEY:
                 LogExt.e(getClass(), "Mood survey not implemented yet");
                 task = null;
@@ -123,7 +131,9 @@ public class TaskItemFactory extends SurveyFactory {
 
         // Special cases for active tasks that are also OrderedTasks
         if (item instanceof ActiveTaskItem) {
-            mapLocalizedSteps((ActiveTaskItem)item, task);
+            ActiveTaskItem activeTaskItem = (ActiveTaskItem)item;
+            mapLocalizedSteps(activeTaskItem, task);
+            removeSteps(activeTaskItem, task);
         }
 
         return task;
@@ -176,6 +186,12 @@ public class TaskItemFactory extends SurveyFactory {
         return new NavigableOrderedTask(task.getIdentifier(), orderedTask.getSteps());
     }
 
+    /**
+     * This method maps some fields from a SurveyItem list stored in localizedSteps to edit
+     * the corresponding Steps in the Task
+     * @param activeTaskItem An ActiveTaskItem that contains localized steps
+     * @param task the task to edit
+     */
     protected void mapLocalizedSteps(ActiveTaskItem activeTaskItem, Task task) {
 
         if (!(task instanceof OrderedTask)) {
@@ -206,12 +222,42 @@ public class TaskItemFactory extends SurveyFactory {
                 }
 
                 if (step instanceof ActiveStep && surveyItem instanceof ActiveStepSurveyItem) {
-                    ((ActiveStep)step).setSpokenInstruction(((ActiveStepSurveyItem)surveyItem).getStepSpokenInstruction());
-                    ((ActiveStep)step).setFinishedSpokenInstruction(((ActiveStepSurveyItem)surveyItem).getStepFinishedSpokenInstruction());
+                    ActiveStep activeStep = (ActiveStep)step;
+                    ActiveStepSurveyItem activeStepSurveyItem = (ActiveStepSurveyItem)surveyItem;
+                    activeStep.setStepDuration(activeStepSurveyItem.getStepDuration());
+                    activeStep.setSpokenInstruction(activeStepSurveyItem.getStepSpokenInstruction());
+                    activeStep.setFinishedSpokenInstruction(activeStepSurveyItem.getStepFinishedSpokenInstruction());
                 }
 
                 // Must call this to make sure the changes stick
                 orderedTask.replaceStep(indexOfStep, step);
+            }
+        }
+    }
+
+    /**
+     * Removes the corresponding steps from the Task
+     * @param activeTaskItem An ActiveTaskItem that contains removeSteps
+     * @param task the task to edit
+     */
+    public void removeSteps(ActiveTaskItem activeTaskItem, Task task) {
+        if (!(task instanceof OrderedTask)) {
+            LogExt.e(getClass(), "Map Localized Steps only available for OrderedTasks");
+            return;
+        }
+
+        OrderedTask orderedTask = (OrderedTask)task;
+
+        if (orderedTask.getSteps() == null || orderedTask.getSteps().isEmpty() ||
+            activeTaskItem.getRemoveSteps() == null || activeTaskItem.getRemoveSteps().isEmpty())
+        {
+            return;
+        }
+
+        // Loop through all steps in a task, and see if any of them match the localized step
+        for (Step step : orderedTask.getSteps()) {
+            if (activeTaskItem.getRemoveSteps().contains(step.getIdentifier())) {
+                orderedTask.removeStep(orderedTask.getSteps().indexOf(step));
             }
         }
     }
@@ -284,13 +330,32 @@ public class TaskItemFactory extends SurveyFactory {
                 item.createPredefinedExclusions());  // TODO: may need to be the same as iOS
     }
 
+    public Task createShortWalkTask(Context context, ActiveTaskItem item) {
+
+        // The walking activity is assumed to be walking back and forth rather than trying to walk down a long hallway.
+        int restDuration = extractInt(REST_DURATION_KEY, DEFAULT_WALKING_REST_DURATION, item.getTaskOptions());
+        int numberOfSteps = extractInt(NUMBER_OF_STEPS_PER_LEG_KEY, DEFAULT_STEPS_PER_LEG, item.getTaskOptions());
+
+        return WalkingTaskFactory.shortWalkTask(
+                context,
+                item.getSchemaIdentifier(),
+                item.getIntendedUseDescription(),
+                numberOfSteps,
+                restDuration,
+                item.createPredefinedExclusions());
+    }
+
     public Task createTremorTask(Context context, ActiveTaskItem item) {
         int duration = extractInt(DURATION_KEY, DEFAULT_DURATION, item.getTaskOptions());
 
         String handOptionName = extractString(HAND_OPTIONS_KEY, HandTaskOptions.SERIALIZED_NAME_HAND_BOTH, item.getTaskOptions());
         HandTaskOptions.Hand handOption = HandTaskOptions.toHandOption(handOptionName);
 
-        List<String> excludePositionList = extractStringList(EXCLUDE_POSITIONS_KEY, new ArrayList<>(), item.getTaskOptions());
+        List<TremorTaskFactory.TremorTaskExcludeOption> excludeOptionList = new ArrayList<>();
+        List<String> serializedExcludeList = extractStringList(EXCLUDE_POSITIONS_KEY, new ArrayList<>(), item.getTaskOptions());
+        for (String serialized : serializedExcludeList) {
+            excludeOptionList.add(TremorTaskFactory.toTremorExcludeOption(serialized));
+        }
 //        int excludePositionList = extractInt(EXCLUDE_POSITIONS_KEY, 0, item.getTaskOptions());
 //        List<TremorTaskFactory.TremorTaskExcludeOption> excludeOptionList =
 //                OptionSetUtils.toEnumList(excludePositionList, TremorTaskFactory.TremorTaskExcludeOption.values());
@@ -300,7 +365,7 @@ public class TaskItemFactory extends SurveyFactory {
                 item.getSchemaIdentifier(),
                 item.getIntendedUseDescription(),
                 duration,
-                new ArrayList<>(),//excludeOptionList,
+                excludeOptionList,
                 handOption,
                 item.createPredefinedExclusions());
     }
@@ -341,13 +406,19 @@ public class TaskItemFactory extends SurveyFactory {
         return defaultValue;
     }
 
+    @SuppressWarnings("unchecked")  // needed for unchecked String List generic type casting
     private List<String> extractStringList(String key, List<String> defaultValue, Map<String, Object> options) {
         if (options != null && !options.isEmpty()) {
             // Attempt to read key from JSON
             if (options.get(key) != null &&
-                options.get(key) instanceof String)
+                options.get(key) instanceof ArrayList<?>)
             {
-                return Collections.singletonList((String)options.get(key));
+                ArrayList<?> arrayList = (ArrayList<?>)options.get(key);
+                if (!arrayList.isEmpty() &&
+                    arrayList.get(0) instanceof String)
+                {
+                    return (ArrayList<String>)options.get(key);
+                }
             }
         }
         return defaultValue;

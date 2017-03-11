@@ -18,9 +18,8 @@ import org.researchstack.backbone.task.Task;
 
 import java.util.Collections;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
+import static org.researchstack.backbone.task.factory.TremorTaskFactory.*;
 
 /**
  * Created by TheMDP on 1/5/17.
@@ -64,8 +63,8 @@ public class TaskItemFactoryTests {
                         assertEquals("Detail Text 123", ((CompletionStep) step).getMoreDetailText());
                     }
                     if (step instanceof InstructionStep) {
-                        if (step.getIdentifier().equals("Instruction0StepIdentifier")) {
-                            assertEquals("intended Use Description Text", step.getTitle());
+                        if (step.getIdentifier().equals("instruction")) {
+                            assertEquals("intended Use Description Text", step.getText());
                         }
                     }
                     if (step instanceof TappingIntervalStep) {
@@ -103,11 +102,11 @@ public class TaskItemFactoryTests {
                 step = task.getStepAfterStep(step, null);
                 if (step != null) {
                     if (step instanceof InstructionStep) {
-                        if (step.getIdentifier().equals("Instruction0StepIdentifier")) {
-                            assertEquals("intended Use Description Text", step.getTitle());
+                        if (step.getIdentifier().equals("instruction")) {
+                            assertEquals("intended Use Description Text", step.getText());
                         }
-                        if (step.getIdentifier().equals("Instruction1StepIdentifier")) {
-                            assertEquals("Speech Instruction", step.getTitle());
+                        if (step.getIdentifier().equals("instruction1")) {
+                            assertEquals("Speech Instruction", step.getText());
                         }
                     }
                     if (step instanceof AudioStep) {
@@ -142,8 +141,8 @@ public class TaskItemFactoryTests {
                 step = task.getStepAfterStep(step, null);
                 if (step != null) {
                     if (step instanceof InstructionStep) {
-                        if (step.getIdentifier().equals("Instruction0StepIdentifier")) {
-                            assertEquals("intended Use Description Text", step.getTitle());
+                        if (step.getIdentifier().equals("instruction")) {
+                            assertEquals("intended Use Description Text", step.getText());
                         }
                     }
                     if (step instanceof WalkingTaskStep) {
@@ -159,6 +158,57 @@ public class TaskItemFactoryTests {
             } while (step != null);
 
             // 2 intro steps, a countdown, an walking step, a rest step, and a conclusion
+            assertEquals(6, stepCount);
+        }
+    }
+
+    @Test
+    public void testShortWalkTask() {
+        String inputTaskString = "{\"taskIdentifier\":\"4-APHTimedWalking-80F09109-265A-49C6-9C5D-765E49AAF5D9\",\"schemaIdentifier\":\"Walking Activity\",\"taskType\":\"shortWalk\",\"taskOptions\":{\"restDuration\":30.0,\"numberOfStepsPerLeg\":100.0},\"removeSteps\":[\"walking.return\"],\"localizedSteps\":[{\"identifier\":\"instruction\",\"type\":\"instruction\",\"text\":\"This activity measures your gait (walk) and balance, which can be affected by Parkinson disease.\",\"detailText\":\"Please do not continue if you cannot safely walk unassisted.\"},{\"identifier\":\"instruction1\",\"type\":\"instruction\",\"text\":\"\\u2022 Please wear a comfortable pair of walking shoes and find a flat, smooth surface for walking.\\n\\n\\u2022 Try to walk continuously by turning at the ends of your path, as if you are walking around a cone.\\n\\n\\u2022 Importantly, walk at your normal pace. You do not need to walk faster than usual.\",\"detailText\":\"Put your phone in a pocket or bag and follow the audio instructions.\"},{\"identifier\":\"walking.outbound\",\"type\":\"active\",\"stepDuration\":30.0,\"text\":\"Walk back and forth for 30 seconds.\",\"stepSpokenInstruction\":\"Walk back and forth for 30 seconds.\"},{\"identifier\":\"walking.rest\",\"type\":\"active\",\"stepDuration\":30.0,\"text\":\"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to avoid moving for 30 seconds.\",\"stepSpokenInstruction\":\"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to avoid moving for 30 seconds.\"}]}";
+        TaskItem taskItem = helper.gson.fromJson(inputTaskString, TaskItem.class);
+        TaskItemFactory factory = new TaskItemFactory(helper.mockContext, Collections.singletonList(taskItem));
+
+        {
+            Task task = factory.getTaskList().get(0);
+
+            assertNotNull(task);
+            assertEquals("Walking Activity", task.getIdentifier());
+
+            Step step = null;
+            int stepCount = 0;
+            do {
+                step = task.getStepAfterStep(step, null);
+                if (step != null) {
+                    if (step instanceof InstructionStep) {
+                        if (step.getIdentifier().equals("instruction")) {
+                            assertEquals("This activity measures your gait (walk) and balance, which can be affected by Parkinson disease.", step.getText());
+                            assertEquals("Please do not continue if you cannot safely walk unassisted.", ((InstructionStep) step).getMoreDetailText());
+                        }
+                        if (step.getIdentifier().equals("instruction1")) {
+                            assertEquals("\u2022 Please wear a comfortable pair of walking shoes and find a flat, smooth surface for walking.\n\n\u2022 Try to walk continuously by turning at the ends of your path, as if you are walking around a cone.\n\n\u2022 Importantly, walk at your normal pace. You do not need to walk faster than usual.", step.getText());
+                            assertEquals("Put your phone in a pocket or bag and follow the audio instructions.", ((InstructionStep) step).getMoreDetailText());
+                        }
+                    }
+                    if (step instanceof WalkingTaskStep) {
+                        assertEquals("walking.outbound", step.getIdentifier());
+                        WalkingTaskStep substep = (WalkingTaskStep)step;
+                        assertEquals(30, substep.getStepDuration());
+                        assertEquals(100, substep.getNumberOfStepsPerLeg());
+                        assertEquals("Walk back and forth for 30 seconds.", substep.getText());
+                        assertEquals("Walk back and forth for 30 seconds.", substep.getSpokenInstruction());
+                    }
+                    if (step instanceof FitnessStep) {
+                        assertEquals("walking.rest", step.getIdentifier());
+                        FitnessStep substep = (FitnessStep)step;
+                        assertEquals(30, substep.getStepDuration());
+                        assertEquals("Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to avoid moving for 30 seconds.", substep.getText());
+                        assertEquals("Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to avoid moving for 30 seconds.", substep.getSpokenInstruction());
+                    }
+                    stepCount++;
+                }
+            } while (step != null);
+
+            // 2 intro steps, a countdown, an walking step (only one way), a rest step, and a conclusion
             assertEquals(6, stepCount);
         }
     }
@@ -181,8 +231,8 @@ public class TaskItemFactoryTests {
                 step = task.getStepAfterStep(step, null);
                 if (step != null) {
                     if (step instanceof InstructionStep) {
-                        if (step.getIdentifier().equals("Instruction0StepIdentifier")) {
-                            assertEquals("intended Use Description Text", step.getTitle());
+                        if (step.getIdentifier().equals("instruction")) {
+                            assertEquals("intended Use Description Text", step.getText());
                         }
                     }
                     if (step instanceof ActiveStep && !(step instanceof CountdownStep)) {
@@ -200,13 +250,9 @@ public class TaskItemFactoryTests {
         }
     }
 
-/*
-// Currently this json is INVALID and throws a MalformedJsonException
-// Skip this test until we can fix it on the server or find a way to parse bad json
-
     @Test
     public void testTremorTaskBothHandsExcludeNoseAndElbowBent() {
-        String inputTaskString = "{\"taskIdentifier\":\"1-Tremor-ABCD-1234\",\"schemaIdentifier\":\"Tremor Activity\",\"taskType\":\"tremor\",\"intendedUseDescription\":\"intended Use Description Text\",\"taskOptions\":{\"duration\":10.0,\"handOptions\":\"both\",\"excludePostions”:[“elbowBent\",\"touchNose”]}}";
+        String inputTaskString = "{\"taskIdentifier\":\"1-Tremor-ABCD-1234\",\"schemaIdentifier\":\"Tremor Activity\",\"taskType\":\"tremor\",\"intendedUseDescription\":\"intended Use Description Text\",\"taskOptions\":{\"duration\":10.0,\"handOptions\":\"both\",\"excludePositions\":[\"handAtShoulderLength\", \"elbowBent\"]}}";
         TaskItem taskItem = helper.gson.fromJson(inputTaskString, TaskItem.class);
         TaskItemFactory factory = new TaskItemFactory(helper.mockContext, Collections.singletonList(taskItem));
 
@@ -222,23 +268,24 @@ public class TaskItemFactoryTests {
                 step = task.getStepAfterStep(step, null);
                 if (step != null) {
                     if (step instanceof InstructionStep) {
-                        if (step.getIdentifier().equals("Instruction0StepIdentifier")) {
-                            assertEquals("intended Use Description Text", step.getTitle());
+                        if (step.getIdentifier().equals("instruction")) {
+                            assertEquals("intended Use Description Text", step.getText());
                         }
                     }
                     if (step instanceof ActiveStep && !(step instanceof CountdownStep)) {
                         // The inputTaskString specifies that it should ONLY be right hand with 12 seconds duration
                         ActiveStep substep = (ActiveStep)step;
                         assertEquals(10, substep.getStepDuration());
-                        assertTrue(substep.getIdentifier().contains("right"));
+                        // Check that
+                        assertFalse(substep.getIdentifier().contains(TremorTestExtendArmStepIdentifier));
+                        assertFalse(substep.getIdentifier().contains(TremorTestBendArmStepIdentifier));
                     }
                     stepCount++;
                 }
             } while (step != null);
 
-            // 7 intro steps, 5 countdown, 5 active step, a rest step, and a conclusion
-            assertEquals(18, stepCount);
+            // 23 represents both hands' instructions, countdowns, and active steps
+            assertEquals(23, stepCount);
         }
     }
-*/
 }

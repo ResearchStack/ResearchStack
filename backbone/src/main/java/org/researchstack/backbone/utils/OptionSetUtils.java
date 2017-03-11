@@ -12,6 +12,7 @@ public class OptionSetUtils {
     /**
      * @param optionSetBitMask the the bit mask representing a list of enum options
      * @param enumOptions this should always be the result of your Enum.values();
+     * @param <E> the type of the enum
      * @return a list of enums that are represented by the optionSet
      */
     public static <E extends Enum> List<E> toEnumList(int optionSetBitMask, E[] enumOptions) {

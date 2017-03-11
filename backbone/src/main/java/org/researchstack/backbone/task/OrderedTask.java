@@ -172,4 +172,12 @@ public class OrderedTask extends Task implements Serializable {
     public void replaceStep(int index, Step step) {
         steps.set(index, step);
     }
+
+    /**
+     * Convenience method to remove a Step from the Task
+     * @param index index of step to remove
+     */
+    public void removeStep(int index) {
+        steps.remove(index);
+    }
 }

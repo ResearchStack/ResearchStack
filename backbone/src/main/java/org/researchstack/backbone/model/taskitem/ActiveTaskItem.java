@@ -29,8 +29,14 @@ public class ActiveTaskItem extends TaskItem {
     @SerializedName("localizedSteps")
     private List<SurveyItem> localizedSteps;
 
+    @SerializedName("removeSteps")
+    private List<String> removeSteps;
+
     @SerializedName("predefinedExclusions")
     private int predefinedExclusions;
+
+    @SerializedName("intendedUseDescription")
+    private String intendedUseDescription;
 
     // Purposefully not de-serializing this object, we will be setting it in TaskItemAdapter
     public static final String GSON_TASK_OPTIONS_NAME = "taskOptions";
@@ -69,5 +75,21 @@ public class ActiveTaskItem extends TaskItem {
 
     public void setLocalizedSteps(List<SurveyItem> localizedSteps) {
         this.localizedSteps = localizedSteps;
+    }
+
+    public List<String> getRemoveSteps() {
+        return removeSteps;
+    }
+
+    public void setRemoveSteps(List<String> removeSteps) {
+        this.removeSteps = removeSteps;
+    }
+
+    public String getIntendedUseDescription() {
+        return intendedUseDescription;
+    }
+
+    public void setIntendedUseDescription(String intendedUseDescription) {
+        this.intendedUseDescription = intendedUseDescription;
     }
 }

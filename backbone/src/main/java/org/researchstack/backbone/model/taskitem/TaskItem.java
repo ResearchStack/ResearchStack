@@ -34,9 +34,6 @@ public class TaskItem {
     @SerializedName(TASK_TYPE_GSON)
     private TaskItemType taskType;
 
-    @SerializedName("intendedUseDescription")
-    private String intendedUseDescription;
-
     @SerializedName("insertSteps")
     private List<SurveyItem> insertSteps;
 
@@ -85,14 +82,6 @@ public class TaskItem {
 
     public void setTaskIsOptional(boolean taskIsOptional) {
         this.taskIsOptional = taskIsOptional;
-    }
-
-    public String getIntendedUseDescription() {
-        return intendedUseDescription;
-    }
-
-    public void setIntendedUseDescription(String intendedUseDescription) {
-        this.intendedUseDescription = intendedUseDescription;
     }
 
     public List<SurveyItem> getInsertSteps() {
