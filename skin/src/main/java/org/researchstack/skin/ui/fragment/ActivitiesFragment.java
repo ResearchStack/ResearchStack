@@ -13,11 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.joda.time.DateTime;
 import org.researchstack.backbone.StorageAccess;
+import org.researchstack.backbone.model.survey.SurveyItem;
+import org.researchstack.backbone.model.survey.SurveyItemAdapter;
+import org.researchstack.backbone.model.taskitem.TaskItem;
+import org.researchstack.backbone.model.taskitem.TaskItemAdapter;
+import org.researchstack.backbone.model.taskitem.factory.TaskItemFactory;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.task.factory.TremorTaskFactory;
+import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
@@ -28,6 +38,7 @@ import org.researchstack.skin.ui.adapter.TaskAdapter;
 import org.researchstack.skin.ui.views.DividerItemDecoration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -35,6 +46,15 @@ import rx.Subscription;
 
 
 public class ActivitiesFragment extends Fragment implements StorageAccessListener {
+
+
+    // TODO: remove these constants
+    public static final String APHWalkingActivitySurveyIdentifier              = "4-APHTimedWalking-80F09109-265A-49C6-9C5D-765E49AAF5D9";
+    public static final String APHVoiceActivitySurveyIdentifier                = "3-APHPhonation-C614A231-A7B7-4173-BDC8-098309354292";
+    public static final String APHTappingActivitySurveyIdentifier              = "2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF";
+    public static final String APHTremorActivitySurveyIdentifier               = "1-APHTremor-108E189F-4B5B-48DC-BFD7-FA6796EEf439";
+
+
     private static final String LOG_TAG = ActivitiesFragment.class.getCanonicalName();
     private static final int REQUEST_TASK = 1492;
     private TaskAdapter adapter;
@@ -119,10 +139,22 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                             Task newTask = DataProvider.getInstance().loadTask(getContext(), task);
 
                             if (newTask == null) {
-                                Toast.makeText(getActivity(),
-                                        R.string.rss_local_error_load_task,
-                                        Toast.LENGTH_SHORT).show();
-                                return;
+
+                                // TODO: figure out a different way to show do these in loadTask
+                                if (task.taskID.equals(APHTappingActivitySurveyIdentifier)) {
+                                    startCustomTappingTask();
+                                } else if (task.taskID.equals(APHTremorActivitySurveyIdentifier)) {
+                                    startCustomTremorTask();
+                                } else if (task.taskID.equals(APHVoiceActivitySurveyIdentifier)) {
+                                    startCustomVoiceTask();
+                                } else if (task.taskID.equals(APHWalkingActivitySurveyIdentifier)) {
+                                    startCustomWalkingTask();
+                                } else {
+                                    Toast.makeText(getActivity(),
+                                            R.string.rss_local_error_load_task,
+                                            Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                             }
 
                             startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask),
@@ -230,4 +262,34 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         // Ignore, activity handles auth
     }
 
+    private Gson createGson() {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
+        builder.registerTypeAdapter(TaskItem.class, new TaskItemAdapter());
+        return builder.create();
+    }
+
+    private void startCustomTappingTask() {
+        String taskItemJson = "{\"taskIdentifier\":\"2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF\",\"schemaIdentifier\":\"Tapping Activity\",\"taskType\":\"tapping\",\"intendedUseDescription\":\"Speed of finger tapping can reflect severity of motor symptoms in Parkinson disease. This activity measures your tapping speed for each hand. Your medical provider may measure this differently.\",\"taskOptions\":{\"duration\":20.0,\"handOptions\":\"both\"},\"localizedSteps\":[{\"identifier\":\"conclusion\",\"type\":\"instruction\",\"text\":\"Thank You!\"}]}";
+        Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
+        startActivity(ActiveTaskActivity.newIntent(getContext(), task));
+    }
+
+    private void startCustomTremorTask() {
+        String taskItemJson = "{\"taskIdentifier\":\"1-APHTremor-108E189F-4B5B-48DC-BFD7-FA6796EEf439\",\"schemaIdentifier\":\"Tremor Activity\",\"taskType\":\"tremor\",\"taskOptions\":{\"duration\":10.0,\"handOptions\":\"right\",\"excludePostions\":6}}";
+        Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
+        startActivity(ActiveTaskActivity.newIntent(getContext(), task));
+    }
+
+    private void startCustomVoiceTask() {
+        String taskItemJson = "{\"taskIdentifier\":\"3-APHPhonation-C614A231-A7B7-4173-BDC8-098309354292\",\"schemaIdentifier\":\"Voice Activity\",\"taskType\":\"voice\",\"localizedSteps\":[{\"identifier\":\"instruction\",\"type\":\"instruction\",\"title\":\"Voice\"},{\"identifier\":\"instruction1\",\"type\":\"instruction\",\"title\":\"Voice\",\"text\":\"Take a deep breath and say “Aaaaah” into the microphone for as long as you can. Keep a steady volume so the audio bars remain blue.\",\"detailText\":\"Tap Get Started to begin the test.\"},{\"identifier\":\"countdown\",\"type\":\"instruction\",\"text\":\"Please wait while we check the ambient sound levels.\"}],\"taskOptions\":{\"duration\":10.0,\"speechInstruction\":\"Speech Instruction\",\"shortSpeechInstruction\":\"Short Speech Instruction\"}}";
+        Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
+        startActivity(ActiveTaskActivity.newIntent(getContext(), task));
+    }
+
+    private void startCustomWalkingTask() {
+        String taskItemJson = "{\"taskIdentifier\":\"4-APHTimedWalking-80F09109-265A-49C6-9C5D-765E49AAF5D9\",\"schemaIdentifier\":\"Walking Activity\",\"taskType\":\"shortWalk\",\"taskOptions\":{\"restDuration\":30.0,\"numberOfStepsPerLeg\":100.0},\"removeSteps\":[\"walking.return\"],\"localizedSteps\":[{\"identifier\":\"instruction\",\"type\":\"instruction\",\"text\":\"This activity measures your gait (walk) and balance, which can be affected by Parkinson disease.\",\"detailText\":\"Please do not continue if you cannot safely walk unassisted.\"},{\"identifier\":\"instruction1\",\"type\":\"instruction\",\"text\":\"\\u2022 Please wear a comfortable pair of walking shoes and find a flat, smooth surface for walking.\\n\\n\\u2022 Try to walk continuously by turning at the ends of your path, as if you are walking around a cone.\\n\\n\\u2022 Importantly, walk at your normal pace. You do not need to walk faster than usual.\",\"detailText\":\"Put your phone in a pocket or bag and follow the audio instructions.\"},{\"identifier\":\"walking.outbound\",\"type\":\"active\",\"stepDuration\":30.0,\"text\":\"Walk back and forth for 30 seconds.\",\"stepSpokenInstruction\":\"Walk back and forth for 30 seconds.\"},{\"identifier\":\"walking.rest\",\"type\":\"active\",\"stepDuration\":30.0,\"text\":\"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to avoid moving for 30 seconds.\",\"stepSpokenInstruction\":\"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to avoid moving for 30 seconds.\"}]}";
+        Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
+        startActivity(ActiveTaskActivity.newIntent(getContext(), task));
+    }
 }
