@@ -111,34 +111,17 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
                 activeStepLayout.addView(tappingStepLayout, new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT, height));
 
-                // Start on a button tap
-                OnClickListener onClickListener = new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        start();
-                    }
-                };
-                leftTappingButton.setOnClickListener(onClickListener);
-                rightTappingButton.setOnClickListener(onClickListener);
+                setupSampleResult();
             }
         });
     }
 
-    @Override
-    protected void doUIAnimationPerSecond() {
-        super.doUIAnimationPerSecond();
-        progressBarHorizontal.setProgress(progressBarHorizontal.getProgress() + 1);
-    }
-
-    @Override
-    protected void start() {
-        super.start();
-
-        startTime = System.currentTimeMillis();
-        tapCount = 0;
-        progressBar.setProgress(0);
+    /**
+     * Should only be called after the UI has been laid out
+     */
+    protected void setupSampleResult() {
         sampleList = new ArrayList<>();
-        tapCountTextView.setText(String.format(Locale.getDefault(), "%2d", tapCount));
+        tapCount = 0;
         for (int i = 0; i <= NO_BUTTON; i++) {
             lastPointerIdx[i] = INVALID_POINTER_IDX;
         }
@@ -164,14 +147,24 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
                 rightButtonXY[1] - activeStepLayoutXY[1],
                 rightTappingButton.getWidth(), rightTappingButton.getHeight());
 
-        // Remove click listeners for start
-        leftTappingButton.setOnClickListener(null);
-        rightTappingButton.setOnClickListener(null);
-
         // Assign and wait for user touches
         setupTouchListener(leftTappingButton, LEFT_BUTTON, TappedButtonLeft, true);
         setupTouchListener(rightTappingButton, RIGHT_BUTTON, TappedButtonRight, true);
         setupTouchListener(activeStepLayout, NO_BUTTON, TappedButtonNone, false);
+    }
+
+    @Override
+    protected void doUIAnimationPerSecond() {
+        super.doUIAnimationPerSecond();
+        progressBarHorizontal.setProgress(progressBarHorizontal.getProgress() + 1);
+    }
+
+    @Override
+    protected void start() {
+        super.start();
+
+        startTime = System.currentTimeMillis();
+        tapCountTextView.setText(String.format(Locale.getDefault(), "%2d", tapCount));
     }
 
     protected void setupTouchListener(
@@ -272,6 +265,10 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
     }
 
     protected void countATap() {
+        // Start official data logging with first tap on a button
+        if (tapCount == 0) {
+            start();
+        }
         tapCount++;
         tapCountTextView.setText(String.format(Locale.getDefault(), "%2d", tapCount));
     }
