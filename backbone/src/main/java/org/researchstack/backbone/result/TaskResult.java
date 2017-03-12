@@ -28,22 +28,21 @@ public class TaskResult extends Result
 {
     private Map<String, StepResult> results;
 
-    // unimplemented but exists in RK, implement or delete if not needed
-    private UUID uuidTask;
-
-    // unimplemented but exists in RK, implement or delete if not needed
-    private Uri outputDirectory;
+    /** Store extra details needed for parsing the result in the taskDetails */
+    private Map<String, Object> taskDetails;
 
     /* Default identifier for serilization/deserialization */
     TaskResult() {
         super();
         this.results = new LinkedHashMap<>();
+        this.taskDetails = new HashMap<>();
     }
 
     public TaskResult(String identifier)
     {
         super(identifier);
         this.results = new LinkedHashMap<>();
+        this.taskDetails = new HashMap<>();
     }
 
     /**
@@ -84,5 +83,13 @@ public class TaskResult extends Result
      */
     public void setStepResultForStepIdentifier(String identifier, StepResult stepResult) {
         results.put(identifier, stepResult);
+    }
+
+    public Map<String, Object> getTaskDetails() {
+        return taskDetails;
+    }
+
+    public void setTaskDetails(Map<String, Object> taskDetails) {
+        this.taskDetails = taskDetails;
     }
 }

@@ -41,6 +41,8 @@ import java.util.Map;
 
 public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCallback {
 
+    public static final String ACTIVITY_TASK_RESULT_KEY = "ACTIVITY_TASK_RESULT_KEY";
+
     private boolean isBackButtonEnabled;
 
     public static Intent newIntent(Context context, Task task) {
@@ -124,6 +126,7 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
         unlockScreenOn();
         unlockOrientation();
 
+        taskResult.getTaskDetails().put(ACTIVITY_TASK_RESULT_KEY, true);
         taskResult.setEndDate(new Date());
 
         // Loop through and find all the FileResult files
