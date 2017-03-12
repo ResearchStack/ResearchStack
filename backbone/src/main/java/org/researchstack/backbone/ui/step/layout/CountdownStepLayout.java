@@ -3,6 +3,7 @@ package org.researchstack.backbone.ui.step.layout;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -105,7 +106,8 @@ public class CountdownStepLayout extends ActiveStepLayout {
             @Override
             public void run() {
                 long timeElapsedInMs = System.currentTimeMillis() - startTime;
-                float percentComplete = 1.0f - ((float)timeElapsedInMs / (float)(1000 * activeStep.getStepDuration()));
+                float percentLeft = (float)timeElapsedInMs / (float)(DateUtils.SECOND_IN_MILLIS * (activeStep.getStepDuration() - 1));
+                float percentComplete = 1.0f - percentLeft;
 
                 if (percentComplete < 0) {
                     arcDrawable.setSweepAngle(0.0f);
