@@ -2,6 +2,7 @@ package org.researchstack.backbone.model.taskitem.factory;
 
 import android.content.Context;
 
+import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 
 import org.researchstack.backbone.R;
@@ -409,16 +410,18 @@ public class TaskItemFactory extends SurveyFactory {
     @SuppressWarnings("unchecked")  // needed for unchecked String List generic type casting
     private List<String> extractStringList(String key, List<String> defaultValue, Map<String, Object> options) {
         if (options != null && !options.isEmpty()) {
-            // Attempt to read key from JSON
+            // Attempt to read key from JSON, GSON stores any Lists as a Map
             if (options.get(key) != null &&
-                options.get(key) instanceof ArrayList<?>)
+                options.get(key) instanceof ArrayList)
             {
-                ArrayList<?> arrayList = (ArrayList<?>)options.get(key);
-                if (!arrayList.isEmpty() &&
-                    arrayList.get(0) instanceof String)
-                {
-                    return (ArrayList<String>)options.get(key);
+                ArrayList arrayList = (ArrayList) options.get(key);
+                List<String> stringList = new ArrayList<>();
+                for (Object listItem : arrayList) {
+                    if (listItem instanceof String) {
+                        stringList.add((String)listItem);
+                    }
                 }
+                return stringList;
             }
         }
         return defaultValue;

@@ -26,7 +26,6 @@ import org.researchstack.backbone.model.taskitem.factory.TaskItemFactory;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
 import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.task.factory.TremorTaskFactory;
 import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LogExt;
@@ -48,7 +47,7 @@ import rx.Subscription;
 public class ActivitiesFragment extends Fragment implements StorageAccessListener {
 
 
-    // TODO: remove these constants
+    // TODO: remove the methods below once we finish task builder
     public static final String APHWalkingActivitySurveyIdentifier              = "4-APHTimedWalking-80F09109-265A-49C6-9C5D-765E49AAF5D9";
     public static final String APHVoiceActivitySurveyIdentifier                = "3-APHPhonation-C614A231-A7B7-4173-BDC8-098309354292";
     public static final String APHTappingActivitySurveyIdentifier              = "2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF";
@@ -153,8 +152,9 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                                     Toast.makeText(getActivity(),
                                             R.string.rss_local_error_load_task,
                                             Toast.LENGTH_SHORT).show();
-                                    return;
                                 }
+
+                                return;
                             }
 
                             startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask),
@@ -262,6 +262,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         // Ignore, activity handles auth
     }
 
+    // TODO: remove the methods below once we finish task builder
     private Gson createGson() {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
@@ -270,13 +271,13 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
     }
 
     private void startCustomTappingTask() {
-        String taskItemJson = "{\"taskIdentifier\":\"2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF\",\"schemaIdentifier\":\"Tapping Activity\",\"taskType\":\"tapping\",\"intendedUseDescription\":\"Speed of finger tapping can reflect severity of motor symptoms in Parkinson disease. This activity measures your tapping speed for each hand. Your medical provider may measure this differently.\",\"taskOptions\":{\"duration\":20.0,\"handOptions\":\"both\"},\"localizedSteps\":[{\"identifier\":\"conclusion\",\"type\":\"instruction\",\"text\":\"Thank You!\"}]}";
+        String taskItemJson = "{\"taskIdentifier\":\"2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF\",\"schemaIdentifier\":\"TappingActivity\",\"taskType\":\"tapping\",\"intendedUseDescription\":\"Speed of finger tapping can reflect severity of motor symptoms in Parkinson disease. This activity measures your tapping speed for each hand. Your medical provider may measure this differently.\",\"taskOptions\":{\"duration\":20.0,\"handOptions\":\"both\"},\"localizedSteps\":[{\"identifier\":\"conclusion\",\"type\":\"instruction\",\"text\":\"Thank You!\"}]}";
         Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
         startActivity(ActiveTaskActivity.newIntent(getContext(), task));
     }
 
     private void startCustomTremorTask() {
-        String taskItemJson = "{\"taskIdentifier\":\"1-APHTremor-108E189F-4B5B-48DC-BFD7-FA6796EEf439\",\"schemaIdentifier\":\"Tremor Activity\",\"taskType\":\"tremor\",\"taskOptions\":{\"duration\":10.0,\"handOptions\":\"right\",\"excludePostions\":6}}";
+        String taskItemJson = "{\"taskIdentifier\":\"1-APHTremor-108E189F-4B5B-48DC-BFD7-FA6796EEf439\",\"schemaIdentifier\":\"Tremor Activity\",\"taskType\":\"tremor\",\"taskOptions\":{\"duration\":10.0,\"handOptions\":\"both\",\"excludePositions\":[\"elbowBent\",\"handQueenWave\"]}}";
         Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
         startActivity(ActiveTaskActivity.newIntent(getContext(), task));
     }
