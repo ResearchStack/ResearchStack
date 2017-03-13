@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -28,15 +29,18 @@ import static org.researchstack.backbone.result.TappingIntervalResult.TappingBut
 
 /**
  * Created by TheMDP on 2/23/17.
+ *
+ * The TappingIntervalStepLayout has two buttons at the bottom of the screen that the user
+ * is instructed to tap one and then the other repeatably.
+ *
+ * This goes on for as long as the active step desires, and collects data on the taps
+ * and packages them in a TappingIntervalResult
  */
 
 public class TappingIntervalStepLayout extends ActiveStepLayout {
 
     protected TappingIntervalStep tappingIntervalStep;
-
-    protected TappingIntervalResult.Rect stepViewRect;
-    protected TappingIntervalResult.Rect leftButtonRect;
-    protected TappingIntervalResult.Rect rightButtonRect;
+    protected TappingIntervalResult tappingResult;
 
     protected long startTime;
     protected int tapCount;
@@ -126,31 +130,54 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
             lastPointerIdx[i] = INVALID_POINTER_IDX;
         }
 
-        // Calculate view sizes
+        TappingIntervalResult tappingResult = new TappingIntervalResult(tappingIntervalStep.getIdentifier());
+
         int[] activeStepLayoutXY = new int[2];
         activeStepLayout.getLocationOnScreen(activeStepLayoutXY);
-        stepViewRect = new TappingIntervalResult.Rect(activeStepLayoutXY[0], activeStepLayoutXY[1],
-                activeStepLayout.getWidth(), activeStepLayout.getHeight());
+        {
+            View button = leftTappingButton;
 
-        // Button rects are relative to the stepViewRect
-        int[] leftButtonXY = new int[2];
-        leftTappingButton.getLocationOnScreen(leftButtonXY);
-        leftButtonRect = new TappingIntervalResult.Rect(
-                leftButtonXY[0] - activeStepLayoutXY[0],
-                leftButtonXY[1] - activeStepLayoutXY[1],
-                leftTappingButton.getWidth(), leftTappingButton.getHeight());
+            int[] buttonXY = new int[2];
+            button.getLocationOnScreen(buttonXY);
+            int buttonLeft = buttonXY[0] - activeStepLayoutXY[0];
+            int buttonTop = buttonXY[1] - activeStepLayoutXY[1];
+            int buttonRight = buttonLeft + button.getWidth();
+            int buttonBottom = buttonRight + button.getHeight();
+            Rect buttonRect = new Rect(buttonLeft, buttonTop, buttonRight, buttonBottom);
 
-        int[] rightButtonXY = new int[2];
-        rightTappingButton.getLocationOnScreen(rightButtonXY);
-        rightButtonRect = new TappingIntervalResult.Rect(
-                rightButtonXY[0] - activeStepLayoutXY[0],
-                rightButtonXY[1] - activeStepLayoutXY[1],
-                rightTappingButton.getWidth(), rightTappingButton.getHeight());
+            setupTouchListener(button, LEFT_BUTTON, buttonRect, TappedButtonLeft, true);
+            tappingResult.setButtonRect1(buttonLeft, buttonTop, button.getWidth(), button.getHeight());
+        }
 
-        // Assign and wait for user touches
-        setupTouchListener(leftTappingButton, LEFT_BUTTON, TappedButtonLeft, true);
-        setupTouchListener(rightTappingButton, RIGHT_BUTTON, TappedButtonRight, true);
-        setupTouchListener(activeStepLayout, NO_BUTTON, TappedButtonNone, false);
+        {
+            View button = rightTappingButton;
+
+            int[] buttonXY = new int[2];
+            button.getLocationOnScreen(buttonXY);
+            int buttonLeft = buttonXY[0] - activeStepLayoutXY[0];
+            int buttonTop = buttonXY[1] - activeStepLayoutXY[1];
+            int buttonRight = buttonLeft + button.getWidth();
+            int buttonBottom = buttonRight + button.getHeight();
+            Rect buttonRect = new Rect(buttonLeft, buttonTop, buttonRight, buttonBottom);
+
+            setupTouchListener(button, RIGHT_BUTTON, buttonRect, TappedButtonRight, true);
+            tappingResult.setButtonRect2(buttonLeft, buttonTop, button.getWidth(), button.getHeight());
+        }
+
+        {
+            View button = activeStepLayout;
+
+            int[] buttonXY = new int[2];
+            button.getLocationOnScreen(buttonXY);
+            int buttonLeft = buttonXY[0] - activeStepLayoutXY[0];
+            int buttonTop = buttonXY[1] - activeStepLayoutXY[1];
+            int buttonRight = buttonLeft + button.getWidth();
+            int buttonBottom = buttonRight + button.getHeight();
+            Rect buttonRect = new Rect(buttonLeft, buttonTop, buttonRight, buttonBottom);
+
+            setupTouchListener(button, NO_BUTTON, buttonRect, TappedButtonNone, false);
+            tappingResult.setStepViewSize(activeStepLayout.getWidth(), activeStepLayout.getHeight());
+        }
     }
 
     @Override
@@ -170,6 +197,7 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
     protected void setupTouchListener(
             final View view,
             final int idx,
+            final Rect buttonRect,
             TappingIntervalResult.TappingButtonIdentifier buttonId,
             boolean countsAsATap)
     {
@@ -185,9 +213,9 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
                             buttonSamples[idx] = new TappingIntervalResult.Sample();
                             buttonSamples[idx].setTimestamp(motionEvent.getEventTime() - startTime);
                             buttonSamples[idx].setButtonIdentifier(buttonId);
-                            buttonSamples[idx].setLocation(new TappingIntervalResult.Point(
-                                    (int)(motionEvent.getX() + leftButtonRect.left),
-                                    (int)(motionEvent.getY() + leftButtonRect.top)));
+                            buttonSamples[idx].setLocation(
+                                    (int)(motionEvent.getX() + buttonRect.left),
+                                    (int)(motionEvent.getY() + buttonRect.top));
                             lastPointerIdx[idx] = motionEvent.getActionMasked();
 
                             LogExt.d(getClass(), "tap down with button idx " + idx);
@@ -248,14 +276,9 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
             return;
         }
 
-        TappingIntervalResult tappingResult = new TappingIntervalResult(tappingIntervalStep.getIdentifier());
         tappingResult.setStartDate(new Date(startTime));
         tappingResult.setEndDate(new Date());
         tappingResult.setSamples(sampleList);
-        tappingResult.setButtonRect1(leftButtonRect);
-        tappingResult.setButtonRect2(rightButtonRect);
-        tappingResult.setStepViewSize(new TappingIntervalResult.Size(
-                stepViewRect.right - stepViewRect.left, stepViewRect.bottom - stepViewRect.top));
 
         stepResult.getResults().put(tappingResult.getIdentifier(), tappingResult);
 
