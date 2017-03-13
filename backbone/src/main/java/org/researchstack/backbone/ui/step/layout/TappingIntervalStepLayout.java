@@ -130,7 +130,7 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
             lastPointerIdx[i] = INVALID_POINTER_IDX;
         }
 
-        TappingIntervalResult tappingResult = new TappingIntervalResult(tappingIntervalStep.getIdentifier());
+        tappingResult = new TappingIntervalResult(tappingIntervalStep.getIdentifier());
 
         int[] activeStepLayoutXY = new int[2];
         activeStepLayout.getLocationOnScreen(activeStepLayoutXY);
