@@ -1,15 +1,13 @@
 package org.researchstack.backbone.task.factory;
 
-/**
- * Created by TheMDP on 2/24/17.
- */
-
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.model.ProfileInfoOption;
 
 /**
+ * Created by TheMDP on 2/24/17.
+ *
  * Values that identify the hand(s) to be used in an active task.
  *
  * By default, the participant will be asked to use their most affected hand.

@@ -38,6 +38,13 @@ import java.util.Map;
 
 /**
  * Created by TheMDP on 3/7/17.
+ *
+ * The TaskItemFactory controls converting TaskItem objects to Task objects
+ * It accounts for all the variations specified in TaskItemType when looping through each
+ * TaskItem and storing the result in a field you can access using the getTaskList method
+ *
+ * Note that TaskItem objects should be create from JSON using the GSON library,
+ * and a TaskItemAdapter class to do special de-serialization for the TaskItems
  */
 
 public class TaskItemFactory extends SurveyFactory {

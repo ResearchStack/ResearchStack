@@ -2,6 +2,10 @@ package org.researchstack.backbone.model.taskitem;
 
 /**
  * Created by TheMDP on 3/7/17.
+ *
+ * A CustomTaskItem can be used to serialize your own TaskItem with a custom identifier and type,
+ * See TaskItemFactory and TaskItemAdapter on how to inject your own task when a CustomTaskItem
+ * is found during deserialization
  */
 
 public class CustomTaskItem extends TaskItem {
@@ -10,7 +14,7 @@ public class CustomTaskItem extends TaskItem {
 
     protected String rawJson;
 
-    /* Default constructor needed for serilization/deserialization of object */
+    /* Default constructor needed for serialization/deserialization of object */
     CustomTaskItem() {
         super();
     }

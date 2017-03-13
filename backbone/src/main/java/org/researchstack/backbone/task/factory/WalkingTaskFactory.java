@@ -91,7 +91,7 @@ public class WalkingTaskFactory {
      *                                this parameter is nonzero, the user is asked to stand still
      *                                for the specified rest period after the turn sequence
      *                                has been completed, and baseline data is collected.
-     * @param optionList              Hand that affect the features of the predefined task.
+     * @param optionList              Options that affect the features of the predefined task.
      *
      * @return An active short walk task that can be presented with an `ActiveTaskActivity` object.
      */
@@ -259,7 +259,7 @@ public class WalkingTaskFactory {
      *                                nonzero, the user is asked to stand still for the specified rest
      *                                period after the turn sequence has been completed, and baseline
      *                                data is collected.
-     * @param optionList              Hand that affect the features of the predefined task.
+     * @param optionList              Options that affect the features of the predefined task.
      *
      * @return An active short walk task that can be presented with an `ActiveTaskActivity` object.
      */
@@ -396,7 +396,7 @@ public class WalkingTaskFactory {
      * @param turnAroundTimeLimit         The turn around time limit in seconds
      * @param includeAssistiveDeviceForm  A Boolean value that indicates whether to inlude the form step
      *                                    about the usage of an assistive device.
-     * @param optionList                  Hand that affect the features of the predefined task.
+     * @param optionList                  Options that affect the features of the predefined task.
      *
      * @return An active timed walk task that can be presented with an `ORKTaskViewController` object.
      */

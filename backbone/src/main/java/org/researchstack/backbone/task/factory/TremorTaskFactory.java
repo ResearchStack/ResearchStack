@@ -58,9 +58,9 @@ public class TremorTaskFactory {
      * @param intendedUseDescription A localized string describing the intended use of the data
      *                               collected. If the value of this parameter is null, none will be used
      * @param activeStepDuration     The duration for each active step in the task in seconds
-     * @param tremorOptionList       Hand that affect which active steps are presented for this task.
-     * @param handOption             Hand for determining which hand(s) to test.
-     * @param taskOptionList             Hand that affect the features of the predefined task,
+     * @param tremorOptionList       Options that affect which active steps are presented for this task.
+     * @param handOption             Options for determining which hand(s) to test.
+     * @param taskOptionList         Options that affect the features of the predefined task,
      *                               conclusion option will be ignored at this time.
      *
      * @return An active tremor test task that can be presented with an `ORKTaskViewController` object.

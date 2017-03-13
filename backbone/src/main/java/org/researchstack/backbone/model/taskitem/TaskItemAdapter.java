@@ -12,6 +12,16 @@ import java.util.Map;
 
 /**
  * Created by TheMDP on 3/7/17.
+ *
+ * This class is the deserializer for TaskItem classes
+ * It looks at the "taskType" field, attempts to map it to this library's pre-defined types
+ * and if it does not find it, creates a custom task item
+ * the class of the custom task item can easily be controlled by overriding this
+ * adapter, and overriding the method getCustomClass
+ *
+ * To go even further and change the mapping of the custom tak item to a custom step,
+ * you should override TaskItemFactory's method public Task createCustomTask method
+ * which is the go to for converting a task item to a Task
  */
 
 public class TaskItemAdapter implements JsonDeserializer<TaskItem> {

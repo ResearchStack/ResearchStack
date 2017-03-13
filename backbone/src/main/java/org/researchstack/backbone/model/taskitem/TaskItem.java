@@ -18,9 +18,16 @@ public class TaskItem {
     @SerializedName("taskIdentifier")
     private String taskIdentifier;
 
+    /**
+     * The schemaIdentifier describes the output format of the TaskResult
+     * It can be skipped unless you specifically use it when accessing your db storage
+     */
     @SerializedName("schemaIdentifier")
     private String schemaIdentifier;
 
+    /**
+     * If taskIsOptional is true, there will be a skip task button added to the first step of the task
+     */
     @SerializedName("optional")
     private boolean taskIsOptional;
 
@@ -28,9 +35,17 @@ public class TaskItem {
     @SerializedName(TASK_TYPE_GSON)
     private TaskItemType taskType;
 
+    /**
+     * insertSteps is a list of steps that will be inserted into the Task after it is built
+     */
     @SerializedName("insertSteps")
     private List<SurveyItem> insertSteps;
 
+    /**
+     * taskSteps are a list of SurveyItems that will be used to build the Task
+     * it is similar to insertSteps, except the whole Task will be taskSteps instead of just
+     * inserting specific steps into a pre-constructed TaskItemType
+     */
     @SerializedName(value = "taskSteps", alternate = {"steps"})
     private List<SurveyItem> taskSteps;
 
