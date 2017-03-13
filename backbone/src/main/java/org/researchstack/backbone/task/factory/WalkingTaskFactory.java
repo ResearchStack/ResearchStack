@@ -209,6 +209,7 @@ public class WalkingTaskFactory {
                     String voiceTitle = String.format(voiceTitleFormat, TaskFactory.convertDurationToString(context, restDuration));
                     step.setSpokenInstruction(voiceTitle);
                     step.setRecorderConfigurationList(recorderConfigList);
+                    step.setShouldShowDefaultTimer(true);
                     step.setShouldContinueOnFinish(true);
                     step.setShouldStartTimerAutomatically(true);
                     step.setStepDuration(restDuration);

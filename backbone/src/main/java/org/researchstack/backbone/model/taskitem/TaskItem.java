@@ -15,17 +15,11 @@ import java.util.List;
 
 public class TaskItem {
 
-    @SerializedName("taskTitle")
-    private String taskTitle;
-
     @SerializedName("taskIdentifier")
     private String taskIdentifier;
 
     @SerializedName("schemaIdentifier")
     private String schemaIdentifier;
-
-    @SerializedName("taskClassName")
-    private String taskClassName;
 
     @SerializedName("optional")
     private boolean taskIsOptional;
@@ -44,14 +38,6 @@ public class TaskItem {
         super();
     }
 
-    public String getTaskTitle() {
-        return taskTitle;
-    }
-
-    public void setTaskTitle(String taskTitle) {
-        this.taskTitle = taskTitle;
-    }
-
     public String getTaskIdentifier() {
         return taskIdentifier;
     }
@@ -66,14 +52,6 @@ public class TaskItem {
 
     public void setSchemaIdentifier(String schemaIdentifier) {
         this.schemaIdentifier = schemaIdentifier;
-    }
-
-    public String getTaskClassName() {
-        return taskClassName;
-    }
-
-    public void setTaskClassName(String taskClassName) {
-        this.taskClassName = taskClassName;
     }
 
     public boolean isTaskIsOptional() {

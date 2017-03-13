@@ -108,8 +108,10 @@ public class AudioTaskFactory {
         if (!optionList.contains(TaskExcludeOption.INSTRUCTIONS)) {
             {
                 String title = context.getString(R.string.rsb_AUDIO_TASK_TITLE);
+                if (intendedUseDescription == null) {
+                    intendedUseDescription = context.getString(R.string.rsb_AUDIO_INTENDED_USE);
+                }
                 InstructionStep step = new InstructionStep(Instruction0StepIdentifier, title, intendedUseDescription);
-                step.setMoreDetailText(context.getString(R.string.rsb_AUDIO_INTENDED_USE));
                 step.setImage(ResUtils.Audio.PHONE_WAVES);
                 stepList.add(step);
             }

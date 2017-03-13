@@ -1,10 +1,11 @@
 package org.researchstack.backbone.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.List;
 
 public class SchedulesAndTasksModel {
-
     public List<ScheduleModel> schedules;
 
     public static class ScheduleModel {
@@ -22,7 +23,7 @@ public class SchedulesAndTasksModel {
         public String taskClassName;
         public boolean taskIsOptional;
         public String taskType;
-        public String intendedUseDescription;
+        @SerializedName("taskCompletionTimeString")
         public String taskCompletionTime;
     }
 }

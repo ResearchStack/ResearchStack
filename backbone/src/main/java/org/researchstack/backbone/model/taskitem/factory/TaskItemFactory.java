@@ -215,19 +215,33 @@ public class TaskItemFactory extends SurveyFactory {
 
                 int indexOfStep = orderedTask.getSteps().indexOf(step);
 
-                step.setTitle(surveyItem.title);
-                step.setText(surveyItem.text);
+                if (surveyItem.title != null) {
+                    step.setTitle(surveyItem.title);
+                }
+                if (surveyItem.text != null) {
+                    step.setText(surveyItem.text);
+                }
 
                 if (step instanceof InstructionStep && surveyItem instanceof InstructionSurveyItem) {
-                    ((InstructionStep)step).setMoreDetailText(((InstructionSurveyItem)surveyItem).detailText);
+                    InstructionStep substep = (InstructionStep)step;
+                    InstructionSurveyItem subsurveyItem = (InstructionSurveyItem)surveyItem;
+                    if (subsurveyItem.detailText != null) {
+                        substep.setMoreDetailText(subsurveyItem.detailText);
+                    }
                 }
 
                 if (step instanceof ActiveStep && surveyItem instanceof ActiveStepSurveyItem) {
                     ActiveStep activeStep = (ActiveStep)step;
                     ActiveStepSurveyItem activeStepSurveyItem = (ActiveStepSurveyItem)surveyItem;
-                    activeStep.setStepDuration(activeStepSurveyItem.getStepDuration());
-                    activeStep.setSpokenInstruction(activeStepSurveyItem.getStepSpokenInstruction());
-                    activeStep.setFinishedSpokenInstruction(activeStepSurveyItem.getStepFinishedSpokenInstruction());
+                    if (activeStepSurveyItem.getStepDuration() > 0) {
+                        activeStep.setStepDuration(activeStepSurveyItem.getStepDuration());
+                    }
+                    if (activeStepSurveyItem.getStepSpokenInstruction() != null) {
+                        activeStep.setSpokenInstruction(activeStepSurveyItem.getStepSpokenInstruction());
+                    }
+                    if (activeStepSurveyItem.getStepFinishedSpokenInstruction() != null) {
+                        activeStep.setFinishedSpokenInstruction(activeStepSurveyItem.getStepFinishedSpokenInstruction());
+                    }
                 }
 
                 // Must call this to make sure the changes stick
@@ -357,9 +371,6 @@ public class TaskItemFactory extends SurveyFactory {
         for (String serialized : serializedExcludeList) {
             excludeOptionList.add(TremorTaskFactory.toTremorExcludeOption(serialized));
         }
-//        int excludePositionList = extractInt(EXCLUDE_POSITIONS_KEY, 0, item.getTaskOptions());
-//        List<TremorTaskFactory.TremorTaskExcludeOption> excludeOptionList =
-//                OptionSetUtils.toEnumList(excludePositionList, TremorTaskFactory.TremorTaskExcludeOption.values());
 
         return TremorTaskFactory.tremorTask(
                 context,
@@ -370,18 +381,6 @@ public class TaskItemFactory extends SurveyFactory {
                 handOption,
                 item.createPredefinedExclusions());
     }
-//
-//    private List<Step> transformTaskSteps(Context context, List<TaskItem> itemList) {
-//        if (itemList == null || itemList.isEmpty()) {
-//            return null;
-//        }
-//
-//        List<Step> activeSteps = new ArrayList<>();
-//        int lastIndex = itemList.size() - 1;
-//
-//        // Map the items to steps
-//
-//    }
 
     private int extractInt(String key, int defaultValue, Map<String, Object> options) {
         if (options != null && !options.isEmpty()) {
