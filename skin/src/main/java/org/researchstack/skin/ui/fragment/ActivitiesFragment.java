@@ -26,6 +26,8 @@ import org.researchstack.backbone.model.taskitem.factory.TaskItemFactory;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.task.factory.MoodSurveyFactory;
+import org.researchstack.backbone.task.factory.MoodSurveyFrequency;
 import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LogExt;
@@ -46,13 +48,12 @@ import rx.Subscription;
 
 public class ActivitiesFragment extends Fragment implements StorageAccessListener {
 
-
     // TODO: remove the methods below once we finish task builder
     public static final String APHWalkingActivitySurveyIdentifier              = "4-APHTimedWalking-80F09109-265A-49C6-9C5D-765E49AAF5D9";
     public static final String APHVoiceActivitySurveyIdentifier                = "3-APHPhonation-C614A231-A7B7-4173-BDC8-098309354292";
     public static final String APHTappingActivitySurveyIdentifier              = "2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF";
     public static final String APHTremorActivitySurveyIdentifier               = "1-APHTremor-108E189F-4B5B-48DC-BFD7-FA6796EEf439";
-
+    public static final String APHMoodSurveyIdentifier                         = "3-APHMoodSurvey-7259AC18-D711-47A6-ADBD-6CFCECDED1DF";
 
     private static final String LOG_TAG = ActivitiesFragment.class.getCanonicalName();
     private static final int REQUEST_TASK = 1492;
@@ -138,7 +139,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                             Task newTask = DataProvider.getInstance().loadTask(getContext(), task);
 
                             if (newTask == null) {
-
+                                
                                 // TODO: figure out a different way to show do these in loadTask
                                 if (task.taskID.equals(APHTappingActivitySurveyIdentifier)) {
                                     startCustomTappingTask();
@@ -148,6 +149,8 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                                     startCustomVoiceTask();
                                 } else if (task.taskID.equals(APHWalkingActivitySurveyIdentifier)) {
                                     startCustomWalkingTask();
+                                } else if (task.taskID.equals(APHMoodSurveyIdentifier)) {
+                                    startCustomMoodSurveyTask();
                                 } else {
                                     Toast.makeText(getActivity(),
                                             R.string.rss_local_error_load_task,
@@ -292,5 +295,16 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         String taskItemJson = "{\"taskIdentifier\":\"4-APHTimedWalking-80F09109-265A-49C6-9C5D-765E49AAF5D9\",\"schemaIdentifier\":\"Walking Activity\",\"taskType\":\"shortWalk\",\"taskOptions\":{\"restDuration\":30.0,\"numberOfStepsPerLeg\":100.0},\"removeSteps\":[\"walking.return\"],\"localizedSteps\":[{\"identifier\":\"instruction\",\"type\":\"instruction\",\"text\":\"This activity measures your gait (walk) and balance, which can be affected by Parkinson disease.\",\"detailText\":\"Please do not continue if you cannot safely walk unassisted.\"},{\"identifier\":\"instruction1\",\"type\":\"instruction\",\"text\":\"\u2022 Please wear a comfortable pair of walking shoes and find a flat, smooth surface for walking.\n\n\u2022 Try to walk continuously by turning at the ends of your path, as if you are walking around a cone.\n\n\u2022 Importantly, walk at your normal pace. You do not need to walk faster than usual.\",\"detailText\":\"Put your phone in a pocket or bag and follow the audio instructions.\"},{\"identifier\":\"walking.outbound\",\"type\":\"active\",\"stepDuration\":30.0,\"title\":\"\",\"text\":\"Walk back and forth for 30 seconds.\",\"stepSpokenInstruction\":\"Walk back and forth for 30 seconds.\"},{\"identifier\":\"walking.rest\",\"type\":\"active\",\"stepDuration\":30.0,\"text\":\"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to avoid moving for 30 seconds.\",\"stepSpokenInstruction\":\"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to avoid moving for 30 seconds.\"}]}";
         Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
         startActivity(ActiveTaskActivity.newIntent(getContext(), task));
+    }
+
+    private void startCustomMoodSurveyTask() {
+        Task task = MoodSurveyFactory.moodSurvey(
+                getContext(),
+                "Mood Survey",
+                "Tell us how you feel. We\'ll ask you to rate your mental clarity, mood, and pain level today as well as how well you slept and how much exercise you have done in the last day. You will also have an opportunity to track any activity or thought that you choose yourself.",
+                MoodSurveyFrequency.DAILY,
+                "Today, my thinking is:",
+                new ArrayList<>());
+        startActivity(ViewTaskActivity.newIntent(getContext(), task));
     }
 }

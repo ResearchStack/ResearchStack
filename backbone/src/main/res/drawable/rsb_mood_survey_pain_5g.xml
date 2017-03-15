@@ -1,0 +1,24 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="137dp"
+        android:height="116dp"
+        android:viewportWidth="137.0"
+        android:viewportHeight="116.0">
+    <path
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"
+        android:pathData="M64.3,54.2c0,4.8 -3.9,8.7 -8.7,8.7c-4.8,0 -8.7,-3.9 -8.7,-8.7c0,-4.8 3.9,-8.6 8.7,-8.6c4.8,0 8.7,3.8 8.7,8.6Z"/>
+    <path
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"
+        android:pathData="M90.1,54.2c0,4.8 -3.8,8.7 -8.6,8.7c-4.8,0 -8.7,-3.9 -8.7,-8.7c0,-4.8 3.9,-8.6 8.7,-8.6c4.8,0 8.6,3.8 8.6,8.6Z"/>
+    <path
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"
+        android:pathData="M68.5,7.5c-27,0 -49.1,22 -49.1,49.1c0,27.1 22.1,49.1 49.1,49.1c27.1,0 49.1,-22 49.1,-49.1C117.6,29.5 95.6,7.5 68.5,7.5m0,102.6C39,110.1 15.1,86.1 15.1,56.6C15.1,27.1 39,3.1 68.5,3.1C98,3.1 122,27.1 122,56.6c0,29.5 -24,53.5 -53.5,53.5Z"/>
+    <path
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"
+        android:pathData="M57.3,84C56.7,84 56,83.8 55.5,83.3C54.2,82.3 54,80.5 55,79.2c0.1,-0.1 10.7,-13 26.5,-1.4c1.3,0.9 1.5,2.8 0.6,4.1c-1,1.3 -2.8,1.6 -4.1,0.6C67,74.5 60.3,82 59.6,82.9C59,83.6 58.2,84 57.3,84Z"/>
+    <path
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"
+        android:pathData="M42.7,44.5c-0.7,0 -1.4,-0.4 -1.8,-1c-0.7,-1 -0.4,-2.4 0.6,-3.1L55,31.4C56,30.7 57.4,31 58.1,32c0.7,1 0.4,2.4 -0.6,3.1l-13.6,9c-0.3,0.2 -0.8,0.4 -1.2,0.4Z"/>
+    <path
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"
+        android:pathData="M91.2,43.7l0,0C79.2,43.5 75,35.3 74.8,34.9c-0.5,-1.1 0,-2.4 1.1,-2.9c1,-0.5 2.4,-0.1 2.9,1c0.1,0.3 3.3,6.2 12.5,6.3c1.2,0 2.1,1 2.1,2.3c0,1.2 -1,2.1 -2.2,2.1Z"/>
+</vector>
