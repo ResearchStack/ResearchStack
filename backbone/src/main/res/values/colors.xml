@@ -35,6 +35,9 @@
     <color name="rsb_instruction_step_layout_image_tint_color">@color/rsb_colorPrimary</color>
     <color name="rsb_instruction_step_layout_image_auxillary_tint_color">@color/rsb_light_gray</color>
 
+    <!-- Image Choice Step Body -->
+    <color name="rsb_image_choice_hint_text_color">@color/rsb_black</color>
+
     <!-- Countdown screen -->
     <color name="rsb_countdown_step_layout_timer_color">@color/rsb_colorPrimary</color>
     <color name="rsb_countdown_step_layout_text_color">@color/rsb_black</color>
@@ -46,5 +49,9 @@
 
     <!-- Tapping Screen -->
     <color name="rsb_step_layout_tapping_button_text_color">@color/rsb_white</color>
+
+    <!-- Mood Survey -->
+    <color name="rsb_mood_survey_normal_image_color">@color/rsb_warm_gray</color>
+    <color name="rsb_mood_survey_selected_image_color">@color/rsb_colorPrimary</color>
 
 </resources>

@@ -4,6 +4,8 @@ import android.content.Context;
 
 import org.researchstack.backbone.StorageAccess;
 
+import java.util.Locale;
+
 
 public class ResUtils {
     /**
@@ -52,6 +54,24 @@ public class ResUtils {
         public static final String ELBOW_BENT_FLIPPED       = "rsb_tremor_elbow_bent_flipped";
         public static final String HAND_TO_NOSE_FLIPPED     = "rsb_tremor_hand_to_nose_flipped";
         public static final String QUEEN_WAVE_FLIPPED       = "rsb_tremor_queen_wave_flipped";
+    }
+
+    public static class MoodSurvey {
+        public static final String OVERALL                  = "rsb_mood_survey_mood";
+        public static final String CLARITY                  = "rsb_mood_survey_clarity";
+        public static final String PAIN                     = "rsb_mood_survey_pain";
+        public static final String SLEEP                    = "rsb_mood_survey_sleep";
+        public static final String EXERCISE                 = "rsb_mood_survey_exercise";
+        public static final String CUSTOM                   = "rsb_mood_survey_custom";
+
+        /**
+         * @param root One of the constants above, like, OVERALL, PAIN, etc.
+         * @param index the index of the image (1 through 5)
+         * @return The full drawable image res based on the root
+         */
+        public static String normal(String root, int index) {
+            return String.format(Locale.getDefault(), "%s_%dg", root, index);
+        }
     }
 
     // AnimatedVectorDrawable 's
