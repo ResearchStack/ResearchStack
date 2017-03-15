@@ -12,17 +12,7 @@ import android.view.MenuItem;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.active.recorder.AudioRecorderSettings;
-import org.researchstack.backbone.task.NavigableOrderedTask;
-import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.task.factory.AudioTaskFactory;
-import org.researchstack.backbone.task.factory.HandOptions;
-import org.researchstack.backbone.task.factory.TappingTaskFactory;
-import org.researchstack.backbone.task.factory.TaskExcludeOption;
-import org.researchstack.backbone.task.factory.TremorTaskFactory;
-import org.researchstack.backbone.task.factory.WalkingTaskFactory;
-import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.views.IconTabLayout;
 import org.researchstack.backbone.utils.LogExt;
@@ -36,7 +26,6 @@ import org.researchstack.skin.UiManager;
 import org.researchstack.skin.notification.TaskAlertReceiver;
 import org.researchstack.skin.ui.adapter.MainPagerAdapter;
 
-import java.util.Arrays;
 import java.util.List;
 
 import rx.Observable;
@@ -192,7 +181,7 @@ public class MainActivity extends BaseActivity {
 //        NavigableOrderedTask task = TremorTaskFactory.tremorTask(
 //                this, "tremorttaskid", "We collect sensor data to measure your hand tremor", 10,
 //                Arrays.asList(new TremorTaskFactory.TremorTaskExcludeOption[] {}),
-//                TremorTaskFactory.HandOptions.BOTH,
+//                TremorTaskFactory.HandTaskOptions.BOTH,
 //                Arrays.asList(new TremorTaskFactory.TaskExcludeOption[] {}));
 //
 //        Intent intent = ActiveTaskActivity.newIntent(this, task);
@@ -229,7 +218,7 @@ public class MainActivity extends BaseActivity {
         // TODO: for now, uncomment this to run/test the tapping task
 //        OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
 //                this, "tappingtaskid", "intendedUseDescription",
-//                30, HandOptions.BOTH, Arrays.asList(new TaskExcludeOption[] {}));
+//                30, HandTaskOptions.BOTH, Arrays.asList(new TaskExcludeOption[] {}));
 //
 //        Intent intent = ActiveTaskActivity.newIntent(this, task);
 //        startActivity(intent);

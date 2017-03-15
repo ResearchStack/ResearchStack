@@ -23,7 +23,6 @@ public class SchedulesAndTasksModel {
         public String taskClassName;
         public boolean taskIsOptional;
         public String taskType;
-
         @SerializedName("taskCompletionTimeString")
         public String taskCompletionTime;
     }

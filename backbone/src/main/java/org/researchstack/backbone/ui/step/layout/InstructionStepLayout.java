@@ -126,18 +126,26 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             // Set Summary
             if(! TextUtils.isEmpty(text)) {
                 textTextView.setVisibility(View.VISIBLE);
-                textTextView.setText(Html.fromHtml(text));
-                final String htmlDocTitle = title;
-                textTextView.setMovementMethod(new TextViewLinkHandler() {
-                    @Override
-                    public void onLinkClick(String url) {
-                        String path = ResourcePathManager.getInstance().
-                                generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
-                        Intent intent = ViewWebDocumentActivity.newIntentForPath(
-                                getContext(), htmlDocTitle, path);
-                        getContext().startActivity(intent);
-                    }
-                });
+
+                // There is an odd bug where endlines do not show up with Html.fromHtml correctly,
+                // so we should use the old school text when we find one and assume it is not html,
+                // because html does not use "\n" it uses line breaks
+                if (text.contains("\n")) {
+                    textTextView.setText(text);
+                } else {
+                    textTextView.setText(Html.fromHtml(text));
+                    final String htmlDocTitle = title;
+                    textTextView.setMovementMethod(new TextViewLinkHandler() {
+                        @Override
+                        public void onLinkClick(String url) {
+                            String path = ResourcePathManager.getInstance().
+                                    generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
+                            Intent intent = ViewWebDocumentActivity.newIntentForPath(
+                                    getContext(), htmlDocTitle, path);
+                            getContext().startActivity(intent);
+                        }
+                    });
+                }
             }
 
             // Set Next / Skip
@@ -145,7 +153,18 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             submitBar.setPositiveTitle(R.string.rsb_next);
             submitBar.setPositiveAction(v -> onComplete());
 
-            if (step.isOptional()) {
+            if (instructionStepInterface.getSubmitBarNegativeActionSkipRule() != null) {
+                final InstructionStepInterface.SubmitBarNegativeActionSkipRule rule =
+                        instructionStepInterface.getSubmitBarNegativeActionSkipRule();
+                submitBar.setNegativeTitle(rule.getTitle());
+                submitBar.setNegativeAction(v -> {
+                    StepResult stepResult = new StepResult(step);
+                    rule.onNegativeActionClicked(instructionStepInterface, stepResult);
+                    if (callbacks != null) {
+                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                    }
+                });
+            } else if (step.isOptional()) {
                 submitBar.setNegativeTitle(R.string.rsb_step_skip);
                 submitBar.setNegativeAction(v -> {
                     if (callbacks != null) {

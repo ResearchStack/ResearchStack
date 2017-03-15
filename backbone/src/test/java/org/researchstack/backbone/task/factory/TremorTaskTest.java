@@ -94,7 +94,7 @@ public class TremorTaskTest {
         NavigableOrderedTask task = tremorTask(
                 mockContext, "tremorttaskid", "intendedUseDescription", 10000,
                 Arrays.asList(new TremorTaskExcludeOption[] {}),
-                HandOptions.BOTH,
+                HandTaskOptions.Hand.BOTH,
                 Arrays.asList(new TaskExcludeOption[] {}), true);
 
         String[] stepIds = getFullTremorStepIds(true, true);
@@ -114,7 +114,7 @@ public class TremorTaskTest {
         NavigableOrderedTask task = tremorTask(
                 mockContext, "tremorttaskid", "intendedUseDescription", 10000,
                 Arrays.asList(new TremorTaskExcludeOption[] {}),
-                HandOptions.BOTH,
+                HandTaskOptions.Hand.BOTH,
                 Arrays.asList(new TaskExcludeOption[] {}), true);
 
         String[] stepIds = getFullTremorStepIds(false, true);
@@ -151,7 +151,7 @@ public class TremorTaskTest {
         NavigableOrderedTask task = tremorTask(
                 mockContext, "tremorttaskid", "intendedUseDescription", 10000,
                 Arrays.asList(new TremorTaskExcludeOption[] {}),
-                HandOptions.BOTH,
+                HandTaskOptions.Hand.BOTH,
                 Arrays.asList(new TaskExcludeOption[] {}), false);
 
         String[] stepIds = getFullTremorStepIds(false, true);
@@ -199,7 +199,7 @@ public class TremorTaskTest {
             NavigableOrderedTask task = tremorTask(
                     mockContext, "tremorttaskid", "intendedUseDescription", 10000,
                     Collections.singletonList(excludeOptionList.get(i)),
-                    HandOptions.BOTH,
+                    HandTaskOptions.Hand.BOTH,
                     Arrays.asList(new TaskExcludeOption[] {}));
 
             Step step = null;
@@ -225,7 +225,7 @@ public class TremorTaskTest {
         NavigableOrderedTask task = tremorTask(
                 mockContext, "tremorttaskid", "intendedUseDescription", 10000,
                 Arrays.asList(new TremorTaskExcludeOption[] {}),
-                HandOptions.BOTH,
+                HandTaskOptions.Hand.BOTH,
                 Collections.singletonList(TaskExcludeOption.INSTRUCTIONS));
 
         Step step = null;

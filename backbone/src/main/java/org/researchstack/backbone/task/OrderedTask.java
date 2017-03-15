@@ -160,4 +160,24 @@ public class OrderedTask extends Task implements Serializable {
     public List<Step> getSteps() {
         return new ArrayList<>(steps);
     }
+
+    /**
+     * Convenience method to replace a Step at a specific index
+     * This can be used to change the contents of a Step by calling getSteps(),
+     * changing the step, and then calling this method to make sure the changes stick
+     *
+     * @param index index of step to replace
+     * @param step to replace at index
+     */
+    public void replaceStep(int index, Step step) {
+        steps.set(index, step);
+    }
+
+    /**
+     * Convenience method to remove a Step from the Task
+     * @param index index of step to remove
+     */
+    public void removeStep(int index) {
+        steps.remove(index);
+    }
 }

@@ -19,6 +19,7 @@ import org.researchstack.backbone.answerformat.PasswordAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.model.survey.ActiveStepSurveyItem;
 import org.researchstack.backbone.model.survey.BooleanQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.CompoundQuestionSurveyItem;
@@ -54,6 +55,8 @@ import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationExpectedAnswerQuestionStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
+import org.researchstack.backbone.step.active.ActiveStep;
+import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 
 import java.util.ArrayList;
@@ -61,6 +64,13 @@ import java.util.List;
 
 /**
  * Created by TheMDP on 12/29/16.
+ *
+ * The SurveyFactory controls converting SurveyItem object to Step objects
+ * It accounts for all the variations specified in SurveyItemType when looping through each
+ * SurveyItem and storing the result in a field you can access using the getSteps method
+ *
+ * Note that SurveyItem objects should be create from JSON using the GSON library,
+ * and a SurveyItemAdapter class to do special de-serialization for the SurveyItems
  */
 
 public class SurveyFactory {
@@ -107,10 +117,12 @@ public class SurveyFactory {
 
     public List<Step> createSteps(Context context, List<SurveyItem> surveyItems, boolean isSubtaskStep) {
         List<Step> steps = new ArrayList<>();
-        for (SurveyItem item : surveyItems) {
-            Step step = createSurveyStep(context, item, isSubtaskStep);
-            if (step != null) {
-                steps.add(step);
+        if (surveyItems != null) {
+            for (SurveyItem item : surveyItems) {
+                Step step = createSurveyStep(context, item, isSubtaskStep);
+                if (step != null) {
+                    steps.add(step);
+                }
             }
         }
         return steps;
@@ -196,6 +208,11 @@ public class SurveyFactory {
             case SHARE_THE_APP:
                 if (!(item instanceof InstructionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, SHARE_THE_APP types must be InstructionSurveyItem");
+                }
+                return createShareTheAppStep(context, (InstructionSurveyItem)item);
+            case ACTIVE_STEP:
+                if (!(item instanceof ActiveStepSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, ACTIVE_STEP types must be ActiveStepSurveyItem");
                 }
                 return createShareTheAppStep(context, (InstructionSurveyItem)item);
             case CUSTOM:
@@ -748,6 +765,11 @@ public class SurveyFactory {
             step.setText(context.getString(R.string.rsb_share_the_app_text));
         }
 
+        return step;
+    }
+
+    public ActiveStep createActiveStep(Context context, ActiveStepSurveyItem item) {
+        ActiveStep step = new ActiveStep(item.identifier, item.title, item.text);
         return step;
     }
 

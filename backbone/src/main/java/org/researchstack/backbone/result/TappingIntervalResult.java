@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by TheMDP on 2/23/17.
@@ -22,19 +23,19 @@ public class TappingIntervalResult extends Result {
      * The size of the bounds of the step view containing the tap targets.
      */
     @SerializedName("TappingViewSize")
-    private Size stepViewSize;
+    private String stepViewSize;
 
     /**
      * The frame of the left button, in points, relative to the step view bounds.
      */
     @SerializedName("ButtonRectLeft")
-    private Rect buttonRect1;
+    private String buttonRectLeft;
 
     /**
      * sThe frame of the right button, in points, relative to the step view bounds.
      */
     @SerializedName("ButtonRectRight")
-    private Rect buttonRect2;
+    private String buttonRectRight;
 
     /* Default identifier for serialization/deserialization */
     TappingIntervalResult() {
@@ -53,28 +54,18 @@ public class TappingIntervalResult extends Result {
         this.samples = samples;
     }
 
-    public Size getStepViewSize() {
-        return stepViewSize;
+    public void setStepViewSize(int width, int height) {
+        this.stepViewSize = String.format(Locale.getDefault(), "{%d, %d}", width, height);
     }
 
-    public void setStepViewSize(Size stepViewSize) {
-        this.stepViewSize = stepViewSize;
+    public void setButtonRect1(int x, int y, int width, int height) {
+        // This is the output format of iOS' NSStringFromCGRect, which is the expected format
+        this.buttonRectLeft = String.format(Locale.getDefault(), "{{%d, %d} {%d, %d}}", x, y, width, height);
     }
 
-    public Rect getButtonRect1() {
-        return buttonRect1;
-    }
-
-    public void setButtonRect1(Rect buttonRect1) {
-        this.buttonRect1 = buttonRect1;
-    }
-
-    public Rect getButtonRect2() {
-        return buttonRect2;
-    }
-
-    public void setButtonRect2(Rect buttonRect2) {
-        this.buttonRect2 = buttonRect2;
+    public void setButtonRect2(int x, int y, int width, int height) {
+        // This is the output format of iOS' NSStringFromCGRect, which is the expected format
+        this.buttonRectRight = String.format(Locale.getDefault(), "{{%d, %d} {%d, %d}}", x, y, width, height);
     }
 
     public static class Sample implements Serializable {
@@ -111,7 +102,7 @@ public class TappingIntervalResult extends Result {
          * the `stepViewSize` in the enclosing `ORKTappingIntervalResult` object.
          */
         @SerializedName("TapCoordinate")
-        private Point location;
+        private String location;
 
         /* Default identifier for serialization/deserialization */
         public Sample() {
@@ -141,13 +132,8 @@ public class TappingIntervalResult extends Result {
         public void setButtonIdentifier(TappingButtonIdentifier buttonIdentifier) {
             this.buttonIdentifier = buttonIdentifier;
         }
-
-        public Point getLocation() {
-            return location;
-        }
-
-        public void setLocation(Point location) {
-            this.location = location;
+        public void setLocation(int x, int y) {
+            this.location = String.format(Locale.getDefault(), "{%d, %d}", x, y);
         }
     }
 
@@ -161,83 +147,5 @@ public class TappingIntervalResult extends Result {
         TappedButtonLeft,
         // The touch landed in the right button.
         TappedButtonRight;
-    }
-
-    /**
-     * This is re-created so that it can be Serializable,
-     * and we have control over its serialization
-     */
-    public static final class Size implements Serializable {
-        @SerializedName("width")
-        private int width;
-        @SerializedName("height")
-        private int height;
-
-        public Size(int width, int height) {
-            this.width = width;
-            this.height = height;
-        }
-
-        public int getWidth() {
-            return width;
-        }
-
-        public int getHeight() {
-            return height;
-        }
-
-        public void setWidth(int width) {
-            this.width = width;
-        }
-
-        public void setHeight(int height) {
-            this.height = height;
-        }
-    }
-
-    /**
-     * This is re-created so that it can be Serializable,
-     * and we have control over its serialization
-     */
-    public static final class Rect implements Serializable {
-        @SerializedName("bottom")
-        public int bottom;
-        @SerializedName("left")
-        public int left;
-        @SerializedName("right")
-        public int right;
-        @SerializedName("top")
-        public int top;
-
-        public Rect() {
-            throw new RuntimeException("Stub!");
-        }
-
-        public Rect(int left, int top, int right, int bottom) {
-            this.left = left;
-            this.top = top;
-            this.right = right;
-            this.bottom = bottom;
-        }
-    }
-
-    /**
-     * This is re-created so that it can be Serializable,
-     * and we have control over its serialization
-     */
-    public static final class Point implements Serializable {
-        @SerializedName("x")
-        public int x;
-        @SerializedName("y")
-        public int y;
-
-        public Point() {
-            throw new RuntimeException("Stub!");
-        }
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
     }
 }

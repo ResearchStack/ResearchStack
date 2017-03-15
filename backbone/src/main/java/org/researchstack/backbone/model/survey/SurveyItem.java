@@ -16,7 +16,8 @@ import java.util.Map;
 
 public class SurveyItem<T> implements Serializable {
 
-    @SerializedName("identifier")
+    static final String IDENTIFIER_GSON = "identifier";
+    @SerializedName(IDENTIFIER_GSON)
     public String identifier;
 
     static final String TYPE_GSON = "type";
@@ -51,6 +52,13 @@ public class SurveyItem<T> implements Serializable {
 
     public String getTypeIdentifier() {
         return type.getValue();
+    }
+
+    public String getIdentifier() {
+        if (identifier == null) {
+            return getTypeIdentifier();
+        }
+        return identifier;
     }
 
     @Override

@@ -19,6 +19,7 @@ import java.util.Date;
 
 abstract class JsonArrayDataRecorder extends Recorder {
 
+    public static final String JSON_ITEMS_KEY = "items";
     public static final String JSON_MIME_CONTENT_TYPE = "application/json";
     public static final String JSON_FILE_SUFFIX = ".json";
     public static final String JSON_OBJECT_SEPARATOR = ",";
@@ -66,7 +67,7 @@ abstract class JsonArrayDataRecorder extends Recorder {
         startTime = System.currentTimeMillis();
 
         // Since we are writing a JsonArray, have the header and footer be
-        dataLogger.start("[", "]");
+        dataLogger.start("{\"" + JSON_ITEMS_KEY + "\":[", "]}");
         isFirstJsonObject = true; // will avoid comma separator on write object write
     }
 
