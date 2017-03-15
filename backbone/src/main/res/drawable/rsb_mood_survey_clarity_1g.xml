@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="90dp"
+        android:height="76dp"
+        android:viewportWidth="90.0"
+        android:viewportHeight="76.0">
+    <path
+        android:pathData="M47.13,5.99C29.42,5.99 15.01,20.4 15.01,38.11C15.01,55.83 29.42,70.24 47.13,70.24C64.85,70.24 79.26,55.83 79.26,38.11C79.26,20.4 64.85,5.99 47.13,5.99M47.13,73.11C27.84,73.11 12.13,57.41 12.13,38.11C12.13,18.82 27.84,3.11 47.13,3.11C66.43,3.11 82.13,18.82 82.13,38.11C82.13,57.41 66.43,73.11 47.13,73.11"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M44.66,29.78C44.66,32.9 42.12,35.44 38.98,35.44C35.85,35.44 33.31,32.9 33.31,29.78C33.31,26.65 35.85,24.11 38.98,24.11C42.12,24.11 44.66,26.65 44.66,29.78"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M61.6,29.78C61.6,32.9 59.05,35.44 55.92,35.44C52.79,35.44 50.25,32.9 50.25,29.78C50.25,26.65 52.79,24.11 55.92,24.11C59.05,24.11 61.6,26.65 61.6,29.78"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M64.47,43.04C64.46,42.52 64.03,42.11 63.52,42.11L31.39,42.11C30.87,42.11 30.45,42.52 30.43,43.04C30.42,43.36 30.27,50.99 35.27,56.15C38.18,59.13 42.2,60.65 47.22,60.65L47.46,60.65C52.62,60.6 56.73,59.02 59.68,55.95C64.64,50.8 64.48,43.36 64.47,43.04"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+</vector>
