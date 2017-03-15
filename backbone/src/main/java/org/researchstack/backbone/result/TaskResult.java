@@ -5,6 +5,7 @@ import android.net.Uri;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class TaskResult extends Result
     private Map<String, StepResult> results;
 
     /** Store extra details needed for parsing the result in the taskDetails */
-    private Map<String, Object> taskDetails;
+    private Map<String, Serializable> taskDetails;
 
     /* Default identifier for serilization/deserialization */
     TaskResult() {
@@ -85,11 +86,11 @@ public class TaskResult extends Result
         results.put(identifier, stepResult);
     }
 
-    public Map<String, Object> getTaskDetails() {
+    public Map<String, Serializable> getTaskDetails() {
         return taskDetails;
     }
 
-    public void setTaskDetails(Map<String, Object> taskDetails) {
+    public void setTaskDetails(Map<String, Serializable> taskDetails) {
         this.taskDetails = taskDetails;
     }
 }
