@@ -91,6 +91,16 @@ public class ImageChoiceBody implements StepBody {
             setupImageViewClickListener(i, imageButton, imageChoice);
         }
 
+        // Loop through and apply the step result if it exists
+        if (result.getResult() != null) {
+            for (int i = 0; i < answerFormat.getImageChoiceList().size(); i++) {
+                ImageChoiceAnswerFormat.ImageChoice imageChoice = answerFormat.getImageChoiceList().get(i);
+                if (imageChoice.getValue().equals(result.getResult())) {
+                    imageViewList.get(i).callOnClick();
+                }
+            }
+        }
+
         return body;
     }
 
