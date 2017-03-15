@@ -13,11 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.joda.time.DateTime;
 import org.researchstack.backbone.StorageAccess;
+import org.researchstack.backbone.model.survey.SurveyItem;
+import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.task.factory.MoodSurveyFactory;
+import org.researchstack.backbone.task.factory.MoodSurveyFrequency;
+import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
@@ -35,6 +43,10 @@ import rx.Subscription;
 
 
 public class ActivitiesFragment extends Fragment implements StorageAccessListener {
+
+    // TODO: remove the methods below once we finish task builder
+    public static final String APHMoodSurveyIdentifier                         = "3-APHMoodSurvey-7259AC18-D711-47A6-ADBD-6CFCECDED1DF";
+
     private static final String LOG_TAG = ActivitiesFragment.class.getCanonicalName();
     private static final int REQUEST_TASK = 1492;
     private TaskAdapter adapter;
@@ -119,9 +131,15 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                             Task newTask = DataProvider.getInstance().loadTask(getContext(), task);
 
                             if (newTask == null) {
-                                Toast.makeText(getActivity(),
-                                        R.string.rss_local_error_load_task,
-                                        Toast.LENGTH_SHORT).show();
+                                // TODO: figure out a different way to show do these in loadTask
+                                if (task.taskID.equals(APHMoodSurveyIdentifier)) {
+                                    startCustomMoodSurveyTask();
+                                } else {
+                                    Toast.makeText(getActivity(),
+                                            R.string.rss_local_error_load_task,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
                                 return;
                             }
 
@@ -230,4 +248,21 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         // Ignore, activity handles auth
     }
 
+    // TODO: remove the methods below once we finish task builder
+    private Gson createGson() {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
+        return builder.create();
+    }
+
+    private void startCustomMoodSurveyTask() {
+        Task task = MoodSurveyFactory.moodSurvey(
+                getContext(),
+                "Mood Survey",
+                "Tell us how you feel. We\'ll ask you to rate your mental clarity, mood, and pain level today as well as how well you slept and how much exercise you have done in the last day. You will also have an opportunity to track any activity or thought that you choose yourself.",
+                MoodSurveyFrequency.DAILY,
+                "Today, my thinking is:",
+                new ArrayList<>());
+        startActivity(ViewTaskActivity.newIntent(getContext(), task));
+    }
 }
