@@ -249,11 +249,6 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
     }
 
     // TODO: remove the methods below once we finish task builder
-    private Gson createGson() {
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
-        return builder.create();
-    }
 
     private void startCustomMoodSurveyTask() {
         Task task = MoodSurveyFactory.moodSurvey(
