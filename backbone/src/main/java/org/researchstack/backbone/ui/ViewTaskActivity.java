@@ -20,6 +20,7 @@ import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepLayoutHelper;
 
 import java.util.Date;
@@ -73,6 +74,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
             taskResult = (TaskResult) savedInstanceState.getSerializable(EXTRA_TASK_RESULT);
             currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
         }
+
+        LogExt.d(ViewTaskActivity.class, "Received task: "+task.getIdentifier());
 
         task.validateParameters();
 

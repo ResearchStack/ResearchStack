@@ -150,9 +150,6 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
         // Since we are now about to try and upload the files to the server, let's update their status
         // These files will now stick around until we have successfully uploaded them
         DataLoggerManager.getInstance().updateFileListToAttemptedUploadStatus(fileList);
-
-        DataProvider.getInstance().uploadTaskResult(this, taskResult);
-
         super.saveAndFinish();
     }
 
