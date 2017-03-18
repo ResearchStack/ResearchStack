@@ -101,6 +101,8 @@ public class AppPrefs {
     }
 
     public void clear() {
-        prefs.edit().clear().apply();
+        if (prefs != null) {
+            prefs.edit().clear().apply();
+        }
     }
 }
