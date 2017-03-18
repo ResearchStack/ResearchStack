@@ -209,7 +209,7 @@ public class AudioRecorder extends Recorder {
         String filepath = fullFilePath();
         File file = new File(filepath);
         String mimeType = getMimeType(filepath);
-        AudioResult audioResult = new AudioResult(getIdentifier(), file, mimeType);
+        AudioResult audioResult = new AudioResult(fileResultIdentifier(), file, mimeType);
         audioResult.setStartDate(new Date(startTime));
         audioResult.setEndDate(new Date());
 
