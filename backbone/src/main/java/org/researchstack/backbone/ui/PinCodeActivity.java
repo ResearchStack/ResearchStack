@@ -1,5 +1,6 @@
 package org.researchstack.backbone.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -8,7 +9,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import org.researchstack.backbone.DataProvider;
+import org.researchstack.backbone.DataResponse;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.StepResult;
@@ -32,11 +33,14 @@ import org.researchstack.backbone.ui.step.layout.FingerprintStepLayout;
 import org.researchstack.backbone.ui.views.PinCodeLayout;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
+import org.researchstack.backbone.utils.StepLayoutHelper;
 import org.researchstack.backbone.utils.ThemeUtils;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class PinCodeActivity extends AppCompatActivity implements StorageAccessListener {
@@ -56,12 +60,14 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         StorageAccess.getInstance().logAccessTime();
 
         storageAccessUnregister();
-        if(pinCodeLayout != null) {
+        if(pinCodeLayout != null && ViewCompat.isAttachedToWindow(pinCodeLayout)) {
             getWindowManager().removeView(pinCodeLayout);
         }
         if(fingerprintLayout != null) {
             fingerprintLayout.stopListening();
-            getWindowManager().removeView(fingerprintLayout);
+            if (ViewCompat.isAttachedToWindow(fingerprintLayout)) {
+                getWindowManager().removeView(fingerprintLayout);
+            }
         }
     }
 
@@ -146,7 +152,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
         if (StorageAccess.getInstance().usesFingerprint(this)) {
             initFingerprintLayout();
-        } else {
+        } else  {
             initPincodeLayout();
         }
     }
@@ -175,7 +181,6 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
             public void onCancelStep() {
                 // the cancel step signals to the pin code activity the FingerprintStepLayout needs setup again
                 signOut();
-                transitionToNextState();
             }
         });
 
@@ -259,7 +264,6 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         signOut();
-                        transitionToNextState();
                     }
                 })
                 .setNegativeButton(R.string.rsb_cancel, null)
@@ -268,8 +272,25 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
     private void signOut() {
         // Signs the user out of the app, so they have to start from scratch
-        DataProvider.getInstance().signOut(this);
-        StorageAccess.getInstance().removePinCode(this);
+        // Only gives a callback to response on success, the rest is handled by StepLayoutHelper
+        DataProvider.getInstance().signOut(this).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<DataResponse>() {
+            @Override
+            public void call(DataResponse response) {
+                if (!PinCodeActivity.this.isFinishing()) {
+                    transitionToNextState();
+                }
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                if (!PinCodeActivity.this.isFinishing()) {
+                    new AlertDialog.Builder(PinCodeActivity.this)
+                            .setMessage(throwable.getLocalizedMessage())
+                            .setPositiveButton(getString(R.string.rsb_ok), null)
+                            .create().show();
+                }
+            }
+        });
     }
 
     /**
