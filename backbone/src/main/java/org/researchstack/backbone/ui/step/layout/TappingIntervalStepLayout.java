@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -137,46 +138,67 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
         {
             View button = leftTappingButton;
 
-            int[] buttonXY = new int[2];
-            button.getLocationOnScreen(buttonXY);
-            int buttonLeft = buttonXY[0] - activeStepLayoutXY[0];
-            int buttonTop = buttonXY[1] - activeStepLayoutXY[1];
-            int buttonRight = buttonLeft + button.getWidth();
-            int buttonBottom = buttonRight + button.getHeight();
-            Rect buttonRect = new Rect(buttonLeft, buttonTop, buttonRight, buttonBottom);
+            button.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    button.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-            setupTouchListener(button, LEFT_BUTTON, buttonRect, TappedButtonLeft, true);
-            tappingResult.setButtonRect1(buttonLeft, buttonTop, button.getWidth(), button.getHeight());
+                    int[] buttonXY = new int[2];
+                    button.getLocationOnScreen(buttonXY);
+                    int buttonLeft = buttonXY[0] - activeStepLayoutXY[0];
+                    int buttonTop = buttonXY[1] - activeStepLayoutXY[1];
+                    int buttonRight = buttonLeft + button.getWidth();
+                    int buttonBottom = buttonRight + button.getHeight();
+                    Rect buttonRect = new Rect(buttonLeft, buttonTop, buttonRight, buttonBottom);
+
+                    setupTouchListener(button, LEFT_BUTTON, buttonRect, TappedButtonLeft, true);
+                    tappingResult.setButtonRect1(buttonLeft, buttonTop, button.getWidth(), button.getHeight());
+                }
+            });
         }
 
         {
             View button = rightTappingButton;
 
-            int[] buttonXY = new int[2];
-            button.getLocationOnScreen(buttonXY);
-            int buttonLeft = buttonXY[0] - activeStepLayoutXY[0];
-            int buttonTop = buttonXY[1] - activeStepLayoutXY[1];
-            int buttonRight = buttonLeft + button.getWidth();
-            int buttonBottom = buttonRight + button.getHeight();
-            Rect buttonRect = new Rect(buttonLeft, buttonTop, buttonRight, buttonBottom);
+            button.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    button.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-            setupTouchListener(button, RIGHT_BUTTON, buttonRect, TappedButtonRight, true);
-            tappingResult.setButtonRect2(buttonLeft, buttonTop, button.getWidth(), button.getHeight());
+                    int[] buttonXY = new int[2];
+                    button.getLocationOnScreen(buttonXY);
+                    int buttonLeft = buttonXY[0] - activeStepLayoutXY[0];
+                    int buttonTop = buttonXY[1] - activeStepLayoutXY[1];
+                    int buttonRight = buttonLeft + button.getWidth();
+                    int buttonBottom = buttonRight + button.getHeight();
+                    Rect buttonRect = new Rect(buttonLeft, buttonTop, buttonRight, buttonBottom);
+
+                    setupTouchListener(button, RIGHT_BUTTON, buttonRect, TappedButtonRight, true);
+                    tappingResult.setButtonRect2(buttonLeft, buttonTop, button.getWidth(), button.getHeight());
+                }
+            });
         }
 
         {
             View button = activeStepLayout;
 
-            int[] buttonXY = new int[2];
-            button.getLocationOnScreen(buttonXY);
-            int buttonLeft = buttonXY[0] - activeStepLayoutXY[0];
-            int buttonTop = buttonXY[1] - activeStepLayoutXY[1];
-            int buttonRight = buttonLeft + button.getWidth();
-            int buttonBottom = buttonRight + button.getHeight();
-            Rect buttonRect = new Rect(buttonLeft, buttonTop, buttonRight, buttonBottom);
+            button.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    button.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-            setupTouchListener(button, NO_BUTTON, buttonRect, TappedButtonNone, false);
-            tappingResult.setStepViewSize(activeStepLayout.getWidth(), activeStepLayout.getHeight());
+                    int[] buttonXY = new int[2];
+                    button.getLocationOnScreen(buttonXY);
+                    int buttonLeft = buttonXY[0] - activeStepLayoutXY[0];
+                    int buttonTop = buttonXY[1] - activeStepLayoutXY[1];
+                    int buttonRight = buttonLeft + button.getWidth();
+                    int buttonBottom = buttonRight + button.getHeight();
+                    Rect buttonRect = new Rect(buttonLeft, buttonTop, buttonRight, buttonBottom);
+
+                    setupTouchListener(button, NO_BUTTON, buttonRect, TappedButtonNone, false);
+                    tappingResult.setStepViewSize(activeStepLayout.getWidth(), activeStepLayout.getHeight());
+                }
+            });
         }
     }
 
