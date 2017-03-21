@@ -66,13 +66,29 @@ public class LoginStepLayout extends ProfileStepLayout {
             final String password = getPassword();
 
             Observable<DataResponse> login = DataProvider.getInstance()
-                    .signIn(getContext(), email, password)
-                    .compose(ObservableUtils.applyDefault());
+                    .signIn(getContext(), email, password);
 
             // Only gives a callback to response on success, the rest is handled by StepLayoutHelper
-            StepLayoutHelper.safePerformWithAlerts(login, this, response ->
-                    super.onNextClicked()
-            );
+            StepLayoutHelper.safePerform(login, this, new StepLayoutHelper.WebCallback() {
+                @Override
+                public void onSuccess(DataResponse response) {
+                    hideLoadingDialog();
+                    LoginStepLayout.super.onNextClicked();
+                }
+
+                @Override
+                public void onFail(Throwable throwable) {
+                    hideLoadingDialog();
+                    // TODO: use the status code instead of this string
+                    if (throwable.toString().contains("statusCode=412")) {
+                        // Moving to the next step will trigger the re-consent flow
+                        // Since the user is not consented, but signed in successfully
+                        LoginStepLayout.super.onNextClicked();
+                    } else {
+                        showOkAlertDialog(throwable.getMessage());
+                    }
+                }
+            });
         }
     }
 
