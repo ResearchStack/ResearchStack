@@ -19,17 +19,7 @@ public class TaskFactory {
 
     public static class Constants {
         // Recorder Config Identifiers
-        public static final String Accelerometer1ConfigIdentifier   = "ac1_acc";
-        public static final String DeviceMotion1ConfigIdentifier    = "ac1_motion";
-        public static final String Accelerometer2ConfigIdentifier   = "ac2_acc";
-        public static final String DeviceMotion2ConfigIdentifier    = "ac2_motion";
-        public static final String Accelerometer3ConfigIdentifier   = "ac3_acc";
-        public static final String DeviceMotion3ConfigIdentifier    = "ac3_motion";
-        public static final String Accelerometer4ConfigIdentifier   = "ac4_acc";
-        public static final String DeviceMotion4ConfigIdentifier    = "ac4_motion";
-        public static final String Accelerometer5ConfigIdentifier   = "ac5_acc";
-        public static final String DeviceMotion5ConfigIdentifier    = "ac5_motion";
-        public static final String AccelerometerRecorderIdentifier  = "accelerometer";
+        public static final String AccelerometerRecorderIdentifier  = "accel";
         public static final String PedometerRecorderIdentifier      = "pedometer";
         public static final String DeviceMotionRecorderIdentifier   = "deviceMotion";
         public static final String LocationRecorderIdentifier       = "location";
