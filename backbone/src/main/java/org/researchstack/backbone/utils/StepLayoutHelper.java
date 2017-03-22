@@ -14,6 +14,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by TheMDP on 1/16/17.
@@ -49,7 +50,7 @@ public class StepLayoutHelper {
             final WebCallback callback)
     {
         final WeakReference<View> weakView = new WeakReference<>(viewPerforming);
-        observable.subscribe(dataResponse -> {
+        observable.observeOn(AndroidSchedulers.mainThread()).subscribe(dataResponse -> {
             // Controls canceling an observable perform through weak reference to the view
             if (weakView == null || weakView.get() == null || weakView.get().getContext() == null) {
                 return; // no callback
