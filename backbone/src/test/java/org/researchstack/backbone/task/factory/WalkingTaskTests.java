@@ -86,7 +86,7 @@ public class WalkingTaskTests {
         Mockito.when(mockContext.getString(R.string.rsb_TASK_COMPLETE_TITLE)).thenReturn("");
         Mockito.when(mockContext.getString(R.string.rsb_TASK_COMPLETE_TEXT)).thenReturn("");
 
-        Mockito.when(mockContext.getString(R.string.rsb_minutes)).thenReturn("minutes");
+        Mockito.when(mockContext.getString(R.string.rsb_time_minutes)).thenReturn("minutes");
         Mockito.when(mockContext.getString(R.string.rsb_time_seconds)).thenReturn("seconds");
 
         Mockito.when(mockContext.getString(R.string.rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE)).thenReturn("");

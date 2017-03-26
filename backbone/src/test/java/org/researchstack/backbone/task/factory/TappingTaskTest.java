@@ -50,7 +50,7 @@ public class TappingTaskTest {
         Mockito.when(mockContext.getString(R.string.rsb_TAPPING_INSTRUCTION_RIGHT)).thenReturn("");
         Mockito.when(mockContext.getString(R.string.rsb_TAPPING_INTRO_TEXT_2_FORMAT)).thenReturn("Keep tapping for %1$s.");
 
-        Mockito.when(mockContext.getString(R.string.rsb_minutes)).thenReturn("minutes");
+        Mockito.when(mockContext.getString(R.string.rsb_time_minutes)).thenReturn("minutes");
         Mockito.when(mockContext.getString(R.string.rsb_time_seconds)).thenReturn("seconds");
 
         Mockito.when(mockResources.getInteger(R.integer.rsb_sensor_frequency_default)).thenReturn(100);

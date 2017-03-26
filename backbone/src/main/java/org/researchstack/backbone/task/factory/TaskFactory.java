@@ -74,7 +74,7 @@ public class TaskFactory {
         int seconds = durationInSeconds - minutes * 60;
         if (minutes > 0) {
             return String.format(Locale.getDefault(), "%d %s, %d %s",
-                    minutes, context.getString(R.string.rsb_minutes).toLowerCase(),
+                    minutes, context.getString(R.string.rsb_time_minutes).toLowerCase(),
                     seconds, context.getString(R.string.rsb_time_seconds).toLowerCase());
         } else {
             return String.format(Locale.getDefault(), "%d %s",
