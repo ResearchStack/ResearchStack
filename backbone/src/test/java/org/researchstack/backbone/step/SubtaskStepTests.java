@@ -101,10 +101,11 @@ public class SubtaskStepTests {
         String subtaskJson = resourceHelper.getJsonStringForResourceName("subtask");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(subtaskJson, listType);
 
-        SurveyFactory factory = new SurveyFactory(helper.mockContext, surveyItemList);
-        MutatedResultTask mutatedResultTask = new MutatedResultTask("Mutating Task", factory.getSteps());
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(helper.mockContext, surveyItemList);
+        MutatedResultTask mutatedResultTask = new MutatedResultTask("Mutating Task", stepList);
         SubtaskStep subtaskStep = new SubtaskStep(mutatedResultTask);
-        return new SubtaskStepAndSteps(subtaskStep, factory.getSteps());
+        return new SubtaskStepAndSteps(subtaskStep, stepList);
     }
 
     class MutatedResultTask extends OrderedTask {

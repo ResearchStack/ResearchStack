@@ -2,7 +2,6 @@ package org.researchstack.backbone.model.taskitem.factory;
 
 import android.content.Context;
 
-import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 
 import org.researchstack.backbone.R;
@@ -10,13 +9,11 @@ import org.researchstack.backbone.model.survey.ActiveStepSurveyItem;
 import org.researchstack.backbone.model.survey.InstructionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.taskitem.ActiveTaskItem;
-import org.researchstack.backbone.model.taskitem.CustomTaskItem;
 import org.researchstack.backbone.model.taskitem.TaskItem;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
-import org.researchstack.backbone.step.CompletionStep;
 import org.researchstack.backbone.step.InstructionStep;
-import org.researchstack.backbone.step.InstructionStepInterface;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.active.ActiveStep;
 import org.researchstack.backbone.step.active.recorder.AudioRecorderSettings;
 import org.researchstack.backbone.task.NavigableOrderedTask;
@@ -28,11 +25,9 @@ import org.researchstack.backbone.task.factory.TappingTaskFactory;
 import org.researchstack.backbone.task.factory.TremorTaskFactory;
 import org.researchstack.backbone.task.factory.WalkingTaskFactory;
 import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.backbone.utils.OptionSetUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -64,23 +59,21 @@ public class TaskItemFactory extends SurveyFactory {
     private static final String RECORDING_SETTINGS_KEY          = "recordingSettings";
     private static final String NUMBER_OF_STEPS_PER_LEG_KEY     = "numberOfStepsPerLeg";
 
-    private List<Task> taskList;
+    // When set, this will be used
+    private CustomTaskCreator customTaskCreator;
 
-    public TaskItemFactory(Context context, List<TaskItem> itemList) {
-        super(context, null, null);
-        createTasks(context, itemList);
+    /*
+     * Default constructor
+     */
+    public TaskItemFactory() {
+        super();
     }
 
-    public void createTasks(Context context, List<TaskItem> itemList) {
-        taskList = new ArrayList<>();
-        for (TaskItem item : itemList) {
-            Task task = createTask(context, item);
-            if (task != null) {
-                taskList.add(task);
-            }
-        }
-    }
-
+    /**
+     * @param context can be any context, activity or application, used to access "R" resources
+     * @param item TaskItem to transform into
+     * @return a Task created from the TaskItem object
+     */
     public Task createTask(Context context, TaskItem item) {
 
         Task task = null;
@@ -125,16 +118,31 @@ public class TaskItemFactory extends SurveyFactory {
                 task = null;
                 break;
             case CUSTOM:
-                if (!(item instanceof CustomTaskItem)) {
-                    throw new IllegalStateException("Error in json parsing, no type must be CustomTaskItem");
-                }
-                task = createCustomTask(context, (CustomTaskItem)item);
+                task = createCustomTask(context, item);
                 break;
         }
 
+        fillTaskWithDefaultTaskItemAdditions(context, task, item);
+
+        return task;
+    }
+
+    public void fillTaskWithDefaultTaskItemAdditions(Context context, Task task, TaskItem item) {
         // Add submit bar negative action on first step to skip task if possible
         if (item.isTaskIsOptional()) {
             task = addSkipActionToTask(context, task);
+        }
+
+        if (item.getInsertSteps() != null && !item.getInsertSteps().isEmpty()) {
+            if (task instanceof OrderedTask) {
+                // Insert steps are only supported for OrderedTask
+                OrderedTask orderedTask = (OrderedTask)task;
+                for (SurveyItem surveyItem : item.getInsertSteps()) {
+                    // TODO: do insert steps, that can also be tasks
+                }
+            } else {
+                throw new IllegalStateException("insertSteps functionality only works with OrderedTasks");
+            }
         }
 
         // Special cases for active tasks that are also OrderedTasks
@@ -143,8 +151,6 @@ public class TaskItemFactory extends SurveyFactory {
             mapLocalizedSteps(activeTaskItem, task);
             removeSteps(activeTaskItem, task);
         }
-
-        return task;
     }
 
     protected Task addSkipActionToTask(Context context, Task task) {
@@ -433,100 +439,34 @@ public class TaskItemFactory extends SurveyFactory {
         return defaultValue;
     }
 
-    public Task createCustomTask(Context context, CustomTaskItem item) {
+    /**
+     * Override to create your own custom Tasks
+     * @param context can be app or activity, used for resources
+     * @param item the task item to convert into a task
+     * @return a Task object made from the TaskItem
+     */
+    public Task createCustomTask(Context context, TaskItem item) {
+        List<Step> steps = super.createSurveySteps(context, item.getTaskSteps());
 
-
-
-//        guard let steps = transformTaskSteps(factory) else { return nil }
-//
-//        let allSteps = addInsertSteps(steps, factory: factory)
-//
-//        if let subtaskStep = allSteps.first as? SBASubtaskStep , allSteps.count == 1 {
-//            // If there is only 1 step then do not need to wrap subtasks in a subtask step
-//            return subtaskStep.subtask
-//        }
-//        else {
-//            // Create a navigable ordered task for the steps
-//            return SBANavigableOrderedTask(identifier: self.schemaIdentifier, steps: allSteps)
-//        }
-
-        return null;
+        if (steps.size() == 1 && steps.get(0) instanceof SubtaskStep) {
+            return ((SubtaskStep)steps.get(0)).getSubtask();
+        } else {
+            return new NavigableOrderedTask(item.getSchemaIdentifier(), steps);
+        }
     }
 
-    public List<Task> getTaskList() {
-        return taskList;
+    public CustomTaskCreator getCustomTaskCreator() {
+        return customTaskCreator;
     }
 
-//    fileprivate func transformTaskSteps(_ factory: SBASurveyFactory) -> [ORKStep]? {
-//        let transformableSteps = self.taskSteps
-//        guard transformableSteps.count > 0 else { return nil }
-//
-//        var activeSteps: [ORKStep] = []
-//        let lastIndex = transformableSteps.count - 1
-//
-//        // Map the step transformers to ORKSteps
-//        var subtaskSteps: [ORKStep] = transformableSteps.enumerated().mapAndFilter({ (index, item) in
-//        let step = item.transformToStep(with: factory, isLastStep:(lastIndex == index))
-//        if let activeStep = step as? SBASubtaskStep,
-//                let task = activeStep.subtask as? SBATaskExtension,
-//                let firstStep = task.step(at: 0),
-//        let taskTitle = firstStep.title
-//        , task.isActiveTask() {
-//            // If this is an active task AND the title is available, then track it
-//            activeStep.title = taskTitle
-//            activeSteps.append(activeStep)
-//        }
-//        return step
-//        })
-//
-//        // If there should be a progress step added between active tasks, then insert those steps
-//        if activeSteps.count > 1 {
-//            let stepTitles = activeSteps.map({ $0.title! })
-//            for (idx, activeStep) in activeSteps.enumerated() {
-//                if idx + 1 < activeSteps.count, let insertAfter = subtaskSteps.index(of: activeStep) {
-//                    let progressStep = SBAProgressStep(identifier: "progress", stepTitles: stepTitles, index: idx)
-//                    subtaskSteps.insert(progressStep, at: insertAfter.advanced(by: 1))
-//                }
-//            }
-//        }
-//
-//        return subtaskSteps
-//    }
-//
-//    fileprivate func addInsertSteps(_ subtaskSteps: [ORKStep], factory: SBASurveyFactory) -> [ORKStep] {
-//
-//        // Map the insert steps
-//        guard let insertSteps = self.insertSteps?.mapAndFilter({ $0.transformToStep(with: factory, isLastStep: false) })
-//        , insertSteps.count > 0 else {
-//            return subtaskSteps
-//        }
-//
-//        var steps = subtaskSteps
-//        var introStep: ORKStep!
-//                let firstStep = steps.removeFirst()
-//
-//        // Look at what kind of step the first step is. If this is a subtask step then
-//        // pull out the first step of the subtask and use that as the intro step
-//        if let subtaskStep = firstStep as? SBASubtaskStep,
-//                let orderedTask = subtaskStep.subtask as? ORKOrderedTask {
-//            // Pull out the first step from the ordered task and use that as the intro step
-//            var mutatableSteps = orderedTask.steps
-//            introStep = mutatableSteps.removeFirst()
-//            let mutatedTask = orderedTask.copy(with: mutatableSteps)
-//            let mutatedSubtaskStep = subtaskStep.copy(with: mutatedTask)
-//            steps.insert(mutatedSubtaskStep, at: 0)
-//        }
-//        else {
-//            // If the first step isn't of the subtask step type with an ordered task
-//            // then use the first step as the intro step
-//            introStep = firstStep
-//        }
-//
-//        // Insert the steps inside
-//        steps.insert(introStep, at: 0)
-//        steps.insert(contentsOf: insertSteps, at: 1)
-//
-//        return steps
-//
-//    }
+    public void setCustomTaskCreator(CustomTaskCreator customTaskCreator) {
+        this.customTaskCreator = customTaskCreator;
+    }
+
+    /**
+     * This can be used by another class to implement custom conversion from a TaskItem to a Task
+     */
+    public interface CustomTaskCreator {
+        Task createCustomTask(Context context, TaskItem item, TaskItemFactory factory);
+    }
 }

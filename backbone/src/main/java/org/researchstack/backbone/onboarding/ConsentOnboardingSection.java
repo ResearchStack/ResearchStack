@@ -25,7 +25,7 @@ public class ConsentOnboardingSection extends OnboardingSection {
             return surveyFactory;
         }
 
-        surveyFactory = new ConsentDocumentFactory(context, surveyItems, consentDocument, converter, customStepCreator);
+        surveyFactory = new ConsentDocumentFactory(consentDocument, converter, customStepCreator);
         return surveyFactory;
     }
 }

@@ -278,7 +278,8 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
     //region Start Custom Task
     private void startCustomTappingTask() {
         String taskItemJson = "{\"taskIdentifier\":\"2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF\",\"schemaIdentifier\":\"TappingActivity\",\"taskType\":\"tapping\",\"intendedUseDescription\":\"Speed of finger tapping can reflect severity of motor symptoms in Parkinson disease. This activity measures your tapping speed for each hand. Your medical provider may measure this differently.\",\"taskOptions\":{\"duration\":20.0,\"handOptions\":\"both\"},\"localizedSteps\":[{\"identifier\":\"conclusion\",\"type\":\"instruction\",\"text\":\"Thank You!\"}]}";
-        Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
+        TaskItemFactory factory = new TaskItemFactory();
+        Task task = factory.createTask(getContext(), createGson().fromJson(taskItemJson, TaskItem.class));
         startActivityForResult(ActiveTaskActivity.newIntent(getContext(), task), REQUEST_TASK);
     }
 
@@ -318,7 +319,8 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
     }
 
     private void startCustomTask(TaskItem taskItem) {
-        Task task = (new TaskItemFactory(getContext(), Collections.singletonList(taskItem))).getTaskList().get(0);
+        TaskItemFactory factory = new TaskItemFactory();
+        Task task = factory.createTask(getContext(), taskItem);
         startCustomTask(task);
     }
 

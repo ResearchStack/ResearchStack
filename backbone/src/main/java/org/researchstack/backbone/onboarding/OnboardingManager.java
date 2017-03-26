@@ -2,33 +2,27 @@ package org.researchstack.backbone.onboarding;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.StringRes;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ConsentSectionAdapter;
-import org.researchstack.backbone.model.survey.CustomSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
-import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.ResourceManager;
 import org.researchstack.backbone.ui.OnboardingTaskActivity;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -68,7 +62,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
     public OnboardingManager(Context context) {
         this(context,
              ResourceManager.getInstance().getOnboardingManager().getName(),
-             new ResourceManagerNameJsonProvider(context));
+             new ResourceManager.NameJsonProvider(context));
     }
 
     /*
@@ -82,7 +76,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
      *        developer is guided to the correct one by having to override the default
      * @return OnboardingManager set up using ResourceManager, so make sure it is initialized
      */
-    public OnboardingManager(Context context,
+    protected OnboardingManager(Context context,
                              String onboardingResourceName,
                              ResourceNameToStringConverter converter)
     {
@@ -117,8 +111,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
         registerSurveyItemAdapter(onboardingGson);
         onboardingGson.registerTypeAdapter(OnboardingSection.class, new OnboardingSectionAdapter(convertor));
         onboardingGson.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(context, convertor));
-        Gson gson = onboardingGson.create();
-        return gson;
+        return onboardingGson.create();
     }
 
     // Override this to control OnboardingSection sort order
@@ -234,37 +227,33 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
     public List<Step> steps(Context context, OnboardingSection section, OnboardingTaskType taskType) {
 
         // Check to see that the steps for this section should be included
-        if (shouldInclude(context, section.getOnboardingSectionType(), taskType) == false) {
+        if (!shouldInclude(context, section.getOnboardingSectionType(), taskType)) {
             Log.d(LOG_TAG, "No sections for the task type " + taskType.ordinal());
             return null;
         }
 
         // Get the default factory
         SurveyFactory factory = section.getDefaultOnboardingSurveyFactory(context, converter, this);
+        List<Step> stepList = factory.createSurveySteps(context, section.surveyItems);
 
         // For consent, need to filter out steps that should not be included and group the steps into a substep.
-        // This is to facilitate skipping reconsent for a user who is logging in where it is unknown whether
-        // or not the user needs to reconsent. Returned this way because the steps in a subclass of ORKOrderedTask
+        // This is to facilitate skipping re-consent for a user who is logging in where it is unknown whether
+        // or not the user needs to re-consent. Returned this way because the steps in a subclass of ORKOrderedTask
         // are immutable but can be skipped using navigation rules.
         if (factory instanceof ConsentDocumentFactory) {
             ConsentDocumentFactory consentFactory = (ConsentDocumentFactory)factory;
-            List<Step> steps = new ArrayList<>();
             switch (taskType) {
                 case REGISTRATION:
-                    steps.add(consentFactory.registrationConsentStep());
-                    break;
+                    return Collections.singletonList(consentFactory.registrationConsentStep());
                 case LOGIN:
-                    steps.add(consentFactory.loginConsentStep());
-                    break;
-                default: // RECONSENT
-                    steps.add(consentFactory.reconsentStep());
-                    break;
+                    return Collections.singletonList(consentFactory.loginConsentStep());
+                default: // RE_CONSENT
+                    return Collections.singletonList(consentFactory.reconsentStep());
             }
-            return steps;
         }
 
         // For all other cases, return the steps.
-        return factory.getSteps();
+        return stepList;
     }
 
     /**
@@ -327,57 +316,9 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
         return StorageAccess.getInstance().hasPinCode(context);
     }
 
-    public static class ResourceManagerNameJsonProvider implements ResourceNameToStringConverter {
-
-        Context context;
-
-        ResourceManagerNameJsonProvider(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public String getJsonStringForResourceName(String resourceName) {
-            // Look at all methods of ResourceManager
-            Method[] resourceMethods = ResourceManager.class.getDeclaredMethods();
-            for (Method method : resourceMethods) {
-                if (method.getReturnType().equals(ResourcePathManager.Resource.class)) {
-                    String errorMessage = null;
-                    try {
-                        Object resourceObj = method.invoke(ResourceManager.getInstance());
-                        if (resourceObj instanceof ResourcePathManager.Resource) {
-                            ResourcePathManager.Resource resource = (ResourcePathManager.Resource)resourceObj;
-                            if (resourceName.equals(resource.getName())) {
-                                // Resource name match, return its contents as a JSON string
-                                return ResourceManager.getResourceAsString(context, resource.getRelativePath());
-                            }
-                        }
-                    } catch (IllegalAccessException e) {
-                        errorMessage = e.getMessage();
-                    } catch (InvocationTargetException e) {
-                        errorMessage = e.getMessage();
-                    }
-                    if (errorMessage != null) {
-                        throw new IllegalStateException("You must define a method in ResourceManager that returns a Resource for the resourceName " + resourceName);
-                    }
-                }
-            }
-            // This should never happen unless you have an invalid resource name referenced in json
-            Log.e(LOG_TAG, "No resource with name " + resourceName + " found");
-            return null;
-        }
-
-        @Override
-        public String getHtmlStringForResourceName(String resourceName) {
-            String htmlFilePath = ResourceManager.getInstance()
-                    .generatePath(ResourceManager.Resource.TYPE_HTML, resourceName);
-            return ResourceManager.getResourceAsString(context, htmlFilePath);
-        }
-    }
-
     @Override
-    public CustomStep createCustomStep(CustomSurveyItem item, SurveyFactory factory) {
-        // Go with default implementation of this SurveyFactory
-        return factory.createCustomStep(item);
+    public Step createCustomStep(Context context, SurveyItem item, SurveyFactory factory) {
+        return null;
     }
 
     /**

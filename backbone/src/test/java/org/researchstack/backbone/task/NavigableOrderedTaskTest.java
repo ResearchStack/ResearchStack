@@ -204,10 +204,11 @@ public class NavigableOrderedTaskTest
         String eligibilityJson = mParserHelper.getJsonStringForResourceName("eligibilityrequirements");
         OnboardingSection section = mSurveyFactoryHelper.gson.fromJson(eligibilityJson, OnboardingSection.class);
 
-        SurveyFactory factory = new SurveyFactory(mSurveyFactoryHelper.mockContext, section.surveyItems);
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(mSurveyFactoryHelper.mockContext, section.surveyItems);
 
         String taskId = "Parent Task";
-        NavigableOrderedTask task = new NavigableOrderedTask(taskId, factory.getSteps());
+        NavigableOrderedTask task = new NavigableOrderedTask(taskId, stepList);
         TaskResult result = new TaskResult(taskId);
 
         Step step = task.getStepAfterStep(null, result);
@@ -237,10 +238,11 @@ public class NavigableOrderedTaskTest
         String eligibilityJson = mParserHelper.getJsonStringForResourceName("eligibilityrequirements");
         OnboardingSection section = mSurveyFactoryHelper.gson.fromJson(eligibilityJson, OnboardingSection.class);
 
-        SurveyFactory factory = new SurveyFactory(mSurveyFactoryHelper.mockContext, section.surveyItems);
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(mSurveyFactoryHelper.mockContext, section.surveyItems);
 
         String taskId = "Parent Task";
-        NavigableOrderedTask task = new NavigableOrderedTask(taskId, factory.getSteps());
+        NavigableOrderedTask task = new NavigableOrderedTask(taskId, stepList);
         TaskResult result = new TaskResult(taskId);
 
         Step step = task.getStepAfterStep(null, result);

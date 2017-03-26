@@ -61,7 +61,8 @@ public class OnboardingSection {
             return surveyFactory;
         }
 
-        surveyFactory = new SurveyFactory(context, surveyItems, customStepCreator);
+        surveyFactory = new SurveyFactory();
+        surveyFactory.setCustomStepCreator(customStepCreator);
         return surveyFactory;
     }
 }
