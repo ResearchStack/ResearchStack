@@ -15,7 +15,12 @@ import java.util.List;
 
 public class TaskItem {
 
-    @SerializedName("taskIdentifier")
+    /**
+     * If present, this will be used as the task id when the task is created
+     * Also, if taskType is missing, taskIdentifier will be used in it's place
+     */
+    static final String TASK_IDENTIFIER_GSON = "taskIdentifier";
+    @SerializedName(TASK_IDENTIFIER_GSON)
     private String taskIdentifier;
 
     /**
@@ -48,6 +53,11 @@ public class TaskItem {
      */
     @SerializedName(value = "taskSteps", alternate = {"steps"})
     private List<SurveyItem> taskSteps;
+
+
+    private String customItemTypeIdentifier;
+
+    private transient String rawJson;
 
     public TaskItem() {
         super();
@@ -94,6 +104,9 @@ public class TaskItem {
     }
 
     public String getTaskTypeIdentifier() {
+        if (isCustomTask()) {
+            return customItemTypeIdentifier;
+        }
         return taskType.getValue();
     }
 
@@ -103,5 +116,28 @@ public class TaskItem {
 
     public void setTaskType(TaskItemType type) {
         this.taskType = type;
+    }
+
+    protected void setCustomTypeValue(String value) {
+        customItemTypeIdentifier = value;
+    }
+
+    public String getCustomTypeValue() {
+        return customItemTypeIdentifier;
+    }
+
+    public void setRawJson(String json) {
+        this.rawJson = json;
+    }
+
+    public String getRawJson() {
+        return rawJson;
+    }
+
+    /**
+     * @return true if the survey item type is custom, false otherwise
+     */
+    public boolean isCustomTask() {
+        return customItemTypeIdentifier != null;
     }
 }

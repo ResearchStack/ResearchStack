@@ -23,8 +23,8 @@ import java.util.List;
 public class FormStep extends QuestionStep {
     List<QuestionStep> formSteps;
 
-    /* Default constructor needed for serilization/deserialization of object */
-    FormStep() {
+    /* Default constructor needed for serialization/deserialization of object */
+    public FormStep() {
         super();
     }
 

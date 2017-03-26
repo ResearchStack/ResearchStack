@@ -3,7 +3,6 @@ package org.researchstack.backbone.model.survey;
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
-import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 
 /**
  * Created by TheMDP on 12/31/16.
@@ -49,13 +48,6 @@ public enum SurveyItemType {
     QUESTION_SCALE              ("scaleInteger"),           // ORKScaleAnswerFormat
     @SerializedName("timingRange")
     QUESTION_TIMING_RANGE       ("timingRange"),            // Timing Range: ORKTextChoiceAnswerFormat of style SingleChoiceTextQuestion
-    // Consent subtypes
-    @SerializedName(ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER)
-    CONSENT_SHARING_OPTIONS     (ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER),  // ConsentSharingStep
-    @SerializedName(ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER)
-    CONSENT_REVIEW              (ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER),          // ConsentReviewStep
-    @SerializedName("consentVisual")
-    CONSENT_VISUAL              ("consentVisual"),          // VisualConsentStep
     // Account subtypes
     @SerializedName("registration")
     ACCOUNT_REGISTRATION        ("registration"        ),   // ProfileStep
@@ -80,14 +72,25 @@ public enum SurveyItemType {
     PASSCODE                    ("passcode"),               // iOS has 6 digit too, but for now only support 4 digit
     // Active Step
     @SerializedName("active")
-    ACTIVE_STEP    ("active");                              // ActiveStep
+    ACTIVE_STEP    ("active"),                              // ActiveStep
+
+
+    // Consent subtypes
+    @SerializedName(ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER)
+    CONSENT_SHARING_OPTIONS     (ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER),  // ConsentSharingStep
+    @SerializedName(ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER)
+    CONSENT_REVIEW              (ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER),   // ConsentReviewStep
+    @SerializedName             ("consentVisual")
+    CONSENT_VISUAL              ("consentVisual"),                                    // VisualConsentStep
+    @SerializedName             ("reconsent.instruction")
+    RE_CONSENT                  ("reconsent.instruction");                            // ReconsentInstructionStep
 
     SurveyItemType(String rawValue) {
         value = rawValue;
     }
 
     private String value;
-    String getValue() {
+    public String getValue() {
         return value;
     }
 
