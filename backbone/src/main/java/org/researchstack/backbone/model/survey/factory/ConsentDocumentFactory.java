@@ -15,7 +15,6 @@ import org.researchstack.backbone.model.survey.InstructionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.onboarding.ReConsentInstructionStep;
-import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
@@ -48,7 +47,6 @@ public class ConsentDocumentFactory extends SurveyFactory {
     private List<Step> stepList;
 
     private ConsentDocument consentDocument;
-    private ResourceNameToStringConverter resourceConverter;
 
     public ConsentDocumentFactory() {
         super();
@@ -56,31 +54,23 @@ public class ConsentDocumentFactory extends SurveyFactory {
     }
 
     /**
-     * @param document consent document, already deserialized
-     * @param converter used to convert html filenames to html content for VisualConsentStep
+     * @param document consent document, already de-serialized
      */
-    public ConsentDocumentFactory(
-            ConsentDocument document,
-            ResourceNameToStringConverter converter)
-    {
+    public ConsentDocumentFactory(ConsentDocument document) {
         this();
         consentDocument = document;
-        resourceConverter = converter;
     }
 
     /**
      * @param document consent document, already deserialized
-     * @param converter used to convert html filenames to html content for VisualConsentStep
      * @param customStepCreator override to control step creation from custom survey items
      */
     public ConsentDocumentFactory(
             ConsentDocument document,
-            ResourceNameToStringConverter converter,
             CustomStepCreator customStepCreator)
     {
         this();
         consentDocument = document;
-        resourceConverter = converter;
         setCustomStepCreator(customStepCreator);
     }
 

@@ -6,10 +6,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ConsentSectionAdapter;
@@ -38,7 +38,7 @@ import java.util.List;
  * order in which the user will go through without much work from the app developer
  */
 
-public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider, SurveyFactory.CustomStepCreator {
+public class OnboardingManager implements SurveyFactory.CustomStepCreator {
 
     static final String LOG_TAG = OnboardingManager.class.getCanonicalName();
 
@@ -49,9 +49,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
         @SerializedName("sections")
         List<OnboardingSection> sections;
     }
-    SectionsGsonHolder mSectionsGsonHolder;
-    Gson mGson;
-    ResourceNameToStringConverter converter;
+    private SectionsGsonHolder mSectionsGsonHolder;
 
     /*
      * Always initalize using this class
@@ -60,31 +58,12 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
      * @return OnboardingManager set up using ResourceManager, so make sure it is initialized
      */
     public OnboardingManager(Context context) {
-        this(context,
-             ResourceManager.getInstance().getOnboardingManager().getName(),
-             new ResourceManager.NameJsonProvider(context));
-    }
+        ResourcePathManager.Resource onboarding = ResourceManager.getInstance().getOnboardingManager();
+        String onboardingJson = ResourceManager.getResourceAsString(context,
+                ResourceManager.getInstance().generateAbsolutePath(onboarding.getType(), onboarding.getName()));
 
-    /*
-     * Constructor used for unit testing, also can be used to provide a custom ResourceManager
-     * for the original onboardingResourceName, and also
-     * for any nested "resourceName" attributes that are found during the deserialization
-     *
-     * @param Context used in reference to the ResourceManager and for the SurveyFactory
-     * @param onboardingResourceName root onboarding json file
-     * @param converter a custom json provider for providing json for resources
-     *        developer is guided to the correct one by having to override the default
-     * @return OnboardingManager set up using ResourceManager, so make sure it is initialized
-     */
-    protected OnboardingManager(Context context,
-                             String onboardingResourceName,
-                             ResourceNameToStringConverter converter)
-    {
-        this.converter = converter;
-        mGson = buildGson(context, converter);
-        String onboardingJson = converter.getJsonStringForResourceName(onboardingResourceName);
-
-        mSectionsGsonHolder = mGson.fromJson(onboardingJson, SectionsGsonHolder.class);
+        Gson gson = buildGson(context); // Do not store this gson as a member variable, it has a link to Context
+        mSectionsGsonHolder = gson.fromJson(onboardingJson, SectionsGsonHolder.class);
         Collections.sort(mSectionsGsonHolder.sections, getSectionComparator());
     }
 
@@ -103,25 +82,30 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
     }
 
     /**
-     * @param convertor used to find recursive json and html resourceNames and load them while parsing
+     * @param context should be activity context, just in case this is stored, but
+     *                the results of this method should not be since it will store context
      * @return a Gson to be used by the OnboardingManager
      */
-    private Gson buildGson(Context context, ResourceNameToStringConverter convertor) {
+    private Gson buildGson(final Context context) {
+        // We give access to context through this interface so that once this method
+        // is over, we won't hold a reference to context
+        final AdapterContextProvider provider = new AdapterContextProvider() {
+            @Override
+            public Context getContext() {
+                return context;
+            }
+        };
+
         GsonBuilder onboardingGson = new GsonBuilder();
         registerSurveyItemAdapter(onboardingGson);
-        onboardingGson.registerTypeAdapter(OnboardingSection.class, new OnboardingSectionAdapter(convertor));
-        onboardingGson.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(context, convertor));
+        onboardingGson.registerTypeAdapter(OnboardingSection.class, new OnboardingSectionAdapter(provider));
+        onboardingGson.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(provider));
         return onboardingGson.create();
     }
 
     // Override this to control OnboardingSection sort order
     public Comparator<OnboardingSection> getSectionComparator() {
         return new SectionComparator();
-    }
-
-    @Override
-    public Gson getGson() {
-        return mGson;
     }
 
     /**
@@ -224,7 +208,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
      * @param taskType the type of task to control section steps
      * @return step list for this onboarding section and the task type
      */
-    public List<Step> steps(Context context, OnboardingSection section, OnboardingTaskType taskType) {
+    public List<Step> steps(final Context context, OnboardingSection section, OnboardingTaskType taskType) {
 
         // Check to see that the steps for this section should be included
         if (!shouldInclude(context, section.getOnboardingSectionType(), taskType)) {
@@ -233,7 +217,7 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
         }
 
         // Get the default factory
-        SurveyFactory factory = section.getDefaultOnboardingSurveyFactory(context, converter, this);
+        SurveyFactory factory = section.getDefaultOnboardingSurveyFactory(context, this);
         List<Step> stepList = factory.createSurveySteps(context, section.surveyItems);
 
         // For consent, need to filter out steps that should not be included and group the steps into a substep.
@@ -359,6 +343,10 @@ public class OnboardingManager implements OnboardingSectionAdapter.GsonProvider,
                 }
             }
         }
+    }
+
+    public interface AdapterContextProvider {
+        Context getContext();
     }
 }
 

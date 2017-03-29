@@ -54,7 +54,6 @@ public class OnboardingSection {
     transient SurveyFactory surveyFactory;
     public SurveyFactory getDefaultOnboardingSurveyFactory(
             Context context,
-            ResourceNameToStringConverter converter,
             SurveyFactory.CustomStepCreator customStepCreator)
     {
         if (surveyFactory != null) {

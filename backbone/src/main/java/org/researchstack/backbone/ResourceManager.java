@@ -1,20 +1,22 @@
 package org.researchstack.backbone;
 
-
-import android.content.Context;
-import android.util.Log;
-
-import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
-import org.researchstack.backbone.utils.LogExt;
-
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class is responsible for returning paths of resources defined in the assets folder. This
  * class has more structure and expects certain assets to be defined for use within the framework.
  */
 public abstract class ResourceManager extends ResourcePathManager {
+
+    /**
+     * The resource map is a way to inject your own resources into the ResourceManager
+     */
+    private Map<String, Resource> resourceMap = new HashMap<>();
+
     /**
      * Returns a singleton static instance of the ResourceManager class
      *
@@ -124,51 +126,71 @@ public abstract class ResourceManager extends ResourcePathManager {
     public abstract Resource getOnboardingManager();
 
     /**
-     * The NameJsonProvider is a useful class that utilizes the
-     * ResourceManager to convert simple String names to Json Strings
+     * @param resourceName the name of the resource to find
+     * @return a Resource this manager provides, null if none exists
      */
-    public static class NameJsonProvider implements ResourceNameToStringConverter {
-
-        private Context context;
-
-        public NameJsonProvider(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public String getJsonStringForResourceName(String resourceName) {
-            // Look at all methods of ResourceManager
-            Method[] resourceMethods = ResourceManager.class.getDeclaredMethods();
-            for (Method method : resourceMethods) {
-                if (method.getReturnType().equals(ResourcePathManager.Resource.class)) {
-                    String errorMessage = null;
-                    try {
-                        Object resourceObj = method.invoke(ResourceManager.getInstance());
-                        if (resourceObj instanceof ResourcePathManager.Resource) {
-                            ResourcePathManager.Resource resource = (ResourcePathManager.Resource)resourceObj;
-                            if (resourceName.equals(resource.getName())) {
-                                // Resource name match, return its contents as a JSON string
-                                return ResourceManager.getResourceAsString(context, resource.getRelativePath());
-                            }
-                        }
-                    } catch (Exception e) {
-                        errorMessage = e.getMessage();
-                    }
-                    if (errorMessage != null) {
-                        throw new IllegalStateException("You must define a method in ResourceManager that returns a Resource for the resourceName " + resourceName);
-                    }
+    public Resource getResource(String resourceName) {
+        Resource resource = resourceMap.get(resourceName);
+        // If we use the abstract methods (backwards compatibility)
+        // the resource may exist in one of the methods
+        if (resource == null) {
+            List<Resource> resourceList = reflectToCreateResourceList();
+            for (Resource resourceInList : resourceList) {
+                if (resourceInList.getName().equals(resourceName)) {
+                    return resourceInList;
                 }
             }
-            // This should never happen unless you have an invalid resource name referenced in json
-            LogExt.e(getClass(), "No resource with name " + resourceName + " found");
-            return null;
         }
+        return resource;
+    }
 
-        @Override
-        public String getHtmlStringForResourceName(String resourceName) {
-            String htmlFilePath = ResourceManager.getInstance()
-                    .generatePath(ResourceManager.Resource.TYPE_HTML, resourceName);
-            return ResourceManager.getResourceAsString(context, htmlFilePath);
+    /**
+     * Uses reflection to find all methods that return "Resource" types and builds it into a list
+     * @return a list of Resource objects
+     */
+    private List<Resource> reflectToCreateResourceList() {
+        List<Resource> resourceList = new ArrayList<>();
+        // Look at all methods of ResourceManager to find ones that return type "Resource"
+        Method[] resourceMethods = ResourceManager.class.getDeclaredMethods();
+        for (Method method : resourceMethods) {
+            if (method.getReturnType().equals(ResourcePathManager.Resource.class)) {
+                String errorMessage = null;
+                try {
+                    Object resourceObj = method.invoke(ResourceManager.getInstance());
+                    if (resourceObj instanceof ResourcePathManager.Resource) {
+                        resourceList.add((ResourcePathManager.Resource)resourceObj);
+                    }
+                } catch (Exception e) {
+                    errorMessage = e.getMessage();
+                }
+                if (errorMessage != null) {
+                    throw new IllegalStateException("You must define a method in ResourceManager " +
+                            "that returns a Resource for the resourceName or add it to the" +
+                            "ResourceManager with addResource()");
+                }
+            }
         }
+        return resourceList;
+    }
+
+    /**
+     * @param resourceName the name of the resource that will be
+     * @param resource the full path, type, and name of the resource
+     * @return an instance of this class to chain adding resources
+     */
+    public ResourceManager addResource(String resourceName, Resource resource) {
+        resourceMap.put(resourceName, resource);
+        return this;
+    }
+
+    /**
+     * @return a duplicate copy of the ResourceManager's custom resource map
+     */
+    public Map<String, Resource> getResourceMap() {
+        return new HashMap<>(resourceMap);
+    }
+
+    public void removeResource(String name) {
+        resourceMap.remove(name);
     }
 }

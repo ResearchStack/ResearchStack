@@ -6,13 +6,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.researchstack.backbone.ResourceManager;
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.model.taskitem.TaskItem;
 import org.researchstack.backbone.model.taskitem.TaskItemAdapter;
 import org.researchstack.backbone.model.taskitem.factory.TaskItemFactory;
-import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LogExt;
 
@@ -27,32 +27,10 @@ import org.researchstack.backbone.utils.LogExt;
 
 public class TaskCreationManager implements TaskItemFactory.CustomTaskCreator, SurveyFactory.CustomStepCreator {
 
-    private Gson mGson;
-    private ResourceNameToStringConverter converter;
     private TaskItemFactory taskItemFactory;
 
-    /*
-     * Always initialize using this method, the other constructor is for unit testing
-     * @param Context used in reference to the ResourceManager to load JSON resources to construct
-     *                the TaskCreationManager
-     * @return TaskCreationManager set up using ResourceManager, so make sure it is initialized
-     */
-    public TaskCreationManager(Context context) {
-        this(new ResourceManager.NameJsonProvider(context));
-    }
-
-    /*
-     * Constructor used for unit testing, also can be used to provide a custom ResourceManager
-     * for any nested "resourceName" attributes that are found during the deserialization
-     *
-     * @param converter a custom json provider for providing json for resources
-     *        developer is guided to the correct one by having to override the default
-     * @return TaskCreationManager set up using ResourceManager, so make sure it is initialized
-     */
-    protected TaskCreationManager(ResourceNameToStringConverter converter)
-    {
-        this.converter = converter;
-        mGson = buildGson();
+    public TaskCreationManager() {
+        super();
         taskItemFactory = new TaskItemFactory();
     }
 
@@ -63,7 +41,9 @@ public class TaskCreationManager implements TaskItemFactory.CustomTaskCreator, S
      * @return             a Task based on the contents of the resource
      */
     public Task createTask(Context context, String resourceName) {
-        String taskItemJson = converter.getJsonStringForResourceName(resourceName);
+        String taskItemJson = ResourceManager.getResourceAsString(context,
+                ResourceManager.getInstance().generateAbsolutePath(ResourcePathManager.Resource.TYPE_JSON, resourceName));
+
         if (taskItemJson == null) {
             LogExt.e(getClass(), "Error finding resource with resource name " + resourceName +
             ". Did you define a method that returns it in your concrete implementation " +
@@ -71,7 +51,8 @@ public class TaskCreationManager implements TaskItemFactory.CustomTaskCreator, S
             return null;
         }
 
-        TaskItem taskItem = mGson.fromJson(taskItemJson, TaskItem.class);
+        Gson gson = buildGson(context);
+        TaskItem taskItem = gson.fromJson(taskItemJson, TaskItem.class);
         if (taskItem == null) {
             LogExt.e(getClass(), "Error creating TaskItem from json");
             return null;
@@ -112,7 +93,7 @@ public class TaskCreationManager implements TaskItemFactory.CustomTaskCreator, S
     /**
      * @return a Gson to be used by the TaskCreationManager
      */
-    private Gson buildGson() {
+    private Gson buildGson(Context context) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         registerSurveyItemAdapter(gsonBuilder);
         registerTaskItemAdapter(gsonBuilder);

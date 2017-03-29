@@ -1,8 +1,11 @@
 package org.researchstack.backbone.model.taskitem.factory;
 
+import android.content.pm.PackageManager;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.researchstack.backbone.model.survey.factory.ResourceParserHelper;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
 import org.researchstack.backbone.model.taskitem.TaskItem;
 import org.researchstack.backbone.step.CompletionStep;
@@ -27,14 +30,15 @@ import static org.researchstack.backbone.task.factory.TremorTaskFactory.*;
 
 public class TaskItemFactoryTests {
 
-    SurveyFactoryHelper  helper;
-    ResourceParserHelper resourceHelper;
+    private SurveyFactoryHelper helper;
 
     @Before
     public void setUp() throws Exception {
 
         helper = new SurveyFactoryHelper();
-        resourceHelper = new ResourceParserHelper();
+
+        PackageManager packageManager = Mockito.mock(PackageManager.class);
+        Mockito.when(helper.mockContext.getPackageManager()).thenReturn(packageManager);
     }
 
     @Test

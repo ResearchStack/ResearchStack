@@ -1,13 +1,19 @@
 package org.researchstack.backbone.task;
-import com.google.gson.reflect.TypeToken;
+
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.researchstack.backbone.model.survey.SurveyItem;
-import org.researchstack.backbone.model.survey.factory.ResourceParserHelper;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.researchstack.backbone.ResourceManager;
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
+import org.researchstack.backbone.onboarding.MockResourceManager;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
@@ -16,7 +22,6 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,16 +36,29 @@ import static junit.framework.Assert.assertTrue;
  * NavigableOrderedTask is a class in RK that does many of the same things as
  * SmartSurveyTask. In the future it would be nice to implement this to replace SmartSurveyTask.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ResourcePathManager.class, ResourceManager.class})
 public class NavigableOrderedTaskTest
 {
-    ResourceParserHelper mParserHelper;
     SurveyFactoryHelper mSurveyFactoryHelper;
 
     @Before
     public void setUp() throws Exception
     {
         mSurveyFactoryHelper = new SurveyFactoryHelper();
-        mParserHelper = new ResourceParserHelper();
+
+        // All of this, along with the @PrepareForTest and @RunWith above, is needed
+        // to mock the resource manager to load resources from the directory src/test/resources
+        PowerMockito.mockStatic(ResourcePathManager.class);
+        PowerMockito.mockStatic(ResourceManager.class);
+        MockResourceManager resourceManager = new MockResourceManager();
+        PowerMockito.when(ResourceManager.getInstance()).thenReturn(resourceManager);
+        resourceManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "eligibilityrequirements");
+    }
+
+    private String getJsonResource(String resourceName) {
+        ResourcePathManager.Resource resource = ResourceManager.getInstance().getResource(resourceName);
+        return ResourceManager.getResourceAsString(mSurveyFactoryHelper.mockContext, resourceName);
     }
 
     @Test
@@ -201,7 +219,7 @@ public class NavigableOrderedTaskTest
 
     @Test
     public void testNavigationExpectedAnswerRulesPassed() {
-        String eligibilityJson = mParserHelper.getJsonStringForResourceName("eligibilityrequirements");
+        String eligibilityJson = getJsonResource("eligibilityrequirements");
         OnboardingSection section = mSurveyFactoryHelper.gson.fromJson(eligibilityJson, OnboardingSection.class);
 
         SurveyFactory factory = new SurveyFactory();
@@ -235,7 +253,7 @@ public class NavigableOrderedTaskTest
 
     @Test
     public void testNavigationExpectedAnswerRulesFailed() {
-        String eligibilityJson = mParserHelper.getJsonStringForResourceName("eligibilityrequirements");
+        String eligibilityJson = getJsonResource("eligibilityrequirements");
         OnboardingSection section = mSurveyFactoryHelper.gson.fromJson(eligibilityJson, OnboardingSection.class);
 
         SurveyFactory factory = new SurveyFactory();

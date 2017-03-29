@@ -4,10 +4,16 @@ import com.google.gson.reflect.TypeToken;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.researchstack.backbone.ResourceManager;
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.survey.SurveyItem;
-import org.researchstack.backbone.model.survey.factory.ResourceParserHelper;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
+import org.researchstack.backbone.onboarding.MockResourceManager;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;
@@ -28,16 +34,29 @@ import static junit.framework.Assert.assertTrue;
  * Created by TheMDP on 1/6/17.
  */
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ResourcePathManager.class, ResourceManager.class})
 public class SubtaskStepTests {
 
     SurveyFactoryHelper  helper;
-    ResourceParserHelper resourceHelper;
 
     @Before
     public void setUp() throws Exception
     {
         helper = new SurveyFactoryHelper();
-        resourceHelper = new ResourceParserHelper();
+
+        // All of this, along with the @PrepareForTest and @RunWith above, is needed
+        // to mock the resource manager to load resources from the directory src/test/resources
+        PowerMockito.mockStatic(ResourcePathManager.class);
+        PowerMockito.mockStatic(ResourceManager.class);
+        MockResourceManager resourceManager = new MockResourceManager();
+        PowerMockito.when(ResourceManager.getInstance()).thenReturn(resourceManager);
+        resourceManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "subtask");
+    }
+
+    private String getJsonResource(String resourceName) {
+        ResourcePathManager.Resource resource = ResourceManager.getInstance().getResource(resourceName);
+        return ResourceManager.getResourceAsString(helper.mockContext, resourceName);
     }
 
     @Test
@@ -98,7 +117,7 @@ public class SubtaskStepTests {
     SubtaskStepAndSteps createSubtaskStep() {
         Type listType = new TypeToken<List<SurveyItem>>() {
         }.getType();
-        String subtaskJson = resourceHelper.getJsonStringForResourceName("subtask");
+        String subtaskJson = getJsonResource("subtask");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(subtaskJson, listType);
 
         SurveyFactory factory = new SurveyFactory();

@@ -7,11 +7,16 @@ import com.google.gson.reflect.TypeToken;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.researchstack.backbone.ResourceManager;
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.EmailAnswerFormat;
@@ -21,6 +26,7 @@ import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.SurveyItem;
+import org.researchstack.backbone.onboarding.MockResourceManager;
 import org.researchstack.backbone.onboarding.ReConsentInstructionStep;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
@@ -39,6 +45,10 @@ import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -51,19 +61,28 @@ import static junit.framework.Assert.assertTrue;
  */
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({FingerprintManagerCompat.class})
+@PrepareForTest({FingerprintManagerCompat.class, ResourcePathManager.class, ResourceManager.class})
 public class SurveyFactoryTests {
 
-    SurveyFactoryHelper  helper;
-    ResourceParserHelper resourceHelper;
-
+    private SurveyFactoryHelper helper;
     @Mock FingerprintManagerCompat mockFingerprintManager;
 
     @Before
     public void setUp() throws Exception
     {
         helper = new SurveyFactoryHelper();
-        resourceHelper = new ResourceParserHelper();
+
+        // All of this, along with the @PrepareForTest and @RunWith above, is needed
+        // to mock the resource manager to load resources from the directory src/test/resources
+        PowerMockito.mockStatic(ResourcePathManager.class);
+        PowerMockito.mockStatic(ResourceManager.class);
+        MockResourceManager mockManager = new MockResourceManager();
+        PowerMockito.when(ResourceManager.getInstance()).thenReturn(mockManager);
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_factory_eligibilityrequirements");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_factory_onboarding");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_factory_consent");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "consentdocument");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "custom_consentdocument");
 
         mockFingerprintManager = Mockito.mock(FingerprintManagerCompat.class);
         Mockito.when(mockFingerprintManager.isHardwareDetected()).thenReturn(true);
@@ -71,11 +90,15 @@ public class SurveyFactoryTests {
         Mockito.when(FingerprintManagerCompat.from(helper.mockContext)).thenReturn(mockFingerprintManager);
     }
 
+    private String getJsonResource(String resourceName) {
+        ResourcePathManager.Resource resource = ResourceManager.getInstance().getResource(resourceName);
+        return ResourceManager.getResourceAsString(helper.mockContext, resourceName);
+    }
+
     @Test
     public void testEligibilitySurveyFactory() {
-        Type listType = new TypeToken<List<SurveyItem>>() {
-        }.getType();
-        String eligibilityJson = resourceHelper.getJsonStringForResourceName("survey_factory_eligibilityrequirements");
+        Type listType = new TypeToken<List<SurveyItem>>() {}.getType();
+        String eligibilityJson = getJsonResource("survey_factory_eligibilityrequirements");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(eligibilityJson, listType);
 
         SurveyFactory factory = new SurveyFactory();
@@ -115,9 +138,8 @@ public class SurveyFactoryTests {
     @Test
     public void testSurveyFactory()
     {
-        Type listType = new TypeToken<List<SurveyItem>>() {
-        }.getType();
-        String eligibilityJson = resourceHelper.getJsonStringForResourceName("survey_factory_onboarding");
+        Type listType = new TypeToken<List<SurveyItem>>() {}.getType();
+        String eligibilityJson = getJsonResource("survey_factory_onboarding");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(eligibilityJson, listType);
 
         SurveyFactory factory = new SurveyFactory();
@@ -169,14 +191,14 @@ public class SurveyFactoryTests {
     @Test
     public void testConsentDocumentFactory()
     {
-        String consentDocJson = resourceHelper.getJsonStringForResourceName("consentdocument");
+        String consentDocJson = getJsonResource("consentdocument");
         ConsentDocument consentDoc = helper.gson.fromJson(consentDocJson, ConsentDocument.class);
 
         Type listType = new TypeToken<List<SurveyItem>>() {}.getType();
-        String consentItemsJson = resourceHelper.getJsonStringForResourceName("survey_factory_consent");
+        String consentItemsJson = getJsonResource("survey_factory_consent");
         List<SurveyItem> surveyItemList = helper.gson.fromJson(consentItemsJson, listType);
 
-        ConsentDocumentFactory factory = new ConsentDocumentFactory(consentDoc, helper.converter);
+        ConsentDocumentFactory factory = new ConsentDocumentFactory(consentDoc);
         List<Step> stepList = factory.createSurveySteps(helper.mockContext, surveyItemList);
 
         assertNotNull(stepList);
@@ -217,10 +239,7 @@ public class SurveyFactoryTests {
         assertEquals(ProfileInfoOption.BIRTHDATE, consentProfileStep.getProfileInfoOptions().get(1));
 
         assertTrue(substepListStep.getStepList().get(1) instanceof ConsentSignatureStep);
-
         assertTrue(substepListStep.getStepList().get(2) instanceof ConsentDocumentStep);
-        ConsentDocumentStep documentStep = (ConsentDocumentStep)substepListStep.getStepList().get(2);
-        assertEquals("consent_full", documentStep.getConsentHTML());
 
         assertTrue(stepList.get(7) instanceof InstructionStep);
         assertEquals("consentCompletion", stepList.get(7).getIdentifier());
@@ -229,7 +248,7 @@ public class SurveyFactoryTests {
     @Test
     public void testCustomConsentDocument()
     {
-        String consentDocJson = resourceHelper.getJsonStringForResourceName("custom_consentdocument");
+        String consentDocJson = getJsonResource("custom_consentdocument");
         ConsentDocument consentDoc = helper.gson.fromJson(consentDocJson, ConsentDocument.class);
 
         assertEquals(consentDoc.getSections().size(), 4);

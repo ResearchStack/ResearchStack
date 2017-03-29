@@ -1,6 +1,7 @@
 package org.researchstack.backbone.model.survey.factory;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 
 import com.google.gson.Gson;
@@ -15,7 +16,7 @@ import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 import org.researchstack.backbone.model.taskitem.TaskItem;
 import org.researchstack.backbone.model.taskitem.TaskItemAdapter;
-import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
+import org.researchstack.backbone.onboarding.OnboardingManager;
 
 /**
  * Created by TheMDP on 1/6/17.
@@ -28,13 +29,13 @@ public class SurveyFactoryHelper {
     public Gson gson;
     @Mock public Context mockContext;
     @Mock private Resources mockResources;
-    @Mock public MockResourceNameConverter converter;
 
     static final String PRIVACY_TITLE = "Privacy";
     static final String PRIVACY_LEARN_MORE = "Learn more about how your privacy and identity are protected";
 
     public SurveyFactoryHelper() {
         mockContext = Mockito.mock(Context.class);
+
         Mockito.when(mockContext.getString(R.string.rsb_yes))       .thenReturn("Yes");
         Mockito.when(mockContext.getString(R.string.rsb_no))        .thenReturn("No");
         Mockito.when(mockContext.getString(R.string.rsb_not_sure))  .thenReturn("Not sure");
@@ -228,24 +229,15 @@ public class SurveyFactoryHelper {
         Mockito.when(mockResources.getInteger(R.integer.rsb_sensor_frequency_default)).thenReturn(100);
         Mockito.when(mockContext.getResources()).thenReturn(mockResources);
 
-        converter = new MockResourceNameConverter();
-
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(TaskItem.class, new TaskItemAdapter());
         builder.registerTypeAdapter(SurveyItem.class, new SurveyItemAdapter());
-        builder.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(mockContext, converter));
+        builder.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(new OnboardingManager.AdapterContextProvider() {
+            @Override
+            public Context getContext() {
+                return mockContext;
+            }
+        }));
         gson = builder.create();
-    }
-
-    public static class MockResourceNameConverter implements ResourceNameToStringConverter {
-        @Override
-        public String getJsonStringForResourceName(String resourceName) {
-            return resourceName;
-        }
-
-        @Override
-        public String getHtmlStringForResourceName(String resourceName) {
-            return resourceName;
-        }
     }
 }

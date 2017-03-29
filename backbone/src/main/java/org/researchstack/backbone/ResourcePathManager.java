@@ -66,7 +66,11 @@ public abstract class ResourcePathManager {
      * @return String representation of the file
      */
     public static String getResourceAsString(Context context, String filePath) {
-        return new String(getResourceAsBytes(context, filePath), Charset.forName("UTF-8"));
+        byte[] fileBytes = getResourceAsBytes(context, filePath);
+        if (fileBytes == null) {
+            return null;
+        }
+        return new String(fileBytes, Charset.forName("UTF-8"));
     }
 
     /**
@@ -78,6 +82,9 @@ public abstract class ResourcePathManager {
      */
     public static byte[] getResourceAsBytes(Context context, String filePath) {
         InputStream is = getResouceAsInputStream(context, filePath);
+        if (is == null) {
+            return null;
+        }
         ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
 
         byte[] readBuffer = new byte[4 * 1024];
@@ -114,6 +121,9 @@ public abstract class ResourcePathManager {
      * @return InputStream representation of the asset
      */
     public static InputStream getResouceAsInputStream(Context context, String filePath) {
+        if (context == null) {
+            return null;
+        }
         AssetManager assetManager = context.getAssets();
         InputStream inputStream = null;
         try {
