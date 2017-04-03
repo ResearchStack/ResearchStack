@@ -23,6 +23,7 @@ import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
 public class MoodSurveyFactory {
 
+    public static final String MoodSurveyIdentifier = "Mood Survey";
     public static final String MoodSurveyCustomQuestionStepIdentifier   = "mood.custom";
     public static final String MoodSurveyClarityQuestionStepIdentifier  = "mood.clarity";
     public static final String MoodSurveyOverallQuestionStepIdentifier  = "mood.overall";
@@ -61,76 +62,95 @@ public class MoodSurveyFactory {
         List<Step> stepList = new ArrayList<>();
 
         if (!optionList.contains(TaskExcludeOption.INSTRUCTIONS)) {
-            String title = (frequency == MoodSurveyFrequency.DAILY) ?
-                    context.getString(R.string.rsb_MOOD_SURVEY_INTRO_DAILY_TITLE) :
-                    context.getString(R.string.rsb_MOOD_SURVEY_INTRO_WEEKLY_TITLE);
-            String text = intendedUseDescription;
-            if (text == null) {
-                text = (frequency == MoodSurveyFrequency.DAILY) ?
-                        context.getString(R.string.rsb_MOOD_SURVEY_INTRO_DAILY_TEXT) :
-                        context.getString(R.string.rsb_MOOD_SURVEY_INTRO_WEEKLY_TEXT);
-            }
-            InstructionStep step = new InstructionStep(Instruction0StepIdentifier, title, text);
-            step.setMoreDetailText(context.getString(R.string.rsb_MOOD_SURVEY_INTRO_DETAIL));
-            stepList.add(step);
+            stepList.add(getIntroStep(context, frequency, intendedUseDescription));
         }
 
         // Custom
         if (customQuestionText != null) {
-            stepList.add(moodQuestionStep(context, MoodSurveyCustomQuestionStepIdentifier,
-                    customQuestionText, MoodScaleAnswerFormat.MoodQuestionType.CUSTOM));
+            stepList.add(getCustomQuestionStep(context, customQuestionText));
         }
 
         // Clarity
-        {
-            String title = (frequency == MoodSurveyFrequency.DAILY) ?
-                    context.getString(R.string.rsb_MOOD_CLARITY_DAILY_PROMPT) :
-                    context.getString(R.string.rsb_MOOD_CLARITY_WEEKLY_PROMPT);
-            stepList.add(moodQuestionStep(context, MoodSurveyClarityQuestionStepIdentifier,
-                    title, MoodScaleAnswerFormat.MoodQuestionType.CLARITY));
-        }
+        stepList.add(getClarityStep(context, frequency));
 
         // Overall
-        {
-            String title = (frequency == MoodSurveyFrequency.DAILY) ?
-                    context.getString(R.string.rsb_MOOD_OVERALL_DAILY_PROMPT) :
-                    context.getString(R.string.rsb_MOOD_OVERALL_WEEKLY_PROMPT);
-            stepList.add(moodQuestionStep(context, MoodSurveyOverallQuestionStepIdentifier,
-                    title, MoodScaleAnswerFormat.MoodQuestionType.OVERALL));
-        }
+        stepList.add(getOverallStep(context, frequency));
 
         // Pain
-        {
-            String title = (frequency == MoodSurveyFrequency.DAILY) ?
-                    context.getString(R.string.rsb_MOOD_PAIN_DAILY_PROMPT) :
-                    context.getString(R.string.rsb_MOOD_PAIN_WEEKLY_PROMPT);
-            stepList.add(moodQuestionStep(context, MoodSurveyPainQuestionStepIdentifier,
-                    title, MoodScaleAnswerFormat.MoodQuestionType.PAIN));
-        }
+        stepList.add(getPainStep(context, frequency));
 
         // Sleep
-        {
-            String title = (frequency == MoodSurveyFrequency.DAILY) ?
-                    context.getString(R.string.rsb_MOOD_SLEEP_DAILY_PROMPT) :
-                    context.getString(R.string.rsb_MOOD_SLEEP_WEEKLY_PROMPT);
-            stepList.add(moodQuestionStep(context, MoodSurveySleepQuestionStepIdentifier,
-                    title, MoodScaleAnswerFormat.MoodQuestionType.SLEEP));
-        }
+        stepList.add(getSleepStep(context, frequency));
 
         // Exercise
-        {
-            String title = (frequency == MoodSurveyFrequency.DAILY) ?
-                    context.getString(R.string.rsb_MOOD_EXERCISE_DAILY_PROMPT) :
-                    context.getString(R.string.rsb_MOOD_EXERCISE_WEEKLY_PROMPT);
-            stepList.add(moodQuestionStep(context, MoodSurveyExerciseQuestionStepIdentifier,
-                    title, MoodScaleAnswerFormat.MoodQuestionType.EXERCISE));
-        }
+        stepList.add(getExerciseStep(context, frequency));
 
         if (!optionList.contains(TaskExcludeOption.CONCLUSION)) {
             stepList.add(TaskFactory.makeCompletionStep(context));
         }
 
         return new OrderedTask(identifier, stepList);
+    }
+
+    protected static Step getIntroStep(Context context, MoodSurveyFrequency frequency, String intendedUseDescription) {
+        String title = (frequency == MoodSurveyFrequency.DAILY) ?
+                context.getString(R.string.rsb_MOOD_SURVEY_INTRO_DAILY_TITLE) :
+                context.getString(R.string.rsb_MOOD_SURVEY_INTRO_WEEKLY_TITLE);
+        String text = intendedUseDescription;
+        if (text == null) {
+            text = (frequency == MoodSurveyFrequency.DAILY) ?
+                    context.getString(R.string.rsb_MOOD_SURVEY_INTRO_DAILY_TEXT) :
+                    context.getString(R.string.rsb_MOOD_SURVEY_INTRO_WEEKLY_TEXT);
+        }
+        InstructionStep step = new InstructionStep(Instruction0StepIdentifier, title, text);
+        step.setMoreDetailText(context.getString(R.string.rsb_MOOD_SURVEY_INTRO_DETAIL));
+
+        return step;
+    }
+
+    protected static Step getCustomQuestionStep(Context context, String customQuestionText) {
+        return moodQuestionStep(context, MoodSurveyCustomQuestionStepIdentifier,
+                customQuestionText, MoodScaleAnswerFormat.MoodQuestionType.CUSTOM);
+    }
+
+    protected static Step getClarityStep(Context context, MoodSurveyFrequency frequency) {
+        String title = (frequency == MoodSurveyFrequency.DAILY) ?
+                context.getString(R.string.rsb_MOOD_CLARITY_DAILY_PROMPT) :
+                context.getString(R.string.rsb_MOOD_CLARITY_WEEKLY_PROMPT);
+        return moodQuestionStep(context, MoodSurveyClarityQuestionStepIdentifier,
+                title, MoodScaleAnswerFormat.MoodQuestionType.CLARITY);
+    }
+
+    protected static Step getOverallStep(Context context, MoodSurveyFrequency frequency) {
+        String title = (frequency == MoodSurveyFrequency.DAILY) ?
+                context.getString(R.string.rsb_MOOD_OVERALL_DAILY_PROMPT) :
+                context.getString(R.string.rsb_MOOD_OVERALL_WEEKLY_PROMPT);
+        return moodQuestionStep(context, MoodSurveyOverallQuestionStepIdentifier,
+                title, MoodScaleAnswerFormat.MoodQuestionType.OVERALL);
+    }
+
+    protected static Step getPainStep(Context context, MoodSurveyFrequency frequency) {
+        String title = (frequency == MoodSurveyFrequency.DAILY) ?
+                context.getString(R.string.rsb_MOOD_PAIN_DAILY_PROMPT) :
+                context.getString(R.string.rsb_MOOD_PAIN_WEEKLY_PROMPT);
+        return moodQuestionStep(context, MoodSurveyPainQuestionStepIdentifier,
+                title, MoodScaleAnswerFormat.MoodQuestionType.PAIN);
+    }
+
+    protected static Step getSleepStep(Context context, MoodSurveyFrequency frequency) {
+        String title = (frequency == MoodSurveyFrequency.DAILY) ?
+                context.getString(R.string.rsb_MOOD_SLEEP_DAILY_PROMPT) :
+                context.getString(R.string.rsb_MOOD_SLEEP_WEEKLY_PROMPT);
+        return moodQuestionStep(context, MoodSurveySleepQuestionStepIdentifier,
+                title, MoodScaleAnswerFormat.MoodQuestionType.SLEEP);
+    }
+
+    protected static Step getExerciseStep(Context context, MoodSurveyFrequency frequency) {
+        String title = (frequency == MoodSurveyFrequency.DAILY) ?
+                context.getString(R.string.rsb_MOOD_EXERCISE_DAILY_PROMPT) :
+                context.getString(R.string.rsb_MOOD_EXERCISE_WEEKLY_PROMPT);
+        return moodQuestionStep(context, MoodSurveyExerciseQuestionStepIdentifier,
+                title, MoodScaleAnswerFormat.MoodQuestionType.EXERCISE);
     }
 
     /**
@@ -140,7 +160,7 @@ public class MoodSurveyFactory {
      * @param type MoodQuestionType for the MoodScaleAnswerFormat
      * @return a QuestionStep for the Mood Survey
      */
-    private static QuestionStep moodQuestionStep(
+    protected static QuestionStep moodQuestionStep(
             Context context,
             String identifier,
             String title,

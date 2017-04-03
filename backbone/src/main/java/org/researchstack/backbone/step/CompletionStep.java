@@ -10,7 +10,7 @@ import org.researchstack.backbone.utils.ResUtils;
 public class CompletionStep extends InstructionStep {
 
     /* Default constructor needed for serilization/deserialization of object */
-    CompletionStep() {
+    public CompletionStep() {
         super();
         commonInit();
     }

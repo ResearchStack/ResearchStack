@@ -113,5 +113,6 @@
     <string name="rss_activities_yesterday_header_message">Below are your incomplete tasks from yesterday.\nThese are for reference only.</string>
     <string name="rss_activities_optional_header_title">Keep Going!</string>
     <string name="rss_activities_optional_header_message">Try one of these activities to enhance your experience in your study.</string>
-    
+
+    <string name="rss_activities_mood_survey_intended_use">Tell us how you feel. We\'ll ask you to rate your mental clarity, mood, and pain level today as well as how well you slept and how much exercise you have done in the last day. You will also have an opportunity to track any activity or thought that you choose yourself.</string>
 </resources>

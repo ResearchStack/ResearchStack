@@ -70,7 +70,7 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
     private SubmitBarNegativeActionSkipRule submitBarSkipRule;
 
     /* Default constructor needed for serilization/deserialization of object */
-    InstructionStep() {
+    public InstructionStep() {
         super();
     }
 
