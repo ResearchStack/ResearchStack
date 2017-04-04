@@ -70,7 +70,7 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
      * that when pressed, will skip this step to another step specified by SubmitBarNegativeActionSkipRule
      */
     private SubmitBarNegativeActionSkipRule submitBarSkipRule;
-
+    
     /* Default constructor needed for serialization/deserialization of object */
     public InstructionStep() {
         super();

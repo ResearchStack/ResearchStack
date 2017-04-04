@@ -49,7 +49,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     // Child Views
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private LinearLayout container;
-    private StepBody     stepBody;
+    protected StepBody     stepBody;
 
     public SurveyStepLayout(Context context)
     {
