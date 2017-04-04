@@ -193,4 +193,11 @@ public abstract class Recorder {
     private String generateUniqueFileName() {
         return UUID.randomUUID().toString();
     }
+
+    /**
+     * @return a step-specific identifier that can be used for the FileResult
+     */
+    public String fileResultIdentifier() {
+        return identifier + "_" + step.getIdentifier();
+    }
 }

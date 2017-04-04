@@ -331,7 +331,9 @@ public class StorageAccess {
      */
     protected void removeSharedPreference(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
-        prefs.edit().clear().apply();
+        if (prefs != null) {
+            prefs.edit().clear().apply();
+        }
     }
 
     /**
@@ -340,7 +342,9 @@ public class StorageAccess {
      * @param context android context
      */
     public void removePinCode(Context context) {
-        encryptionProvider.removePinCode(context);
+        if (encryptionProvider != null) {
+            encryptionProvider.removePinCode(context);
+        }
         removeSharedPreference(context);
     }
 

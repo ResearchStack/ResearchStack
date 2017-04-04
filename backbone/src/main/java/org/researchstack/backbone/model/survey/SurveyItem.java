@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by TheMDP on 12/31/16.
@@ -14,7 +13,7 @@ import java.util.Map;
  * Otherwise you will see a runtime exception
  */
 
-public class SurveyItem<T> implements Serializable {
+public class SurveyItem<T extends Serializable> implements Serializable {
 
     static final String IDENTIFIER_GSON = "identifier";
     @SerializedName(IDENTIFIER_GSON)

@@ -17,7 +17,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.joda.time.DateTime;
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.StorageAccess;
+import org.researchstack.backbone.model.SchedulesAndTasksModel;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemAdapter;
 import org.researchstack.backbone.model.taskitem.TaskItem;
@@ -32,9 +34,7 @@ import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
-import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
-import org.researchstack.backbone.model.SchedulesAndTasksModel;
 import org.researchstack.skin.ui.adapter.TaskAdapter;
 import org.researchstack.skin.ui.views.DividerItemDecoration;
 
@@ -49,11 +49,11 @@ import rx.Subscription;
 public class ActivitiesFragment extends Fragment implements StorageAccessListener {
 
     // TODO: remove the methods below once we finish task builder
-    public static final String APHWalkingActivitySurveyIdentifier              = "4-APHTimedWalking-80F09109-265A-49C6-9C5D-765E49AAF5D9";
-    public static final String APHVoiceActivitySurveyIdentifier                = "3-APHPhonation-C614A231-A7B7-4173-BDC8-098309354292";
-    public static final String APHTappingActivitySurveyIdentifier              = "2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF";
-    public static final String APHTremorActivitySurveyIdentifier               = "1-APHTremor-108E189F-4B5B-48DC-BFD7-FA6796EEf439";
-    public static final String APHMoodSurveyIdentifier                         = "3-APHMoodSurvey-7259AC18-D711-47A6-ADBD-6CFCECDED1DF";
+    public static final String APHWalkingActivitySurveyIdentifier = "4-APHTimedWalking-80F09109-265A-49C6-9C5D-765E49AAF5D9";
+    public static final String APHVoiceActivitySurveyIdentifier =   "3-APHPhonation-C614A231-A7B7-4173-BDC8-098309354292";
+    public static final String APHTappingActivitySurveyIdentifier = "2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF";
+    public static final String APHTremorActivitySurveyIdentifier =  "1-APHTremor-108E189F-4B5B-48DC-BFD7-FA6796EEf439";
+    public static final String APHMoodSurveyIdentifier =            "3-APHMoodSurvey-7259AC18-D711-47A6-ADBD-6CFCECDED1DF";
 
     private static final String LOG_TAG = ActivitiesFragment.class.getCanonicalName();
     private static final int REQUEST_TASK = 1492;
@@ -112,7 +112,8 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
 
     /**
      * Override this method to provide a customer adapter for your application.
-     * @return  The adapter for displaying the list of tasks.
+     *
+     * @return The adapter for displaying the list of tasks.
      */
     protected TaskAdapter createTaskAdapter() {
         return new TaskAdapter(getActivity());
@@ -129,7 +130,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                 .map(o -> (SchedulesAndTasksModel) o)
                 .subscribe(model -> {
                     swipeContainer.setRefreshing(false);
-                    if(adapter == null) {
+                    if (adapter == null) {
                         unsubscribe();
                         adapter = createTaskAdapter();
                         recyclerView.setAdapter(adapter);
@@ -139,7 +140,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                             Task newTask = DataProvider.getInstance().loadTask(getContext(), task);
 
                             if (newTask == null) {
-                                
+
                                 // TODO: figure out a different way to show do these in loadTask
                                 if (task.taskID.equals(APHTappingActivitySurveyIdentifier)) {
                                     startCustomTappingTask();
@@ -174,6 +175,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
 
     /**
      * Process the model to create section groups and section headers
+     *
      * @param model SchedulesAndTasksModel object
      * @return a list of section groups and section headers
      */
@@ -194,11 +196,11 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
             boolean today = (scheduled.isAfter(startOfDay) && scheduled.isBefore(startOfTomorrow));
             boolean yesterday = (scheduled.isAfter(startOfYesterday) && scheduled.isBefore(startOfDay));
             for (SchedulesAndTasksModel.TaskScheduleModel task : schedule.tasks) {
-                if(today && task.taskIsOptional) {
+                if (today && task.taskIsOptional) {
                     optionalTasks.add(task);
-                } else if(today) {
+                } else if (today) {
                     todaysTasks.add(task);
-                } else if(yesterday) {
+                } else if (yesterday) {
                     yesterdayTasks.add(task);
                 } else {
                     // skipping task
@@ -217,14 +219,14 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         tasks.addAll(todaysTasks);
 
         // todays optional tasks
-        if(optionalTasks.size() > 0) {
+        if (optionalTasks.size() > 0) {
             tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rss_activities_optional_header_title),
                     getActivity().getString(R.string.rss_activities_optional_header_message)));
             tasks.addAll(optionalTasks);
         }
 
         // yesterdays tasks
-        if(yesterdayTasks.size() > 0) {
+        if (yesterdayTasks.size() > 0) {
             tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rss_activities_yesterday_header_title),
                     getActivity().getString(R.string.rss_activities_yesterday_header_message)));
             tasks.addAll(yesterdayTasks);
@@ -272,29 +274,26 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         builder.registerTypeAdapter(TaskItem.class, new TaskItemAdapter());
         return builder.create();
     }
-
+  
     protected void startCustomTappingTask() {
         String taskItemJson = "{\"taskIdentifier\":\"2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF\",\"schemaIdentifier\":\"TappingActivity\",\"taskType\":\"tapping\",\"intendedUseDescription\":\"Speed of finger tapping can reflect severity of motor symptoms in Parkinson disease. This activity measures your tapping speed for each hand. Your medical provider may measure this differently.\",\"taskOptions\":{\"duration\":20.0,\"handOptions\":\"both\"},\"localizedSteps\":[{\"identifier\":\"conclusion\",\"type\":\"instruction\",\"text\":\"Thank You!\"}]}";
         Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
-        startActivity(ActiveTaskActivity.newIntent(getContext(), task));
+        startActivityForResult(ActiveTaskActivity.newIntent(getContext(), task), REQUEST_TASK);
     }
 
     protected void startCustomTremorTask() {
         String taskItemJson = "{\"taskIdentifier\":\"1-APHTremor-108E189F-4B5B-48DC-BFD7-FA6796EEf439\",\"schemaIdentifier\":\"Tremor Activity\",\"taskType\":\"tremor\",\"taskOptions\":{\"duration\":10.0,\"handOptions\":\"both\",\"excludePositions\":[\"elbowBent\",\"handQueenWave\"]}}";
-        Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
-        startActivity(ActiveTaskActivity.newIntent(getContext(), task));
+        startCustomTask(taskItemJson);
     }
 
     protected void startCustomVoiceTask() {
         String taskItemJson = "{\"taskIdentifier\":\"3-APHPhonation-C614A231-A7B7-4173-BDC8-098309354292\",\"schemaIdentifier\":\"Voice Activity\",\"taskType\":\"voice\",\"intendedUseDescription\":\"This activitiy evaluates your voice by recording it with the microphone at the bottom of your phone.\",\"localizedSteps\":[{\"identifier\":\"instruction\",\"type\":\"instruction\",\"title\":\"Voice\"},{\"identifier\":\"instruction1\",\"type\":\"instruction\",\"title\":\"Voice\",\"text\":\"Take a deep breath and say “Aaaaah” into the microphone for as long as you can. Keep a steady volume so the audio bars remain blue.\",\"detailText\":\"Tap Get Started to begin the test.\"},{\"identifier\":\"countdown\",\"type\":\"instruction\",\"text\":\"Please wait while we check the ambient sound levels.\"}],\"taskOptions\":{\"duration\":10.0}}";
-        Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
-        startActivity(ActiveTaskActivity.newIntent(getContext(), task));
+        startCustomTask(taskItemJson);
     }
 
     protected void startCustomWalkingTask() {
         String taskItemJson = "{\"taskIdentifier\":\"4-APHTimedWalking-80F09109-265A-49C6-9C5D-765E49AAF5D9\",\"schemaIdentifier\":\"Walking Activity\",\"taskType\":\"shortWalk\",\"taskOptions\":{\"restDuration\":30.0,\"numberOfStepsPerLeg\":100.0},\"removeSteps\":[\"walking.return\"],\"localizedSteps\":[{\"identifier\":\"instruction\",\"type\":\"instruction\",\"text\":\"This activity measures your gait (walk) and balance, which can be affected by Parkinson disease.\",\"detailText\":\"Please do not continue if you cannot safely walk unassisted.\"},{\"identifier\":\"instruction1\",\"type\":\"instruction\",\"text\":\"\u2022 Please wear a comfortable pair of walking shoes and find a flat, smooth surface for walking.\n\n\u2022 Try to walk continuously by turning at the ends of your path, as if you are walking around a cone.\n\n\u2022 Importantly, walk at your normal pace. You do not need to walk faster than usual.\",\"detailText\":\"Put your phone in a pocket or bag and follow the audio instructions.\"},{\"identifier\":\"walking.outbound\",\"type\":\"active\",\"stepDuration\":30.0,\"title\":\"\",\"text\":\"Walk back and forth for 30 seconds.\",\"stepSpokenInstruction\":\"Walk back and forth for 30 seconds.\"},{\"identifier\":\"walking.rest\",\"type\":\"active\",\"stepDuration\":30.0,\"text\":\"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to avoid moving for 30 seconds.\",\"stepSpokenInstruction\":\"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to avoid moving for 30 seconds.\"}]}";
-        Task task = (new TaskItemFactory(getContext(), Collections.singletonList(createGson().fromJson(taskItemJson, TaskItem.class)))).getTaskList().get(0);
-        startActivity(ActiveTaskActivity.newIntent(getContext(), task));
+        startCustomTask(taskItemJson);
     }
 
     protected void startCustomMoodSurveyTask() {
@@ -305,6 +304,26 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                 MoodSurveyFrequency.DAILY,
                 "Today, my thinking is:",
                 new ArrayList<>());
-        startActivity(ViewTaskActivity.newIntent(getContext(), task));
+        startCustomTask(task);
     }
+
+    //endregion
+
+    //region Start Custom Task Helpers
+
+    private void startCustomTask(String taskItemJson) {
+        TaskItem taskItem = createGson().fromJson(taskItemJson, TaskItem.class);
+        startCustomTask(taskItem);
+    }
+
+    private void startCustomTask(TaskItem taskItem) {
+        Task task = (new TaskItemFactory(getContext(), Collections.singletonList(taskItem))).getTaskList().get(0);
+        startCustomTask(task);
+    }
+
+    private void startCustomTask(Task task) {
+        startActivityForResult(ActiveTaskActivity.newIntent(getContext(), task), REQUEST_TASK);
+    }
+
+    //endregion
 }

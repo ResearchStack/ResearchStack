@@ -283,8 +283,8 @@ public class TremorTaskFactory {
                 String stepIdentifier = stepIdentifierWithHandId(TremorTestInLapStepIdentifier, handIdentifier);
                 NavigationActiveStep step = new NavigationActiveStep(stepIdentifier);
                 step.setRecorderConfigurationList(Arrays.asList(
-                        new AccelerometerRecorderConfig(Accelerometer1ConfigIdentifier, sensorFreq),
-                        new DeviceMotionRecorderConfig(DeviceMotion1ConfigIdentifier, sensorFreq)
+                        new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq),
+                        new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq)
                 ));
                 String title = String.format(titleFormat, activeStepDuration);
                 step.setTitle(title);
@@ -332,8 +332,8 @@ public class TremorTaskFactory {
                 String stepIdentifier = stepIdentifierWithHandId(TremorTestExtendArmStepIdentifier, handIdentifier);
                 NavigationActiveStep step = new NavigationActiveStep(stepIdentifier);
                 step.setRecorderConfigurationList(Arrays.asList(
-                        new AccelerometerRecorderConfig(Accelerometer2ConfigIdentifier, sensorFreq),
-                        new DeviceMotionRecorderConfig(DeviceMotion2ConfigIdentifier, sensorFreq)
+                        new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq),
+                        new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq)
                 ));
                 String title = String.format(titleFormat, activeStepDuration);
                 step.setTitle(title);
@@ -381,8 +381,8 @@ public class TremorTaskFactory {
                 String stepIdentifier = stepIdentifierWithHandId(TremorTestBendArmStepIdentifier, handIdentifier);
                 NavigationActiveStep step = new NavigationActiveStep(stepIdentifier);
                 step.setRecorderConfigurationList(Arrays.asList(
-                        new AccelerometerRecorderConfig(Accelerometer3ConfigIdentifier, sensorFreq),
-                        new DeviceMotionRecorderConfig(DeviceMotion3ConfigIdentifier, sensorFreq)
+                        new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq),
+                        new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq)
                 ));
                 String title = String.format(titleFormat, activeStepDuration);
                 step.setTitle(title);
@@ -430,8 +430,8 @@ public class TremorTaskFactory {
                 String stepIdentifier = stepIdentifierWithHandId(TremorTestTouchNoseStepIdentifier, handIdentifier);
                 NavigationActiveStep step = new NavigationActiveStep(stepIdentifier);
                 step.setRecorderConfigurationList(Arrays.asList(
-                        new AccelerometerRecorderConfig(Accelerometer4ConfigIdentifier, sensorFreq),
-                        new DeviceMotionRecorderConfig(DeviceMotion4ConfigIdentifier, sensorFreq)
+                        new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq),
+                        new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq)
                 ));
                 String title = String.format(titleFormat, activeStepDuration);
                 step.setTitle(title);
@@ -479,8 +479,8 @@ public class TremorTaskFactory {
                 String stepIdentifier = stepIdentifierWithHandId(TremorTestTurnWristStepIdentifier, handIdentifier);
                 NavigationActiveStep step = new NavigationActiveStep(stepIdentifier);
                 step.setRecorderConfigurationList(Arrays.asList(
-                        new AccelerometerRecorderConfig(Accelerometer5ConfigIdentifier, sensorFreq),
-                        new DeviceMotionRecorderConfig(DeviceMotion5ConfigIdentifier, sensorFreq)
+                        new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq),
+                        new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq)
                 ));
                 String title = String.format(titleFormat, activeStepDuration);
                 step.setTitle(title);

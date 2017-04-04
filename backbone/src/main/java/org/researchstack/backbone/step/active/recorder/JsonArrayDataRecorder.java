@@ -54,7 +54,7 @@ abstract class JsonArrayDataRecorder extends Recorder {
 
                 @Override
                 public void onWriteComplete(File file) {
-                    FileResult fileResult = new FileResult(getIdentifier(), dataLoggerFile, JSON_MIME_CONTENT_TYPE);
+                    FileResult fileResult = new FileResult(fileResultIdentifier(), dataLoggerFile, JSON_MIME_CONTENT_TYPE);
                     fileResult.setContentType(JSON_MIME_CONTENT_TYPE);
                     fileResult.setStartDate(new Date(startTime));
                     fileResult.setEndDate(new Date(endTime));

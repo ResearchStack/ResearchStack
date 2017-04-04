@@ -2,11 +2,13 @@ package org.researchstack.backbone.model.survey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by TheMDP on 12/31/16.
  */
 
-public class QuestionSurveyItem<T extends Object> extends SurveyItem<T> {
+public class QuestionSurveyItem<T extends Serializable> extends SurveyItem<T> {
 
     @SerializedName("questionStyle")
     public boolean questionStyle;
