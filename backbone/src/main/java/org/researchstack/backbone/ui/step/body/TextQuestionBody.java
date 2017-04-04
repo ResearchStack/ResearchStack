@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui.step.body;
 
 import android.content.res.Resources;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,14 @@ public class TextQuestionBody implements StepBody {
         // Format EditText from TextAnswerFormat
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
 
-        editText.setSingleLine(!format.isMultipleLines());
+        if(format.isMultipleLines()) {
+            editText.setSingleLine(false);
+            editText.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            editText.setHorizontallyScrolling(false);
+            editText.setLines(5);
+        } else {
+            editText.setSingleLine(false);
+        }
 
         if (format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH) {
             InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(format.getMaximumLength());
