@@ -11,19 +11,16 @@ import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.ConsentReviewSurveyItem;
 import org.researchstack.backbone.model.survey.ConsentSharingOptionsSurveyItem;
-import org.researchstack.backbone.model.survey.CustomInstructionSurveyItem;
-import org.researchstack.backbone.model.survey.CustomSurveyItem;
+import org.researchstack.backbone.model.survey.InstructionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.onboarding.OnboardingSection;
-import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
+import org.researchstack.backbone.onboarding.ReConsentInstructionStep;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.ConsentSubtaskStep;
 import org.researchstack.backbone.step.ConsentVisualStep;
-import org.researchstack.backbone.step.CustomInstructionStep;
-import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
@@ -38,87 +35,99 @@ import java.util.List;
 
 public class ConsentDocumentFactory extends SurveyFactory {
 
-    public static final String RECONSENT_IDENTIFIER_PREFIX = "reconsent";
     public static final String CONSENT_SIGNATURE_IDENTIFIER = "consentSignature";
     public static final String CONSENT_REVIEW_PROFILE_IDENTIFIER = "consentReviewProfile";
     public static final String CONSENT_SHARING_IDENTIFIER = "consentSharingOptions";
     public static final String CONSENT_REVIEW_IDENTIFIER = "consentReview";
 
-    ConsentDocument consentDocument;
-    ResourceNameToStringConverter resourceConverter;
-
     /**
-     * @param context used for building steps with resources
-     * @param surveyItems surveyItems to convert to steps
-     * @param document consent document, already deserialized
-     * @param convertor used to convert html filenames to html content for VisualConsentStep
+     * A list of steps that is used to track the state of Survey Factory so
+     * They can be used to create different types of Tasks
      */
-    public ConsentDocumentFactory(
-            Context context,
-            List<SurveyItem> surveyItems,
-            ConsentDocument document,
-            ResourceNameToStringConverter convertor)
-    {
+    private List<Step> stepList;
+
+    private ConsentDocument consentDocument;
+
+    public ConsentDocumentFactory() {
         super();
-        consentDocument = document;
-        resourceConverter = convertor;
-        steps = createSteps(context, surveyItems, false);
+        stepList = new ArrayList<>();
     }
 
     /**
-     * @param context used for building steps with resources
-     * @param surveyItems surveyItems to convert to steps
+     * @param document consent document, already de-serialized
+     */
+    public ConsentDocumentFactory(ConsentDocument document) {
+        this();
+        consentDocument = document;
+    }
+
+    /**
      * @param document consent document, already deserialized
-     * @param convertor used to convert html filenames to html content for VisualConsentStep
      * @param customStepCreator override to control step creation from custom survey items
      */
     public ConsentDocumentFactory(
-            Context context,
-            List<SurveyItem> surveyItems,
             ConsentDocument document,
-            ResourceNameToStringConverter convertor,
             CustomStepCreator customStepCreator)
     {
-        super();
+        this();
         consentDocument = document;
-        resourceConverter = convertor;
-        super.customStepCreator = customStepCreator;
-        steps = createSteps(context, surveyItems, false);
+        setCustomStepCreator(customStepCreator);
     }
 
     @Override
-    public List<Step> createSteps(Context context, List<SurveyItem> surveyItems, boolean isSubtaskStep) {
-        List<Step> steps = new ArrayList<>();
-        for (SurveyItem item : surveyItems) {
-            switch (item.type) {
-                case CONSENT_REVIEW:
-                    if (!(item instanceof ConsentReviewSurveyItem)) {
-                        throw new IllegalStateException("Error in json parsing, CONSENT_REVIEW types must be ConsentReviewSurveyItem");
-                    }
-                    if (consentDocument == null) {
-                        throw new IllegalStateException("Consent document cannot be null!");
-                    }
-                    steps.add(createConsentReviewSteps(context, (ConsentReviewSurveyItem)item));
-                    break;
-                case CONSENT_SHARING_OPTIONS:
-                    if (!(item instanceof ConsentSharingOptionsSurveyItem)) {
-                        throw new IllegalStateException("Error in json parsing, CONSENT_SHARING_OPTIONS types must be ConsentSharingOptionsSurveyItem");
-                    }
-                    steps.add(createConsentSharingStep(context, (ConsentSharingOptionsSurveyItem)item));
-                    break;
-                case CONSENT_VISUAL:
-                    if (consentDocument == null) {
-                        throw new IllegalStateException("Consent document cannot be null!");
-                    }
-                    steps.add(createConsentVisualSteps(item, consentDocument.getSections()));
-                    break;
-                default:
-                    steps.add(super.createSurveyStep(context, item, isSubtaskStep));
-                    break;
-            }
+    public List<Step> createSurveySteps(Context context, List<SurveyItem> surveyItems) {
+        stepList = new ArrayList<>();
+        return super.createSurveySteps(context, surveyItems);
+    }
+
+    /**
+     * This is how we can assess our own types for consent
+     * @param item SurveyItem from JSON
+     * @return valid Step matching the SurveyItem
+     */
+    @Override
+    public Step createSurveyStep(Context context, SurveyItem item) {
+        Step step = null;
+        switch (item.type) {
+            case CONSENT_REVIEW:
+                if (!(item instanceof ConsentReviewSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, CONSENT_REVIEW types must be ConsentReviewSurveyItem");
+                }
+                if (consentDocument == null) {
+                    throw new IllegalStateException("Consent document cannot be null!");
+                }
+                step = createConsentReviewSteps(context, (ConsentReviewSurveyItem)item);
+                break;
+            case CONSENT_SHARING_OPTIONS:
+                if (!(item instanceof ConsentSharingOptionsSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, CONSENT_SHARING_OPTIONS types must be ConsentSharingOptionsSurveyItem");
+                }
+                step = createConsentSharingStep(context, (ConsentSharingOptionsSurveyItem)item);
+                break;
+            case CONSENT_VISUAL:
+                if (consentDocument == null) {
+                    throw new IllegalStateException("Consent document cannot be null!");
+                }
+                step = createConsentVisualSteps(item, consentDocument.getSections());
+                break;
+            case RE_CONSENT:
+                if (!(item instanceof InstructionSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, RE_CONSENT types must be InstructionSurveyItem");
+                }
+                step = createReConsentInstructionStep((InstructionSurveyItem)item);
+                break;
         }
 
-        return steps;
+        if (step == null) {
+            step = super.createSurveyStep(context, item);
+        }
+
+        // Maintain a list that can then be used to create different tasks from this stepList
+        if (step != null) {
+            stepList.add(step);
+        }
+
+        return step;
     }
 
     /**
@@ -267,6 +276,16 @@ public class ConsentDocumentFactory extends SurveyFactory {
     }
 
     /**
+     * @param item to make the reconsent step
+     * @return an instruction step that is shown with reconsent
+     */
+    public ReConsentInstructionStep createReConsentInstructionStep(InstructionSurveyItem item) {
+        ReConsentInstructionStep step = new ReConsentInstructionStep(item.identifier, item.title, item.text);
+        fillInstructionStep(step, item);
+        return step;
+    }
+
+    /**
      * After all survey items have been processed into steps, use this method to get all
      * ConsentVisualSteps
      * @return list of all the ConsentVisualStep
@@ -322,43 +341,18 @@ public class ConsentDocumentFactory extends SurveyFactory {
         // Strip out the registration steps, and only leave the consent steps
         List<Step> steps = new ArrayList<>();
         for (Step step : getSteps()) {
-            if (!(step instanceof CustomStep)) {
+            if (!(step instanceof ReConsentInstructionStep)) {
                 steps.add(step);
-            } else {
-                CustomStep customStep = (CustomStep)step;
-                // Do not include re-consent step in regular registration consent step
-                if (!customStep.getCustomTypeIdentifier().startsWith(RECONSENT_IDENTIFIER_PREFIX)) {
-                    steps.add(step);
-                }
             }
         }
         return new NavigationSubtaskStep(OnboardingSection.CONSENT_IDENTIFIER, steps);
     }
 
-    /**
-     * @param item InstructionSurveyItem from JSON
-     * @return valid CustomStep matching the InstructionSurveyItem
-     */
-    @Override
-    public CustomStep createCustomStep(CustomSurveyItem item) {
-        if (item instanceof CustomInstructionSurveyItem) {
-            return createCustomInstructionStep((CustomInstructionSurveyItem)item);
-        } else {
-            return super.createCustomStep(item);
-        }
+    public void setConsentDocument(ConsentDocument consentDocument) {
+        this.consentDocument = consentDocument;
     }
 
-    /**
-     * @param item CustomInstructionSurveyItem from JSON
-     * @return valid CustomInstructionStep matching the CustomInstructionSurveyItem
-     */
-    CustomInstructionStep createCustomInstructionStep(CustomInstructionSurveyItem item) {
-        CustomInstructionStep step = new CustomInstructionStep(item.identifier, item.title, item.text, item.getTypeIdentifier());
-        step.setFootnote(item.footnote);
-        step.setNextStepIdentifier(item.nextIdentifier);
-        step.setMoreDetailText(item.detailText);
-        step.setImage(item.image);
-        step.setIconImage(item.iconImage);
-        return step;
+    private List<Step> getSteps() {
+        return stepList;
     }
 }

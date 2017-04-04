@@ -2,10 +2,14 @@ package org.researchstack.backbone.utils;
 
 import org.junit.Test;
 import org.researchstack.backbone.result.AudioResult;
+import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.active.AudioStep;
 import org.researchstack.backbone.step.active.CountdownStep;
+import org.researchstack.backbone.ui.ViewTaskActivity;
+import org.researchstack.backbone.ui.step.layout.StepLayout;
 
 import java.io.File;
 
@@ -16,6 +20,36 @@ import static org.junit.Assert.*;
  */
 
 public class StepResultHelperTests {
+
+
+    @Test
+    public void testFindStepClass_Custom() {
+        StepResult result0 = new StepResult(new InstructionStep("g", null, null));
+        Result result1 = new Result("a");
+        result0.getResults().put(result1.getIdentifier(), result1);
+        Result result2 = new Result("b");
+        result0.getResults().put(result2.getIdentifier(), result2);
+        Result result3 = new Result("c");
+        result0.getResults().put(result3.getIdentifier(), result3);
+        StepResult result4 = new StepResult(new InstructionStep("d", null, null));
+        CustomResult customResult = new CustomResult("e");
+        result4.setResult(customResult);
+        result0.getResults().put(result4.getIdentifier(), result4);
+
+        CustomResult result = StepResultHelper.findResultOfClass(result0, new StepResultHelper.ResultClassComparator<CustomResult>() {
+            public boolean isTypeOfClass(Object object) {
+                return object instanceof CustomResult;
+            }
+        });
+
+        assertNotNull(result);
+    }
+
+    public static class CustomResult extends Result {
+        public CustomResult(String identifier) {
+            super(identifier);
+        }
+    }
 
     @Test
     public void testFindStepWithIdSimple() {

@@ -13,8 +13,10 @@ public class RangeSurveyItem<T> extends QuestionSurveyItem {
     public T max;
     @SerializedName("defaultValue")
     public T defaultValue;
+    @SerializedName("unit")
+    public String unit;
 
-    /* Default constructor needed for serilization/deserialization of object */
+    /* Default constructor needed for serialization/deserialization of object */
     RangeSurveyItem() {
         super();
     }

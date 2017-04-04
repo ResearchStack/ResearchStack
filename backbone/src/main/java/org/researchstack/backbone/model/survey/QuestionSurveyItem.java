@@ -28,8 +28,8 @@ public class QuestionSurveyItem<T extends Serializable> extends SurveyItem<T> {
     @SerializedName("skipIfPassed")
     public boolean skipIfPassed;
 
-    /* Default constructor needed for serilization/deserialization of object */
-    QuestionSurveyItem() {
+    /* Default constructor needed for serialization/deserialization of object */
+    public QuestionSurveyItem() {
         super();
     }
 

@@ -1,18 +1,22 @@
 package org.researchstack.backbone.onboarding;
 
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.researchstack.backbone.ResourceManager;
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
 import org.researchstack.backbone.step.InstructionStep;
-import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.ToggleFormStep;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,26 +24,42 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by TheMDP on 1/3/17.
  */
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({FingerprintManagerCompat.class, ResourcePathManager.class, ResourceManager.class})
 public class OnboardingManagerTest {
 
-    ResourceNameToStringConverter mFullResourceProvider;
     OnboardingManager mOnboardingManager;
     @Mock MockOnboardingManager mMockOnboardingManager;
     SurveyFactoryHelper mSurveyFactoryHelper;
 
+    private MockResourceManager resourceManager;
+
     @Before
     public void setUp() throws Exception
     {
+        ResourcePathManager.init(new MockResourceManager());
         mSurveyFactoryHelper = new SurveyFactoryHelper();
-        mFullResourceProvider = new FullTestResourceProvider();
-        mOnboardingManager = new OnboardingManager(mSurveyFactoryHelper.mockContext, "onboarding", mFullResourceProvider);
-        mMockOnboardingManager = new MockOnboardingManager(mSurveyFactoryHelper.mockContext, "onboarding", mFullResourceProvider);
+
+        // All of this, along with the @PrepareForTest and @RunWith above, is needed
+        // to mock the resource manager to load resources from the directory src/test/resources
+        PowerMockito.mockStatic(ResourcePathManager.class);
+        PowerMockito.mockStatic(ResourceManager.class);
+        resourceManager = new MockResourceManager();
+        PowerMockito.when(ResourceManager.getInstance()).thenReturn(resourceManager);
+        resourceManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "eligibilityrequirements");
+        resourceManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "consent");
+        resourceManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "onboarding");
+        resourceManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "consentdocument");
+        resourceManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "custom_consentdocument");
+        resourceManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "section_sort_order_test");
+
+        mOnboardingManager = new OnboardingManager(mSurveyFactoryHelper.mockContext);
+        mMockOnboardingManager = new MockOnboardingManager(mSurveyFactoryHelper.mockContext);
     }
 
     @Test
@@ -246,7 +266,10 @@ public class OnboardingManagerTest {
 
     @Test
     public void testSortOrder() {
-        OnboardingManager manager = new OnboardingManager(null, "section_sort_order_test", mFullResourceProvider);
+        String oldOnboardingName = resourceManager.getOnboardingJsonName();
+        resourceManager.setOnboardingJsonName("section_sort_order_test");
+
+        OnboardingManager manager = new OnboardingManager(mSurveyFactoryHelper.mockContext);
         // See file for section order
         List<String> expectedOrder = new ArrayList<>();
 
@@ -269,6 +292,8 @@ public class OnboardingManagerTest {
             String expectedSectionId = expectedOrder.get(i);
             assertEquals(actualSectionId, expectedSectionId);
         }
+
+        resourceManager.setOnboardingJsonName(oldOnboardingName);
     }
 
     @Test
@@ -342,42 +367,5 @@ public class OnboardingManagerTest {
             }
         }
         return null;
-    }
-
-    class FullTestResourceProvider implements ResourceNameToStringConverter {
-
-        @Override
-        public String getJsonStringForResourceName(String resourceName) {
-            // Resources are in src/test/resources
-            InputStream jsonStream = getClass().getClassLoader().getResourceAsStream(resourceName+".json");
-            String json = convertStreamToString(jsonStream);
-            return json;
-        }
-
-        @Override
-        public String getHtmlStringForResourceName(String resourceName) {
-            return resourceName; // dont convert
-        }
-
-        String convertStreamToString(InputStream is) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            String line = null;
-            try {
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line).append('\n');
-                }
-            } catch (IOException e) {
-                assertTrue("Failed to read stream", false);
-            } finally {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    assertTrue("Failed to read stream", false);
-                }
-            }
-            return sb.toString();
-        }
     }
 }

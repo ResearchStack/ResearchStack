@@ -6,6 +6,8 @@ import android.support.annotation.StringRes;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.InputType;
 
+import com.google.gson.JsonElement;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
@@ -23,7 +25,6 @@ import org.researchstack.backbone.model.survey.ActiveStepSurveyItem;
 import org.researchstack.backbone.model.survey.BooleanQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.CompoundQuestionSurveyItem;
-import org.researchstack.backbone.model.survey.CustomSurveyItem;
 import org.researchstack.backbone.model.survey.DateRangeSurveyItem;
 import org.researchstack.backbone.model.survey.FloatRangeSurveyItem;
 import org.researchstack.backbone.model.survey.IntegerRangeSurveyItem;
@@ -34,10 +35,10 @@ import org.researchstack.backbone.model.survey.QuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SubtaskQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
+import org.researchstack.backbone.model.survey.TimingRangeQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.step.CompletionStep;
-import org.researchstack.backbone.step.CustomStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.EmailVerificationSubStep;
 import org.researchstack.backbone.step.FormStep;
@@ -56,11 +57,11 @@ import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationExpectedAnswerQuestionStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
 import org.researchstack.backbone.step.active.ActiveStep;
-import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by TheMDP on 12/29/16.
@@ -81,45 +82,26 @@ public class SurveyFactory {
     public static final String CONSENT_QUIZ_IDENTIFIER = "consentQuiz";
 
     // When set, this will be used
-    CustomStepCreator customStepCreator;
-
-    List<Step> steps;
-    /*
-     * @param context can be any context, activity or application, used to access "R" resources
-     * @param List<SurveyItem>
-     */
-    public SurveyFactory(Context context, List<SurveyItem> surveyItems) {
-        this(context, surveyItems, null);
-    }
-
-    /**
-     * @param context can be any context, activity or application, used to access "R" resources
-     * @param surveyItems usually from parsing JSON
-     * @param customStepCreator used to control which step a custom survey item becomes
-     */
-    public SurveyFactory(Context context, List<SurveyItem> surveyItems, CustomStepCreator customStepCreator) {
-        this.customStepCreator = customStepCreator;
-        steps = createSteps(context, surveyItems, false);
-    }
+    private CustomStepCreator customStepCreator;
 
     /**
      * Can be used to make a SurveyFactor and take advantage of its SurveyItem to Step methods
      */
     public SurveyFactory() {
         super();
-        steps = new ArrayList<>();
         // Default constructor, mainly used for subclasses
     }
 
-    public List<Step> getSteps() {
-        return steps;
-    }
-
-    public List<Step> createSteps(Context context, List<SurveyItem> surveyItems, boolean isSubtaskStep) {
+    /**
+     * @param context can be any context, activity or application, used to access "R" resources
+     * @param surveyItems a list of survey items that will be transformed into Steps
+     * @return a list of steps
+     */
+    public List<Step> createSurveySteps(Context context, List<SurveyItem> surveyItems) {
         List<Step> steps = new ArrayList<>();
         if (surveyItems != null) {
             for (SurveyItem item : surveyItems) {
-                Step step = createSurveyStep(context, item, isSubtaskStep);
+                Step step = createSurveyStep(context, item);
                 if (step != null) {
                     steps.add(step);
                 }
@@ -128,7 +110,13 @@ public class SurveyFactory {
         return steps;
     }
 
-    public Step createSurveyStep(Context context, SurveyItem item, boolean isSubtaskStep) {
+    /**
+     * @param context can be any context, activity or application, used to access "R" resources
+     * @param item the survey item to act upon
+     * @return a step created from the item
+     */
+    public Step createSurveyStep(Context context, SurveyItem item) {
+
         switch (item.type) {
             case INSTRUCTION:
             case INSTRUCTION_COMPLETION:
@@ -216,22 +204,16 @@ public class SurveyFactory {
                 }
                 return createShareTheAppStep(context, (InstructionSurveyItem)item);
             case CUSTOM:
-                if (!(item instanceof CustomSurveyItem)) {
-                    throw new IllegalStateException("Error in json parsing, CUSTOM types must be CustomSurveyItem");
-                }
-                CustomSurveyItem customItem = (CustomSurveyItem)item;
                 // To override a custom step from survey item mapping,
                 // You need to override the CustomStepCreator
                 if (customStepCreator != null) {
-                    return customStepCreator.createCustomStep(customItem, this);
+                    Step step = customStepCreator.createCustomStep(context, item, this);
+                    if (step != null) {
+                        return step;
+                    }
                 }
-                return createCustomStep((CustomSurveyItem)item);
+                return createCustomStep(context, item);
         }
-
-        // Handled by ConsentDocumentFactory subclass
-//        case CONSENT_REVIEW:
-//        case CONSENT_SHARING_OPTIONS:
-//        case CONSENT_VISUAL:
 
         return null;
     }
@@ -265,7 +247,7 @@ public class SurveyFactory {
     }
 
     /** Helper method for instruction steps */
-    void fillInstructionStep(InstructionStep step, InstructionSurveyItem item) {
+    public void fillInstructionStep(InstructionStep step, InstructionSurveyItem item) {
         if (item.footnote != null) {
             step.setFootnote(item.footnote);
         }
@@ -287,14 +269,14 @@ public class SurveyFactory {
      * @param item SubtaskQuestionSurveyItem item from JSON that contains nested SurveyItems
      * @return a subtask step by recursively calling createSurveyStep for inner subtask steps
      */
-    SubtaskStep createSubtaskStep(Context context, SubtaskQuestionSurveyItem item) {
+    public SubtaskStep createSubtaskStep(Context context, SubtaskQuestionSurveyItem item) {
         if (item.items == null || item.items.isEmpty()) {
             throw new IllegalStateException("subtasks must have step items to proceed");
         }
 
         List<Step> substeps = new ArrayList<>();
         for (SurveyItem subItem : item.items) {
-            Step step = createSurveyStep(context, subItem, true);
+            Step step = createSurveyStep(context, subItem);
             substeps.add(step);
         }
 
@@ -314,15 +296,17 @@ public class SurveyFactory {
      * @param item SubtaskQuestionSurveyItem item from JSON that contains nested SurveyItems
      * @return a subtask step by recursively calling createSurveyStep for inner subtask steps
      */
-    FormStep createCompoundStep(Context context, CompoundQuestionSurveyItem item) {
+    public FormStep createCompoundStep(Context context, CompoundQuestionSurveyItem item) {
         if (item.items == null || item.items.isEmpty()) {
             throw new IllegalStateException("compound surveys must have step items to proceed");
         }
 
         List<QuestionStep> questionSteps = new ArrayList<>();
-        for (QuestionSurveyItem subItem : item.items) {
-            QuestionStep step = createQuestionStep(context, subItem);
-            questionSteps.add(step);
+        for (SurveyItem subItem : item.items) {
+            if (subItem instanceof QuestionSurveyItem) {
+                QuestionStep step = createQuestionStep(context, (QuestionSurveyItem)subItem);
+                questionSteps.add(step);
+            }
         }
 
         FormStep step = new FormStep(item.identifier, item.title, item.text, questionSteps);
@@ -333,7 +317,7 @@ public class SurveyFactory {
      * @param item QuestionSurveyItem from JSON
      * @return QuestionStep converted from the item
      */
-    QuestionStep createQuestionStep(Context context, QuestionSurveyItem item) {
+    public QuestionStep createQuestionStep(Context context, QuestionSurveyItem item) {
         AnswerFormat format = null;
         switch (item.type) {
             case QUESTION_BOOLEAN:
@@ -408,7 +392,6 @@ public class SurveyFactory {
                 break;
             case QUESTION_MULTIPLE_CHOICE:
             case QUESTION_SINGLE_CHOICE:
-            case QUESTION_TIMING_RANGE:     // Single choice question, but with "Not Sure" as an added option
             {
                 if (!(item instanceof ChoiceQuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, this type must be ChoiceQuestionSurveyItem");
@@ -420,15 +403,28 @@ public class SurveyFactory {
                 AnswerFormat.ChoiceAnswerStyle answerStyle = AnswerFormat.ChoiceAnswerStyle.SingleChoice;
                 if (item.type == SurveyItemType.QUESTION_MULTIPLE_CHOICE) {
                     answerStyle = AnswerFormat.ChoiceAnswerStyle.MultipleChoice;
-                } else if (item.type == SurveyItemType.QUESTION_TIMING_RANGE) {
-                    if (!(singleItem.items.get(0).getValue() instanceof String)) {
-                        throw new IllegalStateException("Error in json parsing, QUESTION_TIMING_RANGE text choices must be Strings");
-                    }
-                    String notSure = context.getString(R.string.rsb_not_sure);
-                    singleItem.items.add(new Choice(notSure, notSure));
                 }
                 Choice[] choices = singleItem.items.toArray(new Choice[singleItem.items.size()]);
                 format = new ChoiceAnswerFormat(answerStyle, choices);
+                break;
+            }
+            case QUESTION_TIMING_RANGE:     // Single choice question, but with "Not Sure" as an added option
+            {
+                if (!(item instanceof TimingRangeQuestionSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, QUESTION_TIMING_RANGE type must be TimingRangeQuestionSurveyItem");
+                }
+                if (item.items == null || item.items.isEmpty()) {
+                    throw new IllegalStateException("TimingRangeQuestionSurveyItem must have Range items");
+                }
+                List<Choice<String>> choiceList = new ArrayList<>();
+                TimingRangeQuestionSurveyItem subItem = (TimingRangeQuestionSurveyItem)item;
+                for (IntegerRangeSurveyItem integerRange : subItem.items) {
+                    choiceList.add(convertToTextChoice(context, integerRange));
+                }
+                String notSure = context.getString(R.string.rsb_not_sure);
+                choiceList.add(new Choice<>(notSure, notSure));
+                Choice[] choices = choiceList.toArray(new Choice[choiceList.size()]);
+                format = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice, choices);
                 break;
             }
             case QUESTION_TEXT:
@@ -459,7 +455,7 @@ public class SurveyFactory {
      * @param item ToggleQuestionSurveyItem from JSON, that has nested boolean QuestionSurveyItems
      * @return a ToggleFormStep which is a form step that is also a NavigationStep
      */
-    ToggleFormStep createToggleFormStep(Context context, ToggleQuestionSurveyItem item) {
+    public ToggleFormStep createToggleFormStep(Context context, ToggleQuestionSurveyItem item) {
         if (item.items == null || item.items.isEmpty()) {
             throw new IllegalStateException("toggle questions must have questions in the json");
         }
@@ -610,7 +606,7 @@ public class SurveyFactory {
      * a helper method to make a re-usable generic method for creating question steps
      * @return QuestionStep with title, placeholder, and format all filled in
      */
-    QuestionStep createGenericQuestionStep(
+    public QuestionStep createGenericQuestionStep(
             Context context,
             String identifier,
             @StringRes int titleRes,
@@ -777,10 +773,8 @@ public class SurveyFactory {
      * @param item InstructionSurveyItem from JSON
      * @return valid CustomStep matching the InstructionSurveyItem
      */
-    public CustomStep createCustomStep(CustomSurveyItem item) {
-        CustomStep step = new CustomStep(item.identifier, item.title, item.getTypeIdentifier());
-        step.setText(item.text);
-        return step;
+    public Step createCustomStep(Context context, SurveyItem item) {
+        return new InstructionStep(item.identifier, item.title, item.text);
     }
 
     /*
@@ -808,10 +802,67 @@ public class SurveyFactory {
         toStep.setSkipToStepIdentifier(item.skipIdentifier);
     }
 
+    public Choice<String> convertToTextChoice(Context context, IntegerRangeSurveyItem item) {
+        String timeUnitStr;
+        switch (item.unit) {
+            case "minutes":
+                timeUnitStr = context.getString(R.string.rsb_time_minutes);
+                break;
+            case "hours":
+                timeUnitStr = context.getString(R.string.rsb_time_hours);
+                break;
+            case "days":
+                timeUnitStr = context.getString(R.string.rsb_time_days);
+                break;
+            case "weeks":
+                timeUnitStr = context.getString(R.string.rsb_time_weeks);
+                break;
+            case "months":
+                timeUnitStr = context.getString(R.string.rsb_time_months);
+                break;
+            case "years":
+                timeUnitStr = context.getString(R.string.rsb_time_years);
+                break;
+            default:
+                timeUnitStr = context.getString(R.string.rsb_time_seconds);
+                break;
+        }
+
+        // Note: in all cases, the value is returned in English so that the localized
+        // values will result in the same answer in any table. It is up to the researcher to translate.
+        if (item.max != null) {
+            // We also have a min
+            if (item.min != null) {
+                String maxStr = String.format(Locale.getDefault(), "%d %s", item.max, timeUnitStr);
+                String maxText = String.format(context.getString(R.string.rsb_range_ago), maxStr);
+
+                return new Choice<>(
+                        String.format(Locale.getDefault(), "%d-%s", item.min, maxText),
+                        String.format(Locale.US, "%d-%d %s ago", item.min, item.max, timeUnitStr));
+            } else { // we just have a max
+                String maSxtr = String.format(Locale.getDefault(), "%d %s", item.max, timeUnitStr);
+                String text = String.format(context.getString(R.string.rsb_less_than_ago), maSxtr);
+                return new Choice<>(text, String.format(Locale.US, "Less than %d %s ago", item.max, timeUnitStr));
+            }
+        } else { // does not have a max
+            String minStr = String.format(Locale.getDefault(), "%d %s", item.min, timeUnitStr);
+            String text = String.format(context.getString(R.string.rsb_more_than_ago), minStr);
+            return new Choice<>(text, String.format(Locale.US, "More than %d %s ago", item.min, timeUnitStr));
+        }
+    }
+
+    public void setCustomStepCreator(CustomStepCreator customStepCreator) {
+        this.customStepCreator = customStepCreator;
+    }
+
+    public CustomStepCreator getCustomStepCreator() {
+        return customStepCreator;
+    }
+
     /**
      * This can be used by another class to implement custom conversion from a CustomSurveyItem to a CustomStep
      */
     public interface CustomStepCreator {
-        CustomStep createCustomStep(CustomSurveyItem item, SurveyFactory factory);
+        Step createCustomStep(Context context, SurveyItem item, SurveyFactory factory);
     }
 }

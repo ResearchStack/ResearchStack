@@ -4,11 +4,13 @@ import android.util.Log;
 
 import org.researchstack.backbone.model.survey.InstructionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.ui.step.layout.InstructionStepLayout;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * An InstructionStep object gives the participant instructions for a task.
@@ -17,7 +19,7 @@ import java.util.List;
  * introductory content, instructions in the middle of a task, or a final message at the completion
  * of a task.
  */
-public class InstructionStep extends Step implements NavigableOrderedTask.NavigationRule, InstructionStepInterface {
+public class InstructionStep extends Step implements NavigableOrderedTask.NavigationRule {
     /*
      * Additional detailed text to display
      */
@@ -68,8 +70,8 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
      * that when pressed, will skip this step to another step specified by SubmitBarNegativeActionSkipRule
      */
     private SubmitBarNegativeActionSkipRule submitBarSkipRule;
-
-    /* Default constructor needed for serilization/deserialization of object */
+    
+    /* Default constructor needed for serialization/deserialization of object */
     public InstructionStep() {
         super();
     }
@@ -135,12 +137,10 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
         return animationRepeatDuration;
     }
 
-    @Override
     public void setSubmitBarNegativeActionSkipRule(String taskIdentifier, String title, String skipIdentifier) {
         submitBarSkipRule = new SubmitBarNegativeActionSkipRule(taskIdentifier, title, skipIdentifier);
     }
 
-    @Override
     public SubmitBarNegativeActionSkipRule getSubmitBarNegativeActionSkipRule() {
         return submitBarSkipRule;
     }
@@ -148,5 +148,33 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
     @Override
     public String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
         return nextStepIdentifier;
+    }
+
+    public static class SubmitBarNegativeActionSkipRule {
+
+        public static final String SKIP_RESULT_KEY = "skip";
+
+        private String taskIdentifier;
+        private String title;
+        private String skipToStepIdentifier;
+
+        public SubmitBarNegativeActionSkipRule(String taskIdentifier, String title, String skipToStepIdentifier) {
+            this.taskIdentifier = taskIdentifier;
+            this.title = title;
+            this.skipToStepIdentifier = skipToStepIdentifier;
+        }
+
+        public void onNegativeActionClicked(InstructionStep step, StepResult stepResult) {
+            // Set the next step identifier
+            step.setNextStepIdentifier(skipToStepIdentifier);
+
+            // add a result to this step view controller to mark that the task was skipped
+            Map<String, Object> stepResultMap = stepResult.getResults();
+            stepResultMap.put(SKIP_RESULT_KEY, taskIdentifier);
+        }
+
+        public String getTitle() {
+            return title;
+        }
     }
 }

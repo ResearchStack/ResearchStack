@@ -6,6 +6,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import org.researchstack.backbone.model.survey.SurveyItem;
+import org.researchstack.backbone.model.survey.factory.SurveyFactory;
+import org.researchstack.backbone.model.taskitem.factory.TaskItemFactory;
+
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +29,7 @@ import java.util.Map;
  */
 
 public class TaskItemAdapter implements JsonDeserializer<TaskItem> {
+
     @Override
     public TaskItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject =  json.getAsJsonObject();
@@ -36,8 +41,16 @@ public class TaskItemAdapter implements JsonDeserializer<TaskItem> {
         String customTypeString = null;
         if (itemType == null) {
             itemType = TaskItemType.CUSTOM;
-            customTypeString = typeJson.getAsString();
+            // Some JSON can be malformed and there is no taskType, only taskIdentifier
+            // In that case let's try and still parse it by setting the task type as the task identifier
+            if (typeJson != null) {
+                customTypeString = typeJson.getAsString();
+            } else { // use "taskIdentifier" string
+                customTypeString = jsonObject.get(TaskItem.TASK_IDENTIFIER_GSON).getAsString();
+            }
         }
+
+        TaskItem item = null;
 
         switch (itemType) {
             case WALKING:
@@ -47,25 +60,22 @@ public class TaskItemAdapter implements JsonDeserializer<TaskItem> {
             case MOOD_SURVEY:
             case TREMOR:
             case MEMORY:
-                ActiveTaskItem activeTaskItem = context.deserialize(json, ActiveTaskItem.class);
-
-                // Custom de-serialization of open-ended taskOptions field
-                JsonElement taskOptionsJson = jsonObject.get(ActiveTaskItem.GSON_TASK_OPTIONS_NAME);
-                if (taskOptionsJson != null) {
-                    
-                }
-
-                return activeTaskItem;
+                item = context.deserialize(json, ActiveTaskItem.class);
+                break;
             case CUSTOM:
-                CustomTaskItem item = context.deserialize(json, getCustomClass(customTypeString));
+                item = context.deserialize(json, getCustomClass(customTypeString, json));
                 item.setTaskType(itemType); // need to set CUSTOM type for surveyItem, since it is a special case
-                item.customSurveyItemIdentifier = customTypeString;
-                item.setRawJson(json.getAsString());
-                return item;
+                item.setCustomTypeValue(customTypeString);
+                break;
         }
 
-        TaskItem item = context.deserialize(json, BaseTaskItem.class);
-        item.setTaskType(itemType);
+        if (item == null) {
+            item = context.deserialize(json, BaseTaskItem.class);
+            item.setTaskType(itemType);
+        }
+
+        item.setRawJson(json.toString());
+
         return item;
     }
 
@@ -73,9 +83,11 @@ public class TaskItemAdapter implements JsonDeserializer<TaskItem> {
      * This can be overridden by subclasses to provide custom survey item deserialization
      * the default deserialization is always a CustomTaskItem.class
      * @param customType used to map to different types of survey items
+     * @param json if customType is not enough, you can use the JsonElement to determine how to parse
+     *             it's contents by peeking at it's variables
      * @return type of survey item to create from the custom class
      */
-    public Class<? extends CustomTaskItem> getCustomClass(String customType) {
-        return CustomTaskItem.class;
+    public Class<? extends TaskItem> getCustomClass(String customType, JsonElement json) {
+        return BaseTaskItem.class;
     }
 }

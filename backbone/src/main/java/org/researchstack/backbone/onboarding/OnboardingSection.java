@@ -54,14 +54,14 @@ public class OnboardingSection {
     transient SurveyFactory surveyFactory;
     public SurveyFactory getDefaultOnboardingSurveyFactory(
             Context context,
-            ResourceNameToStringConverter converter,
             SurveyFactory.CustomStepCreator customStepCreator)
     {
         if (surveyFactory != null) {
             return surveyFactory;
         }
 
-        surveyFactory = new SurveyFactory(context, surveyItems, customStepCreator);
+        surveyFactory = new SurveyFactory();
+        surveyFactory.setCustomStepCreator(customStepCreator);
         return surveyFactory;
     }
 }

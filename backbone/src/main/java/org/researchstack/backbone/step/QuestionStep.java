@@ -31,7 +31,7 @@ public class QuestionStep extends Step {
     private String placeholder;
 
     /* Default constructor needed for serilization/deserialization of object */
-    QuestionStep() {
+    public QuestionStep() {
         super();
     }
 

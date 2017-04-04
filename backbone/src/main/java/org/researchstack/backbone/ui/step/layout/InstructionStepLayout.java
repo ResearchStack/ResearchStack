@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.text.Html;
-import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.InstructionStepInterface;
+import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
@@ -26,7 +25,7 @@ import org.researchstack.backbone.utils.TextUtils;
 public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout {
     protected StepCallbacks callbacks;
 
-    protected InstructionStepInterface instructionStepInterface;
+    protected InstructionStep instructionStep;
     protected Step step;
 
     protected TextView  titleTextView;
@@ -61,10 +60,10 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     protected void validateAndSetStep(Step step) {
-        if (!(step instanceof InstructionStepInterface)) {
-            throw new IllegalStateException("InstructionStepLayout only works with InstructionStepInterface");
+        if (!(step instanceof InstructionStep)) {
+            throw new IllegalStateException("InstructionStepLayout only works with InstructionStep");
         }
-        this.instructionStepInterface = (InstructionStepInterface)step;
+        this.instructionStep = (InstructionStep)step;
         this.step = step;
     }
 
@@ -110,11 +109,11 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             String text  = step.getText();
 
             if (TextUtils.isEmpty(title) &&
-                !TextUtils.isEmpty(text) && !TextUtils.isEmpty(instructionStepInterface.getMoreDetailText()))
+                !TextUtils.isEmpty(text) && !TextUtils.isEmpty(instructionStep.getMoreDetailText()))
             {
                 // With no Title, we can assume text and detail text is equla to title and text
                 title = text;
-                text = instructionStepInterface.getMoreDetailText();
+                text = instructionStep.getMoreDetailText();
             }
 
             // Set Title
@@ -153,13 +152,13 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             submitBar.setPositiveTitle(R.string.rsb_next);
             submitBar.setPositiveAction(v -> onComplete());
 
-            if (instructionStepInterface.getSubmitBarNegativeActionSkipRule() != null) {
-                final InstructionStepInterface.SubmitBarNegativeActionSkipRule rule =
-                        instructionStepInterface.getSubmitBarNegativeActionSkipRule();
+            if (instructionStep.getSubmitBarNegativeActionSkipRule() != null) {
+                final InstructionStep.SubmitBarNegativeActionSkipRule rule =
+                        instructionStep.getSubmitBarNegativeActionSkipRule();
                 submitBar.setNegativeTitle(rule.getTitle());
                 submitBar.setNegativeAction(v -> {
                     StepResult stepResult = new StepResult(step);
-                    rule.onNegativeActionClicked(instructionStepInterface, stepResult);
+                    rule.onNegativeActionClicked(instructionStep, stepResult);
                     if (callbacks != null) {
                         callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
                     }
@@ -175,8 +174,8 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
 
-            refreshImage(instructionStepInterface.getImage(), instructionStepInterface.getIsImageAnimated());
-            refreshDetailText(instructionStepInterface.getMoreDetailText(), moreDetailTextView.getCurrentTextColor());
+            refreshImage(instructionStep.getImage(), instructionStep.getIsImageAnimated());
+            refreshDetailText(instructionStep.getMoreDetailText(), moreDetailTextView.getCurrentTextColor());
         }
     }
 
@@ -209,12 +208,12 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     protected void startAnimationRepeat(final AnimatedVectorDrawableCompat animatedVector) {
-        if (instructionStepInterface.getAnimationRepeatDuration() > 0) {
+        if (instructionStep.getAnimationRepeatDuration() > 0) {
             if (mainHandler == null) {
                 mainHandler = new Handler();
             }
             mainHandler.removeCallbacksAndMessages(null);
-            final long repeatDuration = instructionStepInterface.getAnimationRepeatDuration();
+            final long repeatDuration = instructionStep.getAnimationRepeatDuration();
             animationRepeatRunnbale = new Runnable() {
                 @Override
                 public void run() {
