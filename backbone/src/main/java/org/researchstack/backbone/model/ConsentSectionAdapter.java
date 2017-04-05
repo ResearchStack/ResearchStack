@@ -68,7 +68,7 @@ public class ConsentSectionAdapter implements JsonDeserializer<ConsentSection> {
         if (consentSection.getHtmlContent() != null &&
             adapterProvider != null && adapterProvider.getContext() != null)
         {
-            String htmlContentPath = ResourceManager.getInstance().generateAbsolutePath(
+            String htmlContentPath = ResourceManager.getInstance().generatePath(
                     ResourcePathManager.Resource.TYPE_HTML, consentSection.getHtmlContent());
             String htmlContent = ResourceManager.getResourceAsString(adapterProvider.getContext(), htmlContentPath);
             consentSection.setHtmlContent(htmlContent);

@@ -42,7 +42,7 @@ public class TaskCreationManager implements TaskItemFactory.CustomTaskCreator, S
      */
     public Task createTask(Context context, String resourceName) {
         String taskItemJson = ResourceManager.getResourceAsString(context,
-                ResourceManager.getInstance().generateAbsolutePath(ResourcePathManager.Resource.TYPE_JSON, resourceName));
+                ResourceManager.getInstance().generatePath(ResourcePathManager.Resource.TYPE_JSON, resourceName));
 
         if (taskItemJson == null) {
             LogExt.e(getClass(), "Error finding resource with resource name " + resourceName +
