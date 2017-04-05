@@ -53,7 +53,7 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
                 "class knows where to load it from");
             }
             String resourceJson = ResourceManager.getResourceAsString(adapterProvider.getContext(),
-                    ResourceManager.getInstance().generateAbsolutePath(resource.getType(), resource.getName()));
+                    ResourceManager.getInstance().generatePath(resource.getType(), resource.getName()));
             JsonParser parser = new JsonParser();
             json = parser.parse(resourceJson);
         }

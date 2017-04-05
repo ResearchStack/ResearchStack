@@ -60,7 +60,7 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
     public OnboardingManager(Context context) {
         ResourcePathManager.Resource onboarding = ResourceManager.getInstance().getOnboardingManager();
         String onboardingJson = ResourceManager.getResourceAsString(context,
-                ResourceManager.getInstance().generateAbsolutePath(onboarding.getType(), onboarding.getName()));
+                ResourceManager.getInstance().generatePath(onboarding.getType(), onboarding.getName()));
 
         Gson gson = buildGson(context); // Do not store this gson as a member variable, it has a link to Context
         mSectionsGsonHolder = gson.fromJson(onboardingJson, SectionsGsonHolder.class);
