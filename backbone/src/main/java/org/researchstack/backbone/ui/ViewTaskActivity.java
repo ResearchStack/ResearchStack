@@ -313,7 +313,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         if(imm.isActive() && imm.isAcceptingText())
         {
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 
