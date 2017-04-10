@@ -157,15 +157,7 @@ public class StepSwitcher extends FrameLayout {
                         .setDuration(animationTime)
                         .translationX(-1 * newTranslationX)
                         .withEndAction(() -> {
-                            InputMethodManager imm = (InputMethodManager) getContext()
-                                    .getSystemService(Activity.INPUT_METHOD_SERVICE);
-
-                            if (imm.isActive() && imm.isAcceptingText()) {
-                                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                            }
-
                             removeView(currentStep);
-
                         });
             }
         });
