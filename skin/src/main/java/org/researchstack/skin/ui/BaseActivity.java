@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -95,6 +96,16 @@ public class BaseActivity extends PinCodeActivity
                         startActivityForResult(SignUpTaskActivity.newIntent(BaseActivity.this,
                                                                             task), OverviewActivity.REQUEST_CODE_SIGN_IN);
                     };
+                    break;
+
+                case DataProvider.ERROR_APP_UPGRADE_REQUIRED:
+                    messageText = getString(R.string.rss_network_error_upgrade_app);
+                    actionText = getString(R.string.rss_network_error_upgrade_app_action);
+
+                    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=" + getString(R.string.app_name)));
+                    playStoreIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    action = v -> startActivity(playStoreIntent);
                     break;
             }
 

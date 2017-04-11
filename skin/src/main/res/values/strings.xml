@@ -97,6 +97,8 @@
     <string name="rss_network_error_consent_action">GO</string>
     <string name="rss_network_error_sign_in">Your account has been signed out, please sign in to continue</string>
     <string name="rss_network_error_sign_in_action">SIGN IN</string>
+    <string name="rss_network_error_upgrade_app">Please upgrade the application to restore functionality</string>
+    <string name="rss_network_error_upgrade_app_action">UPGRADE</string>
     <string name="rss_network_error_boom">Something happened with network, try again later</string>
     <string name="rss_network_error_unknown">Whoops! looks like something bad happened when talking
         to the server, try again later!
