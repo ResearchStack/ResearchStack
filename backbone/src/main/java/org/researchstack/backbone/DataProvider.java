@@ -3,7 +3,6 @@ package org.researchstack.backbone;
 import android.app.Application;
 import android.content.Context;
 
-import org.researchstack.backbone.model.ConsentSignature;
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;
 import org.researchstack.backbone.model.User;
@@ -18,8 +17,9 @@ import rx.Observable;
  * framework to be backend-agnostic
  */
 public abstract class DataProvider {
-    public final static String ERROR_NOT_AUTHENTICATED = "ERROR_NOT_AUTHENTICATED";
-    public final static String ERROR_CONSENT_REQUIRED = "ERROR_CONSENT_REQUIRED";
+    public static final String ERROR_NOT_AUTHENTICATED = "ERROR_NOT_AUTHENTICATED";
+    public static final String ERROR_CONSENT_REQUIRED = "ERROR_CONSENT_REQUIRED";
+    public static final String ERROR_APP_UPGRADE_REQUIRED = "ERROR_APP_UPGRADE_REQUIRED";
 
     private static DataProvider instance;
 
