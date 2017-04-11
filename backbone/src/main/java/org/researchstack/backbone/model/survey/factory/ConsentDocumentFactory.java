@@ -86,7 +86,7 @@ public class ConsentDocumentFactory extends SurveyFactory {
      * @return valid Step matching the SurveyItem
      */
     @Override
-    public Step createSurveyStep(Context context, SurveyItem item) {
+    public Step createSurveyStep(Context context, SurveyItem item, boolean isSubtaskStep) {
         Step step = null;
         switch (item.type) {
             case CONSENT_REVIEW:
@@ -119,11 +119,12 @@ public class ConsentDocumentFactory extends SurveyFactory {
         }
 
         if (step == null) {
-            step = super.createSurveyStep(context, item);
+            step = super.createSurveyStep(context, item, isSubtaskStep);
         }
 
         // Maintain a list that can then be used to create different tasks from this stepList
-        if (step != null) {
+        // Only add root steps, aka if they are not already in a subtask step
+        if (step != null && !isSubtaskStep) {
             stepList.add(step);
         }
 

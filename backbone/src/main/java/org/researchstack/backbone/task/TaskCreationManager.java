@@ -35,6 +35,7 @@ public class TaskCreationManager implements TaskItemFactory.CustomTaskCreator, S
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param resourceName needs to be a resource  that you define in the ResourceManager
      *                     it is as simple as defining a method returning a resource with this name
      *                     in your concreate implementation of ResourceManager

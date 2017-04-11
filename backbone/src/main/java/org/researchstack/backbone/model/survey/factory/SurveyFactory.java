@@ -101,7 +101,7 @@ public class SurveyFactory {
         List<Step> steps = new ArrayList<>();
         if (surveyItems != null) {
             for (SurveyItem item : surveyItems) {
-                Step step = createSurveyStep(context, item);
+                Step step = createSurveyStep(context, item, false);
                 if (step != null) {
                     steps.add(step);
                 }
@@ -113,9 +113,10 @@ public class SurveyFactory {
     /**
      * @param context can be any context, activity or application, used to access "R" resources
      * @param item the survey item to act upon
+     * @param isSubtaskStep true if this is within a subtask step already, false otherwise
      * @return a step created from the item
      */
-    public Step createSurveyStep(Context context, SurveyItem item) {
+    public Step createSurveyStep(Context context, SurveyItem item, boolean isSubtaskStep) {
 
         switch (item.type) {
             case INSTRUCTION:
@@ -246,7 +247,12 @@ public class SurveyFactory {
                 "Type of step not implemented yet.");
     }
 
-    /** Helper method for instruction steps */
+    /**
+     * Helper method for instruction steps
+     *
+     * @param step the instruction step to fill with the item's info
+     * @param item the item to fil up the step with its fields
+     */
     public void fillInstructionStep(InstructionStep step, InstructionSurveyItem item) {
         if (item.footnote != null) {
             step.setFootnote(item.footnote);
@@ -266,6 +272,7 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item SubtaskQuestionSurveyItem item from JSON that contains nested SurveyItems
      * @return a subtask step by recursively calling createSurveyStep for inner subtask steps
      */
@@ -276,7 +283,7 @@ public class SurveyFactory {
 
         List<Step> substeps = new ArrayList<>();
         for (SurveyItem subItem : item.items) {
-            Step step = createSurveyStep(context, subItem);
+            Step step = createSurveyStep(context, subItem, true);
             substeps.add(step);
         }
 
@@ -293,6 +300,7 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item SubtaskQuestionSurveyItem item from JSON that contains nested SurveyItems
      * @return a subtask step by recursively calling createSurveyStep for inner subtask steps
      */
@@ -314,6 +322,7 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item QuestionSurveyItem from JSON
      * @return QuestionStep converted from the item
      */
@@ -452,6 +461,7 @@ public class SurveyFactory {
     /**
      * Toggles are actually a FormStep, since they are a list of other QuestionSteps
      * Similar to a subtask step, but only as it relates to QuestionSurveyItems
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item ToggleQuestionSurveyItem from JSON, that has nested boolean QuestionSurveyItems
      * @return a ToggleFormStep which is a form step that is also a NavigationStep
      */
@@ -604,6 +614,11 @@ public class SurveyFactory {
 
     /**
      * a helper method to make a re-usable generic method for creating question steps
+     * @param context can be any context, activity or application, used to access "R" resources
+     * @param identifier the identifier for the question step
+     * @param titleRes the string resource for the title of the question step
+     * @param placeholderRes the string resource for the placeholder title for the question step
+     * @param format the answer format for the question step
      * @return QuestionStep with title, placeholder, and format all filled in
      */
     public QuestionStep createGenericQuestionStep(
@@ -770,6 +785,7 @@ public class SurveyFactory {
     }
 
     /**
+     * @param context can be any context, activity or application, used to access "R" resources
      * @param item InstructionSurveyItem from JSON
      * @return valid CustomStep matching the InstructionSurveyItem
      */
