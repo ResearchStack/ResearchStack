@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -180,6 +181,9 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
      * @return a list of section groups and section headers
      */
     public List<Object> processResults(SchedulesAndTasksModel model) {
+        if (model == null) {
+            return Lists.newArrayList();
+        }
         List<Object> tasks = new ArrayList<>();
 
         DateTime now = new DateTime();

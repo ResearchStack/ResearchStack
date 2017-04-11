@@ -111,6 +111,17 @@ public class SurveyFactory {
     }
 
     /**
+     * Creates a Step which is not a subtask step.
+     *
+     * @param context can be any context, activity or application, used to access "R" resources
+     * @param item the survey item to act upon
+     * @return a step created from the item
+     */
+    public Step createSurveyStep(Context context, SurveyItem item) {
+        return createSurveyStep(context, item, false);
+    }
+
+    /**
      * @param context can be any context, activity or application, used to access "R" resources
      * @param item the survey item to act upon
      * @param isSubtaskStep true if this is within a subtask step already, false otherwise
