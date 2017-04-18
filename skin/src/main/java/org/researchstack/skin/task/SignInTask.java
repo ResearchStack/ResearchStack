@@ -7,7 +7,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.skin.TaskProvider;
 
-@Deprecated // use OnboardingManager.getInstance().launchOnboarding(OnboardingTaskType.LOGIN, this);
+@Deprecated // use ResearchStack.getInstance().getOnboardingManager().launchOnboarding(OnboardingTaskType.LOGIN, this);
 public class SignInTask extends OnboardingTask {
     public static final int MINIMUM_STEPS = 0;
     public static final String ID_EMAIL = "ID_EMAIL";
