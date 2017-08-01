@@ -1,6 +1,5 @@
 package org.researchstack.backbone.ui.step.body;
 
-import android.content.res.Resources;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,11 +76,8 @@ public class TextQuestionBody implements StepBody {
             editText.setFilters(filters);
         }
 
-        Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
         body.setLayoutParams(layoutParams);
 
         return body;
