@@ -54,7 +54,7 @@ ext {
     bintrayRepo = 'ResearchStack'
     bintrayName = 'Backbone'
 
-    publishedGroupId = 'org.researchstack'
+    publishedGroupId = 'com.medaptivehealth.researchstack'
     libraryName = 'Backbone'
     artifact = 'backbone'
 
@@ -67,7 +67,7 @@ ext {
 
     // This grabs the key/value pairs from local.properties and assigns them to variables that
     // can be used in gradle, and specifically, the mavenInstaller below
-    userOrgName = 'researchstack'
+    userOrgName = 'medaptivehealth'
     developerId = properties.getProperty("bintray.user")
     developerName = properties.getProperty("bintray.developerName")
     developerEmail = properties.getProperty("bintray.developerEmail")

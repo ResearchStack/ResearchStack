@@ -57,7 +57,7 @@ ext {
     bintrayRepo = 'ResearchStack'
     bintrayName = 'Skin'
 
-    publishedGroupId = 'org.researchstack'
+    publishedGroupId = 'com.medaptivehealth.researchstack'
     libraryName = 'Skin'
     artifact = 'skin'
 
@@ -68,7 +68,7 @@ ext {
 
     libraryVersion = version
 
-    userOrgName = 'researchstack'
+    userOrgName = 'medaptivehealth'
     developerId = properties.getProperty("bintray.user")
     developerName = properties.getProperty("bintray.developerName")
     developerEmail = properties.getProperty("bintray.developerEmail")
