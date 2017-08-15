@@ -20,6 +20,7 @@
         <item name="android:paddingRight">@dimen/rsb_margin_right</item>
         <item name="android:paddingTop">@dimen/rsb_padding_wedge</item>
         <item name="android:paddingBottom">@dimen/rsb_padding_small</item>
+        <item name="android:textSize">@dimen/rsb_text_size_summary</item>
     </style>
 
     <style name="Backbone.Survey.Summary.Link">

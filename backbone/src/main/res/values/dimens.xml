@@ -18,6 +18,7 @@
     <dimen name="rsb_margin_right">16dp</dimen>
 
     <!-- Text Size -->
-    <dimen name="rsb_text_size_title">20sp</dimen>
+    <dimen name="rsb_text_size_title">26sp</dimen>
+    <dimen name="rsb_text_size_summary">16sp</dimen>
 
 </resources>
