@@ -301,7 +301,7 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
     }
 
     @Override
-    public Step createCustomStep(Context context, SurveyItem item, SurveyFactory factory) {
+    public Step createCustomStep(Context context, SurveyItem item, boolean isSubtaskStep, SurveyFactory factory) {
         return null;
     }
 
