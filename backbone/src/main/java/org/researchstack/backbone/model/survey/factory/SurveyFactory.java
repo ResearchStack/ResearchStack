@@ -109,18 +109,7 @@ public class SurveyFactory {
         }
         return steps;
     }
-
-    /**
-     * Creates a Step which is not a subtask step.
-     *
-     * @param context can be any context, activity or application, used to access "R" resources
-     * @param item the survey item to act upon
-     * @return a step created from the item
-     */
-    public Step createSurveyStep(Context context, SurveyItem item) {
-        return createSurveyStep(context, item, false);
-    }
-
+    
     /**
      * @param context can be any context, activity or application, used to access "R" resources
      * @param item the survey item to act upon
@@ -219,12 +208,12 @@ public class SurveyFactory {
                 // To override a custom step from survey item mapping,
                 // You need to override the CustomStepCreator
                 if (customStepCreator != null) {
-                    Step step = customStepCreator.createCustomStep(context, item, this);
+                    Step step = customStepCreator.createCustomStep(context, item, isSubtaskStep, this);
                     if (step != null) {
                         return step;
                     }
                 }
-                return createCustomStep(context, item);
+                return createCustomStep(context, item, isSubtaskStep);
         }
 
         return null;
@@ -798,9 +787,10 @@ public class SurveyFactory {
     /**
      * @param context can be any context, activity or application, used to access "R" resources
      * @param item InstructionSurveyItem from JSON
+     * @param isSubtaskStep true if this is within a subtask step already, false otherwise
      * @return valid CustomStep matching the InstructionSurveyItem
      */
-    public Step createCustomStep(Context context, SurveyItem item) {
+    public Step createCustomStep(Context context, SurveyItem item, boolean isSubtaskStep) {
         return new InstructionStep(item.identifier, item.title, item.text);
     }
 
@@ -890,6 +880,6 @@ public class SurveyFactory {
      * This can be used by another class to implement custom conversion from a CustomSurveyItem to a CustomStep
      */
     public interface CustomStepCreator {
-        Step createCustomStep(Context context, SurveyItem item, SurveyFactory factory);
+        Step createCustomStep(Context context, SurveyItem item, boolean isSubtaskStep, SurveyFactory factory);
     }
 }

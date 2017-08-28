@@ -106,11 +106,12 @@ public class TaskCreationManager implements TaskItemFactory.CustomTaskCreator, S
      * You should also override registerSurveyItemAdapter to control the CustomSurveyItem data model
      * @param item the custom survey item to create a custom step from
      * @param factory the factory that created the custom survey item
+     * @param isSubtaskStep true if this is within a subtask step already, false otherwise
      * @return a CustomStep that can be used in your app
      */
     @Override
-    public Step createCustomStep(Context context, SurveyItem item, SurveyFactory factory) {
-        return factory.createCustomStep(context, item);
+    public Step createCustomStep(Context context, SurveyItem item, boolean isSubtaskStep, SurveyFactory factory) {
+        return factory.createCustomStep(context, item, isSubtaskStep);
     }
 
     /**
