@@ -7,8 +7,8 @@ package org.researchstack.backbone.model.staged;
  *
  */
 
-public enum MedStagedDurationType {
-    DAILY,
-    WEEKLY,
-    MONTHLY
+public enum MedStagedDurationUnit {
+    DAYS,
+    WEEKS,
+    MONTHS
 }

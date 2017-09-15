@@ -21,8 +21,8 @@ public class MedStagedSchedule {
         return scheduleInternal(startDate, null, 0, null, null);
     }
 
-    public static MedStagedSchedule limitedSchedule(Date startDate, int duration, MedStagedDurationType durationType) {
-        return scheduleInternal(startDate, null, duration, durationType, null);
+    public static MedStagedSchedule limitedSchedule(Date startDate, int duration, MedStagedDurationUnit durationUnit) {
+        return scheduleInternal(startDate, null, duration, durationUnit, null);
     }
 
     public static MedStagedSchedule repeatingSchedule(Date startDate, Date endDate, MedRepetitionPattern pattern) {
@@ -30,19 +30,19 @@ public class MedStagedSchedule {
     }
 
     public static MedStagedSchedule repeatingLimitedSchedule(Date startDate, Date endDate,
-                                                             int duration, MedStagedDurationType durationType,
+                                                             int duration, MedStagedDurationUnit durationUnit,
                                                              MedRepetitionPattern pattern) {
-        return scheduleInternal(startDate, endDate, duration, durationType, pattern);
+        return scheduleInternal(startDate, endDate, duration, durationUnit, pattern);
     }
 
     private static MedStagedSchedule scheduleInternal(Date startDate, Date endDate,
-                                                      int duration, MedStagedDurationType durationType,
+                                                      int duration, MedStagedDurationUnit durationUnit,
                                                       MedRepetitionPattern repeats) {
         MedStagedSchedule stagedSchedule = new MedStagedSchedule();
         stagedSchedule.startDate = startDate;
         stagedSchedule.endDate = endDate;
         stagedSchedule.duration = duration;
-        stagedSchedule.durationType = durationType;
+        stagedSchedule.durationUnit = durationUnit;
         stagedSchedule.repeats = repeats;
         return stagedSchedule;
     }
@@ -50,7 +50,7 @@ public class MedStagedSchedule {
     private Date startDate;
     private Date endDate;
     private int duration;
-    private MedStagedDurationType durationType;
+    private MedStagedDurationUnit durationUnit;
     private MedRepetitionPattern repeats;
 
     public Date getStartDate() {
@@ -65,8 +65,8 @@ public class MedStagedSchedule {
         return duration;
     }
 
-    public MedStagedDurationType getDurationType() {
-        return durationType;
+    public MedStagedDurationUnit getDurationUnit() {
+        return durationUnit;
     }
 
     public MedRepetitionPattern getRepeats() {
