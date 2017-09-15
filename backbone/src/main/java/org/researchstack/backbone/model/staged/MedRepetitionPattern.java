@@ -1,5 +1,7 @@
 package org.researchstack.backbone.model.staged;
 
+import java.io.Serializable;
+
 /**
  * Created by mauriciosouto on 7/9/17.
  *
@@ -14,7 +16,7 @@ package org.researchstack.backbone.model.staged;
  *
  */
 
-public abstract class MedRepetitionPattern {
+public abstract class MedRepetitionPattern implements Serializable {
 
     private int unitsToSkip;
 

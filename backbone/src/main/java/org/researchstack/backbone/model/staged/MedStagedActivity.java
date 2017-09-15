@@ -1,5 +1,7 @@
 package org.researchstack.backbone.model.staged;
 
+import org.researchstack.backbone.task.Task;
+
 import java.util.Map;
 
 /**
@@ -20,7 +22,15 @@ public class MedStagedActivity {
     private String id;
     private MedStagedActivityType type;
     private MedStagedSchedule schedule;
-    private Map<String, Object> activityInfo;
+    private MedStagedActivityState status;
+
+    private String title;
+    private String text;
+    private String instructions;
+    private int tintColor;
+
+    private Task task;
+    private boolean resultResettable;
 
     public String getId() {
         return id;
@@ -46,11 +56,59 @@ public class MedStagedActivity {
         this.schedule = schedule;
     }
 
-    public Map<String, Object> getActivityInfo() {
-        return activityInfo;
+    public MedStagedActivityState getStatus() {
+        return status;
     }
 
-    public void setActivityInfo(Map<String, Object> activityInfo) {
-        this.activityInfo = activityInfo;
+    public void setStatus(MedStagedActivityState status) {
+        this.status = status;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public int getTintColor() {
+        return tintColor;
+    }
+
+    public void setTintColor(int tintColor) {
+        this.tintColor = tintColor;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
+    public boolean isResultResettable() {
+        return resultResettable;
+    }
+
+    public void setResultResettable(boolean resultResettable) {
+        this.resultResettable = resultResettable;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 }

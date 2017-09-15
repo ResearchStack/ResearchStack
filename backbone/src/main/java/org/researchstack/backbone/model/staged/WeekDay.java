@@ -1,5 +1,7 @@
 package org.researchstack.backbone.model.staged;
 
+import java.io.Serializable;
+
 /**
  * Created by mauriciosouto on 7/9/17.
  *
@@ -12,7 +14,7 @@ package org.researchstack.backbone.model.staged;
  *
  */
 
-public class WeekDay {
+public class WeekDay implements Serializable {
 
     public int week;
     public int day;
