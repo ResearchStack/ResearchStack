@@ -48,6 +48,9 @@ public class MedStagedActivityRecord {
     @DatabaseField
     public String schedule;
 
+    @DatabaseField
+    public boolean resultResettable;
+
     public String getStagedActivityId() {
         return this.stagedActivityId;
     }
@@ -112,6 +115,14 @@ public class MedStagedActivityRecord {
         this.schedule = schedule;
     }
 
+    public boolean isResultResettable() {
+        return resultResettable;
+    }
+
+    public void setResultResettable(boolean resultResettable) {
+        this.resultResettable = resultResettable;
+    }
+
     public static MedStagedActivity toMedStagedActivity(MedStagedActivityRecord record) {
 
         MedStagedActivity activity = null;
@@ -124,6 +135,7 @@ public class MedStagedActivityRecord {
             activity.setText(record.text);
             activity.setInstructions(record.instructions);
             activity.setTintColor(record.tintColor);
+            activity.setResultResettable(record.isResultResettable());
             activity.setSchedule(GSON.fromJson(record.schedule, MedStagedSchedule.class));
         }
         return activity;
@@ -138,6 +150,7 @@ public class MedStagedActivityRecord {
         record.text = activity.getText();
         record.instructions = activity.getInstructions();
         record.tintColor = activity.getTintColor();
+        record.resultResettable = activity.isResultResettable();
         return record;
     }
 }
