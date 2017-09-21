@@ -18,24 +18,24 @@ import java.util.Date;
 public class MedStagedSchedule {
 
     public static MedStagedSchedule schedule(Date startDate) {
-        return scheduleInternal(startDate, null, 0, null, null);
+        return schedule(startDate, null, 0, null, null);
     }
 
     public static MedStagedSchedule limitedSchedule(Date startDate, int duration, MedStagedDurationUnit durationUnit) {
-        return scheduleInternal(startDate, null, duration, durationUnit, null);
+        return schedule(startDate, null, duration, durationUnit, null);
     }
 
     public static MedStagedSchedule repeatingSchedule(Date startDate, Date endDate, MedRepetitionPattern pattern) {
-        return scheduleInternal(startDate, endDate, 0, null, pattern);
+        return schedule(startDate, endDate, 0, null, pattern);
     }
 
     public static MedStagedSchedule repeatingLimitedSchedule(Date startDate, Date endDate,
                                                              int duration, MedStagedDurationUnit durationUnit,
                                                              MedRepetitionPattern pattern) {
-        return scheduleInternal(startDate, endDate, duration, durationUnit, pattern);
+        return schedule(startDate, endDate, duration, durationUnit, pattern);
     }
 
-    private static MedStagedSchedule scheduleInternal(Date startDate, Date endDate,
+    public static MedStagedSchedule schedule(Date startDate, Date endDate,
                                                       int duration, MedStagedDurationUnit durationUnit,
                                                       MedRepetitionPattern repeats) {
         MedStagedSchedule stagedSchedule = new MedStagedSchedule();

@@ -1,5 +1,7 @@
 package org.researchstack.backbone.model.staged;
 
+import java.util.List;
+
 /**
  * Created by mauriciosouto on 7/9/17.
  *
@@ -13,13 +15,13 @@ package org.researchstack.backbone.model.staged;
 
 public class MedMonthlyDayRepetitionPattern extends MedRepetitionPattern {
 
-    private boolean[] pattern;
+    private List<WeekDay> pattern;
 
-    public boolean[] getPattern() {
+    public List<WeekDay> getPattern() {
         return pattern;
     }
 
-    public void setPattern(boolean[] pattern) {
+    public void setPattern(List<WeekDay> pattern) {
         this.pattern = pattern;
     }
 }
