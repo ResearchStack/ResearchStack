@@ -92,7 +92,7 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
 
 
     public void saveMedStagedEvent(MedStagedEvent event) {
-        LogExt.d(getClass(), "saveMedStagedEvent() Activity id: " + event.getActivity());
+        LogExt.d(getClass(), "saveMedStagedEvent() Activity id: " + event.getActivityId());
         try {
             getDao(MedStagedEventRecord.class).create(MedStagedEventRecord.toRecord(event));
         } catch (SQLException e) {
@@ -101,7 +101,7 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
     }
 
     public void updateMedStagedEvent(int recordId, MedStagedEvent event) {
-        LogExt.d(getClass(), "updateMedStagedEvent() Activity id: " + event.getActivity());
+        LogExt.d(getClass(), "updateMedStagedEvent() Activity id: " + event.getActivityId());
         try {
             MedStagedEventRecord record = MedStagedEventRecord.toRecord(event);
             record.id = recordId;

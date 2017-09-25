@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class MedStagedEvent {
 
-    private String activity;
+    private String activityId;
     private Date eventStartDate;
     private Date eventEndDate;
     private MedStagedActivityState status;
@@ -19,12 +19,12 @@ public class MedStagedEvent {
     public MedStagedEvent() {
     }
 
-    public String getActivity() {
-        return activity;
+    public String getActivityId() {
+        return activityId;
     }
 
-    public void setActivity(String activity) {
-        this.activity = activity;
+    public void setActivityId(String activityId) {
+        this.activityId = activityId;
     }
 
     public Date getEventStartDate() {

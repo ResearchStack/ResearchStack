@@ -38,7 +38,7 @@ public class MedStagedEventRecord {
 
     public static MedStagedEvent toMedStagedEvent(MedStagedEventRecord record) {
         MedStagedEvent medStagedEvent = new MedStagedEvent();
-        medStagedEvent.setActivity(record.stagedActivityId);
+        medStagedEvent.setActivityId(record.stagedActivityId);
         medStagedEvent.setEventStartDate(record.eventStartDate);
         medStagedEvent.setEventEndDate(record.eventEndDate);
         medStagedEvent.setStatus(record.status);
@@ -48,7 +48,7 @@ public class MedStagedEventRecord {
 
     public static MedStagedEventRecord toRecord(MedStagedEvent event) {
         MedStagedEventRecord record = new MedStagedEventRecord();
-        record.stagedActivityId = event.getActivity();
+        record.stagedActivityId = event.getActivityId();
         record.eventStartDate = event.getEventStartDate();
         record.eventEndDate = event.getEventEndDate();
         record.status = event.getStatus();
