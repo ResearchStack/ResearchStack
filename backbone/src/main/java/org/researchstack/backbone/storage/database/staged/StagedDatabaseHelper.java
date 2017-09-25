@@ -151,6 +151,26 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
+    public List<MedStagedEvent> loadMedStagedEventsByDate(Date date) {
+        LogExt.d(getClass(), "loadMedStagedEvents()");
+        try {
+            List<MedStagedEvent> results = new ArrayList<>();
+            Dao dao = getDao(MedStagedEventRecord.class);
+
+            List<MedStagedEventRecord> eventRecords = dao.queryForAll().list();
+
+            for (MedStagedEventRecord record : eventRecords) {
+                if (record.eventStartDate.before(date) && record.eventEndDate.after(date)) {
+                    MedStagedEvent result = MedStagedEventRecord.toMedStagedEvent(record);
+                    results.add(result);
+                }
+            }
+            return results;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<MedStagedEvent> loadLiveMedStagedEvents(Date date) {
         LogExt.d(getClass(), "loadLiveMedStagedEvents()");
         try {
