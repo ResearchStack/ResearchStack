@@ -114,14 +114,8 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
     public List<MedStagedEvent> loadAllMedStagedEvents() {
         LogExt.d(getClass(), "loadAllMedStagedEvents()");
         try {
-            List<MedStagedEvent> results = new ArrayList<>();
             List<MedStagedEventRecord> eventRecords = getDao(MedStagedEventRecord.class).queryForAll().list();
-
-            for (MedStagedEventRecord record : eventRecords) {
-                MedStagedEvent result = MedStagedEventRecord.toMedStagedEvent(record);
-                results.add(result);
-            }
-            return results;
+            return eventsFromRecords(eventRecords, null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -130,7 +124,6 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
     public List<MedStagedEvent> loadMedStagedEvents(Date date, String activityId, MedStagedActivityState status) {
         LogExt.d(getClass(), "loadMedStagedEvents()");
         try {
-            List<MedStagedEvent> results = new ArrayList<>();
             Dao dao = getDao(MedStagedEventRecord.class);
 
             Map<String, Object> where = new HashMap<>();
@@ -138,14 +131,7 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
             where.put(MedStagedEventRecord.STATUS_COLUMN, status);
 
             List<MedStagedEventRecord> eventRecords = dao.queryForFieldValues(where).list();
-
-            for (MedStagedEventRecord record : eventRecords) {
-                if (record.eventStartDate.before(date) && record.eventEndDate.after(date)) {
-                    MedStagedEvent result = MedStagedEventRecord.toMedStagedEvent(record);
-                    results.add(result);
-                }
-            }
-            return results;
+            return eventsFromRecords(eventRecords, date);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -154,21 +140,26 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
     public List<MedStagedEvent> loadLiveMedStagedEvents(Date date) {
         LogExt.d(getClass(), "loadLiveMedStagedEvents()");
         try {
-            List<MedStagedEvent> results = new ArrayList<>();
+
             Dao dao = getDao(MedStagedEventRecord.class);
-
             List<MedStagedEventRecord> eventRecords = dao.queryForAll().list();
-
-            for (MedStagedEventRecord record : eventRecords) {
-                if (record.eventStartDate.before(date) && record.eventEndDate.after(date)) {
-                    MedStagedEvent result = MedStagedEventRecord.toMedStagedEvent(record);
-                    results.add(result);
-                }
-            }
-            return results;
+            return eventsFromRecords(eventRecords, date);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private List<MedStagedEvent> eventsFromRecords(List<MedStagedEventRecord> eventRecords, Date date) {
+        List<MedStagedEvent> results = new ArrayList<>();
+        for (MedStagedEventRecord record : eventRecords) {
+            if (date == null || (record.eventStartDate.before(date) && record.eventEndDate.after(date))) {
+                MedStagedEvent result = MedStagedEventRecord.toMedStagedEvent(record);
+                MedStagedActivity activity = this.getMedStagedActivity(result.getActivityId());
+                result.setActivity(activity);
+                results.add(result);
+            }
+        }
+        return results;
     }
 
 }

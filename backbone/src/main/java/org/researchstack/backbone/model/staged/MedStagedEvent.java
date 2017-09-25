@@ -15,6 +15,7 @@ public class MedStagedEvent {
     private Date eventEndDate;
     private MedStagedActivityState status;
     private Task result;
+    private MedStagedActivity activity;
 
     public MedStagedEvent() {
     }
@@ -58,5 +59,13 @@ public class MedStagedEvent {
     public void addResult(Task result, MedStagedActivityState status) {
         this.result = result;
         this.status = status;
+    }
+
+    public MedStagedActivity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(MedStagedActivity activity) {
+        this.activity = activity;
     }
 }
