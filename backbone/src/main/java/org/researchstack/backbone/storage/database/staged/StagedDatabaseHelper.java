@@ -135,6 +135,21 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
+    public List<MedStagedEvent> loadMedStagedEvents(Date date, String activityId) {
+        LogExt.d(getClass(), "loadMedStagedEvents()");
+        try {
+            Dao dao = getDao(MedStagedEventRecord.class);
+
+            Map<String, Object> where = new HashMap<>();
+            where.put(MedStagedEventRecord.ACTIVITY_ID_COLUMN, activityId);
+
+            List<MedStagedEventRecord> eventRecords = dao.queryForFieldValues(where).list();
+            return eventsFromRecords(eventRecords, date);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<MedStagedEvent> loadLiveMedStagedEvents(Date date) {
         LogExt.d(getClass(), "loadLiveMedStagedEvents()");
         try {
@@ -154,7 +169,7 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
 
             List<MedStagedEventRecord> eventRecords = dao.queryForAll().list();
             for (MedStagedEventRecord record : eventRecords) {
-                if (date == null || record.eventStartDate.after(date) || record.eventStartDate.equals(date)) {
+                if (date == null || !record.eventStartDate.before(date)) {
                     // Future Event
                     deleteMedStagedEvent(record.id);
                 }
@@ -167,7 +182,7 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
     private List<MedStagedEvent> eventsFromRecords(List<MedStagedEventRecord> eventRecords, Date date) {
         List<MedStagedEvent> results = new ArrayList<>();
         for (MedStagedEventRecord record : eventRecords) {
-            if (date == null || (record.eventStartDate.before(date) && record.eventEndDate.after(date))) {
+            if (date == null || (!record.eventStartDate.after(date) && !record.eventEndDate.before(date))) {
                 MedStagedEvent result = MedStagedEventRecord.toMedStagedEvent(record);
                 MedStagedActivity activity = this.getMedStagedActivity(result.getActivityId());
                 result.setActivity(activity);
