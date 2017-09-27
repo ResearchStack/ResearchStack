@@ -2,6 +2,7 @@ package org.researchstack.backbone.model.staged;
 
 import org.researchstack.backbone.task.Task;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Map;
  *
  */
 
-public class MedStagedActivity {
+public class MedStagedActivity implements Serializable {
 
     private String id;
     private MedStagedActivityType type;

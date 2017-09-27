@@ -46,8 +46,8 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
-    public void saveMedStagedActivity(MedStagedActivity activity) {
-        LogExt.d(getClass(), "saveMedStagedActivity() id: " + activity.getId());
+    public void addOrUpdateMedStagedActivity(MedStagedActivity activity) {
+        LogExt.d(getClass(), "addOrUpdateMedStagedActivity() id: " + activity.getId());
         try {
             getDao(MedStagedActivityRecord.class).createOrUpdate(MedStagedActivityRecord.toRecord(activity));
         } catch (SQLException e) {
@@ -55,7 +55,7 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
-    public void removeMedStagedActivity(String activityId) {
+    public void deleteMedStagedActivity(String activityId) {
         LogExt.d(getClass(), "removeMedStagedActivity() Activity id: " + activityId);
         try {
             getDao(MedStagedActivityRecord.class).deleteById(activityId);
@@ -100,12 +100,10 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
-    public void updateMedStagedEvent(int recordId, MedStagedEvent event) {
-        LogExt.d(getClass(), "updateMedStagedEvent() Activity id: " + event.getActivityId());
+    public void deleteMedStagedEvent(int eventId) {
+        LogExt.d(getClass(), "deleteMedStagedEvent() Event id: " + eventId);
         try {
-            MedStagedEventRecord record = MedStagedEventRecord.toRecord(event);
-            record.id = recordId;
-            getDao(MedStagedEventRecord.class).update(record);
+            getDao(MedStagedEventRecord.class).deleteById(eventId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -144,6 +142,23 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
             Dao dao = getDao(MedStagedEventRecord.class);
             List<MedStagedEventRecord> eventRecords = dao.queryForAll().list();
             return eventsFromRecords(eventRecords, date);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteFutureMedStagedEvents(Date date) {
+        LogExt.d(getClass(), "deleteMedStagedEvents()");
+        try {
+            Dao dao = getDao(MedStagedEventRecord.class);
+
+            List<MedStagedEventRecord> eventRecords = dao.queryForAll().list();
+            for (MedStagedEventRecord record : eventRecords) {
+                if (date == null || record.eventStartDate.after(date) || record.eventStartDate.equals(date)) {
+                    // Future Event
+                    deleteMedStagedEvent(record.id);
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

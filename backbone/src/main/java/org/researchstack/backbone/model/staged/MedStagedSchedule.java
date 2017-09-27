@@ -1,5 +1,6 @@
 package org.researchstack.backbone.model.staged;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Date;
  *
  */
 
-public class MedStagedSchedule {
+public class MedStagedSchedule implements Serializable {
 
     public static MedStagedSchedule schedule(Date startDate) {
         return schedule(startDate, null, 0, null, null);

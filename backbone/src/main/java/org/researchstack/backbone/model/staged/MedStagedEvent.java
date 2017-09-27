@@ -2,13 +2,14 @@ package org.researchstack.backbone.model.staged;
 
 import org.researchstack.backbone.task.Task;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by mauriciosouto on 7/9/17.
  */
 
-public class MedStagedEvent {
+public class MedStagedEvent implements Serializable {
 
     private String activityId;
     private Date eventStartDate;
