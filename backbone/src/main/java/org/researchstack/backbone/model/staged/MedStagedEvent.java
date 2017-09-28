@@ -1,5 +1,6 @@
 package org.researchstack.backbone.model.staged;
 
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.Task;
 
 import java.io.Serializable;
@@ -15,7 +16,8 @@ public class MedStagedEvent implements Serializable {
     private Date eventStartDate;
     private Date eventEndDate;
     private MedStagedActivityState status;
-    private Task result;
+    private Task task;
+    private TaskResult result;
     private MedStagedActivity activity;
 
     public MedStagedEvent() {
@@ -53,11 +55,19 @@ public class MedStagedEvent implements Serializable {
         this.status = status;
     }
 
-    public Task getResult() {
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    public TaskResult getResult() {
         return result;
     }
 
-    public void addResult(Task result, MedStagedActivityState status) {
+    public void addResult(TaskResult result, MedStagedActivityState status) {
         this.result = result;
         this.status = status;
     }

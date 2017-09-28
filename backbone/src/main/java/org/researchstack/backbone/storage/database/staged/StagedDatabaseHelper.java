@@ -7,10 +7,12 @@ import net.sqlcipher.database.SQLiteDatabase;
 import org.researchstack.backbone.model.staged.MedStagedActivity;
 import org.researchstack.backbone.model.staged.MedStagedActivityState;
 import org.researchstack.backbone.model.staged.MedStagedEvent;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.database.sqlite.SqlCipherDatabaseHelper;
 import org.researchstack.backbone.storage.database.sqlite.UpdatablePassphraseProvider;
 import org.researchstack.backbone.storage.database.staged.records.MedStagedActivityRecord;
 import org.researchstack.backbone.storage.database.staged.records.MedStagedEventRecord;
+import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.utils.LogExt;
 
 import java.sql.SQLException;
@@ -183,10 +185,14 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         List<MedStagedEvent> results = new ArrayList<>();
         for (MedStagedEventRecord record : eventRecords) {
             if (date == null || (!record.eventStartDate.after(date) && !record.eventEndDate.before(date))) {
-                MedStagedEvent result = MedStagedEventRecord.toMedStagedEvent(record);
-                MedStagedActivity activity = this.getMedStagedActivity(result.getActivityId());
-                result.setActivity(activity);
-                results.add(result);
+                TaskResult taskResult = null;
+                if (record.taskResultId != null) {
+                    taskResult = loadLatestTaskResult(record.taskResultId);
+                }
+                MedStagedEvent event = MedStagedEventRecord.toMedStagedEvent(record, taskResult);
+                MedStagedActivity activity = this.getMedStagedActivity(event.getActivityId());
+                event.setActivity(activity);
+                results.add(event);
             }
         }
         return results;
