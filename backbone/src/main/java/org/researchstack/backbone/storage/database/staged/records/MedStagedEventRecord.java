@@ -7,12 +7,14 @@ import org.researchstack.backbone.model.staged.MedStagedActivityState;
 import org.researchstack.backbone.model.staged.MedStagedEvent;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.OrderedTask;
+import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.util.Date;
 import java.util.Map;
 
+import co.touchlab.squeaky.field.DataType;
 import co.touchlab.squeaky.field.DatabaseField;
 import co.touchlab.squeaky.table.DatabaseTable;
 
@@ -43,33 +45,35 @@ public class MedStagedEventRecord {
     @DatabaseField
     public MedStagedActivityState status;
 
-    @DatabaseField
+    @DatabaseField(canBeNull = true)
     public String taskId;
 
-    @DatabaseField
-    public String task;
+    @DatabaseField(dataType = DataType.SERIALIZABLE, canBeNull = true)
+    public Object task;
 
-    @DatabaseField
+    @DatabaseField(canBeNull = true)
     public String taskResultId;
 
     public static MedStagedEvent toMedStagedEvent(MedStagedEventRecord record, TaskResult result) {
         MedStagedEvent medStagedEvent = new MedStagedEvent();
+        medStagedEvent.setId(record.id);
         medStagedEvent.setActivityId(record.stagedActivityId);
         medStagedEvent.setEventStartDate(record.eventStartDate);
         medStagedEvent.setEventEndDate(record.eventEndDate);
-        medStagedEvent.setTask(GSON.fromJson(record.task, OrderedTask.class));
+        medStagedEvent.setTask((Task) record.task);
         medStagedEvent.addResult(result, record.status);
         return medStagedEvent;
     }
 
     public static MedStagedEventRecord toRecord(MedStagedEvent event) {
         MedStagedEventRecord record = new MedStagedEventRecord();
+        record.id = event.getId();
         record.stagedActivityId = event.getActivityId();
         record.eventStartDate = event.getEventStartDate();
         record.eventEndDate = event.getEventEndDate();
         record.status = event.getStatus();
         if (event.getTask() != null) {
-            record.task = GSON.toJson(event.getTask());
+            record.task = event.getTask();
             record.taskId = event.getTask().getIdentifier();
         }
         if (event.getResult() != null) {

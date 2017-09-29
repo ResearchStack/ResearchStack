@@ -12,6 +12,7 @@ import java.util.Date;
 
 public class MedStagedEvent implements Serializable {
 
+    private int id;
     private String activityId;
     private Date eventStartDate;
     private Date eventEndDate;
@@ -21,6 +22,14 @@ public class MedStagedEvent implements Serializable {
     private MedStagedActivity activity;
 
     public MedStagedEvent() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getActivityId() {

@@ -24,6 +24,7 @@ public class MedStagedEventRecordTest {
         OrderedTask task = new OrderedTask("TEST_TASK_ID", new ArrayList<Step>());
 
         MedStagedEvent event = new MedStagedEvent();
+        event.setId(1);
         event.setActivityId("1234");
         event.setStatus(MedStagedActivityState.INITIAL);
         event.setEventStartDate(new Date());
@@ -32,6 +33,7 @@ public class MedStagedEventRecordTest {
 
         MedStagedEventRecord record = MedStagedEventRecord.toRecord(event);
 
+        Assert.assertEquals(record.id, event.getId());
         Assert.assertEquals(record.stagedActivityId, event.getActivityId());
         Assert.assertEquals(record.status, event.getStatus());
         Assert.assertEquals(record.eventStartDate, event.getEventStartDate());
@@ -41,6 +43,7 @@ public class MedStagedEventRecordTest {
 
         event = MedStagedEventRecord.toMedStagedEvent(record, null);
 
+        Assert.assertEquals(record.id, event.getId());
         Assert.assertEquals(record.stagedActivityId, event.getActivityId());
         Assert.assertEquals(record.status, event.getStatus());
         Assert.assertEquals(record.eventStartDate, event.getEventStartDate());

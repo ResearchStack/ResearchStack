@@ -8,6 +8,7 @@ import org.researchstack.backbone.model.staged.MedStagedActivity;
 import org.researchstack.backbone.model.staged.MedStagedActivityState;
 import org.researchstack.backbone.model.staged.MedStagedEvent;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.storage.database.TaskRecord;
 import org.researchstack.backbone.storage.database.sqlite.SqlCipherDatabaseHelper;
 import org.researchstack.backbone.storage.database.sqlite.UpdatablePassphraseProvider;
 import org.researchstack.backbone.storage.database.staged.records.MedStagedActivityRecord;
@@ -92,11 +93,25 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
-
     public void saveMedStagedEvent(MedStagedEvent event) {
         LogExt.d(getClass(), "saveMedStagedEvent() Activity id: " + event.getActivityId());
         try {
             getDao(MedStagedEventRecord.class).create(MedStagedEventRecord.toRecord(event));
+            if (event.getResult() != null) {
+                this.saveTaskResult(event.getResult());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateMedStagedEvent(MedStagedEvent event) {
+        LogExt.d(getClass(), "updateMedStagedEvent() Activity id: " + event.getActivityId() + " Event Id: " + event.getId());
+        try {
+            getDao(MedStagedEventRecord.class).update(MedStagedEventRecord.toRecord(event));
+            if (event.getResult() != null) {
+                this.saveTaskResult(event.getResult());
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
