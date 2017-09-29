@@ -199,7 +199,8 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
     private List<MedStagedEvent> eventsFromRecords(List<MedStagedEventRecord> eventRecords, Date date) {
         List<MedStagedEvent> results = new ArrayList<>();
         for (MedStagedEventRecord record : eventRecords) {
-            if (date == null || (!record.eventStartDate.after(date) && !record.eventEndDate.before(date))) {
+            if ((date == null || (!record.eventStartDate.after(date) && !record.eventEndDate.before(date)))
+                    || record.status != MedStagedActivityState.INITIAL) {
                 TaskResult taskResult = null;
                 if (record.taskResultId != null) {
                     taskResult = loadLatestTaskResult(record.taskResultId);
