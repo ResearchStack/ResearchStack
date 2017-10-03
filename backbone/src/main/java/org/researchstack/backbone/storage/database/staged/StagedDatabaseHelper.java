@@ -188,7 +188,10 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
             for (MedStagedEventRecord record : eventRecords) {
                 if (date == null || !record.eventStartDate.before(date)) {
                     // Future Event
-                    deleteMedStagedEvent(record.id);
+                    if (record.status == MedStagedActivityState.INITIAL) {
+                        // Keep started or completed events
+                        deleteMedStagedEvent(record.id);
+                    }
                 }
             }
         } catch (SQLException e) {
