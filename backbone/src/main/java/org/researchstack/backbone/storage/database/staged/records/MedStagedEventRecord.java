@@ -28,7 +28,7 @@ public class MedStagedEventRecord {
     private static final Gson GSON = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601).create();
 
     public static final String ACTIVITY_ID_COLUMN = "stagedActivityId";
-    public static final String STATUS_COLUMN = "stagedActivityId";
+    public static final String STATUS_COLUMN = "status";
 
     @DatabaseField(generatedId = true)
     public int id;

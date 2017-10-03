@@ -5,7 +5,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 
-version = '2.0.20'
+version = '2.0.21'
 
 android {
     compileSdkVersion 25
@@ -18,7 +18,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 27
+        versionCode 28
         versionName version
     }
     buildTypes {
