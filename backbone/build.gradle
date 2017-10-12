@@ -93,3 +93,33 @@ if (project.hasProperty("android")) { // Android libraries
     }
 }
 
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+
+                pom.groupId = GROUP
+                pom.artifactId = project.getProperties().POM_ARTIFACT_ID
+                pom.version = VERSION_NAME
+
+                def deployPath = file('./')
+                repository(url: "file://${deployPath.absolutePath}/../../Android-SDK/")
+
+                pom.project {
+                    name project.getProperties().POM_NAME
+                    packaging project.getProperties().POM_PACKAGING
+                    description POM_DESCRIPTION
+
+                    licenses {
+                        license {
+                            name POM_LICENCE_NAME
+                            url POM_LICENCE_URL
+                            distribution POM_LICENCE_DIST
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
