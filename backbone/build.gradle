@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven'
 
 version = '1.1.4'
 
 android {
+    
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
@@ -15,6 +15,7 @@ android {
         versionCode 6
         versionName version
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,31 +39,6 @@ android {
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-ext {
-    bintrayRepo = 'ResearchStack'
-    bintrayName = 'Backbone'
-
-    publishedGroupId = 'org.researchstack'
-    libraryName = 'Backbone'
-    artifact = 'backbone'
-
-    libraryDescription = 'Backbone description'
-
-    siteUrl = 'https://researchstack.org'
-    gitUrl = 'https://github.com/ResearchStack/ResearchStack.git'
-
-    libraryVersion = version
-
-    userOrgName = 'researchstack'
-    developerId = properties.getProperty("bintray.user")
-    developerName = properties.getProperty("bintray.developerName")
-    developerEmail = properties.getProperty("bintray.developerEmail")
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:25.2.0'
@@ -85,46 +61,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile 'org.mockito:mockito-core:1.10.19'
-}
-
-group = publishedGroupId                               // Maven Group ID for the artifact
-
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                groupId publishedGroupId
-                artifactId artifact
-
-                // Add your description here
-                name libraryName
-                description libraryDescription
-                url siteUrl
-
-                // Set your license
-                licenses {
-                    license {
-                        name licenseName
-                        url licenseUrl
-                    }
-                }
-                developers {
-                    developer {
-                        id developerId
-                        name developerName
-                        email developerEmail
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
 }
 
 if (project.hasProperty("android")) { // Android libraries
@@ -151,29 +87,16 @@ if (project.hasProperty("android")) { // Android libraries
     }
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
+uploadArchives {
+    repositories.mavenDeployer {
 
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
+        def deployPath = file('./')
+        repository(url: "file://${deployPath.absolutePath}/../../../Android-SDK/")
 
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-
-    configurations = ['archives']
-    pkg {
-        repo = bintrayRepo
-        name = bintrayName
-        userOrg = userOrgName
-        desc = libraryDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publish = true
+        pom.project {
+            groupId 'com.medable'
+            artifactId 'Backbone'
+            version getProperty('versionName')
+        }
     }
 }
