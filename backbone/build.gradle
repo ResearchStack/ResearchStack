@@ -2,12 +2,17 @@ apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
 
-version = '1.1.4'
-
 android {
-    
+
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(output.outputFile.parentFile,
+                    output.outputFile.name.replace(".aar", "_v${VERSION_NAME}.aar"));
+        }
+    }
 
     defaultConfig {
         minSdkVersion 16
@@ -17,6 +22,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -35,9 +44,6 @@ android {
 
     resourcePrefix 'rsb_'
 }
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -87,16 +93,3 @@ if (project.hasProperty("android")) { // Android libraries
     }
 }
 
-uploadArchives {
-    repositories.mavenDeployer {
-
-        def deployPath = file('./')
-        repository(url: "file://${deployPath.absolutePath}/../../../Android-SDK/")
-
-        pom.project {
-            groupId 'com.medable'
-            artifactId 'Backbone'
-            version getProperty('versionName')
-        }
-    }
-}

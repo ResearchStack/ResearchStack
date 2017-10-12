@@ -1,3 +1,4 @@
+apply plugin: 'maven'
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
@@ -30,6 +31,41 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+
+                pom.groupId = GROUP
+                pom.artifactId = project.getProperties().POM_ARTIFACT_ID
+                pom.version = VERSION_NAME
+
+                def deployPath = file('./')
+                repository(url: "file://${deployPath.absolutePath}/../../Android-SDK/")
+
+                pom.project {
+                    name project.getProperties().POM_NAME
+                    packaging project.getProperties().POM_PACKAGING
+                    description POM_DESCRIPTION
+
+                    licenses {
+                        license {
+                            name POM_LICENCE_NAME
+                            url POM_LICENCE_URL
+                            distribution POM_LICENCE_DIST
+                        }
+                    }
+                }
+
+                pom.whenConfigured { pom ->
+                    pom.dependencies.forEach { dep ->
+                        if (dep.getVersion() == "unspecified") {
+                            dep.setGroupId(GROUP)
+                            dep.setVersion(VERSION_NAME)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
