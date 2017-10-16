@@ -1,15 +1,11 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
 
 android {
+
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
-
-    lintOptions {
-        warning "InvalidPackage"
-    }
 
     libraryVariants.all { variant ->
         variant.outputs.each { output ->
@@ -24,7 +20,12 @@ android {
         versionCode 6
         versionName version
     }
+
     buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -68,7 +69,6 @@ if (project.hasProperty("android")) { // Android libraries
     task javadoc(type: Javadoc) {
         failOnError false
         source = android.sourceSets.main.java.srcDirs
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     }
 
     afterEvaluate {
@@ -109,6 +109,16 @@ afterEvaluate { project ->
                         }
                     }
                 }
+
+                pom.whenConfigured { pom ->
+                    pom.dependencies.forEach { dep ->
+                        if (dep.getVersion() == "unspecified") {
+                            dep.setGroupId(GROUP)
+                            dep.setVersion(VERSION_NAME)
+                        }
+                    }
+                }
+
             }
         }
     }
