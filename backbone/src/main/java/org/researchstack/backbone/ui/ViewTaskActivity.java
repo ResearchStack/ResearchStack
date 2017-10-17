@@ -227,7 +227,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         } else if (action == StepCallbacks.ACTION_PREV) {
             showPreviousStep();
         } else if (action == StepCallbacks.ACTION_END) {
-            showConfirmExitDialog();
+            saveAndFinish();
         } else if (action == StepCallbacks.ACTION_NONE) {
             // Used when onSaveInstanceState is called of a view. No action is taken.
         } else {

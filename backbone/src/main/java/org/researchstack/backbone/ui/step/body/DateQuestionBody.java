@@ -2,7 +2,6 @@ package org.researchstack.backbone.ui.step.body;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.res.Resources;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,11 +111,8 @@ public class DateQuestionBody implements StepBody {
             }
         });
 
-        Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
         view.setLayoutParams(layoutParams);
 
         return view;
