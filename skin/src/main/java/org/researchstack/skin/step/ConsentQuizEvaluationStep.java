@@ -2,9 +2,10 @@ package org.researchstack.skin.step;
 
 import org.researchstack.backbone.step.Step;
 import org.researchstack.skin.R;
-import org.researchstack.skin.model.ConsentQuizModel;
+import org.researchstack.backbone.model.ConsentQuizModel;
 import org.researchstack.skin.ui.layout.ConsentQuizEvaluationStepLayout;
 
+@Deprecated // use NavigationFormStep or NavigationSubtaskStep instead
 public class ConsentQuizEvaluationStep extends Step {
     private ConsentQuizModel quizModel;
 

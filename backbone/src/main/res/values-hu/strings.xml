@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Informed consent process. -->
+    <string name="rsb_CONSENT_NAME_TITLE">Beleegyezés</string>
+    <string name="rsb_CONSENT_NAME_GIVEN">Utónév</string>
+    <string name="rsb_CONSENT_NAME_FAMILY">Családi név</string>
+    <string name="rsb_CONSENT_NAME_PLACEHOLDER">Szükséges</string>
+    <string name="rsb_CONSENT_REVIEW_TITLE">Áttekintés</string>
+    <string name="rsb_CONSENT_REVIEW_INSTRUCTION">Tekintse át az alábbi űrlapot, majd koppintson az Elfogadom gombra, ha készen áll a folytatásra.</string>
+    <string name="rsb_CONSENT_REVIEW_ALERT_TITLE">Áttekintés</string>
+    <string name="rsb_CONSENT_SIGNATURE_TITLE">Aláírás</string>
+    <string name="rsb_CONSENT_SIGNATURE_INSTRUCTION">Kérjük, írja alá az ujjával az alábbi vonalon.</string>
+    <string name="rsb_CONSENT_SIGNATURE_PLACEHOLDER">Itt írja alá</string>
+    <string name="rsb_CONSENT_PAGE_NUMBER_FORMAT">%2$ld/%1$ld oldal</string>
+    <!-- Consent section titles. -->
+    <string name="rsb_CONSENT_SECTION_WELCOME">Üdvözöljük</string>
+    <string name="rsb_CONSENT_SECTION_DATA_GATHERING">Adatgyűjtés</string>
+    <string name="rsb_CONSENT_SECTION_PRIVACY">Adatvédelem</string>
+    <string name="rsb_CONSENT_SECTION_DATA_USE">Adathasználat</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_SURVEY">Kérdőív</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_TASKS">A vizsgálat feladatai</string>
+    <string name="rsb_CONSENT_SECTION_TIME_COMMITMENT">Szükséges idő</string>
+    <string name="rsb_CONSENT_SECTION_WITHDRAWING">Visszavonás</string>
+    <string name="rsb_CONSENT_LEARN_MORE_TITLE">További infók</string>
+    <!-- Consent section learn more -->
+    <string name="rsb_LEARN_MORE_DATA_GATHERING">További információk az adatok gyűjtésének módjáról</string>
+    <string name="rsb_LEARN_MORE_DATA_USE">További információk az adatok felhasználásának módjáról</string>
+    <string name="rsb_LEARN_MORE_PRIVACY">További információk az adatok és személyes információk védelmének módjáról</string>
+    <string name="rsb_LEARN_MORE_WELCOME">További információk a vizsgálatról</string>
+    <string name="rsb_LEARN_MORE_STUDY_SURVEY">További információk a kérdőívről</string>
+    <string name="rsb_LEARN_MORE_TIME_COMMITMENT">További információk arról, mennyi időt vesz igénybe a felmérés</string>
+    <string name="rsb_LEARN_MORE_TASKS">További információk a bennfoglalt feladatokról</string>
+    <string name="rsb_LEARN_MORE_WITHDRAWING">További információk a visszavonásról</string>
+    <!-- Consent sharing step -->
+    <string name="rsb_CONSENT_SHARING_TITLE">Megosztási beállítások</string>
+    <string name="rsb_consent_share_widely">Az adataim megosztása a következővel és világszerte szakképzett kutatókkal: %1$s</string>
+    <string name="rsb_consent_share_only">Az adataim megosztása csak a következővel: %1$s</string>
+    <string name="rsb_consent_sharing_description">A(z) %1$s meg fogja kapni az Ön vizsgálati adatait az Ön vizsgálatban való részvételéről.\n\nA kódolt vizsgálati adatok szélesebb körű megosztása (az olyan információk nélkül, mint az Ön neve) segítheti ezt és a jövőbeli kutatásokat.</string>
+    <string name="rsb_LEARN_MORE_CONSENT_SHARING">További infó az adatok megosztásáról</string>
+    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%1$s neve (kinyomtatva)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%1$s aláírása</string>
+    <string name="rsb_CONSENT_DOC_LINE_DATE">Dátum</string>
+    <!-- Progress indication (in navigation bar). -->
+    <string name="rsb_STEP_PROGRESS_FORMAT">%1$s/%2$s. lépés</string>
+    <!-- Alert for out of range values. -->
+    <string name="rsb_RANGE_ALERT_TITLE">Érvénytelen érték</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">A(z) %1$s túllépi a maximálisan engedélyezett értéket (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">A(z) %1$s kisebb a minimálisan engedélyezett értéknél (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">A(z) %1$s nem érvényes érték.</string>
+    <!-- Alert for invalid email address value -->
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Érvénytelen e-mail cím: %1$s</string>
+    <!-- Alerts for invalid location coordinates -->
+    <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Adjon meg egy címet</string>
+    <string name="rsb_LOCATION_ERROR_TITLE">A megadott cím nem található</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_LOCATION_UNKNOWN">Az aktuális hely feloldása nem sikerült. Írjon be egy címet, vagy menjen olyan helyre, ahol a GPS-jelerősség kedvezőbb.</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_DENIED">A helymeghatározáshoz való hozzáférés le van tiltva. Engedélyezze az alkalmazás számára a helymeghatározás funkció használatát a Beállításokban.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE">A megadott címhez nem található eredmény. Győződjön meg arról, hogy a cím érvényes.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">Ön nem csatlakozik az internethez, vagy túllépte a címkeresési kérelmek maximálisan engedélyezett számát. Ha nem csatlakozik az internethez, akkor kapcsolja be a Wi-Fi-t és válaszoljon erre a kérdésre, ha a kihagyás gomb megjelenik, akkor hagyja ki ezt a kérdést, vagy térjen vissza a kérdőívre, amikor már csatlakozik az internethez. Ellenkező esetben próbálkozzon újra néhány perc múlva.</string>
+    <!-- Alert for exceeding length limit in text answer -->
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">A szöveg túllépi a maximális hosszt: %1$s</string>
+    <!-- Camera not available during multitasking -->
+    <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">A kamera nem érhető el osztott képernyős nézetben.</string>
+    <!-- Registration step -->
+    <string name="rsb_EMAIL_FORM_ITEM_TITLE">E-mail</string>
+    <string name="rsb_EMAIL_FORM_ITEM_PLACEHOLDER">nagyede@example.com</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_TITLE">Jelszó</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_PLACEHOLDER">Jelszó megadása</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_TITLE">Megerősítés</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_PLACEHOLDER">Jelszó ismételt megadása</string>
+    <string name="rsb_CONFIRM_PASSWORD_ERROR_MESSAGE">A jelszavak nem egyeznek meg.</string>
+    <string name="rsb_ADDITIONAL_INFO_SECTION_TITLE">További információk</string>
+    <string name="rsb_GIVEN_NAME_ITEM_PLACEHOLDER">Ede</string>
+    <string name="rsb_FAMILY_NAME_ITEM_PLACEHOLDER">Nagy</string>
+    <string name="rsb_GENDER_FORM_ITEM_TITLE">Nem</string>
+    <string name="rsb_GENDER_FORM_ITEM_PLACEHOLDER">Nem kiválasztása</string>
+    <string name="rsb_DOB_FORM_ITEM_TITLE">Születési dátum</string>
+    <string name="rsb_DOB_FORM_ITEM_PLACEHOLDER">Dátum kiválasztása</string>
+    <!-- Verification step -->
+    <string name="rsb_VERIFICATION_NAV_TITLE">Ellenőrzés</string>
+    <string name="rsb_VERIFICATION_STEP_TITLE">E-mail ellenőrzése</string>
+    <string name="rsb_RESEND_EMAIL_LABEL_MESSAGE">Koppintson az alábbi linkre, ha nem kapott ellenőrző e-mailt, és azt szeretné, ha újra elküldenénk.</string>
+    <string name="rsb_RESEND_EMAIL_BUTTON_TITLE">Ellenőrző e-mail újraküldése</string>
+    <!-- Login step -->
+    <string name="rsb_LOGIN_CONTINUE_BUTTON_TITLE">Bejelentkezés</string>
+    <string name="rsb_FORGOT_PASSWORD_BUTTON_TITLE">Elfelejtette a jelszót?</string>
+    <!-- Passcode step -->
+    <string name="rsb_PASSCODE_PROMPT_MESSAGE">Adja meg a jelkódot</string>
+    <string name="rsb_PASSCODE_CONFIRM_MESSAGE">Erősítse meg a jelkódját</string>
+    <string name="rsb_PASSCODE_SAVED_MESSAGE">A jelkód mentve</string>
+    <string name="rsb_PASSCODE_AUTHENTICATED_MESSAGE">A jelkód hitelesítve van</string>
+    <string name="rsb_PASSCODE_OLD_ENTRY_MESSAGE">Adja meg a régi jelkódját</string>
+    <string name="rsb_PASSCODE_NEW_ENTRY_MESSAGE">Adja meg az új jelkódját</string>
+    <string name="rsb_PASSCODE_CONFIRM_NEW_ENTRY_MESSAGE">Erősítse meg az új jelkódját</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_TITLE">A jelkód helytelen</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_MESSAGE">A jelkódok nem egyeznek meg. Próbálja újra.</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_MESSAGE">Kérjük, végezzen hitelesítést a Touch ID-val</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_ERROR_ALERT_TITLE">Touch ID-val kapcsolatos hiba</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_INVALID_INPUT_MESSAGE">Kizárólag számkarakterek engedélyezettek.</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILITY_LABEL">Jelkóddal történő belépés folyamatjelzője</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILTIY_VALUE">%1$s/%2$s számjegy megadva</string>
+    <string name="rsb_PASSCODE_FORGOT_BUTTON_TITLE">Elfelejtette a jelkódot?</string>
+    <!-- Keychain wrapper -->
+    <string name="rsb_KEYCHAIN_ADD_ERROR_MESSAGE">Nem lehetett hozzáadni a Kulcskarika-elemet.</string>
+    <string name="rsb_KEYCHAIN_UPDATE_ERROR_MESSAGE">Nem lehetett frissíteni a Kulcskarika-elemet.</string>
+    <string name="rsb_KEYCHAIN_DELETE_ERROR_MESSAGE">Nem lehetett törölni a Kulcskarika-elemet.</string>
+    <string name="rsb_KEYCHAIN_FIND_ERROR_MESSAGE">A Kulcskarika-elem nem található.</string>
+    <!-- Blood types -->
+    <string name="rsb_blood_type_a_plus">A+</string>
+    <string name="rsb_BLOOD_TYPE_A_">A-</string>
+    <string name="rsb_blood_type_ab_plus">AB+</string>
+    <string name="rsb_BLOOD_TYPE_AB_">AB-</string>
+    <string name="rsb_blood_type_b_plus">B+</string>
+    <string name="rsb_BLOOD_TYPE_B_">B-</string>
+    <string name="rsb_blood_type_o_plus">0+</string>
+    <string name="rsb_BLOOD_TYPE_O_">0-</string>
+    <!-- Gender values. -->
+    <string name="rsb_GENDER_FEMALE">Nő</string>
+    <string name="rsb_GENDER_MALE">Férfi</string>
+    <string name="rsb_GENDER_OTHER">Egyéb</string>
+    <!-- Boolean answer strings -->
+    <string name="rsb_BOOL_NO">Nem</string>
+    <string name="rsb_BOOL_YES">Igen</string>
+    <!-- Measuring unit abbreviations -->
+    <string name="rsb_MEASURING_UNIT_CM">cm</string>
+    <string name="rsb_MEASURING_UNIT_FT">ft</string>
+    <string name="rsb_MEASURING_UNIT_IN">in</string>
+    <!-- Default placeholders to request answers in a questionnaire. -->
+    <string name="rsb_PLACEHOLDER_TEXT_OR_NUMBER">Koppintson a válaszhoz</string>
+    <string name="rsb_NULL_ANSWER">Válasz kiválasztása</string>
+    <string name="rsb_PLACEHOLDER_IMAGE_CHOICES">Koppintson a kijelöléshez</string>
+    <string name="rsb_PLACEHOLDER_LONG_TEXT">Koppintson az íráshoz.</string>
+    <!-- Button titles -->
+    <string name="rsb_BUTTON_AGREE">Elfogadom</string>
+    <string name="rsb_BUTTON_CANCEL">Mégsem</string>
+    <string name="rsb_BUTTON_OK">OK</string>
+    <string name="rsb_BUTTON_CLEAR">Törlés</string>
+    <string name="rsb_BUTTON_DISAGREE">Nem fogadom el</string>
+    <string name="rsb_BUTTON_DONE">Kész</string>
+    <string name="rsb_BUTTON_GET_STARTED">Kezdés</string>
+    <string name="rsb_BUTTON_LEARN_MORE">További infók</string>
+    <string name="rsb_BUTTON_NEXT">Következő</string>
+    <string name="rsb_BUTTON_SKIP">Kihagyás</string>
+    <string name="rsb_BUTTON_SKIP_QUESTION">A kérdés kihagyása</string>
+    <string name="rsb_BUTTON_START_TIMER">Időzítő indítása</string>
+    <string name="rsb_BUTTON_OPTION_SAVE">Mentés későbbre</string>
+    <string name="rsb_BUTTON_OPTION_DISCARD">Eredmények elvetése</string>
+    <string name="rsb_BUTTON_OPTION_STOP_TASK">Feladat befejezése</string>
+    <string name="rsb_BUTTON_SAVE">Mentés</string>
+    <string name="rsb_BUTTON_CLEAR_ANSWER">Válasz törlése</string>
+    <string name="rsb_BUTTON_READ_ONLY_MODE">Ez a válasz nem módosítható.</string>
+    <!-- General active tasks. -->
+    <string name="rsb_COUNTDOWN_LABEL">Tevékenység indítása:</string>
+    <string name="rsb_TASK_COMPLETE_TITLE">Tevékenység befejezve</string>
+    <string name="rsb_TASK_COMPLETE_TEXT">Az adatok ki lesznek elemezve, és értesítést fog kapni, ha az eredmény elkészült.</string>
+    <string name="rsb_countdown_spoken_remaining">%1$s másodperc van hátra.</string>
+    <!-- Image capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Kép készítése</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Kép készítése újra</string>
+    <string name="rsb_CAPTURE_ERROR_CAMERA_NOT_FOUND">Nem található kamera. Ezt a lépést nem lehet végrehajtani.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_PERMISSIONS">A lépés végrehajtásához a Beállításokban engedélyezze az alkalmazás számára, hogy hozzáférjen a kamerához.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_OUTPUT_DIRECTORY">Az elkészített képekhez nem lett megadva kimeneti könyvtár.</string>
+    <string name="rsb_CAPTURE_ERROR_CANNOT_WRITE_FILE">Az elkészített képet nem sikerült menteni.</string>
+    <!-- Video capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_VIDEO">Felvétel indítása</string>
+    <string name="rsb_CAPTURE_BUTTON_STOP_CAPTURE_VIDEO">Felvétel leállítása</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Videó ismételt rögzítése</string>
+    <!-- Fitness active task. -->
+    <string name="rsb_FITNESS_TASK_TITLE">Fitnesz</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Távolság (%1$s)</string>
+    <string name="rsb_FITNESS_HEARTRATE_TITLE">Pulzusszám (bpm)</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Üljön kényelmesen %1$s időtartamig.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Gyalogoljon olayn gyorsan, amilyen gyorsan tud %1$s időtartam alatt.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Ez a tevékenység a pulzusát figyeli, és megméri, milyen messzire tud gyalogolni %1$s időtartam alatt.</string>
+    <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Kültéren gyalogoljon olyan gyorsan, ahogy csak tud %1$s időtartamig. Amikor befejezte, üljön le, és pihenjen kényelmesen %2$s időtartamig. A kezdéshez koppintson a Kezdés elemre.</string>
+    <!-- Short walk active task. -->
+    <string name="rsb_WALK_TASK_TITLE">Testtartás és egyensúly</string>
+    <string name="rsb_WALK_INTRO_TEXT">Ez a tevékenység a testtartását és egyensúlyát méri járás és állás közben. Ne folytassa, ha segítség nélkül nem tud biztonságosan gyalogolni.</string>
+    <string name="rsb_walk_intro_2_text_ld">Keressen olyan helyet, ahol segítség nélkül gyalogolhat egyenesen körülbelül %1$d lépést.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL">Tegye a telefont a zsebébe vagy a táskájába, és kövesse a hangutasításokat.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Most álljon mozdulatlanul %1$s időtartamig.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Álljon mozdulatlanul %1$s időtartamig.</string>
+    <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Forduljon meg, és menjen vissza a kiindulási ponthoz.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Tegyen meg legalább %1$d lépést egyenesen.</string>
+    <!-- Short walk back and forth. -->
+    <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Keressen egy olyan helyet, ahol egyenes vonalban tud oda-vissza gyalogolni. Próbáljon meg folyamatosan gyalogolni, és a végeken úgy forduljon meg, mintha egy útjelző bóját kerülne meg.\n\nEzután utasítást fog kapni, hogy fogduljon meg egy teljes kört megtéve, majd álljon meg, engedje le a törzse mellett karjait, és álljon vállszélességű terpeszben.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Koppintson a Kezdés elemre, amikor készen áll.\nEzután tegye a telefont a zsebébe vagy a táskájába, és kövesse a hangutasításokat.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Gyalogoljon oda-vissza egy egyenes vonal mentén ennyi ideig: %1$s. A szokásos tempójában gyalogoljon.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Forduljon meg egy teljes kör mentén, és álljon mozdulatlanul ennyi ideig: %1$s.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Befejezte a tevékenységet.</string>
+    <!-- Tapping active task. -->
+    <string name="rsb_TAPPING_TASK_TITLE">Koppintási sebesség</string>
+    <string name="rsb_TAPPING_TASK_TITLE_RIGHT">Jobb kéz</string>
+    <string name="rsb_TAPPING_TASK_TITLE_LEFT">Bal kéz</string>
+    <string name="rsb_TAPPING_INTRO_TEXT">Ez a tevékenység megméri a koppintási sebességét.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_REST_PHONE">Tegye a telefont egy vízszintes felületre.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_MOST_AFFECTED">Ugyanannak a kezének két ujjával felváltva koppintson a gombokra a kijelzőn.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_FIRST">A jobb kezének két ujjával felváltva koppintson a gombokra a kijelzőn.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">A bal kezének két ujjával felváltva koppintson a gombokra a kijelzőn.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Most ismételje meg ugyanezt a tesztet jobb kézzel.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Most ismételje meg ugyanezt a tesztet bal kézzel.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Koppintson az egyik, majd a másik ujjával. Próbáljon meg egyenletes időközönként koppintani. Folytassa a koppintásokat ennyi ideig: %1$s.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION">A kezdéshez koppintson a Kezdés elemre.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Koppintson\na Következő elemre\na kezdéshez.</string>
+    <string name="rsb_TAP_BUTTON_TITLE">Koppintás</string>
+    <string name="rsb_TOTAL_TAPS_LABEL">Összes koppintás</string>
+    <string name="rsb_TAPPING_INSTRUCTION">Két ujjal koppintson a gombokra olyan egyenletesen, ahogy csak tud.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_RIGHT">Koppintson a gombokra JOBB kézzel.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_LEFT">Koppintson a gombokra BAL kézzel.</string>
+    <string name="rsb_TAPPING_SKIP_TITLE">Kéz kihagyása</string>
+    <!-- Audio active task. -->
+    <string name="rsb_AUDIO_TASK_TITLE">Hang</string>
+    <string name="rsb_AUDIO_CALL_TO_ACTION">A kezdéshez koppintson a Kezdés elemre.</string>
+    <string name="rsb_AUDIO_INSTRUCTION">Amilyen hosszan csak tudja, mondja, hogy „Áááááá” a mikrofonba.</string>
+    <string name="rsb_AUDIO_INTRO_TEXT">Vegyen mély levegőt, és amilyen hosszan csak tudja, mondja a mikrofonba, hogy „Áááááá”. Próbáljon egyenletes hangerőt tartani, hogy a hangsávok kékek maradjanak.</string>
+    <string name="rsb_AUDIO_INTENDED_USE">Ez a tevékenység kiértékeli a hangját, rögzítve, ahogy a telefon alján lévő mikrofonba beszél.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_LABEL">Túl hangos</string>
+    <string name="rsb_AUDIO_GENERIC_ERROR_LABEL">Nem sikerült hangot felvenni</string>
+    <string name="rsb_AUDIO_LEVEL_CHECK_LABEL">Kérjük, várjon, amíg ellenőrizzük a háttérzaj szintjét.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_MESSAGE">A környezeti zaj szinte túl magas a hangja felvételéhez. Kérjük, menjen csendesebb helyre, és próbálkozzon újra.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_ACTION_NEXT">Koppintson a Következő elemre, amikor készen áll.</string>
+    <!-- Tone audiometry active task. -->
+    <string name="rsb_TONE_AUDIOMETRY_TASK_TITLE">Hangaudiometria</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTENDED_USE">Ez a tevékenység azt méri fel, hogyan hallja Ön a különböző hangokat.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTRO_TEXT">Először is csatlakoztassa és tegye fel a fejhallgatót.</string>
+    <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">A kezdéshez koppintson a Kezdés elemre.</string>
+    <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Ön most valószínűleg hall egy hangot. Állítsa be a hangerőt a készülék oldalán található vezérlőkkel.\n\nKoppintson a gombra, amikor készen áll a kezdésre.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Koppintson a gombra mindig, amikor egy hangot hall.</string>
+    <string name="rsb_tone_label_left">%1$s Hz, bal</string>
+    <string name="rsb_tone_label_right">%1$s Hz, jobb</string>
+    <!-- Spatial span memory active task. -->
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Térbeli memória</string>
+    <string name="rsb_spatial_span_memory_intro_text">Ez a tevékenység a rövidtávú térbeli memóriát vizsgálja. Ehhez ismételje meg a felvillanó %1$s képeinek sorrendjét.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">virágok</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">virágok</string>
+    <string name="rsb_spatial_span_memory_intro_2_text">A(z) %1$s egymás után fel fognak villanni. Koppintson a(z) %2$s képeire a megjelenésükkel azonos sorrendben.</string>
+    <string name="rsb_spatial_span_memory_intro_2_text_reverse">A(z) %1$s egymás után fel fognak villanni. Koppintson a(z) %2$s képeire a megjelenésük fordított sorrendjében.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">A kezdéshez koppintson a Kezdés elemre, majd figyeljen.</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
+    <string name="rsb_MEMORY_GAME_SCORE_TITLE">Eredmény</string>
+    <string name="rsb_memory_game_playback_title">Figyelje, ahogy a(z) %1$s felvillannak</string>
+    <string name="rsb_memory_game_gameplay_title">Koppintson a(z) %1$s képekre olyan sorrendben, ahogy felvillantak</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Koppintson a(z) %1$s képekre fordított sorrendben</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">A sorozat befejeződött</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">A folytatáshoz koppintson a Következő gombra</string>
+    <string name="rsb_MEMORY_GAME_FAILED_TITLE">Újrapróbálkozás</string>
+    <string name="rsb_MEMORY_GAME_FAILED_MESSAGE">Ez alkalommal nem sikerült. A folytatáshoz koppintson a Következő gombra.</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_TITLE">Letelt az idő</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_MESSAGE">Elfogyott az idő.\nA folytatáshoz koppintson a Következő gombra.</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE">Játék befejezve</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_TITLE">Szüneteltetve</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_MESSAGE">A folytatáshoz koppintson a Következő gombra</string>
+    <!-- Reaction time active task. -->
+    <string name="rsb_REACTION_TIME_TASK_TITLE">Reakcióidő</string>
+    <string name="rsb_REACTION_TIME_TASK_INTENDED_USE">Ez a tevékenység felméri, hogy mennyi ideig tart Önnek válaszolni egy vizuális jelzésre.</string>
+    <string name="rsb_REACTION_TIME_TASK_INTRO_TEXT_FORMAT">Rázza meg a készüléket tetszőleges irányban, amint megjelenik a képernyőn a kék pont. A készülék %D alkalommal fogja megkérni erre.</string>
+    <string name="rsb_REACTION_TIME_TASK_CALL_TO_ACTION">A kezdéshez koppintson a Kezdés elemre.</string>
+    <string name="rsb_REACTION_TIME_TASK_ATTEMPTS_FORMAT">%1$s/%2$s. kísérlet</string>
+    <string name="rsb_REACTION_TIME_TASK_ACTIVE_STEP_TITLE">Gyorsan rázza meg a készüléket, amikor megjelenik a kék kör</string>
+    <!-- Tower of Hanoi active task -->
+    <string name="rsb_TOWER_OF_HANOI_TASK_TITLE">Hanoi tornyai</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTENDED_USE">Ez a tevékenység kiértékeli az Ön kirakómegoldási képességeit.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTRO_TEXT">Helyezze át a teljes köteget a kijelölt oszlopra a lehető legkevesebb lépésben.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_TASK_CALL_TO_ACTION">A kezdéshez koppintson a Kezdés elemre</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_INTRO_TEXT">A kirakós megoldása</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_PROGRESS_TEXT">Lépések száma: %1$s \n %2$s</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_SKIP_BUTTON_TITLE">Nem tudom megoldani ezt a kirakót</string>
+    <!-- Timed walk active task. -->
+    <string name="rsb_TIMED_WALK_TITLE">Időre mért gyaloglás</string>
+    <string name="rsb_TIMED_WALK_INTRO_DETAIL">Ez a tevékenység az alsó végtagok működését méri.</string>
+    <string name="rsb_timed_walk_intro_2_text">Keressen olyan helyet, lehetőleg kültéren, ahol %1$s ideig egyenesen tud gyalogolni olyan gyorsan, ahogy csak tud, de biztonságosan. Ne lassítson le, amíg el nem hagyta a célvonalat.</string>
+    <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Koppintson\na Következő elemre\na kezdéshez.</string>
+    <string name="rsb_TIMED_WALK_FORM_TITLE">Segítőeszköz</string>
+    <string name="rsb_TIMED_WALK_FORM_TEXT">Ugyanazt a segítőeszközt használja minden teszthez.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_TEXT">Használ boka-járáskönnyítőt?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TITLE">Használ segítőeszközt?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TEXT">Válasz kijelöléséhez koppintson ide.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE">Nincs</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_2">Egyoldali bot</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_3">Egyoldali mankó</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Kétoldali bot</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Kétoldali mankó</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Járókeret/rollátor</string>
+    <string name="rsb_timed_walk_instruction">Gyalogoljon legalább %1$s távolságra egyenesen.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_2">Forduljon meg, és menjen vissza a kiindulási ponthoz.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Koppintson a Kész lehetőségre, ha elkészült.</string>
+    <!-- PSAT active task. -->
+    <string name="rsb_PASAT_TITLE">PASAT</string>
+    <string name="rsb_PVSAT_TITLE">PVSAT</string>
+    <string name="rsb_PAVSAT_TITLE">PAVSAT</string>
+    <string name="rsb_PASAT_INTRO_TEXT">Az Ütemes hallási sorozatösszeadási teszt a hallási információfeldolgozási sebességet és számítási képességet méri.</string>
+    <string name="rsb_PVSAT_INTRO_TEXT">Az Ütemes vizuális sorozatösszeadási teszt a vizuális információfeldolgozási sebességet és számítási képességet méri.</string>
+    <string name="rsb_PAVSAT_INTRO_TEXT">Az Ütemes hallási és vizuális sorozatösszeadási teszt a hallási és vizuális információfeldolgozási sebességet és számítási képességet méri.</string>
+    <string name="rsb_psat_intro_text_2">%1$s másodpercenként számjegyek jelennek meg.\nMinden új számjegyet adjon hozzá az előtte lévőhöz.\nFigyelem: Ne számítsa ki a teljes sorozat összegét, csak az utolsó két számjegy összegét.</string>
+    <string name="rsb_PSAT_CALL_TO_ACTION">A kezdéshez koppintson a Kezdés elemre.</string>
+    <string name="rsb_PSAT_INITIAL_INSTRUCTION">Jegyezze meg ezt az első számjegyet.</string>
+    <string name="rsb_PSAT_INSTRUCTION">Adja hozzá ezt az új számjegyet az előzőhöz.</string>
+    <string name="rsb_PSAT_NO_DIGIT">-</string>
+    <!-- Hole peg test active task. -->
+    <string name="rsb_hole_peg_test_title">%1$s lyukú körillesztő teszt</string>
+    <string name="rsb_hole_peg_test_intro_text">Ez a tevékenység a felső végtagok mozgását vizsgálja, amelynek során a rendszer megkéri Önt, hogy illesszen bele egy kört egy lyukba. Ezt %1$s alkalommal kell megtennie.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">A bal és a jobb keze egyaránt tesztelve lesz.\nMinél gyorsabban vegye fel a kört, és illessze be a lyukba, és miután ezt %1$s alkalommal megtette, távolítsa el %2$s alkalommal.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">A jobb és a bal keze egyaránt tesztelve lesz.\nMinél gyorsabban vegye fel a kört, és illessze be a lyukba, és miután ezt %1$s alkalommal megtette, távolítsa el %2$s alkalommal.</string>
+    <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">A kezdéshez koppintson a Kezdés elemre.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_LEFT_HAND">Tegye a kört a lyukba a bal kezével.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_RIGHT_HAND">Tegye a kört a lyukba a jobb kezével.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_LEFT_HAND">Tegye a kört a vonal mögé a bal kezével.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_RIGHT_HAND">Tegye a kört a vonal mögé a jobb kezével.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT">Fogja meg a kört két ujjal.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT_2">Emelje fel az ujjait a kör elhelyezéséhez.</string>
+    <!-- Tremor test active task. -->
+    <string name="rsb_TREMOR_TEST_TITLE">Remegési tevékenység</string>
+    <string name="rsb_TREMOR_TEST_INTRO_1_DETAIL">Ez a tevékenység a keze remegését méri különböző helyzetekben. Keressen egy olyan helyet, ahol kényelmesen le tud ülni a tevékenység idejére.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Tartsa a telefont a gyakrabban használt kezében, a képen látható módon.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Tartsa a telefont a JOBB kezében, a képen látható módon.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Tartsa a telefont a BAL kezében, a képen látható módon.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">A rendszer fel fogja kérni a(z) %1$s végrehajtására, miközben ül a telefonnal a kezében.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">egy feladat</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">két feladat</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">három feladat</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_4_TASK">négy feladat</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_5_TASK">öt feladat</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT">Koppintson a Következő elemre a folytatáshoz.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Készüljön fel arra, hogy a telefont az ölében tartsa.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Készüljön fel arra, hogy a telefont a BAL kezével az ölében tartsa.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Készüljön fel arra, hogy a telefont a JOBB kezével az ölében tartsa.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Tartsa az ölében a telefont %1$d másodpercig.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Most tartsa a telefont kinyújtott karral vállmagasságban.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Most tartsa a telefont kinyújtott karral, BAL kézzel vállmagasságban.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Most tartsa a telefont kinyújtott karral, JOBB kézzel vállmagasságban.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Tartsa a telefont kinyújtott karral %1$d másodpercig.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Most tartsa a telefont behajlított könyökkel vállmagasságban.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Most tartsa a telefont behajlított könyökkel, BAL kézzel vállmagasságban.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Most tartsa a telefont behajlított könyökkel, JOBB kézzel vállmagasságban.</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Tartsa a telefont behajlított könyökkel %1$d másodpercig.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Most a könyökét behajlítva érintse többször az orrához a telefont.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Most tartsa a telefont BAL kézzel, a könyökét behajlítva, és érintse többször az orrához a telefont.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Most tartsa a telefont JOBB kézzel, a könyökét behajlítva, és érintse többször az orrához a telefont.</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Érintse a telefont az orrához %1$d másodpercig.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Forgassa a felemelt csuklóját (mintha integetne).</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Forgassa a felemelt BAL csuklóját a telefonnal a kezében (mintha integetne).</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Forgassa a felemelt JOBB csuklóját a telefonnal a kezében (mintha integetne).</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Forgassa a felemelt csuklóját %1$d másodpercig.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Most tegye át a telefont a BAL kezébe, és folytassa a következő feladattal.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Most tegye át a telefont a JOBB kezébe, és folytassa a következő feladattal.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Folytatás a következő feladattal.</string>
+    <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Tevékenység befejezve.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">A rendszer fel fogja kérni a(z) %1$s végrehajtására, miközben ül a telefonnal az egyik kezében, majd a másik kezében.</string>
+    <string name="rsb_TREMOR_SKIP_LEFT_HAND">A BAL kezemmel nem tudom elvégezni ezt a feladatot.</string>
+    <string name="rsb_TREMOR_SKIP_RIGHT_HAND">A JOBB kezemmel nem tudom elvégezni ezt a feladatot.</string>
+    <string name="rsb_TREMOR_SKIP_NEITHER">Mindkét kézzel el tudom végezni ezt a feladatot.</string>
+    <!-- Potentially user visible error messages. -->
+    <string name="rsb_ERROR_DATALOGGER_CREATE_FILE">A fájl nem hozható létre</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_FREE_SPACE">Nem sikerült elég naplófájlt eltávolítani a küszöb eléréséhez</string>
+    <string name="rsb_ERROR_DATALOGGER_SET_ATTRIBUTE">Hiba történt az attribútum beállításakor</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_MAORK">A fájl nincs töröltként megjelölve (nincs feltöltöttként megjelölve)</string>
+    <string name="rsb_ERROR_DATALOGGER_MULTIPLE">Több hiba történt a naplók eltávolításakor</string>
+    <string name="rsb_ERROR_RECORDER_NO_DATA">Nem található összegyűjtött adat.</string>
+    <string name="rsb_ERROR_RECORDER_NO_OUTPUT_DIRECTORY">Nincs megadva kimeneti könyvtár</string>
+    <!-- Charts -->
+    <string name="rsb_CHART_NO_DATA_TEXT">Nincs adat</string>
+    <!-- Accessibility -->
+    <string name="rsb_AX_BUTTON_BACK">Vissza</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">%1$s illusztrációja</string>
+    <string name="rsb_AX_SIGNVIEW_LABEL">Külön aláírásmező</string>
+    <string name="rsb_AX_SIGNVIEW_HINT">Érintse meg a képernyőt, és mozgassa az ujját az aláíráshoz</string>
+    <string name="rsb_AX_SIGNVIEW_SIGNED">Aláírva</string>
+    <string name="rsb_AX_SIGNVIEW_UNSIGNED">Aláírás nélküli</string>
+    <string name="rsb_AX_SELECTED">Kiválasztva</string>
+    <string name="rsb_AX_UNSELECTED">Nincs kijelölve</string>
+    <string name="rsb_AX_SLIDER_LABEL">Válaszcsúszka. Tartomány: %1$s - %2$s</string>
+    <string name="rsb_AX_UNLABELED_IMAGE">Címke nélküli kép</string>
+    <string name="rsb_AX_ANNOUNCE_BEGIN_TASK">Feladat megkezdése</string>
+    <string name="rsb_AX_MEMORY_TILE_ACTIVE">aktív</string>
+    <string name="rsb_AX_MEMORY_TILE_CORRECT">helyes</string>
+    <string name="rsb_AX_MEMORY_TILE_INCORRECT">helytelen</string>
+    <string name="rsb_AX_MEMORY_TILE_QUIESCENT">nyugodt</string>
+    <string name="rsb_AX_MEMORY_TILE_LABEL">Memóriajáték címe</string>
+    <string name="rsb_AX_IMAGE_CAPTURE_LABEL">Előnézet rögzítése</string>
+    <string name="rsb_AX_IMAGE_CAPTURED_LABEL">Készített kép</string>
+    <string name="rsb_AX_VIDEO_CAPTURE_LABEL">Videorögzítés előnézete</string>
+    <string name="rsb_AX_VIDEO_CAPTURED_LABEL">Rögzített videó</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_INVALID_MOVE_FORMAT">Nem helyezhető %1$s méretű korong %2$s méretű korongra</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TARGET_DISK">Cél</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Torony</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Koppintson duplán a korong elhelyezéséhez</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Koppintson duplán a legfelső korong kijelöléséhez</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">A következő méretű korongokat tárolja: %1$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Üres</string>
+    <string name="rsb_ax_graph_range_format">Tartomány ettől: %1$s eddig: %2$s</string>
+    <string name="rsb_AX_GRAPH_STACK_PREFIX">Halom a következőkből:</string>
+    <string name="rsb_AX_GRAPH_AND_SEPARATOR">és</string>
+    <string name="rsb_ax_graph_point">Pont: %1$s</string>
+    
+</resources>

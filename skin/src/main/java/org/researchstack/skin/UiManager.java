@@ -3,9 +3,12 @@ package org.researchstack.skin;
 import android.app.Application;
 import android.content.Context;
 
+import org.researchstack.backbone.ResourceManager;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.notification.TaskNotificationReceiver;
+import org.researchstack.skin.ui.fragment.ShareFragment;
 
 import java.util.List;
 
@@ -43,7 +46,7 @@ public abstract class UiManager {
     /**
      * All ActionItems returned by this method should define a title, icon, and class. These
      * ActionItems are used to populate an ActionBar in the main Activity, so the class should be
-     * that of activity (either SettingsActivity & LearnActivity or your own items)
+     * that of activity (either SettingsActivity &amp; LearnActivity or your own items)
      *
      * @return a list of ActionItems for display in the MainActivity ActionBar
      */
@@ -52,7 +55,7 @@ public abstract class UiManager {
     /**
      * All ActionItems returned by this method should define a title, icon, and class. These items
      * are used to fill a pager in the MainActivity. The framework uses the class objects from this
-     * list to create a Fragments for tha pager. It is imperative that the defined classes be of
+     * list to create Fragments for tha pager. It is imperative that the defined classes be of
      * instance  {@link android.support.v4.app.Fragment}.
      *
      * @return a list of ActionItems for display in the MainActivity ActionBar
@@ -60,23 +63,31 @@ public abstract class UiManager {
     public abstract List<ActionItem> getMainTabBarItems();
 
     /**
-     * Includsion Criteria Step is one of the first Steps the user will come in contact with. It is
+     * Inclusion Criteria Step is one of the first Steps the user will come in contact with. It is
      * a question / form of questions whos result is used to see if the user elligible or
-     * inelligible for the study. That result in calculate and returned within {@link
-     * #isInclusionCriteriaValid(StepResult)}
+     * inelligible for the study.
+     *
+     * This method is now deprecated and Inclusion Criteria will now be loaded from a JSON file as
+     * defined  {@link ResourceManager#getInclusionCriteria()}.
      *
      * @param context android context
      * @return a Step used for Eligibility within the onboarding process
      */
+    @Deprecated
     public abstract Step getInclusionCriteriaStep(Context context);
 
     /**
      * Method used by the framework to show if the user the result of the {@link
      * #getInclusionCriteriaStep(Context)}.
      *
+     * This method is now deprecated and Inclusion Criteria will now be loaded from a JSON file as
+     * defined  {@link ResourceManager#getInclusionCriteria()}.  The JSON file
+     * contains expected answers which will be used to determine if the inclusion criteria is valid.
+     *
      * @param result StepResult object that contains the answers of the InclusionCriteria step
-     * @return true if the user is elligible for the study
+     * @return <code>true</code> if the user is elligible for the study
      */
+    @Deprecated
     public abstract boolean isInclusionCriteriaValid(StepResult result);
 
     /**
@@ -85,10 +96,20 @@ public abstract class UiManager {
      * All data will still be collected and uploaded when the user successfully signs up for the
      * first time Defaults to false.
      *
+     *
      * @return true if consent is skippable
      */
     public boolean isConsentSkippable() {
         return false;
+    }
+
+    /**
+     * Returns <code>true</code> if the password supplied by the user in the sign up step is valid.
+     * @param password the password to validate
+     * @return <code>true</code> if the password is valid, <code>false</code> otherwise
+     */
+    public boolean isValidPassword(String password) {
+        return ! TextUtils.isEmpty(password);
     }
 
     /**
@@ -99,5 +120,16 @@ public abstract class UiManager {
      */
     public Class<?> getTaskNotificationReceiver() {
         return TaskNotificationReceiver.class;
+    }
+
+    /**
+     * Return the ShareFragment to be used.  Individual apps can extend and modify the fragment if they
+     * desire custom logic or presentation.
+     *
+     * @return The ShareFragment to use.
+     */
+    public ShareFragment getShareFragment()
+    {
+        return new ShareFragment();
     }
 }

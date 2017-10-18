@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
@@ -46,6 +47,9 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     public void initialize(Step step, StepResult result) {
         this.step = (ConsentDocumentStep) step;
         this.confirmationDialogBody = ((ConsentDocumentStep) step).getConfirmMessage();
+        if (confirmationDialogBody == null) {
+            confirmationDialogBody = getContext().getString(R.string.rsb_consent_document_review_message);
+        }
         this.htmlContent = ((ConsentDocumentStep) step).getConsentHTML();
         this.stepResult = result;
 

@@ -16,6 +16,12 @@ public class DecimalAnswerFormat extends AnswerFormat {
     private float minValue;
     private float maxValue;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    DecimalAnswerFormat()
+    {
+        super();
+    }
+
     /**
      * Creates an answer format with the specified min and max values
      *

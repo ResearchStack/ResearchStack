@@ -15,6 +15,11 @@ public class ConsentVisualStep extends Step {
     @Deprecated
     private String nextButtonString;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    ConsentVisualStep() {
+        super();
+    }
+
     public ConsentVisualStep(String identifier) {
         super(identifier);
     }

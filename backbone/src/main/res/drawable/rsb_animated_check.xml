@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AS throws warning here, but support library supports it -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/rsb_check_mark">
+    <target
+        android:name="tick"
+        android:animation="@anim/rsb_check_animation"/>
+</animated-vector>

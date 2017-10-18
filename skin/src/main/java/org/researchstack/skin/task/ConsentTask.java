@@ -27,8 +27,8 @@ import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.skin.R;
-import org.researchstack.skin.ResourceManager;
-import org.researchstack.skin.model.ConsentQuizModel;
+import org.researchstack.backbone.ResourceManager;
+import org.researchstack.backbone.model.ConsentQuizModel;
 import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 import org.researchstack.skin.step.ConsentQuizQuestionStep;
@@ -37,6 +37,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@Deprecated
+/**
+ * use OnboardingManager.getInstance().launchOnboarding(context, TaskType.REGISTRATION);
+ * use OnboardingManager.getInstance().launchOnboarding(context, TaskType.LOGIN); or...
+ * use OnboardingManager.getInstance().launchOnboarding(context, TaskType.RECONSENT);
+ */
 public class ConsentTask extends OrderedTask {
     public static final String ID_VISUAL = "ID_VISUAL";
     public static final String ID_FIRST_QUESTION = "question_1";

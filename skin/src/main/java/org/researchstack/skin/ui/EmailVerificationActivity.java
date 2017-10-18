@@ -21,7 +21,7 @@ import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.ThemeUtils;
-import org.researchstack.skin.DataProvider;
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.task.SignUpTask;
@@ -81,7 +81,7 @@ public class EmailVerificationActivity extends PinCodeActivity {
         String accentColorString = "#" + Integer.toHexString(Color.red(accentColor)) +
                 Integer.toHexString(Color.green(accentColor)) +
                 Integer.toHexString(Color.blue(accentColor));
-        String formattedSummary = getString(R.string.rss_confirm_summary,
+        String formattedSummary = getString(R.string.rsb_confirm_summary,
                 "<font color=\"" + accentColorString + "\">" + email + "</font>");
         ((AppCompatTextView) findViewById(R.id.email_verification_body)).setText(Html.fromHtml(
                 formattedSummary));
@@ -109,7 +109,7 @@ public class EmailVerificationActivity extends PinCodeActivity {
         Step signUpStep = new Step(OnboardingTask.SignUpStepIdentifier);
         signUpStep.setStepTitle(R.string.rss_sign_up);
         signUpStep.setStepLayoutClass(SignUpStepLayout.class);
-        signUpStep.setTitle(getString(R.string.rss_change_email));
+        signUpStep.setTitle(getString(R.string.rsb_change_email));
 
         Intent intent = new Intent(this, ViewTaskActivity.class);
         intent.putExtra(ViewTaskActivity.EXTRA_TASK, new OrderedTask(CHANGE_EMAIL_ID, signUpStep));
@@ -165,14 +165,14 @@ public class EmailVerificationActivity extends PinCodeActivity {
                                 .alpha(0)
                                 .withEndAction(() -> progress.setVisibility(View.GONE));
                         Toast.makeText(EmailVerificationActivity.this,
-                                R.string.rss_email_not_verified, Toast.LENGTH_LONG).show();
+                                R.string.rsb_email_not_verified, Toast.LENGTH_LONG).show();
                     }
                 }, error -> {
                     progress.animate()
                             .alpha(0)
                             .withEndAction(() -> progress.setVisibility(View.GONE));
                     Toast.makeText(EmailVerificationActivity.this,
-                            R.string.rss_email_not_verified, Toast.LENGTH_LONG).show();
+                            R.string.rsb_email_not_verified, Toast.LENGTH_LONG).show();
                 });
     }
 }

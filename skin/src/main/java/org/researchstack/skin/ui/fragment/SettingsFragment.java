@@ -32,69 +32,71 @@ import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.AppPrefs;
-import org.researchstack.skin.DataProvider;
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
-import org.researchstack.skin.ResourceManager;
+import org.researchstack.backbone.ResourceManager;
 import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.notification.TaskAlertReceiver;
-import org.researchstack.skin.step.PassCodeCreationStep;
+import org.researchstack.backbone.step.PassCodeCreationStep;
 import org.researchstack.skin.task.ConsentTask;
-import org.researchstack.skin.ui.OnboardingActivity;
-import org.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
+import org.researchstack.skin.ui.OverviewActivity;
+import org.researchstack.backbone.ui.step.layout.SignUpPinCodeCreationStepLayout;
 import org.researchstack.skin.utils.ConsentFormUtils;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Date;
 
 import rx.Observable;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
-        SharedPreferences.OnSharedPreferenceChangeListener, StorageAccessListener {
+        SharedPreferences.OnSharedPreferenceChangeListener, StorageAccessListener
+{
+    private static final int REQUEST_CODE_SHARING_OPTIONS = 0;
+    private static final int REQUEST_CODE_CHANGE_PASSCODE = 1;
+
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Settings Keys.
     // If you are adding / changing settings, make sure they are unique / match in rss_settings.xml
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Profile
-    public static final String KEY_PROFILE = "rss_settings_profile";
-    public static final String KEY_PROFILE_NAME = "rss_settings_profile_name";
+    public static final String KEY_PROFILE           = "rss_settings_profile";
+    public static final String KEY_PROFILE_NAME      = "rss_settings_profile_name";
     public static final String KEY_PROFILE_BIRTHDATE = "rss_settings_profile_birthdate";
     // Reminders
-    public static final String KEY_REMINDERS = "rss_settings_reminders";
+    public static final String KEY_REMINDERS         = "rss_settings_reminders";
     // Privacy
-    public static final String KEY_PRIVACY = "rss_settings_privacy";
-    public static final String KEY_PRIVACY_POLICY = "rss_settings_privacy_policy";
-    public static final String KEY_REVIEW_CONSENT = "rss_settings_privacy_review_consent";
-    public static final String KEY_SHARING_OPTIONS = "rss_settings_privacy_sharing_options";
+    public static final String KEY_PRIVACY           = "rss_settings_privacy";
+    public static final String KEY_PRIVACY_POLICY    = "rss_settings_privacy_policy";
+    public static final String KEY_REVIEW_CONSENT    = "rss_settings_privacy_review_consent";
+    public static final String KEY_SHARING_OPTIONS   = "rss_settings_privacy_sharing_options";
     // Security
     public static final String KEY_AUTO_LOCK_ENABLED = "rss_settings_auto_lock_on_exit";
-    public static final String KEY_AUTO_LOCK_TIME = "rss_settings_auto_lock_time";
-    public static final String KEY_CHANGE_PASSCODE = "rss_settings_security_change_passcode";
+    public static final String KEY_AUTO_LOCK_TIME    = "rss_settings_auto_lock_time";
+    public static final String KEY_CHANGE_PASSCODE   = "rss_settings_security_change_passcode";
     // General
-    public static final String KEY_GENERAL = "rss_settings_general";
-    public static final String KEY_SOFTWARE_NOTICES = "rss_settings_general_software_notices";
-    public static final String KEY_LEAVE_STUDY = "rss_settings_general_leave_study";
-    public static final String KEY_JOIN_STUDY = "rss_settings_general_join_study";
+    public static final String KEY_GENERAL           = "rss_settings_general";
+    public static final String KEY_SOFTWARE_NOTICES  = "rss_settings_general_software_notices";
+    public static final String KEY_LEAVE_STUDY       = "rss_settings_general_leave_study";
+    public static final String KEY_JOIN_STUDY        = "rss_settings_general_join_study";
     // Other
-    public static final String KEY_VERSION = "rss_settings_version";
-    public static final String PASSCODE = "passcode";
-    private static final int REQUEST_CODE_SHARING_OPTIONS = 0;
-    private static final int REQUEST_CODE_CHANGE_PASSCODE = 1;
+    public static final String KEY_VERSION           = "rss_settings_version";
+    public static final String PASSCODE              = "passcode";
+
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Preference Items
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private PreferenceCategory profileCategory;
     private PreferenceCategory privacyCategory;
-    private Preference sharingScope;
+    private Preference         sharingScope;
     private PreferenceCategory generalCategory;
-    private Preference leaveStudy;
-    private Preference joinStudy;
+    private Preference         leaveStudy;
+    private Preference         joinStudy;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Field Vars
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private ConsentSectionModel data;
-    private View progress;
+    private View                progress;
 
     /**
      * This boolean is responsible for keeping track of the UI on whether changes have been made
@@ -104,7 +106,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     private boolean isInitializedForConsent = false;
 
     @Override
-    public void onCreatePreferences(Bundle bundle, String s) {
+    public void onCreatePreferences(Bundle bundle, String s)
+    {
         super.addPreferencesFromResource(R.xml.rss_settings);
 
         // Get our screen which is created in Skin SettingsFragment
@@ -124,13 +127,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         screen.findPreference(KEY_VERSION).setSummary(getVersionString());
     }
 
-    private void initPreferenceForConsent() {
+    private void initPreferenceForConsent()
+    {
         boolean isSignedInAndConsented = DataProvider.getInstance().isSignedIn(getActivity()) &&
                 DataProvider.getInstance().isConsented(getActivity());
 
         PreferenceScreen screen = getPreferenceScreen();
 
-        if (!isSignedInAndConsented) {
+        if(! isSignedInAndConsented)
+        {
             screen.removePreference(profileCategory);
             privacyCategory.removePreference(sharingScope);
             generalCategory.removePreference(leaveStudy);
@@ -138,56 +143,61 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             // This method will be called if we leave the study. This means we need to add
             // "join study" back into the general-category as it was removed on the initial call of
             // this method
-            if (generalCategory.findPreference(KEY_JOIN_STUDY) == null) {
+            if(generalCategory.findPreference(KEY_JOIN_STUDY) == null)
+            {
                 generalCategory.addPreference(joinStudy);
             }
-        } else {
+        }
+        else
+        {
             generalCategory.removePreference(joinStudy);
 
             Observable.defer(() -> Observable.just(DataProvider.getInstance()
-                    .getUser(getActivity())))
+                                                           .getUser(getActivity())))
                     .compose(ObservableUtils.applyDefault())
                     .subscribe(profile -> {
-                        if (profile == null) {
+                        if(profile == null)
+                        {
                             getPreferenceScreen().removePreference(profileCategory);
                             return;
 
                         }
 
                         Preference namePref = profileCategory.findPreference(KEY_PROFILE_NAME);
-                        if (profile.getName() != null) {
+                        if(profile.getName() != null)
+                        {
                             namePref.setSummary(profile.getName());
-                        } else {
+                        }
+                        else
+                        {
                             profileCategory.removePreference(namePref);
                         }
 
                         Preference birthdatePref = profileCategory.findPreference(
                                 KEY_PROFILE_BIRTHDATE);
-                        if (profile.getBirthDate() != null) {
-                            try {
-                                // The incoming date is formated in "yyyy-MM-dd", clean it up to "MMM dd, yyyy"
-                                Date birthdate = FormatHelper.SIMPLE_FORMAT_DATE.parse(profile.getBirthDate());
-                                DateFormat format = FormatHelper.getFormat(DateFormat.LONG,
-                                        FormatHelper.NONE);
-                                birthdatePref.setSummary(format.format(birthdate));
-                            } catch (ParseException e) {
-                                LogExt.e(SettingsFragment.class, e);
-                                birthdatePref.setSummary(profile.getBirthDate());
-                            }
-                        } else {
+                        if(profile.getBirthDate() != null)
+                        {
+                            // The incoming date is formated in "yyyy-MM-dd", clean it up to "MMM dd, yyyy"
+                            Date birthdate = profile.getBirthDate();
+                            DateFormat format = FormatHelper.getFormat(DateFormat.LONG,
+                                                                       FormatHelper.NONE);
+                            birthdatePref.setSummary(format.format(birthdate));
+                        }
+                        else
+                        {
                             profileCategory.removePreference(birthdatePref);
                         }
                     });
 
             // Load Consent Data and set sharing scope
             Observable.defer(() -> Observable.just(ResourceManager.getInstance()
-                    .getConsentSections()
-                    .create(getActivity()))).flatMap((consentData) -> {
+                                                           .getConsentSections()
+                                                           .create(getActivity()))).flatMap((consentData) -> {
                 this.data = (ConsentSectionModel) consentData;
 
                 // Load and set sharing scope
                 return Observable.just(DataProvider.getInstance()
-                        .getUserSharingScope(getContext()));
+                                               .getUserSharingScope(getContext()));
             }).compose(ObservableUtils.applyDefault()).subscribe(scope -> {
                 sharingScope.setSummary(formatSharingOption(scope));
             });
@@ -197,7 +207,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         FrameLayout settingsRoot = new FrameLayout(container.getContext());
 
         ViewGroup v = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
@@ -211,11 +222,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     }
 
     @Override
-    public boolean onPreferenceTreeClick(Preference preference) {
+    public boolean onPreferenceTreeClick(Preference preference)
+    {
         LogExt.i(getClass(), String.valueOf(preference.getTitle()));
 
-        if (preference.hasKey()) {
-            switch (preference.getKey()) {
+        if(preference.hasKey())
+        {
+            switch(preference.getKey())
+            {
                 case KEY_PRIVACY_POLICY:
                     showPrivacyPolicy();
                     return true;
@@ -230,7 +244,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
                 case KEY_CHANGE_PASSCODE:
                     PassCodeCreationStep step = new PassCodeCreationStep(PASSCODE,
-                            R.string.rss_passcode_change_title);
+                                                                         R.string.rsb_passcode_change_title);
                     step.setStateOrdinal(SignUpPinCodeCreationStepLayout.State.CHANGE.ordinal());
                     OrderedTask passcodeTask = new OrderedTask("task_rss_settings_passcode", step);
                     Intent passcodeIntent = ViewTaskActivity.newIntent(getContext(), passcodeTask);
@@ -252,25 +266,25 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     sharingStep.setStepTitle(R.string.rss_settings_privacy_sharing_options);
 
                     String shareWidely = getString(R.string.rsb_consent_share_widely,
-                            investigatorLongDesc);
+                                                   investigatorLongDesc);
                     Choice<String> shareWidelyChoice = new Choice<>(shareWidely,
-                            "sponsors_and_partners",
-                            null);
+                                                                    "sponsors_and_partners",
+                                                                    null);
 
                     String shareRestricted = getString(R.string.rsb_consent_share_only,
-                            investigatorShortDesc);
+                                                       investigatorShortDesc);
                     Choice<String> shareRestrictedChoice = new Choice<>(shareRestricted,
-                            "all_qualified_researchers",
-                            null);
+                                                                        "all_qualified_researchers",
+                                                                        null);
 
                     sharingStep.setAnswerFormat(new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice,
-                            shareWidelyChoice,
-                            shareRestrictedChoice));
+                                                                       shareWidelyChoice,
+                                                                       shareRestrictedChoice));
 
                     sharingStep.setTitle(getString(R.string.rsb_consent_share_title));
                     sharingStep.setText(getString(R.string.rsb_consent_share_description,
-                            investigatorLongDesc,
-                            localizedLearnMoreHTMLContent));
+                                                  investigatorLongDesc,
+                                                  localizedLearnMoreHTMLContent));
 
                     Task task = new OrderedTask("SharingStepTask", sharingStep);
                     Intent intent = ViewTaskActivity.newIntent(getContext(), task);
@@ -281,46 +295,50 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     new AlertDialog.Builder(getActivity()).setTitle(R.string.rss_settings_general_leave_study)
                             .setMessage(R.string.rss_settings_dialog_leave_study)
                             .setPositiveButton(R.string.rss_settings_general_leave_study,
-                                    (dialog, which) -> {
+                                               (dialog, which) -> {
 
-                                        progress.setVisibility(View.VISIBLE);
+                                                   progress.setVisibility(View.VISIBLE);
 
-                                        DataProvider.getInstance()
-                                                .withdrawConsent(getActivity(), null)
-                                                .subscribe(response -> {
-                                                    progress.setVisibility(View.GONE);
+                                                   DataProvider.getInstance()
+                                                           .withdrawConsent(getActivity(), null)
+                                                           .subscribe(response -> {
+                                                               progress.setVisibility(View.GONE);
 
-                                                    if (response.isSuccess()) {
-                                                        Toast.makeText(getActivity(),
-                                                                R.string.rss_network_result_consent_withdraw_success,
-                                                                Toast.LENGTH_SHORT).show();
+                                                               if(response.isSuccess())
+                                                               {
+                                                                   Toast.makeText(getActivity(),
+                                                                                  R.string.rss_network_result_consent_withdraw_success,
+                                                                                  Toast.LENGTH_SHORT).show();
 
-                                                        isInitializedForConsent = false;
-                                                        initPreferenceForConsent();
-                                                    } else {
-                                                        Toast.makeText(getActivity(),
-                                                                R.string.rss_network_error_consent_withdraw_failed,
-                                                                Toast.LENGTH_SHORT).show();
-                                                    }
+                                                                   isInitializedForConsent = false;
+                                                                   initPreferenceForConsent();
+                                                               }
+                                                               else
+                                                               {
+                                                                   Toast.makeText(getActivity(),
+                                                                                  R.string.rss_network_error_consent_withdraw_failed,
+                                                                                  Toast.LENGTH_SHORT).show();
+                                                               }
 
-                                                }, error -> {
-                                                    LogExt.e(getClass(), error);
-                                                    progress.setVisibility(View.GONE);
-                                                });
-                                    })
+                                                           }, error -> {
+                                                               LogExt.e(getClass(), error);
+                                                               progress.setVisibility(View.GONE);
+                                                           });
+                                               })
                             .setNegativeButton(R.string.rsb_cancel, null)
                             .show();
                     return true;
 
                 case KEY_JOIN_STUDY:
-                    startActivity(new Intent(getActivity(), OnboardingActivity.class));
+                    startActivity(new Intent(getActivity(), OverviewActivity.class));
                     getActivity().finish();
                     return true;
 
                 case KEY_REMINDERS:
                     SharedPreferences preferences = preference.getSharedPreferences();
                     boolean isRemindersEnabled = preferences.getBoolean(KEY_REMINDERS, true);
-                    if (!isRemindersEnabled) {
+                    if(! isRemindersEnabled)
+                    {
                         getActivity().sendBroadcast(new Intent(TaskAlertReceiver.ALERT_DELETE_ALL));
                     }
                     return true;
@@ -331,8 +349,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_SHARING_OPTIONS && resultCode == Activity.RESULT_OK) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(requestCode == REQUEST_CODE_SHARING_OPTIONS && resultCode == Activity.RESULT_OK)
+        {
             TaskResult taskResult = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
             String result = (String) taskResult.getStepResult(ConsentTask.ID_SHARING).getResult();
 
@@ -342,7 +362,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
                 sharingScope.setSummary(formatSharingOption(result));
             });
-        } else if (requestCode == REQUEST_CODE_CHANGE_PASSCODE && resultCode == Activity.RESULT_OK) {
+        }
+        else if(requestCode == REQUEST_CODE_CHANGE_PASSCODE && resultCode == Activity.RESULT_OK)
+        {
             TaskResult result = (TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT);
 
             String oldPinCode = (String) result.getStepResult(PASSCODE)
@@ -357,61 +379,77 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 return null;
             }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
                 Toast.makeText(getActivity(),
-                        R.string.rss_local_result_passcode_changed,
-                        Toast.LENGTH_SHORT).show();
+                               R.string.rss_local_result_passcode_changed,
+                               Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             }, e -> {
                 Toast.makeText(getActivity(),
-                        R.string.rss_local_error_passcode_failed,
-                        Toast.LENGTH_SHORT).show();
+                               R.string.rss_local_error_passcode_failed,
+                               Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             });
-        } else {
+        }
+        else
+        {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        switch (key) {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+    {
+        switch(key)
+        {
             case KEY_AUTO_LOCK_ENABLED:
             case KEY_AUTO_LOCK_TIME:
-                long autoLockTime = AppPrefs.getInstance(getContext()).getAutoLockTime();
+                long autoLockTime = AppPrefs.getInstance().getAutoLockTime();
                 StorageAccess.getInstance().getPinCodeConfig().setPinAutoLockTime(autoLockTime);
                 break;
         }
     }
 
-    public String formatSharingOption(String option) {
-        if (option.equals("sponsors_and_partners")) {
+    public String formatSharingOption(String option)
+    {
+        if(option.equals("sponsors_and_partners"))
+        {
             String investigatorLongDesc = data.getDocumentProperties()
                     .getInvestigatorLongDescription();
 
             return getString(R.string.rsb_consent_share_widely, investigatorLongDesc);
-        } else if (option.equals("all_qualified_researchers")) {
+        }
+        else if(option.equals("all_qualified_researchers"))
+        {
             String investigatorShortDesc = data.getDocumentProperties()
                     .getInvestigatorShortDescription();
 
             return getString(R.string.rsb_consent_share_only, investigatorShortDesc);
-        } else if (option.equals("no_sharing")) {
+        }
+        else if(option.equals("no_sharing"))
+        {
             return getString(R.string.rsb_consent_share_no);
-        } else {
+        }
+        else
+        {
             // If you want to add another sharing option, feel free, you just need to override this
             // method in your SettingsFragment
             throw new RuntimeException("Sharing option " + option + " not supported");
         }
     }
 
-    public String getVersionString() {
+    public String getVersionString()
+    {
         int versionCode;
         String versionName;
         PackageManager manager = getActivity().getPackageManager();
 
-        try {
+        try
+        {
             PackageInfo info = manager.getPackageInfo(getActivity().getPackageName(), 0);
             versionCode = info.versionCode;
             versionName = info.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
+        }
+        catch(PackageManager.NameNotFoundException e)
+        {
             LogExt.e(getClass(), "Could not find package version info");
             versionCode = 0;
             versionName = getString(R.string.rss_settings_version_unknown);
@@ -419,38 +457,44 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         return getString(R.string.rss_settings_version, versionName, versionCode);
     }
 
-    public void showPrivacyPolicy() {
+    public void showPrivacyPolicy()
+    {
         String path = ResourceManager.getInstance().getPrivacyPolicy().getAbsolutePath();
         Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
-                getString(R.string.rss_settings_privacy_policy),
-                path);
+                                                                 getString(R.string.rss_settings_privacy_policy),
+                                                                 path);
         startActivity(intent);
     }
 
-    public void showSoftwareNotices() {
+    public void showSoftwareNotices()
+    {
         String path = ResourceManager.getInstance().getSoftwareNotices().getAbsolutePath();
         Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
-                getString(R.string.rss_settings_general_software_notices),
-                path);
+                                                                 getString(R.string.rss_settings_general_software_notices),
+                                                                 path);
         startActivity(intent);
     }
 
     @Override
-    public void onDataReady() {
+    public void onDataReady()
+    {
         LogExt.i(getClass(), "onDataReady()");
 
-        if (!isInitializedForConsent) {
+        if(! isInitializedForConsent)
+        {
             initPreferenceForConsent();
         }
     }
 
     @Override
-    public void onDataFailed() {
+    public void onDataFailed()
+    {
         // Ignore
     }
 
     @Override
-    public void onDataAuth() {
+    public void onDataAuth()
+    {
         // Ignore, handled in activity
     }
 }

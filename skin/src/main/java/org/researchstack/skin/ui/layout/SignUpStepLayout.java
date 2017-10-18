@@ -11,17 +11,20 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.TextUtils;
-import org.researchstack.skin.DataProvider;
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
+import org.researchstack.skin.UiManager;
 import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.adapter.TextWatcherAdapter;
 
+@Deprecated // No longer needed with new OnboardingManager
 public class SignUpStepLayout extends RelativeLayout implements StepLayout {
     private StepCallbacks callbacks;
 
@@ -130,11 +133,11 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout {
 
     public boolean isAnswerValid() {
         if (!isEmailValid()) {
-            email.setError(getResources().getString(R.string.rss_error_invalid_email));
+            email.setError(getResources().getString(R.string.rsb_error_invalid_email));
         }
 
         if (!isPasswordValid()) {
-            password.setError(getResources().getString(R.string.rss_error_invalid_password));
+            password.setError(getResources().getString(R.string.rsb_error_invalid_password));
         }
 
         return TextUtils.isEmpty(email.getError()) && TextUtils.isEmpty(password.getError());
@@ -146,8 +149,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout {
     }
 
     public boolean isPasswordValid() {
-        CharSequence target = password.getText();
-        return !TextUtils.isEmpty(target);
+        return UiManager.getInstance().isValidPassword(password.getText().toString());
     }
 
     @Override

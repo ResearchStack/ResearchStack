@@ -23,7 +23,7 @@
         android:imeOptions="actionNext"
         android:inputType="text"
         android:minHeight="@dimen/rsb_item_size_default"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="14sp"
         tools:text="Value" />

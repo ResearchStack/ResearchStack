@@ -19,7 +19,7 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.UiThreadContext;
 import org.researchstack.skin.ActionItem;
-import org.researchstack.skin.DataProvider;
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
@@ -175,6 +175,64 @@ public class MainActivity extends BaseActivity {
                 }
             });
         }
+
+    // TODO: integrate this into the Scheduled Activities
+    // TODO: for now, uncomment this to run/test the Tremor Task
+//        NavigableOrderedTask task = TremorTaskFactory.tremorTask(
+//                this, "tremorttaskid", "We collect sensor data to measure your hand tremor", 10,
+//                Arrays.asList(new TremorTaskFactory.TremorTaskExcludeOption[] {}),
+//                TremorTaskFactory.HandTaskOptions.BOTH,
+//                Arrays.asList(new TremorTaskFactory.TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the Short Walk Task
+//        OrderedTask task = WalkingTaskFactory.shortWalkTask(
+//                this, "walkingtaskid", "intendedUseDescription",
+//                30, 10, Arrays.asList(new TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the Walk back and forth test
+//        OrderedTask task = WalkingTaskFactory.walkBackAndForthTask(
+//                this, "walkingtaskid", "intendedUseDescription",
+//                30, 10, Arrays.asList(new TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the timed walk task
+//        OrderedTask task = WalkingTaskFactory.timedWalkTask(
+//                this, "walkingtaskid", "intendedUseDescription",
+//                50.0, 30, 10, true, Arrays.asList(new TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the tapping task
+//        OrderedTask task = TappingTaskFactory.twoFingerTappingIntervalTask(
+//                this, "tappingtaskid", "intendedUseDescription",
+//                30, HandTaskOptions.BOTH, Arrays.asList(new TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
+
+        // TODO: integrate this into the Scheduled Activities
+        // TODO: for now, uncomment this to run/test the Audio task
+//        NavigableOrderedTask task = AudioTaskFactory.audioTask(
+//                this, "audiotaskid", "intendedUseDescription",
+//                "speech description", "short speech description", 5,
+//                AudioRecorderSettings.defaultSettings(), true,
+//                Arrays.asList(new TaskExcludeOption[] {}));
+//
+//        Intent intent = ActiveTaskActivity.newIntent(this, task);
+//        startActivity(intent);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
@@ -16,6 +17,7 @@ import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
 import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 
+@Deprecated // use FormStepLayout instead
 public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
     private ConsentQuizEvaluationStep step;

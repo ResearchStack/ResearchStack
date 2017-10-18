@@ -95,12 +95,26 @@ public class StepSwitcher extends FrameLayout {
      *                   {@link StepSwitcher#SHIFT_LEFT} or {@link StepSwitcher#SHIFT_RIGHT}
      */
     public void show(StepLayout stepLayout, int direction) {
+        show(stepLayout, direction, false);
+    }
+
+    /**
+     * Adds a new step to the view hierarchy. If a step is currently showing, the direction
+     * parameter is used to indicate which direction(x-axis) that the views should animate to.
+     *
+     * @param stepLayout the step you want to switch to
+     * @param direction  the direction of the animation in the x direction. This values can either be
+     *                   {@link StepSwitcher#SHIFT_LEFT} or {@link StepSwitcher#SHIFT_RIGHT}
+     * @param alwaysReplaceView if true, even if the view have the same step id, they will be replaced
+     *                          useful if you are trying to refresh a step view with different UI state
+     */
+    public void show(StepLayout stepLayout, int direction, boolean alwaysReplaceView) {
         // if layouts originate from the same step, ignore show
         View currentStep = findViewById(R.id.rsb_current_step);
         if (currentStep != null) {
             String currentStepId = (String) currentStep.getTag(R.id.rsb_step_layout_id);
             String stepLayoutId = (String) stepLayout.getLayout().getTag(R.id.rsb_step_layout_id);
-            if (currentStepId.equals(stepLayoutId)) {
+            if (currentStepId.equals(stepLayoutId) && !alwaysReplaceView) {
                 return;
             }
         }
@@ -143,15 +157,7 @@ public class StepSwitcher extends FrameLayout {
                         .setDuration(animationTime)
                         .translationX(-1 * newTranslationX)
                         .withEndAction(() -> {
-                            InputMethodManager imm = (InputMethodManager) getContext()
-                                    .getSystemService(Activity.INPUT_METHOD_SERVICE);
-
-                            if (imm.isActive() && imm.isAcceptingText()) {
-                                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                            }
-
                             removeView(currentStep);
-
                         });
             }
         });

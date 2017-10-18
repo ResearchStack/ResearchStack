@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:paddingBottom="@dimen/rsb_padding_wedge"
-        android:text="@string/rss_permission_disclaimer"
+        android:text="@string/rsb_permission_disclaimer"
         android:visibility="visible" />
 
     <View

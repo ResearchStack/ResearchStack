@@ -2,11 +2,13 @@ package org.researchstack.skin.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.researchstack.backbone.model.ConsentQuizModel;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.DocumentProperties;
 
 import java.util.List;
 
+@Deprecated // No longer needed with new OnboardingManager
 public class ConsentSectionModel {
 
     @SerializedName("documentProperties")

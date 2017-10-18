@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui.views;
 
 import android.content.Context;
 import android.support.annotation.CallSuper;
+import android.support.v7.widget.AppCompatButton;
 import android.text.InputFilter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class PinCodeLayout extends RelativeLayout {
     protected TextView title;
     protected EditText editText;
     protected View progress;
+    protected AppCompatButton forgotPasscodeButton;
 
     public PinCodeLayout(Context context) {
         super(context);
@@ -70,6 +72,8 @@ public class PinCodeLayout extends RelativeLayout {
         editText.setFilters(filters);
 
         progress = findViewById(R.id.progress);
+
+        forgotPasscodeButton = (AppCompatButton)findViewById(R.id.rsb_forgot_passcode_button);
     }
 
     public void resetSummaryText() {
@@ -85,4 +89,7 @@ public class PinCodeLayout extends RelativeLayout {
         progress.setVisibility(show ? VISIBLE : GONE);
     }
 
+    public AppCompatButton getForgotPasscodeButton() {
+        return forgotPasscodeButton;
+    }
 }

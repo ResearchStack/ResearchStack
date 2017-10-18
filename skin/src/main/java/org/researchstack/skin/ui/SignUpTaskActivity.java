@@ -16,13 +16,15 @@ import org.researchstack.backbone.ui.callbacks.ActivityCallback;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
 import org.researchstack.backbone.utils.TextUtils;
-import org.researchstack.skin.DataProvider;
-import org.researchstack.skin.PermissionRequestManager;
+import org.researchstack.backbone.DataProvider;
+import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.skin.R;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.task.OnboardingTask;
+import org.researchstack.skin.task.SignUpTask;
 import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
 
+@Deprecated // use OnboardingManager.getInstance().launchOnboarding(OnboardingTaskType.REGISTRATION, this);
 public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCallback {
 
     TaskResult consentResult;
@@ -54,6 +56,8 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
             String pin = (String) result.getResult();
             if (!TextUtils.isEmpty(pin)) {
                 StorageAccess.getInstance().createPinCode(this, pin);
+                SignUpTask signUpTask = (SignUpTask)getTask();
+                signUpTask.setHasPasscode(true);
             }
 
             if (consentResult != null) {

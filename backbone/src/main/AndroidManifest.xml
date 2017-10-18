@@ -1,1 +1,20 @@
-<manifest package="org.researchstack.backbone" />
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.researchstack.backbone">
+
+    <!-- We allow users to secure their data using their fingerprint see -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+
+    <!-- ActiveSteps may vibrate the phone on start and on finish -->
+    <!-- Apps should include this if you want ActiveSteps to vibrate -->
+    <!-- <uses-permission android:name="android.permission.VIBRATE"/> -->
+
+    <!-- Used to track location updates for walking tasks to get length walked, speed, etc -->
+    <!-- Apps should include this in their main AndroidManifest.xml if using location walking tasks -->
+    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+
+    <!-- Needs to be added if your app uses an task with AudioStep -->
+    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
+
+</manifest>

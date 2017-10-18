@@ -11,7 +11,7 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.skin.R;
-import org.researchstack.skin.ResourceManager;
+import org.researchstack.backbone.ResourceManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,6 +54,7 @@ public class ConsentFormUtils {
     }
 
     /**
+     * @param context can be activity or application
      * @return Consent form pdf
      */
     @NonNull

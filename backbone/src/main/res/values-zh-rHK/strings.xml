@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Informed consent process. -->
+    <string name="rsb_CONSENT_NAME_TITLE">同意書</string>
+    <string name="rsb_CONSENT_NAME_GIVEN">名字</string>
+    <string name="rsb_CONSENT_NAME_FAMILY">姓氏</string>
+    <string name="rsb_CONSENT_NAME_PLACEHOLDER">必填</string>
+    <string name="rsb_CONSENT_REVIEW_TITLE">同意書檢閱</string>
+    <string name="rsb_CONSENT_REVIEW_INSTRUCTION">請檢閲以下的文件。如果你準備好繼續，請點一下「同意」。</string>
+    <string name="rsb_CONSENT_REVIEW_ALERT_TITLE">同意書檢閱</string>
+    <string name="rsb_CONSENT_SIGNATURE_TITLE">簽名</string>
+    <string name="rsb_CONSENT_SIGNATURE_INSTRUCTION">請用手指在下方的橫線上簽名。</string>
+    <string name="rsb_CONSENT_SIGNATURE_PLACEHOLDER">在此簽名</string>
+    <string name="rsb_CONSENT_PAGE_NUMBER_FORMAT">第 %1$ld 頁（共 %2$ld 頁）</string>
+    <!-- Consent section titles. -->
+    <string name="rsb_CONSENT_SECTION_WELCOME">歡迎</string>
+    <string name="rsb_CONSENT_SECTION_DATA_GATHERING">數據收集</string>
+    <string name="rsb_CONSENT_SECTION_PRIVACY">私隱</string>
+    <string name="rsb_CONSENT_SECTION_DATA_USE">數據使用</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_SURVEY">研究問卷</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_TASKS">研究任務</string>
+    <string name="rsb_CONSENT_SECTION_TIME_COMMITMENT">所需時間</string>
+    <string name="rsb_CONSENT_SECTION_WITHDRAWING">退出研究</string>
+    <string name="rsb_CONSENT_LEARN_MORE_TITLE">了解更多</string>
+    <!-- Consent section learn more -->
+    <string name="rsb_LEARN_MORE_DATA_GATHERING">進一步了解數據的收集方法</string>
+    <string name="rsb_LEARN_MORE_DATA_USE">進一步了解數據的使用方法</string>
+    <string name="rsb_LEARN_MORE_PRIVACY">進一步了解你的私隱及個人身份如何得到保護</string>
+    <string name="rsb_LEARN_MORE_WELCOME">開始前先了解此研究</string>
+    <string name="rsb_LEARN_MORE_STUDY_SURVEY">進一步了解研究的問卷</string>
+    <string name="rsb_LEARN_MORE_TIME_COMMITMENT">進一步了解研究所花費的時間</string>
+    <string name="rsb_LEARN_MORE_TASKS">進一步了解相關的任務</string>
+    <string name="rsb_LEARN_MORE_WITHDRAWING">進一步了解退出研究</string>
+    <!-- Consent sharing step -->
+    <string name="rsb_CONSENT_SHARING_TITLE">分享選項</string>
+    <string name="rsb_consent_share_widely">與「%1$s」及全世界合資格的研究者分享我的數據</string>
+    <string name="rsb_consent_share_only">只與「%1$s」分享我的數據</string>
+    <string name="rsb_consent_sharing_description">你參與是次研究後，「%1$s」將會接收到你的研究數據。\n\n廣泛分享編碼後的研究數據（而不包括姓名等資料）將會對本次及將來的研究工作有幫助。</string>
+    <string name="rsb_LEARN_MORE_CONSENT_SHARING">進一步了解數據共享</string>
+    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%1$s 的姓名（正楷）</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%1$s 的簽名</string>
+    <string name="rsb_CONSENT_DOC_LINE_DATE">日期</string>
+    <!-- Progress indication (in navigation bar). -->
+    <string name="rsb_STEP_PROGRESS_FORMAT">步驟 %1$s/%2$s</string>
+    <!-- Alert for out of range values. -->
+    <string name="rsb_RANGE_ALERT_TITLE">無效值</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s 超過了上限（%2$s）。</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s 低於下限（%2$s）。</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s 不是有效的數值。</string>
+    <!-- Alert for invalid email address value -->
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">無效的電郵地址：%1$s</string>
+    <!-- Alerts for invalid location coordinates -->
+    <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">輸入地址</string>
+    <string name="rsb_LOCATION_ERROR_TITLE">找不到指定的地址</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_LOCATION_UNKNOWN">無法找出現時位置，請輸入地址或移動至 GPS 訊號較佳的位置（如適用）。</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_DENIED">定位服務存取遭拒，請前往「設定」以授權此 App 使用定位服務。</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE">找不到輸入的地址，請確定地址是否正確。</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">你可能未連接互聯網，或地址查詢請求的次數已超出上限。如果你未連接互聯網，請開啟 Wi-Fi 以回答此問題（如果顯示「略過」按鈕，則可略過此問題），或在連接互聯網後返回此問卷。否則，請在幾分鐘後再試一次。</string>
+    <!-- Alert for exceeding length limit in text answer -->
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">文字內容超出長度上限：%1$s</string>
+    <!-- Camera not available during multitasking -->
+    <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">分割螢幕無法使用相機。</string>
+    <!-- Registration step -->
+    <string name="rsb_EMAIL_FORM_ITEM_TITLE">電郵</string>
+    <string name="rsb_EMAIL_FORM_ITEM_PLACEHOLDER">jappleseed@example.com</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_TITLE">密碼</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_PLACEHOLDER">輸入密碼</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_TITLE">確認</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_PLACEHOLDER">請再次輸入密碼</string>
+    <string name="rsb_CONFIRM_PASSWORD_ERROR_MESSAGE">密碼不符。</string>
+    <string name="rsb_ADDITIONAL_INFO_SECTION_TITLE">其他資料</string>
+    <string name="rsb_GIVEN_NAME_ITEM_PLACEHOLDER">大明</string>
+    <string name="rsb_FAMILY_NAME_ITEM_PLACEHOLDER">王</string>
+    <string name="rsb_GENDER_FORM_ITEM_TITLE">性別</string>
+    <string name="rsb_GENDER_FORM_ITEM_PLACEHOLDER">選擇性別</string>
+    <string name="rsb_DOB_FORM_ITEM_TITLE">出生日期</string>
+    <string name="rsb_DOB_FORM_ITEM_PLACEHOLDER">選擇日期</string>
+    <!-- Verification step -->
+    <string name="rsb_VERIFICATION_NAV_TITLE">驗證</string>
+    <string name="rsb_VERIFICATION_STEP_TITLE">驗證你的電郵</string>
+    <string name="rsb_RESEND_EMAIL_LABEL_MESSAGE">如果你未收到驗證電郵，並希望系統再傳送一次，請點一下下方的連結。</string>
+    <string name="rsb_RESEND_EMAIL_BUTTON_TITLE">重新傳送驗證電郵</string>
+    <!-- Login step -->
+    <string name="rsb_LOGIN_CONTINUE_BUTTON_TITLE">登入</string>
+    <string name="rsb_FORGOT_PASSWORD_BUTTON_TITLE">忘記密碼？</string>
+    <!-- Passcode step -->
+    <string name="rsb_PASSCODE_PROMPT_MESSAGE">輸入密碼</string>
+    <string name="rsb_PASSCODE_CONFIRM_MESSAGE">確認密碼</string>
+    <string name="rsb_PASSCODE_SAVED_MESSAGE">密碼已儲存</string>
+    <string name="rsb_PASSCODE_AUTHENTICATED_MESSAGE">已認證密碼</string>
+    <string name="rsb_PASSCODE_OLD_ENTRY_MESSAGE">輸入舊密碼</string>
+    <string name="rsb_PASSCODE_NEW_ENTRY_MESSAGE">輸入新密碼</string>
+    <string name="rsb_PASSCODE_CONFIRM_NEW_ENTRY_MESSAGE">確認新密碼</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_TITLE">密碼不正確</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_MESSAGE">密碼不符，請再試一次。</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_MESSAGE">請使用 Touch ID 認證</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_ERROR_ALERT_TITLE">Touch ID 錯誤</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_INVALID_INPUT_MESSAGE">只允許輸入數字。</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILITY_LABEL">密碼輸入進度指示器</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILTIY_VALUE">已輸入 %1$s 個數字（共 %2$s 個）</string>
+    <string name="rsb_PASSCODE_FORGOT_BUTTON_TITLE">忘記密碼？</string>
+    <!-- Keychain wrapper -->
+    <string name="rsb_KEYCHAIN_ADD_ERROR_MESSAGE">無法加入「鑰匙圈」項目。</string>
+    <string name="rsb_KEYCHAIN_UPDATE_ERROR_MESSAGE">無法更新「鑰匙圈」項目。</string>
+    <string name="rsb_KEYCHAIN_DELETE_ERROR_MESSAGE">無法刪除「鑰匙圈」項目。</string>
+    <string name="rsb_KEYCHAIN_FIND_ERROR_MESSAGE">找不到「鑰匙圈」項目。</string>
+    <!-- Blood types -->
+    <string name="rsb_blood_type_a_plus">A+</string>
+    <string name="rsb_BLOOD_TYPE_A_">A-</string>
+    <string name="rsb_blood_type_ab_plus">AB+</string>
+    <string name="rsb_BLOOD_TYPE_AB_">AB-</string>
+    <string name="rsb_blood_type_b_plus">B+</string>
+    <string name="rsb_BLOOD_TYPE_B_">B-</string>
+    <string name="rsb_blood_type_o_plus">O+</string>
+    <string name="rsb_BLOOD_TYPE_O_">O-</string>
+    <!-- Gender values. -->
+    <string name="rsb_GENDER_FEMALE">女性</string>
+    <string name="rsb_GENDER_MALE">男性</string>
+    <string name="rsb_GENDER_OTHER">其他</string>
+    <!-- Boolean answer strings -->
+    <string name="rsb_BOOL_NO">不是</string>
+    <string name="rsb_BOOL_YES">是</string>
+    <!-- Measuring unit abbreviations -->
+    <string name="rsb_MEASURING_UNIT_CM">厘米</string>
+    <string name="rsb_MEASURING_UNIT_FT">呎</string>
+    <string name="rsb_MEASURING_UNIT_IN">吋</string>
+    <!-- Default placeholders to request answers in a questionnaire. -->
+    <string name="rsb_PLACEHOLDER_TEXT_OR_NUMBER">點一下回答</string>
+    <string name="rsb_NULL_ANSWER">選擇答案</string>
+    <string name="rsb_PLACEHOLDER_IMAGE_CHOICES">點一下選擇</string>
+    <string name="rsb_PLACEHOLDER_LONG_TEXT">點一下編寫</string>
+    <!-- Button titles -->
+    <string name="rsb_BUTTON_AGREE">同意</string>
+    <string name="rsb_BUTTON_CANCEL">取消</string>
+    <string name="rsb_BUTTON_OK">好</string>
+    <string name="rsb_BUTTON_CLEAR">清除</string>
+    <string name="rsb_BUTTON_DISAGREE">不同意</string>
+    <string name="rsb_BUTTON_DONE">完成</string>
+    <string name="rsb_BUTTON_GET_STARTED">開始</string>
+    <string name="rsb_BUTTON_LEARN_MORE">了解更多</string>
+    <string name="rsb_BUTTON_NEXT">下一步</string>
+    <string name="rsb_BUTTON_SKIP">略過</string>
+    <string name="rsb_BUTTON_SKIP_QUESTION">略過此問題</string>
+    <string name="rsb_BUTTON_START_TIMER">開始計時器</string>
+    <string name="rsb_BUTTON_OPTION_SAVE">儲存作日後之用</string>
+    <string name="rsb_BUTTON_OPTION_DISCARD">放棄測試結果</string>
+    <string name="rsb_BUTTON_OPTION_STOP_TASK">結束測試任務</string>
+    <string name="rsb_BUTTON_SAVE">儲存</string>
+    <string name="rsb_BUTTON_CLEAR_ANSWER">清除答案</string>
+    <string name="rsb_BUTTON_READ_ONLY_MODE">無法修改此答案。</string>
+    <!-- General active tasks. -->
+    <string name="rsb_COUNTDOWN_LABEL">測試活動倒數</string>
+    <string name="rsb_TASK_COMPLETE_TITLE">測試活動已完成</string>
+    <string name="rsb_TASK_COMPLETE_TEXT">測試活動將會進行分析。當得到結果時，你將會收到通知。</string>
+    <string name="rsb_countdown_spoken_remaining">剩餘 %1$s 秒。</string>
+    <!-- Image capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">截取圖案</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">重新截取圖案</string>
+    <string name="rsb_CAPTURE_ERROR_CAMERA_NOT_FOUND">找不到相機，無法完成此步驟。</string>
+    <string name="rsb_CAPTURE_ERROR_NO_PERMISSIONS">如要完成此步驟，請前往「設定」以允許此 App 使用相機。</string>
+    <string name="rsb_CAPTURE_ERROR_NO_OUTPUT_DIRECTORY">未指定截取圖案的輸出目錄。</string>
+    <string name="rsb_CAPTURE_ERROR_CANNOT_WRITE_FILE">無法儲存截取的圖案。</string>
+    <!-- Video capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_VIDEO">開始錄音</string>
+    <string name="rsb_CAPTURE_BUTTON_STOP_CAPTURE_VIDEO">停止錄影</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">重新截取影片</string>
+    <!-- Fitness active task. -->
+    <string name="rsb_FITNESS_TASK_TITLE">體能</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">距離（%1$s）</string>
+    <string name="rsb_FITNESS_HEARTRATE_TITLE">心跳率（每分鐘次數）</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">安坐 %1$s。</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">用最快的速度步行 %1$s。</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">此測試活動能監測你的心跳率，並量度你在 %1$s內能步行的最遠距離。</string>
+    <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">在室外以盡可能最快的速度步行 %1$s。完成後，安坐並休息 %2$s。點一下「開始」以進行測試。</string>
+    <!-- Short walk active task. -->
+    <string name="rsb_WALK_TASK_TITLE">步態及平衡</string>
+    <string name="rsb_WALK_INTRO_TEXT">此測試活動可測量你步行及站立時的步態及平衡。如果你行動不便或行走時需要輔助，請勿繼續進行。</string>
+    <string name="rsb_walk_intro_2_text_ld">找一個安全的地方，讓你可以不靠輔助地直線步行大約 %1$d 步。</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL">將電話放進口袋、手袋或背包裏，並跟隨語音指示。</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">現在站立 %1$s。</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">站立 %1$s。</string>
+    <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">掉頭，然後步行回到起點。</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">直線步行最多 %1$d 步。</string>
+    <!-- Short walk back and forth. -->
+    <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">找一個安全的地方，讓你可以直線來回步行。請嘗試不停步行，遇到盡頭時請有如繞過雪糕筒般掉頭。\n\n下一步，你將需要轉一整個圈，然後站着不動，雙手放在兩旁，而雙腳張開至肩膊的闊度。</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">如果你準備好開始，請點一下「開始」。\n然後將電話放進口袋、手袋或背包裏，並跟隨語音指示。</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">以平常姿態，直線來回步行 %1$s。</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">轉一個圈，然後站立 %1$s。</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">你已完成測試活動。</string>
+    <!-- Tapping active task. -->
+    <string name="rsb_TAPPING_TASK_TITLE">點按速度</string>
+    <string name="rsb_TAPPING_TASK_TITLE_RIGHT">右手</string>
+    <string name="rsb_TAPPING_TASK_TITLE_LEFT">左手</string>
+    <string name="rsb_TAPPING_INTRO_TEXT">此測試活動能評估你的點按速度。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_REST_PHONE">請先平放電話。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_MOST_AFFECTED">請用同一隻手的兩指梅花間竹地點按螢幕上的按鈕。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_FIRST">請用右手的兩指梅花間竹地點按螢幕上的按鈕。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">請用左手的兩指梅花間竹地點按螢幕上的按鈕。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">現在用右手進行相同的測試。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">現在用左手進行相同的測試。</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">先用一指點按，然後用另一指點按。請嘗試以最平穩的速度，持續點按 %1$s。</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION">點一下「開始」以進行測試。</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">點一下「下一步」開始。</string>
+    <string name="rsb_TAP_BUTTON_TITLE">點按</string>
+    <string name="rsb_TOTAL_TAPS_LABEL">點按總次數</string>
+    <string name="rsb_TAPPING_INSTRUCTION">用兩指以最平穩的速度點按這些按鈕。</string>
+    <string name="rsb_TAPPING_INSTRUCTION_RIGHT">用你的右手點按這些按鈕。</string>
+    <string name="rsb_TAPPING_INSTRUCTION_LEFT">用你的左手點按這些按鈕。</string>
+    <string name="rsb_TAPPING_SKIP_TITLE">略過這隻手</string>
+    <!-- Audio active task. -->
+    <string name="rsb_AUDIO_TASK_TITLE">語音</string>
+    <string name="rsb_AUDIO_CALL_TO_ACTION">點一下「開始」以進行測試。</string>
+    <string name="rsb_AUDIO_INSTRUCTION">對着咪高風發出「呀─」的聲音，時間愈長愈好。</string>
+    <string name="rsb_AUDIO_INTRO_TEXT">深呼吸，然後對着咪高風發出「呀─」的聲音，時間愈長愈好。請保持穩定的音量，以使音量棒圖維持藍色。</string>
+    <string name="rsb_AUDIO_INTENDED_USE">此測試活動會使用電話底部的咪高風錄音，以評估你的聲音。</string>
+    <string name="rsb_AUDIO_TOO_LOUD_LABEL">太大聲</string>
+    <string name="rsb_AUDIO_GENERIC_ERROR_LABEL">無法錄音</string>
+    <string name="rsb_AUDIO_LEVEL_CHECK_LABEL">正在檢查背景雜音音量，請稍候。</string>
+    <string name="rsb_AUDIO_TOO_LOUD_MESSAGE">環境雜音太大聲，無法錄取你的聲音。請前往較靜的地方，然後再試一次。</string>
+    <string name="rsb_AUDIO_TOO_LOUD_ACTION_NEXT">準備好後，請點一下「下一步」。</string>
+    <!-- Tone audiometry active task. -->
+    <string name="rsb_TONE_AUDIOMETRY_TASK_TITLE">純音聽力檢查</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTENDED_USE">此測試活動能評估你聆聽不同聲音的能力。</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTRO_TEXT">在開始之前，請插入並戴上耳筒。</string>
+    <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">點一下「開始」以進行測試。</string>
+    <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">你現在應該聽到一個音頻。請使用裝置旁的音量按鈕以調整音量。\n\n如果你準備好開始，請點一下按鈕。</string>
+    <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">每次當你開始聽到聲音時，請點一下按鈕。</string>
+    <string name="rsb_tone_label_left">%1$s Hz，左</string>
+    <string name="rsb_tone_label_right">%1$s Hz，右</string>
+    <!-- Spatial span memory active task. -->
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">空間記憶</string>
+    <string name="rsb_spatial_span_memory_intro_text">此測試活動需要你重覆%1$s圖案亮起的次序，以測量你的短期空間記憶。</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">花朵</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">花朵</string>
+    <string name="rsb_spatial_span_memory_intro_2_text">部分%1$s圖案會逐個亮起。請以亮起的次序點按這些%2$s圖案。</string>
+    <string name="rsb_spatial_span_memory_intro_2_text_reverse">部分%1$s圖案會逐個亮起。請以亮起的相反次序點按這些%2$s圖案。</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">點一下「開始」以進行測試，然後細心觀看。</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
+    <string name="rsb_MEMORY_GAME_SCORE_TITLE">分數</string>
+    <string name="rsb_memory_game_playback_title">看亮起的%1$s</string>
+    <string name="rsb_memory_game_gameplay_title">以剛才亮起的順序點按%1$s圖案</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">按相反次序點按%1$s圖案</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">已完成順序</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">如要繼續，點一下「下一步」</string>
+    <string name="rsb_MEMORY_GAME_FAILED_TITLE">再試一次</string>
+    <string name="rsb_MEMORY_GAME_FAILED_MESSAGE">你似乎記錯了順序。點一下「下一步」繼續。</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_TITLE">時間到了</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_MESSAGE">時間到了。\n點一下「下一步」繼續。</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE">遊戲結束</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_TITLE">已暫停</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_MESSAGE">如要繼續，點一下「下一步」</string>
+    <!-- Reaction time active task. -->
+    <string name="rsb_REACTION_TIME_TASK_TITLE">反應時間</string>
+    <string name="rsb_REACTION_TIME_TASK_INTENDED_USE">此測試活動會評估你對視覺提示作出反應所需的時間。</string>
+    <string name="rsb_REACTION_TIME_TASK_INTRO_TEXT_FORMAT">當螢幕顯示藍色圓點時，請立刻以任何方向搖動裝置。你將需要執行此操作 %D 次。</string>
+    <string name="rsb_REACTION_TIME_TASK_CALL_TO_ACTION">點一下「開始」以進行測試。</string>
+    <string name="rsb_REACTION_TIME_TASK_ATTEMPTS_FORMAT">第 %1$s/%2$s 次嘗試</string>
+    <string name="rsb_REACTION_TIME_TASK_ACTIVE_STEP_TITLE">當藍色圓圈出現時，請快速搖動裝置</string>
+    <!-- Tower of Hanoi active task -->
+    <string name="rsb_TOWER_OF_HANOI_TASK_TITLE">河內塔</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTENDED_USE">此測試活動會評估你的解題能力。</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTRO_TEXT">用最少的次數將所有圓盤移到有顏色標示的平台。</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_TASK_CALL_TO_ACTION">點一下「開始」以進行測試</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_INTRO_TEXT">解開謎題</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_PROGRESS_TEXT">移動次數：%1$s \n %2$s</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_SKIP_BUTTON_TITLE">我無法解開此謎題</string>
+    <!-- Timed walk active task. -->
+    <string name="rsb_TIMED_WALK_TITLE">定時步行</string>
+    <string name="rsb_TIMED_WALK_INTRO_DETAIL">此測試活動可測量你的下肢功能。</string>
+    <string name="rsb_timed_walk_intro_2_text">找一個安全的地方（最好在室外），讓你可以快速地直線步行大約 %1$s。通過終點線前請勿放慢速度。</string>
+    <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">點一下「下一步」開始。</string>
+    <string name="rsb_TIMED_WALK_FORM_TITLE">輔助器材</string>
+    <string name="rsb_TIMED_WALK_FORM_TEXT">每次測試時請使用相同的輔助器材。</string>
+    <string name="rsb_TIMED_WALK_QUESTION_TEXT">你是否穿戴足踝矯形器？</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TITLE">你是否使用輔助器材？</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TEXT">點一下此處以選擇答案。</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE">無</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_2">單邊手杖</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_3">單邊拐杖</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">雙邊手杖</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">雙邊拐杖</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">助行架或四輪助行架</string>
+    <string name="rsb_timed_walk_instruction">直線步行最多 %1$s。</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_2">掉頭，然後步行回到起點。</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">完成後，請點一下「完成」。</string>
+    <!-- PSAT active task. -->
+    <string name="rsb_PASAT_TITLE">PASAT</string>
+    <string name="rsb_PVSAT_TITLE">PVSAT</string>
+    <string name="rsb_PAVSAT_TITLE">PAVSAT</string>
+    <string name="rsb_PASAT_INTRO_TEXT">定時聽覺連續加法測試（PASAT）可測量你的聽覺資料處理速度及計算能力。</string>
+    <string name="rsb_PVSAT_INTRO_TEXT">定時視覺連續加法測試（PVSAT）可測量你的視覺資料處理速度及計算能力。</string>
+    <string name="rsb_PAVSAT_INTRO_TEXT">定時聽覺及視覺連續加法測試（PAVSAT）可測量你的聽覺及視覺資料處理速度及計算能力。</string>
+    <string name="rsb_psat_intro_text_2">每 %1$s 秒會顯示一個數字。\n你必須將新的數字與前一個數字相加。\n注意：請勿計算所有的數字總和，只需計算最後兩個數字的總和。</string>
+    <string name="rsb_PSAT_CALL_TO_ACTION">點一下「開始」以進行測試。</string>
+    <string name="rsb_PSAT_INITIAL_INSTRUCTION">記住第一個數字。</string>
+    <string name="rsb_PSAT_INSTRUCTION">將這個新的數字與前一個數字相加。</string>
+    <string name="rsb_PSAT_NO_DIGIT">-</string>
+    <!-- Hole peg test active task. -->
+    <string name="rsb_hole_peg_test_title">%1$s 孔柱測試</string>
+    <string name="rsb_hole_peg_test_intro_text">此測試活動需要你將圓柱放進洞內，以測量你的上肢功能。你將需要執行此操作 %1$s 次。</string>
+    <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">測試活動將會測試你的左手及右手。\n你必須以最快的速度拿起圓柱並放進洞中，完成 %1$s 次後需要拿走 %2$s 次。</string>
+    <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">測試活動將會測試你的右手及左手。\n你必須以最快的速度拿起圓柱並放進洞中，完成 %1$s 次後需要拿走 %2$s 次。</string>
+    <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">點一下「開始」以進行測試。</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_LEFT_HAND">請用左手將圓柱放進洞中。</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_RIGHT_HAND">請用右手將圓柱放進洞中。</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_LEFT_HAND">請用左手將圓柱放進線後。</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_RIGHT_HAND">請用右手將圓柱放進線後。</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT">用兩指拿起圓柱。</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT_2">放開手指以放下圓柱。</string>
+    <!-- Tremor test active task. -->
+    <string name="rsb_TREMOR_TEST_TITLE">顫抖測試活動</string>
+    <string name="rsb_TREMOR_TEST_INTRO_1_DETAIL">此測試活動可測量你雙手不同位置的顫抖情況。請找一個地方，讓你可以在此測試活動期間舒適坐下。</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">請用較受影響的手拿着電話，如下圖所示。</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">請用右手拿着電話，如下圖所示。</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">請用左手拿着電話，如下圖所示。</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">你將需要坐着，並拿着電話進行%1$s。</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">一個任務</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">兩個任務</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">三個任務</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_4_TASK">四個任務</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_5_TASK">五個任務</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT">點一下「下一步」繼續。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">請準備將手放在大腿上，然後拿着電話。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">請準備將左手放在大腿上，然後拿着電話。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">請準備將右手放在大腿上，然後拿着電話。</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">將手放在大腿上，然後拿着電話 %1$d 秒。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">現在伸直手臂，並將電話拿到肩膊的高度。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">現在伸直左手手臂，並將電話拿到肩膊的高度。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">現在伸直右手手臂，並將電話拿到肩膊的高度。</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">伸直手臂，然後拿着電話 %1$d 秒。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">現在彎曲手肘，並將電話拿到肩膊的高度。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">現在彎曲左手手肘，並將電話拿到肩膊的高度。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">現在彎曲右手手肘，並將電話拿到肩膊的高度。</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">彎曲手肘，然後拿着電話 %1$d 秒</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">現在繼續彎曲手肘，並用電話重複觸碰鼻子。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">現在繼續彎曲左手手肘，並拿着電話重複觸碰鼻子。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">現在繼續彎曲右手手肘，並拿着電話重複觸碰鼻子。</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">拿着電話觸碰鼻子 %1$d 秒</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">請準備進行揮手動作（只揮動手腕）。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">請準備用左手拿着電話，進行揮手動作（只揮動手腕）。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">請準備用右手拿着電話，進行揮手動作（只揮動手腕）。</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">繼續進行揮手動作 %1$d 秒。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">現在用左手拿着電話，並繼續進行下一個任務。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">現在用右手拿着電話，並繼續進行下一個任務。</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">繼續進行下一個任務。</string>
+    <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">測試活動已完成。</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">你將需要坐着，先用一隻手拿着電話進行%1$s，然後再用另一隻手進行。</string>
+    <string name="rsb_TREMOR_SKIP_LEFT_HAND">我無法用左手進行此測試活動。</string>
+    <string name="rsb_TREMOR_SKIP_RIGHT_HAND">我無法用右手進行此測試活動。</string>
+    <string name="rsb_TREMOR_SKIP_NEITHER">我可以用雙手進行此測試活動。</string>
+    <!-- Potentially user visible error messages. -->
+    <string name="rsb_ERROR_DATALOGGER_CREATE_FILE">無法製作檔案</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_FREE_SPACE">無法移除足夠的記錄檔案以達到臨界值</string>
+    <string name="rsb_ERROR_DATALOGGER_SET_ATTRIBUTE">設定屬性錯誤</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_MAORK">檔案未標示為已刪除（未標示為已上載）</string>
+    <string name="rsb_ERROR_DATALOGGER_MULTIPLE">移除記錄檔時發生多個錯誤</string>
+    <string name="rsb_ERROR_RECORDER_NO_DATA">找不到已收集的數據。</string>
+    <string name="rsb_ERROR_RECORDER_NO_OUTPUT_DIRECTORY">未指定輸出目錄</string>
+    <!-- Charts -->
+    <string name="rsb_CHART_NO_DATA_TEXT">沒有數據</string>
+    <!-- Accessibility -->
+    <string name="rsb_AX_BUTTON_BACK">上一步</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">%1$s圖案</string>
+    <string name="rsb_AX_SIGNVIEW_LABEL">指定簽名欄位</string>
+    <string name="rsb_AX_SIGNVIEW_HINT">觸碰螢幕並移動手指簽名</string>
+    <string name="rsb_AX_SIGNVIEW_SIGNED">已簽名</string>
+    <string name="rsb_AX_SIGNVIEW_UNSIGNED">未簽名</string>
+    <string name="rsb_AX_SELECTED">已選擇</string>
+    <string name="rsb_AX_UNSELECTED">未選擇</string>
+    <string name="rsb_AX_SLIDER_LABEL">回應滑桿。範圍由 %1$s 至 %2$s</string>
+    <string name="rsb_AX_UNLABELED_IMAGE">未標記的圖案</string>
+    <string name="rsb_AX_ANNOUNCE_BEGIN_TASK">開始任務</string>
+    <string name="rsb_AX_MEMORY_TILE_ACTIVE">動態</string>
+    <string name="rsb_AX_MEMORY_TILE_CORRECT">正確</string>
+    <string name="rsb_AX_MEMORY_TILE_INCORRECT">不正確</string>
+    <string name="rsb_AX_MEMORY_TILE_QUIESCENT">靜態</string>
+    <string name="rsb_AX_MEMORY_TILE_LABEL">記憶遊戲圖樣</string>
+    <string name="rsb_AX_IMAGE_CAPTURE_LABEL">截取預覽</string>
+    <string name="rsb_AX_IMAGE_CAPTURED_LABEL">截取的圖案</string>
+    <string name="rsb_AX_VIDEO_CAPTURE_LABEL">截取影片預覽</string>
+    <string name="rsb_AX_VIDEO_CAPTURED_LABEL">截取的影片</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_INVALID_MOVE_FORMAT">無法將 %1$s 號的圓盤放在 %2$s 號的圓盤上</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TARGET_DISK">目標</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER">塔座</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">點兩下放置圓盤</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">點兩下選擇最上方的圓盤</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">其中的圓盤大小是 %1$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">空白</string>
+    <string name="rsb_ax_graph_range_format">範圍介乎 %1$s 至 %2$s</string>
+    <string name="rsb_AX_GRAPH_STACK_PREFIX">圓盤柱的組成方式：</string>
+    <string name="rsb_AX_GRAPH_AND_SEPARATOR">與</string>
+    <string name="rsb_ax_graph_point">點數：%1$s</string>
+
+</resources>

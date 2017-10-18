@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="rsb_config_mediumAnimTime">300</integer>
+    <integer name="rsb_config_longAnimTime">800</integer>
+
+    <integer name="rsb_config_anim_time_check_mark">@integer/rsb_config_mediumAnimTime</integer>
+    <integer name="rsb_config_anim_time_fingerprint">@integer/rsb_config_longAnimTime</integer>
+
+    <!-- How often to loop the fingerprint animation -->
+    <integer name="rsb_config_anim_time_fingerprint_frequency">2000</integer>
+    <integer name="rsb_config_anim_time_fingerprint_too_many_attempts_delay">2500</integer>
+    <integer name="rsb_config_anim_time_fingerprint_error_delay">1600</integer>
+
+    <!-- Tapping Animation Duration -->
+    <integer name="rsb_config_tapping_duration_half">500</integer>
+
+    <!-- The frequency of sensor collection, in Hz -->
+    <integer name="rsb_sensor_frequency_default">100</integer>
+    <integer name="rsb_sensor_frequency_tremor_task">@integer/rsb_sensor_frequency_default</integer>
+    <integer name="rsb_sensor_frequency_walking_task">@integer/rsb_sensor_frequency_default</integer>
+    <integer name="rsb_sensor_frequency_tapping_task">@integer/rsb_sensor_frequency_default</integer>
+
 </resources>

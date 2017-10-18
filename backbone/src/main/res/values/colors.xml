@@ -7,14 +7,51 @@
     <color name="rsb_black">#000</color>
     <color name="rsb_black_20">#33000000</color>
     <color name="rsb_black_40">#66000000</color>
+    <color name="rsb_white">#FFFFFF</color>
     <color name="rsb_white_60">#CCFFFFFF</color>
+    <color name="rsb_light_gray">#e5e5e5</color>
     <color name="rsb_warm_gray">#FF757575</color>
     <color name="rsb_warm_gray_20">#33757575</color>
     <color name="rsb_submit_bar_gray">#EEEEEE</color>
     <color name="rsb_submit_bar_negative">#979797</color>
-    <color name="rsb_list_divider">#e5e5e5</color>
-    <color name="rsb_error">#ffff5722</color>
+    <color name="rsb_list_divider">@color/rsb_light_gray</color>
+    <color name="rsb_red">#ffff5722</color>
+    <color name="rsb_green">#43D551</color>
 
     <color name="rsb_tab_indicator">#2196f3</color>
     <color name="rsb_tab_text_selected">#662196f3</color>
+
+    <color name="rsb_error">@color/rsb_red</color>
+    <color name="rsb_success">@color/rsb_green</color>
+    <color name="rsb_hint">@color/rsb_warm_gray</color>
+
+    <color name="rsb_check_mark_foreground">@color/rsb_white</color>
+    <color name="rsb_check_mark_background">@color/rsb_green</color>
+
+    <color name="rsb_forgot_passcode_text_color">@color/rsb_submit_bar_negative</color>
+    <color name="rsb_fingerprint">@color/rsb_colorPrimary</color>
+
+    <!-- Step must also have set "shouldTintImage" to true for this to be used -->
+    <color name="rsb_instruction_step_layout_image_tint_color">@color/rsb_colorPrimary</color>
+    <color name="rsb_instruction_step_layout_image_auxillary_tint_color">@color/rsb_light_gray</color>
+
+    <!-- Image Choice Step Body -->
+    <color name="rsb_image_choice_hint_text_color">@color/rsb_black</color>
+
+    <!-- Countdown screen -->
+    <color name="rsb_countdown_step_layout_timer_color">@color/rsb_colorPrimary</color>
+    <color name="rsb_countdown_step_layout_text_color">@color/rsb_black</color>
+
+    <color name="rsb_cancel_menu_icon">@color/rsb_white</color>
+
+    <!-- Permission screen -->
+    <color name="rsb_permission_icon">@color/rsb_white</color>
+
+    <!-- Tapping Screen -->
+    <color name="rsb_step_layout_tapping_button_text_color">@color/rsb_white</color>
+
+    <!-- Mood Survey -->
+    <color name="rsb_mood_survey_normal_image_color">@color/rsb_warm_gray</color>
+    <color name="rsb_mood_survey_selected_image_color">@color/rsb_colorPrimary</color>
+
 </resources>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Informed consent process. -->
+    <string name="rsb_CONSENT_NAME_TITLE">Samtykke</string>
+    <string name="rsb_CONSENT_NAME_GIVEN">Fornavn</string>
+    <string name="rsb_CONSENT_NAME_FAMILY">Etternavn</string>
+    <string name="rsb_CONSENT_NAME_PLACEHOLDER">Kreves</string>
+    <string name="rsb_CONSENT_REVIEW_TITLE">Se gjennom</string>
+    <string name="rsb_CONSENT_REVIEW_INSTRUCTION">Se gjennom skjemaet nedenfor, og trykk på Enig hvis du er klar til å fortsette.</string>
+    <string name="rsb_CONSENT_REVIEW_ALERT_TITLE">Se gjennom</string>
+    <string name="rsb_CONSENT_SIGNATURE_TITLE">Signatur</string>
+    <string name="rsb_CONSENT_SIGNATURE_INSTRUCTION">Signer med fingeren på linjen nedenfor.</string>
+    <string name="rsb_CONSENT_SIGNATURE_PLACEHOLDER">Signer her</string>
+    <string name="rsb_CONSENT_PAGE_NUMBER_FORMAT">Side %1$ld av %2$ld</string>
+    <!-- Consent section titles. -->
+    <string name="rsb_CONSENT_SECTION_WELCOME">Velkommen</string>
+    <string name="rsb_CONSENT_SECTION_DATA_GATHERING">Datainnsamling</string>
+    <string name="rsb_CONSENT_SECTION_PRIVACY">Personvern</string>
+    <string name="rsb_CONSENT_SECTION_DATA_USE">Databruk</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_SURVEY">Undersøkelse</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_TASKS">Oppgaver</string>
+    <string name="rsb_CONSENT_SECTION_TIME_COMMITMENT">Tidsbruk</string>
+    <string name="rsb_CONSENT_SECTION_WITHDRAWING">Avslutte studien</string>
+    <string name="rsb_CONSENT_LEARN_MORE_TITLE">Finn ut mer</string>
+    <!-- Consent section learn more -->
+    <string name="rsb_LEARN_MORE_DATA_GATHERING">Finn ut mer om hvordan data samles inn</string>
+    <string name="rsb_LEARN_MORE_DATA_USE">Finn ut mer om hvordan dataene brukes</string>
+    <string name="rsb_LEARN_MORE_PRIVACY">Finn ut mer om hvordan personvernet og identiteten din beskyttes</string>
+    <string name="rsb_LEARN_MORE_WELCOME">Finn ut mer om studien</string>
+    <string name="rsb_LEARN_MORE_STUDY_SURVEY">Finn ut mer om undersøkelsen</string>
+    <string name="rsb_LEARN_MORE_TIME_COMMITMENT">Finn ut mer om hvor mye tid studien krever</string>
+    <string name="rsb_LEARN_MORE_TASKS">Finn ut mer om oppgavene i studien</string>
+    <string name="rsb_LEARN_MORE_WITHDRAWING">Finn ut mer om å avslutte studien</string>
+    <!-- Consent sharing step -->
+    <string name="rsb_CONSENT_SHARING_TITLE">Delingsvalg</string>
+    <string name="rsb_consent_share_widely">Del dataene dine med %1$s og erfarne forskere over hele verden</string>
+    <string name="rsb_consent_share_only">Del data kun med %1$s</string>
+    <string name="rsb_consent_sharing_description">%1$s vil motta data fra undersøkelsen du deltar i.\n\nEn videre deling av dine kodede opplysninger (navn og lignende fjernes) kan komme til nytte både i denne og framtidige undersøkelser.</string>
+    <string name="rsb_LEARN_MORE_CONSENT_SHARING">Finn ut mer om datadeling</string>
+    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">Navnet til %1$s (store bokstaver)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">Signaturen til %1$s</string>
+    <string name="rsb_CONSENT_DOC_LINE_DATE">Dato</string>
+    <!-- Progress indication (in navigation bar). -->
+    <string name="rsb_STEP_PROGRESS_FORMAT">Trinn %1$s av %2$s</string>
+    <!-- Alert for out of range values. -->
+    <string name="rsb_RANGE_ALERT_TITLE">Ugyldig verdi</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s overstiger høyest tillatte verdi (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s er mindre enn lavest tillatte verdi (%2$s).</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s er ikke en gyldig verdi.</string>
+    <!-- Alert for invalid email address value -->
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Ugyldig e-postadresse: %1$s</string>
+    <!-- Alerts for invalid location coordinates -->
+    <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Skriv inn en adresse</string>
+    <string name="rsb_LOCATION_ERROR_TITLE">Fant ikke angitt adresse</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_LOCATION_UNKNOWN">Finner ikke din nåværende posisjon. Skriv inn adressen, eller gå om mulig til et sted med bedre GPS-signal.</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_DENIED">Du har ikke gitt appen tilgang til stedstjenester. Du kan endre tilgangen til stedstjenester i Innstillinger.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE">Fant ingen treff for angitt adresse. Kontroller at adressen er riktig og prøv igjen.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">Du er enten ikke koblet til Internett, eller du har oversteget grensen for antall adressesøk. Hvis du ikke er koblet til Internett, må du slå på Wi-Fi for å svare på spørsmålet. Du kan hoppe over spørsmålet hvis hopp over-knappen er tilgjengelig, eller komme tilbake til undersøkelsen når du er koblet til Internett. Prøv ellers igjen om noen minutter.</string>
+    <!-- Alert for exceeding length limit in text answer -->
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Teksten overstiger makslengden: %1$s</string>
+    <!-- Camera not available during multitasking -->
+    <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">Kameraet er ikke tilgjengelig på delt skjerm.</string>
+    <!-- Registration step -->
+    <string name="rsb_EMAIL_FORM_ITEM_TITLE">E-post</string>
+    <string name="rsb_EMAIL_FORM_ITEM_PLACEHOLDER">jappleseed@example.com</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_TITLE">Passord</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_PLACEHOLDER">Oppgi passord</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_TITLE">Bekreft</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_PLACEHOLDER">Oppgi passordet igjen</string>
+    <string name="rsb_CONFIRM_PASSWORD_ERROR_MESSAGE">Passordene er ikke like.</string>
+    <string name="rsb_ADDITIONAL_INFO_SECTION_TITLE">Tilleggsinformasjon</string>
+    <string name="rsb_GIVEN_NAME_ITEM_PLACEHOLDER">John</string>
+    <string name="rsb_FAMILY_NAME_ITEM_PLACEHOLDER">Appleseed</string>
+    <string name="rsb_GENDER_FORM_ITEM_TITLE">Kjønn</string>
+    <string name="rsb_GENDER_FORM_ITEM_PLACEHOLDER">Angi kjønn</string>
+    <string name="rsb_DOB_FORM_ITEM_TITLE">Fødselsdato</string>
+    <string name="rsb_DOB_FORM_ITEM_PLACEHOLDER">Angi dato</string>
+    <!-- Verification step -->
+    <string name="rsb_VERIFICATION_NAV_TITLE">Verifisering</string>
+    <string name="rsb_VERIFICATION_STEP_TITLE">Verifiser e-postadressen</string>
+    <string name="rsb_RESEND_EMAIL_LABEL_MESSAGE">Trykk på koblingen nedenfor hvis du ikke mottok verifiseringsmeldingen på e-post og vil sende den på nytt.</string>
+    <string name="rsb_RESEND_EMAIL_BUTTON_TITLE">Send verifiseringsmelding på nytt</string>
+    <!-- Login step -->
+    <string name="rsb_LOGIN_CONTINUE_BUTTON_TITLE">Logg på</string>
+    <string name="rsb_FORGOT_PASSWORD_BUTTON_TITLE">Glemt passordet?</string>
+    <!-- Passcode step -->
+    <string name="rsb_PASSCODE_PROMPT_MESSAGE">Oppgi kode</string>
+    <string name="rsb_PASSCODE_CONFIRM_MESSAGE">Bekreft kode</string>
+    <string name="rsb_PASSCODE_SAVED_MESSAGE">Kode arkivert</string>
+    <string name="rsb_PASSCODE_AUTHENTICATED_MESSAGE">Kode godkjent</string>
+    <string name="rsb_PASSCODE_OLD_ENTRY_MESSAGE">Oppgi den gamle koden</string>
+    <string name="rsb_PASSCODE_NEW_ENTRY_MESSAGE">Angi den nye koden</string>
+    <string name="rsb_PASSCODE_CONFIRM_NEW_ENTRY_MESSAGE">Bekreft den nye koden</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_TITLE">Koden er feil</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_MESSAGE">Kodene er ikke like. Prøv igjen.</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_MESSAGE">Autentiser med Touch ID</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_ERROR_ALERT_TITLE">Touch ID-feil</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_INVALID_INPUT_MESSAGE">Kun numeriske tegn er tillatt.</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILITY_LABEL">Framdriftsindikator for inntasting av kode</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILTIY_VALUE">%1$s av %2$s sifre oppgitt</string>
+    <string name="rsb_PASSCODE_FORGOT_BUTTON_TITLE">Glemt koden?</string>
+    <!-- Keychain wrapper -->
+    <string name="rsb_KEYCHAIN_ADD_ERROR_MESSAGE">Kunne ikke legge til nøkkelringobjekt.</string>
+    <string name="rsb_KEYCHAIN_UPDATE_ERROR_MESSAGE">Kunne ikke oppdatere nøkkelringobjekt.</string>
+    <string name="rsb_KEYCHAIN_DELETE_ERROR_MESSAGE">Kunne ikke slette nøkkelringobjekt.</string>
+    <string name="rsb_KEYCHAIN_FIND_ERROR_MESSAGE">Fant ikke nøkkelringobjekt.</string>
+    <!-- Blood types -->
+    <string name="rsb_blood_type_a_plus">A+</string>
+    <string name="rsb_BLOOD_TYPE_A_">A-</string>
+    <string name="rsb_blood_type_ab_plus">AB+</string>
+    <string name="rsb_BLOOD_TYPE_AB_">AB-</string>
+    <string name="rsb_blood_type_b_plus">B+</string>
+    <string name="rsb_BLOOD_TYPE_B_">B-</string>
+    <string name="rsb_blood_type_o_plus">O+</string>
+    <string name="rsb_BLOOD_TYPE_O_">O-</string>
+    <!-- Gender values. -->
+    <string name="rsb_GENDER_FEMALE">Kvinne</string>
+    <string name="rsb_GENDER_MALE">Mann</string>
+    <string name="rsb_GENDER_OTHER">Annet</string>
+    <!-- Boolean answer strings -->
+    <string name="rsb_BOOL_NO">Nei</string>
+    <string name="rsb_BOOL_YES">Ja</string>
+    <!-- Measuring unit abbreviations -->
+    <string name="rsb_MEASURING_UNIT_CM">cm</string>
+    <string name="rsb_MEASURING_UNIT_FT">fot</string>
+    <string name="rsb_MEASURING_UNIT_IN">to</string>
+    <!-- Default placeholders to request answers in a questionnaire. -->
+    <string name="rsb_PLACEHOLDER_TEXT_OR_NUMBER">Trykk for å svare</string>
+    <string name="rsb_NULL_ANSWER">Velg et svar</string>
+    <string name="rsb_PLACEHOLDER_IMAGE_CHOICES">Trykk for å velge</string>
+    <string name="rsb_PLACEHOLDER_LONG_TEXT">Trykk for å skrive</string>
+    <!-- Button titles -->
+    <string name="rsb_BUTTON_AGREE">Enig</string>
+    <string name="rsb_BUTTON_CANCEL">Avbryt</string>
+    <string name="rsb_BUTTON_OK">OK</string>
+    <string name="rsb_BUTTON_CLEAR">Fjern</string>
+    <string name="rsb_BUTTON_DISAGREE">Uenig</string>
+    <string name="rsb_BUTTON_DONE">Ferdig</string>
+    <string name="rsb_BUTTON_GET_STARTED">Start</string>
+    <string name="rsb_BUTTON_LEARN_MORE">Finn ut mer</string>
+    <string name="rsb_BUTTON_NEXT">Neste</string>
+    <string name="rsb_BUTTON_SKIP">Hopp over</string>
+    <string name="rsb_BUTTON_SKIP_QUESTION">Hopp over spørsmålet</string>
+    <string name="rsb_BUTTON_START_TIMER">Start tidtaker</string>
+    <string name="rsb_BUTTON_OPTION_SAVE">Spar til senere</string>
+    <string name="rsb_BUTTON_OPTION_DISCARD">Forkast resultater</string>
+    <string name="rsb_BUTTON_OPTION_STOP_TASK">Avslutt oppgave</string>
+    <string name="rsb_BUTTON_SAVE">Arkiver</string>
+    <string name="rsb_BUTTON_CLEAR_ANSWER">Fjern svar</string>
+    <string name="rsb_BUTTON_READ_ONLY_MODE">Dette svaret kan ikke endres.</string>
+    <!-- General active tasks. -->
+    <string name="rsb_COUNTDOWN_LABEL">Starter aktivitet om</string>
+    <string name="rsb_TASK_COMPLETE_TITLE">Aktivitet fullført</string>
+    <string name="rsb_TASK_COMPLETE_TEXT">Dataene vil bli analysert, og du blir varslet når resultatene er klare.</string>
+    <string name="rsb_countdown_spoken_remaining">%1$s sekunder gjenstår.</string>
+    <!-- Image capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Ta bilde</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Ta nytt bilde</string>
+    <string name="rsb_CAPTURE_ERROR_CAMERA_NOT_FOUND">Finner ikke kamera. Trinnet kunne ikke fullføres.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_PERMISSIONS">For å fullføre trinnet må du først gi appen tilgang til kameraet i Innstillinger.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_OUTPUT_DIRECTORY">Du har ikke angitt en katalog for bildene du tar.</string>
+    <string name="rsb_CAPTURE_ERROR_CANNOT_WRITE_FILE">Bildet kunne ikke arkiveres.</string>
+    <!-- Video capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_VIDEO">Start opptak</string>
+    <string name="rsb_CAPTURE_BUTTON_STOP_CAPTURE_VIDEO">Stopp opptak</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Spill inn video på nytt</string>
+    <!-- Fitness active task. -->
+    <string name="rsb_FITNESS_TASK_TITLE">Kondisjon</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Strekning (%1$s)</string>
+    <string name="rsb_FITNESS_HEARTRATE_TITLE">Puls (slag/min)</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Sitt komfortabelt i %1$s.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Gå så fort du kan i %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Denne aktiviteten leser av pulsen din og måler hvor langt du kan gå på %1$s.</string>
+    <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Gå utendørs så fort du kan i %1$s. Når du er ferdig, setter du deg og hviler komfortabelt i %2$s.Trykk på Start for å begynne.</string>
+    <!-- Short walk active task. -->
+    <string name="rsb_WALK_TASK_TITLE">Balanse og gange</string>
+    <string name="rsb_WALK_INTRO_TEXT">Denne aktiviteten måler balansen og gangen din mens du går og står i ro. Ikke fortsett hvis du ikke kan gå trygt uten hjelp.</string>
+    <string name="rsb_walk_intro_2_text_ld">Finn et sted der du trygt og uten hjelp kan gå omtrent %1$d skritt i rett linje.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL">Legg telefonen i lommen eller en veske, og følg lydinstruksjonene.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Stå stille i %1$s.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Stå stille i %1$s.</string>
+    <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Snu og gå tilbake der du startet.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Gå opptil %1$d skritt i rett linje.</string>
+    <!-- Short walk back and forth. -->
+    <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Finn et sted hvor du trygt kan gå fram og tilbake i en rett linje. Prøv å gå kontinuerlig når du skal snu, som om du skal gå rundt en kjegle.\n\nDu vil bli deretter bedt om å snu deg helt rundt og stå helt stille med armene ned langs siden og føttene med en skulderbreddes avstand.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Trykk på Kom i gang når du er klar til å starte.\nPlasser deretter telefonen i en lomme eller veske, og følg lydinstruksjonene.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Gå fram og tilbake i en rett linje i %1$s. Gå så normalt så mulig.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Snu deg helt rundt og stå stille i %1$s.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Du har fullført aktiviteten.</string>
+    <!-- Tapping active task. -->
+    <string name="rsb_TAPPING_TASK_TITLE">Trykkhastighet</string>
+    <string name="rsb_TAPPING_TASK_TITLE_RIGHT">Høyre hånd</string>
+    <string name="rsb_TAPPING_TASK_TITLE_LEFT">Venstre hånd</string>
+    <string name="rsb_TAPPING_INTRO_TEXT">Denne aktiviteten måler trykkhastigheten din.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_REST_PHONE">Plasser telefonen på en flat overflate.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_MOST_AFFECTED">Bruk to fingre på samme hånd til å trykke vekselvis på knappene på skjermen.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_FIRST">Bruk to fingre på høyre hånd til å trykke vekselvis på knappene på skjermen.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Bruk to fingre på venstre hånd til å trykke vekselvis på knappene på skjermen.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Gjør den samme testen med høyre hånd.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Gjør den samme testen med venstre hånd.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Trykk med én finger, og deretter den andre. Veksle mellom knappene i jevne intervaller. Fortsett å trykke i %1$s.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION">Trykk på Start for å begynne.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Trykk på Neste for å begynne.</string>
+    <string name="rsb_TAP_BUTTON_TITLE">Trykk</string>
+    <string name="rsb_TOTAL_TAPS_LABEL">Trykk totalt</string>
+    <string name="rsb_TAPPING_INSTRUCTION">Trykk på knappene så jevnt som du klarer, med to fingre.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_RIGHT">Trykk på knappene med din HØYRE hånd.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_LEFT">Trykk på knappene med din VENSTRE hånd.</string>
+    <string name="rsb_TAPPING_SKIP_TITLE">Utelat denne hånden</string>
+    <!-- Audio active task. -->
+    <string name="rsb_AUDIO_TASK_TITLE">Stemme</string>
+    <string name="rsb_AUDIO_CALL_TO_ACTION">Trykk på Start for å begynne.</string>
+    <string name="rsb_AUDIO_INSTRUCTION">Si «aaa» inn i mikrofonen så lenge du klarer.</string>
+    <string name="rsb_AUDIO_INTRO_TEXT">Trekk pusten dypt inn og si «aaa» inn i mikrofonen så lenge du klarer. Hold et jevnt volum slik at lydstolpene forblir blå.</string>
+    <string name="rsb_AUDIO_INTENDED_USE">Aktiviteten vil evaluere stemmen din ved å ta den opp i mikrofonen i nedre kant av telefonen.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_LABEL">For høyt</string>
+    <string name="rsb_AUDIO_GENERIC_ERROR_LABEL">Kan ikke ta opp lyd</string>
+    <string name="rsb_AUDIO_LEVEL_CHECK_LABEL">Vent mens vi kontrollerer støynivået i bakgrunnen.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_MESSAGE">Støynivået fra omgivelsene er for høyt til å gjøre opptak av stemmen din. Gå til et sted mindre støy, og prøv igjen.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_ACTION_NEXT">Trykk på Neste når du er klar.</string>
+    <!-- Tone audiometry active task. -->
+    <string name="rsb_TONE_AUDIOMETRY_TASK_TITLE">Toneaudiometri</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTENDED_USE">Aktiviteten måler hvor godt du hører ulike lyder.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTRO_TEXT">Koble til og ta på deg hodetelefonene før du begynner.</string>
+    <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Trykk på Start for å begynne.</string>
+    <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Du bør nå høre en tone. Juster volumet med kontrollene på siden av enheten.\n\nTrykk på knappen når du er klar til å begynne.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Trykk på knappen hver gang du hører en lyd.</string>
+    <string name="rsb_tone_label_left">%1$s Hz, venstre</string>
+    <string name="rsb_tone_label_right">%1$s Hz, høyre</string>
+    <!-- Spatial span memory active task. -->
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Visuell hukommelse</string>
+    <string name="rsb_spatial_span_memory_intro_text">Denne aktiviteten måler den visuelle korttidshukommelsen din ved å be deg gjenta i hvilken rekkefølge %1$s lyser.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">blomstrene</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">blomstrene</string>
+    <string name="rsb_spatial_span_memory_intro_2_text">Noen av %1$s vil lyse én om gangen. Trykk på disse %2$s i samme rekkefølge som de lyser opp.</string>
+    <string name="rsb_spatial_span_memory_intro_2_text_reverse">Noen av %1$s vil lyse én om gangen. Trykk på disse %2$s i omvendt rekkefølge av hvordan de lyser opp.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Begynn ved å trykke på Start, og følg så nøye med.</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
+    <string name="rsb_MEMORY_GAME_SCORE_TITLE">Poeng</string>
+    <string name="rsb_memory_game_playback_title">Se %1$s lyse opp</string>
+    <string name="rsb_memory_game_gameplay_title">Trykk på %1$s i samme rekkefølge som de lyste</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Trykk på %1$s i omvendt rekkefølge</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Mønster fullført</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Trykk på Neste for å fortsette</string>
+    <string name="rsb_MEMORY_GAME_FAILED_TITLE">Prøv igjen</string>
+    <string name="rsb_MEMORY_GAME_FAILED_MESSAGE">Testbesvarelsen var ikke helt riktig. Trykk på Neste for å fortsette.</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_TITLE">Tiden er ute</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_MESSAGE">Du gikk over tiden.\nTrykk på Neste for å fortsette.</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE">Spill ferdig</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_TITLE">Pause</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_MESSAGE">Trykk på Neste for å fortsette</string>
+    <!-- Reaction time active task. -->
+    <string name="rsb_REACTION_TIME_TASK_TITLE">Reaksjonstid</string>
+    <string name="rsb_REACTION_TIME_TASK_INTENDED_USE">Aktiviteten måler hvor lang tid det tar før du reagerer på visuelle signaler.</string>
+    <string name="rsb_REACTION_TIME_TASK_INTRO_TEXT_FORMAT">Rist enheten så snart du ser den blå prikken vises på skjermen. Du vil bli bedt om å gjøre dette %D ganger.</string>
+    <string name="rsb_REACTION_TIME_TASK_CALL_TO_ACTION">Trykk på Start for å begynne.</string>
+    <string name="rsb_REACTION_TIME_TASK_ATTEMPTS_FORMAT">Forsøk %1$s av %2$s</string>
+    <string name="rsb_REACTION_TIME_TASK_ACTIVE_STEP_TITLE">Rist enheten fort når den blå sirkelen vises</string>
+    <!-- Tower of Hanoi active task -->
+    <string name="rsb_TOWER_OF_HANOI_TASK_TITLE">Tårnet i Hanoi</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTENDED_USE">Denne aktiviteten vurderer evnen din til å løse oppgaver.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTRO_TEXT">Flytt hele stabelen til den markerte plattformen med så få trekk som mulig.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_TASK_CALL_TO_ACTION">Trykk på Start for å begynne</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_INTRO_TEXT">Løs oppgaven</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_PROGRESS_TEXT">Antall trekk: %1$s \n %2$s</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_SKIP_BUTTON_TITLE">Jeg klarer ikke å løse oppgaven</string>
+    <!-- Timed walk active task. -->
+    <string name="rsb_TIMED_WALK_TITLE">Gå på tid</string>
+    <string name="rsb_TIMED_WALK_INTRO_DETAIL">Denne aktiviteten måler funksjonen i nedre kroppshalvdel.</string>
+    <string name="rsb_timed_walk_intro_2_text">Finn et sted, helst utendørs, der du trygt kan gå omtrent %1$s i rett linje, så raskt som mulig. Ikke senk farten til etter at du har passert mållinjen.</string>
+    <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Trykk på Neste for å begynne.</string>
+    <string name="rsb_TIMED_WALK_FORM_TITLE">Hjelpemiddel</string>
+    <string name="rsb_TIMED_WALK_FORM_TEXT">Bruk samme hjelpemiddel i hver test.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_TEXT">Bruker du en ankel- eller fotortose?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TITLE">Bruker du et hjelpemiddel?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TEXT">Trykk her for å velge et svar.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE">Ingen</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_2">Én stokk</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_3">Én krykke</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">To stokker</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">To krykker</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Gåstol/rollator</string>
+    <string name="rsb_timed_walk_instruction">Gå opptil %1$s i rett linje.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_2">Snu og gå tilbake der du startet.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Trykk på Ferdig når du har fullført oppgaven.</string>
+    <!-- PSAT active task. -->
+    <string name="rsb_PASAT_TITLE">PASAT</string>
+    <string name="rsb_PVSAT_TITLE">PVSAT</string>
+    <string name="rsb_PAVSAT_TITLE">PAVSAT</string>
+    <string name="rsb_PASAT_INTRO_TEXT">PASAT-testen (Paced Auditory Serial Addition Test) måler hvor raskt du behandler lydinformasjon og evnen din til å gjøre utregninger.</string>
+    <string name="rsb_PVSAT_INTRO_TEXT">PVSAT-testen (Paced Visual Serial Addition Test) måler hvor raskt du behandler synsinformasjon og evnen din til å gjøre utregninger.</string>
+    <string name="rsb_PAVSAT_INTRO_TEXT">PAVSAT-testen (Paced Auditory and Visual Serial Addition Test) måler hvor raskt du behandler lyd- og synsinformasjon og evnen din til å gjøre utregninger.</string>
+    <string name="rsb_psat_intro_text_2">Enkeltsifre vises hvert %1$s. sekund.\nDu må legge det nye sifferet sammen med det som ble vist rett før.\nMerk at du ikke skal summere alle tallene, bare de to som ble vist sist.</string>
+    <string name="rsb_PSAT_CALL_TO_ACTION">Trykk på Start for å begynne.</string>
+    <string name="rsb_PSAT_INITIAL_INSTRUCTION">Husk dette første sifferet.</string>
+    <string name="rsb_PSAT_INSTRUCTION">Legg dette nye sifferet til det forrige.</string>
+    <string name="rsb_PSAT_NO_DIGIT">-</string>
+    <!-- Hole peg test active task. -->
+    <string name="rsb_hole_peg_test_title">%1$s-hulls pluggtest</string>
+    <string name="rsb_hole_peg_test_intro_text">I denne aktiviteten skal du plassere en plugg i et hull for å måle funksjonen i armene dine. Du vil bli bedt om å gjøre det %1$s ganger.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">Både venstre og høyre hånd vil bli testet.\nDu må plukke opp pluggen så fort som mulig, og legge den i hullet. Gjør dette %1$s ganger, og fjern den så igjen %2$s ganger.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">Både høyre og venstre hånd vil bli testet.\nDu må plukke opp pluggen så fort som mulig, og legge den i hullet. Gjør dette %1$s ganger, og fjern den så igjen %2$s ganger.</string>
+    <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Trykk på Start for å begynne.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_LEFT_HAND">Plasser pluggen i hullet med venstre hånd.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_RIGHT_HAND">Plasser pluggen i hullet med høyre hånd.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_LEFT_HAND">Plasser pluggen bak streken med venstre hånd.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_RIGHT_HAND">Plasser pluggen bak streken med høyre hånd.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT">Bruk to fingre til å løfte opp pluggen.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT_2">Løft fingrene for å slippe pluggen.</string>
+    <!-- Tremor test active task. -->
+    <string name="rsb_TREMOR_TEST_TITLE">Skjelving – aktivitet</string>
+    <string name="rsb_TREMOR_TEST_INTRO_1_DETAIL">Denne aktiviteten måler skjelving i hendene dine i forskjellige posisjoner. Finn et sted hvor du kan sitte i ro i løpet av denne aktiviteten.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Hold telefonen i hånden som er hardest rammet, som vist i bildet nedenfor.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Hold telefonen i din HØYRE hånd som vist i bildet nedenfor.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Hold telefonen i din VENSTRE hånd som vist i bildet nedenfor.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Du vil bli bedt om å utføre %1$s mens du sitter med telefonen i den ene hånden.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">en oppgave</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">to oppgaver</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">tre oppgaver</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_4_TASK">fire oppgaver</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_5_TASK">fem oppgaver</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT">Trykk på Neste for å gå videre.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Forbered deg på å holde telefonen i fanget.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Forbered deg på å holde telefonen i fanget med VENSTRE hånd.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Forbered deg på å holde telefonen i fanget med HØYRE hånd.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Hold telefonen i fanget i %1$d sekunder.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Hold telefonen med utstrakt hånd i skulderhøyde.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Hold telefonen med VENSTRE hånd utstrakt i skulderhøyde.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Hold telefonen med HØYRE hånd utstrakt i skulderhøyde.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Hold telefonen med utstrakt hånd i %1$d sekunder.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Hold telefonen i skulderhøyde med albuen bøyd.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Hold telefonen med VENSTRE hånd i skulderhøyde med albuen bøyd.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Hold telefonen med HØYRE hånd i skulderhøyde med albuen bøyd.</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Hold telefonen med albuen bøyd i %1$d sekunder</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Hold albuen bøyd, og trykk telefonen mot nesen gjentatte ganger.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Hold albuen bøyd med telefonen i VENSTRE hånd, og trykk telefonen mot nesen gjentatte ganger.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Hold albuen bøyd med telefonen i HØYRE hånd, og trykk telefonen mot nesen gjentatte ganger.</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Hold telefonen mot nesen i %1$d sekunder</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Forbered deg på å vinke som en dronning (vink ved å vri på håndleddet).</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Forbered deg på å vinke som en dronning med telefonen i VENSTRE hånd (vink ved å vri på håndleddet).</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Forbered deg på å vinke som en dronning med telefonen i HØYRE hånd (vink ved å vri på håndleddet).</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Vink som en dronning i %1$d sekunder.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Flytt telefonen til VENSTRE hånd, og fortsett oppgaven.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Flytt telefonen til HØYRE hånd, og fortsett oppgaven.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Fortsett til neste oppgave.</string>
+    <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Aktivitet fullført.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Du vil bli bedt om å utføre %1$s mens du sitter med telefonen i den ene hånden, og deretter igjen med den andre hånden.</string>
+    <string name="rsb_TREMOR_SKIP_LEFT_HAND">Jeg kan ikke utføre denne aktiviteten med min VENSTRE hånd.</string>
+    <string name="rsb_TREMOR_SKIP_RIGHT_HAND">Jeg kan ikke utføre denne aktiviteten med min HØYRE hånd.</string>
+    <string name="rsb_TREMOR_SKIP_NEITHER">Jeg kan utføre denne aktiviteten med begge hender.</string>
+    <!-- Potentially user visible error messages. -->
+    <string name="rsb_ERROR_DATALOGGER_CREATE_FILE">Kunne ikke opprette fil</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_FREE_SPACE">Kunne ikke fjerne nok loggfiler til å nå grensen</string>
+    <string name="rsb_ERROR_DATALOGGER_SET_ATTRIBUTE">Feil ved angivelse av attributt</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_MAORK">Fil er ikke merket som slettet (ikke merket som opplastet)</string>
+    <string name="rsb_ERROR_DATALOGGER_MULTIPLE">Flere feil ved fjerning av logger</string>
+    <string name="rsb_ERROR_RECORDER_NO_DATA">Fant ingen innsamlede data.</string>
+    <string name="rsb_ERROR_RECORDER_NO_OUTPUT_DIRECTORY">Ingen katalog angitt</string>
+    <!-- Charts -->
+    <string name="rsb_CHART_NO_DATA_TEXT">Ingen data</string>
+    <!-- Accessibility -->
+    <string name="rsb_AX_BUTTON_BACK">Tilbake</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">Illustrasjon av %1$s</string>
+    <string name="rsb_AX_SIGNVIEW_LABEL">Eget signaturfelt</string>
+    <string name="rsb_AX_SIGNVIEW_HINT">Berør skjermen og flytt fingeren for å signere</string>
+    <string name="rsb_AX_SIGNVIEW_SIGNED">Signert</string>
+    <string name="rsb_AX_SIGNVIEW_UNSIGNED">Ikke signert</string>
+    <string name="rsb_AX_SELECTED">Markert</string>
+    <string name="rsb_AX_UNSELECTED">Ikke markert</string>
+    <string name="rsb_AX_SLIDER_LABEL">Svarskyveknapp fra %1$s til %2$s</string>
+    <string name="rsb_AX_UNLABELED_IMAGE">Bilde uten etikett</string>
+    <string name="rsb_AX_ANNOUNCE_BEGIN_TASK">Start oppgave</string>
+    <string name="rsb_AX_MEMORY_TILE_ACTIVE">aktiv</string>
+    <string name="rsb_AX_MEMORY_TILE_CORRECT">riktig</string>
+    <string name="rsb_AX_MEMORY_TILE_INCORRECT">feil</string>
+    <string name="rsb_AX_MEMORY_TILE_QUIESCENT">inaktiv</string>
+    <string name="rsb_AX_MEMORY_TILE_LABEL">Brikke i bildelottospill</string>
+    <string name="rsb_AX_IMAGE_CAPTURE_LABEL">Forhåndsvisning av bilde</string>
+    <string name="rsb_AX_IMAGE_CAPTURED_LABEL">Tatt bilde</string>
+    <string name="rsb_AX_VIDEO_CAPTURE_LABEL">Forhåndsvisning av videoopptak</string>
+    <string name="rsb_AX_VIDEO_CAPTURED_LABEL">Innspilt video</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_INVALID_MOVE_FORMAT">Kan ikke plassere skive med størrelse %1$s på skive med størrelse %2$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TARGET_DISK">Mål</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Tårn</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Dobbelttrykk for å plassere skiven</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">Dobbelttrykk for å velge øverste skive</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">Har skive med størrelse %1$s</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Tom</string>
+    <string name="rsb_ax_graph_range_format">Område fra %1$s til %2$s</string>
+    <string name="rsb_AX_GRAPH_STACK_PREFIX">Stabel bestående av</string>
+    <string name="rsb_AX_GRAPH_AND_SEPARATOR">og</string>
+    <string name="rsb_ax_graph_point">Punkt: %1$s</string>
+    
+</resources>

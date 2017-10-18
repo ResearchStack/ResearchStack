@@ -4,4 +4,6 @@
     <dimen name="rss_btn_pressed_z_material">4dp</dimen>
     <dimen name="rss_btn_active_elevation_material">4dp</dimen>
     <dimen name="rss_btn_active_pressed_z_material">6dp</dimen>
+
+    <dimen name="rss_activity_indicator_size">24dp</dimen>
 </resources>

@@ -5,9 +5,23 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class SectionModel {
+    public static final String SHARE_TYPE_DETAILS = "share";
+
+    @SerializedName("logo_name")
+    private String logoName;
+
+    private String title;
 
     @SerializedName("items")
     private List<Section> sections;
+
+    public String getLogoName() {
+        return logoName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 
     public List<Section> getSections() {
         return sections;

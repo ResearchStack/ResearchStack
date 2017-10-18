@@ -6,13 +6,12 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.step.body.NotImplementedStepBody;
 import org.researchstack.skin.R;
-import org.researchstack.skin.step.PassCodeCreationStep;
-import org.researchstack.skin.ui.layout.PermissionStepLayout;
+import org.researchstack.backbone.step.PassCodeCreationStep;
+import org.researchstack.backbone.ui.step.layout.PermissionStepLayout;
 import org.researchstack.skin.ui.layout.SignInStepLayout;
-import org.researchstack.skin.ui.layout.SignUpEligibleStepLayout;
-import org.researchstack.skin.ui.layout.SignUpIneligibleStepLayout;
 import org.researchstack.skin.ui.layout.SignUpStepLayout;
 
+@Deprecated // No longer needed with new OnboardingManager
 public abstract class OnboardingTask extends Task {
     public static final String SignUpInclusionCriteriaStepIdentifier = "InclusionCriteria";
     public static final String SignUpEligibleStepIdentifier = "Eligible";
@@ -93,28 +92,10 @@ public abstract class OnboardingTask extends Task {
         return thankyouStep;
     }
 
-    public Step getIneligibleStep() {
-        if (ineligibleStep == null) {
-            ineligibleStep = new Step(SignUpIneligibleStepIdentifier);
-            ineligibleStep.setStepTitle(R.string.rss_eligibility);
-            ineligibleStep.setStepLayoutClass(SignUpIneligibleStepLayout.class);
-        }
-        return ineligibleStep;
-    }
-
-    public Step getEligibleStep() {
-        if (eligibleStep == null) {
-            eligibleStep = new Step(SignUpEligibleStepIdentifier);
-            eligibleStep.setStepTitle(R.string.rss_eligibility);
-            eligibleStep.setStepLayoutClass(SignUpEligibleStepLayout.class);
-        }
-        return eligibleStep;
-    }
-
     public Step getPassCodeCreationStep() {
         if (passcodeCreationStep == null) {
             passcodeCreationStep = new PassCodeCreationStep(SignUpPassCodeCreationStepIdentifier,
-                    R.string.rss_passcode);
+                    R.string.rsb_passcode);
         }
         return passcodeCreationStep;
     }
@@ -131,7 +112,7 @@ public abstract class OnboardingTask extends Task {
     public Step getPermissionStep() {
         if (permissionsStep == null) {
             permissionsStep = new Step(SignUpPermissionsStepIdentifier);
-            permissionsStep.setStepTitle(R.string.rss_permissions);
+            permissionsStep.setStepTitle(R.string.rsb_permissions);
             permissionsStep.setStepLayoutClass(PermissionStepLayout.class);
         }
         return permissionsStep;

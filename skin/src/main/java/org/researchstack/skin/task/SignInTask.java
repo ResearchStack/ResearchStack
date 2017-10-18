@@ -4,10 +4,10 @@ import android.content.Context;
 
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.skin.PermissionRequestManager;
+import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.skin.TaskProvider;
 
-
+@Deprecated // use ResearchStack.getInstance().getOnboardingManager().launchOnboarding(OnboardingTaskType.LOGIN, this);
 public class SignInTask extends OnboardingTask {
     public static final int MINIMUM_STEPS = 0;
     public static final String ID_EMAIL = "ID_EMAIL";

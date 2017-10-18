@@ -3,6 +3,8 @@ package org.researchstack.backbone.utils;
 import android.text.InputFilter;
 import android.text.Spanned;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.regex.Pattern;
 
 public class TextUtils {
@@ -77,5 +79,19 @@ public class TextUtils {
             }
             return null;
         }
+    }
+
+    public static String urlEncode(String input) {
+        String output = null;
+        try
+        {
+            output = URLEncoder.encode(input, "UTF-8");
+            return output;
+        }
+        catch(UnsupportedEncodingException uee)
+        {
+            LogExt.i(TextUtils.class, "Failed to url encode: " + uee.getMessage());
+        }
+        return input;
     }
 }

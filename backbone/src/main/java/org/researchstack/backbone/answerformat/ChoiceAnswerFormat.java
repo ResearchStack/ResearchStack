@@ -11,6 +11,12 @@ public class ChoiceAnswerFormat extends AnswerFormat {
     private AnswerFormat.ChoiceAnswerStyle answerStyle;
     private Choice[] choices;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    ChoiceAnswerFormat()
+    {
+        super();
+    }
+
     /**
      * Creates an answer format with the specified answerStyle(single or multichoice) and collection
      * of choices.

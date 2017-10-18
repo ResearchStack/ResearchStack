@@ -7,11 +7,16 @@ public class DurationAnswerFormat extends AnswerFormat {
     private String unit;
     private int step;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    DurationAnswerFormat()
+    {
+        super();
+    }
+
     public DurationAnswerFormat(int step, String unit) {
         this.step = step;
         this.unit = unit;
     }
-
 
     @Override
     public QuestionType getQuestionType() {

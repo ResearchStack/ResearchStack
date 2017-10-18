@@ -12,7 +12,7 @@ public interface Encrypter {
      *
      * @param data the byte array of data to be encrypted
      * @return the encrypted data
-     * @throws GeneralSecurityException
+     * @throws GeneralSecurityException if an exception occurs
      */
     byte[] encrypt(byte[] data) throws GeneralSecurityException;
 
@@ -21,7 +21,7 @@ public interface Encrypter {
      *
      * @param data the byte array of data to be decrypted
      * @return the decrypted data
-     * @throws GeneralSecurityException
+     * @throws GeneralSecurityException if an exception occurs
      */
     byte[] decrypt(byte[] data) throws GeneralSecurityException;
 

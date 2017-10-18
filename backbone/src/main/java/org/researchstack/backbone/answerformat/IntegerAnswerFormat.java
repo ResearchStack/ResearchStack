@@ -16,6 +16,12 @@ public class IntegerAnswerFormat extends AnswerFormat {
     private int maxValue;
     private int minValue;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    IntegerAnswerFormat()
+    {
+        super();
+    }
+
     /**
      * Creates an integer answer format with the specified min and max values.
      *

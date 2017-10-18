@@ -1,18 +1,5 @@
 <resources>
 
-    <!-- Passcode -->
-    <string name="rss_passcode_change_title">Change Passcode</string>
-    <string name="rss_passcode">Passcode</string>
-    <string name="rss_passcode_create_title">Choose a passcode</string>
-    <string name="rss_passcode_create_summary">Enter a secure, %1$d-%2$s code to protect your data and log in
-        faster.
-    </string>
-    <string name="rss_passcode_confirm_title">Confirm your passcode</string>
-    <string name="rss_passcode_confirm_summary">Enter your %1$d-%2$s code one more time to confirm.</string>
-    <string name="rss_passcode_confirm_error">That code doesn’t match the one you entered. Try again
-        or go back to choose a different %1$d-%2$s code.
-    </string>
-
     <!-- Study Overview -->
     <string name="rss_sign_in">Sign In</string>
     <string name="rss_send_email">Send Email</string>
@@ -62,26 +49,6 @@
     <string name="rss_username">Username</string>
     <string name="rss_username_hint">username_123</string>
 
-    <!-- Email Verif -->
-    <string name="rss_confirm">Confirm</string>
-    <string name="rss_confirm_title">Check your email</string>
-    <string name="rss_confirm_summary">We’ve emailed %1$s with a link to confirm your account. After
-        visiting the link, come back and touch “continue” below.
-    </string>
-    <string name="rss_confirm_diff">ENTER A DIFFERENT EMAIL</string>
-    <string name="rss_confirm_resend_email">Resend</string>
-
-    <string name="rss_wrong_email">Wrong email address? Tap here.</string>
-    <string name="rss_once_verified">Once verified, tap below</string>
-    <string name="rss_continue">Continue</string>
-    <string name="rss_resend_email">Resend Verification Email</string>
-    <string name="rss_email_verification_body">%1$s has send you a verification email at %2$s
-    </string>
-    <string name="rss_email_not_verified">Please check your email to verify your account before
-        continuing
-    </string>
-    <string name="rss_change_email">Change Email</string>
-
     <!-- Main Activity Toast Hints -->
     <string name="rss_activities">Activities</string>
     <string name="rss_dashboard">Dashboard</string>
@@ -113,7 +80,7 @@
     <string name="rss_settings_general_software_notices">Software Notices</string>
     <string name="rss_settings_general_leave_study">Leave Study</string>
     <string name="rss_settings_general_join_study">Join Study</string>
-    <string name="rss_settings_version">Build number %1$s (%2$s)</string>
+    <string name="rss_settings_version">Build number %1$s (%2$d)</string>
     <string name="rss_settings_version_unknown">Unknown version</string>
     <string name="rss_settings_dialog_leave_study">Are you sure you want to leave the study? This
         action cannot be undone and you will need to provide consent in order to re-enroll.
@@ -130,6 +97,8 @@
     <string name="rss_network_error_consent_action">GO</string>
     <string name="rss_network_error_sign_in">Your account has been signed out, please sign in to continue</string>
     <string name="rss_network_error_sign_in_action">SIGN IN</string>
+    <string name="rss_network_error_upgrade_app">Please upgrade the application to restore functionality</string>
+    <string name="rss_network_error_upgrade_app_action">UPGRADE</string>
     <string name="rss_network_error_boom">Something happened with network, try again later</string>
     <string name="rss_network_error_unknown">Whoops! looks like something bad happened when talking
         to the server, try again later!
@@ -138,31 +107,14 @@
     <string name="rss_local_result_passcode_changed">Passcode Changed</string>
     <string name="rss_local_error_load_task">Unable to load the selected task</string>
     <string name="rss_error_select_answer">Please select an answer</string>
-    <string name="rss_error_invalid_password">Invalid Password</string>
-    <string name="rss_error_invalid_email">Invalid Email</string>
 
-    <!-- Permissions -->
-    <string name="rss_permissions">Permissions</string>
-    <string name="rss_permission_location_title">Location</string>
-    <string name="rss_permission_location_desc">The app needs location permissions to show accurate
-        location-based data</string>
-    <string name="rss_permission_notification_title">Notifications</string>
-    <string name="rss_permission_notification_desc">The app needs your permission in order to show
-    notifications when you complete surveys. This permission is optional and can be enabled in
-    the App\'s Settings screen.</string>
-    <string name="rss_permission_notification_desc_long">This activity is serving as an example of
-        how you would implement outside auth. In other words, this activity represents an 3rd party
-        auth process like ones found in Google+, Google Drive, or Google Fit. This example is simple
-        and the result only controls whether notifications will show .\n\nYou can still enable app
-        notifications via the settings screen. The button for this screen is in the upper right hand
-        corner of the main screen (gear icon).</string>
-    <string name="rss_permission_disclaimer">Participation in the study requires some permissions
-        from your device.
-    </string>
-    <string name="rss_permission_continue_invalid">Please allow %1$s permissions to continue.
-    </string>
-    <string name="rss_allow">Allow</string>
-    <string name="rss_granted">Granted</string>
-    <string name="rss_optional">Optional</string>
+    <!-- Activities -->
+    <string name="rss_activities_today_header_title">Today, %1$s, %2$s %3$s</string>
+    <string name="rss_activities_today_header_message">To start an activity, select from the list below.</string>
+    <string name="rss_activities_yesterday_header_title">Yesterday</string>
+    <string name="rss_activities_yesterday_header_message">Below are your incomplete tasks from yesterday.\nThese are for reference only.</string>
+    <string name="rss_activities_optional_header_title">Keep Going!</string>
+    <string name="rss_activities_optional_header_message">Try one of these activities to enhance your experience in your study.</string>
 
+    <string name="rss_activities_mood_survey_intended_use">Tell us how you feel. We\'ll ask you to rate your mental clarity, mood, and pain level today as well as how well you slept and how much exercise you have done in the last day. You will also have an opportunity to track any activity or thought that you choose yourself.</string>
 </resources>

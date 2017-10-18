@@ -1,5 +1,8 @@
 package org.researchstack.backbone.utils;
 
+import android.content.Context;
+
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 
 import java.text.DateFormat;
@@ -7,6 +10,12 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class FormatHelper {
+
+    private static final String COUNTRY_US      = "US";
+    private static final String COUNTRY_LIBERIA = "LR";
+    private static final String COUNTRY_BURMA   = "MM";
+
+    private static final double FEET_PER_METER = 3.28084;
 
     public static final int NONE = -1;
     public static final String DATE_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
@@ -62,4 +71,17 @@ public class FormatHelper {
         return style >= DateFormat.FULL && style <= DateFormat.SHORT;
     }
 
+    public static String localizeDistance(Context context, double distanceInMeters, Locale currentLocale) {
+        String countryCode = currentLocale.getCountry();
+        switch (countryCode) {
+            case COUNTRY_US:
+            case COUNTRY_LIBERIA:
+            case COUNTRY_BURMA: // in feet
+                return String.format(currentLocale, "%.01f %s", (distanceInMeters * FEET_PER_METER),
+                        context.getString(R.string.rsb_distance_feet));
+            default:   // in meters
+                return String.format(currentLocale, "%.01f %s", distanceInMeters,
+                        context.getString(R.string.rsb_distance_meters));
+        }
+    }
 }
