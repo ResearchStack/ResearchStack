@@ -150,8 +150,8 @@ public final class KeystoreEncryptionHelper {
             return null;
         } catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
                 | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException |
-                InvalidAlgorithmParameterException e) {
-            throw new RuntimeException("Failed to init Cipher", e);
+                InvalidAlgorithmParameterException | NullPointerException e) {
+            return null;
         }
     }
 
