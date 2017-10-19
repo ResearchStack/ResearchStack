@@ -57,7 +57,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
     public static final String APHMoodSurveyIdentifier =            "3-APHMoodSurvey-7259AC18-D711-47A6-ADBD-6CFCECDED1DF";
 
     private static final String LOG_TAG = ActivitiesFragment.class.getCanonicalName();
-    private static final int REQUEST_TASK = 1492;
+    public static final int REQUEST_TASK = 1492;
     private TaskAdapter adapter;
     private RecyclerView recyclerView;
     private Subscription subscription;
@@ -120,7 +120,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         return new TaskAdapter(getActivity());
     }
 
-    private void fetchData() {
+    public void fetchData() {
         LogExt.d(LOG_TAG, "fetchData()");
         Observable.create(subscriber -> {
             SchedulesAndTasksModel model = DataProvider.getInstance()
@@ -138,32 +138,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
 
                         subscription = adapter.getPublishSubject().subscribe(task -> {
                             LogExt.d(LOG_TAG, "Publish subject subscribe clicked.");
-                            Task newTask = DataProvider.getInstance().loadTask(getContext(), task);
-
-                            if (newTask == null) {
-
-                                // TODO: figure out a different way to show do these in loadTask
-                                if (task.taskID.equals(APHTappingActivitySurveyIdentifier)) {
-                                    startCustomTappingTask();
-                                } else if (task.taskID.equals(APHTremorActivitySurveyIdentifier)) {
-                                    startCustomTremorTask();
-                                } else if (task.taskID.equals(APHVoiceActivitySurveyIdentifier)) {
-                                    startCustomVoiceTask();
-                                } else if (task.taskID.equals(APHWalkingActivitySurveyIdentifier)) {
-                                    startCustomWalkingTask();
-                                } else if (task.taskID.equals(APHMoodSurveyIdentifier)) {
-                                    startCustomMoodSurveyTask();
-                                } else {
-                                    Toast.makeText(getActivity(),
-                                            R.string.rss_local_error_load_task,
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-                                return;
-                            }
-
-                            startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask),
-                                    REQUEST_TASK);
+                            taskSelected(task);
                         });
                     } else {
                         adapter.clear();
@@ -172,6 +147,34 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
                     adapter.addAll(processResults(model));
 
                 });
+    }
+
+    public void taskSelected(SchedulesAndTasksModel.TaskScheduleModel task) {
+        Task newTask = DataProvider.getInstance().loadTask(getContext(), task);
+        if (newTask == null) {
+
+            // TODO: figure out a different way to show do these in loadTask
+            if (task.taskID.equals(APHTappingActivitySurveyIdentifier)) {
+                startCustomTappingTask();
+            } else if (task.taskID.equals(APHTremorActivitySurveyIdentifier)) {
+                startCustomTremorTask();
+            } else if (task.taskID.equals(APHVoiceActivitySurveyIdentifier)) {
+                startCustomVoiceTask();
+            } else if (task.taskID.equals(APHWalkingActivitySurveyIdentifier)) {
+                startCustomWalkingTask();
+            } else if (task.taskID.equals(APHMoodSurveyIdentifier)) {
+                startCustomMoodSurveyTask();
+            } else {
+                Toast.makeText(getActivity(),
+                        R.string.rss_local_error_load_task,
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            return;
+        }
+
+        startActivityForResult(ViewTaskActivity.newIntent(getContext(), newTask),
+                REQUEST_TASK);
     }
 
     /**
