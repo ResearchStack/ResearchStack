@@ -193,19 +193,31 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
 
         recorderList = new ArrayList<>();
-        File outputDir = getContext().getFilesDir();
-        if (DEBUG_SAVE_FILES_EXTERNALLY) {
-            outputDir = getContext().getExternalFilesDir(null);
-        }
+        File outputDir = getOutputDirectory();
 
         if (activeStep.getRecorderConfigurationList() != null) {
-            for (RecorderConfig config : activeStep.getRecorderConfigurationList()) {
+            for (RecorderConfig config : getRecorderConfigurationList()) {
                 Recorder recorder = config.recorderForStep(activeStep, outputDir);
                 recorder.setRecorderListener(this);
                 recorderList.add(recorder);
                 recorder.start(getContext());
             }
         }
+    }
+
+    public File getOutputDirectory() {
+        File outputDir = getContext().getFilesDir();
+        if (DEBUG_SAVE_FILES_EXTERNALLY) {
+            outputDir = getContext().getExternalFilesDir(null);
+        }
+        return outputDir;
+    }
+
+    public List<RecorderConfig> getRecorderConfigurationList() {
+        if (activeStep == null) {
+            return new ArrayList<>();
+        }
+        return activeStep.getRecorderConfigurationList();
     }
 
     public void stop() {
