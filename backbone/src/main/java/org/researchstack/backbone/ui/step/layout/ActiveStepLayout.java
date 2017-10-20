@@ -95,6 +95,10 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     protected ActiveStep activeStep;
 
     protected LinearLayout activeStepLayout;
+    public LinearLayout getActiveStepLayout() {
+        return activeStepLayout;
+    }
+
     protected TextView titleTextview;
     protected TextView textTextview;
     protected TextView timerTextview;
@@ -171,7 +175,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
     }
 
-    protected void start() {
+    public void start() {
         if (activeStep.startsFinished()) {
             return;
         }
@@ -204,7 +208,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
     }
 
-    protected void stop() {
+    public void stop() {
         if (activeStep.getShouldVibrateOnFinish()) {
             vibrate();
         }
@@ -250,7 +254,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
     }
 
-    protected void skip() {
+    public void skip() {
         for (Recorder recorder : recorderList) {
             recorder.setRecorderListener(new RecorderListener() {
                 @Override
