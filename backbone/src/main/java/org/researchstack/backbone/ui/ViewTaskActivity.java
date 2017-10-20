@@ -247,13 +247,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     public void onDataReady()
     {
         super.onDataReady();
-
-        if(currentStep == null)
-        {
-            currentStep = task.getStepAfterStep(null, taskResult);
-        }
-
-        showStep(currentStep);
+        showNextStep();
     }
 
     @Override
