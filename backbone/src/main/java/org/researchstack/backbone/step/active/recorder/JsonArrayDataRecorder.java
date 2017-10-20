@@ -17,7 +17,7 @@ import java.util.Date;
  * in between individual json object writes, so that the format of the file is correct
  */
 
-abstract class JsonArrayDataRecorder extends Recorder {
+public abstract class JsonArrayDataRecorder extends Recorder {
 
     public static final String JSON_ITEMS_KEY = "items";
     public static final String JSON_MIME_CONTENT_TYPE = "application/json";
@@ -32,7 +32,7 @@ abstract class JsonArrayDataRecorder extends Recorder {
     protected long startTime;
     protected long endTime;
 
-    JsonArrayDataRecorder(String identifier, Step step, File outputDirectory) {
+    public JsonArrayDataRecorder(String identifier, Step step, File outputDirectory) {
         super(identifier, step, outputDirectory);
     }
 
@@ -43,7 +43,7 @@ abstract class JsonArrayDataRecorder extends Recorder {
         }
     }
 
-    protected void startJsonDataLogging() {
+    public void startJsonDataLogging() {
         if (dataLoggerFile == null) {
             dataLoggerFile = new File(getOutputDirectory(), uniqueFilename + JSON_FILE_SUFFIX);
             dataLogger = new DataLogger(dataLoggerFile, new DataLogger.DataWriteListener() {
@@ -71,13 +71,13 @@ abstract class JsonArrayDataRecorder extends Recorder {
         isFirstJsonObject = true; // will avoid comma separator on write object write
     }
 
-    protected void stopJsonDataLogging() {
+    public void stopJsonDataLogging() {
         setRecording(false);
         endTime = System.currentTimeMillis();
         dataLogger.stop();
     }
 
-    protected void writeJsonObjectToFile(JsonObject jsonObject) {
+    public void writeJsonObjectToFile(JsonObject jsonObject) {
         // append optional comma for array separation
         String jsonString = (!isFirstJsonObject ? JSON_OBJECT_SEPARATOR : "") + jsonObject.toString();
         dataLogger.appendData(jsonString);
