@@ -95,6 +95,10 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     protected ActiveStep activeStep;
 
     protected LinearLayout activeStepLayout;
+    public LinearLayout getActiveStepLayout() {
+        return activeStepLayout;
+    }
+
     protected TextView titleTextview;
     protected TextView textTextview;
     protected TextView timerTextview;
@@ -171,7 +175,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
     }
 
-    protected void start() {
+    public void start() {
         if (activeStep.startsFinished()) {
             return;
         }
@@ -189,22 +193,44 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
 
         recorderList = new ArrayList<>();
-        File outputDir = getContext().getFilesDir();
-        if (DEBUG_SAVE_FILES_EXTERNALLY) {
-            outputDir = getContext().getExternalFilesDir(null);
-        }
+        File outputDir = getOutputDirectory();
 
         if (activeStep.getRecorderConfigurationList() != null) {
-            for (RecorderConfig config : activeStep.getRecorderConfigurationList()) {
+            for (RecorderConfig config : getRecorderConfigurationList()) {
                 Recorder recorder = config.recorderForStep(activeStep, outputDir);
-                recorder.setRecorderListener(this);
-                recorderList.add(recorder);
-                recorder.start(getContext());
+                // recorder can be null if it requires custom setup
+                if (recorder == null) {
+                    recorder = createCustomRecorder(config);
+                }
+                if (recorder != null) {
+                    recorder.setRecorderListener(this);
+                    recorderList.add(recorder);
+                    recorder.start(getContext());
+                }
             }
         }
     }
 
-    protected void stop() {
+    public Recorder createCustomRecorder(RecorderConfig config) {
+        return null;  // to be overridden by subclass
+    }
+
+    public File getOutputDirectory() {
+        File outputDir = getContext().getFilesDir();
+        if (DEBUG_SAVE_FILES_EXTERNALLY) {
+            outputDir = getContext().getExternalFilesDir(null);
+        }
+        return outputDir;
+    }
+
+    public List<RecorderConfig> getRecorderConfigurationList() {
+        if (activeStep == null) {
+            return new ArrayList<>();
+        }
+        return activeStep.getRecorderConfigurationList();
+    }
+
+    public void stop() {
         if (activeStep.getShouldVibrateOnFinish()) {
             vibrate();
         }
@@ -250,7 +276,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
     }
 
-    protected void skip() {
+    public void skip() {
         for (Recorder recorder : recorderList) {
             recorder.setRecorderListener(new RecorderListener() {
                 @Override

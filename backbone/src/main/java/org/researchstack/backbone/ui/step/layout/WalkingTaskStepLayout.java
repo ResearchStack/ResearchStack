@@ -58,7 +58,7 @@ public class WalkingTaskStepLayout extends ActiveStepLayout {
     }
 
     @Override
-    protected void start() {
+    public void start() {
         super.start();
 
         // Loop through and try to find the Pedometer recorder

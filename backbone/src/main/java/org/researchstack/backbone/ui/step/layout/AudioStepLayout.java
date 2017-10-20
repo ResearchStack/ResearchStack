@@ -49,7 +49,7 @@ public class AudioStepLayout extends ActiveStepLayout implements AudioRecorder.A
     }
 
     @Override
-    protected void start() {
+    public void start() {
         super.start();
 
         if (recorderList != null) {
@@ -62,7 +62,7 @@ public class AudioStepLayout extends ActiveStepLayout implements AudioRecorder.A
     }
 
     @Override
-    protected void setupActiveViews() {
+    public void setupActiveViews() {
         super.setupActiveViews();
 
         audioContentLayout = (RelativeLayout)layoutInflater.inflate(R.layout.rsb_step_layout_audio, activeStepLayout, false);
