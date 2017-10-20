@@ -198,9 +198,12 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         if (activeStep.getRecorderConfigurationList() != null) {
             for (RecorderConfig config : getRecorderConfigurationList()) {
                 Recorder recorder = config.recorderForStep(activeStep, outputDir);
-                recorder.setRecorderListener(this);
-                recorderList.add(recorder);
-                recorder.start(getContext());
+                // recorder can be null if it requires special setup, and needs to avoid this default setup
+                if (recorder != null) {
+                    recorder.setRecorderListener(this);
+                    recorderList.add(recorder);
+                    recorder.start(getContext());
+                }
             }
         }
     }
