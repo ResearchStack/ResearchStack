@@ -26,21 +26,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class DividerItemDecoration extends RecyclerView.ItemDecoration
-{
-    public static final  int   HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
-    public static final  int   VERTICAL_LIST   = LinearLayoutManager.VERTICAL;
-    private static final int[] ATTRS           = new int[] {
+public class DividerItemDecoration extends RecyclerView.ItemDecoration {
+    public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
+    public static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
+    private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider
     };
-    private final boolean  rtl;
+    private final boolean rtl;
     private final Drawable divider;
 
-    private int   orientation;
+    private int orientation;
     private float paddingStart;
 
-    public DividerItemDecoration(Context context, int orientation, float paddingStart, boolean rtl)
-    {
+    public DividerItemDecoration(Context context, int orientation, float paddingStart, boolean rtl) {
         this.rtl = rtl;
 
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
@@ -50,59 +48,45 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
         setPaddingStart(paddingStart);
     }
 
-    public void setOrientation(int orientation)
-    {
-        if(orientation != HORIZONTAL_LIST && orientation != VERTICAL_LIST)
-        {
+    public void setOrientation(int orientation) {
+        if (orientation != HORIZONTAL_LIST && orientation != VERTICAL_LIST) {
             throw new IllegalArgumentException("invalid orientation");
         }
         this.orientation = orientation;
     }
 
-    public void setPaddingStart(float paddingStart)
-    {
-        if(paddingStart < 0)
-        {
+    public void setPaddingStart(float paddingStart) {
+        if (paddingStart < 0) {
             throw new IllegalArgumentException("paddingStart < 0");
         }
         this.paddingStart = paddingStart;
     }
 
     @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state)
-    {
-        if(orientation == VERTICAL_LIST)
-        {
+    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        if (orientation == VERTICAL_LIST) {
             drawVertical(c, parent);
-        }
-        else
-        {
+        } else {
             drawHorizontal(c, parent);
         }
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
-    {
-        if(orientation == VERTICAL_LIST)
-        {
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        if (orientation == VERTICAL_LIST) {
             outRect.set(0, 0, 0, divider.getIntrinsicHeight());
-        }
-        else
-        {
+        } else {
             outRect.set(0, 0, divider.getIntrinsicWidth(), 0);
         }
     }
 
-    public void drawVertical(Canvas c, RecyclerView parent)
-    {
+    public void drawVertical(Canvas c, RecyclerView parent) {
         final int left = (int) (parent.getPaddingLeft() + (rtl ? 0 : paddingStart));
         final int right = (int) (parent.getWidth() - parent.getPaddingRight() +
                 (rtl ? paddingStart : 0));
 
         final int childCount = parent.getChildCount();
-        for(int i = 0; i < childCount; i++)
-        {
+        for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int top = child.getBottom() + params.bottomMargin +
@@ -113,14 +97,12 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
         }
     }
 
-    public void drawHorizontal(Canvas c, RecyclerView parent)
-    {
+    public void drawHorizontal(Canvas c, RecyclerView parent) {
         final int top = parent.getPaddingTop();
         final int bottom = parent.getHeight() - parent.getPaddingBottom();
 
         final int childCount = parent.getChildCount();
-        for(int i = 0; i < childCount; i++)
-        {
+        for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int left = child.getRight() + params.rightMargin +

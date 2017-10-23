@@ -14,6 +14,9 @@ public class InstructionSurveyItem extends SurveyItem<String> {
     @SerializedName("image")
     public String image;
 
+    @SerializedName("isImageAnimated")
+    public boolean isImageAnimated;
+
     @SerializedName("iconImage")
     public String iconImage;
 
@@ -27,8 +30,8 @@ public class InstructionSurveyItem extends SurveyItem<String> {
     @SerializedName("learnMoreHTMLContentURL")
     public String learnMoreHTMLContentURL;
 
-    /* Default constructor needed for serilization/deserialization of object */
-    InstructionSurveyItem() {
+    /* Default constructor needed for serialization/deserialization of object */
+    public InstructionSurveyItem() {
         super();
     }
 

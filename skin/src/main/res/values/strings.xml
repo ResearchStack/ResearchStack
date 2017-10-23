@@ -97,6 +97,8 @@
     <string name="rss_network_error_consent_action">GO</string>
     <string name="rss_network_error_sign_in">Your account has been signed out, please sign in to continue</string>
     <string name="rss_network_error_sign_in_action">SIGN IN</string>
+    <string name="rss_network_error_upgrade_app">Please upgrade the application to restore functionality</string>
+    <string name="rss_network_error_upgrade_app_action">UPGRADE</string>
     <string name="rss_network_error_boom">Something happened with network, try again later</string>
     <string name="rss_network_error_unknown">Whoops! looks like something bad happened when talking
         to the server, try again later!
@@ -106,16 +108,13 @@
     <string name="rss_local_error_load_task">Unable to load the selected task</string>
     <string name="rss_error_select_answer">Please select an answer</string>
 
-    <!-- Share -->
-    <string name="rss_share">Spread the Word</string>
-    <string name="rss_share_title">Help us spread the work</string>
-    <string name="rss_share_app_url">PUT_YOUR_APP_PLAY_STORE_URL_HERE</string>
-    <string name="rss_share_message">Please help us find study participants by sharing information about the study.</string>
-    <string name="rss_share_twitter">Share on Twitter</string>
-    <string name="rss_share_facebook">Share on Facebook</string>
-    <string name="rss_share_sms">Share via SMS</string>
-    <string name="rss_share_email">Share via Email</string>
-    <string name="rss_share_message_format">Please take a look at this app.</string>
-    <string name="rss_share_facebook_key">facebook</string>
-    <string name="rss_share_email_subject">Subject</string>
+    <!-- Activities -->
+    <string name="rss_activities_today_header_title">Today, %1$s, %2$s %3$s</string>
+    <string name="rss_activities_today_header_message">To start an activity, select from the list below.</string>
+    <string name="rss_activities_yesterday_header_title">Yesterday</string>
+    <string name="rss_activities_yesterday_header_message">Below are your incomplete tasks from yesterday.\nThese are for reference only.</string>
+    <string name="rss_activities_optional_header_title">Keep Going!</string>
+    <string name="rss_activities_optional_header_message">Try one of these activities to enhance your experience in your study.</string>
+
+    <string name="rss_activities_mood_survey_intended_use">Tell us how you feel. We\'ll ask you to rate your mental clarity, mood, and pain level today as well as how well you slept and how much exercise you have done in the last day. You will also have an opportunity to track any activity or thought that you choose yourself.</string>
 </resources>

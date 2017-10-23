@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Informed consent process. -->
+    <string name="rsb_CONSENT_NAME_TITLE">İzin</string>
+    <string name="rsb_CONSENT_NAME_GIVEN">Ad</string>
+    <string name="rsb_CONSENT_NAME_FAMILY">Soyad</string>
+    <string name="rsb_CONSENT_NAME_PLACEHOLDER">Gerekli</string>
+    <string name="rsb_CONSENT_REVIEW_TITLE">Gözden Geçir</string>
+    <string name="rsb_CONSENT_REVIEW_INSTRUCTION">Aşağıdaki formu gözden geçirin ve sürdürmeye hazırsanız Kabul Ediyorum’a dokunun.</string>
+    <string name="rsb_CONSENT_REVIEW_ALERT_TITLE">Gözden Geçir</string>
+    <string name="rsb_CONSENT_SIGNATURE_TITLE">İmza</string>
+    <string name="rsb_CONSENT_SIGNATURE_INSTRUCTION">Lütfen parmağınızı kullanarak aşağıdaki çizgiye imza atın.</string>
+    <string name="rsb_CONSENT_SIGNATURE_PLACEHOLDER">Burayı İmzalayın</string>
+    <string name="rsb_CONSENT_PAGE_NUMBER_FORMAT">Sayfa %1$ld / %2$ld</string>
+    <!-- Consent section titles. -->
+    <string name="rsb_CONSENT_SECTION_WELCOME">Hoş Geldiniz</string>
+    <string name="rsb_CONSENT_SECTION_DATA_GATHERING">Veri Toplama</string>
+    <string name="rsb_CONSENT_SECTION_PRIVACY">Gizlilik</string>
+    <string name="rsb_CONSENT_SECTION_DATA_USE">Veri Kullanımı</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_SURVEY">Çalışma Anketi</string>
+    <string name="rsb_CONSENT_SECTION_STUDY_TASKS">Çalışma Görevleri</string>
+    <string name="rsb_CONSENT_SECTION_TIME_COMMITMENT">Zaman Ayırma</string>
+    <string name="rsb_CONSENT_SECTION_WITHDRAWING">Sözünü Geri Alma</string>
+    <string name="rsb_CONSENT_LEARN_MORE_TITLE">Daha Fazla Bilgi</string>
+    <!-- Consent section learn more -->
+    <string name="rsb_LEARN_MORE_DATA_GATHERING">Verilerin toplanması hakkında daha fazla bilgi</string>
+    <string name="rsb_LEARN_MORE_DATA_USE">Verilerin kullanılması hakkında daha fazla bilgi</string>
+    <string name="rsb_LEARN_MORE_PRIVACY">Gizliliğinizin ve kimliğinizin korunması hakkında daha fazla bilgi</string>
+    <string name="rsb_LEARN_MORE_WELCOME">Çalışma hakkında daha fazla bilgi</string>
+    <string name="rsb_LEARN_MORE_STUDY_SURVEY">Çalışma anketi hakkında daha fazla bilgi</string>
+    <string name="rsb_LEARN_MORE_TIME_COMMITMENT">Çalışmanın zamanınıza etkisi hakkında daha fazla bilgi</string>
+    <string name="rsb_LEARN_MORE_TASKS">İlişkili görevler hakkında daha fazla bilgi</string>
+    <string name="rsb_LEARN_MORE_WITHDRAWING">Sözünü geri alma hakkında daha fazla bilgi</string>
+    <!-- Consent sharing step -->
+    <string name="rsb_CONSENT_SHARING_TITLE">Paylaşma Seçenekleri</string>
+    <string name="rsb_consent_share_widely">Verilerimi %1$s ve dünya çapında nitelikli araştırmacılarla paylaş</string>
+    <string name="rsb_consent_share_only">Verilerimi yalnızca %1$s ile paylaş</string>
+    <string name="rsb_consent_sharing_description">%1$s, bu çalışmaya katılımınız sonucundaki çalışma verilerinizi alacaktır.\n\nKodlanmış çalışma verilerinizin daha kapsamlı bir biçimde paylaşılması (adınız gibi bilgiler olmadan) bu çalışmaya ve ilerideki çalışmalara faydalı olabilir.</string>
+    <string name="rsb_LEARN_MORE_CONSENT_SHARING">Veri paylaşımı hakkında daha fazla bilgi</string>
+    <!-- Lines beneath typewritten signatures on documents. Argument is the title of the signatory, e.g. "Participant's Signature" -->
+    <string name="rsb_CONSENT_DOC_LINE_PRINTED_NAME">%1$s Adı (yazılı)</string>
+    <string name="rsb_CONSENT_DOC_LINE_SIGNATURE">%1$s İmzası</string>
+    <string name="rsb_CONSENT_DOC_LINE_DATE">Tarih</string>
+    <!-- Progress indication (in navigation bar). -->
+    <string name="rsb_STEP_PROGRESS_FORMAT">Adım %1$s / %2$s</string>
+    <!-- Alert for out of range values. -->
+    <string name="rsb_RANGE_ALERT_TITLE">Geçersiz değer</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_ABOVE_MAXIMUM">%1$s, izin verilen maksimum değeri (%2$s) aşıyor.</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_BELOW_MAXIMUM">%1$s, izin verilen minimum değerden (%2$s) küçük.</string>
+    <string name="rsb_RANGE_ALERT_MESSAGE_OTHER">%1$s geçerli bir değer değil.</string>
+    <!-- Alert for invalid email address value -->
+    <string name="rsb_INVALID_EMAIL_ALERT_MESSAGE">Geçersiz e-posta adresi: %1$s</string>
+    <!-- Alerts for invalid location coordinates -->
+    <string name="rsb_LOCATION_QUESTION_PLACEHOLDER">Adres girin</string>
+    <string name="rsb_LOCATION_ERROR_TITLE">Belirtilen Adres Bulunamadı</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_LOCATION_UNKNOWN">Şu anki konumunuz çözülemedi. Lütfen bir adres girin veya uygunsa daha iyi GPS sinyalı olan bir konuma gidin.</string>
+    <string name="rsb_LOCATION_ERROR_MESSAGE_DENIED">Konum servislerine erişim reddedildi. Lütfen konum servislerini kullanmak için Ayarlar\'da bu uygulamaya izin verin.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE">Girilen adres için bir sonuç bulunmadı. Lütfen adresin geçerli olduğundan emin olun.</string>
+    <string name="rsb_LOCATION_ERROR_GEOCODE_NETWORK">İnternet\'e bağlı değilsiniz veya en fazla adres arama isteği miktarını aştınız. İnternet\'e bağlı değilseniz lütfen bu soruya yanıt vermek için Wi-Fi\'yi açın, atlama düğmesi varsa bu soruyu atlayın ya da İnternet\'e bağlı olduğunuzda anket için yeniden sayfayı ziyaret edin. Aksi takdirde, birkaç dakika sonra yeniden deneyin.</string>
+    <!-- Alert for exceeding length limit in text answer -->
+    <string name="rsb_TEXT_ANSWER_EXCEEDING_MAX_LENGTH_ALERT_MESSAGE">Metin içeriği maksimum uzunluğu aşıyor: %1$s</string>
+    <!-- Camera not available during multitasking -->
+    <string name="rsb_CAMERA_UNAVAILABLE_MESSAGE">Bölünmüş ekranda Kamera kullanılamıyor.</string>
+    <!-- Registration step -->
+    <string name="rsb_EMAIL_FORM_ITEM_TITLE">E-posta</string>
+    <string name="rsb_EMAIL_FORM_ITEM_PLACEHOLDER">ad@example.com</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_TITLE">Parola</string>
+    <string name="rsb_PASSWORD_FORM_ITEM_PLACEHOLDER">Parola girin</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_TITLE">Doğrula</string>
+    <string name="rsb_CONFIRM_PASSWORD_FORM_ITEM_PLACEHOLDER">Parolayı yeniden girin</string>
+    <string name="rsb_CONFIRM_PASSWORD_ERROR_MESSAGE">Parolalar eşleşmiyor.</string>
+    <string name="rsb_ADDITIONAL_INFO_SECTION_TITLE">Ek Bilgi</string>
+    <string name="rsb_GIVEN_NAME_ITEM_PLACEHOLDER">Ali</string>
+    <string name="rsb_FAMILY_NAME_ITEM_PLACEHOLDER">Utku</string>
+    <string name="rsb_GENDER_FORM_ITEM_TITLE">Cinsiyet</string>
+    <string name="rsb_GENDER_FORM_ITEM_PLACEHOLDER">Bir cinsiyet seçin</string>
+    <string name="rsb_DOB_FORM_ITEM_TITLE">Doğum Tarihi</string>
+    <string name="rsb_DOB_FORM_ITEM_PLACEHOLDER">Bir tarih seçin</string>
+    <!-- Verification step -->
+    <string name="rsb_VERIFICATION_NAV_TITLE">Doğrulama</string>
+    <string name="rsb_VERIFICATION_STEP_TITLE">E-postanızı doğrulayın</string>
+    <string name="rsb_RESEND_EMAIL_LABEL_MESSAGE">Doğrulama e-postası almadıysanız ve yeniden gönderilmesini istiyorsanız, lütfen aşağıdaki bağlantıya dokunun.</string>
+    <string name="rsb_RESEND_EMAIL_BUTTON_TITLE">Doğrulamayı Yeniden E-postala</string>
+    <!-- Login step -->
+    <string name="rsb_LOGIN_CONTINUE_BUTTON_TITLE">Oturum Aç</string>
+    <string name="rsb_FORGOT_PASSWORD_BUTTON_TITLE">Parolayı mı unuttunuz?</string>
+    <!-- Passcode step -->
+    <string name="rsb_PASSCODE_PROMPT_MESSAGE">Parola girin</string>
+    <string name="rsb_PASSCODE_CONFIRM_MESSAGE">Parolayı doğrulayın</string>
+    <string name="rsb_PASSCODE_SAVED_MESSAGE">Parola kaydedildi</string>
+    <string name="rsb_PASSCODE_AUTHENTICATED_MESSAGE">Parola doğrulandı</string>
+    <string name="rsb_PASSCODE_OLD_ENTRY_MESSAGE">Eski parolanızı girin</string>
+    <string name="rsb_PASSCODE_NEW_ENTRY_MESSAGE">Yeni parolanızı girin</string>
+    <string name="rsb_PASSCODE_CONFIRM_NEW_ENTRY_MESSAGE">Yeni parolanızı doğrulayın</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_TITLE">Parola Doğru Değil</string>
+    <string name="rsb_PASSCODE_INVALID_ALERT_MESSAGE">Parolalar eşleşmedi. Yeniden deneyin.</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_MESSAGE">Lütfen Touch ID ile kimlik doğrulayın</string>
+    <string name="rsb_PASSCODE_TOUCH_ID_ERROR_ALERT_TITLE">Touch ID hatası</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_INVALID_INPUT_MESSAGE">Yalnızca sayısal karakterlere izin veriliyor.</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILITY_LABEL">Parola giriş ilerleme göstergesi</string>
+    <string name="rsb_PASSCODE_TEXTFIELD_ACCESSIBILTIY_VALUE">%1$s / %2$s basamak girildi</string>
+    <string name="rsb_PASSCODE_FORGOT_BUTTON_TITLE">Parolayı mı Unuttunuz?</string>
+    <!-- Keychain wrapper -->
+    <string name="rsb_KEYCHAIN_ADD_ERROR_MESSAGE">Anahtar zinciri öğesi eklenemedi.</string>
+    <string name="rsb_KEYCHAIN_UPDATE_ERROR_MESSAGE">Anahtar zinciri öğesi güncellenemedi.</string>
+    <string name="rsb_KEYCHAIN_DELETE_ERROR_MESSAGE">Anahtar zinciri öğesi silinemedi.</string>
+    <string name="rsb_KEYCHAIN_FIND_ERROR_MESSAGE">Anahtar zinciri öğesi bulunamadı.</string>
+    <!-- Blood types -->
+    <string name="rsb_blood_type_a_plus">A+</string>
+    <string name="rsb_BLOOD_TYPE_A_">A-</string>
+    <string name="rsb_blood_type_ab_plus">AB+</string>
+    <string name="rsb_BLOOD_TYPE_AB_">AB-</string>
+    <string name="rsb_blood_type_b_plus">B+</string>
+    <string name="rsb_BLOOD_TYPE_B_">B-</string>
+    <string name="rsb_blood_type_o_plus">0+</string>
+    <string name="rsb_BLOOD_TYPE_O_">0-</string>
+    <!-- Gender values. -->
+    <string name="rsb_GENDER_FEMALE">Kadın</string>
+    <string name="rsb_GENDER_MALE">Erkek</string>
+    <string name="rsb_GENDER_OTHER">Diğer</string>
+    <!-- Boolean answer strings -->
+    <string name="rsb_BOOL_NO">Hayır</string>
+    <string name="rsb_BOOL_YES">Evet</string>
+    <!-- Measuring unit abbreviations -->
+    <string name="rsb_MEASURING_UNIT_CM">cm</string>
+    <string name="rsb_MEASURING_UNIT_FT">fit</string>
+    <string name="rsb_MEASURING_UNIT_IN">inç</string>
+    <!-- Default placeholders to request answers in a questionnaire. -->
+    <string name="rsb_PLACEHOLDER_TEXT_OR_NUMBER">Yanıtlamak için dokunun</string>
+    <string name="rsb_NULL_ANSWER">Bir yanıt seçin</string>
+    <string name="rsb_PLACEHOLDER_IMAGE_CHOICES">Seçmek için dokunun</string>
+    <string name="rsb_PLACEHOLDER_LONG_TEXT">Yazmak için dokunun</string>
+    <!-- Button titles -->
+    <string name="rsb_BUTTON_AGREE">Kabul Ediyorum</string>
+    <string name="rsb_BUTTON_CANCEL">Vazgeç</string>
+    <string name="rsb_BUTTON_OK">Tamam</string>
+    <string name="rsb_BUTTON_CLEAR">Sil</string>
+    <string name="rsb_BUTTON_DISAGREE">Kabul Etmiyorum</string>
+    <string name="rsb_BUTTON_DONE">Bitti</string>
+    <string name="rsb_BUTTON_GET_STARTED">Başla</string>
+    <string name="rsb_BUTTON_LEARN_MORE">Daha fazla bilgi</string>
+    <string name="rsb_BUTTON_NEXT">İleri</string>
+    <string name="rsb_BUTTON_SKIP">Atla</string>
+    <string name="rsb_BUTTON_SKIP_QUESTION">Bu soruyu atla</string>
+    <string name="rsb_BUTTON_START_TIMER">Sayacı Başlat</string>
+    <string name="rsb_BUTTON_OPTION_SAVE">Sonrası İçin Kaydet</string>
+    <string name="rsb_BUTTON_OPTION_DISCARD">Sonuçları At</string>
+    <string name="rsb_BUTTON_OPTION_STOP_TASK">Görevi Bitir</string>
+    <string name="rsb_BUTTON_SAVE">Kaydet</string>
+    <string name="rsb_BUTTON_CLEAR_ANSWER">Yanıtı sil</string>
+    <string name="rsb_BUTTON_READ_ONLY_MODE">Bu yanıt değiştirilemiyor.</string>
+    <!-- General active tasks. -->
+    <string name="rsb_COUNTDOWN_LABEL">Aktivite başlatılıyor</string>
+    <string name="rsb_TASK_COMPLETE_TITLE">Aktivite Tamamlandı</string>
+    <string name="rsb_TASK_COMPLETE_TEXT">Verileriniz incelenecek ve sonuçlarınız hazır olduğunuzda size haber verilecektir.</string>
+    <string name="rsb_countdown_spoken_remaining">%1$s saniye kaldı.</string>
+    <!-- Image capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_IMAGE">Görüntü Yakala</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_IMAGE">Görüntüyü Yeniden Yakala</string>
+    <string name="rsb_CAPTURE_ERROR_CAMERA_NOT_FOUND">Kamera bulunamadı. Bu adım tamamlanamıyor.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_PERMISSIONS">Bu adımı tamamlamak için Ayarlar\'da bu uygulamanın kameraya erişimine izin verin.</string>
+    <string name="rsb_CAPTURE_ERROR_NO_OUTPUT_DIRECTORY">Yakalanan görüntülerin kaydedileceği bir dizin belirtilmemiş.</string>
+    <string name="rsb_CAPTURE_ERROR_CANNOT_WRITE_FILE">Yakalanan görüntü kaydedilemedi.</string>
+    <!-- Video capture step. -->
+    <string name="rsb_CAPTURE_BUTTON_CAPTURE_VIDEO">Kaydı Başlat</string>
+    <string name="rsb_CAPTURE_BUTTON_STOP_CAPTURE_VIDEO">Kaydı Durdur</string>
+    <string name="rsb_CAPTURE_BUTTON_RECAPTURE_VIDEO">Videoyu Yeniden Yakala</string>
+    <!-- Fitness active task. -->
+    <string name="rsb_FITNESS_TASK_TITLE">Fitness</string>
+    <string name="rsb_FITNESS_DISTANCE_TITLE_FORMAT">Mesafe (%1$s)</string>
+    <string name="rsb_FITNESS_HEARTRATE_TITLE">Kalp Atış Hızı (vuruş/dk)</string>
+    <string name="rsb_FITNESS_SIT_INSTRUCTION_FORMAT">Rahat bir şekilde %1$s oturun.</string>
+    <string name="rsb_FITNESS_WALK_INSTRUCTION_FORMAT">Yürüyebildiğiniz kadar hızlı %1$s yürüyün.</string>
+    <string name="rsb_FITNESS_INTRO_TEXT_FORMAT">Bu aktivite, kalp atış hızınızı izler ve %1$s içinde ne kadar mesafe yürüyebileceğinizi ölçer.</string>
+    <string name="rsb_FITNESS_INTRO_2_TEXT_FORMAT">Açık havada yürüyebildiğiniz en yüksek hızda %1$s yürüyün. Bitirdiğinizde, oturun ve %2$s rahat bir şekilde dinlenin. Başlamak için Başla’ya dokunun.</string>
+    <!-- Short walk active task. -->
+    <string name="rsb_WALK_TASK_TITLE">Yürüyüş Tarzı ve Denge</string>
+    <string name="rsb_WALK_INTRO_TEXT">Bu aktivite, yürürken ve ayakta dururken yürüyüş tarzınızı ve dengenizi ölçer. Yardımsız, güvenli bir şekilde yürüyemiyorsanız devam etmeyin.</string>
+    <string name="rsb_walk_intro_2_text_ld">Düz bir çizgide yaklaşık %1$d adım yardımsız, güvenli bir şekilde yürüyebileceğiniz bir yer bulun.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL">Telefonunuzu cebinize veya çantanıza koyun ve sesli yönergeleri izleyin.</string>
+    <string name="rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT">Şimdi %1$s süresince hareketsiz durun.</string>
+    <string name="rsb_WALK_STAND_INSTRUCTION_FORMAT">Hareketsiz bir şekilde %1$s durun.</string>
+    <string name="rsb_WALK_RETURN_INSTRUCTION_FORMAT">Geriye dönün ve başladığınız yere yürüyün.</string>
+    <string name="rsb_WALK_OUTBOUND_INSTRUCTION_FORMAT">Düz bir çizgide en fazla %1$d adım yürüyün.</string>
+    <!-- Short walk back and forth. -->
+    <string name="rsb_WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION">Düz bir çizgide ileri geri güvenli bir şekilde yürüyebileceğiniz bir yer bulun. Yolunuzun sonunda geri dönüp devam ederek durmadan yürümeye çalışın.\n\nSonra tam daire etrafında dönmeniz, ardından da kollarınız yanlarda ve ayaklarınız omuz genişliğinde açık olarak hareketsiz durmanız istenecektir.</string>
+    <string name="rsb_WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION">Başlamaya hazır olduğunuzda Başla’ya dokunun.\nSonra telefonunuzu cebinize veya çantanıza koyun ve sesli yönergeleri izleyin.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT">Düz bir çizgide ileri geri %1$s yürüyün. Normal bir şekilde yürüyün.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT">Tam daire şeklinde dönün ve sonra %1$s süresince hareketsiz durun.</string>
+    <string name="rsb_WALK_BACK_AND_FORTH_FINISHED_VOICE">Bu aktiviteyi tamamladınız.</string>
+    <!-- Tapping active task. -->
+    <string name="rsb_TAPPING_TASK_TITLE">Dokunma Hızı</string>
+    <string name="rsb_TAPPING_TASK_TITLE_RIGHT">Sağ El</string>
+    <string name="rsb_TAPPING_TASK_TITLE_LEFT">Sol El</string>
+    <string name="rsb_TAPPING_INTRO_TEXT">Bu aktivite dokunma hızınızı ölçer.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_REST_PHONE">Telefonunuzu düz bir yüzeye koyun.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_MOST_AFFECTED">Ekrandaki düğmelere dönüşümlü olarak dokunmak için aynı elinizin iki parmağını kullanın.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_FIRST">Ekrandaki düğmelere dönüşümlü olarak dokunmak için sağ elinizin iki parmağını kullanın.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_FIRST">Ekrandaki düğmelere dönüşümlü olarak dokunmak için sol elinizin iki parmağını kullanın.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_RIGHT_SECOND">Şimdi aynı testi sağ elinizi kullanarak tekrarlayın.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_LEFT_SECOND">Şimdi aynı testi sol elinizi kullanarak tekrarlayın.</string>
+    <string name="rsb_TAPPING_INTRO_TEXT_2_FORMAT">Tek parmağınızla, sonra diğeriyle dokunun. Mümkün olduğunca eşit zaman aralıklarıyla dokunmaya çalışın. %1$s süresince dokunmaya devam edin.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION">Başlamak için Başla’ya dokunun.</string>
+    <string name="rsb_TAPPING_CALL_TO_ACTION_NEXT">Başlamak için İleri’ye dokunun.</string>
+    <string name="rsb_TAP_BUTTON_TITLE">Dokun</string>
+    <string name="rsb_TOTAL_TAPS_LABEL">Toplam Dokunma</string>
+    <string name="rsb_TAPPING_INSTRUCTION">İki parmağınızı kullanarak düğmelere dokunabildiğiniz kadar tutarlı dokunun.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_RIGHT">Düğmelere SAĞ elinizi kullanarak dokunun.</string>
+    <string name="rsb_TAPPING_INSTRUCTION_LEFT">Düğmelere SOL elinizi kullanarak dokunun.</string>
+    <string name="rsb_TAPPING_SKIP_TITLE">Bu eli atla</string>
+    <!-- Audio active task. -->
+    <string name="rsb_AUDIO_TASK_TITLE">Ses</string>
+    <string name="rsb_AUDIO_CALL_TO_ACTION">Başlamak için Başla’ya dokunun.</string>
+    <string name="rsb_AUDIO_INSTRUCTION">Mikrofona, söyleyebildiğiniz kadar uzun “Aaaaa” deyin.</string>
+    <string name="rsb_AUDIO_INTRO_TEXT">Derin bir nefes alın ve mikrofona, söyleyebildiğiniz kadar uzun “Aaaaa” deyin. Ses çubukları mavi kalacak şekilde ses yüksekliğini sabit tutmaya çalışın.</string>
+    <string name="rsb_AUDIO_INTENDED_USE">Bu aktivite, telefonunuzun alt tarafındaki mikrofonla kayıt yaparak sesinizi değerlendirir.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_LABEL">Çok Yüksek</string>
+    <string name="rsb_AUDIO_GENERIC_ERROR_LABEL">Ses kaydı yapılamıyor</string>
+    <string name="rsb_AUDIO_LEVEL_CHECK_LABEL">Arkaplan gürültü düzeyi denetlenirken lütfen bekleyin.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_MESSAGE">Ortam gürültü düzeyi sesinizi kaydedemeyecek kadar yüksek. Lütfen daha sessiz bir yere gidip yeniden deneyin.</string>
+    <string name="rsb_AUDIO_TOO_LOUD_ACTION_NEXT">Hazır olduğunuzda İleri’ye dokunun.</string>
+    <!-- Tone audiometry active task. -->
+    <string name="rsb_TONE_AUDIOMETRY_TASK_TITLE">Ses Tonu Odyometrisi</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTENDED_USE">Bu aktivite, farklı sesleri duyabilme becerinizi ölçer.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INTRO_TEXT">Başlamadan önce kulaklığınızı bağlayın ve takın.</string>
+    <string name="rsb_TONE_AUDIOMETRY_CALL_TO_ACTION">Başlamak için Başla’ya dokunun.</string>
+    <string name="rsb_TONE_AUDIOMETRY_PREP_TEXT">Bir ses duyacaksınız. Aygıtınızın yan tarafında bulunan denetimleri kullanarak ses seviyesini ayarlayın.\n\nBaşlamaya hazır olduğunuzda düğmeye dokunun.</string>
+    <string name="rsb_TONE_AUDIOMETRY_INSTRUCTION">Her ses duymaya başladığınızda düğmeye dokunun.</string>
+    <string name="rsb_tone_label_left">%1$s Hz, Sol</string>
+    <string name="rsb_tone_label_right">%1$s Hz, Sağ</string>
+    <!-- Spatial span memory active task. -->
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TITLE">Konumsal Bellek</string>
+    <string name="rsb_spatial_span_memory_intro_text">Bu aktivite, %1$s görüntülerinin sırasını yinelemenizi isteyerek kısa süreli konumsal belleğinizi ölçer.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_PLURAL">çiçek</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_TARGET_STANDALONE">çiçek</string>
+    <string name="rsb_spatial_span_memory_intro_2_text">Bu %1$s görüntülerinin bazıları teker teker yanacaktır. Bu %2$s görüntülerine yandıkları sırada dokunun.</string>
+    <string name="rsb_spatial_span_memory_intro_2_text_reverse">Bu %1$s görüntülerinin bazıları teker teker yanacaktır. Bu %2$s görüntülerine yandıkları sıranın tersinde dokunun.</string>
+    <string name="rsb_SPATIAL_SPAN_MEMORY_CALL_TO_ACTION">Başlamak için Başla\'ya dokunun, sonra dikkatlice izleyin.</string>
+    <string name="rsb_memory_game_item_count_title">%1$s</string>
+    <string name="rsb_MEMORY_GAME_SCORE_TITLE">Puan</string>
+    <string name="rsb_memory_game_playback_title">Bu %1$s görüntülerinin yanmasını izleyin</string>
+    <string name="rsb_memory_game_gameplay_title">Bu %1$s görüntülerine yandıkları sırada dokunun</string>
+    <string name="rsb_memory_game_gameplay_reverse_title">Bu %1$s görüntülerine ters sırada dokunun</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_TITLE">Dizi Tamamlandı</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE_MESSAGE">Devam etmek için İleri’ye dokunun</string>
+    <string name="rsb_MEMORY_GAME_FAILED_TITLE">Yeniden Deneyin</string>
+    <string name="rsb_MEMORY_GAME_FAILED_MESSAGE">Bu sefer pek iyi yapamadınız. Devam etmek için İleri’ye dokunun.</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_TITLE">Süre Doldu</string>
+    <string name="rsb_MEMORY_GAME_TIMEOUT_MESSAGE">Süreniz kalmadı.\nDevam etmek için İleri’ye dokunun.</string>
+    <string name="rsb_MEMORY_GAME_COMPLETE">Oyun Tamamlandı</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_TITLE">Duraklatıldı</string>
+    <string name="rsb_MEMORY_GAME_PAUSED_MESSAGE">Devam etmek için İleri’ye dokunun</string>
+    <!-- Reaction time active task. -->
+    <string name="rsb_REACTION_TIME_TASK_TITLE">Tepki Süresi</string>
+    <string name="rsb_REACTION_TIME_TASK_INTENDED_USE">Bu aktivite, görünen bir ipucuna yanıt verebildiğiniz süreyi hesaplar.</string>
+    <string name="rsb_REACTION_TIME_TASK_INTRO_TEXT_FORMAT">Ekranda mavi nokta görünür görünmez aygıtı herhangi bir yönde hızlıca sallayın. Bunu %D kez yapmanız istenecek.</string>
+    <string name="rsb_REACTION_TIME_TASK_CALL_TO_ACTION">Başlamak için Başla’ya dokunun.</string>
+    <string name="rsb_REACTION_TIME_TASK_ATTEMPTS_FORMAT">%1$s / %2$s Girişim</string>
+    <string name="rsb_REACTION_TIME_TASK_ACTIVE_STEP_TITLE">Mavi çember göründüğünde aygıtı hızlıca sallayın</string>
+    <!-- Tower of Hanoi active task -->
+    <string name="rsb_TOWER_OF_HANOI_TASK_TITLE">Hanoi Kulesi</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTENDED_USE">Bu aktivite bulmaca çözme becerilerinizi ölçer.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_INTRO_TEXT">Tüm yığını, vurgulanan platforma mümkün olan en az hamlede taşıyın.</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_TASK_CALL_TO_ACTION">Başlamak için Başla’ya dokunun</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_INTRO_TEXT">Bulmacayı Çöz</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_PROGRESS_TEXT">Hamle Sayısı: %1$s \n %2$s</string>
+    <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_SKIP_BUTTON_TITLE">Bu bulmacayı çözemedim</string>
+    <!-- Timed walk active task. -->
+    <string name="rsb_TIMED_WALK_TITLE">Süreli Yürüme</string>
+    <string name="rsb_TIMED_WALK_INTRO_DETAIL">Bu aktivite, alt ekstremite fonksiyonlarınızı ölçer.</string>
+    <string name="rsb_timed_walk_intro_2_text">Düz bir çizgide mümkün olduğunca hızlı ama güvenli bir şekilde %1$s yürüyebileceğiniz bir yer (tercihen dışarıda) bulun. Bitirme çizgisini geçene dek yavaşlamayın.</string>
+    <string name="rsb_TIMED_WALK_INTRO_2_DETAIL">Başlamak için İleri’ye dokunun.</string>
+    <string name="rsb_TIMED_WALK_FORM_TITLE">Yardımcı aygıt</string>
+    <string name="rsb_TIMED_WALK_FORM_TEXT">Her test için aynı yardımcı aygıtı kullanın.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_TEXT">Ayak bileği ortezi takıyor musunuz?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TITLE">Yardımcı aygıt kullanıyor musunuz?</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_TEXT">Bir yanıt seçmek için dokunun.</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE">Hiçbiri</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_2">Tek Taraflı Baston</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_3">Tek Taraflı Koltuk Değneği</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_4">Çift Taraflı Baston</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_5">Çift Taraflı Koltuk Değneği</string>
+    <string name="rsb_TIMED_WALK_QUESTION_2_CHOICE_6">Yürüteç/Yürüme Desteği</string>
+    <string name="rsb_timed_walk_instruction">Düz bir çizgide en fazla %1$s yürüyün.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_2">Geriye dönün ve başladığınız yere yürüyün.</string>
+    <string name="rsb_TIMED_WALK_INSTRUCTION_TEXT">Tamamladığınızda Bitti’ye dokunun.</string>
+    <!-- PSAT active task. -->
+    <string name="rsb_PASAT_TITLE">PASAT</string>
+    <string name="rsb_PVSAT_TITLE">PVSAT</string>
+    <string name="rsb_PAVSAT_TITLE">PAVSAT</string>
+    <string name="rsb_PASAT_INTRO_TEXT">Tempolu İşitsel Toplama Testi, işitsel bilgi işleme hızınızı ve hesaplama becerinizi ölçer.</string>
+    <string name="rsb_PVSAT_INTRO_TEXT">Tempolu Görsel Toplama Testi, görsel bilgi işleme hızınızı ve hesaplama becerinizi ölçer.</string>
+    <string name="rsb_PAVSAT_INTRO_TEXT">Tempolu İşitsel-Görsel Toplama Testi, işitsel ve görsel bilgi işleme hızınızı ve hesaplama becerinizi ölçer.</string>
+    <string name="rsb_psat_intro_text_2">Her %1$s saniyede bir tek tek rakamlar sunulur.\nHer yeni rakamı bir önceki rakama eklemeniz gerekir.\nDikkat edin, değişen toplamı değil yalnızca son iki rakamın toplamını hesaplamanız gerekir.</string>
+    <string name="rsb_PSAT_CALL_TO_ACTION">Başlamak için Başla’ya dokunun.</string>
+    <string name="rsb_PSAT_INITIAL_INSTRUCTION">Bu ilk rakamı aklınızda tutun.</string>
+    <string name="rsb_PSAT_INSTRUCTION">Bu yeni rakamı bir öncekine ekleyin.</string>
+    <string name="rsb_PSAT_NO_DIGIT">-</string>
+    <!-- Hole peg test active task. -->
+    <string name="rsb_hole_peg_test_title">%1$s Delikli Daire Testi</string>
+    <string name="rsb_hole_peg_test_intro_text">Bu aktivite, bir daireyi deliğe yerleştirmenizi isteyerek üst uzuvlarınızın işlevini ölçer. Bunu %1$s kez yapmanız istenecektir.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_left_hand_first">Hem sol hem de sağ eliniz test edilecektir.\nDaireyi mümkün olduğu kadar hızlı bir şekilde almalı, onu deliğe koymalı ve bunu %1$s kez yaptıktan sonra yeniden %2$s kez kaldırmalısınız.</string>
+    <string name="rsb_hole_peg_test_intro_text_2_right_hand_first">Hem sağ hem de sol eliniz test edilecektir.\nDaireyi mümkün olduğu kadar hızlı bir şekilde almalı, onu deliğe koymalı ve bunu %1$s kez yaptıktan sonra yeniden %2$s kez kaldırmalısınız.</string>
+    <string name="rsb_HOLE_PEG_TEST_CALL_TO_ACTION">Başlamak için Başla’ya dokunun.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_LEFT_HAND">Sol elinizi kullanarak daireyi deliğin içine koyun.</string>
+    <string name="rsb_HOLE_PEG_TEST_PLACE_INSTRUCTION_RIGHT_HAND">Sağ elinizi kullanarak daireyi deliğin içine koyun.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_LEFT_HAND">Sol elinizi kullanarak daireyi çizginin arkasına koyun.</string>
+    <string name="rsb_HOLE_PEG_TEST_REMOVE_INSTRUCTION_RIGHT_HAND">Sağ elinizi kullanarak daireyi çizginin arkasına koyun.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT">İki parmağınızla daireyi alın.</string>
+    <string name="rsb_HOLE_PEG_TEST_TEXT_2">Daireyi bırakmak için parmakları kaldırın.</string>
+    <!-- Tremor test active task. -->
+    <string name="rsb_TREMOR_TEST_TITLE">Tremor Aktivitesi</string>
+    <string name="rsb_TREMOR_TEST_INTRO_1_DETAIL">Bu aktivite, çeşitli pozisyonlarda ellerinizdeki tremor düzeyini ölçer. Bu aktivite süresince rahat bir şekilde oturabileceğiniz bir yer bulun.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DEFAULT_TEXT">Telefonu aşağıdaki görüntüde gösterildiği gibi daha çok etkilenen elinizde tutun.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_RIGHT_HAND_TEXT">Telefonu aşağıdaki görüntüde gösterildiği gibi SAĞ elinizde tutun.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_LEFT_HAND_TEXT">Telefonu aşağıdaki görüntüde gösterildiği gibi SOL elinizde tutun.</string>
+    <string name="rsb_tremor_test_intro_2_detail_default">Telefonunuz elinizde otururken %1$s gerçekleştirmeniz istenecektir.</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK">bir görev</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK">iki görev</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK">üç görev</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_4_TASK">dört görev</string>
+    <string name="rsb_TREMOR_TEST_INTRO_2_DETAIL_5_TASK">beş görev</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_INTRO_TEXT">Devam etmek için İleri’ye dokunun.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO">Telefonunuzu kucağınızda tutmaya hazırlanın.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_LEFT">Telefonunuzu SOL elinizle kucağınızda tutmaya hazırlanın.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_IN_LAP_INTRO_RIGHT">Telefonunuzu SAĞ elinizle kucağınızda tutmaya hazırlanın.</string>
+    <string name="rsb_tremor_test_active_step_in_lap_instruction_ld">Telefonunuzu %1$d saniye kucağınızda tutmaya devam edin.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO">Şimdi telefonunuzu eliniz uzatılmış olarak omuz yüksekliğinde tutun.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_LEFT">Şimdi telefonunuzu SOL eliniz uzatılmış olarak omuz yüksekliğinde tutun.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_EXTEND_ARM_INTRO_RIGHT">Şimdi telefonunuzu SAĞ eliniz uzatılmış olarak omuz yüksekliğinde tutun.</string>
+    <string name="rsb_tremor_test_active_step_extend_arm_instruction_ld">Telefonunuzu eliniz uzatılmış olarak %1$d saniye tutmaya devam edin.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO">Şimdi telefonunuzu dirseğiniz kıvrık olarak omuz yüksekliğinde tutun.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_LEFT">Şimdi telefonunuzu dirseğiniz kıvrık olarak omuz yüksekliğinde SOL elinizle tutun.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT">Şimdi telefonunuzu dirseğiniz kıvrık olarak omuz yüksekliğinde SAĞ elinizle tutun.</string>
+    <string name="rsb_tremor_test_active_step_bend_arm_instruction_ld">Telefonunuzu dirseğiniz kıvrık olarak %1$d saniye tutmaya devam edin</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO">Şimdi dirseğinizi kıvrık tutarak telefonunuzu burnunuza tekrar tekrar dokundurun.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT">Şimdi telefonunuz SOL elinizde olacak şekilde dirseğinizi kıvrık tutarak telefonunuzu burnunuza tekrar tekrar dokundurun.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT">Şimdi telefonunuz SAĞ elinizde olacak şekilde dirseğinizi kıvrık tutarak telefonunuzu burnunuza tekrar tekrar dokundurun.</string>
+    <string name="rsb_tremor_test_active_step_touch_nose_instruction_ld">Telefonunuzu burnunuza değdirmeye %1$d saniye devam edin</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO">Bileğinizi çevirerek el sallamaya hazırlanın.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT">Telefonunuz SOL elinizde olacak şekilde bileğinizi çevirerek el sallamaya hazırlanın.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_RIGHT">Telefonunuz SAĞ elinizde olacak şekilde bileğinizi çevirerek el sallamaya hazırlanın.</string>
+    <string name="rsb_tremor_test_active_step_turn_wrist_instruction_ld">Bileğinizi çevirerek el sallamaya %1$d saniye devam edin.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_LEFT_INSTRUCTION">Şimdi telefonunuzu SOL elinize alıp bir sonraki göreve geçin.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_SWITCH_HANDS_RIGHT_INSTRUCTION">Şimdi telefonunuzu SAĞ elinize alıp bir sonraki göreve geçin.</string>
+    <string name="rsb_TREMOR_TEST_ACTIVE_STEP_FINISHED_INSTRUCTION">Bir sonraki göreve geçin.</string>
+    <string name="rsb_TREMOR_TEST_COMPLETED_INSTRUCTION">Aktivite tamamlandı.</string>
+    <string name="rsb_tremor_test_skip_question_both_hands">Telefonunuz önce bir elinizde, sonra diğer elinizde otururken %1$s gerçekleştirmeniz istenecektir.</string>
+    <string name="rsb_TREMOR_SKIP_LEFT_HAND">Bu aktiviteyi SOL elimle gerçekleştiremem.</string>
+    <string name="rsb_TREMOR_SKIP_RIGHT_HAND">Bu aktiviteyi SAĞ elimle gerçekleştiremem.</string>
+    <string name="rsb_TREMOR_SKIP_NEITHER">Bu aktiviteyi her iki elimle gerçekleştirebilirim.</string>
+    <!-- Potentially user visible error messages. -->
+    <string name="rsb_ERROR_DATALOGGER_CREATE_FILE">Dosya yaratılamadı</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_FREE_SPACE">Eşiğe ulaşmaya yetecek kadar günlük dosyası silinemedi</string>
+    <string name="rsb_ERROR_DATALOGGER_SET_ATTRIBUTE">Özelliği ayarlama hatası</string>
+    <string name="rsb_ERROR_DATALOGGER_COULD_NOT_MAORK">Dosya silinmiş (karşıya yüklenmiş) olarak işaretlenemedi</string>
+    <string name="rsb_ERROR_DATALOGGER_MULTIPLE">Günlükleri silmeyle ilgili birden fazla hata</string>
+    <string name="rsb_ERROR_RECORDER_NO_DATA">Toplanmış bir veri bulunamadı.</string>
+    <string name="rsb_ERROR_RECORDER_NO_OUTPUT_DIRECTORY">Çıkış dizini belirtilmemiş</string>
+    <!-- Charts -->
+    <string name="rsb_CHART_NO_DATA_TEXT">Veri Yok</string>
+    <!-- Accessibility -->
+    <string name="rsb_AX_BUTTON_BACK">Geri</string>
+    <string name="rsb_AX_IMAGE_ILLUSTRATION">%1$s resmi</string>
+    <string name="rsb_AX_SIGNVIEW_LABEL">Belirtilen imza alanı</string>
+    <string name="rsb_AX_SIGNVIEW_HINT">İmzalamak için ekrana dokunup parmağınızı hareket ettirin</string>
+    <string name="rsb_AX_SIGNVIEW_SIGNED">İmzalanmış</string>
+    <string name="rsb_AX_SIGNVIEW_UNSIGNED">İmzalanmamış</string>
+    <string name="rsb_AX_SELECTED">Seçili</string>
+    <string name="rsb_AX_UNSELECTED">Seçili değil</string>
+    <string name="rsb_AX_SLIDER_LABEL">Yanıt sürgüsü. %1$s ile %2$s aralığında</string>
+    <string name="rsb_AX_UNLABELED_IMAGE">Etiketsiz görüntü</string>
+    <string name="rsb_AX_ANNOUNCE_BEGIN_TASK">Göreve başla</string>
+    <string name="rsb_AX_MEMORY_TILE_ACTIVE">etkin</string>
+    <string name="rsb_AX_MEMORY_TILE_CORRECT">doğru</string>
+    <string name="rsb_AX_MEMORY_TILE_INCORRECT">yanlış</string>
+    <string name="rsb_AX_MEMORY_TILE_QUIESCENT">hareketsiz</string>
+    <string name="rsb_AX_MEMORY_TILE_LABEL">Bellek oyunu taşı</string>
+    <string name="rsb_AX_IMAGE_CAPTURE_LABEL">Yakalanan görüntü önizlemesi</string>
+    <string name="rsb_AX_IMAGE_CAPTURED_LABEL">Yakalanmış görüntü</string>
+    <string name="rsb_AX_VIDEO_CAPTURE_LABEL">Video yakalama önizlemesi</string>
+    <string name="rsb_AX_VIDEO_CAPTURED_LABEL">Yakalanmış video</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_INVALID_MOVE_FORMAT">%1$s büyüklüğündeki disk, %2$s büyüklüğündeki diskin üzerine yerleştirilemez</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TARGET_DISK">Hedef</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER">Kule</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_PLACE_DISK">Diski yerleştirmek için çift dokunun</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_SELECT_DISK">En üstteki diski seçmek için çift dokunun</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_CONTAINS">%1$s büyüklüklerinde disk içeriyor</string>
+    <string name="rsb_AX_TOWER_OF_HANOI_TOWER_EMPTY">Boş</string>
+    <string name="rsb_ax_graph_range_format">%1$s - %2$s aralığında</string>
+    <string name="rsb_AX_GRAPH_STACK_PREFIX">Yığın içeriği:</string>
+    <string name="rsb_AX_GRAPH_AND_SEPARATOR">ve</string>
+    <string name="rsb_ax_graph_point">Nokta: %1$s</string>
+
+</resources>

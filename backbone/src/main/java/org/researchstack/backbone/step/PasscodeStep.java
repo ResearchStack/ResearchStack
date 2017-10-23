@@ -1,5 +1,6 @@
 package org.researchstack.backbone.step;
 
+import org.researchstack.backbone.ui.step.layout.FingerprintStepLayout;
 import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 import org.researchstack.backbone.ui.step.layout.SignUpPinCodeCreationStepLayout;
 
@@ -7,7 +8,9 @@ import org.researchstack.backbone.ui.step.layout.SignUpPinCodeCreationStepLayout
  * Created by TheMDP on 1/4/17.
  */
 
-public class PasscodeStep extends Step {
+public class PasscodeStep extends InstructionStep {
+
+    private boolean useFingerprint = false;
 
     public int stateOrdinal = - 1;
 
@@ -17,8 +20,7 @@ public class PasscodeStep extends Step {
     }
 
     public PasscodeStep(String identifier, String title, String text) {
-        super(identifier, title);
-        setText(text);
+        super(identifier, title, text);
     }
 
     public int getStateOrdinal()
@@ -31,8 +33,28 @@ public class PasscodeStep extends Step {
         this.stateOrdinal = stateOrdinal;
     }
 
+    /**
+     * @return true if UI will be FingerprintStepLayout, false if UI will be PasscodeCreationStepLayout
+     */
+    public boolean getUseFingerprint()
+    {
+        return useFingerprint;
+    }
+
+    /**
+     * @param useFingerprint true if UI will be FingerprintStepLayout, false if UI will be PasscodeCreationStepLayout
+     */
+    public void setUseFingerprint(boolean useFingerprint)
+    {
+        this.useFingerprint = useFingerprint;
+    }
+
     @Override
     public Class getStepLayoutClass() {
-        return PasscodeCreationStepLayout.class;
+        if (!useFingerprint) {
+            return PasscodeCreationStepLayout.class;
+        } else {
+            return FingerprintStepLayout.class;
+        }
     }
 }

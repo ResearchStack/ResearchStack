@@ -101,15 +101,15 @@ public class DateAnswerFormat extends AnswerFormat
         if(minimumDate != null && resultDate.getTime() < minimumDate.getTime())
         {
             return new BodyAnswer(false,
-                    R.string.rsb_invalid_answer_date_under,
-                    FormatHelper.SIMPLE_FORMAT_DATE.format(minimumDate));
+                                  R.string.rsb_invalid_answer_date_under,
+                                  FormatHelper.SIMPLE_FORMAT_DATE.format(minimumDate));
         }
 
         if(maximumDate != null && resultDate.getTime() > maximumDate.getTime())
         {
             return new BodyAnswer(false,
-                    R.string.rsb_invalid_answer_date_over,
-                    FormatHelper.SIMPLE_FORMAT_DATE.format(maximumDate));
+                                  R.string.rsb_invalid_answer_date_over,
+                                  FormatHelper.SIMPLE_FORMAT_DATE.format(maximumDate));
         }
 
         return BodyAnswer.VALID;

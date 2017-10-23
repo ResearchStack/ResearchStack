@@ -1,34 +1,31 @@
 package org.researchstack.backbone.utils;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.lang.reflect.Constructor;
 
-public class ViewUtils
-{
+public class ViewUtils {
 
-    private ViewUtils() {}
+    private ViewUtils() {
+    }
 
-    public static InputFilter[] addFilter(InputFilter[] filters, InputFilter filter)
-    {
-        if(filters == null || filters.length == 0)
-        {
-            return new InputFilter[] {filter};
-        }
-        else
-        {
+    public static InputFilter[] addFilter(InputFilter[] filters, InputFilter filter) {
+        if (filters == null || filters.length == 0) {
+            return new InputFilter[]{filter};
+        } else {
             // Overwrite value if the filter to be inserted already exists in the filters array
-            for(int i = 0, size = filters.length; i < size; i++)
-            {
-                if(filters[i].getClass().isInstance(filter))
-                {
+            for (int i = 0, size = filters.length; i < size; i++) {
+                if (filters[i].getClass().isInstance(filter)) {
                     filters[i] = filter;
                     return filters;
                 }
@@ -45,68 +42,61 @@ public class ViewUtils
         }
     }
 
-    public static void disableSoftInputFromAppearing(EditText editText)
-    {
-        if(Build.VERSION.SDK_INT >= 11)
-        {
+    public static void disableSoftInputFromAppearing(EditText editText) {
+        if (Build.VERSION.SDK_INT >= 11) {
             editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
             editText.setTextIsSelectable(true);
-        }
-        else
-        {
+        } else {
             editText.setRawInputType(InputType.TYPE_NULL);
             editText.setFocusable(true);
         }
     }
 
-    public static void hideSoftInputMethod(Context context)
-    {
-        if(context instanceof Activity)
-        {
+    public static void hideSoftInputMethod(Context context) {
+        if (context instanceof Activity) {
             View currentFocus = ((Activity) context).getCurrentFocus();
 
-            if(currentFocus != null && currentFocus.getWindowToken() != null)
-            {
+            if (currentFocus != null && currentFocus.getWindowToken() != null) {
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromInputMethod(currentFocus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
     }
 
-    public static void showSoftInputMethod(EditText editText)
-    {
+    public static void showSoftInputMethod(EditText editText) {
         editText.requestFocus();
         InputMethodManager imm = (InputMethodManager) editText.getContext()
                 .getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.showSoftInput(editText, 0);
     }
 
-    public static Fragment createFragment(String className)
-    {
-        try
-        {
+    public static Fragment createFragment(String className) {
+        try {
             Class fragmentClass = Class.forName(className);
             return createFragment(fragmentClass);
-        }
-        catch(ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public static Fragment createFragment(Class fragmentClass)
-    {
-        try
-        {
+    public static Fragment createFragment(Class fragmentClass) {
+        try {
             Constructor<?> fragConstructor = fragmentClass.getConstructor();
             Object fragment = fragConstructor.newInstance();
             return (Fragment) fragment;
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * @param context can be app or activity, used for Resources class
+     * @param dp the size in dp as the input
+     * @return the dp converted to px for this device based on its display metrics
+     */
+    public static int dpToPx(Context context, int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, dp, displayMetrics);
+    }
 }

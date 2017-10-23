@@ -29,7 +29,7 @@ import java.util.Set;
  *
  * ProfileStepLayout is used to display fields that relate to a user's profile
  * and the QuestionSteps were created from
- * @see {@link org.researchstack.backbone.model.ProfileInfoOption} objects,
+ * see {@link org.researchstack.backbone.model.ProfileInfoOption} objects,
  * which can be found in the @see {@link org.researchstack.backbone.step.ProfileStep}
  */
 
@@ -71,7 +71,7 @@ public class ProfileStepLayout extends FormStepLayout {
         if (result == null) {
             result = new StepResult<StepResult>(step);
         }
-        prePopulateUserProfileResults(step, result);
+        prePopulateUserProfileResults(stepResult);
         super.initialize(step, result);
     }
 
@@ -86,7 +86,7 @@ public class ProfileStepLayout extends FormStepLayout {
     /**
      * @param result to add pre-populated user profile results that are create from the User object
      */
-    protected void prePopulateUserProfileResults(Step step, StepResult result) {
+    protected void prePopulateUserProfileResults(StepResult<StepResult> result) {
         user = DataProvider.getInstance().getUser(getContext());
         if (user == null) {
             user = new User();  // first time controlling the user object
@@ -210,7 +210,7 @@ public class ProfileStepLayout extends FormStepLayout {
     }
 
     /**
-     * @param stepIdentifier
+     * @param stepIdentifier the identifier for the step
      * @return String answer of step body, null if one doesn't exist or it is not a String
      */
     protected String getTextAnswer(String stepIdentifier) {
@@ -222,7 +222,7 @@ public class ProfileStepLayout extends FormStepLayout {
     }
 
     /**
-     * @param stepIdentifier
+     * @param stepIdentifier the identifier for the step
      * @return Date answer of step body, null if one doesn't exist or it is not a Date
      */
     protected Date getDateAnswer(String stepIdentifier) {
@@ -236,8 +236,7 @@ public class ProfileStepLayout extends FormStepLayout {
     protected Object findStepResult(String stepIdentifier) {
         StepBody matchingStepBody = getStepBody(stepIdentifier);
         if (matchingStepBody != null) {
-            Object stepResultObj = matchingStepBody.getStepResult(false).getResult();
-            return stepResultObj;
+            return matchingStepBody.getStepResult(false).getResult();
         }
         return null;
     }

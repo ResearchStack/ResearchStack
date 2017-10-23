@@ -1,8 +1,8 @@
 package org.researchstack.backbone;
+
 import android.app.Application;
 import android.content.Context;
 
-import org.researchstack.backbone.model.ConsentSignature;
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;
 import org.researchstack.backbone.model.User;
@@ -16,18 +16,17 @@ import rx.Observable;
  * Class used to as a buffer between the network layer and UI layer. The implementation allows the
  * framework to be backend-agnostic
  */
-public abstract class DataProvider
-{
-    public final static String ERROR_NOT_AUTHENTICATED = "ERROR_NOT_AUTHENTICATED";
-    public final static String ERROR_CONSENT_REQUIRED  = "ERROR_CONSENT_REQUIRED";
+public abstract class DataProvider {
+    public static final String ERROR_NOT_AUTHENTICATED = "ERROR_NOT_AUTHENTICATED";
+    public static final String ERROR_CONSENT_REQUIRED = "ERROR_CONSENT_REQUIRED";
+    public static final String ERROR_APP_UPGRADE_REQUIRED = "ERROR_APP_UPGRADE_REQUIRED";
 
     private static DataProvider instance;
 
     /**
      * Default Constructor
      */
-    public DataProvider()
-    {
+    public DataProvider() {
     }
 
     /**
@@ -35,10 +34,8 @@ public abstract class DataProvider
      *
      * @return the singleton instance of this class
      */
-    public static DataProvider getInstance()
-    {
-        if(instance == null)
-        {
+    public static DataProvider getInstance() {
+        if (instance == null) {
             throw new RuntimeException(
                     "DataProvider instance is null. Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
@@ -52,8 +49,7 @@ public abstract class DataProvider
      *
      * @param instance an implementation of DataProvider
      */
-    public static void init(DataProvider instance)
-    {
+    public static void init(DataProvider instance) {
         DataProvider.instance = instance;
     }
 
@@ -70,6 +66,9 @@ public abstract class DataProvider
     /**
      * Called to sign the user up to the backend service
      *
+     * @param email the user's email
+     * @param username the user's username
+     * @param password the user's password
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signUp was successful
@@ -79,6 +78,8 @@ public abstract class DataProvider
     /**
      * Called to sign the user in to the backend service
      *
+     * @param username the user's username
+     * @param password the user's password
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
@@ -99,6 +100,7 @@ public abstract class DataProvider
      * Called to alert the backend to resend a vertification
      * email
      *
+     * @param email user's email
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
@@ -139,10 +141,8 @@ public abstract class DataProvider
      *
      * @param context android context
      * @return true if user is currently consented
-     *
-     * @Deprecated use isConsented() no params instead
      */
-    @Deprecated
+    @Deprecated // isConsented() no params instead
     public boolean isConsented(Context context) {
         return false;
     }
@@ -156,6 +156,7 @@ public abstract class DataProvider
      * Called to alert the backend that the user wants to withdraw from
      * the study
      *
+     * @param reason the reason for withdrawal, can be any string
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if withdrawl was successful
@@ -169,6 +170,7 @@ public abstract class DataProvider
      * with the signature parameter
      *
      * @param context android context
+     * @param consentResult the TaskResult map containing hard-coded key/value data
      */
     @Deprecated // use uploadConsent(Context context, ConsentSignatureBody signature) instead
     public abstract void uploadConsent(Context context, TaskResult consentResult);
@@ -179,6 +181,7 @@ public abstract class DataProvider
      *
      * @param context android context
      * @param signature Valid ConsentSignature object
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()} if successful
      */
     public abstract Observable<DataResponse> uploadConsent(Context context, ConsentSignatureBody signature);
 
@@ -196,6 +199,7 @@ public abstract class DataProvider
      * <p>
      * Please use {@link FileAccess} class to encrypt user information when saving.
      *
+     * @param consentResult the TaskResult map containing hard-coded key/value data
      * @param context android context
      */
     @Deprecated // use saveLocalConsent(Context context, ConsentSignatureBody signature) instead
@@ -273,7 +277,7 @@ public abstract class DataProvider
      * Loads a Task object
      *
      * @param context android context
-     * @param task the TaskScheduleModel model
+     * @param task    the TaskScheduleModel model
      * @return a Task object with defined sub-steps
      */
     public abstract Task loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task);
@@ -281,8 +285,8 @@ public abstract class DataProvider
     /**
      * This initial task may include profile items such as height and weight that may need to be
      * processed differently than a normal task result.
-     *
-     * @param context android context
+     * <p>
+     * @param context    android context
      * @param taskResult initial TaskResult object to process
      */
     public abstract void processInitialTaskResult(Context context, TaskResult taskResult);
@@ -292,7 +296,7 @@ public abstract class DataProvider
      * call to notify the backend.
      *
      * @param context android context
-     * @param email email of the user
+     * @param email   email of the user
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if forgitpassword request was successful
      */

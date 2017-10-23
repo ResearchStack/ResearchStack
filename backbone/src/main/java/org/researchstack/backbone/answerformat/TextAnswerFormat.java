@@ -7,8 +7,7 @@ import android.text.InputType;
  * The TextAnswerFormat class represents the answer format for questions that collect a text
  * response from the user.
  */
-public class TextAnswerFormat extends AnswerFormat
-{
+public class TextAnswerFormat extends AnswerFormat {
     public static final int UNLIMITED_LENGTH = 0;
     private int maximumLength;
     private int minimumLength = 0;
@@ -21,8 +20,7 @@ public class TextAnswerFormat extends AnswerFormat
      * Creates a TextAnswerFormat with no maximum length
      * Also, default constructor needed for serilization/deserialization of object
      */
-    public TextAnswerFormat()
-    {
+    public TextAnswerFormat() {
         this(UNLIMITED_LENGTH);
     }
 
@@ -31,8 +29,7 @@ public class TextAnswerFormat extends AnswerFormat
      *
      * @param maximumLength the maximum text length allowed
      */
-    public TextAnswerFormat(int maximumLength)
-    {
+    public TextAnswerFormat(int maximumLength) {
         this.maximumLength = maximumLength;
     }
 
@@ -41,13 +38,12 @@ public class TextAnswerFormat extends AnswerFormat
      *
      * @return the maximum length, <code>UNLIMITED_LENGTH</code> (0) if no maximum
      */
-    public int getMaximumLength()
-    {
+    public int getMaximumLength() {
         return maximumLength;
     }
 
     /**
-     * Set the maximum length for the answer, 0 if no maximum set
+     * @param maximumLength the maximum length for the answer, 0 if no maximum set
      */
     public void setMaximumLength(int maximumLength)
     {
@@ -65,7 +61,7 @@ public class TextAnswerFormat extends AnswerFormat
     }
 
     /**
-     * Set the minimum length for the answer, 0 if no minumum set
+     * @param minimumLength minimum length for the answer, 0 if no minumum set
      */
     public void setMinumumLength(int minimumLength)
     {
@@ -73,8 +69,7 @@ public class TextAnswerFormat extends AnswerFormat
     }
 
     @Override
-    public QuestionType getQuestionType()
-    {
+    public QuestionType getQuestionType() {
         return Type.Text;
     }
 
@@ -83,8 +78,7 @@ public class TextAnswerFormat extends AnswerFormat
      *
      * @param isMultipleLines boolean indicating if multiple lines are allowed
      */
-    public void setIsMultipleLines(boolean isMultipleLines)
-    {
+    public void setIsMultipleLines(boolean isMultipleLines) {
         this.isMultipleLines = isMultipleLines;
     }
 
@@ -93,8 +87,7 @@ public class TextAnswerFormat extends AnswerFormat
      *
      * @return boolean indicating if multiple lines are allowed
      */
-    public boolean isMultipleLines()
-    {
+    public boolean isMultipleLines() {
         return isMultipleLines;
     }
 
@@ -138,8 +131,7 @@ public class TextAnswerFormat extends AnswerFormat
      * @param text the user's text answer to be validated
      * @return a boolean indicating if the answer is valid
      */
-    public boolean isAnswerValid(String text)
-    {
+    public boolean isAnswerValid(String text) {
         boolean valid = text != null && text.length() >= minimumLength &&
                 (maximumLength == UNLIMITED_LENGTH || text.length() <= maximumLength);
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.researchstack.backbone.StorageAccess;
+import org.researchstack.backbone.onboarding.OnboardingManager;
+import org.researchstack.backbone.onboarding.OnboardingTaskType;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.PinCodeActivity;
@@ -21,6 +24,7 @@ import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.skin.AppPrefs;
 import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.R;
+import org.researchstack.skin.ResearchStack;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.task.SignInTask;
@@ -40,6 +44,7 @@ public class BaseActivity extends PinCodeActivity
         IntentFilter errorFilter = new IntentFilter();
         errorFilter.addAction(DataProvider.ERROR_CONSENT_REQUIRED);
         errorFilter.addAction(DataProvider.ERROR_NOT_AUTHENTICATED);
+        errorFilter.addAction(DataProvider.ERROR_APP_UPGRADE_REQUIRED);
 
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(errorBroadcastReceiver, errorFilter);
@@ -76,25 +81,24 @@ public class BaseActivity extends PinCodeActivity
                 case DataProvider.ERROR_CONSENT_REQUIRED:
                     messageText = getString(R.string.rss_network_error_consent);
                     actionText = getString(R.string.rss_network_error_consent_action);
-                    action = v -> {
-                        Task task = TaskProvider.getInstance().get(TaskProvider.TASK_ID_CONSENT);
-                        Intent consentTask = ViewTaskActivity.newIntent(BaseActivity.this, task);
-                        startActivityForResult(consentTask, SignUpEligibleStepLayout.CONSENT_REQUEST);
-                    };
+                    action = v -> ResearchStack.getInstance().getOnboardingManager()
+                            .launchOnboarding(OnboardingTaskType.RECONSENT, context);
                     break;
 
                 case DataProvider.ERROR_NOT_AUTHENTICATED:
                     messageText = getString(R.string.rss_network_error_sign_in);
                     actionText = getString(R.string.rss_network_error_sign_in_action);
-                    action = v -> {
-                        boolean hasPinCode = StorageAccess.getInstance()
-                                .hasPinCode(BaseActivity.this);
-                        SignInTask task = (SignInTask) TaskProvider.getInstance()
-                                .get(TaskProvider.TASK_ID_SIGN_IN);
-                        task.setHasPasscode(hasPinCode);
-                        startActivityForResult(SignUpTaskActivity.newIntent(BaseActivity.this,
-                                task), OverviewActivity.REQUEST_CODE_SIGN_IN);
-                    };
+                    action = v -> ResearchStack.getInstance().getOnboardingManager()
+                            .launchOnboarding(OnboardingTaskType.LOGIN, context);
+                    break;
+
+                case DataProvider.ERROR_APP_UPGRADE_REQUIRED:
+                    messageText = getString(R.string.rss_network_error_upgrade_app);
+                    actionText = getString(R.string.rss_network_error_upgrade_app_action);
+
+                    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
+                    playStoreIntent.setData(Uri.parse("market://details?id=" + context.getPackageName()));
+                    action = v -> startActivity(playStoreIntent);
                     break;
             }
 
@@ -107,7 +111,7 @@ public class BaseActivity extends PinCodeActivity
             }
             snackbar.getView().setOnClickListener(v -> snackbar.dismiss());
             snackbar.setActionTextColor(ContextCompat.getColor(BaseActivity.this,
-                    R.color.rss_snackbar_action_color));
+                                                               R.color.rss_snackbar_action_color));
             TextView messageView = getSnackBarMessageView(snackbar);
             if (messageView != null)
             {

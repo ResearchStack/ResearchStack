@@ -3,7 +3,7 @@ language: android
 # Required to run retrolambda
 jdk:
     - oraclejdk8
-    
+
 android:
   components:
     # Uncomment the lines below if you want to
@@ -31,12 +31,7 @@ before_install:
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
   - export JAVA_HOME=$JAVA8_HOME
 
-before_script:
-  # Tests crash if a local.properties file isn't present; this file is not kept
-  # under version control. Create an empty local.properties for testing.
-  - touch local.properties
-
-script: ./gradlew test
+script: ./gradlew build
 
 # Uncomment line below to add post-test scripts.
 # after_script:

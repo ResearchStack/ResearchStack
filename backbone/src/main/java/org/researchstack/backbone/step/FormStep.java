@@ -20,17 +20,15 @@ import java.util.List;
  * The result of a form step is an {@link org.researchstack.backbone.result.StepResult} object that
  * includes a child StepResult object for each form item.
  */
-public class FormStep extends QuestionStep
-{
+public class FormStep extends QuestionStep {
     List<QuestionStep> formSteps;
 
-    /* Default constructor needed for serilization/deserialization of object */
-    FormStep() {
+    /* Default constructor needed for serialization/deserialization of object */
+    public FormStep() {
         super();
     }
 
-    public FormStep(String identifier, String title, String text)
-    {
+    public FormStep(String identifier, String title, String text) {
         super(identifier, title, new FormAnswerFormat());
         setText(text);
     }
@@ -45,19 +43,16 @@ public class FormStep extends QuestionStep
      *
      * @return a list of QuestionSteps in the form
      */
-    public List<QuestionStep> getFormSteps()
-    {
+    public List<QuestionStep> getFormSteps() {
         return formSteps;
     }
 
-    public void setFormSteps(List<QuestionStep> formSteps)
-    {
-        this.formSteps = formSteps;
+    public void setFormSteps(QuestionStep... formSteps) {
+        setFormSteps(Arrays.asList(formSteps));
     }
 
-    public void setFormSteps(QuestionStep... formSteps)
-    {
-        setFormSteps(Arrays.asList(formSteps));
+    public void setFormSteps(List<QuestionStep> formSteps) {
+        this.formSteps = formSteps;
     }
 
     @Override

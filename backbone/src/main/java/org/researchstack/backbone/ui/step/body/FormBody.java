@@ -17,12 +17,11 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormBody implements StepBody
-{
+public class FormBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private FormStep               step;
+    private FormStep step;
     private StepResult<StepResult> result;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -30,15 +29,13 @@ public class FormBody implements StepBody
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private List<StepBody> formStepChildren;
 
-    public FormBody(Step step, StepResult result)
-    {
+    public FormBody(Step step, StepResult result) {
         this.step = (FormStep) step;
         this.result = result == null ? new StepResult<>(step) : result;
     }
 
     @Override
-    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
-    {
+    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         // Inflate our container for each compact child StepBody
         LinearLayout body = (LinearLayout) inflater.inflate(R.layout.rsb_step_layout_form_body,
                 parent,
@@ -49,8 +46,7 @@ public class FormBody implements StepBody
 
         // Iterate through all steps and generate each compact view. Store each StepBody child in a
         // list to iterate over (e.g. within getStepResult())
-        for(QuestionStep questionStep : questionSteps)
-        {
+        for (QuestionStep questionStep : questionSteps) {
             StepBody stepBody = createStepBody(questionStep);
             View bodyView = stepBody.getBodyView(VIEW_TYPE_COMPACT, inflater, body);
             body.addView(bodyView);
@@ -62,13 +58,10 @@ public class FormBody implements StepBody
     }
 
     @Override
-    public StepResult getStepResult(boolean skipped)
-    {
-        for(StepBody child : formStepChildren)
-        {
+    public StepResult getStepResult(boolean skipped) {
+        for (StepBody child : formStepChildren) {
             StepResult childResult = child.getStepResult(skipped);
-            if(childResult != null)
-            {
+            if (childResult != null) {
                 result.setResultForIdentifier(childResult.getIdentifier(), childResult);
             }
         }
@@ -77,13 +70,10 @@ public class FormBody implements StepBody
     }
 
     @Override
-    public BodyAnswer getBodyAnswerState()
-    {
-        for(StepBody formStepBody : formStepChildren)
-        {
+    public BodyAnswer getBodyAnswerState() {
+        for (StepBody formStepBody : formStepChildren) {
             BodyAnswer bodyAnswer = formStepBody.getBodyAnswerState();
-            if(! bodyAnswer.isValid())
-            {
+            if (!bodyAnswer.isValid()) {
                 return bodyAnswer;
             }
         }
@@ -92,18 +82,14 @@ public class FormBody implements StepBody
     }
 
     @NonNull
-    private StepBody createStepBody(QuestionStep questionStep)
-    {
+    private StepBody createStepBody(QuestionStep questionStep) {
         StepResult childResult = result.getResultForIdentifier(questionStep.getIdentifier());
 
         Class cls = questionStep.getStepBodyClass();
-        try
-        {
+        try {
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
             return (StepBody) constructor.newInstance(questionStep, childResult);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             LogExt.e(this.getClass(), "Cannot instantiate step body for step " + questionStep.getStepTitle() + ", class name: " + cls.getCanonicalName());
             throw new RuntimeException(e);
         }

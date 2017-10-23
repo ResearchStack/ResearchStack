@@ -28,10 +28,14 @@ import java.util.Set;
  * is to implement a new Task subclass directly. Override the methods {@link #getStepAfterStep} and
  * {@link #getStepBeforeStep}, and call super for all other methods.
  */
-public class OrderedTask extends Task implements Serializable
-{
+public class OrderedTask extends Task implements Serializable {
 
     protected List<Step> steps;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    public OrderedTask() {
+        super();
+    }
 
     /**
      * Returns an initialized ordered task using the specified identifier and array of steps.
@@ -40,8 +44,7 @@ public class OrderedTask extends Task implements Serializable
      * @param steps      An array of {@link Step} objects in the order in which they should be
      *                   presented.
      */
-    public OrderedTask(String identifier, List<Step> steps)
-    {
+    public OrderedTask(String identifier, List<Step> steps) {
         super(identifier);
         this.steps = new ArrayList<>(steps);
     }
@@ -52,8 +55,7 @@ public class OrderedTask extends Task implements Serializable
      * @param identifier The unique identifier for the task
      * @param steps      The {@link Step} objects in the order in which they should be presented.
      */
-    public OrderedTask(String identifier, Step... steps)
-    {
+    public OrderedTask(String identifier, Step... steps) {
         this(identifier, Arrays.asList(steps));
     }
 
@@ -65,17 +67,14 @@ public class OrderedTask extends Task implements Serializable
      * @return the next step in <code>steps</code> after the passed in step, or null if at the end
      */
     @Override
-    public Step getStepAfterStep(Step step, TaskResult result)
-    {
-        if(step == null)
-        {
+    public Step getStepAfterStep(Step step, TaskResult result) {
+        if (step == null) {
             return steps.get(0);
         }
 
         int nextIndex = steps.indexOf(step) + 1;
 
-        if(nextIndex < steps.size())
-        {
+        if (nextIndex < steps.size()) {
             return steps.get(nextIndex);
         }
 
@@ -91,12 +90,10 @@ public class OrderedTask extends Task implements Serializable
      * start
      */
     @Override
-    public Step getStepBeforeStep(Step step, TaskResult result)
-    {
+    public Step getStepBeforeStep(Step step, TaskResult result) {
         int nextIndex = steps.indexOf(step) - 1;
 
-        if(nextIndex >= 0)
-        {
+        if (nextIndex >= 0) {
             return steps.get(nextIndex);
         }
 
@@ -104,12 +101,9 @@ public class OrderedTask extends Task implements Serializable
     }
 
     @Override
-    public Step getStepWithIdentifier(String identifier)
-    {
-        for(Step step : steps)
-        {
-            if(identifier.equals(step.getIdentifier()))
-            {
+    public Step getStepWithIdentifier(String identifier) {
+        for (Step step : steps) {
+            if (identifier.equals(step.getIdentifier())) {
                 return step;
             }
         }
@@ -117,9 +111,8 @@ public class OrderedTask extends Task implements Serializable
     }
 
     @Override
-    public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result)
-    {
-        int current = step == null ? - 1 : steps.indexOf(step);
+    public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result) {
+        int current = step == null ? -1 : steps.indexOf(step);
         return new TaskProgress(current, steps.size());
     }
 
@@ -131,11 +124,9 @@ public class OrderedTask extends Task implements Serializable
      * @return the step title, or a progress string if it doesn't have one
      */
     @Override
-    public String getTitleForStep(Context context, Step step)
-    {
+    public String getTitleForStep(Context context, Step step) {
         String title = super.getTitleForStep(context, step);
-        if(TextUtils.isEmpty(title))
-        {
+        if (TextUtils.isEmpty(title)) {
             int currentIndex = steps.indexOf(step);
             title = context.getString(R.string.rsb_format_step_title,
                     currentIndex + 1,
@@ -150,16 +141,13 @@ public class OrderedTask extends Task implements Serializable
      * @throws org.researchstack.backbone.task.Task.InvalidTaskException if the task is invalid
      */
     @Override
-    public void validateParameters()
-    {
+    public void validateParameters() {
         Set<String> uniqueIds = new HashSet<>();
-        for(Step step : steps)
-        {
+        for (Step step : steps) {
             uniqueIds.add(step.getIdentifier());
         }
 
-        if(uniqueIds.size() != steps.size())
-        {
+        if (uniqueIds.size() != steps.size()) {
             throw new InvalidTaskException("OrderedTask has steps with duplicate ids");
         }
     }
@@ -169,8 +157,36 @@ public class OrderedTask extends Task implements Serializable
      *
      * @return a copy of the ordered list of steps in the task
      */
-    public List<Step> getSteps()
-    {
+    public List<Step> getSteps() {
         return new ArrayList<>(steps);
+    }
+
+    /**
+     * Convenience method to replace a Step at a specific index
+     * This can be used to change the contents of a Step by calling getSteps(),
+     * changing the step, and then calling this method to make sure the changes stick
+     *
+     * @param index index of step to replace
+     * @param step to replace at index
+     */
+    public void replaceStep(int index, Step step) {
+        steps.set(index, step);
+    }
+
+    /**
+     * Convenience method to remove a Step from the Task
+     * @param index index of step to remove
+     */
+    public void removeStep(int index) {
+        steps.remove(index);
+    }
+
+    /**
+     * * Convenience method to add a Step to the Task
+     * @param index to add the step at
+     * @param step the step to add
+     */
+    public void addStep(int index, Step step) {
+        steps.add(index, step);
     }
 }

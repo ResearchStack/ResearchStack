@@ -23,7 +23,7 @@ import org.researchstack.skin.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Deprecated // use ShareTheAppStep which loads ShareTheAppStepLayout instead
 public class ShareFragment extends Fragment
 {
     protected static final String FACEBOOK_SHARE_URL = "https://www.facebook.com/sharer/sharer.php?u=";
@@ -71,21 +71,21 @@ public class ShareFragment extends Fragment
     /**
      * Return a list of Share Type Item objects.
      *
-     * @return
+     * @return list of share items to be displayed in adapter
      */
     protected List<ShareItem> loadItems() {
         List<ShareItem> items = new ArrayList<>();
 
-        ShareItem twitter = new ShareItem("rss_ic_twitter_icon", getString(R.string.rss_share_twitter), Type.TWITTER);
+        ShareItem twitter = new ShareItem(ResUtils.TWITTER_ICON, getString(R.string.rsb_share_twitter), Type.TWITTER);
         items.add(twitter);
 
-        ShareItem facebook = new ShareItem("rss_ic_facebook_icon", getString(R.string.rss_share_facebook), Type.FACEBOOK);
+        ShareItem facebook = new ShareItem(ResUtils.FACEBOOK_ICON, getString(R.string.rsb_share_facebook), Type.FACEBOOK);
         items.add(facebook);
 
-        ShareItem sms = new ShareItem("rss_ic_sms_icon", getString(R.string.rss_share_sms), Type.SMS);
+        ShareItem sms = new ShareItem(ResUtils.SMS_ICON, getString(R.string.rsb_share_sms), Type.SMS);
         items.add(sms);
 
-        ShareItem email = new ShareItem("rss_ic_email_icon", getString(R.string.rss_share_email), Type.EMAIL);
+        ShareItem email = new ShareItem(ResUtils.EMAIL_ICON, getString(R.string.rsb_share_email), Type.EMAIL);
         items.add(email);
 
         return items;
@@ -145,7 +145,7 @@ public class ShareFragment extends Fragment
 
             holder.itemView.setOnClickListener(v -> {
                 Intent intent = null;
-                String message = context.getString(R.string.rss_share_message_format);
+                String message = context.getString(R.string.rsb_share_the_app_message);
                 switch(item.type)
                 {
                     case TWITTER:
@@ -197,7 +197,7 @@ public class ShareFragment extends Fragment
     protected Intent getShareEmailIntent(String message) {
         Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
             MAILTO_SCHEME, "", null));
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.rss_share_email_subject));
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.rsb_share_email_subject));
         intent.putExtra(Intent.EXTRA_TEXT, message);
         return intent;
     }
@@ -235,7 +235,7 @@ public class ShareFragment extends Fragment
      * @return  The share intent.
      */
     protected Intent getShareFacebookIntent(String message) {
-        String urlToShare = getString(R.string.rss_share_app_url);
+        String urlToShare = getString(R.string.rsb_share_app_url);
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType(TEXT_MIME_TYPE);
         intent.putExtra(Intent.EXTRA_TEXT, urlToShare);
@@ -245,7 +245,7 @@ public class ShareFragment extends Fragment
         List<ResolveInfo> matches = getActivity().getPackageManager().queryIntentActivities(intent, 0);
         for (ResolveInfo info : matches)
         {
-            String facebookKey = getString(R.string.rss_share_facebook_key);
+            String facebookKey = getString(R.string.rsb_share_facebook_key);
             if (info.activityInfo.packageName.toLowerCase().contains(facebookKey) ||
                 info.activityInfo.name.toLowerCase().contains(facebookKey))
             {

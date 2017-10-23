@@ -99,4 +99,10 @@ public class AppPrefs {
     {
         return prefs.getBoolean(SettingsFragment.KEY_REMINDERS, false);
     }
+
+    public void clear() {
+        if (prefs != null) {
+            prefs.edit().clear().apply();
+        }
+    }
 }

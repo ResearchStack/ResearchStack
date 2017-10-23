@@ -18,9 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/rss_share_title"
+        android:text="@string/rsb_share_the_app_title"
         android:layout_marginBottom="16dp"
-        style="@style/LearnTitle"/>
+        style="@style/RsbLearnTitle"/>
 
     <View
         android:layout_width="match_parent"
@@ -31,12 +31,12 @@
         android:id="@+id/share_message_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rss_share_message"
+        android:text="@string/rsb_share_the_app_message"
         android:layout_margin="16dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/share_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent"/>
+
 </LinearLayout>

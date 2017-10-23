@@ -1,4 +1,5 @@
 package org.researchstack.skin;
+
 import android.app.Application;
 import android.content.Context;
 
@@ -15,8 +16,7 @@ import java.util.List;
  * UiManager is responsible for providing an a way to define certain aspects of the UI that cannot
  * be provided / genreated by the framework.
  */
-public abstract class UiManager
-{
+public abstract class UiManager {
     private static UiManager instance;
 
     /**
@@ -25,8 +25,7 @@ public abstract class UiManager
      *
      * @param manager an implementation of UiManager
      */
-    public static void init(UiManager manager)
-    {
+    public static void init(UiManager manager) {
         UiManager.instance = manager;
     }
 
@@ -35,10 +34,8 @@ public abstract class UiManager
      *
      * @return A singleton static instance of the this class
      */
-    public static UiManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static UiManager getInstance() {
+        if (instance == null) {
             throw new RuntimeException(
                     "UiManager instance is null. Make sure to init a concrete implementation of ResearchStack in Application.onCreate()");
         }
@@ -102,8 +99,7 @@ public abstract class UiManager
      *
      * @return true if consent is skippable
      */
-    public boolean isConsentSkippable()
-    {
+    public boolean isConsentSkippable() {
         return false;
     }
 
@@ -122,8 +118,7 @@ public abstract class UiManager
      *
      * @return BroadCastReceiver class responsible for consuming alarms for triggering Notifications
      */
-    public Class<?> getTaskNotificationReceiver()
-    {
+    public Class<?> getTaskNotificationReceiver() {
         return TaskNotificationReceiver.class;
     }
 

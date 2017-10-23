@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepLayoutHelper;
 
 import java.util.Date;
@@ -32,7 +34,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private StepSwitcher root;
     protected Toolbar toolbar;
 
-    private Step currentStep;
+    protected StepLayout currentStepLayout;
+    protected Step currentStep;
     protected Task task;
     public Task getTask() {
         return task;
@@ -71,6 +74,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
             taskResult = (TaskResult) savedInstanceState.getSerializable(EXTRA_TASK_RESULT);
             currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
         }
+
+        LogExt.d(ViewTaskActivity.class, "Received task: "+task.getIdentifier());
 
         task.validateParameters();
 
@@ -115,6 +120,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     protected void showStep(Step step)
     {
+        showStep(step, false);
+    }
+
+    protected void showStep(Step step, boolean alwaysReplaceView)
+    {
         int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult)
                 .getCurrent();
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
@@ -124,8 +134,14 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
                         ? StepSwitcher.SHIFT_LEFT
-                        : StepSwitcher.SHIFT_RIGHT);
+                        : StepSwitcher.SHIFT_RIGHT, alwaysReplaceView);
         currentStep = step;
+        currentStepLayout = stepLayout;
+    }
+
+    protected void refreshCurrentStep()
+    {
+        showStep(currentStep, true);
     }
 
     protected StepLayout getLayoutForStep(Step step)
@@ -145,7 +161,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         return stepLayout;
     }
 
-    private void saveAndFinish()
+    protected void saveAndFinish()
     {
         taskResult.setEndDate(new Date());
         Intent resultIntent = new Intent();
@@ -176,15 +192,34 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == android.R.id.home)
-        {
+    public boolean onCreateOptionsMenu(Menu menu){
+        // Create Menu which has an "X" or cancel icon
+        getMenuInflater().inflate(R.menu.rsb_task_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.rsb_clear_menu_item) {
+            showConfirmExitDialog();
+            return true;
+        } else if(item.getItemId() == android.R.id.home) {
             notifyStepOfBackPress();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Clear out all the data that has been saved by this Activity
+     * And push user back to the Overview screen, or whatever screen was below this Activity
+     */
+    protected void discardResultsAndFinish() {
+        taskResult.getResults().clear();
+        taskResult = null;
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 
     @Override
@@ -202,7 +237,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         outState.putSerializable(EXTRA_STEP, currentStep);
     }
 
-    private void notifyStepOfBackPress()
+    protected void notifyStepOfBackPress()
     {
         StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
         currentStepLayout.isBackEventConsumed();
@@ -239,7 +274,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     protected void onSaveStepResult(String id, StepResult result)
     {
-        taskResult.setStepResultForStepIdentifier(id, result);
+        if (result != null) {
+            taskResult.setStepResultForStepIdentifier(id, result);
+        }
     }
 
     protected void onExecuteStepAction(int action)
@@ -260,6 +297,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         {
             // Used when onSaveInstanceState is called of a view. No action is taken.
         }
+        else if(action == StepCallbacks.ACTION_REFRESH)
+        {
+            refreshCurrentStep();
+        }
         else
         {
             throw new IllegalArgumentException("Action with value " + action + " is invalid. " +
@@ -272,26 +313,27 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         if(imm.isActive() && imm.isAcceptingText())
         {
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
+                imm.hideSoftInputFromInputMethod(getCurrentFocus().getWindowToken(), 0);
+            }
         }
     }
 
+    /**
+     * Make sure user is 100% wanting to cancel, since their data will be discarded
+     */
     private void showConfirmExitDialog()
     {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
-                "Are you sure you want to exit?")
-                .setMessage(R.string.lorem_medium)
-                .setPositiveButton("End Task", (dialog, which) -> finish())
-                .setNegativeButton("Cancel", null)
-                .create();
-        alertDialog.show();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.rsb_are_you_sure)
+                .setPositiveButton(R.string.rsb_discard_results, (dialog, i) -> discardResultsAndFinish())
+                .setNegativeButton(R.string.rsb_cancel, null).create().show();
     }
 
     @Override
     public void onCancelStep()
     {
-        setResult(Activity.RESULT_CANCELED);
-        finish();
+        discardResultsAndFinish();
     }
 
     public void setActionBarTitle(String title)

@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -24,10 +25,12 @@ import java.util.List;
 
 /**
  * Created by TheMDP on 1/16/17.
- *
  */
 
 public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements StepLayout, StepCallbacks {
+
+    /** Used to save and load the index of the view pager for when this view is destoryed/created */
+    private static final String VIEW_PAGER_INDEX_KEY = "ViewPagerIndexKey";
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Communicate w/ host
@@ -38,8 +41,8 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
 
     protected StepResult<StepResult> stepResult;
 
-    SwipeDisabledViewPager viewPager;
-    ViewPagerSubstepStepLayoutAdapter viewPagerAdapter;
+    protected SwipeDisabledViewPager viewPager;
+    protected ViewPagerSubstepStepLayoutAdapter viewPagerAdapter;
 
     public ViewPagerSubstepListStepLayout(Context context) {
         super(context);
@@ -55,6 +58,7 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
      * Override this in subclasses to perform something on completion
      */
     protected void onComplete() {
+        removeViewPagerIndex();
         callbacks.onSaveStep(ACTION_NEXT, substepListStep, stepResult);
     }
 
@@ -68,6 +72,15 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
         viewPager.setAdapter(viewPagerAdapter);
         addView(viewPager, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+
+        // If there is a cached view pager index, then send the user to that view
+        loadViewPagerIndex();
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        callbacks.onSaveStep(StepCallbacks.ACTION_NONE, substepListStep, stepResult);
+        return super.onSaveInstanceState();
     }
 
     @SuppressWarnings("unchecked") // StepResult<T> cast
@@ -81,7 +94,7 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
 
         if (result != null && !result.getResults().isEmpty()) {
             for (Object valuObj : result.getResults().values()) {
-                if (!(valuObj instanceof StepResult)) {
+                if (valuObj != null && !(valuObj instanceof StepResult)) {
                     throw new IllegalStateException("StepResult only supports StepResult<StepResult> class");
                 }
             }
@@ -126,20 +139,47 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
                 if (!viewPagerAdapter.moveNext()) {
                     onComplete();
                 } else {
+                    saveViewPagerIndex();
                     callbacks.onSaveStep(ACTION_NONE, substepListStep, stepResult);
                 }
                 break;
             case ACTION_PREV:
                 stepResult.getResults().remove(step.getIdentifier());
                 if (!viewPagerAdapter.movePrevious()) {
+                    removeViewPagerIndex();
                     callbacks.onSaveStep(ACTION_PREV, substepListStep, stepResult);
                 } else {
+                    saveViewPagerIndex();
                     callbacks.onSaveStep(ACTION_NONE, substepListStep, stepResult);
                 }
                 break;
             case ACTION_END:
+                removeViewPagerIndex();
                 onCancelStep();
                 break;
+        }
+    }
+
+    protected Step getMockViewPagerStep() {
+        return new Step(substepListStep.getIdentifier() + "." + VIEW_PAGER_INDEX_KEY);
+    }
+
+    protected void saveViewPagerIndex() {
+        Step mockStep = getMockViewPagerStep();
+        StepResult<Integer> mockStepResult = new StepResult<>(mockStep);
+        mockStepResult.setResult(viewPager.getCurrentItem());
+        stepResult.getResults().put(mockStep.getIdentifier(), mockStepResult);
+    }
+
+    protected void removeViewPagerIndex() {
+        stepResult.getResults().remove(getMockViewPagerStep().getIdentifier());
+    }
+
+    protected void loadViewPagerIndex() {
+        Step mockStep = getMockViewPagerStep();
+        StepResult mockStepResult = stepResult.getResults().get(mockStep.getIdentifier());
+        if (mockStepResult != null && mockStepResult.getResult() instanceof Integer) {
+            viewPager.setCurrentItem((Integer)mockStepResult.getResult());
         }
     }
 
@@ -153,7 +193,33 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
         this.callbacks = callbacks;
     }
 
+    /**
+     * Can only be called after the ViewPager is instantiated and the StepLayouts have been created
+     * If you need to access them when they are created, use onStepLayoutCreated method below
+     *
+     * @param index of StepLayout
+     * @return the StepLayout at index in the ViewPager
+     */
+    protected StepLayout getStepLayout(int index) {
+        if (viewPagerAdapter == null ||
+            viewPagerAdapter.stepLayouts == null ||
+            viewPagerAdapter.stepLayouts.isEmpty() ||
+            viewPagerAdapter.stepLayouts.size() <= index)
+        {
+            return null;
+        }
+        return viewPagerAdapter.stepLayouts.get(index);
+    }
+
+    protected void onStepLayoutCreated(StepLayout stepLayout, int index) {
+        // can be implemented by sub-classes
+        loadViewPagerIndex();
+    }
+
     protected class ViewPagerSubstepStepLayoutAdapter extends PagerAdapter {
+
+        /** onSavedInstanceState wont be called unless view pager views have a valid id */
+        private static final int BASE_VIEW_PAGER_ID = 10;
 
         List<StepLayout> stepLayouts;
 
@@ -178,11 +244,15 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
             // Build ViewPager views based off of Step's StepLayouts, similar to what ViewTaskActivity does
             StepLayout stepLayout = StepLayoutHelper.createLayoutFromStep(step, getContext());
             StepResult subStepResult = StepResultHelper.findStepResult(stepResult, step.getIdentifier());
-            stepLayout.initialize(step, subStepResult);
             stepLayout.setCallbacks(ViewPagerSubstepListStepLayout.this);
+            stepLayout.initialize(step, subStepResult);
             stepLayouts.add(stepLayout);
+            stepLayout.getLayout().setId(BASE_VIEW_PAGER_ID + position);
 
             collection.addView(stepLayout.getLayout(), 0);
+
+            onStepLayoutCreated(stepLayout, position);
+
             return stepLayout.getLayout();
         }
 
@@ -226,6 +296,11 @@ public class ViewPagerSubstepListStepLayout extends AlertFrameLayout implements 
         public boolean onTouchEvent(MotionEvent event) {
             // Never allow swiping to switch between pages
             return false;
+        }
+
+        @Override
+        public Parcelable onSaveInstanceState() {
+            return super.onSaveInstanceState();
         }
     }
 }

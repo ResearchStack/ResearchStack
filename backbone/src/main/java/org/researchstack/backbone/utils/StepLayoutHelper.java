@@ -14,6 +14,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by TheMDP on 1/16/17.
@@ -49,7 +50,7 @@ public class StepLayoutHelper {
             final WebCallback callback)
     {
         final WeakReference<View> weakView = new WeakReference<>(viewPerforming);
-        observable.subscribe(dataResponse -> {
+        observable.observeOn(AndroidSchedulers.mainThread()).subscribe(dataResponse -> {
             // Controls canceling an observable perform through weak reference to the view
             if (weakView == null || weakView.get() == null || weakView.get().getContext() == null) {
                 return; // no callback
@@ -95,6 +96,36 @@ public class StepLayoutHelper {
             public void onFail(Throwable throwable) {
                 weakView.get().hideLoadingDialog();
                 weakView.get().showOkAlertDialog(throwable.getMessage());
+            }
+        });
+    }
+
+    /**
+     * This is the same as safePerform except all loading dialogs are shown automatically
+     *
+     * @param observable that is performing a web call, or asynchronous operation
+     * @param viewPerforming the view that is making the observable call
+     * @param callback will be invoked if the observable is invoked, and the view is in a valid state
+     */
+    @MainThread
+    public static void safePerformWithOnlyLoadingAlerts(
+            Observable<DataResponse> observable,
+            AlertFrameLayout viewPerforming,
+            final WebCallback callback)
+    {
+        viewPerforming.showLoadingDialog();
+        final WeakReference<AlertFrameLayout> weakView = new WeakReference<>(viewPerforming);
+        safePerform(observable, viewPerforming, new WebCallback() {
+            @Override
+            public void onSuccess(DataResponse response) {
+                weakView.get().hideLoadingDialog();
+                callback.onSuccess(response);
+            }
+
+            @Override
+            public void onFail(Throwable throwable) {
+                weakView.get().hideLoadingDialog();
+                callback.onFail(throwable);
             }
         });
     }

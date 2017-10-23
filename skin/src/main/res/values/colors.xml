@@ -5,4 +5,10 @@
     <color name="rss_teal">#009891</color>
     <color name="rss_black_60">#99000000</color>
     <color name="rss_snackbar_action_color">#1d92f4</color>
+
+    <color name="rss_activity_yellow">#FDB447</color>
+    <color name="rss_activity_blue">#22AEF4</color>
+    <color name="rss_activity_red">#EA3A57</color>
+    <color name="rss_activity_purple">#9240D3</color>
+    <color name="rss_activity_default">@color/rsb_light_gray</color>
 </resources>

@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.step.OnboardingCompletionStep;
 
 import java.lang.reflect.Type;
@@ -39,80 +40,117 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
         String customTypeString = null;
         if (surveyItemType == null) {
             surveyItemType = SurveyItemType.CUSTOM;
-            customTypeString = typeJson.getAsString();
+            // Some JSON can be malformed and there is no type, only identifier
+            // In that case let's try and still parse it by setting the type as the identifier;
+            if (typeJson != null) {
+                customTypeString = typeJson.getAsString();
+            } else { // use "identifier" string
+                customTypeString = jsonObject.get(SurveyItem.IDENTIFIER_GSON).getAsString();
+            }
         }
+
+        SurveyItem item = null;
 
         switch (surveyItemType) {
             case INSTRUCTION:
             case INSTRUCTION_COMPLETION:
-                return context.deserialize(json, InstructionSurveyItem.class);
+                item = context.deserialize(json, InstructionSurveyItem.class);
+                break;
             case SUBTASK:
-                return context.deserialize(json, SubtaskQuestionSurveyItem.class);
+                item = context.deserialize(json, SubtaskQuestionSurveyItem.class);
+                break;
             case QUESTION_COMPOUND:
-                return context.deserialize(json, CompoundQuestionSurveyItem.class);
+                item = context.deserialize(json, CompoundQuestionSurveyItem.class);
+                break;
             case QUESTION_TOGGLE:
-                return context.deserialize(json, ToggleQuestionSurveyItem.class);
+                item = context.deserialize(json, ToggleQuestionSurveyItem.class);
+                break;
             case QUESTION_BOOLEAN:
-                return context.deserialize(json, BooleanQuestionSurveyItem.class);
+                item = context.deserialize(json, BooleanQuestionSurveyItem.class);
+                break;
             case QUESTION_DECIMAL:
-                return context.deserialize(json, FloatRangeSurveyItem.class);
+                item = context.deserialize(json, FloatRangeSurveyItem.class);
+                break;
             case QUESTION_INTEGER:
-                return context.deserialize(json, IntegerRangeSurveyItem.class);
+                item = context.deserialize(json, IntegerRangeSurveyItem.class);
+                break;
             case QUESTION_DURATION:
                 break;
             case QUESTION_SCALE:
-                return context.deserialize(json, ScaleQuestionSurveyItem.class);
+                item = context.deserialize(json, ScaleQuestionSurveyItem.class);
+                break;
             case QUESTION_TEXT:
-                return context.deserialize(json, CompoundQuestionSurveyItem.class);
+                item = context.deserialize(json, CompoundQuestionSurveyItem.class);
+                break;
             case QUESTION_DATE:
             case QUESTION_DATE_TIME:
             case QUESTION_TIME:
-                return context.deserialize(json, DateRangeSurveyItem.class);
+                item = context.deserialize(json, DateRangeSurveyItem.class);
+                break;
             case QUESTION_MULTIPLE_CHOICE:
             case QUESTION_SINGLE_CHOICE:
+                item = context.deserialize(json, ChoiceQuestionSurveyItem.class);
+                break;
             case QUESTION_TIMING_RANGE:
-                return context.deserialize(json, ChoiceQuestionSurveyItem.class);
+                item = context.deserialize(json, TimingRangeQuestionSurveyItem.class);
+                break;
             case CONSENT_SHARING_OPTIONS:
-                return context.deserialize(json, ConsentSharingOptionsSurveyItem.class);
+                item = context.deserialize(json, ConsentSharingOptionsSurveyItem.class);
+                break;
             case CONSENT_REVIEW:
-                return context.deserialize(json, ConsentReviewSurveyItem.class);
+                item = context.deserialize(json, ConsentReviewSurveyItem.class);
+                break;
             case CONSENT_VISUAL:
+                break;
+            case RE_CONSENT:
+                item = context.deserialize(json, InstructionSurveyItem.class);
                 break;
             case ACCOUNT_REGISTRATION:
             case ACCOUNT_LOGIN:
             case ACCOUNT_PROFILE:
-                return context.deserialize(json, ProfileSurveyItem.class);
+                item = context.deserialize(json, ProfileSurveyItem.class);
+                break;
             case ACCOUNT_COMPLETION:
             case ACCOUNT_EMAIL_VERIFICATION:
-                return context.deserialize(json, InstructionSurveyItem.class);
+                item = context.deserialize(json, InstructionSurveyItem.class);
+                break;
             case ACCOUNT_DATA_GROUPS:
             case ACCOUNT_EXTERNAL_ID:
             case ACCOUNT_PERMISSIONS:
-                break;
             case PASSCODE:
                 break;
+            case SHARE_THE_APP:
+                item = context.deserialize(json, InstructionSurveyItem.class);
+                break;
+            case ACTIVE_STEP:
+                item = context.deserialize(json, ActiveStepSurveyItem.class);
+                break;
             case CUSTOM:
-                CustomSurveyItem item = context.deserialize(json, getCustomClass(customTypeString));
+                item = context.deserialize(json, getCustomClass(customTypeString, json));
                 item.type = surveyItemType; // need to set CUSTOM type for surveyItem, since it is a special case
-                item.customSurveyItemIdentifer = customTypeString;
-                return item;
+                item.setCustomTypeValue(customTypeString);
+                break;
         }
 
-        SurveyItem surveyItem = context.deserialize(json, BaseSurveyItem.class);
-        surveyItem.type = surveyItemType;
-        return surveyItem;
+        if (item == null) {
+            item = context.deserialize(json, BaseSurveyItem.class);
+            item.type = surveyItemType;
+        }
+
+        item.setRawJson(json.toString());
+
+        return item;
     }
 
     /**
      * This can be overridden by subclasses to provide custom survey item deserialization
      * the default deserialization is always an instruction survey item
      * @param customType used to map to different types of survey items
+     * @param json if customType is not enough, you can use the JsonElement to determine how to parse
+     *             it's contents by peeking at it's variables
      * @return type of survey item to create from the custom class
      */
-    public Class<? extends CustomSurveyItem> getCustomClass(String customType) {
-        if (customType.endsWith(".instruction")) {
-            return CustomInstructionSurveyItem.class;
-        }
-        return CustomSurveyItem.class;
+    public Class<? extends SurveyItem> getCustomClass(String customType, JsonElement json) {
+        return BaseSurveyItem.class;
     }
 }

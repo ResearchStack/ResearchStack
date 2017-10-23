@@ -23,18 +23,14 @@ import java.util.Date;
  * hold the type of result data the step can generate, unless it makes sense to use an existing
  * subclass.
  */
-public class Result implements Serializable
-{
+public class Result implements Serializable {
     String identifier;
 
     private Date startDate;
 
     private Date endDate;
 
-    // unimplemented but exists in RK, implement or delete if not needed
-    private boolean saveable;
-
-    /* Default identifier for serilization/deserialization */
+    /* Default identifier for serialization/deserialization */
     Result() {
         super();
     }
@@ -48,8 +44,7 @@ public class Result implements Serializable
      *
      * @param identifier The unique identifier of the result.
      */
-    public Result(String identifier)
-    {
+    public Result(String identifier) {
         this.identifier = identifier;
     }
 
@@ -66,8 +61,7 @@ public class Result implements Serializable
      *
      * @return the unique identifier
      */
-    public String getIdentifier()
-    {
+    public String getIdentifier() {
         return identifier;
     }
 
@@ -76,8 +70,7 @@ public class Result implements Serializable
      *
      * @return the start date of this result
      */
-    public Date getStartDate()
-    {
+    public Date getStartDate() {
         return startDate;
     }
 
@@ -86,8 +79,7 @@ public class Result implements Serializable
      *
      * @param startDate the time the result started
      */
-    public void setStartDate(Date startDate)
-    {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
@@ -96,8 +88,7 @@ public class Result implements Serializable
      *
      * @return the end date of this result
      */
-    public Date getEndDate()
-    {
+    public Date getEndDate() {
         return endDate;
     }
 
@@ -106,13 +97,12 @@ public class Result implements Serializable
      *
      * @param endDate the end date of this result
      */
-    public void setEndDate(Date endDate)
-    {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
     /**
-     * @param newIdentifier
+     * @param newIdentifier new identifier for result
      * @return a deep copy of this object, and its polymorphism, with a new identifier set
      */
     public Result deepCopy(String newIdentifier) {

@@ -1,5 +1,7 @@
 package org.researchstack.backbone.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -9,12 +11,15 @@ import java.io.Serializable;
  *
  * @param <T> the type of value for the choice, usually Integer or String, but must implement Serializable
  */
-public class Choice <T> implements Serializable
-{
+public class Choice<T> implements Serializable {
+
+    @SerializedName(value="text", alternate = {"prompt"})
     private String text;
 
+    @SerializedName("value")
     private T value;
 
+    @SerializedName("detailText")
     private String detailText;
 
     /* Default constructor needed for serilization/deserialization of object */
@@ -28,8 +33,7 @@ public class Choice <T> implements Serializable
      * @param text  user-facing text representing the choice
      * @param value value of any type for this choice, type should match other choices in the step
      */
-    public Choice(String text, T value)
-    {
+    public Choice(String text, T value) {
         this(text, value, null);
     }
 
@@ -41,8 +45,7 @@ public class Choice <T> implements Serializable
      *                   step
      * @param detailText extra detail text for the choice
      */
-    public Choice(String text, T value, String detailText)
-    {
+    public Choice(String text, T value, String detailText) {
         this.text = text;
         this.value = value;
         this.detailText = detailText;
@@ -53,8 +56,7 @@ public class Choice <T> implements Serializable
      *
      * @return the text
      */
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
@@ -63,8 +65,7 @@ public class Choice <T> implements Serializable
      *
      * @param text the text
      */
-    public void setText(String text)
-    {
+    public void setText(String text) {
         this.text = text;
     }
 
@@ -73,8 +74,7 @@ public class Choice <T> implements Serializable
      *
      * @return the value
      */
-    public T getValue()
-    {
+    public T getValue() {
         return value;
     }
 
@@ -83,8 +83,7 @@ public class Choice <T> implements Serializable
      *
      * @param value the value of this choice
      */
-    public void setValue(T value)
-    {
+    public void setValue(T value) {
         this.value = value;
     }
 
@@ -93,8 +92,7 @@ public class Choice <T> implements Serializable
      *
      * @return the detail text, or null if none
      */
-    public String getDetailText()
-    {
+    public String getDetailText() {
         return detailText;
     }
 
@@ -103,8 +101,7 @@ public class Choice <T> implements Serializable
      *
      * @param detailText the detail text
      */
-    public void setDetailText(String detailText)
-    {
+    public void setDetailText(String detailText) {
         this.detailText = detailText;
     }
 }

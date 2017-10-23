@@ -44,6 +44,7 @@ public class AlertLinearLayout extends LinearLayout {
 
     /**
      * Helper method for ProfileSteps that need to make calls to the web
+     * @param title title of the alert dialog
      */
     public void showLoadingDialog(String title) {
         hideLoadingDialog();  // just in case these are showing

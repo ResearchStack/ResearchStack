@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui.step.body;
 
 import android.content.res.Resources;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,11 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.backbone.utils.ViewUtils;
 
-public class TextQuestionBody implements StepBody
-{
+public class TextQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private QuestionStep       step;
+    private QuestionStep step;
     private StepResult<String> result;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -32,43 +32,34 @@ public class TextQuestionBody implements StepBody
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private EditText editText;
 
-    public TextQuestionBody(Step step, StepResult result)
-    {
+    public TextQuestionBody(Step step, StepResult result) {
         this.step = (QuestionStep) step;
         this.result = result == null ? new StepResult<>(step) : result;
     }
 
     @Override
-    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent)
-    {
+    public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         View body = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
 
         editText = (EditText) body.findViewById(R.id.value);
-        if(step.getPlaceholder() != null)
-        {
+        if (step.getPlaceholder() != null) {
             editText.setHint(step.getPlaceholder());
-        }
-        else
-        {
+        } else {
             editText.setHint(R.string.rsb_hint_step_body_text);
         }
 
         TextView title = (TextView) body.findViewById(R.id.label);
 
         // TODO: naming is confusing... compact means less, but this adds a view -MDP
-        if(viewType == VIEW_TYPE_COMPACT)
-        {
+        if (viewType == VIEW_TYPE_COMPACT) {
             title.setText(step.getTitle());
-        }
-        else
-        {
+        } else {
             title.setVisibility(View.GONE);
         }
 
         // Restore previous result
         String stringResult = result.getResult();
-        if(! TextUtils.isEmpty(stringResult))
-        {
+        if (!TextUtils.isEmpty(stringResult)) {
             editText.setText(stringResult);
         }
 
@@ -80,10 +71,16 @@ public class TextQuestionBody implements StepBody
         // Format EditText from TextAnswerFormat
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
 
-        editText.setSingleLine(! format.isMultipleLines());
+        if(format.isMultipleLines()) {
+            editText.setSingleLine(false);
+            editText.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            editText.setHorizontallyScrolling(false);
+            editText.setLines(5);
+        } else {
+            editText.setSingleLine(false);
+        }
 
-        if(format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH)
-        {
+        if (format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH) {
             InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(format.getMaximumLength());
             InputFilter[] filters = ViewUtils.addFilter(editText.getFilters(), maxLengthFilter);
             editText.setFilters(filters);
@@ -103,10 +100,8 @@ public class TextQuestionBody implements StepBody
 
 
     @Override
-    public StepResult getStepResult(boolean skipped)
-    {
-        if(skipped)
-        {
+    public StepResult getStepResult(boolean skipped) {
+        if (skipped) {
             result.setResult(null);
         }
 
@@ -114,11 +109,9 @@ public class TextQuestionBody implements StepBody
     }
 
     @Override
-    public BodyAnswer getBodyAnswerState()
-    {
+    public BodyAnswer getBodyAnswerState() {
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
-        if (!format.isAnswerValid(editText.getText().toString()))
-        {
+        if (!format.isAnswerValid(editText.getText().toString())) {
             return BodyAnswer.INVALID;
         }
 

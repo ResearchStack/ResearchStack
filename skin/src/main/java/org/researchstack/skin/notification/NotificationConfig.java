@@ -1,4 +1,5 @@
 package org.researchstack.skin.notification;
+
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.ColorInt;
@@ -7,15 +8,13 @@ import android.support.annotation.DrawableRes;
 /**
  * Configuration class for framework notifciations
  */
-public abstract class NotificationConfig
-{
+public abstract class NotificationConfig {
     private static NotificationConfig instance;
 
     /**
      * Default Constructor
      */
-    NotificationConfig()
-    {
+    NotificationConfig() {
     }
 
     /**
@@ -24,8 +23,7 @@ public abstract class NotificationConfig
      *
      * @param manager an implementation of NotificationConfig
      */
-    public static void init(NotificationConfig manager)
-    {
+    public static void init(NotificationConfig manager) {
         NotificationConfig.instance = manager;
     }
 
@@ -34,10 +32,8 @@ public abstract class NotificationConfig
      *
      * @return the singleton instance of this class
      */
-    public static NotificationConfig getInstance()
-    {
-        if(instance == null)
-        {
+    public static NotificationConfig getInstance() {
+        if (instance == null) {
             throw new RuntimeException(
                     "NotificationConfig instance is null. Make sure to init a concrete " +
                             "implementation of ResearchStack in Application.onCreate()");

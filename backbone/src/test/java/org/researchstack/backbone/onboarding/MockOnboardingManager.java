@@ -2,9 +2,6 @@ package org.researchstack.backbone.onboarding;
 
 import android.content.Context;
 
-import org.researchstack.backbone.onboarding.OnboardingManager;
-import org.researchstack.backbone.onboarding.ResourceNameToStringConverter;
-
 /**
  * Created by TheMDP on 1/12/17.
  */
@@ -15,12 +12,8 @@ public class MockOnboardingManager extends OnboardingManager {
     private boolean isRegistered = false;
     private boolean hasPasscode = false;
 
-    MockOnboardingManager(Context context, String onboardingResourceName, ResourceNameToStringConverter jsonProvider) {
-        super(context, onboardingResourceName, jsonProvider);
-    }
-
-    MockOnboardingManager(String onboardingResourceName, ResourceNameToStringConverter jsonProvider) {
-        super(null, onboardingResourceName, jsonProvider);
+    MockOnboardingManager(Context context) {
+        super(context);
     }
 
     void setIsLoginVerified(boolean isLoginVerified) {

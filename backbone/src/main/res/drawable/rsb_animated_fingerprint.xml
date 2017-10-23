@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AS throws warning here, but support library supports it -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/rsb_fingerprint">
+    <target
+        android:name="fingerprint"
+        android:animation="@anim/rsb_fingerprint_animation"/>
+</animated-vector>

@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -44,6 +45,7 @@ public class AlertFrameLayout extends FrameLayout {
 
     /**
      * Helper method for ProfileSteps that need to make calls to the web
+     * @param title title of the alert dialog
      */
     public void showLoadingDialog(String title) {
         if (getContext() == null) {
@@ -68,6 +70,15 @@ public class AlertFrameLayout extends FrameLayout {
      * @param message message that will be show with alert
      */
     public void showOkAlertDialog(String message) {
+        showOkAlertDialog(message, null);
+    }
+
+    /**
+     * Helper method for showing an error alert
+     * @param message message that will be show with alert
+     * @param listener on click listener
+     */
+    public void showOkAlertDialog(String message, DialogInterface.OnClickListener listener) {
         if (getContext() == null) {
             return;
         }
@@ -75,7 +86,15 @@ public class AlertFrameLayout extends FrameLayout {
         hideAlertDialog();
         alertDialog = new AlertDialog.Builder(getContext())
                 .setMessage(message)
-                .setPositiveButton(getContext().getString(R.string.rsb_ok), null)
+                .setPositiveButton(getContext().getString(R.string.rsb_ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        if (listener != null) {
+                            listener.onClick(dialogInterface, i);
+                        }
+                    }
+                })
                 .create();
         alertDialog.show();
     }

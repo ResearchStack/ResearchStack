@@ -2,11 +2,8 @@ package org.researchstack.backbone.answerformat;
 
 import android.content.Context;
 
-import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.Choice;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.researchstack.backbone.model.UserHealth;
 
 /**
  * Created by TheMDP on 1/4/17.
@@ -29,14 +26,14 @@ public class GenderAnswerFormat extends ChoiceAnswerFormat {
      * @return Choice array for gender
      */
     static Choice[] createChoices(Context context) {
-        String female   = context.getString(R.string.rsb_gender_female);
-        String male     = context.getString(R.string.rsb_gender_male);
-        String other    = context.getString(R.string.rsb_gender_other);
+        String female   = UserHealth.Gender.FEMALE.localizedTitle(context);
+        String male     = UserHealth.Gender.MALE.localizedTitle(context);
+        String other    = UserHealth.Gender.OTHER.localizedTitle(context);
 
         Choice[] genderChoices = new Choice[3];
-        genderChoices[0] = new Choice(female, female);
-        genderChoices[1] = new Choice(male, male);
-        genderChoices[2] = new Choice(other, other);
+        genderChoices[0] = new Choice<String>(female, female);
+        genderChoices[1] = new Choice<String>(male, male);
+        genderChoices[2] = new Choice<String>(other, other);
 
         return genderChoices;
     }

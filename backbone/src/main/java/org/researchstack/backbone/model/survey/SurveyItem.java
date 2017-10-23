@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by TheMDP on 12/31/16.
@@ -14,12 +13,13 @@ import java.util.Map;
  * Otherwise you will see a runtime exception
  */
 
-public class SurveyItem<T> implements Serializable {
+public class SurveyItem<T extends Serializable> implements Serializable {
 
-    @SerializedName("identifier")
+    public static final String IDENTIFIER_GSON = "identifier";
+    @SerializedName(IDENTIFIER_GSON)
     public String identifier;
 
-    static final String TYPE_GSON = "type";
+    public static final String TYPE_GSON = "type";
     @SerializedName(TYPE_GSON)
     public SurveyItemType type;
 
@@ -34,6 +34,17 @@ public class SurveyItem<T> implements Serializable {
 
     @SerializedName("items")
     public List<T> items;
+
+    /**
+     * This holds the original Json Object that was used to create this object
+     * Only is set if this object was created with the SurveyItemAdapter
+     */
+    private transient String rawJson;
+
+    /**
+     * This is simply used to keep track of state for the SurveyItemFactory, and will not be serialized
+     */
+    private String customSurveyItemType;
 
     /* Default constructor needed for serilization/deserialization of object */
     SurveyItem() {
@@ -50,7 +61,17 @@ public class SurveyItem<T> implements Serializable {
     }
 
     public String getTypeIdentifier() {
+        if (isCustomStep()) {
+            return customSurveyItemType;
+        }
         return type.getValue();
+    }
+
+    public String getIdentifier() {
+        if (identifier == null) {
+            return getTypeIdentifier();
+        }
+        return identifier;
     }
 
     @Override
@@ -77,5 +98,28 @@ public class SurveyItem<T> implements Serializable {
         }
 
         return identifier.equals(rhs.identifier);
+    }
+
+    protected void setCustomTypeValue(String value) {
+        customSurveyItemType = value;
+    }
+
+    public String getCustomTypeValue() {
+        return customSurveyItemType;
+    }
+
+    public void setRawJson(String json) {
+        this.rawJson = json;
+    }
+
+    public String getRawJson() {
+        return rawJson;
+    }
+
+    /**
+     * @return true if the survey item type is custom, false otherwise
+     */
+    public boolean isCustomStep() {
+        return customSurveyItemType != null;
     }
 }

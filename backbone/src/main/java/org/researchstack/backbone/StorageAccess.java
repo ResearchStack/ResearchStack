@@ -2,6 +2,7 @@ package org.researchstack.backbone;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.MainThread;
@@ -33,13 +34,15 @@ import java.util.List;
  * or it's fuctionality copied to your application's own base Activity. Make sure to delay any data
  * access until {@link PinCodeActivity#onDataReady()} has been called.
  */
-public class StorageAccess
-{
+public class StorageAccess {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Assert Constants
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     private static final boolean CHECK_THREADS = false;
+
+    private static final String SHARED_PREFS_KEY = "StorageAccessSharedPrefsKey";
+    private static final String USES_FINGERPRINT_KEY = "UsesFingerprintKey";
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Static Fields
@@ -51,17 +54,25 @@ public class StorageAccess
     // Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    private FileAccess         fileAccess;
-    private PinCodeConfig      pinCodeConfig;
-    private AppDatabase        appDatabase;
+    private FileAccess fileAccess;
+    private PinCodeConfig pinCodeConfig;
+    private AppDatabase appDatabase;
     private EncryptionProvider encryptionProvider;
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
     private List<StorageAccessListener> listeners = Collections.synchronizedList(new ArrayList<>());
 
-    private StorageAccess()
-    {
+    private StorageAccess() {
+    }
+
+    /**
+     * Returns the singleton instance of this class.
+     *
+     * @return the singleton instance of this class
+     */
+    public static StorageAccess getInstance() {
+        return instance;
     }
 
     /**
@@ -73,22 +84,11 @@ public class StorageAccess
      * @param fileAccess         an implementation of FileAccess
      * @param appDatabase        an implementation of AppDatabase
      */
-    public void init(PinCodeConfig pinCodeConfig, EncryptionProvider encryptionProvider, FileAccess fileAccess, AppDatabase appDatabase)
-    {
+    public void init(PinCodeConfig pinCodeConfig, EncryptionProvider encryptionProvider, FileAccess fileAccess, AppDatabase appDatabase) {
         this.pinCodeConfig = pinCodeConfig;
         this.appDatabase = appDatabase;
         this.fileAccess = fileAccess;
         this.encryptionProvider = encryptionProvider;
-    }
-
-    /**
-     * Returns the singleton instance of this class.
-     *
-     * @return the singleton instance of this class
-     */
-    public static StorageAccess getInstance()
-    {
-        return instance;
     }
 
     /**
@@ -97,8 +97,7 @@ public class StorageAccess
      *
      * @return the FileAccess singleton
      */
-    public FileAccess getFileAccess()
-    {
+    public FileAccess getFileAccess() {
         return fileAccess;
     }
 
@@ -108,8 +107,7 @@ public class StorageAccess
      *
      * @return the AppDatabase singleton
      */
-    public AppDatabase getAppDatabase()
-    {
+    public AppDatabase getAppDatabase() {
         return appDatabase;
     }
 
@@ -118,8 +116,7 @@ public class StorageAccess
      *
      * @return the pin code configuration
      */
-    public PinCodeConfig getPinCodeConfig()
-    {
+    public PinCodeConfig getPinCodeConfig() {
         return pinCodeConfig;
     }
 
@@ -129,11 +126,9 @@ public class StorageAccess
      * @param context android context
      * @return a boolean indicating if the user has created a pin code
      */
-    public boolean hasPinCode(Context context)
-    {
+    public boolean hasPinCode(Context context) {
         return encryptionProvider.hasPinCode(context);
     }
-
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Storage Access request and notification
@@ -154,17 +149,13 @@ public class StorageAccess
      *                leaks. Promise ;)
      */
     @MainThread
-    public void requestStorageAccess(Context context)
-    {
+    public void requestStorageAccess(Context context) {
         UiThreadContext.assertUiThread();
 
-        if(encryptionProvider.needsAuth(context, pinCodeConfig))
-        {
+        if (encryptionProvider.needsAuth(context, pinCodeConfig)) {
             // just need to re-auth
             notifySoftFail();
-        }
-        else
-        {
+        } else {
             notifyReady();
         }
     }
@@ -176,14 +167,11 @@ public class StorageAccess
      * @param storageAccessListener the listener to register
      */
     @MainThread
-    public final void register(StorageAccessListener storageAccessListener)
-    {
-        if(CHECK_THREADS)
-        {
+    public final void register(StorageAccessListener storageAccessListener) {
+        if (CHECK_THREADS) {
             UiThreadContext.assertUiThread();
         }
-        if(listeners.contains(storageAccessListener))
-        {
+        if (listeners.contains(storageAccessListener)) {
             throw new StorageAccessException("Listener already registered");
         }
 
@@ -197,68 +185,54 @@ public class StorageAccess
      * @param storageAccessListener the registered listener
      */
     @MainThread
-    public final void unregister(StorageAccessListener storageAccessListener)
-    {
-        if(CHECK_THREADS)
-        {
+    public final void unregister(StorageAccessListener storageAccessListener) {
+        if (CHECK_THREADS) {
             UiThreadContext.assertUiThread();
         }
         listeners.remove(storageAccessListener);
     }
 
-    private void notifyReady()
-    {
-        handler.post(this :: notifyListenersReady);
+    private void notifyReady() {
+        handler.post(this::notifyListenersReady);
     }
 
     @MainThread
-    private void notifyListenersReady()
-    {
-        if(CHECK_THREADS)
-        {
+    private void notifyListenersReady() {
+        if (CHECK_THREADS) {
             UiThreadContext.assertUiThread();
         }
 
-        for(StorageAccessListener listener : listeners)
-        {
+        for (StorageAccessListener listener : listeners) {
             listener.onDataReady();
         }
     }
 
-    private void notifyHardFail()
-    {
-        handler.post(this :: notifyListenersHardFail);
+    private void notifyHardFail() {
+        handler.post(this::notifyListenersHardFail);
     }
 
     @MainThread
-    private void notifyListenersHardFail()
-    {
-        if(CHECK_THREADS)
-        {
+    private void notifyListenersHardFail() {
+        if (CHECK_THREADS) {
             UiThreadContext.assertUiThread();
         }
 
-        for(StorageAccessListener listener : listeners)
-        {
+        for (StorageAccessListener listener : listeners) {
             listener.onDataFailed();
         }
     }
 
-    private void notifySoftFail()
-    {
-        handler.post(this :: notifyListenersSoftFail);
+    private void notifySoftFail() {
+        handler.post(this::notifyListenersSoftFail);
     }
 
     @MainThread
-    private void notifyListenersSoftFail()
-    {
-        if(CHECK_THREADS)
-        {
+    private void notifyListenersSoftFail() {
+        if (CHECK_THREADS) {
             UiThreadContext.assertUiThread();
         }
 
-        for(StorageAccessListener listener : listeners)
-        {
+        for (StorageAccessListener listener : listeners) {
             listener.onDataAuth();
         }
     }
@@ -275,8 +249,7 @@ public class StorageAccess
      * ensure that it updates frequently while the user is still inside of the app so as not to
      * trigger a reset, but will reset if the user has been outside of the app for too long.
      */
-    public void logAccessTime()
-    {
+    public void logAccessTime() {
         encryptionProvider.logAccessTime();
     }
 
@@ -288,8 +261,7 @@ public class StorageAccess
      * @param pin     string of the pin to attempt authentication
      * @throws StorageAccessException if the authentication failed
      */
-    public void authenticate(Context context, String pin)
-    {
+    public void authenticate(Context context, String pin) {
         encryptionProvider.startWithPassphrase(context, pin);
         injectEncrypter();
     }
@@ -302,10 +274,8 @@ public class StorageAccess
      * @param pin     the user's pin, this should already be validated (enter + confirm)
      * @throws StorageAccessException if there is already a pin code
      */
-    public void createPinCode(Context context, String pin)
-    {
-        if(hasPinCode(context))
-        {
+    public void createPinCode(Context context, String pin) {
+        if (hasPinCode(context)) {
             throw new StorageAccessException("Attempted to create a pin when one already exists");
         }
 
@@ -322,22 +292,63 @@ public class StorageAccess
      * @param newPin  the new pin, which should already be validated (enter + confirm)
      * @throws StorageAccessException if the pin code change failed
      */
-    public void changePinCode(Context context, String oldPin, String newPin)
-    {
+    public void changePinCode(Context context, String oldPin, String newPin) {
         encryptionProvider.changePinCode(context, oldPin, newPin);
         injectEncrypter();
     }
 
     /**
+     * @param context can be android or application
+     * @return true if pin code is backed by fingerprint, false if it is user created
+     */
+    public boolean usesFingerprint(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        return prefs.getString(USES_FINGERPRINT_KEY, null) != null;
+    }
+
+    /**
+     * @param context can be android or application
+     * @return the fingerprint data encrypted
+     */
+    public String getFingerprint(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        return prefs.getString(USES_FINGERPRINT_KEY, null);
+    }
+
+    /**
+     * Method must be called and set to true if the user registers their fingerprint
+     * @param context can be android or application
+     * @param encryptedKey the key used for storage, MUST BE ENCRYPTED and the encryption key for it backed by keystore
+     */
+    public void setUsesFingerprint(Context context, String encryptedKey) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        prefs.edit().putString(USES_FINGERPRINT_KEY, encryptedKey).apply();
+    }
+
+    /**
+     * Removes any history of using fingerprint for authentication
+     * @param context can be android or application
+     */
+    protected void removeSharedPreference(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        if (prefs != null) {
+            prefs.edit().clear().apply();
+        }
+    }
+
+    /**
      * Removes the pin code if one exists.
+     *
      * @param context android context
      */
     public void removePinCode(Context context) {
-        encryptionProvider.removePinCode(context);
+        if (encryptionProvider != null) {
+            encryptionProvider.removePinCode(context);
+        }
+        removeSharedPreference(context);
     }
 
-    private void injectEncrypter()
-    {
+    private void injectEncrypter() {
         fileAccess.setEncrypter(encryptionProvider.getEncrypter());
         appDatabase.setEncryptionKey(encryptionProvider.getEncrypter().getDbKey());
     }

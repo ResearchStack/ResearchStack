@@ -1,29 +1,23 @@
 package org.researchstack.backbone.step;
 
-import android.util.Log;
-
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;
-import org.researchstack.backbone.utils.StepHelper;
+import org.researchstack.backbone.utils.StepResultHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by TheMDP on 12/31/16.
+ * Created by TheMDP on 2/5/17.
+ *
+ * The NavigationQuestionStep class allows the developer to implement any custom navigation rule
+ * by allowing them to pass in the interface themselves for determining the nextStepIdentifier
  */
 
 public class NavigationQuestionStep extends QuestionStep implements NavigableOrderedTask.NavigationRule {
 
-    private static final String LOG_TAG = NavigationQuestionStep.class.getCanonicalName();
-
-    String skipToStepIdentifier;
-    boolean skipIfPassed;
-
-    /** Expected answer for this QuestionStep, used by NavigableOrderedTask */
-    private Object expectedAnswer;
+    private List<NavigableOrderedTask.ObjectEqualsNavigationRule> customRules;
 
     /* Default constructor needed for serilization/deserialization of object */
     NavigationQuestionStep() {
@@ -42,41 +36,20 @@ public class NavigationQuestionStep extends QuestionStep implements NavigableOrd
         super(identifier, title, format);
     }
 
-    public String getSkipToStepIdentifier() {
-        return skipToStepIdentifier;
-    }
-
-    public void setSkipToStepIdentifier(String identifier) {
-        skipToStepIdentifier = identifier;
-    }
-
-    public boolean getSkipIfPassed() {
-        return skipIfPassed;
-    }
-
-    public void setSkipIfPassed(boolean skipIfPassed) {
-        this.skipIfPassed = skipIfPassed;
-    }
-
-    /**
-     * @param expectedAnswer the expected answer for this QuestionStep
-     */
-    public void setExpectedAnswer(Object expectedAnswer) {
-        this.expectedAnswer = expectedAnswer;
-    }
-
-    /**
-     * @return expectedAnswer, which is usually null, but used with NavigableOrderedTask reads steps
-     */
-    public Object getExpectedAnswer() {
-        return expectedAnswer;
+    public void setCustomRules(List<NavigableOrderedTask.ObjectEqualsNavigationRule> customRules) {
+        this.customRules = customRules;
     }
 
     @Override
     public String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
-        List<QuestionStep> stepList = new ArrayList<>();
-        stepList.add(this);
-        return StepHelper.navigationFormStepSkipIdentifier(
-                skipToStepIdentifier, skipIfPassed, stepList, result, additionalTaskResults);
+        if (customRules != null) {
+            for (NavigableOrderedTask.ObjectEqualsNavigationRule rule : customRules) {
+                String nextIdentifier = rule.nextStepIdentifier(result, additionalTaskResults);
+                if (nextIdentifier != null) {
+                    return nextIdentifier;
+                }
+            }
+        }
+        return null;
     }
 }

@@ -1,6 +1,5 @@
 package org.researchstack.backbone.onboarding;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -8,6 +7,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import org.researchstack.backbone.ResourceManager;
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.survey.SurveyItem;
 
@@ -20,10 +21,13 @@ import java.util.List;
 
 public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSection> {
 
-    ResourceNameToStringConverter mResourceNameConverter;
+    private OnboardingManager.AdapterContextProvider adapterProvider;
 
-    public OnboardingSectionAdapter(ResourceNameToStringConverter converter) {
-        mResourceNameConverter = converter;
+    /**
+     * @param adapterProvider should provide Gson and Context, to avoid storing them as member variables in this class
+     */
+    public OnboardingSectionAdapter(OnboardingManager.AdapterContextProvider adapterProvider) {
+        this.adapterProvider = adapterProvider;
     }
 
     @Override
@@ -42,10 +46,16 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
             // Android does not support spaces or uppercase letters for resource names
             // So convert all of these before we request the resource name
             String convertedResourceName = resourceName.getAsString().replace(" ", "_").toLowerCase();
-            String resourceJson = mResourceNameConverter.getJsonStringForResourceName(convertedResourceName);
+            ResourcePathManager.Resource resource = ResourceManager.getInstance().getResource(convertedResourceName);
+            if (resource == null) {
+                throw new IllegalStateException("Could not find resource with name " + convertedResourceName +
+                "to load in onboarding JSON.  Make sure you add it with ResourceManager.addResource(), so this" +
+                "class knows where to load it from");
+            }
+            String resourceJson = ResourceManager.getResourceAsString(adapterProvider.getContext(),
+                    ResourceManager.getInstance().generatePath(resource.getType(), resource.getName()));
             JsonParser parser = new JsonParser();
-            JsonElement nestedSectionElement = parser.parse(resourceJson);
-            json = nestedSectionElement;
+            json = parser.parse(resourceJson);
         }
 
         OnboardingSection section;
@@ -67,9 +77,5 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
         section.surveyItems = surveyItems;
 
         return section;
-    }
-
-    public interface GsonProvider {
-        Gson getGson();
     }
 }

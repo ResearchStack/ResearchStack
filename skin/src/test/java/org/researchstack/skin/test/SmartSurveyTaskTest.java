@@ -1,6 +1,8 @@
 package org.researchstack.skin.test;
 
 
+import android.content.Context;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,14 +11,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.researchstack.skin.model.TaskModel;
 import org.researchstack.skin.task.SmartSurveyTask;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import android.content.Context;
 
 /*
 Tests whether step type "SurveyTextOnly" works in addition to "SurveyQuestion"

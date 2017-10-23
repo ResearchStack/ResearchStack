@@ -18,14 +18,13 @@ public class ConsentOnboardingSection extends OnboardingSection {
     @Override
     public SurveyFactory getDefaultOnboardingSurveyFactory(
             Context context,
-            ResourceNameToStringConverter converter,
             SurveyFactory.CustomStepCreator customStepCreator)
     {
         if (surveyFactory != null) {
             return surveyFactory;
         }
 
-        surveyFactory = new ConsentDocumentFactory(context, surveyItems, consentDocument, converter, customStepCreator);
+        surveyFactory = new ConsentDocumentFactory(consentDocument, customStepCreator);
         return surveyFactory;
     }
 }
