@@ -89,7 +89,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
 
-    compile 'com.android.support:support-annotations:25.1.0'
+    compile 'com.android.support:support-annotations:26.1.0'
 }
 
 // this could be a script, since it is used in two places
