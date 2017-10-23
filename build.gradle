@@ -26,6 +26,9 @@ allprojects {
     repositories {
         jcenter()
         maven {
+            url "https://maven.google.com"
+        }
+        maven {
             url "https://dl.bintray.com/touchlab/Squeaky"
         }
         maven { url "https://jitpack.io" }
