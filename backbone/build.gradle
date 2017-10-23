@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
@@ -8,12 +7,12 @@ apply plugin: 'maven-publish'
 version = '2.0.0-SNAPSHOT'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 6
         versionName version
         vectorDrawables.useSupportLibrary = true
@@ -101,7 +100,7 @@ dependencies {
 
     compile 'com.scottyab:aes-crypto:0.0.3'
     compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
-    apt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
+    annotationProcessor 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
 
     compile 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
 
