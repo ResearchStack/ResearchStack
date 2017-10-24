@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">Tartomány ettől: %1$s eddig: %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Halom a következőkből:</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">és</string>
-    <string name="rsb_ax_graph_point">Pont: %1$s</string>
+    <string name="rsb_ax_graph_point">Pont: %1$d</string>
     
 </resources>

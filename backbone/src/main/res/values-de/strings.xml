@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">Bereich von %1$s bis %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Stapel besteht aus</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">und</string>
-    <string name="rsb_ax_graph_point">Punkt: %1$s</string>
+    <string name="rsb_ax_graph_point">Punkt: %1$d</string>
     
 </resources>

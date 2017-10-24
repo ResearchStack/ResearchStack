@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">Trong khoảng từ %1$s đến %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Ngăn xếp bao gồm</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">và</string>
-    <string name="rsb_ax_graph_point">Điểm: %1$s</string>
+    <string name="rsb_ax_graph_point">Điểm: %1$d</string>
 
 </resources>

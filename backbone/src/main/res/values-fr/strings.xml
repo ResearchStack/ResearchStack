@@ -392,6 +392,6 @@
     <string name="rsb_ax_graph_range_format">De %1$s à %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Pile composée de</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">et</string>
-    <string name="rsb_ax_graph_point">Point : %1$s</string>
+    <string name="rsb_ax_graph_point">Point : %1$d</string>
     
 </resources>

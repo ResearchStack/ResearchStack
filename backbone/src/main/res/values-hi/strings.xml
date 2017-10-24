@@ -391,7 +391,7 @@
     <string name="rsb_ax_graph_range_format">%1$s से %2$s तक श्रेणी</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">निम्नलिखित का संग्रह</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">और</string>
-    <string name="rsb_ax_graph_point">पॉइंट : %1$s</string>
+    <string name="rsb_ax_graph_point">पॉइंट : %1$d</string>
 
 
 </resources>
