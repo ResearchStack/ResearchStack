@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -54,13 +56,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     {
         super.onCreate(savedInstanceState);
         super.setResult(RESULT_CANCELED);
-        super.setContentView(R.layout.rsb_activity_step_switcher);
+        super.setContentView(getContentViewId());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        root = (StepSwitcher) findViewById(R.id.container);
+        root = (StepSwitcher) findViewById(getViewSwitcherRootId());
 
         if(savedInstanceState == null)
         {
@@ -89,6 +91,14 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     public Step getCurrentStep()
     {
         return currentStep;
+    }
+
+    public @LayoutRes int getContentViewId() {
+        return R.layout.rsb_activity_step_switcher;
+    }
+
+    public @IdRes int getViewSwitcherRootId() {
+        return R.id.container;
     }
 
     protected void showNextStep()
@@ -322,7 +332,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     /**
      * Make sure user is 100% wanting to cancel, since their data will be discarded
      */
-    private void showConfirmExitDialog()
+    public void showConfirmExitDialog()
     {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.rsb_are_you_sure)

@@ -52,16 +52,23 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
     {
         // Init root
         layoutInflater = LayoutInflater.from(getContext());
-        layoutInflater.inflate(R.layout.rsb_layout_fixed_submit_bar, this, true);
+        layoutInflater.inflate(getFixedSubmitBarLayoutId(), this, true);
 
         // Add contentContainer to the layout
-        contentContainer = (ViewGroup) findViewById(R.id.rsb_content_container);
+        contentContainer = findViewById(getContentContainerLayoutId());
+
         View content = layoutInflater.inflate(getContentResourceId(), contentContainer, false);
         contentContainer.addView(content, 0);
 
         // Init scrollview and submit bar guide positioning
         submitBarGuide = findViewById(R.id.rsb_submit_bar_guide);
         submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+
+        if (submitBarGuide == null) {
+            // This must be a custom layout
+            return;
+        }
+
         scrollView = (ObservableScrollView) findViewById(R.id.rsb_content_container_scrollview);
         scrollView.setScrollListener(scrollY -> onScrollChanged(scrollView, submitBarGuide, submitBar));
         scrollView.getViewTreeObserver()
@@ -82,6 +89,14 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
                         onScrollChanged(scrollView, submitBarGuide, submitBar);
                     }
                 });
+    }
+
+    public int getContentContainerLayoutId() {
+        return R.id.rsb_content_container;
+    }
+
+    public int getFixedSubmitBarLayoutId() {
+        return R.layout.rsb_layout_fixed_submit_bar;
     }
 
     private void onScrollChanged(ScrollView scrollView, View submitBarGuide, View submitBar)
