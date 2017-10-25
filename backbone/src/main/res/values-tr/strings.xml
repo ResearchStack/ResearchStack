@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">%1$s - %2$s aralığında</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Yığın içeriği:</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">ve</string>
-    <string name="rsb_ax_graph_point">Nokta: %1$s</string>
+    <string name="rsb_ax_graph_point">Nokta: %1$d</string>
 
 </resources>

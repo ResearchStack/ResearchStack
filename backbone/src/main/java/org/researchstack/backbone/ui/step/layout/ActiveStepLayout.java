@@ -1,5 +1,6 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.RequiresPermission;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -175,6 +177,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
     }
 
+    @RequiresPermission(value = Manifest.permission.VIBRATE, conditional = true)
     public void start() {
         if (activeStep.startsFinished()) {
             return;
@@ -230,6 +233,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         return activeStep.getRecorderConfigurationList();
     }
 
+    @RequiresPermission(value = Manifest.permission.VIBRATE, conditional = true)
     public void stop() {
         if (activeStep.getShouldVibrateOnFinish()) {
             vibrate();
@@ -398,6 +402,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         this.callbacks = callbacks;
     }
 
+    @RequiresPermission(Manifest.permission.VIBRATE)
     private void vibrate() {
         Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(DEFAULT_VIBRATION_AND_SOUND_DURATION);

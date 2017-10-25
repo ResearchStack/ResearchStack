@@ -181,6 +181,7 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
             case Surface.ROTATION_180:
                 orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
                 break;
+            case Surface.ROTATION_270:
             default:
                 orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
                 break;

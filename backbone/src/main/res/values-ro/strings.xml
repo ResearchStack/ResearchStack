@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">Interval de la %1$s la %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Stiva compusă din</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">și</string>
-    <string name="rsb_ax_graph_point">Punctul: %1$s</string>
+    <string name="rsb_ax_graph_point">Punctul: %1$d</string>
     
 </resources>

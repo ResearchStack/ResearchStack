@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">範圍介乎 %1$s 至 %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">圓盤柱的組成方式：</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">與</string>
-    <string name="rsb_ax_graph_point">點數：%1$s</string>
+    <string name="rsb_ax_graph_point">點數：%1$d</string>
 
 </resources>

@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">Діапазон від %1$s до %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Стос, створений із</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">і</string>
-    <string name="rsb_ax_graph_point">Точка: %1$s</string>
+    <string name="rsb_ax_graph_point">Точка: %1$d</string>
     
 </resources>

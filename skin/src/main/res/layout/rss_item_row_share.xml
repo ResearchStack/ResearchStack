@@ -4,15 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:layout_gravity="center_vertical"
     android:background="?android:attr/selectableItemBackground"
-    android:orientation="horizontal"
-    android:layout_gravity="center_vertical">
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal">
 
+    <!-- warning due to layout_width and layout_height not defined here, and not detecting that it is set in the style-->
+
+    <!--suppress AndroidDomInspection -->
     <ImageView
         android:id="@+id/share_item_icon"
         style="@style/RsbLearnItemLogo"
         android:layout_gravity="center_vertical"
+        tools:ignore="RequiredSize"
         />
 
     <TextView
@@ -24,9 +28,7 @@
         android:gravity="center_vertical"
         android:singleLine="true"
         android:textAppearance="@style/Preference_TextAppearanceMaterialSubhead"
+        tools:ignore="RequiredSize"
         tools:text="@string/lorem_name"
         />
 </LinearLayout>
-
-
-

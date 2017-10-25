@@ -197,6 +197,8 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                         startAnimationRepeat(animatedVector);
                     }
                 } else {
+                    // TODO: check if above is needed, setImageResource may be sufficient
+                    // https://developer.android.com/guide/topics/graphics/vector-drawable-resources.html
                     imageView.setImageResource(drawableInt);
                 }
 

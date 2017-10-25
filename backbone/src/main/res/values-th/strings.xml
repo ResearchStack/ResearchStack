@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">ช่วงตั้งแต่ %1$s ถึง %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">สแต็คประกอบด้วย</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">และ</string>
-    <string name="rsb_ax_graph_point">จุด: %1$s</string>
+    <string name="rsb_ax_graph_point">จุด: %1$d</string>
 
 </resources>
