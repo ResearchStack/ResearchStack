@@ -54,13 +54,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     {
         super.onCreate(savedInstanceState);
         super.setResult(RESULT_CANCELED);
-        super.setContentView(R.layout.rsb_activity_step_switcher);
+        super.setContentView(getContentViewId());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        root = (StepSwitcher) findViewById(R.id.container);
+        root = (StepSwitcher) findViewById(getViewSwitcherRootId());
 
         if(savedInstanceState == null)
         {
@@ -89,6 +89,14 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     public Step getCurrentStep()
     {
         return currentStep;
+    }
+
+    public int getContentViewId() {
+        return R.layout.rsb_activity_step_switcher;
+    }
+
+    public int getViewSwitcherRootId() {
+        return R.id.container;
     }
 
     protected void showNextStep()
