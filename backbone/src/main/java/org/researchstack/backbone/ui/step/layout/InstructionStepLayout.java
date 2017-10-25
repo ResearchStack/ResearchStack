@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.text.Html;
 import android.util.AttributeSet;
@@ -89,7 +91,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     @Override
-    public int getContentResourceId() {
+    public @LayoutRes int getContentResourceId() {
         return R.layout.rsb_step_layout_instruction;
     }
 
@@ -102,7 +104,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
         }
     }
 
-    public void connectStepUi(int titleRId, int textRId, int imageRId, int detailRId) {
+    public void connectStepUi(@IdRes int titleRId, @IdRes int textRId, @IdRes int imageRId, @IdRes int detailRId) {
         titleTextView       = findViewById(titleRId);
         textTextView        = findViewById(textRId);
         imageView           = findViewById(imageRId);

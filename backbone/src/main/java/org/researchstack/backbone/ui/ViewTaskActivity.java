@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -91,11 +93,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         return currentStep;
     }
 
-    public int getContentViewId() {
+    public @LayoutRes int getContentViewId() {
         return R.layout.rsb_activity_step_switcher;
     }
 
-    public int getViewSwitcherRootId() {
+    public @IdRes int getViewSwitcherRootId() {
         return R.id.container;
     }
 
