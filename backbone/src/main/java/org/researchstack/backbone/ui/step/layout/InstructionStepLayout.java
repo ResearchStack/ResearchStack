@@ -56,7 +56,12 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     @Override
     public void initialize(Step step, StepResult result) {
         validateAndSetStep(step);
-        initializeStep();
+        connectStepUi(
+                R.id.rsb_intruction_title,
+                R.id.rsb_intruction_text,
+                R.id.rsb_image_view,
+                R.id.rsb_instruction_more_detail_text);
+        refreshStep();
     }
 
     protected void validateAndSetStep(Step step) {
@@ -97,19 +102,20 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
         }
     }
 
-    private void initializeStep() {
+    public void connectStepUi(int titleRId, int textRId, int imageRId, int detailRId) {
+        titleTextView       = findViewById(titleRId);
+        textTextView        = findViewById(textRId);
+        imageView           = findViewById(imageRId);
+        moreDetailTextView  = findViewById(detailRId);
+    }
 
-        titleTextView       = (TextView)findViewById(R.id.rsb_intruction_title);
-        textTextView        = (TextView)findViewById(R.id.rsb_intruction_text);
-        imageView           = (ImageView) findViewById(R.id.rsb_image_view);
-        moreDetailTextView  = (TextView)findViewById(R.id.rsb_instruction_more_detail_text);
-
+    public void refreshStep() {
         if (step != null) {
             String title = step.getTitle();
             String text  = step.getText();
 
             if (TextUtils.isEmpty(title) &&
-                !TextUtils.isEmpty(text) && !TextUtils.isEmpty(instructionStep.getMoreDetailText()))
+                    !TextUtils.isEmpty(text) && !TextUtils.isEmpty(instructionStep.getMoreDetailText()))
             {
                 // With no Title, we can assume text and detail text is equla to title and text
                 title = text;
@@ -148,30 +154,32 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             }
 
             // Set Next / Skip
-            submitBar.setVisibility(View.VISIBLE);
-            submitBar.setPositiveTitle(R.string.rsb_next);
-            submitBar.setPositiveAction(v -> onComplete());
+            if (submitBar != null) {
+                submitBar.setVisibility(View.VISIBLE);
+                submitBar.setPositiveTitle(R.string.rsb_next);
+                submitBar.setPositiveAction(v -> onComplete());
 
-            if (instructionStep.getSubmitBarNegativeActionSkipRule() != null) {
-                final InstructionStep.SubmitBarNegativeActionSkipRule rule =
-                        instructionStep.getSubmitBarNegativeActionSkipRule();
-                submitBar.setNegativeTitle(rule.getTitle());
-                submitBar.setNegativeAction(v -> {
-                    StepResult stepResult = new StepResult(step);
-                    rule.onNegativeActionClicked(instructionStep, stepResult);
-                    if (callbacks != null) {
-                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
-                    }
-                });
-            } else if (step.isOptional()) {
-                submitBar.setNegativeTitle(R.string.rsb_step_skip);
-                submitBar.setNegativeAction(v -> {
-                    if (callbacks != null) {
-                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
-                    }
-                });
-            } else {
-                submitBar.getNegativeActionView().setVisibility(View.GONE);
+                if (instructionStep.getSubmitBarNegativeActionSkipRule() != null) {
+                    final InstructionStep.SubmitBarNegativeActionSkipRule rule =
+                            instructionStep.getSubmitBarNegativeActionSkipRule();
+                    submitBar.setNegativeTitle(rule.getTitle());
+                    submitBar.setNegativeAction(v -> {
+                        StepResult stepResult = new StepResult(step);
+                        rule.onNegativeActionClicked(instructionStep, stepResult);
+                        if (callbacks != null) {
+                            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                        }
+                    });
+                } else if (step.isOptional()) {
+                    submitBar.setNegativeTitle(R.string.rsb_step_skip);
+                    submitBar.setNegativeAction(v -> {
+                        if (callbacks != null) {
+                            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
+                        }
+                    });
+                } else {
+                    submitBar.getNegativeActionView().setVisibility(View.GONE);
+                }
             }
 
             refreshImage(instructionStep.getImage(), instructionStep.getIsImageAnimated());
