@@ -37,6 +37,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     protected Toolbar toolbar;
 
     protected StepLayout currentStepLayout;
+    public StepLayout getCurrentStepLayout() {
+        return currentStepLayout;
+    }
+
     protected Step currentStep;
     protected Task task;
     public Task getTask() {
@@ -58,7 +62,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         super.setResult(RESULT_CANCELED);
         super.setContentView(getContentViewId());
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(getToolbarResourceId());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -82,6 +86,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         task.validateParameters();
 
         task.onViewChange(Task.ViewChangeType.ActivityCreate, this, currentStep);
+    }
+
+    public @IdRes int getToolbarResourceId() {
+        return R.id.toolbar;
     }
 
     /**

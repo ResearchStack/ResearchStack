@@ -185,7 +185,9 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             }
 
             refreshImage(instructionStep.getImage(), instructionStep.getIsImageAnimated());
-            refreshDetailText(instructionStep.getMoreDetailText(), moreDetailTextView.getCurrentTextColor());
+            if (moreDetailTextView != null) {
+                refreshDetailText(instructionStep.getMoreDetailText(), moreDetailTextView.getCurrentTextColor());
+            }
         }
     }
 

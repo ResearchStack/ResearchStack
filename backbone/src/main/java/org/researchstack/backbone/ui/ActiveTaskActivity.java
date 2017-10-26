@@ -74,7 +74,7 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
     }
 
     @Override
-    protected void showStep(Step step, boolean alwaysReplaceView) {
+    public void showStep(Step step, boolean alwaysReplaceView) {
 
         // compute back button status while currentStep is actually the previousStep at this point
         isBackButtonEnabled =
