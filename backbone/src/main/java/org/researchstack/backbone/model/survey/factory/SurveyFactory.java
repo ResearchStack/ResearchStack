@@ -269,6 +269,8 @@ public class SurveyFactory {
         if (item.iconImage != null) {
             step.setIconImage(item.iconImage);
         }
+        step.setIsImageAnimated(item.isImageAnimated);
+        step.setAnimationRepeatDuration(item.animationRepeatDuration);
     }
 
     /**
