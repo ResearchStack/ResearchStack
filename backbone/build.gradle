@@ -92,12 +92,12 @@ dependencies {
     implementation 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
 
     // Used to display UploadData and study data in various chart formats
-    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.3'
+    api 'com.github.PhilJay:MPAndroidChart:v2.2.3'
 
     implementation 'com.scottyab:aes-crypto:0.0.3'
     api 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
     annotationProcessor 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
-    implementation 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
+    api 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
 
     // Libraries to help with unit testing
     testImplementation 'junit:junit:4.12'
