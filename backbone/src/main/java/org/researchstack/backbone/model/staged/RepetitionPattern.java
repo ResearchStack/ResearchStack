@@ -8,15 +8,15 @@ import java.io.Serializable;
  * Abstract class to support repetition on Staged Activities
  *
  * There are four concrete subclasses of this class:
- * - MedDailyRepetitionPattern
- * - MedWeeklyRepetitionPattern
+ * - DailyRepetitionPattern
+ * - WeeklyRepetitionPattern
  * - MedMonthlyDateRepetitionPatttern
- * - MedMonthlyDayRepetitionPattern.
+ * - MonthlyDayRepetitionPattern.
  * Each has the attribute unitsToSkip, which indicates the number of units (days, weeks, months) to skip before repeating
  *
  */
 
-public abstract class MedRepetitionPattern implements Serializable {
+public abstract class RepetitionPattern implements Serializable {
 
     private int unitsToSkip;
 

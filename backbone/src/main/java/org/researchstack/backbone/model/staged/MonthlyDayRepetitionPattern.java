@@ -13,7 +13,7 @@ import java.util.List;
  *
  */
 
-public class MedMonthlyDayRepetitionPattern extends MedRepetitionPattern {
+public class MonthlyDayRepetitionPattern extends RepetitionPattern {
 
     private List<WeekDay> pattern;
 

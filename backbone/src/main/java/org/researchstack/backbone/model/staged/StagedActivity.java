@@ -3,7 +3,6 @@ package org.researchstack.backbone.model.staged;
 import org.researchstack.backbone.task.Task;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * Created by mauriciosouto on 7/9/17.
@@ -13,17 +12,17 @@ import java.util.Map;
  *
  * - id: a unique ID for the activity
  * - type: one of survey, activeTask, or insight
- * - schedule: an MedStagedSchedule for this activity
+ * - schedule: an StagedSchedule for this activity
  * - activityInfo: dictionary with type specific information - ["title" : TITLE_STRING, "text": TEXT_STRING, "instructions": INSTRUCTION_STRING, "task": TASK]
  *
  */
 
-public class MedStagedActivity implements Serializable {
+public class StagedActivity implements Serializable {
 
     private String id;
-    private MedStagedActivityType type;
-    private MedStagedSchedule schedule;
-    private MedStagedActivityState status;
+    private StagedActivityType type;
+    private StagedSchedule schedule;
+    private StagedActivityState status;
 
     private String title;
     private String text;
@@ -41,27 +40,27 @@ public class MedStagedActivity implements Serializable {
         this.id = id;
     }
 
-    public MedStagedActivityType getType() {
+    public StagedActivityType getType() {
         return type;
     }
 
-    public void setType(MedStagedActivityType type) {
+    public void setType(StagedActivityType type) {
         this.type = type;
     }
 
-    public MedStagedSchedule getSchedule() {
+    public StagedSchedule getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(MedStagedSchedule schedule) {
+    public void setSchedule(StagedSchedule schedule) {
         this.schedule = schedule;
     }
 
-    public MedStagedActivityState getStatus() {
+    public StagedActivityState getStatus() {
         return status;
     }
 
-    public void setStatus(MedStagedActivityState status) {
+    public void setStatus(StagedActivityState status) {
         this.status = status;
     }
 

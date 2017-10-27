@@ -10,7 +10,7 @@ import java.util.List;
  *
  */
 
-public class MedMonthlyDateRepetitionPattern extends MedRepetitionPattern {
+public class MonthlyDateRepetitionPattern extends RepetitionPattern {
 
     private List<Integer> pattern;
 

@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.researchstack.backbone.model.staged.MedStagedActivityState;
-import org.researchstack.backbone.model.staged.MedStagedEvent;
+import org.researchstack.backbone.model.staged.StagedActivityState;
+import org.researchstack.backbone.model.staged.StagedEvent;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.OrderedTask;
 
@@ -17,21 +17,21 @@ import java.util.Date;
  */
 
 @RunWith(MockitoJUnitRunner.class)
-public class MedStagedEventRecordTest {
+public class StagedEventRecordTest {
 
     @Test
-    public void testMedStagedEventRecord() {
+    public void testStagedEventRecord() {
         OrderedTask task = new OrderedTask("TEST_TASK_ID", new ArrayList<Step>());
 
-        MedStagedEvent event = new MedStagedEvent();
+        StagedEvent event = new StagedEvent();
         event.setId(1);
         event.setActivityId("1234");
-        event.setStatus(MedStagedActivityState.INITIAL);
+        event.setStatus(StagedActivityState.INITIAL);
         event.setEventStartDate(new Date());
         event.setEventEndDate(new Date());
         event.setTask(task);
 
-        MedStagedEventRecord record = MedStagedEventRecord.toRecord(event);
+        StagedEventRecord record = StagedEventRecord.toRecord(event);
 
         Assert.assertEquals(record.id, event.getId());
         Assert.assertEquals(record.stagedActivityId, event.getActivityId());
@@ -41,7 +41,7 @@ public class MedStagedEventRecordTest {
         Assert.assertEquals(record.taskId, "TEST_TASK_ID");
         Assert.assertNotNull(record.task);
 
-        event = MedStagedEventRecord.toMedStagedEvent(record, null);
+        event = StagedEventRecord.toStagedEvent(record, null);
 
         Assert.assertEquals(record.id, event.getId());
         Assert.assertEquals(record.stagedActivityId, event.getActivityId());
