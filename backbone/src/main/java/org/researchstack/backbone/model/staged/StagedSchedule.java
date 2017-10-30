@@ -12,34 +12,34 @@ import java.util.Date;
  * - endDate: end date for the staged schedule. Can be null/nil.
  * - duration: the length of time a particular instance of content will remain available after it is created. Can be null/nil, meaning no expiration
  * - durationType: units for duration (days, weeks, months). Can be null/nil
- * - repeats: class of type MedRepetitionPattern. Can be null/nil if the activity doesn't repeat.
+ * - repeats: class of type RepetitionPattern. Can be null/nil if the activity doesn't repeat.
  *
  */
 
-public class MedStagedSchedule implements Serializable {
+public class StagedSchedule implements Serializable {
 
-    public static MedStagedSchedule schedule(Date startDate) {
+    public static StagedSchedule schedule(Date startDate) {
         return schedule(startDate, null, 0, null, null);
     }
 
-    public static MedStagedSchedule limitedSchedule(Date startDate, int duration, MedStagedDurationUnit durationUnit) {
+    public static StagedSchedule limitedSchedule(Date startDate, int duration, StagedDurationUnit durationUnit) {
         return schedule(startDate, null, duration, durationUnit, null);
     }
 
-    public static MedStagedSchedule repeatingSchedule(Date startDate, Date endDate, MedRepetitionPattern pattern) {
+    public static StagedSchedule repeatingSchedule(Date startDate, Date endDate, RepetitionPattern pattern) {
         return schedule(startDate, endDate, 0, null, pattern);
     }
 
-    public static MedStagedSchedule repeatingLimitedSchedule(Date startDate, Date endDate,
-                                                             int duration, MedStagedDurationUnit durationUnit,
-                                                             MedRepetitionPattern pattern) {
+    public static StagedSchedule repeatingLimitedSchedule(Date startDate, Date endDate,
+                                                          int duration, StagedDurationUnit durationUnit,
+                                                          RepetitionPattern pattern) {
         return schedule(startDate, endDate, duration, durationUnit, pattern);
     }
 
-    public static MedStagedSchedule schedule(Date startDate, Date endDate,
-                                                      int duration, MedStagedDurationUnit durationUnit,
-                                                      MedRepetitionPattern repeats) {
-        MedStagedSchedule stagedSchedule = new MedStagedSchedule();
+    public static StagedSchedule schedule(Date startDate, Date endDate,
+                                          int duration, StagedDurationUnit durationUnit,
+                                          RepetitionPattern repeats) {
+        StagedSchedule stagedSchedule = new StagedSchedule();
         stagedSchedule.startDate = startDate;
         stagedSchedule.endDate = endDate;
         stagedSchedule.duration = duration;
@@ -51,8 +51,8 @@ public class MedStagedSchedule implements Serializable {
     private Date startDate;
     private Date endDate;
     private int duration;
-    private MedStagedDurationUnit durationUnit;
-    private MedRepetitionPattern repeats;
+    private StagedDurationUnit durationUnit;
+    private RepetitionPattern repeats;
 
     public Date getStartDate() {
         return startDate;
@@ -66,11 +66,11 @@ public class MedStagedSchedule implements Serializable {
         return duration;
     }
 
-    public MedStagedDurationUnit getDurationUnit() {
+    public StagedDurationUnit getDurationUnit() {
         return durationUnit;
     }
 
-    public MedRepetitionPattern getRepeats() {
+    public RepetitionPattern getRepeats() {
         return repeats;
     }
 }

@@ -4,16 +4,14 @@ import android.content.Context;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
-import org.researchstack.backbone.model.staged.MedStagedActivity;
-import org.researchstack.backbone.model.staged.MedStagedActivityState;
-import org.researchstack.backbone.model.staged.MedStagedEvent;
+import org.researchstack.backbone.model.staged.StagedActivity;
+import org.researchstack.backbone.model.staged.StagedActivityState;
+import org.researchstack.backbone.model.staged.StagedEvent;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.storage.database.TaskRecord;
 import org.researchstack.backbone.storage.database.sqlite.SqlCipherDatabaseHelper;
 import org.researchstack.backbone.storage.database.sqlite.UpdatablePassphraseProvider;
-import org.researchstack.backbone.storage.database.staged.records.MedStagedActivityRecord;
-import org.researchstack.backbone.storage.database.staged.records.MedStagedEventRecord;
-import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.storage.database.staged.records.StagedActivityRecord;
+import org.researchstack.backbone.storage.database.staged.records.StagedEventRecord;
 import org.researchstack.backbone.utils.LogExt;
 
 import java.sql.SQLException;
@@ -42,49 +40,49 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         try {
             super.onCreate(sqLiteDatabase);
             TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase),
-                    MedStagedActivityRecord.class,
-                    MedStagedEventRecord.class);
+                    StagedActivityRecord.class,
+                    StagedEventRecord.class);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void addOrUpdateMedStagedActivity(MedStagedActivity activity) {
-        LogExt.d(getClass(), "addOrUpdateMedStagedActivity() id: " + activity.getId());
+    public void addOrUpdateStagedActivity(StagedActivity activity) {
+        LogExt.d(getClass(), "addOrUpdateStagedActivity() id: " + activity.getId());
         try {
-            getDao(MedStagedActivityRecord.class).createOrUpdate(MedStagedActivityRecord.toRecord(activity));
+            getDao(StagedActivityRecord.class).createOrUpdate(StagedActivityRecord.toRecord(activity));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void deleteMedStagedActivity(String activityId) {
-        LogExt.d(getClass(), "removeMedStagedActivity() Activity id: " + activityId);
+    public void deleteStagedActivity(String activityId) {
+        LogExt.d(getClass(), "removeStagedActivity() Activity id: " + activityId);
         try {
-            getDao(MedStagedActivityRecord.class).deleteById(activityId);
+            getDao(StagedActivityRecord.class).deleteById(activityId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public MedStagedActivity getMedStagedActivity(String activityId) {
-        LogExt.d(getClass(), "getMedStagedActivity() Activity id: " + activityId);
+    public StagedActivity getStagedActivity(String activityId) {
+        LogExt.d(getClass(), "getStagedActivity() Activity id: " + activityId);
         try {
-            MedStagedActivityRecord record = getDao(MedStagedActivityRecord.class).queryForId(activityId);
-            return MedStagedActivityRecord.toMedStagedActivity(record);
+            StagedActivityRecord record = getDao(StagedActivityRecord.class).queryForId(activityId);
+            return StagedActivityRecord.toStagedActivity(record);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<MedStagedActivity> loadAllMedStagedActivities() {
-        LogExt.d(getClass(), "loadAllMedStagedActivities()");
+    public List<StagedActivity> loadAllStagedActivities() {
+        LogExt.d(getClass(), "loadAllStagedActivities()");
         try {
-            List<MedStagedActivity> results = new ArrayList<>();
-            List<MedStagedActivityRecord> activityRecords = getDao(MedStagedActivityRecord.class).queryForAll().list();
+            List<StagedActivity> results = new ArrayList<>();
+            List<StagedActivityRecord> activityRecords = getDao(StagedActivityRecord.class).queryForAll().list();
 
-            for (MedStagedActivityRecord record : activityRecords) {
-                MedStagedActivity result = MedStagedActivityRecord.toMedStagedActivity(record);
+            for (StagedActivityRecord record : activityRecords) {
+                StagedActivity result = StagedActivityRecord.toStagedActivity(record);
                 results.add(result);
             }
             return results;
@@ -93,10 +91,10 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
-    public void saveMedStagedEvent(MedStagedEvent event) {
-        LogExt.d(getClass(), "saveMedStagedEvent() Activity id: " + event.getActivityId());
+    public void saveStagedEvent(StagedEvent event) {
+        LogExt.d(getClass(), "saveStagedEvent() Activity id: " + event.getActivityId());
         try {
-            getDao(MedStagedEventRecord.class).create(MedStagedEventRecord.toRecord(event));
+            getDao(StagedEventRecord.class).create(StagedEventRecord.toRecord(event));
             if (event.getResult() != null) {
                 this.saveTaskResult(event.getResult());
             }
@@ -105,10 +103,10 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
-    public void updateMedStagedEvent(MedStagedEvent event) {
-        LogExt.d(getClass(), "updateMedStagedEvent() Activity id: " + event.getActivityId() + " Event Id: " + event.getId());
+    public void updateStagedEvent(StagedEvent event) {
+        LogExt.d(getClass(), "updateStagedEvent() Activity id: " + event.getActivityId() + " Event Id: " + event.getId());
         try {
-            getDao(MedStagedEventRecord.class).update(MedStagedEventRecord.toRecord(event));
+            getDao(StagedEventRecord.class).update(StagedEventRecord.toRecord(event));
             if (event.getResult() != null) {
                 this.saveTaskResult(event.getResult());
             }
@@ -117,80 +115,80 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
-    public void deleteMedStagedEvent(int eventId) {
-        LogExt.d(getClass(), "deleteMedStagedEvent() Event id: " + eventId);
+    public void deleteStagedEvent(int eventId) {
+        LogExt.d(getClass(), "deleteStagedEvent() Event id: " + eventId);
         try {
-            getDao(MedStagedEventRecord.class).deleteById(eventId);
+            getDao(StagedEventRecord.class).deleteById(eventId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<MedStagedEvent> loadAllMedStagedEvents() {
-        LogExt.d(getClass(), "loadAllMedStagedEvents()");
+    public List<StagedEvent> loadAllStagedEvents() {
+        LogExt.d(getClass(), "loadAllStagedEvents()");
         try {
-            List<MedStagedEventRecord> eventRecords = getDao(MedStagedEventRecord.class).queryForAll().list();
+            List<StagedEventRecord> eventRecords = getDao(StagedEventRecord.class).queryForAll().list();
             return eventsFromRecords(eventRecords, null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<MedStagedEvent> loadMedStagedEvents(Date date, String activityId, MedStagedActivityState status) {
-        LogExt.d(getClass(), "loadMedStagedEvents()");
+    public List<StagedEvent> loadStagedEvents(Date date, String activityId, StagedActivityState status) {
+        LogExt.d(getClass(), "loadStagedEvents()");
         try {
-            Dao dao = getDao(MedStagedEventRecord.class);
+            Dao dao = getDao(StagedEventRecord.class);
 
             Map<String, Object> where = new HashMap<>();
-            where.put(MedStagedEventRecord.ACTIVITY_ID_COLUMN, activityId);
-            where.put(MedStagedEventRecord.STATUS_COLUMN, status);
+            where.put(StagedEventRecord.ACTIVITY_ID_COLUMN, activityId);
+            where.put(StagedEventRecord.STATUS_COLUMN, status);
 
-            List<MedStagedEventRecord> eventRecords = dao.queryForFieldValues(where).list();
+            List<StagedEventRecord> eventRecords = dao.queryForFieldValues(where).list();
             return eventsFromRecords(eventRecords, date);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<MedStagedEvent> loadMedStagedEvents(Date date, String activityId) {
-        LogExt.d(getClass(), "loadMedStagedEvents()");
+    public List<StagedEvent> loadStagedEvents(Date date, String activityId) {
+        LogExt.d(getClass(), "loadStagedEvents()");
         try {
-            Dao dao = getDao(MedStagedEventRecord.class);
+            Dao dao = getDao(StagedEventRecord.class);
 
             Map<String, Object> where = new HashMap<>();
-            where.put(MedStagedEventRecord.ACTIVITY_ID_COLUMN, activityId);
+            where.put(StagedEventRecord.ACTIVITY_ID_COLUMN, activityId);
 
-            List<MedStagedEventRecord> eventRecords = dao.queryForFieldValues(where).list();
+            List<StagedEventRecord> eventRecords = dao.queryForFieldValues(where).list();
             return eventsFromRecords(eventRecords, date);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<MedStagedEvent> loadLiveMedStagedEvents(Date date) {
-        LogExt.d(getClass(), "loadLiveMedStagedEvents()");
+    public List<StagedEvent> loadLiveStagedEvents(Date date) {
+        LogExt.d(getClass(), "loadLiveStagedEvents()");
         try {
 
-            Dao dao = getDao(MedStagedEventRecord.class);
-            List<MedStagedEventRecord> eventRecords = dao.queryForAll().list();
+            Dao dao = getDao(StagedEventRecord.class);
+            List<StagedEventRecord> eventRecords = dao.queryForAll().list();
             return eventsFromRecords(eventRecords, date);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void deleteFutureMedStagedEvents(Date date) {
-        LogExt.d(getClass(), "deleteMedStagedEvents()");
+    public void deleteFutureStagedEvents(Date date) {
+        LogExt.d(getClass(), "deleteStagedEvents()");
         try {
-            Dao dao = getDao(MedStagedEventRecord.class);
+            Dao dao = getDao(StagedEventRecord.class);
 
-            List<MedStagedEventRecord> eventRecords = dao.queryForAll().list();
-            for (MedStagedEventRecord record : eventRecords) {
+            List<StagedEventRecord> eventRecords = dao.queryForAll().list();
+            for (StagedEventRecord record : eventRecords) {
                 if (date == null || !record.eventStartDate.before(date)) {
                     // Future Event
-                    if (record.status == MedStagedActivityState.INITIAL) {
+                    if (record.status == StagedActivityState.INITIAL) {
                         // Keep started or completed events
-                        deleteMedStagedEvent(record.id);
+                        deleteStagedEvent(record.id);
                     }
                 }
             }
@@ -199,17 +197,17 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
-    private List<MedStagedEvent> eventsFromRecords(List<MedStagedEventRecord> eventRecords, Date date) {
-        List<MedStagedEvent> results = new ArrayList<>();
-        for (MedStagedEventRecord record : eventRecords) {
+    private List<StagedEvent> eventsFromRecords(List<StagedEventRecord> eventRecords, Date date) {
+        List<StagedEvent> results = new ArrayList<>();
+        for (StagedEventRecord record : eventRecords) {
             if ((date == null || (!record.eventStartDate.after(date) && !record.eventEndDate.before(date)))
-                    || record.status != MedStagedActivityState.INITIAL) {
+                    || record.status != StagedActivityState.INITIAL) {
                 TaskResult taskResult = null;
                 if (record.taskResultId != null) {
                     taskResult = loadLatestTaskResult(record.taskResultId);
                 }
-                MedStagedEvent event = MedStagedEventRecord.toMedStagedEvent(record, taskResult);
-                MedStagedActivity activity = this.getMedStagedActivity(event.getActivityId());
+                StagedEvent event = StagedEventRecord.toStagedEvent(record, taskResult);
+                StagedActivity activity = this.getStagedActivity(event.getActivityId());
                 event.setActivity(activity);
                 results.add(event);
             }

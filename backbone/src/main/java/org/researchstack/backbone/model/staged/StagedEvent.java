@@ -10,18 +10,18 @@ import java.util.Date;
  * Created by mauriciosouto on 7/9/17.
  */
 
-public class MedStagedEvent implements Serializable {
+public class StagedEvent implements Serializable {
 
     private int id;
     private String activityId;
     private Date eventStartDate;
     private Date eventEndDate;
-    private MedStagedActivityState status;
+    private StagedActivityState status;
     private Task task;
     private TaskResult result;
-    private MedStagedActivity activity;
+    private StagedActivity activity;
 
-    public MedStagedEvent() {
+    public StagedEvent() {
     }
 
     public int getId() {
@@ -56,11 +56,11 @@ public class MedStagedEvent implements Serializable {
         this.eventEndDate = eventEndDate;
     }
 
-    public MedStagedActivityState getStatus() {
+    public StagedActivityState getStatus() {
         return status;
     }
 
-    public void setStatus(MedStagedActivityState status) {
+    public void setStatus(StagedActivityState status) {
         this.status = status;
     }
 
@@ -76,16 +76,16 @@ public class MedStagedEvent implements Serializable {
         return result;
     }
 
-    public void addResult(TaskResult result, MedStagedActivityState status) {
+    public void addResult(TaskResult result, StagedActivityState status) {
         this.result = result;
         this.status = status;
     }
 
-    public MedStagedActivity getActivity() {
+    public StagedActivity getActivity() {
         return activity;
     }
 
-    public void setActivity(MedStagedActivity activity) {
+    public void setActivity(StagedActivity activity) {
         this.activity = activity;
     }
 }

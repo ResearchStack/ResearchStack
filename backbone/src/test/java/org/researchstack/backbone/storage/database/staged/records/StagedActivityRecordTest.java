@@ -4,30 +4,30 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.researchstack.backbone.model.staged.MedStagedActivity;
-import org.researchstack.backbone.model.staged.MedStagedActivityState;
-import org.researchstack.backbone.model.staged.MedStagedActivityType;
+import org.researchstack.backbone.model.staged.StagedActivity;
+import org.researchstack.backbone.model.staged.StagedActivityState;
+import org.researchstack.backbone.model.staged.StagedActivityType;
 
 /**
  * Created by mauriciosouto on 18/9/17.
  */
 
 @RunWith(MockitoJUnitRunner.class)
-public class MedStagedActivityRecordTest {
+public class StagedActivityRecordTest {
 
     @Test
-    public void testMedStagedActivityRecord() {
-        MedStagedActivity activity = new MedStagedActivity();
+    public void testStagedActivityRecord() {
+        StagedActivity activity = new StagedActivity();
         activity.setId("12345");
-        activity.setType(MedStagedActivityType.ACTIVE_TASK);
-        activity.setStatus(MedStagedActivityState.INITIAL);
+        activity.setType(StagedActivityType.ACTIVE_TASK);
+        activity.setStatus(StagedActivityState.INITIAL);
         activity.setTitle("Title");
         activity.setText("Text");
         activity.setInstructions("Instructions");
         activity.setTintColor(1);
         activity.setResultResettable(true);
 
-        MedStagedActivityRecord record = MedStagedActivityRecord.toRecord(activity);
+        StagedActivityRecord record = StagedActivityRecord.toRecord(activity);
         Assert.assertEquals(record.stagedActivityId, activity.getId());
         Assert.assertEquals(record.type, activity.getType());
         Assert.assertEquals(record.status, activity.getStatus());
@@ -37,7 +37,7 @@ public class MedStagedActivityRecordTest {
         Assert.assertEquals(record.tintColor, activity.getTintColor());
         Assert.assertEquals(record.resultResettable, activity.isResultResettable());
 
-        activity = MedStagedActivityRecord.toMedStagedActivity(record);
+        activity = StagedActivityRecord.toStagedActivity(record);
         Assert.assertEquals(record.stagedActivityId, activity.getId());
         Assert.assertEquals(record.type, activity.getType());
         Assert.assertEquals(record.status, activity.getStatus());

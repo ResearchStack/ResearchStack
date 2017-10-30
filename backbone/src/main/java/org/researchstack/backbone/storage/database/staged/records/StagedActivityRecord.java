@@ -3,10 +3,10 @@ package org.researchstack.backbone.storage.database.staged.records;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.researchstack.backbone.model.staged.MedStagedActivity;
-import org.researchstack.backbone.model.staged.MedStagedActivityState;
-import org.researchstack.backbone.model.staged.MedStagedActivityType;
-import org.researchstack.backbone.model.staged.MedStagedSchedule;
+import org.researchstack.backbone.model.staged.StagedActivity;
+import org.researchstack.backbone.model.staged.StagedActivityState;
+import org.researchstack.backbone.model.staged.StagedActivityType;
+import org.researchstack.backbone.model.staged.StagedSchedule;
 import org.researchstack.backbone.utils.FormatHelper;
 
 import co.touchlab.squeaky.field.DatabaseField;
@@ -17,7 +17,7 @@ import co.touchlab.squeaky.table.DatabaseTable;
  */
 
 @DatabaseTable
-public class MedStagedActivityRecord {
+public class StagedActivityRecord {
 
     public static final String STAGED_ACTIVITY_ID = "stagedActivityId";
 
@@ -28,10 +28,10 @@ public class MedStagedActivityRecord {
     public String stagedActivityId;
 
     @DatabaseField(canBeNull = false)
-    public MedStagedActivityType type;
+    public StagedActivityType type;
 
     @DatabaseField
-    public MedStagedActivityState status;
+    public StagedActivityState status;
 
     @DatabaseField
     public String title;
@@ -59,19 +59,19 @@ public class MedStagedActivityRecord {
         this.stagedActivityId = stagedActivityId;
     }
 
-    public MedStagedActivityType getType() {
+    public StagedActivityType getType() {
         return type;
     }
 
-    public void setType(MedStagedActivityType type) {
+    public void setType(StagedActivityType type) {
         this.type = type;
     }
 
-    public MedStagedActivityState getStatus() {
+    public StagedActivityState getStatus() {
         return status;
     }
 
-    public void setStatus(MedStagedActivityState status) {
+    public void setStatus(StagedActivityState status) {
         this.status = status;
     }
 
@@ -123,11 +123,11 @@ public class MedStagedActivityRecord {
         this.resultResettable = resultResettable;
     }
 
-    public static MedStagedActivity toMedStagedActivity(MedStagedActivityRecord record) {
+    public static StagedActivity toStagedActivity(StagedActivityRecord record) {
 
-        MedStagedActivity activity = null;
+        StagedActivity activity = null;
         if (record != null){
-            activity = new MedStagedActivity();
+            activity = new StagedActivity();
             activity.setId(record.stagedActivityId);
             activity.setType(record.type);
             activity.setStatus(record.status);
@@ -136,13 +136,13 @@ public class MedStagedActivityRecord {
             activity.setInstructions(record.instructions);
             activity.setTintColor(record.tintColor);
             activity.setResultResettable(record.isResultResettable());
-            activity.setSchedule(GSON.fromJson(record.schedule, MedStagedSchedule.class));
+            activity.setSchedule(GSON.fromJson(record.schedule, StagedSchedule.class));
         }
         return activity;
     }
 
-    public static MedStagedActivityRecord toRecord(MedStagedActivity activity) {
-        MedStagedActivityRecord record = new MedStagedActivityRecord();
+    public static StagedActivityRecord toRecord(StagedActivity activity) {
+        StagedActivityRecord record = new StagedActivityRecord();
         record.stagedActivityId = activity.getId();
         record.type = activity.getType();
         record.status = activity.getStatus();
