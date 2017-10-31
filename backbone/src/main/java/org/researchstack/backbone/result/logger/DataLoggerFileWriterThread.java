@@ -105,7 +105,11 @@ public class DataLoggerFileWriterThread {
                         closingException.printStackTrace();
                     }
                 }
-                writeFailedFromThreadToMainThread(e);
+                if (e.getMessage().contains("Stream Closed")) {
+                    // Ignore this IOException, since the message can just be ignored safely
+                } else {
+                    writeFailedFromThreadToMainThread(e);
+                }
             }
         }
 
