@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -33,6 +34,11 @@ public class ArcDrawable extends Drawable {
         mStartAngle = startAngle;
     }
 
+    private Path.Direction direction = Path.Direction.CCW;
+    public void setDirection(Path.Direction newDirection) {
+        direction = newDirection;
+    }
+
     public ArcDrawable() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(DEFAULT_STROKE_WIDTH);
@@ -50,7 +56,8 @@ public class ArcDrawable extends Drawable {
                 halfStrokeWidth,
                 canvas.getWidth() - halfStrokeWidth,
                 canvas.getHeight() - halfStrokeWidth);
-        canvas.drawArc(rect, mStartAngle, -mSweepingAngle, false, mPaint);
+        float angle = (direction == Path.Direction.CCW) ? -mSweepingAngle : mSweepingAngle;
+        canvas.drawArc(rect, mStartAngle, angle, false, mPaint);
     }
 
     @Override
