@@ -3,12 +3,20 @@ package org.researchstack.backbone.ui.step.layout;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Animatable2;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Html;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +33,9 @@ import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
 public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout {
+
+    private static final String LOG_TAG = InstructionStepLayout.class.getCanonicalName();
+
     protected StepCallbacks callbacks;
 
     protected InstructionStep instructionStep;
@@ -201,17 +212,37 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                 // TODO: other than setting a flag on the Step?
                 // TODO: catch exceptions maybe?
                 if (isAnimated) {
-                    final AnimatedVectorDrawableCompat animatedVector =
-                            AnimatedVectorDrawableCompat.create(getContext(), drawableInt);
-                    imageView.setImageDrawable(animatedVector);
-                    if (animatedVector != null) {
-                        animatedVector.start();
-                        startAnimationRepeat(animatedVector);
+                    try {
+                        // First, try and load the drawable as an animation-list
+                        Drawable drawable = ResourcesCompat.getDrawable(getResources(), drawableInt, null);
+                        if (drawable != null && drawable instanceof AnimationDrawable) {
+                            AnimationDrawable animationDrawable = (AnimationDrawable)drawable;
+                            imageView.setImageDrawable(animationDrawable);
+                            animationDrawable.start();
+                        }
+                    } catch (Resources.NotFoundException notFoundException) {
+                        // Animation was NOT an animation-list
+                        // Try loading it as an animated vector drawable
+                        try {
+                            final AnimatedVectorDrawableCompat animatedVector =
+                                    AnimatedVectorDrawableCompat.create(getContext(), drawableInt);
+                            imageView.setImageDrawable(animatedVector);
+                            if (animatedVector != null) {
+                                animatedVector.start();
+                                startAnimationRepeat(animatedVector);
+                            }
+                        } catch (ClassCastException castException) {
+                            Log.e(LOG_TAG, "Could not parse animation drawable");
+                        }
                     }
                 } else {
                     // TODO: check if above is needed, setImageResource may be sufficient
                     // https://developer.android.com/guide/topics/graphics/vector-drawable-resources.html
                     imageView.setImageResource(drawableInt);
+                }
+
+                if (instructionStep.scaleType != null) {
+                    imageView.setScaleType(instructionStep.scaleType);
                 }
 
                 imageView.setVisibility(View.VISIBLE);
@@ -222,6 +253,25 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     protected void startAnimationRepeat(final AnimatedVectorDrawableCompat animatedVector) {
+        if (instructionStep.getAnimationRepeatDuration() > 0) {
+            if (mainHandler == null) {
+                mainHandler = new Handler();
+            }
+            mainHandler.removeCallbacksAndMessages(null);
+            final long repeatDuration = instructionStep.getAnimationRepeatDuration();
+            animationRepeatRunnbale = new Runnable() {
+                @Override
+                public void run() {
+                    animatedVector.stop();
+                    animatedVector.start();
+                    mainHandler.postDelayed(animationRepeatRunnbale, repeatDuration);
+                }
+            };
+            mainHandler.postDelayed(animationRepeatRunnbale, repeatDuration);
+        }
+    }
+
+    protected void startAnimationRepeat(final AnimationDrawable animatedVector) {
         if (instructionStep.getAnimationRepeatDuration() > 0) {
             if (mainHandler == null) {
                 mainHandler = new Handler();

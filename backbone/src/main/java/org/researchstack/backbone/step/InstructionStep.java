@@ -1,6 +1,7 @@
 package org.researchstack.backbone.step;
 
 import android.util.Log;
+import android.widget.ImageView;
 
 import org.researchstack.backbone.model.survey.InstructionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
@@ -58,6 +59,11 @@ public class InstructionStep extends Step implements NavigableOrderedTask.Naviga
      Optional icon image to show above the title and text.
      */
     String iconImage;
+
+    /**
+     * Image scale type
+     */
+    public ImageView.ScaleType scaleType;
 
     /**
      * Pointer to the next step to show after this one. If nil, then the next step
