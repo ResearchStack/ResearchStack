@@ -212,8 +212,8 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                 // TODO: other than setting a flag on the Step?
                 // TODO: catch exceptions maybe?
                 if (isAnimated) {
-                    // This can happen if the animation was actually a animation-list
                     try {
+                        // First, try and load the drawable as an animation-list
                         Drawable drawable = ResourcesCompat.getDrawable(getResources(), drawableInt, null);
                         if (drawable != null && drawable instanceof AnimationDrawable) {
                             AnimationDrawable animationDrawable = (AnimationDrawable)drawable;
@@ -221,6 +221,8 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                             animationDrawable.start();
                         }
                     } catch (Resources.NotFoundException notFoundException) {
+                        // Animation was NOT an animation-list
+                        // Try loading it as an animated vector drawable
                         try {
                             final AnimatedVectorDrawableCompat animatedVector =
                                     AnimatedVectorDrawableCompat.create(getContext(), drawableInt);
