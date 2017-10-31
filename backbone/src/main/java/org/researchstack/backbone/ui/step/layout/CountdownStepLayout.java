@@ -97,7 +97,7 @@ public class CountdownStepLayout extends ActiveStepLayout {
     }
 
     @Override
-    protected void doUIAnimationPerSecond() {
+    public void doUIAnimationPerSecond() {
         timerTextview.setText(String.valueOf(secondsLeft));
     }
 

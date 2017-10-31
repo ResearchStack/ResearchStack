@@ -151,6 +151,10 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     }
 
     protected void setupSubmitBar() {
+        if (submitBar == null) {
+            return;  // some custom UI implementations don't use the submit bar
+        }
+
         if (activeStep.isOptional()) {
             submitBar.getNegativeActionView().setVisibility(View.VISIBLE);
             submitBar.setNegativeAction(new Action1() {
@@ -254,13 +258,15 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
 
         if (!activeStep.getShouldContinueOnFinish()) {
-            submitBar.setPositiveActionViewEnabled(true);
-            submitBar.setPositiveAction(new Action1() {
-                @Override
-                public void call(Object o) {
-                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
-                }
-            });
+            if (submitBar != null) {
+                submitBar.setPositiveActionViewEnabled(true);
+                submitBar.setPositiveAction(new Action1() {
+                    @Override
+                    public void call(Object o) {
+                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
+                    }
+                });
+            }
         } else if (noRecordersActive) {
             // There will be no recorders onComplete callbacks to wait for, so just go to next activeStep
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
@@ -322,11 +328,14 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
                 }
             }
         };
+        mainHandler.removeCallbacks(animationRunnable);
         mainHandler.post(animationRunnable);
     }
 
-    protected void doUIAnimationPerSecond() {
-        timerTextview.setText(toMinuteSecondsString(secondsLeft));
+    public void doUIAnimationPerSecond() {
+        if (timerTextview != null) {
+            timerTextview.setText(toMinuteSecondsString(secondsLeft));
+        }
     }
 
     private String toMinuteSecondsString(int seconds) {
@@ -335,14 +344,18 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         return String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
     }
 
-    protected void setupActiveViews() {
+    public void setupActiveViews() {
         titleTextview = (TextView) contentContainer.findViewById(R.id.rsb_active_step_layout_title);
-        titleTextview.setText(activeStep.getTitle());
-        titleTextview.setVisibility(activeStep.getTitle() == null ? View.GONE : View.VISIBLE);
+        if (titleTextview != null) {
+            titleTextview.setText(activeStep.getTitle());
+            titleTextview.setVisibility(activeStep.getTitle() == null ? View.GONE : View.VISIBLE);
+        }
 
         textTextview = (TextView) contentContainer.findViewById(R.id.rsb_active_step_layout_text);
-        textTextview.setText(activeStep.getText());
-        textTextview.setVisibility(activeStep.getText() == null ? View.GONE : View.VISIBLE);
+        if (textTextview != null) {
+            textTextview.setText(activeStep.getText());
+            textTextview.setVisibility(activeStep.getText() == null ? View.GONE : View.VISIBLE);
+        }
 
         timerTextview = (TextView) contentContainer.findViewById(R.id.rsb_active_step_layout_countdown);
 
@@ -350,22 +363,26 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         progressBarHorizontal = (ProgressBar) contentContainer.findViewById(R.id.rsb_active_step_layout_progress_horizontal);
 
         imageView = (ImageView) contentContainer.findViewById(R.id.rsb_image_view);
-        if (activeStep.getImageResName() != null) {
-            int drawableInt = ResUtils.getDrawableResourceId(getContext(), activeStep.getImageResName());
-            if (drawableInt != 0) {
-                imageView.setImageResource(drawableInt);
-                imageView.setVisibility(View.VISIBLE);
+        if (imageView != null) {
+            if (activeStep.getImageResName() != null) {
+                int drawableInt = ResUtils.getDrawableResourceId(getContext(), activeStep.getImageResName());
+                if (drawableInt != 0) {
+                    imageView.setImageResource(drawableInt);
+                    imageView.setVisibility(View.VISIBLE);
+                }
+            } else {
+                imageView.setVisibility(View.GONE);
             }
-        } else {
-            imageView.setVisibility(View.GONE);
         }
 
         activeStepLayout = (LinearLayout) contentContainer.findViewById(R.id.rsb_step_layout_active_layout);
 
-        if (activeStep.hasCountDown()) {
-            timerTextview.setVisibility(View.VISIBLE);
-        } else {
-            timerTextview.setVisibility(View.GONE);
+        if (timerTextview != null) {
+            if (activeStep.hasCountDown()) {
+                timerTextview.setVisibility(View.VISIBLE);
+            } else {
+                timerTextview.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -448,13 +465,15 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
             if (activeStep.getShouldContinueOnFinish()) {
                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
             } else {
-                submitBar.getPositiveActionView().setEnabled(true);
-                submitBar.setPositiveAction(new Action1() {
-                    @Override
-                    public void call(Object o) {
-                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
-                    }
-                });
+                if (submitBar != null) {
+                    submitBar.getPositiveActionView().setEnabled(true);
+                    submitBar.setPositiveAction(new Action1() {
+                        @Override
+                        public void call(Object o) {
+                            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
+                        }
+                    });
+                }
             }
         }
     }
