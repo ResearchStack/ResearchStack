@@ -18,7 +18,7 @@ public class ActiveStepSurveyItem extends SurveyItem<String> {
     private int    stepDuration;
 
     /* Default constructor needed for serilization/deserialization of object */
-    ActiveStepSurveyItem() {
+    public ActiveStepSurveyItem() {
         super();
     }
 
