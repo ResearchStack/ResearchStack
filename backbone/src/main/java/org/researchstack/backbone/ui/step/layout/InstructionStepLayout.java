@@ -219,6 +219,9 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                             AnimationDrawable animationDrawable = (AnimationDrawable)drawable;
                             imageView.setImageDrawable(animationDrawable);
                             animationDrawable.start();
+                        } else {
+                            // This will trigger trying the animated vector compat code
+                            throw new Resources.NotFoundException();
                         }
                     } catch (Resources.NotFoundException notFoundException) {
                         // Animation was NOT an animation-list

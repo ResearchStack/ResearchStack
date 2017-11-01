@@ -47,6 +47,13 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
     private long minTime;
     private float minDistance;
 
+    private double totalDistance;
+    private Location lastLocation;
+    private LocationUpdateListener locationUpdateListener;
+    public void setLocationUpdateListener(LocationUpdateListener listener) {
+        locationUpdateListener = listener;
+    }
+
     /**
      * @param minTime per Android doc, minimum time interval between location updates, in milliseconds
      * @param minDistance per Android doc, minimum distance between location updates, in meters, no minimum if zero
@@ -62,6 +69,9 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
 
     @Override
     public void start(Context context) {
+
+        lastLocation = null;
+        totalDistance = 0;
 
         if (locationManager == null) {
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -150,6 +160,14 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
             }
 
             writeJsonObjectToFile(jsonObject);
+
+            if (locationUpdateListener != null) {
+                if (lastLocation != null) {
+                    totalDistance += lastLocation.distanceTo(location);
+                }
+                locationUpdateListener.onLocationUpdated(location.getLongitude(), location.getLatitude(), totalDistance);
+            }
+            lastLocation = location;
         }
     }
 
@@ -166,5 +184,14 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
     @Override
     public void onProviderDisabled(String s) {
         Log.i(TAG, "onProviderDisabled " + s);
+    }
+
+    public interface LocationUpdateListener {
+        /**
+         * @param longitude the longitude of the current position
+         * @param latitude the longitude of the current position
+         * @param distance the total distance covered so far, in meters
+         */
+        void onLocationUpdated(double longitude, double latitude, double distance);
     }
 }

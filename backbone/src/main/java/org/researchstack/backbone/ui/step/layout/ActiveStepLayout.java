@@ -251,7 +251,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
             speakText(activeStep.getFinishedSpokenInstruction());
         }
 
-        boolean noRecordersActive = recorderList.isEmpty();
+        boolean noRecordersActive = (recorderList == null || recorderList.isEmpty());
 
         for (Recorder recorder : recorderList) {
             recorder.stop();

@@ -203,7 +203,7 @@ public class SurveyFactory {
                 if (!(item instanceof ActiveStepSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, ACTIVE_STEP types must be ActiveStepSurveyItem");
                 }
-                return createShareTheAppStep(context, (InstructionSurveyItem)item);
+                return createActiveStep(context, (ActiveStepSurveyItem)item);
             case CUSTOM:
                 // To override a custom step from survey item mapping,
                 // You need to override the CustomStepCreator
@@ -272,8 +272,12 @@ public class SurveyFactory {
         if (item.scaleType != null) {
             step.scaleType = item.scaleType;
         }
-        step.setIsImageAnimated(item.isImageAnimated);
-        step.setAnimationRepeatDuration(item.animationRepeatDuration);
+        if (item.isImageAnimated) {
+            step.setIsImageAnimated(true);
+        }
+        if (item.animationRepeatDuration > 0) {
+            step.setAnimationRepeatDuration(item.animationRepeatDuration);
+        }
     }
 
     /**
@@ -785,8 +789,27 @@ public class SurveyFactory {
     }
 
     public ActiveStep createActiveStep(Context context, ActiveStepSurveyItem item) {
-        ActiveStep step = new ActiveStep(item.identifier, item.title, item.text);
+        ActiveStep step = new ActiveStep(item.identifier);
+        fillActiveStep(step, item);
         return step;
+    }
+
+    public void fillActiveStep(ActiveStep step, ActiveStepSurveyItem item) {
+        if (item.title != null) {
+            step.setTitle(item.title);
+        }
+        if (item.text != null) {
+            step.setText(item.text);
+        }
+        if (item.getStepDuration() > 0) {
+            step.setStepDuration(item.getStepDuration());
+        }
+        if (item.getStepFinishedSpokenInstruction() != null) {
+            step.setFinishedSpokenInstruction(item.getStepFinishedSpokenInstruction());
+        }
+        if (item.getStepSpokenInstruction() != null) {
+            step.setSpokenInstruction(item.getStepSpokenInstruction());
+        }
     }
 
     /**
