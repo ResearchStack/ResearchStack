@@ -58,11 +58,32 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
 
     private static final String LOG_TAG = ActivitiesFragment.class.getCanonicalName();
     public static final int REQUEST_TASK = 1492;
-    private TaskAdapter adapter;
-    private RecyclerView recyclerView;
-    private Subscription subscription;
-    private SwipeRefreshLayout swipeContainer;
 
+    private TaskAdapter adapter;
+    public TaskAdapter getAdapter() {
+        return adapter;
+    }
+    public void setAdapter(TaskAdapter adapter) {
+        this.adapter = adapter;
+    }
+
+    private RecyclerView recyclerView;
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
+    private Subscription subscription;
+    public void setRxSubscription(Subscription subscription) {
+        this.subscription = subscription;
+    }
+    public Subscription getRxSubscription() {
+        return subscription;
+    }
+
+    private SwipeRefreshLayout swipeContainer;
+    public SwipeRefreshLayout getSwipeFreshLayout() {
+        return swipeContainer;
+    }
 
     @Nullable
     @Override
@@ -93,7 +114,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         unsubscribe();
     }
 
-    private void unsubscribe() {
+    public void unsubscribe() {
         if (subscription != null) {
             subscription.unsubscribe();
         }
