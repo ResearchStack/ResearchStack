@@ -72,9 +72,13 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         this.adapter = adapter;
     }
 
-    // To allow unit tests to mock.
-    @VisibleForTesting
-    void setIntentFactory(@NonNull IntentFactory intentFactory) {
+    /** Intent factory, made available for subclasses to create Intent instances. */
+    public final IntentFactory getIntentFactory() {
+        return intentFactory;
+    }
+
+    /** Intent factory setter, made available if subclasses' unit tests need to mock. */
+    public final void setIntentFactory(@NonNull IntentFactory intentFactory) {
         this.intentFactory = intentFactory;
     }
 
@@ -176,28 +180,44 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
             if (newTask == null) {
                 // We were unable to load the survey task. This probably means it's one of these
                 // custom tasks, keyed off task ID.
-                // TODO: figure out a different way to show do these in loadTask
-                if (task.taskID.equals(APHTappingActivitySurveyIdentifier)) {
-                    startCustomTappingTask();
-                } else if (task.taskID.equals(APHTremorActivitySurveyIdentifier)) {
-                    startCustomTremorTask();
-                } else if (task.taskID.equals(APHVoiceActivitySurveyIdentifier)) {
-                    startCustomVoiceTask();
-                } else if (task.taskID.equals(APHWalkingActivitySurveyIdentifier)) {
-                    startCustomWalkingTask();
-                } else if (task.taskID.equals(APHMoodSurveyIdentifier)) {
-                    startCustomMoodSurveyTask();
-                } else {
-                    Toast.makeText(getActivity(),
-                            R.string.rss_local_error_load_task,
-                            Toast.LENGTH_SHORT).show();
-                }
+                startCustomTask(task);
             } else {
                 // This is a survey task.
                 startActivityForResult(intentFactory.newTaskIntent(getContext(),
                         ViewTaskActivity.class, newTask), REQUEST_TASK);
             }
         });
+    }
+
+    /**
+     * <p>
+     * Start a custom task based on the given task schedule model. Generally used if the
+     * DataProvider cannot load the task for whatever reason.
+     * </p>
+     * <p>
+     * If apps need to specify their own custom tasks, they should override this method.
+     * </p>
+     *
+     * @param task
+     *         task schedule model to trigger the custom task
+     */
+    protected void startCustomTask(SchedulesAndTasksModel.TaskScheduleModel task) {
+        // TODO: figure out a different way to show do these in loadTask
+        if (task.taskID.equals(APHTappingActivitySurveyIdentifier)) {
+            startCustomTappingTask();
+        } else if (task.taskID.equals(APHTremorActivitySurveyIdentifier)) {
+            startCustomTremorTask();
+        } else if (task.taskID.equals(APHVoiceActivitySurveyIdentifier)) {
+            startCustomVoiceTask();
+        } else if (task.taskID.equals(APHWalkingActivitySurveyIdentifier)) {
+            startCustomWalkingTask();
+        } else if (task.taskID.equals(APHMoodSurveyIdentifier)) {
+            startCustomMoodSurveyTask();
+        } else {
+            Toast.makeText(getActivity(),
+                    R.string.rss_local_error_load_task,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
