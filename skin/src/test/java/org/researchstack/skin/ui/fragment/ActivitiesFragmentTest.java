@@ -51,7 +51,7 @@ public class ActivitiesFragmentTest {
         fragment.setAdapter(mockAdapter);
         fragment.setIntentFactory(mockIntentFactory);
         fragment.setObservableTransformerFactory(mockObservableTransformerFactory);
-        fragment.setSwipeContainer(mock(SwipeRefreshLayout.class));
+        fragment.setSwipeFreshLayout(mock(SwipeRefreshLayout.class));
     }
 
     @AfterClass

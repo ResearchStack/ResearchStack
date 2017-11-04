@@ -58,6 +58,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
 
     private static final String LOG_TAG = ActivitiesFragment.class.getCanonicalName();
     public static final int REQUEST_TASK = 1492;
+
     private TaskAdapter adapter;
     private IntentFactory intentFactory = IntentFactory.INSTANCE;
     private ObservableTransformerFactory observableTransformerFactory =
@@ -66,9 +67,11 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
     private Subscription subscription;
     private SwipeRefreshLayout swipeContainer;
 
-    // To allow unit tests to mock.
-    @VisibleForTesting
-    void setAdapter(@NonNull TaskAdapter adapter) {
+    public TaskAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void setAdapter(TaskAdapter adapter) {
         this.adapter = adapter;
     }
 
@@ -89,9 +92,25 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         this.observableTransformerFactory = observableTransformerFactory;
     }
 
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
+    public Subscription getRxSubscription() {
+        return subscription;
+    }
+
+    public void setRxSubscription(Subscription subscription) {
+        this.subscription = subscription;
+    }
+
+    public SwipeRefreshLayout getSwipeFreshLayout() {
+        return swipeContainer;
+    }
+
     // To allow unit tests to mock.
     @VisibleForTesting
-    void setSwipeContainer(@NonNull SwipeRefreshLayout swipeContainer) {
+    void setSwipeFreshLayout(@NonNull SwipeRefreshLayout swipeContainer) {
         this.swipeContainer = swipeContainer;
     }
 
@@ -124,7 +143,7 @@ public class ActivitiesFragment extends Fragment implements StorageAccessListene
         unsubscribe();
     }
 
-    private void unsubscribe() {
+    public void unsubscribe() {
         if (subscription != null) {
             subscription.unsubscribe();
         }
