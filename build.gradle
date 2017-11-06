@@ -11,7 +11,7 @@ buildscript {
         // change this to 1.5.x if you're not on Android Studio 2.0.0 beta
         classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
         // workaround lint bug concerning lombok (used by retrolambda)
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
