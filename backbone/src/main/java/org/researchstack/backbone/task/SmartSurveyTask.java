@@ -1,7 +1,8 @@
-package org.researchstack.skin.task;
+package org.researchstack.backbone.task;
 
 import android.content.Context;
 
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
@@ -16,10 +17,8 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.skin.R;
-import org.researchstack.skin.model.TaskModel;
+import org.researchstack.backbone.model.TaskModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;

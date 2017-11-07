@@ -1,4 +1,4 @@
-package org.researchstack.skin.test;
+package org.researchstack.backbone.task;
 
 
 import android.content.Context;
@@ -8,8 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.researchstack.skin.model.TaskModel;
-import org.researchstack.skin.task.SmartSurveyTask;
+import org.researchstack.backbone.model.TaskModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class SmartSurveyTaskTest {
     public void setUp() throws Exception
 
     {
-        elements = new ArrayList<TaskModel.StepModel>();
+        elements = new ArrayList<>();
         //elements.add("sup1");
         taskModel = new TaskModel();
         taskModel.identifier = "weight";
