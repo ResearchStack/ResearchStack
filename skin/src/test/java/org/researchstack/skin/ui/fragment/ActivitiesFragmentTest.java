@@ -47,11 +47,18 @@ public class ActivitiesFragmentTest {
         mockObservableTransformerFactory = mock(ObservableTransformerFactory.class);
 
         // Spy fragment, so we can separate out non-test calls.
-        fragment = spy(new ActivitiesFragment());
+        fragment = spy(new TestActivitiesFragment());
         fragment.setAdapter(mockAdapter);
         fragment.setIntentFactory(mockIntentFactory);
         fragment.setObservableTransformerFactory(mockObservableTransformerFactory);
         fragment.setSwipeFreshLayout(mock(SwipeRefreshLayout.class));
+    }
+
+    public static class TestActivitiesFragment extends ActivitiesFragment {
+        @Override
+        protected void startCustomTask(SchedulesAndTasksModel.TaskScheduleModel task) {
+            // do nothing
+        }
     }
 
     @AfterClass
@@ -82,108 +89,20 @@ public class ActivitiesFragmentTest {
     }
 
     @Test
-    public void taskSelected_Tapping() {
+    public void taskSelected_NonSurvey() {
         // Mock dataProvider.loadTask()
         when(mockDataProvider.loadTask(any(), any())).thenReturn(Single.just(null));
-
-        // Spy fragment.startCustomTask()
-        doNothing().when(fragment).startCustomTappingTask();
 
         // Make test task
         SchedulesAndTasksModel.TaskScheduleModel taskScheduleModel =
                 new SchedulesAndTasksModel.TaskScheduleModel();
-        taskScheduleModel.taskID = ActivitiesFragment.APHTappingActivitySurveyIdentifier;
 
         // Execute
         fragment.taskSelected(taskScheduleModel);
 
         // Verify data flow
         verify(mockDataProvider).loadTask(any(), same(taskScheduleModel));
-        verify(fragment).startCustomTappingTask();
-    }
-
-    @Test
-    public void taskSelected_Tremor() {
-        // Mock dataProvider.loadTask()
-        when(mockDataProvider.loadTask(any(), any())).thenReturn(Single.just(null));
-
-        // Spy fragment.startCustomTask()
-        doNothing().when(fragment).startCustomTremorTask();
-
-        // Make test task
-        SchedulesAndTasksModel.TaskScheduleModel taskScheduleModel =
-                new SchedulesAndTasksModel.TaskScheduleModel();
-        taskScheduleModel.taskID = ActivitiesFragment.APHTremorActivitySurveyIdentifier;
-
-        // Execute
-        fragment.taskSelected(taskScheduleModel);
-
-        // Verify data flow
-        verify(mockDataProvider).loadTask(any(), same(taskScheduleModel));
-        verify(fragment).startCustomTremorTask();
-    }
-
-    @Test
-    public void taskSelected_Voice() {
-        // Mock dataProvider.loadTask()
-        when(mockDataProvider.loadTask(any(), any())).thenReturn(Single.just(null));
-
-        // Spy fragment.startCustomTask()
-        doNothing().when(fragment).startCustomVoiceTask();
-
-        // Make test task
-        SchedulesAndTasksModel.TaskScheduleModel taskScheduleModel =
-                new SchedulesAndTasksModel.TaskScheduleModel();
-        taskScheduleModel.taskID = ActivitiesFragment.APHVoiceActivitySurveyIdentifier;
-
-        // Execute
-        fragment.taskSelected(taskScheduleModel);
-
-        // Verify data flow
-        verify(mockDataProvider).loadTask(any(), same(taskScheduleModel));
-        verify(fragment).startCustomVoiceTask();
-    }
-
-    @Test
-    public void taskSelected_Walking() {
-        // Mock dataProvider.loadTask()
-        when(mockDataProvider.loadTask(any(), any())).thenReturn(Single.just(null));
-
-        // Spy fragment.startCustomTask()
-        doNothing().when(fragment).startCustomWalkingTask();
-
-        // Make test task
-        SchedulesAndTasksModel.TaskScheduleModel taskScheduleModel =
-                new SchedulesAndTasksModel.TaskScheduleModel();
-        taskScheduleModel.taskID = ActivitiesFragment.APHWalkingActivitySurveyIdentifier;
-
-        // Execute
-        fragment.taskSelected(taskScheduleModel);
-
-        // Verify data flow
-        verify(mockDataProvider).loadTask(any(), same(taskScheduleModel));
-        verify(fragment).startCustomWalkingTask();
-    }
-
-    @Test
-    public void taskSelected_Mood() {
-        // Mock dataProvider.loadTask()
-        when(mockDataProvider.loadTask(any(), any())).thenReturn(Single.just(null));
-
-        // Spy fragment.startCustomTask()
-        doNothing().when(fragment).startCustomMoodSurveyTask();
-
-        // Make test task
-        SchedulesAndTasksModel.TaskScheduleModel taskScheduleModel =
-                new SchedulesAndTasksModel.TaskScheduleModel();
-        taskScheduleModel.taskID = ActivitiesFragment.APHMoodSurveyIdentifier;
-
-        // Execute
-        fragment.taskSelected(taskScheduleModel);
-
-        // Verify data flow
-        verify(mockDataProvider).loadTask(any(), same(taskScheduleModel));
-        verify(fragment).startCustomMoodSurveyTask();
+        verify(fragment).startCustomTask(same(taskScheduleModel));
     }
 
     @Test
