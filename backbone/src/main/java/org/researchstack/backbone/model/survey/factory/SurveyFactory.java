@@ -2,11 +2,10 @@ package org.researchstack.backbone.model.survey.factory;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.InputType;
-
-import com.google.gson.JsonElement;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
@@ -21,6 +20,7 @@ import org.researchstack.backbone.answerformat.PasswordAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.model.TaskModel;
 import org.researchstack.backbone.model.survey.ActiveStepSurveyItem;
 import org.researchstack.backbone.model.survey.BooleanQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
@@ -57,6 +57,7 @@ import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationExpectedAnswerQuestionStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
 import org.researchstack.backbone.step.active.ActiveStep;
+import org.researchstack.backbone.task.SmartSurveyTask;
 import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 
 import java.util.ArrayList;
@@ -75,6 +76,8 @@ import java.util.Locale;
  */
 
 public class SurveyFactory {
+    /** Singleton instance. */
+    public static final SurveyFactory INSTANCE = new SurveyFactory();
 
     // The rest of them use the toString of ProfileInfoOption
     public static final String EMAIL_VERIFICATION_SUBSTEP_IDENTIFIER = "emailVerificationSubstep";
@@ -90,6 +93,19 @@ public class SurveyFactory {
     public SurveyFactory() {
         super();
         // Default constructor, mainly used for subclasses
+    }
+
+    /**
+     * Create a SmartSurveyTask for the given Context and TaskModel
+     *
+     * @param context   activity context
+     * @param taskModel task model to create the survey task from
+     * @return created survey task
+     */
+    @NonNull
+    public SmartSurveyTask createSmartSurveyTask(
+            @NonNull Context context, @NonNull TaskModel taskModel) {
+        return new SmartSurveyTask(context, taskModel);
     }
 
     /**

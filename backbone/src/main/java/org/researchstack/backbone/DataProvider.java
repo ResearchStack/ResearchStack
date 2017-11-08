@@ -2,15 +2,15 @@ package org.researchstack.backbone;
 
 import android.app.Application;
 import android.content.Context;
-
+import android.support.annotation.NonNull;
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;
 import org.researchstack.backbone.model.User;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.task.Task;
-
 import rx.Observable;
+import rx.Single;
 
 /**
  * Class used to as a buffer between the network layer and UI layer. The implementation allows the
@@ -271,7 +271,8 @@ public abstract class DataProvider {
      * @param context android context
      * @return a SchedulesAndTasksModel object
      */
-    public abstract SchedulesAndTasksModel loadTasksAndSchedules(Context context);
+    @NonNull
+    public abstract Single<SchedulesAndTasksModel> loadTasksAndSchedules(Context context);
 
     /**
      * Loads a Task object
@@ -280,7 +281,8 @@ public abstract class DataProvider {
      * @param task    the TaskScheduleModel model
      * @return a Task object with defined sub-steps
      */
-    public abstract Task loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task);
+    @NonNull
+    public abstract Single<Task> loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task);
 
     /**
      * This initial task may include profile items such as height and weight that may need to be
