@@ -87,6 +87,16 @@ public abstract class DataProvider {
     public abstract Observable<DataResponse> signIn(Context context, String username, String password);
 
     /**
+     * Called to sign the user in using the user's external ID.
+     *
+     * @param context    android context
+     * @param externalId the user's external ID
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
+     * returning true if signIn was successful
+     */
+    public abstract Observable<DataResponse> signInWithExternalId(Context context, String externalId);
+
+    /**
      * Sign out the user.  This will possibly involve a call to the server,
      * and also clear all relevant local data that relates to the User, User Session, or Consent
      *

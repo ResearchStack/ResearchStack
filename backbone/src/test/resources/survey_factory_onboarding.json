@@ -30,5 +30,9 @@
     "type"         : "onboardingCompletion",
     "title"        : "Thank You!",
     "text"         : "You are all set."
+  },
+  {
+    "identifier"   : "externalIDLogin",
+    "type"         : "externalIDLogin"
   }
 ]
