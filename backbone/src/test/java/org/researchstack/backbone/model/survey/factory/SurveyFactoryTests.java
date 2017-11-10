@@ -183,7 +183,7 @@ public class SurveyFactoryTests {
         // This doesn't usually happen *after* onboarding completion (and never with login w/ email
         // and password), but for the sake of this test, we're adding it here.
         assertTrue(stepList.get(6) instanceof LoginStep);
-        assertEquals("externalIDLogin", stepList.get(6).getIdentifier());
+        assertEquals("externalID", stepList.get(6).getIdentifier());
         LoginStep externalIdLoginStep = (LoginStep) stepList.get(6);
         assertEquals(1, externalIdLoginStep.getProfileInfoOptions().size());
         assertEquals(ProfileInfoOption.EXTERNAL_ID, externalIdLoginStep.getProfileInfoOptions()

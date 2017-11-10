@@ -219,11 +219,9 @@ public class SurveyFactory {
             case ACCOUNT_DATA_GROUPS:
                 return createNotImplementedStep(item);
             case ACCOUNT_EXTERNAL_ID:
-                return createNotImplementedStep(item);
-            case ACCOUNT_EXTERNAL_ID_LOGIN:
                 if (!(item instanceof ProfileSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, " +
-                            "ACCOUNT_EXTERNAL_ID_LOGIN types must be ProfileSurveyItem");
+                            "ACCOUNT_EXTERNAL_ID types must be ProfileSurveyItem");
                 }
                 return createLoginStep(context, (ProfileSurveyItem)item, EXTERNAL_ID_LOGIN_OPTIONS);
             case PASSCODE:
@@ -722,6 +720,8 @@ public class SurveyFactory {
     /**
      * @param context can be any context, activity or application, used to access "R" resources
      * @param item InstructionSurveyItem from JSON
+     * @param loginOptions A list of ProfileInfoOptions representing the fields needed for login.
+     *                     Can be defaultLoginOptions() for email/password, EXTERNAL_ID_LOGIN_OPTIONS
      * @return valid EmailVerificationSubStep matching the InstructionSurveyItem
      */
     public LoginStep createLoginStep(

@@ -57,8 +57,6 @@ public enum SurveyItemType {
     ACCOUNT_EMAIL_VERIFICATION  ("emailVerification"   ),   // EmailVerificationStep
     @SerializedName("externalID")
     ACCOUNT_EXTERNAL_ID         ("externalID"          ),   // ExternalIDStep
-    @SerializedName("externalIDLogin")
-    ACCOUNT_EXTERNAL_ID_LOGIN   ("externalIDLogin"     ),   // ExternalIDLoginStep
     @SerializedName("permissions")
     ACCOUNT_PERMISSIONS         ("permissions"         ),   // PermissionsStep
     @SerializedName("onboardingCompletion")

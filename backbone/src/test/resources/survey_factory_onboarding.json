@@ -32,7 +32,7 @@
     "text"         : "You are all set."
   },
   {
-    "identifier"   : "externalIDLogin",
-    "type"         : "externalIDLogin"
+    "identifier"   : "externalID",
+    "type"         : "externalID"
   }
 ]
