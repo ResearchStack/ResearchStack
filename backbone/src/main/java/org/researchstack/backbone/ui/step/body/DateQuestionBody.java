@@ -31,7 +31,7 @@ public class DateQuestionBody implements StepBody {
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private QuestionStep step;
-    private StepResult<Long> result;
+    private StepResult<Object> result;
     private DateAnswerFormat format;
     private Calendar calendar;
     private DateFormat dateformatter;
@@ -52,8 +52,18 @@ public class DateQuestionBody implements StepBody {
             this.dateformatter = FormatHelper.getFormat(FormatHelper.NONE, DateFormat.MEDIUM);
         }
 
+
+        // Fix, check if the Timestamp was set as Double or Long
+        Long savedTimeInMillis = null;
+        if (this.result.getResult() != null) {
+            if (this.result.getResult() instanceof Double) {
+                savedTimeInMillis = ((Double) this.result.getResult()).longValue();
+            } else if (this.result.getResult() instanceof Long) {
+                savedTimeInMillis = (Long) this.result.getResult();
+            }
+        }
+
         // First check the result and restore last picked date
-        Long savedTimeInMillis = this.result.getResult();
         if (savedTimeInMillis != null) {
             calendar.setTimeInMillis(savedTimeInMillis);
             hasChosenDate = true;
