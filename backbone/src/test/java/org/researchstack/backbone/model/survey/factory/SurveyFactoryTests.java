@@ -7,11 +7,8 @@ import com.google.gson.reflect.TypeToken;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -45,10 +42,6 @@ import org.researchstack.backbone.step.SubtaskStep;
 import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -147,7 +140,7 @@ public class SurveyFactoryTests {
 
         assertNotNull(stepList);
         assertTrue(stepList.size() > 0);
-        assertEquals(6, stepList.size());
+        assertEquals(7, stepList.size());
 
         assertTrue(stepList.get(0) instanceof LoginStep);
         assertEquals("login", stepList.get(0).getIdentifier());
@@ -186,6 +179,20 @@ public class SurveyFactoryTests {
 
         assertTrue(stepList.get(5) instanceof InstructionStep);
         assertEquals("onboardingCompletion", stepList.get(5).getIdentifier());
+
+        // This doesn't usually happen *after* onboarding completion (and never with login w/ email
+        // and password), but for the sake of this test, we're adding it here.
+        assertTrue(stepList.get(6) instanceof LoginStep);
+        assertEquals("externalID", stepList.get(6).getIdentifier());
+        LoginStep externalIdLoginStep = (LoginStep) stepList.get(6);
+        assertEquals(1, externalIdLoginStep.getProfileInfoOptions().size());
+        assertEquals(ProfileInfoOption.EXTERNAL_ID, externalIdLoginStep.getProfileInfoOptions()
+                .get(0));
+        assertEquals(1, externalIdLoginStep.getFormSteps().size());
+        assertTrue(externalIdLoginStep.getFormSteps().get(0).getAnswerFormat()
+                instanceof TextAnswerFormat);
+        assertEquals(SurveyFactory.EXTERNAL_ID_MAX_LENGTH, ((TextAnswerFormat) externalIdLoginStep
+                .getFormSteps().get(0).getAnswerFormat()).getMaximumLength());
     }
 
     @Test

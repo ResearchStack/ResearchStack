@@ -106,6 +106,8 @@
     <string name="rsb_name_placeholder">Enter full name</string>
     <string name="rsb_email">Email</string>
     <string name="rsb_email_placeholder">jappleseed@example.com</string>
+    <string name="rsb_external_id">External ID</string>
+    <string name="rsb_external_id_placeholder">Enter external ID</string>
     <string name="rsb_password">Password</string>
     <string name="rsb_password_placeholder">Enter password</string>
     <string name="rsb_confirm_password">Confirm</string>

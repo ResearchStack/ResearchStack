@@ -10,7 +10,6 @@ import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.User;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
@@ -22,7 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by TheMDP on 1/14/17.
@@ -186,6 +184,13 @@ public class ProfileStepLayout extends FormStepLayout {
      */
     protected QuestionStep getEmailStep() {
         return getQuestionStep(ProfileInfoOption.EMAIL.getIdentifier());
+    }
+
+    /**
+     * @return External ID if this profile form step has it, null otherwise
+     */
+    protected String getExternalId() {
+        return getTextAnswer(ProfileInfoOption.EXTERNAL_ID.getIdentifier());
     }
 
     /**

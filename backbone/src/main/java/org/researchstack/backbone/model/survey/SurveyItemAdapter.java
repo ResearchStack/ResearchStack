@@ -6,9 +6,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import org.researchstack.backbone.model.survey.factory.SurveyFactory;
-import org.researchstack.backbone.step.OnboardingCompletionStep;
-
 import java.lang.reflect.Type;
 
 /**
@@ -108,6 +105,7 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
             case ACCOUNT_REGISTRATION:
             case ACCOUNT_LOGIN:
             case ACCOUNT_PROFILE:
+            case ACCOUNT_EXTERNAL_ID:
                 item = context.deserialize(json, ProfileSurveyItem.class);
                 break;
             case ACCOUNT_COMPLETION:
@@ -115,7 +113,6 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
                 item = context.deserialize(json, InstructionSurveyItem.class);
                 break;
             case ACCOUNT_DATA_GROUPS:
-            case ACCOUNT_EXTERNAL_ID:
             case ACCOUNT_PERMISSIONS:
             case PASSCODE:
                 break;

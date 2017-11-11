@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.InputType;
 
@@ -61,6 +62,7 @@ import org.researchstack.backbone.task.SmartSurveyTask;
 import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -83,6 +85,16 @@ public class SurveyFactory {
     public static final String EMAIL_VERIFICATION_SUBSTEP_IDENTIFIER = "emailVerificationSubstep";
     public static final String PASSWORD_CONFIRMATION_IDENTIFIER = "confirmation";
     public static final String CONSENT_QUIZ_IDENTIFIER = "consentQuiz";
+
+    @VisibleForTesting
+    static final int EXTERNAL_ID_MAX_LENGTH = 128;
+
+    private static final List<ProfileInfoOption> EXTERNAL_ID_LOGIN_OPTIONS;
+    static {
+        List<ProfileInfoOption> tempList = new ArrayList<>();
+        tempList.add(ProfileInfoOption.EXTERNAL_ID);
+        EXTERNAL_ID_LOGIN_OPTIONS = Collections.unmodifiableList(tempList);
+    }
 
     // When set, this will be used
     private CustomStepCreator customStepCreator;
@@ -189,7 +201,7 @@ public class SurveyFactory {
                 if (!(item instanceof ProfileSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, ACCOUNT_LOGIN types must be ProfileSurveyItem");
                 }
-                return createLoginStep(context, (ProfileSurveyItem)item);
+                return createLoginStep(context, (ProfileSurveyItem)item, defaultLoginOptions());
             case ACCOUNT_COMPLETION:
                 // TODO: finish the completion step layout, for now just use a simple instruction
                 // TODO: should show the cool check mark animation, see iOS
@@ -207,7 +219,11 @@ public class SurveyFactory {
             case ACCOUNT_DATA_GROUPS:
                 return createNotImplementedStep(item);
             case ACCOUNT_EXTERNAL_ID:
-                return createNotImplementedStep(item);
+                if (!(item instanceof ProfileSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, " +
+                            "ACCOUNT_EXTERNAL_ID types must be ProfileSurveyItem");
+                }
+                return createLoginStep(context, (ProfileSurveyItem)item, EXTERNAL_ID_LOGIN_OPTIONS);
             case PASSCODE:
                 return createPasscodeStep(context, item);
             case SHARE_THE_APP:
@@ -540,7 +556,7 @@ public class SurveyFactory {
                     createGenderQuestionStep(context, profileInfo);
                     break;
                 case EXTERNAL_ID:
-                    // TODO: implement external ID step, which is used for internal app usage
+                    questionSteps.add(createExternalIdQuestionStep(context, profileInfo));
                     break;
                 case BLOOD_TYPE:            // ChoiceTextAnswerFormat, see HealthKit blood types
                 case FITZPATRICK_SKIN_TYPE: // ChoiceTextAnswerFormat
@@ -567,6 +583,22 @@ public class SurveyFactory {
                 R.string.rsb_email,
                 R.string.rsb_email_placeholder,
                 new EmailAnswerFormat());
+    }
+
+    /**
+     * Create a question for External ID.
+     *
+     * @param context       used to generate title and placeholder title for step
+     * @param profileOption used to set step identifier
+     * @return QuestionStep used for gathering user's external ID
+     */
+    public QuestionStep createExternalIdQuestionStep(
+            Context context, ProfileInfoOption profileOption) {
+        return createGenericQuestionStep(context,
+                profileOption.getIdentifier(),
+                R.string.rsb_external_id,
+                R.string.rsb_external_id_placeholder,
+                new TextAnswerFormat(EXTERNAL_ID_MAX_LENGTH));
     }
 
     /**
@@ -688,10 +720,13 @@ public class SurveyFactory {
     /**
      * @param context can be any context, activity or application, used to access "R" resources
      * @param item InstructionSurveyItem from JSON
+     * @param loginOptions A list of ProfileInfoOptions representing the fields needed for login.
+     *                     Can be defaultLoginOptions() for email/password, EXTERNAL_ID_LOGIN_OPTIONS
      * @return valid EmailVerificationSubStep matching the InstructionSurveyItem
      */
-    public LoginStep createLoginStep(Context context, ProfileSurveyItem item) {
-        List<ProfileInfoOption> options = createProfileInfoOptions(context, item, defaultLoginOptions());
+    public LoginStep createLoginStep(
+            Context context, ProfileSurveyItem item, List<ProfileInfoOption> loginOptions) {
+        List<ProfileInfoOption> options = createProfileInfoOptions(context, item, loginOptions);
         return new LoginStep(
                 item.identifier, item.title, item.text,
                 options, createQuestionSteps(context, options, false)); // false = dont create ConfirmPassword step
