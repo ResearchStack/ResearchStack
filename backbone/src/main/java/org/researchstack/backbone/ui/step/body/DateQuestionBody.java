@@ -53,6 +53,7 @@ public class DateQuestionBody implements StepBody {
         }
 
 
+        // Working with ResearchStack/Backbone I got a Cast Exception trying to Cast Result as Long been a Double
         // Fix, check if the Timestamp was set as Double or Long
         Long savedTimeInMillis = null;
         if (this.result.getResult() != null) {
