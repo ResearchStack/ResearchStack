@@ -111,6 +111,8 @@ public class SmartSurveyTask extends Task implements Serializable {
             ((TextAnswerFormat) answerFormat).setIsMultipleLines(multipleLines);
         } else if (type.equals("DateConstraints")) {
             answerFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
+        } else if (type.equals("DateTimeConstraints")) {
+            answerFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.DateAndTime);
         } else if (type.equals("DurationConstraints")) {
             answerFormat = new DurationAnswerFormat(constraints.step, constraints.durationUnit);
         } else {
