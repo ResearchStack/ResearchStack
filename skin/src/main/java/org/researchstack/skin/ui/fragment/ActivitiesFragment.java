@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscription;
+import rx.functions.Action1;
 
 public abstract class ActivitiesFragment extends Fragment implements StorageAccessListener {
     private static final String LOG_TAG = ActivitiesFragment.class.getCanonicalName();
@@ -54,7 +56,7 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
     private IntentFactory intentFactory = IntentFactory.INSTANCE;
     private ObservableTransformerFactory observableTransformerFactory =
             ObservableTransformerFactory.INSTANCE;
-    private RecyclerView recyclerView;
+    protected RecyclerView recyclerView;
     private Subscription subscription;
     private SwipeRefreshLayout swipeContainer;
 
@@ -158,24 +160,46 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
     public void fetchData() {
         DataProvider.getInstance().loadTasksAndSchedules(getActivity()).toObservable()
                 .compose(observableTransformerFactory.defaultTransformer())
-                .subscribe(model -> {
-                    swipeContainer.setRefreshing(false);
-                    if (adapter == null) {
-                        unsubscribe();
-                        adapter = createTaskAdapter();
-                        recyclerView.setAdapter(adapter);
-
-                        subscription = adapter.getPublishSubject().subscribe(task -> {
-                            LogExt.d(LOG_TAG, "Publish subject subscribe clicked.");
-                            taskSelected(task);
-                        });
-                    } else {
-                        adapter.clear();
+                .subscribe(new Action1<SchedulesAndTasksModel>() {
+                    @Override
+                    public void call(SchedulesAndTasksModel model) {
+                        refreshAdapterSuccess(model);
                     }
-
-                    adapter.addAll(processResults(model));
-
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        refreshAdapterFailure(throwable.getLocalizedMessage());
+                    }
                 });
+    }
+
+    protected void refreshAdapterFailure(String errorMessage) {
+        swipeContainer.setRefreshing(false);
+        new AlertDialog.Builder(getContext()).setMessage(errorMessage).create().show();
+    }
+
+    /**
+     * @param model SchedulesAndTasksModel can be used to fill the adapter
+     */
+    protected void refreshAdapterSuccess(SchedulesAndTasksModel model) {
+        swipeContainer.setRefreshing(false);
+        createOrClearAdapter();
+        adapter.addAll(processResults(model));
+    }
+
+    protected void createOrClearAdapter() {
+        if (adapter == null) {
+            unsubscribe();
+            adapter = createTaskAdapter();
+            recyclerView.setAdapter(adapter);
+
+            subscription = adapter.getPublishSubject().subscribe(task -> {
+                LogExt.d(LOG_TAG, "Publish subject subscribe clicked.");
+                taskSelected(task);
+            });
+        } else {
+            adapter.clear();
+        }
     }
 
     public void taskSelected(SchedulesAndTasksModel.TaskScheduleModel task) {
