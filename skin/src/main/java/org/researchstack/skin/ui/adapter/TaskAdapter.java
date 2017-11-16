@@ -28,10 +28,10 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_ITEM = 1;
 
-    List<Object> tasks;
-    private LayoutInflater inflater;
+    protected List<Object> tasks;
+    protected LayoutInflater inflater;
 
-    PublishSubject<SchedulesAndTasksModel.TaskScheduleModel> publishSubject = PublishSubject.create();
+    protected PublishSubject<SchedulesAndTasksModel.TaskScheduleModel> publishSubject = PublishSubject.create();
 
     public TaskAdapter(Context context) {
         super();

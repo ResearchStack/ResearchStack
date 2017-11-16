@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
@@ -34,7 +35,7 @@ import rx.Observable;
 public class MainActivity extends BaseActivity {
     private static final int REQUEST_CODE_INITIAL_TASK = 1010;
 
-    private MainPagerAdapter pagerAdapter;
+    protected MainPagerAdapter pagerAdapter;
 
     private boolean failedToFinishInitialTask;
 
@@ -67,14 +68,18 @@ public class MainActivity extends BaseActivity {
                 }
             });
 
-            for (ActionItem item : items) {
-                tabLayout.addIconTab(
-                        item.getTitle(),
-                        item.getIcon(),
-                        items.indexOf(item) == 0,
-                        // need real logic for this (show badge)
-                        items.indexOf(item) == 0
-                );
+            if(items != null && items.size() > 1) {
+                for (ActionItem item : items) {
+                    tabLayout.addIconTab(
+                            item.getTitle(),
+                            item.getIcon(),
+                            items.indexOf(item) == 0,
+                            // need real logic for this (show badge)
+                            items.indexOf(item) == 0
+                    );
+                }
+            } else { // If there is only one tab, hide the layout
+                tabLayout.setVisibility(View.GONE);
             }
 
             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
