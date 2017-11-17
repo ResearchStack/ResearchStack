@@ -36,6 +36,7 @@ import org.researchstack.backbone.model.survey.QuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SubtaskQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
+import org.researchstack.backbone.model.survey.TextfieldSurveyItem;
 import org.researchstack.backbone.model.survey.TimingRangeQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
 import org.researchstack.backbone.onboarding.OnboardingSection;
@@ -478,7 +479,15 @@ public class SurveyFactory {
                 break;
             }
             case QUESTION_TEXT:
-                format = new TextAnswerFormat();
+                if (!(item instanceof TextfieldSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, QUESTION_TEXT type must be TextfieldSurveyItem");
+                }
+                TextfieldSurveyItem textfieldSurveyItem = (TextfieldSurveyItem)item;
+                TextAnswerFormat textFormat = new TextAnswerFormat();
+                if (textfieldSurveyItem.inputType != null) {
+                    textFormat.setInputType(textfieldSurveyItem.inputType);
+                }
+                format = textFormat;
                 break;
         }
 

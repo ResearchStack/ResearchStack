@@ -77,7 +77,7 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
                 item = context.deserialize(json, ScaleQuestionSurveyItem.class);
                 break;
             case QUESTION_TEXT:
-                item = context.deserialize(json, CompoundQuestionSurveyItem.class);
+                item = context.deserialize(json, TextfieldSurveyItem.class);
                 break;
             case QUESTION_DATE:
             case QUESTION_DATE_TIME:
