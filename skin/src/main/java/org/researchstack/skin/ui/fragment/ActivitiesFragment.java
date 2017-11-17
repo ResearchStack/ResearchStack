@@ -238,7 +238,7 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
      * @return a list of section groups and section headers
      */
     public List<Object> processResults(SchedulesAndTasksModel model) {
-        if (model == null) {
+        if (model == null || model.schedules == null) {
             return Lists.newArrayList();
         }
         List<Object> tasks = new ArrayList<>();
