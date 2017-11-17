@@ -487,6 +487,9 @@ public class SurveyFactory {
                 if (textfieldSurveyItem.inputType != null) {
                     textFormat.setInputType(textfieldSurveyItem.inputType);
                 }
+                if (textfieldSurveyItem.validationRegex != null) {
+                    textFormat.setValidationRegex(textfieldSurveyItem.validationRegex);
+                }
                 format = textFormat;
                 break;
         }

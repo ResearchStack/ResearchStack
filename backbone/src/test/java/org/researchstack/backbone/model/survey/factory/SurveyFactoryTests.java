@@ -1,6 +1,7 @@
 package org.researchstack.backbone.model.survey.factory;
 
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import android.text.InputType;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -43,6 +44,7 @@ import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -76,6 +78,7 @@ public class SurveyFactoryTests {
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_factory_consent");
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "consentdocument");
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "custom_consentdocument");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_textfield");
 
         mockFingerprintManager = Mockito.mock(FingerprintManagerCompat.class);
         Mockito.when(mockFingerprintManager.isHardwareDetected()).thenReturn(true);
@@ -278,5 +281,26 @@ public class SurveyFactoryTests {
 
         assertEquals(ConsentSection.Type.Custom, consentDoc.getSections().get(3).getType());
         assertEquals("custom_step_identifier2", consentDoc.getSections().get(3).getTypeIdentifier());
+    }
+
+    @Test
+    public void testSurveyItem_textfield() {
+        String textfieldJson = getJsonResource("survey_item_textfield");
+        SurveyItem surveyItem = helper.gson.fromJson(textfieldJson, SurveyItem.class);
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(helper.mockContext, Collections.singletonList(surveyItem));
+
+        assertNotNull(stepList);
+        assertEquals(1, stepList.size());
+
+        assertTrue(stepList.get(0) instanceof QuestionStep);
+        QuestionStep step = (QuestionStep)stepList.get(0);
+        assertEquals("birthdate_month", step.getIdentifier());
+        assertEquals("Month", step.getTitle());
+
+        assertTrue(step.getAnswerFormat() instanceof TextAnswerFormat);
+        TextAnswerFormat format = (TextAnswerFormat)step.getAnswerFormat();
+        assertEquals("^[0-9]*$", format.validationRegex());
+        assertEquals(InputType.TYPE_CLASS_NUMBER, format.getInputType());
     }
 }

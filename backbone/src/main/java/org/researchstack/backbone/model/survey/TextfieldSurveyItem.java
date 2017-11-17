@@ -28,6 +28,9 @@ public class TextfieldSurveyItem extends QuestionSurveyItem<String> {
     @SerializedName("inputType")
     public Integer inputType;
 
+    @SerializedName("validationRegex")
+    public String validationRegex;
+
     /* Default constructor needed for serialization/deserialization of object */
     public TextfieldSurveyItem() {
         super();
