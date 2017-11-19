@@ -59,6 +59,10 @@ public class ActivitiesFragmentTest {
         protected void startCustomTask(SchedulesAndTasksModel.TaskScheduleModel task) {
             // do nothing
         }
+        @Override
+        protected boolean isFragmentValid() {
+            return true;
+        }
     }
 
     @AfterClass
