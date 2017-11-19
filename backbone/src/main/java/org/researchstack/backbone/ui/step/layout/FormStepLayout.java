@@ -173,11 +173,18 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
             nextEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         }
         if (firstEditText != null && formStep.isAutoFocusFirstEditText()) {
-            firstEditText.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-            }
+            focusKeyboard(firstEditText);
+        }
+    }
+
+    protected void focusKeyboard(EditText onEditText) {
+        if (onEditText == null) {
+            return;
+        }
+        onEditText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
     }
 
