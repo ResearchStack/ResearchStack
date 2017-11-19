@@ -38,6 +38,16 @@ public class FormStep extends QuestionStep {
         formSteps = steps;
     }
 
+    private boolean autoFocusFirstEditText;
+
+    public boolean isAutoFocusFirstEditText() {
+        return autoFocusFirstEditText;
+    }
+
+    public void setAutoFocusFirstEditText(boolean autoFocusFirstEditText) {
+        this.autoFocusFirstEditText = autoFocusFirstEditText;
+    }
+
     /**
      * Returns the list of items in the form.
      *

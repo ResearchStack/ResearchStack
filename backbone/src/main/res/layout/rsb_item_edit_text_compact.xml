@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/rsb_margin_left"
+    android:layout_marginRight="@dimen/rsb_margin_right">
 
     <TextView
         android:id="@+id/label"

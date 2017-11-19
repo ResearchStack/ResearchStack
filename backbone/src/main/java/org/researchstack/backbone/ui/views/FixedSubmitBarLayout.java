@@ -2,6 +2,8 @@ package org.researchstack.backbone.ui.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -69,33 +71,33 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
             return;
         }
 
-        scrollView = (ObservableScrollView) findViewById(R.id.rsb_content_container_scrollview);
-        scrollView.setScrollListener(scrollY -> onScrollChanged(scrollView, submitBarGuide, submitBar));
-        scrollView.getViewTreeObserver()
-                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
-                {
-                    @Override
-                    public void onGlobalLayout()
-                    {
-                        scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        scrollView = findViewById(R.id.rsb_content_container_scrollview);
+        // Sub-classes can create layouts without scrollview for fullscreen behavior
+        if (scrollView != null) {
+            scrollView.setScrollListener(scrollY -> onScrollChanged(scrollView, submitBarGuide, submitBar));
+            scrollView.getViewTreeObserver()
+                    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                        // Set submitBarGuide the same height as submitBar
-                        if(submitBarGuide.getHeight() != submitBar.getHeight())
-                        {
-                            submitBarGuide.getLayoutParams().height = submitBar.getHeight();
-                            submitBarGuide.requestLayout();
+                            // Set submitBarGuide the same height as submitBar
+                            if (submitBarGuide.getHeight() != submitBar.getHeight()) {
+                                submitBarGuide.getLayoutParams().height = submitBar.getHeight();
+                                submitBarGuide.requestLayout();
+                            }
+
+                            onScrollChanged(scrollView, submitBarGuide, submitBar);
                         }
-
-                        onScrollChanged(scrollView, submitBarGuide, submitBar);
-                    }
-                });
+                    });
+        }
     }
 
-    public int getContentContainerLayoutId() {
+    public @IdRes int getContentContainerLayoutId() {
         return R.id.rsb_content_container;
     }
 
-    public int getFixedSubmitBarLayoutId() {
+    public @LayoutRes int getFixedSubmitBarLayoutId() {
         return R.layout.rsb_layout_fixed_submit_bar;
     }
 

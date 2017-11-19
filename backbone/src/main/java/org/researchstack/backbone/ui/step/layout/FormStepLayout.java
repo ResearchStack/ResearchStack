@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -56,7 +57,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Child Views
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    protected LinearLayout container;
+    protected ViewGroup container;
     protected LinearLayout stepBodyContainer;
 
     public FormStepLayout(Context context)
@@ -144,11 +145,15 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      * Assign the correct flow for next button to the next EditText
      */
     protected void setupEditTextImeOptions() {
+        EditText firstEditText = null;
         EditText nextEditText = null;
         EditText previousEditText;
         for (FormStepData stepData : subQuestionStepData) {
             EditText editText = findEditText(stepData);
             if (editText != null) {
+                if (firstEditText == null) {
+                    firstEditText = editText;
+                }
                 previousEditText = nextEditText;
                 nextEditText = editText;
                 if (previousEditText != null) {
@@ -166,6 +171,20 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         // Assign the last EditText a Done button, which should automatically hide keyboard
         if (nextEditText != null) {
             nextEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        }
+        if (firstEditText != null && formStep.isAutoFocusFirstEditText()) {
+            firstEditText.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            }
+        }
+    }
+
+    protected void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.toggleSoftInputFromWindow(getRootView().getWindowToken(), 0, 0);
         }
     }
 
@@ -197,6 +216,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      */
     @Override
     public boolean isBackEventConsumed() {
+        if (formStep.isAutoFocusFirstEditText()) {
+            hideKeyboard();
+        }
         updateAllQuestionSteps(false);
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, formStep, stepResult);
         return false;
@@ -213,6 +235,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     }
 
     public void refreshSubmitBar() {
+        if (submitBar == null) {
+            return;  // custom layouts may not have a submit bar
+        }
         submitBar.setPositiveAction(v -> onNextClicked());
         submitBar.setNegativeTitle(R.string.rsb_step_skip);
         submitBar.setNegativeAction(v -> onSkipClicked());
@@ -231,7 +256,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     {
         LogExt.i(getClass(), "initStepLayout()");
 
-        container = (LinearLayout) findViewById(R.id.rsb_form_step_content_container);
+        container = findViewById(R.id.rsb_form_step_content_container);
         stepBodyContainer = (LinearLayout) findViewById(R.id.rsb_form_step_body_layout);
         TextView title = (TextView) findViewById(R.id.rsb_form_step_title);
         TextView summary = (TextView) findViewById(R.id.rsb_form_step_summary);
@@ -286,6 +311,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         boolean isAnswerValid = isAnswerValid(true);
         if (isAnswerValid)
         {
+            if (formStep.isAutoFocusFirstEditText()) {
+                hideKeyboard();
+            }
             updateAllQuestionSteps(false);
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, formStep, stepResult);
         }
