@@ -14,6 +14,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.StepLayoutHelper;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +99,10 @@ public class LoginStepLayout extends ProfileStepLayout {
                 public void onFail(Throwable throwable) {
                     hideLoadingDialog();
                     // TODO: use the status code instead of this string
-                    if (throwable.toString().contains("statusCode=412")) {
+                    if (throwable instanceof UnknownHostException) {
+                        // This is likely a no internet connection error
+                        LoginStepLayout.super.showOkAlertDialog(getString(R.string.rsb_error_no_internet));
+                    } else if (throwable.toString().contains("statusCode=412")) {
                         // Moving to the next step will trigger the re-consent flow
                         // Since the user is not consented, but signed in successfully
                         LoginStepLayout.super.onNextClicked();

@@ -143,6 +143,7 @@
     <string name="rsb_enable">Enable</string>
     <string name="rsb_distance_meters">meters</string>
     <string name="rsb_distance_feet">feet</string>
+    <string name="rsb_error_no_internet">Please check your network connection and try again.</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_data_failed">FailedP to load encrypted data, try again!</string>
