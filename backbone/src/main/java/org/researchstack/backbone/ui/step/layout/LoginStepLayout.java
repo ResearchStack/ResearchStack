@@ -51,9 +51,11 @@ public class LoginStepLayout extends ProfileStepLayout {
             // Add the Forgot Password UI below the login form
             // Only add this if there is an Email step in the form. This might not be present if,
             // for example, we are logging in using a method other than Email.
-            submitBar.getNegativeActionView().setVisibility(View.VISIBLE);
-            submitBar.setNegativeTitle(R.string.rsb_forgot_password);
-            submitBar.setNegativeAction(v -> forgotPasswordClicked());
+            if (submitBar != null) {
+                submitBar.getNegativeActionView().setVisibility(View.VISIBLE);
+                submitBar.setNegativeTitle(R.string.rsb_forgot_password);
+                submitBar.setNegativeAction(v -> forgotPasswordClicked());
+            }
         }
     }
 

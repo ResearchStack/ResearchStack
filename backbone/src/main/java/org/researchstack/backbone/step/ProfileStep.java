@@ -20,12 +20,15 @@ import java.util.List;
 public class ProfileStep extends FormStep {
 
     private List<ProfileInfoOption> profileInfoOptions = new ArrayList<>();
+    public void setProfileInfoOptions(List<ProfileInfoOption> options) {
+        profileInfoOptions = options;
+    }
     public List<ProfileInfoOption> getProfileInfoOptions() {
         return profileInfoOptions;
     }
 
     /* Default constructor needed for serilization/deserialization of object */
-    ProfileStep() {
+    protected ProfileStep() {
         super();
     }
 

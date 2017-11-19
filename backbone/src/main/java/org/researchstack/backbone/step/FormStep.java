@@ -39,6 +39,20 @@ public class FormStep extends QuestionStep {
     }
 
     /**
+     * If true, the first question body layout with an edittext will receive focus on load
+     * default is false and nothing will occur
+     */
+    private boolean autoFocusFirstEditText;
+
+    public boolean isAutoFocusFirstEditText() {
+        return autoFocusFirstEditText;
+    }
+
+    public void setAutoFocusFirstEditText(boolean autoFocusFirstEditText) {
+        this.autoFocusFirstEditText = autoFocusFirstEditText;
+    }
+
+    /**
      * Returns the list of items in the form.
      *
      * @return a list of QuestionSteps in the form
