@@ -163,12 +163,16 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
                 .subscribe(new Action1<SchedulesAndTasksModel>() {
                     @Override
                     public void call(SchedulesAndTasksModel model) {
-                        refreshAdapterSuccess(model);
+                        if (getActivity() != null && isAdded()) {
+                            refreshAdapterSuccess(model);
+                        }
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        refreshAdapterFailure(throwable.getLocalizedMessage());
+                        if (getActivity() != null && isAdded()) {
+                            refreshAdapterFailure(throwable.getLocalizedMessage());
+                        }
                     }
                 });
     }
