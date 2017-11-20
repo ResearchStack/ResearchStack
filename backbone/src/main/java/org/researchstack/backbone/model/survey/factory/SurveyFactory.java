@@ -425,7 +425,9 @@ public class SurveyFactory {
                     throw new IllegalStateException("Error in json parsing, QUESTION_INTEGER types must be IntegerRangeSurveyItem");
                 }
                 IntegerRangeSurveyItem intItem = (IntegerRangeSurveyItem)item;
-                format = new IntegerAnswerFormat(intItem.min, intItem.max);
+                int min = (intItem.min == null) ? 0 : intItem.min;
+                int max = (intItem.max == null) ? 0 : intItem.max;
+                format = new IntegerAnswerFormat(min, max);
                 break;
             case QUESTION_DURATION:
                 // TODO: create DurationQuestionSurveyItem and also TimeIntervalAnswerFormat
