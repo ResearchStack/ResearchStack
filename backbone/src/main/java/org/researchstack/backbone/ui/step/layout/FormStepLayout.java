@@ -191,7 +191,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     protected void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
-            imm.toggleSoftInputFromWindow(getRootView().getWindowToken(), 0, 0);
+            imm.hideSoftInputFromWindow(getRootView().getWindowToken(), 0);
         }
     }
 
