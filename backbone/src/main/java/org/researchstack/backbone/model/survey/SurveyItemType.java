@@ -39,8 +39,8 @@ public enum SurveyItemType {
     QUESTION_TIME               ("timePicker"),             // ORKTimeOfDayAnswerFormat
     @SerializedName("timeInterval")
     QUESTION_DURATION           ("timeInterval"),           // ORKTimeIntervalAnswerFormat
-    @SerializedName(value="QUESTION_INTEGER", alternate={"numericInteger", "integer"})
-    QUESTION_INTEGER            ("integer"),                // ORKNumericAnswerFormat of style Integer
+    @SerializedName(value="numericInteger", alternate={"integer"})
+    QUESTION_INTEGER            ("numericInteger"),         // ORKNumericAnswerFormat of style Integer
     @SerializedName("numericDecimal")
     QUESTION_DECIMAL            ("numericDecimal"),         // ORKNumericAnswerFormat of style Decimal
     @SerializedName("scaleInteger")
