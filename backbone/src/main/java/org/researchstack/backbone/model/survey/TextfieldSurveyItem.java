@@ -31,6 +31,9 @@ public class TextfieldSurveyItem extends QuestionSurveyItem<String> {
     @SerializedName("validationRegex")
     public String validationRegex;
 
+    @SerializedName("disabled")
+    public Boolean disabled;
+
     /* Default constructor needed for serialization/deserialization of object */
     public TextfieldSurveyItem() {
         super();

@@ -502,6 +502,9 @@ public class SurveyFactory {
                 if (textfieldSurveyItem.validationRegex != null) {
                     textFormat.setValidationRegex(textfieldSurveyItem.validationRegex);
                 }
+                if (textfieldSurveyItem.disabled != null && textfieldSurveyItem.disabled) {
+                    textFormat.setDisabled(true);
+                }
                 format = textFormat;
                 break;
         }

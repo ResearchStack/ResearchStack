@@ -15,6 +15,7 @@ public class TextAnswerFormat extends AnswerFormat {
     private boolean isMultipleLines = false;
     private int     inputType       = InputType.TYPE_CLASS_TEXT;
     private String  validationRegex = null;
+    private boolean disabled;
 
     /**
      * Creates a TextAnswerFormat with no maximum length
@@ -144,5 +145,13 @@ public class TextAnswerFormat extends AnswerFormat {
         }
 
         return valid;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 }

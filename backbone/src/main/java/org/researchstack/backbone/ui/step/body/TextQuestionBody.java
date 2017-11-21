@@ -51,11 +51,18 @@ public class TextQuestionBody implements StepBody {
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         View body = inflater.inflate(getBodyViewRes(), parent, false);
 
+        // Format EditText from TextAnswerFormat
+        TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
+
         editText = (EditText) body.findViewById(R.id.value);
         if (step.getPlaceholder() != null) {
             editText.setHint(step.getPlaceholder());
         } else {
             editText.setHint(R.string.rsb_hint_step_body_text);
+        }
+        editText.setEnabled(true);
+        if (format.isDisabled()) {
+            editText.setEnabled(false);
         }
 
         TextView title = (TextView) body.findViewById(R.id.label);
@@ -77,9 +84,6 @@ public class TextQuestionBody implements StepBody {
         RxTextView.textChanges(editText).subscribe(text -> {
             result.setResult(text.toString());
         });
-
-        // Format EditText from TextAnswerFormat
-        TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
 
         if(format.isMultipleLines()) {
             editText.setSingleLine(false);
