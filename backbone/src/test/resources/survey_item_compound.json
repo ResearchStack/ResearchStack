@@ -1,0 +1,15 @@
+{
+  "identifier": "walking_q1",
+  "type": "form",
+  "text": "During the last 7 days, on how many days did you WALK for at least 10 minutes at a time?",
+  "inputFields": [{
+    "identifier": "days_per_week",
+    "dataType": "integer",
+    "min": 0,
+    "max": 7,
+    "prompt": "days per week"
+  }],
+  "expectedAnswer": "whenSkipButtonClicked",
+  "skipTitle": "No walking",
+  "skipIdentifier": "sitting_instruction"
+}
