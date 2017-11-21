@@ -59,8 +59,7 @@ public class NavigationFormStep extends FormStep implements NavigableOrderedTask
         // to trigger a skip to a specific step identifier
         if (expectedAnswer != null &&
             expectedAnswer.equals(CompoundQuestionSurveyItem.SKIP_BUTTON_TAPPED_ACTION_IDENTIFIER)) {
-            StepResult stepResult = StepResultHelper.findStepResult(result, getIdentifier());
-            if (stepResult == null || stepResult.getResult() == null) {
+            if (StepHelper.wasFormStepSkipped(this, result)) {
                 return skipToStepIdentifier;
             }
         }
