@@ -29,6 +29,7 @@ import org.researchstack.backbone.ui.step.body.TextQuestionBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepResultHelper;
+import org.researchstack.backbone.utils.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -200,12 +201,8 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      * @return EditText for this FormStepData if one exists and we can find it, null otherwise
      */
     protected EditText findEditText(FormStepData stepData) {
-        if (stepData.view != null) {
-            // R.id.value is the EditText from TextQuestionBody
-            View viewObj = stepData.view.get().findViewById(R.id.value);
-            if (viewObj instanceof EditText) {
-                return (EditText)viewObj;
-            }
+        if (stepData.view != null && stepData.view.get() != null) {
+            return ViewUtils.findFirstEditText(stepData.view.get());
         }
         return null;
     }
