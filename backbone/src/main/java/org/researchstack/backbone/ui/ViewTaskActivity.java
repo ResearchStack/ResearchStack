@@ -71,7 +71,14 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         if(savedInstanceState == null)
         {
             task = (Task) getIntent() .getSerializableExtra(EXTRA_TASK);
-            taskResult = new TaskResult(task.getIdentifier());
+
+            // Grab the existing task result if it is available, otherwise make a new one
+            if (getIntent().hasExtra(EXTRA_TASK_RESULT)) {
+                taskResult = (TaskResult) getIntent().getSerializableExtra(EXTRA_TASK_RESULT);
+            } else {
+                taskResult = new TaskResult(task.getIdentifier());
+            }
+
             taskResult.setStartDate(new Date());
         }
         else

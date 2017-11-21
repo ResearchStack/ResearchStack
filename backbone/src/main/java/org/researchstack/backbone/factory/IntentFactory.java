@@ -3,6 +3,8 @@ package org.researchstack.backbone.factory;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 
@@ -33,6 +35,25 @@ public class IntentFactory {
     public Intent newTaskIntent(Context context, Class<? extends ViewTaskActivity> clazz, Task task) {
         Intent intent = new Intent(context, clazz);
         intent.putExtra(ViewTaskActivity.EXTRA_TASK, task);
+        return intent;
+    }
+
+    /**
+     * Creates an Intent for a task activity with an existing task result
+     *
+     * @param context activity context
+     * @param clazz   activity class
+     * @param task    task activity
+     * @param result  existing task result
+     * @return an Intent for this task activity
+     */
+    @NonNull
+    public Intent newTaskIntent(Context context, Class<? extends ViewTaskActivity> clazz, Task task, TaskResult result) {
+        Intent intent = new Intent(context, clazz);
+        intent.putExtra(ViewTaskActivity.EXTRA_TASK, task);
+        if (result != null) {
+            intent.putExtra(ViewTaskActivity.EXTRA_TASK_RESULT, result);
+        }
         return intent;
     }
 }
