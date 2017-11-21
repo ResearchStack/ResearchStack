@@ -359,7 +359,16 @@ public class SurveyFactory {
             }
         }
 
-        FormStep step = new FormStep(item.identifier, item.title, item.text, questionSteps);
+        NavigationFormStep step = new NavigationFormStep(item.identifier, item.title, item.text, questionSteps);
+        transferNavigationRules(item, step);
+        if (item.expectedAnswer != null) {
+            step.setExpectedAnswer(item.expectedAnswer);
+        }
+        if (item.skipTitle != null) {
+            step.setSkipTitle(item.skipTitle);
+            // we can assume that if we set the skip title, we want to show the skip button
+            step.setOptional(true);
+        }
         return step;
     }
 

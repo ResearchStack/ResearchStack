@@ -246,12 +246,20 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
             return;  // custom layouts may not have a submit bar
         }
         submitBar.setPositiveAction(v -> onNextClicked());
-        submitBar.setNegativeTitle(R.string.rsb_step_skip);
+        if (formStep.getSkipTitle() == null) {
+            submitBar.setNegativeTitle(R.string.rsb_step_skip);
+        } else {
+            submitBar.setNegativeTitle(formStep.getSkipTitle());
+        }
         submitBar.setNegativeAction(v -> onSkipClicked());
-        for (FormStepData stepData : subQuestionStepData) {
-            if(!stepData.step.isOptional())
-            {
-                submitBar.getNegativeActionView().setVisibility(View.GONE);
+
+        submitBar.getNegativeActionView().setVisibility(View.VISIBLE);
+        if (!formStep.isOptional()) {
+            // If form isnt optional, check and see if the question steps are
+            for (FormStepData stepData : subQuestionStepData) {
+                if (!stepData.step.isOptional()) {
+                    submitBar.getNegativeActionView().setVisibility(View.GONE);
+                }
             }
         }
     }
