@@ -136,7 +136,7 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
         }
     }
 
-    private void setUpAdapter() {
+    protected void setUpAdapter() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
