@@ -361,6 +361,7 @@ public class SurveyFactory {
 
         NavigationFormStep step = new NavigationFormStep(item.identifier, item.title, item.text, questionSteps);
         transferNavigationRules(item, step);
+        fillQuestionStep(item, step);
         if (item.expectedAnswer != null) {
             step.setExpectedAnswer(item.expectedAnswer);
         }
@@ -514,12 +515,16 @@ public class SurveyFactory {
         } else {
             step = new QuestionStep(item.identifier, item.title, format);
         }
-        step.setText(item.text);
-        step.setOptional(item.optional);
-        step.setPlaceholder(item.placeholderText);
+        fillQuestionStep(item, step);
         // TODO: iOS has footnote, do we need that as well?
 
         return step;
+    }
+
+    protected void fillQuestionStep(QuestionSurveyItem item, QuestionStep step) {
+        step.setText(item.text);
+        step.setOptional(item.optional);
+        step.setPlaceholder(item.placeholderText);
     }
 
     /**
