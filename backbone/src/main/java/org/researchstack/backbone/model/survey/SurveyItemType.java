@@ -19,8 +19,7 @@ public enum SurveyItemType {
     INSTRUCTION                 ("instruction"),            // InstructionStep
     @SerializedName("completion")
     INSTRUCTION_COMPLETION      ("completion"),             // CompletionStep
-    // Question, aka Form, Subtypes
-    @SerializedName("compound")
+    @SerializedName(value="compound", alternate={"form"})
     QUESTION_COMPOUND           ("compound"),               // QuestionSteps > 1
     @SerializedName("toggle")
     QUESTION_TOGGLE             ("toggle"),                 // SBABooleanToggleFormStep
@@ -40,7 +39,7 @@ public enum SurveyItemType {
     QUESTION_TIME               ("timePicker"),             // ORKTimeOfDayAnswerFormat
     @SerializedName("timeInterval")
     QUESTION_DURATION           ("timeInterval"),           // ORKTimeIntervalAnswerFormat
-    @SerializedName("numericInteger")
+    @SerializedName(value="numericInteger", alternate={"integer"})
     QUESTION_INTEGER            ("numericInteger"),         // ORKNumericAnswerFormat of style Integer
     @SerializedName("numericDecimal")
     QUESTION_DECIMAL            ("numericDecimal"),         // ORKNumericAnswerFormat of style Decimal

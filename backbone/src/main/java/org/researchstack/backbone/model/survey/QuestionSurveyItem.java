@@ -19,7 +19,7 @@ public class QuestionSurveyItem<T extends Serializable> extends SurveyItem<T> {
     @SerializedName("range")
     public RangeSurveyItem range;
 
-    @SerializedName("expectedAnswer")
+    @SerializedName(value="expectedAnswer", alternate={"matchingAnswer"})
     public Object expectedAnswer;
 
     @SerializedName("skipIdentifier")

@@ -18,6 +18,7 @@ import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.EmailAnswerFormat;
+import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
 import org.researchstack.backbone.answerformat.PasswordAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.model.ConsentDocument;
@@ -26,13 +27,17 @@ import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.onboarding.MockResourceManager;
 import org.researchstack.backbone.onboarding.ReConsentInstructionStep;
+import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
+import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
+import org.researchstack.backbone.step.NavigationFormStep;
 import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.ProfileStep;
@@ -49,6 +54,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -79,6 +85,7 @@ public class SurveyFactoryTests {
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "consentdocument");
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "custom_consentdocument");
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_textfield");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_compound");
 
         mockFingerprintManager = Mockito.mock(FingerprintManagerCompat.class);
         Mockito.when(mockFingerprintManager.isHardwareDetected()).thenReturn(true);
@@ -302,5 +309,35 @@ public class SurveyFactoryTests {
         TextAnswerFormat format = (TextAnswerFormat)step.getAnswerFormat();
         assertEquals("^[0-9]*$", format.validationRegex());
         assertEquals(InputType.TYPE_CLASS_NUMBER, format.getInputType());
+    }
+
+    @Test
+    public void testSurveyItem_form() {
+        String json = getJsonResource("survey_item_compound");
+        SurveyItem surveyItem = helper.gson.fromJson(json, SurveyItem.class);
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(helper.mockContext, Collections.singletonList(surveyItem));
+
+        assertNotNull(stepList);
+        assertEquals(1, stepList.size());
+
+        String expectedStepId = "walking_q1";
+        assertTrue(stepList.get(0) instanceof NavigationFormStep);
+        NavigationFormStep step = (NavigationFormStep)stepList.get(0);
+        assertEquals(expectedStepId, step.getIdentifier());
+        assertEquals(1, step.getFormSteps().size());
+        assertTrue(step.getFormSteps().get(0).getAnswerFormat() instanceof IntegerAnswerFormat);
+
+        assertEquals("No walking", step.getSkipTitle());
+        assertEquals("sitting_instruction", step.getSkipToStepIdentifier());
+
+        TaskResult taskResult = new TaskResult("task_id");
+        assertEquals("sitting_instruction", step.nextStepIdentifier(taskResult, null));
+        StepResult<String> stepResult = new StepResult<>(new Step(expectedStepId));
+        taskResult.getResults().put(expectedStepId, stepResult);
+        assertEquals("sitting_instruction", step.nextStepIdentifier(taskResult, null));
+        stepResult.setResult("AnyResult");
+        taskResult.getResults().put(expectedStepId, stepResult);
+        assertNull(step.nextStepIdentifier(taskResult, null));
     }
 }

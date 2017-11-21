@@ -2,10 +2,12 @@ package org.researchstack.backbone.step;
 
 import android.util.Log;
 
+import org.researchstack.backbone.model.survey.CompoundQuestionSurveyItem;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.utils.StepHelper;
+import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class NavigationFormStep extends FormStep implements NavigableOrderedTask
 
     private String skipToStepIdentifier;
     private boolean skipIfPassed;
+    private Object expectedAnswer;
 
     /* Default constructor needed for serilization/deserialization of object */
     NavigationFormStep() {
@@ -51,7 +54,22 @@ public class NavigationFormStep extends FormStep implements NavigableOrderedTask
 
     @Override
     public String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
+
+        // Special case SKIP_BUTTON_TAPPED_ACTION_IDENTIFIER will use the skip button being clicked
+        // to trigger a skip to a specific step identifier
+        if (expectedAnswer != null &&
+            expectedAnswer.equals(CompoundQuestionSurveyItem.SKIP_BUTTON_TAPPED_ACTION_IDENTIFIER)) {
+            StepResult stepResult = StepResultHelper.findStepResult(result, getIdentifier());
+            if (stepResult == null || stepResult.getResult() == null) {
+                return skipToStepIdentifier;
+            }
+        }
+
         return StepHelper.navigationFormStepSkipIdentifier(
                 skipToStepIdentifier, skipIfPassed, formSteps, result, additionalTaskResults);
+    }
+
+    public void setExpectedAnswer(Object expectedAnswer) {
+        this.expectedAnswer = expectedAnswer;
     }
 }

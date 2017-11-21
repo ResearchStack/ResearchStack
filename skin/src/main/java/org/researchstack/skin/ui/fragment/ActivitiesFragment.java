@@ -220,9 +220,13 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
             } else {
                 // This is a survey task.
                 startActivityForResult(intentFactory.newTaskIntent(getContext(),
-                        ViewTaskActivity.class, newTask), REQUEST_TASK);
+                        getDefaultViewTaskActivityClass(), newTask), REQUEST_TASK);
             }
         });
+    }
+
+    public Class<? extends ViewTaskActivity> getDefaultViewTaskActivityClass() {
+        return ViewTaskActivity.class;
     }
 
     /**

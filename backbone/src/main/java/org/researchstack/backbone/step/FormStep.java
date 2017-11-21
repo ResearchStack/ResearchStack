@@ -23,6 +23,8 @@ import java.util.List;
 public class FormStep extends QuestionStep {
     List<QuestionStep> formSteps;
 
+    private String skipTitle;
+
     /* Default constructor needed for serialization/deserialization of object */
     public FormStep() {
         super();
@@ -67,6 +69,20 @@ public class FormStep extends QuestionStep {
 
     public void setFormSteps(List<QuestionStep> formSteps) {
         this.formSteps = formSteps;
+    }
+
+    /**
+     * @return The title of the skip button, default will be localized "Skip"
+     */
+    public String getSkipTitle() {
+        return skipTitle;
+    }
+
+    /**
+     * @param skipTitle The title of the skip button, default will be localized "Skip"
+     */
+    public void setSkipTitle(String skipTitle) {
+        this.skipTitle = skipTitle;
     }
 
     @Override

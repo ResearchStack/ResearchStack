@@ -29,6 +29,9 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
         JsonObject jsonObject =  json.getAsJsonObject();
 
         JsonElement typeJson = jsonObject.get(SurveyItem.TYPE_GSON);
+        if (typeJson == null) {
+            typeJson = jsonObject.get(SurveyItem.TYPE_GSON_2);
+        }
         SurveyItemType surveyItemType = context.deserialize(typeJson, SurveyItemType.class);
 
         // This was a custom survey item type
