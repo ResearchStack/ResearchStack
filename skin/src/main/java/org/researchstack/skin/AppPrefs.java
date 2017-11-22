@@ -1,16 +1,25 @@
 package org.researchstack.skin;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import com.google.common.collect.Sets;
+
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.skin.ui.fragment.SettingsFragment;
+
+import java.util.Set;
 
 public class AppPrefs {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Statics
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private static final String KEY_ONBOARDING_COMPLETE = "settings_onboarding_complete";
-    private static final String KEY_ONBOARDING_SKIPPED  = "settings_onboarding_skipped";
+    private static final String KEY_ONBOARDING_SKIPPED = "settings_onboarding_skipped";
+    private static final String KEY_DATA_PROVIDER_ERRORS = "data_provider_error";
     private static AppPrefs instance;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -18,8 +27,7 @@ public class AppPrefs {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private final SharedPreferences prefs;
 
-    AppPrefs(Context context)
-    {
+    AppPrefs(Context context) {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
@@ -28,19 +36,15 @@ public class AppPrefs {
     }
 
     @Deprecated
-    public static synchronized AppPrefs getInstance(Context context)
-    {
-        if(instance == null)
-        {
+    public static synchronized AppPrefs getInstance(Context context) {
+        if (instance == null) {
             instance = new AppPrefs(context);
         }
         return instance;
     }
 
-    public static AppPrefs getInstance()
-    {
-        if(instance == null)
-        {
+    public static AppPrefs getInstance() {
+        if (instance == null) {
             throw new RuntimeException(
                     "AppPrefs instance is null. Make sure it is initialized in ResearchStack before calling.");
         }
@@ -52,8 +56,7 @@ public class AppPrefs {
      *
      * @return time in milliseconds
      */
-    public long getAutoLockTime()
-    {
+    public long getAutoLockTime() {
         boolean isAutoLocked = prefs.getBoolean(SettingsFragment.KEY_AUTO_LOCK_ENABLED, true);
 
         String time = prefs.getString(SettingsFragment.KEY_AUTO_LOCK_TIME, "1");
@@ -61,13 +64,29 @@ public class AppPrefs {
         return autoLockMins * 60 * 1000;
     }
 
-    public void setSkippedOnboarding(boolean skipped)
-    {
+    public void addDataProviderError(@Nullable @DataProvider.Errors String dataProviderError) {
+        Set<String> errors = prefs.getStringSet(KEY_DATA_PROVIDER_ERRORS, Sets.newHashSet());
+        errors.add(dataProviderError);
+        prefs.edit().putStringSet(KEY_DATA_PROVIDER_ERRORS, errors).apply();
+    }
+
+    public void clearDataProviderError(@NonNull @DataProvider.Errors String dataProviderError) {
+        Set<String> errors = prefs.getStringSet(KEY_DATA_PROVIDER_ERRORS, Sets.newHashSet());
+        errors.remove(dataProviderError);
+        prefs.edit().putStringSet(KEY_DATA_PROVIDER_ERRORS, errors).apply();
+    }
+
+    @NonNull
+    @DataProvider.Errors
+    public Set<String> getDataProviderErrors() {
+        return prefs.getStringSet(KEY_DATA_PROVIDER_ERRORS, Sets.newHashSet());
+    }
+
+    public void setSkippedOnboarding(boolean skipped) {
         prefs.edit().putBoolean(KEY_ONBOARDING_SKIPPED, skipped).apply();
     }
 
-    public boolean skippedOnboarding()
-    {
+    public boolean skippedOnboarding() {
         return prefs.getBoolean(KEY_ONBOARDING_SKIPPED, false);
     }
 
@@ -77,26 +96,22 @@ public class AppPrefs {
      *
      * @param complete true if onboading is complete
      */
-    public void setOnboardingComplete(boolean complete)
-    {
+    public void setOnboardingComplete(boolean complete) {
         prefs.edit().putBoolean(KEY_ONBOARDING_COMPLETE, complete).apply();
     }
 
     /**
      * @return true if onboading is complete
      */
-    public boolean isOnboardingComplete()
-    {
+    public boolean isOnboardingComplete() {
         return prefs.getBoolean(KEY_ONBOARDING_COMPLETE, false);
     }
 
-    public void setTaskReminderComplete(boolean enabled)
-    {
+    public void setTaskReminderComplete(boolean enabled) {
         prefs.edit().putBoolean(SettingsFragment.KEY_REMINDERS, enabled).apply();
     }
 
-    public boolean isTaskReminderEnabled()
-    {
+    public boolean isTaskReminderEnabled() {
         return prefs.getBoolean(SettingsFragment.KEY_REMINDERS, false);
     }
 

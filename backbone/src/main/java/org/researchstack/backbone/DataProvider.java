@@ -3,23 +3,42 @@ package org.researchstack.backbone;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringDef;
+
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;
 import org.researchstack.backbone.model.User;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.task.Task;
+
+import java.lang.annotation.Retention;
+
 import rx.Observable;
 import rx.Single;
+
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+import static org.researchstack.backbone.DataProvider.Errors.ERROR_APP_UPGRADE_REQUIRED;
+import static org.researchstack.backbone.DataProvider.Errors.ERROR_CONSENT_REQUIRED;
+import static org.researchstack.backbone.DataProvider.Errors.ERROR_NOT_AUTHENTICATED;
 
 /**
  * Class used to as a buffer between the network layer and UI layer. The implementation allows the
  * framework to be backend-agnostic
  */
 public abstract class DataProvider {
-    public static final String ERROR_NOT_AUTHENTICATED = "ERROR_NOT_AUTHENTICATED";
-    public static final String ERROR_CONSENT_REQUIRED = "ERROR_CONSENT_REQUIRED";
-    public static final String ERROR_APP_UPGRADE_REQUIRED = "ERROR_APP_UPGRADE_REQUIRED";
+
+    @Retention(SOURCE)
+    @StringDef({
+            ERROR_NOT_AUTHENTICATED,
+            ERROR_CONSENT_REQUIRED,
+            ERROR_APP_UPGRADE_REQUIRED
+    })
+    public @interface Errors {
+        String ERROR_NOT_AUTHENTICATED = "org.researchstack.ERROR_NOT_AUTHENTICATED";
+        String ERROR_CONSENT_REQUIRED = "org.researchstack.ERROR_CONSENT_REQUIRED";
+        String ERROR_APP_UPGRADE_REQUIRED = "org.researchstack.ERROR_APP_UPGRADE_REQUIRED";
+    }
 
     private static DataProvider instance;
 
@@ -66,10 +85,10 @@ public abstract class DataProvider {
     /**
      * Called to sign the user up to the backend service
      *
-     * @param email the user's email
+     * @param email    the user's email
      * @param username the user's username
      * @param password the user's password
-     * @param context android context
+     * @param context  android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signUp was successful
      */
@@ -80,7 +99,7 @@ public abstract class DataProvider {
      *
      * @param username the user's username
      * @param password the user's password
-     * @param context android context
+     * @param context  android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
      */
@@ -110,7 +129,7 @@ public abstract class DataProvider {
      * Called to alert the backend to resend a vertification
      * email
      *
-     * @param email user's email
+     * @param email   user's email
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
@@ -123,7 +142,7 @@ public abstract class DataProvider {
      * Afterwords, it the implementation must also upload the consent doc that was
      * previously stored using saveLocalConsent
      *
-     * @param context android context
+     * @param context  android context
      * @param password the user's password
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if verifyEmail was successful
@@ -166,7 +185,7 @@ public abstract class DataProvider {
      * Called to alert the backend that the user wants to withdraw from
      * the study
      *
-     * @param reason the reason for withdrawal, can be any string
+     * @param reason  the reason for withdrawal, can be any string
      * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if withdrawl was successful
@@ -179,7 +198,7 @@ public abstract class DataProvider {
      * object and filling up the ConsentSignature and then calling the method below this
      * with the signature parameter
      *
-     * @param context android context
+     * @param context       android context
      * @param consentResult the TaskResult map containing hard-coded key/value data
      */
     @Deprecated // use uploadConsent(Context context, ConsentSignatureBody signature) instead
@@ -189,7 +208,7 @@ public abstract class DataProvider {
      * This method is responsible in uploading the user consent information (e.g. Name, Birthdate,
      * Signature) to the backend.
      *
-     * @param context android context
+     * @param context   android context
      * @param signature Valid ConsentSignature object
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()} if successful
      */
@@ -197,9 +216,10 @@ public abstract class DataProvider {
 
     /**
      * Loads consent from local storage
+     *
      * @param context android context
      * @return null if no call has been made to saveLocalConsent, otherwise
-     *         it will return the ConsentSignatureBody from the call to saveLocalConsent
+     * it will return the ConsentSignatureBody from the call to saveLocalConsent
      */
     public abstract ConsentSignatureBody loadLocalConsent(Context context);
 
@@ -210,7 +230,7 @@ public abstract class DataProvider {
      * Please use {@link FileAccess} class to encrypt user information when saving.
      *
      * @param consentResult the TaskResult map containing hard-coded key/value data
-     * @param context android context
+     * @param context       android context
      */
     @Deprecated // use saveLocalConsent(Context context, ConsentSignatureBody signature) instead
     public abstract void saveConsent(Context context, TaskResult consentResult);
@@ -219,7 +239,7 @@ public abstract class DataProvider {
      * This method is responsible in saving user consent information (e.g. Name, Birthdate,
      * Signature) locally for use after the user successfully signs in
      *
-     * @param context android context
+     * @param context              android context
      * @param consentSignatureBody object which will be saved
      */
     public abstract void saveLocalConsent(Context context, ConsentSignatureBody consentSignatureBody);
@@ -235,8 +255,9 @@ public abstract class DataProvider {
 
     /**
      * Saves the user object
+     *
      * @param context android context
-     * @param user User object to save
+     * @param user    User object to save
      */
     public abstract void setUser(Context context, User user);
 
@@ -298,6 +319,7 @@ public abstract class DataProvider {
      * This initial task may include profile items such as height and weight that may need to be
      * processed differently than a normal task result.
      * <p>
+     *
      * @param context    android context
      * @param taskResult initial TaskResult object to process
      */
