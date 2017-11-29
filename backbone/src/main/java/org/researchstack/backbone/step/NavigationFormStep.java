@@ -24,7 +24,7 @@ public class NavigationFormStep extends FormStep implements NavigableOrderedTask
     private Object expectedAnswer;
 
     /* Default constructor needed for serilization/deserialization of object */
-    NavigationFormStep() {
+    public NavigationFormStep() {
         super();
     }
 
