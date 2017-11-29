@@ -39,17 +39,36 @@ public class ArcDrawable extends Drawable {
         direction = newDirection;
     }
 
+    private static final int DEFAULT_FULL_CIRCLE_COLOR = Color.GRAY;
+    private static final float DEFAULT_FULL_CIRCLE_STROKE_PERCENTAGE = 0.25f;
+    /**
+     * The full circle preview is a ring that shows behind the arc as an indication
+     * Of how and where the arc will follow
+     */
+    private Paint mFullCirclePreviewPaint;
+    private boolean mIncludeFullCirclePreview;
+    public void setIncludeFullCirclePreview(boolean mIncludeFullCirclePreview) {
+        this.mIncludeFullCirclePreview = mIncludeFullCirclePreview;
+    }
+    private int mFullCirclePreviewColor = DEFAULT_FULL_CIRCLE_COLOR;
+    public void setFullCirclePreviewColor(int mFullCirclePreviewColor) {
+        this.mFullCirclePreviewColor = mFullCirclePreviewColor;
+    }
+
     public ArcDrawable() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(DEFAULT_STROKE_WIDTH);
         mPaint.setColor(DEFAULT_STROKE_COLOR);
         mPaint.setStyle(Paint.Style.STROKE);
+        mFullCirclePreviewPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mFullCirclePreviewPaint.setStyle(Paint.Style.STROKE);
         mSweepingAngle = FULL_SWEEPING_ANGLE;
         mStartAngle = DEFAULT_START_ANGLE;
     }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
+
         float halfStrokeWidth = mPaint.getStrokeWidth() * 0.5f;
         RectF rect = new RectF(
                 halfStrokeWidth,
@@ -57,6 +76,19 @@ public class ArcDrawable extends Drawable {
                 canvas.getWidth() - halfStrokeWidth,
                 canvas.getHeight() - halfStrokeWidth);
         float angle = (direction == Path.Direction.CCW) ? -mSweepingAngle : mSweepingAngle;
+
+        // Draw the preview first, if applicable, so it is under the main arc
+        if (mIncludeFullCirclePreview) {
+            mFullCirclePreviewPaint.setColor(mFullCirclePreviewColor);
+            float fullPreviewStroke = DEFAULT_FULL_CIRCLE_STROKE_PERCENTAGE * mPaint.getStrokeWidth();
+            mFullCirclePreviewPaint.setStrokeWidth(fullPreviewStroke);
+            RectF fullCircleRect = new RectF(halfStrokeWidth, halfStrokeWidth,
+                    canvas.getWidth() - halfStrokeWidth,
+                    canvas.getHeight() - halfStrokeWidth);
+            canvas.drawArc(fullCircleRect, mStartAngle, FULL_SWEEPING_ANGLE, false, mFullCirclePreviewPaint);
+        }
+
+        // Draw the arc over top the preview
         canvas.drawArc(rect, mStartAngle, angle, false, mPaint);
     }
 
