@@ -23,15 +23,15 @@ public class IntegerQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private QuestionStep step;
-    private StepResult<Integer> result;
-    private IntegerAnswerFormat format;
+    protected QuestionStep step;
+    protected StepResult<Integer> result;
+    protected IntegerAnswerFormat format;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private int viewType;
-    private EditText editText;
+    protected int viewType;
+    protected EditText editText;
 
     public IntegerQuestionBody(Step step, StepResult result) {
         this.step = (QuestionStep) step;
@@ -84,7 +84,7 @@ public class IntegerQuestionBody implements StepBody {
         return formItemView;
     }
 
-    private void setFilters(Context context) {
+    protected void setFilters(Context context) {
         editText.setSingleLine(true);
         final int minValue = format.getMinValue();
         // allow any positive int if no max value is specified
