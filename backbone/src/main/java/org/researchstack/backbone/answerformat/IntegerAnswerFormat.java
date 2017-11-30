@@ -17,10 +17,16 @@ import org.w3c.dom.Text;
  */
 public class IntegerAnswerFormat extends TextAnswerFormat {
     private int maxValue;
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+    }
     private int minValue;
+    public void setMinValue(int minValue) {
+        this.minValue = minValue;
+    }
 
     /* Default constructor needed for serilization/deserialization of object */
-    protected IntegerAnswerFormat() {
+    public IntegerAnswerFormat() {
         super();
         commonInit();
     }

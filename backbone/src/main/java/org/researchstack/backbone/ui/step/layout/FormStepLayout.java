@@ -242,22 +242,35 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         if (submitBar == null) {
             return;  // custom layouts may not have a submit bar
         }
-        submitBar.setPositiveAction(v -> onNextClicked());
-        if (formStep.getSkipTitle() == null) {
-            submitBar.setNegativeTitle(R.string.rsb_step_skip);
-        } else {
-            submitBar.setNegativeTitle(formStep.getSkipTitle());
-        }
-        submitBar.setNegativeAction(v -> onSkipClicked());
 
-        submitBar.getNegativeActionView().setVisibility(View.VISIBLE);
+        submitBar.setPositiveAction(v -> onNextClicked());
+
+        submitBar.setNegativeAction(v -> onSkipClicked());
+        String skipTitle = skipButtonTitle();
+        submitBar.setNegativeTitle(skipTitle);
+        submitBar.getNegativeActionView().setVisibility(skipTitle == null ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * @return null if skip should be hidden, a valid title otherwise
+     */
+    protected String skipButtonTitle() {
+        boolean isSkipVisible = true;
         if (!formStep.isOptional()) {
             // If form isnt optional, check and see if the question steps are
             for (FormStepData stepData : subQuestionStepData) {
                 if (!stepData.step.isOptional()) {
-                    submitBar.getNegativeActionView().setVisibility(View.GONE);
+                    isSkipVisible = false;
                 }
             }
+        }
+        if (!isSkipVisible) {
+            return null;
+        }
+        if (formStep.getSkipTitle() == null) {
+            return getString(R.string.rsb_step_skip);
+        } else {
+            return formStep.getSkipTitle();
         }
     }
 

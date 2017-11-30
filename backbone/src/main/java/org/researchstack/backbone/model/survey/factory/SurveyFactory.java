@@ -350,7 +350,16 @@ public class SurveyFactory {
         if (item.items == null || item.items.isEmpty()) {
             throw new IllegalStateException("compound surveys must have step items to proceed");
         }
+        List<QuestionStep> questionSteps = formStepCreateQuestionSteps(context, item);
+        NavigationFormStep step = new NavigationFormStep(item.identifier, item.title, item.text, questionSteps);
+        fillNavigationFormStep(step, item);
+        return step;
+    }
 
+    /**
+     * Helper method to re-use the logic of creating question steps for a form step
+     */
+    protected List<QuestionStep> formStepCreateQuestionSteps(Context context, CompoundQuestionSurveyItem item) {
         List<QuestionStep> questionSteps = new ArrayList<>();
         for (SurveyItem subItem : item.items) {
             if (subItem instanceof QuestionSurveyItem) {
@@ -358,19 +367,30 @@ public class SurveyFactory {
                 questionSteps.add(step);
             }
         }
+        return questionSteps;
+    }
 
-        NavigationFormStep step = new NavigationFormStep(item.identifier, item.title, item.text, questionSteps);
+    /**
+     * Helper method to fill a navigation form step, but leave the base class out of it
+     */
+    protected void fillNavigationFormStep(NavigationFormStep step, CompoundQuestionSurveyItem item) {
+        fillFormStep(step, item);
         transferNavigationRules(item, step);
-        fillQuestionStep(item, step);
         if (item.expectedAnswer != null) {
             step.setExpectedAnswer(item.expectedAnswer);
         }
+    }
+
+    /**
+     * Helper method to fill a form step, but leave the base class out of it
+     */
+    protected void fillFormStep(FormStep step, CompoundQuestionSurveyItem item) {
+        fillQuestionStep(item, step);
         if (item.skipTitle != null) {
             step.setSkipTitle(item.skipTitle);
             // we can assume that if we set the skip title, we want to show the skip button
             step.setOptional(true);
         }
-        return step;
     }
 
     /**
@@ -385,27 +405,9 @@ public class SurveyFactory {
                 if (!(item instanceof BooleanQuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_BOOLEAN types must be BooleanQuestionSurveyItem");
                 }
-                BooleanQuestionSurveyItem boolItem = (BooleanQuestionSurveyItem)item;
-                String yes = null, no = null;
-                // First try and get the true / value choices from the BooleanQuestionSurveyItem
-                // Since it may sometimes, but not always provided
-                if (boolItem.items != null && boolItem.items.size() == 2) {
-                    for (Choice<Boolean> choice : boolItem.items) {
-                        if (choice.getValue() == true) {
-                            yes = choice.getText();
-                        } else {
-                            no = choice.getText();
-                        }
-                    }
-                }
-                // If they are not provided, use the default yes / no strings for true / false
-                if (yes == null) {
-                    yes = context.getString(R.string.rsb_yes);
-                }
-                if (no == null) {
-                    no = context.getString(R.string.rsb_no);
-                }
-                format = new BooleanAnswerFormat(yes, no);
+                BooleanAnswerFormat boolFormat = new BooleanAnswerFormat();
+                fillBooleanAnswerFormat(context, boolFormat, (BooleanQuestionSurveyItem)item);
+                format = boolFormat;
                 break;
             case QUESTION_DATE:
             case QUESTION_DATE_TIME:
@@ -434,10 +436,9 @@ public class SurveyFactory {
                 if (!(item instanceof IntegerRangeSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_INTEGER types must be IntegerRangeSurveyItem");
                 }
-                IntegerRangeSurveyItem intItem = (IntegerRangeSurveyItem)item;
-                int min = (intItem.min == null) ? 0 : intItem.min;
-                int max = (intItem.max == null) ? 0 : intItem.max;
-                format = new IntegerAnswerFormat(min, max);
+                IntegerAnswerFormat integerFormat = new IntegerAnswerFormat();
+                fillIntegerAnswerFormat(integerFormat, (IntegerRangeSurveyItem)item);
+                format = integerFormat;
                 break;
             case QUESTION_DURATION:
                 // TODO: create DurationQuestionSurveyItem and also TimeIntervalAnswerFormat
@@ -459,16 +460,9 @@ public class SurveyFactory {
                 if (!(item instanceof ChoiceQuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, this type must be ChoiceQuestionSurveyItem");
                 }
-                ChoiceQuestionSurveyItem singleItem = (ChoiceQuestionSurveyItem)item;
-                if (singleItem.items == null || singleItem.items.isEmpty()) {
-                    throw new IllegalStateException("ChoiceQuestionSurveyItem must have choices");
-                }
-                AnswerFormat.ChoiceAnswerStyle answerStyle = AnswerFormat.ChoiceAnswerStyle.SingleChoice;
-                if (item.type == SurveyItemType.QUESTION_MULTIPLE_CHOICE) {
-                    answerStyle = AnswerFormat.ChoiceAnswerStyle.MultipleChoice;
-                }
-                Choice[] choices = singleItem.items.toArray(new Choice[singleItem.items.size()]);
-                format = new ChoiceAnswerFormat(answerStyle, choices);
+                ChoiceAnswerFormat choiceFormat = new ChoiceAnswerFormat();
+                fillChoiceAnswerFormat(choiceFormat, (ChoiceQuestionSurveyItem)item);
+                format = choiceFormat;
                 break;
             }
             case QUESTION_TIMING_RANGE:     // Single choice question, but with "Not Sure" as an added option
@@ -507,6 +501,9 @@ public class SurveyFactory {
                 }
                 format = textFormat;
                 break;
+            default:
+                format = createCustomAnswerFormat(context, item);
+                break;
         }
 
         QuestionStep step = null;
@@ -519,9 +516,60 @@ public class SurveyFactory {
             step = new QuestionStep(item.identifier, item.title, format);
         }
         fillQuestionStep(item, step);
-        // TODO: iOS has footnote, do we need that as well?
 
         return step;
+    }
+
+    /**
+     * This method can be overridden by a subclass to provide your own AnswerFormat that
+     * can be used to customize the QuestionBody UI
+     * @param context can be android or app
+     * @param item QuestionSurveyItem with item.getCustomTypeValue() unknown to the base SurveyFactory
+     * @return the correct AnswerFormat to this QuestionStep
+     */
+    public AnswerFormat createCustomAnswerFormat(Context context, QuestionSurveyItem item) {
+        return null; // to be implemented by subclass
+    }
+
+    protected void fillIntegerAnswerFormat(IntegerAnswerFormat format, IntegerRangeSurveyItem item) {
+        format.setMaxValue((item.max == null) ? 0 : item.max);
+        format.setMinValue((item.min == null) ? 0 : item.min);
+    }
+
+    protected void fillChoiceAnswerFormat(ChoiceAnswerFormat format, ChoiceQuestionSurveyItem item) {
+        if (item.items == null || item.items.isEmpty()) {
+            throw new IllegalStateException("ChoiceQuestionSurveyItem must have choices");
+        }
+        AnswerFormat.ChoiceAnswerStyle answerStyle = AnswerFormat.ChoiceAnswerStyle.SingleChoice;
+        if (item.type == SurveyItemType.QUESTION_MULTIPLE_CHOICE) {
+            answerStyle = AnswerFormat.ChoiceAnswerStyle.MultipleChoice;
+        }
+        format.setAnswerStyle(answerStyle);
+        Choice[] choices = item.items.toArray(new Choice[item.items.size()]);
+        format.setChoices(choices);
+    }
+
+    protected void fillBooleanAnswerFormat(Context context, BooleanAnswerFormat format, BooleanQuestionSurveyItem item) {
+        String yes = null, no = null;
+        // First try and get the true / value choices from the BooleanQuestionSurveyItem
+        // Since it may sometimes, but not always provided
+        if (item.items != null && item.items.size() == 2) {
+            for (Choice<Boolean> choice : item.items) {
+                if (choice.getValue()) {
+                    yes = choice.getText();
+                } else {
+                    no = choice.getText();
+                }
+            }
+        }
+        // If they are not provided, use the default yes / no strings for true / false
+        if (yes == null) {
+            yes = context.getString(R.string.rsb_yes);
+        }
+        if (no == null) {
+            no = context.getString(R.string.rsb_no);
+        }
+        format.setTextValues(yes, no);
     }
 
     protected void fillQuestionStep(QuestionSurveyItem item, QuestionStep step) {
