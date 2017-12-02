@@ -34,6 +34,7 @@ import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
+import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
 import org.researchstack.backbone.step.NavigationFormStep;
@@ -109,8 +110,8 @@ public class SurveyFactoryTests {
         assertTrue(stepList.size() > 0);
         assertEquals(3, stepList.size());
 
-        assertTrue(stepList.get(0) instanceof ToggleFormStep);
-        ToggleFormStep quizStep = (ToggleFormStep) stepList.get(0);
+        assertTrue(stepList.get(0) instanceof NavigationFormStep);
+        NavigationFormStep quizStep = (NavigationFormStep) stepList.get(0);
         assertEquals("eligibleInstruction", quizStep.getSkipToStepIdentifier());
         assertTrue(quizStep.getSkipIfPassed());
 

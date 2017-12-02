@@ -13,6 +13,7 @@ import org.researchstack.backbone.ResourceManager;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
 import org.researchstack.backbone.step.InstructionStep;
+import org.researchstack.backbone.step.NavigationFormStep;
 import org.researchstack.backbone.step.Step;
 
 import java.util.ArrayList;
@@ -298,7 +299,7 @@ public class OnboardingManagerTest {
     public void testEligibilitySection() {
         List<Step> steps = checkOnboardingSteps(OnboardingSectionType.ELIGIBILITY, OnboardingTaskType.REGISTRATION);
         List<Step> expectedSteps = new ArrayList<>();
-        expectedSteps.add(new ToggleFormStep("inclusionCriteria", null, null));
+        expectedSteps.add(new NavigationFormStep("inclusionCriteria", null, null));
         expectedSteps.add(new InstructionStep("ineligibleInstruction", null, "Unfortunately, you are ineligible to join this study."));
         expectedSteps.add(new InstructionStep("eligibleInstruction", null, "You are eligible to join the study."));
 

@@ -16,6 +16,7 @@ import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
+import org.researchstack.backbone.step.NavigationFormStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
 
@@ -227,8 +228,8 @@ public class NavigableOrderedTaskTest
         TaskResult result = new TaskResult(taskId);
 
         Step step = task.getStepAfterStep(null, result);
-        assertTrue(step instanceof ToggleFormStep);
-        ToggleFormStep toggleFormStep = (ToggleFormStep)step;
+        assertTrue(step instanceof NavigationFormStep);
+        NavigationFormStep toggleFormStep = (NavigationFormStep)step;
 
         StepResult<Boolean> question1Result = new StepResult<>(toggleFormStep.getFormSteps().get(0));
         question1Result.setResult(true);
@@ -261,8 +262,8 @@ public class NavigableOrderedTaskTest
         TaskResult result = new TaskResult(taskId);
 
         Step step = task.getStepAfterStep(null, result);
-        assertTrue(step instanceof ToggleFormStep);
-        ToggleFormStep toggleFormStep = (ToggleFormStep)step;
+        assertTrue(step instanceof NavigationFormStep);
+        NavigationFormStep toggleFormStep = (NavigationFormStep)step;
 
         StepResult<Boolean> question1Result = new StepResult<>(toggleFormStep.getFormSteps().get(0));
         question1Result.setResult(true);
