@@ -2,6 +2,8 @@ package org.researchstack.backbone.step;
 
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.ui.step.body.SingleChoiceQuestionBody;
+import org.researchstack.backbone.ui.step.layout.ConsentSharingStepLayout;
+import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 
 /**
  * This class represents a question step that includes prepopulated content that asks users about
@@ -21,6 +23,11 @@ public class ConsentSharingStep extends QuestionStep {
     public ConsentSharingStep(String identifier, String title, AnswerFormat format) {
         super(identifier, title, format);
         setOptional(false);
+    }
+
+    @Override
+    public Class getStepLayoutClass() {
+        return ConsentSharingStepLayout.class;
     }
 
     @Override

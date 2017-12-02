@@ -45,7 +45,6 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
-import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
 
 import java.lang.reflect.Type;
@@ -111,8 +110,8 @@ public class SurveyFactoryTests {
         assertTrue(stepList.size() > 0);
         assertEquals(3, stepList.size());
 
-        assertTrue(stepList.get(0) instanceof ToggleFormStep);
-        ToggleFormStep quizStep = (ToggleFormStep) stepList.get(0);
+        assertTrue(stepList.get(0) instanceof NavigationFormStep);
+        NavigationFormStep quizStep = (NavigationFormStep) stepList.get(0);
         assertEquals("eligibleInstruction", quizStep.getSkipToStepIdentifier());
         assertTrue(quizStep.getSkipIfPassed());
 

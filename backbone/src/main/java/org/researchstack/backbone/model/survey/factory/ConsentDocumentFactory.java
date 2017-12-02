@@ -21,6 +21,7 @@ import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.ConsentSubtaskStep;
 import org.researchstack.backbone.step.ConsentVisualStep;
+import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
@@ -165,7 +166,9 @@ public class ConsentDocumentFactory extends SurveyFactory {
             String oldIdentifier = new String(item.identifier);
             item.identifier = CONSENT_REVIEW_PROFILE_IDENTIFIER;
             // This will create a profile step with name, and birthday, or w/e is in JSON
-            stepList.add(super.createProfileStep(context, item));
+            ProfileStep profileStep = super.createProfileStep(context, item);
+            profileStep.setOptional(false);
+            stepList.add(profileStep);
             item.identifier = oldIdentifier;
         }
 

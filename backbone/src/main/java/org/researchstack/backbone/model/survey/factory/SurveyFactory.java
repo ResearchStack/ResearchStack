@@ -38,7 +38,6 @@ import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItemType;
 import org.researchstack.backbone.model.survey.TextfieldSurveyItem;
 import org.researchstack.backbone.model.survey.TimingRangeQuestionSurveyItem;
-import org.researchstack.backbone.model.survey.ToggleQuestionSurveyItem;
 import org.researchstack.backbone.onboarding.OnboardingSection;
 import org.researchstack.backbone.step.CompletionStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
@@ -55,7 +54,6 @@ import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.ShareTheAppStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
-import org.researchstack.backbone.step.ToggleFormStep;
 import org.researchstack.backbone.step.NavigationExpectedAnswerQuestionStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
 import org.researchstack.backbone.step.active.ActiveStep;
@@ -178,11 +176,6 @@ public class SurveyFactory {
                     throw new IllegalStateException("Error in json parsing, QUESTION_* types must be QuestionSurveyItem");
                 }
                 return createQuestionStep(context, (QuestionSurveyItem)item);
-            case QUESTION_TOGGLE:
-                if (!(item instanceof ToggleQuestionSurveyItem)) {
-                    throw new IllegalStateException("Error in json parsing, QUESTION_TOGGLE types must be ToggleQuestionSurveyItem");
-                }
-                return createToggleFormStep(context, (ToggleQuestionSurveyItem)item);
             case QUESTION_COMPOUND:
                 if (!(item instanceof CompoundQuestionSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_COMPOUND types must be CompoundQuestionSurveyItem");
@@ -579,29 +572,6 @@ public class SurveyFactory {
     }
 
     /**
-     * Toggles are actually a FormStep, since they are a list of other QuestionSteps
-     * Similar to a subtask step, but only as it relates to QuestionSurveyItems
-     * @param context can be any context, activity or application, used to access "R" resources
-     * @param item ToggleQuestionSurveyItem from JSON, that has nested boolean QuestionSurveyItems
-     * @return a ToggleFormStep which is a form step that is also a NavigationStep
-     */
-    public ToggleFormStep createToggleFormStep(Context context, ToggleQuestionSurveyItem item) {
-        if (item.items == null || item.items.isEmpty()) {
-            throw new IllegalStateException("toggle questions must have questions in the json");
-        }
-        List<QuestionStep> questionSteps = new ArrayList<>();
-        for (BooleanQuestionSurveyItem questionItem : item.items) {
-            QuestionStep questionStep = createQuestionStep(context, questionItem);
-            questionSteps.add(questionStep);
-        }
-
-        ToggleFormStep step = new ToggleFormStep(item.identifier, item.title, item.text, questionSteps);
-        transferNavigationRules(item, step);
-
-        return step;
-    }
-
-    /**
      * @param context can be any context, activity or application, used to access "R" resources
      * @param profileInfoOptions type of profile item that should be included in profile form step
      * @param addConfirmPasswordOption true if confirm password should be added with password, false otherwise
@@ -657,11 +627,13 @@ public class SurveyFactory {
      * @return QuestionStep used for gathering user's email
      */
     public QuestionStep createEmailQuestionStep(Context context, ProfileInfoOption profileOption) {
-        return createGenericQuestionStep(context,
+        QuestionStep emailStep = createGenericQuestionStep(context,
                 profileOption.getIdentifier(),
                 R.string.rsb_email,
                 R.string.rsb_email_placeholder,
                 new EmailAnswerFormat());
+        emailStep.setOptional(false);
+        return  emailStep;
     }
 
     /**
@@ -673,11 +645,13 @@ public class SurveyFactory {
      */
     public QuestionStep createExternalIdQuestionStep(
             Context context, ProfileInfoOption profileOption) {
-        return createGenericQuestionStep(context,
+        QuestionStep externalIdStep = createGenericQuestionStep(context,
                 profileOption.getIdentifier(),
                 R.string.rsb_external_id,
                 R.string.rsb_external_id_placeholder,
                 new TextAnswerFormat(EXTERNAL_ID_MAX_LENGTH));
+        externalIdStep.setOptional(false);
+        return externalIdStep;
     }
 
     /**
@@ -686,11 +660,13 @@ public class SurveyFactory {
      * @return QuestionStep used for gathering user's password
      */
     public QuestionStep createPasswordQuestionStep(Context context, ProfileInfoOption profileOption) {
-        return createGenericQuestionStep(context,
+        QuestionStep passwordStep = createGenericQuestionStep(context,
                 profileOption.getIdentifier(),
                 R.string.rsb_password,
                 R.string.rsb_password_placeholder,
                 new PasswordAnswerFormat());
+        passwordStep.setOptional(false);
+        return passwordStep;
     }
 
     /**
@@ -715,11 +691,13 @@ public class SurveyFactory {
      * @return QuestionStep used for gathering user's password
      */
     public QuestionStep createConfirmPasswordQuestionStep(Context context) {
-        return createGenericQuestionStep(context,
+        QuestionStep confirmPasswordStep = createGenericQuestionStep(context,
                 PASSWORD_CONFIRMATION_IDENTIFIER,
                 R.string.rsb_confirm_password,
                 R.string.rsb_confirm_password_placeholder,
                 new PasswordAnswerFormat());
+        confirmPasswordStep.setOptional(false);
+        return confirmPasswordStep;
     }
 
     /**

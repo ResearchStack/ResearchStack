@@ -37,12 +37,8 @@ public class QuestionSurveyItem<T extends Serializable> extends SurveyItem<T> {
         return identifier != null && type.isQuestionSubtype();
     }
 
-    public boolean isBooleanToggle() {
-        return type == SurveyItemType.QUESTION_TOGGLE;
-    }
-
     public boolean isCompoundStep() {
-        return isBooleanToggle() || type == SurveyItemType.QUESTION_COMPOUND;
+        return type == SurveyItemType.QUESTION_COMPOUND;
     }
 
     /**
