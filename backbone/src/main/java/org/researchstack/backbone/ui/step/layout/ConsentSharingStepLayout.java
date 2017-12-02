@@ -29,7 +29,7 @@ public class ConsentSharingStepLayout extends SurveyStepLayout {
 
     @Override
     protected void onComplete() {
-
+        super.onComplete();
         if (stepResult != null) {
             Object resultObj = stepResult.getResult();
 
@@ -54,6 +54,5 @@ public class ConsentSharingStepLayout extends SurveyStepLayout {
             body.scope = stringSharingScope;
             DataProvider.getInstance().saveLocalConsent(getContext(), body);
         }
-        super.onComplete();
     }
 }
