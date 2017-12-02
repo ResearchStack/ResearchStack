@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -15,7 +14,6 @@ import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.ToggleFormStep;
 
 import java.util.ArrayList;
 import java.util.Arrays;

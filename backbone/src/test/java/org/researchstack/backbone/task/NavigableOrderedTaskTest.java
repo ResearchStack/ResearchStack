@@ -1,7 +1,5 @@
 package org.researchstack.backbone.task;
 
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -20,7 +18,6 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
-import org.researchstack.backbone.step.ToggleFormStep;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

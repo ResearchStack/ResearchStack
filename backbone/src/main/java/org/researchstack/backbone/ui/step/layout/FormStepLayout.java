@@ -256,13 +256,14 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      */
     protected String skipButtonTitle() {
         boolean isSkipVisible = true;
-        if (!formStep.isOptional()) {
-            // If form isnt optional, check and see if the question steps are
-            for (FormStepData stepData : subQuestionStepData) {
-                if (!stepData.step.isOptional()) {
-                    isSkipVisible = false;
-                }
+        // Check and see if any of the question steps are not optional
+        for (FormStepData stepData : subQuestionStepData) {
+            if (!stepData.step.isOptional()) {
+                isSkipVisible = false;
             }
+        }
+        if (isSkipVisible) {
+            isSkipVisible = formStep.isOptional();
         }
         if (!isSkipVisible) {
             return null;
