@@ -36,6 +36,7 @@ import java.util.List;
 
 public class ConsentDocumentFactory extends SurveyFactory {
 
+    public static final String CONSENT_SUBTASK_ID = "consent";
     public static final String CONSENT_SIGNATURE_IDENTIFIER = "consentSignature";
     public static final String CONSENT_REVIEW_PROFILE_IDENTIFIER = "consentReviewProfile";
     public static final String CONSENT_SHARING_IDENTIFIER = "consentSharingOptions";
