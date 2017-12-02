@@ -134,15 +134,33 @@ public class StepResultHelper {
      * Only works with the DEFAULT Result identifier keys
      * @param stepIdentifier for result
      * @param stepResult the step result to try and find the boolean result in
-     * @param taskResult the task result to try and find the boolean result in
      * @return String object if exists, empty string otherwise
      */
-    public static Boolean findBooleanResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
+    public static Boolean findBooleanResult(String stepIdentifier, StepResult stepResult) {
         StepResult idStepResult = findStepResult(stepResult, stepIdentifier);
         if (idStepResult != null) {
             Object resultValue = idStepResult.getResult();
             if (resultValue instanceof Boolean) {
                 return (Boolean) resultValue;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
+     * @param stepIdentifier for result
+     * @param taskResult the task result to try and find the boolean result in
+     * @return String object if exists, empty string otherwise
+     */
+    public static Boolean findBooleanResult(String stepIdentifier, TaskResult taskResult) {
+        if (taskResult == null || taskResult.getResults() == null || stepIdentifier == null) {
+            return null;
+        }
+        for (StepResult stepResult : taskResult.getResults().values()) {
+            Boolean stringResult = findBooleanResult(stepIdentifier, stepResult);
+            if (stringResult != null) {
+                return stringResult;
             }
         }
         return null;
@@ -193,6 +211,15 @@ public class StepResultHelper {
             }
         }
         return null;
+    }
+
+    /**
+     * @param subtaskId the id of the parent subtask that contains the nested step result
+     * @param stepResultId the step result id
+     * @return the fully qualified identifier for use within StepResultHelper functions
+     */
+    public static String subtaskIdentifier(String subtaskId, String stepResultId) {
+        return subtaskId + "." + stepResultId;
     }
 
     public static abstract class ResultClassComparator<T extends Result> {

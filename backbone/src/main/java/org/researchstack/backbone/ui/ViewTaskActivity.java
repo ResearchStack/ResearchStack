@@ -183,6 +183,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         stepLayout.initialize(step, result);
         stepLayout.setCallbacks(this);
 
+        if (stepLayout instanceof ResultListener) {
+            ((ResultListener)stepLayout).taskResult(this, taskResult);
+        }
+
         return stepLayout;
     }
 
@@ -368,5 +372,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         {
             actionBar.setTitle(title);
         }
+    }
+
+    public interface ResultListener {
+        void taskResult(ViewTaskActivity activity, TaskResult taskResult);
     }
 }
