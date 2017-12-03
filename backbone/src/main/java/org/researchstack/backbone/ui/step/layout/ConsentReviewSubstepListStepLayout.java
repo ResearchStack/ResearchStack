@@ -119,8 +119,9 @@ public class ConsentReviewSubstepListStepLayout extends ViewPagerSubstepListStep
             if (body.scope == null) {
                 sharingScope = "";
             }
+        } else {
+            body.scope = sharingScope;
         }
-        body.scope = sharingScope;
 
         // Save Consent Information
         // User is not signed in yet, so we need to save consent info to disk for later upload
