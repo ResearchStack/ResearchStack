@@ -3,6 +3,7 @@ package org.researchstack.backbone.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -28,16 +29,38 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
+    public static final String EXTRA_COLOR_PRIMARY = "ViewTaskActivity.ExtraColorPrimary";
+    public static final String EXTRA_COLOR_ACCENT = "ViewTaskActivity.ExtraColorAccent";
+    public static final String EXTRA_PRINCIPAL_TEXT_COLOR = "ViewTaskActivity.ExtraPrincipalTextColor";
+    public static final String EXTRA_SECONDARY_TEXT_COLOR = "ViewTaskActivity.ExtraSecondaryTextColor";
+    public static final String EXTRA_ACTION_FAILED_COLOR = "ViewTaskActivity.ExtraActionFailedColor";
 
     private StepSwitcher root;
 
     private Step currentStep;
     private Task task;
     private TaskResult taskResult;
+    private int colorPrimary;
+    private int colorAccent;
+    private int principalTextColor;
+    private int secondaryTextColor;
+    private int actionFailedColor;
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
+        return intent;
+    }
+
+    public static Intent newThemedIntent(Context context, Task task, int colorPrimary, int colorAccent,
+                                   int principalTextColor, int secondaryTextColor , int actionFailedColor) {
+        Intent intent = new Intent(context, ViewTaskActivity.class);
+        intent.putExtra(EXTRA_TASK, task);
+        intent.putExtra(EXTRA_COLOR_PRIMARY, colorPrimary);
+        intent.putExtra(EXTRA_COLOR_ACCENT, colorAccent);
+        intent.putExtra(EXTRA_PRINCIPAL_TEXT_COLOR, principalTextColor);
+        intent.putExtra(EXTRA_SECONDARY_TEXT_COLOR, secondaryTextColor);
+        intent.putExtra(EXTRA_ACTION_FAILED_COLOR, actionFailedColor);
         return intent;
     }
 
@@ -55,6 +78,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
 
         if (savedInstanceState == null) {
             task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
+            colorPrimary = getIntent().getIntExtra(EXTRA_COLOR_PRIMARY, R.color.rsb_colorPrimary);
+            colorAccent = getIntent().getIntExtra(EXTRA_COLOR_ACCENT, R.color.rsb_colorAccent);
+            principalTextColor = getIntent().getIntExtra(EXTRA_PRINCIPAL_TEXT_COLOR, R.color.cell_header_grey);
+            secondaryTextColor = getIntent().getIntExtra(EXTRA_SECONDARY_TEXT_COLOR, R.color.item_text_grey);
+            actionFailedColor = getIntent().getIntExtra(EXTRA_ACTION_FAILED_COLOR, R.color.rsb_error);
             taskResult = new TaskResult(task.getIdentifier());
             taskResult.setStartDate(new Date());
         } else {
@@ -113,6 +141,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         // Change the title on the activity
         String title = task.getTitleForStep(this, step);
         setActionBarTitle(title);
+        setActionBarBackgroundColor(colorPrimary);
 
         // Get result from the TaskResult, can be null
         StepResult result = taskResult.getStepResult(step.getIdentifier());
@@ -263,6 +292,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(title);
+        }
+    }
+
+    public void setActionBarBackgroundColor(int backgroundColor) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(backgroundColor));
         }
     }
 }
