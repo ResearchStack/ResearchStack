@@ -178,13 +178,13 @@
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
-    <style name="Base.Button.Skin.Onboarding" parent="@style/Widget.AppCompat.Button" tools:ignore="ResourceName">
+    <style name="Base.Button.Backbone.Onboarding" parent="@style/Widget.AppCompat.Button" tools:ignore="ResourceName">
         <item name="android:layout_width">160dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="Button.Skin.Onboarding" parent="@style/Base.Button.Skin.Onboarding" tools:ignore="ResourceName" />
+    <style name="Button.Backbone.Onboarding" parent="@style/Base.Button.Backbone.Onboarding" tools:ignore="ResourceName" />
 
 
 </resources>

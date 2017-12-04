@@ -120,7 +120,7 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_skip"
-            style="@style/Button.Skin.Onboarding"
+            style="@style/Button.Backbone.Onboarding"
             android:text="@string/rsb_skip_signup"
             android:visibility="gone"
             app:backgroundTint="@color/rsb_submit_bar_negative"
@@ -128,7 +128,7 @@
         />
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_sign_up"
-            style="@style/Button.Skin.Onboarding"
+            style="@style/Button.Backbone.Onboarding"
             android:text="@string/rsb_join_study"
         />
         <Space android:layout_width="16dp" android:layout_height="match_parent"/>
