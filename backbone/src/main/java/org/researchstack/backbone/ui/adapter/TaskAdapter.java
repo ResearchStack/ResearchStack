@@ -48,10 +48,10 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         if (viewType == VIEW_TYPE_HEADER) {
-            View view = inflater.inflate(R.layout.rss_item_schedule_header, parent, false);
+            View view = inflater.inflate(R.layout.rsb_item_schedule_header, parent, false);
             return new HeaderViewHolder(view);
         } else {
-            View view = inflater.inflate(R.layout.rss_item_schedule, parent, false);
+            View view = inflater.inflate(R.layout.rsb_item_schedule, parent, false);
             return new ViewHolder(view);
         }
     }
@@ -148,20 +148,20 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int colorId = 0;
         if(taskId != null) {
             if (taskId.contains("APHTimedWalking")) {
-                colorId = resources.getColor(R.color.rss_activity_yellow);
+                colorId = resources.getColor(R.color.rsb_activity_yellow);
             } else if (taskId.contains("APHPhonation")) {
-                colorId = resources.getColor(R.color.rss_activity_blue);
+                colorId = resources.getColor(R.color.rsb_activity_blue);
             } else if (taskId.contains("APHIntervalTapping")) {
-                colorId = resources.getColor(R.color.rss_activity_purple);
+                colorId = resources.getColor(R.color.rsb_activity_purple);
             } else if (taskId.contains("APHMedicationTracker")) {
-              colorId = resources.getColor(R.color.rss_activity_red);
+              colorId = resources.getColor(R.color.rsb_activity_red);
             } else if (taskId.contains("APHTremor")) {
               colorId = resources.getColor(R.color.rsb_colorPrimary);
             } else {
-              colorId = resources.getColor(R.color.rss_activity_default);
+              colorId = resources.getColor(R.color.rsb_activity_default);
             }
         } else {
-            colorId = resources.getColor(R.color.rss_activity_default);
+            colorId = resources.getColor(R.color.rsb_activity_default);
         }
 
         return colorId;

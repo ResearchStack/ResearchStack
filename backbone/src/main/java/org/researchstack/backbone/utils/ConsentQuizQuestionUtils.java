@@ -58,8 +58,8 @@ public class ConsentQuizQuestionUtils {
 
     static List<Choice> createBooleanChoices(Context ctx, ConsentQuizModel.QuizQuestion question) {
         List<Choice> choices = new ArrayList();
-        choices.add(new Choice<>(ctx.getString(R.string.rss_btn_true), "true"));
-        choices.add(new Choice<>(ctx.getString(R.string.rss_btn_false), "false"));
+        choices.add(new Choice<>(ctx.getString(R.string.rsb_btn_true), "true"));
+        choices.add(new Choice<>(ctx.getString(R.string.rsb_btn_false), "false"));
         return choices;
     }
 }

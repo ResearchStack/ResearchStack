@@ -45,13 +45,13 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
 
     @Override
     public int getContentResourceId() {
-        return R.layout.rss_layout_consent_evaluation;
+        return R.layout.rsb_layout_consent_evaluation;
     }
 
     private void initializeStep() {
-        ImageView image = (ImageView) findViewById(R.id.rss_quiz_eval_image);
-        TextView title = (TextView) findViewById(R.id.rss_quiz_eval_title);
-        TextView summary = (TextView) findViewById(R.id.rss_quiz_eval_summary);
+        ImageView image = (ImageView) findViewById(R.id.rsb_quiz_eval_image);
+        TextView title = (TextView) findViewById(R.id.rsb_quiz_eval_title);
+        TextView summary = (TextView) findViewById(R.id.rsb_quiz_eval_summary);
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.getNegativeActionView().setVisibility(View.GONE);

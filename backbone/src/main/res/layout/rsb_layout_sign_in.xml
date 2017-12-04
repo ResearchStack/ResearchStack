@@ -12,26 +12,16 @@
         style="@style/Backbone.Survey.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registration" />
-
-    <TextView
-        android:id="@+id/text"
-        style="@style/Backbone.Survey.Summary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:textColorLink="?attr/colorAccent"
-        android:visibility="gone"
-        tools:text="@string/lorem_long"
-        tools:visibility="visible" />
+        android:text="Credentials" />
 
     <TableLayout
         android:id="@+id/credentials"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text"
+        android:layout_below="@+id/title"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
+        android:layout_marginTop="@dimen/rsb_padding_wedge"
         android:stretchColumns="1">
 
         <TableRow
@@ -44,19 +34,18 @@
                 android:layout_marginRight="@dimen/rsb_padding_small"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="right"
-                android:text="@string/rsb_email" />
+                android:text="@string/rsb_username" />
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/email"
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:hint="@string/rss_email_hint"
+                android:hint="@string/rsb_study_registration_username_hint"
                 android:inputType="textEmailAddress"
                 android:textSize="14sp" />
 
         </TableRow>
-
 
         <TableRow
             android:gravity="center_vertical"
@@ -69,7 +58,7 @@
                 android:layout_marginRight="@dimen/rsb_padding_small"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="right"
-                android:text="@string/rss_password" />
+                android:text="@string/rsb_password" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/password"
@@ -77,7 +66,7 @@
                 android:layout_height="match_parent"
                 android:layout_column="1"
                 android:gravity="center_vertical"
-                android:hint="@string/rss_study_registration_password_hint"
+                android:hint="@string/rsb_study_registration_password_hint"
                 android:inputType="textVisiblePassword"
                 android:textSize="14sp" />
 
@@ -92,6 +81,18 @@
         android:layout_alignParentBottom="true"
         app:negativeActionTitle="@string/rsb_exit"
         app:positiveActionTitle="@string/rsb_submit" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/forgot_password"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/submit_bar"
+        android:text="@string/rsb_forgot_password"
+        android:textColor="@color/rsb_submit_bar_negative" />
 
     <include
         android:id="@+id/progress"

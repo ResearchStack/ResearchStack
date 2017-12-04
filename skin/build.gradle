@@ -36,7 +36,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    resourcePrefix 'rss_'
+    resourcePrefix 'rsb_'
 }
 
 // Reading in data from local.properties is used here to grab key/value pairs used below in ext

@@ -32,7 +32,7 @@ public class LearnFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.rss_fragment_learn, container, false);
+        return inflater.inflate(R.layout.rsb_fragment_learn, container, false);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class LearnFragment extends Fragment {
                 View view = inflater.inflate(R.layout.preference_category_material, parent, false);
                 return new HeaderViewHolder(view);
             } else {
-                View view = inflater.inflate(R.layout.rss_item_row_learn, parent, false);
+                View view = inflater.inflate(R.layout.rsb_item_row_learn, parent, false);
                 return new ViewHolder(view);
             }
         }

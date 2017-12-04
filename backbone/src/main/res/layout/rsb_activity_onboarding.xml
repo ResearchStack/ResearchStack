@@ -74,7 +74,7 @@
         android:id="@+id/pager_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/rss_black_60"
+        android:background="@color/rsb_black_60"
         android:visibility="gone"
         tools:visibility="visible"
     >
@@ -121,7 +121,7 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_skip"
             style="@style/Button.Skin.Onboarding"
-            android:text="@string/rss_skip_signup"
+            android:text="@string/rsb_skip_signup"
             android:visibility="gone"
             app:backgroundTint="@color/rsb_submit_bar_negative"
             tools:visibility="visible"
@@ -129,7 +129,7 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/intro_sign_up"
             style="@style/Button.Skin.Onboarding"
-            android:text="@string/rss_join_study"
+            android:text="@string/rsb_join_study"
         />
         <Space android:layout_width="16dp" android:layout_height="match_parent"/>
     </LinearLayout>
@@ -143,7 +143,7 @@
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:gravity="center_vertical"
-        android:text="@string/rss_already_participating"
+        android:text="@string/rsb_already_participating"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:textSize="12sp"

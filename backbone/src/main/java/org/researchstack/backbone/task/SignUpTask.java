@@ -64,17 +64,17 @@ public class SignUpTask extends OnboardingTask {
                             case InclusionCriteriaModel.INELIGIBLE_INSTRUCTION_IDENTIFIER:
                                 instruction = new Step(SignUpIneligibleStepIdentifier, s.text);
                                 instruction.setText(s.detailText);
-                                instruction.setStepTitle(R.string.rss_eligibility);
+                                instruction.setStepTitle(R.string.rsb_eligibility);
                                 instruction.setStepLayoutClass(SignUpIneligibleStepLayout.class);
                                 break;
                             case InclusionCriteriaModel.ELIGIBLE_INSTRUCTION_IDENTIFIER:
                                 instruction = new Step(SignUpEligibleStepIdentifier, s.text);
                                 instruction.setText(s.detailText);
-                                instruction.setStepTitle(R.string.rss_eligibility);
+                                instruction.setStepTitle(R.string.rsb_eligibility);
                                 instruction.setStepLayoutClass(SignUpEligibleStepLayout.class);
                                 break;
                             default:
-                                instruction.setStepTitle(R.string.rss_eligibility);
+                                instruction.setStepTitle(R.string.rsb_eligibility);
                                 instruction = new Step(s.identifier, s.text);
                                 instruction.setText(s.detailText);
                         }
@@ -98,7 +98,7 @@ public class SignUpTask extends OnboardingTask {
                             }
                             form.setFormSteps(questions);
                         }
-                        form.setStepTitle(R.string.rss_eligibility);
+                        form.setStepTitle(R.string.rsb_eligibility);
                         form.setOptional(false);
                         stepMap.put(form.getIdentifier(), form);
                         break;

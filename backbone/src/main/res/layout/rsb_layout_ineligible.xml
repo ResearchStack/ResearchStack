@@ -6,14 +6,14 @@
         style="@style/Backbone.Survey.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/rss_ineligible" />
+        android:text="@string/rsb_ineligible" />
 
     <TextView
         android:id="@+id/ineligible_text"
         style="@style/Backbone.Survey.Summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/rss_eligibility_you_are_ineligible"
+        android:text="@string/rsb_eligibility_you_are_ineligible"
         android:textColorLink="?attr/colorAccent" />
 
     <TextView

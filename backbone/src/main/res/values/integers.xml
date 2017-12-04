@@ -20,7 +20,7 @@
     <integer name="rsb_sensor_frequency_walking_task">@integer/rsb_sensor_frequency_default</integer>
     <integer name="rsb_sensor_frequency_tapping_task">@integer/rsb_sensor_frequency_default</integer>
 
-    <integer name="rss_config_maxNumberOfPageIndicatorsToShow">16</integer>
-    <integer name="rss_btn_pressed_animation_duration">100</integer>
-    <integer name="rss_btn_pressed_animation_delay">100</integer>
+    <integer name="rsb_config_maxNumberOfPageIndicatorsToShow">16</integer>
+    <integer name="rsb_btn_pressed_animation_duration">100</integer>
+    <integer name="rsb_btn_pressed_animation_delay">100</integer>
 </resources>

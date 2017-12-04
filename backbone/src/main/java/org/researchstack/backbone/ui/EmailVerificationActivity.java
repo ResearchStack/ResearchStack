@@ -39,7 +39,7 @@ public class EmailVerificationActivity extends PinCodeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.rss_activity_email_verification);
+        setContentView(R.layout.rsb_activity_email_verification);
         progress = findViewById(R.id.progress);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -105,7 +105,7 @@ public class EmailVerificationActivity extends PinCodeActivity {
 
     private void changeEmail() {
         Step signUpStep = new Step(OnboardingTask.SignUpStepIdentifier);
-        signUpStep.setStepTitle(R.string.rss_sign_up);
+        signUpStep.setStepTitle(R.string.rsb_sign_up);
         signUpStep.setStepLayoutClass(SignUpStepLayout.class);
         signUpStep.setTitle(getString(R.string.rsb_change_email));
 

@@ -77,7 +77,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
 
         ConsentQuizModel.QuizQuestion question = step.getQuestion();
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.rss_layout_quiz_question, this, true);
+        inflater.inflate(R.layout.rsb_layout_quiz_question, this, true);
 
         ((TextView) findViewById(R.id.title)).setText(step.getTitle());
 
@@ -110,7 +110,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
         List<Choice> choices = ConsentQuizQuestionUtils.createChoices(getContext(), question);
         for(Choice<String> choice : choices)
         {
-            AppCompatRadioButton button = (AppCompatRadioButton) inflater.inflate(R.layout.rss_item_radio_quiz,
+            AppCompatRadioButton button = (AppCompatRadioButton) inflater.inflate(R.layout.rsb_item_radio_quiz,
                     radioGroup,
                     false);
             button.setText(choice.getText());
@@ -179,8 +179,8 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
 
                 //Set our Result-title
                 String resultTitle = answerCorrect
-                        ? getContext().getString(R.string.rss_quiz_evaluation_correct)
-                        : getContext().getString(R.string.rss_quiz_evaluation_incorrect);
+                        ? getContext().getString(R.string.rsb_quiz_evaluation_correct)
+                        : getContext().getString(R.string.rsb_quiz_evaluation_incorrect);
 
                 this.resultTitle.setVisibility(View.VISIBLE);
                 this.resultTitle.setText(resultTitle);
@@ -191,12 +191,12 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
 
                 if(answerCorrect)
                 {
-                    explanation = getContext().getString(R.string.rss_quiz_question_explanation_correct,
+                    explanation = getContext().getString(R.string.rsb_quiz_question_explanation_correct,
                             step.getQuestion().getPositiveFeedback());
                 }
                 else
                 {
-                    explanation = getContext().getString(R.string.rss_quiz_question_explanation_incorrect,
+                    explanation = getContext().getString(R.string.rsb_quiz_question_explanation_incorrect,
                             expectedChoice.getText(),
                             step.getQuestion().getNegativeFeedback());
                 }
@@ -232,7 +232,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
     {
         if(radioGroup.getCheckedRadioButtonId() == - 1)
         {
-            Toast.makeText(getContext(), R.string.rss_error_select_answer, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.rsb_error_select_answer, Toast.LENGTH_SHORT).show();
             return false;
         }
 

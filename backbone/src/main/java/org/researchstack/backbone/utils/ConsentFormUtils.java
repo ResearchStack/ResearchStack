@@ -38,14 +38,14 @@ public class ConsentFormUtils {
             int stringId = context.getApplicationInfo().labelRes;
             String appName = context.getString(stringId);
             String emailSubject = context.getResources()
-                    .getString(R.string.rss_study_overview_email_subject, appName);
+                    .getString(R.string.rsb_study_overview_email_subject, appName);
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("message/rfc822");
             intent.putExtra(Intent.EXTRA_SUBJECT, emailSubject);
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile((File) o));
 
-            String title = context.getString(R.string.rss_send_email);
+            String title = context.getString(R.string.rsb_send_email);
             context.startActivity(Intent.createChooser(intent, title));
         });
     }

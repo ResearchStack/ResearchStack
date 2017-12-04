@@ -55,7 +55,7 @@ public class OverviewActivity extends PinCodeActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.rss_activity_onboarding);
+        super.setContentView(R.layout.rsb_activity_onboarding);
 
         ImageView logoView = (ImageView) findViewById(R.id.layout_studyoverview_landing_logo);
         TextView titleView = (TextView) findViewById(R.id.layout_studyoverview_landing_title);
@@ -78,14 +78,14 @@ public class OverviewActivity extends PinCodeActivity implements View.OnClickLis
         // add Read Consent option to list and tabbed dialog
         if ("yes".equals(welcomeQuestion.getShowConsent())) {
             StudyOverviewModel.Question consent = new StudyOverviewModel.Question();
-            consent.setTitle(getString(R.string.rss_read_consent_doc));
+            consent.setTitle(getString(R.string.rsb_read_consent_doc));
             consent.setDetails(ResourceManager.getInstance().getConsentHtml().getName());
             model.getQuestions().add(0, consent);
         }
 
         for (int i = 0; i < model.getQuestions().size(); i++) {
             AppCompatButton button = (AppCompatButton) LayoutInflater.from(this)
-                    .inflate(R.layout.rss_button_study_overview, linearLayout, false);
+                    .inflate(R.layout.rsb_button_study_overview, linearLayout, false);
             button.setText(model.getQuestions().get(i).getTitle());
             // set the index for opening the viewpager to the correct page on click
             button.setTag(i);

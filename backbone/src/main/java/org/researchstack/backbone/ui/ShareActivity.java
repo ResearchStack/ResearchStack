@@ -14,7 +14,7 @@ public class ShareActivity extends BaseActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(org.researchstack.backbone.R.layout.rss_activity_fragment);
+    setContentView(org.researchstack.backbone.R.layout.rsb_activity_fragment);
 
     Toolbar toolbar = (Toolbar) findViewById(org.researchstack.backbone.R.id.toolbar);
     setSupportActionBar(toolbar);

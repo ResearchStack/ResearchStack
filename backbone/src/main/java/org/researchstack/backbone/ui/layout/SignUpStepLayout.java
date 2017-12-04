@@ -52,7 +52,7 @@ public class SignUpStepLayout extends RelativeLayout implements StepLayout {
         this.result = result == null ? new StepResult<>(step) : result;
 
         View layout = LayoutInflater.from(getContext())
-                .inflate(R.layout.rss_layout_sign_up, this, true);
+                .inflate(R.layout.rsb_layout_sign_up, this, true);
 
         progress = layout.findViewById(R.id.progress);
 

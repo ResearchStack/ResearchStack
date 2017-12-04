@@ -73,22 +73,22 @@ public class BaseActivity extends PinCodeActivity
             switch(intent.getAction())
             {
                 case DataProvider.ERROR_CONSENT_REQUIRED:
-                    messageText = getString(R.string.rss_network_error_consent);
-                    actionText = getString(R.string.rss_network_error_consent_action);
+                    messageText = getString(R.string.rsb_network_error_consent);
+                    actionText = getString(R.string.rsb_network_error_consent_action);
                     action = v -> ResearchStack.getInstance().getOnboardingManager()
                             .launchOnboarding(OnboardingTaskType.RECONSENT, context);
                     break;
 
                 case DataProvider.ERROR_NOT_AUTHENTICATED:
-                    messageText = getString(R.string.rss_network_error_sign_in);
-                    actionText = getString(R.string.rss_network_error_sign_in_action);
+                    messageText = getString(R.string.rsb_network_error_sign_in);
+                    actionText = getString(R.string.rsb_network_error_sign_in_action);
                     action = v -> ResearchStack.getInstance().getOnboardingManager()
                             .launchOnboarding(OnboardingTaskType.LOGIN, context);
                     break;
 
                 case DataProvider.ERROR_APP_UPGRADE_REQUIRED:
-                    messageText = getString(R.string.rss_network_error_upgrade_app);
-                    actionText = getString(R.string.rss_network_error_upgrade_app_action);
+                    messageText = getString(R.string.rsb_network_error_upgrade_app);
+                    actionText = getString(R.string.rsb_network_error_upgrade_app_action);
 
                     Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
                     playStoreIntent.setData(Uri.parse("market://details?id=" + context.getPackageName()));
@@ -105,7 +105,7 @@ public class BaseActivity extends PinCodeActivity
             }
             snackbar.getView().setOnClickListener(v -> snackbar.dismiss());
             snackbar.setActionTextColor(ContextCompat.getColor(BaseActivity.this,
-                                                               R.color.rss_snackbar_action_color));
+                                                               R.color.rsb_snackbar_action_color));
             TextView messageView = getSnackBarMessageView(snackbar);
             if (messageView != null)
             {

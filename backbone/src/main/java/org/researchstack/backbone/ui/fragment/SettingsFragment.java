@@ -56,30 +56,30 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Settings Keys.
-    // If you are adding / changing settings, make sure they are unique / match in rss_settings.xml
+    // If you are adding / changing settings, make sure they are unique / match in rsb_settings.xml
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Profile
-    public static final String KEY_PROFILE           = "rss_settings_profile";
-    public static final String KEY_PROFILE_NAME      = "rss_settings_profile_name";
-    public static final String KEY_PROFILE_BIRTHDATE = "rss_settings_profile_birthdate";
+    public static final String KEY_PROFILE           = "rsb_settings_profile";
+    public static final String KEY_PROFILE_NAME      = "rsb_settings_profile_name";
+    public static final String KEY_PROFILE_BIRTHDATE = "rsb_settings_profile_birthdate";
     // Reminders
-    public static final String KEY_REMINDERS         = "rss_settings_reminders";
+    public static final String KEY_REMINDERS         = "rsb_settings_reminders";
     // Privacy
-    public static final String KEY_PRIVACY           = "rss_settings_privacy";
-    public static final String KEY_PRIVACY_POLICY    = "rss_settings_privacy_policy";
-    public static final String KEY_REVIEW_CONSENT    = "rss_settings_privacy_review_consent";
-    public static final String KEY_SHARING_OPTIONS   = "rss_settings_privacy_sharing_options";
+    public static final String KEY_PRIVACY           = "rsb_settings_privacy";
+    public static final String KEY_PRIVACY_POLICY    = "rsb_settings_privacy_policy";
+    public static final String KEY_REVIEW_CONSENT    = "rsb_settings_privacy_review_consent";
+    public static final String KEY_SHARING_OPTIONS   = "rsb_settings_privacy_sharing_options";
     // Security
-    public static final String KEY_AUTO_LOCK_ENABLED = "rss_settings_auto_lock_on_exit";
-    public static final String KEY_AUTO_LOCK_TIME    = "rss_settings_auto_lock_time";
-    public static final String KEY_CHANGE_PASSCODE   = "rss_settings_security_change_passcode";
+    public static final String KEY_AUTO_LOCK_ENABLED = "rsb_settings_auto_lock_on_exit";
+    public static final String KEY_AUTO_LOCK_TIME    = "rsb_settings_auto_lock_time";
+    public static final String KEY_CHANGE_PASSCODE   = "rsb_settings_security_change_passcode";
     // General
-    public static final String KEY_GENERAL           = "rss_settings_general";
-    public static final String KEY_SOFTWARE_NOTICES  = "rss_settings_general_software_notices";
-    public static final String KEY_LEAVE_STUDY       = "rss_settings_general_leave_study";
-    public static final String KEY_JOIN_STUDY        = "rss_settings_general_join_study";
+    public static final String KEY_GENERAL           = "rsb_settings_general";
+    public static final String KEY_SOFTWARE_NOTICES  = "rsb_settings_general_software_notices";
+    public static final String KEY_LEAVE_STUDY       = "rsb_settings_general_leave_study";
+    public static final String KEY_JOIN_STUDY        = "rsb_settings_general_join_study";
     // Other
-    public static final String KEY_VERSION           = "rss_settings_version";
+    public static final String KEY_VERSION           = "rsb_settings_version";
     public static final String PASSCODE              = "passcode";
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -108,7 +108,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onCreatePreferences(Bundle bundle, String s)
     {
-        super.addPreferencesFromResource(R.xml.rss_settings);
+        super.addPreferencesFromResource(R.xml.rsb_settings);
 
         // Get our screen which is created in Skin SettingsFragment
         PreferenceScreen screen = getPreferenceScreen();
@@ -246,7 +246,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     PassCodeCreationStep step = new PassCodeCreationStep(PASSCODE,
                                                                          R.string.rsb_passcode_change_title);
                     step.setStateOrdinal(SignUpPinCodeCreationStepLayout.State.CHANGE.ordinal());
-                    OrderedTask passcodeTask = new OrderedTask("task_rss_settings_passcode", step);
+                    OrderedTask passcodeTask = new OrderedTask("task_rsb_settings_passcode", step);
                     Intent passcodeIntent = ViewTaskActivity.newIntent(getContext(), passcodeTask);
                     startActivityForResult(passcodeIntent, REQUEST_CODE_CHANGE_PASSCODE);
                     return true;
@@ -263,7 +263,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
                     ConsentSharingStep sharingStep = new ConsentSharingStep(ConsentTask.ID_SHARING);
                     sharingStep.setOptional(false);
-                    sharingStep.setStepTitle(R.string.rss_settings_privacy_sharing_options);
+                    sharingStep.setStepTitle(R.string.rsb_settings_privacy_sharing_options);
 
                     String shareWidely = getString(R.string.rsb_consent_share_widely,
                                                    investigatorLongDesc);
@@ -292,9 +292,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     return true;
 
                 case KEY_LEAVE_STUDY:
-                    new AlertDialog.Builder(getActivity()).setTitle(R.string.rss_settings_general_leave_study)
-                            .setMessage(R.string.rss_settings_dialog_leave_study)
-                            .setPositiveButton(R.string.rss_settings_general_leave_study,
+                    new AlertDialog.Builder(getActivity()).setTitle(R.string.rsb_settings_general_leave_study)
+                            .setMessage(R.string.rsb_settings_dialog_leave_study)
+                            .setPositiveButton(R.string.rsb_settings_general_leave_study,
                                                (dialog, which) -> {
 
                                                    progress.setVisibility(View.VISIBLE);
@@ -307,7 +307,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                                                                if(response.isSuccess())
                                                                {
                                                                    Toast.makeText(getActivity(),
-                                                                                  R.string.rss_network_result_consent_withdraw_success,
+                                                                                  R.string.rsb_network_result_consent_withdraw_success,
                                                                                   Toast.LENGTH_SHORT).show();
 
                                                                    isInitializedForConsent = false;
@@ -316,7 +316,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                                                                else
                                                                {
                                                                    Toast.makeText(getActivity(),
-                                                                                  R.string.rss_network_error_consent_withdraw_failed,
+                                                                                  R.string.rsb_network_error_consent_withdraw_failed,
                                                                                   Toast.LENGTH_SHORT).show();
                                                                }
 
@@ -379,12 +379,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 return null;
             }).compose(ObservableUtils.applyDefault()).subscribe(o -> {
                 Toast.makeText(getActivity(),
-                               R.string.rss_local_result_passcode_changed,
+                               R.string.rsb_local_result_passcode_changed,
                                Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             }, e -> {
                 Toast.makeText(getActivity(),
-                               R.string.rss_local_error_passcode_failed,
+                               R.string.rsb_local_error_passcode_failed,
                                Toast.LENGTH_SHORT).show();
                 progress.setVisibility(View.GONE);
             });
@@ -452,16 +452,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         {
             LogExt.e(getClass(), "Could not find package version info");
             versionCode = 0;
-            versionName = getString(R.string.rss_settings_version_unknown);
+            versionName = getString(R.string.rsb_settings_version_unknown);
         }
-        return getString(R.string.rss_settings_version, versionName, versionCode);
+        return getString(R.string.rsb_settings_version, versionName, versionCode);
     }
 
     public void showPrivacyPolicy()
     {
         String path = ResourceManager.getInstance().getPrivacyPolicy().getAbsolutePath();
         Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
-                                                                 getString(R.string.rss_settings_privacy_policy),
+                                                                 getString(R.string.rsb_settings_privacy_policy),
                                                                  path);
         startActivity(intent);
     }
@@ -470,7 +470,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     {
         String path = ResourceManager.getInstance().getSoftwareNotices().getAbsolutePath();
         Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
-                                                                 getString(R.string.rss_settings_general_software_notices),
+                                                                 getString(R.string.rsb_settings_general_software_notices),
                                                                  path);
         startActivity(intent);
     }

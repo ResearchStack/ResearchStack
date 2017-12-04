@@ -68,7 +68,7 @@ public class ConsentTask extends OrderedTask {
                 .getConsentSections()
                 .create(context);
 
-        String participant = r.getString(R.string.rss_participant);
+        String participant = r.getString(R.string.rsb_participant);
         ConsentSignature signature = new ConsentSignature("participant", participant, null);
 
         DocumentProperties properties = data.getDocumentProperties();

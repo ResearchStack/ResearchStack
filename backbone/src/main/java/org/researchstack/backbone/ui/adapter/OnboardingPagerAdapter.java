@@ -55,7 +55,7 @@ public class OnboardingPagerAdapter extends PagerAdapter {
         StudyOverviewModel.Question item = items.get(position);
 
         if (!TextUtils.isEmpty(item.getVideoName())) {
-            View layout = inflater.inflate(R.layout.rss_layout_study_html, container, false);
+            View layout = inflater.inflate(R.layout.rsb_layout_study_html, container, false);
             container.addView(layout);
 
             StringBuilder builder = new StringBuilder("<h3>" + item.getTitle() + "</h3>");
@@ -63,7 +63,7 @@ public class OnboardingPagerAdapter extends PagerAdapter {
 
             TextView simpleView = (TextView) layout.findViewById(R.id.text);
             simpleView.setText(Html.fromHtml(builder.toString()));
-            simpleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.rss_ic_video);
+            simpleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.rsb_ic_video);
             simpleView.setOnClickListener(v -> {
                 String videoPath = ResourceManager.getInstance()
                         .generatePath(ResourceManager.Resource.TYPE_MP4, item.getVideoName());

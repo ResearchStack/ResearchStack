@@ -110,7 +110,7 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.rss_fragment_activities, container, false);
+        return inflater.inflate(R.layout.rsb_fragment_activities, container, false);
     }
 
     @Override
@@ -284,24 +284,24 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
         }
 
         // todays tasks
-        tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rss_activities_today_header_title,
+        tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rsb_activities_today_header_title,
                 now.dayOfWeek().getAsText(),
                 now.monthOfYear().getAsText(),
                 now.dayOfMonth().getAsText()),
-                getActivity().getString(R.string.rss_activities_today_header_message)));
+                getActivity().getString(R.string.rsb_activities_today_header_message)));
         tasks.addAll(todaysTasks);
 
         // todays optional tasks
         if (optionalTasks.size() > 0) {
-            tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rss_activities_optional_header_title),
-                    getActivity().getString(R.string.rss_activities_optional_header_message)));
+            tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rsb_activities_optional_header_title),
+                    getActivity().getString(R.string.rsb_activities_optional_header_message)));
             tasks.addAll(optionalTasks);
         }
 
         // yesterdays tasks
         if (yesterdayTasks.size() > 0) {
-            tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rss_activities_yesterday_header_title),
-                    getActivity().getString(R.string.rss_activities_yesterday_header_message)));
+            tasks.add(new TaskAdapter.Header(getActivity().getString(R.string.rsb_activities_yesterday_header_title),
+                    getActivity().getString(R.string.rsb_activities_yesterday_header_message)));
             tasks.addAll(yesterdayTasks);
         }
 
@@ -374,7 +374,7 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
         Task task = MoodSurveyFactory.moodSurvey(
                 getContext(),
                 MoodSurveyFactory.MoodSurveyIdentifier,
-                getContext().getString(R.string.rss_activities_mood_survey_intended_use),
+                getContext().getString(R.string.rsb_activities_mood_survey_intended_use),
                 MoodSurveyFrequency.DAILY,
                 "Today, my thinking is:",
                 new ArrayList<>());

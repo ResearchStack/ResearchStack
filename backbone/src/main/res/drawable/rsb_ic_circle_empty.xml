@@ -3,8 +3,8 @@
     android:shape="oval">
 
     <size
-        android:width="@dimen/rss_activity_indicator_size"
-        android:height="@dimen/rss_activity_indicator_size" />
+        android:width="@dimen/rsb_activity_indicator_size"
+        android:height="@dimen/rsb_activity_indicator_size" />
 
     <solid android:color="@android:color/transparent" />
 

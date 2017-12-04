@@ -45,7 +45,7 @@ public class ShareFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.rss_fragment_share, container, false);
+        return inflater.inflate(R.layout.rsb_fragment_share, container, false);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class ShareFragment extends Fragment
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            View view = inflater.inflate(R.layout.rss_item_row_share, parent, false);
+            View view = inflater.inflate(R.layout.rsb_item_row_share, parent, false);
             return new ShareFragment.ShareAdapter.ViewHolder(view);
         }
 

@@ -75,7 +75,7 @@ public abstract class OnboardingTask extends Task {
     public Step getSignInStep() {
         if (signInStep == null) {
             signInStep = new Step(SignInStepIdentifier);
-            signInStep.setStepTitle(R.string.rss_sign_in);
+            signInStep.setStepTitle(R.string.rsb_sign_in);
             signInStep.setStepLayoutClass(SignInStepLayout.class);
         }
         return signInStep;
@@ -84,7 +84,7 @@ public abstract class OnboardingTask extends Task {
     public Step getThankyouStep() {
         if (thankyouStep == null) {
             thankyouStep = new Step(SignUpThankYouStepIdentifier);
-            thankyouStep.setStepTitle(R.string.rss_thank_you);
+            thankyouStep.setStepTitle(R.string.rsb_thank_you);
             thankyouStep.setStepLayoutClass(NotImplementedStepBody.class);
             //            thankyouStep.setStepLayoutClass(SignUpThankYouStepLayout.class);
         }
@@ -102,7 +102,7 @@ public abstract class OnboardingTask extends Task {
     public Step getSignUpStep() {
         if (signUpStep == null) {
             signUpStep = new Step(SignUpStepIdentifier);
-            signUpStep.setStepTitle(R.string.rss_sign_up);
+            signUpStep.setStepTitle(R.string.rsb_sign_up);
             signUpStep.setStepLayoutClass(SignUpStepLayout.class);
         }
         return signUpStep;
