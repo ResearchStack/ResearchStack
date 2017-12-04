@@ -1,4 +1,4 @@
-package org.researchstack.skin;
+package org.researchstack.backbone;
 
 import org.junit.Before;
 import org.junit.Test;

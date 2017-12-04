@@ -54,4 +54,15 @@
     <color name="rsb_mood_survey_normal_image_color">@color/rsb_warm_gray</color>
     <color name="rsb_mood_survey_selected_image_color">@color/rsb_colorPrimary</color>
 
+    <color name="rss_one_time_color">#3f51b5</color>
+    <color name="rss_recurring_color">#4caf50</color>
+    <color name="rss_teal">#009891</color>
+    <color name="rss_black_60">#99000000</color>
+    <color name="rss_snackbar_action_color">#1d92f4</color>
+
+    <color name="rss_activity_yellow">#FDB447</color>
+    <color name="rss_activity_blue">#22AEF4</color>
+    <color name="rss_activity_red">#EA3A57</color>
+    <color name="rss_activity_purple">#9240D3</color>
+    <color name="rss_activity_default">@color/rsb_light_gray</color>
 </resources>
