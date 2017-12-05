@@ -183,7 +183,10 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
 
     protected void refreshAdapterFailure(String errorMessage) {
         swipeContainer.setRefreshing(false);
-        new AlertDialog.Builder(getContext()).setMessage(errorMessage).create().show();
+        new AlertDialog.Builder(getContext())
+                .setMessage(errorMessage)
+                .setPositiveButton(R.string.rsb_BUTTON_OK, null)
+                .create().show();
     }
 
     /**
