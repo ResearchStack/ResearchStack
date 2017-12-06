@@ -5,12 +5,12 @@ apply plugin: 'maven'
 android {
 
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "26.0.2"
 
     libraryVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.outputFile = new File(output.outputFile.parentFile,
-                    output.outputFile.name.replace(".aar", "_v${VERSION_NAME}.aar"));
+        variant.outputs.all { output ->
+            outputFileName = new File(output.outputFile.parentFile,
+                    output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"));
         }
     }
 
@@ -18,7 +18,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 6
-        versionName version
+        versionName "1.0.6"
     }
 
     buildTypes {
@@ -91,7 +91,7 @@ afterEvaluate { project ->
 
                 pom.groupId = GROUP
                 pom.artifactId = project.getProperties().POM_ARTIFACT_ID
-                pom.version = VERSION_NAME
+                pom.version = android.defaultConfig.versionName
 
                 def deployPath = file('./')
                 repository(url: "file://${deployPath.absolutePath}/../../Android-SDK/")
@@ -114,7 +114,7 @@ afterEvaluate { project ->
                     pom.dependencies.forEach { dep ->
                         if (dep.getVersion() == "unspecified") {
                             dep.setGroupId(GROUP)
-                            dep.setVersion(VERSION_NAME)
+                            dep.setVersion(android.defaultConfig.versionName)
                         }
                     }
                 }
