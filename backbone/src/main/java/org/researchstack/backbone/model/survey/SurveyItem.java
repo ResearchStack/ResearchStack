@@ -48,7 +48,7 @@ public class SurveyItem<T extends Serializable> implements Serializable {
     private String customSurveyItemType;
 
     /* Default constructor needed for serilization/deserialization of object */
-    SurveyItem() {
+    protected SurveyItem() {
         super();
     }
 
