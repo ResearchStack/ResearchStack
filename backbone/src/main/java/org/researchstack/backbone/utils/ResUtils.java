@@ -122,6 +122,16 @@ public class ResUtils {
         return getDrawableResourceId(context, name, 0);
     }
 
+    /**
+     * @param context can be app or activity
+     * @param name of the dimen resource
+     * @return the dimension resource to use in resources.getDimensionPixelOffset
+     */
+    public static int getDimenResourceId(Context context, String name)
+    {
+        return context.getResources().getIdentifier(name, "dimen", context.getPackageName());
+    }
+
     public static int getDrawableResourceId(Context context, String name, int defaultResId) {
         if (name == null || name.length() == 0) {
             return defaultResId;
