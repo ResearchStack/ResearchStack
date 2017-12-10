@@ -169,14 +169,14 @@ public class TaskItemFactory extends SurveyFactory {
         Step introStep = orderedTask.getSteps().get(0);
         if (!(introStep instanceof InstructionStep)) {
             LogExt.e(getClass(), "Handling of an optional task is not implemented " +
-                    "for tasks that do not start with IntructionStep");
+                    "for tasks that do not start with InstructionStep");
             return task;
         }
 
         Step lastStep = orderedTask.getSteps().get(orderedTask.getSteps().size());
         if (orderedTask.getSteps().size() <= 1 || !(lastStep instanceof InstructionStep)) {
             LogExt.e(getClass(), "Handling of an optional task is not implemented " +
-                    "for tasks that do not end with IntructionStep");
+                    "for tasks that do not end with InstructionStep");
             return task;
         }
 

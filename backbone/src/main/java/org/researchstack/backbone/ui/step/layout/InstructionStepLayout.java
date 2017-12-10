@@ -4,8 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -13,7 +11,6 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -70,8 +67,8 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     public void initialize(Step step, StepResult result) {
         validateAndSetStep(step);
         connectStepUi(
-                R.id.rsb_intruction_title,
-                R.id.rsb_intruction_text,
+                R.id.rsb_instruction_title,
+                R.id.rsb_instruction_text,
                 R.id.rsb_image_view,
                 R.id.rsb_instruction_more_detail_text);
         refreshStep();
@@ -126,14 +123,6 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
         if (step != null) {
             String title = step.getTitle();
             String text  = step.getText();
-
-            if (TextUtils.isEmpty(title) &&
-                    !TextUtils.isEmpty(text) && !TextUtils.isEmpty(instructionStep.getMoreDetailText()))
-            {
-                // With no Title, we can assume text and detail text is equla to title and text
-                title = text;
-                text = instructionStep.getMoreDetailText();
-            }
 
             // Set Title
             if (! TextUtils.isEmpty(title)) {
