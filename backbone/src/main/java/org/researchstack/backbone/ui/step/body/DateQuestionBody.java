@@ -7,6 +7,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -82,7 +83,7 @@ public class DateQuestionBody implements StepBody {
             title.setVisibility(View.GONE);
         }
 
-        TextView textView = (TextView) view.findViewById(R.id.value);
+        EditText textView = view.findViewById(R.id.value);
         textView.setSingleLine(true);
         if (step.getPlaceholder() != null) {
             textView.setHint(step.getPlaceholder());

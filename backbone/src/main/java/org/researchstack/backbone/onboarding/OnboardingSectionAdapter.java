@@ -11,6 +11,7 @@ import org.researchstack.backbone.ResourceManager;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.survey.SurveyItem;
+import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -61,7 +62,7 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
         OnboardingSection section;
         // Consent section also has a consent document with it, try and parse it if we have that type
         if (type == OnboardingSectionType.CONSENT) {
-            ConsentOnboardingSection consentSection = new ConsentOnboardingSection();
+            ConsentOnboardingSection consentSection = createConsentOnboardingSection();
             consentSection.consentDocument = context.deserialize(json, ConsentDocument.class);
             section = consentSection;
         } else if (type == OnboardingSectionType.CUSTOM) {
@@ -77,5 +78,14 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
         section.surveyItems = surveyItems;
 
         return section;
+    }
+
+    /**
+     * Can be overridden by a sub-class to provide a custom ConsentOnboardingSection
+     * which can provide a custom ConsentDocumentFactory
+     * @return a ConsentOnboardingSection class
+     */
+    protected ConsentOnboardingSection createConsentOnboardingSection() {
+        return new ConsentOnboardingSection();
     }
 }

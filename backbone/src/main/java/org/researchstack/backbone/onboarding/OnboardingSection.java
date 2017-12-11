@@ -51,7 +51,7 @@ public class OnboardingSection {
     // Isnt deserialized into a field, but is used in the deserialization process
     static final String ONBOARDING_RESOURCE_NAME_GSON = "resourceName";
 
-    transient SurveyFactory surveyFactory;
+    protected transient SurveyFactory surveyFactory;
     public SurveyFactory getDefaultOnboardingSurveyFactory(
             Context context,
             SurveyFactory.CustomStepCreator customStepCreator)

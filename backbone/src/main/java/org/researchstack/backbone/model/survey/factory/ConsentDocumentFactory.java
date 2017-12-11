@@ -247,21 +247,36 @@ public class ConsentDocumentFactory extends SurveyFactory {
     public SubtaskStep createConsentVisualSteps(SurveyItem item, List<ConsentSection> sections) {
         List<Step> stepList = new ArrayList<>();
         int customIdx = 1;
-        for (ConsentSection section : consentDocument.getSections()) {
+        int sectionIdx = 0;
+        for (ConsentSection section : sections) {
             // OnlyInDocument is used to create the ConsentDocumentStep later on
             if (section.getType() != ConsentSection.Type.OnlyInDocument) {
                 ConsentVisualStep step;
                 if (section.getType() == ConsentSection.Type.Custom) {
-                    step = new ConsentVisualStep(section.getTypeIdentifier() + customIdx);
+                    step = createVisualStep(section.getTypeIdentifier() + customIdx,
+                            sectionIdx, sections.size());
                     customIdx++;
                 } else {
-                    step = new ConsentVisualStep(section.getTypeIdentifier());
+                    step = createVisualStep(section.getTypeIdentifier()
+                            , sectionIdx, sections.size());
                 }
                 step.setSection(section);
                 stepList.add(step);
+                sectionIdx++;
             }
         }
         return new SubtaskStep(item.getTypeIdentifier(), stepList);
+    }
+
+    /**
+     * This can be overridden by sub-classes to easily provide a custom ConsentVisualStep
+     * @param identifier the step identifier
+     * @param sectionIndex the index of this particular section within the sectionCount
+     * @param sectionCount the total number of consent visual sections
+     * @return a ConsentVisualStep to be included in the visual consent SubtaskStep
+     */
+    protected ConsentVisualStep createVisualStep(String identifier, int sectionIndex, int sectionCount) {
+        return new ConsentVisualStep(identifier, sectionIndex, sectionCount);
     }
 
     /**
