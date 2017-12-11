@@ -34,15 +34,13 @@ Then add the following entry to your dependencies in your app build.gradle:
 dependencies {
     ...
     compile 'org.researchstack:backbone:VERSION'
-    // or (if using Skin, you don't need Backbone since it is included)
-    compile 'org.researchstack:skin:VERSION'
     ...
 }
 ```
 
 ## Running tests
 
-Tests are located in the /backbone/src/test or /skin/src/test folder. Run the tests in Android Studio by right clicking on 'backbone' or 'skin' and clicking "Run 'All Tests'".
+Tests are located in the /backbone/src/test folder. Run the tests in Android Studio by right clicking on 'backbone' or 'skin' and clicking "Run 'All Tests'".
 
 ## Code Style
 
