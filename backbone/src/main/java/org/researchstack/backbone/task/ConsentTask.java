@@ -155,7 +155,7 @@ public class ConsentTask extends OrderedTask {
                 section.setHtmlContent(ResourceManager.getResourceAsString(ctx, htmlFilePath));
             }
 
-            ConsentVisualStep step = new ConsentVisualStep("consent_" + i);
+            ConsentVisualStep step = new ConsentVisualStep("consent_" + i, i, doc.getSections().size());
             step.setSection(section);
 
             String nextString = ctx.getString(R.string.rsb_next);

@@ -82,6 +82,17 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
     }
 
     /**
+     * Override to register custom ConsentSectionAdapters,
+     * but make sure that the adapter extends from ConsentSectionAdapter
+     * This can allow you to provide a custom ConsentDocumentFactory
+     * @param builder the gson builder to add to
+     * @param provider that is needed to create a ConsentSectionAdapter
+     */
+    public void registerOnboardingSectionAdapter(GsonBuilder builder, AdapterContextProvider provider) {
+        builder.registerTypeAdapter(OnboardingSection.class, new OnboardingSectionAdapter(provider));
+    }
+
+    /**
      * @param context should be activity context, just in case this is stored, but
      *                the results of this method should not be since it will store context
      * @return a Gson to be used by the OnboardingManager
@@ -89,17 +100,12 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
     private Gson buildGson(final Context context) {
         // We give access to context through this interface so that once this method
         // is over, we won't hold a reference to context
-        final AdapterContextProvider provider = new AdapterContextProvider() {
-            @Override
-            public Context getContext() {
-                return context;
-            }
-        };
+        final AdapterContextProvider provider = () -> context;
 
         GsonBuilder onboardingGson = new GsonBuilder();
         registerSurveyItemAdapter(onboardingGson);
-        onboardingGson.registerTypeAdapter(OnboardingSection.class, new OnboardingSectionAdapter(provider));
         onboardingGson.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(provider));
+        registerOnboardingSectionAdapter(onboardingGson, provider);
         return onboardingGson.create();
     }
 
