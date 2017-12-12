@@ -933,7 +933,7 @@ public class SurveyFactory {
     /*
      * Transfers the QuestionSurveyItem nav properties over to NavigationStep
      */
-    private void transferNavigationRules(QuestionSurveyItem item, NavigationExpectedAnswerQuestionStep toStep) {
+    protected void transferNavigationRules(QuestionSurveyItem item, NavigationExpectedAnswerQuestionStep toStep) {
         toStep.setSkipIfPassed(item.skipIfPassed);
         toStep.setSkipToStepIdentifier(item.skipIdentifier);
         toStep.setExpectedAnswer(item.expectedAnswer);
@@ -942,7 +942,7 @@ public class SurveyFactory {
     /*
      * Transfers the QuestionSurveyItem nav properties over to NavigationStep
      */
-    private void transferNavigationRules(QuestionSurveyItem item, NavigationFormStep toStep) {
+    protected void transferNavigationRules(QuestionSurveyItem item, NavigationFormStep toStep) {
         toStep.setSkipIfPassed(item.skipIfPassed);
         toStep.setSkipToStepIdentifier(item.skipIdentifier);
     }
@@ -950,7 +950,7 @@ public class SurveyFactory {
     /*
      * Transfers the QuestionSurveyItem nav properties over to NavigationStep
      */
-    private void transferNavigationRules(QuestionSurveyItem item, NavigationSubtaskStep toStep) {
+    protected void transferNavigationRules(QuestionSurveyItem item, NavigationSubtaskStep toStep) {
         toStep.setSkipIfPassed(item.skipIfPassed);
         toStep.setSkipToStepIdentifier(item.skipIdentifier);
     }
