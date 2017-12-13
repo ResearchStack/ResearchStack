@@ -53,13 +53,15 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Communicate w/ host
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private StepCallbacks callbacks;
+    protected StepCallbacks callbacks;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Child Views
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     protected ViewGroup container;
     protected LinearLayout stepBodyContainer;
+    protected TextView formTitleTextview;
+    protected TextView formSummaryTextview;
 
     public FormStepLayout(Context context)
     {
@@ -283,11 +285,11 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         LogExt.i(getClass(), "initStepLayout()");
 
         container = findViewById(R.id.rsb_form_step_content_container);
-        stepBodyContainer = (LinearLayout) findViewById(R.id.rsb_form_step_body_layout);
-        TextView title = (TextView) findViewById(R.id.rsb_form_step_title);
-        TextView summary = (TextView) findViewById(R.id.rsb_form_step_summary);
+        stepBodyContainer = findViewById(R.id.rsb_form_step_body_layout);
+        formTitleTextview = findViewById(R.id.rsb_form_step_title);
+        formSummaryTextview = findViewById(R.id.rsb_form_step_summary);
 
-        SurveyStepLayout.setupTitleLayout(getContext(), step, title, summary);
+        SurveyStepLayout.setupTitleLayout(getContext(), step, formTitleTextview, formSummaryTextview);
     }
 
     /**
@@ -341,8 +343,12 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
                 hideKeyboard();
             }
             updateAllQuestionSteps(false);
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, formStep, stepResult);
+            onComplete();
         }
+    }
+
+    protected void onComplete() {
+        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, formStep, stepResult);
     }
 
     /**
@@ -440,7 +446,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         {
             updateAllQuestionSteps(true);
             // empty step result when skipped
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, formStep, stepResult);
+            onComplete();
         }
     }
 

@@ -1,13 +1,9 @@
 package org.researchstack.backbone.step;
 
-import android.util.Log;
-
 import org.researchstack.backbone.model.survey.CompoundQuestionSurveyItem;
-import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.utils.StepHelper;
-import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.util.List;
 
