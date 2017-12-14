@@ -200,7 +200,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
 
         recorderList = new ArrayList<>();
-        File outputDir = getOutputDirectory();
+        File outputDir = getOutputDirectory(getContext());
 
         if (activeStep.getRecorderConfigurationList() != null) {
             for (RecorderConfig config : getRecorderConfigurationList()) {
@@ -222,10 +222,14 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         return null;  // to be overridden by subclass
     }
 
-    public File getOutputDirectory() {
-        File outputDir = getContext().getFilesDir();
+    /**
+     * @param ctx can be app or activity, used to get files directory
+     * @return directory for outputting data logger files
+     */
+    public static File getOutputDirectory(Context ctx) {
+        File outputDir = ctx.getFilesDir();
         if (DEBUG_SAVE_FILES_EXTERNALLY) {
-            outputDir = getContext().getExternalFilesDir(null);
+            outputDir = ctx.getExternalFilesDir(null);
         }
         return outputDir;
     }
