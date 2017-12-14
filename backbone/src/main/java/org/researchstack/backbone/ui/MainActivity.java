@@ -36,6 +36,11 @@ public class MainActivity extends BaseActivity {
 
     protected MainPagerAdapter pagerAdapter;
 
+    /**
+     * The view pager that holds the fragment tabs
+     */
+    protected ViewPager viewPager;
+
     private boolean failedToFinishInitialTask;
 
     @Override
@@ -53,7 +58,7 @@ public class MainActivity extends BaseActivity {
             List<ActionItem> items = UiManager.getInstance().getMainTabBarItems();
             pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), items);
 
-            ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+            viewPager = findViewById(R.id.pager);
             viewPager.setAdapter(pagerAdapter);
             viewPager.setPageMargin(1);
             viewPager.setPageMarginDrawable(new ColorDrawable(Color.LTGRAY));
