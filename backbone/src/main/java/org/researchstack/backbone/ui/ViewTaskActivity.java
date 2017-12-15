@@ -3,13 +3,17 @@ package org.researchstack.backbone.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
 
 import java.lang.reflect.Constructor;
@@ -30,7 +35,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
     public static final String EXTRA_COLOR_PRIMARY = "ViewTaskActivity.ExtraColorPrimary";
-    public static final String EXTRA_COLOR_ACCENT = "ViewTaskActivity.ExtraColorAccent";
+    public static final String EXTRA_COLOR_PRIMARY_DARK = "ViewTaskActivity.ExtraColorPrimaryDark";
+    public static final String EXTRA_COLOR_SECONDARY = "ViewTaskActivity.ExtraColorSecondary";
     public static final String EXTRA_PRINCIPAL_TEXT_COLOR = "ViewTaskActivity.ExtraPrincipalTextColor";
     public static final String EXTRA_SECONDARY_TEXT_COLOR = "ViewTaskActivity.ExtraSecondaryTextColor";
     public static final String EXTRA_ACTION_FAILED_COLOR = "ViewTaskActivity.ExtraActionFailedColor";
@@ -41,7 +47,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     private Task task;
     private TaskResult taskResult;
     private int colorPrimary;
-    private int colorAccent;
+    private int colorPrimaryDark;
+    private int colorSecondary;
     private int principalTextColor;
     private int secondaryTextColor;
     private int actionFailedColor;
@@ -52,12 +59,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         return intent;
     }
 
-    public static Intent newThemedIntent(Context context, Task task, int colorPrimary, int colorAccent,
-                                   int principalTextColor, int secondaryTextColor , int actionFailedColor) {
+    public static Intent newThemedIntent(Context context, Task task, int colorPrimary, int colorPrimaryDark, int colorSecondary,
+                                         int principalTextColor, int secondaryTextColor, int actionFailedColor) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         intent.putExtra(EXTRA_COLOR_PRIMARY, colorPrimary);
-        intent.putExtra(EXTRA_COLOR_ACCENT, colorAccent);
+        intent.putExtra(EXTRA_COLOR_PRIMARY_DARK, colorPrimaryDark);
+        intent.putExtra(EXTRA_COLOR_SECONDARY, colorSecondary);
         intent.putExtra(EXTRA_PRINCIPAL_TEXT_COLOR, principalTextColor);
         intent.putExtra(EXTRA_SECONDARY_TEXT_COLOR, secondaryTextColor);
         intent.putExtra(EXTRA_ACTION_FAILED_COLOR, actionFailedColor);
@@ -79,7 +87,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         if (savedInstanceState == null) {
             task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
             colorPrimary = getIntent().getIntExtra(EXTRA_COLOR_PRIMARY, R.color.rsb_colorPrimary);
-            colorAccent = getIntent().getIntExtra(EXTRA_COLOR_ACCENT, R.color.rsb_colorAccent);
+            colorPrimaryDark = getIntent().getIntExtra(EXTRA_COLOR_PRIMARY_DARK, R.color.rsb_colorPrimaryDark);
+            colorSecondary = getIntent().getIntExtra(EXTRA_COLOR_SECONDARY, R.color.rsb_colorAccent);
             principalTextColor = getIntent().getIntExtra(EXTRA_PRINCIPAL_TEXT_COLOR, R.color.cell_header_grey);
             secondaryTextColor = getIntent().getIntExtra(EXTRA_SECONDARY_TEXT_COLOR, R.color.item_text_grey);
             actionFailedColor = getIntent().getIntExtra(EXTRA_ACTION_FAILED_COLOR, R.color.rsb_error);
@@ -124,8 +133,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     }
 
     private void showStep(Step step) {
-        int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult)
-                .getCurrent();
+        int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult).getCurrent();
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
         StepLayout stepLayout = getLayoutForStep(step);
@@ -141,7 +149,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         // Change the title on the activity
         String title = task.getTitleForStep(this, step);
         setActionBarTitle(title);
-        setActionBarBackgroundColor(colorPrimary);
+        step.setStepTheme(colorPrimary, colorPrimaryDark, colorSecondary, principalTextColor, secondaryTextColor, actionFailedColor);
+        setActivityTheme(colorPrimary, colorPrimaryDark);
 
         // Get result from the TaskResult, can be null
         StepResult result = taskResult.getStepResult(step.getIdentifier());
@@ -150,6 +159,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         StepLayout stepLayout = createLayoutFromStep(step);
         stepLayout.initialize(step, result);
         stepLayout.setCallbacks(this);
+        if (stepLayout instanceof SurveyStepLayout) {
+            ((SurveyStepLayout) stepLayout).setSurveyStepTheme(colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
+        }
 
         return stepLayout;
     }
@@ -295,10 +307,22 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         }
     }
 
-    public void setActionBarBackgroundColor(int backgroundColor) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(backgroundColor));
-        }
+    private void setActivityTheme(int primaryColor, int primaryColorDark) {
+        runOnUiThread(() -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+
+                if (primaryColorDark == Color.BLACK && window.getNavigationBarColor() == Color.BLACK) {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                } else {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                }
+                window.setStatusBarColor(primaryColorDark);
+            }
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setBackgroundDrawable(new ColorDrawable(primaryColor));
+            }
+        });
     }
 }

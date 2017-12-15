@@ -6,6 +6,7 @@ buildscript {
         mavenCentral()
         mavenLocal()
         jcenter()
+        google()
     }
 
     dependencies {
@@ -28,5 +29,6 @@ allprojects {
             url "https://dl.bintray.com/touchlab/Squeaky"
         }
         maven { url "https://jitpack.io" }
+        google()
     }
 }

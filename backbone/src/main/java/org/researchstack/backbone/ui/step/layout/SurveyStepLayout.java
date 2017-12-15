@@ -32,6 +32,10 @@ import java.lang.reflect.Constructor;
 public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
 
+    private TextView title;
+    private TextView summary;
+    private SubmitBar submitBar;
+
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Data used to initializeLayout and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -112,9 +116,9 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         LogExt.i(getClass(), "initStepLayout()");
 
         container = (LinearLayout) findViewById(R.id.rsb_survey_content_container);
-        TextView title = (TextView) findViewById(R.id.rsb_survey_title);
-        TextView summary = (TextView) findViewById(R.id.rsb_survey_text);
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        title = (TextView) findViewById(R.id.rsb_survey_title);
+        summary = (TextView) findViewById(R.id.rsb_survey_text);
+        submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveAction(v -> onNextClicked());
 
         if (questionStep != null) {
@@ -214,4 +218,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         return getResources().getString(stringResId);
     }
 
+    public void setSurveyStepTheme(int coloryPrimary, int colorSecondary, int principalTextColor, int secondaryTextColor) {
+        title.setTextColor(principalTextColor);
+        summary.setTextColor(secondaryTextColor);
+        submitBar.setNegativeTitleColor(coloryPrimary);
+        submitBar.setPositiveTitleColor(colorSecondary);
+    }
 }

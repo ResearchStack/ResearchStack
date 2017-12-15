@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
-
 android {
 
     compileSdkVersion 25
@@ -44,9 +43,8 @@ android {
 
     resourcePrefix 'rsb_'
 }
-
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:cardview-v7:25.2.0'
     compile 'com.android.support:preference-v14:25.2.0'
@@ -59,7 +57,6 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0'
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.2.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
-
     compile 'com.scottyab:aes-crypto:0.0.3'
     compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
     annotationProcessor 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
@@ -68,7 +65,6 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile 'org.mockito:mockito-core:1.10.19'
 }
-
 if (project.hasProperty("android")) { // Android libraries
     task sourcesJar(type: Jar) {
         classifier = 'sources'
@@ -92,7 +88,6 @@ if (project.hasProperty("android")) { // Android libraries
         from sourceSets.main.allSource
     }
 }
-
 afterEvaluate { project ->
     uploadArchives {
         repositories {
@@ -132,4 +127,11 @@ afterEvaluate { project ->
         }
     }
 }
-
+buildscript {
+    repositories {
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+    }
+}
