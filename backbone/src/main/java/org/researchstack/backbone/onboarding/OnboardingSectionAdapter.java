@@ -68,7 +68,7 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
         } else if (type == OnboardingSectionType.CUSTOM) {
             section = new CustomOnboardingSection(typeJson.getAsString());
         } else {  // otherwise make the base onboarding section class
-            section = new OnboardingSection();
+            section = createDefaultOnboardingSection();
         }
         section.onboardingType = type;
 
@@ -78,6 +78,15 @@ public class OnboardingSectionAdapter implements JsonDeserializer<OnboardingSect
         section.surveyItems = surveyItems;
 
         return section;
+    }
+
+    /**
+     * Can be overridden by a sub-class to provide a custom OnboardingSection
+     * which can provide a custom SurveyFactory
+     * @return a OnboardingSection class
+     */
+    protected OnboardingSection createDefaultOnboardingSection() {
+        return new OnboardingSection();
     }
 
     /**
