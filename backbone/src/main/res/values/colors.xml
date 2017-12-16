@@ -18,6 +18,6 @@
     <color name="rsb_tab_indicator">#2196f3</color>
     <color name="rsb_tab_text_selected">#662196f3</color>
     
-    <color name="cell_header_grey">#aaaaaa</color>
-    <color name="item_text_grey">#222222</color>
+    <color name="rsb_cell_header_grey">#aaaaaa</color>
+    <color name="rsb_item_text_grey">#222222</color>
 </resources>
