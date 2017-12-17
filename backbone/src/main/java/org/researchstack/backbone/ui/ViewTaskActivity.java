@@ -33,7 +33,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
 
-    private StepSwitcher root;
+    protected StepSwitcher root;
     protected Toolbar toolbar;
 
     protected StepLayout currentStepLayout;
