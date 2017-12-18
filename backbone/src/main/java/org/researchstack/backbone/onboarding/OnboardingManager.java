@@ -277,7 +277,20 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
                 // Permissions and completion are included for login and registration
                 return taskType == OnboardingTaskType.REGISTRATION ||
                        taskType == OnboardingTaskType.LOGIN;
+            case CUSTOM:
+                return shouldIncludeCustomSection(context, sectionType, taskType);
         }
+        return false;
+    }
+
+    /**
+     * @param context can be app or activity
+     * @param sectionType the custom section type
+     * @param taskType the custom task type
+     * @return true if this section should  be including for the taskType, false otherwise
+     */
+    public boolean shouldIncludeCustomSection(
+            Context context, OnboardingSectionType sectionType, OnboardingTaskType taskType) {
         return false;
     }
 
