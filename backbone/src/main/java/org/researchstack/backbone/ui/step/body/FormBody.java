@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.body;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,7 @@ public class FormBody implements StepBody {
         StepResult childResult = result.getResultForIdentifier(questionStep.getIdentifier());
 
         Class cls = questionStep.getStepBodyClass();
+        Log.d("FormBody", "cls: " + cls.getName());
         try {
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
             return (StepBody) constructor.newInstance(questionStep, childResult);

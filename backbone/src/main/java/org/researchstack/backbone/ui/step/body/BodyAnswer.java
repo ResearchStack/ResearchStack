@@ -19,6 +19,12 @@ public class BodyAnswer {
         this.params = params;
     }
 
+    public BodyAnswer(boolean isValid, @StringRes int reason) {
+        this.isValid = isValid;
+        this.reason = reason;
+        this.params = new String[0];
+    }
+
     public boolean isValid() {
         return isValid;
     }
