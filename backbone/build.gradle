@@ -4,7 +4,7 @@ apply plugin: 'maven'
 android {
 
     compileSdkVersion 25
-    buildToolsVersion "26.0.2"
+    buildToolsVersion "26.0.3"
 
     libraryVariants.all { variant ->
         variant.outputs.all { output ->
@@ -32,8 +32,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     packagingOptions {
@@ -122,7 +122,6 @@ afterEvaluate { project ->
                         }
                     }
                 }
-
             }
         }
     }
