@@ -19,6 +19,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
@@ -220,7 +224,16 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
             notifyStepOfBackPress();
             return true;
         } else if (item.getItemId() == R.id.rsb_action_cancel) {
-            finish();
+            new MaterialDialog.Builder(this)
+                    .title(R.string.rsb_task_cancel_title)
+                    .content(R.string.rsb_task_cancel_text)
+                    .theme(Theme.LIGHT)
+                    .positiveColor(colorPrimary)
+                    .negativeColor(colorPrimary)
+                    .negativeText(R.string.rsb_cancel)
+                    .positiveText(R.string.rsb_task_cancel_positive)
+                    .onPositive((dialog, which) -> finish())
+                    .show();
         }
 
         return super.onOptionsItemSelected(item);

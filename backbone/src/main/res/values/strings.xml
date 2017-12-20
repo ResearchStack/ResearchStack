@@ -116,6 +116,9 @@
     <string name="rsb_format_step_title">Step %1$s of %2$s</string>
     <string name="rsb_hours">Hours</string>
     <string name="rsb_minutes">Minutes</string>
+    <string name="rsb_task_cancel_title">Leave Activity</string>
+    <string name="rsb_task_cancel_text">Are you sure you want to leave this activity and discard its results?</string>
+    <string name="rsb_task_cancel_positive">Discard Results</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_data_failed">Failed to load encrypted data, try again!</string>
