@@ -11,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -206,10 +208,19 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.rsb_activity_view_task_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             notifyStepOfBackPress();
             return true;
+        } else if (item.getItemId() == R.id.rsb_action_cancel) {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
