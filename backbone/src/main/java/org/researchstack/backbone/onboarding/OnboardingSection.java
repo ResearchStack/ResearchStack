@@ -33,6 +33,11 @@ public class OnboardingSection {
         super();
     }
 
+    public OnboardingSection(OnboardingSectionType type) {
+        super();
+        this.onboardingType = type;
+    }
+
     static final String ONBOARDING_TYPE_GSON = "onboardingType";
     @SerializedName(ONBOARDING_TYPE_GSON)
     OnboardingSectionType onboardingType;

@@ -176,8 +176,9 @@ public class OnboardingManagerTest {
             ShouldIncludeData includeData = findType(sectionType, shouldIncludeData);
             if (includeData != null) {  // null for CUSTOM
                 for (OnboardingTaskType taskType : OnboardingTaskType.values()) {
+                    OnboardingSection section = new OnboardingSection(sectionType);
                     boolean expectedShouldInclude = includeData.taskTypesIncluded.contains(taskType);
-                    boolean actualShouldInclude = mMockOnboardingManager.shouldInclude(null, sectionType, taskType);
+                    boolean actualShouldInclude = mMockOnboardingManager.shouldInclude(null, section, taskType);
                     assertEquals(expectedShouldInclude, actualShouldInclude);
                 }
             }
@@ -192,7 +193,7 @@ public class OnboardingManagerTest {
         // Check that if the passcode has been set that it is not included
         for (OnboardingTaskType taskType : OnboardingTaskType.values()) {
             boolean shouldInclude = mMockOnboardingManager.shouldInclude(
-                    null, OnboardingSectionType.PASSCODE, taskType);
+                    null, new OnboardingSection(OnboardingSectionType.PASSCODE), taskType);
             assertFalse(shouldInclude);
         }
     }
@@ -255,8 +256,9 @@ public class OnboardingManagerTest {
             ShouldIncludeData includeData = findType(sectionType, shouldIncludeData);
             if (includeData != null) { // null for custom
                 for (OnboardingTaskType taskType : taskTypes) {
+                    OnboardingSection section = new OnboardingSection(sectionType);
                     boolean expectedShouldInclude = includeData.taskTypesIncluded.contains(taskType);
-                    boolean actualShouldInclude = mMockOnboardingManager.shouldInclude(null, sectionType, taskType);
+                    boolean actualShouldInclude = mMockOnboardingManager.shouldInclude(null, section, taskType);
                     assertEquals(expectedShouldInclude, actualShouldInclude);
                 }
             }
