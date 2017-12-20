@@ -133,7 +133,6 @@
     <string name="rsb_birth_date_too_old">You must be %1$s years or younger</string>
     <string name="rsb_birth_date_too_young">You must be at least %1$s years old</string>
 
-
     <!-- Pin Code -->
     <string name="rsb_pincode_enter_title">Enter your passcode</string>
     <string name="rsb_pincode_enter_summary">Enter your %1$d-%2$s code to confirm your identity.</string>
