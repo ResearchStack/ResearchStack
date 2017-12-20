@@ -217,7 +217,7 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
     public List<Step> steps(final Context context, OnboardingSection section, OnboardingTaskType taskType) {
 
         // Check to see that the steps for this section should be included
-        if (!shouldInclude(context, section.getOnboardingSectionType(), taskType)) {
+        if (!shouldInclude(context, section, taskType)) {
             Log.d(LOG_TAG, "No sections for the task type " + taskType.ordinal());
             return null;
         }
@@ -250,8 +250,8 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
      Define the rules for including a given section in a given task type.
      @return    `true` if the `SBAOnboardingSection` should be included for this `SBAOnboardingTaskType`
      */
-    boolean shouldInclude(Context context, OnboardingSectionType sectionType, OnboardingTaskType taskType) {
-        switch (sectionType) {
+    boolean shouldInclude(Context context, OnboardingSection section, OnboardingTaskType taskType) {
+        switch (section.getOnboardingSectionType()) {
             case LOGIN:
                 return taskType == OnboardingTaskType.LOGIN;
             case CONSENT:
@@ -278,19 +278,19 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
                 return taskType == OnboardingTaskType.REGISTRATION ||
                        taskType == OnboardingTaskType.LOGIN;
             case CUSTOM:
-                return shouldIncludeCustomSection(context, sectionType, taskType);
+                return shouldIncludeCustomSection(context, section.getOnboardingSectionIdentifier(), taskType);
         }
         return false;
     }
 
     /**
      * @param context can be app or activity
-     * @param sectionType the custom section type
+     * @param sectionIdentifier the custom section type identifier
      * @param taskType the custom task type
      * @return true if this section should  be including for the taskType, false otherwise
      */
     public boolean shouldIncludeCustomSection(
-            Context context, OnboardingSectionType sectionType, OnboardingTaskType taskType) {
+            Context context, String sectionIdentifier, OnboardingTaskType taskType) {
         return false;
     }
 
