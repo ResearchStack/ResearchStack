@@ -13,7 +13,6 @@
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
         android:layout_marginTop="20dp"
-
         android:textColor="?attr/colorAccent"
         android:textSize="20sp"
 

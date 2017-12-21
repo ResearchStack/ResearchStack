@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +20,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
@@ -29,6 +29,7 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
@@ -46,6 +47,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     public static final String EXTRA_PRINCIPAL_TEXT_COLOR = "ViewTaskActivity.ExtraPrincipalTextColor";
     public static final String EXTRA_SECONDARY_TEXT_COLOR = "ViewTaskActivity.ExtraSecondaryTextColor";
     public static final String EXTRA_ACTION_FAILED_COLOR = "ViewTaskActivity.ExtraActionFailedColor";
+    public static final String EXTRA_SHOW_CANCEL = "ViewTaskActivity.ExtraShowCancel";
 
     private StepSwitcher root;
 
@@ -58,6 +60,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     private int principalTextColor;
     private int secondaryTextColor;
     private int actionFailedColor;
+    private boolean showCancel;
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
@@ -65,7 +68,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         return intent;
     }
 
-    public static Intent newThemedIntent(Context context, Task task, int colorPrimary, int colorPrimaryDark, int colorSecondary,
+    public static Intent newThemedIntent(Context context, Task task, boolean showCancel, int colorPrimary, int colorPrimaryDark, int colorSecondary,
                                          int principalTextColor, int secondaryTextColor, int actionFailedColor) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
@@ -75,6 +78,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         intent.putExtra(EXTRA_PRINCIPAL_TEXT_COLOR, principalTextColor);
         intent.putExtra(EXTRA_SECONDARY_TEXT_COLOR, secondaryTextColor);
         intent.putExtra(EXTRA_ACTION_FAILED_COLOR, actionFailedColor);
+        intent.putExtra(EXTRA_SHOW_CANCEL, showCancel);
         return intent;
     }
 
@@ -98,6 +102,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
             principalTextColor = getIntent().getIntExtra(EXTRA_PRINCIPAL_TEXT_COLOR, R.color.rsb_cell_header_grey);
             secondaryTextColor = getIntent().getIntExtra(EXTRA_SECONDARY_TEXT_COLOR, R.color.rsb_item_text_grey);
             actionFailedColor = getIntent().getIntExtra(EXTRA_ACTION_FAILED_COLOR, R.color.rsb_error);
+            showCancel = getIntent().getBooleanExtra(EXTRA_SHOW_CANCEL, false);
             taskResult = new TaskResult(task.getIdentifier());
             taskResult.setStartDate(new Date());
         } else {
@@ -166,7 +171,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         stepLayout.initialize(step, result);
         stepLayout.setCallbacks(this);
         if (stepLayout instanceof SurveyStepLayout) {
-            ((SurveyStepLayout) stepLayout).setSurveyStepTheme(colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
+            ((SurveyStepLayout) stepLayout).setTheme(colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
+        } else if (stepLayout instanceof ConsentVisualStepLayout) {
+            ((ConsentVisualStepLayout) stepLayout).setTheme(colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
         }
 
         return stepLayout;
@@ -215,6 +222,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.rsb_activity_view_task_menu, menu);
+        menu.findItem(R.id.rsb_action_cancel).setVisible(showCancel);
         return true;
     }
 

@@ -134,4 +134,11 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
                 null));
         submitBar.getNegativeActionView().setVisibility(View.GONE);
     }
+
+    public void setTheme(int coloryPrimary, int colorSecondary, int principalTextColor, int secondaryTextColor) {
+//        title.setTextColor(principalTextColor);
+//        summary.setTextColor(secondaryTextColor);
+//        submitBar.setNegativeTitleColor(coloryPrimary);
+//        submitBar.setPositiveTitleColor(colorSecondary);
+    }
 }

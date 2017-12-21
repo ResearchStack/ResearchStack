@@ -3,6 +3,7 @@
 
     <item android:id="@+id/rsb_action_cancel"
         android:title="@string/rsb_cancel"
+        android:visible="false"
         app:showAsAction="always"/>
 
 </menu>

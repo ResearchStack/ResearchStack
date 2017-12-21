@@ -106,6 +106,8 @@
     <string name="rsb_next">next</string>
     <string name="rsb_what_to_expect">What to Expect</string>
     <string name="rsb_name">Name</string>
+    <string name="rsb_name_first">First Name</string>
+    <string name="rsb_name_last">Last Name</string>
     <string name="rsb_email">Email</string>
     <string name="rsb_disagree">Disagree</string>
     <string name="rsb_agree">Agree</string>

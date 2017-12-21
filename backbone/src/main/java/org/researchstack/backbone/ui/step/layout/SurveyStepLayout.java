@@ -218,7 +218,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         return getResources().getString(stringResId);
     }
 
-    public void setSurveyStepTheme(int coloryPrimary, int colorSecondary, int principalTextColor, int secondaryTextColor) {
+    public void setTheme(int coloryPrimary, int colorSecondary, int principalTextColor, int secondaryTextColor) {
         title.setTextColor(principalTextColor);
         summary.setTextColor(secondaryTextColor);
         submitBar.setNegativeTitleColor(coloryPrimary);
