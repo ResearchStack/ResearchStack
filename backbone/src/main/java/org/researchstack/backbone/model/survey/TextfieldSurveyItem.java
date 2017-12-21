@@ -34,6 +34,9 @@ public class TextfieldSurveyItem extends QuestionSurveyItem<String> {
     @SerializedName("disabled")
     public Boolean disabled;
 
+    @SerializedName("isMultipleLines")
+    public Boolean isMultipleLines;
+
     /* Default constructor needed for serialization/deserialization of object */
     public TextfieldSurveyItem() {
         super();

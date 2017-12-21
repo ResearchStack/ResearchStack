@@ -221,6 +221,25 @@ public class StepResultHelper {
 
     /**
      * Only works with the DEFAULT Result identifier keys
+     * @param stepIdentifier for result
+     * @param taskResult the task result to try and find the date result in
+     * @return Date object if exists, empty string otherwise
+     */
+    public static Date findDateResult(String stepIdentifier, TaskResult taskResult) {
+        if (taskResult == null || taskResult.getResults() == null || stepIdentifier == null) {
+            return null;
+        }
+        for (StepResult stepResult : taskResult.getResults().values()) {
+            Date result = findDateResult(stepIdentifier, stepResult);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
      * Will find the first Result with a specific class type from within a StepResult
      * @param stepResult the step result to search within
      * @param comparator a class comparator that will be provided by the caller
