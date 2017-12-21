@@ -492,6 +492,9 @@ public class SurveyFactory {
                 if (textfieldSurveyItem.disabled != null && textfieldSurveyItem.disabled) {
                     textFormat.setDisabled(true);
                 }
+                if (textfieldSurveyItem.isMultipleLines != null && textfieldSurveyItem.isMultipleLines) {
+                    textFormat.setIsMultipleLines(true);
+                }
                 format = textFormat;
                 break;
             default:
