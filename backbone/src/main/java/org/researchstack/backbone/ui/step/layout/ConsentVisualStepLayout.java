@@ -2,11 +2,9 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +27,10 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
 
     private StepCallbacks callbacks;
     private ConsentVisualStep step;
+    private int colorPrimary;
+    private int colorSecondary;
+    private int principalTextColor;
+    private int secondaryTextColor;
 
     public ConsentVisualStepLayout(Context context) {
         super(context);
@@ -45,6 +47,15 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
     @Override
     public void initialize(Step step, StepResult result) {
         this.step = (ConsentVisualStep) step;
+        initializeStep();
+    }
+
+    public void initialize(Step step, StepResult result, int colorPrimary, int colorSecondary, int principalTextColor, int secondaryTextColor) {
+        this.step = (ConsentVisualStep) step;
+        this.colorPrimary = colorPrimary;
+        this.colorSecondary = colorSecondary;
+        this.principalTextColor = principalTextColor;
+        this.secondaryTextColor = secondaryTextColor;
         initializeStep();
     }
 
@@ -72,13 +83,6 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
     private void initializeStep() {
         ConsentSection data = step.getSection();
 
-        // Set Image
-        TypedValue typedValue = new TypedValue();
-        TypedArray a = getContext().obtainStyledAttributes(typedValue.data,
-                new int[]{R.attr.colorAccent});
-        int accentColor = a.getColor(0, 0);
-        a.recycle();
-
         ImageView imageView = (ImageView) findViewById(R.id.image);
 
         String imageName = !TextUtils.isEmpty(data.getCustomImageName())
@@ -90,7 +94,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         if (imageResId != 0) {
             Drawable drawable = getResources().getDrawable(imageResId);
             drawable = DrawableCompat.wrap(drawable);
-            DrawableCompat.setTint(drawable, accentColor);
+            DrawableCompat.setTint(drawable, colorSecondary);
             imageView.setImageDrawable(drawable);
             imageView.setVisibility(View.VISIBLE);
         } else {
@@ -102,6 +106,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         String title = TextUtils.isEmpty(data.getTitle()) ? getResources().getString(data.getType()
                 .getTitleResId()) : data.getTitle();
         titleView.setText(title);
+        titleView.setTextColor(principalTextColor);
 
         // Set Summary
         TextView summaryView = (TextView) findViewById(R.id.summary);
@@ -119,8 +124,8 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
 
             RxView.clicks(moreInfoView).subscribe(v -> {
                 String webTitle = getResources().getString(R.string.rsb_consent_section_more_info);
-                Intent webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle,
-                        TextUtils.isEmpty(data.getContent()) ? data.getHtmlContent() : data.getContent());
+                Intent webDoc = ViewWebDocumentActivity.newThemedIntent(getContext(), webTitle,
+                        TextUtils.isEmpty(data.getContent()) ? data.getHtmlContent() : data.getContent(), step.getPrimaryColor(), step.getColorPrimaryDark());
                 getContext().startActivity(webDoc);
             });
         } else {
@@ -129,16 +134,9 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveTitle(step.getNextButtonString());
-        submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                step,
-                null));
+        submitBar.setNegativeTitleColor(colorPrimary);
+        submitBar.setPositiveTitleColor(colorSecondary);
+        submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null));
         submitBar.getNegativeActionView().setVisibility(View.GONE);
-    }
-
-    public void setTheme(int coloryPrimary, int colorSecondary, int principalTextColor, int secondaryTextColor) {
-//        title.setTextColor(principalTextColor);
-//        summary.setTextColor(secondaryTextColor);
-//        submitBar.setNegativeTitleColor(coloryPrimary);
-//        submitBar.setPositiveTitleColor(colorSecondary);
     }
 }

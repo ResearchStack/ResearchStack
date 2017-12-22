@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Change to RelativeLayout for preview to work -->
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,9 +21,9 @@
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
         android:layout_marginTop="20dp"
-
+        android:gravity="center"
         android:textColor="?attr/colorAccent"
-        android:textSize="20sp"
+        android:textSize="24sp"
 
         tools:text="@string/lorem_name" />
 
@@ -36,6 +36,7 @@
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
         android:layout_marginTop="36dp"
+        android:textSize="16sp"
         tools:text="@string/lorem_medium" />
 
     <TextView

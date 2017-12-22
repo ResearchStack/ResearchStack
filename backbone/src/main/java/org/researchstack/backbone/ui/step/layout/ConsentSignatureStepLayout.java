@@ -1,11 +1,14 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,23 +39,34 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     private StepCallbacks callbacks;
     private Step step;
     private StepResult<String> result;
+    private Context context;
 
     public ConsentSignatureStepLayout(Context context) {
         super(context);
+        this.context = context;
     }
 
     public ConsentSignatureStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
     }
 
     public ConsentSignatureStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
     }
 
     @Override
     public void initialize(Step step, StepResult result) {
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;
+
+        try {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
+        } catch (NullPointerException e) {
+            Log.e("CSSL", "NPE: " + e.getMessage());
+        }
 
         initializeStep();
     }
@@ -112,6 +126,8 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.getNegativeActionView().setVisibility(View.GONE);
+        submitBar.setPositiveTitleColor(step.getColorSecondary());
+        submitBar.setPositiveTitle(R.string.rsb_done);
         submitBar.setPositiveAction(v -> {
             if (signatureView.isSignatureDrawn()) {
                 setDataToResult();

@@ -26,6 +26,7 @@ import com.afollestad.materialdialogs.Theme;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
@@ -168,13 +169,15 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
 
         // Return the Class & constructor
         StepLayout stepLayout = createLayoutFromStep(step);
-        stepLayout.initialize(step, result);
-        stepLayout.setCallbacks(this);
         if (stepLayout instanceof SurveyStepLayout) {
-            ((SurveyStepLayout) stepLayout).setTheme(colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
+            ((SurveyStepLayout) stepLayout).initialize(step, result, colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
         } else if (stepLayout instanceof ConsentVisualStepLayout) {
-            ((ConsentVisualStepLayout) stepLayout).setTheme(colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
+            ((ConsentVisualStepLayout) stepLayout).initialize(step, result, colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
+        } else {
+            stepLayout.initialize(step, result);
         }
+
+        stepLayout.setCallbacks(this);
 
         return stepLayout;
     }

@@ -2,11 +2,16 @@ package org.researchstack.backbone.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.views.LocalWebView;
@@ -23,6 +28,8 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
     public static final String KEY_DOC_CONTENT = TAG + ".DOC_CONTENT";
     public static final String KEY_TITLE = TAG + ".TITLE";
     public static final String KEY_THEME = TAG + ".THEME";
+    public static final String KEY_COLOR_PRIMARY = "colorPrimary";
+    public static final String KEY_COLOR_PRIMARY_DARK = "colorPrimaryDark";
 
     public static Intent newIntentForContent(Context context, String title, String htmlConent) {
         return newIntentForContent(context, title, htmlConent, true);
@@ -56,6 +63,16 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
         return intent;
     }
 
+    public static Intent newThemedIntent(Context context, String title, String htmlConent, int colorPrimary, int colorPrimaryDark) {
+        Intent intent = new Intent(context, ViewWebDocumentActivity.class);
+        intent.putExtra(KEY_COLOR_PRIMARY, colorPrimary);
+        intent.putExtra(KEY_COLOR_PRIMARY_DARK, colorPrimaryDark);
+        intent.putExtra(KEY_DOC_CONTENT, htmlConent);
+        intent.putExtra(KEY_TITLE, title);
+
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent() != null && getIntent().hasExtra(KEY_THEME)) {
@@ -68,6 +85,14 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        if (getIntent().hasExtra(KEY_COLOR_PRIMARY)) {
+            setToolbarTheme(getIntent().getIntExtra(KEY_COLOR_PRIMARY, Color.GRAY));
+        }
+
+        if (getIntent().hasExtra(KEY_COLOR_PRIMARY_DARK)) {
+            setNotificationBarTheme(getIntent().getIntExtra(KEY_COLOR_PRIMARY_DARK, Color.DKGRAY));
+        }
 
         if (getIntent().hasExtra(KEY_TITLE)) {
             String title = getIntent().getStringExtra(KEY_TITLE);
@@ -94,5 +119,29 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setToolbarTheme(int primaryColor) {
+        runOnUiThread(() -> {
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setBackgroundDrawable(new ColorDrawable(primaryColor));
+            }
+        });
+    }
+
+    private void setNotificationBarTheme(int primaryColorDark) {
+        runOnUiThread(() -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+
+                if (primaryColorDark == Color.BLACK && window.getNavigationBarColor() == Color.BLACK) {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                } else {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                }
+                window.setStatusBarColor(primaryColorDark);
+            }
+        });
     }
 }

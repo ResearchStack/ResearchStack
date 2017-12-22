@@ -32,10 +32,6 @@ import java.lang.reflect.Constructor;
 public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
 
-    private TextView title;
-    private TextView summary;
-    private SubmitBar submitBar;
-
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Data used to initializeLayout and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -52,6 +48,11 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private LinearLayout container;
     private StepBody stepBody;
+
+    private int coloryPrimary;
+    private int colorSecondary;
+    private int principalTextColor;
+    private int secondaryTextColor;
 
     public SurveyStepLayout(Context context) {
         super(context);
@@ -74,6 +75,22 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         if (!(step instanceof QuestionStep)) {
             throw new RuntimeException("Step being used in SurveyStep is not a QuestionStep");
         }
+
+        this.questionStep = (QuestionStep) step;
+        this.stepResult = result;
+
+        initializeStep();
+    }
+
+    public void initialize(Step step, StepResult result, int colorPrimary, int colorSecondary, int principalTextColor, int secondaryTextColor) {
+        if (!(step instanceof QuestionStep)) {
+            throw new RuntimeException("Step being used in SurveyStep is not a QuestionStep");
+        }
+
+        this.coloryPrimary = colorPrimary;
+        this.colorSecondary = colorSecondary;
+        this.principalTextColor = principalTextColor;
+        this.secondaryTextColor = secondaryTextColor;
 
         this.questionStep = (QuestionStep) step;
         this.stepResult = result;
@@ -116,9 +133,13 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         LogExt.i(getClass(), "initStepLayout()");
 
         container = (LinearLayout) findViewById(R.id.rsb_survey_content_container);
-        title = (TextView) findViewById(R.id.rsb_survey_title);
-        summary = (TextView) findViewById(R.id.rsb_survey_text);
-        submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        TextView title = (TextView) findViewById(R.id.rsb_survey_title);
+        title.setTextColor(principalTextColor);
+        TextView summary = (TextView) findViewById(R.id.rsb_survey_text);
+        summary.setTextColor(secondaryTextColor);
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        submitBar.setNegativeTitleColor(coloryPrimary);
+        submitBar.setPositiveTitleColor(colorSecondary);
         submitBar.setPositiveAction(v -> onNextClicked());
 
         if (questionStep != null) {
@@ -216,12 +237,5 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     public String getString(@StringRes int stringResId) {
         return getResources().getString(stringResId);
-    }
-
-    public void setTheme(int coloryPrimary, int colorSecondary, int principalTextColor, int secondaryTextColor) {
-        title.setTextColor(principalTextColor);
-        summary.setTextColor(secondaryTextColor);
-        submitBar.setNegativeTitleColor(coloryPrimary);
-        submitBar.setPositiveTitleColor(colorSecondary);
     }
 }
