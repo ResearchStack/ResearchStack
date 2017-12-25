@@ -1,6 +1,5 @@
 package org.researchstack.backbone.answerformat;
 
-import org.researchstack.backbone.ui.step.body.TwoFieldTextQuestionBody;
 import org.researchstack.backbone.ui.step.body.DateQuestionBody;
 import org.researchstack.backbone.ui.step.body.DecimalQuestionBody;
 import org.researchstack.backbone.ui.step.body.DurationQuestionBody;
@@ -63,8 +62,7 @@ public abstract class AnswerFormat implements Serializable {
         TimeInterval(NotImplementedStepBody.class),
         Duration(DurationQuestionBody.class),
         Location(NotImplementedStepBody.class),
-        Form(FormBody.class),
-        ConsentName(TwoFieldTextQuestionBody.class);
+        Form(FormBody.class);
 
         private Class<?> stepBodyClass;
 

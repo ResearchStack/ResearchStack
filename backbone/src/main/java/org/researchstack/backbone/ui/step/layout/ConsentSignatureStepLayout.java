@@ -3,6 +3,7 @@ package org.researchstack.backbone.ui.step.layout;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
@@ -61,12 +62,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;
 
-        try {
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
-        } catch (NullPointerException e) {
-            Log.e("CSSL", "NPE: " + e.getMessage());
-        }
+        hideSoftKeyboard();
 
         initializeStep();
     }
@@ -89,16 +85,17 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     }
 
     private void initializeStep() {
-        LayoutInflater.from(getContext())
-                .inflate(R.layout.rsb_step_layout_consent_signature, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_signature, this, true);
 
         TextView title = (TextView) findViewById(R.id.title);
+        title.setTextColor(step.getPrincipalTextColor());
         title.setText(step.getTitle());
 
         TextView text = (TextView) findViewById(R.id.summary);
         text.setText(step.getText());
 
-        View clear = findViewById(R.id.layout_consent_review_signature_clear);
+        AppCompatTextView clear = (AppCompatTextView) findViewById(R.id.layout_consent_review_signature_clear);
+        clear.setTextColor(step.getPrimaryColor());
 
         signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
         signatureView.setCallbacks(new SignatureCallbacks() {
@@ -162,4 +159,13 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         }
     }
 
+    private void hideSoftKeyboard() {
+        try {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getRootView().getWindowToken(), 0);
+            getRootView().clearFocus();
+        } catch (NullPointerException e) {
+            Log.e("CSSL", "NPE: " + e.getMessage());
+        }
+    }
 }

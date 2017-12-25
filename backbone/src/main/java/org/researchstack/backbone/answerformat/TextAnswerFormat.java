@@ -10,7 +10,6 @@ public class TextAnswerFormat extends AnswerFormat {
     private int maximumLength;
 
     private boolean isMultipleLines;
-    private boolean isTwoFields;
 
     /**
      * Creates a TextAnswerFormat with no maximum length
@@ -39,11 +38,7 @@ public class TextAnswerFormat extends AnswerFormat {
 
     @Override
     public QuestionType getQuestionType() {
-        if (isTwoFields) {
-            return Type.ConsentName;
-        } else {
-            return Type.Text;
-        }
+        return Type.Text;
     }
 
     /**
@@ -62,24 +57,6 @@ public class TextAnswerFormat extends AnswerFormat {
      */
     public boolean isMultipleLines() {
         return isMultipleLines;
-    }
-
-    /**
-     * Sets whether there should be two EditTexts in the answer (combined as a result).
-     *
-     * @param isTwoFields boolean indicating if the format should use two EditTexts
-     */
-    public void setIsTwoTextFields(boolean isTwoFields) {
-        this.isTwoFields = isTwoFields;
-    }
-
-    /**
-     * Returns whether the format should use two EditTexts.
-     *
-     * @return boolean indicating if the format should use two EditTexts
-     */
-    public boolean isTwoTextFields() {
-        return isTwoFields;
     }
 
     /**
