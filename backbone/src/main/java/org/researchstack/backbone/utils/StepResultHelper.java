@@ -169,6 +169,42 @@ public class StepResultHelper {
     /**
      * Only works with the DEFAULT Result identifier keys
      * @param stepIdentifier for result
+     * @param stepResult the step result to try and find the Number result in
+     * @return Number object if exists, empty string otherwise
+     */
+    public static Number findNumberResult(String stepIdentifier, StepResult stepResult) {
+        StepResult idStepResult = findStepResult(stepResult, stepIdentifier);
+        if (idStepResult != null) {
+            Object resultValue = idStepResult.getResult();
+            if (resultValue instanceof Number) {
+                return (Number) resultValue;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
+     * @param stepIdentifier for result
+     * @param taskResult the task result to try and find the Number result in
+     * @return Number object if exists, empty string otherwise
+     */
+    public static Number findNumberResult(String stepIdentifier, TaskResult taskResult) {
+        if (taskResult == null || taskResult.getResults() == null || stepIdentifier == null) {
+            return null;
+        }
+        for (StepResult stepResult : taskResult.getResults().values()) {
+            Number result = findNumberResult(stepIdentifier, stepResult);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
+     * @param stepIdentifier for result
      * @param stepResult the step result to try and find the integer result in
      * @return Integer object if exists, empty string otherwise
      */
