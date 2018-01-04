@@ -50,7 +50,7 @@ public class RegistrationStepLayout extends ProfileStepLayout {
             final String password = getPassword();
             final String confirmPassword = getConfirmPassword();
 
-            if (!password.equals(confirmPassword)) {
+            if (password != null && !password.equals(confirmPassword)) {
                 Toast.makeText(getContext(), getString(R.string.rsb_error_passwords_do_not_match), Toast.LENGTH_SHORT).show();
                 return;
             }

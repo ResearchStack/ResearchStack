@@ -4,10 +4,16 @@
                   {
                   "onboardingType" : "login",
                   "steps" : [
-                             {
-                             "identifier"   : "login",
-                             "type"         : "login"
-                             }
+                               {
+                               "identifier"   : "login",
+                               "type"         : "login"
+                               },
+                              {
+                                "identifier"  : "loginCheckEmail",
+                                "type"        : "instruction",
+                                "title"       : "Comprehension",
+                                "text"        : "Let's do a quick and simple test of your understanding of this study."
+                              }
                              ]
                   },
 
