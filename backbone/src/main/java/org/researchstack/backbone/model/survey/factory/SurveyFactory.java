@@ -61,6 +61,7 @@ import org.researchstack.backbone.task.SmartSurveyTask;
 import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -196,6 +197,12 @@ public class SurveyFactory {
                     throw new IllegalStateException("Error in json parsing, ACCOUNT_LOGIN types must be ProfileSurveyItem");
                 }
                 return createLoginStep(context, (ProfileSurveyItem)item, defaultLoginOptions());
+            case ACCOUNT_LOGIN_VIA_EMAIL:
+                if (!(item instanceof ProfileSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, ACCOUNT_LOGIN types must be ProfileSurveyItem");
+                }
+                return createLoginStep(context, (ProfileSurveyItem)item, Arrays.asList
+                        (ProfileInfoOption.EMAIL));
             case ACCOUNT_COMPLETION:
                 // TODO: finish the completion step layout, for now just use a simple instruction
                 // TODO: should show the cool check mark animation, see iOS
