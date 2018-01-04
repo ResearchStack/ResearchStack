@@ -77,7 +77,10 @@ public class LoginStepLayout extends ProfileStepLayout {
             if (hasEmail && hasPassword) {
                 // Login with email and password.
                 login = DataProvider.getInstance().signIn(getContext(), email, password);
-            } else if (hasExternalId) {
+            } else if (hasEmail && !getProfileStep().getProfileInfoOptions().contains
+                    (ProfileInfoOption.PASSWORD)) {
+                login = DataProvider.getInstance().requestSignInLink(email);
+            }else if (hasExternalId) {
                 // Login with external ID.
                 login = DataProvider.getInstance().signInWithExternalId(getContext(), externalId);
             } else {
