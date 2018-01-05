@@ -465,6 +465,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
             return step;
         }
         protected StepBody stepBody;
+        public StepBody getStepBody() {
+            return stepBody;
+        }
         protected WeakReference<View> view;
 
         FormStepData(QuestionStep step, StepBody stepBody, View view) {
