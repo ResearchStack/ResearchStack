@@ -3,6 +3,7 @@ package org.researchstack.backbone.storage.database;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.FormatHelper;
@@ -38,6 +39,12 @@ public class StepRecord {
     @DatabaseField
     public Date completed;
 
+    @DatabaseField(canBeNull = false)
+    public String answerFormatClass;
+
+    @DatabaseField
+    public String answerFormat;
+
     @DatabaseField
     public String result;
 
@@ -45,10 +52,19 @@ public class StepRecord {
         StepResult result = new StepResult(new Step(record.stepId));
         result.setStartDate(record.started);
         result.setEndDate(record.completed);
+
+        AnswerFormat answerFormat = null;
+        if (record.answerFormatClass != null) {
+            try {
+                answerFormat = (AnswerFormat) GSON.fromJson(record.answerFormat, Class.forName(record.answerFormatClass));
+                result.setAnswerFormat(answerFormat);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         if (!TextUtils.isEmpty(record.result)) {
             result.setResults(GSON.fromJson(record.result, Map.class));
         }
-
         return result;
     }
 }

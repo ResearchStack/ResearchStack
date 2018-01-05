@@ -84,6 +84,8 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
                     stepRecord.taskId = taskResult.getIdentifier();
                     stepRecord.stepId = stepResult.getIdentifier();
                     stepRecord.completed = stepResult.getEndDate();
+                    stepRecord.answerFormatClass = stepResult.getAnswerFormat().getClass().getName();
+                    stepRecord.answerFormat = gson.toJson(stepResult.getAnswerFormat());
                     if (!stepResult.getResults().isEmpty()) {
                         stepRecord.result = gson.toJson(stepResult.getResults());
                     }
