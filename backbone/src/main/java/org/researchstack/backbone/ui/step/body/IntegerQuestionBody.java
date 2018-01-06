@@ -65,14 +65,14 @@ public class IntegerQuestionBody implements StepBody {
         }
     }
 
-    private View initViewDefault(LayoutInflater inflater, ViewGroup parent) {
+    protected View initViewDefault(LayoutInflater inflater, ViewGroup parent) {
         editText = (EditText) inflater.inflate(R.layout.rsb_item_edit_text, parent, false);
         setFilters(parent.getContext());
 
         return editText;
     }
 
-    private View initViewCompact(LayoutInflater inflater, ViewGroup parent) {
+    protected View initViewCompact(LayoutInflater inflater, ViewGroup parent) {
         View formItemView = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
 
         TextView title = (TextView) formItemView.findViewById(R.id.label);

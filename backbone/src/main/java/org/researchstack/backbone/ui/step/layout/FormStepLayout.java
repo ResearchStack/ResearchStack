@@ -3,6 +3,7 @@ package org.researchstack.backbone.ui.step.layout;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Parcelable;
+import android.support.annotation.IdRes;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -286,10 +287,18 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
         container = findViewById(R.id.rsb_form_step_content_container);
         stepBodyContainer = findViewById(R.id.rsb_form_step_body_layout);
-        formTitleTextview = findViewById(R.id.rsb_form_step_title);
-        formSummaryTextview = findViewById(R.id.rsb_form_step_summary);
+        formTitleTextview = findViewById(getFormTitleId());
+        formSummaryTextview = findViewById(getFormTextId());
 
         SurveyStepLayout.setupTitleLayout(getContext(), step, formTitleTextview, formSummaryTextview);
+    }
+
+    protected @IdRes int getFormTitleId() {
+        return R.id.rsb_form_step_title;
+    }
+
+    protected @IdRes int getFormTextId() {
+        return R.id.rsb_form_step_summary;
     }
 
     /**
