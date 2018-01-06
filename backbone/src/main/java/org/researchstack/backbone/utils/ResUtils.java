@@ -118,6 +118,11 @@ public class ResUtils {
         return context.getResources().getIdentifier(name, "color", context.getPackageName());
     }
 
+    public static int getStringResourceId(Context context, String name)
+    {
+        return context.getResources().getIdentifier(name, "string", context.getPackageName());
+    }
+
     public static int getDrawableResourceId(Context context, String name) {
         return getDrawableResourceId(context, name, 0);
     }
