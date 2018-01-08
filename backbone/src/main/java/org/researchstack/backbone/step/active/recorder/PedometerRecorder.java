@@ -1,11 +1,13 @@
 package org.researchstack.backbone.step.active.recorder;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.os.Build;
 import android.support.annotation.MainThread;
 
+import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.DataProvider;
@@ -105,13 +107,6 @@ public class PedometerRecorder extends SensorRecorder
         return computedStride;
     }
 
-    @Override
-    protected void writeJsonData() {
-        // We ignore this method call from the base-class,
-        // since we are simply going to write a step taken
-        // when it comes back from the onSensorChanged method
-    }
-
     @MainThread
     @Override
     public void onStepTaken() {
@@ -128,16 +123,18 @@ public class PedometerRecorder extends SensorRecorder
         }
     }
 
+
     @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
+    public void recordSensorEvent(SensorEvent sensorEvent, JsonObject object) {
         // Step detector is only available for OS kitkat and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
-            sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR)
+                sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR)
         {
             onStepTaken();
         } else if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             accelerometerStepDetector.processAccelerometerData(sensorEvent);
         }
+        //TODO: fix accelerometer data
     }
 
     @Override

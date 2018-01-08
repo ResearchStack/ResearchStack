@@ -53,32 +53,12 @@ public class AccelerometerRecorder extends SensorRecorder {
         }
     }
 
-    /**
-     * Called by the base class at the Recorder's frequency
-     */
     @Override
-    protected void writeJsonData() {
-        // Update the main json object
-        jsonObject.addProperty(TIMESTAMP_IN_SECONDS_KEY, System.currentTimeMillis() * 1e-3d);
-
-        double uptime;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            uptime = SystemClock.elapsedRealtimeNanos() * 1e-9d;
-        } else {
-            uptime = SystemClock.elapsedRealtime() * 1e-3d;
-        }
-        jsonObject.addProperty(UPTIME_IN_SECONDS_KEY, uptime);
-        writeJsonObjectToFile(jsonObject);
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        switch (sensorEvent.sensor.getType()) {
-            case Sensor.TYPE_ACCELEROMETER:
+    public void recordSensorEvent(SensorEvent sensorEvent, JsonObject jsonObject) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 jsonObject.addProperty(ACCELERATION_X_KEY, sensorEvent.values[0]);
                 jsonObject.addProperty(ACCELERATION_Y_KEY, sensorEvent.values[1]);
                 jsonObject.addProperty(ACCELERATION_Z_KEY, sensorEvent.values[2]);
-                break;
         }
     }
 

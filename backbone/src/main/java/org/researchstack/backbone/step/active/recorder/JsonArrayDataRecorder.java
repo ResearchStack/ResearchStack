@@ -67,7 +67,7 @@ public abstract class JsonArrayDataRecorder extends Recorder {
         startTime = System.currentTimeMillis();
 
         // Since we are writing a JsonArray, have the header and footer be
-        dataLogger.start("{\"" + JSON_ITEMS_KEY + "\":[", "]}");
+        dataLogger.start("[", "]");
         isFirstJsonObject = true; // will avoid comma separator on write object write
     }
 
