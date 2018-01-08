@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding.view.RxView;
-
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.result.StepResult;
@@ -22,6 +20,8 @@ import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
+
+import java.net.URL;
 
 public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
@@ -81,7 +81,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
     }
 
     private void initializeStep() {
-        ConsentSection data = step.getSection();
+        final ConsentSection data = step.getSection();
 
         ImageView imageView = (ImageView) findViewById(R.id.image);
 
@@ -107,7 +107,9 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
             DrawableCompat.setTint(drawable, colorSecondary);
             imageView.setImageDrawable(drawable);
             imageView.setVisibility(View.VISIBLE);
-        } else {
+        }
+        else
+        {
             imageView.setVisibility(View.GONE);
         }
 
@@ -132,12 +134,29 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
                 moreInfoView.setText(data.getType().getMoreInfoResId());
             }
 
-            RxView.clicks(moreInfoView).subscribe(v -> {
-                String webTitle = getResources().getString(R.string.rsb_consent_section_more_info);
-                Intent webDoc = ViewWebDocumentActivity.newThemedIntent(getContext(), webTitle,
-                        TextUtils.isEmpty(data.getContent()) ? data.getHtmlContent() : data.getContent(), step.getPrimaryColor(), step.getColorPrimaryDark());
-                getContext().startActivity(webDoc);
+            moreInfoView.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    String webTitle = getResources().getString(R.string.rsb_consent_section_more_info);
+                    URL contentUrl = data.getContentUrl();
+                    Intent webDoc;
+                    if(contentUrl != null)
+                    {
+                         webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle, contentUrl, true);
+
+                    }
+                    else
+                    {
+                        webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle,
+                                TextUtils.isEmpty(data.getContent()) ? data.getHtmlContent() : data.getContent());
+                    }
+
+                    ViewWebDocumentActivity.addThemeColors(webDoc, step.getPrimaryColor(), step.getColorPrimaryDark());
+                    getContext().startActivity(webDoc);
+                }
             });
+
         } else {
             moreInfoView.setVisibility(View.GONE);
         }

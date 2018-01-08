@@ -6,6 +6,7 @@ import org.researchstack.backbone.R;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.Serializable;
+import java.net.URL;
 
 public class ConsentSection implements Serializable {
 
@@ -69,6 +70,14 @@ public class ConsentSection implements Serializable {
      */
     @SerializedName("sectionHtmlContent")
     private String htmlContent;
+
+    /**
+     * The contentUrl is used to override the ‘htmlContent’ and ‘consent’ property if a document should be required
+     * in the learn more section
+     */
+    @SerializedName("contentUrl")
+    private URL contentUrl;
+
     /**
      * A custom illustration for the consent.
      * <p>
@@ -154,6 +163,16 @@ public class ConsentSection implements Serializable {
     public void setContent(String content) {
         this.content = content;
         this.escapedContent = null;
+    }
+
+    public URL getContentUrl()
+    {
+        return contentUrl;
+    }
+
+    public void setContentUrl(URL url)
+    {
+        contentUrl = url;
     }
 
     public String getSummary() {
