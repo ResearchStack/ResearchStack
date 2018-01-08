@@ -3,6 +3,8 @@ package org.researchstack.backbone.step.active.recorder;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.os.Build;
+import android.os.SystemClock;
 
 import com.google.gson.JsonObject;
 
@@ -22,7 +24,9 @@ import java.util.List;
 
 public class AccelerometerRecorder extends SensorRecorder {
 
-    public static final String TIMESTAMP_KEY        = "timestamp";
+    public static final String TIMESTAMP_IN_SECONDS_KEY = "timestamp";
+    public static final String UPTIME_IN_SECONDS_KEY = "uptime";
+    // TODO: uptime
     public static final String ACCELERATION_X_KEY   = "x";
     public static final String ACCELERATION_Y_KEY   = "y";
     public static final String ACCELERATION_Z_KEY   = "z";
@@ -54,7 +58,16 @@ public class AccelerometerRecorder extends SensorRecorder {
      */
     @Override
     protected void writeJsonData() {
-        jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis());
+        // Update the main json object
+        jsonObject.addProperty(TIMESTAMP_IN_SECONDS_KEY, System.currentTimeMillis() * 1e-3d);
+
+        double uptime;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            uptime = SystemClock.elapsedRealtimeNanos() * 1e-9d;
+        } else {
+            uptime = SystemClock.elapsedRealtime() * 1e-3d;
+        }
+        jsonObject.addProperty(UPTIME_IN_SECONDS_KEY, uptime);
         writeJsonObjectToFile(jsonObject);
     }
 

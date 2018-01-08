@@ -3,6 +3,8 @@ package org.researchstack.backbone.step.active.recorder;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.os.Build;
+import android.os.SystemClock;
 
 import com.google.gson.JsonObject;
 
@@ -25,7 +27,8 @@ import java.util.List;
 
 public class DeviceMotionRecorder extends SensorRecorder {
 
-    public static final String TIMESTAMP_KEY            = "timestamp";
+    public static final String TIMESTAMP_IN_SECONDS_KEY = "timestamp";
+    public static final String UPTIME_IN_SECONDS_KEY = "uptime";
     public static final String ACCURACY_KEY             = "accuracy";
 
     public static final String ROTATION_VECTOR_KEY      = "attitude";
@@ -70,7 +73,16 @@ public class DeviceMotionRecorder extends SensorRecorder {
     @Override
     protected void writeJsonData() {
         // Update the main json object
-        jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis());
+        jsonObject.addProperty(TIMESTAMP_IN_SECONDS_KEY, System.currentTimeMillis() * 1e-3d);
+
+        double uptime;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            uptime = SystemClock.elapsedRealtimeNanos() * 1e-9d;
+        } else {
+            uptime = SystemClock.elapsedRealtime() * 1e-3d;
+        }
+        jsonObject.addProperty(UPTIME_IN_SECONDS_KEY, uptime);
+
         jsonObject.add(ACCELEROMETER_KEY, accelJsonObject);
         jsonObject.add(LINEAR_ACCELEROMETER_KEY, linAccelJsonObject);
         jsonObject.add(GYROSCOPE_KEY, gyroscopeJsonObject);
