@@ -124,6 +124,8 @@ public class ConsentSection implements Serializable {
         return formalTitle;
     }
 
+    public void setFormalTitle(String title) { this.formalTitle = title; }
+
     public Type getType() {
         return type;
     }
@@ -138,6 +140,11 @@ public class ConsentSection implements Serializable {
 
     public String getCustomImageName() {
         return customImageName;
+    }
+
+    public void setCustomImageName(String imageName)
+    {
+        customImageName = imageName;
     }
 
     public String getContent() {
@@ -168,6 +175,10 @@ public class ConsentSection implements Serializable {
 
     public String getCustomLearnMoreButtonTitle() {
         return customLearnMoreButtonTitle;
+    }
+
+    public void setCustomLearnMoreButtonTitle(String text) {
+        customLearnMoreButtonTitle = text;
     }
 
     public enum Type implements Serializable {

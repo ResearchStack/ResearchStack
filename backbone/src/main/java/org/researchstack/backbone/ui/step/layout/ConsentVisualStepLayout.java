@@ -91,8 +91,18 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
 
         int imageResId = ResUtils.getDrawableResourceId(getContext(), imageName);
 
+        Drawable drawable = null;
+
         if (imageResId != 0) {
-            Drawable drawable = getResources().getDrawable(imageResId);
+            drawable = getResources().getDrawable(imageResId);
+        }
+        else if(imageName != null && imageResId == 0)
+        {
+            drawable = Drawable.createFromPath(imageName);
+        }
+
+        if (drawable != null)
+        {
             drawable = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(drawable, colorSecondary);
             imageView.setImageDrawable(drawable);
