@@ -10,12 +10,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.views.LocalWebView;
 import org.researchstack.backbone.utils.ThemeUtils;
+
+import java.net.URL;
 
 /**
  * The ViewWebDocumentActivity is used for viewing both local and network HTML docs. This activity
@@ -30,14 +33,21 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
     public static final String KEY_THEME = TAG + ".THEME";
     public static final String KEY_COLOR_PRIMARY = "colorPrimary";
     public static final String KEY_COLOR_PRIMARY_DARK = "colorPrimaryDark";
+    public static final String KEY_CONTENT_URL = TAG + ".URL";
 
-    public static Intent newIntentForContent(Context context, String title, String htmlConent) {
-        return newIntentForContent(context, title, htmlConent, true);
+    public static Intent newIntentForContent(Context context, String title, URL contentUrl, boolean useCallingTheme) {
+        Intent intent = newIntent(context, title, useCallingTheme);
+        intent.putExtra(KEY_CONTENT_URL, contentUrl.toString());
+        return intent;
     }
 
-    public static Intent newIntentForContent(Context context, String title, String htmlConent, boolean useCallingTheme) {
+    public static Intent newIntentForContent(Context context, String title, String htmlContent) {
+        return newIntentForContent(context, title, htmlContent, true);
+    }
+
+    public static Intent newIntentForContent(Context context, String title, String htmlContent, boolean useCallingTheme) {
         Intent intent = newIntent(context, title, useCallingTheme);
-        intent.putExtra(KEY_DOC_CONTENT, htmlConent);
+        intent.putExtra(KEY_DOC_CONTENT, htmlContent);
         return intent;
     }
 
@@ -63,14 +73,9 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
         return intent;
     }
 
-    public static Intent newThemedIntent(Context context, String title, String htmlConent, int colorPrimary, int colorPrimaryDark) {
-        Intent intent = new Intent(context, ViewWebDocumentActivity.class);
+    public static void addThemeColors(Intent intent, int colorPrimary, int colorPrimaryDark) {
         intent.putExtra(KEY_COLOR_PRIMARY, colorPrimary);
         intent.putExtra(KEY_COLOR_PRIMARY_DARK, colorPrimaryDark);
-        intent.putExtra(KEY_DOC_CONTENT, htmlConent);
-        intent.putExtra(KEY_TITLE, title);
-
-        return intent;
     }
 
     @Override
@@ -82,7 +87,16 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
         super.setContentView(R.layout.rsb_activity_web_document);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        try
+        {
+            setSupportActionBar(toolbar);
+        } catch (Exception e)
+        {
+            //there is already an action bar
+            toolbar.setVisibility(View.GONE);
+        }
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -101,13 +115,20 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
 
         LocalWebView webView = (LocalWebView) findViewById(R.id.webview);
 
-        if (getIntent().hasExtra(KEY_DOC_PATH)) {
+        if (getIntent().hasExtra(KEY_DOC_PATH))
+        {
             String docPath = getIntent().getStringExtra(KEY_DOC_PATH);
             webView.loadUrl(docPath);
-        } else if (getIntent().hasExtra(KEY_DOC_CONTENT)) {
+        }
+        else if (getIntent().hasExtra(KEY_DOC_CONTENT))
+        {
             String docContent = getIntent().getStringExtra(KEY_DOC_CONTENT);
 //            webView.loadData(docContent, "text/html", "UTF-8");
             webView.loadDataWithBaseURL(null, docContent, "text/html", "UTF-8", null);
+        }
+        else if (getIntent().hasExtra(KEY_CONTENT_URL))
+        {
+            webView.loadUrl(getIntent().getStringExtra(KEY_CONTENT_URL));
         }
     }
 

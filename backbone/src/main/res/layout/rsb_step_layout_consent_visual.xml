@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_centerHorizontal="true"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         tools:src="@drawable/rsb_debug_gray" />
 
     <TextView
@@ -22,6 +22,7 @@
         android:layout_marginRight="@dimen/rsb_margin_right"
         android:layout_marginTop="20dp"
         android:gravity="center"
+        android:textAlignment="center"
         android:textColor="?attr/colorAccent"
         android:textSize="24sp"
 
@@ -30,11 +31,13 @@
     <TextView
         android:id="@+id/summary"
         style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
+        android:gravity="center"
+        android:textAlignment="center"
         android:layout_marginTop="36dp"
         android:textSize="16sp"
         tools:text="@string/lorem_medium" />
@@ -45,11 +48,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/summary"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="@dimen/rsb_margin_right"
         android:paddingBottom="@dimen/rsb_padding_medium"
-        android:paddingRight="@dimen/rsb_padding_medium"
         android:paddingTop="@dimen/rsb_padding_medium"
+        android:layout_marginLeft="@dimen/rsb_margin_left"
+        android:layout_marginRight="@dimen/rsb_margin_right"
+        android:gravity="center"
+        android:textAlignment="center"
         android:textColor="?attr/colorAccent"
         tools:text="More Info" />
 
