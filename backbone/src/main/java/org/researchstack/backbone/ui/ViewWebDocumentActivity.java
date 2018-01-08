@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -82,7 +83,16 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
         super.setContentView(R.layout.rsb_activity_web_document);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        try
+        {
+            setSupportActionBar(toolbar);
+        } catch (Exception e)
+        {
+            //there is already an action bar
+            toolbar.setVisibility(View.GONE);
+        }
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 

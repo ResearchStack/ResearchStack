@@ -31,7 +31,7 @@
     <TextView
         android:id="@+id/summary"
         style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:layout_marginLeft="@dimen/rsb_margin_left"
@@ -49,7 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/summary"
         android:paddingBottom="@dimen/rsb_padding_medium"
-        android:paddingRight="@dimen/rsb_padding_medium"
         android:paddingTop="@dimen/rsb_padding_medium"
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
