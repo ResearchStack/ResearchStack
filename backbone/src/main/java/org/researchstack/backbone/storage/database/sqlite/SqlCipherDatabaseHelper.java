@@ -60,7 +60,17 @@ public class SqlCipherDatabaseHelper extends SqueakyOpenHelper implements AppDat
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        // handle future db upgrades here
+        try {
+            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase),
+                    true,
+                    TaskRecord.class,
+                    StepRecord.class);
+            TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase),
+                    TaskRecord.class,
+                    StepRecord.class);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
