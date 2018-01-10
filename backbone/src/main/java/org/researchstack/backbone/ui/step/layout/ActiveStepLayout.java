@@ -29,6 +29,7 @@ import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 import org.researchstack.backbone.step.active.recorder.RecorderListener;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ResUtils;
 
 import java.io.File;
@@ -357,7 +358,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
                         speakText(String.valueOf(secondsLeft));
                     }
                 } catch (NumberFormatException e) {
-                    e.printStackTrace();
+                    LogExt.e(ActiveStepLayout.class, e.getLocalizedMessage());
                 }
             }
             // Special case for allowing spoken text at the end instead of a seconds key
