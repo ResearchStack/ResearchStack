@@ -2,6 +2,8 @@ package org.researchstack.backbone.model.survey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Map;
+
 /**
  * Created by TheMDP on 12/31/16.
  */
@@ -14,8 +16,14 @@ public class ActiveStepSurveyItem extends SurveyItem<String> {
     @SerializedName("stepFinishedSpokenInstruction")
     private String stepFinishedSpokenInstruction;
 
-    @SerializedName("stepDuration")
+    @SerializedName(value="stepDuration", alternate={"duration"})
     private int    stepDuration;
+
+    /**
+     * A map of <"time_in_seconds_to_speak", "what_to_speak">
+     */
+    @SerializedName("spokenInstructions")
+    private Map<String, String> spokenInstructionMap;
 
     /* Default constructor needed for serilization/deserialization of object */
     public ActiveStepSurveyItem() {
@@ -44,5 +52,13 @@ public class ActiveStepSurveyItem extends SurveyItem<String> {
 
     public void setStepDuration(int stepDuration) {
         this.stepDuration = stepDuration;
+    }
+
+    public Map<String, String> getSpokenInstructionMap() {
+        return spokenInstructionMap;
+    }
+
+    public void setSpokenInstructionMap(Map<String, String> spokenInstructions) {
+        spokenInstructionMap = spokenInstructions;
     }
 }

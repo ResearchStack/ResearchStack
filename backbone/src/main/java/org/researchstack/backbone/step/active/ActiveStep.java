@@ -5,6 +5,7 @@ import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by TheMDP on 2/4/17.
@@ -180,6 +181,17 @@ public class ActiveStep extends Step {
      */
     private String imageResName;
 
+    /**
+     * A map of <"time_in_seconds_to_speak", "what_to_speak">
+     */
+    private Map<String, String> spokenInstructionMap;
+
+    /**
+     * This can be increased to allow the ending spoken instruction to
+     * not get cut off if it is too long
+     */
+    private int estimateTimeInMsToSpeakEndInstruction = 2000;  // 2 seconds
+
     /* Default constructor needed for serialization/deserialization of object */
     ActiveStep() {
         super();
@@ -316,7 +328,8 @@ public class ActiveStep extends Step {
     public boolean hasVoice() {
         boolean hasSpokenInstruction = spokenInstruction != null && !spokenInstruction.isEmpty();
         boolean hasFinishedSpokenInstruction = finishedSpokenInstruction != null && !finishedSpokenInstruction.isEmpty();
-        return (hasSpokenInstruction || hasFinishedSpokenInstruction);
+        boolean hasValidSpeakingMap = spokenInstructionMap != null && !spokenInstructionMap.isEmpty();
+        return (hasSpokenInstruction || hasFinishedSpokenInstruction || hasValidSpeakingMap);
     }
 
     public List<RecorderConfig> getRecorderConfigurationList() {
@@ -333,5 +346,21 @@ public class ActiveStep extends Step {
 
     public void setImageResName(String imageResName) {
         this.imageResName = imageResName;
+    }
+
+    public Map<String, String> getSpokenInstructionMap() {
+        return spokenInstructionMap;
+    }
+
+    public void setSpokenInstructionMap(Map<String, String> spokenInstructions) {
+        spokenInstructionMap = spokenInstructions;
+    }
+
+    public int getEstimateTimeInMsToSpeakEndInstruction() {
+        return estimateTimeInMsToSpeakEndInstruction;
+    }
+
+    public void setEstimateTimeInMsToSpeakEndInstruction(int estimateTimeInMsToSpeakEndInstruction) {
+        this.estimateTimeInMsToSpeakEndInstruction = estimateTimeInMsToSpeakEndInstruction;
     }
 }
