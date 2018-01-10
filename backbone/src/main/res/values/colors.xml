@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="rsb_colorPrimary">#3F51B5</color>
-    <color name="rsb_colorPrimaryDark">#303F9F</color>
-    <color name="rsb_colorAccent">#FF4081</color>
+    <color name="rsb_colorPrimary">#2e2156</color>
+    <color name="rsb_colorPrimaryDark">#261c4a</color>
+    <color name="rsb_colorAccent">@color/rsb_black</color>
     <color name="rsb_colorAccentDark">#cc3367</color>
     <color name="rsb_black">#000</color>
     <color name="rsb_black_20">#33000000</color>
@@ -17,4 +17,7 @@
 
     <color name="rsb_tab_indicator">#2196f3</color>
     <color name="rsb_tab_text_selected">#662196f3</color>
+    
+    <color name="rsb_cell_header_grey">#aaaaaa</color>
+    <color name="rsb_item_text_grey">#222222</color>
 </resources>

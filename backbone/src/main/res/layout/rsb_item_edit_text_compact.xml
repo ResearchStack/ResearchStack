@@ -22,6 +22,8 @@
         android:layout_height="wrap_content"
         android:imeOptions="actionNext"
         android:inputType="text"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:minHeight="@dimen/rsb_item_size_default"
         android:singleLine="true"
         android:textColor="?android:attr/textColorPrimary"

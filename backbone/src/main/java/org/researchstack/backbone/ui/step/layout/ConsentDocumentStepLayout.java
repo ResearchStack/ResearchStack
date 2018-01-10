@@ -1,12 +1,14 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
@@ -81,7 +83,9 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        submitBar.setPositiveTitleColor(step.getColorSecondary());
         submitBar.setPositiveAction(v -> showDialog());
+        submitBar.setNegativeTitleColor(step.getPrimaryColor());
         submitBar.setNegativeAction(v -> disagreeConsent());
     }
 
@@ -91,15 +95,18 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     }
 
     private void showDialog() {
-        new AlertDialog.Builder(getContext()).setTitle(R.string.rsb_consent_review_alert_title)
-                .setMessage(confirmationDialogBody)
-                .setCancelable(false)
-                .setPositiveButton(R.string.rsb_agree, (dialog, which) -> {
+        new MaterialDialog.Builder(getContext())
+                .title(R.string.rsb_consent_review_alert_title)
+                .content(confirmationDialogBody)
+                .theme(Theme.LIGHT)
+                .cancelable(false)
+                .positiveColor(step.getColorSecondary())
+                .negativeColor(step.getPrimaryColor())
+                .negativeText(R.string.rsb_consent_review_cancel)
+                .positiveText(R.string.rsb_agree)
+                .onPositive((dialog, which) -> {
                     stepResult.setResult(true);
                     callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
-                })
-                .setNegativeButton(R.string.rsb_consent_review_cancel, (dialog, which) -> {
-                    // Gives them a chance to read it again
                 })
                 .show();
     }

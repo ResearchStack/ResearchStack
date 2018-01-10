@@ -1,16 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
-
 android {
 
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "26.0.3"
 
     libraryVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.outputFile = new File(output.outputFile.parentFile,
-                    output.outputFile.name.replace(".aar", "_v${VERSION_NAME}.aar"));
+        variant.outputs.all { output ->
+            outputFileName = new File(output.outputFile.parentFile,
+                    output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"));
         }
     }
 
@@ -18,7 +17,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 6
-        versionName version
+        versionName "1.0.3"
     }
 
     buildTypes {
@@ -33,8 +32,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     packagingOptions {
@@ -44,9 +43,8 @@ android {
 
     resourcePrefix 'rsb_'
 }
-
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:cardview-v7:25.2.0'
     compile 'com.android.support:preference-v14:25.2.0'
@@ -59,16 +57,15 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0'
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.2.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
-
     compile 'com.scottyab:aes-crypto:0.0.3'
     compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
     annotationProcessor 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
     compile 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
+    compile 'com.afollestad.material-dialogs:core:0.9.0.2'
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile 'org.mockito:mockito-core:1.10.19'
 }
-
 if (project.hasProperty("android")) { // Android libraries
     task sourcesJar(type: Jar) {
         classifier = 'sources'
@@ -92,7 +89,6 @@ if (project.hasProperty("android")) { // Android libraries
         from sourceSets.main.allSource
     }
 }
-
 afterEvaluate { project ->
     uploadArchives {
         repositories {
@@ -100,7 +96,7 @@ afterEvaluate { project ->
 
                 pom.groupId = GROUP
                 pom.artifactId = project.getProperties().POM_ARTIFACT_ID
-                pom.version = VERSION_NAME
+                pom.version = android.defaultConfig.versionName
 
                 def deployPath = file('./')
                 repository(url: "file://${deployPath.absolutePath}/../../Android-SDK/")
@@ -123,13 +119,19 @@ afterEvaluate { project ->
                     pom.dependencies.forEach { dep ->
                         if (dep.getVersion() == "unspecified") {
                             dep.setGroupId(GROUP)
-                            dep.setVersion(VERSION_NAME)
+                            dep.setVersion(android.defaultConfig.versionName)
                         }
                     }
                 }
-
             }
         }
     }
 }
-
+buildscript {
+    repositories {
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+    }
+}

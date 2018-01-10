@@ -22,6 +22,9 @@
     <style name="Theme.Backbone" parent="Base.Theme.Backbone" />
 
     <style name="Theme.Backbone.Toolbar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
         <item name="colorControlNormal">@android:color/white</item>
     </style>
 

@@ -43,13 +43,9 @@ public class SubmitBar extends LinearLayout {
 
         positiveView = (TextView) findViewById(R.id.bar_submit_postitive);
         positiveView.setText(a.getString(R.styleable.SubmitBar_positiveActionTitle));
-        positiveView.setTextColor(a.getColor(R.styleable.SubmitBar_positiveActionColor,
-                ThemeUtils.getAccentColor(context)));
 
         negativeView = (TextView) findViewById(R.id.bar_submit_negative);
         negativeView.setText(a.getString(R.styleable.SubmitBar_negativeActionTitle));
-        negativeView.setTextColor(a.getColor(R.styleable.SubmitBar_negativeActionColor,
-                ContextCompat.getColor(context, R.color.rsb_submit_bar_negative)));
 
         a.recycle();
     }
@@ -74,6 +70,10 @@ public class SubmitBar extends LinearLayout {
         return positiveView;
     }
 
+    public void setPositiveTitleColor(int color) {
+        positiveView.setTextColor(color);
+    }
+
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Negative Action Helper Methods
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -95,4 +95,7 @@ public class SubmitBar extends LinearLayout {
         return negativeView;
     }
 
+    public void setNegativeTitleColor(int color) {
+        negativeView.setTextColor(color);
+    }
 }

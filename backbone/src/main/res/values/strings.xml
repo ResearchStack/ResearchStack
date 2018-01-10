@@ -106,6 +106,8 @@
     <string name="rsb_next">next</string>
     <string name="rsb_what_to_expect">What to Expect</string>
     <string name="rsb_name">Name</string>
+    <string name="rsb_name_first">First Name</string>
+    <string name="rsb_name_last">Last Name</string>
     <string name="rsb_email">Email</string>
     <string name="rsb_disagree">Disagree</string>
     <string name="rsb_agree">Agree</string>
@@ -116,6 +118,9 @@
     <string name="rsb_format_step_title">Step %1$s of %2$s</string>
     <string name="rsb_hours">Hours</string>
     <string name="rsb_minutes">Minutes</string>
+    <string name="rsb_task_cancel_title">Leave Activity</string>
+    <string name="rsb_task_cancel_text">Are you sure you want to leave this activity and discard its results?</string>
+    <string name="rsb_task_cancel_positive">Discard Results</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_data_failed">Failed to load encrypted data, try again!</string>
@@ -129,7 +134,6 @@
     <string name="rsb_invalid_answer_date_none">Please choose a date.</string>
     <string name="rsb_birth_date_too_old">You must be %1$s years or younger</string>
     <string name="rsb_birth_date_too_young">You must be at least %1$s years old</string>
-
 
     <!-- Pin Code -->
     <string name="rsb_pincode_enter_title">Enter your passcode</string>

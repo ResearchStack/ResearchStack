@@ -22,16 +22,17 @@ import java.io.Serializable;
  */
 public class Step implements Serializable {
     private String identifier;
-
     private Class stepLayoutClass;
-
     private int stepTitle;
-
     private boolean optional = true;
-
     private String title;
-
     private String text;
+    private int colorPrimary;
+    private int colorPrimaryDark;
+    private int colorSecondary;
+    private int principalTextColor;
+    private int secondaryTextColor;
+    private int actionFailedColor;
 
     // The following fields are in RK but not implemented in ResearchStack
     // These options can be developed as needed or removed if we find they are not necessary
@@ -190,5 +191,66 @@ public class Step implements Serializable {
      */
     public void setStepLayoutClass(Class stepLayoutClass) {
         this.stepLayoutClass = stepLayoutClass;
+    }
+
+    /**
+     * Sets the theme for the step.
+     *
+     * @param colorPrimary the primary color for the step
+     * @param colorPrimaryDark the primary dark color for the step
+     * @param colorSecondary the accent color for the step
+     * @param principalTextColor the principal text color for the step
+     * @param secondaryTextColor the secondary text color for the step
+     * @param actionFailedColor the action failed color for the step
+     */
+    public void setStepTheme(int colorPrimary, int colorPrimaryDark, int colorSecondary, int principalTextColor, int secondaryTextColor, int actionFailedColor) {
+        this.colorPrimary = colorPrimary;
+        this.colorPrimaryDark = colorPrimaryDark;
+        this.colorSecondary = colorSecondary;
+        this.principalTextColor = principalTextColor;
+        this.secondaryTextColor = secondaryTextColor;
+        this.actionFailedColor = actionFailedColor;
+    }
+
+    /**
+     * Gets the the primary color for the step
+     */
+    public int getPrimaryColor() {
+        return colorPrimary;
+    }
+
+    /**
+     * Gets the the primary dark color for the step
+     */
+    public int getColorPrimaryDark() {
+        return colorPrimaryDark;
+    }
+
+    /**
+     * Gets the the accent color for the step
+     */
+    public int getColorSecondary() {
+        return colorSecondary;
+    }
+
+    /**
+     * Gets the the principal text color for the step
+     */
+    public int getPrincipalTextColor() {
+        return principalTextColor;
+    }
+
+    /**
+     * Gets the the secondary text color for the step
+     */
+    public int getSecondaryTextColor() {
+        return secondaryTextColor;
+    }
+
+    /**
+     * Gets the the action failed color for the step
+     */
+    public int getActionFailedColor() {
+        return actionFailedColor;
     }
 }

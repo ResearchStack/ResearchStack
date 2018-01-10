@@ -13,10 +13,7 @@
         android:layout_marginLeft="@dimen/rsb_margin_left"
         android:layout_marginRight="@dimen/rsb_margin_right"
         android:layout_marginTop="20dp"
-
-        android:textColor="?attr/colorAccent"
-        android:textSize="20sp"
-
+        style="@style/Backbone.Survey.Title"
         tools:text="@string/lorem_name" />
 
     <TextView
@@ -39,8 +36,6 @@
         android:layout_marginRight="@dimen/rsb_padding_medium"
         android:layout_marginTop="20dp"
         android:paddingBottom="52dp"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp"
         app:signatureColor="?attr/colorAccent" />
 
     <org.researchstack.backbone.ui.views.SubmitBar
