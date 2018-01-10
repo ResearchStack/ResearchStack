@@ -133,8 +133,6 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
 
         recordSensorEvent(sensorEvent, jsonObject);
 
-        LogExt.d(SensorRecorder.class, "Recording sensor event json: " + jsonObject);
-
         writeJsonObjectToFile(jsonObject);
     }
 
