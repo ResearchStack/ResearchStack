@@ -116,11 +116,11 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 uptimeNanos = SystemClock.elapsedRealtimeNanos();
             } else {
-                uptimeNanos = SystemClock.elapsedRealtime() * 100000; // millis to nanos
+                uptimeNanos = (long) (SystemClock.elapsedRealtime() * 1e6); // millis to nanos
             }
 
             long timestampReferenceMillis = System.currentTimeMillis()
-                    + ((timestampZeroReferenceNanos - uptimeNanos) / 1000000L);
+                    + (long) ((timestampZeroReferenceNanos - uptimeNanos) * 1e-6);
             Date timestampReferenceDate = new Date(timestampReferenceMillis);
             jsonObject.addProperty(TIMESTAMP_DATE_KEY,
                     new SimpleDateFormat(FormatHelper.DATE_FORMAT_ISO_8601, Locale.getDefault())
