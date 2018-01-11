@@ -35,7 +35,6 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
 
     public static final float MANUAL_JSON_FREQUENCY = -1.0f;
 
-    private static final long MILLI_SECONDS_PER_SEC = 1000L;
     private static final long MICRO_SECONDS_PER_SEC = 1000000L;
 
     public static final String TIMESTAMP_IN_SECONDS_KEY = "timestamp";
@@ -176,9 +175,6 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
         return false;
     }
 
-    protected long calculateDelayBetweenSamplesInMilliSeconds() {
-        return (long)((float)MILLI_SECONDS_PER_SEC / frequency);
-    }
 
     protected int calculateDelayBetweenSamplesInMicroSeconds() {
         return (int)((float)MICRO_SECONDS_PER_SEC / frequency);
