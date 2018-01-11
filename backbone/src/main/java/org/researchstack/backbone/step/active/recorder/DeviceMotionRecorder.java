@@ -42,17 +42,15 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     public static final float GRAVITY_SI_CONVERSION = SensorManager.GRAVITY_EARTH;
 
-    public static final String SENSOR_INT_TYPE_KEY = "sensorTypeAndroid";
-    public static final String SENSOR_STRING_TYPE_KEY = "sensorTypeNameAndroid";
     public static final String SENSOR_DATA_TYPE_KEY = "sensorType";
     public static final String SENSOR_DATA_SUBTYPE_KEY = "sensorAndroidType";
 
-    public static final String SENSOR_ACCURACY_TYPE_KEY = "sensorAccuracy";
-    public static final String SENSOR_NAME_KEY = "sensorName";
     public static final String SENSOR_EVENT_ACCURACY_KEY = "eventAccuracy";
 
     public static final Map<Integer, String> SENSOR_TYPE_TO_DATA_TYPE;
     public static final Set<Integer> ROTATION_VECTOR_TYPES;
+
+    public static final String ROTATION_REFERENCE_COORDINATE_KEY = "referenceCoordinate";
 
     static {
         ImmutableMap.Builder<Integer, String>  sensorTypeMapBuilder = ImmutableMap.builder();
@@ -234,12 +232,15 @@ public class DeviceMotionRecorder extends SensorRecorder {
         int sensorType = sensorEvent.sensor.getType();
         if (Sensor.TYPE_ROTATION_VECTOR == sensorType) {
             jsonObject.addProperty(SENSOR_DATA_SUBTYPE_KEY, "rotationVector");
+            jsonObject.addProperty(ROTATION_REFERENCE_COORDINATE_KEY, "East-Up-North");
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2
                 && Sensor.TYPE_GAME_ROTATION_VECTOR == sensorType) {
             jsonObject.addProperty(SENSOR_DATA_SUBTYPE_KEY, "gameRotationVector");
+            jsonObject.addProperty(ROTATION_REFERENCE_COORDINATE_KEY, "zUp");
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR == sensorType) {
             jsonObject.addProperty(SENSOR_DATA_SUBTYPE_KEY, "geomagneticRotationVector");
+            jsonObject.addProperty(ROTATION_REFERENCE_COORDINATE_KEY, "East-Up-North");
         }
 
         // x = rot_axis.y * sin(theta/2)
