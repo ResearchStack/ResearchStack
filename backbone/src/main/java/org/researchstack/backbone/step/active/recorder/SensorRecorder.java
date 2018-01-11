@@ -120,13 +120,14 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
             }
 
             long timestampReferenceMillis = System.currentTimeMillis()
-                    + (long) ((timestampZeroReferenceNanos - uptimeNanos) * 1e-6);
+                    + (long) ((timestampZeroReferenceNanos - uptimeNanos) * 1e-6d);
             Date timestampReferenceDate = new Date(timestampReferenceMillis);
             jsonObject.addProperty(TIMESTAMP_DATE_KEY,
                     new SimpleDateFormat(FormatHelper.DATE_FORMAT_ISO_8601, Locale.getDefault())
                             .format(timestampReferenceDate));
         }
 
+        // these values are doubles
         jsonObject.addProperty(TIMESTAMP_IN_SECONDS_KEY,
                 (sensorEvent.timestamp - timestampZeroReferenceNanos) * 1e-9);
         jsonObject.addProperty(UPTIME_IN_SECONDS_KEY, sensorEvent.timestamp * 1e-9);
