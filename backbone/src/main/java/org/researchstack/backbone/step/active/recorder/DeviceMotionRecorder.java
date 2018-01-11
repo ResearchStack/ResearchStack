@@ -13,7 +13,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.LogExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Created by TheMDP on 2/5/17.
@@ -155,7 +152,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
         switch (sensorType) {
             case Sensor.TYPE_ACCELEROMETER:
-                    recordAccelerometerEvent(sensorEvent, jsonObject);
+                recordAccelerometerEvent(sensorEvent, jsonObject);
                 break;
             case Sensor.TYPE_GRAVITY:
                 recordGravityEvent(sensorEvent, jsonObject);
@@ -169,8 +166,10 @@ public class DeviceMotionRecorder extends SensorRecorder {
             case Sensor.TYPE_MAGNETIC_FIELD:
                 recordMagneticField(sensorEvent, jsonObject);
                 break;
+            case Sensor.TYPE_GAME_ROTATION_VECTOR:
+            case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
             case Sensor.TYPE_ROTATION_VECTOR:
-                recordRotationVector(sensorEvent,jsonObject);
+                recordRotationVector(sensorEvent, jsonObject);
                 break;
             default:
                 logger.warn("Unable to record sensor type: " + sensorType);
@@ -233,7 +232,9 @@ public class DeviceMotionRecorder extends SensorRecorder {
     void recordRotationVector(SensorEvent sensorEvent, JsonObject jsonObject) {
         // indicate android sensor subtype
         int sensorType = sensorEvent.sensor.getType();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2
+        if (Sensor.TYPE_ROTATION_VECTOR == sensorType) {
+            jsonObject.addProperty(SENSOR_DATA_SUBTYPE_KEY, "rotationVector");
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2
                 && Sensor.TYPE_GAME_ROTATION_VECTOR == sensorType) {
             jsonObject.addProperty(SENSOR_DATA_SUBTYPE_KEY, "gameRotationVector");
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
@@ -251,8 +252,12 @@ public class DeviceMotionRecorder extends SensorRecorder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             // w = cos(theta/2)
             jsonObject.addProperty(W_KEY, sensorEvent.values[3]);
-            // estimated accuracy in radians, or -1 if unavailable
-            jsonObject.addProperty(ACCURACY_KEY, sensorEvent.values[4]);
+
+            // game rotation vector never provides accuracy, always returns zero
+            if (Sensor.TYPE_GAME_ROTATION_VECTOR!= sensorType) {
+                // estimated accuracy in radians, or -1 if unavailable
+                jsonObject.addProperty(ACCURACY_KEY, sensorEvent.values[4]);
+            }
         } else if (sensorEvent.values.length > 3) {
             // this value was optional before SDK Level 18
             // w = cos(theta/2)
@@ -274,24 +279,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-        int sensorType = sensor.getType();
-        String sensorTypeKey = SENSOR_TYPE_TO_DATA_TYPE.get(sensorType);
-        if (Strings.isNullOrEmpty(sensorTypeKey)) {
-            logger.warn("Unable find type key for sensor type: "
-                    + sensorType);
-            return;
-        }
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(SENSOR_DATA_TYPE_KEY, sensorTypeKey);
-        jsonObject.addProperty(SENSOR_ACCURACY_TYPE_KEY, i);
-
-        jsonObject.addProperty(SENSOR_INT_TYPE_KEY, sensorType);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            jsonObject.addProperty(SENSOR_STRING_TYPE_KEY, sensor.getStringType());
-        }
-        jsonObject.addProperty(SENSOR_NAME_KEY, sensor.getVendor() + ";" + sensor.getName());
-
-        LogExt.d(SensorRecorder.class, "Recording sensor accuracy change json: " + jsonObject);
-        writeJsonObjectToFile(jsonObject);
+        // no-op
     }
 }
