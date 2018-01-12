@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.CallSuper;
 import android.support.annotation.RequiresPermission;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -184,6 +185,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
     }
 
+    @CallSuper
     @RequiresPermission(value = Manifest.permission.VIBRATE, conditional = true)
     public void start() {
         if (activeStep.startsFinished()) {
