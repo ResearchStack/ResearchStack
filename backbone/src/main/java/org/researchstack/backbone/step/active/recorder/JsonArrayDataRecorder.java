@@ -67,7 +67,7 @@ public abstract class JsonArrayDataRecorder extends Recorder {
         startTime = System.currentTimeMillis();
 
         // Since we are writing a JsonArray, have the header and footer be
-        dataLogger.start("{\"" + JSON_ITEMS_KEY + "\":[", "]}");
+        dataLogger.start("[", "]");
         isFirstJsonObject = true; // will avoid comma separator on write object write
     }
 
@@ -79,7 +79,8 @@ public abstract class JsonArrayDataRecorder extends Recorder {
 
     public void writeJsonObjectToFile(JsonObject jsonObject) {
         // append optional comma for array separation
-        String jsonString = (!isFirstJsonObject ? JSON_OBJECT_SEPARATOR : "") + jsonObject.toString();
+        String jsonString = (!isFirstJsonObject ? JSON_OBJECT_SEPARATOR : "")
+                + jsonObject.toString();
         dataLogger.appendData(jsonString);
         isFirstJsonObject = false;
     }

@@ -119,4 +119,16 @@ public class StepResult<T> extends Result {
     public AnswerFormat getAnswerFormat() {
         return answerFormat;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("StepResult{");
+        sb.append(", identifier='").append(identifier).append('\'');
+        sb.append(", answerFormat=").append(answerFormat);
+        sb.append(", startDate=").append(getStartDate());
+        sb.append(", endDate=").append(getIdentifier());
+        sb.append("results=").append(results);
+        sb.append('}');
+        return sb.toString();
+    }
 }

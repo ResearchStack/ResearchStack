@@ -88,7 +88,7 @@ public abstract class Recorder {
         super();
     }
 
-    Recorder(String identifier, Step step, File outputDirectory) {
+    protected Recorder(String identifier, Step step, File outputDirectory) {
         super();
         setIdentifier(identifier);
         setStep(step);
