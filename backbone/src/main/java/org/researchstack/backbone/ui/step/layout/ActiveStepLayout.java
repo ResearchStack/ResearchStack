@@ -29,6 +29,7 @@ import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 import org.researchstack.backbone.step.active.recorder.RecorderListener;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
+import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ResUtils;
 
 import java.io.File;
@@ -82,6 +83,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     private static final boolean DEBUG_SAVE_FILES_EXTERNALLY = false;
 
     private TextToSpeech tts;
+    protected String textToSpeakOnInit;
 
     protected StepCallbacks callbacks;
 
@@ -93,6 +95,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     protected Runnable animationRunnable;
     protected long startTime;
     protected int  secondsLeft;
+    protected long continueOnFinishDelay = 0;
 
     protected ActiveStep activeStep;
 
@@ -261,22 +264,23 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
             recorder.stop();
         }
 
+        mainHandler.removeCallbacksAndMessages(null);
         if (!activeStep.getShouldContinueOnFinish()) {
             if (submitBar != null) {
                 submitBar.setPositiveActionViewEnabled(true);
-                submitBar.setPositiveAction(new Action1() {
-                    @Override
-                    public void call(Object o) {
-                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
-                    }
-                });
+                submitBar.setPositiveAction(o ->
+                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult));
             }
         } else if (noRecordersActive) {
+            continueAfterTextDelay();
+        }
+    }
+
+    protected void continueAfterTextDelay() {
+        mainHandler.postDelayed(() -> {
             // There will be no recorders onComplete callbacks to wait for, so just go to next activeStep
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
-        }
-
-        mainHandler.removeCallbacksAndMessages(null);
+        }, continueOnFinishDelay);
     }
 
     /**
@@ -313,27 +317,61 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         startTime = System.currentTimeMillis();
         secondsLeft = activeStep.getStepDuration();
 
-        animationRunnable = new Runnable() {
-            @Override
-            public void run() {
-                doUIAnimationPerSecond();
+        animationRunnable = () -> {
+            doUIAnimationPerSecond();
 
-                secondsLeft--;
+            checkForSpeakInstructionMap(activeStep.getStepDuration() - secondsLeft);
 
-                // These calculations will remove any lag from the seconds timer
-                long timeToPast = (activeStep.getStepDuration() - secondsLeft) * 1000;
-                long nextSecond = startTime + timeToPast;
-                long timeUntilNextSecond = nextSecond - System.currentTimeMillis();
+            secondsLeft--;
 
-                if (secondsLeft < 0) {
-                    stop();
-                } else {
-                    mainHandler.postDelayed(animationRunnable, timeUntilNextSecond);
-                }
+            // These calculations will remove any lag from the seconds timer
+            long timeToPast = (activeStep.getStepDuration() - secondsLeft) * 1000;
+            long nextSecond = startTime + timeToPast;
+            long timeUntilNextSecond = nextSecond - System.currentTimeMillis();
+
+            if (secondsLeft < 0) {
+                checkForSpeakInstructionMap(activeStep.getStepDuration() - secondsLeft);
+                stop();
+            } else {
+                mainHandler.postDelayed(animationRunnable, timeUntilNextSecond);
             }
         };
         mainHandler.removeCallbacks(animationRunnable);
         mainHandler.post(animationRunnable);
+    }
+
+    private void checkForSpeakInstructionMap(int elapsedTimeInSeconds) {
+        int secondsLeft = activeStep.getStepDuration() - elapsedTimeInSeconds;
+        // Check if we have the spoken instruction map key for this time, and speak it if we do
+        if (activeStep.getSpokenInstructionMap() != null) {
+            String elapsedSecondsKey = String.valueOf(elapsedTimeInSeconds);
+            if (activeStep.getSpokenInstructionMap().containsKey(elapsedSecondsKey)) {
+                speakText(activeStep.getSpokenInstructionMap().get(elapsedSecondsKey));
+            }
+            // Special case for allowing spoken text countdown
+            String countdownKey = "countdown";
+            if (activeStep.getSpokenInstructionMap().containsKey(countdownKey)) {
+                String countdownValStr = activeStep.getSpokenInstructionMap().get(countdownKey);
+                try {
+                    int countdownTime = Integer.parseInt(countdownValStr);
+                    if (secondsLeft <= countdownTime && secondsLeft > 0) {
+                        speakText(String.valueOf(secondsLeft));
+                    }
+                } catch (NumberFormatException e) {
+                    LogExt.e(ActiveStepLayout.class, e.getLocalizedMessage());
+                }
+            }
+            // Special case for allowing spoken text at the end instead of a seconds key
+            String endKey = "end";
+            if (secondsLeft == 0) {
+                if (activeStep.getSpokenInstructionMap().containsKey(endKey)) {
+                    // We can't speak at the "end" because it will get cut off
+                    // so delay continue on finish for an estimated amount of time
+                    continueOnFinishDelay = activeStep.getEstimateTimeInMsToSpeakEndInstruction();
+                    speakText(activeStep.getSpokenInstructionMap().get(endKey));
+                }
+            }
+        }
     }
 
     public void doUIAnimationPerSecond() {
@@ -437,6 +475,8 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     }
 
     protected void speakText(String text) {
+        // Setting this will guarantee the text gets spoken in the case that tts isn't set up yet
+        textToSpeakOnInit = text;
         if (tts == null) {
             return;
         }
@@ -467,16 +507,12 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         if (recorderList.isEmpty()) {
             stepResultFinished();
             if (activeStep.getShouldContinueOnFinish()) {
-                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
+                continueAfterTextDelay();
             } else {
                 if (submitBar != null) {
                     submitBar.getPositiveActionView().setEnabled(true);
-                    submitBar.setPositiveAction(new Action1() {
-                        @Override
-                        public void call(Object o) {
-                            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult);
-                        }
-                    });
+                    submitBar.setPositiveAction(o ->
+                            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, stepResult));
                 }
             }
         }
@@ -509,6 +545,8 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
                 tts.setLanguage(Locale.getDefault());
                 if (ActiveStepLayout.this.activeStep.getSpokenInstruction() != null) {
                     speakText(ActiveStepLayout.this.activeStep.getSpokenInstruction());
+                } else if (textToSpeakOnInit != null) {
+                    speakText(textToSpeakOnInit);
                 }
             } else {
                 tts = null;
