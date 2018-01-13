@@ -2,15 +2,24 @@ package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Handler;
+import android.os.Build;
+import android.os.SystemClock;
+
+import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.FormatHelper;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by TheMDP on 2/7/17.
@@ -26,8 +35,11 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
 
     public static final float MANUAL_JSON_FREQUENCY = -1.0f;
 
-    private static final long MILLI_SECONDS_PER_SEC = 1000L;
     private static final long MICRO_SECONDS_PER_SEC = 1000000L;
+
+    public static final String TIMESTAMP_IN_SECONDS_KEY = "timestamp";
+    public static final String UPTIME_IN_SECONDS_KEY = "uptime";
+    public static final String TIMESTAMP_DATE_KEY = "timestampDate";
 
     /**
      * The frequency of the sensor data collection in samples per second (Hz).
@@ -39,11 +51,7 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
     private SensorManager sensorManager;
     private List<Sensor> sensorList;
 
-    private Handler mainHandler;
-    private Runnable jsonWriterRunnable;
-    private int  writeCounter;
-    private long writeDelayGoal;
-    private long writeStartTime;
+    private long timestampZeroReferenceNanos = 0;
 
     SensorRecorder(double frequency, String identifier, Step step, File outputDirectory) {
         super(identifier, step, outputDirectory);
@@ -57,14 +65,6 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
      *         Collections.singletonList(Sensor.TYPE_ACCELEROMETER)
      */
     protected abstract List<Integer> getSensorTypeList(List<Sensor> availableSensorList);
-
-    /**
-     * This is called at the specified frequency so that we get an accurate frequency,
-     * since Android sensors do not allow precise sensor frequency reporting
-     *
-     * Subclasses should call writeJsonObjectToFile() from within this method
-     */
-    protected abstract void writeJsonData();
 
     @Override
     public void start(Context context) {
@@ -86,54 +86,67 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
                             calculateDelayBetweenSamplesInMicroSeconds());
                 }
                 anySucceeded |= success;
+
+                if (!success) {
+                    LogExt.i(SensorRecorder.class, "Failed to register sensor: " + sensor);
+                }
             }
         }
 
         if (!anySucceeded) {
-            super.onRecorderFailed("Failed to initialize sensor");
+            super.onRecorderFailed("Failed to initialize any sensor");
         } else {
             super.startJsonDataLogging();
-        }
-
-        startRunnableForWritingJson();
-    }
-
-    protected void startRunnableForWritingJson() {
-        // These will be used to monitor periodic writes to get an accurate write frequency
-        mainHandler = new Handler();
-        writeCounter = 1;
-        writeStartTime = System.currentTimeMillis();
-
-        if (frequency < 0) {
-            // Writing the JSON will be done manually, and not at a specific frequency
-        } else {
-            writeDelayGoal = calculateDelayBetweenSamplesInMilliSeconds();
-            jsonWriterRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    writeJsonData();
-
-                    writeCounter++;
-                    // Offset delay from the writeJsonData call to get an accurate write frequency
-                    long delayGoal = ((writeStartTime + (writeCounter * writeDelayGoal)) - System.currentTimeMillis());
-                    // The device is not fast enough to keep up, so we will get a frequency only
-                    // as fast as it can do, so just make the delay goal be the original delay
-                    if (delayGoal <= 0) {
-                        // minimal write delay to give the UI thread some time to catch up
-                        // and hopefully get the frequency back up to the desired one
-                        delayGoal = 1;
-                    }
-
-                    mainHandler.postDelayed(jsonWriterRunnable, delayGoal);
-                }
-            };
-            mainHandler.postDelayed(jsonWriterRunnable, writeDelayGoal);
         }
     }
 
     @Override
+    public final void onSensorChanged(SensorEvent sensorEvent) {
+
+        JsonObject jsonObject = new JsonObject();
+
+        if (timestampZeroReferenceNanos <= 0) {
+            // set timestamp reference, which timestamps are measured relative to
+            timestampZeroReferenceNanos = sensorEvent.timestamp;
+
+            // record date equivalent of timestamp reference
+            long uptimeNanos;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                uptimeNanos = SystemClock.elapsedRealtimeNanos();
+            } else {
+                uptimeNanos = (long) (SystemClock.elapsedRealtime() * 1e6); // millis to nanos
+            }
+
+            long timestampReferenceMillis = System.currentTimeMillis()
+                    + (long) ((timestampZeroReferenceNanos - uptimeNanos) * 1e-6d);
+            Date timestampReferenceDate = new Date(timestampReferenceMillis);
+            jsonObject.addProperty(TIMESTAMP_DATE_KEY,
+                    new SimpleDateFormat(FormatHelper.DATE_FORMAT_ISO_8601, Locale.getDefault())
+                            .format(timestampReferenceDate));
+        }
+
+        // these values are doubles
+        jsonObject.addProperty(TIMESTAMP_IN_SECONDS_KEY,
+                (sensorEvent.timestamp - timestampZeroReferenceNanos) * 1e-9);
+        jsonObject.addProperty(UPTIME_IN_SECONDS_KEY, sensorEvent.timestamp * 1e-9);
+
+        recordSensorEvent(sensorEvent, jsonObject);
+
+        writeJsonObjectToFile(jsonObject);
+    }
+
+    /***
+     * This method receives a SensorEvent and a JsonObject and is expected to update the
+     * JsonObject with data to be written.
+     * @param sensorEvent
+     * @param object json object pre-populated with uptime and timestamp
+     */
+    public abstract void recordSensorEvent(final SensorEvent sensorEvent,
+                                           final JsonObject object);
+
+    @Override
     public void stop() {
-        mainHandler.removeCallbacks(jsonWriterRunnable);
         for (Sensor sensor : sensorList) {
             sensorManager.unregisterListener(this, sensor);
         }
@@ -143,7 +156,6 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
     @Override
     public void cancel() {
         super.cancel();
-        mainHandler.removeCallbacks(jsonWriterRunnable);
         for (Sensor sensor : sensorList) {
             sensorManager.unregisterListener(this, sensor);
         }
@@ -163,9 +175,6 @@ abstract class SensorRecorder extends JsonArrayDataRecorder implements SensorEve
         return false;
     }
 
-    protected long calculateDelayBetweenSamplesInMilliSeconds() {
-        return (long)((float)MILLI_SECONDS_PER_SEC / frequency);
-    }
 
     protected int calculateDelayBetweenSamplesInMicroSeconds() {
         return (int)((float)MICRO_SECONDS_PER_SEC / frequency);

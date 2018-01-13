@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.CallSuper;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
@@ -237,7 +238,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
             });
         }
     }
-
+    
     /**
      * This method will be called when we were recording in the background with RecorderService
      * and this step layout was destroyed and then re-created before the recording finished
@@ -299,6 +300,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         }
     }
 
+    @CallSuper
     @RequiresPermission(value = Manifest.permission.VIBRATE, conditional = true)
     public void start() {
         LogExt.d(ActiveStepLayout.class, "start()");
