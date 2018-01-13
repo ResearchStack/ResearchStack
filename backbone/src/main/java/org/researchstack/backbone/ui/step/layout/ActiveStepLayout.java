@@ -272,7 +272,7 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
                 if (intent == null || intent.getAction() == null) {
                     return;
                 }
-                if (RecorderService.BROADCAST_RECORDER_COMPLETE.equals(intent.getAction())) {
+                if (RecorderService.ACTION_BROADCAST_RECORDER_COMPLETE.equals(intent.getAction())) {
                     LogExt.d(ActiveStepLayout.class, "RecorderService complete broadcast received");
                     RecorderService.ResultHolder resultHolder =
                             RecorderService.consumeSavedResultList(appContext, activeStep);
@@ -283,10 +283,22 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
                     } else {
                         processRecorderServiceResults(resultHolder, false);
                     }
+                } else if (RecorderService.ACTION_BROADCAST_RECORDER_METRONOME.equals(intent.getAction())) {
+                    if (intent.hasExtra(RecorderService.BROADCAST_RECORDER_METRONOME_CTR)) {
+                        recorderServiceMetronomeAction(intent.getIntExtra(
+                                RecorderService.BROADCAST_RECORDER_METRONOME_CTR, 0));
+                    }
+                } else if (RecorderService.ACTION_BROADCAST_RECORDER_SPOKEN_TEXT.equals(intent.getAction())) {
+                    if (intent.hasExtra(RecorderService.BROADCAST_RECORDER_SPOKEN_TEXT)) {
+                        recorderServiceSpokeText(intent.getStringExtra(
+                                RecorderService.BROADCAST_RECORDER_SPOKEN_TEXT));
+                    }
                 }
             }
         };
-        IntentFilter intentFilter = new IntentFilter(RecorderService.BROADCAST_RECORDER_COMPLETE);
+        IntentFilter intentFilter = new IntentFilter(RecorderService.ACTION_BROADCAST_RECORDER_COMPLETE);
+        intentFilter.addAction(RecorderService.ACTION_BROADCAST_RECORDER_METRONOME);
+        intentFilter.addAction(RecorderService.ACTION_BROADCAST_RECORDER_SPOKEN_TEXT);
         LocalBroadcastManager.getInstance(appContext)
                 .registerReceiver(recorderServiceReceiver, intentFilter);
     }
@@ -582,5 +594,13 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
             Log.e(getClass().getCanonicalName(), "Failed to initialize TTS with error code " + i);
             tts = null;
         }
+    }
+
+    protected void recorderServiceMetronomeAction(int metronomeCtr) {
+        // Can be implemented by sub-class to do UI events on metronome sound
+    }
+
+    protected void recorderServiceSpokeText(String spokenText) {
+        // Can be implemented by sub-class to also show text in the UI
     }
 }

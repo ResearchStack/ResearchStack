@@ -33,7 +33,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.app.NotificationCompat;
@@ -50,7 +49,6 @@ import org.researchstack.backbone.step.active.recorder.Recorder;
 import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 import org.researchstack.backbone.step.active.recorder.RecorderListener;
 import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LogExt;
 
@@ -83,9 +81,12 @@ public class RecorderService extends Service implements RecorderListener, TextTo
 
     private static final String INTENT_KEY_OUTPUT_DIRECTORY     = "RecorderOutputDirectory";
 
-    public static String BROADCAST_RECORDER_COMPLETE        = "RecorderService_RecordingComplete";
-    public static String BROADCAST_RECORDER_METRONOME       = "RecorderService_MetronomeBroadcast";
-    public static String BROADCAST_RECORDER_METRONOME_CTR   = "RecorderService_MetronomeCtr";
+    public static String ACTION_BROADCAST_RECORDER_COMPLETE     = "RecorderService_RecordingComplete";
+    public static String ACTION_BROADCAST_RECORDER_METRONOME    = "RecorderService_MetronomeBroadcast";
+    public static String ACTION_BROADCAST_RECORDER_SPOKEN_TEXT  = "RecorderService_SpokenTextBroadcast";
+
+    public static String BROADCAST_RECORDER_METRONOME_CTR       = "RecorderService_MetronomeCtr";
+    public static String BROADCAST_RECORDER_SPOKEN_TEXT         = "RecorderService_SpokenText";
 
     /**
      * @param appContext
@@ -426,7 +427,7 @@ public class RecorderService extends Service implements RecorderListener, TextTo
 
     private void sendRecorderErrorBroadcast(String errorMessage) {
         LogExt.d(RecorderService.class, "sendRecorderErrorBroadcast()");
-        Intent broadcastIntent = new Intent(BROADCAST_RECORDER_COMPLETE);
+        Intent broadcastIntent = new Intent(ACTION_BROADCAST_RECORDER_COMPLETE);
         ResultHolder resultHolder = new ResultHolder();
         resultHolder.setErrorMessage(errorMessage);
         resultHolder.setStartTime(startTime);
@@ -436,7 +437,7 @@ public class RecorderService extends Service implements RecorderListener, TextTo
 
     private void sendRecorderCompleteBroadcast() {
         LogExt.d(RecorderService.class, "sendRecorderCompleteBroadcast()");
-        Intent broadcastIntent = new Intent(BROADCAST_RECORDER_COMPLETE);
+        Intent broadcastIntent = new Intent(ACTION_BROADCAST_RECORDER_COMPLETE);
         ResultHolder resultHolder = new ResultHolder();
         resultHolder.setResultList(resultList);
         resultHolder.setStartTime(startTime);
@@ -444,9 +445,15 @@ public class RecorderService extends Service implements RecorderListener, TextTo
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
-    private void sendMetronomeBroadcast(int ctr) {
-        Intent broadcastIntent = new Intent(BROADCAST_RECORDER_METRONOME);
+    protected void sendMetronomeBroadcast(int ctr) {
+        Intent broadcastIntent = new Intent(ACTION_BROADCAST_RECORDER_METRONOME);
         broadcastIntent.putExtra(BROADCAST_RECORDER_METRONOME_CTR, ctr);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+    }
+
+    protected void sendSpokenTextBroadcast(String spokenText) {
+        Intent broadcastIntent = new Intent(ACTION_BROADCAST_RECORDER_SPOKEN_TEXT);
+        broadcastIntent.putExtra(BROADCAST_RECORDER_SPOKEN_TEXT, spokenText);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
@@ -572,6 +579,7 @@ public class RecorderService extends Service implements RecorderListener, TextTo
         } else {
             ttsUnder20(text);
         }
+        sendSpokenTextBroadcast(text);
     }
 
     @SuppressWarnings("deprecation")
