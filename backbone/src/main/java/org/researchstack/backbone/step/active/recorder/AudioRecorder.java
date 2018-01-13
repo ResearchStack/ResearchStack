@@ -77,7 +77,7 @@ public class AudioRecorder extends Recorder {
     public static double getLastTotalSampleAvg() {
        return sLastSampleAvg;
     }
-    protected void setLastTotalSampleAvg(double totalAvg) {
+    public static void setLastTotalSampleAvg(double totalAvg) {
         sLastSampleAvg = totalAvg;
     }
 

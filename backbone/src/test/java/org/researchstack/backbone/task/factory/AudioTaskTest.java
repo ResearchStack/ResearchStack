@@ -23,6 +23,7 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.AudioTooLoudStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.CountdownStep;
+import org.researchstack.backbone.step.active.recorder.AudioRecorder;
 import org.researchstack.backbone.step.active.recorder.AudioRecorderSettings;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 
@@ -153,16 +154,16 @@ public class AudioTaskTest {
                 Arrays.asList(new TaskExcludeOption[] {}));
 
         TaskResult taskTooLoudResult = new TaskResult("audiotaskid");
-        TaskResult taskNotTooLoudResult = new TaskResult("audiotaskid");
 
         List<String> stepIds = getAudioStepIdsOneTooLoudCycle();
         Step step = null;
         int i = 0;
         boolean firstCycleComplete = false;
+        AudioRecorder.setLastTotalSampleAvg(AudioTaskFactory.LOUDNESS_THRESHOLD + .1);
         do {
             TaskResult taskResult = taskTooLoudResult;
             if (firstCycleComplete) {
-                taskResult = taskNotTooLoudResult;
+                AudioRecorder.setLastTotalSampleAvg(AudioTaskFactory.LOUDNESS_THRESHOLD - .1);
             }
 
             step = task.getStepAfterStep(step, taskResult);
@@ -173,25 +174,7 @@ public class AudioTaskTest {
                     firstCycleComplete = true;
                 }
 
-                if (step instanceof CountdownStep) {
-                    {
-                        StepResult<Result> tooLoudResult = new StepResult<>(step);
-                        AudioResult audioResult = new AudioResult(AudioRecorderIdentifier);
-                        audioResult.setRollingAverageOfVolume(AudioTaskFactory.LOUDNESS_THRESHOLD + .1);
-                        tooLoudResult.getResults().put(audioResult.getIdentifier(), audioResult);
-                        taskTooLoudResult.getResults().put(tooLoudResult.getIdentifier(), tooLoudResult);
-                    }
-
-                    {
-                        StepResult<Result> notTooLoudResult = new StepResult<>(step);
-                        AudioResult audioResult = new AudioResult(AudioRecorderIdentifier);
-                        audioResult.setRollingAverageOfVolume(AudioTaskFactory.LOUDNESS_THRESHOLD - .1);
-                        notTooLoudResult.getResults().put(audioResult.getIdentifier(), audioResult);
-                        taskNotTooLoudResult.getResults().put(notTooLoudResult.getIdentifier(), notTooLoudResult);
-                    }
-                }
-
-                assertEquals(step.getIdentifier(), stepIds.get(i));
+                assertEquals(stepIds.get(i), step.getIdentifier());
                 i++;
             }
         } while (step != null);
@@ -242,6 +225,7 @@ public class AudioTaskTest {
                 Instruction1StepIdentifier,
                 CountdownStepIdentifier,
                 AudioTooLoudStepIdentifier,
+                Instruction1StepIdentifier,
                 CountdownStepIdentifier,
                 AudioStepIdentifier,
                 ConclusionStepIdentifier));
