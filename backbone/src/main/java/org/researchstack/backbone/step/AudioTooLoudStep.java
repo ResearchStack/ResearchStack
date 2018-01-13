@@ -1,11 +1,9 @@
 package org.researchstack.backbone.step;
 
-import org.researchstack.backbone.result.AudioResult;
-import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.active.recorder.AudioRecorder;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.util.List;
 
@@ -45,25 +43,11 @@ public class AudioTooLoudStep extends InstructionStep implements NavigableOrdere
 
     @Override
     public boolean shouldSkipStep(TaskResult result, List<TaskResult> additionalTaskResults) {
-        // Check if audio is too loud by using a rolling average in AudioResult object
-        StepResult stepResult = StepResultHelper.findStepResult(result, audioStepResultIdentifier);
-        if (stepResult != null && !stepResult.getResults().keySet().isEmpty()) {
-            for (Object key : stepResult.getResults().keySet()) {
-                Object value = stepResult.getResults().get(key);
-                if (value instanceof AudioResult) {
-                    AudioResult audioResult = (AudioResult)value;
-                    boolean isResultTooLoud = audioResult.getRollingAverageOfVolume() > loudnessThreshold;
-
-                    LogExt.i(getClass(), "Audio is " + (isResultTooLoud ? "" : "not") +
-                            " too loud with value of " + audioResult.getRollingAverageOfVolume());
-
-                    isSkippingStep = !isResultTooLoud;
-                    return isSkippingStep;
-                }
-            }
-        }
-        isSkippingStep = true;
-        return true;
+        boolean isResultTooLoud = AudioRecorder.getLastTotalSampleAvg() > loudnessThreshold;
+        LogExt.i(getClass(), "Audio is " + (isResultTooLoud ? "" : "not") +
+                " too loud with value of " + AudioRecorder.getLastTotalSampleAvg());
+        isSkippingStep = !isResultTooLoud;
+        return !isResultTooLoud;
     }
 
     @Override

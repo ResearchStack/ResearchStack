@@ -17,160 +17,272 @@
 
 package org.researchstack.backbone.step.active;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.FileResult;
 import org.researchstack.backbone.result.Result;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.active.recorder.Recorder;
 import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 import org.researchstack.backbone.step.active.recorder.RecorderListener;
+import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ActiveTaskActivity;
+import org.researchstack.backbone.ui.ViewTaskActivity;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import static org.researchstack.backbone.ui.ViewTaskActivity.EXTRA_STEP;
+import static org.researchstack.backbone.ui.ViewTaskActivity.EXTRA_TASK;
+import static org.researchstack.backbone.ui.ViewTaskActivity.EXTRA_TASK_RESULT;
 
 /**
  * Created by TheMDP on 1/10/18.
  */
 
-public class RecorderService extends Service implements RecorderListener {
+public class RecorderService extends Service implements RecorderListener, TextToSpeech.OnInitListener {
 
-    private static final String LOGGING_TAG = RecorderService.class.getSimpleName();
+    public static final String RECORDER_PREFS_KEY = "RecorderServicePrefs";
+    public static final String RECORDER_PREFS_RESULTS_KEY       = "Results";
+    public static final String RECORDER_PREFS_START_TIME_KEY    = "StartTime";
 
-    private static final String NOTIFICATION_CHANNEL_ID = "RecorderService_NotificationChannel";
+    public static final int DEFAULT_VIBRATION_AND_SOUND_DURATION = 500; // in milliseconds
 
-    private static final String INTENT_KEY_NOTIFICATION_ICON_RES    = "NotificationIconRes";
-    private static final String INTENT_KEY_NOTIFICATION_TITLE       = "NotificationTitle";
-    private static final String INTENT_KEY_RECORDER_CONFIG_LIST     = "RecordConfigList";
-    private static final String INTENT_KEY_ACTIVE_STEP              = "RecorderActiveStep";
-    private static final String INTENT_KEY_OUTPUT_DIRECTORY         = "RecorderOutputDirectory";
+    private static final String NOTIFICATION_CHANNEL_ID         = "RecorderService_NotificationChannel";
+    public static final String INTENT_ACTION_RECORDER_RESUME    = "INTENT_ACTION_RECORDER_RESUME";
 
-    private static final String STATUS_EXTRA = "status";
+    private static final String INTENT_KEY_OUTPUT_DIRECTORY     = "RecorderOutputDirectory";
 
-    public static final String BROADCAST_RECORDER_ERROR                = "RecorderService_Error";
-    public static final String BROADCAST_RECORDER_ERROR_MESSAGE_KEY    = "ErrorMessage";
+    public static String BROADCAST_RECORDER_COMPLETE        = "RecorderService_RecordingComplete";
+    public static String BROADCAST_RECORDER_METRONOME       = "RecorderService_MetronomeBroadcast";
+    public static String BROADCAST_RECORDER_METRONOME_CTR   = "RecorderService_MetronomeCtr";
 
-    public static String BROADCAST_RECORDER_COMPLETE            = "RecorderService_RecordingComplete";
-    public static String BROADCAST_RECORDER_COMPLETE_RESULTS    = "RecorderService_RecordingResults";
-
-    public static FileResultList getResultList(Intent intent) {
-        if (intent == null || intent.getExtras() == null ||
-                !intent.getExtras().containsKey(BROADCAST_RECORDER_COMPLETE_RESULTS)) {
-            return new FileResultList();
+    /**
+     * @param appContext
+     * @return the saved result list, if this active step has already completed recording
+     */
+    public static ResultHolder consumeSavedResultList(Context appContext, ActiveStep activeStep) {
+        SharedPreferences prefs = appContext.getSharedPreferences(RECORDER_PREFS_KEY, MODE_PRIVATE);
+        String key = activeStep.getRecordingUuid().toString() + RECORDER_PREFS_RESULTS_KEY;
+        if (!prefs.contains(key)) {
+            return null;
         }
-        return (FileResultList) intent.getExtras()
-                .getSerializable(BROADCAST_RECORDER_COMPLETE_RESULTS);
+        String resultHolderJson = prefs.getString(key, null);
+        if (resultHolderJson == null) {
+            return null;
+        }
+        ResultHolder resultHolder = new Gson().fromJson(resultHolderJson, ResultHolder.class);
+        if (resultHolder == null) {
+            return null;
+        }
+        // This was a valid recorder result that was just read, so consume it
+        prefs.edit().remove(key).apply();
+        return resultHolder;
+    }
+
+    /**
+     * @param appContext
+     * @param activeStep to use to search for a previous start time
+     * @return null if the active step recording has not been started, null otherwise
+     */
+    public static Long getStartTime(Context appContext, ActiveStep activeStep) {
+        SharedPreferences prefs = appContext.getSharedPreferences(RECORDER_PREFS_KEY, MODE_PRIVATE);
+        String key = activeStep.getRecordingUuid().toString() + RECORDER_PREFS_START_TIME_KEY;
+        if (!prefs.contains(key)) {
+            return null;
+        }
+        long startTime = prefs.getLong(key, -1);
+        if (startTime < 0) {
+            return null;
+        }
+        return startTime;
+    }
+
+    protected static void setStartTime(Context appContext, ActiveStep activeStep, long startTime) {
+        LogExt.d(RecorderService.class, "setStartTime() " + startTime);
+        SharedPreferences prefs = appContext.getSharedPreferences(RECORDER_PREFS_KEY, MODE_PRIVATE);
+        String key = activeStep.getRecordingUuid().toString() + RECORDER_PREFS_START_TIME_KEY;
+        prefs.edit().putLong(key, startTime).apply();
+    }
+
+    protected static void removeStartTime(Context appContext, ActiveStep activeStep) {
+        LogExt.d(RecorderService.class, "removeStartTime()");
+        SharedPreferences prefs = appContext.getSharedPreferences(RECORDER_PREFS_KEY, MODE_PRIVATE);
+        String key = activeStep.getRecordingUuid().toString() + RECORDER_PREFS_START_TIME_KEY;
+        prefs.edit().remove(key).apply();
+    }
+
+    /**
+     * @param appContext
+     * @return the saved result list, if this active step has already completed recording
+     */
+    protected static void setSavedResultList(Context appContext,
+                                             ActiveStep activeStep,
+                                             ResultHolder resultHolder) {
+
+        SharedPreferences prefs = appContext.getSharedPreferences(RECORDER_PREFS_KEY, MODE_PRIVATE);
+        String key = activeStep.getRecordingUuid().toString() + RECORDER_PREFS_RESULTS_KEY;
+        String resultListHolderJson = new Gson().toJson(resultHolder);
+        // commit needed since this may be read immediately
+        prefs.edit().putString(key, resultListHolderJson).commit();
+        // Once we have stored the result, we should remove the startTime pref
+        removeStartTime(appContext, activeStep);
     }
 
     /**
      * @param appContext needed to create the intent
      * @param activeStep currently being run, must contain a valid stepDuration
-     * @param recorderConfigList of the recorders to create and run
      * @param outputDirectory for the recorders
+     * @param task the task for this activeStep, used in the Notification PendingIntent
+     * @param taskResult the current TaskResult, used in the Notification PendingIntent
      * @return the intent to launch via "appContext.startService()"
      */
-    public static Intent startService(Context appContext,
-                                      ActiveStep activeStep,
-                                      List<RecorderConfig> recorderConfigList,
-                                      File outputDirectory) {
+    public static void startService(Context appContext,
+                                    File outputDirectory,
+                                    ActiveStep activeStep,
+                                    Task task,
+                                    TaskResult taskResult) {
 
         Intent intent = new Intent(appContext, RecorderService.class);
         Bundle extras = new Bundle();
 
-        RecorderConfigList configList = new RecorderConfigList();
-        configList.setConfigList(recorderConfigList);
-        extras.putSerializable(INTENT_KEY_RECORDER_CONFIG_LIST, configList);
-
-        extras.putSerializable(INTENT_KEY_ACTIVE_STEP, activeStep);
+        extras.putSerializable(EXTRA_STEP, activeStep);
+        extras.putSerializable(ViewTaskActivity.EXTRA_TASK, task);
+        extras.putSerializable(ViewTaskActivity.EXTRA_TASK_RESULT, taskResult);
         extras.putSerializable(INTENT_KEY_OUTPUT_DIRECTORY, outputDirectory);
 
         intent.putExtras(extras);
-        return intent;
+        appContext.startService(intent);
     }
 
-    private Handler mainHandler;
-    private List<Recorder> recorderList;
-    private List<FileResult> resultList;
+    protected long startTime;
+    protected Handler mainHandler;
 
-    private Notification foregroundNotification;
+    protected List<Recorder> recorderList;
+    protected List<FileResult> resultList;
+    protected ActiveStep activeStep;
+    protected Task task;
+    protected TaskResult taskResult;
+
+    protected Notification foregroundNotification;
+
+    protected TextToSpeech tts;
+    protected String textToSpeakOnInit;
+    protected boolean isWaitingToComplete;
+    protected boolean isServiceRunning;
+    protected boolean shouldCancelRecordersOnDestroy;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.v(LOGGING_TAG, "onCreate");
+        LogExt.d(RecorderService.class, "onCreate");
         // no-op, wait for onStartCommand
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.v(LOGGING_TAG, "onStartCommand");
+        LogExt.d(RecorderService.class, "onStartCommand");
 
+        if (isServiceRunning) {
+            LogExt.e(RecorderService.class, "RecorderService already running, " +
+                    "ignoring duplicate start command");
+            return START_NOT_STICKY;
+        }
+
+        isServiceRunning = true;
+        shouldCancelRecordersOnDestroy = true;
         mainHandler = new Handler();
+        resultList = new ArrayList<>();
+        recorderList = new ArrayList<>();
+        startTime = System.currentTimeMillis();
+        isWaitingToComplete = false;
 
-        RecorderConfigList configList = new RecorderConfigList();
         File outputDir = null;
-        ActiveStep activeStep = null;
         if (intent != null && intent.getExtras() != null) {
             Bundle bundle = intent.getExtras();
-            if (bundle.containsKey(INTENT_KEY_RECORDER_CONFIG_LIST)) {
-                configList = (RecorderConfigList)bundle
-                        .getSerializable(INTENT_KEY_RECORDER_CONFIG_LIST);
+            if (bundle.containsKey(EXTRA_STEP)) {
+                activeStep = (ActiveStep)bundle.getSerializable(EXTRA_STEP);
             }
-            if (bundle.containsKey(INTENT_KEY_ACTIVE_STEP)) {
-                activeStep = (ActiveStep)bundle.getSerializable(INTENT_KEY_ACTIVE_STEP);
+            if (bundle.containsKey(EXTRA_TASK)) {
+                task = (Task)bundle.getSerializable(EXTRA_TASK);
+            }
+            if (bundle.containsKey(EXTRA_TASK_RESULT)) {
+                taskResult = (TaskResult)bundle.getSerializable(EXTRA_TASK_RESULT);
+                if (taskResult == null && task != null) {  // it may be that there is no results yet
+                    taskResult = new TaskResult(task.getIdentifier());
+                }
             }
             if (bundle.containsKey(INTENT_KEY_OUTPUT_DIRECTORY)) {
                 outputDir = (File)bundle.getSerializable(INTENT_KEY_OUTPUT_DIRECTORY);
             }
         }
 
-        boolean isConfigListValid = configList != null &&
-                configList.getConfigList() != null &&
-                !configList.getConfigList().isEmpty();
+        if (activeStep != null && activeStep.getStepDuration() > 0 &&
+                task != null && taskResult != null) {
 
-        if (activeStep != null && activeStep.getStepDuration() > 0 && isConfigListValid) {
+            LogExt.d(RecorderService.class, "Valid active step found, starting service");
+
+            if (activeStep.hasVoice()) {
+                tts = new TextToSpeech(this, this);
+            }
+
+            setStartTime(getApplicationContext(), activeStep, startTime);
 
             String notificationTitle = getString(R.string.rsb_recorder_notification_title);
             // This will ensure that this service is never destroyed
-            showForegroundNotification(R.drawable.rsb_ic_recorder_notification, notificationTitle);
+            showForegroundNotification(notificationTitle);
 
             // Start the recording process
-            for (RecorderConfig recorderConfig : configList.getConfigList()) {
-                Recorder recorder = recorderConfig.recorderForStep(activeStep, outputDir);
-                // recorder can be null if it requires custom setup,
-                // but that will require a custom RecorderService to handle
-                if (recorder != null) {
-                    recorder.setRecorderListener(this);
-                    recorderList.add(recorder);
-                    recorder.start(getApplicationContext());
+            if (activeStep.getRecorderConfigurationList() != null) {
+                for (RecorderConfig recorderConfig : activeStep.getRecorderConfigurationList()) {
+                    Recorder recorder = recorderConfig.recorderForStep(activeStep, outputDir);
+                    // recorder can be null if it requires custom setup,
+                    // but that will require a custom RecorderService to handle
+                    if (recorder != null) {
+                        recorder.setRecorderListener(this);
+                        recorderList.add(recorder);
+                        recorder.start(getApplicationContext());
+                        LogExt.d(RecorderService.class, "recorder started " + recorder.getIdentifier());
+                    }
                 }
             }
 
-            // Now allow the recorder to record for as long as the active step requires
-            mainHandler.postDelayed(() -> {
-                onRecorderDurationFinished();
-            }, activeStep.getStepDuration() * 1000L);
+            // Start the delayed operations that will happen during the life-cycle of the service
+            startDelayedOperations();
 
         } else {
-            String errorMessage = "Cannot record because ActiveStep is not valid";
-            if (!isConfigListValid) {
-                errorMessage = "Recorder config list is not valid";
-            }
-            Log.e(LOGGING_TAG, errorMessage);
+            String errorMessage = "ActiveStep is null or does not have a valid step duration";
+            LogExt.e(RecorderService.class, errorMessage);
             sendRecorderErrorBroadcast(errorMessage);
             stopSelf();
         }
@@ -178,8 +290,82 @@ public class RecorderService extends Service implements RecorderListener {
         return START_NOT_STICKY;
     }
 
-    public boolean isServiceRecording() {
-        return recorderList != null && !recorderList.isEmpty();
+    private void startDelayedOperations() {
+        // Now allow the recorder to record for as long as the active step requires
+        mainHandler.postDelayed(this::onRecorderDurationFinished,
+                activeStep.getStepDuration() * 1000L);
+
+        startSpeechToTextMap();
+    }
+
+    protected void startSpeechToTextMap() {
+        String endKey = "end";
+        String countdownKey = "countdown";
+        String metronomeKey = "metronome";
+
+        Map<String, String> speechToTextMap = activeStep.getSpokenInstructionMap();
+        if (speechToTextMap != null) {
+            for (String speechKey : speechToTextMap.keySet()) {
+
+                // Check for special case "end" key that speaks after the step duration
+                if (endKey.equals(speechKey)) {
+                    final String endSpeechText = speechToTextMap.get(speechKey);
+                    mainHandler.postDelayed(() -> speakTextAndUpdateNotification(endSpeechText),
+                            activeStep.getStepDuration() * 1000L);
+
+                    // Check for special case "countdown" key that speaks a verbal seconds countdown
+                } else if (countdownKey.equals(speechKey)) {
+                    try {
+                        int countdownTime = Integer.parseInt(speechToTextMap.get(speechKey));
+                        for (int i = countdownTime; i > 0; i--) {
+                            final String countDownStr = String.valueOf(i);
+                            mainHandler.postDelayed(() -> speakText(countDownStr),
+                                    (activeStep.getStepDuration() - i) * 1000L);
+                        }
+                    } catch (NumberFormatException e) {
+                        LogExt.e(RecorderService.class, e.getLocalizedMessage());
+                    }
+                    // All other cases will speak the text at the seconds time of the speechKey
+                } else if (metronomeKey.equals(speechKey)) {
+                    try {
+                        double metronomeIntervalInSec =
+                                Double.parseDouble(speechToTextMap.get(speechKey));
+                        long metronomeIntervalInMs = (long)(metronomeIntervalInSec * 1000L);
+                        long stopTimeInMs = activeStep.getStepDuration() * 1000L;
+                        long metronomeTimeInMs = metronomeIntervalInMs;
+                        final ToneGenerator tockSound =
+                                new ToneGenerator(AudioManager.STREAM_MUSIC, 60);
+                        int metronomeCtr = 0;
+                        while (metronomeTimeInMs < stopTimeInMs) {
+                            final int metronomeCounter = metronomeCtr;
+                            mainHandler.postDelayed(() -> {
+                                    tockSound.startTone(ToneGenerator.TONE_CDMA_PIP, 100);
+                                    sendMetronomeBroadcast(metronomeCounter);
+                            }, metronomeTimeInMs);
+                            metronomeTimeInMs += metronomeIntervalInMs;
+                            metronomeCtr++;
+                        }
+                    } catch (NumberFormatException e) {
+                        LogExt.e(RecorderService.class, e.getLocalizedMessage());
+                    }
+                    // All other cases will speak the text at the seconds time of the speechKey
+                } else {
+                    try {
+                        double triggerTime = Double.parseDouble(speechKey);
+                        final String speechText = speechToTextMap.get(speechKey);
+                        mainHandler.postDelayed(() -> speakTextAndUpdateNotification(speechText),
+                                (long)(triggerTime * 1000L));
+                    } catch (NumberFormatException e) {
+                        LogExt.e(RecorderService.class, e.getLocalizedMessage());
+                    }
+                }
+            }
+        }
+    }
+
+    protected void speakTextAndUpdateNotification(String message) {
+        speakText(message);
+        showForegroundNotification(message);
     }
 
     /**
@@ -191,16 +377,18 @@ public class RecorderService extends Service implements RecorderListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(LOGGING_TAG, "onDestroyed service is stopping");
+        LogExt.d(RecorderService.class, "onDestroyed service is stopping");
 
+        shutDownTts();
         mainHandler.removeCallbacksAndMessages(null);
-        sendRecorderErrorBroadcast("RecorderService destroyed while recording");
-        if (isServiceRecording()) {
+        if (isServiceRunning && shouldCancelRecordersOnDestroy) {
+            LogExt.d(RecorderService.class, "cancelling all recorders");
+            removeStartTime(getApplicationContext(), activeStep);
             for (Recorder recorder : recorderList) {
                 recorder.cancel();
             }
         }
-        recorderList.clear();
+        isServiceRunning = false;
     }
 
     @Override
@@ -208,18 +396,28 @@ public class RecorderService extends Service implements RecorderListener {
         return null;  // no need, pass everything through LocalBroadcastManager and Intents
     }
 
-    private void showForegroundNotification(@DrawableRes int smallIcon, String notificationMessage) {
-        Intent notificationIntent = new Intent(this, ActiveTaskActivity.class);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+    private void showForegroundNotification(String notificationMessage) {
+
+        LogExt.d(RecorderService.class, "showForegroundNotification(" + notificationMessage + ")");
+        Intent notificationIntent = new Intent(this, activeStep.getActivityClazz());
+
+        // These will guarantee the activity is re-created at the same step as we were running
+        notificationIntent.putExtra(ViewTaskActivity.EXTRA_TASK, task);
+        notificationIntent.putExtra(ViewTaskActivity.EXTRA_TASK_RESULT, taskResult);
+        notificationIntent.putExtra(ViewTaskActivity.EXTRA_STEP, activeStep);
+
+        notificationIntent.setAction(INTENT_ACTION_RECORDER_RESUME);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this, 0, notificationIntent, 0);
 
         String msg = getString(R.string.rsb_recording);
 
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                        .setSmallIcon(smallIcon)
-                        .setContentTitle(notificationMessage)
-                        .setContentText(msg)
+                        .setSmallIcon(R.drawable.rsb_ic_recorder_notification)
+                        .setContentTitle(task.getIdentifier() + " " + msg)
+                        .setContentText(notificationMessage)
                         .setContentIntent(pendingIntent);
 
         foregroundNotification = notificationBuilder.build();
@@ -227,22 +425,64 @@ public class RecorderService extends Service implements RecorderListener {
     }
 
     private void sendRecorderErrorBroadcast(String errorMessage) {
-        Intent broadcastIntent = new Intent(BROADCAST_RECORDER_ERROR);
-        Bundle intentData = new Bundle();
-        intentData.putString(BROADCAST_RECORDER_ERROR_MESSAGE_KEY, errorMessage);
-        broadcastIntent.putExtras(intentData);
+        LogExt.d(RecorderService.class, "sendRecorderErrorBroadcast()");
+        Intent broadcastIntent = new Intent(BROADCAST_RECORDER_COMPLETE);
+        ResultHolder resultHolder = new ResultHolder();
+        resultHolder.setErrorMessage(errorMessage);
+        resultHolder.setStartTime(startTime);
+        setSavedResultList(getApplicationContext(), activeStep, resultHolder);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
     private void sendRecorderCompleteBroadcast() {
+        LogExt.d(RecorderService.class, "sendRecorderCompleteBroadcast()");
         Intent broadcastIntent = new Intent(BROADCAST_RECORDER_COMPLETE);
-        Bundle intentData = new Bundle();
-        broadcastIntent.putExtras(intentData);
+        ResultHolder resultHolder = new ResultHolder();
+        resultHolder.setResultList(resultList);
+        resultHolder.setStartTime(startTime);
+        setSavedResultList(getApplicationContext(), activeStep, resultHolder);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
-    private void onRecorderDurationFinished() {
+    private void sendMetronomeBroadcast(int ctr) {
+        Intent broadcastIntent = new Intent(BROADCAST_RECORDER_METRONOME);
+        broadcastIntent.putExtra(BROADCAST_RECORDER_METRONOME_CTR, ctr);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+    }
 
+    @RequiresPermission(value = Manifest.permission.VIBRATE, conditional = true)
+    private void onRecorderDurationFinished() {
+        LogExt.d(RecorderService.class, "onRecorderDurationFinished()");
+        isWaitingToComplete = true;
+
+        if (activeStep.getShouldVibrateOnFinish()) {
+            vibrate();
+        }
+
+        if (activeStep.getShouldPlaySoundOnFinish()) {
+            playSound();
+        }
+
+        if (activeStep.getFinishedSpokenInstruction() != null) {
+            speakText(activeStep.getFinishedSpokenInstruction());
+        }
+
+        // copy list to avoid any concurrent modifications with calling stop on each recorder
+        List<Recorder> copiedList = new ArrayList<>(recorderList);
+        for (Recorder recorder : copiedList) {
+            recorder.stop();  // this will trigger a call to onComplete below
+            LogExt.d(RecorderService.class, "recorder stopped " + recorder.getIdentifier());
+        }
+        // The continueOnFinishDelay allows the TTS to flush,
+        // and for the recorders to finish up before leaving the screen
+        mainHandler.postDelayed(() -> {
+            isWaitingToComplete = false;
+            if (!recorderList.isEmpty()) {
+                // continue to wait for recorders to finish before sending the complete broadcast
+            } else {
+                sendCompleteBroadcastAndFinish();
+            }
+        }, activeStep.getEstimateTimeInMsToSpeakEndInstruction());
     }
 
     /**
@@ -252,7 +492,25 @@ public class RecorderService extends Service implements RecorderListener {
      */
     @Override
     public void onComplete(Recorder recorder, Result result) {
+        if (!(result instanceof FileResult)) {
+            // Due to the RecorderService having to store results in a SharedPreferences file
+            // We do not allow any Results other than FileResults
+            throw new IllegalStateException("RecorderService only works " +
+                    "with Recorders that return FileResults");
+        }
+        FileResult fileResult = (FileResult)result;
+        LogExt.d(RecorderService.class, "recorder onComplete() " + result.getIdentifier());
+        recorderList.remove(recorder);
+        resultList.add(fileResult);
+        if (!isWaitingToComplete && recorderList.isEmpty()) {
+            sendCompleteBroadcastAndFinish();
+        }
+    }
 
+    protected void sendCompleteBroadcastAndFinish() {
+        shouldCancelRecordersOnDestroy = false;
+        sendRecorderCompleteBroadcast();
+        stopSelf();
     }
 
     /**
@@ -262,16 +520,95 @@ public class RecorderService extends Service implements RecorderListener {
      */
     @Override
     public void onFail(Recorder recorder, Throwable error) {
+        shutDownTts();
+        sendRecorderErrorBroadcast(error.getLocalizedMessage());
+        stopSelf();
+    }
 
+    protected void shutDownTts() {
+        if (tts != null) {
+            if (tts.isSpeaking()) {
+                tts.stop();
+            }
+            tts.shutdown();
+            tts = null;
+        }
+    }
+
+    @Nullable
+    @Override
+    public Context onBroadcastContextRequested() {
+        return this;
+    }
+
+    // TextToSpeech initialization
+    @Override
+    public void onInit(int i) {
+        if (i == TextToSpeech.SUCCESS) {
+            int languageAvailable = tts.isLanguageAvailable(Locale.getDefault());
+            // >= 0 means LANG_AVAILABLE, LANG_COUNTRY_AVAILABLE, or LANG_COUNTRY_VAR_AVAILABLE
+            if (languageAvailable >= 0) {
+                tts.setLanguage(Locale.getDefault());
+                if (textToSpeakOnInit != null) {
+                    speakText(textToSpeakOnInit);
+                }
+            } else {
+                tts = null;
+            }
+        } else {
+            Log.e(getClass().getCanonicalName(), "Failed to initialize TTS with error code " + i);
+            tts = null;
+        }
+    }
+
+    protected void speakText(String text) {
+        // Setting this will guarantee the text gets spoken in the case that tts isn't set up yet
+        textToSpeakOnInit = text;
+        if (tts == null) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ttsGreater21(text);
+        } else {
+            ttsUnder20(text);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void ttsUnder20(String text) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "MessageId");
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, map);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void ttsGreater21(String text) {
+        String utteranceId = String.valueOf(hashCode());
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
+    }
+
+    @RequiresPermission(Manifest.permission.VIBRATE)
+    private void vibrate() {
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(DEFAULT_VIBRATION_AND_SOUND_DURATION);
+    }
+
+    protected void playSound() {
+        ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 50); // 50 = half volume
+        // Play a low and high tone for 500 ms at full volume
+        toneG.startTone(ToneGenerator.TONE_CDMA_LOW_L, DEFAULT_VIBRATION_AND_SOUND_DURATION);
+        toneG.startTone(ToneGenerator.TONE_CDMA_HIGH_L, DEFAULT_VIBRATION_AND_SOUND_DURATION);
     }
 
     /**
      * Holder class for encapsulation serializable list data sent through intents
      */
-    public static class FileResultList implements Serializable {
+    public static class ResultHolder implements Serializable {
+        private long startTime;
+        private String errorMessage;
         private List<FileResult> resultList;
 
-        public FileResultList() {
+        public ResultHolder() {
             super();
             resultList = new ArrayList<>();
         }
@@ -283,25 +620,21 @@ public class RecorderService extends Service implements RecorderListener {
         public void setResultList(List<FileResult> resultList) {
             this.resultList = resultList;
         }
-    }
 
-    /**
-     * Holder class for encapsulation serializable list data sent through intents
-     */
-    protected static class RecorderConfigList implements Serializable {
-        private List<RecorderConfig> configList;
-
-        public RecorderConfigList() {
-            super();
-            configList = new ArrayList<>();
+        public String getErrorMessage() {
+            return errorMessage;
         }
 
-        public List<RecorderConfig> getConfigList() {
-            return configList;
+        public void setErrorMessage(String errorMessage) {
+            this.errorMessage = errorMessage;
         }
 
-        public void setConfigList(List<RecorderConfig> configList) {
-            this.configList = configList;
+        public long getStartTime() {
+            return startTime;
+        }
+
+        public void setStartTime(long startTime) {
+            this.startTime = startTime;
         }
     }
 }

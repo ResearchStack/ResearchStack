@@ -29,6 +29,7 @@ public class CountdownStep extends ActiveStep {
         setShouldStartTimerAutomatically(true);
         setShouldShowDefaultTimer(false);
         setShouldContinueOnFinish(true);
+        setEstimateTimeInMsToSpeakEndInstruction(0); // do not wait to proceed
     }
 
     @Override

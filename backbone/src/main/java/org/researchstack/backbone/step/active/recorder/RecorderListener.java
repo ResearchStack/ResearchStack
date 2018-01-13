@@ -1,5 +1,8 @@
 package org.researchstack.backbone.step.active.recorder;
 
+import android.content.Context;
+import android.support.annotation.Nullable;
+
 import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.step.active.recorder.Recorder;
 
@@ -30,4 +33,9 @@ public interface RecorderListener {
      * @param error           The error that occurred.
      */
     void onFail(Recorder recorder, Throwable error);
+
+    /**
+     * @return a valid Context for the recorder to broadcast status, null if not available
+     */
+    @Nullable Context onBroadcastContextRequested();
 }

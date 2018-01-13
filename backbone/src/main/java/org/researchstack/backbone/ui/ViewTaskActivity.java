@@ -79,6 +79,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
                 taskResult = new TaskResult(task.getIdentifier());
             }
 
+            if (getIntent().hasExtra(EXTRA_STEP)) {
+                currentStep = (Step)getIntent().getSerializableExtra(EXTRA_STEP);
+            }
+
             taskResult.setStartDate(new Date());
         }
         else
@@ -180,14 +184,19 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         // Return the Class & constructor
         StepLayout stepLayout = StepLayoutHelper.createLayoutFromStep(step, this);
+        setupStepLayoutBeforeInitializeIsCalled(stepLayout);
         stepLayout.initialize(step, result);
-        stepLayout.setCallbacks(this);
 
         if (stepLayout instanceof ResultListener) {
             ((ResultListener)stepLayout).taskResult(this, taskResult);
         }
 
         return stepLayout;
+    }
+
+    protected void setupStepLayoutBeforeInitializeIsCalled(StepLayout stepLayout) {
+        // can be implemented by sub-classes to set up the step layout before it's initialized
+        stepLayout.setCallbacks(this);
     }
 
     protected void saveAndFinish()
