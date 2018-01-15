@@ -88,6 +88,11 @@ public class RecorderService extends Service implements RecorderListener, TextTo
     public static String BROADCAST_RECORDER_METRONOME_CTR       = "RecorderService_MetronomeCtr";
     public static String BROADCAST_RECORDER_SPOKEN_TEXT         = "RecorderService_SpokenText";
 
+    // keys associated with spokenInstructions json recorder configs
+    public static final String TEXT_TO_SPEECH_END_KEY = "end";
+    public static final String TEXT_TO_SPEECH_COUNTDOWN_KEY = "countdown";
+    public static final String TEXT_TO_SPEECH_METRONOME_KEY = "metronome";
+
     /**
      * @param appContext
      * @return the saved result list, if this active step has already completed recording
@@ -300,22 +305,19 @@ public class RecorderService extends Service implements RecorderListener, TextTo
     }
 
     protected void startSpeechToTextMap() {
-        String endKey = "end";
-        String countdownKey = "countdown";
-        String metronomeKey = "metronome";
 
         Map<String, String> speechToTextMap = activeStep.getSpokenInstructionMap();
         if (speechToTextMap != null) {
             for (String speechKey : speechToTextMap.keySet()) {
 
                 // Check for special case "end" key that speaks after the step duration
-                if (endKey.equals(speechKey)) {
+                if (TEXT_TO_SPEECH_END_KEY.equals(speechKey)) {
                     final String endSpeechText = speechToTextMap.get(speechKey);
                     mainHandler.postDelayed(() -> speakTextAndUpdateNotification(endSpeechText),
                             activeStep.getStepDuration() * 1000L);
 
                     // Check for special case "countdown" key that speaks a verbal seconds countdown
-                } else if (countdownKey.equals(speechKey)) {
+                } else if (TEXT_TO_SPEECH_COUNTDOWN_KEY.equals(speechKey)) {
                     try {
                         int countdownTime = Integer.parseInt(speechToTextMap.get(speechKey));
                         for (int i = countdownTime; i > 0; i--) {
@@ -327,7 +329,7 @@ public class RecorderService extends Service implements RecorderListener, TextTo
                         LogExt.e(RecorderService.class, e.getLocalizedMessage());
                     }
                     // All other cases will speak the text at the seconds time of the speechKey
-                } else if (metronomeKey.equals(speechKey)) {
+                } else if (TEXT_TO_SPEECH_METRONOME_KEY.equals(speechKey)) {
                     try {
                         double metronomeIntervalInSec =
                                 Double.parseDouble(speechToTextMap.get(speechKey));
