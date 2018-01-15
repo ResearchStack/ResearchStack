@@ -544,7 +544,7 @@ public class RecorderService extends Service implements RecorderListener, TextTo
 
     @Nullable
     @Override
-    public Context onBroadcastContextRequested() {
+    public Context getBroadcastContext() {
         return this;
     }
 

@@ -37,5 +37,6 @@ public interface RecorderListener {
     /**
      * @return a valid Context for the recorder to broadcast status, null if not available
      */
-    @Nullable Context onBroadcastContextRequested();
+    @Nullable
+    Context getBroadcastContext();
 }
