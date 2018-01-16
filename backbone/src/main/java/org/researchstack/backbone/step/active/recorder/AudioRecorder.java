@@ -2,19 +2,24 @@ package org.researchstack.backbone.step.active.recorder;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
 import android.webkit.MimeTypeMap;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.AudioResult;
+import org.researchstack.backbone.result.FileResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LogExt;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -35,7 +40,8 @@ public class AudioRecorder extends Recorder {
      */
     private static final int AVERAGE_MAX_VOLUME_DURATION = 100;
 
-    private AudioRecorderListener audioRecorderListener;
+    public static final String BROADCAST_SAMPLE_ACTION  = "AudioRecorder_BroadcastSample";
+    private static final String BROADCAST_SAMPLE_KEY    = "BroadcastSample";
 
     /**
      * Used to check amplitude of the sample at a desired frequency
@@ -62,6 +68,18 @@ public class AudioRecorder extends Recorder {
     private AudioRecorderSettings settings;
     private MediaRecorder mediaRecorder;
     private long startTime;
+
+    private static double sLastSampleAvg;
+    /**
+     * @return The last audio sample recorder, the total average volume from 0 - 1
+     *         The is most useful for determining if an area is too loud or noisy
+     */
+    public static double getLastTotalSampleAvg() {
+       return sLastSampleAvg;
+    }
+    public static void setLastTotalSampleAvg(double totalAvg) {
+        sLastSampleAvg = totalAvg;
+    }
 
     AudioRecorder(AudioRecorderSettings settings,
                   String identifier,
@@ -157,11 +175,11 @@ public class AudioRecorder extends Recorder {
                     // Compute the new rolling average
                     addSampleToRollingAverages(currentIntensity);
 
-                    if (audioRecorderListener != null && msBetweenCallbacks > 0) {
+                    if (msBetweenCallbacks > 0) {
                         long now = System.currentTimeMillis();
                         if ((now - timeOfLastCallback) > msBetweenCallbacks) {
                             int averageSample = (int) (sampleSumSinceLastCallback / samplesSinceLastCallback);
-                            audioRecorderListener.onAudioSampleRecorded(averageSample, MAX_VOLUME);
+                            sendAverageSampleBroadcast(averageSample);
                             refreshCallbackVariables();
                         }
                     }
@@ -171,6 +189,31 @@ public class AudioRecorder extends Recorder {
         };
         // Smallest possible delay to get the most information about the audio recording
         mainHandler.postDelayed(sampleMonitorRunnable, AVERAGE_MAX_VOLUME_DURATION);
+    }
+
+    private void sendAverageSampleBroadcast(int averageSample) {
+        AverageSampleHolder sampleHolder = new AverageSampleHolder();
+        sampleHolder.averageSampleVolume = averageSample;
+        sampleHolder.maxVolume = MAX_VOLUME;
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BROADCAST_SAMPLE_KEY, sampleHolder);
+        Intent intent = new Intent(BROADCAST_SAMPLE_ACTION);
+        intent.putExtras(bundle);
+        sendBroadcast(intent);
+    }
+
+    /**
+     * @param intent must have action of BROADCAST_SAMPLE_ACTION
+     * @return the AverageSampleHolder contained in the broadcast
+     */
+    public static AverageSampleHolder getAverageSample(Intent intent) {
+        if (intent.getAction() == null ||
+                !intent.getAction().equals(BROADCAST_SAMPLE_ACTION) ||
+                intent.getExtras() == null ||
+                !intent.getExtras().containsKey(BROADCAST_SAMPLE_KEY)) {
+            return null;
+        }
+        return (AverageSampleHolder) intent.getExtras().getSerializable(BROADCAST_SAMPLE_KEY);
     }
 
     private void stopSampleMonitoring() {
@@ -209,15 +252,16 @@ public class AudioRecorder extends Recorder {
         String filepath = fullFilePath();
         File file = new File(filepath);
         String mimeType = getMimeType(filepath);
-        AudioResult audioResult = new AudioResult(fileResultIdentifier(), file, mimeType);
-        audioResult.setStartDate(new Date(startTime));
-        audioResult.setEndDate(new Date());
+        FileResult fileResult = new FileResult(fileResultIdentifier(), file, mimeType);
+        fileResult.setStartDate(new Date(startTime));
+        fileResult.setEndDate(new Date());
 
-        double totalAvgIntensityFrom0To1 = ((double)totalRollingAvg / (double)totalRollingAvgSampleCount) / (double)MAX_VOLUME;
-        audioResult.setRollingAverageOfVolume(totalAvgIntensityFrom0To1);
+        double totalAvgIntensityFrom0To1 = ((double)totalRollingAvg /
+                (double)totalRollingAvgSampleCount) / (double)MAX_VOLUME;
+        setLastTotalSampleAvg(totalAvgIntensityFrom0To1);
 
         // Return the result to the recorder listener
-        onRecorderCompleted(audioResult);
+        onRecorderCompleted(fileResult);
     }
 
     @Override
@@ -225,7 +269,7 @@ public class AudioRecorder extends Recorder {
         stopSampleMonitoring();
 
         if (mediaRecorder == null) {
-            throw new IllegalStateException("Cannot cancel media recorder since it has not been started");
+            return; // no reason to cancel anything, since the mediaRecorder never started
         }
 
         stopAndReleaseMediaRecorder();
@@ -266,23 +310,36 @@ public class AudioRecorder extends Recorder {
     }
 
     /**
-     * @param audioRecorderListener the listener to recieve onAudioSampleRecorded calls
      * @param timeBetweenListenerCalls Duration cannot currently be less than 100 milliseconds
      *                                 the duration in milliseconds that will be in between calls to onAudioSampleRecorded
      */
-    public void setAudioRecorderListener(
-            AudioRecorderListener audioRecorderListener,
-            long timeBetweenListenerCalls)
+    public void setAudioRecorderBroadcastInterval(long timeBetweenListenerCalls)
     {
-        this.audioRecorderListener = audioRecorderListener;
         this.msBetweenCallbacks = timeBetweenListenerCalls;
     }
 
-    public interface AudioRecorderListener {
-        /**
-         * @param averageSampleVolume the current sample's volume
-         * @param maxVolume the max volume that the sampleVolume can be
-         */
-        void onAudioSampleRecorded(int averageSampleVolume, int maxVolume);
+    public static class AverageSampleHolder implements Serializable {
+        private int averageSampleVolume;
+        private int maxVolume;
+
+        public AverageSampleHolder() {
+            super();
+        }
+
+        public int getAverageSampleVolume() {
+            return averageSampleVolume;
+        }
+
+        public void setAverageSampleVolume(int averageSampleVolume) {
+            this.averageSampleVolume = averageSampleVolume;
+        }
+
+        public int getMaxVolume() {
+            return maxVolume;
+        }
+
+        public void setMaxVolume(int maxVolume) {
+            this.maxVolume = maxVolume;
+        }
     }
 }

@@ -2,6 +2,8 @@ package org.researchstack.backbone.step.active.recorder;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -13,10 +15,12 @@ import android.util.Log;
 import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
+import java.io.Serializable;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by TheMDP on 2/17/17.
@@ -30,6 +34,9 @@ import java.io.File;
 public class LocationRecorder extends JsonArrayDataRecorder implements LocationListener {
 
     private static final String TAG = LocationRecorder.class.getSimpleName();
+
+    private static final String SHARED_PREFS_KEY = "LocationRecorder";
+    private static final String LAST_RECORDED_DIST_KEY = "LastRecordedTotalDistance";
 
     public static final String TIMESTAMP_KEY   = "timestamp";
     public static final String COORDINATE_KEY  = "coordinate";
@@ -49,9 +56,22 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
 
     private double totalDistance;
     private Location lastLocation;
-    private LocationUpdateListener locationUpdateListener;
-    public void setLocationUpdateListener(LocationUpdateListener listener) {
-        locationUpdateListener = listener;
+
+    public static final String BROADCAST_LOCATION_UPDATE_ACTION  = "LocationRecorder_BroadcastLocationUpdate";
+    private static final String BROADCAST_LOCATION_UPDATE_KEY    = "LocationUpdate";
+
+    private SharedPreferences locationRecorderPrefs;
+
+    public static float getLastRecordedTotalDistance(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
+        return prefs.getFloat(LAST_RECORDED_DIST_KEY, 0f);
+    }
+
+    protected void setLastRecordedTotalDistance(float totalDistance) {
+        if (locationRecorderPrefs == null) {
+            return;
+        }
+        locationRecorderPrefs.edit().putFloat(LAST_RECORDED_DIST_KEY, totalDistance).apply();
     }
 
     /**
@@ -72,6 +92,7 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
 
         lastLocation = null;
         totalDistance = 0;
+        locationRecorderPrefs = context.getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
 
         if (locationManager == null) {
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -161,14 +182,42 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
 
             writeJsonObjectToFile(jsonObject);
 
-            if (locationUpdateListener != null) {
-                if (lastLocation != null) {
-                    totalDistance += lastLocation.distanceTo(location);
-                }
-                locationUpdateListener.onLocationUpdated(location.getLongitude(), location.getLatitude(), totalDistance);
+            if (lastLocation != null) {
+                totalDistance += lastLocation.distanceTo(location);
             }
+            sendLocationUpdateBroadcast(
+                    location.getLongitude(), location.getLatitude(), totalDistance);
+
             lastLocation = location;
         }
+    }
+
+    protected void sendLocationUpdateBroadcast(double longitude, double latitude, double distance) {
+        setLastRecordedTotalDistance((float)distance);
+        LocationUpdateHolder locationHolder = new LocationUpdateHolder();
+        locationHolder.setLongitude(longitude);
+        locationHolder.setLatitude(latitude);
+        locationHolder.setTotalDistance(distance);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BROADCAST_LOCATION_UPDATE_KEY, locationHolder);
+        Intent intent = new Intent(BROADCAST_LOCATION_UPDATE_ACTION);
+        intent.putExtras(bundle);
+        sendBroadcast(intent);
+    }
+
+    /**
+     * @param intent must have action of BROADCAST_LOCATION_UPDATE_ACTION
+     * @return the LocationUpdateHolder contained in the broadcast
+     */
+    public static LocationUpdateHolder getLocationUpdateHolder(Intent intent) {
+        if (intent.getAction() == null ||
+                !intent.getAction().equals(BROADCAST_LOCATION_UPDATE_ACTION) ||
+                intent.getExtras() == null ||
+                intent.getExtras().containsKey(BROADCAST_LOCATION_UPDATE_KEY)) {
+            return null;
+        }
+        return (LocationUpdateHolder) intent.getExtras()
+                .getSerializable(BROADCAST_LOCATION_UPDATE_KEY);
     }
 
     @Override
@@ -186,12 +235,37 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
         Log.i(TAG, "onProviderDisabled " + s);
     }
 
-    public interface LocationUpdateListener {
-        /**
-         * @param longitude the longitude of the current position
-         * @param latitude the longitude of the current position
-         * @param distance the total distance covered so far, in meters
-         */
-        void onLocationUpdated(double longitude, double latitude, double distance);
+    public static class LocationUpdateHolder implements Serializable {
+        private double longitude;
+        private double latitude;
+        private double totalDistance;
+
+        public LocationUpdateHolder() {
+            super();
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(double longitude) {
+            this.longitude = longitude;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(double latitude) {
+            this.latitude = latitude;
+        }
+
+        public double getTotalDistance() {
+            return totalDistance;
+        }
+
+        public void setTotalDistance(double distance) {
+            this.totalDistance = distance;
+        }
     }
 }

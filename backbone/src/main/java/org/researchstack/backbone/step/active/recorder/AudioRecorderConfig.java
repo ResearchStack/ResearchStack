@@ -22,6 +22,9 @@ public class AudioRecorderConfig extends RecorderConfig {
 
     private AudioRecorderSettings settings;
 
+    private static final long DEFAULT_TIME_BETWEEN_BROADCASTS = 180;
+    private long timeBetweenAverageSampleBroadcasts = DEFAULT_TIME_BETWEEN_BROADCASTS;
+
     /** Default constructor used for serialization/deserialization */
     AudioRecorderConfig() {
         super();
@@ -34,7 +37,9 @@ public class AudioRecorderConfig extends RecorderConfig {
 
     @Override
     public Recorder recorderForStep(Step step, File outputDirectory) {
-        return new AudioRecorder(settings, identifier, step, outputDirectory);
+        AudioRecorder audioRecorder = new AudioRecorder(settings, identifier, step, outputDirectory);
+        audioRecorder.setAudioRecorderBroadcastInterval(timeBetweenAverageSampleBroadcasts);
+        return audioRecorder;
     }
 
     public AudioRecorderSettings getSettings() {
@@ -43,5 +48,13 @@ public class AudioRecorderConfig extends RecorderConfig {
 
     public void setSettings(AudioRecorderSettings settings) {
         this.settings = settings;
+    }
+
+    public long getTimeBetweenAverageSampleBroadcasts() {
+        return timeBetweenAverageSampleBroadcasts;
+    }
+
+    public void setTimeBetweenAverageSampleBroadcasts(long timeBetweenAverageSampleBroadcasts) {
+        this.timeBetweenAverageSampleBroadcasts = timeBetweenAverageSampleBroadcasts;
     }
 }

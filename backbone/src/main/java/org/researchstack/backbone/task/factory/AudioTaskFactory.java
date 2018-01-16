@@ -153,7 +153,7 @@ public class AudioTaskFactory {
             // can correctly direct the user based on the results of the audio recording
             step.setLoudnessThreshold(LOUDNESS_THRESHOLD);
             step.setAudioStepResultIdentifier(CountdownStepIdentifier);
-            step.setNextStepIdentifier(CountdownStepIdentifier);
+            step.setNextStepIdentifier(Instruction1StepIdentifier);
 
             stepList.add(step);
         }

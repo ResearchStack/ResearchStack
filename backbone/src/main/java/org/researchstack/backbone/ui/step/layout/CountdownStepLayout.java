@@ -30,6 +30,7 @@ public class CountdownStepLayout extends ActiveStepLayout {
     protected Runnable fineAnimationRunnable; // runs once per ANIMATION_DELAY
 
     protected CountdownStep countdownStep;
+    protected boolean haveReachedEndOfStep;
 
     public CountdownStepLayout(Context context) {
         super(context);
@@ -53,7 +54,30 @@ public class CountdownStepLayout extends ActiveStepLayout {
         super.initialize(step, result);
         setupCountdownViews();
         startArcDrawableAnimation();
-        startAnimation();
+        haveReachedEndOfStep = false;
+    }
+
+    @Override
+    public void stop() {
+        haveReachedEndOfStep = true;
+        super.stop();
+    }
+
+    @Override
+    public void pauseActiveStepLayout() {
+        // Ignore pause activity (most likely user shutting off the screen)
+        // That is okay, we will proceed to the next step even if screen is off
+        // If we haven't reached the end of the activity yet
+        if (haveReachedEndOfStep) {
+            super.pauseActiveStepLayout();
+        }
+    }
+
+    @Override
+    public void forceStop() {
+        // Ok, it wasn't a screen turning off, we really must stop
+        super.pauseActiveStepLayout();
+        super.forceStop();
     }
 
     private void setupCountdownViews() {
@@ -102,19 +126,17 @@ public class CountdownStepLayout extends ActiveStepLayout {
     }
 
     protected void startArcDrawableAnimation() {
-        fineAnimationRunnable = new Runnable() {
-            @Override
-            public void run() {
-                long timeElapsedInMs = System.currentTimeMillis() - startTime;
-                float percentLeft = (float)timeElapsedInMs / (float)(DateUtils.SECOND_IN_MILLIS * (activeStep.getStepDuration() - 1));
-                float percentComplete = 1.0f - percentLeft;
+        fineAnimationRunnable = () -> {
+            long timeElapsedInMs = System.currentTimeMillis() - startTime;
+            float percentLeft = (float)timeElapsedInMs /
+                    (float)(DateUtils.SECOND_IN_MILLIS * (activeStep.getStepDuration()));
+            float percentComplete = 1.0f - percentLeft;
 
-                if (percentComplete < 0) {
-                    arcDrawable.setSweepAngle(0.0f);
-                } else {
-                    arcDrawable.setSweepAngle(ArcDrawable.FULL_SWEEPING_ANGLE * percentComplete);
-                    mainHandler.postDelayed(fineAnimationRunnable, ANIMATION_DELAY);
-                }
+            if (percentComplete < 0) {
+                arcDrawable.setSweepAngle(0.0f);
+            } else {
+                arcDrawable.setSweepAngle(ArcDrawable.FULL_SWEEPING_ANGLE * percentComplete);
+                mainHandler.postDelayed(fineAnimationRunnable, ANIMATION_DELAY);
             }
         };
         // All mainHandler callbacks are cancelled correctly by base class
