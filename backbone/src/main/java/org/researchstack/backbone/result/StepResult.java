@@ -119,5 +119,4 @@ public class StepResult<T> extends Result {
     public AnswerFormat getAnswerFormat() {
         return answerFormat;
     }
-
 }
