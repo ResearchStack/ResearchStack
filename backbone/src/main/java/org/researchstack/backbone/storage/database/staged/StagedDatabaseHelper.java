@@ -37,8 +37,25 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        super.onCreate(sqLiteDatabase);
         try {
-            super.onCreate(sqLiteDatabase);
+            TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase),
+                    StagedActivityRecord.class,
+                    StagedEventRecord.class);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        super.onUpgrade(sqLiteDatabase, i, i1);
+        try {
+            TableUtils.dropTables(new SQLiteDatabaseImpl(sqLiteDatabase),
+                    true,
+                    StagedActivityRecord.class,
+                    StagedEventRecord.class);
+
             TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase),
                     StagedActivityRecord.class,
                     StagedEventRecord.class);
