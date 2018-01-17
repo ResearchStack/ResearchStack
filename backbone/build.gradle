@@ -8,8 +8,7 @@ android {
 
     libraryVariants.all { variant ->
         variant.outputs.all { output ->
-            outputFileName = new File(output.outputFile.parentFile,
-                    output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"));
+            outputFileName = new File(".", output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"))
         }
     }
 
@@ -17,7 +16,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 6
-        versionName "1.0.3"
+        versionName "1.0.4"
     }
 
     buildTypes {

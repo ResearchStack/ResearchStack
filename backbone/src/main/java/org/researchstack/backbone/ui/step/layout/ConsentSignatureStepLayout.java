@@ -112,8 +112,13 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
             }
         });
 
-        RxView.clicks(clear).subscribe(v -> {
-            signatureView.clearSignature();
+        clear.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                signatureView.clearSignature();
+            }
         });
 
         clear.setClickable(signatureView.isSignatureDrawn());
