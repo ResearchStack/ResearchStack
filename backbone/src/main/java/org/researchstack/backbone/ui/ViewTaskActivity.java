@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,6 +20,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
@@ -241,7 +243,14 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
                     .negativeColor(colorPrimary)
                     .negativeText(R.string.rsb_cancel)
                     .positiveText(R.string.rsb_task_cancel_positive)
-                    .onPositive((dialog, which) -> finish())
+                    .onPositive(new MaterialDialog.SingleButtonCallback()
+                    {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                        {
+                            finish();
+                        }
+                    })
                     .show();
         }
 
@@ -321,7 +330,14 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
                 "Are you sure you want to exit?")
                 .setMessage(R.string.lorem_medium)
-                .setPositiveButton("End Task", (dialog, which) -> finish())
+                .setPositiveButton("End Task", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        finish();
+                    }
+                })
                 .setNegativeButton("Cancel", null)
                 .create();
         alertDialog.show();
@@ -340,21 +356,26 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         }
     }
 
-    private void setActivityTheme(int primaryColor, int primaryColorDark) {
-        runOnUiThread(() -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Window window = getWindow();
+    private void setActivityTheme(final int primaryColor, final int primaryColorDark) {
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Window window = getWindow();
 
-                if (primaryColorDark == Color.BLACK && window.getNavigationBarColor() == Color.BLACK) {
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                } else {
-                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    if (primaryColorDark == Color.BLACK && window.getNavigationBarColor() == Color.BLACK) {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    } else {
+                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    }
+                    window.setStatusBarColor(primaryColorDark);
                 }
-                window.setStatusBarColor(primaryColorDark);
-            }
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setBackgroundDrawable(new ColorDrawable(primaryColor));
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setBackgroundDrawable(new ColorDrawable(primaryColor));
+                }
             }
         });
     }
