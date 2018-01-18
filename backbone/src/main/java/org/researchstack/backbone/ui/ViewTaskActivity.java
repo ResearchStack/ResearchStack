@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.Theme;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;

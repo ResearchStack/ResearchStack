@@ -1,12 +1,15 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
@@ -84,9 +87,23 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
 
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveTitleColor(step.getColorSecondary());
-        submitBar.setPositiveAction(v -> showDialog());
+        submitBar.setPositiveAction(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                showDialog();
+            }
+        });
         submitBar.setNegativeTitleColor(step.getPrimaryColor());
-        submitBar.setNegativeAction(v -> disagreeConsent());
+        submitBar.setNegativeAction(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                disagreeConsent();
+            }
+        });
     }
 
     private void disagreeConsent() {
@@ -104,9 +121,14 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
                 .negativeColor(step.getPrimaryColor())
                 .negativeText(R.string.rsb_consent_review_cancel)
                 .positiveText(R.string.rsb_agree)
-                .onPositive((dialog, which) -> {
-                    stepResult.setResult(true);
-                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                .onPositive(new MaterialDialog.SingleButtonCallback()
+                {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                    {
+                        stepResult.setResult(true);
+                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                    }
                 })
                 .show();
     }

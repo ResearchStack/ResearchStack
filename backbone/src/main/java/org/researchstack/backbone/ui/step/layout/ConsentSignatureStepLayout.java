@@ -94,7 +94,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         TextView text = (TextView) findViewById(R.id.summary);
         text.setText(step.getText());
 
-        AppCompatTextView clear = (AppCompatTextView) findViewById(R.id.layout_consent_review_signature_clear);
+        final AppCompatTextView clear = (AppCompatTextView) findViewById(R.id.layout_consent_review_signature_clear);
         clear.setTextColor(step.getPrimaryColor());
 
         signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
@@ -130,17 +130,23 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         submitBar.getNegativeActionView().setVisibility(View.GONE);
         submitBar.setPositiveTitleColor(step.getColorSecondary());
         submitBar.setPositiveTitle(R.string.rsb_done);
-        submitBar.setPositiveAction(v -> {
-            if (signatureView.isSignatureDrawn()) {
-                setDataToResult();
-                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
-            } else {
-                Toast.makeText(getContext(), R.string.rsb_error_invalid_signature, Toast.LENGTH_SHORT).show();
+        submitBar.setPositiveAction(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if (signatureView.isSignatureDrawn()) {
+                    setDataToResult();
+                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
+                } else {
+                    Toast.makeText(getContext(), R.string.rsb_error_invalid_signature, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
     private void setDataToResult() {
+
         String format = ((ConsentSignatureStep) step).getSignatureDateFormat();
         DateFormat signatureDateFormat = !TextUtils.isEmpty(format)
                 ? new SimpleDateFormat(format)
