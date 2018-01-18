@@ -76,11 +76,20 @@ public abstract class StepNavigationClause implements Serializable {
             // Numeric Value
             return Float.valueOf(stepResultValue.toString()).compareTo(Float.valueOf(value.toString()));
 
-        } else if (resultType.equals(AnswerFormat.Type.SingleChoice)
-                || resultType.equals(AnswerFormat.Type.MultipleChoice)) {
+        } else if ((resultType.equals(AnswerFormat.Type.MultipleChoice))
+            || (resultType.equals(AnswerFormat.Type.SingleChoice))) {
 
-            // String Value
-            return String.valueOf(stepResultValue).compareTo(String.valueOf(value));
+            if (stepResultValue instanceof Object[]) {
+                Object[] array = (Object[]) stepResultValue;
+                for (Object stepValue : array) {
+                    if (String.valueOf(stepValue).equalsIgnoreCase(String.valueOf(value))) {
+                       return 0;
+                    }
+                }
+            } else {
+                return String.valueOf(stepResultValue).compareTo(String.valueOf(value));
+            }
+            return null;
 
         } else if (resultType.equals(AnswerFormat.Type.Boolean)) {
 

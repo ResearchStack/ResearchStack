@@ -10,6 +10,7 @@ import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import co.touchlab.squeaky.field.DatabaseField;
@@ -63,7 +64,14 @@ public class StepRecord {
             }
         }
         if (!TextUtils.isEmpty(record.result)) {
-            result.setResults(GSON.fromJson(record.result, Map.class));
+            Map resultValues = GSON.fromJson(record.result, Map.class);
+            for (Object resultKey : resultValues.keySet()) {
+                if (resultValues.get(resultKey) instanceof List) {
+                    Object[] value = ((List) resultValues.get(resultKey)).toArray();
+                    resultValues.put(resultKey, value);
+                }
+            }
+            result.setResults(resultValues);
         }
         return result;
     }
