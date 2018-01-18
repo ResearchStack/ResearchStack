@@ -9,7 +9,6 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.TextUtils;
 
-import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

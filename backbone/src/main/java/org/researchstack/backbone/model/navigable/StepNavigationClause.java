@@ -6,7 +6,6 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 
 /**
  * Created by mauriciosouto on 10/10/17.
