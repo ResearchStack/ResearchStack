@@ -4,6 +4,7 @@ package org.researchstack.backbone.ui;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
+import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BirthDateAnswerFormat;
 import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
@@ -72,17 +73,25 @@ public class ConsentViewTaskActiviy extends ViewTaskActivity
         super.onSaveStep(action, step, result);
     }
 
-    /*
-    public static @Nullable FormStep getConsentPersonalInfoStep(boolean requiresName, boolean requiresBirthDate)
+    public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate, @Nullable AnswerFormat.QuestionType questionType)
     {
         if (requiresName || requiresBirthDate)
         {
             List<QuestionStep> formSteps = new ArrayList<>();
             if (requiresName)
             {
-                TextAnswerFormat format = new TextAnswerFormat();
+                TextAnswerFormat format;
+                if(questionType != null)
+                {
+                    format = new CustomQuestionTypeAnswerFormat(questionType);
+                }
+                else
+                {
+                    format = new TextAnswerFormat();
+                }
+
                 format.setIsMultipleLines(false);
-                formSteps.add(new RSConsentNameEntryStep(ID_FORM_NAME, "Full Name", format));
+                formSteps.add(new QuestionStep(ID_FORM_NAME, "Full Name", format));
             }
 
             if (requiresBirthDate)
@@ -95,8 +104,7 @@ public class ConsentViewTaskActiviy extends ViewTaskActivity
             }
 
             String formTitle = "Consent";
-            RSFormStep formStep = new RSFormStep(ID_FORM, formTitle, "");
-            //formStep.setStepTitle();
+            FormStep formStep = new FormStep(ID_FORM, formTitle, "");
             formStep.setOptional(false);
             formStep.setFormSteps(formSteps);
 
@@ -105,5 +113,20 @@ public class ConsentViewTaskActiviy extends ViewTaskActivity
 
         return null;
     }
-    */
+
+    private static class CustomQuestionTypeAnswerFormat extends TextAnswerFormat
+    {
+        QuestionType questionType;
+
+        CustomQuestionTypeAnswerFormat(QuestionType questionType)
+        {
+            this.questionType = questionType;
+        }
+
+        @Override
+        public QuestionType getQuestionType() {
+            return questionType;
+        }
+    }
+
 }
