@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui;
 
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import org.researchstack.backbone.answerformat.AnswerFormat;
@@ -17,6 +18,7 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,7 +30,8 @@ import static org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayo
 public class ConsentViewTaskActiviy extends ViewTaskActivity
 {
 
-    private static final String ID_FORM_NAME = "formName";
+    private static final String ID_FORM_FIRST_NAME = "formFirstName";
+    private static final String ID_FORM_LAST_NAME = "formLastName";
     private static final String ID_FORM_DOB = "formDob";
     private static final String ID_FORM = "form";
 
@@ -73,25 +76,15 @@ public class ConsentViewTaskActiviy extends ViewTaskActivity
         super.onSaveStep(action, step, result);
     }
 
-    public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate, @Nullable AnswerFormat.QuestionType questionType)
+    public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate)
     {
         if (requiresName || requiresBirthDate)
         {
             List<QuestionStep> formSteps = new ArrayList<>();
             if (requiresName)
             {
-                TextAnswerFormat format;
-                if(questionType != null)
-                {
-                    format = new CustomQuestionTypeAnswerFormat(questionType);
-                }
-                else
-                {
-                    format = new TextAnswerFormat();
-                }
-
-                format.setIsMultipleLines(false);
-                formSteps.add(new QuestionStep(ID_FORM_NAME, "Full Name", format));
+                formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, "First Name", new TextAnswerFormat()));
+                formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, "Last Name", new TextAnswerFormat()));
             }
 
             if (requiresBirthDate)
@@ -104,7 +97,7 @@ public class ConsentViewTaskActiviy extends ViewTaskActivity
             }
 
             String formTitle = "Consent";
-            FormStep formStep = new FormStep(ID_FORM, formTitle, "");
+            FormStep formStep = new FormStep(ID_FORM, formTitle, "Full Name");
             formStep.setOptional(false);
             formStep.setFormSteps(formSteps);
 
@@ -112,21 +105,6 @@ public class ConsentViewTaskActiviy extends ViewTaskActivity
         }
 
         return null;
-    }
-
-    private static class CustomQuestionTypeAnswerFormat extends TextAnswerFormat
-    {
-        QuestionType questionType;
-
-        CustomQuestionTypeAnswerFormat(QuestionType questionType)
-        {
-            this.questionType = questionType;
-        }
-
-        @Override
-        public QuestionType getQuestionType() {
-            return questionType;
-        }
     }
 
 }

@@ -28,6 +28,8 @@ import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ConsentSignatureStep;
+import org.researchstack.backbone.step.FormStep;
+import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
@@ -167,6 +169,15 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
 
         // Get result from the TaskResult, can be null
         StepResult result = taskResult.getStepResult(step.getIdentifier());
+
+        if(step instanceof FormStep)
+        {
+            for(QuestionStep questionStep : ((FormStep) step).getFormSteps())
+            {
+                questionStep.setStepTheme(step.getPrimaryColor(), step.getColorPrimaryDark(), step.getColorSecondary(),
+                        step.getPrincipalTextColor(), step.getSecondaryTextColor(), step.getActionFailedColor());
+            }
+        }
 
         // Return the Class & constructor
         StepLayout stepLayout = createLayoutFromStep(step);
