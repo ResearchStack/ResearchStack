@@ -72,6 +72,7 @@ public class ConsentViewTaskActiviy extends ViewTaskActivity
         super.onSaveStep(action, step, result);
     }
 
+    /*
     public static @Nullable FormStep getConsentPersonalInfoStep(boolean requiresName, boolean requiresBirthDate)
     {
         if (requiresName || requiresBirthDate)
@@ -104,4 +105,5 @@ public class ConsentViewTaskActiviy extends ViewTaskActivity
 
         return null;
     }
+    */
 }
