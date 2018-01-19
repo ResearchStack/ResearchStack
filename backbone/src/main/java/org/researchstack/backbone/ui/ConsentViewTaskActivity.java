@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.utils.RSHTMLPDFWriter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,15 +55,18 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             {
                 if(question.getIdentifier().equalsIgnoreCase(ID_FORM_FIRST_NAME))
                 {
-                    firstName = (String) result.getResultForIdentifier(ID_FORM_FIRST_NAME);
+                    StepResult nameResult = (StepResult) result.getResultForIdentifier(ID_FORM_FIRST_NAME);
+                    firstName = (String)nameResult.getResult();
                 }
                 if(question.getIdentifier().equalsIgnoreCase(ID_FORM_LAST_NAME))
                 {
-                    lastName = (String) result.getResultForIdentifier(ID_FORM_LAST_NAME);
+                    StepResult nameResult = (StepResult) result.getResultForIdentifier(ID_FORM_LAST_NAME);
+                    lastName = (String)nameResult.getResult();
                 }
                 if(question.getIdentifier().equalsIgnoreCase(ID_FORM_DOB))
                 {
-                    dateOfBirth = (String) result.getResultForIdentifier(ID_FORM_DOB);
+                    StepResult dobResult = (StepResult) result.getResultForIdentifier(ID_FORM_DOB);
+                    dateOfBirth = (String)dobResult.getResult();
                 }
             }
         }
@@ -75,8 +80,16 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             consentHtml = ((ConsentDocumentStep) step).getConsentHTML();
         }
 
+        if(consentHtml != null && signatureBase64 != null)
+        {
+            PDFWriteExposer writter = new PDFWriteExposer();
+            writter.printPdfFile(this, getCurrentTaskId(), consentHtml);
+        }
+
         super.onSaveStep(action, step, result);
     }
+
+
 
     public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate)
     {
@@ -109,4 +122,11 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         return null;
     }
 
+    class PDFWriteExposer extends RSHTMLPDFWriter
+    {
+        protected void printPdfFile(Activity context, final String taskId, String htmlConsentDocument)
+        {
+            super.printPdfFile(context, taskId, htmlConsentDocument);
+        }
+    }
 }

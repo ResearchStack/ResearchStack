@@ -126,7 +126,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         // view.setAlpha() is not working, this is kind of a hack around that
         clear.animate().alpha(signatureView.isSignatureDrawn() ? 1 : 0);
 
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.getNegativeActionView().setVisibility(View.GONE);
         submitBar.setPositiveTitleColor(step.getColorSecondary());
         submitBar.setPositiveTitle(R.string.rsb_done);
@@ -138,6 +138,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
                 if (signatureView.isSignatureDrawn()) {
                     setDataToResult();
                     callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
+                    submitBar.clearActions();
                 } else {
                     Toast.makeText(getContext(), R.string.rsb_error_invalid_signature, Toast.LENGTH_SHORT).show();
                 }

@@ -58,15 +58,20 @@ public class SubmitBar extends LinearLayout {
     }
 
     public void setPositiveAction(final OnClickListener action) {
-        this.positiveView.setOnClickListener(new OnClickListener()
+        positiveView.setOnClickListener(new OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                positiveView.setOnClickListener(null);
                 action.onClick(view);
             }
         });
+    }
+
+    public void clearActions()
+    {
+        positiveView.setOnClickListener(null);
+        negativeView.setOnClickListener(null);
     }
 
     public View getPositiveActionView() {
@@ -91,12 +96,11 @@ public class SubmitBar extends LinearLayout {
     }
 
     public void setNegativeAction(final OnClickListener action) {
-        this.negativeView.setOnClickListener(new OnClickListener()
+        negativeView.setOnClickListener(new OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                negativeView.setOnClickListener(null);
                 action.onClick(view);
             }
         });

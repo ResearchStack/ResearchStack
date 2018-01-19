@@ -85,14 +85,23 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         WebView pdfView = (WebView) findViewById(R.id.webview);
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
 
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveTitleColor(step.getColorSecondary());
         submitBar.setPositiveAction(new OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                showDialog();
+                showDialog(new MaterialDialog.SingleButtonCallback()
+                {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                    {
+                        stepResult.setResult(true);
+                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                        submitBar.clearActions();
+                    }
+                });
             }
         });
         submitBar.setNegativeTitleColor(step.getPrimaryColor());
@@ -111,7 +120,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         callbacks.onSaveStep(StepCallbacks.ACTION_END, step, stepResult);
     }
 
-    private void showDialog() {
+    private void showDialog(MaterialDialog.SingleButtonCallback positiveAction) {
         new MaterialDialog.Builder(getContext())
                 .title(R.string.rsb_consent_review_alert_title)
                 .content(confirmationDialogBody)
@@ -121,15 +130,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
                 .negativeColor(step.getPrimaryColor())
                 .negativeText(R.string.rsb_consent_review_cancel)
                 .positiveText(R.string.rsb_agree)
-                .onPositive(new MaterialDialog.SingleButtonCallback()
-                {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
-                    {
-                        stepResult.setResult(true);
-                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
-                    }
-                })
+                .onPositive(positiveAction)
                 .show();
     }
 }
