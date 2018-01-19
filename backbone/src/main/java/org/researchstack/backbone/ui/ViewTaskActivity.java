@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -74,8 +75,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
 
     public static Intent newThemedIntent(Context context, Task task, boolean showCancel, int colorPrimary, int colorPrimaryDark, int colorSecondary,
                                          int principalTextColor, int secondaryTextColor, int actionFailedColor) {
-        Intent intent = new Intent(context, ViewTaskActivity.class);
-        intent.putExtra(EXTRA_TASK, task);
+        Intent intent = newIntent(context, task);
+        return themIntent(intent,showCancel, colorPrimary, colorPrimaryDark, colorSecondary, principalTextColor, secondaryTextColor, actionFailedColor);
+    }
+
+    protected static Intent themIntent(Intent intent, boolean showCancel, int colorPrimary, int colorPrimaryDark, int colorSecondary,
+                                     int principalTextColor, int secondaryTextColor, int actionFailedColor)
+    {
         intent.putExtra(EXTRA_COLOR_PRIMARY, colorPrimary);
         intent.putExtra(EXTRA_COLOR_PRIMARY_DARK, colorPrimaryDark);
         intent.putExtra(EXTRA_COLOR_SECONDARY, colorSecondary);
@@ -93,8 +99,18 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         super.setContentView(R.layout.rsb_activity_step_switcher);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        try
+        {
+            setSupportActionBar(toolbar);
+        } catch (Exception e)
+        {
+            //there is already an action bar
+            toolbar.setVisibility(View.GONE);
+        }
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         root = (StepSwitcher) findViewById(R.id.container);
 

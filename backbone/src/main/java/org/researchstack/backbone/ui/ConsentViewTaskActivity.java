@@ -1,72 +1,74 @@
 package org.researchstack.backbone.ui;
 
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
-import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BirthDateAnswerFormat;
 import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
-import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout.KEY_SIGNATURE;
 import static org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout.KEY_SIGNATURE_DATE;
 
-public class ConsentViewTaskActiviy extends ViewTaskActivity
+public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCallbacks
 {
-
-    private static final String ID_FORM_FIRST_NAME = "formFirstName";
-    private static final String ID_FORM_LAST_NAME = "formLastName";
-    private static final String ID_FORM_DOB = "formDob";
-    private static final String ID_FORM = "form";
+    private static final String ID_FORM_FIRST_NAME = "user_info_form_first_name";
+    private static final String ID_FORM_LAST_NAME = "user_info_form_last_name";
+    private static final String ID_FORM_DOB = "user_info_form_dob";
+    private static final String ID_FORM = "user_info_form";
 
     String consentHtml;
     String firstName;
     String lastName;
+    String dateOfBirth;
     String signatureBase64;
     String signDate;
 
-
-    protected void onExecuteStepAction(int action) {
-        if (action == StepCallbacks.ACTION_END)
-        {
-            if((getCurrentStep() instanceof ConsentSignatureStep))
-            {
-
-            }
-        }
-        super.onExecuteStepAction(action);
+    public static Intent newIntent(Context context, Task task) {
+        Intent intent = new Intent(context, ConsentViewTaskActivity.class);
+        intent.putExtra(EXTRA_TASK, task);
+        return intent;
     }
 
+    @Override
     public void onSaveStep(int action, Step step, StepResult result) {
 
-        if(step instanceof FormStep)
+        if(step instanceof FormStep && step.getIdentifier().equalsIgnoreCase(ID_FORM))
         {
-
+            for (QuestionStep question : ((FormStep) step).getFormSteps())
+            {
+                if(question.getIdentifier().equalsIgnoreCase(ID_FORM_FIRST_NAME))
+                {
+                    firstName = (String) result.getResultForIdentifier(ID_FORM_FIRST_NAME);
+                }
+                if(question.getIdentifier().equalsIgnoreCase(ID_FORM_LAST_NAME))
+                {
+                    lastName = (String) result.getResultForIdentifier(ID_FORM_LAST_NAME);
+                }
+                if(question.getIdentifier().equalsIgnoreCase(ID_FORM_DOB))
+                {
+                    dateOfBirth = (String) result.getResultForIdentifier(ID_FORM_DOB);
+                }
+            }
         }
         if(step instanceof ConsentSignatureStep)
         {
-            //result.setResultForIdentifier(, getBase64EncodedImage());
-            //result.setResultForIdentifier(KEY_SIGNATURE_DATE, formattedSignDate);
-
             signatureBase64 = (String) result.getResultForIdentifier(KEY_SIGNATURE);
             signDate = (String) result.getResultForIdentifier(KEY_SIGNATURE_DATE);
-
         }
         else if(step instanceof ConsentDocumentStep)
         {
@@ -97,7 +99,7 @@ public class ConsentViewTaskActiviy extends ViewTaskActivity
             }
 
             String formTitle = "Consent";
-            FormStep formStep = new FormStep(ID_FORM, formTitle, "Full Name");
+            FormStep formStep = new FormStep(ID_FORM, formTitle, "");
             formStep.setOptional(false);
             formStep.setFormSteps(formSteps);
 
