@@ -1,12 +1,15 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
@@ -82,11 +85,34 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         WebView pdfView = (WebView) findViewById(R.id.webview);
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
 
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.setPositiveTitleColor(step.getColorSecondary());
-        submitBar.setPositiveAction(v -> showDialog());
+        submitBar.setPositiveAction(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                showDialog(new MaterialDialog.SingleButtonCallback()
+                {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                    {
+                        stepResult.setResult(true);
+                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                        submitBar.clearActions();
+                    }
+                });
+            }
+        });
         submitBar.setNegativeTitleColor(step.getPrimaryColor());
-        submitBar.setNegativeAction(v -> disagreeConsent());
+        submitBar.setNegativeAction(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                disagreeConsent();
+            }
+        });
     }
 
     private void disagreeConsent() {
@@ -94,7 +120,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         callbacks.onSaveStep(StepCallbacks.ACTION_END, step, stepResult);
     }
 
-    private void showDialog() {
+    private void showDialog(MaterialDialog.SingleButtonCallback positiveAction) {
         new MaterialDialog.Builder(getContext())
                 .title(R.string.rsb_consent_review_alert_title)
                 .content(confirmationDialogBody)
@@ -104,10 +130,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
                 .negativeColor(step.getPrimaryColor())
                 .negativeText(R.string.rsb_consent_review_cancel)
                 .positiveText(R.string.rsb_agree)
-                .onPositive((dialog, which) -> {
-                    stepResult.setResult(true);
-                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
-                })
+                .onPositive(positiveAction)
                 .show();
     }
 }

@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:minHeight="@dimen/rsb_item_size_default"
-        android:textColor="?attr/colorAccent"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:textSize="16sp"
         tools:text="title" />
 
