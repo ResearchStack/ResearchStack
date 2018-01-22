@@ -203,7 +203,7 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
             for (StagedEventRecord record : eventRecords) {
                 if (date == null || !record.eventStartDate.before(date)) {
                     // Future Event
-                    if (record.status == StagedActivityState.INITIAL) {
+                    if (record.status == StagedActivityState.New) {
                         // Keep started or completed events
                         deleteStagedEvent(record.id);
                     }
@@ -218,7 +218,7 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         List<StagedEvent> results = new ArrayList<>();
         for (StagedEventRecord record : eventRecords) {
             if ((date == null || (!record.eventStartDate.after(date) && !record.eventEndDate.before(date)))
-                    || record.status != StagedActivityState.INITIAL) {
+                    || record.status != StagedActivityState.New) {
                 TaskResult taskResult = null;
                 if (record.taskResultId != null) {
                     taskResult = loadLatestTaskResult(record.taskResultId);

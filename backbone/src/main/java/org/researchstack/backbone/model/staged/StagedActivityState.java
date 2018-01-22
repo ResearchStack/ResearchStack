@@ -5,7 +5,7 @@ package org.researchstack.backbone.model.staged;
  */
 
 public enum StagedActivityState {
-    INITIAL,
-    NOT_COMPLETED,
-    COMPLETED
+    New,
+    InProgress,
+    Done
 }

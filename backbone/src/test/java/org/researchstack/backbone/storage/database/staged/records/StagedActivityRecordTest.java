@@ -20,7 +20,7 @@ public class StagedActivityRecordTest {
         StagedActivity activity = new StagedActivity();
         activity.setId("12345");
         activity.setType(StagedActivityType.ACTIVE_TASK);
-        activity.setStatus(StagedActivityState.INITIAL);
+        activity.setStatus(StagedActivityState.New);
         activity.setTitle("Title");
         activity.setText("Text");
         activity.setInstructions("Instructions");
