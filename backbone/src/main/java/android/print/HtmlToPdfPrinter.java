@@ -8,6 +8,11 @@ import java.io.File;
 
 public class HtmlToPdfPrinter {
 
+    public interface  PrintReadyCallback
+    {
+        void onPrintFinished();
+    }
+
     private static final String TAG = HtmlToPdfPrinter.class.getSimpleName();
     private final PrintAttributes printAttributes;
 
@@ -15,7 +20,7 @@ public class HtmlToPdfPrinter {
         this.printAttributes = printAttributes;
     }
 
-    public void print(final PrintDocumentAdapter printAdapter, final File path, final String fileName) {
+    public void print(final PrintDocumentAdapter printAdapter, final File path, final String fileName, final PrintReadyCallback callback) {
         printAdapter.onLayout(null, printAttributes, null, new PrintDocumentAdapter.LayoutResultCallback() {
             @Override
             public void onLayoutFinished(PrintDocumentInfo info, boolean changed) {
@@ -23,6 +28,10 @@ public class HtmlToPdfPrinter {
                     @Override
                     public void onWriteFinished(PageRange[] pages) {
                         super.onWriteFinished(pages);
+                        if(callback != null)
+                        {
+                            callback.onPrintFinished();
+                        }
                     }
                 });
             }

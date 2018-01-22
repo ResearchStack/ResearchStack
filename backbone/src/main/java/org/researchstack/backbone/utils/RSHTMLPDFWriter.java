@@ -13,6 +13,11 @@ import java.io.File;
 
 public class RSHTMLPDFWriter
 {
+    public interface PDFFileReadyCallback
+    {
+        void onPrintFileReady();
+    }
+
     private static String SIGNED_PDF_FILENAME = "consent-signed.pdf";
 
     public static File getPDFFilePath(Context context)
@@ -30,7 +35,7 @@ public class RSHTMLPDFWriter
         return getPDFFilePath(context)+"/"+getPDFFileName(taskId);
     }
 
-    protected void printPdfFile(final Activity context, final String taskId, String htmlConsentDocument) {
+    protected void printPdfFile(final Activity context, final String taskId, String htmlConsentDocument, final PDFFileReadyCallback callback) {
         // Create a WebView object specifically for printing
         WebView webView = new WebView(context);
 
@@ -43,14 +48,19 @@ public class RSHTMLPDFWriter
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                createWebPrintJob(context, view, taskId);
+                createWebPrintJob(context, view, taskId, callback);
             }
         });
 
-        webView.loadDataWithBaseURL(null, htmlConsentDocument, "text/HTML", "UTF-8", null);
+        StringBuilder sb = new StringBuilder();
+        sb.append("<HTML><HEAD><LINK href=\"consent.css\" type=\"text/css\" rel=\"stylesheet\"/></HEAD><body>");
+        sb.append(htmlConsentDocument);
+        sb.append("</body></HTML>");
+        webView.loadDataWithBaseURL("file:///android_asset/", sb.toString(), "text/html", "utf-8", null);
+
     }
 
-    private void createWebPrintJob(Context context, WebView webView, String taskId) {
+    private void createWebPrintJob(Context context, WebView webView, String taskId, final PDFFileReadyCallback callback) {
         String jobName = "JobDocument";
         PrintAttributes attributes = new PrintAttributes.Builder()
                 .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
@@ -60,12 +70,22 @@ public class RSHTMLPDFWriter
         File path = getPDFFilePath(context);
         String ouput = getPDFFileName(taskId);
         HtmlToPdfPrinter pdfPrint = new HtmlToPdfPrinter(attributes);
+
+        HtmlToPdfPrinter.PrintReadyCallback printReadyCallback = new HtmlToPdfPrinter.PrintReadyCallback()
+        {
+            @Override
+            public void onPrintFinished()
+            {
+                callback.onPrintFileReady();
+            }
+        };
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
-            pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, ouput);
+            pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, ouput, printReadyCallback);
         }else
         {
-            pdfPrint.print(webView.createPrintDocumentAdapter(), path, ouput);
+            pdfPrint.print(webView.createPrintDocumentAdapter(), path, ouput, printReadyCallback);
         }
     }
 }

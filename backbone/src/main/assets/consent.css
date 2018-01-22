@@ -1,0 +1,5 @@
+.col-1-3 { width: 33.3%; float: left; padding-right: 20px; }
+.sigbox { position: relative; height: 100px; max-height:100px; display: inline-block; bottom: 10px }
+.inbox { position: relative; top: 100%; transform: translateY(-100%); -webkit-transform: translateY(-100%);  }
+.grid:after { content: ""; display: table; clear: both; }
+.border { -webkit-box-sizing: border-box; box-sizing: border-box; }
