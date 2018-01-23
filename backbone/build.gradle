@@ -8,16 +8,15 @@ android {
 
     libraryVariants.all { variant ->
         variant.outputs.all { output ->
-            outputFileName = new File(output.outputFile.parentFile,
-                    output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"));
+            outputFileName = new File(".", output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"))
         }
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 22
         versionCode 6
-        versionName "1.0.3"
+        versionName "1.0.4"
     }
 
     buildTypes {
@@ -39,6 +38,12 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+    }
+
+    android {
+        lintOptions {
+            abortOnError false
+        }
     }
 
     resourcePrefix 'rsb_'
@@ -66,6 +71,7 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile 'org.mockito:mockito-core:1.10.19'
 }
+
 if (project.hasProperty("android")) { // Android libraries
     task sourcesJar(type: Jar) {
         classifier = 'sources'
@@ -89,28 +95,29 @@ if (project.hasProperty("android")) { // Android libraries
         from sourceSets.main.allSource
     }
 }
+
 afterEvaluate { project ->
     uploadArchives {
         repositories {
             mavenDeployer {
 
-                pom.groupId = GROUP
-                pom.artifactId = project.getProperties().POM_ARTIFACT_ID
+                pom.groupId = RS_POM_GROUP
+                pom.artifactId = project.getProperties().BB_POM_ARTIFACT_ID
                 pom.version = android.defaultConfig.versionName
 
                 def deployPath = file('./')
                 repository(url: "file://${deployPath.absolutePath}/../../Android-SDK/")
 
                 pom.project {
-                    name project.getProperties().POM_NAME
-                    packaging project.getProperties().POM_PACKAGING
-                    description POM_DESCRIPTION
+                    name project.getProperties().BB_POM_NAME
+                    packaging project.getProperties().BB_POM_PACKAGING
+                    description RS_POM_DESCRIPTION
 
                     licenses {
                         license {
-                            name POM_LICENCE_NAME
-                            url POM_LICENCE_URL
-                            distribution POM_LICENCE_DIST
+                            name RS_POM_LICENCE_NAME
+                            url RS_POM_LICENCE_URL
+                            distribution RS_POM_LICENCE_DIST
                         }
                     }
                 }
@@ -118,7 +125,7 @@ afterEvaluate { project ->
                 pom.whenConfigured { pom ->
                     pom.dependencies.forEach { dep ->
                         if (dep.getVersion() == "unspecified") {
-                            dep.setGroupId(GROUP)
+                            dep.setGroupId(RS_POM_GROUP)
                             dep.setVersion(android.defaultConfig.versionName)
                         }
                     }
@@ -127,6 +134,7 @@ afterEvaluate { project ->
         }
     }
 }
+
 buildscript {
     repositories {
         maven {

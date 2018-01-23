@@ -89,23 +89,23 @@ afterEvaluate { project ->
         repositories {
             mavenDeployer {
 
-                pom.groupId = GROUP
-                pom.artifactId = project.getProperties().POM_ARTIFACT_ID
+                pom.groupId = RS_POM_GROUP
+                pom.artifactId = project.getProperties().SK_POM_ARTIFACT_ID
                 pom.version = android.defaultConfig.versionName
 
                 def deployPath = file('./')
                 repository(url: "file://${deployPath.absolutePath}/../../Android-SDK/")
 
                 pom.project {
-                    name project.getProperties().POM_NAME
-                    packaging project.getProperties().POM_PACKAGING
-                    description POM_DESCRIPTION
+                    name project.getProperties().SK_POM_NAME
+                    packaging project.getProperties().SK_POM_PACKAGING
+                    description RS_POM_DESCRIPTION
 
                     licenses {
                         license {
-                            name POM_LICENCE_NAME
-                            url POM_LICENCE_URL
-                            distribution POM_LICENCE_DIST
+                            name RS_POM_LICENCE_NAME
+                            url RS_POM_LICENCE_URL
+                            distribution RS_POM_LICENCE_DIST
                         }
                     }
                 }
@@ -113,7 +113,7 @@ afterEvaluate { project ->
                 pom.whenConfigured { pom ->
                     pom.dependencies.forEach { dep ->
                         if (dep.getVersion() == "unspecified") {
-                            dep.setGroupId(GROUP)
+                            dep.setGroupId(RS_POM_GROUP)
                             dep.setVersion(android.defaultConfig.versionName)
                         }
                     }

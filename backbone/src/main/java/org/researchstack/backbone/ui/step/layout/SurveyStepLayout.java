@@ -137,10 +137,20 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         title.setTextColor(principalTextColor);
         TextView summary = (TextView) findViewById(R.id.rsb_survey_text);
         summary.setTextColor(secondaryTextColor);
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setNegativeTitleColor(coloryPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
-        submitBar.setPositiveAction(v -> onNextClicked());
+        submitBar.setPositiveAction(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if(onNextClicked())
+                {
+                    submitBar.clearActions();
+                }
+            }
+        });
 
         if (questionStep != null) {
             if (!TextUtils.isEmpty(questionStep.getTitle())) {
@@ -206,7 +216,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         return super.onSaveInstanceState();
     }
 
-    protected void onNextClicked() {
+    protected boolean onNextClicked() {
         BodyAnswer bodyAnswer = stepBody.getBodyAnswerState();
 
         if (bodyAnswer == null || !bodyAnswer.isValid()) {
@@ -215,10 +225,12 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
                             ? BodyAnswer.INVALID.getString(getContext())
                             : bodyAnswer.getString(getContext()),
                     Toast.LENGTH_SHORT).show();
+            return false;
         } else {
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                     getStep(),
                     stepBody.getStepResult(false));
+            return true;
         }
     }
 

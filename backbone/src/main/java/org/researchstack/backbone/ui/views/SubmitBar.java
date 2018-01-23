@@ -3,19 +3,14 @@ package org.researchstack.backbone.ui.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.utils.ThemeUtils;
-
-import rx.functions.Action1;
 
 public class SubmitBar extends LinearLayout {
     private TextView positiveView;
@@ -62,8 +57,21 @@ public class SubmitBar extends LinearLayout {
         positiveView.setText(title);
     }
 
-    public void setPositiveAction(Action1 submit) {
-        RxView.clicks(this.positiveView).subscribe(submit);
+    public void setPositiveAction(final OnClickListener action) {
+        positiveView.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                action.onClick(view);
+            }
+        });
+    }
+
+    public void clearActions()
+    {
+        positiveView.setOnClickListener(null);
+        negativeView.setOnClickListener(null);
     }
 
     public View getPositiveActionView() {
@@ -87,8 +95,15 @@ public class SubmitBar extends LinearLayout {
         negativeView.setText(title);
     }
 
-    public void setNegativeAction(Action1 submit) {
-        RxView.clicks(this.negativeView).subscribe(submit);
+    public void setNegativeAction(final OnClickListener action) {
+        negativeView.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                action.onClick(view);
+            }
+        });
     }
 
     public View getNegativeActionView() {
