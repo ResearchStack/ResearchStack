@@ -18,6 +18,7 @@ import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
@@ -350,13 +351,26 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     /**
      * Make sure user is 100% wanting to cancel, since their data will be discarded
+     * This may choose to simply exit the activity if the user is on the first step of the OrderedTask
      */
     public void showConfirmExitDialog()
     {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.rsb_are_you_sure)
-                .setPositiveButton(R.string.rsb_discard_results, (dialog, i) -> discardResultsAndFinish())
-                .setNegativeButton(R.string.rsb_cancel, null).create().show();
+        boolean showConfigrmDialog = true;
+        // Do not show the "Are you sure?" dialog if we are on the first step
+        if (task instanceof OrderedTask) {
+            OrderedTask orderedTask = (OrderedTask)task;
+            if (currentStep != null && orderedTask.getSteps().indexOf(currentStep) == 0) {
+                showConfigrmDialog = false;
+            }
+        }
+        if (showConfigrmDialog) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.rsb_are_you_sure)
+                    .setPositiveButton(R.string.rsb_discard_results, (dialog, i) -> discardResultsAndFinish())
+                    .setNegativeButton(R.string.rsb_cancel, null).create().show();
+        } else {
+            discardResultsAndFinish();
+        }
     }
 
     @Override
