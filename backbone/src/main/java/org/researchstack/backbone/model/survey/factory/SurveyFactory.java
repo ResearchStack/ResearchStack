@@ -58,6 +58,7 @@ import org.researchstack.backbone.step.NavigationExpectedAnswerQuestionStep;
 import org.researchstack.backbone.step.NavigationSubtaskStep;
 import org.researchstack.backbone.step.active.ActiveStep;
 import org.researchstack.backbone.task.SmartSurveyTask;
+import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.step.layout.PasscodeCreationStepLayout;
 
 import java.util.ArrayList;
@@ -913,6 +914,7 @@ public class SurveyFactory {
     }
 
     public void fillActiveStep(ActiveStep step, ActiveStepSurveyItem item) {
+        step.setActivityClazz(ActiveTaskActivity.class);
         if (item.title != null) {
             step.setTitle(item.title);
         }

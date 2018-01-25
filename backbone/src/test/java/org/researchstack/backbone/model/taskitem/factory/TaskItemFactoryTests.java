@@ -4,8 +4,11 @@ import android.content.pm.PackageManager;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
 import org.researchstack.backbone.model.taskitem.TaskItem;
 import org.researchstack.backbone.step.CompletionStep;
@@ -18,6 +21,7 @@ import org.researchstack.backbone.step.active.FitnessStep;
 import org.researchstack.backbone.step.active.TappingIntervalStep;
 import org.researchstack.backbone.step.active.WalkingTaskStep;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.utils.LogExt;
 
 import static junit.framework.Assert.*;
 import static org.researchstack.backbone.task.factory.TremorTaskFactory.*;
@@ -28,6 +32,8 @@ import static org.researchstack.backbone.task.factory.TremorTaskFactory.*;
  * The TaskItemFactoryTests will test the deserialization of JSON into their corresponding Task objects
  */
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({LogExt.class})
 public class TaskItemFactoryTests {
 
     private SurveyFactoryHelper helper;
@@ -37,6 +43,7 @@ public class TaskItemFactoryTests {
 
         helper = new SurveyFactoryHelper();
 
+        PowerMockito.mockStatic(LogExt.class);
         PackageManager packageManager = Mockito.mock(PackageManager.class);
         Mockito.when(helper.mockContext.getPackageManager()).thenReturn(packageManager);
     }

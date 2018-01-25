@@ -10,20 +10,22 @@ import android.support.annotation.NonNull;
 import android.view.Surface;
 import android.view.WindowManager;
 
-import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.PermissionRequestManager;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.FileResult;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.result.logger.DataLoggerManager;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.ActiveStep;
+import org.researchstack.backbone.step.active.ActiveTaskAndResultListener;
 import org.researchstack.backbone.step.active.CountdownStep;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
 import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,7 +41,8 @@ import java.util.Map;
  * and make sure that they are correctly bundled and uploaded at the end
  */
 
-public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCallback {
+public class ActiveTaskActivity extends ViewTaskActivity
+        implements ActivityCallback, ActiveTaskAndResultListener {
 
     public static final String ACTIVITY_TASK_RESULT_KEY = "ACTIVITY_TASK_RESULT_KEY";
 
@@ -57,6 +60,14 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
         init();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (currentStepLayout != null && currentStepLayout instanceof ActiveStepLayout) {
+            ((ActiveStepLayout)currentStepLayout).pauseActiveStepLayout();
+        }
+    }
+
     protected void init() {
         if (!DataLoggerManager.isInitialized()) {
             DataLoggerManager.initialize(this);
@@ -66,15 +77,23 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
 
     @Override
     protected void discardResultsAndFinish() {
-        if (currentStepLayout instanceof ActiveStepLayout) {
-            ((ActiveStepLayout) currentStepLayout).forceStop();
+        if (currentStepLayout != null && currentStepLayout instanceof ActiveStepLayout) {
+            ((ActiveStepLayout) currentStepLayout).pauseActiveStepLayout();
+            // Pause may cause the currentStepLayout to change, so check again
+            if (currentStepLayout != null && currentStepLayout instanceof ActiveStepLayout) {
+                ((ActiveStepLayout) currentStepLayout).forceStop();
+            }
         }
+        currentStepLayout = null;
         DataLoggerManager.getInstance().deleteAllDirtyFiles();
         super.discardResultsAndFinish();
     }
 
     @Override
     public void showStep(Step step, boolean alwaysReplaceView) {
+
+        LogExt.d(ActiveTaskActivity.class,
+                "showStep(" + step.getIdentifier() + ", " + alwaysReplaceView + ")");
 
         // compute back button status while currentStep is actually the previousStep at this point
         isBackButtonEnabled =
@@ -84,21 +103,30 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
             getSupportActionBar().setDisplayHomeAsUpEnabled(isBackButtonEnabled);
         }
 
-        // ActiveSteps have a particular lifecycle to where they should not be re-created
-        // unnecessarily, so if it already exists and is showing, then do not re-show the StepLayout
-        if (!isStepAnAlreadyShowingActiveStep(step)) {
+        if (isStepAndLayoutStillValid(step)) {
+            // The step was not killed, it is probably running with the RecorderService
+            // Instead of re-creating it, just signal to it that it should resume
+            ((ActiveStepLayout)currentStepLayout).resumeActiveStepLayout();
+        } else {
             super.showStep(step, alwaysReplaceView);
         }
 
         // Active steps lock screen on and orientation so that the view is not unnecessarily
         // destroyed and recreated while the data logger is recording
-        // TODO: do we need a partial CPU wake lock here?
         if (step instanceof ActiveStep) {
             lockScreenOn();
             lockOrientation();
         } else {
             unlockScreenOn();
             unlockOrientation();
+        }
+    }
+
+    @Override
+    protected void setupStepLayoutBeforeInitializeIsCalled(StepLayout stepLayout) {
+        super.setupStepLayoutBeforeInitializeIsCalled(stepLayout);
+        if (stepLayout instanceof ActiveStepLayout) {
+            ((ActiveStepLayout)stepLayout).setTaskAndResultListener(this);
         }
     }
 
@@ -110,8 +138,9 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
         }
     }
 
-    private boolean isStepAnAlreadyShowingActiveStep(Step step) {
-        return step instanceof ActiveStep && step.equals(currentStep);
+    private boolean isStepAndLayoutStillValid(Step step) {
+        return step instanceof ActiveStep && step.equals(currentStep) &&
+                currentStepLayout != null && currentStepLayout instanceof ActiveStepLayout;
     }
 
     @Override
@@ -232,5 +261,17 @@ public class ActiveTaskActivity extends ViewTaskActivity implements ActivityCall
     @Override
     public void startConsentTask() {
         // deprecated
+    }
+
+    // Only called for ActiveStepLayouts
+    @Override
+    public TaskResult activeTaskActivityResult() {
+        return taskResult;
+    }
+
+    // Only called for ActiveStepLayouts
+    @Override
+    public Task activeTaskActivityGetTask() {
+        return task;
     }
 }

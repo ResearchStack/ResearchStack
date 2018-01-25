@@ -2,10 +2,12 @@ package org.researchstack.backbone.step.active;
 
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.recorder.RecorderConfig;
+import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by TheMDP on 2/4/17.
@@ -187,10 +189,20 @@ public class ActiveStep extends Step {
     private Map<String, String> spokenInstructionMap;
 
     /**
+     * The recording UUID is a unique identifier used by the RecorderService
+     */
+    private UUID recordingUuid;
+
+    /**
      * This can be increased to allow the ending spoken instruction to
      * not get cut off if it is too long
      */
-    private int estimateTimeInMsToSpeakEndInstruction = 2000;  // 2 seconds
+    private int estimateTimeInMsToSpeakEndInstruction = 1000;  // 1 second delay after finishing
+
+    /**
+     * The class of the activity that will run this step
+     */
+    private Class<? extends ActiveTaskActivity> activityClazz = ActiveTaskActivity.class;
 
     /* Default constructor needed for serialization/deserialization of object */
     ActiveStep() {
@@ -200,12 +212,14 @@ public class ActiveStep extends Step {
     public ActiveStep(String identifier) {
         super(identifier);
         setOptional(false);
+        recordingUuid = UUID.randomUUID();
     }
 
     public ActiveStep(String identifier, String title, String detailText) {
         super(identifier, title);
         setText(detailText);
         setOptional(false);
+        recordingUuid = UUID.randomUUID();
     }
 
     @Override
@@ -362,5 +376,21 @@ public class ActiveStep extends Step {
 
     public void setEstimateTimeInMsToSpeakEndInstruction(int estimateTimeInMsToSpeakEndInstruction) {
         this.estimateTimeInMsToSpeakEndInstruction = estimateTimeInMsToSpeakEndInstruction;
+    }
+
+    public UUID getRecordingUuid() {
+        return recordingUuid;
+    }
+
+    public void setRecordingUuid(UUID recordingUuid) {
+        this.recordingUuid = recordingUuid;
+    }
+
+    public Class<? extends ActiveTaskActivity> getActivityClazz() {
+        return activityClazz;
+    }
+
+    public void setActivityClazz(Class<? extends ActiveTaskActivity> activityClazz) {
+        this.activityClazz = activityClazz;
     }
 }

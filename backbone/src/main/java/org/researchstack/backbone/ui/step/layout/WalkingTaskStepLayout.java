@@ -1,13 +1,17 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.View;
 
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.step.active.recorder.AudioRecorder;
 import org.researchstack.backbone.step.active.recorder.PedometerRecorder;
-import org.researchstack.backbone.step.active.recorder.Recorder;
 import org.researchstack.backbone.step.active.WalkingTaskStep;
 
 /**
@@ -23,6 +27,7 @@ import org.researchstack.backbone.step.active.WalkingTaskStep;
 public class WalkingTaskStepLayout extends ActiveStepLayout {
 
     private WalkingTaskStep walkingTaskStep;
+    private BroadcastReceiver pedometerReceiver;
 
     public WalkingTaskStepLayout(Context context) {
         super(context);
@@ -58,26 +63,40 @@ public class WalkingTaskStepLayout extends ActiveStepLayout {
     }
 
     @Override
-    public void start() {
-        super.start();
-
-        // Loop through and try to find the Pedometer recorder
-        if (recorderList != null) {
-            for (Recorder recorder : recorderList) {
-                if (recorder instanceof PedometerRecorder) {
-                    PedometerRecorder pedometerRecorder = (PedometerRecorder)recorder;
-                    pedometerRecorder.setPedometerListener(new PedometerRecorder.PedometerListener() {
-                        @Override
-                        public void onStepTaken(int stepCount, float distance) {
-                            if (walkingTaskStep.getNumberOfStepsPerLeg() > 0 &&
-                               (stepCount >= walkingTaskStep.getNumberOfStepsPerLeg()))
-                            {
-                                WalkingTaskStepLayout.super.stop();
-                            }
+    protected void registerRecorderBroadcastReceivers(Context appContext) {
+        super.registerRecorderBroadcastReceivers(appContext);
+        pedometerReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent == null || intent.getAction() == null) {
+                    return;
+                }
+                if (PedometerRecorder.BROADCAST_PEDOMETER_UPDATE_ACTION.equals(intent.getAction())) {
+                    PedometerRecorder.PedometerUpdateHolder dataHolder =
+                            PedometerRecorder.getPedometerUpdateHolder(intent);
+                    if (dataHolder != null) {
+                        if (walkingTaskStep.getNumberOfStepsPerLeg() > 0 &&
+                                (dataHolder.getStepCount() >= walkingTaskStep.getNumberOfStepsPerLeg()))
+                        {
+                            // TODO: mdephillips 1/13/18
+                            // we may want to move this functionality to the PedometerRecorder
+                            // and having that signal to RecorderService to stop,
+                            // since this StepLayout may be create/destroyed and miss this broadcast
+                            WalkingTaskStepLayout.super.stop();
                         }
-                    });
+                    }
                 }
             }
-        }
+        };
+        IntentFilter intentFilter = new IntentFilter(AudioRecorder.BROADCAST_SAMPLE_ACTION);
+        LocalBroadcastManager.getInstance(appContext)
+                .registerReceiver(pedometerReceiver, intentFilter);
+    }
+
+    @Override
+    protected void unregisterRecorderBroadcastReceivers() {
+        super.unregisterRecorderBroadcastReceivers();
+        Context appContext = getContext().getApplicationContext();
+        LocalBroadcastManager.getInstance(appContext).unregisterReceiver(pedometerReceiver);
     }
 }
