@@ -23,10 +23,6 @@ import java.io.Serializable;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by TheMDP on 2/17/17.
- */
-
-/**
  * Since not all apps using this SDK require this LocationRecorder functionality,
  * we don't include it in the manifest and hence also suppress missing permissions warnings in the compiler
  */
@@ -45,16 +41,20 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
     public static final String ALTITUDE_KEY    = "altitude";
     public static final String ACCURACY_KEY    = "accuracy";
     public static final String COURSE_KEY      = "course";
+    public static final String RELATIVE_LATITUDE_KEY = "relativeLatitude";
+    public static final String RELATIVE_LONGITUDE_KEY = "relativeLongitude";
     public static final String SPEED_KEY       = "speed";
 
     private JsonObject jsonObject;
     private JsonObject coordinateJsonObject;
 
     private LocationManager locationManager = null;
-    private long minTime;
-    private float minDistance;
+    private final long minTime;
+    private final float minDistance;
+    private final boolean usesRelativeCoordinates;
 
     private double totalDistance;
+    private Location firstLocation;
     private Location lastLocation;
 
     public static final String BROADCAST_LOCATION_UPDATE_ACTION  = "LocationRecorder_BroadcastLocationUpdate";
@@ -81,15 +81,35 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
      * @param step the step that contains this recorder
      * @param outputDirectory the output directory of the file that will be written with location data
      */
-    LocationRecorder(long minTime, float minDistance, String identifier, Step step, File outputDirectory) {
+    LocationRecorder(
+            long minTime, float minDistance, boolean usesRelativeCoordinates, String identifier,
+            Step step, File outputDirectory) {
         super(identifier, step, outputDirectory);
         this.minTime = minTime;
         this.minDistance = minDistance;
+        this.usesRelativeCoordinates = usesRelativeCoordinates;
+    }
+
+    public long getMinTime() {
+        return minTime;
+    }
+
+    public float getMinDistance() {
+        return minDistance;
+    }
+
+    /**
+     * If this is set to true, the recorder will produce relative GPS coordinates, using the
+     * user's initial position as zero in the relative coordinate system. If this is set to
+     * false, the recorder will produce absolute GPS coordinates.
+     */
+    public boolean getUsesRelativeCoordinates() {
+        return usesRelativeCoordinates;
     }
 
     @Override
     public void start(Context context) {
-
+        firstLocation = null;
         lastLocation = null;
         totalDistance = 0;
         locationRecorderPrefs = context.getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
@@ -158,10 +178,24 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
+            if (firstLocation == null) {
+                // Initialize first location
+                firstLocation = location;
+            }
+
             jsonObject.addProperty(TIMESTAMP_KEY, location.getTime());
 
-            coordinateJsonObject.addProperty(LONGITUDE_KEY, location.getLongitude());
-            coordinateJsonObject.addProperty(LATITUDE_KEY, location.getLatitude());
+            if (usesRelativeCoordinates) {
+                // Subtract from the firstLocation to get relative coordinates.
+                double relativeLatitude = location.getLatitude() - firstLocation.getLatitude();
+                double relativeLongitude = location.getLongitude() - firstLocation.getLongitude();
+                coordinateJsonObject.addProperty(RELATIVE_LATITUDE_KEY, relativeLatitude);
+                coordinateJsonObject.addProperty(RELATIVE_LONGITUDE_KEY, relativeLongitude);
+            } else {
+                // Use absolute coordinates given by the location.
+                coordinateJsonObject.addProperty(LONGITUDE_KEY, location.getLongitude());
+                coordinateJsonObject.addProperty(LATITUDE_KEY, location.getLatitude());
+            }
             jsonObject.add(COORDINATE_KEY, coordinateJsonObject);
 
             if (location.hasAccuracy()) {
