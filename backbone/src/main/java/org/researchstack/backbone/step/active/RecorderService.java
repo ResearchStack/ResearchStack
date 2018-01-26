@@ -273,8 +273,8 @@ public class RecorderService extends Service implements RecorderListener, TextTo
                     LogExt.e(RecorderService.class,
                             "Error finding ActiveStep's sound " + activeStep.getSoundRes());
                 } else {
-                    MediaPlayer mp = MediaPlayer.create(this, soundRes);
-                    mp.start();
+                    mediaPlayer = MediaPlayer.create(this, soundRes);
+                    mediaPlayer.start();
                 }
             }
 
