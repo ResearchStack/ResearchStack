@@ -25,6 +25,13 @@ public class ActiveStepSurveyItem extends SurveyItem<String> {
     @SerializedName("spokenInstructions")
     private Map<String, String> spokenInstructionMap;
 
+    /**
+     * A string representation of a raw file resource,
+     * it will play on start() of ActiveStepLayout
+     */
+    @SerializedName("soundRes")
+    private String soundRes;
+
     /* Default constructor needed for serilization/deserialization of object */
     public ActiveStepSurveyItem() {
         super();
@@ -60,5 +67,13 @@ public class ActiveStepSurveyItem extends SurveyItem<String> {
 
     public void setSpokenInstructionMap(Map<String, String> spokenInstructions) {
         spokenInstructionMap = spokenInstructions;
+    }
+
+    public String getSoundRes() {
+        return soundRes;
+    }
+
+    public void setSoundRes(String soundRes) {
+        this.soundRes = soundRes;
     }
 }
