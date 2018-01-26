@@ -926,6 +926,9 @@ public class SurveyFactory {
         if (item.getSpokenInstructionMap() != null) {
             step.setSpokenInstructionMap(item.getSpokenInstructionMap());
         }
+        if (item.getSoundRes() != null) {
+            step.setSoundRes(item.getSoundRes());
+        }
     }
 
     /**
