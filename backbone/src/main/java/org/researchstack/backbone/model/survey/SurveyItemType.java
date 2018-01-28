@@ -20,7 +20,7 @@ public enum SurveyItemType {
     @SerializedName("completion")
     INSTRUCTION_COMPLETION      ("completion"),             // CompletionStep
     @SerializedName(value="compound", alternate={"form", "toggle"})
-    QUESTION_COMPOUND           ("compound"),               // QuestionSteps > 1
+    QUESTION_FORM("compound"),               // QuestionSteps > 1
     @SerializedName("boolean")
     QUESTION_BOOLEAN            ("boolean"),                // ORKBooleanAnswerFormat
     @SerializedName("singleChoiceText")
@@ -93,7 +93,7 @@ public enum SurveyItemType {
 
     public boolean isQuestionSubtype() {
         switch (this) {
-            case QUESTION_COMPOUND:
+            case QUESTION_FORM:
             case QUESTION_BOOLEAN:
             case QUESTION_SINGLE_CHOICE:
             case QUESTION_MULTIPLE_CHOICE:

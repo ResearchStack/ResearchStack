@@ -25,7 +25,7 @@ import org.researchstack.backbone.model.TaskModel;
 import org.researchstack.backbone.model.survey.ActiveStepSurveyItem;
 import org.researchstack.backbone.model.survey.BooleanQuestionSurveyItem;
 import org.researchstack.backbone.model.survey.ChoiceQuestionSurveyItem;
-import org.researchstack.backbone.model.survey.CompoundQuestionSurveyItem;
+import org.researchstack.backbone.model.survey.FormSurveyItem;
 import org.researchstack.backbone.model.survey.DateRangeSurveyItem;
 import org.researchstack.backbone.model.survey.FloatRangeSurveyItem;
 import org.researchstack.backbone.model.survey.IntegerRangeSurveyItem;
@@ -177,11 +177,11 @@ public class SurveyFactory {
                     throw new IllegalStateException("Error in json parsing, QUESTION_* types must be QuestionSurveyItem");
                 }
                 return createQuestionStep(context, (QuestionSurveyItem)item);
-            case QUESTION_COMPOUND:
-                if (!(item instanceof CompoundQuestionSurveyItem)) {
-                    throw new IllegalStateException("Error in json parsing, QUESTION_COMPOUND types must be CompoundQuestionSurveyItem");
+            case QUESTION_FORM:
+                if (!(item instanceof FormSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, QUESTION_FORM types must be FormSurveyItem");
                 }
-                return createCompoundStep(context, (CompoundQuestionSurveyItem)item);
+                return createFormStep(context, (FormSurveyItem)item);
             case ACCOUNT_REGISTRATION:
                 if (!(item instanceof ProfileSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, ACCOUNT_REGISTRATION types must be ProfileSurveyItem");
@@ -340,7 +340,7 @@ public class SurveyFactory {
      * @param item SubtaskQuestionSurveyItem item from JSON that contains nested SurveyItems
      * @return a subtask step by recursively calling createSurveyStep for inner subtask steps
      */
-    public FormStep createCompoundStep(Context context, CompoundQuestionSurveyItem item) {
+    public FormStep createFormStep(Context context, FormSurveyItem item) {
         if (item.items == null || item.items.isEmpty()) {
             throw new IllegalStateException("compound surveys must have step items to proceed");
         }
@@ -353,7 +353,7 @@ public class SurveyFactory {
     /**
      * Helper method to re-use the logic of creating question steps for a form step
      */
-    protected List<QuestionStep> formStepCreateQuestionSteps(Context context, CompoundQuestionSurveyItem item) {
+    protected List<QuestionStep> formStepCreateQuestionSteps(Context context, FormSurveyItem item) {
         List<QuestionStep> questionSteps = new ArrayList<>();
         for (SurveyItem subItem : item.items) {
             if (subItem instanceof QuestionSurveyItem) {
@@ -367,7 +367,7 @@ public class SurveyFactory {
     /**
      * Helper method to fill a navigation form step, but leave the base class out of it
      */
-    protected void fillNavigationFormStep(NavigationFormStep step, CompoundQuestionSurveyItem item) {
+    protected void fillNavigationFormStep(NavigationFormStep step, FormSurveyItem item) {
         fillFormStep(step, item);
         transferNavigationRules(item, step);
         if (item.expectedAnswer != null) {
@@ -378,12 +378,15 @@ public class SurveyFactory {
     /**
      * Helper method to fill a form step, but leave the base class out of it
      */
-    protected void fillFormStep(FormStep step, CompoundQuestionSurveyItem item) {
+    protected void fillFormStep(FormStep step, FormSurveyItem item) {
         fillQuestionStep(item, step);
         if (item.skipTitle != null) {
             step.setSkipTitle(item.skipTitle);
             // we can assume that if we set the skip title, we want to show the skip button
             step.setOptional(true);
+        }
+        if (item.autoFocusFirstEditText != null) {
+            step.setAutoFocusFirstEditText(item.autoFocusFirstEditText);
         }
     }
 

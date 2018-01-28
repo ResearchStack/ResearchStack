@@ -1,6 +1,6 @@
 package org.researchstack.backbone.step;
 
-import org.researchstack.backbone.model.survey.CompoundQuestionSurveyItem;
+import org.researchstack.backbone.model.survey.FormSurveyItem;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.utils.StepHelper;
@@ -54,7 +54,7 @@ public class NavigationFormStep extends FormStep implements NavigableOrderedTask
         // Special case SKIP_BUTTON_TAPPED_ACTION_IDENTIFIER will use the skip button being clicked
         // to trigger a skip to a specific step identifier
         if (expectedAnswer != null &&
-            expectedAnswer.equals(CompoundQuestionSurveyItem.SKIP_BUTTON_TAPPED_ACTION_IDENTIFIER)) {
+            expectedAnswer.equals(FormSurveyItem.SKIP_BUTTON_TAPPED_ACTION_IDENTIFIER)) {
             if (StepHelper.wasFormStepSkipped(this, result)) {
                 return skipToStepIdentifier;
             }

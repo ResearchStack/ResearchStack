@@ -59,8 +59,8 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
             case SUBTASK:
                 item = context.deserialize(json, SubtaskQuestionSurveyItem.class);
                 break;
-            case QUESTION_COMPOUND:
-                item = context.deserialize(json, CompoundQuestionSurveyItem.class);
+            case QUESTION_FORM:
+                item = context.deserialize(json, FormSurveyItem.class);
                 break;
             case QUESTION_BOOLEAN:
                 item = context.deserialize(json, BooleanQuestionSurveyItem.class);
