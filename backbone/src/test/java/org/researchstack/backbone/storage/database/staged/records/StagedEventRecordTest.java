@@ -29,6 +29,7 @@ public class StagedEventRecordTest {
         event.setStatus(StagedActivityState.New);
         event.setEventStartDate(new Date());
         event.setEventEndDate(new Date());
+        event.setLastStepId("4321");
         event.setTask(task);
 
         StagedEventRecord record = StagedEventRecord.toRecord(event);
@@ -39,6 +40,7 @@ public class StagedEventRecordTest {
         Assert.assertEquals(record.eventStartDate, event.getEventStartDate());
         Assert.assertEquals(record.eventEndDate, event.getEventEndDate());
         Assert.assertEquals(record.taskId, "TEST_TASK_ID");
+        Assert.assertEquals(record.lastStepId, "4321");
         Assert.assertNotNull(record.task);
 
         event = StagedEventRecord.toStagedEvent(record, null);
@@ -49,6 +51,7 @@ public class StagedEventRecordTest {
         Assert.assertEquals(record.eventStartDate, event.getEventStartDate());
         Assert.assertEquals(record.eventEndDate, event.getEventEndDate());
         Assert.assertEquals(event.getTask().getIdentifier(), "TEST_TASK_ID");
+        Assert.assertEquals(event.getLastStepId(), "4321");
     }
 
 }

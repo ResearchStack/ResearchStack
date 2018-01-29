@@ -51,6 +51,9 @@ public class StagedEventRecord {
     @DatabaseField(canBeNull = true)
     public String taskResultId;
 
+    @DatabaseField(canBeNull = true)
+    public String lastStepId;
+
     public static StagedEvent toStagedEvent(StagedEventRecord record, TaskResult result) {
         StagedEvent stagedEvent = new StagedEvent();
         stagedEvent.setId(record.id);
@@ -59,6 +62,7 @@ public class StagedEventRecord {
         stagedEvent.setEventEndDate(record.eventEndDate);
         stagedEvent.setTask((Task) record.task);
         stagedEvent.addResult(result, record.status);
+        stagedEvent.setLastStepId(record.lastStepId);
         return stagedEvent;
     }
 
@@ -76,6 +80,7 @@ public class StagedEventRecord {
         if (event.getResult() != null) {
             record.taskResultId = event.getResult().getIdentifier();
         }
+        record.lastStepId = event.getLastStepId();
         return record;
     }
 
