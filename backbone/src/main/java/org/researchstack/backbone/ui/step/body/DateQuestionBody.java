@@ -135,7 +135,7 @@ public class DateQuestionBody implements StepBody {
 
     @Override
     public StepResult getStepResult(boolean skipped) {
-        if (skipped) {
+        if (skipped || !hasChosenDate) {
             result.setResult(null);
         } else {
             result.setResult(calendar.getTimeInMillis());
