@@ -19,6 +19,7 @@ public class StagedEvent implements Serializable {
     private StagedActivityState status;
     private Task task;
     private TaskResult result;
+    private String lastStepId;
     private StagedActivity activity;
 
     public StagedEvent() {
@@ -87,5 +88,13 @@ public class StagedEvent implements Serializable {
 
     public void setActivity(StagedActivity activity) {
         this.activity = activity;
+    }
+
+    public String getLastStepId() {
+        return lastStepId;
+    }
+
+    public void setLastStepId(String lastStepId) {
+        this.lastStepId = lastStepId;
     }
 }
