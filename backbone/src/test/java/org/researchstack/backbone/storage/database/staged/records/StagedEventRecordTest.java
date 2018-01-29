@@ -26,7 +26,7 @@ public class StagedEventRecordTest {
         StagedEvent event = new StagedEvent();
         event.setId(1);
         event.setActivityId("1234");
-        event.setStatus(StagedActivityState.INITIAL);
+        event.setStatus(StagedActivityState.New);
         event.setEventStartDate(new Date());
         event.setEventEndDate(new Date());
         event.setTask(task);

@@ -5,7 +5,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 
-version = '2.0.42'
+version = '2.0.43'
 
 android {
     compileSdkVersion 25
@@ -14,7 +14,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 49
+        versionCode 50
         versionName version
         vectorDrawables.useSupportLibrary = true
     }
