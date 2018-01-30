@@ -94,11 +94,24 @@ public abstract class DataProvider {
      *
      * @param username the user's username
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
-     * returning true if signIn was successful
+     * returning true if request for sign in link was successful
      */
-    public abstract Observable<DataResponse> requestSignInLink(String username);
+    public Observable<DataResponse> requestSignInLink(String username) {
+        return Observable.just(new DataResponse(false, "Not implemented"));
+    }
 
-    public abstract Observable<DataResponse> signInWithEmailAndToken(String username, String token);
+    /**
+     * Sign in with email and token. This is used in conjunction with requestSignInLink. The
+     * link should be intercepted by the app and the sign in token extracted.
+     *
+     * @param username the user's username
+     * @param token sign in token
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
+     * returning true if request for sign in was successful
+     */
+    public Observable<DataResponse> signInWithEmailAndToken(String username, String token) {
+        return Observable.just(new DataResponse(false, "Not implemented"));
+    }
 
     /**
      * Called to sign the user in using the user's external ID.
@@ -108,7 +121,8 @@ public abstract class DataProvider {
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
      */
-    public abstract Observable<DataResponse> signInWithExternalId(Context context, String externalId);
+    public abstract Observable<DataResponse> signInWithExternalId(Context context, String
+            externalId);
 
     /**
      * Sign out the user.  This will possibly involve a call to the server,
