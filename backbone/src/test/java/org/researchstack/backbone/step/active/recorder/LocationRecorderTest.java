@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import com.google.gson.JsonObject;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.researchstack.backbone.step.Step;
@@ -19,6 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -28,6 +30,8 @@ import static org.mockito.Mockito.when;
 public class LocationRecorderTest {
     private static final Step DUMMY_STEP = new Step();
     private static final File MOCK_OUTPUT_DIRECTORY = mock(File.class);
+    private static final long START_TIME_MILLIS = DateTime.parse("2018-01-29T23:39:44.334Z").getMillis();
+    private static final long START_TIME_NANOS = 1234567890L;
 
     private Context mockContext;
     private LocationRecorder recorder;
@@ -62,11 +66,11 @@ public class LocationRecorderTest {
         recorder.start(mockContext);
 
         // First coordinate
-        Location firstLocation = mockLocation(47.5, -122.5);
+        Location firstLocation = mockLocationWithLatLong(47.5, -122.5);
         recorder.onLocationChanged(firstLocation);
 
         // Second coordinate, head northwest 0.1 degrees.
-        Location secondLocation = mockLocation(47.6, -122.6);
+        Location secondLocation = mockLocationWithLatLong(47.6, -122.6);
         recorder.onLocationChanged(secondLocation);
 
         // Stop
@@ -93,11 +97,11 @@ public class LocationRecorderTest {
         recorder.start(mockContext);
 
         // First coordinate
-        Location firstLocation = mockLocation(47.5, -122.5);
+        Location firstLocation = mockLocationWithLatLong(47.5, -122.5);
         recorder.onLocationChanged(firstLocation);
 
         // Second coordinate, head northwest 0.1 degrees.
-        Location secondLocation = mockLocation(47.6, -122.6);
+        Location secondLocation = mockLocationWithLatLong(47.6, -122.6);
         recorder.onLocationChanged(secondLocation);
 
         // Stop
@@ -118,9 +122,10 @@ public class LocationRecorderTest {
         // firing.
         recorder = spy((LocationRecorder) config.recorderForStep(DUMMY_STEP,
                 MOCK_OUTPUT_DIRECTORY));
-        doNothing().when(recorder).startJsonDataLogging();
+        doReturn(0L).when(recorder).getElapsedNanosSinceBootFromLocation(any());
         doNothing().when(recorder).sendLocationUpdateBroadcast(anyDouble(), anyDouble(),
                 anyDouble());
+        doNothing().when(recorder).startJsonDataLogging();
         doNothing().when(recorder).stopJsonDataLogging();
 
         // LocationRecorder uses an optimization to re-use JSON objects so we can avoid creating
@@ -135,7 +140,7 @@ public class LocationRecorderTest {
         }).when(recorder).writeJsonObjectToFile(any());
     }
 
-    private static Location mockLocation(double latitude, double longitude) {
+    private static Location mockLocationWithLatLong(double latitude, double longitude) {
         Location location = mock(Location.class);
         when(location.getLatitude()).thenReturn(latitude);
         when(location.getLongitude()).thenReturn(longitude);
@@ -166,5 +171,55 @@ public class LocationRecorderTest {
                 0.001);
         assertFalse(coordinateJsonObject.has(LocationRecorder.LATITUDE_KEY));
         assertFalse(coordinateJsonObject.has(LocationRecorder.LONGITUDE_KEY));
+    }
+
+    @Test
+    public void timestamps() {
+        // Setup
+        LocationRecorderConfig config = new LocationRecorderConfig.Builder().build();
+        initLocationRecorderFromConfig(config);
+
+        // Start
+        recorder.start(mockContext);
+
+        // First location
+        Location firstLocation = mockLocationWithTime(START_TIME_MILLIS, START_TIME_NANOS);
+        recorder.onLocationChanged(firstLocation);
+
+        // Second location - 10ms have elapsed (10 million nanos).
+        Location secondLocation = mockLocationWithTime(START_TIME_MILLIS + 10,
+                START_TIME_NANOS + 10 * 1000 * 1000);
+        recorder.onLocationChanged(secondLocation);
+
+        // Stop
+        recorder.stop();
+
+        // Verify saved timestamps.
+        verify(recorder, times(2)).writeJsonObjectToFile(any());
+        assertEquals(savedJsonList.size(), 2);
+
+        // We use Locale to generate a timestamp with timezone. This is a bit wonky to test. For simplicity, just
+        // convert to epoch milliseconds.
+        String timestampDateStr = savedJsonList.get(0).get(LocationRecorder.TIMESTAMP_DATE_KEY).getAsString();
+        long timestampDateMillis = DateTime.parse(timestampDateStr).getMillis();
+        assertEquals(START_TIME_MILLIS, timestampDateMillis);
+
+        assertEquals(0.0, savedJsonList.get(0).get(LocationRecorder.TIMESTAMP_IN_SECONDS_KEY).getAsDouble(),
+                1e-12);
+        assertEquals(START_TIME_NANOS * 1e-9, savedJsonList.get(0).get(LocationRecorder.UPTIME_IN_SECONDS_KEY)
+                .getAsDouble(), 1e-12);
+
+        assertFalse(savedJsonList.get(1).has(LocationRecorder.TIMESTAMP_DATE_KEY));
+        assertEquals(0.010, savedJsonList.get(1).get(LocationRecorder.TIMESTAMP_IN_SECONDS_KEY).getAsDouble(),
+                1e-12);
+        assertEquals(START_TIME_NANOS * 1e-9 + 0.010, savedJsonList.get(1)
+                .get(LocationRecorder.UPTIME_IN_SECONDS_KEY).getAsDouble(), 1e-12);
+    }
+
+    private Location mockLocationWithTime(long epochTimeMillis, long nanosSinceBoot) {
+        Location location = mock(Location.class);
+        when(location.getTime()).thenReturn(epochTimeMillis);
+        doReturn(nanosSinceBoot).when(recorder).getElapsedNanosSinceBootFromLocation(location);
+        return location;
     }
 }
