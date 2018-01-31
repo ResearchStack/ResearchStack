@@ -29,6 +29,8 @@ public enum SurveyItemType {
     QUESTION_MULTIPLE_CHOICE    ("multipleChoiceText"),     // ORKTextChoiceAnswerFormat of style MultipleChoiceTextQuestion
     @SerializedName("textfield")
     QUESTION_TEXT               ("textfield"),              // ORKTextAnswerFormat
+    @SerializedName("emailTextField")
+    QUESTION_EMAIL ("emailTextField"),                      // EmailAnswerFormat
     @SerializedName("datePicker")
     QUESTION_DATE               ("datePicker"),             // ORKDateAnswerFormat of style Date
     @SerializedName("timeAndDatePicker")

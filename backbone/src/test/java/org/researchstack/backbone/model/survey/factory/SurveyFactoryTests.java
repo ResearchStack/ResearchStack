@@ -84,6 +84,7 @@ public class SurveyFactoryTests {
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "custom_consentdocument");
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_textfield");
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_compound");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_email");
 
         mockFingerprintManager = Mockito.mock(FingerprintManagerCompat.class);
         Mockito.when(mockFingerprintManager.isHardwareDetected()).thenReturn(true);
@@ -337,5 +338,23 @@ public class SurveyFactoryTests {
         stepResult.setResult("AnyResult");
         taskResult.getResults().put(expectedStepId, stepResult);
         assertNull(step.nextStepIdentifier(taskResult, null));
+    }
+
+    @Test
+    public void testSurveyItemEmail() {
+        String json = getJsonResource("survey_item_email");
+        SurveyItem surveyItem = helper.gson.fromJson(json, SurveyItem.class);
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(helper.mockContext, Collections.singletonList(surveyItem));
+
+        assertNotNull(stepList);
+        assertEquals(1, stepList.size());
+
+        String expectedStepId = "email";
+        assertTrue(stepList.get(0) instanceof QuestionStep);
+        QuestionStep step = (QuestionStep)stepList.get(0);
+        assertEquals(expectedStepId, step.getIdentifier());
+        assertTrue(step.getAnswerFormat() instanceof EmailAnswerFormat);
+        assertEquals("Personal Email", step.getTitle());
     }
 }
