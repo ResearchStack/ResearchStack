@@ -533,9 +533,6 @@ public class SurveyFactory {
     }
 
     protected void fillTextAnswerFormat(TextAnswerFormat format, TextfieldSurveyItem item) {
-        if (item.placeholderText != null) {
-
-        }
         if (item.inputType != null) {
             format.setInputType(item.inputType);
         }
