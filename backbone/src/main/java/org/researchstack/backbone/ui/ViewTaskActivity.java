@@ -315,6 +315,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     {
         if (result != null) {
             taskResult.setStepResultForStepIdentifier(id, result);
+        } else if (taskResult.getResults() != null) {
+            // result is null, make sure that is reflected in the results
+            taskResult.getResults().remove(id);
         }
     }
 
