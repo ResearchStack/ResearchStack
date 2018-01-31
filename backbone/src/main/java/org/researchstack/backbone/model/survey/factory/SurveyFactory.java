@@ -171,6 +171,7 @@ public class SurveyFactory {
             case QUESTION_SCALE:
             case QUESTION_SINGLE_CHOICE:
             case QUESTION_TEXT:
+            case QUESTION_EMAIL:
             case QUESTION_TIME:
             case QUESTION_TIMING_RANGE:
                 if (!(item instanceof QuestionSurveyItem)) {
@@ -481,26 +482,26 @@ public class SurveyFactory {
                 format = new ChoiceAnswerFormat(AnswerFormat.ChoiceAnswerStyle.SingleChoice, choices);
                 break;
             }
-            case QUESTION_TEXT:
+            case QUESTION_TEXT: {
                 if (!(item instanceof TextfieldSurveyItem)) {
                     throw new IllegalStateException("Error in json parsing, QUESTION_TEXT type must be TextfieldSurveyItem");
                 }
-                TextfieldSurveyItem textfieldSurveyItem = (TextfieldSurveyItem)item;
+                TextfieldSurveyItem textfieldSurveyItem = (TextfieldSurveyItem) item;
                 TextAnswerFormat textFormat = new TextAnswerFormat();
-                if (textfieldSurveyItem.inputType != null) {
-                    textFormat.setInputType(textfieldSurveyItem.inputType);
-                }
-                if (textfieldSurveyItem.validationRegex != null) {
-                    textFormat.setValidationRegex(textfieldSurveyItem.validationRegex);
-                }
-                if (textfieldSurveyItem.disabled != null && textfieldSurveyItem.disabled) {
-                    textFormat.setDisabled(true);
-                }
-                if (textfieldSurveyItem.isMultipleLines != null && textfieldSurveyItem.isMultipleLines) {
-                    textFormat.setIsMultipleLines(true);
-                }
+                fillTextAnswerFormat(textFormat, textfieldSurveyItem);
                 format = textFormat;
                 break;
+            }
+            case QUESTION_EMAIL: {
+                if (!(item instanceof TextfieldSurveyItem)) {
+                    throw new IllegalStateException("Error in json parsing, QUESTION_EMAIL type must be TextfieldSurveyItem");
+                }
+                TextfieldSurveyItem textfieldSurveyItem = (TextfieldSurveyItem) item;
+                EmailAnswerFormat emailFormat = new EmailAnswerFormat();
+                fillTextAnswerFormat(emailFormat, textfieldSurveyItem);
+                format = emailFormat;
+                break;
+            }
             default:
                 format = createCustomAnswerFormat(context, item);
                 break;
@@ -529,6 +530,21 @@ public class SurveyFactory {
      */
     public AnswerFormat createCustomAnswerFormat(Context context, QuestionSurveyItem item) {
         return null; // to be implemented by subclass
+    }
+
+    protected void fillTextAnswerFormat(TextAnswerFormat format, TextfieldSurveyItem item) {
+        if (item.inputType != null) {
+            format.setInputType(item.inputType);
+        }
+        if (item.validationRegex != null) {
+            format.setValidationRegex(item.validationRegex);
+        }
+        if (item.disabled != null && item.disabled) {
+            format.setDisabled(true);
+        }
+        if (item.isMultipleLines != null && item.isMultipleLines) {
+            format.setIsMultipleLines(true);
+        }
     }
 
     protected void fillIntegerAnswerFormat(IntegerAnswerFormat format, IntegerRangeSurveyItem item) {
