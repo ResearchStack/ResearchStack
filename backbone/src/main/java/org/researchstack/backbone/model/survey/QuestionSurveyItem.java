@@ -38,7 +38,7 @@ public class QuestionSurveyItem<T extends Serializable> extends SurveyItem<T> {
     }
 
     public boolean isCompoundStep() {
-        return type == SurveyItemType.QUESTION_COMPOUND;
+        return type == SurveyItemType.QUESTION_FORM;
     }
 
     /**

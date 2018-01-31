@@ -10,21 +10,21 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.FormatHelper;
 
 import java.io.File;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
-
-/**
- * Created by TheMDP on 2/17/17.
- */
 
 /**
  * Since not all apps using this SDK require this LocationRecorder functionality,
@@ -38,24 +38,31 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
     private static final String SHARED_PREFS_KEY = "LocationRecorder";
     private static final String LAST_RECORDED_DIST_KEY = "LastRecordedTotalDistance";
 
-    public static final String TIMESTAMP_KEY   = "timestamp";
     public static final String COORDINATE_KEY  = "coordinate";
     public static final String LONGITUDE_KEY   = "longitude";
     public static final String LATITUDE_KEY    = "latitude";
     public static final String ALTITUDE_KEY    = "altitude";
     public static final String ACCURACY_KEY    = "accuracy";
     public static final String COURSE_KEY      = "course";
+    public static final String RELATIVE_LATITUDE_KEY = "relativeLatitude";
+    public static final String RELATIVE_LONGITUDE_KEY = "relativeLongitude";
     public static final String SPEED_KEY       = "speed";
+    public static final String TIMESTAMP_DATE_KEY = "timestampDate";
+    public static final String TIMESTAMP_IN_SECONDS_KEY = "timestamp";
+    public static final String UPTIME_IN_SECONDS_KEY = "uptime";
 
     private JsonObject jsonObject;
     private JsonObject coordinateJsonObject;
 
     private LocationManager locationManager = null;
-    private long minTime;
-    private float minDistance;
+    private final long minTime;
+    private final float minDistance;
+    private final boolean usesRelativeCoordinates;
 
     private double totalDistance;
+    private Location firstLocation;
     private Location lastLocation;
+    private long startTimeNanosSinceBoot;
 
     public static final String BROADCAST_LOCATION_UPDATE_ACTION  = "LocationRecorder_BroadcastLocationUpdate";
     private static final String BROADCAST_LOCATION_UPDATE_KEY    = "LocationUpdate";
@@ -81,15 +88,35 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
      * @param step the step that contains this recorder
      * @param outputDirectory the output directory of the file that will be written with location data
      */
-    LocationRecorder(long minTime, float minDistance, String identifier, Step step, File outputDirectory) {
+    LocationRecorder(
+            long minTime, float minDistance, boolean usesRelativeCoordinates, String identifier,
+            Step step, File outputDirectory) {
         super(identifier, step, outputDirectory);
         this.minTime = minTime;
         this.minDistance = minDistance;
+        this.usesRelativeCoordinates = usesRelativeCoordinates;
+    }
+
+    public long getMinTime() {
+        return minTime;
+    }
+
+    public float getMinDistance() {
+        return minDistance;
+    }
+
+    /**
+     * If this is set to true, the recorder will produce relative GPS coordinates, using the
+     * user's initial position as zero in the relative coordinate system. If this is set to
+     * false, the recorder will produce absolute GPS coordinates.
+     */
+    public boolean getUsesRelativeCoordinates() {
+        return usesRelativeCoordinates;
     }
 
     @Override
     public void start(Context context) {
-
+        firstLocation = null;
         lastLocation = null;
         totalDistance = 0;
         locationRecorderPrefs = context.getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
@@ -158,10 +185,45 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
-            jsonObject.addProperty(TIMESTAMP_KEY, location.getTime());
+            if (firstLocation == null) {
+                // Initialize first location
+                firstLocation = location;
+            }
 
-            coordinateJsonObject.addProperty(LONGITUDE_KEY, location.getLongitude());
-            coordinateJsonObject.addProperty(LATITUDE_KEY, location.getLatitude());
+            // getElapsedReatimeNanos() is long nanoseconds since system boot time.
+            long locationNanos = getElapsedNanosSinceBootFromLocation(location);
+            if (startTimeNanosSinceBoot == 0) {
+                // Initialize start time.
+                startTimeNanosSinceBoot = locationNanos;
+
+                // Add timestamp date, which is the ISO timestamp representing the activity start time.
+                // Location.getTime() is always epoch milliseconds, so we can use as is.
+                jsonObject.addProperty(TIMESTAMP_DATE_KEY, new SimpleDateFormat(FormatHelper.DATE_FORMAT_ISO_8601,
+                        Locale.getDefault()).format(location.getTime()));
+            } else if (jsonObject.has(TIMESTAMP_DATE_KEY)) {
+                // Because we re-use the jsonObject, we need to clear the timestamp date key after the first iteration.
+                jsonObject.remove(TIMESTAMP_DATE_KEY);
+            }
+
+            // Timestamps
+            // timestamp is seconds since start of the activity (locationNanos minus startTimeNanos, divided by a billion).
+            // uptime is a monotonically increasing timestamp in seconds, with any arbitrary zero. (We use
+            // getElapsedRealtimeNanos(), divided by a billion.)
+            jsonObject.addProperty(TIMESTAMP_IN_SECONDS_KEY, (locationNanos - startTimeNanosSinceBoot) * 1e-9);
+            jsonObject.addProperty(UPTIME_IN_SECONDS_KEY, locationNanos * 1e-9);
+
+            // GPS coordinates
+            if (usesRelativeCoordinates) {
+                // Subtract from the firstLocation to get relative coordinates.
+                double relativeLatitude = location.getLatitude() - firstLocation.getLatitude();
+                double relativeLongitude = location.getLongitude() - firstLocation.getLongitude();
+                coordinateJsonObject.addProperty(RELATIVE_LATITUDE_KEY, relativeLatitude);
+                coordinateJsonObject.addProperty(RELATIVE_LONGITUDE_KEY, relativeLongitude);
+            } else {
+                // Use absolute coordinates given by the location.
+                coordinateJsonObject.addProperty(LONGITUDE_KEY, location.getLongitude());
+                coordinateJsonObject.addProperty(LATITUDE_KEY, location.getLatitude());
+            }
             jsonObject.add(COORDINATE_KEY, coordinateJsonObject);
 
             if (location.hasAccuracy()) {
@@ -189,6 +251,17 @@ public class LocationRecorder extends JsonArrayDataRecorder implements LocationL
                     location.getLongitude(), location.getLatitude(), totalDistance);
 
             lastLocation = location;
+        }
+    }
+
+    // Wrapper method which encapsulates getting the elapsed realtime nanos, or falls back to elasped realtime (millis)
+    // for older OS versions.
+    // Package-scoped so this can be mocked for unit tests.
+    long getElapsedNanosSinceBootFromLocation(Location location) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return location.getElapsedRealtimeNanos();
+        } else {
+            return (long) (SystemClock.elapsedRealtime() * 1e6); // millis to nanos
         }
     }
 

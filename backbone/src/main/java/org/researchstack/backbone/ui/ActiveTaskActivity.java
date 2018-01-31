@@ -46,7 +46,7 @@ public class ActiveTaskActivity extends ViewTaskActivity
 
     public static final String ACTIVITY_TASK_RESULT_KEY = "ACTIVITY_TASK_RESULT_KEY";
 
-    private boolean isBackButtonEnabled;
+    protected boolean isBackButtonEnabled;
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ActiveTaskActivity.class);

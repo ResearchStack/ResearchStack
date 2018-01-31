@@ -189,6 +189,11 @@ public class ActiveStep extends Step {
     private Map<String, String> spokenInstructionMap;
 
     /**
+     * A string representation of a raw file resource
+     */
+    private String soundRes;
+
+    /**
      * The recording UUID is a unique identifier used by the RecorderService
      */
     private UUID recordingUuid;
@@ -392,5 +397,13 @@ public class ActiveStep extends Step {
 
     public void setActivityClazz(Class<? extends ActiveTaskActivity> activityClazz) {
         this.activityClazz = activityClazz;
+    }
+
+    public String getSoundRes() {
+        return soundRes;
+    }
+
+    public void setSoundRes(String soundRes) {
+        this.soundRes = soundRes;
     }
 }

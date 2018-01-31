@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.Nullable;
+import android.support.annotation.RawRes;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -51,6 +53,7 @@ import org.researchstack.backbone.step.active.recorder.RecorderListener;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.backbone.utils.ResUtils;
 
 import java.io.File;
 import java.io.Serializable;
@@ -92,6 +95,24 @@ public class RecorderService extends Service implements RecorderListener, TextTo
     public static final String TEXT_TO_SPEECH_END_KEY = "end";
     public static final String TEXT_TO_SPEECH_COUNTDOWN_KEY = "countdown";
     public static final String TEXT_TO_SPEECH_METRONOME_KEY = "metronome";
+
+    protected long startTime;
+    protected Handler mainHandler;
+
+    protected List<Recorder> recorderList;
+    protected List<FileResult> resultList;
+    protected ActiveStep activeStep;
+    protected Task task;
+    protected TaskResult taskResult;
+
+    protected Notification foregroundNotification;
+
+    protected MediaPlayer mediaPlayer;
+    protected TextToSpeech tts;
+    protected String textToSpeakOnInit;
+    protected boolean isWaitingToComplete;
+    protected boolean isServiceRunning;
+    protected boolean shouldCancelRecordersOnDestroy;
 
     /**
      * @param appContext
@@ -191,23 +212,6 @@ public class RecorderService extends Service implements RecorderListener, TextTo
         appContext.startService(intent);
     }
 
-    protected long startTime;
-    protected Handler mainHandler;
-
-    protected List<Recorder> recorderList;
-    protected List<FileResult> resultList;
-    protected ActiveStep activeStep;
-    protected Task task;
-    protected TaskResult taskResult;
-
-    protected Notification foregroundNotification;
-
-    protected TextToSpeech tts;
-    protected String textToSpeakOnInit;
-    protected boolean isWaitingToComplete;
-    protected boolean isServiceRunning;
-    protected boolean shouldCancelRecordersOnDestroy;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -260,6 +264,18 @@ public class RecorderService extends Service implements RecorderListener, TextTo
 
             if (activeStep.hasVoice()) {
                 tts = new TextToSpeech(this, this);
+            }
+
+            if (activeStep.getSoundRes() != null) {
+                @RawRes int soundRes = ResUtils
+                        .getRawResourceId(this, activeStep.getSoundRes());
+                if (soundRes == 0) {
+                    LogExt.e(RecorderService.class,
+                            "Error finding ActiveStep's sound " + activeStep.getSoundRes());
+                } else {
+                    mediaPlayer = MediaPlayer.create(this, soundRes);
+                    mediaPlayer.start();
+                }
             }
 
             setStartTime(getApplicationContext(), activeStep, startTime);
@@ -383,6 +399,7 @@ public class RecorderService extends Service implements RecorderListener, TextTo
         LogExt.d(RecorderService.class, "onDestroyed service is stopping");
 
         shutDownTts();
+        shutDownMediaPlayer();
         mainHandler.removeCallbacksAndMessages(null);
         if (isServiceRunning && shouldCancelRecordersOnDestroy) {
             LogExt.d(RecorderService.class, "cancelling all recorders");
@@ -530,6 +547,7 @@ public class RecorderService extends Service implements RecorderListener, TextTo
     @Override
     public void onFail(Recorder recorder, Throwable error) {
         shutDownTts();
+        shutDownMediaPlayer();
         sendRecorderErrorBroadcast(error.getLocalizedMessage());
         stopSelf();
     }
@@ -541,6 +559,13 @@ public class RecorderService extends Service implements RecorderListener, TextTo
             }
             tts.shutdown();
             tts = null;
+        }
+    }
+
+    protected void shutDownMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 
