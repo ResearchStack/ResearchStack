@@ -37,6 +37,9 @@ public class TextfieldSurveyItem extends QuestionSurveyItem<String> {
     @SerializedName("isMultipleLines")
     public Boolean isMultipleLines;
 
+    @SerializedName("maxLength")
+    public Integer maxLength;
+
     /* Default constructor needed for serialization/deserialization of object */
     public TextfieldSurveyItem() {
         super();

@@ -105,6 +105,7 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
                 break;
             case ACCOUNT_REGISTRATION:
             case ACCOUNT_LOGIN:
+            case ACCOUNT_LOGIN_VIA_EMAIL:
             case ACCOUNT_PROFILE:
             case ACCOUNT_EXTERNAL_ID:
                 item = context.deserialize(json, ProfileSurveyItem.class);

@@ -22,11 +22,15 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.QuestionStep;
+import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.step.SubtaskStep;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -53,6 +57,69 @@ public class StepHelperTests {
         FormStep formStep = createFormStep();
         TaskResult result = createTaskResult(formStep, false, false);
         assertTrue(StepHelper.wasFormStepSkipped(formStep, result));
+    }
+
+    @Test
+    public void getStepIdentifierTest_SimpleList() {
+        List<Step> stepList = new ArrayList<>();
+        stepList.add(new Step("a"));
+        stepList.add(new Step("b"));
+        stepList.add(new Step("c"));
+
+        Step a = StepHelper.getStepWithIdentifier(stepList, "a");
+        assertNotNull(a);
+        assertEquals("a", a.getIdentifier());
+
+        Step b = StepHelper.getStepWithIdentifier(stepList, "b");
+        assertNotNull(b);
+        assertEquals("b", b.getIdentifier());
+
+        Step c = StepHelper.getStepWithIdentifier(stepList, "c");
+        assertNotNull(c);
+        assertEquals("c", c.getIdentifier());
+    }
+
+    @Test
+    public void getStepIdentifierTest_Subtasks() {
+        List<Step> stepList = new ArrayList<>();
+        stepList.add(new Step("a"));
+        stepList.add(new Step("b"));
+        stepList.add(new Step("c"));
+
+        List<Step> subtaskStepList = new ArrayList<>();
+        stepList.add(new Step("d"));
+        stepList.add(new Step("e"));
+        stepList.add(new Step("f"));
+
+        stepList.add(new SubtaskStep("subtask", subtaskStepList));
+
+        Step a = StepHelper.getStepWithIdentifier(stepList, "a");
+        assertNotNull(a);
+        assertEquals("a", a.getIdentifier());
+
+        Step b = StepHelper.getStepWithIdentifier(stepList, "b");
+        assertNotNull(b);
+        assertEquals("b", b.getIdentifier());
+
+        Step c = StepHelper.getStepWithIdentifier(stepList, "c");
+        assertNotNull(c);
+        assertEquals("c", c.getIdentifier());
+
+        Step d = StepHelper.getStepWithIdentifier(stepList, "d");
+        assertNotNull(d);
+        assertEquals("d", d.getIdentifier());
+
+        Step e = StepHelper.getStepWithIdentifier(stepList, "e");
+        assertNotNull(e);
+        assertEquals("e", e.getIdentifier());
+
+        Step f = StepHelper.getStepWithIdentifier(stepList, "f");
+        assertNotNull(f);
+        assertEquals("f", f.getIdentifier());
+
+        Step subtaskStep = StepHelper.getStepWithIdentifier(stepList, "subtask");
+        assertNotNull(subtaskStep);
+        assertEquals("subtask", subtaskStep.getIdentifier());
     }
 
     private FormStep createFormStep() {

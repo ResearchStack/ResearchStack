@@ -8,6 +8,8 @@ import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.NavigationExpectedAnswerQuestionStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.step.SubtaskStep;
+import org.researchstack.backbone.task.OrderedTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +138,18 @@ public class StepHelper {
         for (Step step : stepList) {
             if (stepId.equals(step.getIdentifier())) {
                 return step;
+            }
+            // A step can contain a task itself, so check for this as well
+            if (step instanceof SubtaskStep) {
+                SubtaskStep subtaskStep = (SubtaskStep)step;
+                if (subtaskStep.getSubtask() != null &&
+                        subtaskStep.getSubtask() instanceof OrderedTask) {
+                    OrderedTask task = (OrderedTask)subtaskStep.getSubtask();
+                    Step foundSubtaskStep = getStepWithIdentifier(task.getSteps(), stepId);
+                    if (foundSubtaskStep != null) {
+                        return foundSubtaskStep;
+                    }
+                }
             }
         }
         return null;

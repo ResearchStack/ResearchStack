@@ -140,7 +140,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
         if(previousStep == null)
         {
-            finish();
+            discardResultsAndFinish();
         }
         else
         {
