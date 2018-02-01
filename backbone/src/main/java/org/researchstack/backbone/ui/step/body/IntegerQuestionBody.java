@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
+import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
@@ -51,6 +52,12 @@ public class IntegerQuestionBody implements StepBody {
         layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
         layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
         view.setLayoutParams(layoutParams);
+
+        if (format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH) {
+            InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(format.getMaximumLength());
+            InputFilter[] filters = ViewUtils.addFilter(editText.getFilters(), maxLengthFilter);
+            editText.setFilters(filters);
+        }
 
         return view;
     }

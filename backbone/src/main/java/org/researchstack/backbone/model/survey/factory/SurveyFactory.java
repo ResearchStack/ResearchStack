@@ -552,11 +552,17 @@ public class SurveyFactory {
         if (item.isMultipleLines != null && item.isMultipleLines) {
             format.setIsMultipleLines(true);
         }
+        if (item.maxLength != null) {
+            format.setMaximumLength(item.maxLength);
+        }
     }
 
     protected void fillIntegerAnswerFormat(IntegerAnswerFormat format, IntegerRangeSurveyItem item) {
         format.setMaxValue((item.max == null) ? 0 : item.max);
         format.setMinValue((item.min == null) ? 0 : item.min);
+        if (item.maxLength != null) {
+            format.setMaximumLength(item.maxLength);
+        }
     }
 
     protected void fillChoiceAnswerFormat(ChoiceAnswerFormat format, ChoiceQuestionSurveyItem item) {

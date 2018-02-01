@@ -24,6 +24,7 @@ import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.model.survey.IntegerRangeSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.onboarding.MockResourceManager;
 import org.researchstack.backbone.onboarding.ReConsentInstructionStep;
@@ -85,6 +86,7 @@ public class SurveyFactoryTests {
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_textfield");
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_compound");
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_email");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_integerrange");
 
         mockFingerprintManager = Mockito.mock(FingerprintManagerCompat.class);
         Mockito.when(mockFingerprintManager.isHardwareDetected()).thenReturn(true);
@@ -307,6 +309,29 @@ public class SurveyFactoryTests {
         assertTrue(step.getAnswerFormat() instanceof TextAnswerFormat);
         TextAnswerFormat format = (TextAnswerFormat)step.getAnswerFormat();
         assertEquals("^[0-9]*$", format.validationRegex());
+        assertEquals(3, format.getMaximumLength());
+        assertEquals(InputType.TYPE_CLASS_NUMBER, format.getInputType());
+    }
+
+    @Test
+    public void testSurveyItem_integerRange() {
+        String textfieldJson = getJsonResource("survey_item_integerrange");
+        SurveyItem surveyItem = helper.gson.fromJson(textfieldJson, SurveyItem.class);
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(helper.mockContext, Collections.singletonList(surveyItem));
+
+        assertNotNull(stepList);
+        assertEquals(1, stepList.size());
+
+        assertTrue(stepList.get(0) instanceof QuestionStep);
+        QuestionStep step = (QuestionStep)stepList.get(0);
+        assertEquals("weight", step.getIdentifier());
+
+        assertTrue(step.getAnswerFormat() instanceof IntegerAnswerFormat);
+        IntegerAnswerFormat format = (IntegerAnswerFormat)step.getAnswerFormat();
+        assertEquals(50, format.getMinValue());
+        assertEquals(500, format.getMaxValue());
+        assertEquals(3, format.getMaximumLength());
         assertEquals(InputType.TYPE_CLASS_NUMBER, format.getInputType());
     }
 
