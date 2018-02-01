@@ -30,7 +30,7 @@ public class SerializableUtils {
             objectOutputStream.close();
             encoded = Base64.encodeToString(byteArrayOutputStream.toByteArray(), 0);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogExt.e(SerializableUtils.class, e.getLocalizedMessage());
         }
         return encoded;
     }
@@ -46,11 +46,11 @@ public class SerializableUtils {
             ObjectInputStream objectInputStream = new ObjectInputStream( new ByteArrayInputStream(bytes) );
             object = (Serializable)objectInputStream.readObject();
         } catch (IOException e) {
-            e.printStackTrace();
+            LogExt.e(SerializableUtils.class, e.getLocalizedMessage());
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            LogExt.e(SerializableUtils.class, e.getLocalizedMessage());
         } catch (ClassCastException e) {
-            e.printStackTrace();
+            LogExt.e(SerializableUtils.class, e.getLocalizedMessage());
         }
         return object;
     }
