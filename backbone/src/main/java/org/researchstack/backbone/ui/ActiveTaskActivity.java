@@ -196,7 +196,7 @@ public class ActiveTaskActivity extends ViewTaskActivity
     /**
      * Active Steps lock orientation so it can avoid any interruptions during data logging
      */
-    private void lockOrientation() {
+    protected void lockOrientation() {
         int orientation;
         int rotation = ((WindowManager) getSystemService(
                 Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
@@ -218,7 +218,7 @@ public class ActiveTaskActivity extends ViewTaskActivity
         setRequestedOrientation(orientation);
     }
 
-    private void unlockOrientation() {
+    protected void unlockOrientation() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
