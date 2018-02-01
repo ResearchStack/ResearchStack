@@ -3,12 +3,14 @@ package org.researchstack.backbone;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
+
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;
 import org.researchstack.backbone.model.User;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.task.Task;
+
 import rx.Observable;
 import rx.Single;
 
@@ -78,13 +80,38 @@ public abstract class DataProvider {
     /**
      * Called to sign the user in to the backend service
      *
+     * @param context  android context
      * @param username the user's username
      * @param password the user's password
-     * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
      */
-    public abstract Observable<DataResponse> signIn(Context context, String username, String password);
+    public abstract Observable<DataResponse> signIn(Context context, String username, String
+            password);
+
+    /**
+     * Request for a link to sign in user
+     *
+     * @param username the user's username
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
+     * returning true if request for sign in link was successful
+     */
+    public Observable<DataResponse> requestSignInLink(String username) {
+        return Observable.just(new DataResponse(false, "Not implemented"));
+    }
+
+    /**
+     * Sign in with email and token. This is used in conjunction with requestSignInLink. The
+     * link should be intercepted by the app and the sign in token extracted.
+     *
+     * @param username the user's username
+     * @param token sign in token
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
+     * returning true if request for sign in was successful
+     */
+    public Observable<DataResponse> signInWithEmailAndToken(String username, String token) {
+        return Observable.just(new DataResponse(false, "Not implemented"));
+    }
 
     /**
      * Called to sign the user in using the user's external ID.
@@ -94,7 +121,8 @@ public abstract class DataProvider {
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
      */
-    public abstract Observable<DataResponse> signInWithExternalId(Context context, String externalId);
+    public abstract Observable<DataResponse> signInWithExternalId(Context context, String
+            externalId);
 
     /**
      * Sign out the user.  This will possibly involve a call to the server,
@@ -151,10 +179,11 @@ public abstract class DataProvider {
      *
      * @param context android context
      * @return true if user is currently consented
+     * @deprecated use {@link #isConsented()} instead
      */
-    @Deprecated // isConsented() no params instead
+    @Deprecated
     public boolean isConsented(Context context) {
-        return false;
+        return isConsented();
     }
 
     /**
@@ -179,10 +208,11 @@ public abstract class DataProvider {
      * object and filling up the ConsentSignature and then calling the method below this
      * with the signature parameter
      *
-     * @param context android context
+     * @param context       android context
      * @param consentResult the TaskResult map containing hard-coded key/value data
+     * @deprecated use {@link #uploadConsent(Context, ConsentSignatureBody)} instead
      */
-    @Deprecated // use uploadConsent(Context context, ConsentSignatureBody signature) instead
+    @Deprecated
     public abstract void uploadConsent(Context context, TaskResult consentResult);
 
     /**
