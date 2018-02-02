@@ -9,6 +9,7 @@ import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -243,6 +244,11 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     protected void onComplete() {
+        // WORKAROUND : Hide softkeyboard before transaction
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && container != null) {
+            imm.hideSoftInputFromWindow(container.getWindowToken(), 0);
+        }
         callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                              getStep(),
                              stepBody.getStepResult(false));
