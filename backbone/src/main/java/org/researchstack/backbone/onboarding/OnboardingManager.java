@@ -250,7 +250,7 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
      Define the rules for including a given section in a given task type.
      @return    `true` if the `SBAOnboardingSection` should be included for this `SBAOnboardingTaskType`
      */
-    boolean shouldInclude(Context context, OnboardingSection section, OnboardingTaskType taskType) {
+    protected boolean shouldInclude(Context context, OnboardingSection section, OnboardingTaskType taskType) {
         switch (section.getOnboardingSectionType()) {
             case LOGIN:
                 return taskType == OnboardingTaskType.LOGIN;
