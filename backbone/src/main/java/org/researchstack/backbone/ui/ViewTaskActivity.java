@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -66,6 +67,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     private int secondaryTextColor;
     private int actionFailedColor;
     private boolean showCancel;
+    private ActionBar actionBar;
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
@@ -109,8 +111,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
             toolbar.setVisibility(View.GONE);
         }
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
         root = (StepSwitcher) findViewById(R.id.container);
 
@@ -178,6 +180,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
                 newStepPosition >= currentStepPosition
                         ? StepSwitcher.SHIFT_LEFT
                         : StepSwitcher.SHIFT_RIGHT);
+        if (newStepPosition == 0) {
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        } else {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         currentStep = step;
     }
 
