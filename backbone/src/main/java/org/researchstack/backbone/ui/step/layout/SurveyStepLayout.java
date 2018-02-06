@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -249,9 +250,15 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         if (imm != null && container != null) {
             imm.hideSoftInputFromWindow(container.getWindowToken(), 0);
         }
-        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                             getStep(),
-                             stepBody.getStepResult(false));
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+                                        getStep(),
+                                        stepBody.getStepResult(false));
+            }
+        }, 100);
     }
 
     public void onSkipClicked()
