@@ -160,6 +160,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
         StepLayout stepLayout = getLayoutForStep(step);
+
+        if (stepLayout == null) {
+            LogExt.e(ViewTaskActivity.class, "Trying to add a step layout with a null task result");
+            return;
+        }
+
         stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
@@ -179,6 +185,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         // Change the title on the activity
         String title = task.getTitleForStep(this, step);
         setActionBarTitle(title);
+
+        if (taskResult == null) {
+            LogExt.e(ViewTaskActivity.class, "Trying to add a step layout with a null task result");
+            return null;
+        }
 
         // Get result from the TaskResult, can be null
         StepResult result = taskResult.getStepResult(step.getIdentifier());
@@ -313,6 +324,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     protected void onSaveStepResult(String id, StepResult result)
     {
+        if (taskResult == null) {
+            LogExt.e(ViewTaskActivity.class, "In bad state, " +
+                    "task result should never be null, skipping onSaveStepResult");
+            return;
+        }
         if (result != null) {
             taskResult.setStepResultForStepIdentifier(id, result);
         } else if (taskResult.getResults() != null) {
