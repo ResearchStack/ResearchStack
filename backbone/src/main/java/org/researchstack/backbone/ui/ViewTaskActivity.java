@@ -199,6 +199,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         setupStepLayoutBeforeInitializeIsCalled(stepLayout);
         stepLayout.initialize(step, result);
 
+        // Some step layouts need to know about the task result
         if (stepLayout instanceof ResultListener) {
             ((ResultListener)stepLayout).taskResult(this, taskResult);
         }
@@ -227,6 +228,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         super.onPause();
 
         task.onViewChange(Task.ViewChangeType.ActivityPause, this, currentStep);
+
+        // Some step layouts need to know about when the activity pauses
+        if (currentStepLayout != null && currentStepLayout instanceof ActivityPauseListener) {
+            ((ActivityPauseListener)currentStepLayout).onActivityPause(this);
+        }
     }
 
     @Override
@@ -418,5 +424,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     public interface ResultListener {
         void taskResult(ViewTaskActivity activity, TaskResult taskResult);
+    }
+
+    public interface ActivityPauseListener {
+        void onActivityPause(ViewTaskActivity activity);
     }
 }
