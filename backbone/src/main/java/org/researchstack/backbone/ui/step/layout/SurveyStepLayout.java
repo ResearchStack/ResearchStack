@@ -9,8 +9,11 @@ import android.support.annotation.StringRes;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +56,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     private LinearLayout container;
     protected StepBody     stepBody;
 
+    private boolean readOnlyMode = false;
+
     public SurveyStepLayout(Context context)
     {
         super(context);
@@ -66,6 +71,14 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     public SurveyStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
+    }
+
+    public boolean isReadOnlyMode() {
+        return readOnlyMode;
+    }
+
+    public void setReadOnlyMode(boolean readOnlyMode) {
+        this.readOnlyMode = readOnlyMode;
     }
 
     public void initialize(Step step)
@@ -185,7 +198,15 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
         stepBody = createStepBody(questionStep, stepResult);
         View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, layoutInflater, this);
-        replaceStepBodyView(container, body);
+
+        if (readOnlyMode) {
+            ReadOnlyStepBlocker readOnlyStepBlocker = new ReadOnlyStepBlocker(getContext());
+            readOnlyStepBlocker.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            readOnlyStepBlocker.addView(body);
+            replaceStepBodyView(container, readOnlyStepBlocker);
+        } else {
+            replaceStepBodyView(container, body);
+        }
     }
 
     @NonNull
@@ -281,5 +302,4 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     {
         return getResources().getString(stringResId);
     }
-
 }

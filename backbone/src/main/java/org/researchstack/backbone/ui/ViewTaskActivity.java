@@ -19,6 +19,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepLayoutHelper;
@@ -30,6 +31,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     public static final String EXTRA_TASK        = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
+    public static final String EXTRA_READONLY        = "ViewTaskActivity.ReadOnly";
 
     private StepSwitcher root;
     protected Toolbar toolbar;
@@ -41,6 +43,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         return task;
     }
     protected TaskResult taskResult;
+
+    private boolean readOnlyMode = false;
 
     public static Intent newIntent(Context context, Task task)
     {
@@ -73,6 +77,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
             task = (Task) savedInstanceState.getSerializable(EXTRA_TASK);
             taskResult = (TaskResult) savedInstanceState.getSerializable(EXTRA_TASK_RESULT);
             currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
+            readOnlyMode = savedInstanceState.getBoolean(EXTRA_READONLY);
         }
 
         LogExt.d(ViewTaskActivity.class, "Received task: "+task.getIdentifier());
@@ -155,6 +160,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         // Return the Class & constructor
         StepLayout stepLayout = StepLayoutHelper.createLayoutFromStep(step, this);
+        if (stepLayout instanceof SurveyStepLayout) {
+            SurveyStepLayout surveyStepLayout = (SurveyStepLayout)stepLayout;
+            surveyStepLayout.setReadOnlyMode(readOnlyMode);
+        }
         stepLayout.initialize(step, result);
         stepLayout.setCallbacks(this);
 
@@ -236,6 +245,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         outState.putSerializable(EXTRA_TASK, task);
         outState.putSerializable(EXTRA_TASK_RESULT, taskResult);
         outState.putSerializable(EXTRA_STEP, currentStep);
+        outState.putBoolean(EXTRA_READONLY, readOnlyMode);
     }
 
     protected void notifyStepOfBackPress()
