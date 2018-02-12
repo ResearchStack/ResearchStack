@@ -26,7 +26,6 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
 import org.researchstack.backbone.ui.step.body.StepBody;
-import org.researchstack.backbone.ui.step.body.TextQuestionBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepResultHelper;
@@ -477,7 +476,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         public StepBody getStepBody() {
             return stepBody;
         }
-        protected WeakReference<View> view;
+        public WeakReference<View> view;
 
         FormStepData(QuestionStep step, StepBody stepBody, View view) {
             this.step = step;
