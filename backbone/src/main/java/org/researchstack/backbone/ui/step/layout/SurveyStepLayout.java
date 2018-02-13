@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -243,9 +245,20 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     protected void onComplete() {
-        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                             getStep(),
-                             stepBody.getStepResult(false));
+        // WORKAROUND : Hide softkeyboard before transaction
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && container != null) {
+            imm.hideSoftInputFromWindow(container.getWindowToken(), 0);
+        }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+                                        getStep(),
+                                        stepBody.getStepResult(false));
+            }
+        }, 100);
     }
 
     public void onSkipClicked()
