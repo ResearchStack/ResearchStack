@@ -272,7 +272,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
      * And push user back to the Overview screen, or whatever screen was below this Activity
      */
     protected void discardResultsAndFinish() {
-        taskResult.getResults().clear();
+        if (taskResult != null) {  // taskResult can be null in a bad state
+            taskResult.getResults().clear();
+        } else {
+            LogExt.d(ViewTaskActivity.class,
+                    "Task result is already null when discarding results");
+        }
         taskResult = null;
         setResult(Activity.RESULT_CANCELED);
         finish();
