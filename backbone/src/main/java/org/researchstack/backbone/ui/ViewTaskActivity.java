@@ -333,7 +333,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     /**
      * Make sure user is 100% wanting to cancel, since their data will be discarded
      */
-    private void showConfirmExitDialog()
+    protected void showConfirmExitDialog()
     {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.rsb_are_you_sure)
