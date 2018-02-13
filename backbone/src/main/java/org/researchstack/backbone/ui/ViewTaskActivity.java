@@ -28,10 +28,10 @@ import java.util.Date;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 {
-    public static final String EXTRA_TASK        = "ViewTaskActivity.ExtraTask";
-    public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
-    public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
-    public static final String EXTRA_READONLY        = "ViewTaskActivity.ReadOnly";
+    public static final String EXTRA_TASK           = "ViewTaskActivity.ExtraTask";
+    public static final String EXTRA_TASK_RESULT    = "ViewTaskActivity.ExtraTaskResult";
+    public static final String EXTRA_STEP           = "ViewTaskActivity.ExtraStep";
+    public static final String EXTRA_READONLY       = "ViewTaskActivity.ReadOnly";
 
     private StepSwitcher root;
     protected Toolbar toolbar;
