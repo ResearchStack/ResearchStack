@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,12 +29,14 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_ITEM = 1;
 
-    protected List<Object> tasks;
-    protected LayoutInflater inflater;
+    @NonNull
+    protected final List<Object> tasks;
+    @NonNull
+    protected final LayoutInflater inflater;
 
     protected PublishSubject<SchedulesAndTasksModel.TaskScheduleModel> publishSubject = PublishSubject.create();
 
-    public TaskAdapter(Context context) {
+    public TaskAdapter(@NonNull Context context) {
         super();
 
         tasks = new ArrayList<>();

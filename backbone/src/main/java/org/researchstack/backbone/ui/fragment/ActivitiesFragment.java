@@ -115,12 +115,18 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycler_view);
         swipeContainer = view.findViewById(R.id.swipe_container);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
+                DividerItemDecoration.VERTICAL_LIST, 0, false));
+
+        createOrClearAdapter();
 
         // TODO: might need to add logic to prevent multiple requests
         swipeContainer.setOnRefreshListener(this::fetchData);
+
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -134,18 +140,6 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
         if (subscription != null) {
             subscription.unsubscribe();
         }
-    }
-
-    protected void setUpAdapter() {
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
-                DividerItemDecoration.VERTICAL_LIST,
-                0,
-                false));
-
-        fetchData();
-
     }
 
     /**
@@ -320,7 +314,7 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
             StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
             DataProvider.getInstance().uploadTaskResult(getActivity(), taskResult);
 
-            setUpAdapter();
+            fetchData();;
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -330,7 +324,7 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
     public void onDataReady() {
         LogExt.i(LOG_TAG, "onDataReady()");
 
-        setUpAdapter();
+        fetchData();
     }
 
     @Override
