@@ -66,6 +66,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         root = (StepSwitcher) findViewById(R.id.container);
 
+        readOnlyMode = getIntent().getBooleanExtra(EXTRA_READONLY, false);
+
         if(savedInstanceState == null)
         {
             task = (Task) getIntent() .getSerializableExtra(EXTRA_TASK);
@@ -77,7 +79,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
             task = (Task) savedInstanceState.getSerializable(EXTRA_TASK);
             taskResult = (TaskResult) savedInstanceState.getSerializable(EXTRA_TASK_RESULT);
             currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
-            readOnlyMode = savedInstanceState.getBoolean(EXTRA_READONLY);
         }
 
         LogExt.d(ViewTaskActivity.class, "Received task: "+task.getIdentifier());
