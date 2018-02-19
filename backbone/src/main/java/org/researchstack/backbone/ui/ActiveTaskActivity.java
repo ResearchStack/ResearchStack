@@ -47,6 +47,7 @@ public class ActiveTaskActivity extends ViewTaskActivity
     public static final String ACTIVITY_TASK_RESULT_KEY = "ACTIVITY_TASK_RESULT_KEY";
 
     protected boolean isBackButtonEnabled;
+    private boolean isPaused = false;
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ActiveTaskActivity.class);
@@ -61,11 +62,22 @@ public class ActiveTaskActivity extends ViewTaskActivity
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        isPaused = false;
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
+        this.isPaused = true;
         if (currentStepLayout != null && currentStepLayout instanceof ActiveStepLayout) {
             ((ActiveStepLayout)currentStepLayout).pauseActiveStepLayout();
         }
+    }
+
+    public boolean getIsPaused() {
+        return isPaused;
     }
 
     protected void init() {

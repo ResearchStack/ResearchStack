@@ -49,6 +49,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     }
     protected TaskResult taskResult;
 
+    protected int currentStepAction;
+
     public static Intent newIntent(Context context, Task task)
     {
         Intent intent = new Intent(context, ViewTaskActivity.class);
@@ -160,6 +162,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
 
         StepLayout stepLayout = getLayoutForStep(step);
+
+        if (stepLayout == null) {
+            LogExt.e(ViewTaskActivity.class, "Trying to add a step layout with a null task result");
+            return;
+        }
+
         stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
         root.show(stepLayout,
                 newStepPosition >= currentStepPosition
@@ -180,6 +188,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         String title = task.getTitleForStep(this, step);
         setActionBarTitle(title);
 
+        if (taskResult == null) {
+            LogExt.e(ViewTaskActivity.class,
+                    "Trying to add a step layout with a null task result");
+            return null;
+        }
+
         // Get result from the TaskResult, can be null
         StepResult result = taskResult.getStepResult(step.getIdentifier());
 
@@ -188,6 +202,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         setupStepLayoutBeforeInitializeIsCalled(stepLayout);
         stepLayout.initialize(step, result);
 
+        // Some step layouts need to know about the task result
         if (stepLayout instanceof ResultListener) {
             ((ResultListener)stepLayout).taskResult(this, taskResult);
         }
@@ -198,6 +213,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     protected void setupStepLayoutBeforeInitializeIsCalled(StepLayout stepLayout) {
         // can be implemented by sub-classes to set up the step layout before it's initialized
         stepLayout.setCallbacks(this);
+        if (stepLayout instanceof OnActionListener) {
+            ((OnActionListener)stepLayout).onAction(currentStepAction, this);
+        }
     }
 
     protected void saveAndFinish()
@@ -216,6 +234,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         super.onPause();
 
         task.onViewChange(Task.ViewChangeType.ActivityPause, this, currentStep);
+
+        // Some step layouts need to know about when the activity pauses
+        if (currentStepLayout != null && currentStepLayout instanceof ActivityPauseListener) {
+            ((ActivityPauseListener)currentStepLayout).onActivityPause(this);
+        }
     }
 
     @Override
@@ -255,7 +278,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
      * And push user back to the Overview screen, or whatever screen was below this Activity
      */
     protected void discardResultsAndFinish() {
-        taskResult.getResults().clear();
+        if (taskResult != null) {  // taskResult can be null in a bad state
+            taskResult.getResults().clear();
+        } else {
+            LogExt.d(ViewTaskActivity.class,
+                    "Task result is already null when discarding results");
+        }
         taskResult = null;
         setResult(Activity.RESULT_CANCELED);
         finish();
@@ -313,6 +341,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     protected void onSaveStepResult(String id, StepResult result)
     {
+        if (taskResult == null) {
+            LogExt.e(ViewTaskActivity.class, "In bad state, " +
+                    "task result should never be null, skipping onSaveStepResult");
+            return;
+        }
         if (result != null) {
             taskResult.setStepResultForStepIdentifier(id, result);
         } else if (taskResult.getResults() != null) {
@@ -323,6 +356,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     protected void onExecuteStepAction(int action)
     {
+        currentStepAction = action;
         if(action == StepCallbacks.ACTION_NEXT)
         {
             showNextStep();
@@ -402,5 +436,16 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
     public interface ResultListener {
         void taskResult(ViewTaskActivity activity, TaskResult taskResult);
+    }
+
+    public interface ActivityPauseListener {
+        void onActivityPause(ViewTaskActivity activity);
+    }
+
+    /**
+     * This interface allows StepLayouts to know what step action brought the user to them
+     */
+    public interface OnActionListener {
+        void onAction(int action, ViewTaskActivity activity);
     }
 }
