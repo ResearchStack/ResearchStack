@@ -15,6 +15,7 @@ public class SchedulesAndTasksModel {
         public String delay;
         public String scheduleString;
         public Date scheduledOn;
+        public Date expiresOn;
         public List<TaskScheduleModel> tasks;
     }
 
