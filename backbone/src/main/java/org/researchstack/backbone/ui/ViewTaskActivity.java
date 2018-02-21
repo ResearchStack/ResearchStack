@@ -19,6 +19,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepLayoutHelper;
@@ -27,9 +28,10 @@ import java.util.Date;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 {
-    public static final String EXTRA_TASK        = "ViewTaskActivity.ExtraTask";
-    public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
-    public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
+    public static final String EXTRA_TASK           = "ViewTaskActivity.ExtraTask";
+    public static final String EXTRA_TASK_RESULT    = "ViewTaskActivity.ExtraTaskResult";
+    public static final String EXTRA_STEP           = "ViewTaskActivity.ExtraStep";
+    public static final String EXTRA_READONLY       = "ViewTaskActivity.ReadOnly";
 
     private StepSwitcher root;
     protected Toolbar toolbar;
@@ -41,6 +43,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         return task;
     }
     protected TaskResult taskResult;
+
+    private boolean readOnlyMode = false;
 
     public static Intent newIntent(Context context, Task task)
     {
@@ -61,6 +65,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         root = (StepSwitcher) findViewById(R.id.container);
+
+        readOnlyMode = getIntent().getBooleanExtra(EXTRA_READONLY, false);
 
         if(savedInstanceState == null)
         {
@@ -155,6 +161,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         // Return the Class & constructor
         StepLayout stepLayout = StepLayoutHelper.createLayoutFromStep(step, this);
+        if (stepLayout instanceof SurveyStepLayout) {
+            SurveyStepLayout surveyStepLayout = (SurveyStepLayout)stepLayout;
+            surveyStepLayout.setReadOnlyMode(readOnlyMode);
+        }
         stepLayout.initialize(step, result);
         stepLayout.setCallbacks(this);
 
@@ -236,6 +246,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         outState.putSerializable(EXTRA_TASK, task);
         outState.putSerializable(EXTRA_TASK_RESULT, taskResult);
         outState.putSerializable(EXTRA_STEP, currentStep);
+        outState.putBoolean(EXTRA_READONLY, readOnlyMode);
     }
 
     protected void notifyStepOfBackPress()
@@ -323,7 +334,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     /**
      * Make sure user is 100% wanting to cancel, since their data will be discarded
      */
-    private void showConfirmExitDialog()
+    protected void showConfirmExitDialog()
     {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.rsb_are_you_sure)
