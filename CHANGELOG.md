@@ -2,6 +2,14 @@
 
 ### Change log
 
+#### v1.0.6
+
+- Bug fixes & improvements.
+
+#### v1.0.5
+
+- Bug fixes & improvements.
+
 #### v1.0.4
 
 - Added support to print consents to pdf.
