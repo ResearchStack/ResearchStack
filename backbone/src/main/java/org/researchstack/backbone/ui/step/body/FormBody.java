@@ -1,10 +1,13 @@
 package org.researchstack.backbone.ui.step.body;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import org.researchstack.backbone.R;
@@ -24,6 +27,7 @@ public class FormBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private FormStep step;
     private StepResult<StepResult> result;
+    private ViewGroup parent;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
@@ -37,6 +41,7 @@ public class FormBody implements StepBody {
 
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
+        this.parent = parent;
         // Inflate our container for each compact child StepBody
         LinearLayout body = (LinearLayout) inflater.inflate(R.layout.rsb_step_layout_form_body,
                 parent,
@@ -66,7 +71,6 @@ public class FormBody implements StepBody {
                 result.setResultForIdentifier(childResult.getIdentifier(), childResult);
             }
         }
-
         return result;
     }
 
@@ -78,6 +82,8 @@ public class FormBody implements StepBody {
                 return bodyAnswer;
             }
         }
+
+        hideSoftKeyboard();
 
         return BodyAnswer.VALID;
     }
@@ -94,6 +100,16 @@ public class FormBody implements StepBody {
         } catch (Exception e) {
             LogExt.e(this.getClass(), "Cannot instantiate step body for step " + questionStep.getStepTitle() + ", class name: " + cls.getCanonicalName());
             throw new RuntimeException(e);
+        }
+    }
+
+    private void hideSoftKeyboard() {
+        try {
+            InputMethodManager imm = (InputMethodManager) parent.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(parent.getRootView().getWindowToken(), 0);
+            parent.getRootView().clearFocus();
+        } catch (NullPointerException e) {
+            Log.e("CSSL", "NPE: " + e.getMessage());
         }
     }
 }
