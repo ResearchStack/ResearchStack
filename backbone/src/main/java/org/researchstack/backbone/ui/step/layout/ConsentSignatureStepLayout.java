@@ -1,20 +1,15 @@
 package org.researchstack.backbone.ui.step.layout;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
@@ -40,29 +35,23 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     private StepCallbacks callbacks;
     private Step step;
     private StepResult<String> result;
-    private Context context;
 
     public ConsentSignatureStepLayout(Context context) {
         super(context);
-        this.context = context;
     }
 
     public ConsentSignatureStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
     }
 
     public ConsentSignatureStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.context = context;
     }
 
     @Override
     public void initialize(Step step, StepResult result) {
         this.step = step;
         this.result = result == null ? new StepResult<>(step) : result;
-
-        hideSoftKeyboard();
 
         initializeStep();
     }
@@ -168,16 +157,6 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
             return Base64.encodeToString(byteArray, Base64.DEFAULT);
         } else {
             return null;
-        }
-    }
-
-    private void hideSoftKeyboard() {
-        try {
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getRootView().getWindowToken(), 0);
-            getRootView().clearFocus();
-        } catch (NullPointerException e) {
-            Log.e("CSSL", "NPE: " + e.getMessage());
         }
     }
 }
