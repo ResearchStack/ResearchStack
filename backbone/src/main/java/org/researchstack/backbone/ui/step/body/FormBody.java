@@ -1,13 +1,9 @@
 package org.researchstack.backbone.ui.step.body;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import org.researchstack.backbone.R;
@@ -16,6 +12,7 @@ import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.backbone.utils.ViewUtils;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -83,7 +80,7 @@ public class FormBody implements StepBody {
             }
         }
 
-        hideSoftKeyboard();
+        ViewUtils.hideSoftInputMethod(parent);
 
         return BodyAnswer.VALID;
     }
@@ -93,25 +90,12 @@ public class FormBody implements StepBody {
         StepResult childResult = result.getResultForIdentifier(questionStep.getIdentifier());
 
         Class cls = questionStep.getStepBodyClass();
-        Log.d("FormBody", "cls: " + cls.getName());
         try {
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
             return (StepBody) constructor.newInstance(questionStep, childResult);
         } catch (Exception e) {
             LogExt.e(this.getClass(), "Cannot instantiate step body for step " + questionStep.getStepTitle() + ", class name: " + cls.getCanonicalName());
             throw new RuntimeException(e);
-        }
-    }
-
-    private void hideSoftKeyboard() {
-        try {
-            InputMethodManager imm = (InputMethodManager) parent.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(parent.getWindowToken(), 0);
-                parent.clearFocus();
-            }
-        } catch (NullPointerException e) {
-            Log.e("CSSL", "NPE: " + e.getMessage());
         }
     }
 }
