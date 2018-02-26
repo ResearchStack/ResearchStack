@@ -106,8 +106,10 @@ public class FormBody implements StepBody {
     private void hideSoftKeyboard() {
         try {
             InputMethodManager imm = (InputMethodManager) parent.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(parent.getRootView().getWindowToken(), 0);
-            parent.getRootView().clearFocus();
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(parent.getWindowToken(), 0);
+                parent.clearFocus();
+            }
         } catch (NullPointerException e) {
             Log.e("CSSL", "NPE: " + e.getMessage());
         }
