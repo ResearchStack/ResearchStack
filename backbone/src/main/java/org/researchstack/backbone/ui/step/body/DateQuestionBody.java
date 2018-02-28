@@ -3,6 +3,7 @@ package org.researchstack.backbone.ui.step.body;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.res.Resources;
+import android.text.InputType;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +86,7 @@ public class DateQuestionBody implements StepBody {
 
         EditText textView = view.findViewById(R.id.value);
         textView.setSingleLine(true);
+        textView.setInputType(InputType.TYPE_NULL);
         if (step.getPlaceholder() != null) {
             textView.setHint(step.getPlaceholder());
         } else {
