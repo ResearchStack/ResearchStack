@@ -122,7 +122,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             @Override
             public void onPrintFileReady()
             {
-                dialog.hide();
+                dialog.dismiss();
                 ConsentViewTaskActivity.super.saveAndFinish();
             }
         });
