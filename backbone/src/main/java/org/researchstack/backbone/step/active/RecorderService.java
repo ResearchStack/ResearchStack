@@ -20,6 +20,8 @@ package org.researchstack.backbone.step.active;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -79,7 +81,6 @@ public class RecorderService extends Service implements RecorderListener, TextTo
 
     public static final int DEFAULT_VIBRATION_AND_SOUND_DURATION = 500; // in milliseconds
 
-    private static final String NOTIFICATION_CHANNEL_ID         = "RecorderService_NotificationChannel";
     public static final String INTENT_ACTION_RECORDER_RESUME    = "INTENT_ACTION_RECORDER_RESUME";
 
     private static final String INTENT_KEY_OUTPUT_DIRECTORY     = "RecorderOutputDirectory";
@@ -90,6 +91,11 @@ public class RecorderService extends Service implements RecorderListener, TextTo
 
     public static String BROADCAST_RECORDER_METRONOME_CTR       = "RecorderService_MetronomeCtr";
     public static String BROADCAST_RECORDER_SPOKEN_TEXT         = "RecorderService_SpokenText";
+
+    private static final String NOTIFICATION_CHANNEL_ID = "CrfRecorderService";
+    private static final String NOTIFICATION_CHANNEL_TITLE = "Recording in progress";
+    private static final String NOTIFICATION_CHANNEL_DESC =
+            "This notification channel communicates to the user that CRF is currently recording data";
 
     // keys associated with spokenInstructions json recorder configs
     public static final String TEXT_TO_SPEECH_END_KEY = "end";
@@ -417,6 +423,20 @@ public class RecorderService extends Service implements RecorderListener, TextTo
     }
 
     private void showForegroundNotification(String notificationMessage) {
+
+        // Starting with API 26, notifications must be contained in a channel
+        if (Build.VERSION.SDK_INT >= 26) {
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                NotificationChannel channel = new NotificationChannel(
+                        NOTIFICATION_CHANNEL_ID,
+                        NOTIFICATION_CHANNEL_TITLE,
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setDescription(NOTIFICATION_CHANNEL_DESC);
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
 
         LogExt.d(RecorderService.class, "showForegroundNotification(" + notificationMessage + ")");
         Intent notificationIntent = new Intent(this, activeStep.getActivityClazz());
