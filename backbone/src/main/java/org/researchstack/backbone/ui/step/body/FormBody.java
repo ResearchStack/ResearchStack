@@ -1,7 +1,6 @@
 package org.researchstack.backbone.ui.step.body;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.backbone.utils.ViewUtils;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ public class FormBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private FormStep step;
     private StepResult<StepResult> result;
+    private ViewGroup parent;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
@@ -37,6 +38,7 @@ public class FormBody implements StepBody {
 
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
+        this.parent = parent;
         // Inflate our container for each compact child StepBody
         LinearLayout body = (LinearLayout) inflater.inflate(R.layout.rsb_step_layout_form_body,
                 parent,
@@ -66,7 +68,6 @@ public class FormBody implements StepBody {
                 result.setResultForIdentifier(childResult.getIdentifier(), childResult);
             }
         }
-
         return result;
     }
 
@@ -79,6 +80,8 @@ public class FormBody implements StepBody {
             }
         }
 
+        ViewUtils.hideSoftInputMethod(parent);
+
         return BodyAnswer.VALID;
     }
 
@@ -87,7 +90,6 @@ public class FormBody implements StepBody {
         StepResult childResult = result.getResultForIdentifier(questionStep.getIdentifier());
 
         Class cls = questionStep.getStepBodyClass();
-        Log.d("FormBody", "cls: " + cls.getName());
         try {
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
             return (StepBody) constructor.newInstance(questionStep, childResult);

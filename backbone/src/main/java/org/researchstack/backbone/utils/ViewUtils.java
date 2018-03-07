@@ -6,7 +6,9 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -58,6 +60,18 @@ public class ViewUtils {
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromInputMethod(currentFocus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
+        }
+    }
+
+    public static void hideSoftInputMethod(ViewGroup parent) {
+        try {
+            InputMethodManager imm = (InputMethodManager) parent.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(parent.getWindowToken(), 0);
+                parent.clearFocus();
+            }
+        } catch (NullPointerException e) {
+            Log.e("CSSL", "NPE: " + e.getMessage());
         }
     }
 

@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -83,36 +84,50 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);
 
         WebView pdfView = (WebView) findViewById(R.id.webview);
-        pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
 
-        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
-        submitBar.setPositiveTitleColor(step.getColorSecondary());
-        submitBar.setPositiveAction(new OnClickListener()
+        pdfView.setWebViewClient(new WebViewClient()
         {
             @Override
-            public void onClick(View view)
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url)
             {
-                showDialog(new MaterialDialog.SingleButtonCallback()
+                final SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+                submitBar.setPositiveTitleColor(step.getColorSecondary());
+                submitBar.setPositiveAction(new OnClickListener()
                 {
                     @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                    public void onClick(View view)
                     {
-                        stepResult.setResult(true);
-                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
-                        submitBar.clearActions();
+                        showDialog(new MaterialDialog.SingleButtonCallback()
+                        {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                            {
+                                stepResult.setResult(true);
+                                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                                submitBar.clearActions();
+                            }
+                        });
+                    }
+                });
+                submitBar.setNegativeTitleColor(step.getPrimaryColor());
+                submitBar.setNegativeAction(new OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        disagreeConsent();
                     }
                 });
             }
         });
-        submitBar.setNegativeTitleColor(step.getPrimaryColor());
-        submitBar.setNegativeAction(new OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                disagreeConsent();
-            }
-        });
+
+        pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
+
     }
 
     private void disagreeConsent() {

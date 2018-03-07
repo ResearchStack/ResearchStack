@@ -10,6 +10,7 @@ import android.print.HtmlToPdfPrinter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.BirthDateAnswerFormat;
 import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
@@ -103,8 +104,11 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
     protected void saveAndFinish() {
         // you can also set title / message
         final AlertDialog dialog = new ProgressDialog.Builder(this)
-                .setCancelable(true)
+                .setCancelable(false)
+                .setTitle(getString(R.string.rsb_saving_consent))
+                .setMessage(getString(R.string.rsb_please_wait))
                 .create();
+
         dialog.show();
 
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName),
@@ -118,11 +122,10 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             @Override
             public void onPrintFileReady()
             {
-                dialog.hide();
+                dialog.dismiss();
+                ConsentViewTaskActivity.super.saveAndFinish();
             }
         });
-
-        super.saveAndFinish();
     }
 
 
