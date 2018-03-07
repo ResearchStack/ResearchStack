@@ -2,6 +2,10 @@
 
 ### Change log
 
+#### v1.0.8
+
+- Always show Cancel button for tasks
+
 #### v1.0.7
 
 - Bug fixes & improvements.
