@@ -68,6 +68,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private int actionFailedColor;
     private ActionBar actionBar;
 
+    private int stepCount = 0;
+
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
@@ -152,7 +154,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         if (nextStep == null) {
             saveAndFinish();
         } else {
-            showStep(nextStep);
+            showStep(nextStep, true);
         }
     }
 
@@ -161,26 +163,20 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         if (previousStep == null) {
             finish();
         } else {
-            showStep(previousStep);
+            showStep(previousStep,false);
         }
     }
 
-    private void showStep(Step step) {
-        int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult).getCurrent();
-        int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
+    private void showStep(Step step, boolean isMovingForward)
+    {
+        stepCount +=  isMovingForward ? 1 : -1;
 
         StepLayout stepLayout = getLayoutForStep(step);
         stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
-        root.show(stepLayout,
-                newStepPosition >= currentStepPosition
-                        ? StepSwitcher.SHIFT_LEFT
-                        : StepSwitcher.SHIFT_RIGHT);
-        if (newStepPosition == 0) {
-            actionBar.setDisplayHomeAsUpEnabled(false);
-        } else {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        root.show(stepLayout, isMovingForward ? StepSwitcher.SHIFT_LEFT : StepSwitcher.SHIFT_RIGHT);
+        actionBar.setDisplayHomeAsUpEnabled(stepCount > 1);
         currentStep = step;
+
     }
 
     protected StepLayout getLayoutForStep(Step step) {
@@ -317,7 +313,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
             currentStep = task.getStepAfterStep(null, taskResult);
         }
 
-        showStep(currentStep);
+        showStep(currentStep, true);
     }
 
     @Override
