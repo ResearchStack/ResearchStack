@@ -1,16 +1,14 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
-
 android {
 
-    compileSdkVersion 25
-    buildToolsVersion "26.0.3"
+    compileSdkVersion 27
+    buildToolsVersion '26.0.3'
 
     libraryVariants.all { variant ->
         variant.outputs.all { output ->
-            outputFileName = new File(output.outputFile.parentFile,
-                    output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"));
+            outputFileName = new File(".", output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"))
         }
     }
 
@@ -42,6 +40,12 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+
     resourcePrefix 'rss_'
 }
 
@@ -57,7 +61,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta3'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
-
+    implementation "com.android.support:support-compat:27.1.0"
 }
 
 if (project.hasProperty("android")) { // Android libraries
