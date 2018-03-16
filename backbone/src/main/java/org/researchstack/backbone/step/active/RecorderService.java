@@ -20,6 +20,8 @@ package org.researchstack.backbone.step.active;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -80,6 +82,10 @@ public class RecorderService extends Service implements RecorderListener, TextTo
     public static final int DEFAULT_VIBRATION_AND_SOUND_DURATION = 500; // in milliseconds
 
     private static final String NOTIFICATION_CHANNEL_ID         = "RecorderService_NotificationChannel";
+    private static final String NOTIFICATION_CHANNEL_TITLE         = "Study in-activity progress tracker";
+    private static final String NOTIFICATION_CHANNEL_DESC         = "Records and shows your progress during an "
+            + "activity.";
+    
     public static final String INTENT_ACTION_RECORDER_RESUME    = "INTENT_ACTION_RECORDER_RESUME";
 
     private static final String INTENT_KEY_OUTPUT_DIRECTORY     = "RecorderOutputDirectory";
@@ -216,6 +222,7 @@ public class RecorderService extends Service implements RecorderListener, TextTo
     public void onCreate() {
         super.onCreate();
         LogExt.d(RecorderService.class, "onCreate");
+        
         // no-op, wait for onStartCommand
     }
 
@@ -236,6 +243,20 @@ public class RecorderService extends Service implements RecorderListener, TextTo
         recorderList = new ArrayList<>();
         startTime = System.currentTimeMillis();
         isWaitingToComplete = false;
+    
+        // Starting with API 26, notifications must be contained in a channel
+        if (Build.VERSION.SDK_INT >= 26) {
+            NotificationManager notificationManager =
+                    (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                NotificationChannel channel = new NotificationChannel(
+                        NOTIFICATION_CHANNEL_ID,
+                        NOTIFICATION_CHANNEL_TITLE,
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setDescription(NOTIFICATION_CHANNEL_DESC);
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
 
         File outputDir = null;
         if (intent != null && intent.getExtras() != null) {
