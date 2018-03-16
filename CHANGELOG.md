@@ -2,6 +2,10 @@
 
 ### Change log
 
+#### v1.0.10
+
+- Bug fixes & improvements
+
 #### v1.0.9
 
 - Bug fixes.
