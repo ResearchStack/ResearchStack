@@ -127,29 +127,33 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         // Set more info
         TextView moreInfoView = (TextView) findViewById(R.id.more_info);
 
-        if (!TextUtils.isEmpty(data.getHtmlContent())) {
-            if (!TextUtils.isEmpty(data.getCustomLearnMoreButtonTitle())) {
+        if (data.getContentUrl() != null || !TextUtils.isEmpty(data.getContent()) || !TextUtils.isEmpty(data.getHtmlContent()))
+        {
+            if (!TextUtils.isEmpty(data.getCustomLearnMoreButtonTitle()))
+            {
                 moreInfoView.setText(data.getCustomLearnMoreButtonTitle());
-            } else {
+            }
+            else
+            {
                 moreInfoView.setText(data.getType().getMoreInfoResId());
             }
 
-            moreInfoView.setOnClickListener(new OnClickListener() {
-
+            moreInfoView.setOnClickListener(new OnClickListener()
+            {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view)
+                {
                     String webTitle = getResources().getString(R.string.rsb_consent_section_more_info);
                     URL contentUrl = data.getContentUrl();
                     Intent webDoc;
                     if(contentUrl != null)
                     {
                          webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle, contentUrl, true);
-
                     }
                     else
                     {
                         webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle,
-                                TextUtils.isEmpty(data.getContent()) ? data.getHtmlContent() : data.getContent());
+                                !TextUtils.isEmpty(data.getHtmlContent()) ? data.getHtmlContent() : data.getContent());
                     }
 
                     ViewWebDocumentActivity.addThemeColors(webDoc, step.getPrimaryColor(), step.getColorPrimaryDark());
