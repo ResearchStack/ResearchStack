@@ -165,7 +165,7 @@ public class ConsentSection implements Serializable
         return customImageName;
     }
 
-    void setCustomImageName(String imageName) {
+    public void setCustomImageName(String imageName) {
         customImageName = imageName;
     }
 
