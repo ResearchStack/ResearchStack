@@ -16,10 +16,13 @@ import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.ui.views.MonthYearPickerDialog;
 import org.researchstack.backbone.utils.FormatHelper;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DateQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -50,6 +53,8 @@ public class DateQuestionBody implements StepBody {
             this.dateformatter = FormatHelper.getFormat(DateFormat.MEDIUM, FormatHelper.NONE);
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
             this.dateformatter = FormatHelper.getFormat(FormatHelper.NONE, DateFormat.MEDIUM);
+        } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.MonthYear) {
+            this.dateformatter = new SimpleDateFormat("MM/yyyy");
         }
 
 
@@ -61,6 +66,15 @@ public class DateQuestionBody implements StepBody {
                 savedTimeInMillis = ((Double) this.result.getResult()).longValue();
             } else if (this.result.getResult() instanceof Long) {
                 savedTimeInMillis = (Long) this.result.getResult();
+            } else if (this.result.getResult() instanceof String) {
+                try {
+                    SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+                    Date parsedResult = parseFormat.parse((String)this.result.getResult());
+                    calendar.setTime(parsedResult);
+                    savedTimeInMillis = calendar.getTimeInMillis();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -104,6 +118,8 @@ public class DateQuestionBody implements StepBody {
                 textView.setHint(R.string.rsb_hint_step_body_time);
             } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
                 textView.setHint(R.string.rsb_hint_step_body_datetime);
+            } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.MonthYear) {
+                textView.setHint(R.string.rsb_hint_step_body_monthyear);
             }
         }
 
@@ -157,7 +173,7 @@ public class DateQuestionBody implements StepBody {
         return format.validateAnswer(calendar.getTime());
     }
 
-    private void showDialog(TextView tv) {
+    private void showDialog(final TextView tv) {
         if (format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
             new DatePickerDialog(tv.getContext(),
                     (view, year, monthOfYear, dayOfMonth) -> {
@@ -206,6 +222,20 @@ public class DateQuestionBody implements StepBody {
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)).show();
+        } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.MonthYear) {
+            MonthYearPickerDialog dialog = new MonthYearPickerDialog(tv.getContext());
+            dialog.setPickerState(format.getMinimumDate(), format.getMaximumDate(), calendar.getTime());
+            dialog.setOnDateSetListener(new MonthYearPickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(View view, int year, int month, int dayOfMonth) {
+                    calendar.set(year, month, dayOfMonth);
+                    hasChosenDate = true;
+                    // Set result to our edit text
+                    String formattedResult = createFormattedResult();
+                    tv.setText(formattedResult);
+                }
+            });
+            dialog.show();
         } else {
             throw new RuntimeException("DateAnswerStyle " + format.getStyle() + " is not recognised");
         }

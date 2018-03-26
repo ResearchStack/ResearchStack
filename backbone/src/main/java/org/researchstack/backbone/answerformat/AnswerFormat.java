@@ -55,6 +55,7 @@ public abstract class AnswerFormat implements Serializable {
         Eligibility(NotImplementedStepBody.class),
         Text(TextQuestionBody.class),
         TimeOfDay(DateQuestionBody.class),
+        MonthYear(DateQuestionBody.class),
         DateAndTime(DateQuestionBody.class),
         Date(DateQuestionBody.class),
         TimeInterval(NotImplementedStepBody.class),
@@ -98,7 +99,8 @@ public abstract class AnswerFormat implements Serializable {
     public enum DateAnswerStyle {
         DateAndTime,
         Date,
-        TimeOfDay
+        TimeOfDay,
+        MonthYear
     }
 
     /**
