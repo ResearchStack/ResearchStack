@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -55,6 +56,8 @@ public class DateQuestionBody implements StepBody {
             this.dateformatter = FormatHelper.getFormat(FormatHelper.NONE, DateFormat.MEDIUM);
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.MonthYear) {
             this.dateformatter = new SimpleDateFormat("MM/yyyy");
+            this.dateformatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+            this.calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
         }
 
 
@@ -68,7 +71,7 @@ public class DateQuestionBody implements StepBody {
                 savedTimeInMillis = (Long) this.result.getResult();
             } else if (this.result.getResult() instanceof String) {
                 try {
-                    SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+                    SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                     Date parsedResult = parseFormat.parse((String)this.result.getResult());
                     calendar.setTime(parsedResult);
                     savedTimeInMillis = calendar.getTimeInMillis();
