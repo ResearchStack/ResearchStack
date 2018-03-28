@@ -157,6 +157,9 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
         setCurrentDate(currentDate);
         setMinDate(minDate);
         setMaxDate(maxDate);
+        if (dialogView != null && mYear > 0) {
+            updateMonthPickerLimits(mYear);
+        }
     }
 
     public void clearDate() {
@@ -201,14 +204,16 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
 
     private void updateMonthPickerLimits(int year) {
         final NumberPicker monthPicker = (NumberPicker) dialogView.findViewById(R.id.picker_month);
-        if (year == mMinYear) {
+        monthPicker.setMinValue(1);
+        monthPicker.setMaxValue(12);
+        if (year == mMaxYear && year == mMinYear) {
             monthPicker.setMinValue(mMinMonth);
-            monthPicker.setMaxValue(12);
+            monthPicker.setMaxValue(mMaxMonth);
         } else if (year == mMaxYear) {
             monthPicker.setMinValue(1);
             monthPicker.setMaxValue(mMaxMonth);
-        } else {
-            monthPicker.setMinValue(1);
+        } else if (year == mMinYear) {
+            monthPicker.setMinValue(mMinMonth);
             monthPicker.setMaxValue(12);
         }
     }
