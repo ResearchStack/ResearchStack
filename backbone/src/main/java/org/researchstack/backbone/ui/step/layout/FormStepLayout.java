@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -286,8 +288,19 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         boolean isAnswerValid = isAnswerValid(true);
         if (isAnswerValid)
         {
-            updateAllQuestionSteps(false);
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, formStep, stepResult);
+            // WORKAROUND : Hide softkeyboard before transaction
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null && container != null) {
+                imm.hideSoftInputFromWindow(container.getWindowToken(), 0);
+            }
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    updateAllQuestionSteps(false);
+                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, formStep, stepResult);
+                }
+            }, 100);
         }
     }
 
