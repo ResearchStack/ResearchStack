@@ -7,10 +7,9 @@ version = '2.0.0-SNAPSHOT'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 6
         versionName version
