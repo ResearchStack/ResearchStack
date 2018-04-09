@@ -72,7 +72,7 @@ public class DateQuestionBody implements StepBody {
             } else if (this.result.getResult() instanceof String) {
                 try {
                     SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                    Date parsedResult = parseFormat.parse((String)this.result.getResult());
+                    Date parsedResult = parseFormat.parse((String) this.result.getResult());
                     calendar.setTime(parsedResult);
                     savedTimeInMillis = calendar.getTimeInMillis();
                 } catch (Exception e) {

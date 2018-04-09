@@ -33,21 +33,21 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
     private int mMinMonth = 1;
 
     private MonthYearPickerDialog.OnDateSetListener mDateSetListener;
-    private View dialogView;
+    private View mDialogView;
 
     public MonthYearPickerDialog(Context context) {
         super(context);
 
         final Context themeContext = getContext();
         final LayoutInflater inflater = LayoutInflater.from(themeContext);
-        dialogView = inflater.inflate(R.layout.rsb_layout_month_year_picker, null);
-        setView(dialogView);
+        mDialogView = inflater.inflate(R.layout.rsb_layout_month_year_picker, null);
+        setView(mDialogView);
 
         setButton(BUTTON_POSITIVE, themeContext.getString(R.string.rsb_ok), this);
         setButton(BUTTON_NEGATIVE, themeContext.getString(R.string.rsb_cancel), this);
 
-        final NumberPicker monthPicker = (NumberPicker) dialogView.findViewById(R.id.picker_month);
-        final NumberPicker yearPicker = (NumberPicker) dialogView.findViewById(R.id.picker_year);
+        final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
+        final NumberPicker yearPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_year);
 
         Calendar cal = Calendar.getInstance();
         mMaxYear = cal.get(Calendar.YEAR) + 100;
@@ -104,9 +104,9 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
         cal.setTime(mDateValue);
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH) + 1;
-        if (dialogView != null) {
-            final NumberPicker monthPicker = (NumberPicker) dialogView.findViewById(R.id.picker_month);
-            final NumberPicker yearPicker = (NumberPicker) dialogView.findViewById(R.id.picker_year);
+        if (mDialogView != null) {
+            final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
+            final NumberPicker yearPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_year);
             yearPicker.setValue(mYear);
             monthPicker.setValue(mMonth);
         }
@@ -124,9 +124,9 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
             mMaxMonth = 12;
         }
 
-        if (dialogView != null) {
-            final NumberPicker monthPicker = (NumberPicker) dialogView.findViewById(R.id.picker_month);
-            final NumberPicker yearPicker = (NumberPicker) dialogView.findViewById(R.id.picker_year);
+        if (mDialogView != null) {
+            final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
+            final NumberPicker yearPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_year);
             yearPicker.setMaxValue(mMaxYear);
             monthPicker.setMaxValue(mMaxMonth);
         }
@@ -144,9 +144,9 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
             mMinYear = 1900;
             mMinMonth = 1;
         }
-        if (dialogView != null) {
-            final NumberPicker monthPicker = (NumberPicker) dialogView.findViewById(R.id.picker_month);
-            final NumberPicker yearPicker = (NumberPicker) dialogView.findViewById(R.id.picker_year);
+        if (mDialogView != null) {
+            final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
+            final NumberPicker yearPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_year);
             yearPicker.setMinValue(mMinYear);
             monthPicker.setMinValue(mMinMonth);
         }
@@ -157,7 +157,7 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
         setCurrentDate(currentDate);
         setMinDate(minDate);
         setMaxDate(maxDate);
-        if (dialogView != null && mYear > 0) {
+        if (mDialogView != null && mYear > 0) {
             updateMonthPickerLimits(mYear);
         }
     }
@@ -203,7 +203,7 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
     }
 
     private void updateMonthPickerLimits(int year) {
-        final NumberPicker monthPicker = (NumberPicker) dialogView.findViewById(R.id.picker_month);
+        final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
         monthPicker.setMinValue(1);
         monthPicker.setMaxValue(12);
         if (year == mMaxYear && year == mMinYear) {
@@ -223,14 +223,14 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
         switch (which) {
             case BUTTON_POSITIVE:
                 if (mDateSetListener != null) {
-                    final NumberPicker monthPicker = (NumberPicker) dialogView.findViewById(R.id.picker_month);
-                    final NumberPicker yearPicker = (NumberPicker) dialogView.findViewById(R.id.picker_year);
+                    final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
+                    final NumberPicker yearPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_year);
 
                     mYear = yearPicker.getValue();
                     mMonth = monthPicker.getValue();
 
-                    dialogView.clearFocus();
-                    mDateSetListener.onDateSet(dialogView, mYear, mMonth - 1, 1);
+                    mDialogView.clearFocus();
+                    mDateSetListener.onDateSet(mDialogView, mYear, mMonth - 1, 1);
                 }
                 break;
             case BUTTON_NEGATIVE:
