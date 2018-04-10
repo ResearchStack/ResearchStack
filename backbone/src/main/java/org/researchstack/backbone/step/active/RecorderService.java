@@ -80,12 +80,11 @@ public class RecorderService extends Service implements RecorderListener, TextTo
     public static final String RECORDER_PREFS_START_TIME_KEY    = "StartTime";
 
     public static final int DEFAULT_VIBRATION_AND_SOUND_DURATION = 500; // in milliseconds
-
     private static final String NOTIFICATION_CHANNEL_ID         = "RecorderService_NotificationChannel";
     private static final String NOTIFICATION_CHANNEL_TITLE         = "Study in-activity progress tracker";
     private static final String NOTIFICATION_CHANNEL_DESC         = "Records and shows your progress during an "
             + "activity.";
-    
+
     public static final String INTENT_ACTION_RECORDER_RESUME    = "INTENT_ACTION_RECORDER_RESUME";
 
     private static final String INTENT_KEY_OUTPUT_DIRECTORY     = "RecorderOutputDirectory";
@@ -438,6 +437,20 @@ public class RecorderService extends Service implements RecorderListener, TextTo
     }
 
     private void showForegroundNotification(String notificationMessage) {
+
+        // Starting with API 26, notifications must be contained in a channel
+        if (Build.VERSION.SDK_INT >= 26) {
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                NotificationChannel channel = new NotificationChannel(
+                        NOTIFICATION_CHANNEL_ID,
+                        NOTIFICATION_CHANNEL_TITLE,
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setDescription(NOTIFICATION_CHANNEL_DESC);
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
 
         LogExt.d(RecorderService.class, "showForegroundNotification(" + notificationMessage + ")");
         Intent notificationIntent = new Intent(this, activeStep.getActivityClazz());
