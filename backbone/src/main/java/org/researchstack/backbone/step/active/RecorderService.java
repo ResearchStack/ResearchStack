@@ -469,11 +469,14 @@ public class RecorderService extends Service implements RecorderListener, TextTo
 
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.rsb_ic_recorder_notification)
                         .setContentTitle(task.getIdentifier() + " " + msg)
                         .setContentText(notificationMessage)
                         .setContentIntent(pendingIntent);
 
+        // vector drawable crash
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notificationBuilder.setSmallIcon(R.drawable.rsb_ic_recorder_notification);
+        }
         foregroundNotification = notificationBuilder.build();
         startForeground(1, foregroundNotification);
     }
