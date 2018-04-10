@@ -42,7 +42,7 @@ public class OnboardingManagerTask extends NavigableOrderedTask {
             stepTitleRes = R.string.rsb_consent_review_step_title;
         }
 
-        if (stepTitleRes > 0) {
+        if (stepTitleRes != 0) {
             return context.getString(stepTitleRes);
         }
 
