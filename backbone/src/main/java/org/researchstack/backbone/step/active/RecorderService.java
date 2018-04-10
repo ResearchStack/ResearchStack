@@ -17,10 +17,6 @@
 
 package org.researchstack.backbone.step.active;
 
-import static org.researchstack.backbone.ui.ViewTaskActivity.EXTRA_STEP;
-import static org.researchstack.backbone.ui.ViewTaskActivity.EXTRA_TASK;
-import static org.researchstack.backbone.ui.ViewTaskActivity.EXTRA_TASK_RESULT;
-
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -46,14 +42,9 @@ import android.support.annotation.RequiresPermission;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
 import com.google.gson.Gson;
-import java.io.File;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.FileResult;
 import org.researchstack.backbone.result.Result;
@@ -65,6 +56,18 @@ import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ResUtils;
+
+import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import static org.researchstack.backbone.ui.ViewTaskActivity.EXTRA_STEP;
+import static org.researchstack.backbone.ui.ViewTaskActivity.EXTRA_TASK;
+import static org.researchstack.backbone.ui.ViewTaskActivity.EXTRA_TASK_RESULT;
 
 /**
  * Created by TheMDP on 1/10/18.
