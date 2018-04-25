@@ -101,6 +101,19 @@ public abstract class DataProvider {
     }
 
     /**
+     * Request for an SMS for the user to login or sign up
+     *
+     * @param regionCode the user's region code
+     * @param phoneNumber the user's phone number
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
+     * returning true if request for phone sign in was successful
+     */
+    public Observable<DataResponse> requestPhoneSignIn(String regionCode, String phoneNumber) {
+        return Observable.just(new DataResponse(false, "Not implemented"));
+    }
+
+
+    /**
      * Sign in with email and token. This is used in conjunction with requestSignInLink. The
      * link should be intercepted by the app and the sign in token extracted.
      *
