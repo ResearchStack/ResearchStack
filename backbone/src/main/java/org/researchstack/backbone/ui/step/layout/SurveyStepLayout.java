@@ -169,7 +169,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         if(! TextUtils.isEmpty(questionStep.getTitle()))
         {
             title.setVisibility(View.VISIBLE);
-            title.setText(questionStep.getTitle());
+            title.setText(Html.fromHtml(questionStep.getTitle()));
         }
 
         if(! TextUtils.isEmpty(questionStep.getText()))
