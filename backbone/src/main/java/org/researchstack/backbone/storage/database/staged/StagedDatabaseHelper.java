@@ -108,6 +108,20 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
         }
     }
 
+    public void deleteStagedActivities() {
+        LogExt.d(getClass(), "deleteStagedActivities()");
+        try {
+            List<StagedActivity> results = new ArrayList<>();
+            List<StagedActivityRecord> activityRecords = getDao(StagedActivityRecord.class).queryForAll().list();
+
+            for (StagedActivityRecord record : activityRecords) {
+                deleteStagedActivity(record.stagedActivityId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void saveStagedEvent(StagedEvent event) {
         LogExt.d(getClass(), "saveStagedEvent() Activity id: " + event.getActivityId());
         try {
@@ -195,7 +209,7 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
     }
 
     public void deleteFutureStagedEvents(Date date) {
-        LogExt.d(getClass(), "deleteStagedEvents()");
+        LogExt.d(getClass(), "deleteFutureStagedEvents()");
         try {
             Dao dao = getDao(StagedEventRecord.class);
 
@@ -208,6 +222,20 @@ public class StagedDatabaseHelper extends SqlCipherDatabaseHelper {
                         deleteStagedEvent(record.id);
                     }
                 }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteStagedEvents() {
+        LogExt.d(getClass(), "deleteStagedEvents()");
+        try {
+            Dao dao = getDao(StagedEventRecord.class);
+
+            List<StagedEventRecord> eventRecords = dao.queryForAll().list();
+            for (StagedEventRecord record : eventRecords) {
+                deleteStagedEvent(record.id);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
