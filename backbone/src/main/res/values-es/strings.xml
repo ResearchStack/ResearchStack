@@ -433,7 +433,7 @@
     <string name="rsb_submit">Enviar</string>
     <string name="rsb_exit">Salir</string>
     <string name="rsb_get_started">Empezar</string>
-    <string name="rsb_done">Listo</string>
+    <string name="rsb_done">Terminar</string>
     <string name="rsb_step_skip">Saltar</string>
     <string name="rsb_next">Siguiente</string>
     <string name="rsb_what_to_expect">Que esperar</string>
@@ -488,4 +488,6 @@
     <string name="rsb_birth_date_too_young">Debe ser %1$s años o mayor</string>
     <string name="rsb_pincode_enter_title">Ingrese su passcode</string>
     <string name="rsb_hint_step_body_text">Ingresar</string>
+    <string name="rsb_are_you_sure">Está seguro?</string>
+    <string name="rsb_discard_results">Descartar Resultados</string>
 </resources>
