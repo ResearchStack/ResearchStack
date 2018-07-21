@@ -85,7 +85,11 @@ dependencies {
     implementation 'nl.littlerobots.rxlint:rxlint:1.6.1'
     implementation 'com.google.code.gson:gson:2.8.2'
 
-    implementation 'com.cronutils:cron-utils:3.1.2'
+    implementation 'com.cronutils:cron-utils:3.1.2', {
+        exclude group: 'joda-time', module: 'joda-time' // this can cause dex errors due to duplicate joda times
+    }
+    api 'net.danlew:android.joda:2.9.9.4' // android specific joda time, jre version causes perf problems
+    testImplementation 'joda-time:joda-time:2.9.9'
 
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
