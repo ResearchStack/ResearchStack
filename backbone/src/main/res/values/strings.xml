@@ -1,14 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
-    <string name="lorem_name" tools:ignore="ResourceName">Lorem Ipsum</string>
-    <string name="lorem_short" tools:ignore="ResourceName">Lorem ipsum dolor sit amet, consectetur
+    <string name="lorem_name" tools:ignore="ResourceName" translatable="false">Lorem Ipsum</string>
+    <string name="lorem_short" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
         adipiscing elit.
     </string>
-    <string name="lorem_medium" tools:ignore="ResourceName">Lorem ipsum dolor sit amet, consectetur
+    <string name="lorem_medium" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
         adipiscing elit sed do
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
     </string>
-    <string name="lorem_long" tools:ignore="ResourceName">Lorem ipsum dolor sit amet, consectetur
+    <string name="lorem_long" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
         adipiscing elit, sed do
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
         nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
@@ -87,7 +87,7 @@
         and that you wish to take part in this research study.
     </string>
     <string name="rsb_consent_signature_instruction">Please sign using your finger on the line
-        below.
+        below222.
     </string>
     <string name="rsb_consent_signature_placeholder">Sign Here</string>
     <string name="rsb_consent_signature_clear">Clear</string>
@@ -168,4 +168,12 @@
     <string name="rsb_error_assetvideoview_unknown">Can\'t play this video.</string>
     <!-- Button to close error alert when a video cannot be played -->
     <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1$s\'s Name (printed)</string>
+    <string name="rsb_consent_doc_line_signature">%1$s\'s Signature</string>
+    <string name="rsb_consent_doc_line_date">Date</string>
+    <string name="rsb_consent_role">Participant</string>
+    <string name="rsb_consent_doc_line_date_format">"MM-dd-yyyy"</string>
+
 </resources>
