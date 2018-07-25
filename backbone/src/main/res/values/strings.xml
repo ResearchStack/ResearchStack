@@ -86,8 +86,7 @@
     <string name="rsb_consent_signature_content">By agreeing you confirm that you read the consent
         and that you wish to take part in this research study.
     </string>
-    <string name="rsb_consent_signature_instruction">Please sign using your finger on the line
-        below222.
+    <string name="rsb_consent_signature_instruction">Please sign using your finger on the line below.
     </string>
     <string name="rsb_consent_signature_placeholder">Sign Here</string>
     <string name="rsb_consent_signature_clear">Clear</string>
