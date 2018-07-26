@@ -126,7 +126,7 @@ public class DateQuestionBody implements StepBody {
             }
         }
 
-        if (result.getResult() != null) {
+        if (hasChosenDate) {
             textView.setText(createFormattedResult());
         }
 
