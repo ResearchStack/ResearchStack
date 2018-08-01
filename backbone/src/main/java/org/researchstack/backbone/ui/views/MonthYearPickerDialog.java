@@ -13,26 +13,17 @@ import org.researchstack.backbone.R;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by spiria on 22/3/18.
  */
 
-public class MonthYearPickerDialog extends AlertDialog implements DialogInterface.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class MonthYearPickerDialog extends AlertDialog implements DialogInterface.OnClickListener {
 
     private Date mDateValue;
-    private int mYear = -1;
-    private int mMonth = -1;
-
     private Date mMaxDate = null;
-    private int mMaxYear = -1;
-    private int mMaxMonth = 12;
-
     private Date mMinDate = null;
-    private int mMinYear = 1900;
-    private int mMinMonth = 1;
-
-    private MonthYearPickerDialog.OnDateSetListener mDateSetListener;
     private View mDialogView;
 
     public MonthYearPickerDialog(Context context) {
@@ -50,106 +41,60 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
         final NumberPicker yearPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_year);
 
         Calendar cal = Calendar.getInstance();
-        mMaxYear = cal.get(Calendar.YEAR) + 100;
+        int maxYear = cal.get(Calendar.YEAR) + 100;
         if (mMaxDate != null) {
             cal.setTime(mMaxDate);
-            mMaxYear = cal.get(Calendar.YEAR);
-            mMaxMonth = cal.get(Calendar.MONTH) + 1;
+            maxYear = cal.get(Calendar.YEAR);
         }
-        yearPicker.setMaxValue(mMaxYear);
-        monthPicker.setMaxValue(mMaxMonth);
-
+        yearPicker.setMaxValue(maxYear);
+        monthPicker.setMaxValue(12);
+        monthPicker.setMinValue(1);
+        int minYear = 1900;
         if (mMinDate != null) {
             cal.setTime(mMinDate);
-            mMinYear = cal.get(Calendar.YEAR);
-            mMinMonth = cal.get(Calendar.MONTH) + 1;
+            minYear = cal.get(Calendar.YEAR);
         }
-        yearPicker.setMinValue(mMinYear);
+        yearPicker.setMinValue(minYear);
 
-        yearPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                updateMonthPickerLimits(newVal);
-            }
-        });
-
-        if (mYear > 0) {
-            yearPicker.setValue(mYear);
-        } else if (mMaxDate != null){
-            yearPicker.setValue(mMaxYear);
-        } else {
-            Calendar c = Calendar.getInstance();
-            yearPicker.setValue(c.get(Calendar.YEAR));
+        Calendar calendar = Calendar.getInstance();
+        if (mDateValue != null) {
+            calendar.setTime(mDateValue);
         }
-
-        updateMonthPickerLimits(yearPicker.getValue());
-
-        if (mMonth > 0) {
-            monthPicker.setValue(mMonth);
-        } else if (mMaxDate != null){
-            monthPicker.setValue(mMaxMonth);
-        } else {
-            Calendar c = Calendar.getInstance();
-            monthPicker.setValue(c.get(Calendar.MONTH) + 1);
-        }
-    }
-
-    public void setOnDateSetListener(MonthYearPickerDialog.OnDateSetListener listener) {
-        mDateSetListener = listener;
+        yearPicker.setValue(calendar.get(Calendar.YEAR));
+        monthPicker.setValue(calendar.get(Calendar.MONTH) + 1);
     }
 
     public void setCurrentDate(Date currentDate) {
         mDateValue = currentDate;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(mDateValue);
-        mYear = cal.get(Calendar.YEAR);
-        mMonth = cal.get(Calendar.MONTH) + 1;
         if (mDialogView != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(mDateValue);
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH) + 1;
             final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
             final NumberPicker yearPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_year);
-            yearPicker.setValue(mYear);
-            monthPicker.setValue(mMonth);
+            yearPicker.setValue(year);
+            monthPicker.setValue(month);
         }
     }
 
     public void setMaxDate(Date maxDate) {
         this.mMaxDate = maxDate;
-        Calendar cal = Calendar.getInstance();
-        if (mMaxDate != null) {
-            cal.setTime(mMaxDate);
-            mMaxYear = cal.get(Calendar.YEAR);
-            mMaxMonth = cal.get(Calendar.MONTH) + 1;
-        } else {
-            mMaxYear = cal.get(Calendar.YEAR) + 100;
-            mMaxMonth = 12;
-        }
-
         if (mDialogView != null) {
-            final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
+            Calendar cal = Calendar.getInstance();
+            int maxYear = cal.get(Calendar.YEAR) + 100;
+            if (mMaxDate != null) {
+                cal.setTime(mMaxDate);
+                maxYear = cal.get(Calendar.YEAR);
+            }
             final NumberPicker yearPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_year);
-            yearPicker.setMaxValue(mMaxYear);
-            monthPicker.setMaxValue(mMaxMonth);
+            yearPicker.setMaxValue(maxYear);
         }
         clearDateIfInvalid();
     }
 
     public void setMinDate(Date minDate) {
         this.mMinDate = minDate;
-        Calendar cal = Calendar.getInstance();
-        if (mMinDate != null) {
-            cal.setTime(mMinDate);
-            mMinYear = cal.get(Calendar.YEAR);
-            mMinMonth = cal.get(Calendar.MONTH) + 1;
-        } else {
-            mMinYear = 1900;
-            mMinMonth = 1;
-        }
-        if (mDialogView != null) {
-            final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
-            final NumberPicker yearPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_year);
-            yearPicker.setMinValue(mMinYear);
-            monthPicker.setMinValue(mMinMonth);
-        }
         clearDateIfInvalid();
     }
 
@@ -157,15 +102,10 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
         setCurrentDate(currentDate);
         setMinDate(minDate);
         setMaxDate(maxDate);
-        if (mDialogView != null && mYear > 0) {
-            updateMonthPickerLimits(mYear);
-        }
     }
 
     public void clearDate() {
         mDateValue = null;
-        mMonth = -1;
-        mYear = -1;
     }
 
     public void clearDateIfInvalid() {
@@ -181,7 +121,7 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
         }
     }
 
-    private int compareDate(Date date1, Date date2) {
+    public int compareDate(Date date1, Date date2) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date1);
         Integer month1 = calendar.get(Calendar.MONTH);
@@ -202,62 +142,7 @@ public class MonthYearPickerDialog extends AlertDialog implements DialogInterfac
         }
     }
 
-    private void updateMonthPickerLimits(int year) {
-        final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
-        monthPicker.setMinValue(1);
-        monthPicker.setMaxValue(12);
-        if (year == mMaxYear && year == mMinYear) {
-            monthPicker.setMinValue(mMinMonth);
-            monthPicker.setMaxValue(mMaxMonth);
-        } else if (year == mMaxYear) {
-            monthPicker.setMinValue(1);
-            monthPicker.setMaxValue(mMaxMonth);
-        } else if (year == mMinYear) {
-            monthPicker.setMinValue(mMinMonth);
-            monthPicker.setMaxValue(12);
-        }
-    }
-
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        switch (which) {
-            case BUTTON_POSITIVE:
-                if (mDateSetListener != null) {
-                    final NumberPicker monthPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_month);
-                    final NumberPicker yearPicker = (NumberPicker) mDialogView.findViewById(R.id.picker_year);
-
-                    mYear = yearPicker.getValue();
-                    mMonth = monthPicker.getValue();
-
-                    mDialogView.clearFocus();
-                    mDateSetListener.onDateSet(mDialogView, mYear, mMonth - 1, 1);
-                }
-                break;
-            case BUTTON_NEGATIVE:
-                cancel();
-                break;
-        }
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, month, dayOfMonth);
-
-        mDateValue = cal.getTime();
-        mYear = cal.get(Calendar.YEAR);
-        mMonth = cal.get(Calendar.MONTH) + 1;
-    }
-
-    public interface OnDateSetListener {
-        /**
-         * @param view the picker associated with the dialog
-         * @param year the selected year
-         * @param month the selected month (0-11 for compatibility with
-         *              {@link Calendar#MONTH})
-         * @param dayOfMonth th selected day of the month (1-31, depending on
-         *                   month)
-         */
-        void onDateSet(View view, int year, int month, int dayOfMonth);
     }
 }
