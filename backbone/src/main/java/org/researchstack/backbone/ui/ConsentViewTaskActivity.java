@@ -127,6 +127,48 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
     }
 
 
+    /**
+     * This method is doesn't support multilanguage. If used it will just print the filed names in English.
+     * Please use the method with the new signature
+     * {@link #getConsentPersonalInfoFormStep(Context context, boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
+     */
+    @Deprecated
+    public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate)
+    {
+        if (requiresName || requiresBirthDate)
+        {
+            List<QuestionStep> formSteps = new ArrayList<>();
+            if (requiresName)
+            {
+                formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, "First Name", new TextAnswerFormat()));
+                formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, "Last Name", new TextAnswerFormat()));
+            }
+
+            if (requiresBirthDate)
+            {
+                Calendar maxDate = Calendar.getInstance();
+                maxDate.add(Calendar.YEAR, -18);
+                DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
+                String dobText = "Date of birth";
+                formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
+            }
+
+            String formTitle = "Consent";
+            FormStep formStep = new FormStep(ID_FORM, formTitle, "");
+            formStep.setOptional(false);
+            formStep.setFormSteps(formSteps);
+
+            return formStep;
+        }
+
+        return null;
+    }
+
+    /**
+     * This new version is prepared to work with multilanguage.
+     * Please use this method instead of
+     * {@link #getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
+     */
     public static @Nullable FormStep getConsentPersonalInfoFormStep(Context context, boolean requiresName, boolean requiresBirthDate)
     {
         if (requiresName || requiresBirthDate)
