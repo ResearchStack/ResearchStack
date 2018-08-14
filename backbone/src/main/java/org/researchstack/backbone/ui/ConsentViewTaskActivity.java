@@ -128,7 +128,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
 
     /**
-     * This method is doesn't support multilanguage. If used it will just print the filed names in English.
+     * This method doesn't support multilanguage. If used, it will just print the filed names in English.
      * Please use the method with the new signature
      * {@link #getConsentPersonalInfoFormStep(Context context, boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
      */
