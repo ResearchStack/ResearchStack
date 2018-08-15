@@ -1,13 +1,16 @@
 package org.researchstack.backbone.ui.step.body;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import org.researchstack.backbone.R;
@@ -177,8 +180,9 @@ public class DateQuestionBody implements StepBody {
     }
 
     private void showDialog(final TextView tv) {
+        final Context viewContext = tv.getContext();
         if (format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
-            new DatePickerDialog(tv.getContext(),
+            new DatePickerDialog(viewContext,
                     (view, year, monthOfYear, dayOfMonth) -> {
                         calendar.set(year, monthOfYear, dayOfMonth);
                         hasChosenDate = true;
@@ -191,7 +195,7 @@ public class DateQuestionBody implements StepBody {
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)).show();
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
-            new TimePickerDialog(tv.getContext(),
+            new TimePickerDialog(viewContext,
                     (view, hourOfDay, minute) -> {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
@@ -206,10 +210,10 @@ public class DateQuestionBody implements StepBody {
                     true).show();
 
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
-            new DatePickerDialog(tv.getContext(),
+            new DatePickerDialog(viewContext,
                     (dview, year, monthOfYear, dayOfMonth) -> {
                         calendar.set(year, monthOfYear, dayOfMonth);
-                        new TimePickerDialog(tv.getContext(),
+                        new TimePickerDialog(viewContext,
                                 (tview, hourOfDay, minute) -> {
                                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                     calendar.set(Calendar.MINUTE, minute);
@@ -226,22 +230,56 @@ public class DateQuestionBody implements StepBody {
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)).show();
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.MonthYear) {
-            MonthYearPickerDialog dialog = new MonthYearPickerDialog(tv.getContext());
+            final MonthYearPickerDialog dialog = new MonthYearPickerDialog(viewContext);
+
             dialog.setPickerState(format.getMinimumDate(), format.getMaximumDate(), calendar.getTime());
-            dialog.setOnDateSetListener(new MonthYearPickerDialog.OnDateSetListener() {
+            dialog.show();
+
+            // Override onClick method for positive button
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onDateSet(View view, int year, int month, int dayOfMonth) {
-                    calendar.set(year, month, dayOfMonth);
-                    hasChosenDate = true;
-                    // Set result to our edit text
-                    String formattedResult = createFormattedResult();
-                    tv.setText(formattedResult);
+                public void onClick(View v) {
+                    final NumberPicker monthPicker = (NumberPicker) dialog.findViewById(R.id.picker_month);
+                    final NumberPicker yearPicker = (NumberPicker) dialog.findViewById(R.id.picker_year);
+                    int selectedYear = yearPicker.getValue();
+                    int selectedMonth = monthPicker.getValue() - 1;
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(selectedYear, selectedMonth, 1);
+                    Date selected = cal.getTime();
+                    if (format.getMinimumDate() != null && dialog.compareDate(selected, format.getMinimumDate()) < 0) {
+                        // Selected Date is invalid, display error and return null;
+                        String minDate = dateformatter.format(format.getMinimumDate());
+                        String errorMessage = viewContext.getString(R.string.rsb_invalid_answer_date_under, minDate);
+                        displayErrorMessage(viewContext, errorMessage);
+                        selected = null;
+                    } else if (format.getMaximumDate() != null && dialog.compareDate(selected, format.getMaximumDate()) > 0) {
+                        // Selected Date is invalid, display error and return null;
+                        String maxDate = dateformatter.format(format.getMaximumDate());
+                        String errorMessage = viewContext.getString(R.string.rsb_invalid_answer_date_over, maxDate);
+                        displayErrorMessage(viewContext, errorMessage);
+                        selected = null;
+                    }
+                    if (selected != null) {
+                        dialog.setCurrentDate(selected);
+                        calendar.set(selectedYear, selectedMonth, 1);
+                        hasChosenDate = true;
+                        // Set result to our edit text
+                        String formattedResult = createFormattedResult();
+                        tv.setText(formattedResult);
+                        dialog.dismiss();
+                    }
                 }
             });
-            dialog.show();
         } else {
             throw new RuntimeException("DateAnswerStyle " + format.getStyle() + " is not recognised");
         }
+    }
+
+    private void displayErrorMessage(Context context, String errorMessage) {
+        new android.support.v7.app.AlertDialog.Builder(context)
+                .setMessage(errorMessage)
+                .setPositiveButton(R.string.rsb_ok, null).create().show();
     }
 
     private String createFormattedResult() {
