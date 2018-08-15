@@ -166,7 +166,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             {
                 Calendar maxDate = Calendar.getInstance();
                 maxDate.add(Calendar.YEAR, -18);
-                ;
+
                 DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
                 String dobText = (context != null) ? context.getString(R.string.rsb_consent_dob_full) : "Date of birth";
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
