@@ -155,43 +155,24 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             List<QuestionStep> formSteps = new ArrayList<>();
             if (requiresName)
             {
-                if (context == null)
-                {
-                    formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, "First Name", new TextAnswerFormat()));
-                    formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, "Last Name", new TextAnswerFormat()));
-                }
-                else {
-                    formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, context.getString(R.string.rsb_name_first),
-                            new TextAnswerFormat()));
-                    formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, context.getString(R.string.rsb_name_last),
-                            new TextAnswerFormat()));
-                }
+                String firstName = (context != null) ? context.getString(R.string.rsb_name_first) : "first name";
+                formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, firstName, new TextAnswerFormat()));
+
+                String lastName = (context != null) ? context.getString(R.string.rsb_name_last) : "last name";
+                formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, lastName, new TextAnswerFormat()));
             }
 
             if (requiresBirthDate)
             {
                 Calendar maxDate = Calendar.getInstance();
                 maxDate.add(Calendar.YEAR, -18);
-                String dobText;
+                ;
                 DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
-                if (context == null)
-                {
-                    dobText = "Date of birth";
-                }
-                else
-                {
-                    dobText = context.getString(R.string.rsb_consent_dob_full);
-                }
+                String dobText = (context != null) ? context.getString(R.string.rsb_consent_dob_full) : "Date of birth";
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
             }
 
-            String formTitle;
-            if (context == null)
-            {
-                formTitle = "Consent";
-            } else {
-                formTitle = context.getString(R.string.rsb_consent);
-            }
+            String formTitle = (context != null) ?  context.getString(R.string.rsb_consent) : "Consent";
             FormStep formStep = new FormStep(ID_FORM, formTitle, "");
             formStep.setOptional(false);
             formStep.setFormSteps(formSteps);
