@@ -127,27 +127,52 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
     }
 
 
-    public static @Nullable FormStep getConsentPersonalInfoFormStep(Context context, boolean requiresName, boolean requiresBirthDate)
+    /**
+     * Returns the personal form steps related with the consent view task.
+     *
+     * This method doesn't support multilanguage. If used, it will just print the filed names in English.
+     * Please use the method with the new signature
+     * {@link #getConsentPersonalInfoFormStep(Context context, boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
+     */
+    @Deprecated
+    public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate)
+    {
+        return getConsentPersonalInfoFormStep(null, requiresName, requiresBirthDate);
+    }
+
+    /**
+     * Returns the personal form steps related with the consent view task.
+     *
+     * This new version is prepared to work with multilanguage.
+     * Please use this method instead of
+     * {@link #getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
+     */
+    public static @Nullable FormStep getConsentPersonalInfoFormStep(Context context, boolean requiresName,
+                                                                    boolean requiresBirthDate)
     {
         if (requiresName || requiresBirthDate)
         {
             List<QuestionStep> formSteps = new ArrayList<>();
             if (requiresName)
             {
-                formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, context.getString(R.string.rsb_name_first), new TextAnswerFormat()));
-                formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, context.getString(R.string.rsb_name_last), new TextAnswerFormat()));
+                String firstName = (context != null) ? context.getString(R.string.rsb_name_first) : "First Name";
+                formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, firstName, new TextAnswerFormat()));
+
+                String lastName = (context != null) ? context.getString(R.string.rsb_name_last) : "Last Name";
+                formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, lastName, new TextAnswerFormat()));
             }
 
             if (requiresBirthDate)
             {
                 Calendar maxDate = Calendar.getInstance();
                 maxDate.add(Calendar.YEAR, -18);
+
                 DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
-                String dobText = context.getString(R.string.rsb_consent_dob_full);
+                String dobText = (context != null) ? context.getString(R.string.rsb_consent_dob_full) : "Date of birth";
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
             }
 
-            String formTitle = context.getString(R.string.rsb_consent);
+            String formTitle = (context != null) ?  context.getString(R.string.rsb_consent) : "Consent";
             FormStep formStep = new FormStep(ID_FORM, formTitle, "");
             formStep.setOptional(false);
             formStep.setFormSteps(formSteps);
