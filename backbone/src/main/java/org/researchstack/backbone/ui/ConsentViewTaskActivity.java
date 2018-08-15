@@ -128,7 +128,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
 
     /**
-     * This method returns the personal form steps related with the consent view task.
+     * Returns the personal form steps related with the consent view task.
      *
      * This method doesn't support multilanguage. If used, it will just print the filed names in English.
      * Please use the method with the new signature
@@ -141,7 +141,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
     }
 
     /**
-     * This method returns the personal form steps related with the consent view task.
+     * Returns the personal form steps related with the consent view task.
      *
      * This new version is prepared to work with multilanguage.
      * Please use this method instead of
@@ -155,10 +155,10 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             List<QuestionStep> formSteps = new ArrayList<>();
             if (requiresName)
             {
-                String firstName = (context != null) ? context.getString(R.string.rsb_name_first) : "first name";
+                String firstName = (context != null) ? context.getString(R.string.rsb_name_first) : "First Name";
                 formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, firstName, new TextAnswerFormat()));
 
-                String lastName = (context != null) ? context.getString(R.string.rsb_name_last) : "last name";
+                String lastName = (context != null) ? context.getString(R.string.rsb_name_last) : "Last Name";
                 formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, lastName, new TextAnswerFormat()));
             }
 
