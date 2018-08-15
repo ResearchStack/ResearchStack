@@ -147,7 +147,8 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
      * Please use this method instead of
      * {@link #getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
      */
-    public static @Nullable FormStep getConsentPersonalInfoFormStep(Context context, boolean requiresName, boolean requiresBirthDate)
+    public static @Nullable FormStep getConsentPersonalInfoFormStep(Context context, boolean requiresName,
+                                                                    boolean requiresBirthDate)
     {
         if (requiresName || requiresBirthDate)
         {
@@ -160,8 +161,10 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
                     formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, "Last Name", new TextAnswerFormat()));
                 }
                 else {
-                    formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, context.getString(R.string.rsb_name_first), new TextAnswerFormat()));
-                    formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, context.getString(R.string.rsb_name_last), new TextAnswerFormat()));
+                    formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, context.getString(R.string.rsb_name_first),
+                            new TextAnswerFormat()));
+                    formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, context.getString(R.string.rsb_name_last),
+                            new TextAnswerFormat()));
                 }
             }
 
@@ -171,7 +174,8 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
                 maxDate.add(Calendar.YEAR, -18);
                 String dobText;
                 DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
-                if (context == null) {
+                if (context == null)
+                {
                     dobText = "Date of birth";
                 }
                 else
@@ -182,7 +186,8 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             }
 
             String formTitle;
-            if (context == null) {
+            if (context == null)
+            {
                 formTitle = "Consent";
             } else {
                 formTitle = context.getString(R.string.rsb_consent);
