@@ -251,7 +251,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     {
         BodyAnswer bodyAnswer = stepBody.getBodyAnswerState();
 
-        if(bodyAnswer == null || ! bodyAnswer.isValid())
+        if ((bodyAnswer == null || ! bodyAnswer.isValid()) && !readOnlyMode)
         {
             Toast.makeText(getContext(),
                            bodyAnswer == null
