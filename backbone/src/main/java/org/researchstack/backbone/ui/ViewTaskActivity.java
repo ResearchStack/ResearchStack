@@ -112,7 +112,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        root = (StepSwitcher) findViewById(R.id.container);
+        root = findViewById(R.id.container);
 
         if (savedInstanceState == null) {
             task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
@@ -122,7 +122,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
             principalTextColor = getIntent().getIntExtra(EXTRA_PRINCIPAL_TEXT_COLOR, R.color.rsb_cell_header_grey);
             secondaryTextColor = getIntent().getIntExtra(EXTRA_SECONDARY_TEXT_COLOR, R.color.rsb_item_text_grey);
             actionFailedColor = getIntent().getIntExtra(EXTRA_ACTION_FAILED_COLOR, R.color.rsb_error);
-            taskResult = new TaskResult(task.getIdentifier());
+            taskResult = (TaskResult) getIntent().getExtras().get(EXTRA_TASK_RESULT);
+            if (taskResult == null)
+            {
+                taskResult = new TaskResult(task.getIdentifier());
+            }
             taskResult.setStartDate(new Date());
         } else {
             task = (Task) savedInstanceState.getSerializable(EXTRA_TASK);
