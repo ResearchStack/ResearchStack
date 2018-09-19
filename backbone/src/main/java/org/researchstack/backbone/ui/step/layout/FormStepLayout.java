@@ -347,10 +347,14 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
         if(!isAnswerValid && showErrorAlertOnInvalid)
         {
-            String invalidReason = android.text.TextUtils.join(", ", invalidReasons) + ".";
-            Toast.makeText(getContext(), invalidReason, Toast.LENGTH_SHORT).show();
+            showErrorAlertWhenInvalid(invalidReasons);
         }
         return isAnswerValid;
+    }
+
+    protected void showErrorAlertWhenInvalid(List<String> invalidReasons) {
+        String invalidReason = android.text.TextUtils.join(", ", invalidReasons) + ".";
+        Toast.makeText(getContext(), invalidReason, Toast.LENGTH_SHORT).show();
     }
 
     /**
