@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.researchstack.backbone.onboarding.OnboardingTaskType;
 import org.researchstack.backbone.result.TaskResult;
@@ -24,6 +24,7 @@ import org.researchstack.backbone.task.OnboardingTask;
 import org.researchstack.backbone.task.SignInTask;
 import org.researchstack.backbone.ui.layout.SignUpEligibleStepLayout;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -131,7 +132,7 @@ public class BaseActivity extends PinCodeActivity
         }
 
         // Try id for lib level snackbar id
-        id = android.support.design.R.id.snackbar_text;
+        id = 0;
         tv = (TextView) snackbar.getView().findViewById(id);
         if (tv != null)
         {

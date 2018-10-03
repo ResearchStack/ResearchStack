@@ -4,10 +4,6 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,26 +12,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.researchstack.backbone.DataProvider;
-import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.onboarding.OnboardingTaskType;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.task.OrderedTask;
-import org.researchstack.backbone.utils.ResUtils;
-import org.researchstack.backbone.utils.TextUtils;
+import com.google.android.material.tabs.TabLayout;
+
 import org.researchstack.backbone.AppPrefs;
+import org.researchstack.backbone.DataProvider;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResearchStack;
 import org.researchstack.backbone.ResourceManager;
+import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.TaskProvider;
 import org.researchstack.backbone.UiManager;
 import org.researchstack.backbone.model.StudyOverviewModel;
 import org.researchstack.backbone.onboarding.OnboardingManager;
+import org.researchstack.backbone.onboarding.OnboardingTaskType;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.PassCodeCreationStep;
 import org.researchstack.backbone.task.OnboardingTask;
+import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.SignInTask;
 import org.researchstack.backbone.task.SignUpTask;
 import org.researchstack.backbone.ui.adapter.OnboardingPagerAdapter;
+import org.researchstack.backbone.utils.ResUtils;
+import org.researchstack.backbone.utils.TextUtils;
+
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * OverviewActivity is the landing page for a user who is not signed up or signed in
@@ -143,8 +145,7 @@ public class OverviewActivity extends PinCodeActivity implements View.OnClickLis
         }
     }
 
-    private StudyOverviewModel parseStudyOverviewModel()
-    {
+    private StudyOverviewModel parseStudyOverviewModel() {
         return ResourceManager.getInstance().getStudyOverview().create(this);
     }
 

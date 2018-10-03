@@ -1,8 +1,8 @@
 package org.researchstack.backbone.ui.views;
 
 import android.content.Context;
-import android.support.annotation.CallSuper;
-import android.support.v7.widget.AppCompatButton;
+import androidx.annotation.CallSuper;
+import androidx.appcompat.widget.AppCompatButton;
 import android.text.InputFilter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;

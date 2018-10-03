@@ -1,7 +1,6 @@
 package org.researchstack.backbone.step;
 
 import android.content.Context;
-import android.support.annotation.MainThread;
 
 import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;

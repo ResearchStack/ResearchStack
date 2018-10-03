@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.google.android.material.tabs.TabLayout;
 
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.result.TaskResult;
@@ -28,6 +28,7 @@ import org.researchstack.backbone.ui.adapter.MainPagerAdapter;
 
 import java.util.List;
 
+import androidx.viewpager.widget.ViewPager;
 import rx.Observable;
 
 

@@ -1,8 +1,5 @@
 package org.researchstack.backbone.ui.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
@@ -10,6 +7,10 @@ import org.researchstack.backbone.utils.ViewUtils;
 import org.researchstack.backbone.ActionItem;
 
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 
 public class MainPagerAdapter extends FragmentPagerAdapter {

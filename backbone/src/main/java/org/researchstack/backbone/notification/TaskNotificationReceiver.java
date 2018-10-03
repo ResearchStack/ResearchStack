@@ -6,10 +6,11 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import org.researchstack.backbone.ui.MainActivity;
+
+import androidx.core.app.NotificationCompat;
 
 
 public class TaskNotificationReceiver extends BroadcastReceiver {

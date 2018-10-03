@@ -3,7 +3,6 @@ package org.researchstack.backbone.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.DisplayMetrics;
@@ -14,6 +13,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.lang.reflect.Constructor;
+
+import androidx.fragment.app.Fragment;
 
 public class ViewUtils {
 

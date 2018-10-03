@@ -3,14 +3,6 @@ package org.researchstack.backbone.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +13,7 @@ import com.google.gson.GsonBuilder;
 
 import org.joda.time.DateTime;
 import org.researchstack.backbone.DataProvider;
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.factory.IntentFactory;
 import org.researchstack.backbone.factory.ObservableTransformerFactory;
@@ -37,14 +30,21 @@ import org.researchstack.backbone.task.factory.MoodSurveyFactory;
 import org.researchstack.backbone.task.factory.MoodSurveyFrequency;
 import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
-import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.adapter.TaskAdapter;
 import org.researchstack.backbone.ui.views.DividerItemDecoration;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -68,12 +68,16 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
         this.adapter = adapter;
     }
 
-    /** Intent factory, made available for subclasses to create Intent instances. */
+    /**
+     * Intent factory, made available for subclasses to create Intent instances.
+     */
     public final IntentFactory getIntentFactory() {
         return intentFactory;
     }
 
-    /** Intent factory setter, made available if subclasses' unit tests need to mock. */
+    /**
+     * Intent factory setter, made available if subclasses' unit tests need to mock.
+     */
     public final void setIntentFactory(@NonNull IntentFactory intentFactory) {
         this.intentFactory = intentFactory;
     }
@@ -235,8 +239,7 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
      * Apps should override this method to specify their own custom tasks.
      * </p>
      *
-     * @param task
-     *         task schedule model to trigger the custom task
+     * @param task task schedule model to trigger the custom task
      */
     protected abstract void startCustomTask(SchedulesAndTasksModel.TaskScheduleModel task);
 
@@ -314,7 +317,8 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
             StorageAccess.getInstance().getAppDatabase().saveTaskResult(taskResult);
             DataProvider.getInstance().uploadTaskResult(getActivity(), taskResult);
 
-            fetchData();;
+            fetchData();
+            ;
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -344,7 +348,7 @@ public abstract class ActivitiesFragment extends Fragment implements StorageAcce
         builder.registerTypeAdapter(TaskItem.class, new TaskItemAdapter());
         return builder.create();
     }
-  
+
     public void startCustomTappingTask() {
         String taskItemJson = "{\"taskIdentifier\":\"2-APHIntervalTapping-7259AC18-D711-47A6-ADBD-6CFCECDED1DF\",\"schemaIdentifier\":\"TappingActivity\",\"taskType\":\"tapping\",\"intendedUseDescription\":\"Speed of finger tapping can reflect severity of motor symptoms in Parkinson disease. This activity measures your tapping speed for each hand. Your medical provider may measure this differently.\",\"taskOptions\":{\"duration\":20.0,\"handOptions\":\"both\"},\"localizedSteps\":[{\"identifier\":\"conclusion\",\"type\":\"instruction\",\"text\":\"Thank You!\"}]}";
         TaskItemFactory factory = new TaskItemFactory();

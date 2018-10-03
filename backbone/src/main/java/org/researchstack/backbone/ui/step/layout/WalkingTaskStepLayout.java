@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -13,6 +12,8 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.recorder.AudioRecorder;
 import org.researchstack.backbone.step.active.recorder.PedometerRecorder;
 import org.researchstack.backbone.step.active.WalkingTaskStep;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * Created by TheMDP on 2/16/17.

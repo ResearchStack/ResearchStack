@@ -2,7 +2,6 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,6 +10,8 @@ import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
