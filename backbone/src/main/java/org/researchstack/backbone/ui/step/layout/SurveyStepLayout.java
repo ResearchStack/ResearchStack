@@ -1,4 +1,5 @@
 package org.researchstack.backbone.ui.step.layout;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
@@ -7,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.Html;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,12 +16,12 @@ import android.widget.Toast;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
+import org.researchstack.backbone.ui.step.body.ScaleQuestionBodyType;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
@@ -30,8 +30,7 @@ import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
 
-public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
-{
+public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -49,33 +48,27 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     // Child Views
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private LinearLayout container;
-    protected StepBody     stepBody;
+    protected StepBody stepBody;
 
-    public SurveyStepLayout(Context context)
-    {
+    public SurveyStepLayout(Context context) {
         super(context);
     }
 
-    public SurveyStepLayout(Context context, AttributeSet attrs)
-    {
+    public SurveyStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SurveyStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public SurveyStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public void initialize(Step step)
-    {
+    public void initialize(Step step) {
         initialize(step, null);
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
-        if(! (step instanceof QuestionStep))
-        {
+    public void initialize(Step step, StepResult result) {
+        if (!(step instanceof QuestionStep)) {
             throw new RuntimeException("Step being used in SurveyStep is not a QuestionStep");
         }
 
@@ -86,8 +79,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
@@ -97,32 +89,27 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
      * @return a boolean indication whether the back event is consumed
      */
     @Override
-    public boolean isBackEventConsumed()
-    {
+    public boolean isBackEventConsumed() {
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, getStep(), stepBody.getStepResult(false));
         return false;
     }
 
     @Override
-    public void setCallbacks(StepCallbacks callbacks)
-    {
+    public void setCallbacks(StepCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 
     @Override
-    public int getContentResourceId()
-    {
+    public int getContentResourceId() {
         return R.layout.rsb_step_layout;
     }
 
-    public void initializeStep()
-    {
+    public void initializeStep() {
         initStepLayout();
         initStepBody();
     }
 
-    public void initStepLayout()
-    {
+    public void initStepLayout() {
         LogExt.i(getClass(), "initStepLayout()");
 
         container = (LinearLayout) findViewById(R.id.rsb_survey_content_container);
@@ -131,17 +118,13 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveAction(v -> onNextClicked());
 
-        if(questionStep != null)
-        {
+        if (questionStep != null) {
             setupTitleLayout(getContext(), questionStep, title, summary);
 
-            if(questionStep.isOptional())
-            {
+            if (questionStep.isOptional()) {
                 submitBar.setNegativeTitle(R.string.rsb_step_skip);
                 submitBar.setNegativeAction(v -> onSkipClicked());
-            }
-            else
-            {
+            } else {
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
         }
@@ -151,34 +134,29 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     @MainThread
     // Protected and static so that FormStepLayout can access this method
     protected static void setupTitleLayout(Context context, QuestionStep questionStep, TextView title, TextView summary) {
-        if(! TextUtils.isEmpty(questionStep.getTitle()))
-        {
+        if (!TextUtils.isEmpty(questionStep.getTitle())) {
             title.setVisibility(View.VISIBLE);
             title.setText(questionStep.getTitle());
         }
 
-        if(! TextUtils.isEmpty(questionStep.getText()))
-        {
+        if (!TextUtils.isEmpty(questionStep.getText())) {
             summary.setVisibility(View.VISIBLE);
             summary.setText(Html.fromHtml(questionStep.getText()));
-            summary.setMovementMethod(new TextViewLinkHandler()
-            {
+            summary.setMovementMethod(new TextViewLinkHandler() {
                 @Override
-                public void onLinkClick(String url)
-                {
+                public void onLinkClick(String url) {
                     String path = ResourcePathManager.getInstance().
                             generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
                     Intent intent = ViewWebDocumentActivity.newIntentForPath(context,
-                                                                             questionStep.getTitle(),
-                                                                             path);
+                            questionStep.getTitle(),
+                            path);
                     context.startActivity(intent);
                 }
             });
         }
     }
 
-    public void initStepBody()
-    {
+    public void initStepBody() {
         LogExt.i(getClass(), "initStepBody()");
 
         stepBody = createStepBody(questionStep, stepResult);
@@ -190,8 +168,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     @MainThread
     // Protected and static so that FormStepLayout can access this method
     protected static void replaceStepBodyView(LinearLayout container, View body) {
-        if(body != null)
-        {
+        if (body != null) {
             View oldView = container.findViewById(R.id.rsb_survey_step_body);
             int bodyIndex = container.indexOfChild(oldView);
             container.removeView(oldView);
@@ -203,41 +180,35 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     @NonNull
     @MainThread
     // Protected and static so that FormStepLayout can access this method
-    protected static StepBody createStepBody(QuestionStep questionStep, StepResult result)
-    {
-        try
-        {
+    protected static StepBody createStepBody(QuestionStep questionStep, StepResult result) {
+        try {
             Class cls = questionStep.getStepBodyClass();
+            if (cls == ScaleQuestionBodyType.class) {
+                return (StepBody) new ScaleQuestionBodyType(questionStep, result);
+            }
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
             return (StepBody) constructor.newInstance(questionStep, result);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Parcelable onSaveInstanceState()
-    {
+    public Parcelable onSaveInstanceState() {
         callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(false));
         return super.onSaveInstanceState();
     }
 
-    protected void onNextClicked()
-    {
+    protected void onNextClicked() {
         BodyAnswer bodyAnswer = stepBody.getBodyAnswerState();
 
-        if(bodyAnswer == null || ! bodyAnswer.isValid())
-        {
+        if (bodyAnswer == null || !bodyAnswer.isValid()) {
             Toast.makeText(getContext(),
-                           bodyAnswer == null
-                                   ? BodyAnswer.INVALID.getString(getContext())
-                                   : bodyAnswer.getString(getContext()),
-                           Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+                    bodyAnswer == null
+                            ? BodyAnswer.INVALID.getString(getContext())
+                            : bodyAnswer.getString(getContext()),
+                    Toast.LENGTH_SHORT).show();
+        } else {
             onComplete();
         }
     }
@@ -247,24 +218,20 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, getStep(), stepResult);
     }
 
-    public void onSkipClicked()
-    {
-        if(callbacks != null)
-        {
+    public void onSkipClicked() {
+        if (callbacks != null) {
             // empty step result when skipped
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                                 getStep(),
-                                 stepBody.getStepResult(true));
+                    getStep(),
+                    stepBody.getStepResult(true));
         }
     }
 
-    public Step getStep()
-    {
+    public Step getStep() {
         return questionStep;
     }
 
-    public String getString(@StringRes int stringResId)
-    {
+    public String getString(@StringRes int stringResId) {
         return getResources().getString(stringResId);
     }
 
