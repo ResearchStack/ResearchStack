@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="90dp"
+        android:height="76dp"
+        android:viewportWidth="90.0"
+        android:viewportHeight="76.0">
+    <path
+        android:pathData="M62.48,53.19C62.32,53.19 62.16,53.16 62,53.11C46.89,47.81 32.43,53.04 32.29,53.09C31.54,53.37 30.71,52.99 30.44,52.25C30.16,51.5 30.54,50.67 31.29,50.4C31.91,50.16 46.87,44.76 62.95,50.39C63.7,50.65 64.1,51.47 63.84,52.22C63.63,52.82 63.07,53.19 62.48,53.19"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M43.89,32.66C43.89,35.79 41.36,38.32 38.22,38.32C35.09,38.32 32.55,35.79 32.55,32.66C32.55,29.54 35.09,27 38.22,27C41.36,27 43.89,29.54 43.89,32.66"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M60.84,32.66C60.84,35.79 58.3,38.32 55.16,38.32C52.03,38.32 49.49,35.79 49.49,32.66C49.49,29.54 52.03,27 55.16,27C58.3,27 60.84,29.54 60.84,32.66"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M46.69,6.23C28.98,6.23 14.57,20.64 14.57,38.35C14.57,56.06 28.98,70.47 46.69,70.47C64.41,70.47 78.82,56.06 78.82,38.35C78.82,20.64 64.41,6.23 46.69,6.23M46.69,73.35C27.39,73.35 11.69,57.65 11.69,38.35C11.69,19.05 27.39,3.35 46.69,3.35C65.99,3.35 81.69,19.05 81.69,38.35C81.69,57.65 65.99,73.35 46.69,73.35"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M28.89,28.44C28.76,28.44 28.62,28.42 28.48,28.38C27.72,28.15 27.29,27.36 27.51,26.59C28.41,23.57 31.68,18 37.67,18.54C38.46,18.61 39.04,19.31 38.97,20.1C38.9,20.89 38.2,21.46 37.41,21.4C32.27,20.92 30.29,27.34 30.27,27.41C30.08,28.04 29.51,28.44 28.89,28.44"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M61.93,23.3C61.82,23.3 61.71,23.29 61.59,23.27L51.9,20.92C51.13,20.73 50.66,19.96 50.84,19.19C51.03,18.41 51.8,17.94 52.58,18.13L62.27,20.47C63.04,20.66 63.52,21.43 63.33,22.2C63.17,22.86 62.58,23.3 61.93,23.3"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+</vector>

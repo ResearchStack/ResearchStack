@@ -2,6 +2,8 @@ package org.researchstack.backbone.model;
 
 import android.support.annotation.StringRes;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +68,13 @@ public class ConsentDocument implements Serializable {
      */
     private String htmlReviewContent;
 
+    @SerializedName("documentProperties")
+    DocumentProperties documentProperties;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    public ConsentDocument() {
+        super();
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -114,4 +123,7 @@ public class ConsentDocument implements Serializable {
         this.htmlReviewContent = htmlReviewContent;
     }
 
+    public DocumentProperties getDocumentProperties() {
+        return documentProperties;
+    }
 }

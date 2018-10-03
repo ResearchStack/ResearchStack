@@ -251,6 +251,8 @@ public class SignatureView extends View {
      * {@link android.graphics.PathMeasure} class and get minX and minY from that.
      * <p>
      * 2. Scale bitmap down. Currently drawing at density of device.
+     *
+     * @return the signature bitmap
      */
     public Bitmap createSignatureBitmap() {
 

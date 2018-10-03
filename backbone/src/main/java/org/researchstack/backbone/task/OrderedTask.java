@@ -3,6 +3,7 @@ package org.researchstack.backbone.task;
 import android.content.Context;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.TextUtils;
@@ -30,6 +31,11 @@ import java.util.Set;
 public class OrderedTask extends Task implements Serializable {
 
     protected List<Step> steps;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    public OrderedTask() {
+        super();
+    }
 
     /**
      * Returns an initialized ordered task using the specified identifier and array of steps.
@@ -132,7 +138,7 @@ public class OrderedTask extends Task implements Serializable {
     /**
      * Validates that there are no duplicate identifiers in the list of steps
      *
-     * @throws org.researchstack.backbone.task.Task.InvalidTaskException
+     * @throws org.researchstack.backbone.task.Task.InvalidTaskException if the task is invalid
      */
     @Override
     public void validateParameters() {
@@ -153,5 +159,34 @@ public class OrderedTask extends Task implements Serializable {
      */
     public List<Step> getSteps() {
         return new ArrayList<>(steps);
+    }
+
+    /**
+     * Convenience method to replace a Step at a specific index
+     * This can be used to change the contents of a Step by calling getSteps(),
+     * changing the step, and then calling this method to make sure the changes stick
+     *
+     * @param index index of step to replace
+     * @param step to replace at index
+     */
+    public void replaceStep(int index, Step step) {
+        steps.set(index, step);
+    }
+
+    /**
+     * Convenience method to remove a Step from the Task
+     * @param index index of step to remove
+     */
+    public void removeStep(int index) {
+        steps.remove(index);
+    }
+
+    /**
+     * * Convenience method to add a Step to the Task
+     * @param index to add the step at
+     * @param step the step to add
+     */
+    public void addStep(int index, Step step) {
+        steps.add(index, step);
     }
 }

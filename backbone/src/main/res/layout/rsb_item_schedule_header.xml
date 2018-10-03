@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="72dp"
+    android:background="@color/rsb_submit_bar_gray">
+
+    <TextView
+        android:id="@+id/activity_header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/rsb_warm_gray"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/activity_header_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@id/activity_header_title"
+        android:gravity="center_horizontal"
+        android:textColor="@color/rsb_warm_gray"
+        android:textSize="14sp"
+        tools:text="Asthma history\n13 questions" />
+
+</RelativeLayout>

@@ -1,0 +1,8 @@
+{
+  "identifier": "weight",
+  "type": "integer",
+  "optional": true,
+  "min": 50,
+  "max": 500,
+  "maxLength":3
+}

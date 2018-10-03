@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.6"
-            android:text="@string/rsb_hours"
+            android:text="@string/rsb_time_hours"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.6"
-            android:text="@string/rsb_minutes"
+            android:text="@string/rsb_time_minutes"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner

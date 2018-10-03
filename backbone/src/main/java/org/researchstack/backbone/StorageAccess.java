@@ -2,6 +2,7 @@ package org.researchstack.backbone;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.MainThread;
@@ -39,6 +40,9 @@ public class StorageAccess {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     private static final boolean CHECK_THREADS = false;
+
+    private static final String SHARED_PREFS_KEY = "StorageAccessSharedPrefsKey";
+    private static final String USES_FINGERPRINT_KEY = "UsesFingerprintKey";
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Static Fields
@@ -126,7 +130,6 @@ public class StorageAccess {
         return encryptionProvider.hasPinCode(context);
     }
 
-
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Storage Access request and notification
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -161,7 +164,7 @@ public class StorageAccess {
      * Registers a listener. If you want to read/write data, you'll need to implement this to know
      * when file access is ready.
      *
-     * @param storageAccessListener
+     * @param storageAccessListener the listener to register
      */
     @MainThread
     public final void register(StorageAccessListener storageAccessListener) {
@@ -179,7 +182,7 @@ public class StorageAccess {
      * Guess what this does. Yes, you'll need to call it if you called register or you'll have
      * memory leaks and possibly crashes on callbacks to dead clients.
      *
-     * @param storageAccessListener
+     * @param storageAccessListener the registered listener
      */
     @MainThread
     public final void unregister(StorageAccessListener storageAccessListener) {
@@ -256,7 +259,7 @@ public class StorageAccess {
      *
      * @param context android context
      * @param pin     string of the pin to attempt authentication
-     * @throws StorageAccessException
+     * @throws StorageAccessException if the authentication failed
      */
     public void authenticate(Context context, String pin) {
         encryptionProvider.startWithPassphrase(context, pin);
@@ -287,11 +290,50 @@ public class StorageAccess {
      * @param context android context
      * @param oldPin  the old pin
      * @param newPin  the new pin, which should already be validated (enter + confirm)
-     * @throws StorageAccessException
+     * @throws StorageAccessException if the pin code change failed
      */
     public void changePinCode(Context context, String oldPin, String newPin) {
         encryptionProvider.changePinCode(context, oldPin, newPin);
         injectEncrypter();
+    }
+
+    /**
+     * @param context can be android or application
+     * @return true if pin code is backed by fingerprint, false if it is user created
+     */
+    public boolean usesFingerprint(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        return prefs.getString(USES_FINGERPRINT_KEY, null) != null;
+    }
+
+    /**
+     * @param context can be android or application
+     * @return the fingerprint data encrypted
+     */
+    public String getFingerprint(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        return prefs.getString(USES_FINGERPRINT_KEY, null);
+    }
+
+    /**
+     * Method must be called and set to true if the user registers their fingerprint
+     * @param context can be android or application
+     * @param encryptedKey the key used for storage, MUST BE ENCRYPTED and the encryption key for it backed by keystore
+     */
+    public void setUsesFingerprint(Context context, String encryptedKey) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        prefs.edit().putString(USES_FINGERPRINT_KEY, encryptedKey).apply();
+    }
+
+    /**
+     * Removes any history of using fingerprint for authentication
+     * @param context can be android or application
+     */
+    protected void removeSharedPreference(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        if (prefs != null) {
+            prefs.edit().clear().apply();
+        }
     }
 
     /**
@@ -300,7 +342,10 @@ public class StorageAccess {
      * @param context android context
      */
     public void removePinCode(Context context) {
-        encryptionProvider.removePinCode(context);
+        if (encryptionProvider != null) {
+            encryptionProvider.removePinCode(context);
+        }
+        removeSharedPreference(context);
     }
 
     private void injectEncrypter() {

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/rsb_step_body_image_choice_layout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/rsb_step_body_image_choice_height"
+        android:layout_margin="@dimen/rsb_padding_medium"/>
+
+    <TextView
+        android:id="@+id/rsb_step_body_image_choice_text_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="@dimen/rsb_step_body_image_choice_text_size"
+        android:textColor="@color/rsb_image_choice_hint_text_color"
+        android:text="@string/rsb_PLACEHOLDER_IMAGE_CHOICES"/>
+
+</LinearLayout>

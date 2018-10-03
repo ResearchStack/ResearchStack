@@ -2,6 +2,7 @@ package org.researchstack.backbone.task;
 
 import android.content.Context;
 
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewTaskActivity;
@@ -27,6 +28,11 @@ import java.io.Serializable;
  */
 public abstract class Task implements Serializable {
     private String identifier;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    public Task() {
+        super();
+    }
 
     /**
      * Class constructor specifying a unique identifier.
@@ -147,7 +153,7 @@ public abstract class Task implements Serializable {
      * This method is usually called by {@link org.researchstack.backbone.ui.ViewTaskActivity} when
      * its task is set.
      *
-     * @throws InvalidTaskException
+     * @throws InvalidTaskException if the task is invalid
      */
     public abstract void validateParameters();
 

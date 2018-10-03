@@ -28,6 +28,8 @@ import java.nio.charset.Charset;
  * ResearchKit™ applications
  */
 public abstract class ResourcePathManager {
+    // TODO: if we are going to go with a singleton instance of Gson,
+    // TODO: we need a simple way to inject type adapters into it - MDP 1/13/2017
     private static Gson gson = new GsonBuilder().setDateFormat("MMM yyyy").create();
 
     private static ResourcePathManager instance;
@@ -64,7 +66,11 @@ public abstract class ResourcePathManager {
      * @return String representation of the file
      */
     public static String getResourceAsString(Context context, String filePath) {
-        return new String(getResourceAsBytes(context, filePath), Charset.forName("UTF-8"));
+        byte[] fileBytes = getResourceAsBytes(context, filePath);
+        if (fileBytes == null) {
+            return null;
+        }
+        return new String(fileBytes, Charset.forName("UTF-8"));
     }
 
     /**
@@ -76,6 +82,9 @@ public abstract class ResourcePathManager {
      */
     public static byte[] getResourceAsBytes(Context context, String filePath) {
         InputStream is = getResouceAsInputStream(context, filePath);
+        if (is == null) {
+            return null;
+        }
         ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
 
         byte[] readBuffer = new byte[4 * 1024];
@@ -112,6 +121,9 @@ public abstract class ResourcePathManager {
      * @return InputStream representation of the asset
      */
     public static InputStream getResouceAsInputStream(Context context, String filePath) {
+        if (context == null) {
+            return null;
+        }
         AssetManager assetManager = context.getAssets();
         InputStream inputStream = null;
         try {
@@ -124,6 +136,7 @@ public abstract class ResourcePathManager {
     /**
      * Load resource from a file-path and turns contents to a objects, of type T, for consumption
      *
+     * @param <T> object type
      * @param context  android context
      * @param clazz    the class of T
      * @param filePath relative file path
@@ -258,6 +271,7 @@ public abstract class ResourcePathManager {
          * Create this Resource into an Object of type T. This method will only work for Json
          * files.
          *
+         * @param <T> object type
          * @param context android context
          * @return object of type T
          */
