@@ -21,7 +21,6 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
-import org.researchstack.backbone.ui.step.body.ScaleQuestionBodyType;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
@@ -183,9 +182,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     protected static StepBody createStepBody(QuestionStep questionStep, StepResult result) {
         try {
             Class cls = questionStep.getStepBodyClass();
-            if (cls == ScaleQuestionBodyType.class) {
-                return (StepBody) new ScaleQuestionBodyType(questionStep, result);
-            }
+
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
             return (StepBody) constructor.newInstance(questionStep, result);
         } catch (Exception e) {

@@ -1,12 +1,10 @@
 package org.researchstack.backbone.answerformat
 
-import org.researchstack.backbone.answerformat.AnswerFormat
-import org.researchstack.backbone.answerformat.IntegerAnswerFormat
 import org.researchstack.backbone.ui.step.body.IntegerQuestionBody
-import org.researchstack.backbone.ui.step.body.ScaleQuestionBodyType
+import org.researchstack.backbone.ui.step.body.ScaleQuestionBody
 import org.researchstack.backbone.ui.step.body.StepBody
 
-class ScaleAnswerFormat(private val minVal: Int, private val maxVal: Int, val step: Int = 1) : IntegerAnswerFormat(), AnswerFormat.QuestionType {
+class ScaleAnswerFormat(private val minVal: Int, private val maxVal: Int, val step: Int = 1) : IntegerAnswerFormat(minVal, maxVal), AnswerFormat.QuestionType {
 
 
     override fun getQuestionType(): QuestionType {
@@ -17,7 +15,7 @@ class ScaleAnswerFormat(private val minVal: Int, private val maxVal: Int, val st
         return if (maxVal > 15) {
             IntegerQuestionBody::class.java
         } else {
-            ScaleQuestionBodyType::class.java
+            ScaleQuestionBody::class.java
         }
     }
 

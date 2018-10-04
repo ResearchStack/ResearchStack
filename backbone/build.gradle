@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
@@ -90,6 +91,8 @@ dependencies {
         exclude group: 'com.google.android', module: 'android'
     }
 
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
+    implementation "androidx.constraintlayout:constraintlayout-solver:${versions.constraintLayout}"
 
     implementation 'com.scottyab:aes-crypto:0.0.3'
     implementation 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
