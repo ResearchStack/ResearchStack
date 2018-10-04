@@ -6,7 +6,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.MainThread;
 
 import com.google.gson.JsonObject;
 
@@ -19,6 +18,8 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.MainThread;
 
 /**
  * Created by TheMDP on 2/15/17.

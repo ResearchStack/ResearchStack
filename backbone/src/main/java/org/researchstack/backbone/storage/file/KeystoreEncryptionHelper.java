@@ -5,7 +5,6 @@ import android.content.Context;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
-import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import android.util.Base64;
 
 import java.io.IOException;
@@ -27,6 +26,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 
 /**
  * Created by TheMDP on 2/3/17.

@@ -2,6 +2,7 @@ package org.researchstack.backbone.notification;
 
 import android.app.Application;
 import android.content.Context;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 

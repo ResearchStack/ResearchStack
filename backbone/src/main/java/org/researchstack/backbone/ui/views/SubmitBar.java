@@ -2,8 +2,6 @@ package org.researchstack.backbone.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,8 @@ import com.jakewharton.rxbinding.view.RxView;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.utils.ThemeUtils;
 
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import rx.functions.Action1;
 
 public class SubmitBar extends LinearLayout {

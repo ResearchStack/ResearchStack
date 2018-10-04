@@ -2,7 +2,6 @@ package org.researchstack.backbone.utils;
 
 import android.content.Context;
 
-
 import java.util.Locale;
 
 

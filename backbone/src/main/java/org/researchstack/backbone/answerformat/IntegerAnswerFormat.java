@@ -5,7 +5,6 @@ import android.text.InputType;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
 import org.researchstack.backbone.utils.TextUtils;
-import org.w3c.dom.Text;
 
 /**
  * This class defines the attributes for an integer answer format that participants enter using a

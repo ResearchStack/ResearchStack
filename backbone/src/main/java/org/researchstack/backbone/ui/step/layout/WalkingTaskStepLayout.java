@@ -9,9 +9,9 @@ import android.view.View;
 
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.step.active.WalkingTaskStep;
 import org.researchstack.backbone.step.active.recorder.AudioRecorder;
 import org.researchstack.backbone.step.active.recorder.PedometerRecorder;
-import org.researchstack.backbone.step.active.WalkingTaskStep;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 

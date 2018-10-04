@@ -5,9 +5,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
 
 import org.researchstack.backbone.ui.step.layout.PermissionStepLayout;
 
@@ -16,6 +13,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
 
 /**
  * This class is responsible for checking permissions during runtime. It is flexible enough to

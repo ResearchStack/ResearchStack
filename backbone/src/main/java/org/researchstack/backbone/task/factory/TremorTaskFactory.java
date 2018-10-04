@@ -10,14 +10,14 @@ import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.step.CompletionStep;
+import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.NavigationQuestionStep;
-import org.researchstack.backbone.step.active.recorder.AccelerometerRecorderConfig;
+import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.ActiveStep;
 import org.researchstack.backbone.step.active.CountdownStep;
-import org.researchstack.backbone.step.InstructionStep;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorderConfig;
 import org.researchstack.backbone.step.active.NavigationActiveStep;
+import org.researchstack.backbone.step.active.recorder.AccelerometerRecorderConfig;
+import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorderConfig;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.utils.ResUtils;
 
@@ -27,7 +27,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.AccelerometerRecorderIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskLeftHandIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskMostAffectedHandIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskRightHandIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskSkipHandStepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Countdown1StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Countdown2StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Countdown3StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Countdown4StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Countdown5StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.DeviceMotionRecorderIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction0StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction1StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction2StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction4StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction5StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction6StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction7StepIdentifier;
 
 /**
  * Created by TheMDP on 2/4/17.

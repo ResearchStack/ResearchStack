@@ -1,6 +1,5 @@
 package org.researchstack.backbone.step.active;
 
-import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
 import org.researchstack.backbone.ui.step.layout.WalkingTaskStepLayout;
 
 /**

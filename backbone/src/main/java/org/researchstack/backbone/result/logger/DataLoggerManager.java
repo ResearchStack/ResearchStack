@@ -2,7 +2,6 @@ package org.researchstack.backbone.result.logger;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import androidx.annotation.MainThread;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -12,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.MainThread;
 
 /**
  * Created by TheMDP on 2/7/17.

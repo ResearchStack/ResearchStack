@@ -2,20 +2,20 @@ package org.researchstack.backbone.ui.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
-import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;
 import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.backbone.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import rx.subjects.PublishSubject;
 

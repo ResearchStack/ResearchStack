@@ -1,5 +1,4 @@
 package org.researchstack.backbone.model;
-import androidx.annotation.StringRes;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,6 +6,8 @@ import org.researchstack.backbone.R;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.Serializable;
+
+import androidx.annotation.StringRes;
 
 public class ConsentSection implements Serializable
 {

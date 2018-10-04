@@ -1,9 +1,10 @@
 package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
 
 import org.researchstack.backbone.result.Result;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by TheMDP on 2/5/17.

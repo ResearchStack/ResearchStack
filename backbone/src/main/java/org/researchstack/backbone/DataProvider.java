@@ -2,7 +2,6 @@ package org.researchstack.backbone;
 
 import android.app.Application;
 import android.content.Context;
-import androidx.annotation.NonNull;
 
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;
@@ -11,6 +10,7 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.task.Task;
 
+import androidx.annotation.NonNull;
 import rx.Observable;
 import rx.Single;
 

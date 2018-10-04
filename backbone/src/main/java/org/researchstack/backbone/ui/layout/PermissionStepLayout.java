@@ -2,8 +2,6 @@ package org.researchstack.backbone.ui.layout;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,7 @@ import android.widget.Toast;
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.PermissionRequestManager;
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
@@ -23,9 +22,11 @@ import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ThemeUtils;
-import org.researchstack.backbone.R;
 
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 @Deprecated // No longer needed with new OnboardingManager
 public class PermissionStepLayout extends LinearLayout implements StepLayout, StepPermissionRequest {

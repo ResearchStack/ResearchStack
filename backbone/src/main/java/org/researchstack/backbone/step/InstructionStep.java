@@ -1,10 +1,7 @@
 package org.researchstack.backbone.step;
 
-import android.util.Log;
 import android.widget.ImageView;
 
-import org.researchstack.backbone.model.survey.InstructionSurveyItem;
-import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;

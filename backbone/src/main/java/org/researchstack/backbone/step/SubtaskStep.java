@@ -7,7 +7,6 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.ui.step.layout.ViewPagerSubstepListStepLayout;
 import org.researchstack.backbone.utils.ObjectUtils;
 
 import java.util.LinkedHashMap;

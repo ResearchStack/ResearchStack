@@ -6,13 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import org.researchstack.backbone.model.survey.SurveyItem;
-import org.researchstack.backbone.model.survey.factory.SurveyFactory;
-import org.researchstack.backbone.model.taskitem.factory.TaskItemFactory;
-
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by TheMDP on 3/7/17.

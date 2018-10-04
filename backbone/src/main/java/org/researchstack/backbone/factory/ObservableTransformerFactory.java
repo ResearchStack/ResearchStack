@@ -1,7 +1,8 @@
 package org.researchstack.backbone.factory;
 
-import androidx.annotation.NonNull;
 import org.researchstack.backbone.utils.ObservableUtils;
+
+import androidx.annotation.NonNull;
 import rx.Observable;
 
 /**

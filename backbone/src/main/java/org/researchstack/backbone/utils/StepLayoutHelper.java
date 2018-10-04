@@ -1,8 +1,6 @@
 package org.researchstack.backbone.utils;
 
 import android.content.Context;
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
 import android.view.View;
 
 import org.researchstack.backbone.DataResponse;
@@ -13,6 +11,8 @@ import org.researchstack.backbone.ui.views.AlertFrameLayout;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 

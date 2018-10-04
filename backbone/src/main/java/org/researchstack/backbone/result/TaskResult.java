@@ -1,18 +1,9 @@
 package org.researchstack.backbone.result;
 
-import android.net.Uri;
-
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * An TaskResult object is a result that contains all the step results generated from one run of a

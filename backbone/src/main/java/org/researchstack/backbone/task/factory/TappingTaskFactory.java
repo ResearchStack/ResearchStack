@@ -16,7 +16,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.AccelerometerRecorderIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskLeftHandIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskRightHandIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction0StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction1StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.TappingStepIdentifier;
 
 /**
  * Created by TheMDP on 2/23/17.

@@ -3,12 +3,13 @@ package org.researchstack.backbone.ui.preference;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceViewHolder;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import org.researchstack.backbone.R;
+
+import androidx.preference.Preference;
+import androidx.preference.PreferenceViewHolder;
 
 public class TextColorPreference extends Preference {
     private TextView titleView;

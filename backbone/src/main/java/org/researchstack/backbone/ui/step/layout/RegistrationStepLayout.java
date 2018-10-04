@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.widget.Toast;
 
 import org.researchstack.backbone.DataProvider;
-
 import org.researchstack.backbone.DataResponse;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.utils.ObservableUtils;

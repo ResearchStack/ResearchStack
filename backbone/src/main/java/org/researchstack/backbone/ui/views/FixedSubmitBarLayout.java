@@ -2,9 +2,6 @@ package org.researchstack.backbone.ui.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import androidx.annotation.IdRes;
-import androidx.annotation.LayoutRes;
-import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +11,10 @@ import android.widget.ScrollView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.core.view.ViewCompat;
 
 public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements StepLayout
 {

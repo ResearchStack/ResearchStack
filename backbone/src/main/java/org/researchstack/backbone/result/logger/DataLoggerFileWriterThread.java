@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
-import androidx.annotation.MainThread;
 
 import org.researchstack.backbone.utils.LogExt;
 
@@ -13,6 +12,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import androidx.annotation.MainThread;
 
 /**
  * Created by TheMDP on 2/9/17.

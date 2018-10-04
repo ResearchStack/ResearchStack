@@ -1,7 +1,6 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
-import androidx.appcompat.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,8 @@ import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SubmitBar;
+
+import androidx.appcompat.app.AlertDialog;
 
 /**
  * Implement saved state for the following objects:

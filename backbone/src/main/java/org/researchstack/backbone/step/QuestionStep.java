@@ -4,11 +4,6 @@ import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * The {@link QuestionStep} class is a concrete subclass of {@link Step} that represents a step in
  * which a single question is presented to the user.

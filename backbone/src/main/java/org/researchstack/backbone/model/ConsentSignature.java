@@ -1,9 +1,9 @@
 package org.researchstack.backbone.model;
 
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
 import java.util.UUID;
+
+import androidx.annotation.NonNull;
 
 public class ConsentSignature implements Serializable {
 

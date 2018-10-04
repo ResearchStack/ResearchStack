@@ -12,10 +12,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
-import androidx.annotation.CallSuper;
-import androidx.annotation.RequiresPermission;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +37,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.RequiresPermission;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import static org.researchstack.backbone.step.active.RecorderService.DEFAULT_VIBRATION_AND_SOUND_DURATION;
 

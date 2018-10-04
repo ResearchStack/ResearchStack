@@ -21,7 +21,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.AudioRecorderIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.CountdownStepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction0StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction1StepIdentifier;
 
 /**
  * Created by TheMDP on 2/26/17.

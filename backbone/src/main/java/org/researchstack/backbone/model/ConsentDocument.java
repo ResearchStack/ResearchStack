@@ -1,12 +1,12 @@
 package org.researchstack.backbone.model;
 
-import androidx.annotation.StringRes;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.StringRes;
 
 public class ConsentDocument implements Serializable {
 

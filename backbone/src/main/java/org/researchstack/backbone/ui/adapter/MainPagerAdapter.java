@@ -3,8 +3,8 @@ package org.researchstack.backbone.ui.adapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import org.researchstack.backbone.utils.ViewUtils;
 import org.researchstack.backbone.ActionItem;
+import org.researchstack.backbone.utils.ViewUtils;
 
 import java.util.List;
 

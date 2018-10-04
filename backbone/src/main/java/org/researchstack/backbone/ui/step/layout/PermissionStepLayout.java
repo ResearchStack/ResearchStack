@@ -1,9 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +22,9 @@ import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.ThemeUtils;
 
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 public class PermissionStepLayout extends LinearLayout implements StepLayout, StepPermissionRequest
 {

@@ -1,11 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Parcelable;
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
@@ -26,6 +22,10 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
+
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();

@@ -2,7 +2,6 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import androidx.core.content.ContextCompat;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -15,6 +14,8 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.CountdownStep;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.ArcDrawable;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by TheMDP on 2/4/17.

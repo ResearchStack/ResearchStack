@@ -10,12 +10,10 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.OrderedTask;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction0StepIdentifier;
 
 /**
  * Created by TheMDP on 3/14/17.

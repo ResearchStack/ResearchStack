@@ -2,12 +2,13 @@ package org.researchstack.backbone.factory;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
 
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
+
+import androidx.annotation.NonNull;
 
 /**
  * This class encapsulates creating Intent instances. This is needed to enable unit tests, since

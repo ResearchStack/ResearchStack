@@ -3,8 +3,6 @@ package org.researchstack.backbone.task.factory;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
-import org.researchstack.backbone.model.ProfileInfoOption;
-
 /**
  * Created by TheMDP on 2/24/17.
  *

@@ -14,7 +14,6 @@ import android.graphics.RectF;
 import android.graphics.drawable.shapes.PathShape;
 import android.os.Parcel;
 import android.os.Parcelable;
-import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +23,8 @@ import org.researchstack.backbone.ui.callbacks.SignatureCallbacks;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.core.view.ViewCompat;
 
 /**
  * Note: For save-state to work, the view MUST have an ID

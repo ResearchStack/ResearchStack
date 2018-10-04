@@ -2,15 +2,10 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import androidx.annotation.IdRes;
-import androidx.annotation.LayoutRes;
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
-import androidx.core.content.res.ResourcesCompat;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -26,6 +21,11 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout {
 

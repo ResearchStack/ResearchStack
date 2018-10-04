@@ -1,10 +1,8 @@
 package org.researchstack.backbone.ui.layout;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.appcompat.widget.AppCompatRadioButton;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -16,20 +14,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ConsentQuestionType;
+import org.researchstack.backbone.model.ConsentQuizModel;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.step.ConsentQuizQuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
-import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ConsentQuizQuestionUtils;
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.model.ConsentQuizModel;
-import org.researchstack.backbone.step.ConsentQuizQuestionStep;
+import org.researchstack.backbone.utils.LogExt;
 
 import java.util.List;
+
+import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 @Deprecated // Use FormStepLayout instead
 public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepLayout

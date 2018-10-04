@@ -1,7 +1,6 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -22,6 +21,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by TheMDP on 1/14/17.

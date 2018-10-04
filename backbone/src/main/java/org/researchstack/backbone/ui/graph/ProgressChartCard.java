@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import androidx.annotation.StringRes;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -18,11 +17,11 @@ import com.google.android.material.tabs.TabLayout;
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.views.IconTabLayout;
 
 import java.text.NumberFormat;
 import java.util.List;
 
+import androidx.annotation.StringRes;
 import androidx.cardview.widget.CardView;
 import rx.Subscription;
 import rx.functions.Action1;

@@ -2,10 +2,8 @@ package org.researchstack.backbone.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class SchedulesAndTasksModel {
     public List<ScheduleModel> schedules;

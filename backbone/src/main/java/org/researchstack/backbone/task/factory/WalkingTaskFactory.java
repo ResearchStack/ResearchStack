@@ -17,15 +17,15 @@ import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.RequireSystemFeatureStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.active.TimedWalkStep;
-import org.researchstack.backbone.step.active.recorder.AccelerometerRecorderConfig;
 import org.researchstack.backbone.step.active.CountdownStep;
 import org.researchstack.backbone.step.active.FitnessStep;
+import org.researchstack.backbone.step.active.TimedWalkStep;
+import org.researchstack.backbone.step.active.WalkingTaskStep;
+import org.researchstack.backbone.step.active.recorder.AccelerometerRecorderConfig;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorderConfig;
 import org.researchstack.backbone.step.active.recorder.LocationRecorderConfig;
 import org.researchstack.backbone.step.active.recorder.PedometerRecorderConfig;
 import org.researchstack.backbone.step.active.recorder.RecorderConfig;
-import org.researchstack.backbone.step.active.WalkingTaskStep;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.ResUtils;
@@ -35,7 +35,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.AccelerometerRecorderIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.CountdownStepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.DeviceMotionRecorderIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction0StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction1StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.LocationRecorderIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.PedometerRecorderIdentifier;
 
 /**
  * Created by TheMDP on 2/15/17.

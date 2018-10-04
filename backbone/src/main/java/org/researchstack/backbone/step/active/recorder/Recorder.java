@@ -2,14 +2,15 @@ package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.MainThread;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
 import java.util.UUID;
+
+import androidx.annotation.MainThread;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * Created by TheMDP on 2/5/17.

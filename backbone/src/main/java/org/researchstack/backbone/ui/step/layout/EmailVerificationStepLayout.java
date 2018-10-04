@@ -4,8 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcelable;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatTextView;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
@@ -36,6 +34,8 @@ import org.researchstack.backbone.utils.StepLayoutHelper;
 import org.researchstack.backbone.utils.StepResultHelper;
 import org.researchstack.backbone.utils.ThemeUtils;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import rx.Observable;
 
 /**

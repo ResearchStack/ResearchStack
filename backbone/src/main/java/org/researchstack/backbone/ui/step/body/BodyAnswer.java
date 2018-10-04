@@ -1,9 +1,10 @@
 package org.researchstack.backbone.ui.step.body;
 
 import android.content.Context;
-import androidx.annotation.StringRes;
 
 import org.researchstack.backbone.R;
+
+import androidx.annotation.StringRes;
 
 public class BodyAnswer {
     public static final BodyAnswer VALID = new BodyAnswer(true, 0);
