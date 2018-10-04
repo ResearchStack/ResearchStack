@@ -7,13 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import org.researchstack.backbone.schedule.ScheduleHelper;
 import org.researchstack.backbone.storage.NotificationHelper;
 import org.researchstack.backbone.storage.database.TaskNotification;
 import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
-import org.researchstack.backbone.UiManager;
-import org.researchstack.backbone.schedule.ScheduleHelper;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -42,7 +41,7 @@ public class TaskAlertReceiver extends BroadcastReceiver {
         createTaskIntent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION, notification);
         return createTaskIntent;
     }
-    
+
     public static Intent createDeleteIntent(int notificationId) {
         Intent deleteTaskIntent = new Intent(TaskAlertReceiver.ALERT_DELETE);
         deleteTaskIntent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, notificationId);
@@ -123,13 +122,13 @@ public class TaskAlertReceiver extends BroadcastReceiver {
 
     private PendingIntent createNotificationIntent(Context context, int taskNotificationId) {
         // Create out intent that is sent to TaskNotificationReceiver
-        Intent taskNotificationIntent = new Intent(context,
+  /*      Intent taskNotificationIntent = new Intent(context,
                 UiManager.getInstance().getTaskNotificationReceiver());
-        taskNotificationIntent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, taskNotificationId);
+        taskNotificationIntent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, taskNotificationId);*/
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 0,
-                taskNotificationIntent,
+                null,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         return pendingIntent;

@@ -2,7 +2,6 @@ package org.researchstack.backbone.utils;
 
 import android.content.Context;
 
-import org.researchstack.backbone.StorageAccess;
 
 import java.util.Locale;
 
@@ -87,7 +86,7 @@ public class ResUtils {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     /**
-     * Should this be here or should {@link StorageAccess} have the
+     * Should this be here or should {@link} have the
      * ability to write files to SDCard
      *
      * @return of SD-Card storage folder name (used to save and share consent-PDF)

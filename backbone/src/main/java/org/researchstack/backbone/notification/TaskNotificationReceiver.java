@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import org.researchstack.backbone.ui.MainActivity;
-
 import androidx.core.app.NotificationCompat;
 
 
@@ -21,7 +19,7 @@ public class TaskNotificationReceiver extends BroadcastReceiver {
         int notificationId = intent.getIntExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, 0);
 
         // Create pending intent wrapper that will open MainActivity
-        Intent activityIntent = new Intent(context, MainActivity.class);
+        Intent activityIntent = null;
         activityIntent.putExtra(TaskAlertReceiver.KEY_NOTIFICATION_ID, notificationId);
         PendingIntent contentIntent = PendingIntent.getActivity(context,
                 0,

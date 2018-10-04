@@ -98,7 +98,7 @@ public class ActiveTaskActivity extends ViewTaskActivity
         }
         currentStepLayout = null;
         DataLoggerManager.getInstance().deleteAllDirtyFiles();
-        super.discardResultsAndFinish();
+       // super.discardResultsAndFinish();
     }
 
     @Override
@@ -146,7 +146,7 @@ public class ActiveTaskActivity extends ViewTaskActivity
     public void notifyStepOfBackPress() {
         // intercept and block any back buttons
         if (isBackButtonEnabled) {
-            super.notifyStepOfBackPress();
+            //super.notifyStepOfBackPress();
         }
     }
 
@@ -240,8 +240,8 @@ public class ActiveTaskActivity extends ViewTaskActivity
         // Requested we end the task, because it couldn't complete for some reason
         if (action == ACTION_END && currentStep instanceof ActiveStep) {
             discardResultsAndFinish();
-        } else {
-            super.onExecuteStepAction(action);
+        } else{
+
         }
     }
 

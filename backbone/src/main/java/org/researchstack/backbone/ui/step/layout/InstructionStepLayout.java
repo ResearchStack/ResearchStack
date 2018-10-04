@@ -19,11 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.utils.ResUtils;
@@ -142,16 +140,6 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                 } else {
                     textTextView.setText(Html.fromHtml(text));
                     final String htmlDocTitle = title;
-                    textTextView.setMovementMethod(new TextViewLinkHandler() {
-                        @Override
-                        public void onLinkClick(String url) {
-                            String path = ResourcePathManager.getInstance().
-                                    generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
-                            Intent intent = ViewWebDocumentActivity.newIntentForPath(
-                                    getContext(), htmlDocTitle, path);
-                            getContext().startActivity(intent);
-                        }
-                    });
                 }
             }
 

@@ -2,7 +2,6 @@ package org.researchstack.backbone.model.survey;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;
 
 /**
  * Created by TheMDP on 12/31/16.
@@ -77,10 +76,9 @@ public enum SurveyItemType {
 
 
     // Consent subtypes
-    @SerializedName(ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER)
-    CONSENT_SHARING_OPTIONS     (ConsentDocumentFactory.CONSENT_SHARING_IDENTIFIER),  // ConsentSharingStep
-    @SerializedName(ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER)
-    CONSENT_REVIEW              (ConsentDocumentFactory.CONSENT_REVIEW_IDENTIFIER),   // ConsentReviewStep
+
+    CONSENT_SHARING_OPTIONS     (""),  // ConsentSharingStep
+    CONSENT_REVIEW              (""),   // ConsentReviewStep
     @SerializedName             ("consentVisual")
     CONSENT_VISUAL              ("consentVisual"),                                    // VisualConsentStep
     @SerializedName             ("reconsent.instruction")
