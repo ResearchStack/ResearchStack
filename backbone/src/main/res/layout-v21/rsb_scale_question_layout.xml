@@ -30,7 +30,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:max="10"
+        android:max="100"
         android:progress="4"
         android:progressTint="?attr/colorAccent"
         android:thumb="@drawable/rsb_scale_thumb"
