@@ -5,8 +5,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
-import android.support.annotation.MainThread;
-import android.util.Log;
+import androidx.annotation.MainThread;
 
 import org.researchstack.backbone.utils.LogExt;
 

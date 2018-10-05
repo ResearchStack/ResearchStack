@@ -2,8 +2,8 @@ package org.researchstack.backbone.notification;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
 
 /**
  * Configuration class for framework notifciations

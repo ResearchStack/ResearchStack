@@ -76,14 +76,14 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // These are all support libraries that should be updated when Google releases new ones
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.android.support:preference-v14:28.0.0'
-    implementation 'com.android.support:support-annotations:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
+    implementation 'androidx.annotation:annotation:1.0.0-alpha1'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
 
     api 'io.reactivex:rxjava:1.3.0'
     implementation 'nl.littlerobots.rxlint:rxlint:1.6.1'

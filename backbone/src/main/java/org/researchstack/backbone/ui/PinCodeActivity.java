@@ -6,10 +6,10 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.view.ViewCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
@@ -33,11 +33,9 @@ import org.researchstack.backbone.ui.step.layout.FingerprintStepLayout;
 import org.researchstack.backbone.ui.views.PinCodeLayout;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
-import org.researchstack.backbone.utils.StepLayoutHelper;
 import org.researchstack.backbone.utils.ThemeUtils;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

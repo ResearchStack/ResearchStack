@@ -1,21 +1,18 @@
 package org.researchstack.backbone.ui.step.body;
 
-import android.content.res.Resources;
-import android.support.annotation.DimenRes;
-import android.support.annotation.LayoutRes;
+import androidx.annotation.DimenRes;
+import androidx.annotation.LayoutRes;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;

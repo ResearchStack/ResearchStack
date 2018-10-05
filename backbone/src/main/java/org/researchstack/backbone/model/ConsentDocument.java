@@ -1,6 +1,6 @@
 package org.researchstack.backbone.model;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import com.google.gson.annotations.SerializedName;
 
