@@ -5,7 +5,7 @@ import android.content.Context;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import android.util.Base64;
 
 import java.io.IOException;
