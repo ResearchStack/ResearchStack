@@ -16,7 +16,6 @@
         android:layout_marginEnd="8dp"
         android:gravity="center_horizontal"
         android:padding="4dp"
-        android:text="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,8 +29,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:max="100"
-        android:progress="4"
+        android:max="10"
+        android:progress="5"
         android:progressTint="?attr/colorAccent"
         android:thumb="@drawable/rsb_scale_thumb"
         app:layout_constraintBottom_toBottomOf="parent"

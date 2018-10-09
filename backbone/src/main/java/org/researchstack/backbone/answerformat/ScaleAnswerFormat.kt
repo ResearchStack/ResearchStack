@@ -12,7 +12,7 @@ class ScaleAnswerFormat(private val minVal: Int, private val maxVal: Int, val st
     }
 
     override fun getStepBodyClass(): Class<out StepBody> {
-        return if (maxVal > 15) {
+        return if (((maxVal - minVal) / step) > 15) {
             IntegerQuestionBody::class.java
         } else {
             ScaleQuestionBody::class.java
