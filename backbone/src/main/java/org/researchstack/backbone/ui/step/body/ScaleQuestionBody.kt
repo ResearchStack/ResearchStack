@@ -1,6 +1,5 @@
 package org.researchstack.backbone.ui.step.body
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +13,7 @@ import org.researchstack.backbone.step.QuestionStep
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.utils.TextUtils
 
-class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
-    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    // Constructor Fields
-    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+open class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
     protected var step: QuestionStep = step as QuestionStep
     protected var result: StepResult<Int> = result as StepResult<Int>? ?: StepResult(step)
     protected var format: ScaleAnswerFormat
@@ -42,7 +38,7 @@ class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
         return initViewCompact(inflater, parent)
     }
 
-    protected fun initViewCompact(inflater: LayoutInflater, parent: ViewGroup): View {
+    private fun initViewCompact(inflater: LayoutInflater, parent: ViewGroup): View {
         val formItemView = inflater.inflate(R.layout.rsb_scale_question_layout, parent, false)
 
         currentNumberTextView = formItemView.findViewById(R.id.value)
@@ -89,11 +85,6 @@ class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
 
     private fun calculateProgress(value: Int, MIN: Int, MAX: Int, STEP: Int): Int {
         return 10 * (value - MIN) / (MAX - MIN)
-    }
-
-    protected fun setFilters(context: Context) {
-
-
     }
 
     override fun getStepResult(skipped: Boolean): StepResult<*> {
