@@ -77,11 +77,10 @@ public class SmartSurveyTask extends Task implements Serializable {
             In a survey JSON file, if you want to define a step that has text but no question,
             set the type to "SurveyTextOnly" instead of "SurveyQuestion"
              */
-            else if (stepModel.type.equals("SurveyTextOnly")) {
+            else if (stepModel.type.equals("SurveyTextOnly") || stepModel.type.equals("SurveyInfoScreen")) {
                 InstructionStep instructionStep = new InstructionStep(stepModel.identifier, stepModel.prompt, stepModel.promptDetail);
                 steps.put(stepModel.identifier, instructionStep);
                 staticStepIdentifiers.add(stepModel.identifier);
-
             } else {
                 throw new UnsupportedOperationException("Wasn't a survey question");
             }
