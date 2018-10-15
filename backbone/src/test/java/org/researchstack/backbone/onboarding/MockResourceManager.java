@@ -81,6 +81,9 @@ public class MockResourceManager extends ResourceManager {
     }
 
     @Override
+    public Resource getLicense() { return null; }
+
+    @Override
     public Resource getConsentSections() {
         return null;
     }
