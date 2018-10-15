@@ -26,6 +26,9 @@ public class TaskModel {
         @SerializedName("identifier")
         public String identifier;
 
+        @SerializedName("title")
+        public String title;
+
         @SerializedName("prompt")
         public String prompt;
 
@@ -73,6 +76,18 @@ public class TaskModel {
 
         @SerializedName("step")
         public int step;
+
+        /**
+         * @property minLength specified for TextFields character limits
+         */
+        @SerializedName("minLength")
+        public int minLength;
+
+        /**
+         * @property maxLength specified for TextFields character limits
+         */
+        @SerializedName("maxLength")
+        public int maxLength;
 
         @SerializedName("maxValue")
         public int maxValue;
