@@ -53,6 +53,14 @@ public abstract class ResourceManager extends ResourcePathManager {
     public abstract Resource getConsentPDF();
 
     /**
+     * This is used to get the licenses associated with your application
+     *
+     * @return a {@link org.researchstack.backbone.ResourcePathManager.Resource} representing an HTML
+     * version of the License file.
+     */
+    public abstract Resource getLicense();
+
+    /**
      * The consent section differs from ResearchKit™ as ResearchStack includes extra
      * documentProperties along with support for quiz steps
      *
