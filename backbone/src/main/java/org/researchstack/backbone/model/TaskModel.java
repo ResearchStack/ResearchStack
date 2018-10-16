@@ -52,6 +52,12 @@ public class TaskModel {
 
         @SerializedName("optional")
         public boolean optional = true;
+
+        @SerializedName("beforeRules")
+        public List<RuleModel> beforeRules;
+
+        @SerializedName("afterRules")
+        public List<RuleModel> afterRules;
     }
 
     public static class ConstraintsModel implements Serializable {
@@ -89,6 +95,12 @@ public class TaskModel {
         @SerializedName("maxLength")
         public int maxLength;
 
+        /**
+         * @property patternPlaceholder for TextFields or IntegerFields to display as the hint
+         */
+        @SerializedName("patternPlaceholder")
+        public String patternPlaceholder;
+
         @SerializedName("maxValue")
         public int maxValue;
 
@@ -123,12 +135,41 @@ public class TaskModel {
         @SerializedName("skipTo")
         public String skipTo;
 
+        /**
+         * @property assignDataGroup data group to assign if operator condition is met
+         */
+        @SerializedName("assignDataGroup")
+        public String assignDataGroup;
+
+        /**
+         * @property dataGroups should be analyzed in conjunction with the operator value "all"
+         */
+        @SerializedName("dataGroups")
+        public List<String> dataGroups;
+
+        /**
+         * @property endSurvey specifies if we should end the survey if the operator condition is met
+         */
+        @SerializedName("endSurvey")
+        public Boolean endSurvey;
+
+        /**
+         * @property displayUnless specifies if we should display the step unless the operator condition is met
+         */
+        @SerializedName("displayUnless")
+        public Boolean displayUnless;
+
+        /**
+         * @property displayIf specifies if we should display the step only if the operator condition is met
+         */
+        @SerializedName("displayIf")
+        public Boolean displayIf;
+
         @SerializedName("type")
         public String type;
 
         @SerializedName("value")
         public Object value;
-
     }
 
     public static class Validation implements Serializable {

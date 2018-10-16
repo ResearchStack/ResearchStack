@@ -16,6 +16,7 @@ public class TextAnswerFormat extends AnswerFormat {
     private int     inputType       = InputType.TYPE_CLASS_TEXT;
     private String  validationRegex = null;
     private boolean disabled;
+    private String  hintText;
 
     /**
      * Creates a TextAnswerFormat with no maximum length
@@ -153,5 +154,13 @@ public class TextAnswerFormat extends AnswerFormat {
 
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
+    }
+
+    public String getHintText() {
+        return hintText;
+    }
+
+    public void setHintText(String hintText) {
+        this.hintText = hintText;
     }
 }
