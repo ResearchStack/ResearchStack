@@ -13,12 +13,14 @@ import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
 import org.researchstack.backbone.model.Choice;
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.model.TaskModel;
+import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,6 +64,7 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
 
     // use this as the 'skipTo' identifier to end the survey instead of going to a question
     public static final String END_OF_SURVEY_MARKER = "END_OF_SURVEY";
+    public static final String NEXT_SURVEY_ELEMENT = "NEXT_SURVEY_ELEMENT";
 
     // Skip rules for answers to survey questions
     protected static final String OPERATOR_SKIP = "de";
@@ -72,6 +75,9 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
     protected static final String OPERATOR_LESS_THAN_EQUAL = "le";
     protected static final String OPERATOR_GREATER_THAN_EQUAL = "ge";
     protected static final String OPERATOR_OTHER_THAN = "ot";
+    protected static final String OPERATOR_ALL = "all";
+    protected static final String OPERATOR_ALWAYS = "always";
+    protected static final String OPERATOR_ANY = "any";
 
     protected HashMap<String, List<TaskModel.RuleModel>> rules;
 
@@ -204,13 +210,11 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         List<TaskModel.RuleModel> stepRules = rules.get(currentIdentifier);
         if (stepRules != null && !stepRules.isEmpty()) {
             LogExt.d(getClass(), "Rules exist for this step");
-            Object answer = result.getStepResult(currentIdentifier).getResult();
+            Object answer = answerForIdentifier(currentIdentifier, result);
             skipToStep = processRules(stepRules, answer);
-
             if (skipToStep != null && skipToStep.equals(END_OF_SURVEY_MARKER)) {
                 return null;
             }
-
             if (skipToStep != null) {
                 adjustDynamicStepIdentifiers(skipToStep, currentIdentifier);
             }
@@ -219,8 +223,23 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         }
 
         String nextStepIdentifier = nextStepIdentifier(true, currentIdentifier);
-
         return nextStepIdentifier == null ? null : getStep(nextStepIdentifier);
+    }
+
+    /**
+     * Finds an answer object in a TaskResult
+     * @param stepIdentifier to use as an identifier to find the result
+     * @param taskResult to holding the StepResult list
+     * @return the root answer value, null if none was found
+     */
+    protected Object answerForIdentifier(String stepIdentifier, TaskResult taskResult) {
+        Object result = null;
+        // Root StepResult will have a contained Result answer
+        StepResult stepResult = StepResultHelper.findStepResult(taskResult, stepIdentifier);
+        if (stepResult != null) {
+            result = stepResult.getResult();
+        }
+        return result;
     }
 
     /**
@@ -246,7 +265,7 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         return getStep(identifier);
     }
 
-    private Step getStep(String identifier) {
+    protected Step getStep(String identifier) {
         if (identifier == null || steps == null) {
             return null;
         }
@@ -352,10 +371,15 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
     protected String checkRule(TaskModel.RuleModel stepRule, Object answer) {
         String operator = stepRule.operator;
         String skipTo = stepRule.skipTo;
+        if (stepRule.endSurvey != null && stepRule.endSurvey) {
+            skipTo = END_OF_SURVEY_MARKER;
+        }
         Object value = stepRule.value;
 
         if (operator.equals(OPERATOR_SKIP)) {
             return answer == null ? skipTo : null;
+        } else if (OPERATOR_ALWAYS.equals(operator)) {
+            return skipTo;
         } else if (answer instanceof Integer) {
             return checkNumberRule(operator, skipTo, ((Number) value).intValue(), (Integer) answer);
         } else if (answer instanceof Double) {
