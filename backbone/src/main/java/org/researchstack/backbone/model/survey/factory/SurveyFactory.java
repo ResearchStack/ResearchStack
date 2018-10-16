@@ -555,6 +555,9 @@ public class SurveyFactory {
         if (item.maxLength != null) {
             format.setMaximumLength(item.maxLength);
         }
+        if (item.placeholderText != null) {
+            format.setHintText(item.placeholderText);
+        }
     }
 
     protected void fillIntegerAnswerFormat(IntegerAnswerFormat format, IntegerRangeSurveyItem item) {

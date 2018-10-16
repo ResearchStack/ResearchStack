@@ -57,8 +57,8 @@ public class TextQuestionBody implements StepBody {
         editText = (EditText) body.findViewById(R.id.value);
         if (step.getPlaceholder() != null) {
             editText.setHint(step.getPlaceholder());
-        } else {
-            editText.setHint(R.string.rsb_hint_step_body_text);
+        } else if (format.getHintText() != null) {
+            editText.setHint(format.getHintText());
         }
         editText.setEnabled(true);
         if (format.isDisabled()) {
