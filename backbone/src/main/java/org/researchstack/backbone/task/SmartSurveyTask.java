@@ -13,14 +13,12 @@ import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
 import org.researchstack.backbone.model.Choice;
-import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.model.TaskModel;
-import org.researchstack.backbone.utils.StepResultHelper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,70 +31,23 @@ import java.util.List;
  * Based on the user's answers to questions, they may be taken to a specific step rather than the
  * next one in the task.
  */
-public class SmartSurveyTask extends OrderedTask implements Serializable {
-
-    // StepModel types that determine which type of survey question to show
-    protected static final String TYPE_BOOLEAN      = "BooleanConstraints";
-    protected static final String TYPE_CHOICE       = "MultiValueConstraints";
-    protected static final String TYPE_INTEGER      = "IntegerConstraints";
-    protected static final String TYPE_DECIMAL      = "DecimalConstraints";
-    protected static final String TYPE_TEXT         = "TextConstraints";
-    protected static final String TYPE_STRING       = "StringConstraints";
-    protected static final String TYPE_DATE         = "DateConstraints";
-    protected static final String TYPE_DATE_TIME    = "DateTimeConstraints";
-    protected static final String TYPE_DURATION     = "DurationConstraints";
-
-    // StepModel types
-    protected static final String SURVEY_TYPE_QUESTION  = "SurveyQuestion";
-    protected static final String SURVEY_TYPE_TEXT      = "SurveyTextOnly";
-    protected static final String SURVEY_TYPE_INFO      = "SurveyInfoScreen";
-
-
-    // StepModel uiHints suggest which type of UI element to show for the survey question
-    protected static final String UI_HINT_CHECKBOX  = "checkbox";
-    protected static final String UI_HINT_RADIO     = "radiobutton";
-    protected static final String UI_HINT_LIST      = "list";
-    protected static final String UI_HINT_NUMBER    = "numberfield";
-    protected static final String UI_HINT_TEXT      = "textfield";
-
-    // Types of Enumeration Label/Values
-    protected static final String ENUMERATION_TYPE_OPTION = "SurveyQuestionOption";
+public class SmartSurveyTask extends Task implements Serializable {
 
     // use this as the 'skipTo' identifier to end the survey instead of going to a question
     public static final String END_OF_SURVEY_MARKER = "END_OF_SURVEY";
-    public static final String NEXT_SURVEY_ELEMENT = "NEXT_SURVEY_ELEMENT";
+    private static final String OPERATOR_SKIP = "de";
+    private static final String OPERATOR_EQUAL = "eq";
+    private static final String OPERATOR_NOT_EQUAL = "ne";
+    private static final String OPERATOR_LESS_THAN = "lt";
+    private static final String OPERATOR_GREATER_THAN = "gt";
+    private static final String OPERATOR_LESS_THAN_EQUAL = "le";
+    private static final String OPERATOR_GREATER_THAN_EQUAL = "ge";
+    private static final String OPERATOR_OTHER_THAN = "ot";
+    private HashMap<String, Step> steps;
+    private HashMap<String, List<TaskModel.RuleModel>> rules;
 
-    // Skip rules for answers to survey questions
-    protected static final String OPERATOR_SKIP = "de";
-    protected static final String OPERATOR_EQUAL = "eq";
-    protected static final String OPERATOR_NOT_EQUAL = "ne";
-    protected static final String OPERATOR_LESS_THAN = "lt";
-    protected static final String OPERATOR_GREATER_THAN = "gt";
-    protected static final String OPERATOR_LESS_THAN_EQUAL = "le";
-    protected static final String OPERATOR_GREATER_THAN_EQUAL = "ge";
-    protected static final String OPERATOR_OTHER_THAN = "ot";
-    protected static final String OPERATOR_ALL = "all";
-    protected static final String OPERATOR_ALWAYS = "always";
-    protected static final String OPERATOR_ANY = "any";
-
-    protected HashMap<String, List<TaskModel.RuleModel>> rules;
-
-    protected List<String> staticStepIdentifiers;
-    protected List<String> dynamicStepIdentifiers;
-
-    /* Default constructor needed for serilization/deserialization of object */
-    public SmartSurveyTask() {
-        super();
-    }
-
-    /**
-     * Class constructor specifying a unique identifier.
-     *
-     * @param identifier the task identifier, see {@link #getIdentifier()}
-     */
-    public SmartSurveyTask(String identifier) {
-        super(identifier);
-    }
+    private List<String> staticStepIdentifiers;
+    private List<String> dynamicStepIdentifiers;
 
     /**
      * Creates a SmartSurveyTask from a {@link TaskModel} object
@@ -106,11 +57,11 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
      */
     public SmartSurveyTask(Context context, TaskModel taskModel) {
         super(taskModel.identifier);
-        steps = new ArrayList<>();
+        steps = new HashMap<>(taskModel.elements.size());
         rules = new HashMap<>();
         staticStepIdentifiers = new ArrayList<>(taskModel.elements.size());
         for (TaskModel.StepModel stepModel : taskModel.elements) {
-            if (stepModel.type.equals(SURVEY_TYPE_QUESTION)) {
+            if (stepModel.type.equals("SurveyQuestion")) {
                 AnswerFormat answerFormat = from(context, stepModel.constraints);
 
                 QuestionStep questionStep = new QuestionStep(stepModel.identifier,
@@ -118,7 +69,7 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
                         answerFormat);
                 questionStep.setText(stepModel.promptDetail);
                 questionStep.setOptional(stepModel.optional);
-                steps.add(questionStep);
+                steps.put(stepModel.identifier, questionStep);
                 staticStepIdentifiers.add(stepModel.identifier);
                 rules.put(stepModel.identifier, stepModel.constraints.rules);
             }
@@ -126,9 +77,9 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
             In a survey JSON file, if you want to define a step that has text but no question,
             set the type to "SurveyTextOnly" instead of "SurveyQuestion"
              */
-            else if (stepModel.type.equals(SURVEY_TYPE_TEXT) || stepModel.type.equals(SURVEY_TYPE_INFO)) {
+            else if (stepModel.type.equals("SurveyTextOnly") || stepModel.type.equals("SurveyInfoScreen")) {
                 InstructionStep instructionStep = new InstructionStep(stepModel.identifier, stepModel.prompt, stepModel.promptDetail);
-                steps.add(instructionStep);
+                steps.put(stepModel.identifier, instructionStep);
                 staticStepIdentifiers.add(stepModel.identifier);
             } else {
                 throw new UnsupportedOperationException("Wasn't a survey question");
@@ -138,30 +89,30 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         dynamicStepIdentifiers = new ArrayList<>(staticStepIdentifiers);
     }
 
-    protected AnswerFormat from(Context context, TaskModel.ConstraintsModel constraints) {
+    private AnswerFormat from(Context context, TaskModel.ConstraintsModel constraints) {
         AnswerFormat answerFormat;
         String type = constraints.type;
-        if (type.equals(TYPE_BOOLEAN)) {
+        if (type.equals("BooleanConstraints")) {
             answerFormat = new BooleanAnswerFormat(context.getString(R.string.rsb_yes),
                     context.getString(R.string.rsb_no));
-        } else if (type.equals(TYPE_CHOICE)) {
+        } else if (type.equals("MultiValueConstraints")) {
             AnswerFormat.ChoiceAnswerStyle answerStyle = constraints.allowMultiple
                     ? AnswerFormat.ChoiceAnswerStyle.MultipleChoice
                     : AnswerFormat.ChoiceAnswerStyle.SingleChoice;
             answerFormat = new ChoiceAnswerFormat(answerStyle, from(constraints.enumeration));
-        } else if (type.equals(TYPE_INTEGER)) {
+        } else if (type.equals("IntegerConstraints")) {
             answerFormat = new IntegerAnswerFormat(constraints.minValue, constraints.maxValue);
-        } else if (type.equals(TYPE_DECIMAL)) {
+        } else if (type.equals("DecimalConstraints")) {
             answerFormat = new DecimalAnswerFormat(constraints.minValue, constraints.maxValue);
-        } else if (type.equals(TYPE_TEXT) || type.equals(TYPE_STRING)) {
+        } else if (type.equals("TextConstraints") || type.equals("StringConstraints")) {
             answerFormat = new TextAnswerFormat();
             boolean multipleLines = constraints.multipleLines;
             ((TextAnswerFormat) answerFormat).setIsMultipleLines(multipleLines);
-        } else if (type.equals(TYPE_DATE)) {
+        } else if (type.equals("DateConstraints")) {
             answerFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.Date);
-        } else if (type.equals(TYPE_DATE_TIME)) {
+        } else if (type.equals("DateTimeConstraints")) {
             answerFormat = new DateAnswerFormat(AnswerFormat.DateAnswerStyle.DateAndTime);
-        } else if (type.equals(TYPE_DURATION)) {
+        } else if (type.equals("DurationConstraints")) {
             answerFormat = new DurationAnswerFormat(constraints.step, constraints.durationUnit);
         } else {
             LogExt.e(SmartSurveyTask.class, "Survey question has answer type not supported:" + type);
@@ -172,7 +123,7 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         return answerFormat;
     }
 
-    protected Choice[] from(List<TaskModel.EnumerationModel> enumeration) {
+    private Choice[] from(List<TaskModel.EnumerationModel> enumeration) {
         Choice[] choices = new Choice[enumeration.size()];
 
         for (int i = 0; i < enumeration.size(); i++) {
@@ -210,11 +161,13 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         List<TaskModel.RuleModel> stepRules = rules.get(currentIdentifier);
         if (stepRules != null && !stepRules.isEmpty()) {
             LogExt.d(getClass(), "Rules exist for this step");
-            Object answer = answerForIdentifier(currentIdentifier, result);
+            Object answer = result.getStepResult(currentIdentifier).getResult();
             skipToStep = processRules(stepRules, answer);
+
             if (skipToStep != null && skipToStep.equals(END_OF_SURVEY_MARKER)) {
                 return null;
             }
+
             if (skipToStep != null) {
                 adjustDynamicStepIdentifiers(skipToStep, currentIdentifier);
             }
@@ -223,23 +176,8 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         }
 
         String nextStepIdentifier = nextStepIdentifier(true, currentIdentifier);
-        return nextStepIdentifier == null ? null : getStep(nextStepIdentifier);
-    }
 
-    /**
-     * Finds an answer object in a TaskResult
-     * @param stepIdentifier to use as an identifier to find the result
-     * @param taskResult to holding the StepResult list
-     * @return the root answer value, null if none was found
-     */
-    protected Object answerForIdentifier(String stepIdentifier, TaskResult taskResult) {
-        Object result = null;
-        // Root StepResult will have a contained Result answer
-        StepResult stepResult = StepResultHelper.findStepResult(taskResult, stepIdentifier);
-        if (stepResult != null) {
-            result = stepResult.getResult();
-        }
-        return result;
+        return nextStepIdentifier == null ? null : steps.get(nextStepIdentifier);
     }
 
     /**
@@ -257,24 +195,12 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         String currentIdentifier = step == null ? null : step.getIdentifier();
         refillDynamicStepIdentifiers(currentIdentifier);
         String previousStepIdentifier = nextStepIdentifier(false, currentIdentifier);
-        return previousStepIdentifier == null ? null : getStep(previousStepIdentifier);
+        return previousStepIdentifier == null ? null : steps.get(previousStepIdentifier);
     }
 
     @Override
     public Step getStepWithIdentifier(String identifier) {
-        return getStep(identifier);
-    }
-
-    protected Step getStep(String identifier) {
-        if (identifier == null || steps == null) {
-            return null;
-        }
-        for (Step step : steps) {
-            if (identifier.equals(step.getIdentifier())) {
-                return step;
-            }
-        }
-        return null;
+        return steps.get(identifier);
     }
 
     /**
@@ -305,7 +231,7 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         // Construction validates most issues, add some validation here if needed
     }
 
-    protected String nextStepIdentifier(boolean after, String currentIdentifier) {
+    private String nextStepIdentifier(boolean after, String currentIdentifier) {
         if (currentIdentifier == null && after) {
             return !dynamicStepIdentifiers.isEmpty() ? dynamicStepIdentifiers.get(0) : null;
         }
@@ -326,7 +252,7 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         return newIndex != -1 ? dynamicStepIdentifiers.get(newIndex) : null;
     }
 
-    protected void refillDynamicStepIdentifiers(String currentIdentifier) {
+    private void refillDynamicStepIdentifiers(String currentIdentifier) {
         //Remove till end in dynamic
         int currentIndexInDynamic = dynamicStepIdentifiers.indexOf(currentIdentifier);
         currentIndexInDynamic = currentIndexInDynamic == -1 ? 0 : currentIndexInDynamic;
@@ -340,7 +266,7 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
                 staticStepIdentifiers.size()));
     }
 
-    protected void adjustDynamicStepIdentifiers(String skipToIdentifier, String currentIdentifier) {
+    private void adjustDynamicStepIdentifiers(String skipToIdentifier, String currentIdentifier) {
         int currentIndex = dynamicStepIdentifiers.indexOf(currentIdentifier);
         int skipToIndex = dynamicStepIdentifiers.indexOf(skipToIdentifier);
 
@@ -355,7 +281,7 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         }
     }
 
-    protected String processRules(List<TaskModel.RuleModel> stepRules, Object answer) {
+    private String processRules(List<TaskModel.RuleModel> stepRules, Object answer) {
         String skipToIdentifier = null;
 
         for (TaskModel.RuleModel stepRule : stepRules) {
@@ -368,18 +294,13 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         return skipToIdentifier;
     }
 
-    protected String checkRule(TaskModel.RuleModel stepRule, Object answer) {
+    private String checkRule(TaskModel.RuleModel stepRule, Object answer) {
         String operator = stepRule.operator;
         String skipTo = stepRule.skipTo;
-        if (stepRule.endSurvey != null && stepRule.endSurvey) {
-            skipTo = END_OF_SURVEY_MARKER;
-        }
         Object value = stepRule.value;
 
         if (operator.equals(OPERATOR_SKIP)) {
             return answer == null ? skipTo : null;
-        } else if (OPERATOR_ALWAYS.equals(operator)) {
-            return skipTo;
         } else if (answer instanceof Integer) {
             return checkNumberRule(operator, skipTo, ((Number) value).intValue(), (Integer) answer);
         } else if (answer instanceof Double) {
@@ -407,7 +328,7 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         return null;
     }
 
-    protected  <T> String checkEqualsRule(String operator, String skipTo, T value, T answer) {
+    private <T> String checkEqualsRule(String operator, String skipTo, T value, T answer) {
         switch (operator) {
             case OPERATOR_EQUAL:
                 return value.equals(answer) ? skipTo : null;
@@ -417,7 +338,7 @@ public class SmartSurveyTask extends OrderedTask implements Serializable {
         return null;
     }
 
-    protected  <T extends Comparable<T>> String checkNumberRule(String operator, String skipTo, T value, T answer) {
+    private <T extends Comparable<T>> String checkNumberRule(String operator, String skipTo, T value, T answer) {
         int compare = answer.compareTo(value);
 
         switch (operator) {
