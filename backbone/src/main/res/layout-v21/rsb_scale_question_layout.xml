@@ -22,15 +22,14 @@
 
     <SeekBar
         android:id="@+id/seekBar"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:max="10"
-        android:progress="5"
+        android:max="100"
+        android:progress="0"
         android:progressTint="?attr/colorAccent"
         android:thumb="@drawable/rsb_scale_thumb"
         app:layout_constraintBottom_toBottomOf="parent"

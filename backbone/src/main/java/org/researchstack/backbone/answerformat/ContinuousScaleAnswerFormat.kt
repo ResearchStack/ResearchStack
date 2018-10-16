@@ -1,10 +1,10 @@
 package org.researchstack.backbone.answerformat
 
+import org.researchstack.backbone.ui.step.body.ContinuousScaleQuestionBody
 import org.researchstack.backbone.ui.step.body.IntegerQuestionBody
-import org.researchstack.backbone.ui.step.body.ScaleQuestionBody
 import org.researchstack.backbone.ui.step.body.StepBody
 
-class ScaleAnswerFormat(private val minVal: Int, private val maxVal: Int, val step: Int = 1) : IntegerAnswerFormat(minVal, maxVal), AnswerFormat.QuestionType {
+class ContinuousScaleAnswerFormat(private val minVal: Int, private val maxVal: Int) : IntegerAnswerFormat(minVal, maxVal), AnswerFormat.QuestionType {
 
 
     override fun getQuestionType(): QuestionType {
@@ -12,10 +12,10 @@ class ScaleAnswerFormat(private val minVal: Int, private val maxVal: Int, val st
     }
 
     override fun getStepBodyClass(): Class<out StepBody> {
-        return if (((maxVal - minVal) / step) > 13) {
+        return if (maxVal - minVal > 10000) {
             IntegerQuestionBody::class.java
         } else {
-            ScaleQuestionBody::class.java
+            ContinuousScaleQuestionBody::class.java
         }
     }
 
