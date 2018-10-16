@@ -12,7 +12,7 @@ public class IntegerRangeSurveyItem extends RangeSurveyItem<Integer> {
     public Integer maxLength;
 
     /* Default constructor needed for serilization/deserialization of object */
-    IntegerRangeSurveyItem() {
+    public IntegerRangeSurveyItem() {
         super();
     }
 }
