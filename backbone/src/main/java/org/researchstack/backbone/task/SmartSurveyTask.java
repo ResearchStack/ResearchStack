@@ -1,6 +1,8 @@
 package org.researchstack.backbone.task;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Parcel;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
@@ -31,6 +33,7 @@ import java.util.List;
  * Based on the user's answers to questions, they may be taken to a specific step rather than the
  * next one in the task.
  */
+@SuppressLint("ParcelCreator")
 public class SmartSurveyTask extends Task implements Serializable {
 
     // use this as the 'skipTo' identifier to end the survey instead of going to a question
@@ -56,7 +59,7 @@ public class SmartSurveyTask extends Task implements Serializable {
      * @param taskModel Java representation of the task json
      */
     public SmartSurveyTask(Context context, TaskModel taskModel) {
-        super(taskModel.identifier);
+        super(taskModel.identifier,"");
         steps = new HashMap<>(taskModel.elements.size());
         rules = new HashMap<>();
         staticStepIdentifiers = new ArrayList<>(taskModel.elements.size());
@@ -358,6 +361,16 @@ public class SmartSurveyTask extends Task implements Serializable {
         }
 
         return null;
+
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
 
     }
 }

@@ -457,7 +457,6 @@ public class RecorderService extends Service implements RecorderListener, TextTo
         Intent notificationIntent = new Intent(this, activeStep.getActivityClazz());
 
         // These will guarantee the activity is re-created at the same step as we were running
-        notificationIntent.putExtra(ViewTaskActivity.EXTRA_TASK, task);
         notificationIntent.putExtra(ViewTaskActivity.EXTRA_TASK_RESULT, taskResult);
         notificationIntent.putExtra(ViewTaskActivity.EXTRA_STEP, activeStep);
 

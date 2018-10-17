@@ -40,7 +40,7 @@ open class ContinuousScaleQuestionBody(step: Step, result: StepResult<*>?) : Ste
     }
 
     private fun initViewCompact(inflater: LayoutInflater, parent: ViewGroup): View {
-        val formItemView = inflater.inflate(R.layout.rsb_scale_question_layout, parent, false)
+        val formItemView = inflater.inflate(R.layout.rsb_continuous_scale_question_layout, parent, false)
 
         currentNumberTextView = formItemView.findViewById(R.id.value)
 

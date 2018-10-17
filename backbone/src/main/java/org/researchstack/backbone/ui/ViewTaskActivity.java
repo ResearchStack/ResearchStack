@@ -55,7 +55,6 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
-        intent.putExtra(EXTRA_TASK, task);
         return intent;
     }
 

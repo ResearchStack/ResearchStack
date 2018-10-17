@@ -36,7 +36,6 @@ public class IntentFactory {
     @NonNull
     public Intent newTaskIntent(Context context, Class<? extends ViewTaskActivity> clazz, Task task) {
         Intent intent = new Intent(context, clazz);
-        intent.putExtra(ViewTaskActivity.EXTRA_TASK, task);
         return intent;
     }
 
@@ -52,7 +51,6 @@ public class IntentFactory {
     @NonNull
     public Intent newTaskIntent(Context context, Class<? extends ViewTaskActivity> clazz, Task task, TaskResult result) {
         Intent intent = new Intent(context, clazz);
-        intent.putExtra(ViewTaskActivity.EXTRA_TASK, task);
         if (result != null) {
             intent.putExtra(ViewTaskActivity.EXTRA_TASK_RESULT, result);
         }
@@ -75,7 +73,6 @@ public class IntentFactory {
                                 Task task, TaskResult result, Step step) {
 
         Intent intent = new Intent(context, clazz);
-        intent.putExtra(ViewTaskActivity.EXTRA_TASK, task);
         if (result != null) {
             intent.putExtra(ViewTaskActivity.EXTRA_TASK_RESULT, result);
         }

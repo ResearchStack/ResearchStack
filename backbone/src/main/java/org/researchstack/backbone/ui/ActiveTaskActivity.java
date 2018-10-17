@@ -52,7 +52,6 @@ public class ActiveTaskActivity extends ViewTaskActivity
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ActiveTaskActivity.class);
-        intent.putExtra(EXTRA_TASK, task);
         return intent;
     }
 

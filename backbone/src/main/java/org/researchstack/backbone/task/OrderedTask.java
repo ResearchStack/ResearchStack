@@ -1,6 +1,8 @@
 package org.researchstack.backbone.task;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Parcel;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.TaskResult;
@@ -27,6 +29,7 @@ import java.util.Set;
  * is to implement a new Task subclass directly. Override the methods {@link #getStepAfterStep} and
  * {@link #getStepBeforeStep}, and call super for all other methods.
  */
+@SuppressLint("ParcelCreator")
 public class OrderedTask extends Task implements Serializable {
 
     protected List<Step> steps;
@@ -39,23 +42,23 @@ public class OrderedTask extends Task implements Serializable {
     /**
      * Returns an initialized ordered task using the specified identifier and array of steps.
      *
-     * @param identifier The unique identifier for the task.
-     * @param steps      An array of {@link Step} objects in the order in which they should be
-     *                   presented.
-     */
-    public OrderedTask(String identifier, List<Step> steps) {
-        super(identifier);
-        this.steps = new ArrayList<>(steps);
-    }
-
-    /**
-     * Returns an initialized ordered task using the specified identifier and array of steps.
-     *
      * @param identifier The unique identifier for the task
      * @param steps      The {@link Step} objects in the order in which they should be presented.
      */
     public OrderedTask(String identifier, Step... steps) {
         this(identifier, Arrays.asList(steps));
+    }
+
+    /**
+     * Returns an initialized ordered task using the specified identifier and array of steps.
+     *
+     * @param identifier The unique identifier for the task.
+     * @param steps      An array of {@link Step} objects in the order in which they should be
+     *                   presented.
+     */
+    public OrderedTask(String identifier, List<Step> steps) {
+        super(identifier,"");
+        this.steps = new ArrayList<>(steps);
     }
 
     /**
@@ -187,5 +190,15 @@ public class OrderedTask extends Task implements Serializable {
      */
     public void addStep(int index, Step step) {
         steps.add(index, step);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

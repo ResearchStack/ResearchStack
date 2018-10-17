@@ -108,19 +108,6 @@ public class SurveyFactory {
     }
 
     /**
-     * Create a SmartSurveyTask for the given Context and TaskModel
-     *
-     * @param context   activity context
-     * @param taskModel task model to create the survey task from
-     * @return created survey task
-     */
-    @NonNull
-    public SmartSurveyTask createSmartSurveyTask(
-            @NonNull Context context, @NonNull TaskModel taskModel) {
-        return new SmartSurveyTask(context, taskModel);
-    }
-
-    /**
      * @param context     can be any context, activity or application, used to access "R" resources
      * @param surveyItems a list of survey items that will be transformed into Steps
      * @return a list of steps
