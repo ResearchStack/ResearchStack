@@ -75,10 +75,10 @@ dependencies {
     implementation 'com.cronutils:cron-utils:3.1.2'
     implementation project(':backbone')
 
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.android.support:preference-v14:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
+    implementation "com.android.support:appcompat-v7:$support_library_version"
+    implementation "com.android.support:cardview-v7:$support_library_version"
+    implementation "com.android.support:preference-v14:$support_library_version"
+    implementation "com.android.support:design:$support_library_version"
 
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
