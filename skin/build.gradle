@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = '1.5.0-SNAPSHOT'
+version = research_stack_version
 
 android {
     compileSdkVersion 28

@@ -5,7 +5,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-version = '1.5.0-SNAPSHOT'
+version = research_stack_version
 
 android {
     compileSdkVersion 28
@@ -54,7 +54,7 @@ ext {
     siteUrl = 'https://researchstack.org'
     gitUrl = 'https://github.com/ResearchStack/ResearchStack.git'
 
-    libraryVersion = version
+    libraryVersion = research_stack_version
 
     userOrgName = 'researchstack'
     developerId = properties.getProperty("bintray.user")
