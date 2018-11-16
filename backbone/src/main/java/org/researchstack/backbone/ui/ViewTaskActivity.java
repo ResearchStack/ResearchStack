@@ -66,6 +66,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private int principalTextColor;
     private int secondaryTextColor;
     private int actionFailedColor;
+    private boolean showBackArrow = true;
     private ActionBar actionBar;
 
     private int stepCount = 0;
@@ -77,12 +78,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     }
 
     public static void themeIntent(Intent intent,
-                                        int colorPrimary,
-                                        int colorPrimaryDark,
-                                        int colorSecondary,
-                                        int principalTextColor,
-                                        int secondaryTextColor,
-                                        int actionFailedColor)
+                                   int colorPrimary,
+                                   int colorPrimaryDark,
+                                   int colorSecondary,
+                                   int principalTextColor,
+                                   int secondaryTextColor,
+                                   int actionFailedColor)
     {
         intent.putExtra(EXTRA_COLOR_PRIMARY, colorPrimary);
         intent.putExtra(EXTRA_COLOR_PRIMARY_DARK, colorPrimaryDark);
@@ -178,12 +179,14 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         StepLayout stepLayout = getLayoutForStep(step);
         stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
         root.show(stepLayout, isMovingForward ? StepSwitcher.SHIFT_LEFT : StepSwitcher.SHIFT_RIGHT);
-        actionBar.setDisplayHomeAsUpEnabled(stepCount > 1);
+        actionBar.setDisplayHomeAsUpEnabled(stepCount > 1 && showBackArrow);
         currentStep = step;
 
     }
 
     protected StepLayout getLayoutForStep(Step step) {
+        // Allow the back/up arrow to be displayed by default
+        showBackArrow = true;
         // Change the title on the activity
         String title = task.getTitleForStep(this, step);
         setActionBarTitle(title);
@@ -384,10 +387,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     }
 
     @Override
-    public void setActionbarVisible(boolean setVisible) {
+    public void setActionbarVisible(final boolean setVisible) {
         actionBar.setHomeButtonEnabled(setVisible);
         actionBar.setDisplayShowHomeEnabled(setVisible);
         actionBar.setDisplayHomeAsUpEnabled(setVisible);
+        showBackArrow = setVisible;
     }
 
     public void setActionBarTitle(String title) {
