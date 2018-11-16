@@ -13,4 +13,6 @@ public interface StepCallbacks {
 
     @Deprecated
     void onCancelStep();
+
+    void setActionbarVisible(boolean setVisible);
 }
