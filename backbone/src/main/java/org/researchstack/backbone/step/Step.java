@@ -34,7 +34,7 @@ public class Step implements Serializable {
     private int principalTextColor;
     private int secondaryTextColor;
     private int actionFailedColor;
-    private ActionBar actionbar;
+    private transient ActionBar actionbar;
 
     // The following fields are in RK but not implemented in ResearchStack
     // These options can be developed as needed or removed if we find they are not necessary
