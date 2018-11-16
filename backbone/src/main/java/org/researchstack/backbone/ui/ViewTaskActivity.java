@@ -187,7 +187,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         // Change the title on the activity
         String title = task.getTitleForStep(this, step);
         setActionBarTitle(title);
-        step.setActionBarReference(actionBar);
         step.setStepTheme(colorPrimary, colorPrimaryDark, colorSecondary, principalTextColor, secondaryTextColor, actionFailedColor);
         setActivityTheme(colorPrimary, colorPrimaryDark);
 
@@ -382,6 +381,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     public void onCancelStep() {
         setResult(Activity.RESULT_CANCELED);
         finish();
+    }
+
+    @Override
+    public void setActionbarVisible(boolean setVisible) {
+        actionBar.setHomeButtonEnabled(setVisible);
+        actionBar.setDisplayShowHomeEnabled(setVisible);
+        actionBar.setDisplayHomeAsUpEnabled(setVisible);
     }
 
     public void setActionBarTitle(String title) {

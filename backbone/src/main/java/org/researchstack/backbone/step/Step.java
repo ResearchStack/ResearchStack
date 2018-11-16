@@ -1,6 +1,5 @@
 package org.researchstack.backbone.step;
 
-import android.support.v7.app.ActionBar;
 import org.researchstack.backbone.task.Task;
 
 import java.io.Serializable;
@@ -34,7 +33,6 @@ public class Step implements Serializable {
     private int principalTextColor;
     private int secondaryTextColor;
     private int actionFailedColor;
-    private transient ActionBar actionbar;
 
     // The following fields are in RK but not implemented in ResearchStack
     // These options can be developed as needed or removed if we find they are not necessary
@@ -254,19 +252,5 @@ public class Step implements Serializable {
      */
     public int getActionFailedColor() {
         return actionFailedColor;
-    }
-
-    /**
-     * Sets a reference to the ActionBar for the step
-     */
-    public void setActionBarReference(ActionBar actionbar) {
-        this.actionbar = actionbar;
-    }
-
-    /**
-     * Gets a reference to the ActionBar for the step
-     */
-    public ActionBar getActionbarReference() {
-        return actionbar;
     }
 }
