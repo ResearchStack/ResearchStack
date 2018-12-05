@@ -8,7 +8,7 @@
         <item name="android:paddingRight">@dimen/rsb_margin_right</item>
         <item name="android:paddingTop">@dimen/rsb_padding_medium</item>
         <item name="android:paddingBottom">@dimen/rsb_padding_medium</item>
-        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textColor">@color/rsb_black</item>
         <item name="android:textSize">@dimen/rsb_text_size_title</item>
     </style>
 
