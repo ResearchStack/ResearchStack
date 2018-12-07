@@ -167,6 +167,8 @@ abstract class Task : Serializable, Parcelable {
      */
     abstract fun validateParameters()
 
+    open fun processTaskResult(step: Step?, result: TaskResult?) {}
+
     enum class ViewChangeType {
         ActivityCreate,
         ActivityPause,
