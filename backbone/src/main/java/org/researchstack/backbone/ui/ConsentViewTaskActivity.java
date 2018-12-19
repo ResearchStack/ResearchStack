@@ -34,10 +34,6 @@ import static org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayo
 
 public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCallbacks
 {
-    String CONSENT_DOC_LINE_PRINTED_NAME = "'s Name (printed)";
-    String CONSENT_DOC_LINE_SIGNATURE = "'s Signature";
-    String CONSENT_DOC_LINE_DATE = "Date";
-
     private static final String ID_FORM_FIRST_NAME = "user_info_form_first_name";
     private static final String ID_FORM_LAST_NAME = "user_info_form_last_name";
     private static final String ID_FORM_DOB = "user_info_form_dob";
@@ -111,10 +107,12 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
         dialog.show();
 
+        String role = getString(R.string.rsb_consent_role);
+        String dateFormat = getString(R.string.rsb_consent_doc_line_date_format);
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName),
-                "Participant",
+                role,
                 signatureBase64,
-                new SimpleDateFormat("MM-dd-yyyy").format(new Date())
+                new SimpleDateFormat(dateFormat).format(new Date())
         );
 
         new PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml, new RSHTMLPDFWriter.PDFFileReadyCallback()
@@ -129,27 +127,52 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
     }
 
 
+    /**
+     * Returns the personal form steps related with the consent view task.
+     *
+     * This method doesn't support multilanguage. If used, it will just print the filed names in English.
+     * Please use the method with the new signature
+     * {@link #getConsentPersonalInfoFormStep(Context context, boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
+     */
+    @Deprecated
     public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate)
+    {
+        return getConsentPersonalInfoFormStep(null, requiresName, requiresBirthDate);
+    }
+
+    /**
+     * Returns the personal form steps related with the consent view task.
+     *
+     * This new version is prepared to work with multilanguage.
+     * Please use this method instead of
+     * {@link #getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
+     */
+    public static @Nullable FormStep getConsentPersonalInfoFormStep(Context context, boolean requiresName,
+                                                                    boolean requiresBirthDate)
     {
         if (requiresName || requiresBirthDate)
         {
             List<QuestionStep> formSteps = new ArrayList<>();
             if (requiresName)
             {
-                formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, "First Name", new TextAnswerFormat()));
-                formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, "Last Name", new TextAnswerFormat()));
+                String firstName = (context != null) ? context.getString(R.string.rsb_name_first) : "First Name";
+                formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, firstName, new TextAnswerFormat()));
+
+                String lastName = (context != null) ? context.getString(R.string.rsb_name_last) : "Last Name";
+                formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, lastName, new TextAnswerFormat()));
             }
 
             if (requiresBirthDate)
             {
                 Calendar maxDate = Calendar.getInstance();
                 maxDate.add(Calendar.YEAR, -18);
+
                 DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
-                String dobText = "Date of birth";
+                String dobText = (context != null) ? context.getString(R.string.rsb_consent_dob_full) : "Date of birth";
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
             }
 
-            String formTitle = "Consent";
+            String formTitle = (context != null) ?  context.getString(R.string.rsb_consent) : "Consent";
             FormStep formStep = new FormStep(ID_FORM, formTitle, "");
             formStep.setOptional(false);
             formStep.setFormSteps(formSteps);
@@ -179,7 +202,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         // Signature
         if (completeName != null)
         {
-            String base = role+" "+CONSENT_DOC_LINE_PRINTED_NAME;
+            String base = getString(R.string.rsb_consent_doc_line_printed_name, role);
             String nameElement = String.format(signatureElementWrapper, completeName, hr, base);
             signatureElements.add(nameElement);
         }
@@ -187,14 +210,14 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         if (signatureB64 != null)
         {
             imageTag = "<img width='100%%' alt='star' src='data:image/png;base64,"+signatureB64+"' />";
-            String base = role+" "+CONSENT_DOC_LINE_SIGNATURE;
+            String base = getString(R.string.rsb_consent_doc_line_signature, role);
             String signatureElement = String.format(signatureElementWrapper, imageTag, hr, base);
             signatureElements.add(signatureElement);
         }
 
         if (signatureElements.size() > 0)
         {
-            String base = CONSENT_DOC_LINE_DATE;
+            String base = getString(R.string.rsb_consent_doc_line_date);
             String signatureElement = String.format(signatureElementWrapper, signatureDate, hr, base);
             signatureElements.add(signatureElement);
         }

@@ -2,6 +2,11 @@
 
 ### Change log
 
+#### v1.1.0
+
+- Tasks accept results on creation so they can be pre-populated.
+- Bug fixes & improvements
+
 #### v1.0.10
 
 - Bug fixes & improvements

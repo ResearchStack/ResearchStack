@@ -66,6 +66,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     private int principalTextColor;
     private int secondaryTextColor;
     private int actionFailedColor;
+    private boolean showBackArrow = true;
     private ActionBar actionBar;
 
     private int stepCount = 0;
@@ -77,12 +78,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     }
 
     public static void themeIntent(Intent intent,
-                                        int colorPrimary,
-                                        int colorPrimaryDark,
-                                        int colorSecondary,
-                                        int principalTextColor,
-                                        int secondaryTextColor,
-                                        int actionFailedColor)
+                                   int colorPrimary,
+                                   int colorPrimaryDark,
+                                   int colorSecondary,
+                                   int principalTextColor,
+                                   int secondaryTextColor,
+                                   int actionFailedColor)
     {
         intent.putExtra(EXTRA_COLOR_PRIMARY, colorPrimary);
         intent.putExtra(EXTRA_COLOR_PRIMARY_DARK, colorPrimaryDark);
@@ -112,7 +113,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        root = (StepSwitcher) findViewById(R.id.container);
+        root = findViewById(R.id.container);
 
         if (savedInstanceState == null) {
             task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
@@ -122,7 +123,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
             principalTextColor = getIntent().getIntExtra(EXTRA_PRINCIPAL_TEXT_COLOR, R.color.rsb_cell_header_grey);
             secondaryTextColor = getIntent().getIntExtra(EXTRA_SECONDARY_TEXT_COLOR, R.color.rsb_item_text_grey);
             actionFailedColor = getIntent().getIntExtra(EXTRA_ACTION_FAILED_COLOR, R.color.rsb_error);
-            taskResult = new TaskResult(task.getIdentifier());
+            taskResult = (TaskResult) getIntent().getExtras().get(EXTRA_TASK_RESULT);
+            if (taskResult == null)
+            {
+                taskResult = new TaskResult(task.getIdentifier());
+            }
             taskResult.setStartDate(new Date());
         } else {
             task = (Task) savedInstanceState.getSerializable(EXTRA_TASK);
@@ -174,12 +179,14 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         StepLayout stepLayout = getLayoutForStep(step);
         stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
         root.show(stepLayout, isMovingForward ? StepSwitcher.SHIFT_LEFT : StepSwitcher.SHIFT_RIGHT);
-        actionBar.setDisplayHomeAsUpEnabled(stepCount > 1);
+        actionBar.setDisplayHomeAsUpEnabled(stepCount > 1 && showBackArrow);
         currentStep = step;
 
     }
 
     protected StepLayout getLayoutForStep(Step step) {
+        // Allow the back/up arrow to be displayed by default
+        showBackArrow = true;
         // Change the title on the activity
         String title = task.getTitleForStep(this, step);
         setActionBarTitle(title);
@@ -377,6 +384,14 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     public void onCancelStep() {
         setResult(Activity.RESULT_CANCELED);
         finish();
+    }
+
+    @Override
+    public void setActionbarVisible(final boolean setVisible) {
+        actionBar.setHomeButtonEnabled(setVisible);
+        actionBar.setDisplayShowHomeEnabled(setVisible);
+        actionBar.setDisplayHomeAsUpEnabled(setVisible);
+        showBackArrow = setVisible;
     }
 
     public void setActionBarTitle(String title) {
