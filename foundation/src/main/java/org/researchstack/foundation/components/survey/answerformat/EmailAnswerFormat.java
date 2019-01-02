@@ -1,7 +1,6 @@
-package org.researchstack.backbone.answerformat;
+package org.researchstack.foundation.components.survey.answerformat;
 
-
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.foundation.components.utils.TextUtils;
 
 public class EmailAnswerFormat extends TextAnswerFormat {
     private static final int MAX_EMAIL_LENGTH = 255;

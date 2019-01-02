@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.step.body;
+package org.researchstack.foundation.components.survey.ui.body;
 
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -8,11 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.answerformat.DurationAnswerFormat;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.survey.answerformat.DurationAnswerFormat;
+import org.researchstack.foundation.components.survey.step.QuestionStep;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 
 /**
  * Implementation of the question type "duration".
@@ -59,8 +59,8 @@ public class DurationQuestionBody implements StepBody {
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsf_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsf_margin_right);
         view.setLayoutParams(layoutParams);
 
         return view;
@@ -75,7 +75,7 @@ public class DurationQuestionBody implements StepBody {
     }
 
     private View initView(LayoutInflater inflater, ViewGroup parent) {
-        View v = inflater.inflate(R.layout.rsb_item_edit_duration, parent, false);
+        View v = inflater.inflate(R.layout.rsf_item_edit_duration, parent, false);
 
         String[] hoursStrs = new String[24];
         for (int i = 0; i < 24; i++) hoursStrs[i] = String.valueOf(i);

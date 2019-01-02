@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui;
+package org.researchstack.foundation.components.web.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.views.LocalWebView;
-import org.researchstack.backbone.utils.ThemeUtils;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.utils.ThemeUtils;
+import org.researchstack.foundation.components.web.ui.views.LocalWebView;
 
 /**
  * The ViewWebDocumentActivity is used for viewing both local and network HTML docs. This activity
@@ -62,7 +62,7 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
             setTheme(getIntent().getIntExtra(KEY_THEME, 0));
         }
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.rsb_activity_web_document);
+        super.setContentView(R.layout.rsf_activity_web_document);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

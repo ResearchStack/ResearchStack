@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.views;
+package org.researchstack.foundation.components.common.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.util.AttributeSet;
 
-import org.researchstack.backbone.R;
+import org.researchstack.foundation.R;
 
 public class IconTabLayout extends TabLayout {
     private int tabIconColor = Color.WHITE;
@@ -29,7 +29,7 @@ public class IconTabLayout extends TabLayout {
         final TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.IconTabLayout,
                 defStyleAttr,
-                R.style.Widget_Backbone_IconTabLayout);
+                R.style.Widget_Foundation_IconTabLayout);
 
         Drawable background = a.getDrawable(R.styleable.IconTabLayout_android_background);
         setBackground(background);

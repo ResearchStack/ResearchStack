@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.step.layout;
+package org.researchstack.foundation.components.survey.ui.layout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,15 +7,15 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ResourcePathManager;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.ViewWebDocumentActivity;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
-import org.researchstack.backbone.ui.views.SubmitBar;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.components.common.ui.layout.FixedSubmitBarLayout;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
+import org.researchstack.foundation.components.common.ui.views.SubmitBar;
+import org.researchstack.foundation.components.singletons.TextViewLinkManager;
+import org.researchstack.foundation.components.utils.TextUtils;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 
 public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout {
     private StepCallbacks callbacks;
@@ -57,7 +57,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
     @Override
     public int getContentResourceId() {
-        return R.layout.rsb_step_layout_instruction;
+        return R.layout.rsf_step_layout_instruction;
     }
 
     private void initializeStep() {
@@ -65,38 +65,30 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
             // Set Title
             if (!TextUtils.isEmpty(step.getTitle())) {
-                TextView title = (TextView) findViewById(R.id.rsb_intruction_title);
+                TextView title = (TextView) findViewById(R.id.rsf_intruction_title);
                 title.setVisibility(View.VISIBLE);
                 title.setText(step.getTitle());
             }
 
             // Set Summary
             if (!TextUtils.isEmpty(step.getText())) {
-                TextView summary = (TextView) findViewById(R.id.rsb_intruction_text);
+                TextView summary = (TextView) findViewById(R.id.rsf_intruction_text);
                 summary.setVisibility(View.VISIBLE);
                 summary.setText(Html.fromHtml(step.getText()));
-                summary.setMovementMethod(new TextViewLinkHandler() {
-                    @Override
-                    public void onLinkClick(String url) {
-                        String path = ResourcePathManager.getInstance().
-                                generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
-                        Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
-                                step.getTitle(),
-                                path);
-                        getContext().startActivity(intent);
-                    }
-                });
+                summary.setMovementMethod(
+                        TextViewLinkManager.Companion.getSharedManager().getHandler(getContext(), step.getTitle())
+                );
             }
 
             // Set Next / Skip
-            SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-            submitBar.setPositiveTitle(R.string.rsb_next);
+            SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsf_submit_bar);
+            submitBar.setPositiveTitle(R.string.rsf_next);
             submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                     step,
                     null));
 
             if (step.isOptional()) {
-                submitBar.setNegativeTitle(R.string.rsb_step_skip);
+                submitBar.setNegativeTitle(R.string.rsf_step_skip);
                 submitBar.setNegativeAction(v -> {
                     if (callbacks != null) {
                         callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);

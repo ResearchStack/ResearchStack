@@ -1,8 +1,8 @@
-package org.researchstack.backbone.answerformat;
+package org.researchstack.foundation.components.survey.answerformat;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.step.body.BodyAnswer;
-import org.researchstack.backbone.utils.FormatHelper;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.survey.ui.body.BodyAnswer;
+import org.researchstack.foundation.components.utils.FormatHelper;
 
 import java.util.Date;
 
@@ -86,13 +86,13 @@ public class DateAnswerFormat extends AnswerFormat {
     public BodyAnswer validateAnswer(Date resultDate) {
         if (minimumDate != null && resultDate.getTime() < minimumDate.getTime()) {
             return new BodyAnswer(false,
-                    R.string.rsb_invalid_answer_date_under,
+                    R.string.rsf_invalid_answer_date_under,
                     FormatHelper.SIMPLE_FORMAT_DATE.format(minimumDate));
         }
 
         if (maximumDate != null && resultDate.getTime() > maximumDate.getTime()) {
             return new BodyAnswer(false,
-                    R.string.rsb_invalid_answer_date_over,
+                    R.string.rsf_invalid_answer_date_over,
                     FormatHelper.SIMPLE_FORMAT_DATE.format(maximumDate));
         }
 

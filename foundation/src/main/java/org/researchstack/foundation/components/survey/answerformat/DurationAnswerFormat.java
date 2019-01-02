@@ -1,4 +1,4 @@
-package org.researchstack.backbone.answerformat;
+package org.researchstack.foundation.components.survey.answerformat;
 
 /**
  * Created by Dario Salvi on 29/04/2016.

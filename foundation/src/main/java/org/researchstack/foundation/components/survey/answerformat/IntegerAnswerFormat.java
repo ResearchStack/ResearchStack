@@ -1,15 +1,15 @@
-package org.researchstack.backbone.answerformat;
+package org.researchstack.foundation.components.survey.answerformat;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.step.body.BodyAnswer;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.survey.ui.body.BodyAnswer;
+import org.researchstack.foundation.components.utils.TextUtils;
 
 /**
  * This class defines the attributes for an integer answer format that participants enter using a
  * numeric keyboard.
  * <p>
  * If you specify maximum or minimum values and the user enters a value outside the specified range,
- * the {@link org.researchstack.backbone.ui.step.body.IntegerQuestionBody} does not allow navigation
+ * the {@link org.researchstack.foundation.ui.step.body.IntegerQuestionBody} does not allow navigation
  * until the participant provides a value that is within the valid range.
  */
 public class IntegerAnswerFormat extends AnswerFormat {
@@ -60,11 +60,11 @@ public class IntegerAnswerFormat extends AnswerFormat {
             Integer intAnswer = Integer.valueOf(inputString);
             if (intAnswer < getMinValue()) {
                 return new BodyAnswer(false,
-                        R.string.rsb_invalid_answer_integer_under,
+                        R.string.rsf_invalid_answer_integer_under,
                         String.valueOf(getMinValue()));
             } else if (intAnswer > getMaxValue()) {
                 return new BodyAnswer(false,
-                        R.string.rsb_invalid_answer_integer_over,
+                        R.string.rsf_invalid_answer_integer_over,
                         String.valueOf(getMaxValue()));
             }
 

@@ -1,4 +1,4 @@
-package org.researchstack.backbone.utils;
+package org.researchstack.foundation.components.utils;
 
 import android.os.Looper;
 

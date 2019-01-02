@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.step.body;
+package org.researchstack.foundation.components.survey.ui.body;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -10,13 +10,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.answerformat.AnswerFormat;
-import org.researchstack.backbone.answerformat.DateAnswerFormat;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.FormatHelper;
+
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.survey.answerformat.AnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.DateAnswerFormat;
+import org.researchstack.foundation.components.survey.step.QuestionStep;
+import org.researchstack.foundation.components.utils.FormatHelper;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -73,7 +74,7 @@ public class DateQuestionBody implements StepBody {
 
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.rsb_item_date_view, parent, false);
+        View view = inflater.inflate(R.layout.rsf_item_date_view, parent, false);
 
         TextView title = (TextView) view.findViewById(R.id.label);
         if (viewType == VIEW_TYPE_COMPACT) {
@@ -88,11 +89,11 @@ public class DateQuestionBody implements StepBody {
             textView.setHint(step.getPlaceholder());
         } else {
             if (format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
-                textView.setHint(R.string.rsb_hint_step_body_date);
+                textView.setHint(R.string.rsf_hint_step_body_date);
             } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
-                textView.setHint(R.string.rsb_hint_step_body_time);
+                textView.setHint(R.string.rsf_hint_step_body_time);
             } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
-                textView.setHint(R.string.rsb_hint_step_body_datetime);
+                textView.setHint(R.string.rsf_hint_step_body_datetime);
             }
         }
 
@@ -115,8 +116,8 @@ public class DateQuestionBody implements StepBody {
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsf_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsf_margin_right);
         view.setLayoutParams(layoutParams);
 
         return view;
@@ -140,7 +141,7 @@ public class DateQuestionBody implements StepBody {
     @Override
     public BodyAnswer getBodyAnswerState() {
         if (!hasChosenDate) {
-            return new BodyAnswer(false, R.string.rsb_invalid_answer_date_none);
+            return new BodyAnswer(false, R.string.rsf_invalid_answer_date_none);
         }
 
         return format.validateAnswer(calendar.getTime());
@@ -149,7 +150,7 @@ public class DateQuestionBody implements StepBody {
     private void showDialog(TextView tv) {
         // need to find a material date picker, since it's not in the support library
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(tv.getContext(),
-                R.style.Theme_Backbone);
+                R.style.Theme_Foundation);
         if (format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
             new DatePickerDialog(contextWrapper,
                     (view, year, monthOfYear, dayOfMonth) -> {

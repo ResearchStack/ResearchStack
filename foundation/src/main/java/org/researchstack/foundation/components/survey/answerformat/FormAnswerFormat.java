@@ -1,4 +1,4 @@
-package org.researchstack.backbone.answerformat;
+package org.researchstack.foundation.components.survey.answerformat;
 
 /**
  * AnswerFormat indicating that the QuestionStep is a form step. This lets the layout know that it

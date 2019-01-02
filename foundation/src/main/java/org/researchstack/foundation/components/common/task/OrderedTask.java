@@ -1,11 +1,12 @@
-package org.researchstack.backbone.task;
+package org.researchstack.foundation.components.common.task;
 
 import android.content.Context;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.utils.TextUtils;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.step.Step;
+import org.researchstack.foundation.core.models.task.Task;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -122,7 +123,7 @@ public class OrderedTask extends Task implements Serializable {
         String title = super.getTitleForStep(context, step);
         if (TextUtils.isEmpty(title)) {
             int currentIndex = steps.indexOf(step);
-            title = context.getString(R.string.rsb_format_step_title,
+            title = context.getString(R.string.rsf_format_step_title,
                     currentIndex + 1,
                     steps.size());
         }
@@ -132,7 +133,7 @@ public class OrderedTask extends Task implements Serializable {
     /**
      * Validates that there are no duplicate identifiers in the list of steps
      *
-     * @throws org.researchstack.backbone.task.Task.InvalidTaskException
+     * @throws org.researchstack.foundation.task.Task.InvalidTaskException
      */
     @Override
     public void validateParameters() {

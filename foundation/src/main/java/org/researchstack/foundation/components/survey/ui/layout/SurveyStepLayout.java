@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.step.layout;
+package org.researchstack.foundation.components.survey.ui.layout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,19 +13,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ResourcePathManager;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.ViewWebDocumentActivity;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.step.body.BodyAnswer;
-import org.researchstack.backbone.ui.step.body.StepBody;
-import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
-import org.researchstack.backbone.ui.views.SubmitBar;
-import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
+import org.researchstack.foundation.components.common.ui.views.SubmitBar;
+import org.researchstack.foundation.components.singletons.TextViewLinkManager;
+import org.researchstack.foundation.components.survey.ui.body.BodyAnswer;
+import org.researchstack.foundation.components.common.ui.layout.FixedSubmitBarLayout;
+import org.researchstack.foundation.components.survey.step.QuestionStep;
+import org.researchstack.foundation.components.survey.ui.body.StepBody;
+import org.researchstack.foundation.components.utils.LogExt;
+import org.researchstack.foundation.components.utils.TextUtils;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 
 import java.lang.reflect.Constructor;
 
@@ -100,7 +100,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     @Override
     public int getContentResourceId() {
-        return R.layout.rsb_step_layout;
+        return R.layout.rsf_step_layout;
     }
 
     public void initializeStep() {
@@ -111,10 +111,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     public void initStepLayout() {
         LogExt.i(getClass(), "initStepLayout()");
 
-        container = (LinearLayout) findViewById(R.id.rsb_survey_content_container);
-        TextView title = (TextView) findViewById(R.id.rsb_survey_title);
-        TextView summary = (TextView) findViewById(R.id.rsb_survey_text);
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        container = (LinearLayout) findViewById(R.id.rsf_survey_content_container);
+        TextView title = (TextView) findViewById(R.id.rsf_survey_title);
+        TextView summary = (TextView) findViewById(R.id.rsf_survey_text);
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsf_submit_bar);
         submitBar.setPositiveAction(v -> onNextClicked());
 
         if (questionStep != null) {
@@ -126,21 +126,13 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             if (!TextUtils.isEmpty(questionStep.getText())) {
                 summary.setVisibility(View.VISIBLE);
                 summary.setText(Html.fromHtml(questionStep.getText()));
-                summary.setMovementMethod(new TextViewLinkHandler() {
-                    @Override
-                    public void onLinkClick(String url) {
-                        String path = ResourcePathManager.getInstance().
-                                generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
-                        Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
-                                questionStep.getTitle(),
-                                path);
-                        getContext().startActivity(intent);
-                    }
-                });
+                summary.setMovementMethod(
+                        TextViewLinkManager.Companion.getSharedManager().getHandler(getContext(), questionStep.getTitle())
+                );
             }
 
             if (questionStep.isOptional()) {
-                submitBar.setNegativeTitle(R.string.rsb_step_skip);
+                submitBar.setNegativeTitle(R.string.rsf_step_skip);
                 submitBar.setNegativeAction(v -> onSkipClicked());
             } else {
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
@@ -156,11 +148,11 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, inflater, this);
 
         if (body != null) {
-            View oldView = container.findViewById(R.id.rsb_survey_step_body);
+            View oldView = container.findViewById(R.id.rsf_survey_step_body);
             int bodyIndex = container.indexOfChild(oldView);
             container.removeView(oldView);
             container.addView(body, bodyIndex);
-            body.setId(R.id.rsb_survey_step_body);
+            body.setId(R.id.rsf_survey_step_body);
         }
     }
 

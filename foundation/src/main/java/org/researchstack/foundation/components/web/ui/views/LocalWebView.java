@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.views;
+package org.researchstack.foundation.components.web.ui.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import org.researchstack.backbone.ResourcePathManager;
-import org.researchstack.backbone.ui.ViewVideoActivity;
-import org.researchstack.backbone.ui.ViewWebDocumentActivity;
-import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.foundation.components.singletons.ResourcePathManager;
+import org.researchstack.foundation.components.utils.LogExt;
+import org.researchstack.foundation.components.web.ui.activities.ViewVideoActivity;
+import org.researchstack.foundation.components.web.ui.activities.ViewWebDocumentActivity;
 
 import java.io.File;
 

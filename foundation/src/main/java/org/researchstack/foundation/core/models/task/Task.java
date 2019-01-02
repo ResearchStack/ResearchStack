@@ -1,10 +1,12 @@
-package org.researchstack.backbone.task;
+package org.researchstack.foundation.core.models.task;
 
 import android.content.Context;
 
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.ViewTaskActivity;
+import org.jetbrains.annotations.NotNull;
+import org.researchstack.foundation.components.presentation.interfaces.ITaskNavigator;
+import org.researchstack.foundation.core.interfaces.ITask;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.step.Step;
 
 import java.io.Serializable;
 
@@ -13,19 +15,24 @@ import java.io.Serializable;
  * <p>
  * To present the ResearchStack framework UI in your app, instantiate an object that extends the
  * Task class (such as {@link OrderedTask}) and provide it to a {@link
- * org.researchstack.backbone.ui.ViewTaskActivity}.
+ * org.researchstack.foundation.ui.ViewTaskActivity}.
  * <p>
  * Implement this protocol to enable dynamic selection of the steps for a given task. By default,
  * OrderedTask implements this protocol for simple sequential tasks.
  * <p>
  * Each {@link Step} in a task roughly corresponds to one screen, and represents the primary unit of
- * work in any task. For example, a {@link org.researchstack.backbone.step.QuestionStep} object
+ * work in any task. For example, a {@link org.researchstack.foundation.step.QuestionStep} object
  * corresponds to a single question presented on screen, together with controls the participant uses
- * to answer the question. Another example is {@link org.researchstack.backbone.step.FormStep},
+ * to answer the question. Another example is {@link org.researchstack.foundation.step.FormStep},
  * which corresponds to a single screen that displays multiple questions or items for which
  * participants provide information, such as first name, last name, and birth date.
  */
-public abstract class Task implements Serializable {
+public abstract class Task implements Serializable, ITask, ITaskNavigator<Step, TaskResult> {
+
+    public interface TaskLifecycleObserver {
+
+    }
+
     private String identifier;
 
     /**
@@ -56,6 +63,7 @@ public abstract class Task implements Serializable {
         return identifier;
     }
 
+    //TODO: probably want to update / remove this method due to dependency on Android Context
     /**
      * Gets the title to display in the toolbar for a given step.
      * <p>
@@ -69,8 +77,14 @@ public abstract class Task implements Serializable {
      * @param step    the current step
      * @return the title to display
      */
+    @Deprecated
     public String getTitleForStep(Context context, Step step) {
         return step.getStepTitle() != 0 ? context.getString(step.getStepTitle()) : "";
+    }
+
+    public String getTitleForStep(Step step) {
+        String titleString = step.getStepTitleString();
+        return  titleString != null ? titleString : "";
     }
 
     /**
@@ -78,7 +92,7 @@ public abstract class Task implements Serializable {
      * <p>
      * This method lets you use a result to determine the next step.
      * <p>
-     * The {@link org.researchstack.backbone.ui.ViewTaskActivity}  calls this method to determine
+     * The {@link org.researchstack.foundation.ui.ViewTaskActivity}  calls this method to determine
      * the step to display after the specified step. The ViewTaskActivity can also call this
      * method every time the result updates, to determine if the new result changes which steps are
      * available.
@@ -95,7 +109,7 @@ public abstract class Task implements Serializable {
     /**
      * Returns the step that precedes the specified step, if there is one.
      * <p>
-     * The {@link org.researchstack.backbone.ui.ViewTaskActivity} calls this method to determine the
+     * The {@link org.researchstack.foundation.ui.ViewTaskActivity} calls this method to determine the
      * step to display before the specified step. The ViewTaskActivity
      * can also call this method every time the result changes, to determine if the new result
      * changes which steps are available.
@@ -121,7 +135,7 @@ public abstract class Task implements Serializable {
     /**
      * Returns the progress of the current step.
      * <p>
-     * During a task, the {@link org.researchstack.backbone.ui.ViewTaskActivity}  can display the
+     * During a task, the {@link org.researchstack.foundation.ui.ViewTaskActivity}  can display the
      * progress (that is, the current step number out of the total number of steps) in the
      * navigation bar. Implement this method to control what is displayed; if you don't implement
      * this method, the progress label does not appear.
@@ -144,23 +158,24 @@ public abstract class Task implements Serializable {
      * implementation makes sure that all its step identifiers are unique, throwing an exception
      * otherwise.
      * <p>
-     * This method is usually called by {@link org.researchstack.backbone.ui.ViewTaskActivity} when
+     * This method is usually called by {@link org.researchstack.foundation.ui.ViewTaskActivity} when
      * its task is set.
      *
      * @throws InvalidTaskException
      */
     public abstract void validateParameters();
 
-    /**
-     * Function that can be overridden in order to access the low level changes in the view.
-     * The function is called at Activity lifecycle events (creation, pause, resume, stop and whenever
-     * the content of the activity is changed, according to the step.
-     *
-     * @param type        lifecycle event
-     * @param activity    current activity
-     * @param currentStep the current step being shown
-     */
-    public void onViewChange(ViewChangeType type, ViewTaskActivity activity, Step currentStep) {
+    //TODO: probably want to remove this due to dependency on ViewTaskActivity
+//    /**
+//     * Function that can be overridden in order to access the low level changes in the view.
+//     * The function is called at Activity lifecycle events (creation, pause, resume, stop and whenever
+//     * the content of the activity is changed, according to the step.
+//     *
+//     * @param type        lifecycle event
+//     * @param activity    current activity
+//     * @param currentStep the current step being shown
+//     */
+    public void onViewChange(ViewChangeType type, TaskLifecycleObserver observer, Step currentStep) {
 
     }
 
@@ -176,7 +191,7 @@ public abstract class Task implements Serializable {
      * A structure that represents how far a task has progressed.
      * <p>
      * Objects that extend Task return the task progress structure to indicate to the {@link
-     * org.researchstack.backbone.ui.ViewTaskActivity} how far the task has progressed.
+     * org.researchstack.foundation.ui.ViewTaskActivity} how far the task has progressed.
      * <p>
      * Note that the values in an {@link TaskProgress} structure are used only for display; you
      * don't use the values to access the steps in a task.

@@ -1,6 +1,4 @@
-package org.researchstack.backbone.utils;
-
-import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
+package org.researchstack.foundation.components.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

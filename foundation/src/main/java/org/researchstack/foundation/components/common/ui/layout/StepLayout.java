@@ -1,10 +1,10 @@
-package org.researchstack.backbone.ui.step.layout;
+package org.researchstack.foundation.components.common.ui.layout;
 
 import android.view.View;
 
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 
 public interface StepLayout {
     void initialize(Step step, StepResult result);

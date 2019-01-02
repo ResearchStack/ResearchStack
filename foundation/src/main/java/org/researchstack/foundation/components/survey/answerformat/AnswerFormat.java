@@ -1,26 +1,26 @@
-package org.researchstack.backbone.answerformat;
+package org.researchstack.foundation.components.survey.answerformat;
 
-import org.researchstack.backbone.ui.step.body.DateQuestionBody;
-import org.researchstack.backbone.ui.step.body.DecimalQuestionBody;
-import org.researchstack.backbone.ui.step.body.DurationQuestionBody;
-import org.researchstack.backbone.ui.step.body.FormBody;
-import org.researchstack.backbone.ui.step.body.IntegerQuestionBody;
-import org.researchstack.backbone.ui.step.body.MultiChoiceQuestionBody;
-import org.researchstack.backbone.ui.step.body.NotImplementedStepBody;
-import org.researchstack.backbone.ui.step.body.SingleChoiceQuestionBody;
-import org.researchstack.backbone.ui.step.body.TextQuestionBody;
+import org.researchstack.foundation.components.survey.ui.body.DateQuestionBody;
+import org.researchstack.foundation.components.survey.ui.body.DecimalQuestionBody;
+import org.researchstack.foundation.components.survey.ui.body.DurationQuestionBody;
+import org.researchstack.foundation.components.survey.ui.body.FormBody;
+import org.researchstack.foundation.components.survey.ui.body.IntegerQuestionBody;
+import org.researchstack.foundation.components.survey.ui.body.MultiChoiceQuestionBody;
+import org.researchstack.foundation.components.survey.ui.body.NotImplementedStepBody;
+import org.researchstack.foundation.components.survey.ui.body.SingleChoiceQuestionBody;
+import org.researchstack.foundation.components.survey.ui.body.TextQuestionBody;
 
 import java.io.Serializable;
 
 /**
  * The AnswerFormat class is the abstract base class for classes that describe the format in which a
  * survey question should be answered. The ResearchStack framework uses {@link
- * org.researchstack.backbone.step.QuestionStep} to represent questions to ask the user. Each
+ * org.researchstack.foundation.step.QuestionStep} to represent questions to ask the user. Each
  * question must have an associated answer format.
  * <p>
  * To use an answer format, instantiate the appropriate answer format subclass and attach it to a
  * question step or form item. Incorporate the resulting step into a task, and present the task with
- * a {@link org.researchstack.backbone.ui.ViewTaskActivity}.
+ * a {@link org.researchstack.foundation.ui.ViewTaskActivity}.
  */
 public abstract class AnswerFormat implements Serializable {
     /**
@@ -42,7 +42,7 @@ public abstract class AnswerFormat implements Serializable {
     /**
      * The type of question. (read-only)
      * <p>
-     * The type provides a default {@link org.researchstack.backbone.ui.step.body.StepBody} for that
+     * The type provides a default {@link org.researchstack.foundation.ui.step.body.StepBody} for that
      * type of question. A custom StepLayout implementation may provide it's own StepBody rather
      * than using the default provided by this AnswerFormat.
      */
@@ -105,7 +105,7 @@ public abstract class AnswerFormat implements Serializable {
     /**
      * Interface that {@link Type} implements. Since you cannot add a value to an existing enum, you
      * may implement this interface instead to provide your own QuestionType that provides a {@link
-     * org.researchstack.backbone.ui.step.body.StepBody} class.
+     * org.researchstack.foundation.ui.step.body.StepBody} class.
      */
     public interface QuestionType {
         Class<?> getStepBodyClass();

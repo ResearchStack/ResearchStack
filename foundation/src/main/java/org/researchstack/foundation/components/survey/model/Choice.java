@@ -1,9 +1,9 @@
-package org.researchstack.backbone.model;
+package org.researchstack.foundation.components.survey.model;
 
 import java.io.Serializable;
 
 /**
- * Choice objects for use in {@link org.researchstack.backbone.answerformat.ChoiceAnswerFormat}.
+ * Choice objects for use in {@link org.researchstack.foundation.answerformat.ChoiceAnswerFormat}.
  * They typically have an integer or string value, always with a string text representation of the
  * choice for the user.
  *

@@ -1,6 +1,7 @@
-package org.researchstack.backbone.step;
+package org.researchstack.foundation.components.survey.step;
 
-import org.researchstack.backbone.ui.step.layout.InstructionStepLayout;
+import org.researchstack.foundation.components.survey.ui.layout.InstructionStepLayout;
+import org.researchstack.foundation.core.models.step.Step;
 
 /**
  * An InstructionStep object gives the participant instructions for a task.

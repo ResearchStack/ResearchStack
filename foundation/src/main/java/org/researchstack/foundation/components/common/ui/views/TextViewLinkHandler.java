@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.step.layout;
+package org.researchstack.foundation.components.common.ui.views;
 
 import android.text.Layout;
 import android.text.Spannable;

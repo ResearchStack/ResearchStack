@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.views;
+package org.researchstack.foundation.components.common.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,12 +10,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding.view.RxView;
+//TODO: remove RX dependency
+//import com.jakewharton.rxbinding.view.RxView;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.utils.ThemeUtils;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.utils.ThemeUtils;
 
-import rx.functions.Action1;
+import java.util.function.Consumer;
+
+//import rx.functions.Action1;
 
 public class SubmitBar extends LinearLayout {
     private TextView positiveView;
@@ -32,12 +35,12 @@ public class SubmitBar extends LinearLayout {
     public SubmitBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_submitbar, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsf_view_submitbar, this, true);
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.SubmitBar,
                 defStyleAttr,
-                R.style.Widget_Backbone_SubmitBar);
+                R.style.Widget_Foundation_SubmitBar);
 
         setBackground(a.getDrawable(R.styleable.SubmitBar_android_background));
 
@@ -49,7 +52,7 @@ public class SubmitBar extends LinearLayout {
         negativeView = (TextView) findViewById(R.id.bar_submit_negative);
         negativeView.setText(a.getString(R.styleable.SubmitBar_negativeActionTitle));
         negativeView.setTextColor(a.getColor(R.styleable.SubmitBar_negativeActionColor,
-                ContextCompat.getColor(context, R.color.rsb_submit_bar_negative)));
+                ContextCompat.getColor(context, R.color.rsf_submit_bar_negative)));
 
         a.recycle();
     }
@@ -66,8 +69,8 @@ public class SubmitBar extends LinearLayout {
         positiveView.setText(title);
     }
 
-    public void setPositiveAction(Action1 submit) {
-        RxView.clicks(this.positiveView).subscribe(submit);
+    public void setPositiveAction(OnClickListener listener) {
+        this.positiveView.setOnClickListener(listener);
     }
 
     public View getPositiveActionView() {
@@ -87,8 +90,8 @@ public class SubmitBar extends LinearLayout {
         negativeView.setText(title);
     }
 
-    public void setNegativeAction(Action1 submit) {
-        RxView.clicks(this.negativeView).subscribe(submit);
+    public void setNegativeAction(OnClickListener listener) {
+        this.negativeView.setOnClickListener(listener);
     }
 
     public View getNegativeActionView() {

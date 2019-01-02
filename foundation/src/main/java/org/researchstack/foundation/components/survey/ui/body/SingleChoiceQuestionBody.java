@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.step.body;
+package org.researchstack.foundation.components.survey.ui.body;
 
 import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
@@ -10,12 +10,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
-import org.researchstack.backbone.model.Choice;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.survey.answerformat.ChoiceAnswerFormat;
+import org.researchstack.foundation.components.survey.model.Choice;
+import org.researchstack.foundation.components.survey.step.QuestionStep;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
+
 
 public class SingleChoiceQuestionBody<T> implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -51,8 +52,8 @@ public class SingleChoiceQuestionBody<T> implements StepBody {
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
+        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsf_margin_left);
+        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsf_margin_right);
         view.setLayoutParams(layoutParams);
 
         return view;
@@ -72,11 +73,11 @@ public class SingleChoiceQuestionBody<T> implements StepBody {
         RadioGroup radioGroup = new RadioGroup(parent.getContext());
         radioGroup.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         radioGroup.setDividerDrawable(ContextCompat.getDrawable(parent.getContext(),
-                R.drawable.rsb_divider_empty_8dp));
+                R.drawable.rsf_divider_empty_8dp));
 
         for (int i = 0; i < choices.length; i++) {
             Choice choice = choices[i];
-            RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.rsb_item_radio,
+            RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.rsf_item_radio,
                     radioGroup,
                     false);
             radioButton.setText(choice.getText());
@@ -100,7 +101,7 @@ public class SingleChoiceQuestionBody<T> implements StepBody {
     private View initViewCompact(LayoutInflater inflater, ViewGroup parent) {
         ViewGroup compactView = (ViewGroup) initViewDefault(inflater, parent);
 
-        TextView label = (TextView) inflater.inflate(R.layout.rsb_item_text_view_title_compact,
+        TextView label = (TextView) inflater.inflate(R.layout.rsf_item_text_view_title_compact,
                 compactView,
                 false);
         label.setText(step.getTitle());
@@ -124,7 +125,7 @@ public class SingleChoiceQuestionBody<T> implements StepBody {
     @Override
     public BodyAnswer getBodyAnswerState() {
         if (currentSelected == null) {
-            return new BodyAnswer(false, R.string.rsb_invalid_answer_choice);
+            return new BodyAnswer(false, R.string.rsf_invalid_answer_choice);
         } else {
             return BodyAnswer.VALID;
         }

@@ -1,9 +1,6 @@
-package org.researchstack.backbone.utils;
+package org.researchstack.foundation.components.utils;
 
 import android.content.Context;
-
-import org.researchstack.backbone.StorageAccess;
-
 
 public class ResUtils {
 

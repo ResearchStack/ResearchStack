@@ -1,8 +1,9 @@
-package org.researchstack.backbone.answerformat;
+package org.researchstack.foundation.components.survey.answerformat;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.step.body.BodyAnswer;
-import org.researchstack.backbone.utils.TextUtils;
+
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.survey.ui.body.BodyAnswer;
+import org.researchstack.foundation.components.utils.TextUtils;
 
 /**
  * This class defines the attributes for a decimal answer format that participants enter using a
@@ -59,10 +60,10 @@ public class DecimalAnswerFormat extends AnswerFormat {
             Float floatAnswer = Float.valueOf(inputString);
             if (floatAnswer < minValue) {
                 return new BodyAnswer(false,
-                        R.string.rsb_invalid_answer_integer_under, String.valueOf(getMinValue()));
+                        R.string.rsf_invalid_answer_integer_under, String.valueOf(getMinValue()));
             } else if (floatAnswer > maxValue) {
                 return new BodyAnswer(false,
-                        R.string.rsb_invalid_answer_integer_over, String.valueOf(getMaxValue()));
+                        R.string.rsf_invalid_answer_integer_over, String.valueOf(getMaxValue()));
             }
         }
 

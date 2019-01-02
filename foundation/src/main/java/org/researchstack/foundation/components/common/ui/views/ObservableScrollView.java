@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.views;
+package org.researchstack.foundation.components.common.ui.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;

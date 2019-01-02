@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.views;
+package org.researchstack.foundation.components.common.ui.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -11,8 +11,9 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.common.ui.views.SubmitBar;
+import org.researchstack.foundation.components.common.ui.views.ObservableScrollView;
 
 public abstract class FixedSubmitBarLayout extends FrameLayout implements StepLayout {
     public FixedSubmitBarLayout(Context context) {
@@ -41,17 +42,17 @@ public abstract class FixedSubmitBarLayout extends FrameLayout implements StepLa
     private void init() {
         // Init root
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.rsb_layout_fixed_submit_bar, this, true);
+        inflater.inflate(R.layout.rsf_layout_fixed_submit_bar, this, true);
 
         // Add contentContainer to the layout
-        ViewGroup contentContainer = (ViewGroup) findViewById(R.id.rsb_content_container);
+        ViewGroup contentContainer = (ViewGroup) findViewById(R.id.rsf_content_container);
         View content = inflater.inflate(getContentResourceId(), contentContainer, false);
         contentContainer.addView(content, 0);
 
         // Init scrollview and submit bar guide positioning
-        final View submitBarGuide = findViewById(R.id.rsb_submit_bar_guide);
-        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-        ObservableScrollView scrollView = (ObservableScrollView) findViewById(R.id.rsb_content_container_scrollview);
+        final View submitBarGuide = findViewById(R.id.rsf_submit_bar_guide);
+        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsf_submit_bar);
+        final ObservableScrollView scrollView = (ObservableScrollView) findViewById(R.id.rsf_content_container_scrollview);
         scrollView.setScrollListener(scrollY -> onScrollChanged(scrollView, submitBarGuide, submitBar));
         scrollView.getViewTreeObserver()
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

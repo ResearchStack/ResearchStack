@@ -1,4 +1,4 @@
-package org.researchstack.backbone.utils;
+package org.researchstack.foundation.components.utils;
 
 import android.app.Activity;
 import android.content.Context;

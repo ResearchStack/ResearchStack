@@ -1,10 +1,10 @@
-package org.researchstack.backbone.ui.step.body;
+package org.researchstack.foundation.components.survey.ui.body;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.researchstack.backbone.result.StepResult;
+import org.researchstack.foundation.core.models.result.StepResult;
 
 public interface StepBody {
     int VIEW_TYPE_DEFAULT = 0;

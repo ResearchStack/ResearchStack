@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.researchstack.backbone.ui.views;
+package org.researchstack.foundation.components.web.ui.views;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -33,7 +33,7 @@ import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-import org.researchstack.backbone.R;
+import org.researchstack.foundation.R;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -192,13 +192,13 @@ public class AssetVideoView extends SurfaceView implements MediaController.Media
                 int messageId;
 
                 if (framework_err == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK) {
-                    messageId = R.string.rsb_error_assetvideoview_invalid_progressive_playback;
+                    messageId = R.string.rsf_error_assetvideoview_invalid_progressive_playback;
                 } else {
-                    messageId = R.string.rsb_error_assetvideoview_unknown;
+                    messageId = R.string.rsf_error_assetvideoview_unknown;
                 }
 
                 new AlertDialog.Builder(getContext()).setMessage(messageId)
-                        .setPositiveButton(R.string.rsb_error_assetvideoview_button,
+                        .setPositiveButton(R.string.rsf_error_assetvideoview_button,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         /* If we get here, there is no onError listener, so

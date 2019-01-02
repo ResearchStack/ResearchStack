@@ -1,4 +1,4 @@
-package org.researchstack.backbone;
+package org.researchstack.foundation.components.singletons;
 
 import android.app.Application;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.foundation.components.utils.LogExt;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

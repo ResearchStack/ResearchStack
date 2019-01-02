@@ -1,7 +1,7 @@
-package org.researchstack.backbone.answerformat;
+package org.researchstack.foundation.components.survey.answerformat;
 
 
-import org.researchstack.backbone.model.Choice;
+import org.researchstack.foundation.components.survey.model.Choice;
 
 /**
  * A convenience subclass of {@link ChoiceAnswerFormat} that provides a simple true/false single

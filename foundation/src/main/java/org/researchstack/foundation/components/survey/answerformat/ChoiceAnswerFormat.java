@@ -1,7 +1,6 @@
-package org.researchstack.backbone.answerformat;
+package org.researchstack.foundation.components.survey.answerformat;
 
-
-import org.researchstack.backbone.model.Choice;
+import org.researchstack.foundation.components.survey.model.Choice;
 
 /**
  * The ChoiceAnswerFormat class represents an answer format that lets participants choose from a
@@ -25,7 +24,7 @@ public class ChoiceAnswerFormat extends AnswerFormat {
 
     /**
      * Returns a multiple choice or single choice question type, which will decide which {@link
-     * org.researchstack.backbone.ui.step.body.StepBody} to use to display this question.
+     * org.researchstack.foundation.ui.step.body.StepBody} to use to display this question.
      *
      * @return the question type for this answer format
      */

@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.step.body;
+package org.researchstack.foundation.components.survey.ui.body;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -6,12 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.FormStep;
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.LogExt;
+
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.survey.step.FormStep;
+import org.researchstack.foundation.components.survey.step.QuestionStep;
+import org.researchstack.foundation.components.utils.LogExt;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class FormBody implements StepBody {
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         // Inflate our container for each compact child StepBody
-        LinearLayout body = (LinearLayout) inflater.inflate(R.layout.rsb_step_layout_form_body,
+        LinearLayout body = (LinearLayout) inflater.inflate(R.layout.rsf_step_layout_form_body,
                 parent,
                 false);
 

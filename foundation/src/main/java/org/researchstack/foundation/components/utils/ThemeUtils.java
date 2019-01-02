@@ -1,11 +1,11 @@
-package org.researchstack.backbone.utils;
+package org.researchstack.foundation.components.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.TypedValue;
 
-import org.researchstack.backbone.R;
+import org.researchstack.foundation.R;
 
 import java.lang.reflect.Method;
 
@@ -38,7 +38,7 @@ public class ThemeUtils {
                 new int[]{R.attr.passcodeTheme});
         int themeResId = a.getResourceId(0, 0);
         if (themeResId == 0) {
-            throw new RuntimeException("Theme must define attribute passCodeTheme or extend from @style/Base.Theme.Backbone");
+            throw new RuntimeException("Theme must define attribute passCodeTheme or extend from @style/Base.Theme.Foundation");
         }
 
         a.recycle();

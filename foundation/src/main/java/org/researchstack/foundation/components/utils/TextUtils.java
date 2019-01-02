@@ -1,4 +1,4 @@
-package org.researchstack.backbone.utils;
+package org.researchstack.foundation.components.utils;
 
 import android.text.InputFilter;
 import android.text.Spanned;

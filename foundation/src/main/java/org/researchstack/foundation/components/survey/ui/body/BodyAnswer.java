@@ -1,14 +1,14 @@
-package org.researchstack.backbone.ui.step.body;
+package org.researchstack.foundation.components.survey.ui.body;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
 
-import org.researchstack.backbone.R;
+import org.researchstack.foundation.R;
 
 public class BodyAnswer {
     public static final BodyAnswer VALID = new BodyAnswer(true, 0);
     public static final BodyAnswer INVALID = new BodyAnswer(false,
-            R.string.rsb_invalid_answer_default);
+            R.string.rsf_invalid_answer_default);
 
     private boolean isValid;
     private int reason;

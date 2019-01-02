@@ -1,7 +1,7 @@
-package org.researchstack.backbone.answerformat;
+package org.researchstack.foundation.components.survey.answerformat;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.step.body.BodyAnswer;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.survey.ui.body.BodyAnswer;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,11 +32,11 @@ public class BirthDateAnswerFormat extends DateAnswerFormat {
         Date maxDate = getMaximumDate();
 
         if (minDate != null && isOnOrBefore(resultDate, minDate)) {
-            return new BodyAnswer(false, R.string.rsb_birth_date_too_old, String.valueOf(maxAge));
+            return new BodyAnswer(false, R.string.rsf_birth_date_too_old, String.valueOf(maxAge));
         }
 
         if (maxDate != null && !isOnOrBefore(resultDate, maxDate)) {
-            return new BodyAnswer(false, R.string.rsb_birth_date_too_young, String.valueOf(minAge));
+            return new BodyAnswer(false, R.string.rsf_birth_date_too_young, String.valueOf(minAge));
         }
 
         return BodyAnswer.VALID;

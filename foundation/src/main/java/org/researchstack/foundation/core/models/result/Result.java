@@ -1,4 +1,6 @@
-package org.researchstack.backbone.result;
+package org.researchstack.foundation.core.models.result;
+
+import org.researchstack.foundation.core.interfaces.IResult;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -6,8 +8,8 @@ import java.util.Date;
 /**
  * The Result class defines the attributes of a result from one step or a group of steps. When you
  * use the ResearchStack framework APIs, you typically get a result from the Result property of
- * either {@link org.researchstack.backbone.ui.ViewTaskActivity} or {@link
- * org.researchstack.backbone.ui.step.layout.StepLayout}. Certain types of results can contain other
+ * either {@link org.researchstack.foundation.ui.ViewTaskActivity} or {@link
+ * org.researchstack.foundation.ui.step.layout.StepLayout}. Certain types of results can contain other
  * results, which together express a hierarchy; examples of these types of results are {@link
  * StepResult} and {@link TaskResult}.
  * <p>
@@ -21,7 +23,7 @@ import java.util.Date;
  * hold the type of result data the step can generate, unless it makes sense to use an existing
  * subclass.
  */
-public class Result implements Serializable {
+public class Result implements Serializable, IResult {
     private String identifier;
 
     private Date startDate;
@@ -34,8 +36,8 @@ public class Result implements Serializable {
     /**
      * Returns an initialized result using the specified identifier.
      * <p>
-     * Typically, objects such as {@link org.researchstack.backbone.ui.ViewTaskActivity} and {@link
-     * org.researchstack.backbone.ui.step.layout.StepLayout} instantiate result (and Result
+     * Typically, objects such as {@link org.researchstack.foundation.ui.ViewTaskActivity} and {@link
+     * org.researchstack.foundation.ui.step.layout.StepLayout} instantiate result (and Result
      * subclass) objects; you seldom need to instantiate a result object in your code.
      *
      * @param identifier The unique identifier of the result.

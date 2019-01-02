@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui;
+package org.researchstack.foundation.components.web.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.MediaController;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.views.AssetVideoView;
+import org.researchstack.foundation.R;
+import org.researchstack.foundation.components.web.ui.views.AssetVideoView;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ public class ViewVideoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.rsb_activity_video_viewer);
+        super.setContentView(R.layout.rsf_activity_video_viewer);
 
         videoView = (AssetVideoView) findViewById(R.id.videoView);
 
