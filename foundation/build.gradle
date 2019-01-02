@@ -9,7 +9,6 @@ version = research_stack_version
 
 android {
     compileSdkVersion 28
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
@@ -19,14 +18,20 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    resourcePrefix 'rsf_'
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildToolsVersion '28.0.3'
 }
 
 Properties properties = new Properties()
@@ -58,12 +63,19 @@ ext {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$support_library_version"
+    implementation "com.android.support:cardview-v7:$support_library_version"
+    implementation "com.android.support:preference-v14:$support_library_version"
+    implementation "com.android.support:design:$support_library_version"
+    implementation "com.android.support:support-compat:$support_library_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "com.google.code.gson:gson:$gson_version"
+
 }
 
 group = publishedGroupId                               // Maven Group ID for the artifact
