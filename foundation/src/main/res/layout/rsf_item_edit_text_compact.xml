@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:minHeight="@dimen/rsb_item_size_default"
+        android:minHeight="@dimen/rsf_item_size_default"
         android:textColor="?attr/colorAccent"
         android:textSize="16sp"
         tools:text="title" />
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:imeOptions="actionNext"
         android:inputType="text"
-        android:minHeight="@dimen/rsb_item_size_default"
+        android:minHeight="@dimen/rsf_item_size_default"
         android:singleLine="true"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="14sp"

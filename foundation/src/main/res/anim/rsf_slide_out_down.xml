@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-/* //device/apps/common/res/anim/slide_out_right.xml
+/* //device/apps/common/res/anim/slide_in_left.xml
 **
 ** Copyright 2007, The Android Open Source Project
 **
@@ -17,8 +17,14 @@
 */
 -->
 
-<translate xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="@integer/rsb_config_mediumAnimTime"
-    android:fromXDelta="0"
-    android:interpolator="@anim/rsb_interpolator_step_layout"
-    android:toXDelta="100%p" />
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/accelerate_cubic">
+    <translate
+        android:duration="@integer/rsf_config_mediumAnimTime"
+        android:fromYDelta="0"
+        android:toYDelta="50%p" />
+    <alpha
+        android:duration="@integer/rsf_config_mediumAnimTime"
+        android:fromAlpha="1.0"
+        android:toAlpha="0.0" />
+</set>

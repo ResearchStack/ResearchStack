@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+
+    <style name="Base.Theme.Foundation" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- List item padding -->
+        <item name="android:listPreferredItemPaddingLeft">50dp</item>
+
+        <!-- Custom Styles for Views -->
+        <item name="toolbarTheme">@style/Theme.Foundation.Toolbar</item>
+        <item name="passcodeTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
+        <item name="submitbarStyle">@style/Widget.Foundation.SubmitBar</item>
+    </style>
+
+    <style name="Theme.Foundation" parent="Base.Theme.Foundation" />
+
+    <style name="Theme.Foundation.Toolbar">
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+
+</resources>

@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.6"
-            android:text="@string/rsb_hours"
+            android:text="@string/rsf_hours"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
@@ -25,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.4"
-            android:minHeight="@dimen/rsb_item_size_default"
+            android:minHeight="@dimen/rsf_item_size_default"
             android:scrollIndicators="right"
             android:spinnerMode="dialog" />
     </LinearLayout>
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.6"
-            android:text="@string/rsb_minutes"
+            android:text="@string/rsf_minutes"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
@@ -51,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.4"
-            android:minHeight="@dimen/rsb_item_size_default"
+            android:minHeight="@dimen/rsf_item_size_default"
             android:scrollIndicators="right"
             android:spinnerMode="dialog" />
     </LinearLayout>

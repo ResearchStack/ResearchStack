@@ -1,0 +1,49 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+
+    <style name="Foundation.Survey.Title" parent="">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:minHeight">@dimen/rsf_item_size_default</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">@dimen/rsf_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsf_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsf_padding_medium</item>
+        <item name="android:paddingBottom">@dimen/rsf_padding_medium</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textSize">@dimen/rsf_text_size_title</item>
+    </style>
+
+    <style name="Foundation.Survey.Summary" parent="">
+        <item name="android:layout_marginTop">@dimen/rsf_padding_wedge</item>
+        <item name="android:layout_marginBottom">@dimen/rsf_padding_small</item>
+        <item name="android:paddingLeft">@dimen/rsf_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsf_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsf_padding_wedge</item>
+        <item name="android:paddingBottom">@dimen/rsf_padding_small</item>
+    </style>
+
+    <style name="Foundation.Survey.Summary.Link">
+        <item name="android:layout_marginTop">@dimen/rsf_padding_wedge</item>
+        <item name="android:paddingLeft">@dimen/rsf_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsf_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsf_padding_wedge</item>
+        <item name="android:paddingBottom">@dimen/rsf_padding_small</item>
+    </style>
+
+    <style name="Widget.Foundation.SubmitBar" parent="">
+        <item name="android:background">@color/rsf_submit_bar_gray</item>
+        <item name="positiveActionTitle">@string/rsf_next</item>
+        <item name="negativeActionTitle">@string/rsf_step_skip</item>
+        <item name="positiveActionColor">?attr/colorAccent</item>
+        <item name="negativeActionColor">@color/rsf_submit_bar_negative</item>
+    </style>
+
+    <style name="Widget.Foundation.IconTabLayout" parent="@style/Widget.Design.TabLayout">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="tabIconColor">@android:color/white</item>
+        <item name="tabIconIndicatorColor">?attr/colorAccent</item>
+        <item name="tabTextColor">@color/rsf_white_60</item>
+        <item name="tabIndicatorColor">@android:color/white</item>
+    </style>
+
+</resources>

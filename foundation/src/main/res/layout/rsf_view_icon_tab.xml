@@ -37,6 +37,6 @@
         android:layout_alignRight="@+id/title"
         android:layout_alignTop="@+id/title"
         android:adjustViewBounds="true"
-        android:src="@drawable/rsb_ic_circle_8dp" />
+        android:src="@drawable/rsf_ic_circle_8dp" />
 
 </merge>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Padding -->
+    <dimen name="rsf_padding_small">8dp</dimen>
+    <dimen name="rsf_padding_wedge">12dp</dimen>
+    <dimen name="rsf_padding_medium">16dp</dimen>
+    <dimen name="rsf_padding_large">24dp</dimen>
+
+    <!-- Item Height -->
+    <dimen name="rsf_item_size_small">48dp</dimen>
+    <dimen name="rsf_item_size_medium">56dp</dimen>
+    <dimen name="rsf_item_size_default">@dimen/rsf_item_size_small</dimen>
+    <dimen name="rsf_item_size_divider">1dp</dimen>
+
+    <!-- Item Margin -->
+    <dimen name="rsf_margin_left">48dp</dimen>
+    <dimen name="rsf_margin_right">16dp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="rsf_text_size_title">20sp</dimen>
+
+</resources>

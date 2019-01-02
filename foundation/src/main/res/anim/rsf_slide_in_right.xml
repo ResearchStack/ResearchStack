@@ -17,14 +17,8 @@
 */
 -->
 
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:interpolator="@android:interpolator/accelerate_cubic">
-    <translate
-        android:duration="@integer/rsb_config_mediumAnimTime"
-        android:fromYDelta="0"
-        android:toYDelta="50%p" />
-    <alpha
-        android:duration="@integer/rsb_config_mediumAnimTime"
-        android:fromAlpha="1.0"
-        android:toAlpha="0.0" />
-</set>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="@integer/rsf_config_mediumAnimTime"
+    android:fromXDelta="100%p"
+    android:interpolator="@anim/rsf_interpolator_step_layout"
+    android:toXDelta="0" />
