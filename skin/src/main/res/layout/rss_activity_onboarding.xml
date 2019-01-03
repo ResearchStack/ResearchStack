@@ -60,7 +60,7 @@
         android:layout_height="96dp"
         android:layout_alignParentBottom="true"
         android:layout_alignTop="@+id/intro_buttons"
-        android:background="@color/rsb_submit_bar_gray" />
+        android:background="@color/rsf_submit_bar_gray" />
 
     <FrameLayout
         android:id="@+id/pager_frame"
@@ -118,7 +118,7 @@
             android:onClick="onSkipClicked"
             android:text="@string/rss_skip_signup"
             android:visibility="gone"
-            app:backgroundTint="@color/rsb_submit_bar_negative"
+            app:backgroundTint="@color/rsf_submit_bar_negative"
             tools:visibility="visible" />
 
         <android.support.v7.widget.AppCompatButton

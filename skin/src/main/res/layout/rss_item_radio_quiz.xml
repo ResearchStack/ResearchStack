@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/rsb_margin_left"
-    android:layout_marginRight="@dimen/rsb_margin_right"
+    android:layout_marginLeft="@dimen/rsf_margin_left"
+    android:layout_marginRight="@dimen/rsf_margin_right"
     android:gravity="center_vertical"
-    android:minHeight="@dimen/rsb_item_size_default"
+    android:minHeight="@dimen/rsf_item_size_default"
     android:padding="8dp"
     tools:text="@string/lorem_name" />
