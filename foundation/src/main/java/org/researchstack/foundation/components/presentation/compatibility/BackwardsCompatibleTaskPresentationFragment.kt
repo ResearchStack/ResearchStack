@@ -38,13 +38,13 @@ open class BackwardsCompatibleTaskPresentationFragment: TaskPresentationFragment
     override fun initialize(savedInstanceState: Bundle?) {
 
         if (savedInstanceState == null) {
-            val taskIdentifier = this.arguments!!.getString(BackwardsCompatibleTaskPresentationFragment.EXTRA_TASK_IDENTIFIER)
+            val taskIdentifier: String = this.arguments!!.getString(BackwardsCompatibleTaskPresentationFragment.EXTRA_TASK_IDENTIFIER)!!
             this._task = this.taskProvider!!.task(taskIdentifier) as Task
             this._taskNavigator = this.task
             this._result = TaskResult(this.task.identifier)
             this.result.setStartDate(Date())
         } else {
-            val taskIdentifier = savedInstanceState.getString(BackwardsCompatibleTaskPresentationFragment.EXTRA_TASK_IDENTIFIER)
+            val taskIdentifier: String = savedInstanceState.getString(BackwardsCompatibleTaskPresentationFragment.EXTRA_TASK_IDENTIFIER)!!
             this._task = this.taskProvider!!.task(taskIdentifier) as Task
             this._taskNavigator = this.task
             this._result = savedInstanceState.getSerializable(BackwardsCompatibleTaskPresentationFragment.EXTRA_TASK_RESULT) as TaskResult
