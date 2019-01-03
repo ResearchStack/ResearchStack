@@ -27,7 +27,7 @@ public class ConsentFormUtils {
 
     public static void viewConsentForm(Context context) {
         String path = ResourceManager.getInstance().getConsentHtml().getAbsolutePath();
-        String title = context.getString(R.string.rsb_consent);
+        String title = context.getString(R.string.rsfc_consent);
         Intent intent = ViewWebDocumentActivity.newIntentForPath(context, title, path);
         context.startActivity(intent);
     }

@@ -64,14 +64,14 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
                     step.getQuizModel().getIncorrectIcon());
 
             image.setImageResource(iconResId);
-            title.setText(R.string.rsb_quiz_evaluation_try_again);
+            title.setText(R.string.rsfc_quiz_evaluation_try_again);
 
             if (!step.isOverMaxAttempts()) {
                 summary.setText(step.getQuizModel().getFailureMessage());
-                submitBar.setPositiveTitle(R.string.rsb_quiz_evaluation_retake);
+                submitBar.setPositiveTitle(R.string.rsfc_quiz_evaluation_retake);
             } else {
                 summary.setText(step.getQuizModel().getFailureMessage());
-                submitBar.setPositiveTitle(R.string.rsb_quiz_evaluation_review_consent);
+                submitBar.setPositiveTitle(R.string.rsfc_quiz_evaluation_review_consent);
             }
         }
 
@@ -81,7 +81,7 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
                     step.getQuizModel().getCorrectIcon());
 
             image.setImageResource(iconResId);
-            title.setText(R.string.rsb_quiz_evaluation_great_job);
+            title.setText(R.string.rsfc_quiz_evaluation_great_job);
 
             if (step.getIncorrect() == 0) {
                 summary.setText(step.getQuizModel().getSuccessMessage());
@@ -89,7 +89,7 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
                 summary.setText(step.getQuizModel().getSuccessMessage());
             }
 
-            submitBar.setPositiveTitle(R.string.rsb_next);
+            submitBar.setPositiveTitle(R.string.rsf_next);
         }
     }
 

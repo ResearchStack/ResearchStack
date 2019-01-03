@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.backbone.ui.ViewTaskActivity;
+import org.researchstack.feature.authentication.pincode.step.PassCodeCreationStep;
 import org.researchstack.feature.storage.StorageAccess;
 import org.researchstack.foundation.components.common.task.OrderedTask;
 import org.researchstack.foundation.components.utils.ResUtils;
@@ -28,7 +29,6 @@ import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.TaskProvider;
 import org.researchstack.skin.UiManager;
 import org.researchstack.skin.model.StudyOverviewModel;
-import org.researchstack.skin.step.PassCodeCreationStep;
 import org.researchstack.skin.task.OnboardingTask;
 import org.researchstack.skin.task.SignInTask;
 import org.researchstack.skin.task.SignUpTask;

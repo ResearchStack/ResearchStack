@@ -12,7 +12,7 @@ public class SimpleNotificationConfig extends NotificationConfig {
 
     @Override
     public int getLargeIconBackgroundColor(Context context) {
-        return context.getResources().getColor(R.color.rsb_error);
+        return context.getResources().getColor(R.color.rsf_error);
     }
 
     @Override

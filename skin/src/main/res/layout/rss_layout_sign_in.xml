@@ -96,7 +96,7 @@
 
     <include
         android:id="@+id/progress"
-        layout="@layout/rsb_progress"
+        layout="@layout/rsf_progress"
         android:visibility="gone"
         tools:visibility="gone" />
 

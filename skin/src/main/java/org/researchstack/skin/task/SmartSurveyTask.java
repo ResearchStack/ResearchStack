@@ -95,8 +95,8 @@ public class SmartSurveyTask extends Task implements Serializable {
         AnswerFormat answerFormat;
         String type = constraints.type;
         if (type.equals("BooleanConstraints")) {
-            answerFormat = new BooleanAnswerFormat(context.getString(R.string.rsb_yes),
-                    context.getString(R.string.rsb_no));
+            answerFormat = new BooleanAnswerFormat(context.getString(R.string.rsf_yes),
+                    context.getString(R.string.rsf_no));
         } else if (type.equals("MultiValueConstraints")) {
             AnswerFormat.ChoiceAnswerStyle answerStyle = constraints.allowMultiple
                     ? AnswerFormat.ChoiceAnswerStyle.MultipleChoice
@@ -215,7 +215,7 @@ public class SmartSurveyTask extends Task implements Serializable {
     @Override
     public String getTitleForStep(Context context, Step step) {
         int currentIndex = staticStepIdentifiers.indexOf(step.getIdentifier()) + 1;
-        return context.getString(R.string.rsb_format_step_title,
+        return context.getString(R.string.rsf_format_step_title,
                 currentIndex,
                 staticStepIdentifiers.size());
     }

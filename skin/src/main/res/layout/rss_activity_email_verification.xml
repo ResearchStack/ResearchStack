@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/rsb_layout_toolbar" />
+    <include layout="@layout/rsf_layout_toolbar" />
 
     <TextView
         android:id="@+id/title"
@@ -56,7 +56,7 @@
 
     <include
         android:id="@+id/progress"
-        layout="@layout/rsb_progress"
+        layout="@layout/rsf_progress"
         android:visibility="gone"
         tools:visibility="gone" />
 
@@ -136,10 +136,10 @@
         </LinearLayout>
 
         <include
-            android:id="@+id/rsb_progress"
+            android:id="@+id/rsf_progress"
             android:visibility="gone"
             tools:visibility="gone"
-            layout="@layout/rsb_progress"
+            layout="@layout/rsf_progress"
             />
     </FrameLayout>
         -->

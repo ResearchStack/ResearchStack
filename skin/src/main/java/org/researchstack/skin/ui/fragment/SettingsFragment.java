@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.ObservableUtils;
+import org.researchstack.feature.authentication.pincode.step.PassCodeCreationStep;
+import org.researchstack.feature.authentication.pincode.ui.SignUpPinCodeCreationStepLayout;
 import org.researchstack.feature.consent.step.ConsentSharingStep;
 import org.researchstack.feature.storage.StorageAccess;
 import org.researchstack.feature.storage.file.StorageAccessListener;
@@ -37,10 +39,8 @@ import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.ConsentSectionModel;
 import org.researchstack.skin.notification.TaskAlertReceiver;
-import org.researchstack.skin.step.PassCodeCreationStep;
 import org.researchstack.skin.task.ConsentTask;
 import org.researchstack.skin.ui.OnboardingActivity;
-import org.researchstack.skin.ui.layout.SignUpPinCodeCreationStepLayout;
 import org.researchstack.skin.utils.ConsentFormUtils;
 
 import java.text.DateFormat;
@@ -203,7 +203,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         ViewGroup v = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
         settingsRoot.addView(v);
 
-        progress = inflater.inflate(R.layout.rsb_progress, container, false);
+        progress = inflater.inflate(R.layout.rsf_progress, container, false);
         progress.setVisibility(View.GONE);
         settingsRoot.addView(progress);
 
@@ -251,13 +251,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     sharingStep.setOptional(false);
                     sharingStep.setStepTitle(R.string.rss_settings_privacy_sharing_options);
 
-                    String shareWidely = getString(R.string.rsb_consent_share_widely,
+                    String shareWidely = getString(R.string.rsfc_consent_share_widely,
                             investigatorLongDesc);
                     Choice<String> shareWidelyChoice = new Choice<>(shareWidely,
                             "sponsors_and_partners",
                             null);
 
-                    String shareRestricted = getString(R.string.rsb_consent_share_only,
+                    String shareRestricted = getString(R.string.rsfc_consent_share_only,
                             investigatorShortDesc);
                     Choice<String> shareRestrictedChoice = new Choice<>(shareRestricted,
                             "all_qualified_researchers",
@@ -267,8 +267,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                             shareWidelyChoice,
                             shareRestrictedChoice));
 
-                    sharingStep.setTitle(getString(R.string.rsb_consent_share_title));
-                    sharingStep.setText(getString(R.string.rsb_consent_share_description,
+                    sharingStep.setTitle(getString(R.string.rsfc_consent_share_title));
+                    sharingStep.setText(getString(R.string.rsfc_consent_share_description,
                             investigatorLongDesc,
                             localizedLearnMoreHTMLContent));
 
@@ -308,7 +308,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                                                     progress.setVisibility(View.GONE);
                                                 });
                                     })
-                            .setNegativeButton(R.string.rsb_cancel, null)
+                            .setNegativeButton(R.string.rsf_cancel, null)
                             .show();
                     return true;
 
@@ -387,14 +387,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             String investigatorLongDesc = data.getDocumentProperties()
                     .getInvestigatorLongDescription();
 
-            return getString(R.string.rsb_consent_share_widely, investigatorLongDesc);
+            return getString(R.string.rsfc_consent_share_widely, investigatorLongDesc);
         } else if (option.equals("all_qualified_researchers")) {
             String investigatorShortDesc = data.getDocumentProperties()
                     .getInvestigatorShortDescription();
 
-            return getString(R.string.rsb_consent_share_only, investigatorShortDesc);
+            return getString(R.string.rsfc_consent_share_only, investigatorShortDesc);
         } else if (option.equals("no_sharing")) {
-            return getString(R.string.rsb_consent_share_no);
+            return getString(R.string.rsfc_consent_share_no);
         } else {
             // If you want to add another sharing option, feel free, you just need to override this
             // method in your SettingsFragment

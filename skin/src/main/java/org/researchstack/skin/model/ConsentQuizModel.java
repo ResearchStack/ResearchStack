@@ -12,7 +12,7 @@ public class ConsentQuizModel implements Serializable {
     private List<QuizQuestion> questions;
 
     // fields with defaults
-    private String incorrectIcon = "rsb_quiz_retry";
+    private String incorrectIcon = "rsf_quiz_retry";
     private String correctIcon = "rss_ic_quiz_valid";
 
     public String getFailureTitle() {

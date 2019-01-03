@@ -20,7 +20,7 @@ public class ConsentQuizQuestionStep extends Step {
 
     @Override
     public int getStepTitle() {
-        return R.string.rsb_quiz;
+        return R.string.rsfc_quiz;
     }
 
     @Override

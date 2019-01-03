@@ -122,7 +122,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
 
         // Set submit bar behavior
         submitBar = (SubmitBar) findViewById(R.id.submit_bar);
-        submitBar.setPositiveTitle(R.string.rsb_next);
+        submitBar.setPositiveTitle(R.string.rsf_next);
         submitBar.setPositiveAction(v -> {
             if (isAnswerValid()) {
                 onNext(true);
