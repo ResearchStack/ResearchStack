@@ -1,14 +1,14 @@
-package org.researchstack.backbone.storage.file.aes;
+package org.researchstack.feature.storage.file.aes;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.tozny.crypto.android.AesCbcWithIntegrity;
 
-import org.researchstack.backbone.storage.file.EncryptionProvider;
-import org.researchstack.backbone.storage.file.PinCodeConfig;
-import org.researchstack.backbone.storage.file.StorageAccessException;
-import org.researchstack.backbone.utils.FileUtils;
+import org.researchstack.feature.storage.utils.FileUtils;
+import org.researchstack.feature.storage.file.EncryptionProvider;
+import org.researchstack.feature.authentication.pincode.PinCodeConfig;
+import org.researchstack.feature.storage.file.StorageAccessException;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,9 +1,10 @@
-package org.researchstack.backbone.storage.file;
+package org.researchstack.feature.storage.file;
 
 import android.content.Context;
 
-import org.researchstack.backbone.storage.file.aes.ClearEncrypter;
-import org.researchstack.backbone.storage.file.aes.Encrypter;
+import org.researchstack.feature.storage.file.aes.ClearEncrypter;
+import org.researchstack.feature.storage.file.aes.Encrypter;
+import org.researchstack.feature.authentication.pincode.PinCodeConfig;
 
 /**
  * Use this class as the EncryptionProvider when you want to store all data without encryption. Pin

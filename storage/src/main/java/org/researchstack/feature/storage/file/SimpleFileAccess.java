@@ -1,11 +1,11 @@
-package org.researchstack.backbone.storage.file;
+package org.researchstack.feature.storage.file;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
-import org.researchstack.backbone.storage.file.aes.Encrypter;
-import org.researchstack.backbone.utils.FileUtils;
+import org.researchstack.feature.storage.utils.FileUtils;
+import org.researchstack.feature.storage.file.aes.Encrypter;
 
 import java.io.File;
 import java.io.FileInputStream;

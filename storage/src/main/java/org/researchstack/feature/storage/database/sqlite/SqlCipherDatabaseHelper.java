@@ -1,4 +1,4 @@
-package org.researchstack.backbone.storage.database.sqlite;
+package org.researchstack.feature.storage.database.sqlite;
 
 import android.content.Context;
 
@@ -7,13 +7,13 @@ import com.google.gson.GsonBuilder;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.storage.database.AppDatabase;
-import org.researchstack.backbone.storage.database.StepRecord;
-import org.researchstack.backbone.storage.database.TaskRecord;
-import org.researchstack.backbone.utils.FormatHelper;
-import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.foundation.components.utils.FormatHelper;
+import org.researchstack.foundation.components.utils.LogExt;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.feature.storage.database.AppDatabase;
+import org.researchstack.feature.storage.database.StepRecord;
+import org.researchstack.feature.storage.database.TaskRecord;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

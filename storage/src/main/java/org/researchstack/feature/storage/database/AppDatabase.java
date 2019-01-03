@@ -1,7 +1,7 @@
-package org.researchstack.backbone.storage.database;
+package org.researchstack.feature.storage.database;
 
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.result.TaskResult;
 
 import java.util.List;
 

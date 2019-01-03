@@ -1,4 +1,4 @@
-package org.researchstack.backbone;
+package org.researchstack.feature.storage;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,14 +6,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.MainThread;
 
-import org.researchstack.backbone.storage.database.AppDatabase;
-import org.researchstack.backbone.storage.file.EncryptionProvider;
-import org.researchstack.backbone.storage.file.FileAccess;
-import org.researchstack.backbone.storage.file.PinCodeConfig;
-import org.researchstack.backbone.storage.file.StorageAccessException;
-import org.researchstack.backbone.storage.file.StorageAccessListener;
-import org.researchstack.backbone.ui.PinCodeActivity;
-import org.researchstack.backbone.utils.UiThreadContext;
+import org.researchstack.foundation.components.utils.UiThreadContext;
+import org.researchstack.feature.storage.database.AppDatabase;
+import org.researchstack.feature.storage.file.EncryptionProvider;
+import org.researchstack.feature.storage.file.FileAccess;
+import org.researchstack.feature.authentication.pincode.PinCodeConfig;
+import org.researchstack.feature.storage.file.StorageAccessException;
+import org.researchstack.feature.storage.file.StorageAccessListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +27,7 @@ import java.util.List;
  * If {@link StorageAccessListener#onDataAuth()} is called, then you must prompt the user for their
  * pin and authenticate using {@link #authenticate}.
  * <p>
- * {@link org.researchstack.backbone.ui.PinCodeActivity} handles almost all of this for you,
+ * {@link org.researchstack.foundation.ui.PinCodeActivity} handles almost all of this for you,
  * including presenting the pin code screen to the user. PinCodeActivity should be used, extended,
  * or it's fuctionality copied to your application's own base Activity. Make sure to delay any data
  * access until {@link PinCodeActivity#onDataReady()} has been called.

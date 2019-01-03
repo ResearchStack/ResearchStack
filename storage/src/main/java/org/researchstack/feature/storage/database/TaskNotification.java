@@ -1,4 +1,4 @@
-package org.researchstack.backbone.storage.database;
+package org.researchstack.feature.storage.database;
 
 import java.io.Serializable;
 import java.util.Date;

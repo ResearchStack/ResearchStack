@@ -1,12 +1,12 @@
-package org.researchstack.backbone.storage.database;
+package org.researchstack.feature.storage.database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.FormatHelper;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.foundation.components.utils.FormatHelper;
+import org.researchstack.foundation.components.utils.TextUtils;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 
 import java.util.Date;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package org.researchstack.backbone.storage.file;
+package org.researchstack.feature.storage.file;
 
 public class StorageAccessException extends RuntimeException {
     public StorageAccessException() {

@@ -1,8 +1,10 @@
-package org.researchstack.backbone.utils;
+package org.researchstack.feature.storage.utils;
+
+//TODO: MOVE TO STORAGE MODULE
 
 import android.support.annotation.NonNull;
 
-import org.researchstack.backbone.storage.file.StorageAccessException;
+import org.researchstack.feature.storage.file.StorageAccessException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

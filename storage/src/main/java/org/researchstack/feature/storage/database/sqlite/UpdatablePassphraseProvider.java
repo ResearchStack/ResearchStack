@@ -1,4 +1,4 @@
-package org.researchstack.backbone.storage.database.sqlite;
+package org.researchstack.feature.storage.database.sqlite;
 
 import co.touchlab.squeaky.db.sqlcipher.PassphraseProvider;
 

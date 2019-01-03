@@ -1,8 +1,9 @@
-package org.researchstack.backbone.storage.file;
+package org.researchstack.feature.storage.file;
 
 import android.content.Context;
 
-import org.researchstack.backbone.storage.file.aes.Encrypter;
+import org.researchstack.feature.storage.file.aes.Encrypter;
+import org.researchstack.feature.authentication.pincode.PinCodeConfig;
 
 /**
  * This interface is used to create, change, and authenticate pin codes provided by the user.
