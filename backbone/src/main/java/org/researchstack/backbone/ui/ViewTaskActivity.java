@@ -12,19 +12,22 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.Nullable;
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
+import org.researchstack.foundation.core.interfaces.IResult;
+import org.researchstack.foundation.core.interfaces.IStep;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.step.Step;
+import org.researchstack.foundation.core.models.task.Task;
 
 import java.lang.reflect.Constructor;
 import java.util.Date;
 
-public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
+public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, Task.TaskLifecycleObserver {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
@@ -211,8 +214,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     }
 
     @Override
-    public void onSaveStep(int action, Step step, StepResult result) {
-        onSaveStepResult(step.getIdentifier(), result);
+    public void onSaveStep(int action, IStep step, @Nullable IResult result) {
+        if (result instanceof StepResult) {
+            onSaveStepResult(step.getIdentifier(), (StepResult)result);
+        }
 
         onExecuteStepAction(action);
     }

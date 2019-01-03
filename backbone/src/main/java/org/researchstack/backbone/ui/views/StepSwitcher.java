@@ -28,7 +28,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
 
 import java.security.InvalidParameterException;
 
