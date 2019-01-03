@@ -11,11 +11,11 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <org.researchstack.backbone.ui.views.SubmitBar
+    <org.researchstack.foundation.components.common.ui.views.SubmitBar
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:negativeActionTitle="@string/rsb_disagree"
-        app:positiveActionTitle="@string/rsb_agree" />
+        app:negativeActionTitle="@string/rsf_disagree"
+        app:positiveActionTitle="@string/rsf_agree" />
 
 </merge>

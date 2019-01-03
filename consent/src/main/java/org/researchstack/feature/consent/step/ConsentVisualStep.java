@@ -1,7 +1,9 @@
-package org.researchstack.backbone.step;
+package org.researchstack.feature.consent.step;
 
-import org.researchstack.backbone.model.ConsentSection;
-import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
+import org.researchstack.feature.consent.R;
+import org.researchstack.feature.consent.model.ConsentSection;
+import org.researchstack.feature.consent.ui.layout.ConsentVisualStepLayout;
+import org.researchstack.foundation.core.models.step.Step;
 
 /**
  * The {@link ConsentVisualStep} class represents a step in the visual consent sequence.
@@ -21,7 +23,7 @@ public class ConsentVisualStep extends Step {
 
     @Override
     public int getStepTitle() {
-        return org.researchstack.backbone.R.string.rsb_consent;
+        return R.string.rsfc_consent;
     }
 
     @Override

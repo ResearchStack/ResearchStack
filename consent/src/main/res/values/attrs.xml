@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="Feature.Consent">
+        <attr name="signatureviewStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="SignatureView">
+        <attr name="signatureColor" format="color" />
+        <attr name="signaturePrintColor" format="color" />
+        <attr name="signatureStrokeSize" format="dimension" />
+        <attr name="hintText" format="string" />
+        <attr name="hintTextColor" format="color" />
+        <attr name="hintTextSize" format="dimension" />
+        <attr name="guidelineColor" format="color" />
+        <attr name="guidelineMargin" format="dimension" />
+        <attr name="guidelineHeight" format="dimension" />
+    </declare-styleable>
+</resources>

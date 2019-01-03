@@ -1,6 +1,7 @@
-package org.researchstack.backbone.step;
+package org.researchstack.feature.consent.step;
 
-import org.researchstack.backbone.ui.step.body.SingleChoiceQuestionBody;
+import org.researchstack.foundation.components.survey.step.QuestionStep;
+import org.researchstack.foundation.components.survey.ui.body.SingleChoiceQuestionBody;
 
 /**
  * This class represents a question step that includes prepopulated content that asks users about

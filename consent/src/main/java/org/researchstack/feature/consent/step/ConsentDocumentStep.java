@@ -1,7 +1,8 @@
-package org.researchstack.backbone.step;
+package org.researchstack.feature.consent.step;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.step.layout.ConsentDocumentStepLayout;
+import org.researchstack.feature.consent.R;
+import org.researchstack.feature.consent.ui.layout.ConsentDocumentStepLayout;
+import org.researchstack.foundation.core.models.step.Step;
 
 /**
  * This step shows an HTML version of your consent document to the user and allows them to indicate
@@ -18,7 +19,7 @@ public class ConsentDocumentStep extends Step {
 
     @Override
     public int getStepTitle() {
-        return R.string.rsb_consent;
+        return R.string.rsfc_consent;
     }
 
     @Override

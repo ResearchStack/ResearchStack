@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.views;
+package org.researchstack.feature.consent.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -19,8 +19,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.callbacks.SignatureCallbacks;
+import org.researchstack.feature.consent.R;
+import org.researchstack.feature.consent.ui.callbacks.SignatureCallbacks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +78,7 @@ public class SignatureView extends View {
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.SignatureView,
                 defStyleAttr,
-                R.style.Widget_Backbone_SignatureView);
+                R.style.Widget_Feature_Consent_SignatureView);
 
         int signatureColor = a.getColor(R.styleable.SignatureView_signatureColor, Color.BLACK);
 

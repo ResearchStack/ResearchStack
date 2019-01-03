@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.step.layout;
+package org.researchstack.feature.consent.ui.layout;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,18 +10,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jakewharton.rxbinding.view.RxView;
-
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.ConsentSignatureStep;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.callbacks.SignatureCallbacks;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.views.SignatureView;
-import org.researchstack.backbone.ui.views.SubmitBar;
-import org.researchstack.backbone.utils.FormatHelper;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.feature.consent.R;
+import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
+import org.researchstack.foundation.components.common.ui.views.SubmitBar;
+import org.researchstack.feature.consent.step.ConsentSignatureStep;
+import org.researchstack.feature.consent.ui.callbacks.SignatureCallbacks;
+import org.researchstack.feature.consent.ui.views.SignatureView;
+import org.researchstack.foundation.components.utils.FormatHelper;
+import org.researchstack.foundation.components.utils.TextUtils;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
@@ -76,7 +75,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
 
     private void initializeStep() {
         LayoutInflater.from(getContext())
-                .inflate(R.layout.rsb_step_layout_consent_signature, this, true);
+                .inflate(R.layout.rsfc_step_layout_consent_signature, this, true);
 
         TextView title = (TextView) findViewById(R.id.title);
         title.setText(step.getTitle());
@@ -101,7 +100,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
             }
         });
 
-        RxView.clicks(clear).subscribe(v -> {
+        clear.setOnClickListener(v -> {
             signatureView.clearSignature();
         });
 
@@ -117,7 +116,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
                 setDataToResult();
                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
             } else {
-                Toast.makeText(getContext(), R.string.rsb_error_invalid_signature, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.rsf_error_invalid_signature, Toast.LENGTH_SHORT).show();
             }
         });
     }

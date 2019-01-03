@@ -1,4 +1,6 @@
-package org.researchstack.backbone.step;
+package org.researchstack.feature.consent.step;
+
+import org.researchstack.foundation.core.models.step.Step;
 
 /**
  * This class represents the final step in the consent process, collecting the signature from the

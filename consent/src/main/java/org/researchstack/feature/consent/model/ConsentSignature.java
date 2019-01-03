@@ -1,4 +1,4 @@
-package org.researchstack.backbone.model;
+package org.researchstack.feature.consent.model;
 
 import android.support.annotation.NonNull;
 

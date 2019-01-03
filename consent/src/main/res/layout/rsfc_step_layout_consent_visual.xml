@@ -11,15 +11,15 @@
         android:layout_height="180dp"
         android:layout_centerHorizontal="true"
         android:scaleType="centerInside"
-        tools:src="@drawable/rsb_debug_gray" />
+        tools:src="@drawable/rsf_debug_gray" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/image"
-        android:layout_marginLeft="@dimen/rsb_margin_left"
-        android:layout_marginRight="@dimen/rsb_margin_right"
+        android:layout_marginLeft="@dimen/rsf_margin_left"
+        android:layout_marginRight="@dimen/rsf_margin_right"
         android:layout_marginTop="20dp"
 
         android:textColor="?attr/colorAccent"
@@ -33,8 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:layout_marginLeft="@dimen/rsb_margin_left"
-        android:layout_marginRight="@dimen/rsb_margin_right"
+        android:layout_marginLeft="@dimen/rsf_margin_left"
+        android:layout_marginRight="@dimen/rsf_margin_right"
         android:layout_marginTop="36dp"
         tools:text="@string/lorem_medium" />
 
@@ -45,10 +45,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/summary"
         android:layout_marginLeft="48dp"
-        android:layout_marginRight="@dimen/rsb_margin_right"
-        android:paddingBottom="@dimen/rsb_padding_medium"
-        android:paddingRight="@dimen/rsb_padding_medium"
-        android:paddingTop="@dimen/rsb_padding_medium"
+        android:layout_marginRight="@dimen/rsf_margin_right"
+        android:paddingBottom="@dimen/rsf_padding_medium"
+        android:paddingRight="@dimen/rsf_padding_medium"
+        android:paddingTop="@dimen/rsf_padding_medium"
         android:textColor="?attr/colorAccent"
         tools:text="More Info" />
 

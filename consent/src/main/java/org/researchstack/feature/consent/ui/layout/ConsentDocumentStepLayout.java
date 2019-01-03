@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.step.layout;
+package org.researchstack.feature.consent.ui.layout;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
@@ -8,12 +8,13 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.ConsentDocumentStep;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.feature.consent.R;
+import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
+import org.researchstack.foundation.components.common.ui.views.SubmitBar;
+import org.researchstack.feature.consent.step.ConsentDocumentStep;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 
 /**
  * Implement saved state for the following objects:
@@ -75,7 +76,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
 
     private void initializeStep() {
         setOrientation(VERTICAL);
-        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsfc_step_layout_consent_doc, this, true);
 
         WebView pdfView = (WebView) findViewById(R.id.webview);
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
@@ -86,14 +87,14 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     }
 
     private void showDialog() {
-        new AlertDialog.Builder(getContext()).setTitle(R.string.rsb_consent_review_alert_title)
+        new AlertDialog.Builder(getContext()).setTitle(R.string.rsfc_consent_review_alert_title)
                 .setMessage(confirmationDialogBody)
                 .setCancelable(false)
-                .setPositiveButton(R.string.rsb_agree, (dialog, which) -> {
+                .setPositiveButton(R.string.rsf_agree, (dialog, which) -> {
                     stepResult.setResult(true);
                     callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
                 })
-                .setNegativeButton(R.string.rsb_consent_review_cancel, (dialog, which) -> {
+                .setNegativeButton(R.string.rsfc_consent_review_cancel, (dialog, which) -> {
                     // Gives them a chance to read it again
                 })
                 .show();

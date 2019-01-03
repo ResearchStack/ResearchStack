@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.callbacks;
+package org.researchstack.feature.consent.ui.callbacks;
 
 public interface SignatureCallbacks {
     void onSignatureStarted();

@@ -1,9 +1,9 @@
-package org.researchstack.backbone.model;
+package org.researchstack.feature.consent.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.feature.consent.R;
+import org.researchstack.foundation.components.utils.TextUtils;
 
 import java.io.Serializable;
 
@@ -73,7 +73,7 @@ public class ConsentSection implements Serializable {
      * A custom illustration for the consent.
      * <p>
      * The custom image can override the image associated with any of the predefined section types
-     * for an {@link org.researchstack.backbone.step.ConsentVisualStep} object. It is ignored for a
+     * for an {@link org.researchstack.foundation.step.ConsentVisualStep} object. It is ignored for a
      * consent review step and for PDF generation.
      * <p>
      * The image is used in template rendering mode, and is tinted using the tint color.
@@ -267,21 +267,21 @@ public class ConsentSection implements Serializable {
         public int getTitleResId() {
             switch (this) {
                 case Overview:
-                    return R.string.rsb_consent_section_welcome;
+                    return R.string.rsfc_consent_section_welcome;
                 case DataGathering:
-                    return R.string.rsb_consent_section_data_gathering;
+                    return R.string.rsfc_consent_section_data_gathering;
                 case Privacy:
-                    return R.string.rsb_consent_section_privacy;
+                    return R.string.rsfc_consent_section_privacy;
                 case DataUse:
-                    return R.string.rsb_consent_section_data_use;
+                    return R.string.rsfc_consent_section_data_use;
                 case TimeCommitment:
-                    return R.string.rsb_consent_section_time_commitment;
+                    return R.string.rsfc_consent_section_time_commitment;
                 case StudySurvey:
-                    return R.string.rsb_consent_section_study_survey;
+                    return R.string.rsfc_consent_section_study_survey;
                 case StudyTasks:
-                    return R.string.rsb_consent_section_study_tasks;
+                    return R.string.rsfc_consent_section_study_tasks;
                 case Withdrawing:
-                    return R.string.rsb_consent_section_withdrawing;
+                    return R.string.rsfc_consent_section_withdrawing;
                 default:
                     return -1;
             }
@@ -290,19 +290,19 @@ public class ConsentSection implements Serializable {
         public String getImageName() {
             switch (this) {
                 case DataGathering:
-                    return "rsb_consent_section_data_gathering";
+                    return "rsfc_consent_section_data_gathering";
                 case Privacy:
-                    return "rsb_consent_section_privacy";
+                    return "rsfc_consent_section_privacy";
                 case DataUse:
-                    return "rsb_consent_section_data_use";
+                    return "rsfc_consent_section_data_use";
                 case TimeCommitment:
-                    return "rsb_consent_section_time_commitment";
+                    return "rsfc_consent_section_time_commitment";
                 case StudySurvey:
-                    return "rsb_consent_section_study_survey";
+                    return "rsfc_consent_section_study_survey";
                 case StudyTasks:
-                    return "rsb_consent_section_study_tasks";
+                    return "rsfc_consent_section_study_tasks";
                 case Withdrawing:
-                    return "rsb_consent_section_withdrawing";
+                    return "rsfc_consent_section_withdrawing";
                 default:
                     return null;
             }
@@ -311,23 +311,23 @@ public class ConsentSection implements Serializable {
         public int getMoreInfoResId() {
             switch (this) {
                 case Overview:
-                    return R.string.rsb_consent_section_more_info_welcome;
+                    return R.string.rsfc_consent_section_more_info_welcome;
                 case DataGathering:
-                    return R.string.rsb_consent_section_more_info_data_gathering;
+                    return R.string.rsfc_consent_section_more_info_data_gathering;
                 case Privacy:
-                    return R.string.rsb_consent_section_more_info_privacy;
+                    return R.string.rsfc_consent_section_more_info_privacy;
                 case DataUse:
-                    return R.string.rsb_consent_section_more_info_data_use;
+                    return R.string.rsfc_consent_section_more_info_data_use;
                 case TimeCommitment:
-                    return R.string.rsb_consent_section_more_info_time_commitment;
+                    return R.string.rsfc_consent_section_more_info_time_commitment;
                 case StudySurvey:
-                    return R.string.rsb_consent_section_more_info_study_survey;
+                    return R.string.rsfc_consent_section_more_info_study_survey;
                 case StudyTasks:
-                    return R.string.rsb_consent_section_more_info_study_tasks;
+                    return R.string.rsfc_consent_section_more_info_study_tasks;
                 case Withdrawing:
-                    return R.string.rsb_consent_section_more_info_withdrawing;
+                    return R.string.rsfc_consent_section_more_info_withdrawing;
                 default:
-                    return R.string.rsb_consent_section_more_info;
+                    return R.string.rsfc_consent_section_more_info;
             }
         }
 

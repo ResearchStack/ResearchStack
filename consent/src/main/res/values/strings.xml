@@ -1,3 +1,83 @@
 <resources>
-    <string name="app_name">Consent</string>
+
+    <!-- Consent Section -->
+    <string name="rsfc_consent">Consent</string>
+    <string name="rsfc_consent_section_welcome">Welcome</string>
+    <string name="rsfc_consent_section_data_gathering">Data Gathering</string>
+    <string name="rsfc_consent_section_privacy">Privacy</string>
+    <string name="rsfc_consent_section_data_use">Data Use</string>
+    <string name="rsfc_consent_section_time_commitment">Time Commitment</string>
+    <string name="rsfc_consent_section_study_survey">Study Survey</string>
+    <string name="rsfc_consent_section_study_tasks">Study Tasks</string>
+    <string name="rsfc_consent_section_withdrawing">Withdrawing</string>
+    <string name="rsfc_consent_learn_more">Learn More</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsfc_consent_section_more_info">Learn more</string>
+    <string name="rsfc_consent_section_more_info_data_gathering">Learn more about how data is
+        gathered
+    </string>
+    <string name="rsfc_consent_section_more_info_data_use">Learn more about how data is used</string>
+    <string name="rsfc_consent_section_more_info_privacy">Learn more about how your privacy and
+        identity are protected
+    </string>
+    <string name="rsfc_consent_section_more_info_welcome">Learn more about the study first</string>
+    <string name="rsfc_consent_section_more_info_study_survey">Learn more about the study survey
+    </string>
+    <string name="rsfc_consent_section_more_info_time_commitment">Learn more about the study\'s
+        impact on your time
+    </string>
+    <string name="rsfc_consent_section_more_info_study_tasks">Learn more about the tasks involved
+    </string>
+    <string name="rsfc_consent_section_more_info_withdrawing">Learn more about withdrawing</string>
+
+    <!-- Consent sharing step -->
+    <string name="rsfc_consent_share_title">Sharing Options</string>
+    <string name="rsfc_consent_share_widely">Share my data with %1$s and qualified researchers
+        worldwide
+    </string>
+    <string name="rsfc_consent_share_no">Not sharing your data</string>
+    <string name="rsfc_consent_share_only">Only share my data with %1$s</string>
+    <string name="rsfc_consent_share_description"><![CDATA[%1$s will receive your study data from your
+        participation in this study. \n\nSharing your coded study data more broadly (without
+        information such as your name) may benefit this and future research.<br/><br/><a href="%2$s">
+        Learn more about data sharing</a>]]>
+    </string>
+
+    <!-- Consent doc step -->
+    <string name="rsfc_consent_review_title">Review</string>
+    <string name="rsfc_consent_review_alert_title">Review</string>
+    <string name="rsfc_consent_review_reason">By agreeing you confirm that you read the information
+        and that you wish to take part in this research study.
+    </string>
+    <string name="rsfc_consent_review_instruction">Review the form below, and tap Agree if you\'re
+        ready to continue.
+    </string>
+    <string name="rsfc_consent_review_cancel">Cancel</string>
+
+    <!-- Consent form step -->
+    <string name="rsfc_consent_form_title">Consent</string>
+    <string name="rsfc_consent_name_full">Full Name</string>
+    <string name="rsfc_consent_dob_full">Date of Birth</string>
+    <string name="rsfc_consent_name_placeholder">Required</string>
+
+    <!-- Consent sig step -->
+    <string name="rsfc_consent_signature_title">Signature</string>
+    <string name="rsfc_consent_signature_content">By agreeing you confirm that you read the consent
+        and that you wish to take part in this research study.
+    </string>
+    <string name="rsfc_consent_signature_instruction">Please sign using your finger on the line
+        below.
+    </string>
+    <string name="rsfc_consent_signature_placeholder">Sign Here</string>
+    <string name="rsfc_consent_signature_clear">Clear</string>
+
+    <!-- Quiz -->
+    <string name="rsfc_quiz">Quiz</string>
+    <string name="rsfc_quiz_evaluation">Quiz Evaluation</string>
+    <string name="rsfc_quiz_evaluation_try_again">Try Again</string>
+    <string name="rsfc_quiz_evaluation_review_consent">Review Consent</string>
+    <string name="rsfc_quiz_evaluation_retake">Retake Quiz</string>
+    <string name="rsfc_quiz_evaluation_great_job">Great Job!</string>
+    
 </resources>
