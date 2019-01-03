@@ -2,22 +2,22 @@ package org.researchstack.skin.task;
 
 import android.content.Context;
 
-import org.researchstack.backbone.answerformat.AnswerFormat;
-import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
-import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
-import org.researchstack.backbone.answerformat.DateAnswerFormat;
-import org.researchstack.backbone.answerformat.DecimalAnswerFormat;
-import org.researchstack.backbone.answerformat.DurationAnswerFormat;
-import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
-import org.researchstack.backbone.answerformat.TextAnswerFormat;
-import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
-import org.researchstack.backbone.model.Choice;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.InstructionStep;
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.foundation.components.survey.answerformat.AnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.BooleanAnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.ChoiceAnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.DateAnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.DecimalAnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.DurationAnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.IntegerAnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.TextAnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.UnknownAnswerFormat;
+import org.researchstack.foundation.components.survey.model.Choice;
+import org.researchstack.foundation.components.survey.step.InstructionStep;
+import org.researchstack.foundation.components.survey.step.QuestionStep;
+import org.researchstack.foundation.components.utils.LogExt;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.step.Step;
+import org.researchstack.foundation.core.models.task.Task;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.TaskModel;
 

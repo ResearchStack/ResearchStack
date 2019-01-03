@@ -3,8 +3,8 @@ package org.researchstack.skin;
 import android.app.Application;
 import android.content.Context;
 
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.Step;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 import org.researchstack.skin.notification.TaskNotificationReceiver;
 
 import java.util.List;

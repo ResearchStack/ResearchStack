@@ -1,10 +1,10 @@
 package org.researchstack.skin.task;
 
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.ui.step.body.NotImplementedStepBody;
+import org.researchstack.foundation.components.survey.ui.body.NotImplementedStepBody;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.step.Step;
+import org.researchstack.foundation.core.models.task.Task;
 import org.researchstack.skin.R;
 import org.researchstack.skin.step.PassCodeCreationStep;
 import org.researchstack.skin.ui.layout.PermissionStepLayout;

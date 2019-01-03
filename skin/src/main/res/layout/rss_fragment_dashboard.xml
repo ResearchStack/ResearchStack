@@ -19,27 +19,27 @@
             android:paddingTop="16dp"
             android:showDividers="middle">
 
-            <org.researchstack.backbone.ui.graph.ProgressChartCard
+            <org.researchstack.feature.chart.ui.graph.ProgressChartCard
                 android:id="@+id/dashboard_chart_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <org.researchstack.backbone.ui.graph.PieChartCard
+            <org.researchstack.feature.chart.ui.graph.PieChartCard
                 android:id="@+id/dashboard_chart_pie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <org.researchstack.backbone.ui.graph.BarChartCard
+            <org.researchstack.feature.chart.ui.graph.BarChartCard
                 android:id="@+id/dashboard_chart_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <org.researchstack.backbone.ui.graph.BarChartCard
+            <org.researchstack.feature.chart.ui.graph.BarChartCard
                 android:id="@+id/dashboard_chart_bar_stacked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <org.researchstack.backbone.ui.graph.LineChartCard
+            <org.researchstack.feature.chart.ui.graph.LineChartCard
                 android:id="@+id/dashboard_chart_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -48,7 +48,7 @@
 
     </ScrollView>
 
-    <org.researchstack.backbone.ui.graph.EmptyView
+    <org.researchstack.feature.chart.ui.graph.EmptyView
         android:id="@+id/dashboard_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

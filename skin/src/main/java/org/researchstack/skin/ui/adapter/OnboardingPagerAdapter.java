@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.researchstack.backbone.ui.ViewVideoActivity;
-import org.researchstack.backbone.ui.views.LocalWebView;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.foundation.components.utils.TextUtils;
+import org.researchstack.foundation.components.web.ui.activities.ViewVideoActivity;
+import org.researchstack.foundation.components.web.ui.views.LocalWebView;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.StudyOverviewModel;

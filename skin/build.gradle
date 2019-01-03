@@ -72,6 +72,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.so'])
     implementation 'com.cronutils:cron-utils:3.1.2'
     implementation project(':foundation')
+    implementation project(':authentication')
+    implementation project(':storage')
+    implementation project(':consent')
+
     implementation project(':backbone')
 
     implementation "com.android.support:appcompat-v7:$support_library_version"

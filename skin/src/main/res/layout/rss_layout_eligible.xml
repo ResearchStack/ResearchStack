@@ -26,7 +26,7 @@
         android:layout_marginTop="24dp"
         android:text="@string/rss_eligibility_tap_below" />
 
-    <org.researchstack.backbone.ui.views.SubmitBar
+    <org.researchstack.foundation.components.common.ui.views.SubmitBar
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

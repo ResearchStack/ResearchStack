@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.step.layout.StepLayout;
-import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
+import org.researchstack.foundation.components.common.ui.views.SubmitBar;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 import org.researchstack.skin.R;
 
 public class SignUpEligibleStepLayout extends RelativeLayout implements StepLayout {

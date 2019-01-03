@@ -2,8 +2,8 @@ package org.researchstack.skin.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.DocumentProperties;
+import org.researchstack.feature.consent.model.ConsentSection;
 
 import java.util.List;
 
