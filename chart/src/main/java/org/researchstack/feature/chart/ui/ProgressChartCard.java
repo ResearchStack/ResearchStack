@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.graph;
+package org.researchstack.feature.chart.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -18,8 +18,8 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.jakewharton.rxbinding.view.RxView;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.views.IconTabLayout;
+import org.researchstack.feature.chart.R;
+import org.researchstack.foundation.components.common.ui.views.IconTabLayout;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -69,7 +69,7 @@ public class ProgressChartCard extends CardView {
     }
 
     private void initializeRoot(AttributeSet attrs, int defStyleAttr) {
-        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_progress, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsfch_view_chart_progress, this, true);
 
         numberFormat = NumberFormat.getInstance();
         numberFormat.setMinimumFractionDigits(0);
@@ -78,7 +78,7 @@ public class ProgressChartCard extends CardView {
         final TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.ProgressChartCard,
                 defStyleAttr,
-                R.style.Widget_Backbone_Chart_Progress);
+                R.style.Widget_Feature_Chart_Chart_Progress);
 
         titleText = a.getString(R.styleable.ProgressChartCard_titleText);
         titleTextColor = a.getColor(R.styleable.ProgressChartCard_titleTextColor, 0);
@@ -167,7 +167,7 @@ public class ProgressChartCard extends CardView {
             }
         }
 
-        tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter() {
+        tabLayout.addOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 PieData data = dataSet.get(tab.getPosition());
@@ -187,6 +187,7 @@ public class ProgressChartCard extends CardView {
                 onTabSelected(tab);
             }
         });
+
     }
 
     public PieChart getChart() {

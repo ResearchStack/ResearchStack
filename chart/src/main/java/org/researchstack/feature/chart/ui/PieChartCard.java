@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.graph;
+package org.researchstack.feature.chart.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 
-import org.researchstack.backbone.R;
+import org.researchstack.feature.chart.R;
 
 import java.text.NumberFormat;
 
@@ -51,7 +51,7 @@ public class PieChartCard extends CardView {
     }
 
     private void initializeRoot(AttributeSet attrs, int defStyleAttr) {
-        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_pie, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsfch_view_chart_pie, this, true);
 
         numberFormat = NumberFormat.getInstance();
         numberFormat.setMinimumFractionDigits(0);
@@ -60,7 +60,7 @@ public class PieChartCard extends CardView {
         final TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.PieChartCard,
                 defStyleAttr,
-                R.style.Widget_Backbone_Chart_Pie);
+                R.style.Widget_Feature_Chart_Chart_Pie);
 
         titleText = a.getString(R.styleable.PieChartCard_titleText);
         titleTextColor = a.getColor(R.styleable.PieChartCard_titleTextColor, 0);
@@ -111,7 +111,7 @@ public class PieChartCard extends CardView {
             String xVal = data.getXVals().get(i);
             float entryValue = data.getDataSet().getEntryForIndex(i).getVal();
 
-            View row = inflater.inflate(R.layout.rsb_item_chart_pie, rowContainer, false);
+            View row = inflater.inflate(R.layout.rsfch_item_chart_pie, rowContainer, false);
 
             TextView label = (TextView) row.findViewById(R.id.item_chart_pie_label);
             label.setText(xVal);

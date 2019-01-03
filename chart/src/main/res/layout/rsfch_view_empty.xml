@@ -14,7 +14,7 @@
         android:layout_marginTop="72dp"
         android:drawablePadding="16dp"
         tools:drawableTint="?attr/colorPrimary"
-        tools:drawableTop="@drawable/rsb_illo_dashboard_empty"
+        tools:drawableTop="@drawable/rsf_illo_dashboard_empty"
         tools:text="No data recorded yet…"
         tools:textColor="?attr/colorPrimary" />
 

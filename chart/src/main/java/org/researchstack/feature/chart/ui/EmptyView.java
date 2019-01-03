@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.graph;
+package org.researchstack.feature.chart.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -11,22 +11,22 @@ import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.researchstack.backbone.R;
+import org.researchstack.feature.chart.R;
 
 public class EmptyView extends FrameLayout {
     public EmptyView(Context context) {
         super(context);
-        init(null, R.attr.emptyviewStyle, R.style.Widget_Backbone_EmptyView);
+        init(null, R.attr.emptyviewStyle, R.style.Widget_Feature_Chart_EmptyView);
     }
 
     public EmptyView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs, R.attr.emptyviewStyle);
-        init(attrs, R.attr.emptyviewStyle, R.style.Widget_Backbone_EmptyView);
+        init(attrs, R.attr.emptyviewStyle, R.style.Widget_Feature_Chart_EmptyView);
     }
 
     public EmptyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr, R.style.Widget_Backbone_EmptyView);
+        init(attrs, defStyleAttr, R.style.Widget_Feature_Chart_EmptyView);
     }
 
     @TargetApi(21)
@@ -36,7 +36,7 @@ public class EmptyView extends FrameLayout {
     }
 
     private void init(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_empty, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsfch_view_empty, this, true);
 
         final TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.EmptyView,

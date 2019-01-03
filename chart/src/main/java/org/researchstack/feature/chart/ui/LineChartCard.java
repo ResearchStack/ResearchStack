@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.graph;
+package org.researchstack.feature.chart.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -20,7 +20,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
 import com.jakewharton.rxbinding.view.RxView;
 
-import org.researchstack.backbone.R;
+import org.researchstack.feature.chart.R;
 
 import rx.Subscription;
 import rx.functions.Action1;
@@ -62,12 +62,12 @@ public class LineChartCard extends CardView {
     }
 
     private void initializeRoot(AttributeSet attrs, int defStyleAttr) {
-        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_line, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsfch_view_chart_line, this, true);
 
         final TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.LineChartCard,
                 defStyleAttr,
-                R.style.Widget_Backbone_Chart_Line);
+                R.style.Widget_Feature_Chart_Chart_Line);
 
         titleText = a.getString(R.styleable.LineChartCard_titleText);
         titleTextColor = a.getColor(R.styleable.LineChartCard_titleTextColor, 0);

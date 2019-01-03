@@ -11,7 +11,7 @@
 
         <TextView
             android:id="@+id/view_chart_pie_title"
-            style="@style/Widget.Backbone.Chart.Title"
+            style="@style/Widget.Feature.Chart.Chart.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Amount of pie eaten" />

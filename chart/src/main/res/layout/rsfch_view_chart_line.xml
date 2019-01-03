@@ -3,14 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ResourceName">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/view_chart_bar_title"
-            style="@style/Widget.Backbone.Chart.Title"
+            android:id="@+id/view_chart_line_title"
+            style="@style/Widget.Feature.Chart.Chart.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Amount of pie eaten" />
@@ -22,16 +23,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:minHeight="48dp"
-            android:src="@drawable/rsb_ic_fullscreen"
+            android:src="@drawable/rsf_ic_fullscreen"
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/view_chart_bar"
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/view_chart_line"
             android:layout_width="match_parent"
             android:layout_height="252dp"
-            android:layout_below="@+id/view_chart_bar_title"
-            android:layout_marginBottom="8dp" />
+            android:layout_below="@+id/view_chart_line_title"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp" />
 
     </RelativeLayout>
 

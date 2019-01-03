@@ -10,7 +10,7 @@
 
         <TextView
             android:id="@+id/view_chart_progress_title"
-            style="@style/Widget.Backbone.Chart.Title"
+            style="@style/Widget.Feature.Chart.Chart.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Amount of pie eaten" />
@@ -38,7 +38,7 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/view_chart_progress_tabs"
-            style="@style/Widget.Backbone.TabLayout.Chart"
+            style="@style/Widget.Feature.Chart.TabLayout.Chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

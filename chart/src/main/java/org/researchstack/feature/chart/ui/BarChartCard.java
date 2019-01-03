@@ -1,4 +1,4 @@
-package org.researchstack.backbone.ui.graph;
+package org.researchstack.feature.chart.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -20,7 +20,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.jakewharton.rxbinding.view.RxView;
 
-import org.researchstack.backbone.R;
+import org.researchstack.feature.chart.R;
 
 import rx.Subscription;
 import rx.functions.Action1;
@@ -59,12 +59,12 @@ public class BarChartCard extends CardView {
     }
 
     private void initializeRoot(AttributeSet attrs, int defStyleAttr) {
-        LayoutInflater.from(getContext()).inflate(R.layout.rsb_view_chart_bar, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.rsfch_view_chart_bar, this, true);
 
         final TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.BarChartCard,
                 defStyleAttr,
-                R.style.Widget_Backbone_Chart_Bar);
+                R.style.Widget_Feature_Chart_Chart_Bar);
 
         titleText = a.getString(R.styleable.BarChartCard_titleText);
         titleTextColor = a.getColor(R.styleable.BarChartCard_titleTextColor, 0);
