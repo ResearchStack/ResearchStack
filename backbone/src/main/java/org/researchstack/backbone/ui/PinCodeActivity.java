@@ -140,7 +140,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         pinCodeLayout = new PinCodeLayout(new ContextThemeWrapper(this, theme));
         pinCodeLayout.setBackgroundColor(Color.WHITE);
 
-        int errorColor = getResources().getColor(R.color.rsb_error);
+        int errorColor = getResources().getColor(R.color.rsf_error);
 
         TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
         EditText pincode = (EditText) pinCodeLayout.findViewById(R.id.pincode);
@@ -169,7 +169,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
             toggleKeyboardAction.call(true);
             throwable.printStackTrace();
-            summary.setText(R.string.rsb_pincode_enter_error);
+            summary.setText(R.string.rsfa_pincode_enter_error);
             summary.setTextColor(errorColor);
             pinCodeLayout.showProgress(false);
         }).onErrorResumeNext(throwable1 -> {
