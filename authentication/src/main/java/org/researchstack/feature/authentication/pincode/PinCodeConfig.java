@@ -1,11 +1,11 @@
-package org.researchstack.backbone.storage.file;
+package org.researchstack.feature.authentication.pincode;
 
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.format.DateUtils;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.feature.authentication.R;
+import org.researchstack.foundation.components.utils.TextUtils;
 
 /**
  * This class allows you to customize the type/strength of the pin code that the user must create to
@@ -126,11 +126,11 @@ public class PinCodeConfig {
         @Override
         public int getInputTypeStringId() {
             if (this == PinCodeType.Numeric) {
-                return R.string.rsb_pincode_enter_digit;
+                return R.string.rsfa_pincode_enter_digit;
             } else if (this == PinCodeType.Alphabetic) {
-                return R.string.rsb_pincode_enter_letter;
+                return R.string.rsfa_pincode_enter_letter;
             } else {
-                return R.string.rsb_pincode_enter_character;
+                return R.string.rsfa_pincode_enter_character;
             }
         }
 
