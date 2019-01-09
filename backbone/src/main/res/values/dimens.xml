@@ -14,11 +14,12 @@
     <dimen name="rsb_item_size_divider">1dp</dimen>
 
     <!-- Item Margin -->
+    <dimen name="rsb_margin_top">16dp</dimen>
     <dimen name="rsb_margin_left">16dp</dimen>
     <dimen name="rsb_margin_right">16dp</dimen>
 
     <!-- Text Size -->
-    <dimen name="rsb_text_size_title">26sp</dimen>
-    <dimen name="rsb_text_size_summary">16sp</dimen>
+    <dimen name="rsb_text_size_title">35sp</dimen>
+    <dimen name="rsb_text_size_summary">18sp</dimen>
 
 </resources>

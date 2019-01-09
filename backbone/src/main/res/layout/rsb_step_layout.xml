@@ -22,7 +22,6 @@
         style="@style/Backbone.Survey.Summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorLink="?attr/colorAccent"
         android:visibility="gone"
         tools:text="@string/lorem_long"
         tools:visibility="visible" />

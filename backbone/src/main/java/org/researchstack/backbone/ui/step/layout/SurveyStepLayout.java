@@ -132,12 +132,12 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     public void initStepLayout() {
         LogExt.i(getClass(), "initStepLayout()");
 
-        container = (LinearLayout) findViewById(R.id.rsb_survey_content_container);
-        TextView title = (TextView) findViewById(R.id.rsb_survey_title);
+        container = findViewById(R.id.rsb_survey_content_container);
+        TextView title = findViewById(R.id.rsb_survey_title);
         title.setTextColor(principalTextColor);
-        TextView summary = (TextView) findViewById(R.id.rsb_survey_text);
+        TextView summary = findViewById(R.id.rsb_survey_text);
         summary.setTextColor(secondaryTextColor);
-        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        final SubmitBar submitBar = findViewById(R.id.rsb_submit_bar);
         submitBar.setNegativeTitleColor(coloryPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
         submitBar.setPositiveAction(new OnClickListener()
