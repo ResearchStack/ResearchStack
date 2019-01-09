@@ -27,6 +27,7 @@ public class Step implements Serializable {
     private boolean optional = true;
     private String title;
     private String text;
+    private String question;
     private int colorPrimary;
     private int colorPrimaryDark;
     private int colorSecondary;
@@ -164,6 +165,23 @@ public class Step implements Serializable {
      */
     public void setStepTitle(int stepTitle) {
         this.stepTitle = stepTitle;
+    }
+
+    /**
+     * Question text to display for the step in a localized string.
+     */
+    public String getQuestion() {
+        return question;
+    }
+
+    /**
+     * Sets the question text for the step.
+     *
+     * @param question the question text for the step
+     * @see #getQuestion()
+     */
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
     /**
