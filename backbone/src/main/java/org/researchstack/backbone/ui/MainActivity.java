@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
             viewPager.setPageMarginDrawable(new ColorDrawable(Color.LTGRAY));
 
             IconTabLayout tabLayout = (IconTabLayout) findViewById(R.id.tabLayout);
-            tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter() {
+            tabLayout.addOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     int index = tabLayout.getSelectedTabPosition();
