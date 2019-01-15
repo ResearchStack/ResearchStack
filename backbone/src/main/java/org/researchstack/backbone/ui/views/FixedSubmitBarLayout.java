@@ -8,51 +8,43 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
-
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.step.layout.StepLayout;
-
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.core.view.ViewCompat;
+import org.researchstack.backbone.R;
+import org.researchstack.backbone.ui.step.layout.StepLayout;
 
-public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements StepLayout
-{
+public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements StepLayout {
     protected LayoutInflater layoutInflater;
     protected SubmitBar submitBar;
     protected View submitBarGuide;
     protected ViewGroup contentContainer;
     protected ObservableScrollView scrollView;
 
-    public FixedSubmitBarLayout(Context context)
-    {
+    public FixedSubmitBarLayout(Context context) {
         super(context);
         init();
     }
 
-    public FixedSubmitBarLayout(Context context, AttributeSet attrs)
-    {
+    public FixedSubmitBarLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public FixedSubmitBarLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public FixedSubmitBarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @TargetApi(21)
-    public FixedSubmitBarLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
+    public FixedSubmitBarLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
     public abstract int getContentResourceId();
 
-    private void init()
-    {
+    private void init() {
         // Init root
         layoutInflater = LayoutInflater.from(getContext());
         layoutInflater.inflate(getFixedSubmitBarLayoutId(), this, true);
@@ -65,7 +57,7 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
 
         // Init scrollview and submit bar guide positioning
         submitBarGuide = findViewById(R.id.rsb_submit_bar_guide);
-        submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        submitBar = findViewById(R.id.rsb_submit_bar);
 
         if (submitBarGuide == null) {
             // This must be a custom layout
@@ -94,27 +86,25 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
         }
     }
 
-    public @IdRes int getContentContainerLayoutId() {
+    public @IdRes
+    int getContentContainerLayoutId() {
         return R.id.rsb_content_container;
     }
 
-    public @LayoutRes int getFixedSubmitBarLayoutId() {
+    public @LayoutRes
+    int getFixedSubmitBarLayoutId() {
         return R.layout.rsb_layout_fixed_submit_bar;
     }
 
-    private void onScrollChanged(ScrollView scrollView, View submitBarGuide, View submitBar)
-    {
+    private void onScrollChanged(ScrollView scrollView, View submitBarGuide, View submitBar) {
         int scrollY = scrollView.getScrollY();
         int guidePosition = submitBarGuide.getTop() - scrollY;
         int guideHeight = submitBarGuide.getHeight();
         int yLimit = scrollView.getHeight() - guideHeight;
 
-        if(guidePosition <= yLimit)
-        {
+        if (guidePosition <= yLimit) {
             ViewCompat.setTranslationY(submitBar, 0);
-        }
-        else
-        {
+        } else {
             int translationY = guidePosition - yLimit;
             ViewCompat.setTranslationY(submitBar, translationY);
         }
@@ -124,6 +114,7 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
      * Calculated the remaining height left in the container, that if filled,
      * would make the scrollview be "fillviewport"
      * We avoid fillviewport however because it interferes with the submitbar
+     *
      * @param heightCalculatedListener will be called once height is calculated
      */
     protected void remainingHeightOfContainer(final HeightCalculatedListener heightCalculatedListener) {
@@ -133,20 +124,19 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
         // Views have not been laid out yet
         if (containerHeight <= 0) {
             submitBar.getViewTreeObserver().addOnGlobalLayoutListener(
-                    new ViewTreeObserver.OnGlobalLayoutListener()
-            {
-                @Override
-                public void onGlobalLayout() {
-                    submitBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            submitBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                    float submitbarY = submitBar.getY();
-                    int containerHeight = contentContainer.getHeight();
+                            float submitbarY = submitBar.getY();
+                            int containerHeight = contentContainer.getHeight();
 
-                    heightCalculatedListener.heightCalculated((int)submitbarY - containerHeight);
-                }
-            });
+                            heightCalculatedListener.heightCalculated((int) submitbarY - containerHeight);
+                        }
+                    });
         } else {
-            heightCalculatedListener.heightCalculated((int)submitbarY - containerHeight);
+            heightCalculatedListener.heightCalculated((int) submitbarY - containerHeight);
         }
     }
 
