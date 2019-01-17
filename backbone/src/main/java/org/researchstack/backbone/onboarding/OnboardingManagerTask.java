@@ -27,9 +27,7 @@ public class OnboardingManagerTask extends NavigableOrderedTask {
 
     @Override
     public String getTitleForStep(Context context, Step step) {
-        String title = null;
-
-        @StringRes int stepTitleRes = -1;
+        @StringRes int stepTitleRes = 0; // zero is not a valid resource ID
 
         // All these are Subtasks, so identifier will be in the form of id.[question_id]
         if (step.getStepTitle() != 0) {
@@ -46,6 +44,6 @@ public class OnboardingManagerTask extends NavigableOrderedTask {
             return context.getString(stepTitleRes);
         }
 
-        return title;
+        return null;
     }
 }
