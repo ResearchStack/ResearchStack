@@ -1,8 +1,9 @@
 package org.researchstack.foundation.core.models.result;
 
-//import org.researchstack.foundation.step.QuestionStep;
-//import org.researchstack.foundation.step.Step;
+import android.support.annotation.Nullable;
 
+import org.researchstack.foundation.components.survey.answerformat.AnswerFormat;
+import org.researchstack.foundation.components.survey.step.QuestionStep;
 import org.researchstack.foundation.core.models.step.Step;
 
 import java.util.Date;
@@ -105,16 +106,24 @@ public class StepResult<T> extends Result {
     }
 
     //TODO: See if we can remove this... What if we remove this for foundation, but add it for backwards compat foundation
-//    /**
-//     * Gets the {@link AnswerFormat} for this step result. May be useful when processing the
-//     * result.
-//     *
-//     * @return the answer format associated with the step
-//     */
-//
-//    public AnswerFormat getAnswerFormat() {
-//        return answerFormat;
-//    }
+    /**
+     * Gets the {@link AnswerFormat} for this step result. May be useful when processing the
+     * result.
+     *
+     * @return the answer format associated with the step
+     */
+
+    @Deprecated
+    @Nullable
+    public AnswerFormat getAnswerFormat() {
+        if (step instanceof QuestionStep) {
+            AnswerFormat answerFormat = ((QuestionStep) step).getAnswerFormat();
+            return answerFormat;
+        }
+        else {
+            return null;
+        }
+    }
 
     public Step getStep() {
         return this.step;
