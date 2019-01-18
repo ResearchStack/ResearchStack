@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Created by David Evans. Copyright (c) 2019.
+ * Created by David Evans, 2019.
  */
 
 public class RangeOfMotionStep extends ActiveStep {
