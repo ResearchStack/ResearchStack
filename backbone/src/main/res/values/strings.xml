@@ -599,17 +599,17 @@
     <string name="rsb_knee_range_of_motion_text_instruction_0">This activity measures how far you can extend your %1$s knee.</string>
     <string name="rsb_knee_range_of_motion_text_instruction_1">Sit down on the edge of a chair. When you begin you will put your device on your %1$s knee for a measurement. Please turn the sound on your device on so you can hear instructions.</string>
     <string name="rsb_knee_range_of_motion_text_instruction_2">Place your device on your %1$s knee with the screen facing out, as pictured.</string>
-    <string name="rsb_knee_range_of_motion_text_instruction_3">When ready, tap the screen to begin and extend your %1$s knee as far as you can. Tap again when you are done.</string>
-    <string name="rsb_knee_range_of_motion_touch_anywhere_step_instruction">Place your device on your %1$s knee</string>
-    <string name="rsb_knee_range_of_motion_spoken_instruction">Extend your %1$s knee. Then tap anywhere.</string>
+    <string name="rsb_knee_range_of_motion_text_instruction_3">When ready, tap the screen to begin and extend your %1$s knee as far as you can. Return to the start position and tap again when you are done.</string>
+    <string name="rsb_knee_range_of_motion_touch_anywhere_step_instruction">Place your device on your %1$s knee. Tap the screen and extend your %1$s knee as far as you can.</string>
+    <string name="rsb_knee_range_of_motion_spoken_instruction">When you are done, return your %1$s knee to the start position. Then tap anywhere.</string>
     <!-- Shoulder"rsb_Range of Motion active task -->
     <string name="rsb_shoulder_range_of_motion_title">%1$s Shoulder Range of Motion</string>
     <string name="rsb_shoulder_range_of_motion_text_instruction_0">This activity measures how far you can extend your %1$s shoulder.</string>
     <string name="rsb_shoulder_range_of_motion_text_instruction_1">When you begin you will put your device on your %1$s shoulder for a measurement. Please turn the sound on your device on so you can hear instructions.</string>
     <string name="rsb_shoulder_range_of_motion_text_instruction_2">Place your device on your %1$s shoulder with the screen facing out, as pictured.</string>
-    <string name="rsb_shoulder_range_of_motion_text_instruction_3">When ready, tap the screen to begin and raise your %1$s arm as far as you can. Tap again when you are done.</string>
-    <string name="rsb_shoulder_range_of_motion_touch_anywhere_step_instruction">Place your device on your %1$s shoulder</string>
-    <string name="rsb_shoulder_range_of_motion_spoken_instruction">Lift your %1$s arm up. Then tap anywhere.</string>
+    <string name="rsb_shoulder_range_of_motion_text_instruction_3">When ready, tap the screen to begin and raise your %1$s arm as far as you can. Return to the start position and tap again when you are done.</string>
+    <string name="rsb_shoulder_range_of_motion_touch_anywhere_step_instruction">Place your device on your %1$s shoulder. Tap the screen and raise your %1$s arm to the front as far as you can.</string>
+    <string name="rsb_shoulder_range_of_motion_spoken_instruction">When you are done, return your %1$s arm to the start position. Then tap anywhere.</string>
     <!-- Timed wa"rsb_k active task. -->
     <string name="rsb_TIMED_WALK_TITLE">Timed Walk</string>
     <string name="rsb_TIMED_WALK_INTRO_DETAIL">This activity measures your lower extremity function.</string>
