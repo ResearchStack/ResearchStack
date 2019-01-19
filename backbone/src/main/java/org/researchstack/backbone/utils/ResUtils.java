@@ -36,13 +36,17 @@ public class ResUtils {
     }
 
     public static class KneeRangeOfMotion {
-        public static final String KNEE_START         = "rsb_knee_start";
-        public static final String KNEE_MAXIMUM       = "rsb_knee_maximum";
+        public static final String KNEE_START_RIGHT         = "rsb_knee_start_right";
+        public static final String KNEE_MAXIMUM_RIGHT       = "rsb_knee_maximum_right";
+        public static final String KNEE_START_LEFT         = "rsb_knee_start_left";
+        public static final String KNEE_MAXIMUM_LEFT       = "rsb_knee_maximum_left";
     }
 
     public static class ShoulderRangeOfMotion {
-        public static final String SHOULDER_START         = "rsb_shoulder_start";
-        public static final String SHOULDER_MAXIMUM       = "rsb_shoulder_maximum";
+        public static final String SHOULDER_START_RIGHT         = "rsb_shoulder_start_right";
+        public static final String SHOULDER_MAXIMUM_RIGHT       = "rsb_shoulder_maximum_right";
+        public static final String SHOULDER_START_LEFT         = "rsb_shoulder_start_left";
+        public static final String SHOULDER_MAXIMUM_LEFT       = "rsb_shoulder_maximum_left";
     }
 
     public static class TimedWalking {
