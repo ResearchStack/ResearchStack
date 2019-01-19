@@ -91,7 +91,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         }
         SENSOR_TYPE_TO_DATA_TYPE = sensorTypeMapBuilder.build();
 
-        // build mappint for rotation type
+        // build mapping for rotation type
         ImmutableSet.Builder<Integer> rotationTypeBuilder =ImmutableSet.builder();
         rotationTypeBuilder.add(Sensor.TYPE_ROTATION_VECTOR);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
