@@ -26,12 +26,23 @@ public class ResUtils {
     public static class Audio {
         public static final String PHONE_WAVES              = "rsb_phonewaves";
         public static final String PHONE_SOUND_WAVES        = "rsb_phonesoundwaves";
+        public static final String PHONE_SOUND_ON           = "rsb_phone_sound_on";
     }
 
     public static class Tapping {
         public static final String PHONE_TAPPING_NO_TAP         = "rsb_tapping_phone_notap_words";
         public static final String ANIMATED_TAPPING_RIGHT       = "rsb_animated_tapping_right";
         public static final String ANIMATED_TAPPING_LEFT        = "rsb_animated_tapping_left";
+    }
+
+    public static class KneeRangeOfMotion {
+        public static final String KNEE_START         = "rsb_knee_start";
+        public static final String KNEE_MAXIMUM       = "rsb_knee_maximum";
+    }
+
+    public static class ShoulderRangeOfMotion {
+        public static final String SHOULDER_START         = "rsb_shoulder_start";
+        public static final String SHOULDER_MAXIMUM       = "rsb_shoulder_maximum";
     }
 
     public static class TimedWalking {
