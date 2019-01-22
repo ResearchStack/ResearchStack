@@ -24,8 +24,8 @@ import org.researchstack.backbone.step.active.TouchAnywhereStep;
 import org.researchstack.backbone.step.active.CountdownStep;
 //import org.researchstack.backbone.step.active.FitnessStep;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorderConfig;
-import org.researchstack.backbone.step.active.recorder.LocationRecorderConfig;
-import org.researchstack.backbone.step.active.recorder.PedometerRecorderConfig;
+//import org.researchstack.backbone.step.active.recorder.LocationRecorderConfig;
+//import org.researchstack.backbone.step.active.recorder.PedometerRecorderConfig;
 import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 //import org.researchstack.backbone.step.active.WalkingTaskStep;
 import org.researchstack.backbone.task.OrderedTask;
@@ -34,8 +34,10 @@ import org.researchstack.backbone.utils.ResUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
@@ -67,6 +69,9 @@ public class RangeOfMotionTaskFactory {
     public static final String TimedWalkTurnAroundStepIdentifier      = "timed.walk.turn.around";
     public static final String TimedWalkTrial2StepIdentifier          = "timed.walk.trial2";
 
+    public static final String TouchAnywhereStepIdentifier            = "touch.anywhere";
+    public static final String SpokenInstructionStepIdentifier        = "spoken.instruction";
+
     /**
      * Returns a predefined task that measures the range of motion for either a left or right knee.
      *
@@ -81,14 +86,15 @@ public class RangeOfMotionTaskFactory {
      * @param optionList              Options that affect the features of the predefined task.
      * @return An active knee range of motion task that can be presented with an `ActiveTaskActivity` object.
      */
+
     public static OrderedTask kneeRangeOfMotionTask(
             Context context,
             String identifier,
             String intendedUseDescription,
-     //       int    numberOfStepsPerLeg,
-     //       int    restDuration,
-     //       int    limbOption,
-            LimbOption.Limb limbOption,
+     //     int    numberOfStepsPerLeg,
+     //     int    restDuration,
+            int    limbOption,
+     //       LimbOption.Limb limbOption,
             List<TaskExcludeOption> optionList)
     {
         List<Step> stepList = new ArrayList<>();
@@ -107,41 +113,41 @@ public class RangeOfMotionTaskFactory {
 
             {
                 String title = context.getString(R.string.rsb_knee_range_of_motion_title);
-                //String textFormat = context.getString(R.string.rsb_walk_intro_1_text_ld);
-                //String text = String.format(textFormat, numberOfStepsPerLeg);
+                String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1);
+                String text = String.format(textFormat, limbOption);
                 InstructionStep step = new InstructionStep(Instruction1StepIdentifier, title, text);
-                step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1));
+                //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1));
                 step.setImage(ResUtils.PHONE_SOUND_ON);
                 stepList.add(step);
             }
 
             {
                 String title = context.getString(R.string.rsb_knee_range_of_motion_title);
-                //String textFormat = context.getString(R.string.rsb_walk_intro_2_text_ld);
-                //String text = String.format(textFormat, numberOfStepsPerLeg);
-                InstructionStep step = new InstructionStep(Instruction1StepIdentifier, title, text);
-                step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_2));
-                step.setImage(ResUtils.KNEE_START);
+                String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_2);
+                String text = String.format(textFormat, limbOption);
+                InstructionStep step = new InstructionStep(Instruction2StepIdentifier, title, text);
+                //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_2));
+                step.setImage(ResUtils.KNEE_START_LEFT);
                 stepList.add(step);
             }
 
             {
                 String title = context.getString(R.string.rsb_knee_range_of_motion_title);
-                //String textFormat = context.getString(R.string.rsb_walk_intro_3_text_ld);
-                //String text = String.format(textFormat, numberOfStepsPerLeg);
-                InstructionStep step = new InstructionStep(Instruction1StepIdentifier, title, text);
-                step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3));
-                step.setImage(ResUtils.KNEE_MAXIMUM);
+                String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3);
+                String text = String.format(textFormat, limbOption);
+                InstructionStep step = new InstructionStep(Instruction3StepIdentifier, title, text);
+                //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3));
+                step.setImage(ResUtils.KNEE_MAXIMUM_LEFT);
                 stepList.add(step);
             }
 
             //This next step is a 'touch anywhere' on the screen step, which initiates device motion recording
             {
                 String title = context.getString(R.string.rsb_knee_range_of_motion_title);
-                //String textFormat = context.getString(R.string.rsb_walk_intro_3_text_ld);
-                //String text = String.format(textFormat, numberOfStepsPerLeg);
-                InstructionStep step = new InstructionStep(Instruction1StepIdentifier, title, text);
-                step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
+                String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
+                String text = String.format(textFormat, limbOption);
+                InstructionStep step = new InstructionStep(TouchAnywhereStepIdentifier, title, text);
+                //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
                 //step.setImage(ResUtils.KNEE_MAXIMUM);
                 stepList.add(step);
             }
@@ -169,10 +175,9 @@ public class RangeOfMotionTaskFactory {
 
                 {
                     RangeOfMotionStep step = new RangeOfMotionStep(ShortWalkOutboundStepIdentifier);
-                    //String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
-                    //String title = String.format(titleFormat, numberOfStepsPerLeg);
-                    step.setTitle(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
-                    step.setSpokenInstruction(step.getTitle());
+                    String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
+                    String title = String.format(titleFormat, limbOption);
+                    //step.setTitle(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
                     step.setTitle(title);
                     step.setSpokenInstruction(step.getTitle());
                     step.setRecorderConfigurationList(recorderConfigList);
@@ -180,8 +185,8 @@ public class RangeOfMotionTaskFactory {
                     step.setShouldPlaySoundOnStart(true);
                     step.setShouldContinueOnFinish(true);
                     step.setShouldStartTimerAutomatically(true);
-                    //step.setStepDuration(computeFallbackDuration(numberOfStepsPerLeg));
-                    //step.setNumberOfStepsPerLeg(numberOfStepsPerLeg);
+                    step.setStepDuration(computeFallbackDuration(limbOption));
+                    step.setlimbOption(limbOption);
                     step.setShouldVibrateOnFinish(true);
                     step.setShouldPlaySoundOnFinish(true);
                     stepList.add(step);
@@ -201,7 +206,7 @@ public class RangeOfMotionTaskFactory {
                 }
 
                 {
-                    RangeOfMotionStep step = new RangeOfMotionStep(ShortWalkReturnStepIdentifier);
+                    RangeOfMotionStep step = new RangeOfMotionStep(SpokenInstructionStepIdentifier);
                     step.setTitle(context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction));
                     step.setSpokenInstruction(step.getTitle());
                     step.setRecorderConfigurationList(recorderConfigList);
@@ -563,8 +568,8 @@ public class RangeOfMotionTaskFactory {
     /**
      * @return a step duration value that can be used if number of steps takes too long
      */
-    private static int computeFallbackDuration(int numberOfStepsPerLeg) {
-        return (int)(numberOfStepsPerLeg * DEFAULT_STEP_DURATION_FALLBACK_FACTOR);
+    private static int computeFallbackDuration(int limbOption) {
+        return (int)(limbOption * DEFAULT_STEP_DURATION_FALLBACK_FACTOR);
     }
 }
 
@@ -577,7 +582,7 @@ public class RangeOfMotionTaskFactory {
  @param limbOption              Which knee is being measured.
  @param intendedUseDescription  A localized string describing the intended use of the data collected. If the value of this parameter is `nil`, default localized text is used.
  @param options                 Options that affect the features of the predefined task.
- */
+
 + (ORKOrderedTask *)kneeRangeOfMotionTaskWithIdentifier:(NSString *)identifier
         limbOption:(ORKPredefinedTaskLimbOption)limbOption
         intendedUseDescription:(nullable NSString *)intendedUseDescription
@@ -663,3 +668,4 @@ public class RangeOfMotionTaskFactory {
         return task;
         }
 
+ */
