@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.View;
+import java.lang.Math;
 
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
@@ -15,7 +16,7 @@ import org.researchstack.backbone.step.active.recorder.PedometerRecorder;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
 
 /**
- * Created by TheMDP on 2/16/17.
+ * Created by David Evans, 2019.
  *
  * The RangeOfMotionStepLayout is basically the same as the ActiveStepLayout, except that it
  * limits the duration of the step based on the user's number of steps taken so far
@@ -101,6 +102,85 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 }
 
+/*
+ From iOS:
+ #define radiansToDegrees(radians) ((radians) * 180.0 / M_PI)
+#define allOrientationsForPitch(x, w, y, z) (atan2(2.0 * (x*w + y*z), 1.0 - 2.0 * (x*x + z*z)))
+#define allOrientationsForRoll(x, w, y, z) (atan2(2.0 * (y*w - x*z), 1.0 - 2.0 * (y*y + z*z)))
+#define allOrientationsForYaw(x, w, y, z) (asin(2.0 * (x*y - w*z)))
+
+ The conversions below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles ) need to be checked with above
+ */
+
+
+
+public static void quaternionToEulerAngle(const Quaternion q, double roll, double pitch, double yaw)
+{
+// convert radians to degrees
+double radiansToDegrees = rad * 180.0 / Math.PI;
+
+// or https://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#toDegrees(double)
+
+public static double toDegrees(double angrad)
+
+// Pitch (x-axis rotation)
+public static double sinp_cosy = +2.0 * (q.x() * q.w() + q.y() * q.z());
+public static double cosp_cosy = +1.0 - 2.0 * (q.x() * q.x() + q.z() * q.z());
+pitch = Math.atan2(sinp_cosy, cosp_cosy);
+
+// Roll (y-axis rotation)
+public static double sinr_cosy = +2.0 * (q.y() * q.w() + q.x() * q.z());
+public static double cosr_cosy = +1.0 - 2.0 * (q.y() * q.y() + q.z() * q.z());
+roll = Math.atan2(sinr_cosy, cosr_cosy);
+
+// Yaw (z-axis rotation)
+public static double siny = +2.0 * (q.x() * q.y() - q.w() * q.z());
+if (fabs(siny) >= 1)
+   yaw = copysign(Math.PI / 2, siny); // use 90 degrees if out of range
+else
+   yaw = Math.asin(siny);
+
+}
+
+/*
+ / Java program to demonstrate working
+ // of java.lang.Math.asin() method
+ import java.lang.Math;
+ 
+ class Gfg {
+ 
+ // driver code
+ public static void main(String args[])
+ {
+ double a = Math.PI;
+ 
+ // Output is NaN, because Math.PI gives 3.141 value
+ // greater than 1
+ System.out.println(Math.asin(a));
+ 
+ // convert Math.PI to radians
+ double b = Math.toRadians(a);
+ 
+ System.out.println(Math.asin(b));
+ 
+ double c = 1.0;
+ System.out.println(Math.asin(c));
+ 
+ double d = 0.0;
+ System.out.println(Math.asin(d));
+ 
+ double e = -1.0;
+ System.out.println(Math.asin(e));
+ 
+ double f = 1.5;
+ 
+ // value of f does not lie in between -1 and 1
+ // so output is NaN
+ System.out.println(Math.asin(f));
+    }
+ }
+ 
+ */
 
 @implementation ORKRangeOfMotionStepViewController
 
