@@ -6,7 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
@@ -20,13 +25,6 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepLayoutHelper;
 
 import java.util.Date;
-
-import androidx.annotation.IdRes;
-import androidx.annotation.LayoutRes;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
@@ -217,7 +215,6 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
         //hideKeyboard();
         super.onPause();
 
-
         // Some step layouts need to know about when the activity pauses
         if (currentStepLayout != null && currentStepLayout instanceof ActivityPauseListener) {
             //((ActivityPauseListener)currentStepLayout).onActivityPause(this);
@@ -267,7 +264,6 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
     }
 
     public void onDataFailed() {
-
         Toast.makeText(this, R.string.rsb_error_data_failed, Toast.LENGTH_LONG).show();
         finish();
     }
