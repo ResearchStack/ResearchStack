@@ -101,24 +101,21 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
     public void setupActiveViews() {
         super.setupActiveViews();
 
-        remainingHeightOfContainer(new HeightCalculatedListener() {
-            @Override
-            public void heightCalculated(int height) {
-                tappingStepLayout = (RelativeLayout)layoutInflater.inflate(R.layout.rsb_step_layout_tapping_interval, activeStepLayout, false);
-                tapCountTextView = (TextView) tappingStepLayout.findViewById(R.id.rsb_total_taps_counter);
-                tapCountTextView.setText(String.format(Locale.getDefault(), "%2d", 0));
-                leftTappingButton = (FloatingActionButton) tappingStepLayout.findViewById(R.id.rsb_tapping_interval_button_left);
-                rightTappingButton = (FloatingActionButton) tappingStepLayout.findViewById(R.id.rsb_tapping_interval_button_right);
+        remainingHeightOfContainer(height -> {
+            tappingStepLayout = (RelativeLayout)layoutInflater.inflate(R.layout.rsb_step_layout_tapping_interval, activeStepLayout, false);
+            tapCountTextView = tappingStepLayout.findViewById(R.id.rsb_total_taps_counter);
+            tapCountTextView.setText(String.format(Locale.getDefault(), "%2d", 0));
+            leftTappingButton = tappingStepLayout.findViewById(R.id.rsb_tapping_interval_button_left);
+            rightTappingButton = tappingStepLayout.findViewById(R.id.rsb_tapping_interval_button_right);
 
-                progressBarHorizontal.setProgress(0);
-                progressBarHorizontal.setMax(activeStep.getStepDuration());
-                progressBarHorizontal.setVisibility(View.VISIBLE);
+            progressBarHorizontal.setProgress(0);
+            progressBarHorizontal.setMax(activeStep.getStepDuration());
+            progressBarHorizontal.setVisibility(View.VISIBLE);
 
-                activeStepLayout.addView(tappingStepLayout, new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, height));
+            activeStepLayout.addView(tappingStepLayout, new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, height));
 
-                setupSampleResult();
-            }
+            setupSampleResult();
         });
     }
 
@@ -214,7 +211,7 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
         super.start();
 
         startTime = System.currentTimeMillis();
-        tapCountTextView.setText(String.format(Locale.getDefault(), "%2d", tapCount));
+      //  tapCountTextView.setText(String.format(Locale.getDefault(), "%2d", tapCount));
     }
 
     protected void setupTouchListener(

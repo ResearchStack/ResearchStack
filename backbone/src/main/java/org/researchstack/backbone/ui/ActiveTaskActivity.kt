@@ -95,6 +95,12 @@ open class ActiveTaskActivity : ViewTaskActivity(), ActivityCallback, ActiveTask
             unlockScreenOn()
             unlockOrientation()
         }
+        LogExt.d(
+            ActiveTaskActivity::class.java,
+            "showStep(" + step.identifier + ", " + alwaysReplaceView + ")"
+        )
+
+
     }
 
     override fun setupStepLayoutBeforeInitializeIsCalled(stepLayout: StepLayout) {
@@ -171,9 +177,9 @@ open class ActiveTaskActivity : ViewTaskActivity(), ActivityCallback, ActiveTask
         // Requested we end the task, because it couldn't complete for some reason
         if (action == StepCallbacks.ACTION_END && currentStep is ActiveStep) {
             discardResultsAndFinish()
-        } else {
-
         }
+
+        super.onExecuteStepAction(action)
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -218,7 +224,9 @@ open class ActiveTaskActivity : ViewTaskActivity(), ActivityCallback, ActiveTask
         const val ACTIVITY_TASK_RESULT_KEY = "ACTIVITY_TASK_RESULT_KEY"
 
         fun newIntent(context: Context, task: Task): Intent {
-            return Intent(context, ActiveTaskActivity::class.java)
+            val intent = Intent(context, ActiveTaskActivity::class.java)
+            intent.putExtra(ViewTaskActivity.EXTRA_TASK, task)
+            return intent
         }
     }
 }
