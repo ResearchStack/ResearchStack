@@ -1,7 +1,6 @@
 package org.researchstack.backbone.task.factory;
 
 import android.content.Context;
-
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
@@ -16,12 +15,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.AccelerometerRecorderIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskLeftHandIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskRightHandIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction0StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction1StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.TappingStepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
 /**
  * Created by TheMDP on 2/23/17.
@@ -31,35 +25,33 @@ public class TappingTaskFactory {
 
     /**
      * Returns a predefined task that consists of two finger tapping (Optionally with a hand specified)
-     *
+     * <p>
      * In a two finger tapping task, the participant is asked to rhythmically and alternately tap two
      * targets on the device screen.
-     *
+     * <p>
      * A two finger tapping task can be used to assess basic motor capabilities including speed, accuracy,
      * and rhythm.
-     *
+     * <p>
      * Data collected in this task includes touch activity and accelerometer information.
      *
-     * @param context                 App or Activity context, used for getting resources
-     * @param identifier              The task identifier to use for this task, appropriate to the study.
-     * @param intendedUseDescription  A localized string describing the intended use of the data
-     *                                collected. If the value of this parameter is `nil`, the default
-     *                                localized text will be displayed.
-     * @param duration                The length of the count down timer that runs while touch data is
-     *                                collected.
-     * @param handOptions             Hand for determining which hand(s) to test.
-     * @param optionList              Hand that affect the features of the predefined task.
-     *
+     * @param context                App or Activity context, used for getting resources
+     * @param identifier             The task identifier to use for this task, appropriate to the study.
+     * @param intendedUseDescription A localized string describing the intended use of the data
+     *                               collected. If the value of this parameter is `nil`, the default
+     *                               localized text will be displayed.
+     * @param duration               The length of the count down timer that runs while touch data is
+     *                               collected.
+     * @param handOptions            Hand for determining which hand(s) to test.
+     * @param optionList             Hand that affect the features of the predefined task.
      * @return An active two finger tapping task that can be presented with an `ActiveTaskActivity` object.
      */
     public static OrderedTask twoFingerTappingIntervalTask(
             Context context,
             String identifier,
             String intendedUseDescription,
-            int    duration,
+            int duration,
             HandTaskOptions.Hand handOptions,
-            List<TaskExcludeOption> optionList)
-    {
+            List<TaskExcludeOption> optionList) {
         // Coin toss for which hand first (in case we're doing both
         final boolean leftFirstIfDoingBoth = (new Random()).nextBoolean();
 
@@ -73,11 +65,10 @@ public class TappingTaskFactory {
             Context context,
             String identifier,
             String intendedUseDescription,
-            int    duration,
+            int duration,
             HandTaskOptions.Hand handOptions,
             List<TaskExcludeOption> optionList,
-            boolean leftFirstIfDoingBoth)
-    {
+            boolean leftFirstIfDoingBoth) {
         List<Step> stepList = new ArrayList<>();
 
         String durationString = TaskFactory.convertDurationToString(context, duration);
@@ -114,7 +105,7 @@ public class TappingTaskFactory {
         for (int hand = 1; hand <= handCount; hand++) {
             String handIdentifier = rightHand ?
                     stepIdentifierWithHandId(Instruction1StepIdentifier, ActiveTaskRightHandIdentifier) :
-                    stepIdentifierWithHandId(Instruction1StepIdentifier, ActiveTaskLeftHandIdentifier)  ;
+                    stepIdentifierWithHandId(Instruction1StepIdentifier, ActiveTaskLeftHandIdentifier);
 
             if (!optionList.contains(TaskExcludeOption.INSTRUCTIONS)) {
                 InstructionStep step = new InstructionStep(handIdentifier, null, null);
@@ -177,7 +168,7 @@ public class TappingTaskFactory {
 
                 String tappingHandIdentifier = rightHand ?
                         stepIdentifierWithHandId(TappingStepIdentifier, ActiveTaskRightHandIdentifier) :
-                        stepIdentifierWithHandId(TappingStepIdentifier, ActiveTaskLeftHandIdentifier)  ;
+                        stepIdentifierWithHandId(TappingStepIdentifier, ActiveTaskLeftHandIdentifier);
 
                 TappingIntervalStep step = new TappingIntervalStep(tappingHandIdentifier);
 
@@ -187,6 +178,7 @@ public class TappingTaskFactory {
                     step.setTitle(context.getString(R.string.rsb_TAPPING_INSTRUCTION_LEFT));
                 }
 
+               // step.setShouldStartTimerAutomatically(true);
                 step.setStepDuration(duration);
                 step.setShouldContinueOnFinish(true);
                 step.setRecorderConfigurationList(recorderConfigList);

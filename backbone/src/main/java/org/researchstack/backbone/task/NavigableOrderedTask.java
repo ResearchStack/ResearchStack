@@ -268,7 +268,7 @@ public class NavigableOrderedTask extends OrderedTask {
     @Override
     public void validateParameters() {
         super.validateParameters();
-        for (Step step : steps) {
+        for (Step step : getSteps()) {
             // Check if the step is a subtask step and validate parameters
             if (step instanceof SubtaskStep) {
                 ((SubtaskStep)step).getSubtask().validateParameters();

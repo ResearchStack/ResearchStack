@@ -6,10 +6,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by TheMDP on 2/23/17.
- */
-
 public class TappingIntervalResult extends Result {
 
     /**
@@ -71,7 +67,7 @@ public class TappingIntervalResult extends Result {
     public static class Sample implements Serializable {
         /**
          * A relative timestamp indicating the time of the tap event.
-         *
+         * <p>
          * The timestamp is relative to the value of `startDate` in the `Result` object that includes this
          * sample.
          */
@@ -80,7 +76,7 @@ public class TappingIntervalResult extends Result {
 
         /**
          * A duration of the tap event.
-         *
+         * <p>
          * The duration store time interval between touch down and touch release events.
          */
         @SerializedName("duration")
@@ -88,7 +84,7 @@ public class TappingIntervalResult extends Result {
 
         /**
          * An enumerated value that indicates which button was tapped, if any.
-         *
+         * <p>
          * If the value of this property is `ORKTappingButtonIdentifierNone`, it indicates that the tap
          * was near, but not inside, one of the target buttons.
          */
@@ -97,7 +93,7 @@ public class TappingIntervalResult extends Result {
 
         /**
          * The location of the tap within the step's view.
-         *
+         * <p>
          * The location coordinates are relative to a rectangle whose size corresponds to
          * the `stepViewSize` in the enclosing `ORKTappingIntervalResult` object.
          */
@@ -132,13 +128,14 @@ public class TappingIntervalResult extends Result {
         public void setButtonIdentifier(TappingButtonIdentifier buttonIdentifier) {
             this.buttonIdentifier = buttonIdentifier;
         }
+
         public void setLocation(int x, int y) {
             this.location = String.format(Locale.getDefault(), "{%d, %d}", x, y);
         }
     }
 
     /**
-     Values that identify the button that was tapped in a tapping sample.
+     * Values that identify the button that was tapped in a tapping sample.
      */
     public enum TappingButtonIdentifier {
         // The touch landed outside of the two buttons.

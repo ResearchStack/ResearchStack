@@ -1,12 +1,16 @@
 package org.researchstack.backbone.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
@@ -20,13 +24,6 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepLayoutHelper;
 
 import java.util.Date;
-
-import androidx.annotation.IdRes;
-import androidx.annotation.LayoutRes;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
@@ -53,21 +50,16 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
 
     protected int currentStepAction;
 
-    public static Intent newIntent(Context context, Task task) {
-        Intent intent = new Intent(context, ViewTaskActivity.class);
-        return intent;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
 
-        toolbar = (Toolbar) findViewById(getToolbarResourceId());
+        toolbar = findViewById(getToolbarResourceId());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        root = (StepSwitcher) findViewById(getViewSwitcherRootId());
+        root = findViewById(getViewSwitcherRootId());
 
         if (savedInstanceState == null) {
             task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
@@ -90,11 +82,9 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
             currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
         }
 
-        LogExt.d(ViewTaskActivity.class, "Received task: " + task.getIdentifier());
-
         task.validateParameters();
 
-
+        onDataReady();
     }
 
     public @IdRes
@@ -217,7 +207,6 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
         //hideKeyboard();
         super.onPause();
 
-
         // Some step layouts need to know about when the activity pauses
         if (currentStepLayout != null && currentStepLayout instanceof ActivityPauseListener) {
             //((ActivityPauseListener)currentStepLayout).onActivityPause(this);
@@ -253,7 +242,7 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
 
 
     protected void notifyStepOfBackPress() {
-        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
+        StepLayout currentStepLayout = findViewById(R.id.rsb_current_step);
         currentStepLayout.isBackEventConsumed();
     }
 
@@ -267,7 +256,6 @@ public class ViewTaskActivity extends AppCompatActivity implements StepCallbacks
     }
 
     public void onDataFailed() {
-
         Toast.makeText(this, R.string.rsb_error_data_failed, Toast.LENGTH_LONG).show();
         finish();
     }

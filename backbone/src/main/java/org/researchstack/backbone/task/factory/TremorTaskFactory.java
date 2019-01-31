@@ -1,10 +1,8 @@
 package org.researchstack.backbone.task.factory;
 
 import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
@@ -21,34 +19,13 @@ import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorderConfi
 import org.researchstack.backbone.task.NavigableOrderedTask;
 import org.researchstack.backbone.utils.ResUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.AccelerometerRecorderIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskLeftHandIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskMostAffectedHandIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskRightHandIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.ActiveTaskSkipHandStepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Countdown1StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Countdown2StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Countdown3StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Countdown4StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Countdown5StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.DeviceMotionRecorderIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction0StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction1StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction2StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction4StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction5StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction6StepIdentifier;
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Instruction7StepIdentifier;
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
 /**
  * Created by TheMDP on 2/4/17.
- *
+ * <p>
  * In iOS, they included a bunch of static methods for building OrderedTasks in the
  * OrderedTask class.  However, I think they belong in this Factory class
  */
@@ -58,15 +35,15 @@ public class TremorTaskFactory {
     static Gson gson;
 
     // Tremor Step Identifiers
-    public static final String TremorTestInLapStepIdentifier        = "tremor.handInLap";
-    public static final String TremorTestExtendArmStepIdentifier    = "tremor.handAtShoulderLength";
-    public static final String TremorTestBendArmStepIdentifier      = "tremor.handAtShoulderLengthWithElbowBent";
-    public static final String TremorTestTouchNoseStepIdentifier    = "tremor.handToNose";
-    public static final String TremorTestTurnWristStepIdentifier    = "tremor.handQueenWave";
+    public static final String TremorTestInLapStepIdentifier = "tremor.handInLap";
+    public static final String TremorTestExtendArmStepIdentifier = "tremor.handAtShoulderLength";
+    public static final String TremorTestBendArmStepIdentifier = "tremor.handAtShoulderLengthWithElbowBent";
+    public static final String TremorTestTouchNoseStepIdentifier = "tremor.handToNose";
+    public static final String TremorTestTurnWristStepIdentifier = "tremor.handQueenWave";
 
     /**
      * Returns a predefined task that measures hand tremor.
-     *
+     * <p>
      * In a tremor assessment task, the participant is asked to hold the device with their most affected
      * hand in various positions while accelerometer and motion data are captured.
      *
@@ -79,7 +56,6 @@ public class TremorTaskFactory {
      * @param handOption             Options for determining which hand(s) to test.
      * @param taskOptionList         Options that affect the features of the predefined task,
      *                               conclusion option will be ignored at this time.
-     *
      * @return An active tremor test task that can be presented with an `ORKTaskViewController` object.
      */
     public static NavigableOrderedTask tremorTask(
@@ -89,8 +65,7 @@ public class TremorTaskFactory {
             int activeStepDuration,
             List<TremorTaskExcludeOption> tremorOptionList,
             HandTaskOptions.Hand handOption,
-            List<TaskExcludeOption> taskOptionList)
-    {
+            List<TaskExcludeOption> taskOptionList) {
         // Coin toss for which hand first (in case we're doing both)
         final boolean leftFirstIfDoingBoth = (new Random()).nextBoolean();
         return tremorTask(context, identifier, intendedUseDescription, activeStepDuration,
@@ -106,8 +81,7 @@ public class TremorTaskFactory {
             List<TremorTaskExcludeOption> tremorOptionList,
             HandTaskOptions.Hand handOption,
             List<TaskExcludeOption> taskOptionList,
-            boolean leftFirstIfDoingBoth)
-    {
+            boolean leftFirstIfDoingBoth) {
         List<Step> stepList = new ArrayList<>();
 
         final boolean doingBoth = (handOption == HandTaskOptions.Hand.BOTH);
@@ -126,7 +100,7 @@ public class TremorTaskFactory {
         }
 
         // Build the string for the detail texts
-        String[] detailStringForNumberOfTasks = new String[] {
+        String[] detailStringForNumberOfTasks = new String[]{
                 context.getString(R.string.rsb_TREMOR_TEST_INTRO_2_DETAIL_1_TASK),
                 context.getString(R.string.rsb_TREMOR_TEST_INTRO_2_DETAIL_2_TASK),
                 context.getString(R.string.rsb_TREMOR_TEST_INTRO_2_DETAIL_3_TASK),
@@ -138,7 +112,7 @@ public class TremorTaskFactory {
         int actualTasksIndex = TremorTaskExcludeOption.values().length - tremorOptionList.size() - 1;
 
         String detailFormat = doingBoth ?
-                context.getString(R.string.rsb_tremor_test_skip_question_both_hands):
+                context.getString(R.string.rsb_tremor_test_skip_question_both_hands) :
                 context.getString(R.string.rsb_tremor_test_intro_2_detail_default);
         String detailText = String.format(detailFormat, detailStringForNumberOfTasks[actualTasksIndex]);
 
@@ -197,12 +171,12 @@ public class TremorTaskFactory {
 
         // Setup rules for skipping all the steps in either the left or right hand if called upon to do so.
         if (doingBoth) {
-            List<Step> firstHandStepList  = firstIsLeft ? leftSteps  : rightSteps;
+            List<Step> firstHandStepList = firstIsLeft ? leftSteps : rightSteps;
             List<Step> secondHandStepList = firstIsLeft ? rightSteps : leftSteps;
             final String secondHandStepId = secondHandStepList.get(0).getIdentifier();
 
             // This step can be used to skip the second hand if we need to
-            final NavigationActiveStep lastStepOfFirstHands = (NavigationActiveStep)firstHandStepList.get(firstHandStepList.size()-1);
+            final NavigationActiveStep lastStepOfFirstHands = (NavigationActiveStep) firstHandStepList.get(firstHandStepList.size() - 1);
 
             // The question step can be used to skip the first steps if we need to
             String handResultString = firstIsLeft ? ActiveTaskLeftHandIdentifier : ActiveTaskRightHandIdentifier;
@@ -227,8 +201,7 @@ public class TremorTaskFactory {
             boolean leftHand,
             String handIdentifier,
             String detailText,
-            List<TaskExcludeOption> taskOptionList)
-    {
+            List<TaskExcludeOption> taskOptionList) {
         List<Step> stepList = new ArrayList<>();
 
         String stepFinishedInstruction = context.getString(
@@ -516,7 +489,7 @@ public class TremorTaskFactory {
         }
 
         // fix the spoken instruction on the last included step, depending on which hand we're on
-        ActiveStep lastStep = (ActiveStep)stepList.get(stepList.size()-1);
+        ActiveStep lastStep = (ActiveStep) stepList.get(stepList.size() - 1);
         if (lastHand) {
             lastStep.setFinishedSpokenInstruction(context.getString(R.string.rsb_TREMOR_TEST_COMPLETED_INSTRUCTION));
         } else if (leftHand) {
@@ -538,7 +511,7 @@ public class TremorTaskFactory {
     /**
      * The `TremorTaskExcludeOption` enum lets you exclude particular steps from the predefined active
      * tasks in the predefined Tremor `OrderedTask`.
-     *
+     * <p>
      * By default, all predefined active tasks will be included. The tremor active task option flags can
      * be used to explicitly specify that an active task is not to be included.
      */
