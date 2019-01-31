@@ -26,18 +26,16 @@ buildscript {
             'picasso'           : '3.0.0-SNAPSHOT'
 
     ]
-    
+
     ext.kotlin_version = '1.2.71'
     repositories {
         jcenter()
         google()
     }
     dependencies {
-<<<<<<< HEAD
+
         classpath 'com.android.tools.build:gradle:3.4.0-beta02'
-=======
-        classpath 'com.android.tools.build:gradle:3.4.0-beta01'
->>>>>>> master
+
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
