@@ -118,7 +118,7 @@ public class RangeOfMotionTaskFactory {
                 String text = String.format(textFormat, limbOption);
                 InstructionStep step = new InstructionStep(Instruction1StepIdentifier, title, text);
                 //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1));
-                step.setImage(ResUtils.KneeRangeOfMotion.Audio.PHONE_SOUND_ON);
+                step.setImage(ResUtils.Audio.PHONE_SOUND_ON);
                 stepList.add(step);
             }
 
@@ -128,7 +128,7 @@ public class RangeOfMotionTaskFactory {
                 String text = String.format(textFormat, limbOption);
                 InstructionStep step = new InstructionStep(Instruction2StepIdentifier, title, text);
                 //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_2));
-                step.setImage(ResUtils.KneeRangeOfMotion.KNEE_START_LEFT);
+                step.setImage(ResUtils.RangeOfMotion.KNEE_START_LEFT);
                 stepList.add(step);
             }
 
@@ -138,7 +138,7 @@ public class RangeOfMotionTaskFactory {
                 String text = String.format(textFormat, limbOption);
                 InstructionStep step = new InstructionStep(Instruction3StepIdentifier, title, text);
                 //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3));
-                step.setImage(ResUtils.KneeRangeOfMotion.KNEE_MAXIMUM_LEFT);
+                step.setImage(ResUtils.RangeOfMotion.KNEE_MAXIMUM_LEFT);
                 stepList.add(step);
             }
 
