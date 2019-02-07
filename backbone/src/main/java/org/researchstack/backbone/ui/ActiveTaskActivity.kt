@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Build
+import android.os.Bundle
+import android.view.MenuItem
 import android.view.Surface
 import android.view.View
 import android.view.WindowManager
@@ -38,6 +40,21 @@ open class ActiveTaskActivity : ViewTaskActivity(), ActivityCallback, ActiveTask
     private var isPaused = false
 
     private val activeTaskResultHandler = ServiceLocator.activeTaskResultHandler
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        supportActionBar?.apply {
+            show()
+            setDisplayHomeAsUpEnabled(true)
+            setHomeButtonEnabled(true)
+        }
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 
     public override fun onResume() {
         super.onResume()
