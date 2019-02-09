@@ -26,7 +26,7 @@ public class TouchAnywhereStep extends ActiveStep {
 
     public TouchAnywhereStep(String identifier) {
         super(identifier);
-        setStepDuration(DEFAULT_STEP_DURATION);
+        //setStepDuration(DEFAULT_STEP_DURATION);
         setShouldStartTimerAutomatically(true);
         setShouldShowDefaultTimer(false);
         setShouldContinueOnFinish(true);
@@ -38,3 +38,50 @@ public class TouchAnywhereStep extends ActiveStep {
         return CountdownStepLayout.class;
     }
 }
+
+
+
+*********
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+       xmlns:android="http://schemas.android.com/apk/res/android"
+       android:id="@+id/mainLayout"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
+       tools:context=".MainActivity"
+       android:id="@+id/mainLayout">  //<--- Provide ID
+
+<TextView
+android:id="@+id/textView"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_centerInParent="true"
+/>
+
+</RelativeLayout>
+
+
+//public class MainActivity extends AppCompatActivity {
+    
+    private RelativeLayout layout;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        layout   = (RelativeLayout)findViewById(R.id.mainLayout);
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // here you can write code to proceed next step.
+                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+    }
+    
+//    }
