@@ -1,26 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
     <style name="Backbone.Survey.Title" parent="">
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:minHeight">@dimen/rsb_item_size_default</item>
-        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/rsb_margin_top</item>
         <item name="android:paddingLeft">@dimen/rsb_margin_left</item>
         <item name="android:paddingRight">@dimen/rsb_margin_right</item>
-        <item name="android:paddingTop">@dimen/rsb_padding_medium</item>
-        <item name="android:paddingBottom">@dimen/rsb_padding_medium</item>
-        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:paddingTop">@dimen/rsb_padding_wedge</item>
+        <item name="android:paddingBottom">@dimen/rsb_padding_wedge</item>
+        <item name="android:textColor">@color/rsb_black</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">@dimen/rsb_text_size_title</item>
     </style>
 
     <style name="Backbone.Survey.Summary" parent="">
-        <item name="android:layout_marginTop">@dimen/rsb_padding_wedge</item>
         <item name="android:layout_marginBottom">@dimen/rsb_padding_small</item>
         <item name="android:paddingLeft">@dimen/rsb_margin_left</item>
-        <item name="android:gravity">center</item>
         <item name="android:paddingRight">@dimen/rsb_margin_right</item>
-        <item name="android:paddingTop">@dimen/rsb_padding_wedge</item>
         <item name="android:paddingBottom">@dimen/rsb_padding_small</item>
         <item name="android:textSize">@dimen/rsb_text_size_summary</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/rsb_black</item>
     </style>
 
     <style name="Backbone.Survey.Summary.Link">

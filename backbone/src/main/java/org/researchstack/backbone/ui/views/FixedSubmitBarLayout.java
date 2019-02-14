@@ -79,8 +79,7 @@ public abstract class FixedSubmitBarLayout extends FrameLayout implements StepLa
         if (guidePosition <= yLimit) {
             ViewCompat.setTranslationY(submitBar, 0);
         } else {
-            int translationY = guidePosition - yLimit;
-            ViewCompat.setTranslationY(submitBar, translationY);
+            ViewCompat.setTranslationY(submitBar, 0);
         }
 
     }

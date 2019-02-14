@@ -2,6 +2,10 @@
 
 ### Change log
 
+#### v1.2.0
+- Steps support Question field now.
+- UI fixes.
+
 #### v1.1.0
 
 - Tasks accept results on creation so they can be pre-populated.
