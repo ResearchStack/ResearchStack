@@ -1,7 +1,7 @@
 package org.researchstack.backbone.result;
 
 /**
- * Created by David EVans, 2019.
+ * Created by David Evans, 2019.
  */
 
 public class RangeOfMotionResult extends Result {
