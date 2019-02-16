@@ -19,9 +19,9 @@ import org.researchstack.backbone.step.RequireSystemFeatureStep;
 import org.researchstack.backbone.step.Step;
 //import org.researchstack.backbone.step.active.TimedWalkStep;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
-import org.researchstack.backbone.step.active.recorder.AccelerometerRecorderConfig;
+//import org.researchstack.backbone.step.active.recorder.AccelerometerRecorderConfig;
 import org.researchstack.backbone.step.active.TouchAnywhereStep;
-import org.researchstack.backbone.step.active.CountdownStep;
+//import org.researchstack.backbone.step.active.CountdownStep;
 //import org.researchstack.backbone.step.active.FitnessStep;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorderConfig;
 //import org.researchstack.backbone.step.active.recorder.LocationRecorderConfig;
@@ -51,26 +51,28 @@ import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
 public class RangeOfMotionTaskFactory {
 
-    private static final float DEFAULT_STEP_DURATION_FALLBACK_FACTOR = 1.5f;
-    private static final int DEFAULT_COUNTDOWN_DURATION = 5; // in seconds
+//    private static final float DEFAULT_STEP_DURATION_FALLBACK_FACTOR = 1.5f;
+//    private static final int DEFAULT_COUNTDOWN_DURATION = 5; // in seconds
+      private static final int DEFAULT_LIMB_OPTION = right; //
 
-    private static final int IGNORE_NUMBER_OF_STEPS = Integer.MAX_VALUE;
-    private static final int SPEAK_WALK_DURATION_HALFWAY_THRESHOLD = 20; // in seconds
+//    private static final int IGNORE_NUMBER_OF_STEPS = Integer.MAX_VALUE;
+//    private static final int SPEAK_WALK_DURATION_HALFWAY_THRESHOLD = 20; // in seconds
 
-    public static final String GpsFeatureStepIdentifier               = "gpsfeature";
-    public static final String LocationPermissionsStepIdentifier      = "locationpermission";
-    public static final String ShortWalkOutboundStepIdentifier        = "walking.outbound";
-    public static final String ShortWalkReturnStepIdentifier          = "walking.return";
-    public static final String ShortWalkRestStepIdentifier            = "walking.rest";
-    public static final String TimedWalkFormStepIdentifier            = "timed.walk.form";
-    public static final String TimedWalkFormAFOStepIdentifier         = "timed.walk.form.afo";
-    public static final String TimedWalkFormAssistanceStepIdentifier  = "timed.walk.form.assistance";
-    public static final String TimedWalkTrial1StepIdentifier          = "timed.walk.trial1";
-    public static final String TimedWalkTurnAroundStepIdentifier      = "timed.walk.turn.around";
-    public static final String TimedWalkTrial2StepIdentifier          = "timed.walk.trial2";
+//    public static final String GpsFeatureStepIdentifier               = "gpsfeature";
+//    public static final String LocationPermissionsStepIdentifier      = "locationpermission";
+//    public static final String ShortWalkOutboundStepIdentifier        = "walking.outbound";
+//    public static final String ShortWalkReturnStepIdentifier          = "walking.return";
+//    public static final String ShortWalkRestStepIdentifier            = "walking.rest";
+//    public static final String TimedWalkFormStepIdentifier            = "timed.walk.form";
+//
+//    public static final String TimedWalkFormAFOStepIdentifier         = "timed.walk.form.afo";
+//    public static final String TimedWalkFormAssistanceStepIdentifier  = "timed.walk.form.assistance";
+//    public static final String TimedWalkTrial1StepIdentifier          = "timed.walk.trial1";
+//    public static final String TimedWalkTurnAroundStepIdentifier      = "timed.walk.turn.around";
+//    public static final String TimedWalkTrial2StepIdentifier          = "timed.walk.trial2";
 
-    public static final String TouchAnywhereStepIdentifier            = "touch.anywhere";
-    public static final String SpokenInstructionStepIdentifier        = "spoken.instruction";
+//    public static final String TouchAnywhere1StepIdentifier            = "touchAnywhere1";
+//    public static final String SpokenInstructionStepIdentifier        = "spokenInstruction";
 
     /**
      * Returns a predefined task that measures the range of motion for either a left or right knee.
@@ -106,13 +108,13 @@ public class RangeOfMotionTaskFactory {
         if (!optionList.contains(TaskExcludeOption.INSTRUCTIONS)) {
             {
                 String title = context.getString(R.string.rsb_knee_range_of_motion_title);
+                //String title = String.format(title, limbOption);
                 InstructionStep step = new InstructionStep(Instruction0StepIdentifier, title, intendedUseDescription);
                 step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_0));
                 stepList.add(step);
             }
 
             {
-                // Need to add image Audio.PHONE_SOUND_ON
                 String title = context.getString(R.string.rsb_knee_range_of_motion_title);
                 String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1);
                 String text = String.format(textFormat, limbOption);
@@ -142,12 +144,12 @@ public class RangeOfMotionTaskFactory {
                 stepList.add(step);
             }
 
-            //This next step is a 'touch anywhere' on the screen step, which initiates device motion recording
+            //This next step is the first 'touch anywhere' on the screen step, which initiates device motion recording
             {
                 String title = context.getString(R.string.rsb_knee_range_of_motion_title);
                 String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
                 String text = String.format(textFormat, limbOption);
-                InstructionStep step = new InstructionStep(TouchAnywhereStepIdentifier, title, text);
+                TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhere1StepIdentifier, title, text);
                 //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
                 //step.setImage(ResUtils.KNEE_MAXIMUM);
                 stepList.add(step);
@@ -155,7 +157,7 @@ public class RangeOfMotionTaskFactory {
         }
 
         {
-            TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier);
+            TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhere1StepIdentifier);
             //step.setStepDuration(DEFAULT_COUNTDOWN_DURATION);
             stepList.add(step);
         }
@@ -173,20 +175,20 @@ public class RangeOfMotionTaskFactory {
                 //    recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
                 //}
 
-
                 {
-                    RangeOfMotionStep step = new RangeOfMotionStep(ShortWalkOutboundStepIdentifier);
+                    RangeOfMotionStep step = new RangeOfMotionStep(TouchAnywhere1StepIdentifier);
                     String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
                     String title = String.format(titleFormat, limbOption);
                     //step.setTitle(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
                     step.setTitle(title);
-                    step.setSpokenInstruction(step.getTitle());
+                    step.setSpokenInstruction(step.getSpokenInstruction());
+                    step.getSpokenInstruction(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
                     step.setRecorderConfigurationList(recorderConfigList);
                     step.setShouldVibrateOnStart(true);
                     step.setShouldPlaySoundOnStart(true);
                     step.setShouldContinueOnFinish(true);
                     step.setShouldStartTimerAutomatically(true);
-                    step.setStepDuration(computeFallbackDuration(limbOption));
+                    step.setStepDuration(computeFallbackLimbOption(limbOption));
                     step.setlimbOption(limbOption);
                     step.setShouldVibrateOnFinish(true);
                     step.setShouldPlaySoundOnFinish(true);
@@ -194,7 +196,38 @@ public class RangeOfMotionTaskFactory {
                 }
             }
 
+            //This next step is the second 'touch anywhere' on the screen step, which ends device motion recording
             {
+                String title = context.getString(R.string.rsb_knee_range_of_motion_title);
+                String textFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction);
+                String text = String.format(textFormat, limbOption);
+                TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhere2StepIdentifier, title, text);
+                //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
+                //step.setImage(ResUtils.KNEE_MAXIMUM);
+                stepList.add(step);
+            }
+        }
+
+        {
+            TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhere2StepIdentifier);
+            //step.setStepDuration(DEFAULT_COUNTDOWN_DURATION);
+            stepList.add(step);
+        }
+
+        {
+            {
+                List<RecorderConfig> recorderConfigList = new ArrayList<>();
+                if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
+                    recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+                }
+                //if (!optionList.contains(TaskExcludeOption.PEDOMETER)) {
+                //    recorderConfigList.add(new PedometerRecorderConfig(PedometerRecorderIdentifier));
+                //}
+                //if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
+                //    recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
+                //}
+
+                {
                 List<RecorderConfig> recorderConfigList = new ArrayList<>();
                 //if (!optionList.contains(TaskExcludeOption.PEDOMETER)) {
                 //    recorderConfigList.add(new PedometerRecorderConfig(PedometerRecorderIdentifier));
@@ -209,7 +242,8 @@ public class RangeOfMotionTaskFactory {
                 {
                     RangeOfMotionStep step = new RangeOfMotionStep(SpokenInstructionStepIdentifier);
                     step.setTitle(context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction));
-                    step.setSpokenInstruction(step.getTitle());
+                    step.setSpokenInstruction(step.getSpokenInstruction());
+                    step.getSpokenInstruction(context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction));
                     step.setRecorderConfigurationList(recorderConfigList);
                     step.setShouldVibrateOnStart(true);
                     step.setShouldPlaySoundOnStart(true);
@@ -228,7 +262,16 @@ public class RangeOfMotionTaskFactory {
             stepList.add(TaskFactory.makeCompletionStep(context));
         }
 
+
+
         return new OrderedTask(identifier, stepList);
+
+            /**
+             * @return a limb option that can be used if a limb option is not selected
+             */
+            private static int computeFallbackLimbOption(int limbOption) {
+            return (int)(limbOption * DEFAULT_LIMB_OPTION);
+        }
     }
 
     /**
@@ -511,18 +554,18 @@ public class RangeOfMotionTaskFactory {
 
         {
             List<RecorderConfig> recorderConfigList = new ArrayList<>();
-            if (!optionList.contains(TaskExcludeOption.PEDOMETER)) {
-                recorderConfigList.add(new PedometerRecorderConfig(PedometerRecorderIdentifier));
-            }
-            if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
-                recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
-            }
+            //if (!optionList.contains(TaskExcludeOption.PEDOMETER)) {
+            //    recorderConfigList.add(new PedometerRecorderConfig(PedometerRecorderIdentifier));
+            //}
+            //if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
+            //    recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
+            //}
             if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
                 recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
             }
-            if (!optionList.contains(TaskExcludeOption.LOCATION)) {
-                recorderConfigList.add(new LocationRecorderConfig(LocationRecorderIdentifier));
-            }
+            //if (!optionList.contains(TaskExcludeOption.LOCATION)) {
+            //    recorderConfigList.add(new LocationRecorderConfig(LocationRecorderIdentifier));
+            //}
 
             {
                 String titleFormat = context.getString(R.string.rsb_timed_walk_instruction);
@@ -566,12 +609,7 @@ public class RangeOfMotionTaskFactory {
         return new OrderedTask(identifier, stepList);
     }
 
-    /**
-     * @return a step duration value that can be used if number of steps takes too long
-     */
-    private static int computeFallbackDuration(int limbOption) {
-        return (int)(limbOption * DEFAULT_STEP_DURATION_FALLBACK_FACTOR);
-    }
+
 }
 
 
