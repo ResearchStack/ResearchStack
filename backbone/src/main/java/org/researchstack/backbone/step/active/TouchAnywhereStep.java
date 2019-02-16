@@ -6,13 +6,9 @@ import org.researchstack.backbone.ui.step.layout.TouchAnywhereStepLayout;
 /**
  * Created by David Evans, 2019.
  *
- * The `TouchAnywhereStep` class represents a step that displays a label and a
- * countdown for a time equal to its duration.
+ * The `TouchAnywhereStep` class represents a step that enables the user to
+ * begin the task by touching anywhere on the screen.
  *
- * To use the countdown step, set the `duration` property, incorporate it into a
- * task, and present the task with ViewTaskActivity.
- *
- * The countdown step is used in most of ResearchStacks's predefined active tasks.
  */
 
 public class TouchAnywhereStep extends ActiveStep {
@@ -20,7 +16,7 @@ public class TouchAnywhereStep extends ActiveStep {
     public static final int DEFAULT_STEP_DURATION = 5;
 
     /* Default constructor needed for serilization/deserialization of object */
-    CountdownStep() {
+    TouchAnywhereStep() {
         super();
     }
 
@@ -33,9 +29,28 @@ public class TouchAnywhereStep extends ActiveStep {
         setEstimateTimeInMsToSpeakEndInstruction(0); // do not wait to proceed
     }
 
+
+
+    //public class MainActivity extends AppCompatActivity
+    {
+
+    private RelativeLayout layout;
+
     @Override
-    public Class getStepLayoutClass() {
-        return CountdownStepLayout.class;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        layout   = (RelativeLayout)findViewById(R.id.mainLayout);
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // here you can write code to proceed next step.
+                Toast.makeText(TouchAnywhereStep.this, "Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
 
@@ -50,7 +65,7 @@ public class TouchAnywhereStep extends ActiveStep {
        xmlns:tools="http://schemas.android.com/tools"
        android:layout_width="fill_parent"
        android:layout_height="fill_parent"
-       tools:context=".MainActivity"
+       tools:context=".TouchAnywhere"
        android:id="@+id/mainLayout">  //<--- Provide ID
 
 <TextView
@@ -63,7 +78,7 @@ android:layout_centerInParent="true"
 </RelativeLayout>
 
 
-//public class MainActivity extends AppCompatActivity {
+/*//public class MainActivity extends AppCompatActivity {
     
     private RelativeLayout layout;
     
@@ -82,6 +97,6 @@ android:layout_centerInParent="true"
             }
         });
         
-    }
+    }*/
     
 //    }
