@@ -35,8 +35,8 @@ public class TaskFactory {
         public static final String Instruction6StepIdentifier = "instruction6";
         public static final String Instruction7StepIdentifier = "instruction7";
 
-        // Countdown identifiers
-        public static final String CountdownStepIdentifier = "countdown";
+        // Countdown Identifiers
+        public static final String CountdownStepIdentifier  = "countdown";
         public static final String Countdown1StepIdentifier = "countdown1";
         public static final String Countdown2StepIdentifier = "countdown2";
         public static final String Countdown3StepIdentifier = "countdown3";
@@ -46,14 +46,27 @@ public class TaskFactory {
         // Tapping Identifiers
         public static final String TappingStepIdentifier = "tapping";
 
+        //Touch Anywhere Identifiers
+        public static final String TouchAnywhere1StepIdentifier = "touchAnywhere1";
+        public static final String TouchAnywhere2StepIdentifier = "touchAnywhere2";
+
+        // Spoken Instruction Step Identifier
+        public static final String SpokenInstructionStepIdentifier = "spokenInstruction";
+
         // Conclusion Step Identifiers
         public static final String ConclusionStepIdentifier = "conclusion";
 
-        // Active Task Steps Hand Identifier
+        // Active Task Steps Hand Identifiers
         public static final String ActiveTaskMostAffectedHandIdentifier = "mostAffected";
         public static final String ActiveTaskLeftHandIdentifier         = "left";
         public static final String ActiveTaskRightHandIdentifier        = "right";
         public static final String ActiveTaskSkipHandStepIdentifier     = "skipHand";
+
+        // Active Task Steps Limb Identifiers
+        public static final String ActiveTaskMostAffectedLimbIdentifier = "mostAffected";
+        public static final String ActiveTaskLeftLimbIdentifier         = "left";
+        public static final String ActiveTaskRightLimbIdentifier        = "right";
+        public static final String ActiveTaskSkipLimbStepIdentifier     = "skipLimb";
     }
 
     public static CompletionStep makeCompletionStep(Context context) {
@@ -69,6 +82,7 @@ public class TaskFactory {
      * @param durationInSeconds the duration in seconds
      * @return a string formatted to "in X minutes, Y seconds" where x & y are from durationInSeconds
      */
+    
     public static String convertDurationToString(Context context, int durationInSeconds) {
         int minutes = durationInSeconds / 60;
         int seconds = durationInSeconds - minutes * 60;
