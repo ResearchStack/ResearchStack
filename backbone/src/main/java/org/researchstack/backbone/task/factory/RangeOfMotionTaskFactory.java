@@ -145,14 +145,9 @@ public class RangeOfMotionTaskFactory {
             }
         }
         
-        //This next step is the first 'touch anywhere' on the screen step, which initiates device motion recording
+        //This next step is the first 'touch anywhere' on the screen step, which provides spoken instructions
         {
             {
-                List<RecorderConfig> recorderConfigList = new ArrayList<>();
-                if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
-                    recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
-                }
-
                 {
                     TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhere1StepIdentifier);
                     String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
@@ -161,7 +156,7 @@ public class RangeOfMotionTaskFactory {
                     step.setTitle(title);
                     //step.setSpokenInstruction(step.getTitle());
                     step.setSpokenInstruction(step.getSpokenInstruction());
-                    step.getSpokenInstruction(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
+                step.getSpokenInstruction(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
                     step.setRecorderConfigurationList(recorderConfigList);
                     step.setShouldVibrateOnStart(true);
                     step.setShouldPlaySoundOnStart(true);
@@ -178,9 +173,13 @@ public class RangeOfMotionTaskFactory {
                 }
             }
 
-            //This next step is the second 'touch anywhere' on the screen step, which ends device motion recording
+            //This next step is the second 'touch anywhere' on the screen step, which initiates device motion recording
         {
             {
+                List<RecorderConfig> recorderConfigList = new ArrayList<>();
+                if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
+                    recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+                }
                 {
                     TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStep2StepIdentifier);
                     step.setTitle(context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction));
@@ -198,6 +197,7 @@ public class RangeOfMotionTaskFactory {
                     stepList.add(step);
                     
                     /*
+                     //Possibly useful for above?
                      String voiceTitleFormat = context.getString(R.string.rsb_WALK_STAND_VOICE_INSTRUCTION_FORMAT);
                      String voiceTitle = String.format(voiceTitleFormat, TaskFactory.convertDurationToString(context, restDuration));
                      step.setSpokenInstruction(voiceTitle);
