@@ -161,7 +161,7 @@ public class RangeOfMotionTaskFactory {
                     step.setTitle(title);
                     //step.setSpokenInstruction(step.getTitle());
                     step.setSpokenInstruction(step.getSpokenInstruction());
-                step.getSpokenInstruction(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
+                    step.getSpokenInstruction(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
                     step.setRecorderConfigurationList(recorderConfigList);
                     step.setShouldVibrateOnStart(true);
                     step.setShouldPlaySoundOnStart(true);
