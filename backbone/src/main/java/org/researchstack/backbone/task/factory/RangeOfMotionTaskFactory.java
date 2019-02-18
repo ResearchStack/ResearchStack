@@ -144,7 +144,7 @@ public class RangeOfMotionTaskFactory {
             }
         }
 
-        //This next step is the first 'touch anywhere' on the screen step, which provides spoken instructions
+        //This next step is the first 'touch anywhere' on the screen step. When this step begins, the spoken instruction commences automatically. Touching the screen ends the step and the next step begins.
         {
             {
                 {
@@ -170,7 +170,7 @@ public class RangeOfMotionTaskFactory {
                 }
             }
 
-            //This next step is the second 'touch anywhere' on the screen step, which initiates device motion recording
+            //This next step is the second 'touch anywhere' (on the screen) step. When this step begins, the spoken instruction commences automatically and device motion is recorded. Touchng the screen ends the step and the recording of device motion, and the next step begins.
             {
                 {
                     List<RecorderConfig> recorderConfigList = new ArrayList<>();
