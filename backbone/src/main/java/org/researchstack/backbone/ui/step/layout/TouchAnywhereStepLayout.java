@@ -21,21 +21,23 @@ import org.researchstack.backbone.step.active.TouchAnywhereStep;
 
 public class TouchAnywhereStepLayout extends ActiveStepLayout {
 
-    <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:id="@+id/mainLayout">  //<--- Provide ID
+    private RelativeLayout layout;
     
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-    />
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        layout   = (RelativeLayout)findViewById(R.id.rsb_active_step_layout_touch_anywhere);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+    }
     
-    </RelativeLayout>
+}
     
 }
