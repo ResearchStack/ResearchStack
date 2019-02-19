@@ -23,21 +23,5 @@ public class TouchAnywhereStep extends ActiveStep {
         setShouldContinueOnFinish(true);
 
     }
-
-    {
-        private RelativeLayout layout;
-            
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-                
-            layout   = (RelativeLayout)findViewById(R.id.mainLayout);
-            layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
-        }
-    }
 }
 
