@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
