@@ -8,7 +8,7 @@
     android:id="@+id/rsb_active_step_layout_touch_anywhere">
     
     <TextView
-    android:id="@+id/rsb_active_step_layout_touch_anywhere_text"
+    android:id="@+id/rsb_active_step_layout_touch_anywhere_title"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
