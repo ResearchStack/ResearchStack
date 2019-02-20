@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"                           // should this be match_parent?
+    android:layout_height="fill_parent"                          // should this be match_parent?
+//  tools:context=".MainActivity"                                // not sure this is needed?
+    android:id="@+id/rsb_active_step_layout_touch_anywhere">
+    
+    <TextView
+    android:id="@+id/rsb_active_step_layout_touch_anywhere_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    
+    />
+    
+</RelativeLayout>
