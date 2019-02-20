@@ -19,10 +19,9 @@ import org.researchstack.backbone.step.active.RangeOfMotionStep;
  * Created by David Evans, 2019.
  *
  * The RangeOfMotionStepLayout is basically the same as the ActiveStepLayout, except that it
- * limits the duration of the step based on the user's number of steps taken so far
+ * displays the start, maximum, minimum and finish Euler angles
  *
- * It also shows an indefinite progress dialog, since we don't know if it will end based on
- * the stepDuration or the numberOfStepsPerLeg
+ *
  */
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
@@ -142,45 +141,15 @@ else
 
 }
 
+
+
+SensorManager.getQuaternionFromVector(Q, values);
+float[] quaternion_w = Q[0];
+float[] quaternion_x = Q[1];
+float[] quaternion_y = Q[2];
+float[] quaternion_z = Q[3];
+
 /*
- / Java program to demonstrate working
- // of java.lang.Math.asin() method
- import java.lang.Math;
- 
- class Gfg {
- 
- // driver code
- public static void main(String args[])
- {
- double a = Math.PI;
- 
- // Output is NaN, because Math.PI gives 3.141 value
- // greater than 1
- System.out.println(Math.asin(a));
- 
- // convert Math.PI to radians
- double b = Math.toRadians(a);
- 
- System.out.println(Math.asin(b));
- 
- double c = 1.0;
- System.out.println(Math.asin(c));
- 
- double d = 0.0;
- System.out.println(Math.asin(d));
- 
- double e = -1.0;
- System.out.println(Math.asin(e));
- 
- double f = 1.5;
- 
- // value of f does not lie in between -1 and 1
- // so output is NaN
- System.out.println(Math.asin(f));
-    }
- }
- 
- */
 
 @implementation ORKRangeOfMotionStepViewController
 
