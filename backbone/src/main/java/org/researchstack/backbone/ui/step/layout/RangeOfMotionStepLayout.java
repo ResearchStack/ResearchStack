@@ -7,27 +7,38 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.View;
+import android.content.Context;
+import android.graphics.Rect;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import java.lang.Math;
 
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.RangeOfMotionResult;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.active.recorder.AudioRecorder;
-import org.researchstack.backbone.step.active.recorder.PedometerRecorder;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
+import org.researchstack.backbone.step.active.recorder.AudioRecorder;
+import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
 
 /**
  * Created by David Evans, 2019.
  *
  * The RangeOfMotionStepLayout is basically the same as the ActiveStepLayout, except that it
- * displays the start, maximum, minimum and finish Euler angles
+ * calculates the start, maximum, minimum and finish (Euler angles) results
  *
  *
  */
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
-    private RangeOfMotionStep rangeOfMotionStep;
-    private BroadcastReceiver pedometerReceiver;
+    protected RangeOfMotionStep rangeOfMotionStep;
+    protected RangeOfMotionResult tappingResult;
+    private BroadcastReceiver deviceMotionReceiver;
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
@@ -65,7 +76,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
         super.registerRecorderBroadcastReceivers(appContext);
-        pedometerReceiver = new BroadcastReceiver() {
+        deviceMotionReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent == null || intent.getAction() == null) {
@@ -90,14 +101,14 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         };
         IntentFilter intentFilter = new IntentFilter(AudioRecorder.BROADCAST_SAMPLE_ACTION);
         LocalBroadcastManager.getInstance(appContext)
-                .registerReceiver(pedometerReceiver, intentFilter);
+                .registerReceiver(deviceMotionReceiver, intentFilter);
     }
 
     @Override
     protected void unregisterRecorderBroadcastReceivers() {
         super.unregisterRecorderBroadcastReceivers();
         Context appContext = getContext().getApplicationContext();
-        LocalBroadcastManager.getInstance(appContext).unregisterReceiver(pedometerReceiver);
+        LocalBroadcastManager.getInstance(appContext).unregisterReceiver(deviceMotionReceiver);
     }
 }
 
@@ -108,7 +119,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 #define allOrientationsForRoll(x, w, y, z) (atan2(2.0 * (y*w - x*z), 1.0 - 2.0 * (y*y + z*z)))
 #define allOrientationsForYaw(x, w, y, z) (asin(2.0 * (x*y - w*z)))
 
- The conversions below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles ) need to be checked with above
+ The conversion equations below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles ) need to be checked with above
  */
 
 
