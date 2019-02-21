@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
@@ -34,12 +35,10 @@ public class TouchAnywhereStepLayout extends ActiveStepLayout {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, null);
             }
         });
         
     }
-    
-}
     
 }
