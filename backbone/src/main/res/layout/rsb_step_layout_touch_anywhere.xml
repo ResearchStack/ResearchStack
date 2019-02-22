@@ -10,7 +10,7 @@
     android:id="@+id/rsb_active_step_layout_touch_anywhere_title"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
+    android:layout_centerHorizontal="true"
     
 />
     
