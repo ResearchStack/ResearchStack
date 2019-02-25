@@ -112,26 +112,19 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 }
 
+
+
 /*
- From iOS:
- #define radiansToDegrees(radians) ((radians) * 180.0 / M_PI)
-#define allOrientationsForPitch(x, w, y, z) (atan2(2.0 * (x*w + y*z), 1.0 - 2.0 * (x*x + z*z)))
-#define allOrientationsForRoll(x, w, y, z) (atan2(2.0 * (y*w - x*z), 1.0 - 2.0 * (y*y + z*z)))
-#define allOrientationsForYaw(x, w, y, z) (asin(2.0 * (x*y - w*z)))
-
- The conversion equations below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles ) need to be checked with above
- */
-
-
-
+  The conversion equations below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles ) need to be checked with above
+ 
+ 
 public static void quaternionToEulerAngle(const Quaternion q, double roll, double pitch, double yaw)
 {
-// convert radians to degrees
-double radiansToDegrees = rad * 180.0 / Math.PI;
+
 
 // or https://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#toDegrees(double)
 
-public static double toDegrees(double angrad)
+
 
 // Pitch (x-axis rotation)
 public static double sinp_cosy = +2.0 * (q.x() * q.w() + q.y() * q.z());
@@ -152,13 +145,52 @@ else
 
 }
 
+ */
+
+//Based on iOS:
+
+@Override
+
+// convert radians to degrees
+// can use: double radiansToDegrees = rad * 180.0 / Math.PI;
+
+public double allOrientationsForPitch(q.x, q.w, q.y, q.z) = (Math.atan2(2.0 * (q.x*q.w + q.y*q.z), 1.0 - 2.0 * (q.x*q.x + q.z*q.z)))
+
+public double allOrientationsForRoll(q.x, q.w, q.y, q.z) = (Math.atan2(2.0 * (q.y*q.w - q.x*q.z), 1.0 - 2.0 * (q.y*q.y + q.z*q.z)))
+
+public double allOrientationsForYaw(q.x, q.w, q.y, q.z) = (Math.asin(2.0 * (q.x*q.y - q.w*q.z)))
 
 
-SensorManager.getQuaternionFromVector(Q, values);
-float[] quaternion_w = Q[0];
-float[] quaternion_x = Q[1];
-float[] quaternion_y = Q[2];
-float[] quaternion_z = Q[3];
+/*
+ When the device is in Portrait mode, we need to get the attitude's pitch
+ to determine the device's angle. attitude.pitch doesn't return all
+ orientations, so we use the attitude's quaternion to calculate the
+ Euler angle.
+ */
+
+public static final int sensor.getType() = Sensor.TYPE_ROTATION_VECTOR
+
+public double getDeviceAngleInDegreesFromAttitude:
+    if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            double angle;
+            SensorManager.getQuaternionFromVector(float[] Quarternion, values); {
+            double[] q.w = Quaternion.w;
+            double[] q.x = Quaternion.x;
+            double[] q.y = Quaternion.y;
+            double[] q.z = Quaternion.z;
+            angle = Math.toDegrees(allOrientationsForRoll(w, x, y, z));
+            }
+    else {
+            SensorManager.getQuaternionFromVector(float[] Quarternion, values); {
+            double[] q.w = Quaternion.w;
+            double[] q.x = Quaternion.x;
+            double[] q.y = Quaternion.y;
+            double[] q.z = Quaternion.z;
+            angle = Math.toDegrees(allOrientationsForPitch(w, x, y, z));
+            }
+    return angle;
+        }
+    }
 
 /*
 
@@ -218,7 +250,7 @@ float[] quaternion_z = Q[3];
  to determine the device's angle. attitude.pitch doesn't return all
  orientations, so we use the attitude's quaternion to calculate the
  angle.
- */
+
         - (double)getDeviceAngleInDegreesFromAttitude:(CMAttitude *)attitude {
         if (!_orientation) {
         _orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -240,8 +272,9 @@ float[] quaternion_z = Q[3];
         return angle;
         }
 
+ */
 
-        #pragma mark - ORKActiveTaskViewController
+#pragma mark - ORKActiveTaskViewController
 
         - (ORKResult *)result {
         ORKStepResult *stepResult = [super result];
