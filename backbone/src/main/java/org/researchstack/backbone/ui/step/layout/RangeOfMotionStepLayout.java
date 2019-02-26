@@ -37,7 +37,7 @@ import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     protected RangeOfMotionStep rangeOfMotionStep;
-    protected RangeOfMotionResult tappingResult;
+    protected RangeOfMotionResult rangeOfMotionResult;
     private BroadcastReceiver deviceMotionReceiver;
 
     public RangeOfMotionStepLayout(Context context) {
@@ -147,12 +147,6 @@ else
 
  */
 
-//Based on iOS:
-
-@Override
-
-// convert radians to degrees
-// can use: double radiansToDegrees = rad * 180.0 / Math.PI;
 
 public double allOrientationsForPitch(w, x, y, z) = (Math.atan2(2.0 * (q.x*q.w + q.y*q.z), 1.0 - 2.0 * (q.x*q.x + q.z*q.z)))
 
@@ -196,13 +190,14 @@ _startAngle = ([this getDeviceAngleInDegreesFromAttitude:_referenceAttitude]);
 
 //This calculates the current device orientation relative to the start orientation,
 //by multiplying by the inverse of the current orientation
-- (void)deviceMotionRecorderDidUpdateWithMotion:(CMDeviceMotion *)motion {
-if (!_referenceAttitude) {
-_referenceAttitude = motion.attitude;
-}
-CMAttitude *currentAttitude = [motion.attitude copy];
+- (void)deviceMotionRecorderDidUpdateWithMotion:
+    event.sensor.getType() = Sensor.TYPE_ROTATION_VECTOR {
+    if (!_referenceAttitude) {
+        _referenceAttitude = motion.attitude;
+    }
+    CMAttitude *currentAttitude = [motion.attitude copy];
 
-[currentAttitude multiplyByInverseOfAttitude:_referenceAttitude];
+    [currentAttitude multiplyByInverseOfAttitude:_referenceAttitude];
 
 double angle = [self getDeviceAngleInDegreesFromAttitude:currentAttitude];
 
@@ -221,7 +216,6 @@ boolean shiftAngleRange = angle > 90 && angle <= 180;
     [this calculateAndSetAngles];
 }
 
-
 /*
  When the device is in Portrait mode, we need to get the attitude's pitch
  to determine the device's angle. attitude.pitch doesn't return all
@@ -229,11 +223,9 @@ boolean shiftAngleRange = angle > 90 && angle <= 180;
  Euler angle.
  */
 
-@Override
 public void onSensorChanged(SensorEvent event) {
     if (event.sensor.getType() = Sensor.TYPE_ROTATION_VECTOR)
     return;
-
 public double getDeviceAngleInDegreesFromAttitude:
     if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             double angle;
@@ -242,9 +234,9 @@ public double getDeviceAngleInDegreesFromAttitude:
             double[] q.x = Quaternion.x;
             double[] q.y = Quaternion.y;
             double[] q.z = Quaternion.z;
-            angle = Math.toDegrees(allOrientationsForRoll(w, x, y, z));
+angle = Math.toDegrees(allOrientationsForRoll(w, x, y, z)); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
             }
-    else {
+    else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             SensorManager.getQuaternionFromVector(float[] Quarternion, values); {
             double[] q.w = Quaternion.w;
             double[] q.x = Quaternion.x;
@@ -280,6 +272,8 @@ return stepResult;
 
 /*
 
+ From iOS:
+ 
 @implementation ORKRangeOfMotionStepViewController
 
         - (void)viewDidLoad {
