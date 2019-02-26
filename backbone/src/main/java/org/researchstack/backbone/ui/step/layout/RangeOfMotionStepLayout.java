@@ -28,8 +28,8 @@ import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
 /**
  * Created by David Evans, 2019.
  *
- * The RangeOfMotionStepLayout is basically the same as the ActiveStepLayout, except that it
- * calculates the start, maximum, minimum and finish (Euler angles) results
+ * The RangeOfMotionStepLayout is essentially the same as the ActiveStepLayout, except that it
+ * calculates the start, maximum, minimum and finish (Euler) angle results
  *
  *
  */
@@ -154,11 +154,72 @@ else
 // convert radians to degrees
 // can use: double radiansToDegrees = rad * 180.0 / Math.PI;
 
-public double allOrientationsForPitch(q.x, q.w, q.y, q.z) = (Math.atan2(2.0 * (q.x*q.w + q.y*q.z), 1.0 - 2.0 * (q.x*q.x + q.z*q.z)))
+public double allOrientationsForPitch(w, x, y, z) = (Math.atan2(2.0 * (q.x*q.w + q.y*q.z), 1.0 - 2.0 * (q.x*q.x + q.z*q.z)))
 
-public double allOrientationsForRoll(q.x, q.w, q.y, q.z) = (Math.atan2(2.0 * (q.y*q.w - q.x*q.z), 1.0 - 2.0 * (q.y*q.y + q.z*q.z)))
+public double allOrientationsForRoll(w, x, y, z) = (Math.atan2(2.0 * (q.y*q.w - q.x*q.z), 1.0 - 2.0 * (q.y*q.y + q.z*q.z)))
 
-public double allOrientationsForYaw(q.x, q.w, q.y, q.z) = (Math.asin(2.0 * (q.x*q.y - q.w*q.z)))
+public double allOrientationsForYaw(w, x, y, z) = (Math.asin(2.0 * (q.x*q.y - q.w*q.z)))
+
+
+
+
+- (void)viewDidLoad {
+[super viewDidLoad];
+_contentView = [ORKRangeOfMotionContentView new];
+_contentView.translatesAutoresizingMaskIntoConstraints = NO;
+self.activeStepView.activeCustomView = _contentView;
+_gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+[self.activeStepView addGestureRecognizer:_gestureRecognizer];
+}
+
+
+//This function records the angle of the device when the screen is tapped
+- (void)handleTap:(UIGestureRecognizer *)sender {
+[self calculateAndSetAngles];
+[self finish];
+}
+
+
+public void calculateAndSetAngles {
+_startAngle = ([this getDeviceAngleInDegreesFromAttitude:_referenceAttitude]);
+
+
+//This function calculates maximum and minimum angles recorded by the device
+    if (_newAngle > _maxAngle) {
+    _maxAngle = _newAngle;
+    }
+    if (_minAngle == 0.0 || _newAngle < _minAngle) {
+    _minAngle = _newAngle;
+    }
+}
+
+
+//This calculates the current device orientation relative to the start orientation,
+//by multiplying by the inverse of the current orientation
+- (void)deviceMotionRecorderDidUpdateWithMotion:(CMDeviceMotion *)motion {
+if (!_referenceAttitude) {
+_referenceAttitude = motion.attitude;
+}
+CMAttitude *currentAttitude = [motion.attitude copy];
+
+[currentAttitude multiplyByInverseOfAttitude:_referenceAttitude];
+
+double angle = [self getDeviceAngleInDegreesFromAttitude:currentAttitude];
+
+
+
+//This function shifts the range of angles reported by the device from +/-180 degrees to
+//-90 to +270 degrees, which should be sufficient to cover all achievable knee and shoulder ranges of motion
+boolean shiftAngleRange = angle > 90 && angle <= 180;
+    if (shiftAngleRange) {
+        double _newAngle = fabs(angle) - 360;
+        }
+    else {
+        double _newAngle = angle;
+        }
+
+    [this calculateAndSetAngles];
+}
 
 
 /*
@@ -168,7 +229,10 @@ public double allOrientationsForYaw(q.x, q.w, q.y, q.z) = (Math.asin(2.0 * (q.x*
  Euler angle.
  */
 
-public static final int sensor.getType() = Sensor.TYPE_ROTATION_VECTOR
+@Override
+public void onSensorChanged(SensorEvent event) {
+    if (event.sensor.getType() = Sensor.TYPE_ROTATION_VECTOR)
+    return;
 
 public double getDeviceAngleInDegreesFromAttitude:
     if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -191,6 +255,28 @@ public double getDeviceAngleInDegreesFromAttitude:
     return angle;
         }
     }
+}
+
+
+#pragma mark - ORKActiveTaskViewController
+
+- (ORKResult *)result {
+ORKStepResult *stepResult = [super result];
+
+ORKRangeOfMotionResult *result = [[ORKRangeOfMotionResult alloc] initWithIdentifier:self.step.identifier];
+
+//result.start = 90.0 - _startAngle;
+result.start = _startAngle; // Android's zero orientation is in portrait (perpendicular to the ground); whereas iOs is paralell with the ground
+result.finish = result.start - _newAngle;
+//Because the task uses pitch in the direction opposite to the original device axes (i.e. right hand rule), maximum and minimum angles are reported the 'wrong' way around for the knee and shoulder tasks
+result.minimum = result.start - _maxAngle;
+result.maximum = result.start - _minAngle;
+result.range = fabs(result.maximum - result.minimum);
+
+stepResult.results = [self.addedResults arrayByAddingObject:result] ? : @[result];
+
+return stepResult;
+}
 
 /*
 
