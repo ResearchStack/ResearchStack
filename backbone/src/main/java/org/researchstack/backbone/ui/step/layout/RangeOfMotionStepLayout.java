@@ -148,11 +148,11 @@ else
  */
 
 
-public double allOrientationsForPitch(w, x, y, z) = (Math.atan2(2.0 * (q.x*q.w + q.y*q.z), 1.0 - 2.0 * (q.x*q.x + q.z*q.z)))
+public double allOrientationsForPitch(w, x, y, z) = (Math.atan2(2.0 * (quaternion_x*quaternion_w + quaternion_y*quaternion_z), 1.0 - 2.0 * (quaternion_x*quaternion_x + quaternion_z*quaternion_z)))
 
-public double allOrientationsForRoll(w, x, y, z) = (Math.atan2(2.0 * (q.y*q.w - q.x*q.z), 1.0 - 2.0 * (q.y*q.y + q.z*q.z)))
+public double allOrientationsForRoll(w, x, y, z) = (Math.atan2(2.0 * (quaternion_y*quaternion_w - quaternion_x*quaternion_z), 1.0 - 2.0 * (quaternion_y*quaternion_y + quaternion_z*quaternion_z)))
 
-public double allOrientationsForYaw(w, x, y, z) = (Math.asin(2.0 * (q.x*q.y - q.w*q.z)))
+public double allOrientationsForYaw(w, x, y, z) = (Math.asin(2.0 * (quaternion_x*quaternion_y - quaternion_w*quaternion_z)))
 
 
 
@@ -202,7 +202,6 @@ _startAngle = ([this getDeviceAngleInDegreesFromAttitude:_referenceAttitude]);
 double angle = [self getDeviceAngleInDegreesFromAttitude:currentAttitude];
 
 
-
 //This function shifts the range of angles reported by the device from +/-180 degrees to
 //-90 to +270 degrees, which should be sufficient to cover all achievable knee and shoulder ranges of motion
 boolean shiftAngleRange = angle > 90 && angle <= 180;
@@ -229,19 +228,19 @@ public void onSensorChanged(SensorEvent event) {
 public double getDeviceAngleInDegreesFromAttitude:
     if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             double angle;
-            SensorManager.getQuaternionFromVector(float[] Quarternion, values); {
-            double[] q.w = Quaternion.w;
-            double[] q.x = Quaternion.x;
-            double[] q.y = Quaternion.y;
-            double[] q.z = Quaternion.z;
-angle = Math.toDegrees(allOrientationsForRoll(w, x, y, z)); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
+            SensorManager.getQuaternionFromVector(double[] Quarternion, values); {
+            double quaternion_w = Quaternion[0];
+            double quaternion_x = Quaternion[1];
+            double quaternion_y = Quaternion[2];
+            double quaternion_z = Quaternion[3];
+            angle = Math.toDegrees(allOrientationsForRoll(w, x, y, z)); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
             }
     else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            SensorManager.getQuaternionFromVector(float[] Quarternion, values); {
-            double[] q.w = Quaternion.w;
-            double[] q.x = Quaternion.x;
-            double[] q.y = Quaternion.y;
-            double[] q.z = Quaternion.z;
+            SensorManager.getQuaternionFromVector(double[] Quarternion, values); {
+            double quaternion_w = Quaternion[0];
+            double quaternion_x = Quaternion[1];
+            double quaternion_y = Quaternion[2];
+            double quaternion_z = Quaternion[3];
             angle = Math.toDegrees(allOrientationsForPitch(w, x, y, z));
             }
     return angle;
