@@ -123,13 +123,13 @@ or https://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#toDegrees(doubl
 
 //public static void allOrientationsForPitch(double quaternion_w, double quaternion_x, double quaternion_y, double quaternion_z)
 
-double allOrientationsForPitch(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.atan2(2.0 * (quaternion_x * quaternion_w + quaternion_y * quaternion_z), 1.0 - 2.0 * (quaternion_x * quaternion_x + quaternion_z * quaternion_z)))
+public double allOrientationsForPitch(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.atan2(2.0 * (quaternion_x * quaternion_w + quaternion_y * quaternion_z), 1.0 - 2.0 * (quaternion_x * quaternion_x + quaternion_z * quaternion_z)))
 
-double allOrientationsForRoll(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.atan2(2.0 * (quaternion_y * quaternion_w - quaternion_x * quaternion_z), 1.0 - 2.0 * (quaternion_y * quaternion_y + quaternion_z * quaternion_z)))
+public double allOrientationsForRoll(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.atan2(2.0 * (quaternion_y * quaternion_w - quaternion_x * quaternion_z), 1.0 - 2.0 * (quaternion_y * quaternion_y + quaternion_z * quaternion_z)))
 
-//Yaw is not needed with knee and shoulder tasks, but will be in other RoM tasks
-//double allOrientationsForYaw(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.asin(2.0 * (quaternion_x * quaternion_y - quaternion_w * quaternion_z)))
+//Yaw is not needed with the current knee and shoulder tasks, but will be in other RoM tasks
 
+//public double allOrientationsForYaw(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.asin(2.0 * (quaternion_x * quaternion_y - quaternion_w * quaternion_z)))
 
 
 
@@ -145,8 +145,8 @@ _gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:
 
 //This function records the angle of the device when the screen is tapped
 - (void)handleTap:(UIGestureRecognizer *)sender {
-[self calculateAndSetAngles];
-[self finish];
+[this calculateAndSetAngles];
+[this finish];
 }
 
 
@@ -175,7 +175,7 @@ _startAngle = ([this getDeviceAngleInDegreesFromAttitude:_referenceAttitude]);
 
     [currentAttitude multiplyByInverseOfAttitude:_referenceAttitude];
 
-double angle = [self getDeviceAngleInDegreesFromAttitude:currentAttitude];
+double angle = [this getDeviceAngleInDegreesFromAttitude:currentAttitude];
 
 
 //This function shifts the range of angles reported by the device from +/-180 degrees to
