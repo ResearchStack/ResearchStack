@@ -115,44 +115,20 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
 /*
-  The conversion equations below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles ) need to be checked with above
- 
- 
-public static void quaternionToEulerAngle(const Quaternion q, double roll, double pitch, double yaw)
-{
+  The conversion equations below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles )
 
-
-// or https://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#toDegrees(double)
-
-
-
-// Pitch (x-axis rotation)
-public static double sinp_cosy = +2.0 * (q.x() * q.w() + q.y() * q.z());
-public static double cosp_cosy = +1.0 - 2.0 * (q.x() * q.x() + q.z() * q.z());
-pitch = Math.atan2(sinp_cosy, cosp_cosy);
-
-// Roll (y-axis rotation)
-public static double sinr_cosy = +2.0 * (q.y() * q.w() + q.x() * q.z());
-public static double cosr_cosy = +1.0 - 2.0 * (q.y() * q.y() + q.z() * q.z());
-roll = Math.atan2(sinr_cosy, cosr_cosy);
-
-// Yaw (z-axis rotation)
-public static double siny = +2.0 * (q.x() * q.y() - q.w() * q.z());
-if (fabs(siny) >= 1)
-   yaw = copysign(Math.PI / 2, siny); // use 90 degrees if out of range
-else
-   yaw = Math.asin(siny);
-
-}
-
+or https://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#toDegrees(double)
  */
 
 
-public double allOrientationsForPitch(w, x, y, z) = (Math.atan2(2.0 * (quaternion_x*quaternion_w + quaternion_y*quaternion_z), 1.0 - 2.0 * (quaternion_x*quaternion_x + quaternion_z*quaternion_z)))
+//public static void allOrientationsForPitch(double quaternion_w, double quaternion_x, double quaternion_y, double quaternion_z)
 
-public double allOrientationsForRoll(w, x, y, z) = (Math.atan2(2.0 * (quaternion_y*quaternion_w - quaternion_x*quaternion_z), 1.0 - 2.0 * (quaternion_y*quaternion_y + quaternion_z*quaternion_z)))
+double allOrientationsForPitch(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.atan2(2.0 * (quaternion_x * quaternion_w + quaternion_y * quaternion_z), 1.0 - 2.0 * (quaternion_x * quaternion_x + quaternion_z * quaternion_z)))
 
-public double allOrientationsForYaw(w, x, y, z) = (Math.asin(2.0 * (quaternion_x*quaternion_y - quaternion_w*quaternion_z)))
+double allOrientationsForRoll(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.atan2(2.0 * (quaternion_y * quaternion_w - quaternion_x * quaternion_z), 1.0 - 2.0 * (quaternion_y * quaternion_y + quaternion_z * quaternion_z)))
+
+//Yaw is not needed with knee and shoulder tasks, but will be in other RoM tasks
+//double allOrientationsForYaw(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.asin(2.0 * (quaternion_x * quaternion_y - quaternion_w * quaternion_z)))
 
 
 
@@ -225,7 +201,7 @@ boolean shiftAngleRange = angle > 90 && angle <= 180;
 public void onSensorChanged(SensorEvent event) {
     if (event.sensor.getType() = Sensor.TYPE_ROTATION_VECTOR)
     return;
-public double getDeviceAngleInDegreesFromAttitude:
+public static double getDeviceAngleInDegreesFromAttitude:
     if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             double angle;
             SensorManager.getQuaternionFromVector(double[] Quarternion, values); {
@@ -233,7 +209,7 @@ public double getDeviceAngleInDegreesFromAttitude:
             double quaternion_x = Quaternion[1];
             double quaternion_y = Quaternion[2];
             double quaternion_z = Quaternion[3];
-            angle = Math.toDegrees(allOrientationsForRoll(w, x, y, z)); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
+            angle = Math.toDegrees(allOrientationsForRoll(quaternion_w, quaternion_x, quaternion_y, quaternion_z)); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
             }
     else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             SensorManager.getQuaternionFromVector(double[] Quarternion, values); {
@@ -241,7 +217,7 @@ public double getDeviceAngleInDegreesFromAttitude:
             double quaternion_x = Quaternion[1];
             double quaternion_y = Quaternion[2];
             double quaternion_z = Quaternion[3];
-            angle = Math.toDegrees(allOrientationsForPitch(w, x, y, z));
+            angle = Math.toDegrees(allOrientationsForPitch(quaternion_w, quaternion_x, quaternion_y, quaternion_z));
             }
     return angle;
         }
