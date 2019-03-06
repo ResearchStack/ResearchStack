@@ -26,12 +26,9 @@ android {
     }
     resourcePrefix 'rsfch_'
     compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildToolsVersion '28.0.3'
 }
 
 Properties properties = new Properties()
@@ -73,6 +70,7 @@ dependencies {
     implementation project(':foundation')
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.3'
     implementation 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    implementation "com.android.support:support-v4:$support_library_version"
     implementation 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'
     implementation 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
     implementation 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'

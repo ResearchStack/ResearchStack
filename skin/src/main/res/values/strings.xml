@@ -113,7 +113,7 @@
     <string name="rss_settings_general_software_notices">Software Notices</string>
     <string name="rss_settings_general_leave_study">Leave Study</string>
     <string name="rss_settings_general_join_study">Join Study</string>
-    <string name="rss_settings_version">Build number %1$s (%2$s)</string>
+    <string name="rss_settings_version">Build number %1$s (%2$d)</string>
     <string name="rss_settings_version_unknown">Unknown version</string>
     <string name="rss_settings_dialog_leave_study">Are you sure you want to leave the study? This
         action cannot be undone and you will need to provide consent in order to re-enroll.

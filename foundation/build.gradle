@@ -27,6 +27,7 @@ android {
         }
     }
 
+    resourcePrefix 'rsff_'
 }
 
 Properties properties = new Properties()
