@@ -2,6 +2,7 @@ package org.researchstack.backbone.answerformat;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.researchstack.foundation.components.survey.answerformat.EmailAnswerFormat;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
