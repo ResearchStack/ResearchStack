@@ -9,7 +9,6 @@ version = research_stack_version
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.3"
 
     lintOptions {
         warning "InvalidPackage"
@@ -88,6 +87,7 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    implementation "com.android.support:support-v4:$support_library_version"
     implementation 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'
     implementation 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
     implementation 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
