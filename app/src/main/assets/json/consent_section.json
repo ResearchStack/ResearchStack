@@ -1,0 +1,138 @@
+{
+  "documentProperties": {
+    "htmlDocument": "asthma_fullconsent",
+    "investigatorShortDescription": "Mount Sinai",
+    "investigatorLongDescription": "Mount Sinai and its partners",
+    "htmlContent": "consent_section_html_sharing_rsch",
+    "requiresSignature": true,
+    "requiresName": true,
+    "requiresBirthdate": true
+  },
+  "quiz": {
+    "questions": [
+      {
+        "identifier": "instruction",
+        "prompt": "Comprehension",
+        "text": "Let's do a quick and simple test of your understanding of this study.",
+        "type": "instruction"
+      },
+      {
+        "identifier": "purpose",
+        "prompt": "What is the purpose of this study?",
+        "type": "singleChoiceText",
+        "textChoices": [
+          "Understand the fluctuations of Parkinson disease symptoms",
+          "Treating Parkinson disease"
+        ],
+        "expectedAnswer": "0"
+      },
+      {
+        "identifier": "question1",
+        "prompt": "If my asthma gets worse during the study I should stop relying on the app and see my doctor.",
+        "type": "boolean",
+        "positiveFeedback": "The app does not replace your usual medical care. Continue asthma care with your usual doctor at all times and let him/her know you are in the study. If your asthma is getting worse at any time, including during the study, please contact your doctor.",
+        "negativeFeedback": "The app does not replace your usual medical care. Continue asthma care with your usual doctor at all times and let him/her know you are in the study. If your asthma is getting worse at any time, including during the study, please contact your doctor.",
+        "expectedAnswer": "true"
+      },
+      {
+        "identifier": "question2",
+        "prompt": "Once I start participating in the study, I am free to withdraw at any time but the data I contributed will not be deleted.",
+        "type": "boolean",
+        "positiveFeedback": "You are free to withdraw at any time from the study. To withdraw, choose “Leave Study” on the app's “Profile” page, delete the app from your phone, or contact the researchers. Data you have contributed up until you withdraw will stay in the study but no further data will be gathered.",
+        "negativeFeedback": "You are free to withdraw at any time from the study. To withdraw, choose “Leave Study” on the app's “Profile” page, delete the app from your phone, or contact the researchers. Data you have contributed up until you withdraw will stay in the study but no further data will be gathered.",
+        "expectedAnswer": "true"
+      },
+      {
+        "identifier": "question3",
+        "prompt": "This app is a research study and not a commercial application.",
+        "positiveFeedback": "This is a research study and not a commercial application.",
+        "negativeFeedback": "This is a research study and not a commercial application.",
+        "type": "boolean",
+        "expectedAnswer": "true"
+      }
+    ],
+    "successTitle": "Great Job!",
+    "successMessage": "You answered all of the questions correctly. Tap Next to continue.",
+    "failureTitle": "Try again",
+    "failureMessage": "Unfortunately, you answered one or more questions incorrectly on the quiz. We need you to repeat the quiz to make sure you understand what you need to know about the study. Please read the consent information and take the quiz again.",
+    "allowedFailures": 0,
+    "incorrectIcon": "rss_ic_quiz_retry",
+    "correctIcon": "rss_ic_quiz_valid"
+  },
+  "sections": [
+    {
+      "sectionType": "overview",
+      "sectionSummary": "Mount Sinai is doing a research study about whether an asthma app on your iPhone will help you to monitor your asthma. This simple walkthrough will help you to understand the study, the impact it will have on your life, and will allow you to provide consent to participate.",
+      "sectionHtmlContent": "consent_section_html_welcome"
+    },
+    {
+      "sectionType": "custom",
+      "sectionTitle": "We'll Test Your Understanding",
+      "sectionSummary": "We’ll walk you through some information on our Asthma research study, and  provide a short quiz at the end to confirm your understanding.",
+      "sectionHtmlContent": "consent_section_html_quiz_headsup"
+    },
+    {
+      "sectionType": "dataGathering",
+      "sectionSummary": "This study will gather location and sensor data from your phone and personal fitness devices (such as Apple Watch) with your permission. You can choose not to do this and still participate in the study.",
+      "sectionHtmlContent": "consent_section_html_dataprocessing"
+    },
+    {
+      "sectionType": "privacy",
+      "sectionSummary": "To protect your privacy, we will use a random code instead of your name on your study data.",
+      "sectionHtmlContent": "consent_section_html_protectingdata"
+    },
+    {
+      "sectionType": "dataUse",
+      "sectionTitle": "Data Use",
+      "sectionSummary": "We will not share your information with any commercial third parties such as advertisers.",
+      "sectionHtmlContent": "consent_section_html_datause"
+    },
+    {
+      "sectionType": "timeCommitment",
+      "sectionSummary": "Your participation in this study will average 15 minutes each week for 6 months.",
+      "sectionHtmlContent": "consent_section_html_time"
+    },
+    {
+      "sectionType": "studySurvey",
+      "sectionTitle": "Study Tasks",
+      "sectionSummary": "You will answer a few simple daily and weekly questions about your asthma. These questions should only take a few minutes.",
+      "sectionHtmlContent": "consent_section_html_study_survey"
+    },
+    {
+      "sectionType": "studyTasks",
+      "sectionTitle": "Potential Benefits",
+      "sectionSummary": "You could learn more about asthma and monitoring your health that may help you to be healthier. It is possible that neither you nor others may benefit from taking part in this research.",
+      "sectionHtmlContent": "consent_section_html_study_task"
+    },
+    {
+      "sectionType": "withdrawing",
+      "sectionTitle": "Withdrawing",
+      "sectionSummary": "There will be no penalty to you if you decide not to take part in this study. You can withdraw your consent and discontinue participation at any time.",
+      "sectionHtmlContent": "consent_section_html_withdrawing"
+    },
+    {
+      "sectionType": "custom",
+      "sectionTitle": "Secure Database",
+      "sectionSummary": "Your study data will be stored in a manner that maintains strict information technology procedures to safeguard your information and to prevent improper access.",
+      "sectionImage": "rsb_consent_section_potential_benefits_alt",
+      "sectionHtmlContent": "consent_section_html_security",
+      "sectionAnimationUrl": "10_PotentialBenifits_Alt"
+    },
+    {
+      "sectionType": "custom",
+      "sectionTitle": "Issues to Consider",
+      "sectionSummary": "This Asthma app does not replace your usual medical care. Continue your asthma care with your usual doctor.",
+      "sectionImage": "rsb_consent_section_visiting_doctor",
+      "sectionHtmlContent": "consent_section_html_talktodoctor",
+      "sectionAnimationUrl": "11_VisitingDoctor"
+    },
+    {
+      "sectionType": "custom",
+      "sectionTitle": "Follow Up",
+      "sectionSummary": "Study investigators may contact you as needed for feedback and further mobile health app development needs if you opt in at the conclusion of the study.",
+      "sectionImage": "rsb_consent_section_recontact",
+      "sectionHtmlContent": "consent_section_html_recontact",
+      "sectionAnimationUrl": "12_Recontact"
+    }
+  ]
+}

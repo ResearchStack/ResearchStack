@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">SampleApp</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="task_inital_toolbar_title">Initial Task</string>
+    <string name="yes_human">Yes, I am a human.</string>
+    <string name="yes_robot">No, I am a robot but I am sentient and concerned about my health.
+    </string>
+    <string name="no_alien">No, I’m an alien.</string>
+    <string name="inclusion_question">Were you born somewhere on planet earth and are you a
+        human-ish?
+    </string>
+    <string name="sample_notification_example">Notification Permission</string>
+    <string name="grant">Grant</string>
+</resources>

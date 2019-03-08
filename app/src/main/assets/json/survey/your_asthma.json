@@ -1,0 +1,337 @@
+{
+  "identifier": "YourAsthma",
+  "type": "Survey",
+  "name": "YourAsthma",
+  "elements": [
+    {
+      "identifier": "asthma_gets_worse_with",
+      "prompt": "My asthma gets worse with (check all that apply):",
+      "uiHint": "MultiValueConstraints",
+      "guid": "854fff00-3d2e-41c2-9a36-17b72887819a",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "allowMultiple": true,
+        "allowOther": true,
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "A cold"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "Exercise"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "Being more active than usual (walking, running, climbing stairs)"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 4,
+            "label": "Strong smells (perfume, chemicals, sprays, paint)"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 5,
+            "label": "Exhaust fumes"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 6,
+            "label": "House dust"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 7,
+            "label": "Dogs"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 8,
+            "label": "Cats"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 9,
+            "label": "Other furry/feathered animals"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 10,
+            "label": "Mold"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 11,
+            "label": "Pollen from trees, grass or weeds"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 12,
+            "label": "Extreme heat"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 13,
+            "label": "Extreme cold"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 14,
+            "label": "Changes in weather"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 15,
+            "label": "Around the time of my period"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 16,
+            "label": "Poor air quality"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 17,
+            "label": "Someone smoking near me"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 18,
+            "label": "Stress"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 19,
+            "label": "Feeling sad, angry, excited, tense"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 20,
+            "label": "Laughter"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 21,
+            "label": "I don't know what triggers my asthma"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 22,
+            "label": "None of these things trigger my asthma"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "flushot",
+      "prompt": "Have you had a flu shot this year?",
+      "uiHint": "checkbox",
+      "guid": "854cff00-3b2f-41c2-9b88-17b72287819a",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "rules": [
+          {
+            "operator": "eq",
+            "skipTo": "plan",
+            "type": "SurveyRule",
+            "value": 1
+          }
+        ],
+        "dataType": "boolean",
+        "type": "BooleanConstraints"
+      }
+    },
+    {
+      "identifier": "flu_prompt",
+      "prompt": "Did you know: Flu vaccine is recommended for most people with asthma?",
+      "uiHint": "checkbox",
+      "guid": "A7B9A2EB-2BBB-449A-BF33-432C5CA70C3D",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "boolean",
+        "type": "BooleanConstraints"
+      }
+    },
+    {
+      "identifier": "plan",
+      "prompt": "Do you have an asthma action plan (a written plan for how to change your medicine if your asthma gets worse from your doctor)?",
+      "uiHint": "checkbox",
+      "guid": "854cff00-3c2f-41c2-9b76-17b72287619b",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "rules": [
+          {
+            "operator": "eq",
+            "skipTo": "lung_function",
+            "type": "SurveyRule",
+            "value": 1
+          }
+        ],
+        "dataType": "boolean",
+        "type": "BooleanConstraints"
+      }
+    },
+    {
+      "identifier": "aap_prompt",
+      "prompt": "Did you know: People with asthma are recommended to develop an asthma action plan with their healthcare provider that gives specific instructions for early treatment of asthma symptoms?",
+      "uiHint": "checkbox",
+      "guid": "2439ED57-4473-4BF4-B5BB-FDEB6219299D",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "boolean",
+        "type": "BooleanConstraints"
+      }
+    },
+    {
+      "identifier": "lung_function",
+      "prompt": "Have you ever had your lung function measured by your asthma doctor (a test called spirometry)?",
+      "uiHint": "MultiValueConstraints",
+      "guid": "854ccf00-3e23-71c2-9b36-17b72287819b",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "Yes"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "No"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "Not sure"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "peak_flow",
+      "prompt": "If you use your peak flow meter to monitor your asthma, enter your best peak flow (L/min)",
+      "uiHint": "numberfield",
+      "guid": "21987ad2-4846-48a4-ba80-27b3371186c0",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "type": "IntegerConstraints",
+        "step": null,
+        "maxValue": 900,
+        "minValue": 60
+      }
+    },
+    {
+      "identifier": "troubles_about_asthma",
+      "prompt": "What troubles you the most about your asthma? (select all that apply)",
+      "uiHint": "MultiValueConstraints",
+      "guid": "854fff00-3d2c-41c2-9c03-17b73287819b",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "allowMultiple": true,
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "Limits how active I am"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "Makes me miss work/school"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "I have to use my quick relief medicine all the time"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 4,
+            "label": "I can't remember to take my daily controller medicine"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 5,
+            "label": "I can't sleep because my asthma wakes me up at night"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 6,
+            "label": "I never know when something will trigger my asthma"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 7,
+            "label": "I hate it when I have an attack and I have to go to the emergency room or hospital"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 8,
+            "label": "None of the above"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "asthma_control",
+      "prompt": "Select your goal(s) for asthma control (select all that apply)",
+      "uiHint": "MultiValueConstraints",
+      "guid": "854fff00-3d2c-41c2-9c09-17b72287319b",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "allowMultiple": true,
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "Be more active"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "Miss/interfere work/school less often"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "Use less quick relief medicine"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 4,
+            "label": "Remember to take my control medicine"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 5,
+            "label": "Sleep through the night without asthma symptoms"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 6,
+            "label": "Avoid things that trigger my asthma"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 7,
+            "label": "Avoid asthma attacks"
+          }
+        ]
+      }
+    }
+  ]
+}

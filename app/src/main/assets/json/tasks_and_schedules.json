@@ -1,0 +1,116 @@
+{
+  "schedules": [
+    {
+      "scheduleType": "once",
+      "delay": "P3D",
+      "tasks": [
+        {
+          "taskTitle": "About You",
+          "taskID": "AboutYou-27829fa5-d731-4372-ba30-a5859f688297",
+          "taskFileName": "about_you",
+          "taskClassName": "APHDailyTaskViewController",
+          "taskCompletionTimeString": "8 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "recurring",
+      "scheduleString": "* * * * *",
+      "tasks": [
+        {
+          "taskTitle": "Test Survey",
+          "taskID": "1c5ee4e2-baab-47db-b515-2fbe9fdf50a6",
+          "taskFileName": "practice_survey",
+          "taskCompletionTimeString": "4 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "recurring",
+      "scheduleString": "0 5 * * *",
+      "tasks": [
+        {
+          "taskTitle": "Daily Survey",
+          "taskID": "DailyPrompt-27829fa5-d731-4372-ba30-a5859f655297",
+          "taskFileName": "asthma_daily_prompt",
+          "taskClassName": "APHDailyTaskViewController",
+          "taskCompletionTimeString": "8 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "recurring",
+      "scheduleString": "0 5 * * 6",
+      "tasks": [
+        {
+          "taskTitle": "Weekly Survey",
+          "taskID": "WeeklySurvey-b573a78-8917-4582-8f1f-0552d0bfd28a",
+          "taskFileName": "asthma_weekly",
+          "taskClassName": "APHWeeklyTaskViewController",
+          "taskCompletionTimeString": "16 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "once",
+      "delay": "P4D",
+      "tasks": [
+        {
+          "taskTitle": "Medical History",
+          "taskID": "MedicalHistory-b3cd0d66-b943-11e4-a71e-12e3f512a338",
+          "taskFileName": "medical_history",
+          "taskClassName": "APCGenericSurveyTaskViewController",
+          "taskCompletionTimeString": "17 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "once",
+      "tasks": [
+        {
+          "taskTitle": "Asthma Medication",
+          "taskID": "AsthmaMedication-c2379e84-b943-11e4-a71e-12e3f512a338",
+          "taskFileName": "asthma_medication_survey",
+          "taskClassName": "APCGenericSurveyTaskViewController",
+          "taskCompletionTimeString": "19 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "once",
+      "delay": "P2D",
+      "tasks": [
+        {
+          "taskTitle": "Your Asthma",
+          "taskID": "YourAsthma-cc06cd68-b943-11e4-a71e-12e3f512a338",
+          "taskFileName": "your_asthma",
+          "taskClassName": "APCGenericSurveyTaskViewController",
+          "taskCompletionTimeString": "9 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "once",
+      "tasks": [
+        {
+          "taskTitle": "Asthma History",
+          "taskID": "AsthmaHistory-d6d07ba4-b943-11e4-a71e-12e3f512a338",
+          "taskFileName": "asthma_history",
+          "taskClassName": "APCGenericSurveyTaskViewController",
+          "taskCompletionTimeString": "13 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "once",
+      "tasks": [
+        {
+          "taskTitle": "Enrollment for Recontact",
+          "taskID": "APHEnrollmentForRecontactTaskViewController-1E174065-5B02-11E4-8ED6-0800200C9A66",
+          "taskClassName": "APHEnrollmentForRecontactTaskViewController",
+          "taskCompletionTimeString": "1 Question"
+        }
+      ]
+    }
+  ]
+}
