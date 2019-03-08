@@ -1,0 +1,5 @@
+<lint>
+    <issue id="InvalidPackage">
+        <ignore regexp="pkix-1.54.0.0.jar"/>
+    </issue>
+</lint>

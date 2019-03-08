@@ -15,9 +15,13 @@ buildscript {
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
         classpath "com.neenbedankt.gradle.plugins:android-apt:1.4"
 
+        // workaround for retrolambda lint error
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+    // workaround for retrolambda lint error
+    configurations.classpath.exclude group: 'com.android.tools.external.lombok'
 }
 
 allprojects {

@@ -1,5 +1,6 @@
 package org.researchstack.backbone.ui.views;
 
+import android.animation.TimeInterpolator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -82,7 +83,8 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener 
                     .scaleX(isSelected() ? 1 : 0)
                     .scaleY(isSelected() ? 1 : 0)
                     .setDuration(150)
-                    .setInterpolator(isSelected() ? new OvershootInterpolator() : new AccelerateInterpolator())
+                    .setInterpolator(isSelected() ? (TimeInterpolator) new OvershootInterpolator()
+                            : (TimeInterpolator) new AccelerateInterpolator())
                     .setStartDelay(isSelected() ? 150 : 0);
 
             title.animate()
