@@ -1,3 +1,0 @@
-# if using Sage Bridge, add these two lines with your study info to gradle.properties
-studyId="STUDY_ID_HERE"
-studyName="STUDY_NAME_HERE"
