@@ -1,1 +1,1 @@
-include ':backbone', ':skin', ':sample_app_skin'
+include ':backbone', ':skin', ':sample_app_skin', ':sample_app_backbone'
