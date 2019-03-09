@@ -95,6 +95,12 @@ if (project.hasProperty("android")) { // Android libraries
     }
 }
 
+def RS_POM_GROUP="com.medable.researchstack"
+def RS_POM_DESCRIPTION="Medable's ResearchStack fork"
+def RS_POM_LICENCE_NAME="The Apache Software License, Version 2.0"
+def RS_POM_LICENCE_URL="http://www.apache.org/licenses/LICENSE-2.0.txt"
+def RS_POM_LICENCE_DIST="repo"
+
 afterEvaluate { project ->
     uploadArchives {
         repositories {

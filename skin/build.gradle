@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
 android {
 
@@ -31,8 +30,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     packagingOptions {
@@ -87,6 +86,12 @@ if (project.hasProperty("android")) { // Android libraries
         from sourceSets.main.allSource
     }
 }
+
+def RS_POM_GROUP="com.medable.researchstack"
+def RS_POM_DESCRIPTION="Medable's ResearchStack fork"
+def RS_POM_LICENCE_NAME="The Apache Software License, Version 2.0"
+def RS_POM_LICENCE_URL="http://www.apache.org/licenses/LICENSE-2.0.txt"
+def RS_POM_LICENCE_DIST="repo"
 
 afterEvaluate { project ->
     uploadArchives {
