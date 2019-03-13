@@ -115,7 +115,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
 /*
-  The conversion equations below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles )
+  Conversion equations below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles )
 
 or https://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#toDegrees(double)
  */
@@ -127,10 +127,8 @@ public double allOrientationsForPitch(quaternion_w, quaternion_x, quaternion_y, 
 
 public double allOrientationsForRoll(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.atan2(2.0 * (quaternion_y * quaternion_w - quaternion_x * quaternion_z), 1.0 - 2.0 * (quaternion_y * quaternion_y + quaternion_z * quaternion_z)))
 
-//Yaw is not needed with the current knee and shoulder tasks, but will be in other RoM tasks
-
-//public double allOrientationsForYaw(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.asin(2.0 * (quaternion_x * quaternion_y - quaternion_w * quaternion_z)))
-
+//Yaw is not needed with the current knee and shoulder tasks, but will be for other RoM tasks
+public double allOrientationsForYaw(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.asin(2.0 * (quaternion_x * quaternion_y - quaternion_w * quaternion_z)))
 
 
 - (void)viewDidLoad {
@@ -155,20 +153,20 @@ _startAngle = ([this getDeviceAngleInDegreesFromAttitude:_referenceAttitude]);
 
 
 //This function calculates maximum and minimum angles recorded by the device
-    if (_newAngle > _maxAngle) {
+if (_newAngle > _maxAngle) {
     _maxAngle = _newAngle;
     }
-    if (_minAngle == 0.0 || _newAngle < _minAngle) {
+if (_minAngle == 0.0 || _newAngle < _minAngle) {
     _minAngle = _newAngle;
     }
 }
 
 
-//This calculates the current device orientation relative to the start orientation,
-//by multiplying by the inverse of the current orientation
-- (void)deviceMotionRecorderDidUpdateWithMotion:
-    event.sensor.getType() = Sensor.TYPE_ROTATION_VECTOR {
-    if (!_referenceAttitude) {
+//This calculates the current device orientation relative to the start orientation, by multiplying by the inverse of the current orientation
+public void deviceMotionRecorderDidUpdateWithMotion:
+    onSensorChanged(SensorEvent event) {
+    if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
+        if (!_referenceAttitude) {
         _referenceAttitude = motion.attitude;
     }
     CMAttitude *currentAttitude = [motion.attitude copy];
@@ -191,6 +189,7 @@ boolean shiftAngleRange = angle > 90 && angle <= 180;
     [this calculateAndSetAngles];
 }
 
+
 /*
  When the device is in Portrait mode, we need to get the attitude's pitch
  to determine the device's angle. attitude.pitch doesn't return all
@@ -198,30 +197,29 @@ boolean shiftAngleRange = angle > 90 && angle <= 180;
  Euler angle.
  */
 
-public void onSensorChanged(SensorEvent event) {
-    if (event.sensor.getType() = Sensor.TYPE_ROTATION_VECTOR)
-    return;
-public static double getDeviceAngleInDegreesFromAttitude:
-    if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            double angle;
-            SensorManager.getQuaternionFromVector(double[] Quarternion, values); {
-            double quaternion_w = Quaternion[0];
-            double quaternion_x = Quaternion[1];
-            double quaternion_y = Quaternion[2];
-            double quaternion_z = Quaternion[3];
+public static getDeviceAngleInDegreesFromAttitude:
+    onSensorChanged(SensorEvent event) {
+    if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
+        double angle {
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                SensorManager.getQuaternionFromVector(double[] Quarternion, event.values);
+                double quaternion_w = Quaternion[0];
+                double quaternion_x = Quaternion[1];
+                double quaternion_y = Quaternion[2];
+                double quaternion_z = Quaternion[3];
+            }
             angle = Math.toDegrees(allOrientationsForRoll(quaternion_w, quaternion_x, quaternion_y, quaternion_z)); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
             }
-    else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            SensorManager.getQuaternionFromVector(double[] Quarternion, values); {
-            double quaternion_w = Quaternion[0];
-            double quaternion_x = Quaternion[1];
-            double quaternion_y = Quaternion[2];
-            double quaternion_z = Quaternion[3];
-            angle = Math.toDegrees(allOrientationsForPitch(quaternion_w, quaternion_x, quaternion_y, quaternion_z));
+            else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                SensorManager.getQuaternionFromVector(double[] Quarternion, event.values);
+                double quaternion_w = Quaternion[0];
+                double quaternion_x = Quaternion[1];
+                double quaternion_y = Quaternion[2];
+                double quaternion_z = Quaternion[3];
             }
-    return angle;
+            angle = Math.toDegrees(allOrientationsForPitch(quaternion_w, quaternion_x, quaternion_y, quaternion_z));
         }
-    }
+    return angle;
 }
 
 
