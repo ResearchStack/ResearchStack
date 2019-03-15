@@ -7,23 +7,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by mauriciosouto on 11/10/17.
- */
-
 public class StepNavigationRule implements NavigableOrderedTask.NavigationRule, Serializable {
 
-    private String nextStep;
     private String otherwise;
     private List<StepNavigationClause> clauses = new ArrayList<>();
 
-    public StepNavigationRule(String nextStep, String otherwise) {
-        this.nextStep = nextStep;
+    public StepNavigationRule(String otherwise) {
         this.otherwise = otherwise;
     }
 
-    public StepNavigationRule(String nextStep, String otherwise, List<StepNavigationClause> clauses) {
-        this.nextStep = nextStep;
+    public StepNavigationRule(String otherwise, List<StepNavigationClause> clauses) {
         this.otherwise = otherwise;
         this.clauses = clauses;
     }
@@ -34,15 +27,15 @@ public class StepNavigationRule implements NavigableOrderedTask.NavigationRule, 
 
     @Override
     public String nextStepIdentifier(TaskResult result, List<TaskResult> additionalTaskResults) {
-        boolean isRuleClausesFulfilled = false;
-        for (StepNavigationClause clause : clauses) {
-            if (clause.fulfillsCondition(result)) {
-                isRuleClausesFulfilled = true;
+        StepNavigationClause clause = null;
+        for (StepNavigationClause navigationClause : clauses) {
+            if (navigationClause.fulfillsCondition(result)) {
+                clause = navigationClause;
                 break;
             }
         }
-        if (isRuleClausesFulfilled) {
-            return this.nextStep;
+        if (clause != null) {
+            return clause.getNextStep();
         } else if (otherwise != null) {
             return otherwise;
         }
