@@ -131,6 +131,19 @@ public double allOrientationsForRoll(quaternion_w, quaternion_x, quaternion_y, q
 public double allOrientationsForYaw(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.asin(2.0 * (quaternion_x * quaternion_y - quaternion_w * quaternion_z)))
 
 
+
+@interface ORKRangeOfMotionStepViewController () <ORKDeviceMotionRecorderDelegate> {
+ORKRangeOfMotionContentView *_contentView;
+UITapGestureRecognizer *_gestureRecognizer;
+CMAttitude *_referenceAttitude;
+UIInterfaceOrientation _orientation;
+}
+
+@end
+
+
+@implementation ORKRangeOfMotionStepViewController
+
 - (void)viewDidLoad {
 [super viewDidLoad];
 _contentView = [ORKRangeOfMotionContentView new];
