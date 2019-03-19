@@ -12,7 +12,6 @@ import org.researchstack.backbone.result.StepResult
 import org.researchstack.backbone.step.QuestionStep
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.utils.TextUtils
-import kotlin.math.absoluteValue
 
 open class ContinuousScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
     protected var step: QuestionStep = step as QuestionStep
@@ -49,9 +48,23 @@ open class ContinuousScaleQuestionBody(step: Step, result: StepResult<*>?) : Ste
         formItemView.rsbRangeEnd.text = format.maxValue.toString()
 
         formItemView.seekBar.max = if (format.minValue <= 0) {
-            format.maxValue + format.minValue.absoluteValue
+            format.maxValue + format.minValue
         } else {
             format.maxValue - format.minValue
+        }
+
+        if (format.maxDescription == null) {
+            formItemView.maxDescription.visibility = View.GONE
+        } else {
+            formItemView.maxDescription.visibility = View.VISIBLE
+            formItemView.maxDescription.text = format.maxDescription
+        }
+
+        if (format.minDescription == null) {
+            formItemView.minDescription.visibility = View.GONE
+        } else {
+            formItemView.minDescription.visibility = View.VISIBLE
+            formItemView.minDescription.text = format.minDescription
         }
 
         formItemView.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

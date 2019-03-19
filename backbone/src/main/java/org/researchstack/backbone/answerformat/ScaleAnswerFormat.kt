@@ -4,7 +4,13 @@ import org.researchstack.backbone.ui.step.body.IntegerQuestionBody
 import org.researchstack.backbone.ui.step.body.ScaleQuestionBody
 import org.researchstack.backbone.ui.step.body.StepBody
 
-class ScaleAnswerFormat(private val minVal: Int, private val maxVal: Int, val step: Int = 1) : IntegerAnswerFormat(minVal, maxVal), AnswerFormat.QuestionType {
+class ScaleAnswerFormat(
+    private val minVal: Int,
+    private val maxVal: Int,
+    val step: Int = 1,
+    val minDescription: String? = null,
+    val maxDescription: String? = null
+) : IntegerAnswerFormat(minVal, maxVal), AnswerFormat.QuestionType {
 
 
     override fun getQuestionType(): QuestionType {

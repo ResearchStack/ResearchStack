@@ -23,6 +23,7 @@ open class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     protected var viewType: Int = 0
     protected var currentNumberTextView: TextView? = null
+    private var seekBarMax = 0
 
     init {
         this.format = this.step.answerFormat as ScaleAnswerFormat
@@ -47,7 +48,27 @@ open class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
 
         formItemView.rsbRangeEnd.text = format.maxValue.toString()
 
-        formItemView.seekBar.max = 10
+        if (format.maxDescription == null) {
+            formItemView.maxDescription.visibility = View.GONE
+        } else {
+            formItemView.maxDescription.visibility = View.VISIBLE
+            formItemView.maxDescription.text = format.maxDescription
+        }
+
+        if (format.minDescription == null) {
+            formItemView.minDescription.visibility = View.GONE
+        } else {
+            formItemView.minDescription.visibility = View.VISIBLE
+            formItemView.minDescription.text = format.minDescription
+        }
+        if (format.maxValue >= 10) {
+            formItemView.seekBar.max = 10
+            seekBarMax = 10
+        } else {
+            formItemView.seekBar.max = format.maxValue - format.minValue
+            seekBarMax = format.maxValue - format.minValue
+        }
+
 
         formItemView.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -69,7 +90,8 @@ open class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
 
 
         if (result.result != null) {
-            formItemView.seekBar.progress = calculateProgress(result.result, format.minValue, format.maxValue, format.step)
+            formItemView.seekBar.progress =
+                calculateProgress(result.result, format.minValue, format.maxValue, format.step)
             currentNumberTextView!!.text = result.result.toString()
         } else {
             currentNumberTextView!!.text = calculateDisplayValue(formItemView.seekBar.progress).toString()
@@ -79,7 +101,7 @@ open class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
     }
 
     private fun calculateDisplayValue(progress: Int): Int {
-        val value = Math.round(progress * (format.maxValue - format.minValue).toDouble() / 10)
+        val value = Math.round(progress * (format.maxValue - format.minValue).toDouble() / seekBarMax)
         return (value.toInt() + format.minValue) / format.step * format.step
     }
 
