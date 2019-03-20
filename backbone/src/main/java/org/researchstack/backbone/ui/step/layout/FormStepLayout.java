@@ -13,7 +13,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.annotation.IdRes;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.FormStep;
@@ -31,11 +34,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import androidx.annotation.IdRes;
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 
 /**
  * Created by TheMDP on 1/14/17.
@@ -64,18 +62,15 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     protected TextView formTitleTextview;
     protected TextView formSummaryTextview;
 
-    public FormStepLayout(Context context)
-    {
+    public FormStepLayout(Context context) {
         super(context);
     }
 
-    public FormStepLayout(Context context, AttributeSet attrs)
-    {
+    public FormStepLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public FormStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public FormStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -84,14 +79,12 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public void initialize(Step step)
-    {
+    public void initialize(Step step) {
         initialize(step, null);
     }
 
     @Override
-    public void initialize(Step step, StepResult result)
-    {
+    public void initialize(Step step, StepResult result) {
         validateStepAndResult(step, result);  // Also sets formStep member variable
 
         subQuestionStepData = new ArrayList<>();
@@ -119,14 +112,13 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     }
 
     /**
-     * @param step to validate it's state
+     * @param step       to validate it's state
      * @param stepResult step result to validate
      */
     @SuppressWarnings("unchecked")  // needed for StepResult<StepResult> cast
     protected void validateStepAndResult(Step step, StepResult stepResult) {
-        if(step != null && step instanceof FormStep)
-        {
-            formStep = (FormStep)step;
+        if (step != null && step instanceof FormStep) {
+            formStep = (FormStep) step;
 
             if (stepResult == null || stepResult.getResults() == null || stepResult.getResults().isEmpty()) {
                 this.stepResult = new StepResult<>(formStep);
@@ -138,9 +130,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
                 }
                 this.stepResult = stepResult;
             }
-        }
-        else
-        {
+        } else {
             throw new RuntimeException("Step being used in FormStepLayout is not a FormStep or is null");
         }
     }
@@ -211,8 +201,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     }
 
     @Override
-    public View getLayout()
-    {
+    public View getLayout() {
         return this;
     }
 
@@ -281,8 +270,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     /**
      * @param step creates the root container for this form step layout
      */
-    protected void initStepLayout(FormStep step)
-    {
+    protected void initStepLayout(FormStep step) {
         LogExt.i(getClass(), "initStepLayout()");
 
         container = findViewById(R.id.rsb_form_step_content_container);
@@ -293,25 +281,26 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         SurveyStepLayout.setupTitleLayout(getContext(), step, formTitleTextview, formSummaryTextview);
     }
 
-    protected @IdRes int getFormTitleId() {
+    protected @IdRes
+    int getFormTitleId() {
         return R.id.rsb_form_step_title;
     }
 
-    protected @IdRes int getFormTextId() {
+    protected @IdRes
+    int getFormTextId() {
         return R.id.rsb_form_step_summary;
     }
 
     /**
-     * @param layoutInflater used to create StepLayout UI for QuestionStep
+     * @param layoutInflater    used to create StepLayout UI for QuestionStep
      * @param stepBodyContainer container that will hold the returned View
-     * @param step the question step to use for the title and summary
-     * @param stepBody the step body to use for creating the step body view
+     * @param step              the question step to use for the title and summary
+     * @param stepBody          the step body to use for creating the step body view
      * @return StepLayout View object container StepBody View and title, and text
      */
     @NonNull
     @MainThread
-    protected static View initStepBodyHolder(LayoutInflater layoutInflater, ViewGroup stepBodyContainer, QuestionStep step, StepBody stepBody)
-    {
+    protected static View initStepBodyHolder(LayoutInflater layoutInflater, ViewGroup stepBodyContainer, QuestionStep step, StepBody stepBody) {
         LogExt.i(TAG, "initStepLayout()");
 
         View surveyStepView = layoutInflater.inflate(R.layout.rsb_step_layout, stepBodyContainer, false);
@@ -321,7 +310,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         TextView summary = (TextView) surveyStepView.findViewById(R.id.rsb_survey_text);
         SurveyStepLayout.setupTitleLayout(layoutInflater.getContext(), step, title, summary);
 
-        LinearLayout surveyStepContainer = (LinearLayout)surveyStepView.findViewById(R.id.rsb_survey_content_container);
+        LinearLayout surveyStepContainer = (LinearLayout) surveyStepView.findViewById(R.id.rsb_survey_content_container);
         View bodyView = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, layoutInflater, surveyStepContainer);
         SurveyStepLayout.replaceStepBodyView(surveyStepContainer, bodyView);
 
@@ -329,8 +318,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     }
 
     @Override
-    public Parcelable onSaveInstanceState()
-    {
+    public Parcelable onSaveInstanceState() {
         updateAllQuestionSteps(false);
         callbacks.onSaveStep(StepCallbacks.ACTION_NONE, formStep, stepResult);
         return super.onSaveInstanceState();
@@ -343,11 +331,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         }
     }
 
-    protected void onNextClicked()
-    {
+    protected void onNextClicked() {
         boolean isAnswerValid = isAnswerValid(true);
-        if (isAnswerValid)
-        {
+        if (isAnswerValid) {
             if (formStep.isAutoFocusFirstEditText()) {
                 hideKeyboard();
             }
@@ -369,9 +355,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     }
 
     /**
-     * @param stepDataList the list of FormStepData to analyze if they are valid or not
+     * @param stepDataList            the list of FormStepData to analyze if they are valid or not
      * @param showErrorAlertOnInvalid if true, error toast is shown if return false, no toast otherwise
-     * @param identifierErrorMap key is the step identifier, value is the error message when it is not valid
+     * @param identifierErrorMap      key is the step identifier, value is the error message when it is not valid
      * @return true if ALL question steps are valid, false if one or more answers are invalid
      */
     protected boolean isAnswerValid(List<FormStepData> stepDataList, boolean showErrorAlertOnInvalid, Map<String, String> identifierErrorMap) {
@@ -380,7 +366,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
         for (FormStepData stepData : stepDataList) {
             BodyAnswer bodyAnswer = stepData.stepBody.getBodyAnswerState();
-            if (bodyAnswer == null || !bodyAnswer.isValid()) {
+            if (!stepData.step.isOptional() && (bodyAnswer == null || !bodyAnswer.isValid())) {
                 isAnswerValid = false;
 
                 String invalidReason = null;
@@ -401,8 +387,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
             }
         }
 
-        if(!isAnswerValid && showErrorAlertOnInvalid)
-        {
+        if (!isAnswerValid && showErrorAlertOnInvalid) {
             String invalidReason = android.text.TextUtils.join(", ", invalidReasons) + ".";
             Toast.makeText(getContext(), invalidReason, Toast.LENGTH_SHORT).show();
         }
@@ -425,7 +410,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     /**
      * @param stepIdToFind uses step to match find step body
      * @return null if stepIdToFind does not have a step with a corresponding StepBody in subQuestionsStep,
-     *         the StepBody object matching stepIdToFind otherwise
+     * the StepBody object matching stepIdToFind otherwise
      */
     protected StepBody getStepBody(String stepIdToFind) {
         for (FormStepData stepData : subQuestionStepData) {
@@ -449,10 +434,8 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         return null;
     }
 
-    public void onSkipClicked()
-    {
-        if(callbacks != null)
-        {
+    public void onSkipClicked() {
+        if (callbacks != null) {
             updateAllQuestionSteps(true);
             // empty step result when skipped
             onComplete();
@@ -463,20 +446,23 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         return formStep;
     }
 
-    public String getString(@StringRes int stringResId)
-    {
+    public String getString(@StringRes int stringResId) {
         return getResources().getString(stringResId);
     }
 
     public class FormStepData {
         protected QuestionStep step;
+
         public QuestionStep getStep() {
             return step;
         }
+
         protected StepBody stepBody;
+
         public StepBody getStepBody() {
             return stepBody;
         }
+
         public WeakReference<View> view;
 
         FormStepData(QuestionStep step, StepBody stepBody, View view) {
