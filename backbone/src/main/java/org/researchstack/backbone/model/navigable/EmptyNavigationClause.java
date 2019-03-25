@@ -1,16 +1,19 @@
 package org.researchstack.backbone.model.navigable;
 
+import android.text.TextUtils;
+
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 
 public class EmptyNavigationClause extends StepNavigationClauseRule {
 
-    public EmptyNavigationClause(String sourceStepIdentifier, Object value, AnswerFormat.Type ruleType, RuleClauseOperand operand) {
-        super(sourceStepIdentifier, value, ruleType, operand);
+    public EmptyNavigationClause(String sourceStepIdentifier, AnswerFormat.Type ruleType, RuleClauseOperand operand) {
+        super(sourceStepIdentifier, "", ruleType, operand);
     }
 
     @Override
     protected boolean evalClause(StepResult stepResult) {
-        return stepResult.getResult().toString().equals("");
+        Object stepResultValue = stepResult.getResult();
+        return stepResultValue == null || TextUtils.isEmpty(stepResultValue.toString());
     }
 }

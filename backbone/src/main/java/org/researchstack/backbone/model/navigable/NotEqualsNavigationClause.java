@@ -11,6 +11,14 @@ public class NotEqualsNavigationClause extends StepNavigationClauseRule {
 
     @Override
     protected boolean evalClause(StepResult stepResult) {
-        return !stepResult.getResult().equals(value);
+        if (stepResult.getResult() != null) {
+            Integer compareResult = compareResult(stepResult);
+            if (compareResult != null) {
+                return !compareResult.equals(0);
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 }
