@@ -22,9 +22,9 @@ public abstract class StepNavigationClauseRule implements Serializable {
     }
 
     public boolean fulfillsCondition(TaskResult result) {
-        if (sourceStepIdentifier != null && value != null) {
+        if (sourceStepIdentifier != null) {
             StepResult stepResult = StepResultHelper.findStepResult(result, sourceStepIdentifier);
-            if (stepResult != null && stepResult.getResult() != null) {
+            if (stepResult != null) {
                 return evalClause(stepResult);
             }
         }
@@ -64,9 +64,9 @@ public abstract class StepNavigationClauseRule implements Serializable {
     }
 
     public boolean eval(TaskResult result) {
-        if (sourceStepIdentifier != null && value != null) {
+        if (sourceStepIdentifier != null) {
             StepResult stepResult = StepResultHelper.findStepResult(result, sourceStepIdentifier);
-            if (stepResult != null && stepResult.getResult() != null) {
+            if (stepResult != null) {
                 return evalClause(stepResult);
             }
         }
@@ -76,7 +76,12 @@ public abstract class StepNavigationClauseRule implements Serializable {
     protected Integer compareResult(StepResult stepResult) {
         AnswerFormat.Type resultType = this.ruleType;
         Object stepResultValue = stepResult.getResult();
-        if (resultType.equals(AnswerFormat.Type.Integer)
+        if (resultType.equals(AnswerFormat.Type.Text)) {
+
+            // Text Value
+            return String.valueOf(stepResultValue.toString()).compareTo(String.valueOf(value.toString()));
+
+        } else if (resultType.equals(AnswerFormat.Type.Integer)
                 || resultType.equals(AnswerFormat.Type.Decimal)) {
 
             // Numeric Value

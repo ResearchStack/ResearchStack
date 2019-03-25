@@ -11,9 +11,11 @@ public class LessThanNavigationClause extends StepNavigationClauseRule {
 
     @Override
     protected boolean evalClause(StepResult stepResult) {
-        Integer compareResult = compareResult(stepResult);
-        if (compareResult != null) {
-            return compareResult < 0;
+        if (stepResult.getResult() != null) {
+            Integer compareResult = compareResult(stepResult);
+            if (compareResult != null) {
+                return compareResult < 0;
+            }
         }
         return false;
     }
