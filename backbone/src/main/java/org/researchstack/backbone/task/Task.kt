@@ -47,17 +47,26 @@ abstract class Task : Serializable {
 
     var title: String = ""
 
+    var allowsSaving = false
+
     /* Default constructor needed for serilization/deserialization of object */
-    constructor() : super() {}
+    constructor() : super()
 
     /**
      * Class constructor specifying a unique identifier.
      *
      * @param identifier the task identifier, see [.getIdentifier]
      */
-    constructor(identifier: String, title: String) {
+    constructor(identifier: String, title: String ) {
         this.identifier = identifier
         this.title = title
+    }
+
+
+    constructor(identifier: String, title: String , allowsSaving:Boolean) {
+        this.identifier = identifier
+        this.title = title
+        this.allowsSaving = allowsSaving
     }
 
     /**
