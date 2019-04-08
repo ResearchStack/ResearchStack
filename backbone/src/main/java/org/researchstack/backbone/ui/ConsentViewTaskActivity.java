@@ -184,19 +184,18 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         return null;
     }
 
-    private String getSignatureHtmlContent(@Nullable String completeName, @NonNull String role, @Nullable String signatureB64, @Nullable String signatureDate)
-    {
+    private String getSignatureHtmlContent(@Nullable String completeName, @NonNull String role, @Nullable String signatureB64,
+                                           @Nullable String signatureDate) {
         StringBuffer body = new StringBuffer();
 
-        String hr = "<hr align='left' width='100%' style='height:1px; border:none; color:#000; background-color:#000; " +
-                "margin-top: 5px; margin-bottom: 0px;'/>";
+        String hr = "<hr align='left' width='100%' style='height:1px; border:none; color:#000; background-color:#000; margin-top: 5px; margin-bottom: 0px;'/>";
 
         String signatureElementWrapper = "<div class='sigbox'><div class='inbox'>%s</div></div>%s%s";
-        String imageTag = null;
+        String imageTag;
 
         List<String> signatureElements = new ArrayList<>();
 
-        if(role == null) {
+        if (role == null) {
             throw new RuntimeException("Consent role cannot be empty");
         }
 
@@ -209,7 +208,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
         if (signatureB64 != null) {
             imageTag = "<img width='100%' alt='star' style='max-height:100px;max-width:200px;height:auto;width:auto;' " +
-                    "src='data:image/png;base64,"+signatureB64+"'/>";
+                    "src='data:image/png;base64," + signatureB64 + "'/>";
             String base = getString(R.string.rsb_consent_doc_line_signature, role);
             String signatureElement = String.format(signatureElementWrapper, imageTag, hr, base);
             signatureElements.add(signatureElement);

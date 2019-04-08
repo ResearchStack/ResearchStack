@@ -77,7 +77,7 @@ public class RSHTMLPDFWriter {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, ouput, printReadyCallback);
-        }else {
+        } else {
             pdfPrint.print(webView.createPrintDocumentAdapter(), path, ouput, printReadyCallback);
         }
     }
