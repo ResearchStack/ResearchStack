@@ -127,12 +127,12 @@ or https://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#toDegrees(doubl
 
 //public static void allOrientationsForPitch(double quaternion_w, double quaternion_x, double quaternion_y, double quaternion_z)
 
-private double allOrientationsForPitch = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)))
+public double allOrientationsForPitch = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)))
 
-private double allOrientationsForRoll = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)))
+public double allOrientationsForRoll = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)))
 
 //Yaw is not needed with the current knee and shoulder tasks, but will be for other RoM tasks
-private double allOrientationsForYaw = (Math.asin(2.0 * (x * y - w * z)))
+public double allOrientationsForYaw = (Math.asin(2.0 * (x * y - w * z)))
 
 */
 
