@@ -4,6 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.content.res.Resources
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.View;
@@ -118,19 +122,19 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
   Conversion equations below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles )
 
 or https://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#toDegrees(double)
- */
+
 
 
 //public static void allOrientationsForPitch(double quaternion_w, double quaternion_x, double quaternion_y, double quaternion_z)
 
-public double allOrientationsForPitch(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.atan2(2.0 * (quaternion_x * quaternion_w + quaternion_y * quaternion_z), 1.0 - 2.0 * (quaternion_x * quaternion_x + quaternion_z * quaternion_z)))
+private double allOrientationsForPitch = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)))
 
-public double allOrientationsForRoll(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.atan2(2.0 * (quaternion_y * quaternion_w - quaternion_x * quaternion_z), 1.0 - 2.0 * (quaternion_y * quaternion_y + quaternion_z * quaternion_z)))
+private double allOrientationsForRoll = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)))
 
 //Yaw is not needed with the current knee and shoulder tasks, but will be for other RoM tasks
-public double allOrientationsForYaw(quaternion_w, quaternion_x, quaternion_y, quaternion_z) = (Math.asin(2.0 * (quaternion_x * quaternion_y - quaternion_w * quaternion_z)))
+private double allOrientationsForYaw = (Math.asin(2.0 * (x * y - w * z)))
 
-
+*/
 
 @interface ORKRangeOfMotionStepViewController () <ORKDeviceMotionRecorderDelegate> {
 ORKRangeOfMotionContentView *_contentView;
@@ -175,7 +179,8 @@ if (_minAngle == 0.0 || _newAngle < _minAngle) {
 }
 
 
-//This calculates the current device orientation relative to the start orientation, by multiplying by the inverse of the current orientation
+//This calculates the current device orientation relative to the start orientation, by multiplying by the current orientation by inverse of the original orientation
+
 public void deviceMotionRecorderDidUpdateWithMotion:
     onSensorChanged(SensorEvent event) {
     if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
@@ -191,6 +196,7 @@ double angle = [this getDeviceAngleInDegreesFromAttitude:currentAttitude];
 
 //This function shifts the range of angles reported by the device from +/-180 degrees to
 //-90 to +270 degrees, which should be sufficient to cover all achievable knee and shoulder ranges of motion
+
 boolean shiftAngleRange = angle > 90 && angle <= 180;
     if (shiftAngleRange) {
         double _newAngle = fabs(angle) - 360;
@@ -202,7 +208,6 @@ boolean shiftAngleRange = angle > 90 && angle <= 180;
     [this calculateAndSetAngles];
 }
 
-
 /*
  When the device is in Portrait mode, we need to get the attitude's pitch
  to determine the device's angle. attitude.pitch doesn't return all
@@ -210,33 +215,44 @@ boolean shiftAngleRange = angle > 90 && angle <= 180;
  Euler angle.
  */
 
-public static getDeviceAngleInDegreesFromAttitude:
-    onSensorChanged(SensorEvent event) {
-    if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
+
+private class getDeviceAngleInDegreesFromAttitude {
+    public static void main(String[] args) {
+//private getDeviceAngleInDegreesFromAttitude:
+    //onSensorChanged(SensorEvent event) {
+
+        public double allOrientationsForPitch = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)))
+
+        public double allOrientationsForRoll = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)))
+
+//Yaw is not needed with the current knee and shoulder tasks, but will be for other RoM tasks
+        public double allOrientationsForYaw = (Math.asin(2.0 * (x * y - w * z)))
+
+    if (sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
         double angle {
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-                SensorManager.getQuaternionFromVector(double[] Quarternion, event.values);
-                double quaternion_w = Quaternion[0];
-                double quaternion_x = Quaternion[1];
-                double quaternion_y = Quaternion[2];
-                double quaternion_z = Quaternion[3];
+                SensorManager.getQuaternionFromVector(double[] Quarternion, double[] values);
+                double w = Quaternion[0];
+                double x = Quaternion[1];
+                double y = Quaternion[2];
+                double z = Quaternion[3];
             }
-            angle = Math.toDegrees(allOrientationsForRoll(quaternion_w, quaternion_x, quaternion_y, quaternion_z)); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
+            angle = Math.toDegrees(allOrientationsForRoll); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
             }
             else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-                SensorManager.getQuaternionFromVector(double[] Quarternion, event.values);
-                double quaternion_w = Quaternion[0];
-                double quaternion_x = Quaternion[1];
-                double quaternion_y = Quaternion[2];
-                double quaternion_z = Quaternion[3];
+                SensorManager.getQuaternionFromVector(double[] Quarternion, double[] values);
+                double w = Quaternion[0];
+                double x = Quaternion[1];
+                double y = Quaternion[2];
+                double z = Quaternion[3];
             }
-            angle = Math.toDegrees(allOrientationsForPitch(quaternion_w, quaternion_x, quaternion_y, quaternion_z));
+            angle = Math.toDegrees(allOrientationsForPitch);
         }
     return angle;
 }
 
 
-#pragma mark - ORKActiveTaskViewController
+//#pragma mark - ORKActiveTaskViewController
 
 - (ORKResult *)result {
 ORKStepResult *stepResult = [super result];
@@ -244,7 +260,7 @@ ORKStepResult *stepResult = [super result];
 ORKRangeOfMotionResult *result = [[ORKRangeOfMotionResult alloc] initWithIdentifier:self.step.identifier];
 
 //result.start = 90.0 - _startAngle;
-result.start = _startAngle; // Android's zero orientation is in portrait (perpendicular to the ground); whereas iOs is paralell with the ground
+result.start = _startAngle; // Android's zero orientation is in portrait (perpendicular to the ground); whereas iOS is paralell with the ground
 result.finish = result.start - _newAngle;
 //Because the task uses pitch in the direction opposite to the original device axes (i.e. right hand rule), maximum and minimum angles are reported the 'wrong' way around for the knee and shoulder tasks
 result.minimum = result.start - _maxAngle;
