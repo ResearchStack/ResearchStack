@@ -155,10 +155,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == STEP_PERMISSION_REQUEST) {
+        if (requestCode == STEP_PERMISSION_REQUEST) {
             PermissionResult result = new PermissionResult(permissions, grantResults);
             List<PermissionListener> permissionListeners = ViewUtils.findViewsOf(findViewById(android.R.id.content), PermissionListener.class, true);
-            for(PermissionListener listener : permissionListeners) {
+            for (PermissionListener listener : permissionListeners) {
                 listener.onPermissionGranted(result);
             }
         }
