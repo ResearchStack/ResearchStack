@@ -7,7 +7,8 @@ import org.researchstack.foundation.core.interfaces.IStep
 
 interface IStepFragment {
     fun initialize(step: IStep, result: IResult?)
-    //TODO: Understand if we need to change StepCallbacks
+    //TODO: JDK - 4/13/19 - Understand if we need to change StepCallbacks
+    //This interface may change depending on work on Actions
     fun setCallbacks(callbacks: StepCallbacks)
     fun onBackPressed()
     val fragment: Fragment
