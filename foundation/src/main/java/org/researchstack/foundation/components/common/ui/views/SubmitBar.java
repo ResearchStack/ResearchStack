@@ -10,15 +10,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-//TODO: remove RX dependency
-//import com.jakewharton.rxbinding.view.RxView;
-
 import org.researchstack.foundation.R;
 import org.researchstack.foundation.components.utils.ThemeUtils;
-
-import java.util.function.Consumer;
-
-//import rx.functions.Action1;
 
 public class SubmitBar extends LinearLayout {
     private TextView positiveView;
