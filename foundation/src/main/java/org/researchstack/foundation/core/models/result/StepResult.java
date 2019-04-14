@@ -31,9 +31,6 @@ public class StepResult<T> extends Result {
 
     private Step step;
 
-    //TODO: See if we can remove this... What if we remove this for foundation, but add it for backwards compat foundation
-//    private AnswerFormat answerFormat;
-
     /**
      * Creates a StepResult from a {@link Step}.
      * <p>
@@ -47,9 +44,6 @@ public class StepResult<T> extends Result {
         this.results = new HashMap<>();
         this.step = step;
 
-//        if (step instanceof QuestionStep) {
-//            answerFormat = ((QuestionStep) step).getAnswerFormat();
-//        }
         setStartDate(new Date());
         // this will be updated when the result is set
         setEndDate(new Date());
@@ -105,7 +99,6 @@ public class StepResult<T> extends Result {
         results.put(identifier, result);
     }
 
-    //TODO: See if we can remove this... What if we remove this for foundation, but add it for backwards compat foundation
     /**
      * Gets the {@link AnswerFormat} for this step result. May be useful when processing the
      * result.

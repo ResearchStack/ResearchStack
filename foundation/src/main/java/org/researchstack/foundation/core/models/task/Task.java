@@ -63,7 +63,6 @@ public abstract class Task implements Serializable, ITask, ITaskNavigator<Step, 
         return identifier;
     }
 
-    //TODO: probably want to update / remove this method due to dependency on Android Context
     /**
      * Gets the title to display in the toolbar for a given step.
      * <p>
@@ -165,14 +164,20 @@ public abstract class Task implements Serializable, ITask, ITaskNavigator<Step, 
      */
     public abstract void validateParameters();
 
-    //TODO: probably want to remove this due to dependency on ViewTaskActivity
+    //JDK - 4/13/19 - changed this interface from
+    //onViewChange(ViewChangeType type, ViewTaskActivity activity, Step currentStep)
+    //to
+    //onViewChange(ViewChangeType type, TaskLifecycleObserver observer, Step currentStep)
+    //this was done to remove the circular dependency on ViewTaskActivity
+    //Note that this method is invoked by ViewTaskActivity, which was modified to implement TaskLifecycleObserver
+    //This is not (yet) invoked by TaskPresentationFragment, but this potentially change at some point
 //    /**
 //     * Function that can be overridden in order to access the low level changes in the view.
 //     * The function is called at Activity lifecycle events (creation, pause, resume, stop and whenever
 //     * the content of the activity is changed, according to the step.
 //     *
 //     * @param type        lifecycle event
-//     * @param activity    current activity
+//     * @param observer    current activity
 //     * @param currentStep the current step being shown
 //     */
     public void onViewChange(ViewChangeType type, TaskLifecycleObserver observer, Step currentStep) {

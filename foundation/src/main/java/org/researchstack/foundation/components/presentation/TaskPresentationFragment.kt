@@ -42,16 +42,9 @@ abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, Ta
     val currentStep: StepType?
         get() = this._currentStep
 
-
-//    var _task: ITask? = null
-//    val task: ITask
-//        get() = this._task!!
-
     var _result: ResultType? = null
     val result: ResultType
         get() = this._result!!
-
-//    var taskPresentaterDelegate: ITaskPresenterDelegate? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
