@@ -55,9 +55,13 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
         refreshState();
 
         TextWatcher pinCodeWatcher = new TextWatcher() {
+            //JDK - 4/13/19
+            //It appears that anonymous classes that implement interfaces
+            //MUST implement all methods.
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                //JDK - 4/13/19
+                //do nothing
             }
 
             @Override
@@ -97,7 +101,8 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                //JDK - 4/13/19
+                //do nothing
             }
         };
 
