@@ -5,8 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.content.res.Resources
+import android.content.res.Resources;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
@@ -127,12 +128,12 @@ or https://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#toDegrees(doubl
 
 //public static void allOrientationsForPitch(double quaternion_w, double quaternion_x, double quaternion_y, double quaternion_z)
 
-public double allOrientationsForPitch = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)))
+private double allOrientationsForPitch = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)))
 
-public double allOrientationsForRoll = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)))
+private double allOrientationsForRoll = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)))
 
 //Yaw is not needed with the current knee and shoulder tasks, but will be for other RoM tasks
-public double allOrientationsForYaw = (Math.asin(2.0 * (x * y - w * z)))
+private double allOrientationsForYaw = (Math.asin(2.0 * (x * y - w * z)))
 
 */
 
@@ -215,31 +216,31 @@ boolean shiftAngleRange = angle > 90 && angle <= 180;
  Euler angle.
  */
 
+protected class getDeviceAngleInDegreesFromAttitude {
 
-private class getDeviceAngleInDegreesFromAttitude {
-    public static void main(String[] args) {
-//private getDeviceAngleInDegreesFromAttitude:
-    //onSensorChanged(SensorEvent event) {
+    public double allOrientationsForPitch(double w, double x, double y, double z) = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)))
 
-        public double allOrientationsForPitch = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)))
+    public double allOrientationsForRoll(double w, double x, double y, double z) = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)))
 
-        public double allOrientationsForRoll = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)))
+    //Yaw is not needed with the current knee and shoulder tasks, but will be for other RoM tasks
+    public double allOrientationsForYaw(double w, double x, double y, double z) = (Math.asin(2.0 * (x * y - w * z)))
 
-//Yaw is not needed with the current knee and shoulder tasks, but will be for other RoM tasks
-        public double allOrientationsForYaw = (Math.asin(2.0 * (x * y - w * z)))
+    public double[] angle(SensorEvent event) {
 
-    if (sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
-        double angle {
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            int type = event.sensor.getType();
+
+            if (type == Sensor.TYPE_ROTATION_VECTOR) {
+
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 SensorManager.getQuaternionFromVector(double[] Quarternion, double[] values);
                 double w = Quaternion[0];
                 double x = Quaternion[1];
                 double y = Quaternion[2];
                 double z = Quaternion[3];
-            }
-            angle = Math.toDegrees(allOrientationsForRoll); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
-            }
-            else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                }
+                angle = Math.toDegrees(allOrientationsForRoll); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
+                }
+                else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
                 SensorManager.getQuaternionFromVector(double[] Quarternion, double[] values);
                 double w = Quaternion[0];
                 double x = Quaternion[1];
