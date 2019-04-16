@@ -188,6 +188,9 @@ abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, Ta
         }
     }
 
+    //JDK - 4/16/19 - as part of future work, we will be removing conformance to StepCallbacks
+    //This means that onSaveStep, onCancelStep, onExecuteStepAction and showConfirmExitDialog will
+    //probably all go away
     protected fun onExecuteStepAction(action: Int) {
         if (action == StepCallbacks.ACTION_NEXT) {
             showNextStep()
