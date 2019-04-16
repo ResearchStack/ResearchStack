@@ -1,21 +1,22 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = '1.1.2'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+version = research_stack_version
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 6
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 7
         versionName version
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -52,7 +53,7 @@ ext {
     siteUrl = 'https://researchstack.org'
     gitUrl = 'https://github.com/ResearchStack/ResearchStack.git'
 
-    libraryVersion = version
+    libraryVersion = research_stack_version
 
     userOrgName = 'researchstack'
     developerId = properties.getProperty("bintray.user")
@@ -65,27 +66,33 @@ ext {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:cardview-v7:23.2.1'
-    compile 'com.android.support:preference-v14:23.2.1'
-    compile 'com.android.support:design:23.2.1'
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'io.reactivex:rxjava:1.1.3'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.2.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-design:0.2.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    compile 'com.scottyab:aes-crypto:0.0.3'
-    compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
-    apt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
-    compile 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.robolectric:robolectric:3.0'
-    testCompile 'org.mockito:mockito-core:1.10.19'
+    implementation "com.android.support:appcompat-v7:$support_library_version"
+    implementation "com.android.support:cardview-v7:$support_library_version"
+    implementation "com.android.support:preference-v14:$support_library_version"
+    implementation "com.android.support:design:$support_library_version"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation project(':foundation')
+
+    implementation 'com.google.code.gson:gson:2.4'
+    implementation 'io.reactivex:rxjava:1.2.5'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    implementation "com.android.support:support-v4:$support_library_version"
+    implementation 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'
+    implementation 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
+    implementation 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.3'
+    implementation 'com.scottyab:aes-crypto:0.0.3'
+    implementation 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
+    annotationProcessor 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
+    implementation 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.robolectric:robolectric:3.0'
+    testImplementation 'org.mockito:mockito-core:1.10.19'
 }
 
 group = publishedGroupId                               // Maven Group ID for the artifact
