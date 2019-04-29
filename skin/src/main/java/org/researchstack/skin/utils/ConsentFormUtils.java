@@ -6,10 +6,10 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 
-import org.researchstack.backbone.ui.ViewWebDocumentActivity;
-import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
-import org.researchstack.backbone.utils.ResUtils;
+import org.researchstack.foundation.components.utils.LogExt;
+import org.researchstack.foundation.components.utils.ResUtils;
+import org.researchstack.foundation.components.web.ui.activities.ViewWebDocumentActivity;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 
@@ -27,7 +27,7 @@ public class ConsentFormUtils {
 
     public static void viewConsentForm(Context context) {
         String path = ResourceManager.getInstance().getConsentHtml().getAbsolutePath();
-        String title = context.getString(R.string.rsb_consent);
+        String title = context.getString(R.string.rsfc_consent);
         Intent intent = ViewWebDocumentActivity.newIntentForPath(context, title, path);
         context.startActivity(intent);
     }

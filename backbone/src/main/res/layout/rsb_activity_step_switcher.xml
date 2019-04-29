@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/rsb_layout_toolbar" />
+    <include layout="@layout/rsf_layout_toolbar" />
 
     <org.researchstack.backbone.ui.views.StepSwitcher
         android:id="@+id/container"

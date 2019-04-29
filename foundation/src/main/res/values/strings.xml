@@ -1,2 +1,76 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Debug -->
+    <string name="lorem_name" tools:ignore="ResourceName">Lorem Ipsum</string>
+    <string name="lorem_short" tools:ignore="ResourceName">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit.
+    </string>
+    <string name="lorem_medium" tools:ignore="ResourceName">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
+    </string>
+    <string name="lorem_long" tools:ignore="ResourceName">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+        anim id est laborum.
+    </string>
+
+    <!-- Other -->
+    <string name="rsf_submit">Submit</string>
+    <string name="rsf_exit">Exit</string>
+    <string name="rsf_get_started">Get Started</string>
+    <string name="rsf_done">Done</string>
+    <string name="rsf_step_skip">Skip</string>
+    <string name="rsf_next">next</string>
+    <string name="rsf_what_to_expect">What to Expect</string>
+    <string name="rsf_name">Name</string>
+    <string name="rsf_email">Email</string>
+    <string name="rsf_disagree">Disagree</string>
+    <string name="rsf_agree">Agree</string>
+    <string name="rsf_ok">OK</string>
+    <string name="rsf_cancel">Cancel</string>
+    <string name="rsf_yes">Yes</string>
+    <string name="rsf_no">No</string>
+    <string name="rsf_format_step_title">Step %1$d of %2$d</string>
+    <string name="rsf_hours">Hours</string>
+    <string name="rsf_minutes">Minutes</string>
+
+    <!-- Step Errors -->
+    <string name="rsf_error_data_failed">Failed to load encrypted data, try again!</string>
+    <string name="rsf_error_invalid_signature">Signature Invalid</string>
+    <string name="rsf_invalid_answer_default">Invalid answer, try again!</string>
+    <string name="rsf_invalid_answer_date_over">Invalid answer, date must be before %1$s</string>
+    <string name="rsf_invalid_answer_date_under">Invalid answer, date must be after %1$s</string>
+    <string name="rsf_invalid_answer_integer_over">Invalid answer, your value must be %1$s or lower</string>
+    <string name="rsf_invalid_answer_integer_under">Invalid answer, your value must be %1$s or higher</string>
+    <string name="rsf_invalid_answer_choice">Please select a value!</string>
+    <string name="rsf_invalid_answer_date_none">Please choose a date.</string>
+    <string name="rsf_birth_date_too_old">You must be %1$s years or younger</string>
+    <string name="rsf_birth_date_too_young">You must be at least %1$s years old</string>
+
+    <!-- Body Hints -->
+    <string name="rsf_hint_step_body_int">Enter a number %1$d-%2$d</string>
+    <string name="rsf_hint_step_body_dec">Enter a number %1$.2f-%2$.2f</string>
+    <string name="rsf_hint_step_body_int_no_max">Enter a number</string>
+    <string name="rsf_hint_step_body_date">Enter a date</string>
+    <string name="rsf_hint_step_body_time">Enter a time</string>
+    <string name="rsf_hint_step_body_datetime">Enter a date and a time</string>
+    <string name="rsf_hint_step_body_text">Answer</string>
+
+    <!-- Graphing -->
+    <string name="rsf_chart_progress_center">%1$s of %2$s</string>
+    <string name="rsf_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <string name="rsf_error_assetvideoview_title">Video problem</string>
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsf_error_assetvideoview_invalid_progressive_playback">This video isn\'t valid for streaming to this device.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsf_error_assetvideoview_unknown">Can\'t play this video.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsf_error_assetvideoview_button">OK</string>
+
 </resources>

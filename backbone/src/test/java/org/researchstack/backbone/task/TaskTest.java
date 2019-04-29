@@ -8,8 +8,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.Step;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.step.Step;
+import org.researchstack.foundation.core.models.task.Task;
 
 import static org.junit.Assert.assertEquals;
 

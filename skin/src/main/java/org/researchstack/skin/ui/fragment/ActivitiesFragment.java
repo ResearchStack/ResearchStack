@@ -18,13 +18,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.storage.file.StorageAccessListener;
-import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
-import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
+import org.researchstack.feature.storage.StorageAccess;
+import org.researchstack.feature.storage.file.StorageAccessListener;
+import org.researchstack.foundation.components.utils.LogExt;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.task.Task;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.SchedulesAndTasksModel;

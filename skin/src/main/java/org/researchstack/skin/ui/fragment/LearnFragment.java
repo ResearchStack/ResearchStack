@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.researchstack.backbone.ui.ViewWebDocumentActivity;
+import org.researchstack.foundation.components.web.ui.activities.ViewWebDocumentActivity;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.SectionModel;
@@ -63,7 +63,7 @@ public class LearnFragment extends Fragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             if (viewType == VIEW_TYPE_HEADER) {
-                View view = inflater.inflate(R.layout.preference_category_material, parent, false);
+                View view = inflater.inflate(R.layout.rss_item_section_learn, parent, false);
                 return new HeaderViewHolder(view);
             } else {
                 View view = inflater.inflate(R.layout.rss_item_row_learn, parent, false);
@@ -114,7 +114,7 @@ public class LearnFragment extends Fragment {
 
             public HeaderViewHolder(View itemView) {
                 super(itemView);
-                title = (TextView) itemView;
+                title = (AppCompatTextView) itemView.findViewById(R.id.learn_item_title);
             }
         }
 

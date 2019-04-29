@@ -1,6 +1,6 @@
 package org.researchstack.skin;
 
-import org.researchstack.backbone.ResourcePathManager;
+import org.researchstack.foundation.components.singletons.ResourcePathManager;
 
 /**
  * This class is responsible for returning paths of resources defined in the assets folder. This

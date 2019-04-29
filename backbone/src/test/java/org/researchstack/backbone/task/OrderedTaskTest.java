@@ -2,7 +2,9 @@ package org.researchstack.backbone.task;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.researchstack.backbone.step.Step;
+import org.researchstack.foundation.components.common.task.OrderedTask;
+import org.researchstack.foundation.core.models.step.Step;
+import org.researchstack.foundation.core.models.task.Task;
 
 import java.util.List;
 

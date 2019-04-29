@@ -6,13 +6,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.step.layout.StepLayout;
-import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
-import org.researchstack.backbone.ui.views.SubmitBar;
-import org.researchstack.backbone.utils.ResUtils;
+import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.components.common.ui.layout.FixedSubmitBarLayout;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
+import org.researchstack.foundation.components.common.ui.views.SubmitBar;
+import org.researchstack.foundation.components.utils.ResUtils;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 import org.researchstack.skin.R;
 import org.researchstack.skin.step.ConsentQuizEvaluationStep;
 
@@ -52,7 +52,7 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
         TextView title = (TextView) findViewById(R.id.rss_quiz_eval_title);
         TextView summary = (TextView) findViewById(R.id.rss_quiz_eval_summary);
 
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsf_submit_bar);
         submitBar.getNegativeActionView().setVisibility(View.GONE);
         submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                 step,
@@ -64,14 +64,14 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
                     step.getQuizModel().getIncorrectIcon());
 
             image.setImageResource(iconResId);
-            title.setText(R.string.rsb_quiz_evaluation_try_again);
+            title.setText(R.string.rsfc_quiz_evaluation_try_again);
 
             if (!step.isOverMaxAttempts()) {
                 summary.setText(step.getQuizModel().getFailureMessage());
-                submitBar.setPositiveTitle(R.string.rsb_quiz_evaluation_retake);
+                submitBar.setPositiveTitle(R.string.rsfc_quiz_evaluation_retake);
             } else {
                 summary.setText(step.getQuizModel().getFailureMessage());
-                submitBar.setPositiveTitle(R.string.rsb_quiz_evaluation_review_consent);
+                submitBar.setPositiveTitle(R.string.rsfc_quiz_evaluation_review_consent);
             }
         }
 
@@ -81,7 +81,7 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
                     step.getQuizModel().getCorrectIcon());
 
             image.setImageResource(iconResId);
-            title.setText(R.string.rsb_quiz_evaluation_great_job);
+            title.setText(R.string.rsfc_quiz_evaluation_great_job);
 
             if (step.getIncorrect() == 0) {
                 summary.setText(step.getQuizModel().getSuccessMessage());
@@ -89,7 +89,7 @@ public class ConsentQuizEvaluationStepLayout extends FixedSubmitBarLayout implem
                 summary.setText(step.getQuizModel().getSuccessMessage());
             }
 
-            submitBar.setPositiveTitle(R.string.rsb_next);
+            submitBar.setPositiveTitle(R.string.rsf_next);
         }
     }
 

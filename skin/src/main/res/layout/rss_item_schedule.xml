@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:textColor="@color/rsb_black"
+        android:textColor="@color/rsf_black"
         tools:text="Asthma history\n13 questions" />
 
 </LinearLayout>

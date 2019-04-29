@@ -1,6 +1,6 @@
 package org.researchstack.skin.step;
 
-import org.researchstack.backbone.step.Step;
+import org.researchstack.foundation.core.models.step.Step;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.ConsentQuizModel;
 import org.researchstack.skin.ui.layout.ConsentQuizEvaluationStepLayout;
@@ -18,7 +18,7 @@ public class ConsentQuizEvaluationStep extends Step {
 
     @Override
     public int getStepTitle() {
-        return R.string.rsb_quiz_evaluation;
+        return R.string.rsfc_quiz_evaluation;
     }
 
     @Override

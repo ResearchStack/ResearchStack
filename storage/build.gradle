@@ -5,6 +5,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
+apply plugin: 'kotlin-kapt'
+
 version = research_stack_version
 
 android {
@@ -71,9 +73,8 @@ dependencies {
     implementation "com.google.code.gson:gson:$gson_version"
     implementation 'com.scottyab:aes-crypto:0.0.3'
     implementation 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
-    annotationProcessor 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
+    kapt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
     implementation 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

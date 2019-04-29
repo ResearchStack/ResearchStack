@@ -3,7 +3,9 @@ package org.researchstack.backbone.answerformat;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.researchstack.backbone.model.Choice;
+import org.researchstack.foundation.components.survey.answerformat.AnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.ChoiceAnswerFormat;
+import org.researchstack.foundation.components.survey.model.Choice;
 
 import static junit.framework.TestCase.assertEquals;
 

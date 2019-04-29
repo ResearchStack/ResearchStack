@@ -6,16 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.task.Task;
+import org.jetbrains.annotations.Nullable;
 import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
-import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.feature.storage.StorageAccess;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
+import org.researchstack.foundation.components.utils.TextUtils;
+import org.researchstack.foundation.core.interfaces.IResult;
+import org.researchstack.foundation.core.interfaces.IStep;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.step.Step;
+import org.researchstack.foundation.core.models.task.Task;
 import org.researchstack.skin.DataProvider;
 import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.R;
@@ -44,20 +47,24 @@ public class SignUpTaskActivity extends ViewTaskActivity implements ActivityCall
     }
 
     @Override
-    public void onSaveStep(int action, Step step, StepResult result) {
-        // Save result to task
-        onSaveStepResult(step.getIdentifier(), result);
+    public void onSaveStep(int action, IStep step, @Nullable IResult result) {
 
-        // Save Pin to disk, then save our consent info
-        if (action == ACTION_NEXT &&
-                step.getIdentifier().equals(OnboardingTask.SignUpPassCodeCreationStepIdentifier)) {
-            String pin = (String) result.getResult();
-            if (!TextUtils.isEmpty(pin)) {
-                StorageAccess.getInstance().createPinCode(this, pin);
-            }
+        if (result instanceof StepResult) {
+            StepResult stepResult = (StepResult) result;
+            // Save result to task
+            onSaveStepResult(step.getIdentifier(), stepResult);
 
-            if (consentResult != null) {
-                saveConsentResultInfo();
+            // Save Pin to disk, then save our consent info
+            if (action == ACTION_NEXT &&
+                    step.getIdentifier().equals(OnboardingTask.SignUpPassCodeCreationStepIdentifier)) {
+                String pin = (String) stepResult.getResult();
+                if (!TextUtils.isEmpty(pin)) {
+                    StorageAccess.getInstance().createPinCode(this, pin);
+                }
+
+                if (consentResult != null) {
+                    saveConsentResultInfo();
+                }
             }
         }
 

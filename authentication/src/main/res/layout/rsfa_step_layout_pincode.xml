@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Change to RelativeLayout for preview to work -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/Foundation.Survey.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rsfa_pincode_enter_title" />
+
+    <TextView
+        android:id="@+id/text"
+        style="@style/Foundation.Survey.Summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:minHeight="52dp"
+        android:paddingTop="@dimen/rsf_padding_small"
+        android:text="@string/rsfa_pincode_enter_summary"
+        android:textColorLink="?attr/colorAccent" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/pincode"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/rsf_item_size_default"
+        android:layout_below="@+id/text"
+        android:background="@null"
+        android:gravity="center"
+        android:imeOptions="actionNone"
+        android:letterSpacing=".25"
+        android:singleLine="true"
+        android:textSize="20sp" />
+
+    <include
+        android:id="@+id/progress"
+        layout="@layout/rsf_progress"
+        android:visibility="gone"
+        tools:visibility="gone" />
+
+</merge>

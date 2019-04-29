@@ -14,14 +14,14 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.ActivityCallback;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.StepPermissionRequest;
-import org.researchstack.backbone.ui.views.SubmitBar;
-import org.researchstack.backbone.utils.ThemeUtils;
+import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
+import org.researchstack.foundation.components.common.ui.views.SubmitBar;
+import org.researchstack.foundation.components.utils.ThemeUtils;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.R;
 
@@ -122,7 +122,7 @@ public class PermissionStepLayout extends LinearLayout implements StepLayout, St
 
         // Set submit bar behavior
         submitBar = (SubmitBar) findViewById(R.id.submit_bar);
-        submitBar.setPositiveTitle(R.string.rsb_next);
+        submitBar.setPositiveTitle(R.string.rsf_next);
         submitBar.setPositiveAction(v -> {
             if (isAnswerValid()) {
                 onNext(true);

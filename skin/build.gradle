@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
+apply plugin: 'kotlin-kapt'
+
 version = research_stack_version
 
 android {
@@ -71,6 +73,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.so'])
     implementation 'com.cronutils:cron-utils:3.1.2'
     implementation project(':foundation')
+    implementation project(':authentication')
+    implementation project(':storage')
+    implementation project(':consent')
+
     implementation project(':backbone')
 
     implementation "com.android.support:appcompat-v7:$support_library_version"
@@ -87,7 +93,7 @@ dependencies {
     implementation 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
 
     implementation 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
-    annotationProcessor 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
+    kapt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.robolectric:robolectric:3.0'

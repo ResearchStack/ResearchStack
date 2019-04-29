@@ -18,12 +18,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.researchstack.backbone.model.Choice;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.step.layout.StepLayout;
-import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks;
+import org.researchstack.foundation.components.common.ui.layout.StepLayout;
+import org.researchstack.foundation.components.common.ui.views.SubmitBar;
+import org.researchstack.foundation.components.survey.model.Choice;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.step.Step;
 import org.researchstack.skin.R;
 import org.researchstack.skin.model.ConsentQuizModel;
 import org.researchstack.skin.step.ConsentQuizQuestionStep;
@@ -88,10 +88,10 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
             instructionText.setVisibility(VISIBLE);
 
             // instruction steps don't need submit, also always count as correct answer
-            submitBar.setPositiveTitle(R.string.rsb_next);
+            submitBar.setPositiveTitle(R.string.rsf_next);
             submitBar.setPositiveAction(v -> onNext(true));
         } else {
-            submitBar.setPositiveTitle(R.string.rsb_submit);
+            submitBar.setPositiveTitle(R.string.rsf_submit);
             submitBar.setPositiveAction(v -> onSubmit());
 
             for (Choice<String> choice : getChoices(question)) {
@@ -148,7 +148,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
                 }
 
                 // Set the drawable of the current checked button, with correct color tint
-                int resId = answerCorrect ? R.drawable.rsb_ic_check : R.drawable.rsb_ic_x;
+                int resId = answerCorrect ? R.drawable.rsf_ic_check : R.drawable.rsf_ic_x;
                 Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
                 drawable = DrawableCompat.wrap(drawable);
                 DrawableCompat.setTint(drawable, resultTextColor);
@@ -211,7 +211,7 @@ public class ConsentQuizQuestionStepLayout extends LinearLayout implements StepL
 
     private void setSubmitBarNext() {
         // Change the submit bar positive-title to "next"
-        submitBar.setPositiveTitle(R.string.rsb_next);
+        submitBar.setPositiveTitle(R.string.rsf_next);
     }
 
     public boolean isAnswerValid() {

@@ -3,9 +3,8 @@ package org.researchstack.skin;
 import android.app.Application;
 import android.content.Context;
 
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.storage.file.FileAccess;
-import org.researchstack.backbone.task.Task;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.task.Task;
 import org.researchstack.skin.model.SchedulesAndTasksModel;
 import org.researchstack.skin.model.User;
 import org.researchstack.skin.ui.EmailVerificationActivity;

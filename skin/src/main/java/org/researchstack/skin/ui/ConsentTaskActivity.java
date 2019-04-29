@@ -3,9 +3,9 @@ package org.researchstack.skin.ui;
 import android.content.Context;
 import android.content.Intent;
 
-import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.ViewTaskActivity;
+import org.researchstack.feature.storage.StorageAccess;
+import org.researchstack.foundation.core.models.task.Task;
 
 public class ConsentTaskActivity extends ViewTaskActivity {
     public static Intent newIntent(Context context, Task task) {

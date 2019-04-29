@@ -9,14 +9,6 @@
         <!-- Custom Styles for Views -->
         <item name="toolbarTheme">@style/Theme.Backbone.Toolbar</item>
         <item name="passcodeTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
-        <item name="submitbarStyle">@style/Widget.Backbone.SubmitBar</item>
-        <item name="icontablayoutStyle">@style/Widget.Backbone.IconTabLayout</item>
-        <item name="signatureviewStyle">@style/Widget.Backbone.SignatureView</item>
-        <item name="emptyviewStyle">@style/Widget.Backbone.EmptyView</item>
-        <item name="progressChartCardStyle">@style/Widget.Backbone.Chart.Progress</item>
-        <item name="pieChartCardStyle">@style/Widget.Backbone.Chart.Pie</item>
-        <item name="lineChartCardStyle">@style/Widget.Backbone.Chart.Line</item>
-        <item name="barChartCardStyle">@style/Widget.Backbone.Chart.Bar</item>
     </style>
 
     <style name="Theme.Backbone" parent="Base.Theme.Backbone" />

@@ -2,8 +2,8 @@ package org.researchstack.skin.task;
 
 import android.content.Context;
 
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.Step;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.step.Step;
 import org.researchstack.skin.PermissionRequestManager;
 import org.researchstack.skin.TaskProvider;
 

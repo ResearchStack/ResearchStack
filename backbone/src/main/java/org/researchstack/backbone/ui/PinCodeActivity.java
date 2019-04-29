@@ -16,13 +16,13 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.StorageAccess;
-import org.researchstack.backbone.storage.file.PinCodeConfig;
-import org.researchstack.backbone.storage.file.StorageAccessListener;
-import org.researchstack.backbone.ui.views.PinCodeLayout;
-import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.ObservableUtils;
-import org.researchstack.backbone.utils.ThemeUtils;
+import org.researchstack.feature.authentication.pincode.PinCodeConfig;
+import org.researchstack.feature.authentication.pincode.ui.PinCodeLayout;
+import org.researchstack.feature.storage.StorageAccess;
+import org.researchstack.feature.storage.file.StorageAccessListener;
+import org.researchstack.foundation.components.utils.LogExt;
+import org.researchstack.foundation.components.utils.ThemeUtils;
 
 import java.util.List;
 
@@ -140,7 +140,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         pinCodeLayout = new PinCodeLayout(new ContextThemeWrapper(this, theme));
         pinCodeLayout.setBackgroundColor(Color.WHITE);
 
-        int errorColor = getResources().getColor(R.color.rsb_error);
+        int errorColor = getResources().getColor(R.color.rsf_error);
 
         TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
         EditText pincode = (EditText) pinCodeLayout.findViewById(R.id.pincode);
@@ -169,7 +169,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
             toggleKeyboardAction.call(true);
             throwable.printStackTrace();
-            summary.setText(R.string.rsb_pincode_enter_error);
+            summary.setText(R.string.rsfa_pincode_enter_error);
             summary.setTextColor(errorColor);
             pinCodeLayout.showProgress(false);
         }).onErrorResumeNext(throwable1 -> {

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
-        android:paddingBottom="@dimen/rsb_padding_wedge"
+        android:paddingBottom="@dimen/rsf_padding_wedge"
         android:text="@string/rss_quiz_question_disclamer"
         android:visibility="visible" />
 
@@ -38,8 +38,8 @@
                 style="@style/Backbone.Survey.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/rsb_padding_wedge"
-                android:paddingTop="@dimen/rsb_padding_wedge"
+                android:paddingBottom="@dimen/rsf_padding_wedge"
+                android:paddingTop="@dimen/rsf_padding_wedge"
                 tools:text="@string/lorem_short" />
 
             <TextView
@@ -48,8 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title"
-                android:paddingBottom="@dimen/rsb_padding_wedge"
-                android:paddingTop="@dimen/rsb_padding_wedge"
+                android:paddingBottom="@dimen/rsf_padding_wedge"
+                android:paddingTop="@dimen/rsf_padding_wedge"
                 android:visibility="gone"
                 tools:text="@string/lorem_short" />
 
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/radio_group"
                 android:background="@android:color/holo_red_light"
-                android:minHeight="@dimen/rsb_item_size_default"
+                android:minHeight="@dimen/rsf_item_size_default"
                 android:visibility="gone" />
 
             <RadioGroup
@@ -75,8 +75,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/radio_group"
-                android:paddingBottom="@dimen/rsb_padding_wedge"
-                android:paddingTop="@dimen/rsb_padding_wedge"
+                android:paddingBottom="@dimen/rsf_padding_wedge"
+                android:paddingTop="@dimen/rsf_padding_wedge"
                 android:visibility="gone"
                 tools:text="@string/lorem_name"
                 tools:visibility="visible" />
@@ -88,8 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/quiz_result_title"
                 android:layout_marginTop="0dp"
-                android:paddingBottom="@dimen/rsb_padding_medium"
-                android:paddingTop="@dimen/rsb_padding_small"
+                android:paddingBottom="@dimen/rsf_padding_medium"
+                android:paddingTop="@dimen/rsf_padding_small"
                 android:text="@string/lorem_long"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -98,12 +98,12 @@
 
     </ScrollView>
 
-    <org.researchstack.backbone.ui.views.SubmitBar
+    <org.researchstack.foundation.components.common.ui.views.SubmitBar
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:negativeActionTitle="@string/rsb_exit"
-        app:positiveActionTitle="@string/rsb_submit"
+        app:negativeActionTitle="@string/rsf_exit"
+        app:positiveActionTitle="@string/rsf_submit"
 
         />
 

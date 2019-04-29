@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Change to RelativeLayout for preview to work -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:layout_marginLeft="@dimen/rsf_margin_left"
+        android:layout_marginRight="@dimen/rsf_margin_right"
+        android:layout_marginTop="20dp"
+
+        android:textColor="?attr/colorAccent"
+        android:textSize="20sp"
+
+        tools:text="@string/lorem_name" />
+
+    <TextView
+        android:id="@+id/summary"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="@dimen/rsf_margin_left"
+        android:layout_marginRight="@dimen/rsf_margin_right"
+        android:layout_marginTop="36dp"
+        tools:text="@string/lorem_medium" />
+
+    <org.researchstack.feature.consent.ui.views.SignatureView
+        android:id="@+id/layout_consent_review_signature"
+        android:layout_width="match_parent"
+        android:layout_height="186dp"
+        android:layout_below="@+id/summary"
+        android:layout_marginLeft="@dimen/rsf_padding_medium"
+        android:layout_marginRight="@dimen/rsf_padding_medium"
+        android:layout_marginTop="20dp"
+        android:paddingBottom="52dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        app:signatureColor="?attr/colorAccent" />
+
+    <org.researchstack.foundation.components.common.ui.views.SubmitBar
+        android:id="@+id/submit_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/layout_consent_review_signature_clear"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/submit_bar"
+        android:text="@string/rsfc_consent_signature_clear"
+        android:textColor="@color/rsf_submit_bar_negative" />
+
+</merge>
+
+

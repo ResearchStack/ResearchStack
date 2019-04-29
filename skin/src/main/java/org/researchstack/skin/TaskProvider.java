@@ -2,13 +2,17 @@ package org.researchstack.skin;
 
 import android.app.Application;
 
-import org.researchstack.backbone.task.Task;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.researchstack.foundation.components.presentation.ITaskProvider;
+import org.researchstack.foundation.core.interfaces.ITask;
+import org.researchstack.foundation.core.models.task.Task;
 
 /**
  * TaskProvider is used as a way for the Framework to get Tasks needed throughout the onboarding
  * process. This allows you to implement your own Tasks if needed.
  */
-public abstract class TaskProvider {
+public abstract class TaskProvider implements ITaskProvider {
     /**
      * Task ID used by the framework for looking up the "initial" task
      */
@@ -63,6 +67,12 @@ public abstract class TaskProvider {
      * @return a task object with an id of {@param taskId}
      */
     public abstract Task get(String taskId);
+
+    @Nullable
+    @Override
+    public ITask task(@NotNull String identifier) {
+        return this.get(identifier);
+    }
 
     /**
      * Used to store a task object for reuse

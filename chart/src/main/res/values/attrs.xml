@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <declare-styleable name="Feature.Chart" tools:ignore="ResourceName">
+        <attr name="emptyviewStyle" format="reference" />
+        <attr name="progressChartCardStyle" format="reference" />
+        <attr name="pieChartCardStyle" format="reference" />
+        <attr name="lineChartCardStyle" format="reference" />
+        <attr name="barChartCardStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="EmptyView" tools:ignore="ResourceName">
+        <attr name="android:background" />
+        <attr name="emptyIcon" format="reference" />
+        <attr name="emptyIconTint" format="color" />
+        <attr name="emptyText" format="string" />
+        <attr name="emptyTextAppearance" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ChartCard" tools:ignore="ResourceName">
+        <attr name="titleText" format="string" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="titleTextTypeface" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="ProgressChartCard" tools:ignore="ResourceName">
+        <attr name="centerTextFormat" format="reference" />
+        <attr name="centerTextColor" format="color" />
+        <attr name="centerTextSize" format="dimension" />
+        <attr name="centerTextTypeface" format="string" />
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleTextTypeface" />
+        <attr name="finishText" format="string" />
+        <attr name="finishTextColor" format="color" />
+        <attr name="tabIndicatorColor" />
+        <attr name="tabTextColor" />
+        <attr name="tabSelectedTextColor" />
+    </declare-styleable>
+
+    <declare-styleable name="PieChartCard" tools:ignore="ResourceName">
+        <attr name="valueTextFormat" format="reference" />
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleTextTypeface" />
+    </declare-styleable>
+
+    <declare-styleable name="LineChartCard" tools:ignore="ResourceName">
+        <attr name="chartXAxisTextColor" format="color" />
+        <attr name="chartXAxisTextSize" format="dimension" />
+        <attr name="chartXAxisTextTypeface" format="string" />
+        <attr name="chartYAxisTextColor" format="color" />
+        <attr name="chartYAxisTextSize" format="dimension" />
+        <attr name="chartYAxisTextTypeface" format="string" />
+        <attr name="expandTintColor" format="color" />
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleTextTypeface" />
+    </declare-styleable>
+
+    <declare-styleable name="BarChartCard" tools:ignore="ResourceName">
+        <attr name="chartXAxisTextColor" />
+        <attr name="chartXAxisTextSize" />
+        <attr name="chartXAxisTextTypeface" />
+        <attr name="expandTintColor" />
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleTextTypeface" />
+    </declare-styleable>
+
+</resources>

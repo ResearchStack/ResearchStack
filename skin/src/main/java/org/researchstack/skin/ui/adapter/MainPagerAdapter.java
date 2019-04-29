@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import org.researchstack.backbone.utils.ViewUtils;
+import org.researchstack.foundation.components.utils.ViewUtils;
 import org.researchstack.skin.ActionItem;
 
 import java.util.List;

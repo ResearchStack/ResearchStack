@@ -3,29 +3,29 @@ package org.researchstack.skin.task;
 import android.content.Context;
 import android.content.res.Resources;
 
-import org.researchstack.backbone.answerformat.AnswerFormat;
-import org.researchstack.backbone.answerformat.BirthDateAnswerFormat;
-import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
-import org.researchstack.backbone.answerformat.DateAnswerFormat;
-import org.researchstack.backbone.answerformat.TextAnswerFormat;
-import org.researchstack.backbone.model.Choice;
-import org.researchstack.backbone.model.ConsentDocument;
-import org.researchstack.backbone.model.ConsentSection;
-import org.researchstack.backbone.model.ConsentSignature;
 import org.researchstack.backbone.model.DocumentProperties;
-import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.ConsentDocumentStep;
-import org.researchstack.backbone.step.ConsentSharingStep;
-import org.researchstack.backbone.step.ConsentSignatureStep;
-import org.researchstack.backbone.step.ConsentVisualStep;
-import org.researchstack.backbone.step.FormStep;
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.task.OrderedTask;
-import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
-import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.feature.consent.model.ConsentDocument;
+import org.researchstack.feature.consent.model.ConsentSection;
+import org.researchstack.feature.consent.model.ConsentSignature;
+import org.researchstack.feature.consent.step.ConsentDocumentStep;
+import org.researchstack.feature.consent.step.ConsentSharingStep;
+import org.researchstack.feature.consent.step.ConsentSignatureStep;
+import org.researchstack.feature.consent.step.ConsentVisualStep;
+import org.researchstack.feature.consent.ui.layout.ConsentSignatureStepLayout;
+import org.researchstack.foundation.components.common.task.OrderedTask;
+import org.researchstack.foundation.components.survey.answerformat.AnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.BirthDateAnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.ChoiceAnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.DateAnswerFormat;
+import org.researchstack.foundation.components.survey.answerformat.TextAnswerFormat;
+import org.researchstack.foundation.components.survey.model.Choice;
+import org.researchstack.foundation.components.survey.step.FormStep;
+import org.researchstack.foundation.components.survey.step.QuestionStep;
+import org.researchstack.foundation.components.utils.LogExt;
+import org.researchstack.foundation.components.utils.TextUtils;
+import org.researchstack.foundation.core.models.result.StepResult;
+import org.researchstack.foundation.core.models.result.TaskResult;
+import org.researchstack.foundation.core.models.step.Step;
 import org.researchstack.skin.R;
 import org.researchstack.skin.ResourceManager;
 import org.researchstack.skin.model.ConsentQuizModel;
@@ -75,9 +75,9 @@ public class ConsentTask extends OrderedTask {
         signature.setRequiresBirthDate(properties.requiresBirthdate());
 
         ConsentDocument doc = new ConsentDocument();
-        doc.setTitle(r.getString(R.string.rsb_consent_form_title));
-        doc.setSignaturePageTitle(R.string.rsb_consent_form_title);
-        doc.setSignaturePageContent(r.getString(R.string.rsb_consent_signature_content));
+        doc.setTitle(r.getString(R.string.rsfc_consent_form_title));
+        doc.setSignaturePageTitle(R.string.rsfc_consent_form_title);
+        doc.setSignaturePageContent(r.getString(R.string.rsfc_consent_signature_content));
         doc.setSections(sections);
         doc.addSignature(signature);
 
@@ -116,13 +116,13 @@ public class ConsentTask extends OrderedTask {
 
         ConsentSharingStep sharingStep = new ConsentSharingStep(ID_SHARING);
         sharingStep.setOptional(false);
-        sharingStep.setStepTitle(R.string.rsb_consent);
+        sharingStep.setStepTitle(R.string.rsfc_consent);
         //        sharingStep.setLocalizedLearnMoreHTMLContent(localizedLearnMoreHTMLContent);
 
-        String shareWidely = r.getString(R.string.rsb_consent_share_widely, investigatorLongDesc);
+        String shareWidely = r.getString(R.string.rsfc_consent_share_widely, investigatorLongDesc);
         Choice<String> shareWidelyChoice = new Choice<>(shareWidely, "sponsors_and_partners", null);
 
-        String shareRestricted = r.getString(R.string.rsb_consent_share_only,
+        String shareRestricted = r.getString(R.string.rsfc_consent_share_only,
                 investigatorShortDesc);
         Choice<String> shareRestrictedChoice = new Choice<>(shareRestricted,
                 "all_qualified_researchers",
@@ -132,8 +132,8 @@ public class ConsentTask extends OrderedTask {
                 shareWidelyChoice,
                 shareRestrictedChoice));
 
-        sharingStep.setTitle(r.getString(R.string.rsb_consent_share_title));
-        sharingStep.setText(r.getString(R.string.rsb_consent_share_description,
+        sharingStep.setTitle(r.getString(R.string.rsfc_consent_share_title));
+        sharingStep.setText(r.getString(R.string.rsfc_consent_share_description,
                 investigatorLongDesc,
                 localizedLearnMoreHTMLContent));
 
@@ -153,11 +153,11 @@ public class ConsentTask extends OrderedTask {
             ConsentVisualStep step = new ConsentVisualStep("consent_" + i);
             step.setSection(section);
 
-            String nextString = ctx.getString(R.string.rsb_next);
+            String nextString = ctx.getString(R.string.rsf_next);
             if (section.getType() == ConsentSection.Type.Overview) {
-                nextString = ctx.getString(R.string.rsb_get_started);
+                nextString = ctx.getString(R.string.rsf_get_started);
             } else if (i == size - 1) {
-                nextString = ctx.getString(R.string.rsb_done);
+                nextString = ctx.getString(R.string.rsf_done);
             }
             step.setNextButtonString(nextString);
 
@@ -193,18 +193,18 @@ public class ConsentTask extends OrderedTask {
         // Add ConsentReviewDocumentStep (view html version of the PDF doc)
         StringBuilder docBuilder = new StringBuilder(
                 "</br><div style=\"padding: 10px 10px 10px 10px;\" class='header'>");
-        String title = ctx.getString(R.string.rsb_consent_review_title);
+        String title = ctx.getString(R.string.rsfc_consent_review_title);
         docBuilder.append(String.format(
                 "<h1 style=\"text-align: center; font-family:sans-serif-light;\">%1$s</h1>",
                 title));
-        String detail = ctx.getString(R.string.rsb_consent_review_instruction);
+        String detail = ctx.getString(R.string.rsfc_consent_review_instruction);
         docBuilder.append(String.format("<p style=\"text-align: center\">%1$s</p>", detail));
         docBuilder.append("</div></br>");
         docBuilder.append(doc.getHtmlReviewContent());
 
         ConsentDocumentStep step = new ConsentDocumentStep(ID_CONSENT_DOC);
         step.setConsentHTML(docBuilder.toString());
-        step.setConfirmMessage(ctx.getString(R.string.rsb_consent_review_reason));
+        step.setConfirmMessage(ctx.getString(R.string.rsfc_consent_review_reason));
         steps.add(step);
 
         // Add full-name input
@@ -217,8 +217,8 @@ public class ConsentTask extends OrderedTask {
                 format.setIsMultipleLines(false);
 
                 String placeholder = ctx.getResources()
-                        .getString(R.string.rsb_consent_name_placeholder);
-                String nameText = ctx.getResources().getString(R.string.rsb_consent_name_full);
+                        .getString(R.string.rsfc_consent_name_placeholder);
+                String nameText = ctx.getResources().getString(R.string.rsfc_consent_name_full);
                 formSteps.add(new QuestionStep(ID_FORM_NAME, nameText, format));
             }
 
@@ -226,13 +226,13 @@ public class ConsentTask extends OrderedTask {
                 Calendar maxDate = Calendar.getInstance();
                 maxDate.add(Calendar.YEAR, -18);
                 DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
-                String dobText = ctx.getResources().getString(R.string.rsb_consent_dob_full);
+                String dobText = ctx.getResources().getString(R.string.rsfc_consent_dob_full);
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
             }
 
-            String formTitle = ctx.getString(R.string.rsb_consent_form_title);
+            String formTitle = ctx.getString(R.string.rsfc_consent_form_title);
             FormStep formStep = new FormStep(ID_FORM, formTitle, step.getText());
-            formStep.setStepTitle(R.string.rsb_consent);
+            formStep.setStepTitle(R.string.rsfc_consent);
             formStep.setOptional(false);
             formStep.setFormSteps(formSteps);
             steps.add(formStep);
@@ -241,9 +241,9 @@ public class ConsentTask extends OrderedTask {
         // Add signature input
         if (doc.getSignature(0).requiresSignatureImage()) {
             ConsentSignatureStep signatureStep = new ConsentSignatureStep(ID_SIGNATURE);
-            signatureStep.setStepTitle(R.string.rsb_consent);
-            signatureStep.setTitle(ctx.getString(R.string.rsb_consent_signature_title));
-            signatureStep.setText(ctx.getString(R.string.rsb_consent_signature_instruction));
+            signatureStep.setStepTitle(R.string.rsfc_consent);
+            signatureStep.setTitle(ctx.getString(R.string.rsfc_consent_signature_title));
+            signatureStep.setText(ctx.getString(R.string.rsfc_consent_signature_instruction));
             signatureStep.setOptional(false);
             signatureStep.setSignatureDateFormat(doc.getSignature(0)
                     .getSignatureDateFormatString());
