@@ -3,7 +3,7 @@ package org.researchstack.foundation.components.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;

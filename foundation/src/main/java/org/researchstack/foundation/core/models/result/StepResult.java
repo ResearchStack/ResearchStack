@@ -1,6 +1,6 @@
 package org.researchstack.foundation.core.models.result;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.researchstack.foundation.components.survey.answerformat.AnswerFormat;
 import org.researchstack.foundation.components.survey.step.QuestionStep;

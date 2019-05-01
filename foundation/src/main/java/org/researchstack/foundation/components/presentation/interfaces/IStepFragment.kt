@@ -1,6 +1,6 @@
 package org.researchstack.foundation.components.presentation.interfaces
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks
 import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.IStep
@@ -11,5 +11,5 @@ interface IStepFragment {
     //This interface may change depending on work on Actions
     fun setCallbacks(callbacks: StepCallbacks)
     fun onBackPressed()
-    val fragment: Fragment
+    val fragment: androidx.fragment.app.Fragment
 }

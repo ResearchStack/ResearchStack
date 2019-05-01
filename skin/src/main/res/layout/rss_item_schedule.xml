@@ -8,7 +8,7 @@
     android:minHeight="56dp"
     android:orientation="horizontal">
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/daily_indicator"
         android:layout_width="16dp"
         android:layout_height="16dp"
@@ -16,7 +16,7 @@
         android:clickable="false"
         android:src="@drawable/rss_ic_circle_16dp" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/task_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

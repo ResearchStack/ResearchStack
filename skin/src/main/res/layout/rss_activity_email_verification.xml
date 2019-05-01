@@ -19,7 +19,7 @@
         android:textColor="?attr/colorAccent"
         android:textSize="20sp" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/email_verification_body"
         style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
         android:layout_marginTop="36dp"
         tools:text="@string/lorem_medium" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/email_verification_wrong_email"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="match_parent"

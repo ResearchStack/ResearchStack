@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.ContextThemeWrapper
@@ -19,7 +19,7 @@ import org.researchstack.feature.authentication.R
 import org.researchstack.feature.authentication.pincode.PasscodeAuthenticator
 import org.researchstack.foundation.components.utils.ThemeUtils
 
-open class PasscodeAuthenticationFragment: Fragment() {
+open class PasscodeAuthenticationFragment: androidx.fragment.app.Fragment() {
 
     open class AuthenticationCallback {
         open fun onAuthenticationFailed() {}

@@ -1,6 +1,6 @@
 package org.researchstack.feature.authentication
 
-import android.support.v4.os.CancellationSignal
+import androidx.core.os.CancellationSignal
 
 open abstract class Authenticator<Result: Authenticator.AuthenticationResult, Callback: Authenticator.AuthenticationCallback<Result>> {
 

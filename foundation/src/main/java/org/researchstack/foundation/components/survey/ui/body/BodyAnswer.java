@@ -1,7 +1,7 @@
 package org.researchstack.foundation.components.survey.ui.body;
 
 import android.content.Context;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import org.researchstack.foundation.R;
 

@@ -2,10 +2,10 @@ package org.researchstack.foundation.components.presentation
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +21,7 @@ import org.researchstack.foundation.core.interfaces.ITask
 import java.lang.RuntimeException
 import java.util.*
 
-abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, TaskType: ITask>(): Fragment(), StepCallbacks {
+abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, TaskType: ITask>(): androidx.fragment.app.Fragment(), StepCallbacks {
 
     public var taskProvider: ITaskProvider? = null
     public var stepFragmentProvider: IStepFragmentProvider? = null

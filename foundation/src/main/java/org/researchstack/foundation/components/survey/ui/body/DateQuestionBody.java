@@ -3,7 +3,7 @@ package org.researchstack.foundation.components.survey.ui.body;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.res.Resources;
-import android.support.v7.view.ContextThemeWrapper;
+import androidx.appcompat.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
