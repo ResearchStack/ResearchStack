@@ -11,6 +11,8 @@ import android.hardware.SensorManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.View;
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 
 import java.lang.Math;
 
@@ -21,8 +23,10 @@ import org.researchstack.backbone.step.active.RangeOfMotionStep;
 import org.researchstack.backbone.step.active.recorder.AudioRecorder;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
 
+import static android.content.pm.ActivityInfo.*;
+
 /**
- * Created by David Evans, David Jimenez, Simon Hartley, 2019.
+ * Created by David Evans, David Jimenez, Laurence Hurst, Simon Hartley, 2019.
  *
  * The RangeOfMotionStepLayout is essentially the same as the ActiveStepLayout, except that it
  * calculates the start, maximum, minimum and finish (Euler) angle results
@@ -106,27 +110,111 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         Context appContext = getContext().getApplicationContext();
         LocalBroadcastManager.getInstance(appContext).unregisterReceiver(deviceMotionReceiver);
     }
+
+
+    /** Methods to calculate maximum and minimum angles recorded by the device **/
+
+    private double minimumAngle () {
+
+        double min_angle = 0;
+
+        if (shifted_angle < min_angle) {
+            min_angle = shifted_angle;
+        }
+        return min_angle;
+    }
+
+    private double maximumAngle () {
+
+        double max_angle = 0;
+
+        if (shifted_angle > max_angle) {
+            max_angle = shifted_angle;
+        }
+        return max_angle
+    }
+
+
+    /** We need to shift the range of Euler angles reported by the device from +/-180 degrees
+     to -90 to +270 degrees, which should be sufficient to cover all achievable knee and
+     shoulder ranges of motion **/
+
+    private double shiftAngleRange () {
+
+        double shifted_angle = 0;
+        boolean targetAngleRange = (angle_in_degrees > 90) && (angle_in_degrees <= 180);
+
+
+        if (targetAngleRange == true) {
+            shifted_angle = Math.abs(angle_in_degrees) - 360;
+        }
+        else {
+            shifted_angle = angle_in_degrees;
+        }
+        return shifted_angle;
+    }
+
+
+    /** Method to obtain the device attitude's quaternion and then calculate Euler angles **/
+
+    private double getDeviceAngleInDegreesFromAttitude(SensorEvent event) {
+
+        int orientation = getResources().getConfiguration().orientation;
+        int type = event.sensor.getType();
+        float[] Quaternion = {0, 0, 0, 0};
+        double angle_in_degrees = 0;
+
+
+        if (type == Sensor.TYPE_ROTATION_VECTOR) {
+
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+                SensorManager.getQuaternionFromVector(Quaternion, event.values);
+                angle_in_degrees = Math.toDegrees(allOrientationsForRoll(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]));
+                // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
+            } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+                SensorManager.getQuaternionFromVector(Quaternion, event.values);
+                angle_in_degrees = Math.toDegrees(allOrientationsForPitch(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]));
+            }
+        }
+        return angle_in_degrees;
+    }
+
+
+    /** Methods to convert quaternions to Euler angles **/
+
+    public double allOrientationsForPitch (double w, double x, double y, double z){
+
+        double angle_in_rads;
+
+        angle_in_rads = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)));
+
+        return  angle_in_rads;
+    }
+
+    public double allOrientationsForRoll (double w, double x, double y, double z){
+
+        double angle_in_rads;
+
+        angle_in_rads = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)));
+
+        return  angle_in_rads;
+    }
+
+    //Yaw (azimuth) is not needed with the current knee and shoulder tasks, but will be for other RoM tasks
+    public double allOrientationsForYaw (double w, double x, double y, double z){
+
+        double angle_in_rads;
+
+        angle_in_rads = (Math.asin(2.0 * (x * y - w * z)));
+
+        return  angle_in_rads;
+    }
+
 }
 
 
-
-/*
-  Conversion equations below (based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles )
-
-or https://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#toDegrees(double)
-
-
-
-//public static void allOrientationsForPitch(double quaternion_w, double quaternion_x, double quaternion_y, double quaternion_z)
-
-private double allOrientationsForPitch = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)))
-
-private double allOrientationsForRoll = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)))
-
-//Yaw is not needed with the current knee and shoulder tasks, but will be for other RoM tasks
-private double allOrientationsForYaw = (Math.asin(2.0 * (x * y - w * z)))
-
-*/
 
 @interface ORKRangeOfMotionStepViewController () <ORKDeviceMotionRecorderDelegate> {
 ORKRangeOfMotionContentView *_contentView;
@@ -161,14 +249,6 @@ public void calculateAndSetAngles {
 _startAngle = ([this getDeviceAngleInDegreesFromAttitude:_referenceAttitude]);
 
 
-//This function calculates maximum and minimum angles recorded by the device
-if (_newAngle > _maxAngle) {
-    _maxAngle = _newAngle;
-    }
-if (_minAngle == 0.0 || _newAngle < _minAngle) {
-    _minAngle = _newAngle;
-    }
-}
 
 
 //This calculates the current device orientation relative to the start orientation, by multiplying by the current orientation by inverse of the original orientation
@@ -186,89 +266,6 @@ public void deviceMotionRecorderDidUpdateWithMotion:
 double angle = [this getDeviceAngleInDegreesFromAttitude:currentAttitude];
 
 
-//This function shifts the range of angles reported by the device from +/-180 degrees to
-//-90 to +270 degrees, which should be sufficient to cover all achievable knee and shoulder ranges of motion
-
-boolean shiftAngleRange = angle > 90 && angle <= 180;
-    if (shiftAngleRange) {
-        double _newAngle = fabs(angle) - 360;
-        }
-    else {
-        double _newAngle = angle;
-        }
-
-    [this calculateAndSetAngles];
-}
-
-/*
- When the device is in Portrait mode, we need to get the attitude's pitch
- to determine the device's angle. attitude.pitch doesn't return all
- orientations, so we use the attitude's quaternion to calculate the
- Euler angle.
- */
-
-class deviceAngleInDegreesFromAttitude {
-
-    /** Variables **/
-
-    private double[] Quaternion = new double[4];
-
-    /** Method to obtain the device attitude and calculate Euler angles **/
-
-    public double getDeviceAngleInDegreesFromAttitude(SensorEvent event) {
-
-            int type = event.sensor.getType();
-            double angle = 0;
-
-            if (type == Sensor.TYPE_ROTATION_VECTOR) {
-
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
-                    SensorManager.getQuaternionFromVector(Quarternion, event.values);
-                    angle = Math.toDegrees(allOrientationsForRoll(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3])); // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
-                    }
-                }
-                else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-
-                    SensorManager.getQuaternionFromVector(Quarternion, event.values);
-                    angle = Math.toDegrees(allOrientationsForPitch(Quaternion[0],Quaternion[1],Quaternion[2],Quaternion[3]));
-                }
-
-            return angle;
-        }
-
-
-    /** Methods to convert quaternions to Euler angles **/
-
-    private double allOrientationsForPitch (double w, double x, double y, double z){
-
-        double angle_in_rads;
-
-        angle_in_rads = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)));
-
-        return  angle_in_rads;
-    }
-
-    private double allOrientationsForRoll (double w, double x, double y, double z){
-
-        double angle_in_rads;
-
-        angle_in_rads = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)));
-
-        return  angle_in_rads;
-    }
-
-    //Yaw (azimuth) is not needed with the current knee and shoulder tasks, but will be for other RoM tasks
-    private double allOrientationsForYaw (double w, double x, double y, double z){
-
-        double angle_in_rads;
-
-        angle_in_rads = (Math.asin(2.0 * (x * y - w * z)));
-
-        return  angle_in_rads;
-    }
-
-}
 
 
 //#pragma mark - ORKActiveTaskViewController
