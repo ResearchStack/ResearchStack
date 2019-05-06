@@ -1,26 +1,14 @@
 package org.researchstack.backbone.task.factory;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
-import android.os.Build;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.answerformat.AnswerFormat;
-import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
-import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
-import org.researchstack.backbone.model.Choice;
-import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.InstructionStep;
-import org.researchstack.backbone.step.PermissionsStep;
-import org.researchstack.backbone.step.QuestionStep;
-import org.researchstack.backbone.step.RequireSystemFeatureStep;
 import org.researchstack.backbone.step.Step;
 //import org.researchstack.backbone.step.active.TimedWalkStep;
-import org.researchstack.backbone.step.active.RangeOfMotionStep;
 //import org.researchstack.backbone.step.active.recorder.AccelerometerRecorderConfig;
-import org.researchstack.backbone.step.active.TouchAnywhereStep;
+import org.researchstack.backbone.step.TouchAnywhereStep;
+import org.researchstack.backbone.step.active.RangeOfMotionStep;
 //import org.researchstack.backbone.step.active.CountdownStep;
 //import org.researchstack.backbone.step.active.FitnessStep;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorderConfig;
@@ -29,15 +17,10 @@ import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorderConfi
 import org.researchstack.backbone.step.active.recorder.RecorderConfig;
 //import org.researchstack.backbone.step.active.WalkingTaskStep;
 import org.researchstack.backbone.task.OrderedTask;
-import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.ResUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 
 import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
@@ -113,35 +96,72 @@ public class RangeOfMotionTaskFactory {
                 stepList.add(step);
             }
 
-            {
-                String title = context.getString(R.string.rsb_knee_range_of_motion_title);
-                String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1);
-                String text = String.format(textFormat, limbOption);
-                InstructionStep step = new InstructionStep(Instruction1StepIdentifier, title, text);
-                //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1));
-                step.setImage(ResUtils.Audio.PHONE_SOUND_ON);
-                stepList.add(step);
+            if ( limbOption == LimbTaskOptions.Limb.RIGHT || limbOption == LimbTaskOptions.Limb.BOTH) {
+                {
+                    String title = context.getString(R.string.rsb_knee_range_of_motion_title);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1);
+                    String text = String.format(textFormat, LimbTaskOptions.Limb.RIGHT);
+                    InstructionStep step = new InstructionStep(Instruction1StepIdentifier, title, text);
+                    //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1));
+                    step.setImage(ResUtils.Audio.PHONE_SOUND_ON);
+                    stepList.add(step);
+                }
+
+                {
+                    String title = context.getString(R.string.rsb_knee_range_of_motion_title);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_2);
+                    String text = String.format(textFormat, LimbTaskOptions.Limb.RIGHT);
+                    InstructionStep step = new InstructionStep(Instruction2StepIdentifier, title, text);
+                    //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_2));
+                    step.setImage(ResUtils.RangeOfMotion.KNEE_START_RIGHT);
+                    stepList.add(step);
+                }
+
+                {
+                    String title = context.getString(R.string.rsb_knee_range_of_motion_title);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3);
+                    String text = String.format(textFormat, LimbTaskOptions.Limb.RIGHT);
+                    InstructionStep step = new InstructionStep(Instruction3StepIdentifier, title, text);
+                    //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3));
+                    step.setImage(ResUtils.RangeOfMotion.KNEE_MAXIMUM_RIGHT);
+                    stepList.add(step);
+                }
             }
 
-            {
-                String title = context.getString(R.string.rsb_knee_range_of_motion_title);
-                String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_2);
-                String text = String.format(textFormat, limbOption);
-                InstructionStep step = new InstructionStep(Instruction2StepIdentifier, title, text);
-                //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_2));
-                step.setImage(ResUtils.RangeOfMotion.KNEE_START_LEFT);
-                stepList.add(step);
+// todo LEFt here
+
+            else if ( limbOption == LimbTaskOptions.Limb.LEFT || limbOption == LimbTaskOptions.Limb.BOTH) {
+                {
+                    String title = context.getString(R.string.rsb_knee_range_of_motion_title);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1);
+                    String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
+                    InstructionStep step = new InstructionStep(Instruction1StepIdentifier, title, text);
+                    //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1));
+                    step.setImage(ResUtils.Audio.PHONE_SOUND_ON);
+                    stepList.add(step);
+                }
+
+                {
+                    String title = context.getString(R.string.rsb_knee_range_of_motion_title);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_2);
+                    String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
+                    InstructionStep step = new InstructionStep(Instruction2StepIdentifier, title, text);
+                    //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_2));
+                    step.setImage(ResUtils.RangeOfMotion.KNEE_START_LEFT);
+                    stepList.add(step);
+                }
+
+                {
+                    String title = context.getString(R.string.rsb_knee_range_of_motion_title);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3);
+                    String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
+                    InstructionStep step = new InstructionStep(Instruction3StepIdentifier, title, text);
+                    //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3));
+                    step.setImage(ResUtils.RangeOfMotion.KNEE_MAXIMUM_LEFT);
+                    stepList.add(step);
+                }
             }
 
-            {
-                String title = context.getString(R.string.rsb_knee_range_of_motion_title);
-                String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3);
-                String text = String.format(textFormat, limbOption);
-                InstructionStep step = new InstructionStep(Instruction3StepIdentifier, title, text);
-                //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3));
-                step.setImage(ResUtils.RangeOfMotion.KNEE_MAXIMUM_LEFT);
-                stepList.add(step);
-            }
         }
 
         //This next step is the first 'touch anywhere' on the screen step. When this step begins, the spoken instruction commences automatically. Touching the screen ends the step and the next step begins.
@@ -173,10 +193,16 @@ public class RangeOfMotionTaskFactory {
             //This next step is the second 'touch anywhere' (on the screen) step. When this step begins, the spoken instruction commences automatically and device motion is recorded. Touchng the screen ends the step and the recording of device motion, and the next step begins.
             {
                 {
+                    //use this (from Walking Task)?
                     List<RecorderConfig> recorderConfigList = new ArrayList<>();
                     if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
                         recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                     }
+                    //or use this (from Tremor Task)?
+                    //step.setRecorderConfigurationList(Arrays.asList(
+                    //        new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq)
+                    //));
+                    
                     {
                         TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhere2StepIdentifier);
                         //step.setTitle(context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction));
