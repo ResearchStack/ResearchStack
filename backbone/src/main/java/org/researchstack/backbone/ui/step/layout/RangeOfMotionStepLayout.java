@@ -36,6 +36,9 @@ import static android.content.pm.ActivityInfo.*;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
+    double angle_in_degrees;
+    double shifted_angle;
+
     protected RangeOfMotionStep rangeOfMotionStep;
     protected RangeOfMotionResult rangeOfMotionResult;
     private BroadcastReceiver deviceMotionReceiver;
@@ -114,7 +117,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /** Methods to calculate maximum and minimum angles recorded by the device **/
 
-    private double minimumAngle () {
+    public double getMinimumAngle () {
 
         double min_angle = 0;
 
@@ -124,7 +127,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         return min_angle;
     }
 
-    private double maximumAngle () {
+    public double getMaximumAngle() {
 
         double max_angle = 0;
 
@@ -139,19 +142,19 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      to -90 to +270 degrees, which should be sufficient to cover all achievable knee and
      shoulder ranges of motion **/
 
-    private double shiftAngleRange () {
+    public double shiftAngleRange() {
 
-        double shifted_angle = 0;
-        boolean targetAngleRange = (angle_in_degrees > 90) && (angle_in_degrees <= 180);
+        //boolean targetAngleRange = (angle_in_degrees > 90) && (angle_in_degrees <= 180);
 
-
-        if (targetAngleRange == true) {
+        //if (targetAngleRange == true) {
+        if ((angle_in_degrees > 90) && (angle_in_degrees <= 180)) {
             shifted_angle = Math.abs(angle_in_degrees) - 360;
+            return shifted_angle;
         }
         else {
             shifted_angle = angle_in_degrees;
+            return shifted_angle;
         }
-        return shifted_angle;
     }
 
 
@@ -162,7 +165,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         int orientation = getResources().getConfiguration().orientation;
         int type = event.sensor.getType();
         float[] Quaternion = {0, 0, 0, 0};
-        double angle_in_degrees = 0;
+        //double angle_in_degrees = 0;
 
 
         if (type == Sensor.TYPE_ROTATION_VECTOR) {
@@ -172,7 +175,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 SensorManager.getQuaternionFromVector(Quaternion, event.values);
                 angle_in_degrees = Math.toDegrees(allOrientationsForRoll(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]));
                 // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
-            } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            }
+            else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 
                 SensorManager.getQuaternionFromVector(Quaternion, event.values);
                 angle_in_degrees = Math.toDegrees(allOrientationsForPitch(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]));
@@ -211,7 +215,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         return  angle_in_rads;
     }
-
 }
 
 
