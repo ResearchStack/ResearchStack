@@ -6,9 +6,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Build;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.step.Step;
@@ -16,10 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -55,7 +49,8 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     static {
         // build mapping for sensor type and its data type value
-        ImmutableMap.Builder<Integer, String>  sensorTypeMapBuilder = ImmutableMap.builder();
+        HashMap<Integer, String>  sensorTypeMapBuilder = new HashMap<>();
+        //ImmutableMap.Builder<Integer, String>  sensorTypeMapBuilder = ImmutableMap.builder();
         // rotation/gyroscope
         sensorTypeMapBuilder.put(Sensor.TYPE_GYROSCOPE, "rotationRate");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -90,10 +85,10 @@ public class DeviceMotionRecorder extends SensorRecorder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             sensorTypeMapBuilder.put(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR, "attitude");
         }
-        SENSOR_TYPE_TO_DATA_TYPE = sensorTypeMapBuilder.build();
+        SENSOR_TYPE_TO_DATA_TYPE = sensorTypeMapBuilder;
 
         // build mappint for rotation type
-        ImmutableSet.Builder<Integer> rotationTypeBuilder =ImmutableSet.builder();
+        HashSet<Integer> rotationTypeBuilder = new HashSet<>();
         rotationTypeBuilder.add(Sensor.TYPE_ROTATION_VECTOR);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             rotationTypeBuilder.add(Sensor.TYPE_GAME_ROTATION_VECTOR);
@@ -101,7 +96,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             rotationTypeBuilder.add(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR);
         }
-        ROTATION_VECTOR_TYPES = rotationTypeBuilder.build();
+        ROTATION_VECTOR_TYPES = rotationTypeBuilder;
     }
 
     public static final String X_KEY    = "x";
@@ -186,7 +181,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         int sensorType = sensorEvent.sensor.getType();
         String sensorTypeKey = SENSOR_TYPE_TO_DATA_TYPE.get(sensorType);
 
-        if (Strings.isNullOrEmpty(sensorTypeKey)) {
+        if (sensorTypeKey!=null || sensorTypeKey.length() > 0) {
             logger.warn("Unable find type key for sensor type: "
                     + sensorType);
             return;
