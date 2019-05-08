@@ -36,8 +36,9 @@ import static android.content.pm.ActivityInfo.*;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
-    double angle_in_degrees;
-    double shifted_angle;
+    //double angle_in_degrees;
+    //double shifted_angle;
+    SensorEvent event;
 
     protected RangeOfMotionStep rangeOfMotionStep;
     protected RangeOfMotionResult rangeOfMotionResult;
@@ -76,6 +77,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         super.validateStep(step);
     }
 
+
+    /* Not sure that we need this section for device motion
+
+
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
         super.registerRecorderBroadcastReceivers(appContext);
@@ -113,16 +118,18 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         Context appContext = getContext().getApplicationContext();
         LocalBroadcastManager.getInstance(appContext).unregisterReceiver(deviceMotionReceiver);
     }
+     */
 
 
     /** Methods to calculate maximum and minimum angles recorded by the device **/
 
-    public double getMinimumAngle () {
+    public double getMinimumAngle() {
 
         double min_angle = 0;
+        double new_angle = shiftAngleRange();
 
-        if (shifted_angle < min_angle) {
-            min_angle = shifted_angle;
+        if (new_angle < min_angle) {
+            min_angle = new_angle;
         }
         return min_angle;
     }
@@ -130,24 +137,27 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public double getMaximumAngle() {
 
         double max_angle = 0;
+        double new_angle = shiftAngleRange();
 
-        if (shifted_angle > max_angle) {
-            max_angle = shifted_angle;
+        if (new_angle > max_angle) {
+            max_angle = new_angle;
         }
         return max_angle
     }
 
 
-    /** We need to shift the range of Euler angles reported by the device from +/-180 degrees
+    /* We need to shift the range of pitch angles reported by the device from +/-180 degrees
      to -90 to +270 degrees, which should be sufficient to cover all achievable knee and
-     shoulder ranges of motion **/
+     shoulder ranges of motion */
 
-    public double shiftAngleRange() {
+    private double shiftAngleRange() {
 
-        //boolean targetAngleRange = (angle_in_degrees > 90) && (angle_in_degrees <= 180);
+        double shifted_angle;
+        double angle_in_degrees = getDeviceAngleInDegreesFromAttitude(event);
+        boolean targetAngleRange = ((angle_in_degrees > 90) && (angle_in_degrees <= 180));
 
-        //if (targetAngleRange == true) {
-        if ((angle_in_degrees > 90) && (angle_in_degrees <= 180)) {
+        if (targetAngleRange == true) {
+        //if ((angle_in_degrees > 90) && (angle_in_degrees <= 180)) { //Not sure if this version will restrict the calculation only to relevant values
             shifted_angle = Math.abs(angle_in_degrees) - 360;
             return shifted_angle;
         }
@@ -165,7 +175,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         int orientation = getResources().getConfiguration().orientation;
         int type = event.sensor.getType();
         float[] Quaternion = {0, 0, 0, 0};
-        //double angle_in_degrees = 0;
+        double angle_in_degrees = 0;
 
 
         if (type == Sensor.TYPE_ROTATION_VECTOR) {
@@ -279,7 +289,7 @@ ORKStepResult *stepResult = [super result];
 ORKRangeOfMotionResult *result = [[ORKRangeOfMotionResult alloc] initWithIdentifier:self.step.identifier];
 
 //result.start = 90.0 - _startAngle;
-result.start = _startAngle; // Android's zero orientation is in portrait (perpendicular to the ground); whereas iOS is paralell with the ground
+result.start = _startAngle; // In Android's zero orientation, the device is in portrait (perpendicular to the ground); whereas in iOS it is parallel with the ground
 result.finish = result.start - _newAngle;
 //Because the task uses pitch in the direction opposite to the original device axes (i.e. right hand rule), maximum and minimum angles are reported the 'wrong' way around for the knee and shoulder tasks
 result.minimum = result.start - _maxAngle;
