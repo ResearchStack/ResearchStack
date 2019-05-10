@@ -1,8 +1,8 @@
 package org.researchstack.feature.storage.file;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.WorkerThread;
 
 import org.researchstack.feature.storage.utils.FileUtils;
 import org.researchstack.feature.storage.file.aes.Encrypter;

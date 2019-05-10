@@ -3,6 +3,8 @@ package org.researchstack.skin;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.fragment.app.Fragment;
+
 import org.researchstack.foundation.core.models.result.StepResult;
 import org.researchstack.foundation.core.models.step.Step;
 import org.researchstack.skin.notification.TaskNotificationReceiver;
@@ -53,7 +55,7 @@ public abstract class UiManager {
      * All ActionItems returned by this method should define a title, icon, and class. These items
      * are used to fill a pager in the MainActivity. The framework uses the class objects from this
      * list to create a Fragments for tha pager. It is imperative that the defined classes be of
-     * instance  {@link android.support.v4.app.Fragment}.
+     * instance  {@link Fragment}.
      *
      * @return a list of ActionItems for display in the MainActivity ActionBar
      */

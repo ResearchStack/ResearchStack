@@ -1,6 +1,6 @@
 package org.researchstack.feature.authentication.pincode
 
-import android.support.v4.os.CancellationSignal
+import androidx.core.os.CancellationSignal
 import java.lang.ref.WeakReference
 import org.researchstack.feature.authentication.Authenticator
 

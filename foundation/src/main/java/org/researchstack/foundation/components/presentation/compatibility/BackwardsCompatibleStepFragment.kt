@@ -1,7 +1,7 @@
 package org.researchstack.foundation.components.presentation.compatibility
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +15,7 @@ import org.researchstack.foundation.core.interfaces.IStep
 import org.researchstack.foundation.core.models.result.StepResult
 import org.researchstack.foundation.core.models.step.Step
 
-public class BackwardsCompatibleStepFragment(): Fragment(), IStepFragment {
+public class BackwardsCompatibleStepFragment(): androidx.fragment.app.Fragment(), IStepFragment {
 
     companion object {
 
@@ -29,7 +29,7 @@ public class BackwardsCompatibleStepFragment(): Fragment(), IStepFragment {
     //this will implement the traditional step layout
     var stepLayout: StepLayout? = null
 
-    override val fragment: Fragment
+    override val fragment: androidx.fragment.app.Fragment
         get() = this
 
     private fun getLayoutParams(stepLayout: StepLayout): FrameLayout.LayoutParams {

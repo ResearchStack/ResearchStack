@@ -2,7 +2,7 @@ package org.researchstack.foundation.components.common.ui.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
