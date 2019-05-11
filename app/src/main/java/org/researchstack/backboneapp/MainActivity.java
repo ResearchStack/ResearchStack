@@ -131,7 +131,7 @@ public class MainActivity extends PinCodeActivity
         }
     }
 
-    private void clearData()
+    void clearData()
     {
         AppPrefs appPrefs = AppPrefs.getInstance(this);
         appPrefs.setHasSurveyed(false);

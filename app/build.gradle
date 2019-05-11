@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -9,6 +11,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -24,4 +27,14 @@ dependencies {
     implementation 'org.researchstack:backbone:1.1.2'
 
     testImplementation 'junit:junit:4.12'
+
+    androidTestImplementation "androidx.core:core-ktx:1.0.0"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:3.1.1"
+
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-beta01'
+    androidTestImplementation 'androidx.test:rules:1.2.0-beta01'
+}
+repositories {
+    mavenCentral()
 }
