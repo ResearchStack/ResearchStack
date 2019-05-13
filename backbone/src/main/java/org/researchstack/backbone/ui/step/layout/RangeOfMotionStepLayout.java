@@ -2,17 +2,12 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.View;
-import android.app.Activity;
-import android.content.pm.ActivityInfo;
 
 import java.lang.Math;
 
@@ -20,10 +15,6 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.RangeOfMotionResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
-import org.researchstack.backbone.step.active.recorder.AudioRecorder;
-import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
-
-import static android.content.pm.ActivityInfo.*;
 
 /**
  * Created by David Evans, David Jimenez, Laurence Hurst, Simon Hartley, 2019.
@@ -36,10 +27,7 @@ import static android.content.pm.ActivityInfo.*;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
-    //double angle_in_degrees;
-    //double shifted_angle;
-    SensorEvent event;
-
+    protected SensorEvent event;
     protected RangeOfMotionStep rangeOfMotionStep;
     protected RangeOfMotionResult rangeOfMotionResult;
     private BroadcastReceiver deviceMotionReceiver;
@@ -121,6 +109,13 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      */
 
 
+    // We need the following methods below:
+    //1. Method for obtaining and holding the reference attitude as quaternion (i.e. the first orientation when recording begins)
+    //2. Method for obtaining and continually updating current attitude as quaternion
+    //3. Method for inverting the reference quaternion and multiplying by current quaternion to give relative position
+    //4. Method for converting relative quaternion to a Euler angle, depending on device orientation (landscape or portrait)
+    //5. Methods to calculate minimum and maximum Euler angles
+
     /** Methods to calculate maximum and minimum angles recorded by the device **/
 
     public double getMinimumAngle() {
@@ -168,29 +163,25 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
 
-    /** Method to obtain the device attitude's quaternion and then calculate Euler angles **/
+    /** Method to calculate Euler angles from the device attitude quaternion **/
 
-    private double getDeviceAngleInDegreesFromAttitude(SensorEvent event) {
+    private double getDeviceAngleInDegreesFromAttitude() {
 
         int orientation = getResources().getConfiguration().orientation;
-        int type = event.sensor.getType();
-        float[] Quaternion = {0, 0, 0, 0};
+        float[] Quaternion = getDeviceAttitudeAsQuaternion();
         double angle_in_degrees = 0;
 
 
-        if (type == Sensor.TYPE_ROTATION_VECTOR) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getDeviceAttitudeAsQuaternion();
+            angle_in_degrees = Math.toDegrees(allOrientationsForRoll(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]));
+            // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
+        }
+        else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 
-                SensorManager.getQuaternionFromVector(Quaternion, event.values);
-                angle_in_degrees = Math.toDegrees(allOrientationsForRoll(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]));
-                // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
-            }
-            else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-
-                SensorManager.getQuaternionFromVector(Quaternion, event.values);
-                angle_in_degrees = Math.toDegrees(allOrientationsForPitch(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]));
-            }
+            getDeviceAttitudeAsQuaternion();
+            angle_in_degrees = Math.toDegrees(allOrientationsForPitch(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]));
         }
         return angle_in_degrees;
     }
@@ -225,6 +216,79 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         return  angle_in_rads;
     }
+
+
+    /** Method to multiply current attitude quaternion by the inverse of the reference quaternion **/
+
+        /*  iOS code for calculating change in device orientation (attitude)
+        - (void)deviceMotionRecorderDidUpdateWithMotion:(CMDeviceMotion *)motion {
+        if (!_referenceAttitude) {
+        _referenceAttitude = motion.attitude;
+        }
+        CMAttitude *currentAttitude = [motion.attitude copy];
+
+        [currentAttitude multiplyByInverseOfAttitude:_referenceAttitude];
+
+        double angle = [self getDeviceAngleInDegreesFromAttitude:currentAttitude];
+        */
+
+    public float multiplyByInverseOfAttitude() {
+
+        int type = event.sensor.getType();
+        float[] currentAttitudeQuaternion = getDeviceAttitudeAsQuaternion(); // on every update
+        float[] inverseReferenceQuaternion = calculateInverseReferenceQuaternion();
+        float[] changeAttitudeQuaternion;
+
+        if (type == Sensor.TYPE_ROTATION_VECTOR) {
+            SensorManager.getQuaternionFromVector(currentAttitudeQuaternion, event.values);
+            changeAttitudeQuaternion = currentAttitudeQuaternion * inverseReferenceQuaternion;
+        }
+        return changeAttitudeQuaternion;
+
+    }
+
+
+    /** Method to obtain and invert reference quaternion **/
+
+    public float[] calculateInverseReferenceQuaternion (){
+
+        float [] firstAttitudeQuaternion = getDeviceAttitudeAsQuaternion(); // not sure how to get first event only
+        float [] inverseOfFirstAttitudeQuaternion;
+        //w = firstAttitudeQuaternion[0];
+        //i = -1*(firstAttitudeQuaternion[1]);
+        //j = -1*(firstAttitudeQuaternion[2]);
+        //k = -1*(firstAttitudeQuaternion[3]);
+
+        getDeviceAttitudeAsQuaternion();
+        inverseOfFirstAttitudeQuaternion = getInverseOfQuaternion(firstAttitudeQuaternion[0], firstAttitudeQuaternion[1], firstAttitudeQuaternion[2], firstAttitudeQuaternion[3]);
+        return inverseOfFirstAttitudeQuaternion;
+    }
+
+    /** Method to inverse the quaternion**/
+
+    public float[] getInverseOfQuaternion (){
+
+        float [] firstAttitudeQuaternion = getDeviceAttitudeAsQuaternion(); // not sure how to get first event only
+        float [] inverseOfFirstAttitudeQuaternion;
+
+        getDeviceAttitudeAsQuaternion();
+        inverseOfFirstAttitudeQuaternion = getDeviceAttitudeAsQuaternion(firstAttitudeQuaternion[0]), (firstAttitudeQuaternion[1]), (firstAttitudeQuaternion[2]), (firstAttitudeQuaternion[3]);
+        return firstAttitudeQuaternion;
+    }
+
+
+
+    /** Method to obtain the device attitude's quaternion from the rotation vector **/
+
+    public float[] getDeviceAttitudeAsQuaternion() {
+
+        int type = event.sensor.getType();
+        float[] q = {0, 0, 0, 0};
+
+        if (type == Sensor.TYPE_ROTATION_VECTOR) {
+                SensorManager.getQuaternionFromVector(q, event.values);
+        }
+        return q;
 }
 
 
