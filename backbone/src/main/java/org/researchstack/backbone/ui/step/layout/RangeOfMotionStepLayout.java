@@ -145,6 +145,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      to -90 to +270 degrees, which should be sufficient to cover all achievable knee and
      shoulder ranges of motion */
 
+    /** Method to shift angle range**/
+
     private double shiftAngleRange() {
 
         double shifted_angle;
@@ -232,11 +234,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         double angle = [self getDeviceAngleInDegreesFromAttitude:currentAttitude];
         */
 
-    public float multiplyByInverseOfAttitude() {
+    public float multiplyReferenceQuaternionByCurrentAttitude() {
 
         int type = event.sensor.getType();
         float[] currentAttitudeQuaternion = getDeviceAttitudeAsQuaternion(); // on every update
-        float[] inverseReferenceQuaternion = calculateInverseReferenceQuaternion();
+        float[] inverseReferenceQuaternion = getInverseOfFirstAttitudeQuaternion();
         float[] changeAttitudeQuaternion;
 
         if (type == Sensor.TYPE_ROTATION_VECTOR) {
@@ -244,38 +246,23 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
             changeAttitudeQuaternion = currentAttitudeQuaternion * inverseReferenceQuaternion;
         }
         return changeAttitudeQuaternion;
-
     }
 
 
-    /** Method to obtain and invert reference quaternion **/
+    /** Method to obtain and calculate the inverse (complex conjugate) of the reference quaternion**/
 
-    public float[] calculateInverseReferenceQuaternion (){
+    public float[] getInverseOfFirstAttitudeQuaternion () {
 
-        float [] firstAttitudeQuaternion = getDeviceAttitudeAsQuaternion(); // not sure how to get first event only
-        float [] inverseOfFirstAttitudeQuaternion;
-        //w = firstAttitudeQuaternion[0];
-        //i = -1*(firstAttitudeQuaternion[1]);
-        //j = -1*(firstAttitudeQuaternion[2]);
-        //k = -1*(firstAttitudeQuaternion[3]);
+        float [] firstAttitudeQuaternion = getDeviceAttitudeAsQuaternion(); // todo: need to limit this to first sensor event only
+        float [] inverseOfFirstAttitudeQuaternion = new float [4];
 
-        getDeviceAttitudeAsQuaternion();
-        inverseOfFirstAttitudeQuaternion = getInverseOfQuaternion(firstAttitudeQuaternion[0], firstAttitudeQuaternion[1], firstAttitudeQuaternion[2], firstAttitudeQuaternion[3]);
+        inverseOfFirstAttitudeQuaternion[0] = firstAttitudeQuaternion[0];
+        inverseOfFirstAttitudeQuaternion[1] = -(firstAttitudeQuaternion[1]);
+        inverseOfFirstAttitudeQuaternion[2] = -(firstAttitudeQuaternion[2]);
+        inverseOfFirstAttitudeQuaternion[3] = -(firstAttitudeQuaternion[3]);
+
         return inverseOfFirstAttitudeQuaternion;
     }
-
-    /** Method to inverse the quaternion**/
-
-    public float[] getInverseOfQuaternion (){
-
-        float [] firstAttitudeQuaternion = getDeviceAttitudeAsQuaternion(); // not sure how to get first event only
-        float [] inverseOfFirstAttitudeQuaternion;
-
-        getDeviceAttitudeAsQuaternion();
-        inverseOfFirstAttitudeQuaternion = getDeviceAttitudeAsQuaternion(firstAttitudeQuaternion[0]), (firstAttitudeQuaternion[1]), (firstAttitudeQuaternion[2]), (firstAttitudeQuaternion[3]);
-        return firstAttitudeQuaternion;
-    }
-
 
 
     /** Method to obtain the device attitude's quaternion from the rotation vector **/
