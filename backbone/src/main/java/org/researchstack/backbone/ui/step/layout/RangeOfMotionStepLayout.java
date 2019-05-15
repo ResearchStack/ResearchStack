@@ -256,14 +256,14 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         float[] current = getDeviceAttitudeAsQuaternion(); // on every update
         float[] changeInAttitudeQuaternion = new float[4];
 
-        changeInAttitudeQuaternion[0] = ((current[0] * inverse[0]) - (current[1] * inverse[1]) - (current[2] * inverse[2]) - (current[3] * inverse[3]));
-        changeInAttitudeQuaternion[1] = ((current[1] * inverse[0]) + (current[0] * inverse[1]) + (current[2] * inverse[3]) - (current[3] * inverse[2]));
-        changeInAttitudeQuaternion[2] = ((current[0] * inverse[2]) - (current[1] * inverse[3]) + (current[2] * inverse[0]) + (current[3] * inverse[1]));
-        changeInAttitudeQuaternion[3] = ((current[0] * inverse[3]) + (current[1] * inverse[2]) - (current[2] * inverse[1]) + (current[3] * inverse[0]));
+        changeInAttitudeQuaternion[0] = ( (current[0] * inverse[0]) - (current[1] * inverse[1]) - (current[2] * inverse[2]) - (current[3] * inverse[3]) );
+        changeInAttitudeQuaternion[1] = ( (current[0] * inverse[1]) + (current[1] * inverse[0]) + (current[2] * inverse[3]) - (current[3] * inverse[2]) );
+        changeInAttitudeQuaternion[2] = ( (current[0] * inverse[2]) - (current[1] * inverse[3]) + (current[2] * inverse[0]) + (current[3] * inverse[1]) );
+        changeInAttitudeQuaternion[3] = ( (current[0] * inverse[3]) + (current[1] * inverse[2]) - (current[2] * inverse[1]) + (current[3] * inverse[0]) );
 
         //just in case the above is incorrect, these are formulae for the quaternions multipled in the opposite order (quaternion multiplication is non-commutative)
         //changeInAttitudeQuaternion[0] = ((inverse[0]*current[0]) - (inverse[1]*current[1]) - (inverse[2]*current[2]) - (inverse[3]*current[3]));
-        //changeInAttitudeQuaternion[1] = ((inverse[1]*current[0]) + (inverse[0]*current[1]) + (inverse[2]*current[3]) - (inverse[3]*current[2]));
+        //changeInAttitudeQuaternion[1] = ((inverse[0]*current[1]) + (inverse[0]*current[0]) + (inverse[2]*current[3]) - (inverse[3]*current[2]));
         //changeInAttitudeQuaternion[2] = ((inverse[0]*current[2]) - (inverse[1]*current[3]) + (inverse[2]*current[0]) + (inverse[3]*current[1]));
         //changeInAttitudeQuaternion[3] = ((inverse[0]*current[3]) + (inverse[1]*current[2]) - (inverse[2]*current[1]) + (inverse[3]*current[0]));
 
