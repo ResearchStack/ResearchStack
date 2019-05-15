@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="nav_activities" type="id"/>
+
+    <item name="nav_dashboard" type="id"/>
+
+    <item name="nav_learn" type="id"/>
+
+    <item name="nav_settings" type="id"/>
+
+</resources>
