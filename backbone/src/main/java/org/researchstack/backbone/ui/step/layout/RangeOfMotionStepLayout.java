@@ -125,14 +125,46 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     //13. Methods to obtain final results of start, finish, minimum and maximum angles
 
 
+
+
     /**
-     * Methods to calculate maximum and minimum angles from entire device recording
+     * Method to obtain range-shifted Euler angle of first device attitude
+     **/
+
+    private double getShiftedFirstDeviceAngle() {
+
+        double raw_first_angle = getDeviceAngleInDegreesFromQuaternion();
+        double adjusted_first_angle;
+
+        adjusted_first_angle = shiftDeviceAngleRange(raw_first_angle);
+
+        return adjusted_first_angle;
+    }
+
+
+    /**
+     * Method to obtain range-shifted Euler angle of final device attitude
+     **/
+
+    private double getShiftedFinalDeviceAngle() {
+
+        double raw_final_angle = getDeviceAngleInDegreesFromQuaternion();
+        double adjusted_final_angle;
+
+        adjusted_final_angle = shiftDeviceAngleRange(raw_final_angle);
+
+        return adjusted_final_angle;
+    }
+
+
+    /**
+     * Methods to calculate maximum and minimum angles during entire device recording
      **/
 
     public double getMinimumAngle() {
 
         double min_angle = 0;
-        double new_angle = shiftDeviceAngleRange();
+        double new_angle = getShiftedDeviceAngle();
 
         if (new_angle < min_angle) {
             min_angle = new_angle;
@@ -143,12 +175,27 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public double getMaximumAngle() {
 
         double max_angle = 0;
-        double new_angle = shiftDeviceAngleRange();
+        double new_angle = getShiftedDeviceAngle();
 
         if (new_angle > max_angle) {
             max_angle = new_angle;
         }
         return max_angle;
+    }
+
+
+    /**
+     * Method to obtain range-shifted Euler angle of current attitude
+     **/
+
+    private double getShiftedDeviceAngle() {
+
+        double raw_device_angle = getDeviceAngleInDegreesFromQuaternion();
+        double adjusted_angle;
+
+        adjusted_angle = shiftDeviceAngleRange(raw_device_angle);
+
+        return adjusted_angle;
     }
 
 
@@ -160,10 +207,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     //to -90 to +270 degrees, which should be sufficient to cover all achievable knee and
     //shoulder ranges of motion
 
-    private double shiftDeviceAngleRange() {
+    private double shiftDeviceAngleRange(double angle_in_degrees) {
 
         double shifted_angle;
-        double angle_in_degrees = getDeviceAngleInDegreesFromQuaternion();
+        //double angle_in_degrees = getDeviceAngleInDegreesFromQuaternion();
         boolean targetAngleRange = ((angle_in_degrees > 90) && (angle_in_degrees <= 180));
 
         if (targetAngleRange) {
@@ -186,7 +233,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         int orientation = getResources().getConfiguration().orientation;
         float[] attitudeQ = multiplyInverseReferenceQuaternionByNewAttitude();
         double angle_in_degrees = 0;
-
 
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
