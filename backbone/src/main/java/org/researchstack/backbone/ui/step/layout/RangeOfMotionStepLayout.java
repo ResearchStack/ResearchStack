@@ -113,14 +113,16 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     //1. Method for obtaining and holding the reference attitude as quaternion (i.e. the first orientation when recording begins)
     //2. Method for obtaining and holding the final attitude as quaternion (i.e. the last orientation when recording ends)
     //3. Method for obtaining and continually updating current attitude as quaternion
-    //4. Method for calculating inverse of the reference quaternion
-    //5. Method for multiplying quaternions
-    //6. Method to multiply the inverse reference quaternion by the current quaternion to give current attitude relative to start position
-    //7. Method to multiply the inverse reference quaternion by the final quaternion to give current attitude relative to start position
-    //8. Method for converting relative quaternion to a Euler angle, depending on device orientation (landscape or portrait)
-    //9. Method to shift angle range from +/- 180 to +270 to -90 degrees
-    //10. Methods to calculate minimum and maximum Euler angles from entire device recording
-    //11. Methods to calculate final results of start, finish, minimum and maximum angles
+    //4. Method for calculating the inverse of a quaternion
+    //5. Method for obtaining and holding the inverse of the reference quaternion
+    //6. Method for multiplying quaternions
+    //7. Method to obtain the product of the inverse reference quaternion and the current quaternion to give current attitude relative to start position
+    //8. Method to obtain the product of the inverse reference quaternion by the final quaternion to give current attitude relative to start position
+    //9. Methods to calculate Euler angles from attitude quaternions
+    //10. Method for obtaining relative quaternion to Euler angles, depending on device orientation (landscape or portrait)
+    //11. Method to shift angle range from +/- 180 to +270 to -90 degrees
+    //12. Methods to calculate minimum and maximum Euler angles from entire device recording
+    //13. Methods to obtain final results of start, finish, minimum and maximum angles
 
 
     /**
@@ -182,19 +184,19 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     private double getDeviceAngleInDegreesFromQuaternion() {
 
         int orientation = getResources().getConfiguration().orientation;
-        float[] Quaternion = multiplyInverseReferenceQuaternionByAllAttitudes();
+        float[] attitudeQ = multiplyInverseReferenceQuaternionByNewAttitude();
         double angle_in_degrees = 0;
 
 
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
             getDeviceAttitudeAsQuaternion();
-            angle_in_degrees = Math.toDegrees(allOrientationsForRoll(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]));
+            angle_in_degrees = Math.toDegrees(allOrientationsForRoll(attitudeQ[0], attitudeQ[1], attitudeQ[2], attitudeQ[3]));
             // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
         } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             getDeviceAttitudeAsQuaternion();
-            angle_in_degrees = Math.toDegrees(allOrientationsForPitch(Quaternion[0], Quaternion[1], Quaternion[2], Quaternion[3]));
+            angle_in_degrees = Math.toDegrees(allOrientationsForPitch(attitudeQ[0], attitudeQ[1], attitudeQ[2], attitudeQ[3]));
         }
         return angle_in_degrees;
     }
@@ -250,10 +252,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to multiply the current attitude quaternion by the inverse of the reference quaternion
+     * Method to multiply the recorded attitude quaternion by the inverse of the reference quaternion
      **/
 
-    public float[] multiplyInverseReferenceQuaternionByAllAttitudes() {
+    public float[] multiplyInverseReferenceQuaternionByNewAttitude() {
 
         float[] inverseOfFirst = getInverseOfFirstAttitudeQuaternion();
         float[] currentAttitude = getDeviceAttitudeAsQuaternion(); // on every update
@@ -267,38 +269,52 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /** Method to multiply quaternions **/
 
+    // for formula, see http://mathworld.wolfram.com/Quaternion.html
+
     public float[] multiplyQuaternions(float[] q1, float[] q2) {
 
         float[] productQuaternion = new float[4];
 
-        // for formula, see http://mathworld.wolfram.com/Quaternion.html
-
-        productQuaternion[0] = ( (q1[0] * q2[0]) - (q1[1] * q2[1]) - (q1[2] * q2[2]) - (q1[3] * q2[3]) );
-        productQuaternion[1] = ( (q1[0] * q2[1]) + (q1[1] * q2[0]) + (q1[2] * q2[3]) - (q1[3] * q2[2]) );
-        productQuaternion[2] = ( (q1[0] * q2[2]) - (q1[1] * q2[3]) + (q1[2] * q2[0]) + (q1[3] * q2[1]) );
-        productQuaternion[3] = ( (q1[0] * q2[3]) + (q1[1] * q2[2]) - (q1[2] * q2[1]) + (q1[3] * q2[0]) );
+        productQuaternion[0] = (q1[0] * q2[0]) - (q1[1] * q2[1]) - (q1[2] * q2[2]) - (q1[3] * q2[3]);
+        productQuaternion[1] = (q1[0] * q2[1]) + (q1[1] * q2[0]) + (q1[2] * q2[3]) - (q1[3] * q2[2]);
+        productQuaternion[2] = (q1[0] * q2[2]) - (q1[1] * q2[3]) + (q1[2] * q2[0]) + (q1[3] * q2[1]);
+        productQuaternion[3] = (q1[0] * q2[3]) + (q1[1] * q2[2]) - (q1[2] * q2[1]) + (q1[3] * q2[0]);
 
         return productQuaternion;
     }
 
 
     /**
-     * Method to calculate the inverse (complex conjugate) of the reference quaternion
+     * Method to obtain the inverse of the reference quaternion
      **/
 
     public float[] getInverseOfFirstAttitudeQuaternion() {
 
         float[] firstAttitudeQuaternion = getFirstAttitudeQuaternion();
-        float[] inverseOfFirstAttitudeQuaternion = new float[4];
+        float[] inverseOfFirstAttitudeQuaternion;
 
-        // for formula, see http://mathworld.wolfram.com/Quaternion.html
-
-        inverseOfFirstAttitudeQuaternion[0] = firstAttitudeQuaternion[0];
-        inverseOfFirstAttitudeQuaternion[1] = -(firstAttitudeQuaternion[1]);
-        inverseOfFirstAttitudeQuaternion[2] = -(firstAttitudeQuaternion[2]);
-        inverseOfFirstAttitudeQuaternion[3] = -(firstAttitudeQuaternion[3]);
+        inverseOfFirstAttitudeQuaternion = getInverseOfQuaternion(firstAttitudeQuaternion);
 
         return inverseOfFirstAttitudeQuaternion;
+    }
+
+
+    /**
+     * Method to calculate the inverse (complex conjugate) of a quaternion
+     **/
+    
+    // for formula, see http://mathworld.wolfram.com/Quaternion.html
+
+    public float[] getInverseOfQuaternion(float[] originalQuaternion) {
+
+        float[] inverseQuaternion = new float[4];
+
+        inverseQuaternion[0] = originalQuaternion[0];
+        inverseQuaternion[1] = -originalQuaternion[1];
+        inverseQuaternion[2] = -originalQuaternion[2];
+        inverseQuaternion[3] = -originalQuaternion[3];
+
+        return inverseQuaternion;
     }
 
 
@@ -311,8 +327,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         float[] firstAttitudeQuaternion;
 
         firstAttitudeQuaternion = getDeviceAttitudeAsQuaternion(); // todo: need to limit this to first sensor event only, or when screen is tapped
-        //float [] firstAttitudeQuaternion = getDeviceAttitudeAsQuaternion(event.values, 0);
-        //float [] firstAttitudeQuaternion = getDeviceAttitudeAsQuaternion(event.values = 0);
+
         return firstAttitudeQuaternion;
     }
 
@@ -338,12 +353,12 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public float[] getDeviceAttitudeAsQuaternion() {
 
         int type = event.sensor.getType();
-        float[] q = {0, 0, 0, 0};
+        float[] attitudeQuaternion = {0, 0, 0, 0};
 
         if (type == Sensor.TYPE_ROTATION_VECTOR) {
-            SensorManager.getQuaternionFromVector(q, event.values);
+            SensorManager.getQuaternionFromVector(attitudeQuaternion, event.values);
         }
-        return q;
+        return attitudeQuaternion;
     }
 
 }
