@@ -19,9 +19,8 @@ import org.researchstack.backbone.step.active.RangeOfMotionStep;
 /**
  * Created by David Evans, David Jimenez, Laurence Hurst, Simon Hartley, 2019.
  *
- * The RangeOfMotionStepLayout is essentially the same as the ActiveStepLayout, except that it
- * calculates the start, maximum, minimum and finish (Euler) angle results
- *
+ * The RangeOfMotionStepLayout is essentially the same as the ActiveStepLayout, except that it calculates
+ * absolute start, minimum, maximum, finish and range (Euler) angle results
  *
  */
 
@@ -110,11 +109,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     // We need the following methods below:
-    //1. Method for obtaining and holding the reference attitude as quaternion (i.e. the first orientation when recording begins)
-    //2. Method for obtaining and holding the final attitude as quaternion (i.e. the last orientation when recording ends)
-    //3. Method for obtaining and continually updating current attitude as quaternion
+    //1. Method for obtaining and holding the initial attitude as a quaternion (i.e. the first orientation when recording begins)
+    //2. Method for obtaining and holding the final attitude as a quaternion (i.e. the last orientation when recording ends)
+    //3. Method for obtaining and continually updating current attitude as quaternions
     //4. Method for calculating the inverse of a quaternion
-    //5. Method for obtaining and holding the inverse of the reference quaternion
+    //5. Method for obtaining and holding the inverse of the start quaternion
     //6. Method for multiplying quaternions
     //7. Method to obtain the product of the inverse reference quaternion and the current quaternion to give current attitude relative to start position
     //8. Method to obtain the product of the inverse reference quaternion by the final quaternion to give current attitude relative to start position
@@ -122,13 +121,12 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     //10. Method for obtaining relative quaternion to Euler angles, depending on device orientation (landscape or portrait)
     //11. Method to shift angle range from +/- 180 to +270 to -90 degrees
     //12. Methods to calculate minimum and maximum Euler angles from entire device recording
-    //13. Methods to obtain final results of start, finish, minimum and maximum angles
-
-
+    //13. Methods to obtain final results of start, finish, minimum, maximum and range angles
 
 
     /**
-     * Method to obtain range-shifted Euler angle of first (start) device attitude
+     * Method to obtain range-shifted Euler angle of first (start) device attitude,
+     * relative to the start position
      **/
 
     private double getShiftedStartDeviceAngle() {
@@ -144,7 +142,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to obtain range-shifted Euler angle of final (finish) device attitude
+     * Method to obtain range-shifted Euler angle of final (finish) device attitude,
+     * relative to the start position
      **/
 
     public double getShiftedFinishDeviceAngle() {
@@ -160,7 +159,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Methods to calculate minimum and maximum angles from entire device recording
+     * Methods to calculate minimum and maximum range-shifted Euler angles from the
+     * entire device recording session
      **/
 
     public double getShiftedMinimumAngle() {
@@ -187,7 +187,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to obtain range-shifted Euler angle for all attitude updates
+     * Method to obtain range-shifted Euler angle for all attitude updates, that are
+     * relative to the start position
      **/
 
     public double getShiftedDeviceAngleUpdates() {
@@ -203,12 +204,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to shift range of calculated angles from +/-180 degrees to -90 to +270 degrees
+     * Method to shift range of calculated angles from +/-180 degrees to -90 to +270 degrees,
+     * to cover all achievable knee and shoulder ranges of motion
      **/
-
-    //We need to shift the range of calculated pitch or roll angles reported by the device
-    //from +/-180 degrees to -90 to +270 degrees, which should be sufficient to cover all
-    //achievable knee and shoulder ranges of motion
 
     public double shiftDeviceAngleRange(double original_angle) {
 
@@ -227,7 +225,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to calculate Euler angles from the device attitude quaternion, depending on screen orientation
+     * Method to calculate Euler angles from the device attitude quaternion, as a function of screen orientation
      **/
 
     private double getDeviceAngleInDegreesFromQuaternion(float[] attitudeQuaternion) {
@@ -239,7 +237,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
             getDeviceAttitudeAsQuaternion();
             angle_in_degrees = Math.toDegrees(allOrientationsForRoll(attitudeQuaternion[0], attitudeQuaternion[1], attitudeQuaternion[2], attitudeQuaternion[3]));
-            // To convert radians to degrees, we could instead use: double radiansToDegrees = rad * 180.0 / Math.PI;
+            // To convert radians to degrees, we could instead manually use: double radiansToDegrees = rad * 180.0 / Math.PI;
         } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             getDeviceAttitudeAsQuaternion();
@@ -283,7 +281,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to multiply the final (finish) attitude quaternion by the inverse of the first (start) quaternion
+     * Method to multiply the final (finish) attitude quaternion by the inverse of the first (start)
+     * quaternion to obtain the attitude of the finish position, relative to the start position
      **/
 
     public float[] multiplyFinishAttitudeByInverseOfStartQuaternion() {
@@ -300,6 +299,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to multiply the recorded attitude quaternion by the inverse of the reference quaternion
+     * to obtain the updated device attitude, relative to the initial (start) position
      **/
 
     public float[] multiplyAllAttitudesByInverseOfStartQuaternion() {
@@ -314,10 +314,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
 
-    /** Method to multiply two quaternions **/
+    /**
+     * Method to multiply two quaternions
+     **/
 
     // for formula, see http://mathworld.wolfram.com/Quaternion.html
-
     public float[] multiplyQuaternions(float[] q1, float[] q2) {
 
         float[] productQuaternion = new float[4];
@@ -332,7 +333,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to obtain the inverse of the reference quaternion
+     * Method to obtain the inverse of the start (initial position) quaternion
      **/
 
     public float[] getInverseOfStartAttitudeQuaternion() {
@@ -349,9 +350,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     /**
      * Method to calculate the inverse (complex conjugate) of a quaternion
      **/
-    
-    // for formula, see http://mathworld.wolfram.com/Quaternion.html
 
+    // for formula, see http://mathworld.wolfram.com/Quaternion.html
     public float[] calculateInverseOfQuaternion(float[] originalQuaternion) {
 
         float[] inverseQuaternion = new float[4];
@@ -366,7 +366,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to obtain and hold the first 'reference' quaternion for device attitude when recording begins with a tap of the screen
+     * Method to obtain and hold the first quaternion representing the initial (start)
+     * position of the device attitude when recording begins with a tap of the screen
      **/
 
     public float[] getStartAttitudeQuaternion() {
@@ -380,7 +381,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to obtain and hold the final quaternion for device attitude when recording ends with a tap of the screen
+     * Method to obtain and hold the last quaternion representing the final (finish)
+     * position of the device attitude when recording ends with a tap of the screen
      **/
 
     public float[] getFinishAttitudeQuaternion() {
@@ -408,84 +410,35 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         return attitudeQuaternion;
     }
 
-}
 
+    public void RangeOfMotionResults() {
 
-@interface ORKRangeOfMotionStepViewController () <ORKDeviceMotionRecorderDelegate> {
-ORKRangeOfMotionContentView *_contentView;
-UITapGestureRecognizer *_gestureRecognizer;
-CMAttitude *_referenceAttitude;
-UIInterfaceOrientation _orientation;
-}
+        double startResult;
+        double finishResult;
+        double minimumResult;
+        double maximumResult;
+        double rangeResult;
 
-@end
+        // In Android's zero orientation, the device is in portrait (perpendicular to the ground); whereas
+        // in iOS it is parallel with the ground
+        startResult = getShiftedStartDeviceAngle();
 
-
-@implementation ORKRangeOfMotionStepViewController
-
-- (void)viewDidLoad {
-[super viewDidLoad];
-_contentView = [ORKRangeOfMotionContentView new];
-_contentView.translatesAutoresizingMaskIntoConstraints = NO;
-self.activeStepView.activeCustomView = _contentView;
-_gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-[self.activeStepView addGestureRecognizer:_gestureRecognizer];
-}
-
-
-//This function records the angle of the device when the screen is tapped
-- (void)handleTap:(UIGestureRecognizer *)sender {
-[this calculateAndSetAngles];
-[this finish];
-}
-
-
-public void calculateAndSetAngles {
-_startAngle = ([this getDeviceAngleInDegreesFromAttitude:_referenceAttitude]);
-
-
-
-
-//This calculates the current device orientation relative to the start orientation, by multiplying by the current orientation by inverse of the original orientation
-
-public void deviceMotionRecorderDidUpdateWithMotion:
-    onSensorChanged(SensorEvent event) {
-    if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
-        if (!_referenceAttitude) {
-        _referenceAttitude = motion.attitude;
+        //Because the task uses pitch in the direction opposite to the original device axes (i.e. right hand rule),
+        // finish, maximum and minimum angles are reported the 'wrong' way around for the knee and shoulder tasks
+        finishResult = startResult - getShiftedFinishDeviceAngle();
+        minimumResult = startResult - getShiftedMaximumAngle();
+        maximumResult = startResult - getShiftedMinimumAngle();
+        rangeResult = Math.abs(maximumResult - minimumResult);
     }
-    CMAttitude *currentAttitude = [motion.attitude copy];
 
-    [currentAttitude multiplyByInverseOfAttitude:_referenceAttitude];
+    stepResult.results = [self.addedResults arrayByAddingObject:result] ? : @[result];
 
-double angle = [this getDeviceAngleInDegreesFromAttitude:currentAttitude];
-
-
-
-
-//#pragma mark - ORKActiveTaskViewController
-
-- (ORKResult *)result {
-ORKStepResult *stepResult = [super result];
-
-ORKRangeOfMotionResult *result = [[ORKRangeOfMotionResult alloc] initWithIdentifier:self.step.identifier];
-
-//result.start = 90.0 - _startAngle;
-result.start = _startAngle; // In Android's zero orientation, the device is in portrait (perpendicular to the ground); whereas in iOS it is parallel with the ground
-result.finish = result.start - _newAngle;
-//Because the task uses pitch in the direction opposite to the original device axes (i.e. right hand rule), maximum and minimum angles are reported the 'wrong' way around for the knee and shoulder tasks
-result.minimum = result.start - _maxAngle;
-result.maximum = result.start - _minAngle;
-result.range = fabs(result.maximum - result.minimum);
-
-stepResult.results = [self.addedResults arrayByAddingObject:result] ? : @[result];
-
-return stepResult;
+    return stepResult;
 }
 
 /*
 
- From iOS:
+ From iOS, for reference:
  
 @implementation ORKRangeOfMotionStepViewController
 
@@ -565,7 +518,6 @@ return stepResult;
         return angle;
         }
 
- */
 
 #pragma mark - ORKActiveTaskViewController
 
@@ -574,15 +526,17 @@ return stepResult;
 
         ORKRangeOfMotionResult *result = [[ORKRangeOfMotionResult alloc] initWithIdentifier:self.step.identifier];
 
-        result.start = 90.0 - _startAngle;
-        result.finish = result.start - _newAngle;
-        //Because the task uses pitch in the direction opposite to the original CoreMotion device axes (i.e. right hand rule), maximum and minimum angles are reported the 'wrong' way around for the knee and shoulder tasks
-        result.minimum = result.start - _maxAngle;
-        result.maximum = result.start - _minAngle;
-        result.range = fabs(result.maximum - result.minimum);
+        result.start = getShiftedStartDeviceAngle();
+        result.finish = result.start - getShiftedFinishDeviceAngle();
+        //Because the task uses pitch in the direction opposite to the original device axes (i.e. right hand rule),
+        // maximum and minimum angles are reported the 'wrong' way around for the knee and shoulder tasks
+        result.minimum = result.start - getShiftedMaximumAngle();
+        result.maximum = result.start - getShiftedMinimumAngle();
+        result.range = Math.abs(result.maximum - result.minimum);
 
         stepResult.results = [self.addedResults arrayByAddingObject:result] ? : @[result];
 
         return stepResult;
         }
 
+*/
