@@ -12,11 +12,11 @@ import org.researchstack.backbone.ui.step.layout.TouchAnywhereStepLayout;
 
 public class TouchAnywhereStep extends ActiveStep {
 
+    /* Default constructor needed for serilization/deserialization of object */
     TouchAnywhereStep() {
         super();
     }
 
-    /* Default constructor needed for serilization/deserialization of object */
     public TouchAnywhereStep(String identifier) {
         super(identifier);
 
