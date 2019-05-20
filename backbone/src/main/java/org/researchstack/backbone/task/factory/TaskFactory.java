@@ -46,9 +46,8 @@ public class TaskFactory {
         // Tapping Identifiers
         public static final String TappingStepIdentifier = "tapping";
 
-        //Touch Anywhere Identifiers
-        public static final String TouchAnywhere1StepIdentifier = "touchAnywhere1";
-        public static final String TouchAnywhere2StepIdentifier = "touchAnywhere2";
+        //Touch Anywhere Identifier
+        public static final String TouchAnywhere1StepIdentifier = "touchAnywhere";
 
         // Spoken Instruction Step Identifier
         public static final String SpokenInstructionStepIdentifier = "spokenInstruction";
@@ -82,7 +81,7 @@ public class TaskFactory {
      * @param durationInSeconds the duration in seconds
      * @return a string formatted to "in X minutes, Y seconds" where x & y are from durationInSeconds
      */
-    
+
     public static String convertDurationToString(Context context, int durationInSeconds) {
         int minutes = durationInSeconds / 60;
         int seconds = durationInSeconds - minutes * 60;
