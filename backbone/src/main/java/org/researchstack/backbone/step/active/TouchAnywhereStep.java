@@ -3,9 +3,10 @@ package org.researchstack.backbone.step.active;
 import org.researchstack.backbone.ui.step.layout.TouchAnywhereStepLayout;
 
 /**
- * Created by David Evans, 2019.
+ * Created by David Evans, Laurence Hurst, 2019.
  *
- * The `TouchAnywhereStep` class represents a step that enables the user to begin the task by touching anywhere on the screen.
+ * The `TouchAnywhereStep` class represents a step that enables the user to
+ * begin the task by touching anywhere on the screen.
  *
  */
 
@@ -15,13 +16,23 @@ public class TouchAnywhereStep extends ActiveStep {
         super();
     }
 
+    /* Default constructor needed for serilization/deserialization of object */
     public TouchAnywhereStep(String identifier) {
         super(identifier);
 
+        setShouldVibrateOnStart(true);
+        setShouldPlaySoundOnStart(true);
+        setShouldVibrateOnFinish(true);
+        setShouldPlaySoundOnFinish(true);
         setShouldStartTimerAutomatically(true);
         setShouldShowDefaultTimer(false);
         setShouldContinueOnFinish(true);
+        setEstimateTimeInMsToSpeakEndInstruction(0); // do not wait to proceed
+    }
 
+    @Override
+    public Class getStepLayoutClass() {
+        return TouchAnywhereStepLayout.class;
     }
 }
 
