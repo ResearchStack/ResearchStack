@@ -47,7 +47,7 @@ public class TaskFactory {
         public static final String TappingStepIdentifier = "tapping";
 
         //Touch Anywhere Identifier
-        public static final String TouchAnywhere1StepIdentifier = "touchAnywhere";
+        public static final String TouchAnywhereStepIdentifier = "touchAnywhere";
 
         // Spoken Instruction Step Identifier
         public static final String SpokenInstructionStepIdentifier = "spokenInstruction";
