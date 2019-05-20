@@ -5,17 +5,10 @@ import android.content.Context;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.Step;
-//import org.researchstack.backbone.step.active.TimedWalkStep;
-//import org.researchstack.backbone.step.active.recorder.AccelerometerRecorderConfig;
-import org.researchstack.backbone.step.TouchAnywhereStep;
+import org.researchstack.backbone.step.active.TouchAnywhereStep;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
-//import org.researchstack.backbone.step.active.CountdownStep;
-//import org.researchstack.backbone.step.active.FitnessStep;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorderConfig;
-//import org.researchstack.backbone.step.active.recorder.LocationRecorderConfig;
-//import org.researchstack.backbone.step.active.recorder.PedometerRecorderConfig;
 import org.researchstack.backbone.step.active.recorder.RecorderConfig;
-//import org.researchstack.backbone.step.active.WalkingTaskStep;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.utils.ResUtils;
 
@@ -25,36 +18,16 @@ import java.util.List;
 import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
 /**
- * Created by David Evans, 2019.
+ * Created by David Evans, Laurence Hurst, Simon Hartley, 2019.
  *
- * In iOS, they included a bunch of static methods for building OrderedTasks in the
+ * In iOS, they included static methods for building OrderedTasks in the
  * OrderedTask class.  However, this class was created to further encapsulate the creation
  * of Range of Motion (ROM) Tasks, specifically the knee ROM task, and shoulder ROM task.
  */
 
 public class RangeOfMotionTaskFactory {
-//    private static final float DEFAULT_STEP_DURATION_FALLBACK_FACTOR = 1.5f;
-//    private static final int DEFAULT_COUNTDOWN_DURATION = 5; // in seconds
-//    private static final int DEFAULT_LIMB_OPTION = right; // this might be incorrect
 
-//    private static final int IGNORE_NUMBER_OF_STEPS = Integer.MAX_VALUE;
-//    private static final int SPEAK_WALK_DURATION_HALFWAY_THRESHOLD = 20; // in seconds
-
-//    public static final String GpsFeatureStepIdentifier               = "gpsfeature";
-//    public static final String LocationPermissionsStepIdentifier      = "locationpermission";
-//    public static final String ShortWalkOutboundStepIdentifier        = "walking.outbound";
-//    public static final String ShortWalkReturnStepIdentifier          = "walking.return";
-//    public static final String ShortWalkRestStepIdentifier            = "walking.rest";
-//    public static final String TimedWalkFormStepIdentifier            = "timed.walk.form";
-//
-//    public static final String TimedWalkFormAFOStepIdentifier         = "timed.walk.form.afo";
-//    public static final String TimedWalkFormAssistanceStepIdentifier  = "timed.walk.form.assistance";
-//    public static final String TimedWalkTrial1StepIdentifier          = "timed.walk.trial1";
-//    public static final String TimedWalkTurnAroundStepIdentifier      = "timed.walk.turn.around";
-//    public static final String TimedWalkTrial2StepIdentifier          = "timed.walk.trial2";
-
-//    public static final String TouchAnywhere1StepIdentifier            = "touchAnywhere1";
-//    public static final String SpokenInstructionStepIdentifier        = "spokenInstruction";
+    public static final String RangeOfMotionStepIdentifier = "rangeOfMotion";
 
     /**
      * Returns a predefined task that measures the range of motion for either a left or right knee.
@@ -75,9 +48,6 @@ public class RangeOfMotionTaskFactory {
             Context context,
             String identifier,
             String intendedUseDescription,
-            //     int     numberOfStepsPerLeg,
-            //     int     restDuration,
-            //String limbOption, // This might be incorrect
             LimbTaskOptions.Limb limbOption, // Based on TremorTaskFactory
             List<TaskExcludeOption> optionList)
     {
@@ -96,7 +66,7 @@ public class RangeOfMotionTaskFactory {
                 stepList.add(step);
             }
 
-            if ( limbOption == LimbTaskOptions.Limb.RIGHT || limbOption == LimbTaskOptions.Limb.BOTH) {
+            if (limbOption == LimbTaskOptions.Limb.RIGHT || limbOption == LimbTaskOptions.Limb.BOTH) {
                 {
                     String title = context.getString(R.string.rsb_knee_range_of_motion_title);
                     String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1);
@@ -128,9 +98,7 @@ public class RangeOfMotionTaskFactory {
                 }
             }
 
-// todo LEFt here
-
-            else if ( limbOption == LimbTaskOptions.Limb.LEFT || limbOption == LimbTaskOptions.Limb.BOTH) {
+            if (limbOption == LimbTaskOptions.Limb.LEFT || limbOption == LimbTaskOptions.Limb.BOTH) {
                 {
                     String title = context.getString(R.string.rsb_knee_range_of_motion_title);
                     String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_1);
@@ -156,58 +124,40 @@ public class RangeOfMotionTaskFactory {
                     String textFormat = context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3);
                     String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
                     InstructionStep step = new InstructionStep(Instruction3StepIdentifier, title, text);
-                    //step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3));
+                    step.setMoreDetailText(context.getString(R.string.rsb_knee_range_of_motion_text_instruction_3));
                     step.setImage(ResUtils.RangeOfMotion.KNEE_MAXIMUM_LEFT);
                     stepList.add(step);
                 }
-            }
 
-        }
+                /* This next step is the 'touch anywhere' (on the screen) step. When this step begins, the spoken
+                instruction commences automatically. Touching the screen ends the step and the next step begins. */
 
-        //This next step is the first 'touch anywhere' on the screen step. When this step begins, the spoken instruction commences automatically. Touching the screen ends the step and the next step begins.
-        {
-            {
                 {
-                    TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhere1StepIdentifier);
-                    String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
-                    String title = String.format(titleFormat, limbOption);
-                    //step.setTitle(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
-                    step.setTitle(title);
-                    step.setSpokenInstruction(title);
-                    //step.setSpokenInstruction(step.getSpokenInstruction());
-                    //step.setSpokenInstruction(step.getTitle());
-                    //step.getSpokenInstruction(context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction));
-                    //step.setRecorderConfigurationList(recorderConfigList);
-                    //step.setLimbOption(computeFallbackLimbOption(limbOption));
-                    //step.setlimbOption(limbOption);
-                    step.setShouldVibrateOnStart(true);
-                    step.setShouldPlaySoundOnStart(true);
-                    step.setShouldContinueOnFinish(true);
-                    step.setShouldStartTimerAutomatically(true);
-                    step.setShouldVibrateOnFinish(true);
-                    step.setShouldPlaySoundOnFinish(true);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
+                    String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
+                    TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier);
                     stepList.add(step);
                 }
-            }
 
-            //This next step is the second 'touch anywhere' (on the screen) step. When this step begins, the spoken instruction commences automatically and device motion is recorded. Touchng the screen ends the step and the recording of device motion, and the next step begins.
-            {
+                /* When this step begins, the spoken instruction commences automatically and device motion recording
+                begins. Touching the screen ends the step and the recording of device motion, and the next step begins */
+
                 {
                     //use this (from Walking Task)?
                     List<RecorderConfig> recorderConfigList = new ArrayList<>();
                     if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
                         recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                     }
-                    //or use this (from Tremor Task)?
+                    //or use this (from TremorTaskFactory)?
                     //step.setRecorderConfigurationList(Arrays.asList(
                     //        new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq)
                     //));
                     
                     {
-                        TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhere2StepIdentifier);
+                        RangeOfMotionStep step = new RangeOfMotionStep(RangeOfMotionStepIdentifier);
                         //step.setTitle(context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction));
                         String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction);
-                        String title = String.format(titleFormat, limbOption);
+                        String title = String.format(titleFormat, LimbTaskOptions.Limb.LEFT);
                         step.setSpokenInstruction(title);
                         //step.setSpokenInstruction(step.getSpokenInstruction());
                         //step.getSpokenInstruction(context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction));
@@ -234,14 +184,6 @@ public class RangeOfMotionTaskFactory {
             if (!optionList.contains(TaskExcludeOption.CONCLUSION)) {
                 stepList.add(TaskFactory.makeCompletionStep(context));
             }
-
-
-            /**
-             * @return a limb option that can be used if a limb option is not selected
-             */
-//          private static int computeFallbackLimbOption ( int limbOption){
-//          return (int) (limbOption * DEFAULT_LIMB_OPTION);
-//      }
 
             return new OrderedTask(identifier, stepList);
 

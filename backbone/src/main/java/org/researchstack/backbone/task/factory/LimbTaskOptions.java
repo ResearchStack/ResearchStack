@@ -10,7 +10,8 @@ import org.researchstack.backbone.model.ProfileInfoOption;
  *
  * Values that identify the limb(s) to be used in an active task.
  *
- * By default, the participant will be asked to use their most affected hand.
+ * By default, the participant will be asked to use their most affected limb.
+ *
  */
 public class LimbTaskOptions {
 
