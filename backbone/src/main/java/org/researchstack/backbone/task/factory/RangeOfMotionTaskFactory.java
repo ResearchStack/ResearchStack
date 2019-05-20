@@ -20,9 +20,9 @@ import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 /**
  * Created by David Evans, Laurence Hurst, Simon Hartley, 2019.
  *
- * In iOS, they included static methods for building OrderedTasks in the
- * OrderedTask class.  However, this class was created to further encapsulate the creation
- * of Range of Motion (ROM) Tasks, specifically the knee ROM task, and shoulder ROM task.
+ * In iOS, they included static methods for building OrderedTasks in the OrderedTask class.
+ * However, this class was created to further encapsulate the creation of Range of Motion (ROM)
+ * Tasks, specifically the knee ROM task.
  */
 
 public class RangeOfMotionTaskFactory {
@@ -30,7 +30,7 @@ public class RangeOfMotionTaskFactory {
     public static final String RangeOfMotionStepIdentifier = "rangeOfMotion";
 
     /**
-     * Returns a predefined task that measures the range of motion for either a left or right knee.
+     * Returns a predefined task that measures the range of motion for a left knee, a right knee, or both knees.
      *
      * The data collected by this task is device motion data.
      *
@@ -136,6 +136,8 @@ public class RangeOfMotionTaskFactory {
                     String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
                     String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
                     TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier);
+                    step.setSpokenInstruction(text);
+                    step.setSpokenInstruction(step.getSpokenInstruction());
                     stepList.add(step);
                 }
 
@@ -159,7 +161,7 @@ public class RangeOfMotionTaskFactory {
                         String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction);
                         String title = String.format(titleFormat, LimbTaskOptions.Limb.LEFT);
                         step.setSpokenInstruction(title);
-                        //step.setSpokenInstruction(step.getSpokenInstruction());
+                        step.setSpokenInstruction(step.getSpokenInstruction());
                         //step.getSpokenInstruction(context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction));
                         step.setRecorderConfigurationList(recorderConfigList);
                         step.setShouldVibrateOnStart(true);
