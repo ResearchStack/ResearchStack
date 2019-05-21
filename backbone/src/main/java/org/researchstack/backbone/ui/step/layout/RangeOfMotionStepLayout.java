@@ -8,13 +8,16 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import java.lang.Math;
 
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.RangeOfMotionResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
+import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 
 /**
  * Created by David Evans, David Jimenez, Laurence Hurst, Simon Hartley, 2019.
@@ -26,6 +29,7 @@ import org.researchstack.backbone.step.active.RangeOfMotionStep;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
+    private RelativeLayout layout;
     protected SensorEvent event;
     protected RangeOfMotionStep rangeOfMotionStep;
     protected RangeOfMotionResult rangeOfMotionResult;
@@ -50,9 +54,21 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public void initialize(Step step, StepResult result) {
         super.initialize(step, result);
+        setupRangeOfMotionViews();
 
         timerTextview.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void setupRangeOfMotionViews() { ;
+
+        layout = (RelativeLayout)findViewById(R.id.rsb_active_step_layout_touch_anywhere);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, null);
+            }
+        });
     }
 
     @Override
@@ -66,7 +82,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /* Not sure that we need this broadcast receiver section for device motion (attitude)
-
 
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
@@ -431,112 +446,12 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         rangeResult = Math.abs(maximumResult - minimumResult);
     }
 
-    stepResult.results = [self.addedResults arrayByAddingObject:result] ? : @[result];
+    stepResult.results =[
+    self.addedResults arrayByAddingObject:result]?:
+    @[result];
 
     return stepResult;
+
 }
 
-/*
 
- From iOS, for reference:
- 
-@implementation ORKRangeOfMotionStepViewController
-
-        - (void)viewDidLoad {
-        [super viewDidLoad];
-        _contentView = [ORKRangeOfMotionContentView new];
-        _contentView.translatesAutoresizingMaskIntoConstraints = NO;
-        self.activeStepView.activeCustomView = _contentView;
-        _gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [self.activeStepView addGestureRecognizer:_gestureRecognizer];
-        }
-        //This function records the angle of the device when the screen is tapped
-        - (void)handleTap:(UIGestureRecognizer *)sender {
-        [self calculateAndSetAngles];
-        [self finish];
-        }
-
-        - (void)calculateAndSetAngles {
-        _startAngle = ([self getDeviceAngleInDegreesFromAttitude:_referenceAttitude]);
-
-        //This function calculates maximum and minimum angles recorded by the device
-        if (_newAngle > _maxAngle) {
-        _maxAngle = _newAngle;
-        }
-        if (_minAngle == 0.0 || _newAngle < _minAngle) {
-        _minAngle = _newAngle;
-        }
-        }
-
-        #pragma mark - ORKDeviceMotionRecorderDelegate
-
-        - (void)deviceMotionRecorderDidUpdateWithMotion:(CMDeviceMotion *)motion {
-        if (!_referenceAttitude) {
-        _referenceAttitude = motion.attitude;
-        }
-        CMAttitude *currentAttitude = [motion.attitude copy];
-
-        [currentAttitude multiplyByInverseOfAttitude:_referenceAttitude];
-
-        double angle = [self getDeviceAngleInDegreesFromAttitude:currentAttitude];
-
-        //This function shifts the range of angles reported by the device from +/-180 degrees to -90 to +270 degrees, which should be sufficient to cover all ahievable knee and shoulder ranges of motion
-        BOOL shiftAngleRange = angle > 90 && angle <= 180;
-        if (shiftAngleRange) {
-        _newAngle = fabs(angle) - 360;
-        } else {
-        _newAngle = angle;
-        }
-
-        [self calculateAndSetAngles];
-        }
-
-/*
- When the device is in Portrait mode, we need to get the attitude's pitch
- to determine the device's angle. attitude.pitch doesn't return all
- orientations, so we use the attitude's quaternion to calculate the
- angle.
-
-        - (double)getDeviceAngleInDegreesFromAttitude:(CMAttitude *)attitude {
-        if (!_orientation) {
-        _orientation = [UIApplication sharedApplication].statusBarOrientation;
-        }
-        double angle;
-        if (UIInterfaceOrientationIsLandscape(_orientation)) {
-        double x = attitude.quaternion.x;
-        double w = attitude.quaternion.w;
-        double y = attitude.quaternion.y;
-        double z = attitude.quaternion.z;
-        angle = radiansToDegrees(allOrientationsForRoll(x, w, y, z));
-        } else {
-        double x = attitude.quaternion.x;
-        double w = attitude.quaternion.w;
-        double y = attitude.quaternion.y;
-        double z = attitude.quaternion.z;
-        angle = radiansToDegrees(allOrientationsForPitch(x, w, y, z));
-        }
-        return angle;
-        }
-
-
-#pragma mark - ORKActiveTaskViewController
-
-        - (ORKResult *)result {
-        ORKStepResult *stepResult = [super result];
-
-        ORKRangeOfMotionResult *result = [[ORKRangeOfMotionResult alloc] initWithIdentifier:self.step.identifier];
-
-        result.start = getShiftedStartDeviceAngle();
-        result.finish = result.start - getShiftedFinishDeviceAngle();
-        //Because the task uses pitch in the direction opposite to the original device axes (i.e. right hand rule),
-        // maximum and minimum angles are reported the 'wrong' way around for the knee and shoulder tasks
-        result.minimum = result.start - getShiftedMaximumAngle();
-        result.maximum = result.start - getShiftedMinimumAngle();
-        result.range = Math.abs(result.maximum - result.minimum);
-
-        stepResult.results = [self.addedResults arrayByAddingObject:result] ? : @[result];
-
-        return stepResult;
-        }
-
-*/
