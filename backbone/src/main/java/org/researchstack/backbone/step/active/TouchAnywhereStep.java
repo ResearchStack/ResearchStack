@@ -17,9 +17,13 @@ public class TouchAnywhereStep extends ActiveStep {
         super();
     }
 
-    public TouchAnywhereStep(String identifier) {
-        super(identifier);
+    public TouchAnywhereStep(String identifier, String title, String detailText) {
+        super(identifier, title, detailText);
+        commonInit();
+    }
 
+    private void commonInit() {
+        setOptional(false);
         setShouldVibrateOnStart(true);
         setShouldPlaySoundOnStart(true);
         setShouldVibrateOnFinish(true);
