@@ -48,9 +48,7 @@ public class TouchAnywhereStepLayout extends ActiveStepLayout {
         setupTouchAnywhereViews();
     }
 
-    private void setupTouchAnywhereViews() {
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+    private void setupTouchAnywhereViews() { ;
         
         layout = (RelativeLayout)findViewById(R.id.rsb_active_step_layout_touch_anywhere);
         layout.setOnClickListener(new View.OnClickListener() {
