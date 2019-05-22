@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -15,6 +16,7 @@ import java.lang.Math;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.RangeOfMotionResult;
+import org.researchstack.backbone.result.TimedWalkResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
@@ -426,32 +428,34 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
 
-    public void RangeOfMotionResults() {
+    @Override
+    protected void stepResultFinished() {
+        super.stepResultFinished();
 
-        double startResult;
-        double finishResult;
-        double minimumResult;
-        double maximumResult;
-        double rangeResult;
+        double start;
+        double finish;
+        double minimum;
+        double maximum;
+        double range;
 
-        // In Android's zero orientation, the device is in portrait (perpendicular to the ground); whereas
-        // in iOS it is parallel with the ground
-        startResult = getShiftedStartDeviceAngle();
+        RangeOfMotionResult rangeOfMotionResult = new rangeOfMotionResult(rangeOfMotionStep.getIdentifier()); // based on TimedWalkStepLayout
 
-        //Because the task uses pitch in the direction opposite to the original device axes (i.e. right hand rule),
-        // finish, maximum and minimum angles are reported the 'wrong' way around for the knee and shoulder tasks
-        finishResult = startResult - getShiftedFinishDeviceAngle();
-        minimumResult = startResult - getShiftedMaximumAngle();
-        maximumResult = startResult - getShiftedMinimumAngle();
-        rangeResult = Math.abs(maximumResult - minimumResult);
+        // In Android's zero orientation, the device is in portrait mode (i.e. perpendicular to the
+        // ground); whereas in iOS ResearchKit zero is parallel with the ground
+
+        start = getShiftedStartDeviceAngle(); // reports absolute angle
+        RangeOfMotionResult.getStart (getShiftedStartDeviceAngle()); // is this the appropriate format?
+
+        //Because the knee and shoulder tasks task uses pitch in the direction opposite to the
+        // original device axes (i.e. right hand rule), finish, maximum and minimum angles are
+        // reported the 'wrong' way around for the knee and shoulder tasks
+
+        finish = start - getShiftedFinishDeviceAngle(); // direction is opposite for knee and shoulder tasks
+        minimum = start - getShiftedMaximumAngle(); // captured minimum angle will be opposite for knee and shoulder tasks
+        maximum = start - getShiftedMinimumAngle(); // captured maximum angle will be opposite for knee and shoulder tasks
+        range = Math.abs(maximum - minimum);
+
+        stepResult.setResultForIdentifier(rangeOfMotionResult.getIdentifier(), rangeOfMotionResult);
     }
-
-    stepResult.results =[
-    self.addedResults arrayByAddingObject:result]?:
-    @[result];
-
     return stepResult;
-
 }
-
-
