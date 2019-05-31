@@ -27,10 +27,10 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.utils.MathUtils;
 
 /**
- * Created by David Evans, David Jimenez, Laurence Hurst, Simon Hartley, 2019.
+ * Created by David Evans, Simon Hartley, Laurence Hurst, David Jimenez, 2019.
  *
  * The RangeOfMotionStepLayout is essentially the same as the ActiveStepLayout, except that it
- * calculates device position as (Euler) angles: absolute start, minimum, maximum, finish and range
+ * calculates absolute device position in (Euler) angles: start, minimum, maximum, finish and range
  *
  */
 
@@ -41,8 +41,13 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     protected RangeOfMotionStep rangeOfMotionStep;
     protected RangeOfMotionResult rangeOfMotionResult;
     private BroadcastReceiver deviceMotionReceiver;
-    float[] startAttitude;
-    float[] finishAttitude;
+    public float[] startAttitude;
+    public float[] finishAttitude;
+    public double start;
+    public double finish;
+    public double minimum;
+    public double maximum;
+    public double range;
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
@@ -153,7 +158,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * relative to the start position
      **/
 
-    private double getShiftedStartDeviceAngle() {
+    private double getShiftedStartAngle() {
 
         double raw_start_angle = getDeviceAngleInDegreesFromQuaternion(startAttitude);
         double absolute_start_angle;
@@ -169,7 +174,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * relative to the start position
      **/
 
-    public double getShiftedFinishDeviceAngle() {
+    public double getShiftedFinishAngle() {
 
         float[] relativeFinishAttitude = multiplyFinishAttitudeByInverseOfStart();
         double raw_finish_angle = getDeviceAngleInDegreesFromQuaternion(relativeFinishAttitude);
@@ -360,7 +365,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      **/
 
     public float[] getInverseOfStartAttitudeQuaternion() {
-        
+
         float[] inverseOfStartAttitudeQuaternion;
 
         inverseOfStartAttitudeQuaternion = calculateInverseOfQuaternion(startAttitude);
@@ -388,39 +393,28 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Methods to obtain and hold the first quaternion representing the initial (start) position
-     * of the device attitude when the step initialises
+     * Methods to obtain and hold the quaternion representing the initial (start) position of the
+     * device attitude when the step initialises
      **/
 
     @Override
     public void createActiveStepLayout() {
         super.createActiveStepLayout();
-        startAttitude = getDeviceAttitudeAsQuaternion();// TODO: store this here?
+        startAttitude = getDeviceAttitudeAsQuaternion(); // TODO: store this here in an instance variable?
     }
 
 
     /**
-     * Methods to obtain and hold the last quaternion representing the final (finish) position
-     * of the device attitude when recording ends with a tap of the screen
+     * Methods to obtain and hold the quaternion representing the final (finish) position of the
+     * device attitude when recording ends with a tap of the screen
      **/
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent){
         super.onTouchEvent(motionEvent);
-        finishAttitude = getDeviceAttitudeAsQuaternion(); // TODO: is this correct?
+        finishAttitude = getDeviceAttitudeAsQuaternion(); // TODO: is this correct to use an instance variable?
         return true;
     }
-
-    //public float[] getFinishAttitudeQuaternion() {
-
-    //    float[] finishAttitudeQuaternion = new float[4];
-    //    boolean screenTouch = onTouchEvent(); // TODO: store finish attitude here?
-
-    //    if (screenTouch) {
-    //            finishAttitudeQuaternion = getDeviceAttitudeAsQuaternion();
-    //    }
-    //    return finishAttitudeQuaternion;
-    //}
 
 
     /**
@@ -443,25 +437,26 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     protected void stepResultFinished() {
         super.stepResultFinished();
 
-        double start;
-        double finish;
-        double minimum;
-        double maximum;
-        double range;
+        //now declared as instance variables
+        //double start;
+        //double finish;
+        //double minimum;
+        //double maximum;
+        //double range;
 
         RangeOfMotionResult rangeOfMotionResult = new rangeOfMotionResult(rangeOfMotionStep.getIdentifier()); // based on TimedWalkStepLayout
 
         // In Android's zero orientation, the device is in portrait mode (i.e. perpendicular to the
         // ground); whereas in iOS ResearchKit zero is parallel with the ground
 
-        start = getShiftedStartDeviceAngle(); // reports absolute angle
-        RangeOfMotionResult.getStart (getShiftedStartDeviceAngle()); // is this the appropriate format?
+        start = getShiftedStartAngle(); // reports angle as absolute instead of relative
+        RangeOfMotionResult.getStart (getShiftedStartAngle()); // is this the appropriate format?
 
         //Because the knee and shoulder tasks task uses pitch in the direction opposite to the
         // original device axes (i.e. right hand rule), finish, maximum and minimum angles are
         // reported the 'wrong' way around for the knee and shoulder tasks
 
-        finish = start - getShiftedFinishDeviceAngle(); // direction is opposite for knee and shoulder tasks
+        finish = start - getShiftedFinishAngle(); // absolute angle; direction is opposite for knee and shoulder tasks
         minimum = start - getShiftedMaximumAngle(); // captured minimum angle will be opposite for knee and shoulder tasks
         maximum = start - getShiftedMinimumAngle(); // captured maximum angle will be opposite for knee and shoulder tasks
         range = Math.abs(maximum - minimum);
