@@ -1,31 +1,37 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import java.lang.Math;
+
+import android.os.Bundle;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.gesture.Gesture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.MotionEvent;
+import android.view.GestureDetector;
+import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
-
-import java.lang.Math;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.RangeOfMotionResult;
-import org.researchstack.backbone.result.TimedWalkResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
+import org.researchstack.backbone.step.active.RecorderService;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.utils.MathUtils;
 
 /**
  * Created by David Evans, David Jimenez, Laurence Hurst, Simon Hartley, 2019.
  *
- * The RangeOfMotionStepLayout is essentially the same as the ActiveStepLayout, except that it calculates
- * absolute start, minimum, maximum, finish and range (Euler) angle results
+ * The RangeOfMotionStepLayout is essentially the same as the ActiveStepLayout, except that it
+ * calculates device position as (Euler) angles: absolute start, minimum, maximum, finish and range
  *
  */
 
@@ -33,6 +39,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     private RelativeLayout layout;
     protected SensorEvent event;
+    protected MotionEvent motionEvent;
     protected RangeOfMotionStep rangeOfMotionStep;
     protected RangeOfMotionResult rangeOfMotionResult;
     private BroadcastReceiver deviceMotionReceiver;
@@ -62,15 +69,28 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    private void setupRangeOfMotionViews() { ;
+    private void setupRangeOfMotionViews() {
 
-        layout = (RelativeLayout)findViewById(R.id.rsb_active_step_layout_touch_anywhere);
+        layout = findViewById(R.id.rsb_active_step_layout_range_of_motion);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, null);
             }
         });
+    }
+
+
+    //Bundle tempBundle = new Bundle();
+    //onCreate(tempBundle);
+
+    //onCreate(new Bundle());
+
+    @Override
+    protected void onCreate(tempBundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
     }
 
     @Override
@@ -83,7 +103,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
 
-    /* Not sure that we need this broadcast receiver section for device motion (attitude)
+    /* Not sure that we need any of this broadcast receiver section for device motion (attitude)
 
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
@@ -231,7 +251,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         boolean targetAngleRange = ((original_angle > 90) && (original_angle <= 180));
 
         if (targetAngleRange) {
-            //if ((original_angle > 90) && (original_angle <= 180)) { //Not sure if this version will restrict the calculation only to relevant values
             shifted_angle = Math.abs(original_angle) - 360;
             return shifted_angle;
         } else {
@@ -267,7 +286,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     /**
      * Methods to calculate Euler angles from device attitude quaternions
      **/
-
+    
     public double allOrientationsForPitch(double w, double x, double y, double z) {
 
         double angle_in_rads;
@@ -315,18 +334,21 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to multiply the recorded attitude quaternion by the inverse of the reference quaternion
-     * to obtain the updated device attitude, relative to the initial (start) position
+     * Method to multiply every recorded attitude quaternion (other than the start attitude) by the
+     * inverse of the quaternion representing the start position to obtain the updated device
+     * attitude, relative to the start position
      **/
 
     public float[] multiplyAllAttitudesByInverseOfStartQuaternion() {
 
+        //float[] startAttitude = getStartAttitudeQuaternion();
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
         float[] deviceAttitude = getDeviceAttitudeAsQuaternion(); // on every update
-        float[] relativeAttitudeQuaternion;
+        float[] relativeAttitudeQuaternion = new float[4];
 
-        relativeAttitudeQuaternion = multiplyQuaternions(deviceAttitude, inverseOfStart);
-
+        //if (deviceAttitude { //!= startAttitude) { // do we need to exclude this?
+            relativeAttitudeQuaternion = multiplyQuaternions(deviceAttitude, inverseOfStart);
+        //}
         return relativeAttitudeQuaternion;
     }
 
@@ -383,31 +405,44 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to obtain and hold the first quaternion representing the initial (start)
-     * position of the device attitude when recording begins with a tap of the screen
+     * Methods to obtain and hold the first quaternion representing the initial (start) position
+     * of the device attitude when the step initialises
      **/
+
+    @Override
+    public void createActiveStepLayout() {
+        super.createActiveStepLayout();
+        getDeviceAttitudeAsQuaternion(); // TODO: store this below
+    }
 
     public float[] getStartAttitudeQuaternion() {
 
-        float[] startAttitudeQuaternion;
-
-        startAttitudeQuaternion = getDeviceAttitudeAsQuaternion(); // TODO: need to limit this to first sensor event only, or when screen is tapped
-
+        float[] startAttitudeQuaternion = new float[4];
+        startAttitudeQuaternion = createActiveStepLayout(); // TODO: store start attitude here
         return startAttitudeQuaternion;
     }
 
 
     /**
-     * Method to obtain and hold the last quaternion representing the final (finish)
-     * position of the device attitude when recording ends with a tap of the screen
+     * Methods to obtain and hold the last quaternion representing the final (finish) position
+     * of the device attitude when recording ends with a tap of the screen
      **/
+
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent){
+        super.onTouchEvent(motionEvent);
+        getDeviceAttitudeAsQuaternion(); // TODO: store this below
+        return true;
+    }
 
     public float[] getFinishAttitudeQuaternion() {
 
-        float[] finishAttitudeQuaternion;
+        float[] finishAttitudeQuaternion = new float[4];
+        boolean screenTouch = onTouchEvent(); // TODO: store finish attitude here
 
-        finishAttitudeQuaternion = getDeviceAttitudeAsQuaternion(); // TODO: need to limit this to last sensor event only, or when screen is tapped
-
+        if (screenTouch) {
+                finishAttitudeQuaternion = getDeviceAttitudeAsQuaternion();
+        }
         return finishAttitudeQuaternion;
     }
 
@@ -419,7 +454,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public float[] getDeviceAttitudeAsQuaternion() {
 
         int type = event.sensor.getType();
-        float[] attitudeQuaternion = {0, 0, 0, 0};
+        float[] attitudeQuaternion = new float[4];
 
         if (type == Sensor.TYPE_ROTATION_VECTOR) {
             SensorManager.getQuaternionFromVector(attitudeQuaternion, event.values);
@@ -457,5 +492,5 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         stepResult.setResultForIdentifier(rangeOfMotionResult.getIdentifier(), rangeOfMotionResult);
     }
-    return stepResult;
+    return stepResult
 }
