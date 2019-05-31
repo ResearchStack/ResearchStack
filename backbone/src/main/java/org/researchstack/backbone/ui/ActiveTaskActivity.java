@@ -59,6 +59,9 @@ public class ActiveTaskActivity extends ViewTaskActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+        if (currentStepLayout != null && currentStepLayout instanceof ActiveStepLayout) {
+            ((ActiveStepLayout)currentStepLayout).createActiveStepLayout();
+        }
     }
 
     @Override
