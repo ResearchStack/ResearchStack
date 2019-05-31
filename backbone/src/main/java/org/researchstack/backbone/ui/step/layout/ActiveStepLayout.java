@@ -181,6 +181,14 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
         removeUiRelatedItemsAndCallbacks();
     }
 
+    /**
+     * This is called when the activity containing this active step layout
+     * has moved to onCreate to provide a hook point for when the activity is initialised.
+     */
+    public void createActiveStepLayout() {
+        LogExt.d(ActiveStepLayout.class, "createActiveStepLayout()");
+    }
+
     protected void removeUiRelatedItemsAndCallbacks() {
         LogExt.d(ActiveStepLayout.class, "removeUiRelatedItemsAndCallbacks()");
         isDetached = true;
