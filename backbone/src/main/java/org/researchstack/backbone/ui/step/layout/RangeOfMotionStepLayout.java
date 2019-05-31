@@ -2,7 +2,6 @@ package org.researchstack.backbone.ui.step.layout;
 
 import java.lang.Math;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -39,10 +38,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     private RelativeLayout layout;
     protected SensorEvent event;
-    protected MotionEvent motionEvent;
     protected RangeOfMotionStep rangeOfMotionStep;
     protected RangeOfMotionResult rangeOfMotionResult;
     private BroadcastReceiver deviceMotionReceiver;
+    float[] startAttitude;
+    float[] finishAttitude;
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
@@ -78,19 +78,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, null);
             }
         });
-    }
-
-
-    //Bundle tempBundle = new Bundle();
-    //onCreate(tempBundle);
-
-    //onCreate(new Bundle());
-
-    @Override
-    protected void onCreate(tempBundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
     }
 
     @Override
@@ -168,7 +155,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     private double getShiftedStartDeviceAngle() {
 
-        float[] startAttitude = getStartAttitudeQuaternion();
         double raw_start_angle = getDeviceAngleInDegreesFromQuaternion(startAttitude);
         double absolute_start_angle;
 
@@ -185,8 +171,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     public double getShiftedFinishDeviceAngle() {
 
-        float[] finishAttitude = multiplyFinishAttitudeByInverseOfStartQuaternion();
-        double raw_finish_angle = getDeviceAngleInDegreesFromQuaternion(finishAttitude);
+        float[] relativeFinishAttitude = multiplyFinishAttitudeByInverseOfStart();
+        double raw_finish_angle = getDeviceAngleInDegreesFromQuaternion(relativeFinishAttitude);
         double absolute_finish_angle;
 
         absolute_finish_angle = shiftDeviceAngleRange(raw_finish_angle);
@@ -230,7 +216,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     public double getShiftedDeviceAngleUpdates() {
 
-        float[] updatedAttitude = multiplyAllAttitudesByInverseOfStartQuaternion();
+        float[] updatedAttitude = multiplyAllAttitudesByInverseOfStart();
         double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(updatedAttitude);
         double adjusted_angle;
 
@@ -321,10 +307,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * quaternion to obtain the attitude of the finish position, relative to the start position
      **/
 
-    public float[] multiplyFinishAttitudeByInverseOfStartQuaternion() {
+    public float[] multiplyFinishAttitudeByInverseOfStart() {
 
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
-        float[] finishAttitude = getFinishAttitudeQuaternion();
         float[] relativeFinishAttitudeQuaternion;
 
         relativeFinishAttitudeQuaternion = multiplyQuaternions(finishAttitude, inverseOfStart);
@@ -339,12 +324,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * attitude, relative to the start position
      **/
 
-    public float[] multiplyAllAttitudesByInverseOfStartQuaternion() {
+    public float[] multiplyAllAttitudesByInverseOfStart() {
 
-        //float[] startAttitude = getStartAttitudeQuaternion();
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
-        float[] deviceAttitude = getDeviceAttitudeAsQuaternion(); // on every update
-        float[] relativeAttitudeQuaternion = new float[4];
+        float[] deviceAttitude = getDeviceAttitudeAsQuaternion(); // TODO: on every update
+        float[] relativeAttitudeQuaternion;
 
         //if (deviceAttitude { //!= startAttitude) { // do we need to exclude this?
             relativeAttitudeQuaternion = multiplyQuaternions(deviceAttitude, inverseOfStart);
@@ -376,8 +360,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      **/
 
     public float[] getInverseOfStartAttitudeQuaternion() {
-
-        float[] startAttitude = getStartAttitudeQuaternion();
+        
         float[] inverseOfStartAttitudeQuaternion;
 
         inverseOfStartAttitudeQuaternion = calculateInverseOfQuaternion(startAttitude);
@@ -412,14 +395,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public void createActiveStepLayout() {
         super.createActiveStepLayout();
-        getDeviceAttitudeAsQuaternion(); // TODO: store this below
-    }
-
-    public float[] getStartAttitudeQuaternion() {
-
-        float[] startAttitudeQuaternion = new float[4];
-        startAttitudeQuaternion = createActiveStepLayout(); // TODO: store start attitude here
-        return startAttitudeQuaternion;
+        startAttitude = getDeviceAttitudeAsQuaternion();// TODO: store this here?
     }
 
 
@@ -431,20 +407,20 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent){
         super.onTouchEvent(motionEvent);
-        getDeviceAttitudeAsQuaternion(); // TODO: store this below
+        finishAttitude = getDeviceAttitudeAsQuaternion(); // TODO: is this correct?
         return true;
     }
 
-    public float[] getFinishAttitudeQuaternion() {
+    //public float[] getFinishAttitudeQuaternion() {
 
-        float[] finishAttitudeQuaternion = new float[4];
-        boolean screenTouch = onTouchEvent(); // TODO: store finish attitude here
+    //    float[] finishAttitudeQuaternion = new float[4];
+    //    boolean screenTouch = onTouchEvent(); // TODO: store finish attitude here?
 
-        if (screenTouch) {
-                finishAttitudeQuaternion = getDeviceAttitudeAsQuaternion();
-        }
-        return finishAttitudeQuaternion;
-    }
+    //    if (screenTouch) {
+    //            finishAttitudeQuaternion = getDeviceAttitudeAsQuaternion();
+    //    }
+    //    return finishAttitudeQuaternion;
+    //}
 
 
     /**
