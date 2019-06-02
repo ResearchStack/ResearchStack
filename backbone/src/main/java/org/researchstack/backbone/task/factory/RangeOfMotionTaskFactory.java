@@ -229,7 +229,7 @@ public class RangeOfMotionTaskFactory {
                 if (!optionList.contains(TaskExcludeOption.CONCLUSION)) {
                     stepList.add(TaskFactory.makeCompletionStep(context));
                 }
-                return new OrderedTask(identifier, stepList);
         }
+        return new OrderedTask(identifier, stepList);
     }
 }
