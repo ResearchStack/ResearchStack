@@ -255,7 +255,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * Method to calculate Euler angles from the device attitude quaternion, as a function of screen orientation
      **/
 
-    private double getDeviceAngleInDegreesFromQuaternion(float[] attitudeQuaternion) {
+    private double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
 
         int orientation = getResources().getConfiguration().orientation;
         double angle_in_degrees = 0;
@@ -263,12 +263,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
             getDeviceAttitudeAsQuaternion();
-            angle_in_degrees = Math.toDegrees(allOrientationsForRoll(attitudeQuaternion[0], attitudeQuaternion[1], attitudeQuaternion[2], attitudeQuaternion[3]));
-            // To convert radians to degrees, we could instead manually use: double radiansToDegrees = rad * 180.0 / Math.PI;
+            angle_in_degrees = Math.toDegrees(allOrientationsForRoll(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
         } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             getDeviceAttitudeAsQuaternion();
-            angle_in_degrees = Math.toDegrees(allOrientationsForPitch(attitudeQuaternion[0], attitudeQuaternion[1], attitudeQuaternion[2], attitudeQuaternion[3]));
+            angle_in_degrees = Math.toDegrees(allOrientationsForPitch(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
         }
         return angle_in_degrees;
     }
@@ -324,9 +323,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to multiply every recorded attitude quaternion (other than the start attitude) by the
-     * inverse of the quaternion representing the start position to obtain the updated device
-     * attitude, relative to the start position
+     * Method to multiply every recorded attitude quaternion by the inverse of the quaternion
+     * representing the start position to obtain the updated device attitude, relative to the
+     * start position
      **/
 
     public float[] multiplyAllAttitudesByInverseOfStart() {
@@ -335,7 +334,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         float[] deviceAttitude = getDeviceAttitudeAsQuaternion(); // TODO: on every update
         float[] relativeAttitudeQuaternion;
 
-        //if (deviceAttitude { //!= startAttitude) { // do we need to exclude this?
+        //if (deviceAttitude { //!= startAttitude) { // do we need to exclude startAttitude?
             relativeAttitudeQuaternion = multiplyQuaternions(deviceAttitude, inverseOfStart);
         //}
         return relativeAttitudeQuaternion;
@@ -343,7 +342,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to multiply two quaternions
+     * Method to multiply two quaternions (non-commutative)
      **/
 
     // for formula, see http://mathworld.wolfram.com/Quaternion.html
@@ -400,7 +399,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public void createActiveStepLayout() {
         super.createActiveStepLayout();
-        startAttitude = getDeviceAttitudeAsQuaternion(); // TODO: store this here in an instance variable?
+        startAttitude = getDeviceAttitudeAsQuaternion(); // TODO: store this here using an instance variable?
     }
 
 
@@ -412,7 +411,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent){
         super.onTouchEvent(motionEvent);
-        finishAttitude = getDeviceAttitudeAsQuaternion(); // TODO: is this correct to use an instance variable?
+        finishAttitude = getDeviceAttitudeAsQuaternion(); // TODO: is this correct?
         return true;
     }
 
@@ -427,7 +426,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         float[] attitudeQuaternion = new float[4];
 
         if (type == Sensor.TYPE_ROTATION_VECTOR) {
-            SensorManager.getQuaternionFromVector(attitudeQuaternion, event.values);
+            SensorManager.getQuaternionFromVector(attitudeQuaternion, event.values); // TODO: is this for every update?
         }
         return attitudeQuaternion;
     }
@@ -446,15 +445,15 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         RangeOfMotionResult rangeOfMotionResult = new rangeOfMotionResult(rangeOfMotionStep.getIdentifier()); // based on TimedWalkStepLayout
 
-        // In Android's zero orientation, the device is in portrait mode (i.e. perpendicular to the
-        // ground); whereas in iOS ResearchKit zero is parallel with the ground
+        /* In Android's zero orientation, the device is in portrait mode (i.e. perpendicular to the
+        ground); whereas in iOS ResearchKit zero is parallel with the ground */
 
-        start = getShiftedStartAngle(); // reports angle as absolute instead of relative
+        start = getShiftedStartAngle(); // reports absolute angle
         RangeOfMotionResult.getStart (getShiftedStartAngle()); // is this the appropriate format?
 
-        //Because the knee and shoulder tasks task uses pitch in the direction opposite to the
-        // original device axes (i.e. right hand rule), finish, maximum and minimum angles are
-        // reported the 'wrong' way around for the knee and shoulder tasks
+        /* Because the knee and shoulder tasks task uses pitch in the direction opposite to the
+        original device axes (i.e. right hand rule), finish, maximum and minimum angles are
+        reported the 'wrong' way around for the knee and shoulder tasks */
 
         finish = start - getShiftedFinishAngle(); // absolute angle; direction is opposite for knee and shoulder tasks
         minimum = start - getShiftedMaximumAngle(); // captured minimum angle will be opposite for knee and shoulder tasks
