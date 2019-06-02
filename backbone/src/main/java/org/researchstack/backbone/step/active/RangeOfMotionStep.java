@@ -14,6 +14,11 @@ public class RangeOfMotionStep extends ActiveStep {
         super();
     }
 
+    public RangeOfMotionStep(String identifier) {
+        super(identifier);
+        commonInit();
+    }
+
     public RangeOfMotionStep(String identifier, String title, String detailText) {
         super(identifier, title, detailText);
         commonInit();
