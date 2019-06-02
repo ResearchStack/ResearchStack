@@ -187,30 +187,44 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Methods to calculate minimum and maximum range-shifted Euler angles from the
-     * entire device recording session
+     * Methods to calculate minimum and maximum range-shifted Euler angles from the entire device
+     * recording session
      **/
+
 
     public double getShiftedMinimumAngle() {
 
-        double min_angle = 0;
         double adjusted_angle = getShiftedDeviceAngleUpdates();
 
-        if (adjusted_angle < min_angle) {
-            min_angle = adjusted_angle;
-        }
-        return min_angle;
+        return getMinimum(adjusted_angle);
     }
+
+    public double getMinimum(double data) {
+
+        double min = 0;
+
+        if (data < min) {
+            min = data;
+        }
+        return min;
+    }
+
 
     public double getShiftedMaximumAngle() {
 
-        double max_angle = 0;
         double adjusted_angle = getShiftedDeviceAngleUpdates();
 
-        if (adjusted_angle > max_angle) {
-            max_angle = adjusted_angle;
+        return getMaximum(adjusted_angle);
+    }
+
+    public double getMaximum(double data) {
+
+        double max = 0;
+
+        if (data > max) {
+            max = data;
         }
-        return max_angle;
+        return max;
     }
 
 
