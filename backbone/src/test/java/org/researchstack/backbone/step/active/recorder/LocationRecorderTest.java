@@ -48,6 +48,7 @@ public class LocationRecorderTest {
                 PackageManager.PERMISSION_GRANTED);
 
         mockContext = mock(Context.class);
+        when(mockContext.getPackageManager()).thenReturn(mockPackageManager);
         when(mockContext.getSystemService(Context.LOCATION_SERVICE)).thenReturn(
                 mockLocationManager);
 
