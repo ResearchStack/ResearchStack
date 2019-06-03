@@ -37,7 +37,7 @@ public class RangeOfMotionTaskFactory {
      *
      * @param context                can be app or activity, used for resources
      * @param identifier             The task identifier to use for this task, appropriate to the study.
-     * @param limbOption             Which limb is being measured.
+     * @param limbOption             The limb that is being measured.
      * @param intendedUseDescription A localized string describing the intended use of the data
      *                               collected. If the value of this parameter is `nil`, the default
      *                               localized text is displayed.
@@ -143,8 +143,8 @@ public class RangeOfMotionTaskFactory {
                 }
             }
 
-                /* This next step is the 'touch anywhere' (on the screen) step (TouchAnywhereStep). When this step begins, the spoken
-                instruction commences automatically. Touching the screen ends the step and the next step begins. */
+                /* When this next step (TouchAnywhereStep) begins, the spoken instruction commences
+                automatically. Touching the screen ends the step and the next step begins. */
 
                 if (limbOption == LimbTaskOptions.Limb.RIGHT || limbOption == LimbTaskOptions.Limb.BOTH) {
 
@@ -155,7 +155,7 @@ public class RangeOfMotionTaskFactory {
                         String text = String.format(textFormat, LimbTaskOptions.Limb.RIGHT);
                         TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier, title, text);
                         step.setSpokenInstruction(text);
-                        step.setSpokenInstruction(step.getSpokenInstruction());
+                        //step.setSpokenInstruction(step.getSpokenInstruction());
                         stepList.add(step);
                     }
 
@@ -164,9 +164,11 @@ public class RangeOfMotionTaskFactory {
 
                     {   //use this format (from Walking Task)?
                         List<RecorderConfig> recorderConfigList = new ArrayList<>();
+
                         if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
                             recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
                         }
+
                         if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
                             recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                         }
@@ -193,18 +195,17 @@ public class RangeOfMotionTaskFactory {
                         String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
                         TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier, title, text);
                         step.setSpokenInstruction(text);
-                        step.setSpokenInstruction(step.getSpokenInstruction());
+                        //step.setSpokenInstruction(step.getSpokenInstruction());
                         stepList.add(step);
                     }
 
-                /* When the RangeOfMotionStep begins, the spoken instruction commences automatically and device motion recording
-                begins. Touching the screen ends the step and recording of device motion, and the next step begins */
-
                     {   //use this format (from Walking Task)?
                         List<RecorderConfig> recorderConfigList = new ArrayList<>();
+
                         if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
                             recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
                         }
+
                         if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
                             recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                         }
@@ -221,6 +222,7 @@ public class RangeOfMotionTaskFactory {
                         }
                     }
                 }
+
                 if (!optionList.contains(TaskExcludeOption.CONCLUSION)) {
                     stepList.add(TaskFactory.makeCompletionStep(context));
                 }
