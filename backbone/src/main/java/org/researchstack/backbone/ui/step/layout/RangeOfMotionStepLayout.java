@@ -37,8 +37,9 @@ import org.researchstack.backbone.utils.MathUtils;
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     private RelativeLayout layout;
-    protected SensorEvent event;
+    protected SensorEvent sensorEvent;
     protected RangeOfMotionStep rangeOfMotionStep;
+    protected MathUtils rsMath;
     protected RangeOfMotionResult rangeOfMotionResult;
     private BroadcastReceiver deviceMotionReceiver;
     public float[] startAttitude;
@@ -196,9 +197,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         double adjusted_angle = getShiftedDeviceAngleUpdates();
 
-        return getMinimum(adjusted_angle);
+        return rsMath.getMinimum(adjusted_angle);
     }
 
+    /*
     public double getMinimum(double data) {
 
         double min = 0;
@@ -208,15 +210,17 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         }
         return min;
     }
+    */
 
 
     public double getShiftedMaximumAngle() {
 
         double adjusted_angle = getShiftedDeviceAngleUpdates();
 
-        return getMaximum(adjusted_angle);
+        return rsMath.getMaximum(adjusted_angle);
     }
 
+    /*
     public double getMaximum(double data) {
 
         double max = 0;
@@ -226,6 +230,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         }
         return max;
     }
+    */
 
 
     /**
@@ -277,11 +282,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
             getDeviceAttitudeAsQuaternion();
-            angle_in_degrees = Math.toDegrees(allOrientationsForRoll(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
+            angle_in_degrees = Math.toDegrees(rsMath.allOrientationsForRoll(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
         } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             getDeviceAttitudeAsQuaternion();
-            angle_in_degrees = Math.toDegrees(allOrientationsForPitch(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
+            angle_in_degrees = Math.toDegrees(rsMath.allOrientationsForPitch(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
         }
         return angle_in_degrees;
     }
@@ -289,7 +294,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Methods to calculate Euler angles from device attitude quaternions
-     **/
+
     
     public double allOrientationsForPitch(double w, double x, double y, double z) {
 
@@ -318,7 +323,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         return angle_in_rads;
     }
-
+     **/
 
     /**
      * Method to multiply the final (finish) attitude quaternion by the inverse of the first (start)
@@ -330,7 +335,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
         float[] relativeFinishAttitudeQuaternion;
 
-        relativeFinishAttitudeQuaternion = multiplyQuaternions(finishAttitude, inverseOfStart);
+        relativeFinishAttitudeQuaternion = rsMath.multiplyQuaternions(finishAttitude, inverseOfStart);
 
         return relativeFinishAttitudeQuaternion;
     }
@@ -345,11 +350,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public float[] multiplyAllAttitudesByInverseOfStart() {
 
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
-        float[] deviceAttitude = getDeviceAttitudeAsQuaternion(); // TODO: on every update
+        float[] deviceAttitude = getDeviceAttitudeAsQuaternion(); // TODO: does this update on every event?
         float[] relativeAttitudeQuaternion;
 
         //if (deviceAttitude { //!= startAttitude) { // do we need to exclude startAttitude?
-            relativeAttitudeQuaternion = multiplyQuaternions(deviceAttitude, inverseOfStart);
+            relativeAttitudeQuaternion = rsMath.multiplyQuaternions(deviceAttitude, inverseOfStart);
         //}
         return relativeAttitudeQuaternion;
     }
@@ -357,7 +362,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to multiply two quaternions (non-commutative)
-     **/
+
 
     // for formula, see http://mathworld.wolfram.com/Quaternion.html
     public float[] multiplyQuaternions(float[] q1, float[] q2) {
@@ -371,6 +376,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         return productQuaternion;
     }
+     **/
 
 
     /**
@@ -381,7 +387,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         float[] inverseOfStartAttitudeQuaternion;
 
-        inverseOfStartAttitudeQuaternion = calculateInverseOfQuaternion(startAttitude);
+        inverseOfStartAttitudeQuaternion = rsMath.calculateInverseOfQuaternion(startAttitude);
 
         return inverseOfStartAttitudeQuaternion;
     }
@@ -389,7 +395,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to calculate the inverse (complex conjugate) of a quaternion
-     **/
+
 
     // for formula, see http://mathworld.wolfram.com/Quaternion.html
     public float[] calculateInverseOfQuaternion(float[] originalQuaternion) {
@@ -403,6 +409,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         return inverseQuaternion;
     }
+     **/
 
 
     /**
@@ -414,7 +421,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public void createActiveStepLayout() {
         super.createActiveStepLayout();
         startAttitude = getDeviceAttitudeAsQuaternion(); // TODO: store this here using an instance variable?
-    }
+    }                                                    // do we need to use sensorEvent.timestamp to synchronise events?
 
 
     /**
@@ -436,11 +443,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     public float[] getDeviceAttitudeAsQuaternion() {
 
-        int type = event.sensor.getType();
+        int type = sensorEvent.sensor.getType();
         float[] attitudeQuaternion = new float[4];
 
         if (type == Sensor.TYPE_ROTATION_VECTOR) {
-            SensorManager.getQuaternionFromVector(attitudeQuaternion, event.values); // TODO: is this for every update?
+            SensorManager.getQuaternionFromVector(attitudeQuaternion, sensorEvent.values); // TODO: is this for every update?
         }
         return attitudeQuaternion;
     }
