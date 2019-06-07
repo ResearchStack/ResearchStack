@@ -8,27 +8,27 @@ public class RangeOfMotionResult extends Result {
     /**
     The angle (degrees) from the device reference position at the start position.
      */
-    public double start;
+    private double start;
 
     /**
     The angle (degrees) from the device reference position when the task finishes recording.
      */
-    public double finish;
+    private double finish;
 
     /**
     The angle (degrees) from the device reference position at the minimum angle (e.g. when the knee is most bent, such as at the end of the task).
      */
-    public double minimum;
+    private double minimum;
     
     /**
     The angle (degrees) from the device reference position at the maximum angle (e.g. when the knee is extended).
      */
-    public double maximum;
+    private double maximum;
     
     /**
      The angle (degrees) passed through from the start position to the maximum angle (e.g. from when the knee is flexed to when it is extended).
      */
-    public double range;
+    private double range;
 
 
     /* Default identifier for serilization/deserialization */
@@ -40,25 +40,43 @@ public class RangeOfMotionResult extends Result {
         super(identifier);
     }
 
-    public void getStart(double start) {
+    public double getStart() {
+        return start;
+    }
+
+    public void setStart(double start) {
         this.start = start;
     }
 
-    public void getFinish(double finish) {
+    public double getFinish() {
+        return finish;
+    }
+
+    public void setFinish(double finish) {
         this.finish = finish;
     }
 
+    public double getMinimum() {
+        return minimum;
+    }
 
-    public void getMinimum(double minimum) {
+    public void setMinimum(double minimum) {
         this.minimum = minimum;
     }
 
-    
-    public void getMaximum(double maximum) {
-        this.maximum = maximum;
+    public double getMaximum() {
+        return maximum;
     }
     
-    public int getRange(double range) {
+    public void setMaximum(double maximum) {
+        this.maximum = maximum;
+    }
+
+    public double getRange() {
+        return range;
+    }
+
+    public void setRange(double range) {
         this.range = range;
     }
 }
