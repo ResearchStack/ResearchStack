@@ -36,12 +36,13 @@ import org.researchstack.backbone.utils.MathUtils;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
-    private RelativeLayout layout;
+    protected RelativeLayout layout;
     protected SensorEvent sensorEvent;
     protected RangeOfMotionStep rangeOfMotionStep;
     protected MathUtils rsMath;
-    protected RangeOfMotionResult rangeOfMotionResult;
+    //protected RangeOfMotionResult rangeOfMotionResult;
     private BroadcastReceiver deviceMotionReceiver;
+
     public float[] startAttitude;
     public float[] finishAttitude;
     public double start;
@@ -263,7 +264,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         if (targetAngleRange) {
             shifted_angle = Math.abs(original_angle) - 360;
             return shifted_angle;
-        } else {
+        }
+        else {
             shifted_angle = original_angle;
             return shifted_angle;
         }
@@ -283,7 +285,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
             getDeviceAttitudeAsQuaternion();
             angle_in_degrees = Math.toDegrees(rsMath.allOrientationsForRoll(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
-        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+        }
+        else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             getDeviceAttitudeAsQuaternion();
             angle_in_degrees = Math.toDegrees(rsMath.allOrientationsForPitch(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
@@ -295,7 +298,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     /**
      * Methods to calculate Euler angles from device attitude quaternions
 
-    
+
     public double allOrientationsForPitch(double w, double x, double y, double z) {
 
         double angle_in_rads;
@@ -325,6 +328,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
      **/
 
+
     /**
      * Method to multiply the final (finish) attitude quaternion by the inverse of the first (start)
      * quaternion to obtain the attitude of the finish position, relative to the start position
@@ -350,12 +354,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public float[] multiplyAllAttitudesByInverseOfStart() {
 
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
-        float[] deviceAttitude = getDeviceAttitudeAsQuaternion(); // TODO: does this update on every event?
+        float[] deviceAttitude = getDeviceAttitudeAsQuaternion(); // TODO: does this update on every sensor event?
         float[] relativeAttitudeQuaternion;
 
-        //if (deviceAttitude { //!= startAttitude) { // do we need to exclude startAttitude?
-            relativeAttitudeQuaternion = rsMath.multiplyQuaternions(deviceAttitude, inverseOfStart);
-        //}
+        relativeAttitudeQuaternion = rsMath.multiplyQuaternions(deviceAttitude, inverseOfStart);
+
         return relativeAttitudeQuaternion;
     }
 
@@ -464,24 +467,31 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         //double maximum;
         //double range;
 
-        RangeOfMotionResult rangeOfMotionResult = new rangeOfMotionResult(rangeOfMotionStep.getIdentifier()); // based on TimedWalkStepLayout
+        RangeOfMotionResult rangeOfMotionResult = new RangeOfMotionResult(rangeOfMotionStep.getIdentifier()); // based on TimedWalkStepLayout
 
         /* In Android's zero orientation, the device is in portrait mode (i.e. perpendicular to the
-        ground); whereas in iOS ResearchKit zero is parallel with the ground */
+        ground), whereas in iOS ResearchKit zero is parallel with the ground. Hence, there will be
+        a 90 degree reported difference between these configurations from the same task */
 
-        start = getShiftedStartAngle(); // reports absolute angle
-        RangeOfMotionResult.getStart (getShiftedStartAngle()); // is this the appropriate format?
+        start = getShiftedStartAngle(); // reports absolute an angle between +270 and -90 degrees
+        rangeOfMotionResult.setStart (start); // TODO is this the appropriate format?
 
         /* Because the knee and shoulder tasks task uses pitch in the direction opposite to the
         original device axes (i.e. right hand rule), finish, maximum and minimum angles are
         reported the 'wrong' way around for the knee and shoulder tasks */
 
         finish = start - getShiftedFinishAngle(); // absolute angle; direction is opposite for knee and shoulder tasks
-        minimum = start - getShiftedMaximumAngle(); // captured minimum angle will be opposite for knee and shoulder tasks
-        maximum = start - getShiftedMinimumAngle(); // captured maximum angle will be opposite for knee and shoulder tasks
-        range = Math.abs(maximum - minimum);
+        rangeOfMotionResult.setFinish (finish);
 
+        minimum = start - getShiftedMaximumAngle(); // captured minimum angle will be opposite for knee and shoulder tasks
+        rangeOfMotionResult.setMinimum (minimum);
+
+        maximum = start - getShiftedMinimumAngle(); // captured maximum angle will be opposite for knee and shoulder tasks
+        rangeOfMotionResult.setMaximum (maximum);
+
+        range = Math.abs(maximum - minimum); // largest range across all recorded angles
+        rangeOfMotionResult.setRange (range);
+        
         stepResult.setResultForIdentifier(rangeOfMotionResult.getIdentifier(), rangeOfMotionResult);
     }
-    return stepResult
 }
