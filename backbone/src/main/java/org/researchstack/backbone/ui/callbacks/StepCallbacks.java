@@ -15,4 +15,5 @@ public interface StepCallbacks {
     void onCancelStep();
 
     void setActionbarVisible(boolean setVisible);
+
 }

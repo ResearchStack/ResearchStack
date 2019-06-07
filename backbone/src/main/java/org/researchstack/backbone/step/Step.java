@@ -271,4 +271,5 @@ public class Step implements Serializable {
     public int getActionFailedColor() {
         return actionFailedColor;
     }
+
 }
