@@ -1,28 +1,31 @@
 package org.researchstack.backbone.ui.views;
 
-import android.annotation.TargetApi;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
-import android.widget.ScrollView;
 
-public class ObservableScrollView extends ScrollView {
+/**
+ * This extension of a {@link NestedScrollView} exists solely to support API 23<
+ * The only addition is the proxy scroll listener that the original ScrollView didn't have without extending and that
+ * NestedScrollView only offers to API 23+.
+ * This class should be removed once the min API is increased to 23 and callers should use a pure NestedScrollView.
+ */
+public class ObservableScrollView extends NestedScrollView {
+    @Nullable
     private OnScrollListener onScrollListener;
 
-    public ObservableScrollView(Context context) {
+    public ObservableScrollView(@NonNull final Context context) {
         super(context);
     }
 
-    public ObservableScrollView(Context context, AttributeSet attrs) {
+    public ObservableScrollView(@NonNull final Context context, @Nullable final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ObservableScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ObservableScrollView(@NonNull final Context context, @Nullable final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @TargetApi(21)
-    public ObservableScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override

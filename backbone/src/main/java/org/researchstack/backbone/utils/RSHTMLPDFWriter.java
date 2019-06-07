@@ -11,31 +11,29 @@ import android.webkit.WebViewClient;
 
 import java.io.File;
 
-public class RSHTMLPDFWriter
-{
-    public interface PDFFileReadyCallback
-    {
+public class RSHTMLPDFWriter {
+
+    public interface PDFFileReadyCallback {
         void onPrintFileReady();
     }
 
     private static String SIGNED_PDF_FILENAME = "consent-signed.pdf";
 
-    public static File getPDFFilePath(Context context)
-    {
+    public static File getPDFFilePath(Context context) {
         return context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
     }
 
-    public static String getPDFFileName(String taskId)
-    {
+    public static String getPDFFileName(String taskId) {
         return taskId+"_"+SIGNED_PDF_FILENAME;
     }
 
-    public static String getPDFPath(Context context, String taskId)
-    {
-        return getPDFFilePath(context)+"/"+getPDFFileName(taskId);
+    public static String getPDFPath(Context context, String taskId) {
+        return getPDFFilePath(context) + "/" + getPDFFileName(taskId);
     }
 
-    protected void printPdfFile(final Activity context, final String taskId, String htmlConsentDocument, final PDFFileReadyCallback callback) {
+    protected void printPdfFile(final Activity context, final String taskId, String htmlConsentDocument, String assetsFolder,
+                                final PDFFileReadyCallback callback) {
+
         // Create a WebView object specifically for printing
         WebView webView = new WebView(context);
 
@@ -56,7 +54,10 @@ public class RSHTMLPDFWriter
         sb.append("<HTML><HEAD><LINK href=\"consent.css\" type=\"text/css\" rel=\"stylesheet\"/></HEAD><body>");
         sb.append(htmlConsentDocument);
         sb.append("</body></HTML>");
-        webView.loadDataWithBaseURL("file:///android_asset/", sb.toString(), "text/html", "utf-8", null);
+        
+        String folder = "file://" + assetsFolder + "/";
+
+        webView.loadDataWithBaseURL(folder, sb.toString(), "text/html", "utf-8", null);
 
     }
 
@@ -66,25 +67,17 @@ public class RSHTMLPDFWriter
                 .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
                 .setResolution(new PrintAttributes.Resolution("pdf", "pdf", 600, 600))
                 .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build();
+
         // write document content to file
         File path = getPDFFilePath(context);
         String ouput = getPDFFileName(taskId);
         HtmlToPdfPrinter pdfPrint = new HtmlToPdfPrinter(attributes);
 
-        HtmlToPdfPrinter.PrintReadyCallback printReadyCallback = new HtmlToPdfPrinter.PrintReadyCallback()
-        {
-            @Override
-            public void onPrintFinished()
-            {
-                callback.onPrintFileReady();
-            }
-        };
+        HtmlToPdfPrinter.PrintReadyCallback printReadyCallback = () -> callback.onPrintFileReady();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, ouput, printReadyCallback);
-        }else
-        {
+        } else {
             pdfPrint.print(webView.createPrintDocumentAdapter(), path, ouput, printReadyCallback);
         }
     }

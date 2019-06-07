@@ -11,6 +11,7 @@ public class BodyAnswer {
 
     private boolean isValid;
     private int reason;
+    private String reasonStr;
     private String[] params;
 
     public BodyAnswer(boolean isValid, @StringRes int reason, String... params) {
@@ -22,6 +23,12 @@ public class BodyAnswer {
     public BodyAnswer(boolean isValid, @StringRes int reason) {
         this.isValid = isValid;
         this.reason = reason;
+        this.params = new String[0];
+    }
+
+    public BodyAnswer(boolean isValid, String reason) {
+        this.isValid = isValid;
+        this.reasonStr = reason;
         this.params = new String[0];
     }
 
@@ -39,7 +46,9 @@ public class BodyAnswer {
     }
 
     public String getString(Context context) {
-        if (getParams().length == 0) {
+        if (reasonStr != null && !reasonStr.isEmpty()) {
+            return reasonStr;
+        } else if (getParams().length == 0) {
             return context.getString(getReason());
         } else {
             return context.getString(getReason(), (Object[]) getParams());

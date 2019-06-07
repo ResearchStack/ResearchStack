@@ -32,21 +32,25 @@ import java.util.List;
 
 import static org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout.KEY_SIGNATURE;
 
-public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCallbacks
-{
+public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCallbacks {
+
     private static final String ID_FORM_FIRST_NAME = "user_info_form_first_name";
     private static final String ID_FORM_LAST_NAME = "user_info_form_last_name";
     private static final String ID_FORM_DOB = "user_info_form_dob";
     private static final String ID_FORM = "user_info_form";
 
-    String consentHtml;
-    String firstName;
-    String lastName;
-    String signatureBase64;
+    private static final String EXTRA_ASSETS_FOLDER = "extra_assets_folder";
 
-    public static Intent newIntent(Context context, Task task) {
+    private String consentHtml;
+    private String firstName;
+    private String lastName;
+    private String signatureBase64;
+
+    public static Intent newIntent(Context context, Task task, String assetsFolder) {
         Intent intent = new Intent(context, ConsentViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
+        intent.putExtra(EXTRA_ASSETS_FOLDER, assetsFolder);
+
         return intent;
     }
 
@@ -107,6 +111,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
         dialog.show();
 
+        String consentAssetsFolder = getIntent().getStringExtra(EXTRA_ASSETS_FOLDER);
         String role = getString(R.string.rsb_consent_role);
         String dateFormat = getString(R.string.rsb_consent_doc_line_date_format);
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName),
@@ -115,15 +120,11 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
                 new SimpleDateFormat(dateFormat).format(new Date())
         );
 
-        new PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml, new RSHTMLPDFWriter.PDFFileReadyCallback()
-        {
-            @Override
-            public void onPrintFileReady()
-            {
-                dialog.dismiss();
-                ConsentViewTaskActivity.super.saveAndFinish();
-            }
-        });
+        new PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml, consentAssetsFolder, () -> {
+                    dialog.dismiss();
+                    ConsentViewTaskActivity.super.saveAndFinish();
+                }
+        );
     }
 
 
@@ -183,40 +184,37 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         return null;
     }
 
-    private String getSignatureHtmlContent(@Nullable String completeName, @NonNull String role, @Nullable String signatureB64, @Nullable String signatureDate)
-    {
+    private String getSignatureHtmlContent(@Nullable String completeName, @NonNull String role, @Nullable String signatureB64,
+                                           @Nullable String signatureDate) {
         StringBuffer body = new StringBuffer();
 
-        String hr = "<hr align='left' width='100%' style='height:1px; border:none; color:#000; background-color:#000; margin-top: -10px; margin-bottom: 0px;' />";
+        String hr = "<hr align='left' width='100%' style='height:1px; border:none; color:#000; background-color:#000; margin-top: 5px; margin-bottom: 0px;'/>";
 
-        String signatureElementWrapper = "<p><br/><div class='sigbox'><div class='inbox'>%s</div></div>%s%s</p>";
-        String imageTag = null;
+        String signatureElementWrapper = "<div class='sigbox'><div class='inbox'>%s</div></div>%s%s";
+        String imageTag;
 
         List<String> signatureElements = new ArrayList<>();
 
-        if(role == null)
-        {
+        if (role == null) {
             throw new RuntimeException("Consent role cannot be empty");
         }
 
         // Signature
-        if (completeName != null)
-        {
+        if (completeName != null) {
             String base = getString(R.string.rsb_consent_doc_line_printed_name, role);
             String nameElement = String.format(signatureElementWrapper, completeName, hr, base);
             signatureElements.add(nameElement);
         }
 
-        if (signatureB64 != null)
-        {
-            imageTag = "<img width='100%%' alt='star' src='data:image/png;base64,"+signatureB64+"' />";
+        if (signatureB64 != null) {
+            imageTag = "<img width='100%' alt='star' style='max-height:100px;max-width:200px;height:auto;width:auto;' " +
+                    "src='data:image/png;base64," + signatureB64 + "'/>";
             String base = getString(R.string.rsb_consent_doc_line_signature, role);
             String signatureElement = String.format(signatureElementWrapper, imageTag, hr, base);
             signatureElements.add(signatureElement);
         }
 
-        if (signatureElements.size() > 0)
-        {
+        if (signatureElements.size() > 0) {
             String base = getString(R.string.rsb_consent_doc_line_date);
             String signatureElement = String.format(signatureElementWrapper, signatureDate, hr, base);
             signatureElements.add(signatureElement);
@@ -224,28 +222,31 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
         int numElements = signatureElements.size();
 
-        if (numElements > 1)
-        {
-            body.append("<div class='grid border'>");
-            for (String element : signatureElements)
-            {
-                body.append(String.format("<div class='col-1-3 border'>%s</div>", element));
+        if (numElements > 1) {
+            body
+                    .append("<table cellpadding='20px' width='100%'>")
+                    .append("<tr>");
+
+            for (String element : signatureElements) {
+                body.append("<td style='vertical-align: bottom;width:33%;'>").append(String.format("<div>%s</div>", element))
+                        .append("</td>");
             }
-            body.append("</div>");
-        }
-        else if (numElements == 1)
-        {
+
+            body
+                    .append("</tr>")
+                    .append("</table>");
+
+        } else if (numElements == 1) {
             body.append(String.format("<div width='200'>%@</div>", signatureElements.get(0)));
         }
 
         return body.toString();
     }
 
-    class PDFWriteExposer extends RSHTMLPDFWriter
-    {
-        protected void printPdfFile(Activity context, final String taskId, String htmlConsentDocument, PDFFileReadyCallback callback)
-        {
-            super.printPdfFile(context, taskId, htmlConsentDocument, callback);
+    class PDFWriteExposer extends RSHTMLPDFWriter {
+        protected void printPdfFile(Activity context, final String taskId, String htmlConsentDocument, String assetsFolder,
+                PDFFileReadyCallback callback) {
+            super.printPdfFile(context, taskId, htmlConsentDocument, assetsFolder, callback);
         }
     }
 }

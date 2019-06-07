@@ -9,10 +9,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,21 +29,25 @@ import com.afollestad.materialdialogs.Theme;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.ui.permissions.PermissionListener;
+import org.researchstack.backbone.ui.permissions.PermissionMediator;
+import org.researchstack.backbone.ui.permissions.PermissionResult;
 import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
+import org.researchstack.backbone.utils.ViewUtils;
 
 import java.lang.reflect.Constructor;
 import java.util.Date;
+import java.util.List;
 
-public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
+public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, PermissionMediator
 {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
@@ -54,6 +58,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     public static final String EXTRA_PRINCIPAL_TEXT_COLOR = "ViewTaskActivity.ExtraPrincipalTextColor";
     public static final String EXTRA_SECONDARY_TEXT_COLOR = "ViewTaskActivity.ExtraSecondaryTextColor";
     public static final String EXTRA_ACTION_FAILED_COLOR = "ViewTaskActivity.ExtraActionFailedColor";
+
+    private static final int STEP_PERMISSION_REQUEST = 44;
 
     private StepSwitcher root;
 
@@ -138,6 +144,24 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         task.validateParameters();
 
         task.onViewChange(Task.ViewChangeType.ActivityCreate, this, currentStep);
+    }
+
+    @RequiresApi(23)
+    @Override
+    public void requestPermissions(String... permissions) {
+        requestPermissions(permissions, STEP_PERMISSION_REQUEST);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == STEP_PERMISSION_REQUEST) {
+            PermissionResult result = new PermissionResult(permissions, grantResults);
+            List<PermissionListener> permissionListeners = ViewUtils.findViewsOf(findViewById(android.R.id.content), PermissionListener.class, true);
+            for (PermissionListener listener : permissionListeners) {
+                listener.onPermissionGranted(result);
+            }
+        }
     }
 
     /**
