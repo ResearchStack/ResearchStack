@@ -32,7 +32,7 @@ public class RangeOfMotionTaskFactory {
 
     /**
      * Returns a predefined task that measures the range of motion for a left knee, a right knee, or both knees.
-     *
+     * <p>
      * The data collected by this task is device motion data.
      *
      * @param context                can be app or activity, used for resources
@@ -42,7 +42,7 @@ public class RangeOfMotionTaskFactory {
      *                               collected. If the value of this parameter is `nil`, the default
      *                               localized text is displayed.
      * @param optionList             Options that affect the features of the predefined task.
-     * @return                       An active knee range of motion task that can be presented with an `ActiveTaskActivity` object.
+     * @return An active knee range of motion task that can be presented with an `ActiveTaskActivity` object.
      */
 
     public static OrderedTask kneeRangeOfMotionTask(
@@ -50,8 +50,7 @@ public class RangeOfMotionTaskFactory {
             String identifier,
             String intendedUseDescription,
             LimbTaskOptions.Limb limbOption,
-            List<TaskExcludeOption> optionList)
-    {
+            List<TaskExcludeOption> optionList) {
         List<Step> stepList = new ArrayList<>();
 
         // Obtain sensor frequency for Range of Motion Task recorders
@@ -99,6 +98,46 @@ public class RangeOfMotionTaskFactory {
                     step.setImage(ResUtils.RangeOfMotion.KNEE_MAXIMUM_RIGHT);
                     stepList.add(step);
                 }
+
+                /* When this next step (TouchAnywhereStep) begins, the spoken instruction commences
+                automatically. Touching the screen ends the step and the next step begins. */
+
+                {
+                    String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
+                    String title = String.format(titleFormat, LimbTaskOptions.Limb.RIGHT);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
+                    String text = String.format(textFormat, LimbTaskOptions.Limb.RIGHT);
+                    TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier, title, text);
+                    step.setSpokenInstruction(text);
+                    //step.setSpokenInstruction(step.getSpokenInstruction());
+                    stepList.add(step);
+                }
+
+                /* When the RangeOfMotionStep begins, the spoken instruction commences automatically and device motion recording
+                begins. Touching the screen ends the step and recording of device motion, and the next step begins */
+
+                {   //use this format (from Walking Task)?
+                    List<RecorderConfig> recorderConfigList = new ArrayList<>();
+
+                    if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
+                        recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
+                    }
+
+                    if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
+                        recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+                    }
+
+                    {
+                        String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
+                        String title = String.format(titleFormat, LimbTaskOptions.Limb.RIGHT);
+                        String textFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction);
+                        String text = String.format(textFormat, LimbTaskOptions.Limb.RIGHT);
+                        RangeOfMotionStep step = new RangeOfMotionStep(RangeOfMotionStepIdentifier, title, text);
+                        step.setSpokenInstruction(text);
+                        step.setRecorderConfigurationList(recorderConfigList);
+                        stepList.add(step);
+                    }
+                }
             }
 
             if (limbOption == LimbTaskOptions.Limb.LEFT || limbOption == LimbTaskOptions.Limb.BOTH) {
@@ -141,91 +180,51 @@ public class RangeOfMotionTaskFactory {
                     step.setImage(ResUtils.RangeOfMotion.KNEE_MAXIMUM_LEFT);
                     stepList.add(step);
                 }
-            }
 
                 /* When this next step (TouchAnywhereStep) begins, the spoken instruction commences
                 automatically. Touching the screen ends the step and the next step begins. */
 
-                if (limbOption == LimbTaskOptions.Limb.RIGHT || limbOption == LimbTaskOptions.Limb.BOTH) {
-
-                    {
-                        String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
-                        String title = String.format(titleFormat, LimbTaskOptions.Limb.RIGHT);
-                        String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
-                        String text = String.format(textFormat, LimbTaskOptions.Limb.RIGHT);
-                        TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier, title, text);
-                        step.setSpokenInstruction(text);
-                        //step.setSpokenInstruction(step.getSpokenInstruction());
-                        stepList.add(step);
-                    }
+                {
+                    String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
+                    String title = String.format(titleFormat, LimbTaskOptions.Limb.LEFT);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
+                    String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
+                    TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier, title, text);
+                    step.setSpokenInstruction(text);
+                    //step.setSpokenInstruction(step.getSpokenInstruction());
+                    stepList.add(step);
+                }
 
                 /* When the RangeOfMotionStep begins, the spoken instruction commences automatically and device motion recording
                 begins. Touching the screen ends the step and recording of device motion, and the next step begins */
 
-                    {   //use this format (from Walking Task)?
-                        List<RecorderConfig> recorderConfigList = new ArrayList<>();
+                {   //use this format (from Walking Task)?
+                    List<RecorderConfig> recorderConfigList = new ArrayList<>();
 
-                        if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
-                            recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
-                        }
-
-                        if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
-                            recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
-                        }
-
-                        {
-                            String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
-                            String title = String.format(titleFormat, LimbTaskOptions.Limb.RIGHT);
-                            String textFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction);
-                            String text = String.format(textFormat, LimbTaskOptions.Limb.RIGHT);
-                            RangeOfMotionStep step = new RangeOfMotionStep(RangeOfMotionStepIdentifier, title, text);
-                            step.setSpokenInstruction(text);
-                            step.setRecorderConfigurationList(recorderConfigList);
-                            stepList.add(step);
-                        }
+                    if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
+                        recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
                     }
-                }
 
-                if (limbOption == LimbTaskOptions.Limb.LEFT || limbOption == LimbTaskOptions.Limb.BOTH) {
+                    if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
+                        recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
+                    }
 
                     {
                         String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
                         String title = String.format(titleFormat, LimbTaskOptions.Limb.LEFT);
-                        String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
+                        String textFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction);
                         String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
-                        TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier, title, text);
+                        RangeOfMotionStep step = new RangeOfMotionStep(RangeOfMotionStepIdentifier, title, text);
                         step.setSpokenInstruction(text);
-                        //step.setSpokenInstruction(step.getSpokenInstruction());
+                        step.setRecorderConfigurationList(recorderConfigList);
                         stepList.add(step);
-                    }
-
-                    {   //use this format (from Walking Task)?
-                        List<RecorderConfig> recorderConfigList = new ArrayList<>();
-
-                        if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
-                            recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
-                        }
-
-                        if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
-                            recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
-                        }
-
-                        {
-                            String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
-                            String title = String.format(titleFormat, LimbTaskOptions.Limb.LEFT);
-                            String textFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction);
-                            String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
-                            RangeOfMotionStep step = new RangeOfMotionStep(RangeOfMotionStepIdentifier, title, text);
-                            step.setSpokenInstruction(text);
-                            step.setRecorderConfigurationList(recorderConfigList);
-                            stepList.add(step);
-                        }
                     }
                 }
 
                 if (!optionList.contains(TaskExcludeOption.CONCLUSION)) {
                     stepList.add(TaskFactory.makeCompletionStep(context));
                 }
+            }
         }
         return new OrderedTask(identifier, stepList);
     }
