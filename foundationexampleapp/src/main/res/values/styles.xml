@@ -1,0 +1,78 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="Theme.FoundationApp" parent="Theme.Foundation">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/rsf_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/rsf_colorPrimaryDark</item>
+        <item name="colorAccent">@color/rsf_colorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.FoundationApp.Dialog</item>
+        <item name="toolbarTheme">@style/Theme.FoundationApp.Toolbar</item>
+    </style>
+
+    <style name="Theme.FoundationApp.Survey">
+        <item name="toolbarTheme">@style/Theme.FoundationApp.Toolbar.Transparent</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="colorPrimaryDark">@color/dark_gray</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="Theme.FoundationApp.Toolbar.Transparent">
+        <item name="colorControlNormal">@color/rsf_warm_gray</item>
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="toolbarStyle">@style/Widget.FoundationApp.Toolbar.Transparent</item>
+    </style>
+
+    <style name="Theme.FoundationApp.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/rsf_warm_gray</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="Theme.FoundationApp.Toolbar">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="toolbarStyle">@style/Widget.FoundationApp.Toolbar</item>
+    </style>
+
+    <style name="Base.Widget.FoundationApp.Toolbar" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.FoundationApp.Toolbar.Title</item>
+    </style>
+
+    <style name="Widget.FoundationApp.Toolbar" parent="@style/Base.Widget.FoundationApp.Toolbar">
+        <item name="android:foreground">?android:windowContentOverlay</item>
+    </style>
+
+
+    <style name="TextAppearance.Widget.FoundationApp.Toolbar.Title"
+        parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Widget.FoundationApp.Toolbar.Title.Transparent">
+        <item name="android:textColor">@color/rsf_warm_gray</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!--<style name="Widget.FoundationApp.Toolbar" parent="@style/Base.Widget.FoundationApp.Toolbar">-->
+        <!--<item name="android:elevation">4dp</item>-->
+        <!--<item name="android:outlineProvider">bounds</item>-->
+    <!--</style>-->
+
+    <style name="Widget.FoundationApp.Toolbar.Transparent" parent="@style/Base.Widget.FoundationApp.Toolbar">
+        <item name="android:elevation">0dp</item>
+        <item name="android:outlineProvider">none</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.FoundationApp.Toolbar.Title.Transparent</item>
+    </style>
+
+</resources>
