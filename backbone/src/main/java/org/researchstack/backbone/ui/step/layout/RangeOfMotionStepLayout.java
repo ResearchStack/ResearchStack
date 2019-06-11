@@ -5,11 +5,14 @@ import java.lang.Math;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.gesture.Gesture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.MotionEvent;
@@ -23,6 +26,8 @@ import org.researchstack.backbone.result.RangeOfMotionResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
 import org.researchstack.backbone.step.active.RecorderService;
+import org.researchstack.backbone.step.active.recorder.AudioRecorder;
+import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.utils.MathUtils;
 
@@ -39,17 +44,17 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     protected RelativeLayout layout;
     protected SensorEvent sensorEvent;
     protected RangeOfMotionStep rangeOfMotionStep;
-    protected MathUtils rsMath;
+    //protected MathUtils rsMath;
     //protected RangeOfMotionResult rangeOfMotionResult;
     private BroadcastReceiver deviceMotionReceiver;
 
     public float[] startAttitude;
     public float[] finishAttitude;
-    public double start;
-    public double finish;
-    public double minimum;
-    public double maximum;
-    public double range;
+    //public double start;
+    //public double finish;
+    //public double minimum;
+    //public double maximum;
+    //public double range;
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
@@ -97,7 +102,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
 
-    /* Not sure that we need any of this broadcast receiver section for device motion (attitude)
+    /*TODO: Not sure what we need from this broadcast receiver section for device motion (attitude) recording
 
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
@@ -108,7 +113,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 if (intent == null || intent.getAction() == null) {
                     return;
                 }
-                if (DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_ACTION.equals(intent.getAction())) {
+                if (DeviceMotionRecorder.ROTATION_VECTOR_TYPES.equals(intent.getAction())) {
                     DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder =
                             DeviceMotionRecorder.getDeviceMotionUpdateHolder(intent);
                     if (dataHolder != null) {
@@ -139,31 +144,15 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      */
 
 
-    // We need the following methods below:
-    //1. Method for obtaining and holding the initial attitude as a quaternion (i.e. the first orientation when recording begins)
-    //2. Method for obtaining and holding the final attitude as a quaternion (i.e. the last orientation when recording ends)
-    //3. Method for obtaining and continually updating current attitude as quaternions
-    //4. Method for calculating the inverse of a quaternion
-    //5. Method for obtaining and holding the inverse of the start quaternion
-    //6. Method for multiplying quaternions
-    //7. Method to obtain the product of the inverse reference quaternion and the current quaternion to give current attitude relative to start position
-    //8. Method to obtain the product of the inverse reference quaternion by the final quaternion to give current attitude relative to start position
-    //9. Methods to calculate Euler angles from attitude quaternions
-    //10. Method for obtaining relative quaternion to Euler angles, depending on device orientation (landscape or portrait)
-    //11. Method to shift angle range from +/- 180 to +270 to -90 degrees
-    //12. Methods to calculate minimum and maximum Euler angles from entire device recording
-    //13. Methods to obtain final results of start, finish, minimum, maximum and range angles
-
-
     /**
      * Method to obtain range-shifted Euler angle of first (start) device attitude,
-     * relative to the start position
+     * relative to the zero position
      **/
 
     private double getShiftedStartAngle() {
 
-        double raw_start_angle = getDeviceAngleInDegreesFromQuaternion(startAttitude);
         double absolute_start_angle;
+        double raw_start_angle = getDeviceAngleInDegreesFromQuaternion(startAttitude);
 
         absolute_start_angle = shiftDeviceAngleRange(raw_start_angle);
 
@@ -178,9 +167,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     public double getShiftedFinishAngle() {
 
+        double absolute_finish_angle;
         float[] relativeFinishAttitude = multiplyFinishAttitudeByInverseOfStart();
         double raw_finish_angle = getDeviceAngleInDegreesFromQuaternion(relativeFinishAttitude);
-        double absolute_finish_angle;
 
         absolute_finish_angle = shiftDeviceAngleRange(raw_finish_angle);
 
@@ -198,7 +187,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         double adjusted_angle = getShiftedDeviceAngleUpdates();
 
-        return rsMath.getMinimum(adjusted_angle);
+        return MathUtils.getMinimum(adjusted_angle);
     }
 
     /*
@@ -218,7 +207,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         double adjusted_angle = getShiftedDeviceAngleUpdates();
 
-        return rsMath.getMaximum(adjusted_angle);
+        return MathUtils.getMaximum(adjusted_angle);
     }
 
     /*
@@ -241,9 +230,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     public double getShiftedDeviceAngleUpdates() {
 
+        double adjusted_angle;
         float[] updatedAttitude = multiplyAllAttitudesByInverseOfStart();
         double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(updatedAttitude);
-        double adjusted_angle;
 
         adjusted_angle = shiftDeviceAngleRange(unadjusted_angle);
 
@@ -253,7 +242,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to shift range of calculated angles from +/-180 degrees to -90 to +270 degrees,
-     * to cover all achievable knee and shoulder ranges of motion
+     * to cover all achievable ranges of motion (which can exceed 180 degrees)
      **/
 
     public double shiftDeviceAngleRange(double original_angle) {
@@ -278,18 +267,18 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     private double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
 
-        int orientation = getResources().getConfiguration().orientation;
         double angle_in_degrees = 0;
+        int orientation = getResources().getConfiguration().orientation;
 
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
             getDeviceAttitudeAsQuaternion();
-            angle_in_degrees = Math.toDegrees(rsMath.allOrientationsForRoll(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
+            angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForRoll(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
         }
         else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             getDeviceAttitudeAsQuaternion();
-            angle_in_degrees = Math.toDegrees(rsMath.allOrientationsForPitch(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
+            angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForPitch(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
         }
         return angle_in_degrees;
     }
@@ -336,10 +325,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     public float[] multiplyFinishAttitudeByInverseOfStart() {
 
-        float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
         float[] relativeFinishAttitudeQuaternion;
+        float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
 
-        relativeFinishAttitudeQuaternion = rsMath.multiplyQuaternions(finishAttitude, inverseOfStart);
+        relativeFinishAttitudeQuaternion = MathUtils.multiplyQuaternions(finishAttitude, inverseOfStart);
 
         return relativeFinishAttitudeQuaternion;
     }
@@ -347,17 +336,17 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to multiply every recorded attitude quaternion by the inverse of the quaternion
-     * representing the start position to obtain the updated device attitude, relative to the
+     * that represents the start position, to obtain the updated device attitude relative to the
      * start position
      **/
 
     public float[] multiplyAllAttitudesByInverseOfStart() {
 
+        float[] relativeAttitudeQuaternion;
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
         float[] deviceAttitude = getDeviceAttitudeAsQuaternion(); // TODO: does this update on every sensor event?
-        float[] relativeAttitudeQuaternion;
 
-        relativeAttitudeQuaternion = rsMath.multiplyQuaternions(deviceAttitude, inverseOfStart);
+        relativeAttitudeQuaternion = MathUtils.multiplyQuaternions(deviceAttitude, inverseOfStart);
 
         return relativeAttitudeQuaternion;
     }
@@ -390,7 +379,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         float[] inverseOfStartAttitudeQuaternion;
 
-        inverseOfStartAttitudeQuaternion = rsMath.calculateInverseOfQuaternion(startAttitude);
+        inverseOfStartAttitudeQuaternion = MathUtils.calculateInverseOfQuaternion(startAttitude);
 
         return inverseOfStartAttitudeQuaternion;
     }
@@ -417,7 +406,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Methods to obtain and hold the quaternion representing the initial (start) position of the
-     * device attitude when the step initialises
+     * device attitude when the step first initialises
      **/
 
     @Override
@@ -460,12 +449,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     protected void stepResultFinished() {
         super.stepResultFinished();
 
-        //now declared as instance variables
-        //double start;
-        //double finish;
-        //double minimum;
-        //double maximum;
-        //double range;
+        double start;
+        double finish;
+        double minimum;
+        double maximum;
+        double range;
 
         RangeOfMotionResult rangeOfMotionResult = new RangeOfMotionResult(rangeOfMotionStep.getIdentifier()); // based on TimedWalkStepLayout
 
@@ -474,24 +462,24 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         a 90 degree reported difference between these configurations from the same task */
 
         start = getShiftedStartAngle(); // reports absolute an angle between +270 and -90 degrees
-        rangeOfMotionResult.setStart (start); // TODO is this the appropriate format?
+        rangeOfMotionResult.setStart(start); // TODO is this the appropriate format?
 
         /* Because the knee and shoulder tasks task uses pitch in the direction opposite to the
         original device axes (i.e. right hand rule), finish, maximum and minimum angles are
         reported the 'wrong' way around for the knee and shoulder tasks */
 
         finish = start - getShiftedFinishAngle(); // absolute angle; direction is opposite for knee and shoulder tasks
-        rangeOfMotionResult.setFinish (finish);
+        rangeOfMotionResult.setFinish(finish);
 
         minimum = start - getShiftedMaximumAngle(); // captured minimum angle will be opposite for knee and shoulder tasks
-        rangeOfMotionResult.setMinimum (minimum);
+        rangeOfMotionResult.setMinimum(minimum);
 
         maximum = start - getShiftedMinimumAngle(); // captured maximum angle will be opposite for knee and shoulder tasks
-        rangeOfMotionResult.setMaximum (maximum);
+        rangeOfMotionResult.setMaximum(maximum);
 
         range = Math.abs(maximum - minimum); // largest range across all recorded angles
-        rangeOfMotionResult.setRange (range);
-        
+        rangeOfMotionResult.setRange(range);
+
         stepResult.setResultForIdentifier(rangeOfMotionResult.getIdentifier(), rangeOfMotionResult);
     }
 }
