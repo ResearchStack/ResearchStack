@@ -9,7 +9,7 @@ public class MathUtils {
      * Method to obtain minimum from range of real numbers
      **/
 
-    public double getMinimum(double data) {
+    public static double getMinimum(double data) {
 
         double min = 0;
 
@@ -24,7 +24,7 @@ public class MathUtils {
      * Method to obtain maximum from range of real numbers
      **/
 
-    public double getMaximum(double data) {
+    public static double getMaximum(double data) {
 
         double max = 0;
 
@@ -40,7 +40,7 @@ public class MathUtils {
      **/
 
     // for formula, see http://mathworld.wolfram.com/Quaternion.html
-    public float[] multiplyQuaternions(float[] q1, float[] q2) {
+    public static float[] multiplyQuaternions(float[] q1, float[] q2) {
 
         float[] productQuaternion = new float[4];
 
@@ -58,7 +58,7 @@ public class MathUtils {
      **/
 
     // for formula, see http://mathworld.wolfram.com/Quaternion.html
-    public float[] calculateInverseOfQuaternion(float[] originalQuaternion) {
+    public static float[] calculateInverseOfQuaternion(float[] originalQuaternion) {
 
         float[] inverseQuaternion = new float[4];
 
@@ -75,7 +75,7 @@ public class MathUtils {
      * Methods to calculate Euler angles from device attitude quaternions
      **/
 
-    public double allOrientationsForPitch(double w, double x, double y, double z) {
+    public static double allOrientationsForPitch(double w, double x, double y, double z) {
 
         double angle_in_rads;
 
@@ -84,7 +84,7 @@ public class MathUtils {
         return angle_in_rads;
     }
 
-    public double allOrientationsForRoll(double w, double x, double y, double z) {
+    public static double allOrientationsForRoll(double w, double x, double y, double z) {
 
         double angle_in_rads;
 
@@ -93,7 +93,7 @@ public class MathUtils {
         return angle_in_rads;
     }
 
-    public double allOrientationsForYaw(double w, double x, double y, double z) {
+    public static double allOrientationsForYaw(double w, double x, double y, double z) {
 
         double angle_in_rads;
 
