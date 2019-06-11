@@ -41,8 +41,8 @@ import org.researchstack.backbone.utils.MathUtils;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
-    private RelativeLayout layout;
-    private SensorEvent sensorEvent;
+    protected SensorEvent sensorEvent;
+    protected RelativeLayout layout;
     private RangeOfMotionStep rangeOfMotionStep;
     private BroadcastReceiver deviceMotionReceiver;
 
@@ -305,7 +305,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public boolean onTouchEvent(MotionEvent motionEvent){
         super.onTouchEvent(motionEvent);
 
-        if ( motionEvent.getAction() == MotionEvent.ACTION_DOWN ) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
             performClick();
             return true;
         }
@@ -363,7 +363,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         original device axes (i.e. right hand rule), finish, maximum and minimum angles are
         reported the 'wrong' way around for the knee and shoulder tasks */
 
-        finish = getShiftedFinishAngle(); // absolute angle; direction is opposite for knee and shoulder tasks
+        finish = getShiftedFinishAngle(); // absolute angle; direction related to start is opposite for knee and shoulder tasks
         rangeOfMotionResult.setFinish(finish);
 
         minimum = start - getShiftedMaximumAngle(); // captured minimum angle will be opposite for knee and shoulder tasks
