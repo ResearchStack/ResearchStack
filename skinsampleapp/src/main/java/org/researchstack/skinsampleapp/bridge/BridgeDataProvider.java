@@ -77,6 +77,11 @@ import rx.schedulers.Schedulers;
 * This is a very simple implementation that hits only part of the Sage Bridge REST API
 * a complete port of the Sage Bridge Java SDK for android: https://github.com/Sage-Bionetworks/BridgeJavaSDK
  */
+/*
+ * JDK - This is included for historical purposes. It may not work anymore. If you would like to integrate
+ * with Sage Bridge in your production application, please see the above link.
+ */
+@Deprecated
 public abstract class BridgeDataProvider extends DataProvider
 {
     public static final String TEMP_CONSENT_JSON_FILE_NAME = "/consent_sig";
