@@ -96,6 +96,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /*TODO: Not sure what we need from this broadcast receiver section for device motion (attitude) recording
+    // I assume this creates the recorded JSON file
 
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
@@ -290,14 +291,14 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     @Override
     public void createActiveStepLayout() {
-        super.createActiveStepLayout();
-        startAttitude = getDeviceAttitudeAsQuaternion(); // TODO: store this here using an instance variable?
-    }                                                    // do we need to use sensorEvent.timestamp to synchronise events?
+        super.createActiveStepLayout(); // TODO: do we need to use sensorEvent.timestamp to synchronise events?
+        startAttitude = getDeviceAttitudeAsQuaternion(); // this holds the start attitude quaternion
+    }
 
 
     /**
      * Methods to obtain and hold the quaternion representing the final (finish) position of the
-     * device attitude when recording ends with a tap of the screen
+     * device attitude when recording ends with the downward action during a tap of the screen
      **/
 
     @Override
@@ -317,10 +318,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public boolean performClick() {
         super.performClick();
 
-        finishAttitude = getDeviceAttitudeAsQuaternion();
+        finishAttitude = getDeviceAttitudeAsQuaternion(); // this holds the finish attitude quaternion
 
         return true;
     }
+
 
     /**
      * Method to obtain the device attitude's quaternion from the rotation vector
@@ -332,7 +334,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         float[] attitudeQuaternion = new float[4];
 
         if (type == Sensor.TYPE_ROTATION_VECTOR) {
-            SensorManager.getQuaternionFromVector(attitudeQuaternion, sensorEvent.values); // TODO: is this for every update?
+            SensorManager.getQuaternionFromVector(attitudeQuaternion, sensorEvent.values); // TODO: does this update for every sensor event?
         }
         return attitudeQuaternion;
     }
