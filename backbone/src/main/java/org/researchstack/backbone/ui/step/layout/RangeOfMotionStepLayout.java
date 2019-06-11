@@ -41,20 +41,13 @@ import org.researchstack.backbone.utils.MathUtils;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
-    protected RelativeLayout layout;
-    protected SensorEvent sensorEvent;
-    protected RangeOfMotionStep rangeOfMotionStep;
-    //protected MathUtils rsMath;
-    //protected RangeOfMotionResult rangeOfMotionResult;
+    private RelativeLayout layout;
+    private SensorEvent sensorEvent;
+    private RangeOfMotionStep rangeOfMotionStep;
     private BroadcastReceiver deviceMotionReceiver;
 
     public float[] startAttitude;
     public float[] finishAttitude;
-    //public double start;
-    //public double finish;
-    //public double minimum;
-    //public double maximum;
-    //public double range;
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
@@ -162,14 +155,13 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to obtain range-shifted Euler angle of final (finish) device attitude,
-     * relative to the start position
+     * relative to the zero position
      **/
 
     public double getShiftedFinishAngle() {
 
         double absolute_finish_angle;
-        float[] relativeFinishAttitude = multiplyFinishAttitudeByInverseOfStart();
-        double raw_finish_angle = getDeviceAngleInDegreesFromQuaternion(relativeFinishAttitude);
+        double raw_finish_angle = getDeviceAngleInDegreesFromQuaternion(finishAttitude);
 
         absolute_finish_angle = shiftDeviceAngleRange(raw_finish_angle);
 
@@ -182,25 +174,12 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * recording session
      **/
 
-
     public double getShiftedMinimumAngle() {
 
         double adjusted_angle = getShiftedDeviceAngleUpdates();
 
         return MathUtils.getMinimum(adjusted_angle);
     }
-
-    /*
-    public double getMinimum(double data) {
-
-        double min = 0;
-
-        if (data < min) {
-            min = data;
-        }
-        return min;
-    }
-    */
 
 
     public double getShiftedMaximumAngle() {
@@ -209,18 +188,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         return MathUtils.getMaximum(adjusted_angle);
     }
-
-    /*
-    public double getMaximum(double data) {
-
-        double max = 0;
-
-        if (data > max) {
-            max = data;
-        }
-        return max;
-    }
-    */
 
 
     /**
@@ -285,56 +252,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Methods to calculate Euler angles from device attitude quaternions
-
-
-    public double allOrientationsForPitch(double w, double x, double y, double z) {
-
-        double angle_in_rads;
-
-        angle_in_rads = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)));
-
-        return angle_in_rads;
-    }
-
-    public double allOrientationsForRoll(double w, double x, double y, double z) {
-
-        double angle_in_rads;
-
-        angle_in_rads = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)));
-
-        return angle_in_rads;
-    }
-
-    //Yaw (azimuth) is not needed with the knee and shoulder tasks, but will be needed in other RoM tasks
-    public double allOrientationsForYaw(double w, double x, double y, double z) {
-
-        double angle_in_rads;
-
-        angle_in_rads = (Math.asin(2.0 * (x * y - w * z)));
-
-        return angle_in_rads;
-    }
-     **/
-
-
-    /**
-     * Method to multiply the final (finish) attitude quaternion by the inverse of the first (start)
-     * quaternion to obtain the attitude of the finish position, relative to the start position
-     **/
-
-    public float[] multiplyFinishAttitudeByInverseOfStart() {
-
-        float[] relativeFinishAttitudeQuaternion;
-        float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
-
-        relativeFinishAttitudeQuaternion = MathUtils.multiplyQuaternions(finishAttitude, inverseOfStart);
-
-        return relativeFinishAttitudeQuaternion;
-    }
-
-
-    /**
      * Method to multiply every recorded attitude quaternion by the inverse of the quaternion
      * that represents the start position, to obtain the updated device attitude relative to the
      * start position
@@ -353,25 +270,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to multiply two quaternions (non-commutative)
-
-
-    // for formula, see http://mathworld.wolfram.com/Quaternion.html
-    public float[] multiplyQuaternions(float[] q1, float[] q2) {
-
-        float[] productQuaternion = new float[4];
-
-        productQuaternion[0] = (q1[0] * q2[0]) - (q1[1] * q2[1]) - (q1[2] * q2[2]) - (q1[3] * q2[3]);
-        productQuaternion[1] = (q1[0] * q2[1]) + (q1[1] * q2[0]) + (q1[2] * q2[3]) - (q1[3] * q2[2]);
-        productQuaternion[2] = (q1[0] * q2[2]) - (q1[1] * q2[3]) + (q1[2] * q2[0]) + (q1[3] * q2[1]);
-        productQuaternion[3] = (q1[0] * q2[3]) + (q1[1] * q2[2]) - (q1[2] * q2[1]) + (q1[3] * q2[0]);
-
-        return productQuaternion;
-    }
-     **/
-
-
-    /**
      * Method to obtain the inverse of the start (initial position) quaternion
      **/
 
@@ -383,25 +281,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         return inverseOfStartAttitudeQuaternion;
     }
-
-
-    /**
-     * Method to calculate the inverse (complex conjugate) of a quaternion
-
-
-    // for formula, see http://mathworld.wolfram.com/Quaternion.html
-    public float[] calculateInverseOfQuaternion(float[] originalQuaternion) {
-
-        float[] inverseQuaternion = new float[4];
-
-        inverseQuaternion[0] = originalQuaternion[0];
-        inverseQuaternion[1] = (-1 * originalQuaternion[1]);
-        inverseQuaternion[2] = (-1 * originalQuaternion[2]);
-        inverseQuaternion[3] = (-1 * originalQuaternion[3]);
-
-        return inverseQuaternion;
-    }
-     **/
 
 
     /**
@@ -424,10 +303,24 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent){
         super.onTouchEvent(motionEvent);
-        finishAttitude = getDeviceAttitudeAsQuaternion(); // TODO: is this correct?
-        return true;
+
+        if ( motionEvent.getAction() == MotionEvent.ACTION_DOWN ) {
+            performClick();
+            return true;
+        }
+        return false;
     }
 
+    // Because we call this from onTouchEvent, this code will be executed for both
+    // normal touch events and for when the system calls this using Accessibility
+    @Override
+    public boolean performClick() {
+        super.performClick();
+
+        finishAttitude = getDeviceAttitudeAsQuaternion();
+
+        return true;
+    }
 
     /**
      * Method to obtain the device attitude's quaternion from the rotation vector
@@ -462,13 +355,13 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         a 90 degree reported difference between these configurations from the same task */
 
         start = getShiftedStartAngle(); // reports absolute an angle between +270 and -90 degrees
-        rangeOfMotionResult.setStart(start); // TODO is this the appropriate format?
+        rangeOfMotionResult.setStart(start);
 
         /* Because the knee and shoulder tasks task uses pitch in the direction opposite to the
         original device axes (i.e. right hand rule), finish, maximum and minimum angles are
         reported the 'wrong' way around for the knee and shoulder tasks */
 
-        finish = start - getShiftedFinishAngle(); // absolute angle; direction is opposite for knee and shoulder tasks
+        finish = getShiftedFinishAngle(); // absolute angle; direction is opposite for knee and shoulder tasks
         rangeOfMotionResult.setFinish(finish);
 
         minimum = start - getShiftedMaximumAngle(); // captured minimum angle will be opposite for knee and shoulder tasks
