@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.SensorEvent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Build;
@@ -73,7 +74,7 @@ import static org.researchstack.backbone.step.active.RecorderService.DEFAULT_VIB
  * save and restore, and during UIKit's UI state restoration.
  */
 
-public class ActiveStepLayout extends FixedSubmitBarLayout
+public abstract class ActiveStepLayout extends FixedSubmitBarLayout
         implements StepLayout, TextToSpeech.OnInitListener {
 
     /**
@@ -611,4 +612,6 @@ public class ActiveStepLayout extends FixedSubmitBarLayout
     protected void recorderServiceSpokeText(String spokenText) {
         // Can be implemented by sub-class to also show text in the UI
     }
+
+    public abstract void onSensorChanged(SensorEvent event);
 }

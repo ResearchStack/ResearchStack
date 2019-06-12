@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.gesture.Gesture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
@@ -42,12 +43,14 @@ import org.researchstack.backbone.utils.MathUtils;
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     protected SensorEvent sensorEvent;
+    protected SensorEventListener sensorEventListener;
     protected RelativeLayout layout;
     private RangeOfMotionStep rangeOfMotionStep;
     private BroadcastReceiver deviceMotionReceiver;
 
-    public float[] startAttitude;
-    public float[] finishAttitude;
+    public float[] startAttitude= new float[4];
+    public float[] finishAttitude= new float[4];
+    public float[] updatedQuaternion = new float[4];
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
@@ -199,8 +202,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public double getShiftedDeviceAngleUpdates() {
 
         double adjusted_angle;
-        float[] updatedAttitude = multiplyAllAttitudesByInverseOfStart();
-        double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(updatedAttitude);
+        
+        double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(updatedQuaternion);
 
         adjusted_angle = shiftDeviceAngleRange(unadjusted_angle);
 
@@ -251,22 +254,19 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         return angle_in_degrees;
     }
 
-
     /**
      * Method to multiply every recorded attitude quaternion by the inverse of the quaternion
      * that represents the start position, to obtain the updated device attitude relative to the
      * start position
      **/
 
-    public float[] multiplyAllAttitudesByInverseOfStart() {
+    @Override
+    public void onSensorChanged(SensorEvent event) { // implementing this added an abstract method into the parent class
 
-        float[] relativeAttitudeQuaternion;
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
-        float[] deviceAttitude = getDeviceAttitudeAsQuaternion(); // TODO: does this update on every sensor event?
+        float[] deviceAttitude = getDeviceAttitudeAsQuaternion();
 
-        relativeAttitudeQuaternion = MathUtils.multiplyQuaternions(deviceAttitude, inverseOfStart);
-
-        return relativeAttitudeQuaternion;
+        updatedQuaternion = MathUtils.multiplyQuaternions(deviceAttitude, inverseOfStart);
     }
 
 
@@ -291,7 +291,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     @Override
     public void createActiveStepLayout() {
-        super.createActiveStepLayout(); // TODO: do we need to use sensorEvent.timestamp to synchronise events?
+        super.createActiveStepLayout();
         startAttitude = getDeviceAttitudeAsQuaternion(); // this holds the start attitude quaternion
     }
 
@@ -330,11 +330,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     public float[] getDeviceAttitudeAsQuaternion() {
 
-        int type = sensorEvent.sensor.getType();
         float[] attitudeQuaternion = new float[4];
+        int type = sensorEvent.sensor.getType();
 
         if (type == Sensor.TYPE_ROTATION_VECTOR) {
-            SensorManager.getQuaternionFromVector(attitudeQuaternion, sensorEvent.values); // TODO: does this update for every sensor event?
+            SensorManager.getQuaternionFromVector(attitudeQuaternion, sensorEvent.values);
         }
         return attitudeQuaternion;
     }
