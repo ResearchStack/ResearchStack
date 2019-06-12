@@ -19,5 +19,4 @@ public interface StepBody {
 
     BodyAnswer getBodyAnswerState();
 
-
 }
