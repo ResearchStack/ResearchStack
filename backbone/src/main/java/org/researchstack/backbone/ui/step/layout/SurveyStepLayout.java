@@ -1,5 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
@@ -53,7 +55,9 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     private int colorSecondary;
     private int principalTextColor;
     private int secondaryTextColor;
+    private SubmitBar submitBar;
 
+    private MediatorLiveData<Boolean> mediator = new MediatorLiveData<>();
     public SurveyStepLayout(Context context) {
         super(context);
     }
@@ -137,7 +141,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         title.setTextColor(principalTextColor);
         TextView summary = findViewById(R.id.rsb_survey_text);
         summary.setTextColor(secondaryTextColor);
-        final SubmitBar submitBar = findViewById(R.id.rsb_submit_bar);
+        submitBar = findViewById(R.id.rsb_submit_bar);
         submitBar.setNegativeTitleColor(coloryPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
         submitBar.setPositiveAction(new OnClickListener()
@@ -175,6 +179,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             }
 
             if (questionStep.isOptional()) {
+
                 submitBar.setNegativeTitle(R.string.rsb_step_skip);
                 submitBar.setNegativeAction(v -> onSkipClicked());
             } else {
@@ -187,7 +192,13 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         LogExt.i(getClass(), "initStepBody()");
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
+        submitBar.setPositiveActionEnabled(getStep().getColorSecondary());
+        if (stepBody != null) {
+            mediator.removeSource(stepBody.isStepEmpty);
+        }
         stepBody = createStepBody(questionStep, stepResult);
+        mediator.addSource(stepBody.isStepEmpty, this::isStepEmpty);
+
         View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, inflater, this);
 
         if (body != null) {
@@ -198,6 +209,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             body.setId(R.id.rsb_survey_step_body);
         }
     }
+
 
     @NonNull
     private StepBody createStepBody(QuestionStep questionStep, StepResult result) {
@@ -249,5 +261,18 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     public String getString(@StringRes int stringResId) {
         return getResources().getString(stringResId);
+    }
+
+    public LiveData<Boolean> isStepEmpty() {
+        return mediator;
+    }
+
+    private void isStepEmpty(boolean isEmpty) {
+        if (!isEmpty)  {
+            submitBar.setPositiveActionEnabled(getStep().getColorSecondary());
+        } else {
+            submitBar.setPositiveActionDisabled();
+        }
+
     }
 }
