@@ -1,10 +1,12 @@
 package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 
 import com.google.common.base.Strings;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +54,10 @@ public class DeviceMotionRecorder extends SensorRecorder {
     public static final Set<Integer> ROTATION_VECTOR_TYPES;
 
     public static final String ROTATION_REFERENCE_COORDINATE_KEY = "referenceCoordinate";
+
+    public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION  = "BroadcastDeviceMotionUpdate";
+    private static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY    = "DeviceMotionUpdate";
+
 
     static {
         // build mapping for sensor type and its data type value
@@ -336,5 +343,55 @@ public class DeviceMotionRecorder extends SensorRecorder {
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
         // no-op
+    }
+
+    protected void sendDeviceMotionUpdateBroadcast(int stepCount, float totalDistance) {
+        DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder = new DeviceMotionRecorder.DeviceMotionUpdateHolder();
+        dataHolder.setStepCount(stepCount); // TODO: what to replace with?
+        dataHolder.setTotalDistance(totalDistance); // TODO: what to replace with?
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BROADCAST_DEVICE_MOTION_UPDATE_KEY, dataHolder);
+        Intent intent = new Intent(BROADCAST_DEVICE_MOTION_UPDATE_ACTION);
+        intent.putExtras(bundle);
+        sendBroadcast(intent);
+    }
+
+    /**
+     * @param intent must have action of BROADCAST_DEVICE_MOTION_UPDATE_ACTION
+     * @return the DeviceMotionUpdateHolder contained in the broadcast
+     */
+    public static DeviceMotionRecorder.DeviceMotionUpdateHolder getDeviceMotionUpdateHolder(Intent intent) {
+        if (intent.getAction() == null ||
+                !intent.getAction().equals(BROADCAST_DEVICE_MOTION_UPDATE_ACTION) ||
+                intent.getExtras() == null ||
+                intent.getExtras().containsKey(BROADCAST_DEVICE_MOTION_UPDATE_KEY)) {
+            return null;
+        }
+        return (DeviceMotionRecorder.DeviceMotionUpdateHolder) intent.getExtras()
+                .getSerializable(BROADCAST_DEVICE_MOTION_UPDATE_KEY);
+    }
+
+    public static class DeviceMotionUpdateHolder implements Serializable {
+        private int stepCount; // TODO: delete/replace?
+        private float totalDistance; // TODO: delete/replace?
+
+
+        //TODO: not sure what variables we need to replace these below
+
+        public int getStepCount() {
+            return stepCount;
+        }
+
+        public void setStepCount(int stepCount) {
+            this.stepCount = stepCount;
+        }
+
+        public float getTotalDistance() {
+            return totalDistance;
+        }
+
+        public void setTotalDistance(float totalDistance) {
+            this.totalDistance = totalDistance;
+        }
     }
 }
