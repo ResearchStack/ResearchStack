@@ -29,8 +29,11 @@ import org.researchstack.backbone.step.active.RangeOfMotionStep;
 import org.researchstack.backbone.step.active.RecorderService;
 import org.researchstack.backbone.step.active.recorder.AudioRecorder;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
+import org.researchstack.backbone.task.factory.RangeOfMotionTaskFactory;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.utils.MathUtils;
+
+import static org.researchstack.backbone.task.factory.TaskFactory.Constants.DeviceMotionRecorderIdentifier;
 
 /**
  * Created by David Evans, Simon Hartley, Laurence Hurst, David Jimenez, 2019.
@@ -43,14 +46,14 @@ import org.researchstack.backbone.utils.MathUtils;
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     protected SensorEvent sensorEvent;
-    protected SensorEventListener sensorEventListener;
+    private SensorEventListener sensorEventListener;
     protected RelativeLayout layout;
     private RangeOfMotionStep rangeOfMotionStep;
     private BroadcastReceiver deviceMotionReceiver;
 
-    public float[] startAttitude= new float[4];
-    public float[] finishAttitude= new float[4];
-    public float[] updatedQuaternion = new float[4];
+    public float[] startAttitude = new float[4];
+    public float[] finishAttitude = new float[4];
+    public float[] updatedAttitude = new float[4];
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
@@ -98,8 +101,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
 
-    /*TODO: Not sure what we need from this broadcast receiver section for device motion (attitude) recording
-    // I assume this creates the recorded JSON file
+    //TODO: Not sure what we need from this broadcast receiver section for device motion (attitude) recording
 
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
@@ -110,19 +112,19 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 if (intent == null || intent.getAction() == null) {
                     return;
                 }
-                if (DeviceMotionRecorder.ROTATION_VECTOR_TYPES.equals(intent.getAction())) {
+                if (DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION.equals(intent.getAction())) {
                     DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder =
                             DeviceMotionRecorder.getDeviceMotionUpdateHolder(intent);
                     if (dataHolder != null) {
-                        if (RangeOfMotionStep.getNumberOfStepsPerLeg() > 0 &&
-                                (dataHolder.getStepCount() >= RangeOfMotionStep.getNumberOfStepsPerLeg()))
-                        {
-                            // TODO: mdephillips 1/13/18
-                            // we may want to move this functionality to the PedometerRecorder
+                        //if (RangeOfMotionStep.getNumberOfStepsPerLeg() > 0 &&
+                        //        (dataHolder.getStepCount() >= RangeOfMotionStep.getNumberOfStepsPerLeg()))
+                        //{
+                            // TODO
+                            // we may want to move this functionality to the DeviceMotionRecorder
                             // and having that signal to RecorderService to stop,
-                            // since this StepLayout may be create/destroyed and miss this broadcast
+                            // since this StepLayout may be created/destroyed and miss this broadcast
                             RangeOfMotionStepLayout.super.stop();
-                        }
+                        //}
                     }
                 }
             }
@@ -138,7 +140,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         Context appContext = getContext().getApplicationContext();
         LocalBroadcastManager.getInstance(appContext).unregisterReceiver(deviceMotionReceiver);
     }
-     */
 
 
     /**
@@ -195,15 +196,15 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to obtain range-shifted Euler angle for all attitude updates, that are
-     * relative to the start position
+     * Method to obtain range-shifted Euler angles for  all attitude updates, relative to the
+     * start position
      **/
 
     public double getShiftedDeviceAngleUpdates() {
 
         double adjusted_angle;
         
-        double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(updatedQuaternion);
+        double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(updatedAttitude);
 
         adjusted_angle = shiftDeviceAngleRange(unadjusted_angle);
 
@@ -233,7 +234,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to calculate Euler angles from the device attitude quaternion, as a function of screen orientation
+     * Method to calculate Euler angles from the device attitude quaternion, as a function of
+     * screen orientation
      **/
 
     private double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
@@ -255,18 +257,21 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     /**
-     * Method to multiply every recorded attitude quaternion by the inverse of the quaternion
+     * Method to multiply every update of the attitude quaternion by the inverse of the quaternion
      * that represents the start position, to obtain the updated device attitude relative to the
-     * start position
+     * start position (this relativity is necessary if the task is being performed in different
+     * start positions, which could result in Euler angles exceeding the already shifted range)
      **/
 
+    //TODO: need to implement onSensorChanged to get sensor updates
+
     @Override
-    public void onSensorChanged(SensorEvent event) { // implementing this added an abstract method into the parent class
+    public void onSensorChanged(SensorEvent event) {
 
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
         float[] deviceAttitude = getDeviceAttitudeAsQuaternion();
 
-        updatedQuaternion = MathUtils.multiplyQuaternions(deviceAttitude, inverseOfStart);
+        updatedAttitude = MathUtils.multiplyQuaternions(deviceAttitude, inverseOfStart);  // this holds the attitude quaternion updates
     }
 
 
@@ -312,8 +317,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         return false;
     }
 
-    // Because we call this from onTouchEvent, this code will be executed for both
-    // normal touch events and for when the system calls this using Accessibility
+    /*
+    * Because we call this from onTouchEvent, this code will be executed for both normal touch
+    * events and when the system calls this using Accessibility via performClick
+    */
+
     @Override
     public boolean performClick() {
         super.performClick();
@@ -325,7 +333,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to obtain the device attitude's quaternion from the rotation vector
+     * Method to obtain the device's attitude as a quaternion from the rotation vector
      **/
 
     public float[] getDeviceAttitudeAsQuaternion() {
@@ -350,8 +358,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         double maximum;
         double range;
 
-        RangeOfMotionResult rangeOfMotionResult = new RangeOfMotionResult(rangeOfMotionStep.getIdentifier()); // based on TimedWalkStepLayout
-
+        RangeOfMotionResult rangeOfMotionResult = new RangeOfMotionResult(rangeOfMotionStep.getIdentifier());
+        
         /* In Android's zero orientation, the device is in portrait mode (i.e. perpendicular to the
         ground), whereas in iOS ResearchKit zero is parallel with the ground. Hence, there will be
         a 90 degree reported difference between these configurations from the same task */
