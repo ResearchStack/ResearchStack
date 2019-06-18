@@ -74,7 +74,7 @@ import static org.researchstack.backbone.step.active.RecorderService.DEFAULT_VIB
  * save and restore, and during UIKit's UI state restoration.
  */
 
-public abstract class ActiveStepLayout extends FixedSubmitBarLayout
+public class ActiveStepLayout extends FixedSubmitBarLayout
         implements StepLayout, TextToSpeech.OnInitListener {
 
     /**
@@ -612,6 +612,4 @@ public abstract class ActiveStepLayout extends FixedSubmitBarLayout
     protected void recorderServiceSpokeText(String spokenText) {
         // Can be implemented by sub-class to also show text in the UI
     }
-
-    public abstract void onSensorChanged(SensorEvent event);
 }
