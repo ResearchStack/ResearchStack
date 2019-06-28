@@ -21,9 +21,9 @@ import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 /**
  * Created by David Evans, Laurence Hurst, Simon Hartley, 2019.
  *
- * In iOS ResearchKit, they included static methods for building OrderedTasks in the OrderedTask
- * class. However, this class was created to further encapsulate the creation of Range of Motion
- * (ROM) Tasks, specifically the knee ROM task.
+ * In iOS's ResearchKit, they included static methods for building OrderedTasks in the OrderedTask
+ * class. However, this class was created to encapsulate the creation of Range of Motion (ROM) Tasks,
+ * specifically the knee ROM task.
  */
 
 public class RangeOfMotionTaskFactory {
@@ -37,12 +37,13 @@ public class RangeOfMotionTaskFactory {
      *
      * @param context                can be app or activity, used for resources
      * @param identifier             The task identifier to use for this task, appropriate to the study.
-     * @param limbOption             The limb that is being measured.
+     * @param limbOption             The limb in which ROM is being measured.
      * @param intendedUseDescription A localized string describing the intended use of the data
      *                               collected. If the value of this parameter is `nil`, the default
      *                               localized text is displayed.
      * @param optionList             Options that affect the features of the predefined task.
-     * @return An active knee range of motion task that can be presented with an `ActiveTaskActivity` object.
+     * @return                       An active range of motion task that can be presented with an
+     *                               `ActiveTaskActivity` object.
      */
 
     public static OrderedTask kneeRangeOfMotionTask(
@@ -50,7 +51,8 @@ public class RangeOfMotionTaskFactory {
             String identifier,
             String intendedUseDescription,
             LimbTaskOptions.Limb limbOption,
-            List<TaskExcludeOption> optionList) {
+            List<TaskExcludeOption> optionList)
+    {
         List<Step> stepList = new ArrayList<>();
 
         // Obtain sensor frequency for Range of Motion Task recorders
@@ -109,14 +111,13 @@ public class RangeOfMotionTaskFactory {
                     String text = String.format(textFormat, LimbTaskOptions.Limb.RIGHT);
                     TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier, title, text);
                     step.setSpokenInstruction(text);
-                    //step.setSpokenInstruction(step.getSpokenInstruction());
                     stepList.add(step);
                 }
 
                 /* When the RangeOfMotionStep begins, the spoken instruction commences automatically and device motion recording
                 begins. Touching the screen ends the step and recording of device motion, and the next step begins */
 
-                {   //use this format (from Walking Task)?
+                {
                     List<RecorderConfig> recorderConfigList = new ArrayList<>();
 
                     if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
@@ -191,14 +192,13 @@ public class RangeOfMotionTaskFactory {
                     String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
                     TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier, title, text);
                     step.setSpokenInstruction(text);
-                    //step.setSpokenInstruction(step.getSpokenInstruction());
                     stepList.add(step);
                 }
 
                 /* When the RangeOfMotionStep begins, the spoken instruction commences automatically and device motion recording
                 begins. Touching the screen ends the step and recording of device motion, and the next step begins */
 
-                {   //use this format (from Walking Task)?
+                {
                     List<RecorderConfig> recorderConfigList = new ArrayList<>();
 
                     if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
