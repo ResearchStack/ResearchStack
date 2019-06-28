@@ -342,9 +342,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public float[] getDeviceAttitudeAsQuaternion() {
 
         float[] attitudeQuaternion = new float[4];
-        int type = sensorEvent.sensor.getType();
+        int sensorType = sensorEvent.sensor.getType();
 
-        if (type == Sensor.TYPE_ROTATION_VECTOR) {
+        if (sensorType == Sensor.TYPE_ROTATION_VECTOR) {
             SensorManager.getQuaternionFromVector(attitudeQuaternion, sensorEvent.values);
         }
         return attitudeQuaternion;
