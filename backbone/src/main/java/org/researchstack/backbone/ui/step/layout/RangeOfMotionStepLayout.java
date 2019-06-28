@@ -100,9 +100,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         super.validateStep(step);
     }
 
-
-    //TODO: Not sure what we need from this broadcast receiver section for device motion (attitude) recording
-
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
         super.registerRecorderBroadcastReceivers(appContext);
@@ -116,15 +113,13 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                     DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder =
                             DeviceMotionRecorder.getDeviceMotionUpdateHolder(intent);
                     if (dataHolder != null) {
-                        //if (RangeOfMotionStep.getNumberOfStepsPerLeg() > 0 &&
-                        //        (dataHolder.getStepCount() >= RangeOfMotionStep.getNumberOfStepsPerLeg()))
-                        //{
-                            // TODO
-                            // we may want to move this functionality to the DeviceMotionRecorder
-                            // and having that signal to RecorderService to stop,
-                            // since this StepLayout may be created/destroyed and miss this broadcast
-                            RangeOfMotionStepLayout.super.stop();
-                        //}
+                        float[] rotation_vector;
+                        if (dataHolder.getW() != 0) {
+                            rotation_vector = new float[] {dataHolder.getX(), dataHolder.getY(), dataHolder.getZ(), dataHolder.getW()};
+                        } else {
+                            rotation_vector = new float[] {dataHolder.getX(), dataHolder.getY(), dataHolder.getZ()};
+                        }
+                        processSensorUpdate(rotation_vector);
                     }
                 }
             }
@@ -213,7 +208,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to shift range of calculated angles from +/-180 degrees to -90 to +270 degrees,
+     * Method to shift default range of calculated angles from +/-180 degrees to -90 to +270 degrees,
      * to cover all achievable ranges of motion (which can exceed 180 degrees)
      **/
 
@@ -246,12 +241,22 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
             getDeviceAttitudeAsQuaternion();
-            angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForRoll(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
+            angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForRoll (
+                    quaternion[0],
+                    quaternion[1],
+                    quaternion[2],
+                    quaternion[3])
+            );
         }
         else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             getDeviceAttitudeAsQuaternion();
-            angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForPitch(quaternion[0], quaternion[1], quaternion[2], quaternion[3]));
+            angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForPitch (
+                    quaternion[0],
+                    quaternion[1],
+                    quaternion[2],
+                    quaternion[3])
+            );
         }
         return angle_in_degrees;
     }
@@ -263,13 +268,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * start positions, which could result in Euler angles exceeding the already shifted range)
      **/
 
-    //TODO: need to implement onSensorChanged to get sensor updates
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
+    public void processSensorUpdate(float[] rotation_vector) {
+        float[] deviceAttitude = new float[4];
+        SensorManager.getQuaternionFromVector(deviceAttitude, rotation_vector);
 
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
-        float[] deviceAttitude = getDeviceAttitudeAsQuaternion();
 
         updatedAttitude = MathUtils.multiplyQuaternions(deviceAttitude, inverseOfStart);  // this holds the attitude quaternion updates
     }
