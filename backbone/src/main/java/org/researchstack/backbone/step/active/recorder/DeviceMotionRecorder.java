@@ -7,7 +7,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.annotation.VisibleForTesting;
 
 import com.google.common.base.Strings;
@@ -207,7 +206,11 @@ public class DeviceMotionRecorder extends SensorRecorder {
         switch (sensorType) {
             case Sensor.TYPE_ACCELEROMETER:
                 recordAccelerometerEvent(sensorEvent, jsonObject);
-                sendDeviceMotionUpdateBroadcast(jsonObject.get(X_KEY).getAsFloat(), jsonObject.get(Y_KEY).getAsFloat(), jsonObject.get(Z_KEY).getAsFloat(), 0);
+                sendDeviceMotionUpdateBroadcast(
+                        jsonObject.get(X_KEY).getAsFloat(),
+                        jsonObject.get(Y_KEY).getAsFloat(),
+                        jsonObject.get(Z_KEY).getAsFloat(),
+                        0);
                 break;
             case Sensor.TYPE_GRAVITY:
                 recordGravityEvent(sensorEvent, jsonObject);
@@ -230,7 +233,11 @@ public class DeviceMotionRecorder extends SensorRecorder {
             case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
             case Sensor.TYPE_ROTATION_VECTOR:
                 recordRotationVector(sensorEvent, jsonObject);
-                sendDeviceMotionUpdateBroadcast(jsonObject.get(X_KEY).getAsFloat(), jsonObject.get(Y_KEY).getAsFloat(), jsonObject.get(Z_KEY).getAsFloat(), jsonObject.get(W_KEY).getAsFloat());
+                sendDeviceMotionUpdateBroadcast(
+                        jsonObject.get(X_KEY).getAsFloat(),
+                        jsonObject.get(Y_KEY).getAsFloat(),
+                        jsonObject.get(Z_KEY).getAsFloat(),
+                        jsonObject.get(W_KEY).getAsFloat());
                 break;
             default:
                 logger.warn("Unable to record sensor type: " + sensorType);
@@ -351,7 +358,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
     public void onAccuracyChanged(Sensor sensor, int i) {
         // no-op
     }
-    
+
     protected void sendDeviceMotionUpdateBroadcast(float x, float y, float z, float w) {
         DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder = new DeviceMotionRecorder.DeviceMotionUpdateHolder();
         dataHolder.setX(x);
