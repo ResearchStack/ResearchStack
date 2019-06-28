@@ -7,6 +7,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.VisibleForTesting;
 
 import com.google.common.base.Strings;
@@ -31,7 +32,7 @@ import java.util.Set;
  * The DeviceMotionRecorder incorporates a bunch of sensor fusion sensor readings
  * together to paint a broad picture of the device's orientation and movement over time.
  *
- * This class is an attempt at recording data in a similar way as iOS' device motion recorder.
+ * This class is an attempt at recording data in a similar way as iOS's device motion recorder.
  *
  * @see <a href="https://developer.android.com/reference/android/hardware/SensorEvent.html#values">
  *      Sensor values</a>
@@ -55,8 +56,10 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     public static final String ROTATION_REFERENCE_COORDINATE_KEY = "referenceCoordinate";
 
-    public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION  = "BroadcastDeviceMotionUpdate";
-    private static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY    = "DeviceMotionUpdate";
+    public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION  = "BroadcastDeviceMotionUpdate"; //added this
+    private static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY    = "DeviceMotionUpdate"; //added this
+
+    private JsonObject jsonObject;
 
 
     static {
@@ -204,6 +207,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         switch (sensorType) {
             case Sensor.TYPE_ACCELEROMETER:
                 recordAccelerometerEvent(sensorEvent, jsonObject);
+                sendDeviceMotionUpdateBroadcast(jsonObject.get(X_KEY).getAsFloat(), jsonObject.get(Y_KEY).getAsFloat(), jsonObject.get(Z_KEY).getAsFloat(), 0);
                 break;
             case Sensor.TYPE_GRAVITY:
                 recordGravityEvent(sensorEvent, jsonObject);
@@ -226,11 +230,13 @@ public class DeviceMotionRecorder extends SensorRecorder {
             case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
             case Sensor.TYPE_ROTATION_VECTOR:
                 recordRotationVector(sensorEvent, jsonObject);
+                sendDeviceMotionUpdateBroadcast(jsonObject.get(X_KEY).getAsFloat(), jsonObject.get(Y_KEY).getAsFloat(), jsonObject.get(Z_KEY).getAsFloat(), jsonObject.get(W_KEY).getAsFloat());
                 break;
             default:
                 logger.warn("Unable to record sensor type: " + sensorType);
         }
     }
+
     /**
      * @see <a href="https://source.android.com/devices/sensors/sensor-types#accelerometer">
      *     Sensor Types: Accelerometer</a>
@@ -265,9 +271,10 @@ public class DeviceMotionRecorder extends SensorRecorder {
         jsonObject.addProperty(Y_KEY, sensorEvent.values[1] / GRAVITY_SI_CONVERSION);
         jsonObject.addProperty(Z_KEY, sensorEvent.values[2] / GRAVITY_SI_CONVERSION);
     }
+
     /**
      * Sensor.TYPE_ROTATION_VECTOR relative to East-North-Up coordinate frame.
-     * Sensor.TYPE_GAME_ROTATION_VECTOR  no magnetometer
+     * Sensor.TYPE_GAME_ROTATION_VECTOR no magnetometer
      * Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR similar to a rotation vector sensor but using a
      *  magnetometer and no gyroscope
      *
@@ -344,11 +351,13 @@ public class DeviceMotionRecorder extends SensorRecorder {
     public void onAccuracyChanged(Sensor sensor, int i) {
         // no-op
     }
-
-    protected void sendDeviceMotionUpdateBroadcast(int stepCount, float totalDistance) {
+    
+    protected void sendDeviceMotionUpdateBroadcast(float x, float y, float z, float w) {
         DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder = new DeviceMotionRecorder.DeviceMotionUpdateHolder();
-        dataHolder.setStepCount(stepCount); // TODO: what to replace with?
-        dataHolder.setTotalDistance(totalDistance); // TODO: what to replace with?
+        dataHolder.setX(x);
+        dataHolder.setY(y);
+        dataHolder.setZ(z);
+        dataHolder.setW(w);
         Bundle bundle = new Bundle();
         bundle.putSerializable(BROADCAST_DEVICE_MOTION_UPDATE_KEY, dataHolder);
         Intent intent = new Intent(BROADCAST_DEVICE_MOTION_UPDATE_ACTION);
@@ -372,26 +381,37 @@ public class DeviceMotionRecorder extends SensorRecorder {
     }
 
     public static class DeviceMotionUpdateHolder implements Serializable {
-        private int stepCount; // TODO: delete/replace?
-        private float totalDistance; // TODO: delete/replace?
+        private float x;
+        private float y;
+        private float z;
+        private float w;
 
-
-        //TODO: not sure what variables we need to replace these below
-
-        public int getStepCount() {
-            return stepCount;
+        public float getX() {
+            return x;
+        }
+        public void setX(float x) {
+            this.x = x;
         }
 
-        public void setStepCount(int stepCount) {
-            this.stepCount = stepCount;
+        public float getY() {
+            return y;
+        }
+        public void setY(float y) {
+            this.y = y;
         }
 
-        public float getTotalDistance() {
-            return totalDistance;
+        public float getZ() {
+            return z;
+        }
+        public void setZ(float z) {
+            this.z = z;
         }
 
-        public void setTotalDistance(float totalDistance) {
-            this.totalDistance = totalDistance;
+        public float getW() {
+            return w;
+        }
+        public void setW(float w) {
+            this.w = w;
         }
     }
 }
