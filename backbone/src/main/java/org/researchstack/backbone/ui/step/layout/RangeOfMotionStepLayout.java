@@ -2,23 +2,18 @@ package org.researchstack.backbone.ui.step.layout;
 
 import java.lang.Math;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.gesture.Gesture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.MotionEvent;
-import android.view.GestureDetector;
-import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 
 import org.researchstack.backbone.R;
@@ -26,19 +21,16 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.RangeOfMotionResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
-import org.researchstack.backbone.step.active.RecorderService;
 import org.researchstack.backbone.step.active.recorder.AudioRecorder;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.utils.MathUtils;
 
-import static org.researchstack.backbone.task.factory.TaskFactory.Constants.DeviceMotionRecorderIdentifier;
-
 /**
  * Created by David Evans, Simon Hartley, Laurence Hurst, David Jimenez, 2019.
  *
  * The RangeOfMotionStepLayout is essentially the same as the ActiveStepLayout, except that it
- * calculates absolute device position in (Euler) angles: start, minimum, maximum, finish and range
+ * calculates absolute device position angles in degrees: start, minimum, maximum, finish and range
  *
  */
 
@@ -52,7 +44,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public float[] startAttitude = new float[4];
     public float[] finishAttitude = new float[4];
     public float[] updatedAttitude = new float[4];
-    public float[] rotationVector = new float[4];
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
@@ -117,7 +108,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
                         if (dataHolder.getW() != 0) {
                             rotation_vector = new float[] {dataHolder.getX(), dataHolder.getY(), dataHolder.getZ(), dataHolder.getW()};
-                        } else {
+                        }
+                        else {
                             rotation_vector = new float[] {dataHolder.getX(), dataHolder.getY(), dataHolder.getZ()};
                         }
                         processDeviceMotionUpdatesAsQuaternions(rotation_vector);
@@ -192,7 +184,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to obtain range-shifted Euler angles for  all attitude updates, relative to the
+     * Method to obtain range-shifted Euler angles for all attitude updates, relative to the
      * start position
      **/
 
@@ -240,7 +232,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         int orientation = getResources().getConfiguration().orientation;
 
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
             getDeviceAttitudeAsQuaternion(sensorEvent.values);
             angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForRoll (
                     quaternion[0],
@@ -250,7 +241,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
             );
         }
         else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-
             getDeviceAttitudeAsQuaternion(sensorEvent.values);
             angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForPitch (
                     quaternion[0],
@@ -271,12 +261,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     public void processDeviceMotionUpdatesAsQuaternions(float[] rotation_vector) {
 
-        //float[] deviceAttitude = new float[4];
-        //SensorManager.getQuaternionFromVector(deviceAttitude, rotation_vector);
         float[] deviceAttitude = getDeviceAttitudeAsQuaternion(rotation_vector);
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
 
-        updatedAttitude = MathUtils.multiplyQuaternions(deviceAttitude, inverseOfStart);  // this holds the attitude quaternion updates
+        updatedAttitude = MathUtils.multiplyQuaternions(deviceAttitude, inverseOfStart);  // this holds the relative device attitude as a quaternion
     }
 
 
@@ -338,7 +326,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to obtain the device's attitude as a quaternion from the rotation vector, when available
+     * Method to obtain the device's attitude as a quaternion from the rotation vector sensor, when
+     * it is available
      **/
 
     public float[] getDeviceAttitudeAsQuaternion(float[] rotation_vector) {
