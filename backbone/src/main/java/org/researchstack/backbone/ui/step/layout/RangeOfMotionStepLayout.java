@@ -29,7 +29,6 @@ import org.researchstack.backbone.step.active.RangeOfMotionStep;
 import org.researchstack.backbone.step.active.RecorderService;
 import org.researchstack.backbone.step.active.recorder.AudioRecorder;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
-import org.researchstack.backbone.task.factory.RangeOfMotionTaskFactory;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.utils.MathUtils;
 
@@ -46,7 +45,6 @@ import static org.researchstack.backbone.task.factory.TaskFactory.Constants.Devi
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     protected SensorEvent sensorEvent;
-    private SensorEventListener sensorEventListener;
     protected RelativeLayout layout;
     private RangeOfMotionStep rangeOfMotionStep;
     private BroadcastReceiver deviceMotionReceiver;
@@ -54,6 +52,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public float[] startAttitude = new float[4];
     public float[] finishAttitude = new float[4];
     public float[] updatedAttitude = new float[4];
+    public float[] rotationVector = new float[4];
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
@@ -112,14 +111,16 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 if (DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION.equals(intent.getAction())) {
                     DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder =
                             DeviceMotionRecorder.getDeviceMotionUpdateHolder(intent);
+
                     if (dataHolder != null) {
                         float[] rotation_vector;
+
                         if (dataHolder.getW() != 0) {
                             rotation_vector = new float[] {dataHolder.getX(), dataHolder.getY(), dataHolder.getZ(), dataHolder.getW()};
                         } else {
                             rotation_vector = new float[] {dataHolder.getX(), dataHolder.getY(), dataHolder.getZ()};
                         }
-                        processSensorUpdate(rotation_vector);
+                        processDeviceMotionUpdatesAsQuaternions(rotation_vector);
                     }
                 }
             }
@@ -240,7 +241,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
-            getDeviceAttitudeAsQuaternion();
+            getDeviceAttitudeAsQuaternion(sensorEvent.values);
             angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForRoll (
                     quaternion[0],
                     quaternion[1],
@@ -250,7 +251,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         }
         else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 
-            getDeviceAttitudeAsQuaternion();
+            getDeviceAttitudeAsQuaternion(sensorEvent.values);
             angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForPitch (
                     quaternion[0],
                     quaternion[1],
@@ -262,16 +263,17 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     /**
-     * Method to multiply every update of the attitude quaternion by the inverse of the quaternion
+     * Method to multiply updates of the attitude quaternion by the inverse of the quaternion
      * that represents the start position, to obtain the updated device attitude relative to the
      * start position (this relativity is necessary if the task is being performed in different
-     * start positions, which could result in Euler angles exceeding the already shifted range)
+     * start positions, which could result in angles that exceed the already shifted range)
      **/
 
-    public void processSensorUpdate(float[] rotation_vector) {
-        float[] deviceAttitude = new float[4];
-        SensorManager.getQuaternionFromVector(deviceAttitude, rotation_vector);
+    public void processDeviceMotionUpdatesAsQuaternions(float[] rotation_vector) {
 
+        //float[] deviceAttitude = new float[4];
+        //SensorManager.getQuaternionFromVector(deviceAttitude, rotation_vector);
+        float[] deviceAttitude = getDeviceAttitudeAsQuaternion(rotation_vector);
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
 
         updatedAttitude = MathUtils.multiplyQuaternions(deviceAttitude, inverseOfStart);  // this holds the attitude quaternion updates
@@ -300,7 +302,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public void createActiveStepLayout() {
         super.createActiveStepLayout();
-        startAttitude = getDeviceAttitudeAsQuaternion(); // this holds the start attitude quaternion
+        startAttitude = getDeviceAttitudeAsQuaternion(sensorEvent.values); // this holds the start attitude quaternion
     }
 
 
@@ -329,23 +331,23 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public boolean performClick() {
         super.performClick();
 
-        finishAttitude = getDeviceAttitudeAsQuaternion(); // this holds the finish attitude quaternion
+        finishAttitude = getDeviceAttitudeAsQuaternion(sensorEvent.values); // this holds the finish attitude quaternion
 
         return true;
     }
 
 
     /**
-     * Method to obtain the device's attitude as a quaternion from the rotation vector
+     * Method to obtain the device's attitude as a quaternion from the rotation vector, when available
      **/
 
-    public float[] getDeviceAttitudeAsQuaternion() {
+    public float[] getDeviceAttitudeAsQuaternion(float[] rotation_vector) {
 
         float[] attitudeQuaternion = new float[4];
         int sensorType = sensorEvent.sensor.getType();
 
         if (sensorType == Sensor.TYPE_ROTATION_VECTOR) {
-            SensorManager.getQuaternionFromVector(attitudeQuaternion, sensorEvent.values);
+            SensorManager.getQuaternionFromVector(attitudeQuaternion, rotation_vector);
         }
         return attitudeQuaternion;
     }
