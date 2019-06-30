@@ -307,6 +307,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
             jsonObject.addProperty(ROTATION_REFERENCE_COORDINATE_KEY, "East-Up-North");
         }
 
+        //The three elements of the rotation vector are equal to the last three components of a unit quaternion:
         // x = rot_axis.y * sin(theta/2)
         jsonObject.addProperty(X_KEY, sensorEvent.values[0]);
         // y = rot_axis.y * sin(theta/2)
@@ -324,7 +325,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
                 jsonObject.addProperty(ACCURACY_KEY, sensorEvent.values[4]);
             }
         } else if (sensorEvent.values.length > 3) {
-            // this value was optional before SDK Level 18
+            // this value was optional before SDK Level 18, and is equal to the first component of a unit quaternion:
             // w = cos(theta/2)
             jsonObject.addProperty(W_KEY, sensorEvent.values[3]);
         }
