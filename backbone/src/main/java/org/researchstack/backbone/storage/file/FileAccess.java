@@ -45,13 +45,14 @@ public interface FileAccess {
      *
      * @param context Can be Application context, but we'll be careful not to store, so don't worry too much.
      * @param path    Path relative to the implementation's root store.  Must start with '/'.  No relative paths.
+     * @return The read Byte array data.
      */
     byte[] readData(Context context, String path);
 
     /**
-     * @param context
-     * @param fromPath
-     * @param toPath
+     * @param context Can be Application context, but we'll be careful not to store, so don't worry too much.
+     * @param fromPath The current path relative to the implementation's root store. Must start with '/'.  No relative paths.
+     * @param toPath The new path relative to the implementation's root store. Must start with '/'.  No relative paths.
      */
     void moveData(Context context, String fromPath, String toPath);
 

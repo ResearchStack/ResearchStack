@@ -39,14 +39,14 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 
 /**
- * Displays a video file.  The VideoView class can load images from various sources (such as
+ * <p>Displays a video file.  The VideoView class can load images from various sources (such as
  * resources or content providers), takes care of computing its measurement from the video so that
  * it can be used in any layout manager, and provides various display options such as scaling and
- * tinting.<p>
- * <p>
+ * tinting.</p>
+ *
  * <em>Note: VideoView does not retain its full state when going into the background.</em>  In
  * particular, it does not restore the current play state, play position, selected tracks, or any
- * subtitle tracks added via {@link #addSubtitleSource addSubtitleSource()}.  Applications should
+ * subtitle tracks added via {@link VideoView#addSubtitleSource addSubtitleSource()}.  Applications should
  * save and restore these on their own in {@link android.app.Activity#onSaveInstanceState} and
  * {@link android.app.Activity#onRestoreInstanceState}.<p> Also note that the audio session id (from
  * {@link #getAudioSessionId}) may change from its previously returned value when the VideoView is
@@ -261,7 +261,8 @@ public class AssetVideoView extends SurfaceView implements MediaController.Media
 
 
     public AssetVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        initVideoView();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

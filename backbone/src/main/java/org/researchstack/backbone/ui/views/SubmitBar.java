@@ -18,8 +18,12 @@ import org.researchstack.backbone.utils.ThemeUtils;
 import rx.functions.Action1;
 
 public class SubmitBar extends LinearLayout {
+
+    private static final float DEFAULT_DISABLED_OPACITY = 0.4f;
+
     private TextView positiveView;
     private TextView negativeView;
+    private float disabledOpacity = DEFAULT_DISABLED_OPACITY;
 
     public SubmitBar(Context context) {
         this(context, null);
@@ -54,6 +58,10 @@ public class SubmitBar extends LinearLayout {
         a.recycle();
     }
 
+    public void setDisabledOpacity(float disabledOpacity) {
+        this.disabledOpacity = disabledOpacity;
+    }
+
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Positive Action Helper Methods
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -72,6 +80,11 @@ public class SubmitBar extends LinearLayout {
 
     public View getPositiveActionView() {
         return positiveView;
+    }
+
+    public void setPositiveActionViewEnabled(boolean enabled) {
+        positiveView.setEnabled(enabled);
+        positiveView.setAlpha(enabled ? 1.0f : disabledOpacity);
     }
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -95,4 +108,8 @@ public class SubmitBar extends LinearLayout {
         return negativeView;
     }
 
+    public void setNegativeActionViewEnabled(boolean enabled) {
+        negativeView.setEnabled(enabled);
+        negativeView.setAlpha(enabled ? 1.0f : disabledOpacity);
+    }
 }

@@ -1,0 +1,21 @@
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/rsb_check_mark_size"
+    android:height="@dimen/rsb_check_mark_size"
+    android:viewportHeight="24.0"
+    android:viewportWidth="24.0">
+    <group android:name="background">
+        <path
+            android:name="circle"
+            android:fillColor="@color/rsb_check_mark_background"
+            android:pathData="M12,12m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0" />
+    </group>
+    <group android:name="check">
+        <path
+            android:name="tick"
+            android:pathData="M7,12 l3,3 l7,-6"
+            android:strokeColor="@color/rsb_white"
+            android:strokeWidth="1"
+            android:strokeLineCap="round"/>
+    </group>
+</vector>

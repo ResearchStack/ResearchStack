@@ -1,0 +1,43 @@
+[
+   {
+   "identifier"       : "inclusionCriteria",
+   "type"             : "toggle",
+   "skipIdentifier"   : "eligibleInstruction",
+   "skipIfPassed"     : true,
+   "items" : [
+              {
+              "identifier"        : "age",
+              "text"              : "Are you 18 or older?",
+              "type"              : "boolean",
+              "expectedAnswer"    : true
+              },
+              {
+              "identifier"        : "residence",
+              "text"              : "Do you live in the United States of America?",
+              "type"              : "boolean",
+              "expectedAnswer"    : true
+              },
+              {
+              "identifier"        : "language",
+              "text"              : "Are you comfortable reading and writing on your iPhone in English?",
+              "type"              : "boolean",
+              "expectedAnswer"    : true
+              }
+            ]
+   },
+   {
+   "identifier"       : "ineligibleInstruction",
+   "type"             : "instruction",
+   "text"             : "Unfortunately, you are ineligible to join this study.",
+   "detailText"       : "However, you can help spread the word and share the app with others.",
+   "iconImage"        : "logo",
+   "nextIdentifier"   : "exit"
+   },
+   {
+   "identifier"       : "eligibleInstruction",
+   "type"             : "instruction",
+   "text"             : "You are eligible to join the study.",
+   "detailText"       : "Tap the button below to begin the consent process",
+   "iconImage"        : "logo"
+   }
+]

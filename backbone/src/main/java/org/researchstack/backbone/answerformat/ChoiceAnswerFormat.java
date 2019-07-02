@@ -9,7 +9,22 @@ import org.researchstack.backbone.model.Choice;
  */
 public class ChoiceAnswerFormat extends AnswerFormat {
     private AnswerFormat.ChoiceAnswerStyle answerStyle;
+    public AnswerFormat.ChoiceAnswerStyle getAnswerStyle() {
+        return answerStyle;
+    }
+    public void setAnswerStyle(AnswerFormat.ChoiceAnswerStyle style) {
+        answerStyle = style;
+    }
     private Choice[] choices;
+    public void setChoices(Choice[] choices) {
+        this.choices = choices;
+    }
+
+    /* Default constructor needed for serilization/deserialization of object */
+    public ChoiceAnswerFormat()
+    {
+        super();
+    }
 
     /**
      * Creates an answer format with the specified answerStyle(single or multichoice) and collection

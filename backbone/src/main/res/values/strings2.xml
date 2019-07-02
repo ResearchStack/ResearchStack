@@ -1,0 +1,116 @@
+<resources>
+
+    <!-- Study Overview -->
+    <string name="rsb_sign_in">Sign In</string>
+    <string name="rsb_send_email">Send Email</string>
+    <string name="rsb_study_overview_email_subject">%1$s Consent Form</string>
+    <string name="rsb_join_study">Join The Study</string>
+    <string name="rsb_read_consent_doc">Read consent document</string>
+    <string name="rsb_email_consent_doc">Email consent Document</string>
+    <string name="rsb_already_participating">Already Participating?</string>
+    <string name="rsb_skip_signup">Skip Signup</string>
+
+    <!-- Eligibility -->
+    <string name="rsb_eligibility">Eligibility</string>
+    <string name="rsb_ineligible">Ineligible</string>
+    <string name="rsb_eligibility_you_are_eligible">You are eligible to join the study!</string>
+    <string name="rsb_eligibility_tap_below">Touch “NEXT” below to get started with the consent process.
+    </string>
+    <string name="rsb_eligibility_you_are_ineligible">Unfortunately, you are ineligible to join this study.
+    </string>
+
+    <!-- Consent -->
+    <string name="rsb_participant">Participant</string>
+
+    <!-- Quiz -->
+    <string name="rsb_quiz_question_disclamer">Please answer a few questions to ensure that you
+        understand the consent form.
+    </string>
+    <string name="rsb_quiz_evaluation_correct">That\'s Correct!</string>
+    <string name="rsb_quiz_evaluation_incorrect">That\'s Incorrect!</string>
+    <string name="rsb_quiz_question_explanation_correct">You are &lt;b>&lt;i>correct.&lt;/i>&lt;/b>
+        %1$s
+    </string>
+    <string name="rsb_quiz_question_explanation_incorrect">The correct answer is &lt;b>&lt;i>%1$s.&lt;/i>&lt;/b>
+        %2$s
+    </string>
+
+    <!-- Sign In / Up -->
+    <string name="rsb_sign_up">Sign Up</string>
+    <string name="rsb_thank_you">Thank you</string>
+    <string name="rsb_email_hint">name@example.com</string>
+    <string name="rsb_study_registration_password">Create your study login password</string>
+    <string name="rsb_study_registration_password_hint">Enter password</string>
+    <string name="rsb_study_registration_username_hint">Enter username or email</string>
+    <string name="rsb_username">Username</string>
+    <string name="rsb_username_hint">username_123</string>
+
+    <!-- Main Activity Toast Hints -->
+    <string name="rsb_activities">Activities</string>
+    <string name="rsb_dashboard">Dashboard</string>
+    <string name="rsb_learn">Learn</string>
+    <string name="rsb_settings">Settings</string>
+
+    <!-- Settings Fragment -->
+    <string name="rsb_settings_profile">Profile</string>
+    <string name="rsb_settings_profile_name">Name</string>
+    <string name="rsb_settings_profile_birthdate">Birthdate</string>
+    <string name="rsb_settings_reminders">Reminders</string>
+    <string name="rsb_settings_reminders_title">Task reminders</string>
+    <string name="rsb_settings_reminders_summary">You’ll be reminded to complete tasks</string>
+    <string name="rsb_settings_privacy">Privacy</string>
+    <string name="rsb_settings_privacy_sharing_options">Sharing Options</string>
+    <string name="rsb_settings_privacy_sharing_options_ph">Share with …</string>
+    <string name="rsb_settings_privacy_review_consent">Review consent document</string>
+    <string name="rsb_settings_privacy_policy">Privacy policy</string>
+    <string name="rsb_settings_security">Security</string>
+    <string name="rsb_settings_security_auto_lock">Auto-Lock on exit</string>
+    <string name="rsb_settings_security_auto_lock_summary">App will automatically lock</string>
+    <string name="rsb_settings_security_auto_lock_time">Auto-Lock time</string>
+    <string name="rsb_settings_security_auto_lock_time_summary">The time it takes for auto-lock to
+        trigger
+    </string>
+    <string name="rsb_settings_security_auto_lock_time_default">1</string>
+    <string name="rsb_settings_security_change_passcode">Change passcode</string>
+    <string name="rsb_settings_general">General</string>
+    <string name="rsb_settings_general_software_notices">Software Notices</string>
+    <string name="rsb_settings_general_leave_study">Leave Study</string>
+    <string name="rsb_settings_general_join_study">Join Study</string>
+    <string name="rsb_settings_version">Build number %1$s (%2$d)</string>
+    <string name="rsb_settings_version_unknown">Unknown version</string>
+    <string name="rsb_settings_dialog_leave_study">Are you sure you want to leave the study? This
+        action cannot be undone and you will need to provide consent in order to re-enroll.
+    </string>
+
+    <!-- Steps -->
+    <string name="rsb_btn_true">True</string>
+    <string name="rsb_btn_false">False</string>
+
+    <!-- Errors / Results -->
+    <string name="rsb_network_result_consent_withdraw_success">Consent Withdrawn</string>
+    <string name="rsb_network_error_consent_withdraw_failed">Failed to Withdraw</string>
+    <string name="rsb_network_error_consent">Please review the consent documentation to continue participating in the study.</string>
+    <string name="rsb_network_error_consent_action">GO</string>
+    <string name="rsb_network_error_sign_in">Your account has been signed out, please sign in to continue</string>
+    <string name="rsb_network_error_sign_in_action">SIGN IN</string>
+    <string name="rsb_network_error_upgrade_app">Please upgrade the application to restore functionality</string>
+    <string name="rsb_network_error_upgrade_app_action">UPGRADE</string>
+    <string name="rsb_network_error_boom">Something happened with network, try again later</string>
+    <string name="rsb_network_error_unknown">Whoops! looks like something bad happened when talking
+        to the server, try again later!
+    </string>
+    <string name="rsb_local_error_passcode_failed">Changing Passcode Failed</string>
+    <string name="rsb_local_result_passcode_changed">Passcode Changed</string>
+    <string name="rsb_local_error_load_task">Unable to load the selected task</string>
+    <string name="rsb_error_select_answer">Please select an answer</string>
+
+    <!-- Activities -->
+    <string name="rsb_activities_today_header_title">Today, %1$s, %2$s %3$s</string>
+    <string name="rsb_activities_today_header_message">To start an activity, select from the list below.</string>
+    <string name="rsb_activities_yesterday_header_title">Yesterday</string>
+    <string name="rsb_activities_yesterday_header_message">Below are your incomplete tasks from yesterday.\nThese are for reference only.</string>
+    <string name="rsb_activities_optional_header_title">Keep Going!</string>
+    <string name="rsb_activities_optional_header_message">Try one of these activities to enhance your experience in your study.</string>
+
+    <string name="rsb_activities_mood_survey_intended_use">Tell us how you feel. We\'ll ask you to rate your mental clarity, mood, and pain level today as well as how well you slept and how much exercise you have done in the last day. You will also have an opportunity to track any activity or thought that you choose yourself.</string>
+</resources>

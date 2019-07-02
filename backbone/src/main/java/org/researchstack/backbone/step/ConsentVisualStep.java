@@ -12,11 +12,27 @@ import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
 public class ConsentVisualStep extends Step {
     private ConsentSection section;
 
+    /**
+     * The index of the section within all the visual consent sections
+     */
+    private int sectionIndex;
+    /**
+     * The total count of the visual consent sections
+     */
+    private int sectionCount;
+
     @Deprecated
     private String nextButtonString;
 
-    public ConsentVisualStep(String identifier) {
+    /* Default constructor needed for serilization/deserialization of object */
+    protected ConsentVisualStep() {
+        super();
+    }
+
+    public ConsentVisualStep(String identifier, int index, int count) {
         super(identifier);
+        setSectionIndex(index);
+        setSectionCount(count);
     }
 
     @Override
@@ -57,5 +73,21 @@ public class ConsentVisualStep extends Step {
     @Deprecated
     public void setNextButtonString(String nextButtonString) {
         this.nextButtonString = nextButtonString;
+    }
+
+    public int getSectionIndex() {
+        return sectionIndex;
+    }
+
+    public void setSectionIndex(int sectionIndex) {
+        this.sectionIndex = sectionIndex;
+    }
+
+    public int getSectionCount() {
+        return sectionCount;
+    }
+
+    public void setSectionCount(int sectionCount) {
+        this.sectionCount = sectionCount;
     }
 }

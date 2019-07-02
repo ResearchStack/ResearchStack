@@ -14,6 +14,7 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.SignatureCallbacks;

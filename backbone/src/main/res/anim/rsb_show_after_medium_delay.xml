@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+    android:ordering="sequentially">
+
+    <objectAnimator android:propertyName="fillAlpha"
+        android:valueFrom="0.0"
+        android:valueTo="0.0"
+        android:valueType="floatType"
+        android:duration="1" />
+    <objectAnimator android:propertyName="strokeAlpha"
+        android:valueFrom="0.0"
+        android:valueTo="0.0"
+        android:valueType="floatType"
+        android:duration="1" />
+
+    <objectAnimator android:propertyName="fillAlpha"
+        android:valueFrom="0.0"
+        android:valueTo="0.0"
+        android:valueType="floatType"
+        android:duration="@integer/rsb_config_tapping_duration_half" />
+
+    <objectAnimator android:propertyName="fillAlpha"
+        android:valueFrom="0.0"
+        android:valueTo="1.0"
+        android:valueType="floatType"
+        android:duration="1" />
+    <objectAnimator android:propertyName="strokeAlpha"
+        android:valueFrom="0.0"
+        android:valueTo="1.0"
+        android:valueType="floatType"
+        android:duration="1" />
+
+    <objectAnimator android:propertyName="fillAlpha"
+        android:valueFrom="1.0"
+        android:valueTo="1.0"
+        android:valueType="floatType"
+        android:duration="@integer/rsb_config_tapping_duration_half" />
+
+</set>

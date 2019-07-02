@@ -1,7 +1,13 @@
 package org.researchstack.backbone.step;
 
 import org.researchstack.backbone.answerformat.AnswerFormat;
+import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The {@link QuestionStep} class is a concrete subclass of {@link Step} that represents a step in
@@ -24,6 +30,11 @@ public class QuestionStep extends Step {
     private AnswerFormat answerFormat;
 
     private String placeholder;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    public QuestionStep() {
+        super();
+    }
 
     /**
      * Returns a new question step that includes the specified identifier.
@@ -87,7 +98,7 @@ public class QuestionStep extends Step {
      *
      * @return the StepBody implementation for this question step.
      */
-    public Class<?> getStepBodyClass() {
+    public Class<? extends StepBody> getStepBodyClass() {
         return answerFormat.getQuestionType().getStepBodyClass();
     }
 

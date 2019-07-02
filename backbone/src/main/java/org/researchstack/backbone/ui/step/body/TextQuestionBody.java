@@ -1,7 +1,10 @@
 package org.researchstack.backbone.ui.step.body;
 
 import android.content.res.Resources;
+import android.support.annotation.DimenRes;
+import android.support.annotation.LayoutRes;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
@@ -23,32 +27,47 @@ public class TextQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private QuestionStep step;
-    private StepResult<String> result;
+    protected QuestionStep step;
+    protected StepResult<String> result;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private EditText editText;
+    protected EditText editText;
+    public EditText getEditText() {
+        return editText;
+    }
 
     public TextQuestionBody(Step step, StepResult result) {
         this.step = (QuestionStep) step;
         this.result = result == null ? new StepResult<>(step) : result;
     }
 
+    public @LayoutRes int getBodyViewRes() {
+        return R.layout.rsb_item_edit_text_compact;
+    }
+
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
-        View body = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
+        View body = inflater.inflate(getBodyViewRes(), parent, false);
+
+        // Format EditText from TextAnswerFormat
+        TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
 
         editText = (EditText) body.findViewById(R.id.value);
         if (step.getPlaceholder() != null) {
             editText.setHint(step.getPlaceholder());
-        } else {
-            editText.setHint(R.string.rsb_hint_step_body_text);
+        } else if (format.getHintText() != null) {
+            editText.setHint(format.getHintText());
+        }
+        editText.setEnabled(true);
+        if (format.isDisabled()) {
+            editText.setEnabled(false);
         }
 
         TextView title = (TextView) body.findViewById(R.id.label);
 
+        // TODO: naming is confusing... compact means less, but this adds a view -MDP
         if (viewType == VIEW_TYPE_COMPACT) {
             title.setText(step.getTitle());
         } else {
@@ -66,10 +85,14 @@ public class TextQuestionBody implements StepBody {
             result.setResult(text.toString());
         });
 
-        // Format EditText from TextAnswerFormat
-        TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
-
-        editText.setSingleLine(!format.isMultipleLines());
+        if(format.isMultipleLines()) {
+            editText.setSingleLine(false);
+            editText.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            editText.setHorizontallyScrolling(false);
+            editText.setLines(5);
+        } else {
+            editText.setSingleLine(false);
+        }
 
         if (format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH) {
             InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(format.getMaximumLength());
@@ -77,16 +100,10 @@ public class TextQuestionBody implements StepBody {
             editText.setFilters(filters);
         }
 
-        Resources res = parent.getResources();
-        LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
-        body.setLayoutParams(layoutParams);
+        editText.setInputType(format.getInputType());
 
         return body;
     }
-
 
     @Override
     public StepResult getStepResult(boolean skipped) {

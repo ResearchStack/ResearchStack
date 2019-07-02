@@ -1,0 +1,9 @@
+{
+  "identifier": "birthdate_month",
+  "type": "textfield",
+  "title": "Month",
+  "placeholderText": "",
+  "validationRegex": "^[0-9]*$",
+  "inputType": 2,
+  "maxLength": 3
+}

@@ -1,8 +1,11 @@
 package org.researchstack.backbone.answerformat;
 
+import android.text.InputType;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
 import org.researchstack.backbone.utils.TextUtils;
+import org.w3c.dom.Text;
 
 /**
  * This class defines the attributes for an integer answer format that participants enter using a
@@ -12,9 +15,21 @@ import org.researchstack.backbone.utils.TextUtils;
  * the {@link org.researchstack.backbone.ui.step.body.IntegerQuestionBody} does not allow navigation
  * until the participant provides a value that is within the valid range.
  */
-public class IntegerAnswerFormat extends AnswerFormat {
+public class IntegerAnswerFormat extends TextAnswerFormat {
     private int maxValue;
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+    }
     private int minValue;
+    public void setMinValue(int minValue) {
+        this.minValue = minValue;
+    }
+
+    /* Default constructor needed for serilization/deserialization of object */
+    public IntegerAnswerFormat() {
+        super();
+        commonInit();
+    }
 
     /**
      * Creates an integer answer format with the specified min and max values.
@@ -23,8 +38,13 @@ public class IntegerAnswerFormat extends AnswerFormat {
      * @param maxValue maximum allowed value, 0 if no max
      */
     public IntegerAnswerFormat(int minValue, int maxValue) {
+        this();
         this.minValue = minValue;
         this.maxValue = maxValue;
+    }
+
+    private void commonInit() {
+        setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 
     @Override
@@ -33,12 +53,12 @@ public class IntegerAnswerFormat extends AnswerFormat {
     }
 
     /**
-     * Returns the maximum allowed value for the question, 0 if no max
+     * Returns the maximum allowed value for the question, Integer.MAX_VALUE if maxValue is 0
      *
-     * @return the max value, 0 if no max
+     * @return the max value, Integer.MAX_VALUE if maxValue is 0
      */
     public int getMaxValue() {
-        return maxValue;
+        return (maxValue == 0) ? Integer.MAX_VALUE : maxValue;
     }
 
     /**

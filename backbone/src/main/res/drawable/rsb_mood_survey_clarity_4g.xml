@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="90dp"
+        android:height="76dp"
+        android:viewportWidth="90.0"
+        android:viewportHeight="76.0">
+    <path
+        android:pathData="M44.18,32.66C44.18,35.79 41.64,38.32 38.5,38.32C35.37,38.32 32.83,35.79 32.83,32.66C32.83,29.54 35.37,27 38.5,27C41.64,27 44.18,29.54 44.18,32.66"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M61.12,32.66C61.12,35.79 58.58,38.32 55.44,38.32C52.31,38.32 49.77,35.79 49.77,32.66C49.77,29.54 52.31,27 55.44,27C58.58,27 61.12,29.54 61.12,32.66"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M46.97,6.23C29.26,6.23 14.85,20.64 14.85,38.35C14.85,56.06 29.26,70.47 46.97,70.47C64.69,70.47 79.09,56.06 79.09,38.35C79.09,20.64 64.69,6.23 46.97,6.23M46.97,73.35C27.67,73.35 11.97,57.65 11.97,38.35C11.97,19.05 27.67,3.35 46.97,3.35C66.27,3.35 81.97,19.05 81.97,38.35C81.97,57.65 66.27,73.35 46.97,73.35"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M28.71,27.97C28.37,27.97 28.03,27.85 27.75,27.61C27.16,27.08 27.1,26.18 27.63,25.58L34.69,17.61C35.21,17.02 36.12,16.96 36.71,17.49C37.31,18.02 37.37,18.93 36.84,19.52L29.78,27.49C29.5,27.81 29.1,27.97 28.71,27.97"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M58.45,21.3L49.92,21.3C49.13,21.3 48.48,20.66 48.48,19.86C48.48,19.07 49.13,18.42 49.92,18.42L58.45,18.42C59.24,18.42 59.89,19.07 59.89,19.86C59.89,20.66 59.24,21.3 58.45,21.3"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+    <path
+        android:pathData="M46.04,53.39C45.64,53.39 45.23,53.26 44.89,53C44.04,52.36 43.88,51.15 44.52,50.31C46.64,47.52 52.71,43.05 60.55,46.07C61.54,46.45 62.03,47.55 61.65,48.55C61.27,49.54 60.16,50.02 59.17,49.64C52.04,46.9 47.62,52.57 47.57,52.63C47.2,53.13 46.63,53.39 46.04,53.39"
+        android:fillAlpha="1"
+        android:fillColor="@color/rsb_mood_survey_normal_image_color"/>
+</vector>

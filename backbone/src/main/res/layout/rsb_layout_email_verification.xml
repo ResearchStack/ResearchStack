@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rsb_email_verification_container">
+
+    <TextView
+        android:id="@+id/rsb_step_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/rsb_margin_left"
+        android:layout_marginRight="@dimen/rsb_margin_right"
+        android:textSize="20sp"
+        android:textColor="?attr/colorAccent"
+        android:text="@string/rsb_confirm_title" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/rsb_email_verification_body"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rsb_step_title"
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="@dimen/rsb_margin_left"
+        android:layout_marginRight="@dimen/rsb_margin_right"
+        tools:text="@string/lorem_medium" />
+
+    <android.support.v7.widget.AppCompatTextView
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:id="@+id/rsb_email_verification_wrong_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:textColor="?attr/colorAccent"
+        android:layout_below="@id/rsb_email_verification_body"
+        android:paddingLeft="0dp"
+        android:layout_marginTop="@dimen/rsb_padding_medium"
+        android:layout_marginLeft="@dimen/rsb_margin_left"
+        android:layout_marginRight="@dimen/rsb_margin_left"
+        android:gravity="left|center_vertical"
+        android:text="@string/rsb_confirm_diff" />
+
+    <android.support.v4.widget.Space
+        android:id="@+id/rsb_email_verify_reenter_password_space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rsb_email_verification_wrong_email"
+        android:layout_marginTop="@dimen/rsb_padding_medium"
+        android:layout_marginLeft="@dimen/rsb_margin_left"
+        android:layout_marginRight="@dimen/rsb_margin_right" />
+
+</RelativeLayout>
