@@ -108,11 +108,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
                         if (dataHolder.getW() != 0) {
                             rotation_vector = new float[] {dataHolder.getX(), dataHolder.getY(), dataHolder.getZ(), dataHolder.getW()};
-                        }
-                        else {
+                        } else {
                             rotation_vector = new float[] {dataHolder.getX(), dataHolder.getY(), dataHolder.getZ()};
                         }
-                        processDeviceMotionUpdatesAsQuaternions(rotation_vector);
+                        getDeviceOrientationRelativeToStart(rotation_vector);
                     }
                 }
             }
@@ -213,8 +212,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         if (targetAngleRange) {
             shifted_angle = Math.abs(original_angle) - 360;
             return shifted_angle;
-        }
-        else {
+        } else {
             shifted_angle = original_angle;
             return shifted_angle;
         }
@@ -259,7 +257,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * start positions, which could result in angles that exceed the already shifted range)
      **/
 
-    public void processDeviceMotionUpdatesAsQuaternions(float[] rotation_vector) {
+    public void getDeviceOrientationRelativeToStart(float[] rotation_vector) {
 
         float[] deviceAttitude = getDeviceAttitudeAsQuaternion(rotation_vector);
         float[] inverseOfStart = getInverseOfStartAttitudeQuaternion();
