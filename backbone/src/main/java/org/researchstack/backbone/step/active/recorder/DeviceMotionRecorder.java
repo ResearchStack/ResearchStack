@@ -394,9 +394,8 @@ public class DeviceMotionRecorder extends SensorRecorder {
         private float z;
         private float w;
 
-        public float getX() {
-            return x;
-        }
+        public float getX() { return x; }
+
         public void setX(float x) {
             this.x = x;
         }
@@ -404,6 +403,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         public float getY() {
             return y;
         }
+
         public void setY(float y) {
             this.y = y;
         }
@@ -411,6 +411,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         public float getZ() {
             return z;
         }
+
         public void setZ(float z) {
             this.z = z;
         }
@@ -418,6 +419,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         public float getW() {
             return w;
         }
+
         public void setW(float w) {
             this.w = w;
         }
