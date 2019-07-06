@@ -21,12 +21,12 @@ public class RangeOfMotionResult extends Result {
     private double minimum;
     
     /**
-    The angle (degrees) from the device reference position at the maximum angle (e.g. when the knee is extended).
+    The angle (degrees) from the device reference position at the maximum angle (e.g. when the knee is most extended during the task).
      */
     private double maximum;
     
     /**
-     The angle (degrees) passed through from the start position to the maximum angle (e.g. from when the knee is flexed to when it is extended).
+     The angle (degrees) passed through from the minimum angle to the maximum angle (e.g. from when the knee is most flexed to when it is most extended).
      */
     private double range;
 
@@ -48,9 +48,7 @@ public class RangeOfMotionResult extends Result {
         this.start = start;
     }
 
-    public double getFinish() {
-        return finish;
-    }
+    public double getFinish() { return finish; }
 
     public void setFinish(double finish) {
         this.finish = finish;
@@ -60,9 +58,7 @@ public class RangeOfMotionResult extends Result {
         return minimum;
     }
 
-    public void setMinimum(double minimum) {
-        this.minimum = minimum;
-    }
+    public void setMinimum(double minimum) { this.minimum = minimum; }
 
     public double getMaximum() {
         return maximum;
@@ -76,7 +72,5 @@ public class RangeOfMotionResult extends Result {
         return range;
     }
 
-    public void setRange(double range) {
-        this.range = range;
-    }
+    public void setRange(double range) { this.range = range; }
 }
