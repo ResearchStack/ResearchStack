@@ -1,2 +1,2 @@
-include ':backbone', ':skin', ':foundation', ':authentication', ':chart', ':consent', ':storage'
+include ':foundation', ':authentication', ':chart', ':consent', ':storage'
 include ':sample_backbone_app'
