@@ -55,8 +55,8 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     public static final String ROTATION_REFERENCE_COORDINATE_KEY = "referenceCoordinate";
 
-    public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION  = "BroadcastDeviceMotionUpdate"; //added this
-    private static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY    = "DeviceMotionUpdate"; //added this
+    public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION  = "BroadcastDeviceMotionUpdate";
+    private static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY    = "DeviceMotionUpdate";
 
     private JsonObject jsonObject;
 
@@ -307,7 +307,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
             jsonObject.addProperty(ROTATION_REFERENCE_COORDINATE_KEY, "East-Up-North");
         }
 
-        //The three elements of the rotation vector are equal to the last three components of a unit quaternion:
+        //The first three elements of the rotation vector are equal to the last three components of a unit quaternion:
         // x = rot_axis.y * sin(theta/2)
         jsonObject.addProperty(X_KEY, sensorEvent.values[0]);
         // y = rot_axis.y * sin(theta/2)
@@ -316,6 +316,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         jsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            //The fourth element of the rotation vector is equal to the first component of a unit quaternion:
             // w = cos(theta/2)
             jsonObject.addProperty(W_KEY, sensorEvent.values[3]);
 
@@ -325,7 +326,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
                 jsonObject.addProperty(ACCURACY_KEY, sensorEvent.values[4]);
             }
         } else if (sensorEvent.values.length > 3) {
-            // this value was optional before SDK Level 18, and is equal to the first component of a unit quaternion:
+            // this value was optional before SDK Level 18
             // w = cos(theta/2)
             jsonObject.addProperty(W_KEY, sensorEvent.values[3]);
         }
