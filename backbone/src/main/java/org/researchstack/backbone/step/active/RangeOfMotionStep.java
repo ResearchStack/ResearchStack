@@ -27,7 +27,6 @@ public class RangeOfMotionStep extends ActiveStep {
     private void commonInit() {
         setOptional(false);
         setShouldShowDefaultTimer(false);
-        // Should the below settings be here or in RangeOfMotionTaskFactory?
         setShouldVibrateOnStart(true);
         setShouldPlaySoundOnStart(true);
         setShouldContinueOnFinish(true);
