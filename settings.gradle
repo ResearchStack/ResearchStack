@@ -1,2 +1,2 @@
-include ':foundation', ':authentication', ':chart', ':consent', ':storage'
+include ':foundation', ':authentication', ':chart', ':consent', ':storage', ':backbone_interop'
 include ':sample_backbone_app'

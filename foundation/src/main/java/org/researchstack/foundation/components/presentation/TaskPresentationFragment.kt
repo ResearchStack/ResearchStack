@@ -23,12 +23,12 @@ import java.util.*
 
 abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, TaskType: ITask>(): androidx.fragment.app.Fragment(), StepCallbacks {
 
-    public var taskProvider: ITaskProvider? = null
-    public var stepFragmentProvider: IStepFragmentProvider? = null
+    lateinit var taskProvider: ITaskProvider
+    lateinit var stepFragmentProvider: IStepFragmentProvider
 
     protected var _task: TaskType? = null
-    public val task: TaskType
-        get() = this._task!!
+    lateinit var task: TaskType
+
 
     protected var _taskNavigator: ITaskNavigator<StepType, ResultType>? = null
     public val taskNavigator: ITaskNavigator<StepType, ResultType>

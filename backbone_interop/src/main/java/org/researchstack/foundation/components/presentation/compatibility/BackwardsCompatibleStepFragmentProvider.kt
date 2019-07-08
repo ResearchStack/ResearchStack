@@ -19,8 +19,8 @@ public class BackwardsCompatibleStepFragmentProvider(val stepLayoutProvider: ISt
             } as? StepLayout
 
             if (stepLayout != null) {
-                val fragment = BackwardsCompatibleStepFragment.newInstance(stepLayout)
-                return fragment
+                // TODO: joliu
+                return null //BackwardsCompatibleStepFragment.newInstance(stepLayout)
             }
             else {
                 throw RuntimeException("Could not instantiate Step Layout")
