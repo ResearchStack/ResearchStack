@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.BackboneApp.Toolbar" parent="@style/Base.Widget.BackboneApp.Toolbar">
+        <item name="android:elevation">4dp</item>
+        <item name="android:outlineProvider">bounds</item>
+    </style>
+
+    <style name="Widget.BackboneApp.Toolbar.Transparent" parent="@style/Base.Widget.BackboneApp.Toolbar">
+        <item name="android:elevation">0dp</item>
+        <item name="android:outlineProvider">none</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.BackboneApp.Toolbar.Title.Transparent</item>
+    </style>
+
+</resources>
