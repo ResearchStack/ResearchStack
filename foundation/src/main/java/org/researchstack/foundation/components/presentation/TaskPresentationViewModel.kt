@@ -1,5 +1,6 @@
 package org.researchstack.foundation.components.presentation
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -44,6 +45,7 @@ class TaskPresentationViewModel<StepType : IStep>(val taskNavigator: ITaskNaviga
     /**
      * Add a StepResult to the TaskResult.
      */
+    @VisibleForTesting
     fun addStepResult(result: StepResult<*>) {
         taskResult.setStepResultForStepIdentifier(result.identifier, result)
         updateStep(currentStep, taskResult, mostRecentNavDirection)
@@ -73,6 +75,7 @@ class TaskPresentationViewModel<StepType : IStep>(val taskNavigator: ITaskNaviga
     /**
      * Update the TaskNavigatorState in response to a stap navigation event or a change to the TaskResult.
      */
+    @VisibleForTesting
     internal fun updateStep(step: StepType?, taskResult: TaskResult, @NavDirection navDirection: Int) {
         currentStep = step
         mostRecentNavDirection = navDirection
