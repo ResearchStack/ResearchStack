@@ -1,5 +1,6 @@
 package org.researchstack.foundation.components.presentation.compatibility
 
+import org.researchstack.backbone.interop.IStepLayoutProvider
 import org.researchstack.backbone.interop.StepAdapterFactory
 import org.researchstack.foundation.core.interfaces.IStep
 

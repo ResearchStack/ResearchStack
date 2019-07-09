@@ -60,28 +60,22 @@ public abstract class Task implements Serializable, ITask, ITaskNavigator<Step, 
         return identifier;
     }
 
-//    /**
-//     * Gets the title to display in the toolbar for a given step.
-//     * <p>
-//     * Override this method to return a custom title, such a text representation of the current
-//     * progress instead of the step's title.
-//     * <p>
-//     * The default implementation gets the title from string resources if it exists, otherwise it
-//     * returns an empty string.
-//     *
-//     * @param context for fetching resources
-//     * @param step    the current step
-//     * @return the title to display
-//     */
-//    @Deprecated
-//    public String getTitleForStep(Context context, Step step) {
-//        return step.getStepTitle() != 0 ? context.getString(step.getStepTitle()) : "";
-//    }
-//
-//    public String getTitleForStep(Step step) {
-//        String titleString = step.getStepTitleString();
-//        return  titleString != null ? titleString : "";
-//    }
+    /**
+     * Gets the title to display in the toolbar for a given step.
+     * <p>
+     * Override this method to return a custom title, such a text representation of the current
+     * progress instead of the step's title.
+     * <p>
+     * The default implementation gets the title from string resources if it exists, otherwise it
+     * returns an empty string.
+     *
+     * @param step    the current step
+     * @return the title to display
+     */
+    public String getTitleForStep(Step step) {
+        String titleString = step.getStepTitle();
+        return  titleString != null ? titleString : "";
+    }
 
     /**
      * Returns the step after the specified step, if there is one.

@@ -1,4 +1,4 @@
-package org.researchstack.adapter;
+package org.researchstack.backbone.interop;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,17 +10,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import org.jetbrains.annotations.NotNull;
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.interop.ResultFactory;
-import org.researchstack.backbone.interop.StepAdapterFactory;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.ui.PinCodeActivity;
 import org.researchstack.foundation.components.common.task.OrderedTask;
 import org.researchstack.foundation.components.presentation.ITaskProvider;
 import org.researchstack.foundation.components.presentation.TaskPresentationFragment;
@@ -39,7 +37,7 @@ import java.util.Map;
 
 import static org.threeten.bp.DateTimeUtils.toDate;
 
-public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentationFragment.OnPerformTaskExitListener {
+public class ViewBackboneInteropTaskActivity extends PinCodeActivity implements TaskPresentationFragment.OnTaskExitListener {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
@@ -47,7 +45,7 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
     public static final int CONTENT_VIEW_ID = R.id.rsb_content_container;
 
     public static Intent newIntent(Context context, Task task) {
-        Intent intent = new Intent(context, ViewTaskActivity2.class);
+        Intent intent = new Intent(context, ViewBackboneInteropTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         return intent;
     }
@@ -99,17 +97,6 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
     }
 
 
-    TaskResult convert(@NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
-        TaskResult tr = new TaskResult(taskResult.getIdentifier());
-        tr.setStartDate(toDate(taskResult.getStartTimestamp()));
-        tr.setEndDate(toDate(taskResult.getEndTimestamp()));
-        for(Map.Entry<String, org.researchstack.foundation.core.models.result.StepResult<?>> e : taskResult.getResults().entrySet()) {
-            tr.setStepResultForStepIdentifier(e.getKey(),getResultFactory().create(e.getValue()));
-        }
-
-        return tr;
-    }
-
     @Override
     public void onTaskExit(@NotNull Status status, @NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
         if (status == Status.CANCELLED) {
@@ -125,6 +112,19 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
     }
 
     // region first stab at dependencies
+
+    @VisibleForTesting
+    TaskResult convert(@NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
+        TaskResult tr = new TaskResult(taskResult.getIdentifier());
+        tr.setStartDate(toDate(taskResult.getStartTimestamp()));
+        tr.setEndDate(toDate(taskResult.getEndTimestamp()));
+        for(Map.Entry<String, org.researchstack.foundation.core.models.result.StepResult<?>> e : taskResult.getResults().entrySet()) {
+            tr.setStepResultForStepIdentifier(e.getKey(),getResultFactory().create(e.getValue()));
+        }
+
+        return tr;
+    }
+
     @VisibleForTesting
     BackwardsCompatibleTaskPresentationFragment create(@NonNull Task task, @Nullable TaskResult taskResult, @Nullable Step step) {
         return BackwardsCompatibleTaskPresentationFragment.createInstance(task.getIdentifier(), getTaskPresentationViewModelFactory(task), getIStepFragmentProvider());

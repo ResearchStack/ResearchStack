@@ -21,6 +21,58 @@ import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.UIStep
 
 class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult>(), StepCallbacks {
+
+    companion object {
+        @JvmStatic
+        fun newInstance(stepLayout: StepLayout, stepPresentationViewModelFactory: StepPresentationViewModelFactory<UIStep>, resultFactory: ResultFactory): BackwardsCompatibleStepFragment {
+            val fragment = BackwardsCompatibleStepFragment()
+            fragment.stepLayout = stepLayout
+            fragment.inject(stepPresentationViewModelFactory)
+            fragment.inject(resultFactory)
+            return fragment
+        }
+    }
+
+    lateinit var resultFactory: ResultFactory
+
+    fun inject(resultFactory: ResultFactory) {
+        this.resultFactory = resultFactory
+    }
+
+    //this will implement the traditional step layout
+    lateinit var stepLayout: StepLayout
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(getLayoutId(), container, false)
+        val containerView: FrameLayout = view.findViewById(R.id.rsf_content_layout)
+
+
+        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
+
+
+        stepLayout.setCallbacks(this)
+        val lp = getLayoutParams(stepLayout)
+        containerView.addView(stepLayout.layout, 0, lp)
+
+
+        val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
+        appCompatActivity.setSupportActionBar(toolbar)
+        appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        return view
+    }
+
+    private fun getLayoutParams(stepLayout: StepLayout): FrameLayout.LayoutParams {
+        var lp: FrameLayout.LayoutParams? = stepLayout.layout.layoutParams?.let {
+            it as? FrameLayout.LayoutParams
+        }
+        if (lp == null) {
+            lp = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT)
+        }
+        return lp
+    }
+
     override fun onSaveStep(action: Int, step: Step?, result: StepResult<*>?) {
         result?.let {
             taskPresentationFragment.taskPresentationViewModel.addStepResult(resultFactory.create(result))
@@ -47,57 +99,6 @@ class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult
         return R.layout.rsf_fragment_step_compat
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(stepLayout: StepLayout, stepPresentationViewModelFactory: StepPresentationViewModelFactory<UIStep>, resultFactory: ResultFactory): BackwardsCompatibleStepFragment {
-            val fragment = BackwardsCompatibleStepFragment()
-            fragment.stepLayout = stepLayout
-            fragment.inject(stepPresentationViewModelFactory)
-            fragment.inject(resultFactory)
-            return fragment
-        }
-    }
-
-    fun inject(resultFactory: ResultFactory) {
-        this.resultFactory = resultFactory
-    }
-
-    lateinit var resultFactory: ResultFactory
-
-
-    //this will implement the traditional step layout
-    lateinit var stepLayout: StepLayout
-
-    private fun getLayoutParams(stepLayout: StepLayout): FrameLayout.LayoutParams {
-        var lp: FrameLayout.LayoutParams? = stepLayout.layout.layoutParams?.let {
-            it as? FrameLayout.LayoutParams
-        }
-        if (lp == null) {
-            lp = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT)
-        }
-        return lp
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(getLayoutId(), container, false)
-        val containerView: FrameLayout = view.findViewById(R.id.rsf_content_layout)
-
-
-        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
-
-
-        stepLayout.setCallbacks(this)
-        val lp = getLayoutParams(stepLayout)
-        containerView.addView(stepLayout.layout, 0, lp)
-
-
-        val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
-        appCompatActivity.setSupportActionBar(toolbar)
-        appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        return view
-    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == android.R.id.home) {

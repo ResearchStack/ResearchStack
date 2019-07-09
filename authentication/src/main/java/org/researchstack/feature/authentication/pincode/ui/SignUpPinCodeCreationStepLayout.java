@@ -15,9 +15,9 @@ import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks
 import org.researchstack.foundation.components.common.ui.layout.StepLayout;
 import org.researchstack.foundation.components.utils.ThemeUtils;
 import org.researchstack.foundation.core.models.result.StepResult;
-import org.researchstack.foundation.core.models.step.UIStep;
+import org.researchstack.foundation.core.models.step.Step;
 
-public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements StepLayout<String> {
+public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements StepLayout {
     public static final String RESULT_OLD_PIN = "PassCodeCreationStep.oldPin";
 
     protected StepCallbacks callbacks;
@@ -40,7 +40,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     }
 
     @Override
-    public void initialize(UIStep step, StepResult<String> result) {
+    public void initialize(Step step, StepResult result) {
         this.step = (PassCodeCreationStep) step;
         this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
 

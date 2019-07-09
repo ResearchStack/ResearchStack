@@ -42,7 +42,7 @@ open class PasscodeAuthenticationFragment: androidx.fragment.app.Fragment() {
     private var callback: AuthenticationCallback? = null
     private var toggleKeyboardAction: ((Boolean) -> Unit)? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override open fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         // Show pincode layout
         val authenticator = this.authenticator!!

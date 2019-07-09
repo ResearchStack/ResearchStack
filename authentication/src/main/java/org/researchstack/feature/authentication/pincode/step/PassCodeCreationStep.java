@@ -1,16 +1,14 @@
 package org.researchstack.feature.authentication.pincode.step;
 
 import org.researchstack.feature.authentication.pincode.ui.SignUpPinCodeCreationStepLayout;
-import org.researchstack.foundation.core.models.step.UIStep;
+import org.researchstack.foundation.core.models.step.Step;
 
-public class PassCodeCreationStep extends UIStep {
+public class PassCodeCreationStep extends Step {
 
     public int stateOrdinal = -1;
 
-    public PassCodeCreationStep(String identifier, int title) {
-        super(identifier);
-        //todo joliu fix
-//        setStepTitle(title);
+    public PassCodeCreationStep(String identifier, String title) {
+        super(identifier, title);
     }
 
     public int getStateOrdinal() {

@@ -19,11 +19,12 @@ class BackwardsCompatibleStepFragmentProvider(val context: Context, val stepAdap
             val stepLayout = backboneStep.stepLayoutClass?.let {
                 val constructor = it.getConstructor(Context::class.java)
                 constructor.newInstance(context)
-            } as StepLayout
+            } as? StepLayout
 
             if (stepLayout != null) {
                 stepLayout.initialize(backboneStep, null)
-                return BackwardsCompatibleStepFragment.newInstance(stepLayout, stepPresentationViewModelFactory, resultFactory)
+                val fragment = BackwardsCompatibleStepFragment.newInstance(stepLayout, stepPresentationViewModelFactory, resultFactory)
+                return fragment
             } else {
                 throw RuntimeException("Could not instantiate Step Layout")
             }

@@ -1,6 +1,6 @@
 package org.researchstack.feature.authentication.pincode
 
-class PinCodeConfigProvider {
+public class PinCodeConfigProvider() {
     companion object {
         private var _pinCodeConfig: PinCodeConfig? = null
         fun config(pinCodeConfig: PinCodeConfig) {

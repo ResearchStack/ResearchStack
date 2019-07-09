@@ -1,6 +1,5 @@
 package org.researchstack.foundation.components.presentation
 
-import android.content.Context
 import android.os.Bundle
 import android.os.ParcelUuid
 import android.view.LayoutInflater
@@ -15,10 +14,8 @@ import androidx.lifecycle.ViewModelProviders
 import org.researchstack.foundation.R
 import org.researchstack.foundation.components.presentation.interfaces.IStepFragmentProvider
 import org.researchstack.foundation.core.interfaces.IResult
-import org.researchstack.foundation.core.interfaces.IStep
 import org.researchstack.foundation.core.interfaces.ITask
 import org.researchstack.foundation.core.interfaces.UIStep
-import org.researchstack.foundation.core.models.result.StepResult
 import org.researchstack.foundation.core.models.result.TaskResult
 import java.util.*
 
@@ -41,7 +38,7 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
         }
     }
 
-    interface OnPerformTaskExitListener {
+    interface OnTaskExitListener {
         enum class Status {
             CANCELLED, FINISHED
         }
@@ -56,22 +53,12 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
     }
 
     // inject
-    lateinit var taskViewModelFactory: TaskPresentationViewModelFactory<StepType>
+    private lateinit var taskViewModelFactory: TaskPresentationViewModelFactory<StepType>
     // inject
-    lateinit var stepFragmentProvider: IStepFragmentProvider<StepType>
+    private lateinit var stepFragmentProvider: IStepFragmentProvider<StepType>
 
 
     lateinit var taskPresentationViewModel: TaskPresentationViewModel<StepType>
-
-//    lateinit var task: TaskType
-
-
-    var _currentStep: StepType? = null
-    var _currentStepFragment: Fragment? = null
-
-    val currentStep: StepType?
-        get() = this._currentStep
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,22 +88,12 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        val view = inflater.inflate(R.layout.rsf_fragment_task_presentation, container, false)
-//
-//        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
-//
-//        val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
-//        appCompatActivity.setSupportActionBar(toolbar)
-//        appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
-        return view
+        return inflater.inflate(R.layout.rsf_fragment_task_presentation, container, false)
     }
 
     @VisibleForTesting
     protected fun showNextStep() {
         taskPresentationViewModel.goForward()
-
     }
 
     @VisibleForTesting
@@ -126,18 +103,17 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
 
     private fun showStep(taskNavigatorState: TaskPresentationViewModel.TaskNavigatorState<StepType>) {
         if (taskNavigatorState.currentStep == null) {
-            val exitStatus: OnPerformTaskExitListener.Status =
+            val exitStatus: OnTaskExitListener.Status =
                     if (taskNavigatorState.navDirection == NavDirection.SHIFT_RIGHT) {
-                        OnPerformTaskExitListener.Status.CANCELLED
+                        OnTaskExitListener.Status.CANCELLED
                     } else {
-                        OnPerformTaskExitListener.Status.FINISHED
+                        OnTaskExitListener.Status.FINISHED
                     }
             checkExitListener(exitStatus)
             return
         }
 
         val stepFragment = this.getFragmentForStep(taskNavigatorState.currentStep)
-        this._currentStepFragment = stepFragment
 
         val transaction = childFragmentManager.beginTransaction()
         if (taskNavigatorState.navDirection == NavDirection.SHIFT_LEFT) {
@@ -152,13 +128,10 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
         childFragmentManager.executePendingTransactions()
     }
 
-    abstract fun getStepResult(taskResult: TaskResult, stepIdentifier: String): IResult?
-    abstract fun setStepResult(taskResult: TaskResult, stepIdentifier: String, stepResult: IResult)
-
     protected fun getFragmentForStep(step: StepType): Fragment {
         // Get result from the TaskResult, can be null
 
-        val fragment = createFragmentFromStep(step)
+        val fragment = stepFragmentProvider.stepFragment(step, StepPresentationViewModelFactory(taskPresentationViewModel))
                 ?: throw RuntimeException("Cannot create fragment for step ${step.identifier}")
         // Change the title on the activity
         setActionBarTitle(step.stepTitle)
@@ -166,21 +139,6 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
         return fragment
     }
 
-    private fun createFragmentFromStep(step: StepType): Fragment? {
-        return this.stepFragmentProvider.stepFragment(step, StepPresentationViewModelFactory(taskPresentationViewModel))
-    }
-
-    fun checkExitListener(finishStatus: OnPerformTaskExitListener.Status) {
-        var onPerformTaskExitListener: OnPerformTaskExitListener? = null
-        if (parentFragment is OnPerformTaskExitListener) {
-            onPerformTaskExitListener = parentFragment as OnPerformTaskExitListener
-        }
-        if (onPerformTaskExitListener == null && activity is OnPerformTaskExitListener) {
-            onPerformTaskExitListener = activity as OnPerformTaskExitListener
-        }
-        onPerformTaskExitListener?.onTaskExit(finishStatus,
-                taskPresentationViewModel.getTaskNavigatorStateLiveData().value!!.taskResult)
-    }
 
     fun setActionBarTitle(title: String?) {
 
@@ -196,10 +154,23 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
         val alertDialog = AlertDialog.Builder(this.activity!!).setTitle(
                 "Are you sure you want to exit?")
                 .setMessage(R.string.lorem_medium)
-                .setPositiveButton("End Task") { dialog, which -> checkExitListener(OnPerformTaskExitListener.Status.CANCELLED) }
+                .setPositiveButton("End Task") { dialog, which -> checkExitListener(OnTaskExitListener.Status.CANCELLED) }
                 .setNegativeButton("Cancel", null)
                 .create()
         alertDialog.show()
+    }
+
+
+    fun checkExitListener(finishStatus: OnTaskExitListener.Status) {
+        var onTaskExitListener: OnTaskExitListener? = null
+        if (parentFragment is OnTaskExitListener) {
+            onTaskExitListener = parentFragment as OnTaskExitListener
+        }
+        if (onTaskExitListener == null && activity is OnTaskExitListener) {
+            onTaskExitListener = activity as OnTaskExitListener
+        }
+        onTaskExitListener?.onTaskExit(finishStatus,
+                taskPresentationViewModel.getTaskNavigatorStateLiveData().value!!.taskResult)
     }
 }
 

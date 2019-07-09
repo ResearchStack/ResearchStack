@@ -13,9 +13,9 @@ import org.researchstack.foundation.core.models.task.Task
 import java.util.*
 
 class TaskPresentationViewModel<StepType : IStep>(val taskNavigator: ITaskNavigator<StepType, TaskResult>,
-                                                                        taskProvider: ITaskProvider,
-                                                                        val taskIdentifier: String,
-                                                                        val taskRunUUID: UUID) : ViewModel() {
+                                                  taskProvider: ITaskProvider,
+                                                  val taskIdentifier: String,
+                                                  val taskRunUUID: UUID) : ViewModel() {
 
     private val task: ITask? = taskProvider.task(taskIdentifier)
     private val taskNavigatorStateMutableLiveData: MutableLiveData<TaskNavigatorState<StepType>> = MutableLiveData()
@@ -23,7 +23,7 @@ class TaskPresentationViewModel<StepType : IStep>(val taskNavigator: ITaskNaviga
 
     private var currentStep: StepType? = null
     private val taskResult: TaskResult = TaskResult(taskIdentifier, taskRunUUID)
-    private var previousNavDirection = NavDirection.SHIFT_LEFT
+    private var mostRecentNavDirection = NavDirection.SHIFT_LEFT
 
     init {
         goForward()
@@ -31,34 +31,36 @@ class TaskPresentationViewModel<StepType : IStep>(val taskNavigator: ITaskNaviga
 
     fun addStepResult(result: StepResult<*>) {
         taskResult.setStepResultForStepIdentifier(result.identifier, result)
-        updateStep(currentStep, taskResult, previousNavDirection)
+        updateStep(currentStep, taskResult, mostRecentNavDirection)
     }
 
     fun goForward() {
-        currentStep = taskNavigator.getStepAfterStep(currentStep, taskResult)
-        previousNavDirection = NavDirection.SHIFT_LEFT
-        updateStep(currentStep, taskResult, previousNavDirection)
+        updateStep(taskNavigator.getStepAfterStep(currentStep, taskResult), taskResult, mostRecentNavDirection)
     }
 
     fun goBack() {
-        currentStep = taskNavigator.getStepBeforeStep(currentStep, taskResult)
-        previousNavDirection = NavDirection.SHIFT_RIGHT
-        updateStep(currentStep, taskResult, previousNavDirection)
+        updateStep(taskNavigator.getStepBeforeStep(currentStep, taskResult), taskResult, mostRecentNavDirection)
     }
 
-    protected fun updateStep(step: StepType?, taskResult: TaskResult, @NavDirection navDirection: Int) {
+    fun updateStep(step: StepType?, taskResult: TaskResult, @NavDirection navDirection: Int) {
+        currentStep = step
+        mostRecentNavDirection = navDirection
+
         if (step == null) {
             taskNavigatorStateMutableLiveData.value =
-                    TaskNavigatorState(navDirection, null, null, taskResult)
+                    TaskNavigatorState(navDirection, null, null, null, null, taskResult)
             return
         }
         taskNavigatorStateMutableLiveData.value =
-                TaskNavigatorState(navDirection, step, taskNavigator.getProgressOfCurrentStep(step, taskResult), taskResult)
+                TaskNavigatorState(navDirection, step,
+                        taskNavigator.getStepBeforeStep(step, taskResult),
+                        taskNavigator.getStepAfterStep(step, taskResult),
+                        taskNavigator.getProgressOfCurrentStep(step, taskResult), taskResult)
     }
 
     fun getTaskNavigatorStateLiveData(): LiveData<TaskNavigatorState<StepType>> {
         return taskNavigatorStateMutableLiveData
     }
 
-    data class TaskNavigatorState<StepType>(@NavDirection val navDirection: Int, val currentStep: StepType?, val taskProgress: Task.TaskProgress?, val taskResult: TaskResult)
+    data class TaskNavigatorState<StepType>(@NavDirection val navDirection: Int, val currentStep: StepType?, val previousStep: StepType?, val nextStep: StepType?, val taskProgress: Task.TaskProgress?, val taskResult: TaskResult)
 }

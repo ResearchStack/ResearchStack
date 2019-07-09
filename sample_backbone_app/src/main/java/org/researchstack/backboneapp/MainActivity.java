@@ -3,6 +3,10 @@ package org.researchstack.backboneapp;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,12 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.Toolbar;
-
-import org.researchstack.adapter.ViewTaskActivity2;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
@@ -25,6 +23,7 @@ import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
+import org.researchstack.backbone.interop.ViewBackboneInteropTaskActivity;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
@@ -84,12 +83,12 @@ public class MainActivity extends PinCodeActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
 
-        consentButton = findViewById(R.id.consent_button);
+        consentButton = (AppCompatButton) findViewById(R.id.consent_button);
         consentButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -99,7 +98,7 @@ public class MainActivity extends PinCodeActivity
             }
         });
 
-        surveyButton = findViewById(R.id.survey_button);
+        surveyButton = (AppCompatButton) findViewById(R.id.survey_button);
         surveyButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -153,8 +152,8 @@ public class MainActivity extends PinCodeActivity
         AppPrefs prefs = AppPrefs.getInstance(this);
 
         View lblConsentedDate = findViewById(R.id.consented_date_lbl);
-        TextView consentedDate = findViewById(R.id.consented_date);
-        ImageView consentedSig = findViewById(R.id.consented_signature);
+        TextView consentedDate = (TextView)findViewById(R.id.consented_date);
+        ImageView consentedSig = (ImageView) findViewById(R.id.consented_signature);
 
         if(prefs.hasConsented())
         {
@@ -178,7 +177,7 @@ public class MainActivity extends PinCodeActivity
             lblConsentedDate.setVisibility(View.INVISIBLE);
         }
 
-        TextView surveyAnswer = findViewById(R.id.survey_results);
+        TextView surveyAnswer = (TextView) findViewById(R.id.survey_results);
 
         if(prefs.hasSurveyed())
         {
@@ -198,11 +197,11 @@ public class MainActivity extends PinCodeActivity
 
         if(requestCode == REQUEST_CONSENT && resultCode == RESULT_OK)
         {
-            processConsentResult((TaskResult) data.getSerializableExtra(ViewTaskActivity2.EXTRA_TASK_RESULT));
+            processConsentResult((TaskResult) data.getSerializableExtra(ViewBackboneInteropTaskActivity.EXTRA_TASK_RESULT));
         }
         else if(requestCode == REQUEST_SURVEY && resultCode == RESULT_OK)
         {
-            processSurveyResult((TaskResult) data.getSerializableExtra(ViewTaskActivity2.EXTRA_TASK_RESULT));
+            processSurveyResult((TaskResult) data.getSerializableExtra(ViewBackboneInteropTaskActivity.EXTRA_TASK_RESULT));
         }
     }
 
@@ -277,7 +276,7 @@ public class MainActivity extends PinCodeActivity
                 signatureStep);
 
         // Launch using hte ViewTaskActivity2 and make sure to listen for the activity result
-        Intent intent = ViewTaskActivity2.newIntent(this, consentTask);
+        Intent intent = ViewBackboneInteropTaskActivity.newIntent(this, consentTask);
         startActivityForResult(intent, REQUEST_CONSENT);
     }
 
@@ -359,7 +358,7 @@ public class MainActivity extends PinCodeActivity
                 booleanStep, multiStep);
 
         // Create an activity using the task and set a delegate.
-        Intent intent = ViewTaskActivity2.newIntent(this, task);
+        Intent intent = ViewBackboneInteropTaskActivity.newIntent(this, task);
         startActivityForResult(intent, REQUEST_SURVEY);
     }
 

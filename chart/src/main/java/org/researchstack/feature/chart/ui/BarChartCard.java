@@ -80,13 +80,13 @@ public class BarChartCard extends CardView {
     }
 
     private void initializeViews() {
-        titleTextView = findViewById(R.id.view_chart_bar_title);
+        titleTextView = (TextView) findViewById(R.id.view_chart_bar_title);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(titleTextColor);
         titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
         titleTextView.setTypeface(Typeface.create(titleTextTypeface, Typeface.NORMAL));
 
-        expand = findViewById(R.id.view_chart_line_expand);
+        expand = (ImageView) findViewById(R.id.view_chart_line_expand);
         if (expandTintColor != 0) {
             Drawable drawable = expand.getDrawable();
             drawable = DrawableCompat.wrap(drawable);
@@ -94,7 +94,7 @@ public class BarChartCard extends CardView {
             expand.setImageDrawable(drawable);
         }
 
-        chart = findViewById(R.id.view_chart_bar);
+        chart = (BarChart) findViewById(R.id.view_chart_bar);
         chart.getLegend().setEnabled(false);
         chart.setDescription("");
         chart.setDrawBorders(false);

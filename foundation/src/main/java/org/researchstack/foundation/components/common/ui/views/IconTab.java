@@ -48,9 +48,9 @@ public class IconTab extends RelativeLayout implements View.OnLongClickListener 
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.rsf_view_icon_tab, this, true);
 
-        title = findViewById(R.id.title);
-        icon = findViewById(R.id.icon);
-        indicator = findViewById(R.id.indicator);
+        title = (TextView) findViewById(R.id.title);
+        icon = (ImageView) findViewById(R.id.icon);
+        indicator = (ImageView) findViewById(R.id.indicator);
 
         // Adjust visibility and layout params
         adjustSelectedView();

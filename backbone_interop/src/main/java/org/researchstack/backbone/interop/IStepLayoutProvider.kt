@@ -1,4 +1,4 @@
-package org.researchstack.foundation.components.presentation.compatibility
+package org.researchstack.backbone.interop
 
 import org.researchstack.foundation.core.interfaces.IStep
 

@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name="org.researchstack.adapter.ViewTaskActivity2"
+            android:name=".ViewBackboneInteropTaskActivity"
             android:windowSoftInputMode="adjustResize"
             />
     </application>

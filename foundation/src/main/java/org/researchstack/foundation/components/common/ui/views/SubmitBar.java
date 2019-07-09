@@ -37,12 +37,12 @@ public class SubmitBar extends LinearLayout {
 
         setBackground(a.getDrawable(R.styleable.SubmitBar_android_background));
 
-        positiveView = findViewById(R.id.bar_submit_postitive);
+        positiveView = (TextView) findViewById(R.id.bar_submit_postitive);
         positiveView.setText(a.getString(R.styleable.SubmitBar_positiveActionTitle));
         positiveView.setTextColor(a.getColor(R.styleable.SubmitBar_positiveActionColor,
                 ThemeUtils.getAccentColor(context)));
 
-        negativeView = findViewById(R.id.bar_submit_negative);
+        negativeView = (TextView) findViewById(R.id.bar_submit_negative);
         negativeView.setText(a.getString(R.styleable.SubmitBar_negativeActionTitle));
         negativeView.setTextColor(a.getColor(R.styleable.SubmitBar_negativeActionColor,
                 ContextCompat.getColor(context, R.color.rsf_submit_bar_negative)));

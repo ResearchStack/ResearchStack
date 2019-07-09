@@ -29,7 +29,7 @@ public class ViewVideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.rsf_activity_video_viewer);
 
-        videoView = findViewById(R.id.videoView);
+        videoView = (AssetVideoView) findViewById(R.id.videoView);
 
         MediaController mediaController = new MediaController(this, false);
         mediaController.setAnchorView(videoView);

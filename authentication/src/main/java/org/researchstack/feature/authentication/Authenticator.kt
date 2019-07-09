@@ -2,9 +2,11 @@ package org.researchstack.feature.authentication
 
 import androidx.core.os.CancellationSignal
 
-abstract class Authenticator<Result: Authenticator.AuthenticationResult, Callback: Authenticator.AuthenticationCallback<Result>> {
+open abstract class Authenticator<Result: Authenticator.AuthenticationResult, Callback: Authenticator.AuthenticationCallback<Result>> {
 
-    open class AuthenticationResult
+    open class AuthenticationResult {
+
+    }
 
     open class AuthenticationCallback<Result: AuthenticationResult> {
         open fun onAuthenticationError(errorCode: Int, errString: String) {}

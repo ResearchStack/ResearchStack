@@ -64,7 +64,7 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.rsf_activity_web_document);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -74,7 +74,7 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
             actionBar.setTitle(title);
         }
 
-        LocalWebView webView = findViewById(R.id.webview);
+        LocalWebView webView = (LocalWebView) findViewById(R.id.webview);
 
         if (getIntent().hasExtra(KEY_DOC_PATH)) {
             String docPath = getIntent().getStringExtra(KEY_DOC_PATH);

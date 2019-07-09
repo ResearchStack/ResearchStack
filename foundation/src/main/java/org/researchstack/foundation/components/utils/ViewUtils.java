@@ -32,7 +32,7 @@ public class ViewUtils {
             // If our loop fails to find filter class type, create a new array and insert that
             // filter at the end of the array.
             int newSize = filters.length + 1;
-            InputFilter[] newFilters = new InputFilter[newSize];
+            InputFilter newFilters[] = new InputFilter[newSize];
             System.arraycopy(filters, 0, newFilters, 0, filters.length);
             newFilters[newSize - 1] = filter;
 
