@@ -6,9 +6,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import org.researchstack.backbone.interop.ResultFactory
-import org.researchstack.backbone.interop.StepAdapterFactory
-import org.researchstack.backbone.interop.StepCallbackAdapter
 import org.researchstack.backbone.result.StepResult
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.ui.callbacks.StepCallbacks
@@ -16,13 +16,15 @@ import org.researchstack.backbone.ui.step.layout.StepLayout
 import org.researchstack.foundation.R
 import org.researchstack.foundation.components.presentation.ActionType
 import org.researchstack.foundation.components.presentation.StepPresentationFragment
+import org.researchstack.foundation.components.presentation.StepPresentationViewModelFactory
 import org.researchstack.foundation.core.interfaces.IResult
-import org.researchstack.foundation.core.interfaces.IStep
+import org.researchstack.foundation.core.interfaces.UIStep
 
-class BackwardsCompatibleStepFragment() : StepPresentationFragment<IStep, IResult>(), StepCallbacks {
+class BackwardsCompatibleStepFragment() : StepPresentationFragment<UIStep, IResult>(), StepCallbacks {
     override fun onSaveStep(action: Int, step: Step?, result: StepResult<*>?) {
-        taskPresentationFragment.taskPresentationViewModel.addStepResult(resultFactory.create(result))
-
+        result?.let {
+            taskPresentationFragment.taskPresentationViewModel.addStepResult(resultFactory.create(result))
+        }
         if (action == StepCallbacks.ACTION_NEXT) {
             stepPresentationViewModel.handleAction(ActionType.FORWARD)
         } else if (action == StepCallbacks.ACTION_PREV) {
@@ -46,16 +48,22 @@ class BackwardsCompatibleStepFragment() : StepPresentationFragment<IStep, IResul
     }
 
     companion object {
-        fun newInstance(stepLayout: StepLayout): BackwardsCompatibleStepFragment {
+        @JvmStatic
+        fun newInstance(stepLayout: StepLayout, stepPresentationViewModelFactory: StepPresentationViewModelFactory<UIStep>, resultFactory: ResultFactory): BackwardsCompatibleStepFragment {
             val fragment = BackwardsCompatibleStepFragment()
             fragment.stepLayout = stepLayout
+            fragment.inject(stepPresentationViewModelFactory)
+            fragment.inject(resultFactory)
             return fragment
         }
     }
 
+    fun inject(resultFactory: ResultFactory) {
+        this.resultFactory = resultFactory
+    }
+
     lateinit var resultFactory: ResultFactory
-    lateinit var stepFactory: StepAdapterFactory
-    lateinit var stepCallbackAdapter: StepCallbackAdapter
+
 
     //this will implement the traditional step layout
     lateinit var stepLayout: StepLayout
@@ -75,11 +83,18 @@ class BackwardsCompatibleStepFragment() : StepPresentationFragment<IStep, IResul
         val view = inflater.inflate(getLayoutId(), container, false)
         val containerView: FrameLayout = view.findViewById(R.id.rsf_content_layout)
 
-        val layout = this.stepLayout
 
-        layout.setCallbacks(this)
-        val lp = getLayoutParams(layout)
-        containerView.addView(layout.layout, 0, lp)
+        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
+
+
+        stepLayout.setCallbacks(this)
+        val lp = getLayoutParams(stepLayout)
+        containerView.addView(stepLayout.layout, 0, lp)
+
+
+        val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
+        appCompatActivity.setSupportActionBar(toolbar)
+        appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         return view
     }

@@ -2,13 +2,11 @@ package org.researchstack.foundation.components.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.IStep
-import java.util.*
 
-class StepPresentationViewModelFactory<StepType : IStep, ResultType : IResult>
-(val taskPresentationViewModel: TaskPresentationViewModel<StepType, ResultType>) : ViewModel() {
-    fun create(taskIdentifier: String, taskRunUUID: UUID): ViewModelProvider.Factory {
+class StepPresentationViewModelFactory<StepType : IStep>
+(val taskPresentationViewModel: TaskPresentationViewModel<StepType>) : ViewModel() {
+    fun create(): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(StepPresentationViewModel::class.java)) {

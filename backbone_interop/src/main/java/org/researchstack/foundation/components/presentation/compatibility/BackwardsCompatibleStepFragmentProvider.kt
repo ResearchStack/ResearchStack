@@ -2,28 +2,29 @@ package org.researchstack.foundation.components.presentation.compatibility
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import org.researchstack.foundation.components.common.ui.layout.StepLayout
-import org.researchstack.foundation.components.presentation.interfaces.IStepFragment
+import org.researchstack.backbone.interop.ResultFactory
+import org.researchstack.backbone.interop.StepAdapterFactory
+import org.researchstack.backbone.ui.step.layout.StepLayout
+import org.researchstack.foundation.components.presentation.StepPresentationViewModelFactory
 import org.researchstack.foundation.components.presentation.interfaces.IStepFragmentProvider
-import org.researchstack.foundation.core.interfaces.IStep
+import org.researchstack.foundation.core.interfaces.UIStep
 
 
-public class BackwardsCompatibleStepFragmentProvider(val stepLayoutProvider: IStepLayoutProvider): IStepFragmentProvider {
+public class BackwardsCompatibleStepFragmentProvider(val context: Context, val stepAdapterFactory: StepAdapterFactory, val resultFactory: ResultFactory) : IStepFragmentProvider<UIStep> {
 
-    override fun stepFragment(context: Context, step: IStep): Fragment? {
+    override fun stepFragment(step: UIStep, stepPresentationViewModelFactory: StepPresentationViewModelFactory<UIStep>): Fragment? {
 
         try {
-
-            val stepLayout = this.stepLayoutProvider.stepLayout(step)?.let {
+            val backboneStep = stepAdapterFactory.create(step)
+            val stepLayout = backboneStep.stepLayoutClass?.let {
                 val constructor = it.getConstructor(Context::class.java)
                 constructor.newInstance(context)
-            } as? StepLayout<*>
+            } as StepLayout
 
             if (stepLayout != null) {
-                // TODO: joliu
-                return null //BackwardsCompatibleStepFragment.newInstance(stepLayout)
-            }
-            else {
+                stepLayout.initialize(backboneStep, null)
+                return BackwardsCompatibleStepFragment.newInstance(stepLayout, stepPresentationViewModelFactory, resultFactory)
+            } else {
                 throw RuntimeException("Could not instantiate Step Layout")
             }
 

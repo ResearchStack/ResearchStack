@@ -4,59 +4,84 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.jetbrains.annotations.NotNull;
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.interop.ResultFactory;
+import org.researchstack.backbone.interop.StepAdapterFactory;
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
-import org.researchstack.backbone.ui.ViewTaskActivity;
-import org.researchstack.backbone.ui.views.StepSwitcher;
+import org.researchstack.foundation.components.common.task.OrderedTask;
+import org.researchstack.foundation.components.presentation.ITaskProvider;
 import org.researchstack.foundation.components.presentation.TaskPresentationFragment;
+import org.researchstack.foundation.components.presentation.TaskPresentationViewModelFactory;
+import org.researchstack.foundation.components.presentation.compatibility.BackwardsCompatibleStepFragmentProvider;
+import org.researchstack.foundation.components.presentation.compatibility.BackwardsCompatibleTaskPresentationFragment;
+import org.researchstack.foundation.components.presentation.interfaces.IStepFragmentProvider;
+import org.researchstack.foundation.components.presentation.interfaces.ITaskNavigator;
+import org.researchstack.foundation.core.interfaces.IStep;
+import org.researchstack.foundation.core.models.step.Step;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentationFragment.OnPerformTaskExitListener {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
+    public static final String TASK_FRAGMENT_TAG = "TaskFragmentTag";
 
-    private StepSwitcher root;
-
-    private Step currentStep;
-    private Task task;
-    private TaskResult taskResult;
+    public static final int CONTENT_VIEW_ID = R.id.rsb_content_container;
 
     public static Intent newIntent(Context context, Task task) {
-        Intent intent = new Intent(context, ViewTaskActivity.class);
+        Intent intent = new Intent(context, ViewTaskActivity2.class);
         intent.putExtra(EXTRA_TASK, task);
         return intent;
     }
+
+    private Fragment taskFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setResult(RESULT_CANCELED);
-        super.setContentView(R.layout.rsb_activity_step_switcher);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        FrameLayout frame = new FrameLayout(this);
+        frame.setId(CONTENT_VIEW_ID);
+        setContentView(frame, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
-        root = (StepSwitcher) findViewById(R.id.container);
 
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+//        root = (StepSwitcher) findViewById(R.id.container);
+        Step currentStep = null;
+        Task task;
+        TaskResult taskResult = null;
         if (savedInstanceState == null) {
             task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
-            taskResult = new TaskResult(task.getIdentifier());
-            taskResult.setStartDate(new Date());
         } else {
             task = (Task) savedInstanceState.getSerializable(EXTRA_TASK);
             taskResult = (TaskResult) savedInstanceState.getSerializable(EXTRA_TASK_RESULT);
             currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
+        }
+
+        if (savedInstanceState == null) {
+            taskFragment = create(task, taskResult, currentStep);
         }
 
         task.validateParameters();
@@ -65,6 +90,74 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
 //        task.onViewChange(Task.ViewChangeType.ActivityCreate, this, currentStep);
     }
 
+    @VisibleForTesting
+    BackwardsCompatibleTaskPresentationFragment create(@NonNull Task task, @Nullable TaskResult taskResult, @Nullable Step step) {
+        return BackwardsCompatibleTaskPresentationFragment.createInstance(task.getIdentifier(), getTaskPresentationViewModelFactory(task), getIStepFragmentProvider());
+    }
+
+    @VisibleForTesting
+    ResultFactory getResultFactory() {
+        return new ResultFactory() {
+
+            @Override
+            public StepResult create(@NotNull org.researchstack.foundation.core.models.result.StepResult result) {
+                StepResult stepResult = new StepResult(new org.researchstack.backbone.step.Step(result.getIdentifier()));
+                return stepResult;
+            }
+
+            @Override
+            public org.researchstack.foundation.core.models.result.StepResult create(@NotNull StepResult result) {
+                return new org.researchstack.foundation.core.models.result.StepResult(result.getIdentifier());
+            }
+        };
+    }
+
+    @VisibleForTesting
+    IStepFragmentProvider getIStepFragmentProvider() {
+        return new BackwardsCompatibleStepFragmentProvider(this, getStepAdapterFactory(), getResultFactory());
+    }
+
+    Map<String, org.researchstack.backbone.step.Step> backboneSteps = new HashMap<>();
+
+    @VisibleForTesting
+    StepAdapterFactory getStepAdapterFactory() {
+        return new StepAdapterFactory() {
+
+            @Override
+            public org.researchstack.backbone.step.Step create(IStep step) {
+                return backboneSteps.get(step.getIdentifier());
+            }
+
+            @Override
+            public IStep create(org.researchstack.backbone.step.Step step) {
+                backboneSteps.put(step.getIdentifier(), step);
+                return new org.researchstack.foundation.core.models.step.Step(step.getIdentifier(), step.getTitle());
+            }
+        };
+    }
+
+    @VisibleForTesting
+    ITaskProvider getITaskProvider(@NonNull Task task) {
+        org.researchstack.backbone.task.OrderedTask orderedTask = (org.researchstack.backbone.task.OrderedTask) task;
+
+        List<org.researchstack.foundation.core.models.step.Step> uiSteps = new ArrayList<>();
+        for (org.researchstack.backbone.step.Step backboneStep : orderedTask.getSteps()) {
+            Step uiStep = (Step) getStepAdapterFactory().create(backboneStep);
+            uiSteps.add(uiStep);
+        }
+        return (taskIdentifier) -> new OrderedTask(task.getIdentifier(), uiSteps);
+    }
+
+    @VisibleForTesting
+    ITaskNavigator<org.researchstack.foundation.core.models.step.Step, org.researchstack.foundation.core.models.result.TaskResult> getITaskNavigator(@NonNull Task task) {
+        return (OrderedTask) getITaskProvider(task).task(task.getIdentifier());
+    }
+
+    @VisibleForTesting
+    TaskPresentationViewModelFactory<Step>
+    getTaskPresentationViewModelFactory(@NonNull Task task) {
+        return new TaskPresentationViewModelFactory<>(getITaskNavigator(task), getITaskProvider(task));
+    }
 
 //    protected void showNextStep() {
 //        Step nextStep = task.getStepAfterStep(currentStep, taskResult);
@@ -187,7 +280,8 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
     public void onDataReady() {
         super.onDataReady();
 
-        // todo joliu show stuff
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(CONTENT_VIEW_ID, taskFragment).commit();
     }
 
     @Override

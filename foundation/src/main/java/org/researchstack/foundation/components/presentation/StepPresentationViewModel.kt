@@ -3,11 +3,12 @@ package org.researchstack.foundation.components.presentation
 import androidx.lifecycle.ViewModel
 import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.IStep
+import org.researchstack.foundation.core.models.result.StepResult
 import org.threeten.bp.Instant
 import java.util.concurrent.atomic.AtomicBoolean
 
-open class StepPresentationViewModel<StepType : IStep, ResultType : IResult>
-(val taskPresentationViewModel: TaskPresentationViewModel<in StepType, in ResultType>) : ViewModel() {
+open class StepPresentationViewModel<StepType : IStep>
+(val taskPresentationViewModel: TaskPresentationViewModel<in StepType>) : ViewModel() {
     private val addedResult: AtomicBoolean = AtomicBoolean()
     private val startTime: Instant = Instant.now()
 
@@ -27,7 +28,7 @@ open class StepPresentationViewModel<StepType : IStep, ResultType : IResult>
         }
     }
 
-    protected fun addStepResult(result: ResultType) {
+    protected fun addStepResult(result: StepResult<*>) {
         addedResult.set(true)
         taskPresentationViewModel.addStepResult(result)
     }

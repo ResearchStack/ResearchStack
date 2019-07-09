@@ -9,14 +9,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import org.researchstack.foundation.R
 import org.researchstack.foundation.core.interfaces.IResult
-import org.researchstack.foundation.core.interfaces.IStep
 import org.researchstack.foundation.core.interfaces.ITask
+import org.researchstack.foundation.core.interfaces.UIStep
 
-abstract class StepPresentationFragment<StepType : IStep, ResultType : IResult> : Fragment() {
+abstract class StepPresentationFragment<StepType : UIStep, ResultType : IResult> : Fragment() {
 
-    protected lateinit var stepPresentationViewModel: StepPresentationViewModel<StepType, ResultType>
+    //inject
+    lateinit var stepPresentationViewModelFactory: StepPresentationViewModelFactory<StepType>
+
+    protected lateinit var stepPresentationViewModel: StepPresentationViewModel<StepType>
 
     protected lateinit var taskPresentationFragment: TaskPresentationFragment<StepType, ResultType, ITask>
+
+    fun inject(stepPresentationViewModelFactory: StepPresentationViewModelFactory<StepType>) {
+        this.stepPresentationViewModelFactory = stepPresentationViewModelFactory
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -34,8 +41,8 @@ abstract class StepPresentationFragment<StepType : IStep, ResultType : IResult> 
         super.onActivityCreated(savedInstanceState)
 
         @Suppress("UNCHECKED_CAST")
-        stepPresentationViewModel = ViewModelProviders.of(this)
-                .get(StepPresentationViewModel::class.java) as StepPresentationViewModel<StepType, ResultType>
+        stepPresentationViewModel = ViewModelProviders.of(this, stepPresentationViewModelFactory.create())
+                .get(StepPresentationViewModel::class.java) as StepPresentationViewModel<StepType>
     }
 
 //    /**

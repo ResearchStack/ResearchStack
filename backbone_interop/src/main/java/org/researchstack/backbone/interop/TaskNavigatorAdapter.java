@@ -1,7 +1,5 @@
 package org.researchstack.backbone.interop;
 
-import android.content.Context;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.researchstack.backbone.task.Task;
@@ -40,18 +38,6 @@ public class TaskNavigatorAdapter implements ITaskNavigator, ITask {
     @Nullable
     @Override
     public IStep getStepWithIdentifier(@NotNull final String identifier) {
-        return null;
-    }
-
-    @NotNull
-    @Override
-    public String getTitleForStep(@NotNull final Context context, @NotNull final IStep step) {
-        return null;
-    }
-
-    @NotNull
-    @Override
-    public String getTitleForStep(@NotNull final IStep step) {
         return null;
     }
 

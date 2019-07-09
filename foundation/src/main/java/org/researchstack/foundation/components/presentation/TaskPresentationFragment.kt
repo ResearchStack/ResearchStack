@@ -9,27 +9,36 @@ import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import org.researchstack.foundation.R
 import org.researchstack.foundation.components.presentation.interfaces.IStepFragmentProvider
-import org.researchstack.foundation.components.presentation.interfaces.ITaskNavigator
 import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.IStep
 import org.researchstack.foundation.core.interfaces.ITask
+import org.researchstack.foundation.core.interfaces.UIStep
+import org.researchstack.foundation.core.models.result.StepResult
 import org.researchstack.foundation.core.models.result.TaskResult
 import java.util.*
 
-abstract class TaskPresentationFragment<StepType : IStep, ResultType : IResult, TaskType : ITask>() : androidx.fragment.app.Fragment() {
+abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult, TaskType : ITask>() : androidx.fragment.app.Fragment() {
 
     companion object {
         @JvmField
-        val ARGUMENT_TASK_VIEW = "TASK_VIEW"
+        val ARGUMENT_TASK_IDENTIFIER = "TASK_IDENTIFIER"
 
         @JvmField
         val ARGUMENT_TASK_RUN_UUID = "TASK_RUN_UUID"
+
+        @JvmStatic
+        @JvmOverloads
+        fun createBundle(taskIdentifier: String, taskRunUUID: UUID = UUID.randomUUID()): Bundle {
+            val bundle = Bundle()
+            bundle.putString(ARGUMENT_TASK_IDENTIFIER, taskIdentifier)
+            bundle.putParcelable(ARGUMENT_TASK_RUN_UUID, ParcelUuid.fromString(taskRunUUID.toString()))
+            return bundle
+        }
     }
 
     interface OnPerformTaskExitListener {
@@ -40,21 +49,22 @@ abstract class TaskPresentationFragment<StepType : IStep, ResultType : IResult, 
         fun onTaskExit(status: Status, taskResult: TaskResult)
     }
 
+    fun inject(taskViewModelFactory: TaskPresentationViewModelFactory<StepType>,
+               stepFragmentProvider: IStepFragmentProvider<StepType>) {
+        this.taskViewModelFactory = taskViewModelFactory
+        this.stepFragmentProvider = stepFragmentProvider
+    }
+
     // inject
-    lateinit var taskViewModelFactory: TaskPresentationViewModelFactory<StepType, ResultType>
-
-    lateinit var taskProvider: ITaskProvider
-    lateinit var stepFragmentProvider: IStepFragmentProvider
-
-    lateinit var taskPresentationViewModel: TaskPresentationViewModel<StepType, ResultType>
-
-    protected var _task: TaskType? = null
-    lateinit var task: TaskType
+    lateinit var taskViewModelFactory: TaskPresentationViewModelFactory<StepType>
+    // inject
+    lateinit var stepFragmentProvider: IStepFragmentProvider<StepType>
 
 
-    protected var _taskNavigator: ITaskNavigator<StepType, ResultType>? = null
-    public val taskNavigator: ITaskNavigator<StepType, ResultType>
-        get() = this._taskNavigator!!
+    lateinit var taskPresentationViewModel: TaskPresentationViewModel<StepType>
+
+//    lateinit var task: TaskType
+
 
     var _currentStep: StepType? = null
     var _currentStepFragment: Fragment? = null
@@ -62,24 +72,20 @@ abstract class TaskPresentationFragment<StepType : IStep, ResultType : IResult, 
     val currentStep: StepType?
         get() = this._currentStep
 
-    var _result: ResultType? = null
-    val result: ResultType
-        get() = this._result!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         lateinit var taskId: String
         var taskRunParcelableUuid: ParcelUuid? = null
 
         if (savedInstanceState == null) {
             arguments?.let {
-                taskId = it.getString(ARGUMENT_TASK_VIEW)!!
+                taskId = it.getString(ARGUMENT_TASK_IDENTIFIER)!!
                 taskRunParcelableUuid = it.getParcelable(ARGUMENT_TASK_RUN_UUID)
             }
 
         } else {
-            taskId = savedInstanceState.getString(ARGUMENT_TASK_VIEW)!!
+            taskId = savedInstanceState.getString(ARGUMENT_TASK_IDENTIFIER)!!
             taskRunParcelableUuid = savedInstanceState.getParcelable<ParcelUuid>(ARGUMENT_TASK_RUN_UUID)
         }
 
@@ -87,7 +93,7 @@ abstract class TaskPresentationFragment<StepType : IStep, ResultType : IResult, 
         taskPresentationViewModel = ViewModelProviders
                 .of(this, taskViewModelFactory
                         .create(taskId, taskRunParcelableUuid?.uuid ?: UUID.randomUUID()))
-                .get(TaskPresentationViewModel::class.java) as TaskPresentationViewModel<StepType, ResultType>
+                .get(TaskPresentationViewModel::class.java) as TaskPresentationViewModel<StepType>
 
         taskPresentationViewModel.getTaskNavigatorStateLiveData()
                 .observe(this, Observer<TaskPresentationViewModel.TaskNavigatorState<StepType>>
@@ -97,19 +103,15 @@ abstract class TaskPresentationFragment<StepType : IStep, ResultType : IResult, 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.rsf_fragment_task_presentation, container, false);
-
-        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
-
-        val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
-        appCompatActivity.setSupportActionBar(toolbar)
-        appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
-        this.initialize(savedInstanceState)
+//
+//        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
+//
+//        val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
+//        appCompatActivity.setSupportActionBar(toolbar)
+//        appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         return view
     }
-
-    abstract fun initialize(savedInstanceState: Bundle?)
 
     @VisibleForTesting
     protected fun showNextStep() {
@@ -150,34 +152,22 @@ abstract class TaskPresentationFragment<StepType : IStep, ResultType : IResult, 
         childFragmentManager.executePendingTransactions()
     }
 
-    abstract fun getStepResult(taskResult: ResultType, stepIdentifier: String): IResult?
-    abstract fun setStepResult(taskResult: ResultType, stepIdentifier: String, stepResult: IResult)
+    abstract fun getStepResult(taskResult: TaskResult, stepIdentifier: String): IResult?
+    abstract fun setStepResult(taskResult: TaskResult, stepIdentifier: String, stepResult: IResult)
 
     protected fun getFragmentForStep(step: StepType): Fragment {
-
-        // Change the title on the activity
-        val title: String = {
-            val title = this.taskNavigator.getTitleForStep(step)
-            if (title != "") {
-                title
-            } else {
-                this.taskNavigator.getTitleForStep(this.activity!!, step)
-            }
-
-        }()
-
-        setActionBarTitle(title)
-
         // Get result from the TaskResult, can be null
 
-        val stepResult: IResult? = this.getStepResult(this.result, step.identifier)
-
-        return createFragmentFromStep(step)
+        val fragment = createFragmentFromStep(step)
                 ?: throw RuntimeException("Cannot create fragment for step ${step.identifier}")
+        // Change the title on the activity
+        setActionBarTitle(step.stepTitle)
+
+        return fragment
     }
 
-    private fun createFragmentFromStep(step: IStep): Fragment? {
-        return this.stepFragmentProvider?.stepFragment(this.activity!! as Context, step)
+    private fun createFragmentFromStep(step: StepType): Fragment? {
+        return this.stepFragmentProvider?.stepFragment(step, StepPresentationViewModelFactory(taskPresentationViewModel))
     }
 
     fun checkExitListener(finishStatus: OnPerformTaskExitListener.Status) {
@@ -192,13 +182,13 @@ abstract class TaskPresentationFragment<StepType : IStep, ResultType : IResult, 
                 taskPresentationViewModel.getTaskNavigatorStateLiveData().value!!.taskResult)
     }
 
-    fun setActionBarTitle(title: String) {
+    fun setActionBarTitle(title: String?) {
 
         val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
 
         val actionBar = appCompatActivity.supportActionBar
         if (actionBar != null) {
-            actionBar.setTitle(title)
+            actionBar.run { setTitle(title) }
         }
     }
 

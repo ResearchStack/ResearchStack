@@ -3,10 +3,6 @@ package org.researchstack.backboneapp;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
+
+import org.researchstack.adapter.ViewTaskActivity2;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
@@ -38,7 +40,6 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.PinCodeActivity;
-import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class MainActivity extends PinCodeActivity
     private static final int REQUEST_CONSENT = 0;
     private static final int REQUEST_SURVEY  = 1;
 
-    // Task/Step Identifiers
+    // Task/UIStep Identifiers
     public static final  String FORM_STEP                 = "form_step";
     public static final  String AGE                       = "age";
     public static final  String INSTRUCTION               = "identifier";
@@ -197,11 +198,11 @@ public class MainActivity extends PinCodeActivity
 
         if(requestCode == REQUEST_CONSENT && resultCode == RESULT_OK)
         {
-            processConsentResult((TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT));
+            processConsentResult((TaskResult) data.getSerializableExtra(ViewTaskActivity2.EXTRA_TASK_RESULT));
         }
         else if(requestCode == REQUEST_SURVEY && resultCode == RESULT_OK)
         {
-            processSurveyResult((TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT));
+            processSurveyResult((TaskResult) data.getSerializableExtra(ViewTaskActivity2.EXTRA_TASK_RESULT));
         }
     }
 
@@ -275,8 +276,8 @@ public class MainActivity extends PinCodeActivity
                 formStep,
                 signatureStep);
 
-        // Launch using hte ViewTaskActivity and make sure to listen for the activity result
-        Intent intent = ViewTaskActivity.newIntent(this, consentTask);
+        // Launch using hte ViewTaskActivity2 and make sure to listen for the activity result
+        Intent intent = ViewTaskActivity2.newIntent(this, consentTask);
         startActivityForResult(intent, REQUEST_CONSENT);
     }
 
@@ -358,7 +359,7 @@ public class MainActivity extends PinCodeActivity
                 booleanStep, multiStep);
 
         // Create an activity using the task and set a delegate.
-        Intent intent = ViewTaskActivity.newIntent(this, task);
+        Intent intent = ViewTaskActivity2.newIntent(this, task);
         startActivityForResult(intent, REQUEST_SURVEY);
     }
 

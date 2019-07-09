@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import org.researchstack.foundation.components.presentation.interfaces.ITaskNavigator
 import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.IStep
+import org.researchstack.foundation.core.models.result.TaskResult
 import java.util.*
 
-class TaskPresentationViewModelFactory<StepType : IStep, ResultType : IResult>
-(val taskNavigator: ITaskNavigator<StepType, ResultType>) {
+class TaskPresentationViewModelFactory<StepType : IStep>
+(val taskNavigator: ITaskNavigator<StepType, TaskResult>,
+ val taskProvider: ITaskProvider) {
 
     fun create(taskIdentifier: String, taskRunUUID: UUID): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {
@@ -16,7 +18,7 @@ class TaskPresentationViewModelFactory<StepType : IStep, ResultType : IResult>
                 if (modelClass.isAssignableFrom(TaskPresentationViewModel::class.java)) {
 
                     @Suppress("UNCHECKED_CAST")
-                    return TaskPresentationViewModel<StepType, ResultType>(taskNavigator) as T
+                    return TaskPresentationViewModel(taskNavigator, taskProvider, taskIdentifier, taskRunUUID) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

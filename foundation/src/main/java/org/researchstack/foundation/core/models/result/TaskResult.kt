@@ -42,7 +42,7 @@ data class TaskResult @JvmOverloads constructor(override val identifier: String,
     /**
      * Sets the result for the step using the step's identifier as a key.
      *
-     * @param identifier the Step and StepResult's identifier
+     * @param identifier the UIStep and StepResult's identifier
      * @param stepResult the StepResult for this identifier
      */
     fun setStepResultForStepIdentifier(identifier: String, stepResult: StepResult<*>?) {
