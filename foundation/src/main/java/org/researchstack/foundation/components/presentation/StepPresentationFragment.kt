@@ -62,8 +62,10 @@ abstract class StepPresentationFragment<StepType : UIStep, ResultType : IResult>
      */
     protected fun handleActionButtonClick(@ActionType actionType: String) {
         if (actionType == ActionType.CANCEL) {
+            // handled in the Fragment to present UI
             this.taskPresentationFragment.showConfirmExitDialog()
         } else {
+            // handled by the ViewModel to modify the Task/Step state
             this.stepPresentationViewModel.handleAction(actionType)
         }
     }

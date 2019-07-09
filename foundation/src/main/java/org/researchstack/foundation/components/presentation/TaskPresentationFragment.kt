@@ -19,7 +19,11 @@ import org.researchstack.foundation.core.interfaces.UIStep
 import org.researchstack.foundation.core.models.result.TaskResult
 import java.util.*
 
-abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult, TaskType : ITask> : androidx.fragment.app.Fragment() {
+/**
+ * Base Fragment that presents a Task for the user to complete.
+ */
+abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult, TaskType : ITask>
+    : androidx.fragment.app.Fragment() {
 
     companion object {
         @JvmField
@@ -28,6 +32,10 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
         @JvmField
         val ARGUMENT_TASK_RUN_UUID = "TASK_RUN_UUID"
 
+        /**
+         * Creates the Bundle needed to configure TaskPresentationFragment. Pass in a taskRunUUID to
+         * continue a previous (unfinished) task run.
+         */
         @JvmStatic
         @JvmOverloads
         fun createBundle(taskIdentifier: String, taskRunUUID: UUID = UUID.randomUUID()): Bundle {

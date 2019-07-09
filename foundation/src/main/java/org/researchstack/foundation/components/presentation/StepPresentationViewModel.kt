@@ -7,6 +7,12 @@ import org.researchstack.foundation.core.models.result.StepResult
 import org.threeten.bp.Instant
 import java.util.concurrent.atomic.AtomicBoolean
 
+/**
+ * ViewModel for presenting an IStep.
+ *
+ * TODO: this model should manage Step states such as IStep's fields and any temporary states (those
+ * that have yet to be saved as a StepResult).
+ */
 open class StepPresentationViewModel<StepType : IStep>
 (val taskPresentationViewModel: TaskPresentationViewModel<in StepType>) : ViewModel() {
     private val addedResult: AtomicBoolean = AtomicBoolean()

@@ -20,9 +20,15 @@ import org.researchstack.foundation.components.presentation.StepPresentationView
 import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.UIStep
 
+/**
+ * Delegates between :backbone StepLayout, StepCallback classes and :foundation Fragments.
+ */
 class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult>(), StepCallbacks {
 
     companion object {
+        /**
+         * Returns an instance of this fragment that delegates for a given StepLayout.
+         */
         @JvmStatic
         fun newInstance(stepLayout: StepLayout, stepPresentationViewModelFactory: StepPresentationViewModelFactory<UIStep>, resultFactory: ResultFactory): BackwardsCompatibleStepFragment {
             val fragment = BackwardsCompatibleStepFragment()
@@ -33,7 +39,8 @@ class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult
         }
     }
 
-    lateinit var resultFactory: ResultFactory
+    // inject
+    private lateinit var resultFactory: ResultFactory
 
     fun inject(resultFactory: ResultFactory) {
         this.resultFactory = resultFactory
@@ -73,6 +80,9 @@ class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult
         return lp
     }
 
+    /**
+     * Delegates StepCallbacks Step actions to :foundation equivalents.
+     */
     override fun onSaveStep(action: Int, step: Step?, result: StepResult<*>?) {
         result?.let {
             taskPresentationFragment.taskPresentationViewModel.addStepResult(resultFactory.create(result))
@@ -98,7 +108,6 @@ class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult
     override fun getLayoutId(): Int {
         return R.layout.rsf_fragment_step_compat
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == android.R.id.home) {

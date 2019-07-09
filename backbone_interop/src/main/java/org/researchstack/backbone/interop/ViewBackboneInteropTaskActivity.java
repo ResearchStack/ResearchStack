@@ -19,6 +19,7 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.PinCodeActivity;
+import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.foundation.components.common.task.OrderedTask;
 import org.researchstack.foundation.components.presentation.ITaskProvider;
 import org.researchstack.foundation.components.presentation.TaskPresentationFragment;
@@ -37,16 +38,20 @@ import java.util.Map;
 
 import static org.threeten.bp.DateTimeUtils.toDate;
 
+/**
+ * Replicates the behavior of ViewTaskActivity while running :backbone tasks on :foundation.
+ */
 public class ViewBackboneInteropTaskActivity extends PinCodeActivity implements TaskPresentationFragment.OnTaskExitListener {
-    public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
-    public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
-    public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
-
     public static final int CONTENT_VIEW_ID = R.id.rsb_content_container;
 
+    /**
+     * @param context application context
+     * @param task    the backbone task to run
+     * @return intent to launch the backbone task
+     */
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewBackboneInteropTaskActivity.class);
-        intent.putExtra(EXTRA_TASK, task);
+        intent.putExtra(ViewTaskActivity.EXTRA_TASK, task);
         return intent;
     }
 
@@ -66,11 +71,11 @@ public class ViewBackboneInteropTaskActivity extends PinCodeActivity implements 
         Task task;
         TaskResult taskResult = null;
         if (savedInstanceState == null) {
-            task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
+            task = (Task) getIntent().getSerializableExtra(ViewTaskActivity.EXTRA_TASK);
         } else {
-            task = (Task) savedInstanceState.getSerializable(EXTRA_TASK);
-            taskResult = (TaskResult) savedInstanceState.getSerializable(EXTRA_TASK_RESULT);
-            currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
+            task = (Task) savedInstanceState.getSerializable(ViewTaskActivity.EXTRA_TASK);
+            taskResult = (TaskResult) savedInstanceState.getSerializable(ViewTaskActivity.EXTRA_TASK_RESULT);
+            currentStep = (Step) savedInstanceState.getSerializable(ViewTaskActivity.EXTRA_STEP);
         }
 
         if (savedInstanceState == null) {
@@ -85,6 +90,7 @@ public class ViewBackboneInteropTaskActivity extends PinCodeActivity implements 
     public void onDataReady() {
         super.onDataReady();
 
+        // wait for data ready and then add TaskPrsentationFragment to the view hierarchy
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(CONTENT_VIEW_ID, taskFragment).commit();
     }
@@ -99,13 +105,14 @@ public class ViewBackboneInteropTaskActivity extends PinCodeActivity implements 
 
     @Override
     public void onTaskExit(@NotNull Status status, @NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
+        // Send back task finish signal same way as ViewTaskActivity does in backbone
         if (status == Status.CANCELLED) {
             setResult(Activity.RESULT_CANCELED);
             finish();
         } else if (status == Status.FINISHED) {
             TaskResult tr = convert(taskResult);
             Intent resultIntent = new Intent();
-            resultIntent.putExtra(EXTRA_TASK_RESULT, tr);
+            resultIntent.putExtra(ViewTaskActivity.EXTRA_TASK_RESULT, tr);
             setResult(RESULT_OK, resultIntent);
             finish();
         }
@@ -113,13 +120,17 @@ public class ViewBackboneInteropTaskActivity extends PinCodeActivity implements 
 
     // region first stab at dependencies
 
+    //
+    // work on progress, fleshing out mappers/factories
+    //
+
     @VisibleForTesting
     TaskResult convert(@NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
         TaskResult tr = new TaskResult(taskResult.getIdentifier());
         tr.setStartDate(toDate(taskResult.getStartTimestamp()));
         tr.setEndDate(toDate(taskResult.getEndTimestamp()));
-        for(Map.Entry<String, org.researchstack.foundation.core.models.result.StepResult<?>> e : taskResult.getResults().entrySet()) {
-            tr.setStepResultForStepIdentifier(e.getKey(),getResultFactory().create(e.getValue()));
+        for (Map.Entry<String, org.researchstack.foundation.core.models.result.StepResult<?>> e : taskResult.getResults().entrySet()) {
+            tr.setStepResultForStepIdentifier(e.getKey(), getResultFactory().create(e.getValue()));
         }
 
         return tr;

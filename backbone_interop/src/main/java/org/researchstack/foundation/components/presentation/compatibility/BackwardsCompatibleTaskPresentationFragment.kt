@@ -10,6 +10,10 @@ import org.researchstack.foundation.core.models.step.Step
 import org.researchstack.foundation.core.models.task.Task
 import java.util.*
 
+/**
+ * Delegates some actions for :backbone ViewTaskActivity, hosts BackwardsCompatibleTaskPresentationFragments
+ * that replicate :backbone Step/StepLayout/StepCallbacks functionality, while running on :foundation.
+ */
 open class BackwardsCompatibleTaskPresentationFragment : TaskPresentationFragment<Step, TaskResult, Task>() {
     companion object {
         @JvmStatic

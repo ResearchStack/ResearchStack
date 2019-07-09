@@ -65,6 +65,7 @@ ext {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+    // provides Java 8 time (JSR-310) backport for pre-Nougat devices
     api 'com.jakewharton.threetenabp:threetenabp:1.0.5'
 
     implementation 'androidx.appcompat:appcompat:1.0.2'

@@ -39,6 +39,10 @@ import java.lang.annotation.Retention;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
+/**
+ * Defines the navigation direction animation for a step transition. For example, moving to the next
+ * step is typically animated by shifting the steps to the left.
+ */
 @Retention(SOURCE)
 @IntDef({NavDirection.SHIFT_LEFT, NavDirection.SHIFT_RIGHT})
 public @interface NavDirection {

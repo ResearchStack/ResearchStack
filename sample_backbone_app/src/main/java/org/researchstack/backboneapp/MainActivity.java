@@ -39,6 +39,7 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.PinCodeActivity;
+import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class MainActivity extends PinCodeActivity
     private static final int REQUEST_CONSENT = 0;
     private static final int REQUEST_SURVEY  = 1;
 
-    // Task/UIStep Identifiers
+    // Task/Step Identifiers
     public static final  String FORM_STEP                 = "form_step";
     public static final  String AGE                       = "age";
     public static final  String INSTRUCTION               = "identifier";
@@ -197,11 +198,11 @@ public class MainActivity extends PinCodeActivity
 
         if(requestCode == REQUEST_CONSENT && resultCode == RESULT_OK)
         {
-            processConsentResult((TaskResult) data.getSerializableExtra(ViewBackboneInteropTaskActivity.EXTRA_TASK_RESULT));
+            processConsentResult((TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT));
         }
         else if(requestCode == REQUEST_SURVEY && resultCode == RESULT_OK)
         {
-            processSurveyResult((TaskResult) data.getSerializableExtra(ViewBackboneInteropTaskActivity.EXTRA_TASK_RESULT));
+            processSurveyResult((TaskResult) data.getSerializableExtra(ViewTaskActivity.EXTRA_TASK_RESULT));
         }
     }
 
@@ -275,7 +276,7 @@ public class MainActivity extends PinCodeActivity
                 formStep,
                 signatureStep);
 
-        // Launch using hte ViewTaskActivity2 and make sure to listen for the activity result
+        // Launch using ViewBackboneInteropTaskActivity and make sure to listen for the activity result
         Intent intent = ViewBackboneInteropTaskActivity.newIntent(this, consentTask);
         startActivityForResult(intent, REQUEST_CONSENT);
     }

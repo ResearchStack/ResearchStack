@@ -38,7 +38,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * This interface defines the various types of actions that are possible to have.
+ * Defines the standard actions for an IStep.
  */
 @Retention(RetentionPolicy.SOURCE)
 @StringDef({ActionType.ADD_MORE, ActionType.BACKWARD, ActionType.CANCEL, ActionType.FORWARD, ActionType.INFO, ActionType.SKIP})

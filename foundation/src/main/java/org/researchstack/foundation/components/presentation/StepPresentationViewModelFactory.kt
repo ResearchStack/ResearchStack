@@ -4,6 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.researchstack.foundation.core.interfaces.IStep
 
+/**
+ * Factory for the StepPresentationViewModel.
+ *
+ * Providing ViewModelProvider.Factory allows us to inject dependencies and pass parameters
+ * to an instance since the Android framework controls the instantiation of ViewModels.
+ */
 class StepPresentationViewModelFactory<StepType : IStep>
 (val taskPresentationViewModel: TaskPresentationViewModel<StepType>) : ViewModel() {
     fun create(): ViewModelProvider.Factory {
