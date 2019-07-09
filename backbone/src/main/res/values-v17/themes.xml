@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+
+    <style name="Theme.Backbone" parent="Base.Theme.Backbone">
+        <item name="android:listPreferredItemPaddingStart">50dp</item>
+        <item name="android:listPreferredItemPaddingEnd">16dp</item>
+    </style>
+
+</resources>
