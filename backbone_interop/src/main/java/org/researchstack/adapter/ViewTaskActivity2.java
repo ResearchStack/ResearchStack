@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.threeten.bp.DateTimeUtils.toDate;
+
 public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentationFragment.OnPerformTaskExitListener {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
@@ -100,14 +102,21 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
         return new ResultFactory() {
 
             @Override
-            public StepResult create(@NotNull org.researchstack.foundation.core.models.result.StepResult result) {
-                StepResult stepResult = new StepResult(new org.researchstack.backbone.step.Step(result.getIdentifier()));
+            public <E> StepResult<E> create(@NotNull org.researchstack.foundation.core.models.result.StepResult<E> result) {
+                StepResult<E> stepResult = new StepResult<>(new org.researchstack.backbone.step.Step(result.getIdentifier()));
+
+                stepResult.setResults(result.getResults());
+
                 return stepResult;
             }
 
             @Override
-            public org.researchstack.foundation.core.models.result.StepResult create(@NotNull StepResult result) {
-                return new org.researchstack.foundation.core.models.result.StepResult(result.getIdentifier());
+            public <E> org.researchstack.foundation.core.models.result.StepResult<E> create(@NotNull StepResult<E> result) {
+                org.researchstack.foundation.core.models.result.StepResult<E> stepResult =
+                        new org.researchstack.foundation.core.models.result.StepResult<>(result.getIdentifier());
+                stepResult.setResults(result.getResults());
+
+                return stepResult;
             }
         };
     }
@@ -348,7 +357,14 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
     }
 
     TaskResult convert(@NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
-        return new TaskResult(taskResult.getIdentifier());
+        TaskResult tr = new TaskResult(taskResult.getIdentifier());
+        tr.setStartDate(toDate(taskResult.getStartTimestamp()));
+        tr.setEndDate(toDate(taskResult.getEndTimestamp()));
+        for(Map.Entry<String, org.researchstack.foundation.core.models.result.StepResult<?>> e : taskResult.getResults().entrySet()) {
+            tr.setStepResultForStepIdentifier(e.getKey(),getResultFactory().create(e.getValue()));
+        }
+
+        return tr;
     }
 
     @Override
@@ -361,6 +377,7 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
             Intent resultIntent = new Intent();
             resultIntent.putExtra(EXTRA_TASK_RESULT, tr);
             setResult(RESULT_OK, resultIntent);
+            finish();
         }
     }
 }
