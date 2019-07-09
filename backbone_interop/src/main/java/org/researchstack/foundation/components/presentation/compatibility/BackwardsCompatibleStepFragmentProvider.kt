@@ -1,6 +1,7 @@
 package org.researchstack.foundation.components.presentation.compatibility
 
 import android.content.Context
+import androidx.fragment.app.Fragment
 import org.researchstack.foundation.components.common.ui.layout.StepLayout
 import org.researchstack.foundation.components.presentation.interfaces.IStepFragment
 import org.researchstack.foundation.components.presentation.interfaces.IStepFragmentProvider
@@ -9,7 +10,7 @@ import org.researchstack.foundation.core.interfaces.IStep
 
 public class BackwardsCompatibleStepFragmentProvider(val stepLayoutProvider: IStepLayoutProvider): IStepFragmentProvider {
 
-    override fun stepFragment(context: Context, step: IStep): IStepFragment? {
+    override fun stepFragment(context: Context, step: IStep): Fragment? {
 
         try {
 

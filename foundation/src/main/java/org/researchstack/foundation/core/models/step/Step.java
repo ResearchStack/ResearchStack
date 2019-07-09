@@ -1,6 +1,5 @@
 package org.researchstack.foundation.core.models.step;
 
-import org.researchstack.foundation.components.survey.step.FormStep;
 import org.researchstack.foundation.core.interfaces.IStep;
 import org.researchstack.foundation.core.models.result.StepResult;
 import org.researchstack.foundation.core.models.task.Task;

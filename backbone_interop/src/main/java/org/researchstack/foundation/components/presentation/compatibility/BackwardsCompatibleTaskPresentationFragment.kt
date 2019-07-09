@@ -1,8 +1,8 @@
 package org.researchstack.foundation.components.presentation.compatibility
 
+import android.app.Activity
 import android.os.Bundle
-import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks
-import org.researchstack.foundation.components.presentation.TaskPresentationCallback
+import android.view.inputmethod.InputMethodManager
 import org.researchstack.foundation.components.presentation.TaskPresentationFragment
 import org.researchstack.foundation.components.presentation.interfaces.IStepFragmentProvider
 import org.researchstack.foundation.core.interfaces.IResult
@@ -10,27 +10,26 @@ import org.researchstack.foundation.core.models.result.StepResult
 import org.researchstack.foundation.core.models.result.TaskResult
 import org.researchstack.foundation.core.models.step.Step
 import org.researchstack.foundation.core.models.task.Task
-import org.threeten.bp.Instant
-import java.util.*
 
-open class BackwardsCompatibleTaskPresentationFragment: TaskPresentationFragment<Step, TaskResult, Task>(), StepCallbacks {
+open class BackwardsCompatibleTaskPresentationFragment : TaskPresentationFragment<Step, TaskResult, Task>() {
 
     companion object {
+        @JvmField
         val EXTRA_TASK_IDENTIFIER = "BackwardsCompatibleTaskPresentationFragment.ExtraTaskIdentifier"
+        @JvmField
         val EXTRA_TASK_RESULT = "BackwardsCompatibleTaskPresentationFragment.ExtraTaskResult"
+        @JvmField
         val EXTRA_STEP = "BackwardsCompatibleTaskPresentationFragment.ExtraStep"
 
         fun newInstance(
                 taskIdentifier: String,
-                stepFragmentProvider: IStepFragmentProvider,
-                callback: TaskPresentationCallback<TaskResult, Task>
+                stepFragmentProvider: IStepFragmentProvider
         ): BackwardsCompatibleTaskPresentationFragment {
             val fragment = BackwardsCompatibleTaskPresentationFragment()
             val args = Bundle()
             args.putString(EXTRA_TASK_IDENTIFIER, taskIdentifier)
             fragment.setArguments(args)
             fragment.stepFragmentProvider = stepFragmentProvider
-            fragment.callback = callback
             return fragment
         }
 
@@ -55,6 +54,18 @@ open class BackwardsCompatibleTaskPresentationFragment: TaskPresentationFragment
         this.task.validateParameters()
     }
 
+    override fun onPause() {
+        hideKeyboard()
+        super.onPause()
+    }
+
+    private fun hideKeyboard() {
+        val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (imm.isActive && imm.isAcceptingText) {
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+        }
+    }
+
     override fun getStepResult(taskResult: TaskResult, stepIdentifier: String): IResult? {
         return taskResult.getStepResult(stepIdentifier)
     }
@@ -63,13 +74,7 @@ open class BackwardsCompatibleTaskPresentationFragment: TaskPresentationFragment
         taskResult.setStepResultForStepIdentifier(stepIdentifier, stepResult as StepResult<*>)
     }
 
-    override fun saveAndFinish(clearResult: Boolean) {
-        if (clearResult) {
-            this.callback!!.onTaskPresentationFinished(this.task, null)
-        }
-        else {
-            this.result.endTimestamp = Instant.now()
-            this.callback!!.onTaskPresentationFinished(this.task, this.result)
-        }
+    fun notifyStepOfBackPressed() {
+        (_currentStepFragment as BackwardsCompatibleStepFragment).notifyStepOfBackPressed()
     }
 }

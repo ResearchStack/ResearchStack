@@ -1,6 +1,5 @@
 package org.researchstack.foundation.core.models.result
 
-import org.researchstack.foundation.components.survey.step.QuestionStep
 import org.researchstack.foundation.core.interfaces.IResult
 import org.threeten.bp.Instant
 import java.util.*
@@ -19,9 +18,9 @@ import java.util.*
  * a child of the [StepResult] object.
  */
 class StepResult<ResultType> @JvmOverloads constructor(override val identifier: String, override val type: String = DEFAULT_TYPE_KEY,
-                                              override var startTimestamp: Instant = Instant.now(),
-                                              override var endTimestamp: Instant = Instant.now(),
-                                              var results: MutableMap<String, ResultType> = HashMap()) : IResult {
+                                                       override var startTimestamp: Instant = Instant.now(),
+                                                       override var endTimestamp: Instant = Instant.now(),
+                                                       var results: MutableMap<String, ResultType> = HashMap()) : IResult {
 
     companion object {
         /**

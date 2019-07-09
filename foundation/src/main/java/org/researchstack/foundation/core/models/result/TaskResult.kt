@@ -17,10 +17,10 @@ import java.util.*
  * The `results` property contains the step results for the task.
  */
 data class TaskResult @JvmOverloads constructor(override val identifier: String,
-                      val taskRunUUID: UUID,
-                      override var startTimestamp: Instant = Instant.now(),
-                      override var endTimestamp: Instant = Instant.now(),
-                      val results: MutableMap<String, StepResult<*>> = HashMap()) : IResult {
+                                                val taskRunUUID: UUID,
+                                                override var startTimestamp: Instant = Instant.now(),
+                                                override var endTimestamp: Instant = Instant.now(),
+                                                val results: MutableMap<String, StepResult<*>> = HashMap()) : IResult {
     override val type: String
         get() = TYPE_KEY
 

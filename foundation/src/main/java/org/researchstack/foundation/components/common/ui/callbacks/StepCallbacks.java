@@ -4,14 +4,17 @@ import org.jetbrains.annotations.Nullable;
 import org.researchstack.foundation.core.interfaces.IResult;
 import org.researchstack.foundation.core.interfaces.IStep;
 
-public interface StepCallbacks {
-    int ACTION_PREV = -1;
-    int ACTION_NONE = 0;
-    int ACTION_NEXT = 1;
-    int ACTION_END = 2;
+public class StepCallbacks {
+    public static final int ACTION_PREV = -1;
+    public static final int ACTION_NONE = 0;
+    public static final int ACTION_NEXT = 1;
+    public static final int ACTION_END = 2;
 
-    void onSaveStep(int action, IStep step, @Nullable IResult result);
-
+    public void onSaveStep(int action, IStep step, @Nullable IResult result) {
+        throw new UnsupportedOperationException();
+    }
     @Deprecated
-    void onCancelStep();
+    public void onCancelStep() {
+        throw new UnsupportedOperationException();
+    }
 }
