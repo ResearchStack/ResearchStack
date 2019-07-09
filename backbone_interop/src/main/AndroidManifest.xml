@@ -4,6 +4,7 @@
     <application>
         <activity
             android:name="org.researchstack.adapter.ViewTaskActivity2"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustResize"
+            />
     </application>
 </manifest>
