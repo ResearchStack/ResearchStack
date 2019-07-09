@@ -43,7 +43,7 @@ public class EmptyView extends FrameLayout {
                 defStyleAttr,
                 defStyleRes);
 
-        TextView emptyTextView = (TextView) findViewById(R.id.view_empty_tv);
+        TextView emptyTextView = findViewById(R.id.view_empty_tv);
         String emptyText = a.getString(R.styleable.EmptyView_emptyText);
         emptyTextView.setText(emptyText);
 

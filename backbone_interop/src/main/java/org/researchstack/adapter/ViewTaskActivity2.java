@@ -43,7 +43,6 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
-    public static final String TASK_FRAGMENT_TAG = "TaskFragmentTag";
 
     public static final int CONTENT_VIEW_ID = R.id.rsb_content_container;
 
@@ -99,14 +98,6 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
         finish();
     }
 
-
-
-    public void setActionBarTitle(String title) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(title);
-        }
-    }
 
     TaskResult convert(@NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
         TaskResult tr = new TaskResult(taskResult.getIdentifier());

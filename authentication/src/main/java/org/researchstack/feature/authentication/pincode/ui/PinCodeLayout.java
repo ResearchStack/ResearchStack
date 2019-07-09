@@ -49,12 +49,12 @@ public class PinCodeLayout extends RelativeLayout {
 
         LayoutInflater.from(getContext()).inflate(R.layout.rsfa_step_layout_pincode, this, true);
 
-        title = (TextView) findViewById(R.id.title);
+        title = findViewById(R.id.title);
         title.setText(R.string.rsfa_pincode_enter_title);
 
         resetSummaryText();
 
-        editText = (EditText) findViewById(R.id.pincode);
+        editText = findViewById(R.id.pincode);
         editText.requestFocus();
 
         PinCodeConfig.Type pinType = config.getPinType();
@@ -73,7 +73,7 @@ public class PinCodeLayout extends RelativeLayout {
     }
 
     public void resetSummaryText() {
-        summary = (TextView) findViewById(R.id.text);
+        summary = findViewById(R.id.text);
         String characterType = getContext().getString(config.getPinType().getInputTypeStringId());
         String pinCodeInstructions = getContext().getString(R.string.rsfa_pincode_enter_summary,
                 config.getPinLength(),

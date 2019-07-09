@@ -10,7 +10,7 @@ import org.researchstack.foundation.components.presentation.interfaces.IStepFrag
 import org.researchstack.foundation.core.interfaces.UIStep
 
 
-public class BackwardsCompatibleStepFragmentProvider(val context: Context, val stepAdapterFactory: StepAdapterFactory, val resultFactory: ResultFactory) : IStepFragmentProvider<UIStep> {
+class BackwardsCompatibleStepFragmentProvider(val context: Context, val stepAdapterFactory: StepAdapterFactory, val resultFactory: ResultFactory) : IStepFragmentProvider<UIStep> {
 
     override fun stepFragment(step: UIStep, stepPresentationViewModelFactory: StepPresentationViewModelFactory<UIStep>): Fragment? {
 

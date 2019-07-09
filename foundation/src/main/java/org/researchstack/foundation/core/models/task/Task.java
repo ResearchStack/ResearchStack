@@ -181,7 +181,7 @@ public abstract class Task implements Serializable, ITask, ITaskNavigator<Step, 
 
     }
 
-    public static enum ViewChangeType {
+    public enum ViewChangeType {
         ActivityCreate,
         ActivityPause,
         ActivityResume,

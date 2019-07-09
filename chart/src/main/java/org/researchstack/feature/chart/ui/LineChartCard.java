@@ -87,13 +87,13 @@ public class LineChartCard extends CardView {
     }
 
     private void initializeViews() {
-        titleTextView = (TextView) findViewById(R.id.view_chart_line_title);
+        titleTextView = findViewById(R.id.view_chart_line_title);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(titleTextColor);
         titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
         titleTextView.setTypeface(Typeface.create(titleTextTypeface, Typeface.NORMAL));
 
-        expand = (ImageView) findViewById(R.id.view_chart_line_expand);
+        expand = findViewById(R.id.view_chart_line_expand);
         if (expandTintColor != 0) {
             Drawable drawable = expand.getDrawable();
             drawable = DrawableCompat.wrap(drawable);
@@ -101,7 +101,7 @@ public class LineChartCard extends CardView {
             expand.setImageDrawable(drawable);
         }
 
-        chart = (LineChart) findViewById(R.id.view_chart_line);
+        chart = findViewById(R.id.view_chart_line);
         chart.getLegend().setEnabled(false);
         chart.setDescription("");
         chart.setDrawBorders(false);

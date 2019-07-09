@@ -22,7 +22,7 @@ import org.researchstack.foundation.core.models.result.StepResult
 import org.researchstack.foundation.core.models.result.TaskResult
 import java.util.*
 
-abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult, TaskType : ITask>() : androidx.fragment.app.Fragment() {
+abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult, TaskType : ITask> : androidx.fragment.app.Fragment() {
 
     companion object {
         @JvmField
@@ -102,7 +102,7 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.rsf_fragment_task_presentation, container, false);
+        val view = inflater.inflate(R.layout.rsf_fragment_task_presentation, container, false)
 //
 //        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
 //
@@ -167,7 +167,7 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
     }
 
     private fun createFragmentFromStep(step: StepType): Fragment? {
-        return this.stepFragmentProvider?.stepFragment(step, StepPresentationViewModelFactory(taskPresentationViewModel))
+        return this.stepFragmentProvider.stepFragment(step, StepPresentationViewModelFactory(taskPresentationViewModel))
     }
 
     fun checkExitListener(finishStatus: OnPerformTaskExitListener.Status) {

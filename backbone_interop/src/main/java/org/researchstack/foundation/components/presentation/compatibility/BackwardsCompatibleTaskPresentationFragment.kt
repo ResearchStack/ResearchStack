@@ -44,7 +44,7 @@ open class BackwardsCompatibleTaskPresentationFragment : TaskPresentationFragmen
             val fragment = BackwardsCompatibleTaskPresentationFragment()
             val args = Bundle()
             args.putString(EXTRA_TASK_IDENTIFIER, taskIdentifier)
-            fragment.setArguments(args)
+            fragment.arguments = args
             fragment.stepFragmentProvider = stepFragmentProvider
             return fragment
         }

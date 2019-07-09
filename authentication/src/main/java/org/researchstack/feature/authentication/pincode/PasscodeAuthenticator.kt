@@ -35,56 +35,52 @@ open class PasscodeAuthenticator(val passcodeConfig: PinCodeConfig, val store: P
         fun presentPasscodeAuthentication(authenticator: PasscodeAuthenticator, cancel: CancellationSignal, callback: PasscodeAuthenticator.PasscodeAuthenticationCallback)
     }
 
-    companion object {
-
-    }
+    companion object
 
     var presentationDelegate: WeakReference<PresentationDelegate>? = null
     fun setPresentationDelegate(presentationDelegate: PresentationDelegate) {
         this.presentationDelegate = WeakReference(presentationDelegate)
     }
 
-    open class PasscodeAuthenticationResult(): Authenticator.AuthenticationResult() {
+    open class PasscodeAuthenticationResult : Authenticator.AuthenticationResult()
 
-    }
-
-    open class PasscodeAuthenticationCallback(): Authenticator.AuthenticationCallback<PasscodeAuthenticationResult>() {
+    open class PasscodeAuthenticationCallback : Authenticator.AuthenticationCallback<PasscodeAuthenticationResult>() {
         open fun onForgotPasscode() {}
     }
 
     sealed class PasscodeAuthenticatorException: RuntimeException {
 
-        constructor() {}
-        constructor(detailMessage: String) : super(detailMessage) {}
-        constructor(detailMessage: String, throwable: Throwable) : super(detailMessage, throwable) {}
-        constructor(throwable: Throwable) : super(throwable) {}
+        constructor()
+        constructor(detailMessage: String) : super(detailMessage)
+        constructor(detailMessage: String, throwable: Throwable) : super(detailMessage, throwable)
+        constructor(throwable: Throwable) : super(throwable)
 
         class InvalidPasscodeException : PasscodeAuthenticatorException {
-            constructor() {}
-            constructor(detailMessage: String) : super(detailMessage) {}
-            constructor(detailMessage: String, throwable: Throwable) : super(detailMessage, throwable) {}
-            constructor(throwable: Throwable) : super(throwable) {}
+            constructor()
+            constructor(detailMessage: String) : super(detailMessage)
+            constructor(detailMessage: String, throwable: Throwable) : super(detailMessage, throwable)
+            constructor(throwable: Throwable) : super(throwable)
         }
 
         class PasscodeExistsException : PasscodeAuthenticatorException {
-            constructor() {}
-            constructor(detailMessage: String) : super(detailMessage) {}
-            constructor(detailMessage: String, throwable: Throwable) : super(detailMessage, throwable) {}
-            constructor(throwable: Throwable) : super(throwable) {}
+            constructor()
+            constructor(detailMessage: String) : super(detailMessage)
+            constructor(detailMessage: String, throwable: Throwable) : super(detailMessage, throwable)
+            constructor(throwable: Throwable) : super(throwable)
         }
 
         class PasscodeDoesNotExistException : PasscodeAuthenticatorException {
-            constructor() {}
-            constructor(detailMessage: String) : super(detailMessage) {}
-            constructor(detailMessage: String, throwable: Throwable) : super(detailMessage, throwable) {}
-            constructor(throwable: Throwable) : super(throwable) {}
+            constructor()
+            constructor(detailMessage: String) : super(detailMessage)
+            constructor(detailMessage: String, throwable: Throwable) : super(detailMessage, throwable)
+            constructor(throwable: Throwable) : super(throwable)
         }
 
         class PresentationDelegateNotSetException : PasscodeAuthenticatorException {
-            constructor() {}
-            constructor(detailMessage: String) : super(detailMessage) {}
-            constructor(detailMessage: String, throwable: Throwable) : super(detailMessage, throwable) {}
-            constructor(throwable: Throwable) : super(throwable) {}
+            constructor()
+            constructor(detailMessage: String) : super(detailMessage)
+            constructor(detailMessage: String, throwable: Throwable) : super(detailMessage, throwable)
+            constructor(throwable: Throwable) : super(throwable)
         }
 
     }
@@ -96,7 +92,7 @@ open class PasscodeAuthenticator(val passcodeConfig: PinCodeConfig, val store: P
     override fun authenticate(cancel: CancellationSignal, callback: PasscodeAuthenticationCallback) {
         val delegate = this.presentationDelegate?.get()
         if (delegate == null) {
-            throw PasscodeAuthenticatorException.PresentationDelegateNotSetException();
+            throw PasscodeAuthenticatorException.PresentationDelegateNotSetException()
         }
         else {
             delegate.presentPasscodeAuthentication(this, cancel, callback)

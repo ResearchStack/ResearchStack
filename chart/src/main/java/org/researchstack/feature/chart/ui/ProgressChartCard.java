@@ -99,21 +99,21 @@ public class ProgressChartCard extends CardView {
     }
 
     private void initializeViews() {
-        titleTextView = (TextView) findViewById(R.id.view_chart_progress_title);
+        titleTextView = findViewById(R.id.view_chart_progress_title);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(titleTextColor);
         titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
         titleTextView.setTypeface(Typeface.create(titleTextTypeface, Typeface.NORMAL));
 
-        finishView = (TextView) findViewById(R.id.view_chart_progress_finish);
+        finishView = findViewById(R.id.view_chart_progress_finish);
         finishView.setText(finishText);
         finishView.setTextColor(finishTextColor);
 
-        tabLayout = (TabLayout) findViewById(R.id.view_chart_progress_tabs);
+        tabLayout = findViewById(R.id.view_chart_progress_tabs);
         tabLayout.setSelectedTabIndicatorColor(tabIndicatorColor);
         tabLayout.setTabTextColors(tabTextColor, tabSelectedTextColor);
 
-        chart = (PieChart) findViewById(R.id.view_chart_progress_chart);
+        chart = findViewById(R.id.view_chart_progress_chart);
         chart.setDrawSliceText(false);
         chart.setTouchEnabled(false);
         chart.setHoleColor(Color.TRANSPARENT);

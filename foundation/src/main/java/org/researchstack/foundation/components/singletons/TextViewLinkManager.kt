@@ -5,7 +5,7 @@ import org.researchstack.foundation.components.common.ui.views.TextViewLinkHandl
 import org.researchstack.foundation.components.web.ui.activities.ViewWebDocumentActivity
 import java.lang.RuntimeException
 
-public abstract class TextViewLinkManager {
+abstract class TextViewLinkManager {
 
     companion object {
 
@@ -29,9 +29,9 @@ public abstract class TextViewLinkManager {
 
 }
 
-public class LegacyTextViewLinkManager: TextViewLinkManager() {
+class LegacyTextViewLinkManager: TextViewLinkManager() {
 
-    public class LegacyTextViewLinkHandler(val context: Context, val title: String): TextViewLinkHandler() {
+    class LegacyTextViewLinkHandler(val context: Context, val title: String): TextViewLinkHandler() {
         override fun onLinkClick(url: String?) {
             val path = ResourcePathManager.getInstance().generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url)
             val intent = ViewWebDocumentActivity.newIntentForPath(

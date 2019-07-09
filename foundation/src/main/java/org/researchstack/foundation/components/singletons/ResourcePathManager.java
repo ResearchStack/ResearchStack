@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * This class is responsible for returning paths of resources defined in the assets folder. You
@@ -132,11 +133,7 @@ public abstract class ResourcePathManager {
     public static <T> T getResourceAsClass(Context context, Class<T> clazz, String filePath) {
         InputStream stream = getResouceAsInputStream(context, filePath);
         Reader reader = null;
-        try {
-            reader = new InputStreamReader(stream, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
 
         return gson.fromJson(reader, clazz);
     }

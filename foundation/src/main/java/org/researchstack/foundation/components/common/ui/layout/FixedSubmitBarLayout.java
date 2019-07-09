@@ -45,14 +45,14 @@ public abstract class FixedSubmitBarLayout extends FrameLayout implements StepLa
         inflater.inflate(R.layout.rsf_layout_fixed_submit_bar, this, true);
 
         // Add contentContainer to the layout
-        ViewGroup contentContainer = (ViewGroup) findViewById(R.id.rsf_content_container);
+        ViewGroup contentContainer = findViewById(R.id.rsf_content_container);
         View content = inflater.inflate(getContentResourceId(), contentContainer, false);
         contentContainer.addView(content, 0);
 
         // Init scrollview and submit bar guide positioning
         final View submitBarGuide = findViewById(R.id.rsf_submit_bar_guide);
-        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsf_submit_bar);
-        final ObservableScrollView scrollView = (ObservableScrollView) findViewById(R.id.rsf_content_container_scrollview);
+        final SubmitBar submitBar = findViewById(R.id.rsf_submit_bar);
+        final ObservableScrollView scrollView = findViewById(R.id.rsf_content_container_scrollview);
         scrollView.setScrollListener(scrollY -> onScrollChanged(scrollView, submitBarGuide, submitBar));
         scrollView.getViewTreeObserver()
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

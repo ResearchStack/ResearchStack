@@ -20,7 +20,7 @@ import org.researchstack.foundation.components.presentation.StepPresentationView
 import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.UIStep
 
-class BackwardsCompatibleStepFragment() : StepPresentationFragment<UIStep, IResult>(), StepCallbacks {
+class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult>(), StepCallbacks {
     override fun onSaveStep(action: Int, step: Step?, result: StepResult<*>?) {
         result?.let {
             taskPresentationFragment.taskPresentationViewModel.addStepResult(resultFactory.create(result))

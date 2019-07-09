@@ -143,8 +143,8 @@ public class PinCodeActivity2 extends AppCompatActivity implements StorageAccess
 
         int errorColor = getResources().getColor(R.color.rsb_error);
 
-        TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
-        EditText pincode = (EditText) pinCodeLayout.findViewById(R.id.pincode);
+        TextView summary = pinCodeLayout.findViewById(R.id.text);
+        EditText pincode = pinCodeLayout.findViewById(R.id.pincode);
 
         toggleKeyboardAction = enable -> {
             pincode.setEnabled(enable);

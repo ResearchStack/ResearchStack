@@ -72,13 +72,13 @@ public class PieChartCard extends CardView {
     }
 
     private void initializeViews() {
-        titleTextView = (TextView) findViewById(R.id.view_chart_pie_title);
+        titleTextView = findViewById(R.id.view_chart_pie_title);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(titleTextColor);
         titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
         titleTextView.setTypeface(Typeface.create(titleTextTypeface, Typeface.NORMAL));
 
-        chart = (PieChart) findViewById(R.id.view_chart_pie);
+        chart = findViewById(R.id.view_chart_pie);
         chart.setDrawSliceText(false);
         chart.setTouchEnabled(false);
         chart.setHoleRadius(0);
@@ -87,7 +87,7 @@ public class PieChartCard extends CardView {
         chart.setDescription("");
         chart.setDrawCenterText(false);
 
-        rowContainer = (LinearLayout) findViewById(R.id.view_chart_pie_rows);
+        rowContainer = findViewById(R.id.view_chart_pie_rows);
     }
 
     public void setTitle(@StringRes int titleResId) {
@@ -113,11 +113,11 @@ public class PieChartCard extends CardView {
 
             View row = inflater.inflate(R.layout.rsfch_item_chart_pie, rowContainer, false);
 
-            TextView label = (TextView) row.findViewById(R.id.item_chart_pie_label);
+            TextView label = row.findViewById(R.id.item_chart_pie_label);
             label.setText(xVal);
             label.setTextColor(data.getDataSet().getColor(i));
 
-            TextView value = (TextView) row.findViewById(R.id.item_chart_pie_value);
+            TextView value = row.findViewById(R.id.item_chart_pie_value);
             value.setText(getContext().getString(valueTextFormat, numberFormat.format(entryValue)));
             value.setTextColor(data.getDataSet().getColor(i));
 

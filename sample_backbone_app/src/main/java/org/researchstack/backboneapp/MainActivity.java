@@ -84,12 +84,12 @@ public class MainActivity extends PinCodeActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
 
-        consentButton = (AppCompatButton) findViewById(R.id.consent_button);
+        consentButton = findViewById(R.id.consent_button);
         consentButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -99,7 +99,7 @@ public class MainActivity extends PinCodeActivity
             }
         });
 
-        surveyButton = (AppCompatButton) findViewById(R.id.survey_button);
+        surveyButton = findViewById(R.id.survey_button);
         surveyButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -153,8 +153,8 @@ public class MainActivity extends PinCodeActivity
         AppPrefs prefs = AppPrefs.getInstance(this);
 
         View lblConsentedDate = findViewById(R.id.consented_date_lbl);
-        TextView consentedDate = (TextView)findViewById(R.id.consented_date);
-        ImageView consentedSig = (ImageView) findViewById(R.id.consented_signature);
+        TextView consentedDate = findViewById(R.id.consented_date);
+        ImageView consentedSig = findViewById(R.id.consented_signature);
 
         if(prefs.hasConsented())
         {
@@ -178,7 +178,7 @@ public class MainActivity extends PinCodeActivity
             lblConsentedDate.setVisibility(View.INVISIBLE);
         }
 
-        TextView surveyAnswer = (TextView) findViewById(R.id.survey_results);
+        TextView surveyAnswer = findViewById(R.id.survey_results);
 
         if(prefs.hasSurveyed())
         {

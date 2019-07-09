@@ -2,7 +2,6 @@ package org.researchstack.backbone.interop;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.researchstack.backbone.task.Task;
 import org.researchstack.foundation.components.presentation.interfaces.ITaskNavigator;
 import org.researchstack.foundation.core.interfaces.IResult;
 import org.researchstack.foundation.core.interfaces.IStep;
@@ -10,12 +9,6 @@ import org.researchstack.foundation.core.interfaces.ITask;
 import org.researchstack.foundation.core.models.task.Task.TaskProgress;
 
 public class TaskNavigatorAdapter implements ITaskNavigator, ITask {
-
-    private final Task task;
-
-    public TaskNavigatorAdapter(Task task) {
-        this.task = task;
-    }
 
     @NotNull
     @Override

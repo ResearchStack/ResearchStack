@@ -65,7 +65,7 @@ class MainActivityTest {
                 .perform(click())
 
         onView(isAssignableFrom(DatePicker::class.java))
-                .perform(setDate(2017, 6, 30));
+                .perform(setDate(2017, 6, 30))
 
         val appCompatButton4 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
