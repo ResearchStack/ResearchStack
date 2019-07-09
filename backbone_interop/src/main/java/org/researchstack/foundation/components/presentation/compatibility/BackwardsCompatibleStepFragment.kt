@@ -85,7 +85,7 @@ class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult
      */
     override fun onSaveStep(action: Int, step: Step?, result: StepResult<*>?) {
         result?.let {
-            taskPresentationFragment.taskPresentationViewModel.addStepResult(resultFactory.create(result))
+            stepPresentationViewModel.addStepResult(resultFactory.create(result))
         }
         if (action == StepCallbacks.ACTION_NEXT) {
             stepPresentationViewModel.handleAction(ActionType.FORWARD)

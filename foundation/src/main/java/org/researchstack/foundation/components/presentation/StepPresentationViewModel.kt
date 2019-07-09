@@ -34,7 +34,7 @@ open class StepPresentationViewModel<StepType : IStep>
         }
     }
 
-    protected fun addStepResult(result: StepResult<*>) {
+    fun addStepResult(result: StepResult<*>) {
         addedResult.set(true)
         taskPresentationViewModel.addStepResult(result)
     }

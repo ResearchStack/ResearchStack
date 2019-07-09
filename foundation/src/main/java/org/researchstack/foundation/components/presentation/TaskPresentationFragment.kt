@@ -136,7 +136,7 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
         childFragmentManager.executePendingTransactions()
     }
 
-    protected fun getFragmentForStep(step: StepType): Fragment {
+    private fun getFragmentForStep(step: StepType): Fragment {
         // Get result from the TaskResult, can be null
 
         val fragment = stepFragmentProvider.stepFragment(step, StepPresentationViewModelFactory(taskPresentationViewModel))
@@ -148,7 +148,7 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
     }
 
 
-    fun setActionBarTitle(title: String?) {
+    private fun setActionBarTitle(title: String?) {
 
         val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
 
@@ -169,7 +169,7 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
     }
 
 
-    fun checkExitListener(finishStatus: OnTaskExitListener.Status) {
+    private fun checkExitListener(finishStatus: OnTaskExitListener.Status) {
         var onTaskExitListener: OnTaskExitListener? = null
         if (parentFragment is OnTaskExitListener) {
             onTaskExitListener = parentFragment as OnTaskExitListener
