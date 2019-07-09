@@ -65,12 +65,6 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
         setContentView(frame, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        root = (StepSwitcher) findViewById(R.id.container);
         Step currentStep = null;
         Task task;
         TaskResult taskResult = null;
@@ -87,11 +81,59 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
         }
 
         task.validateParameters();
-
-        //TODO: joliu fix
-//        task.onViewChange(Task.ViewChangeType.ActivityCreate, this, currentStep);
     }
 
+
+    @Override
+    public void onDataReady() {
+        super.onDataReady();
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(CONTENT_VIEW_ID, taskFragment).commit();
+    }
+
+    @Override
+    public void onDataFailed() {
+        super.onDataFailed();
+        Toast.makeText(this, R.string.rsb_error_data_failed, Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+
+
+    public void setActionBarTitle(String title) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+        }
+    }
+
+    TaskResult convert(@NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
+        TaskResult tr = new TaskResult(taskResult.getIdentifier());
+        tr.setStartDate(toDate(taskResult.getStartTimestamp()));
+        tr.setEndDate(toDate(taskResult.getEndTimestamp()));
+        for(Map.Entry<String, org.researchstack.foundation.core.models.result.StepResult<?>> e : taskResult.getResults().entrySet()) {
+            tr.setStepResultForStepIdentifier(e.getKey(),getResultFactory().create(e.getValue()));
+        }
+
+        return tr;
+    }
+
+    @Override
+    public void onTaskExit(@NotNull Status status, @NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
+        if (status == Status.CANCELLED) {
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+        } else if (status == Status.FINISHED) {
+            TaskResult tr = convert(taskResult);
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(EXTRA_TASK_RESULT, tr);
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        }
+    }
+
+    // region first stab at dependencies
     @VisibleForTesting
     BackwardsCompatibleTaskPresentationFragment create(@NonNull Task task, @Nullable TaskResult taskResult, @Nullable Step step) {
         return BackwardsCompatibleTaskPresentationFragment.createInstance(task.getIdentifier(), getTaskPresentationViewModelFactory(task), getIStepFragmentProvider());
@@ -168,216 +210,5 @@ public class ViewTaskActivity2 extends PinCodeActivity2 implements TaskPresentat
         return new TaskPresentationViewModelFactory<>(getITaskNavigator(task), getITaskProvider(task));
     }
 
-//    protected void showNextStep() {
-//        Step nextStep = task.getStepAfterStep(currentStep, taskResult);
-//        if (nextStep == null) {
-//            saveAndFinish();
-//        } else {
-//            showStep(nextStep);
-//        }
-//    }
-//
-//    protected void showPreviousStep() {
-//        Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
-//        if (previousStep == null) {
-//            finish();
-//        } else {
-//            showStep(previousStep);
-//        }
-//    }
-
-//    private void showStep(Step step) {
-//        int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult)
-//                .getCurrent();
-//        int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
-//
-//        StepLayout stepLayout = getLayoutForStep(step);
-//        stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
-//        root.show(stepLayout,
-//                newStepPosition >= currentStepPosition
-//                        ? StepSwitcher.SHIFT_LEFT
-//                        : StepSwitcher.SHIFT_RIGHT);
-//        currentStep = step;
-//    }
-
-//    protected StepLayout getLayoutForStep(Step step) {
-//        // Change the title on the activity
-//        String title = task.getTitleForStep(this, step);
-//        setActionBarTitle(title);
-//
-//        // Get result from the TaskResult, can be null
-//        StepResult result = taskResult.getStepResult(step.getIdentifier());
-//
-//        // Return the Class & constructor
-//        StepLayout stepLayout = createLayoutFromStep(step);
-//        stepLayout.initialize(step, result);
-//        stepLayout.setCallbacks(this);
-//
-//        return stepLayout;
-//    }
-
-//    @NonNull
-//    private StepLayout createLayoutFromStep(Step step) {
-//        try {
-//            Class cls = step.getStepLayoutClass();
-//            Constructor constructor = cls.getConstructor(Context.class);
-//            return (StepLayout) constructor.newInstance(this);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    private void saveAndFinish() {
-//        taskResult.setEndDate(new Date());
-//        Intent resultIntent = new Intent();
-//        resultIntent.putExtra(EXTRA_TASK_RESULT, taskResult);
-//        setResult(RESULT_OK, resultIntent);
-//        finish();
-//    }
-//
-//    @Override
-//    protected void onPause() {
-////        hideKeyboard();
-//        super.onPause();
-////TODO: joliu fix
-////        task.onViewChange(Task.ViewChangeType.ActivityPause, this, currentStep);
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        //TODO: joliu fix
-////        task.onViewChange(Task.ViewChangeType.ActivityResume, this, currentStep);
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        //TODO: joliu fix
-////        task.onViewChange(Task.ViewChangeType.ActivityStop, this, currentStep);
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == android.R.id.home) {
-//            notifyStepOfBackPress();
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        notifyStepOfBackPress();
-//    }
-
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putSerializable(EXTRA_TASK, task);
-//        outState.putSerializable(EXTRA_TASK_RESULT, taskResult);
-//        outState.putSerializable(EXTRA_STEP, currentStep);
-//    }
-
-//    private void notifyStepOfBackPress() {
-//        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
-//        currentStepLayout.isBackEventConsumed();
-//    }
-
-    @Override
-    public void onDataReady() {
-        super.onDataReady();
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(CONTENT_VIEW_ID, taskFragment).commit();
-    }
-
-    @Override
-    public void onDataFailed() {
-        super.onDataFailed();
-        Toast.makeText(this, R.string.rsb_error_data_failed, Toast.LENGTH_LONG).show();
-        finish();
-    }
-
-//    @Override
-//    public void onSaveStep(int action, Step step, StepResult result) {
-////        onSaveStepResult(step.getIdentifier(), result);
-//
-////        onExecuteStepAction(action);
-//    }
-
-//    protected void onSaveStepResult(String id, StepResult result) {
-//        taskResult.setStepResultForStepIdentifier(id, result);
-//    }
-//
-//    protected void onExecuteStepAction(int action) {
-//        if (action == StepCallbacks.ACTION_NEXT) {
-//            showNextStep();
-//        } else if (action == StepCallbacks.ACTION_PREV) {
-//            showPreviousStep();
-//        } else if (action == StepCallbacks.ACTION_END) {
-//            showConfirmExitDialog();
-//        } else if (action == StepCallbacks.ACTION_NONE) {
-//            // Used when onSaveInstanceState is called of a view. No action is taken.
-//        } else {
-//            throw new IllegalArgumentException("Action with value " + action + " is invalid. " +
-//                    "See StepCallbacks for allowable arguments");
-//        }
-//    }
-
-//    private void hideKeyboard() {
-//        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-//        if (imm.isActive() && imm.isAcceptingText()) {
-//            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-//        }
-//    }
-
-//    private void showConfirmExitDialog() {
-//        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
-//                "Are you sure you want to exit?")
-//                .setMessage(R.string.lorem_medium)
-//                .setPositiveButton("End Task", (dialog, which) -> finish())
-//                .setNegativeButton("Cancel", null)
-//                .create();
-//        alertDialog.show();
-//    }
-
-//    @Override
-//    public void onCancelStep() {
-//        setResult(Activity.RESULT_CANCELED);
-//        finish();
-//    }
-
-    public void setActionBarTitle(String title) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(title);
-        }
-    }
-
-    TaskResult convert(@NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
-        TaskResult tr = new TaskResult(taskResult.getIdentifier());
-        tr.setStartDate(toDate(taskResult.getStartTimestamp()));
-        tr.setEndDate(toDate(taskResult.getEndTimestamp()));
-        for(Map.Entry<String, org.researchstack.foundation.core.models.result.StepResult<?>> e : taskResult.getResults().entrySet()) {
-            tr.setStepResultForStepIdentifier(e.getKey(),getResultFactory().create(e.getValue()));
-        }
-
-        return tr;
-    }
-
-    @Override
-    public void onTaskExit(@NotNull Status status, @NotNull org.researchstack.foundation.core.models.result.TaskResult taskResult) {
-        if (status == Status.CANCELLED) {
-            setResult(Activity.RESULT_CANCELED);
-            finish();
-        } else if (status == Status.FINISHED) {
-            TaskResult tr = convert(taskResult);
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra(EXTRA_TASK_RESULT, tr);
-            setResult(RESULT_OK, resultIntent);
-            finish();
-        }
-    }
+    // endregion
 }
