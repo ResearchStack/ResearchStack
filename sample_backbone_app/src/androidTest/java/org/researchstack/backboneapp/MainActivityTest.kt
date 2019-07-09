@@ -47,34 +47,16 @@ class MainActivityTest {
     private fun testSurvey() {
         val appCompatTextView5 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView5.perform(click())
 
         val appCompatEditText2 = onView(
                 allOf(withId(id.value),
-                        childAtPosition(
-                                allOf(withId(id.rsb_survey_step_body),
-                                        childAtPosition(
-                                                withId(id.rsb_survey_content_container),
-                                                2)),
-                                1),
                         isDisplayed()))
         appCompatEditText2.perform(replaceText("test"), closeSoftKeyboard())
 
         val appCompatTextView6 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView6.perform(click())
 
@@ -96,12 +78,6 @@ class MainActivityTest {
 
         val appCompatTextView7 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView7.perform(click())
 
@@ -118,12 +94,6 @@ class MainActivityTest {
 
         val appCompatTextView8 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView8.perform(click())
 
@@ -151,12 +121,6 @@ class MainActivityTest {
 
         val appCompatTextView9 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView9.perform(click())
 
@@ -245,12 +209,6 @@ class MainActivityTest {
 
         val appCompatTextView4 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                3)),
-                                2),
                         isDisplayed()))
 
         // ConsentSignatureStep
