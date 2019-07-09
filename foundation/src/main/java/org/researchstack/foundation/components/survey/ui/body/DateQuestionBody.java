@@ -39,9 +39,9 @@ public class DateQuestionBody implements StepBody {
 
     private boolean hasChosenDate;
 
-    public DateQuestionBody(Step step, StepResult result) {
+    public DateQuestionBody(Step step, StepResult<Long> result) {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step) : result;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
         this.format = (DateAnswerFormat) this.step.getAnswerFormat();
         this.calendar = Calendar.getInstance();
 

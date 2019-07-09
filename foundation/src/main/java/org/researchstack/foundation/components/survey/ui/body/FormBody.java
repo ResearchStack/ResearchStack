@@ -30,9 +30,9 @@ public class FormBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private List<StepBody> formStepChildren;
 
-    public FormBody(Step step, StepResult result) {
+    public FormBody(Step step, StepResult<StepResult> result) {
         this.step = (FormStep) step;
-        this.result = result == null ? new StepResult<>(step) : result;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
     }
 
     @Override

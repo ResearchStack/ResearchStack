@@ -19,7 +19,7 @@ import org.researchstack.feature.authentication.Authenticator
 
 open class PasscodeAuthenticator(val passcodeConfig: PinCodeConfig, val store: PasscodeStore): Authenticator<PasscodeAuthenticator.PasscodeAuthenticationResult, PasscodeAuthenticator.PasscodeAuthenticationCallback>() {
 
-    open interface PasscodeStore {
+    interface PasscodeStore {
         fun hasPasscode(): Boolean
         fun registerPasscode(passcode: String)
         fun checkPasscode(passcode: String)
@@ -27,7 +27,7 @@ open class PasscodeAuthenticator(val passcodeConfig: PinCodeConfig, val store: P
         fun changePasscode(oldPasscode: String, newPasscode: String)
     }
 
-    open interface PresentationDelegate {
+    interface PresentationDelegate {
         //this should present a way to get a passcode
         //note that in order to support combined passcode + biometric, this should probably only
         //return a yes / no response

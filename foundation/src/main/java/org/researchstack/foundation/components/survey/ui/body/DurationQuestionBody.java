@@ -44,9 +44,9 @@ public class DurationQuestionBody implements StepBody {
     private Spinner hoursSpinner;
     private Spinner minutesSpinner;
 
-    public DurationQuestionBody(Step step, StepResult result) {
+    public DurationQuestionBody(Step step, StepResult<Integer> result) {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step) : result;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
         this.format = (DurationAnswerFormat) this.step.getAnswerFormat();
     }
 

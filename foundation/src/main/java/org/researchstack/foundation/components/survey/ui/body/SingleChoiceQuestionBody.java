@@ -28,9 +28,9 @@ public class SingleChoiceQuestionBody<T> implements StepBody {
     private Choice<T>[] choices;
     private T currentSelected;
 
-    public SingleChoiceQuestionBody(Step step, StepResult result) {
+    public SingleChoiceQuestionBody(Step step, StepResult<T> result) {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step) : result;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
         this.format = (ChoiceAnswerFormat) this.step.getAnswerFormat();
         this.choices = format.getChoices();
 

@@ -16,7 +16,7 @@ public class BackwardsCompatibleStepFragmentProvider(val stepLayoutProvider: ISt
             val stepLayout = this.stepLayoutProvider.stepLayout(step)?.let {
                 val constructor = it.getConstructor(Context::class.java)
                 constructor.newInstance(context)
-            } as? StepLayout
+            } as? StepLayout<*>
 
             if (stepLayout != null) {
                 // TODO: joliu

@@ -1,6 +1,8 @@
 package org.researchstack.foundation.core.models.step;
 
+import org.researchstack.foundation.components.survey.step.FormStep;
 import org.researchstack.foundation.core.interfaces.IStep;
+import org.researchstack.foundation.core.models.result.StepResult;
 import org.researchstack.foundation.core.models.task.Task;
 
 import java.io.Serializable;
@@ -69,7 +71,7 @@ public class Step implements Serializable, IStep {
      * A short string that uniquely identifies the step within the task.
      * <p>
      * The identifier is reproduced in the results of a step. In fact, the only way to link a result
-     * (a {@link org.researchstack.foundation.result.StepResult} object) to the step that generated it
+     * (a {@link StepResult} object) to the step that generated it
      * is to look at the value of <code>identifier</code>. To accurately identify step results, you
      * need to ensure that step identifiers are unique within each task.
      * <p>

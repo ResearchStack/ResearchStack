@@ -32,9 +32,9 @@ public class TextQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private EditText editText;
 
-    public TextQuestionBody(Step step, StepResult result) {
+    public TextQuestionBody(Step step, StepResult<String> result) {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step) : result;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
     }
 
     @Override

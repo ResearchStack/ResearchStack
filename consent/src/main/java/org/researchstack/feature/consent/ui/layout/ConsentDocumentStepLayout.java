@@ -22,7 +22,7 @@ import org.researchstack.foundation.core.models.step.Step;
  * {@link #stepResult}
  * {@link #confirmationDialogBody}
  */
-public class ConsentDocumentStepLayout extends LinearLayout implements StepLayout {
+public class ConsentDocumentStepLayout extends LinearLayout implements StepLayout<Boolean> {
     private StepCallbacks callbacks;
 
     private String confirmationDialogBody;
@@ -44,14 +44,14 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     }
 
     @Override
-    public void initialize(Step step, StepResult result) {
+    public void initialize(Step step, StepResult<Boolean> result) {
         this.step = (ConsentDocumentStep) step;
         this.confirmationDialogBody = ((ConsentDocumentStep) step).getConfirmMessage();
         this.htmlContent = ((ConsentDocumentStep) step).getConsentHTML();
         this.stepResult = result;
 
         if (stepResult == null) {
-            stepResult = new StepResult<>(step);
+            stepResult = new StepResult<>(step.getIdentifier());
         }
 
         initializeStep();

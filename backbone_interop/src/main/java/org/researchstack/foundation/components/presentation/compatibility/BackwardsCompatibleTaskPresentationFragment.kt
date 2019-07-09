@@ -10,6 +10,7 @@ import org.researchstack.foundation.core.models.result.StepResult
 import org.researchstack.foundation.core.models.result.TaskResult
 import org.researchstack.foundation.core.models.step.Step
 import org.researchstack.foundation.core.models.task.Task
+import org.threeten.bp.Instant
 import java.util.*
 
 open class BackwardsCompatibleTaskPresentationFragment: TaskPresentationFragment<Step, TaskResult, Task>(), StepCallbacks {
@@ -41,13 +42,13 @@ open class BackwardsCompatibleTaskPresentationFragment: TaskPresentationFragment
             val taskIdentifier: String = this.arguments!!.getString(BackwardsCompatibleTaskPresentationFragment.EXTRA_TASK_IDENTIFIER)!!
             this._task = this.taskProvider.task(taskIdentifier) as Task
             this._taskNavigator = this.task
-            this._result = TaskResult(this.task.identifier)
-            this.result.setStartDate(Date())
+//            this._result = TaskResult(this.task.identifier)
+//            this.result.setStartDate(Date())
         } else {
             val taskIdentifier: String = savedInstanceState.getString(BackwardsCompatibleTaskPresentationFragment.EXTRA_TASK_IDENTIFIER)!!
             this._task = this.taskProvider.task(taskIdentifier) as Task
             this._taskNavigator = this.task
-            this._result = savedInstanceState.getSerializable(BackwardsCompatibleTaskPresentationFragment.EXTRA_TASK_RESULT) as TaskResult
+//            this._result = savedInstanceState.getSerializable(BackwardsCompatibleTaskPresentationFragment.EXTRA_TASK_RESULT) as TaskResult
             this._currentStep = savedInstanceState.getSerializable(BackwardsCompatibleTaskPresentationFragment.EXTRA_STEP) as Step
         }
 
@@ -67,7 +68,7 @@ open class BackwardsCompatibleTaskPresentationFragment: TaskPresentationFragment
             this.callback!!.onTaskPresentationFinished(this.task, null)
         }
         else {
-            this.result.setEndDate(Date())
+            this.result.endTimestamp = Instant.now()
             this.callback!!.onTaskPresentationFinished(this.task, this.result)
         }
     }

@@ -33,9 +33,9 @@ public class DecimalQuestionBody implements StepBody {
     private int viewType;
     private EditText editText;
 
-    public DecimalQuestionBody(Step step, StepResult result) {
+    public DecimalQuestionBody(Step step, StepResult<Float> result) {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step) : result;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
         this.format = (DecimalAnswerFormat) this.step.getAnswerFormat();
     }
 

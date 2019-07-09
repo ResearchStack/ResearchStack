@@ -2,7 +2,7 @@ package org.researchstack.feature.authentication
 
 import androidx.core.os.CancellationSignal
 
-open abstract class Authenticator<Result: Authenticator.AuthenticationResult, Callback: Authenticator.AuthenticationCallback<Result>> {
+abstract class Authenticator<Result: Authenticator.AuthenticationResult, Callback: Authenticator.AuthenticationCallback<Result>> {
 
     open class AuthenticationResult {
 

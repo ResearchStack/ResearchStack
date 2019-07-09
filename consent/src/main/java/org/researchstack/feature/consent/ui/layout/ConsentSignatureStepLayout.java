@@ -27,7 +27,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ConsentSignatureStepLayout extends RelativeLayout implements StepLayout {
+public class ConsentSignatureStepLayout extends RelativeLayout implements StepLayout<String> {
     public static final String KEY_SIGNATURE = "ConsentSignatureStep.Signature";
     public static final String KEY_SIGNATURE_DATE = "ConsentSignatureStep.Signature.Date";
 
@@ -49,9 +49,9 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     }
 
     @Override
-    public void initialize(Step step, StepResult result) {
+    public void initialize(Step step, StepResult<String> result) {
         this.step = step;
-        this.result = result == null ? new StepResult<>(step) : result;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
 
         initializeStep();
     }

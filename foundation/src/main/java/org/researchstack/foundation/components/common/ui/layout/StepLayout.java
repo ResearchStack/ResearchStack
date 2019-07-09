@@ -6,8 +6,8 @@ import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks
 import org.researchstack.foundation.core.models.result.StepResult;
 import org.researchstack.foundation.core.models.step.Step;
 
-public interface StepLayout {
-    void initialize(Step step, StepResult result);
+public interface StepLayout<ResultType> {
+    void initialize(Step step, StepResult<ResultType> result);
 
     View getLayout();
 

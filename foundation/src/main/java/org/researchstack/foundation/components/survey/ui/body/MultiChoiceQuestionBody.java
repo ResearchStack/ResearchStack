@@ -32,9 +32,9 @@ public class MultiChoiceQuestionBody<T> implements StepBody {
     private Choice<T>[] choices;
     private Set<T> currentSelected;
 
-    public MultiChoiceQuestionBody(Step step, StepResult result) {
+    public MultiChoiceQuestionBody(Step step, StepResult<T[]> result) {
         this.step = (QuestionStep) step;
-        this.result = result == null ? new StepResult<>(step) : result;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
         this.format = (ChoiceAnswerFormat) this.step.getAnswerFormat();
         this.choices = format.getChoices();
 

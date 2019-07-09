@@ -2,29 +2,41 @@ package org.researchstack.foundation.components.presentation
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import android.util.Log
+import android.os.ParcelUuid
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import org.researchstack.foundation.R
 import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks
-import org.researchstack.foundation.components.presentation.interfaces.IStepFragment
-import org.researchstack.foundation.components.presentation.interfaces.IStepFragmentProvider
-import org.researchstack.foundation.components.presentation.interfaces.ITaskNavigator
+import org.researchstack.foundation.components.presentation.interfaces.*
 import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.IStep
 import org.researchstack.foundation.core.interfaces.ITask
-import java.lang.RuntimeException
 import java.util.*
 
-abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, TaskType: ITask>(): androidx.fragment.app.Fragment(), StepCallbacks {
+abstract class TaskPresentationFragment<StepType : IStep, ResultType : IResult, TaskType : ITask>() : androidx.fragment.app.Fragment(), StepCallbacks {
+
+    companion object {
+        @JvmField
+        val ARGUMENT_TASK_VIEW = "TASK_VIEW"
+
+        @JvmField
+        val ARGUMENT_TASK_RUN_UUID = "TASK_RUN_UUID"
+    }
+
+    // inject
+    lateinit var taskViewModelFactory: TaskPresentationViewModelFactory<StepType, ResultType>
 
     lateinit var taskProvider: ITaskProvider
     lateinit var stepFragmentProvider: IStepFragmentProvider
+
+    lateinit var taskPresentationViewModel: TaskPresentationViewModel<StepType, ResultType>
 
     protected var _task: TaskType? = null
     lateinit var task: TaskType
@@ -46,6 +58,34 @@ abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, Ta
     val result: ResultType
         get() = this._result!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        lateinit var taskId: String
+        var taskRunParcelableUuid: ParcelUuid? = null
+
+        if (savedInstanceState == null) {
+            arguments?.let {
+                taskId = it.getString(ARGUMENT_TASK_VIEW)!!
+                taskRunParcelableUuid = it.getParcelable(ARGUMENT_TASK_RUN_UUID)
+            }
+
+        } else {
+            taskId = savedInstanceState.getString(ARGUMENT_TASK_VIEW)!!
+            taskRunParcelableUuid = savedInstanceState.getParcelable<ParcelUuid>(ARGUMENT_TASK_RUN_UUID)
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        taskPresentationViewModel = ViewModelProviders
+                .of(this, taskViewModelFactory
+                        .create(taskId, taskRunParcelableUuid?.uuid ?: UUID.randomUUID()))
+                .get(TaskPresentationViewModel::class.java) as TaskPresentationViewModel<StepType, ResultType>
+
+        taskPresentationViewModel.getTaskNavigatorStateLiveData()
+                .observe(this, Observer<TaskPresentationViewModel.TaskNavigatorState<StepType>>
+                { taskNavigatorState -> this.showStep(taskNavigatorState) })
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.rsf_fragment_task_presentation, container, false);
@@ -63,75 +103,37 @@ abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, Ta
 
     abstract fun initialize(savedInstanceState: Bundle?)
 
-    override fun onResume() {
-
-        val currentStep = this.currentStep
-
-        if (currentStep == null) {
-            this.taskNavigator.getStepAfterStep(null, this.result)?.let { firstStep ->
-                showStep(firstStep)
-            }
-        }
-        else {
-            showStep(currentStep)
-        }
-
-        super.onResume()
-    }
-
+    @VisibleForTesting
     protected fun showNextStep() {
-        val nextStep = this.taskNavigator.getStepAfterStep(this.currentStep, this.result)
-        if (nextStep == null) {
-            this.saveAndFinish(false)
-        } else {
-            showStep(nextStep)
-        }
+        taskPresentationViewModel.goForward()
+
     }
 
+    @VisibleForTesting
     protected fun showPreviousStep() {
-        val previousStep = this.taskNavigator.getStepBeforeStep(this.currentStep, this.result)
-        if (previousStep == null) {
-            saveAndFinish(true)
-        } else {
-            showStep(previousStep)
-        }
+        taskPresentationViewModel.goBack()
     }
 
-    private fun showStep(step: StepType) {
-        val currentStepPosition = this.currentStep?.let {
-            this.taskNavigator.getProgressOfCurrentStep(it, this.result).current
+    private fun showStep(taskNavigatorState: TaskPresentationViewModel.TaskNavigatorState<StepType>) {
+        if (taskNavigatorState.currentStep == null) {
+            saveAndFinish(taskNavigatorState.navDirection == NavDirection.SHIFT_RIGHT)
+            return
         }
 
-        val newStepPosition = this.taskNavigator.getProgressOfCurrentStep(step, this.result).current
-
-        val stepFragment = this.getFragmentForStep(step)
+        val stepFragment = this.getFragmentForStep(taskNavigatorState.currentStep)
         this._currentFragment = stepFragment
 
         val transaction = childFragmentManager.beginTransaction()
+        if (taskNavigatorState.navDirection == NavDirection.SHIFT_LEFT) {
+            transaction.setCustomAnimations(R.anim.rsf_slide_in_right, R.anim.rsf_slide_out_left)
+        } else if (taskNavigatorState.navDirection == NavDirection.SHIFT_RIGHT) {
+            transaction.setCustomAnimations(R.anim.rsf_slide_in_left, R.anim.rsf_slide_out_right)
 
-        if (currentStepPosition != null) {
-            if (newStepPosition > currentStepPosition) {
-                transaction.setCustomAnimations(R.anim.rsf_slide_in_right, R.anim.rsf_slide_out_left)
-            }
-            else {
-                transaction.setCustomAnimations(R.anim.rsf_slide_in_left, R.anim.rsf_slide_out_right)
-            }
-
-            transaction
-                    .replace(R.id.rsf_content_step, stepFragment.fragment)
-                    .commit()
         }
-        else {
-            transaction
-                    .add(R.id.rsf_content_step, stepFragment.fragment)
-                    .commit()
-        }
-
+        transaction
+                .replace(R.id.rsf_content_step, stepFragment.fragment)
+                .commit()
         childFragmentManager.executePendingTransactions()
-
-        Log.d("DEBUG", ""+childFragmentManager.fragments.size)
-
-        this._currentStep = step
     }
 
     abstract fun getStepResult(taskResult: ResultType, stepIdentifier: String): IResult?
@@ -146,8 +148,7 @@ abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, Ta
             val title = this.taskNavigator.getTitleForStep(step)
             if (title != "") {
                 title
-            }
-            else {
+            } else {
                 this.taskNavigator.getTitleForStep(this.activity!!, step)
             }
 
@@ -235,3 +236,4 @@ abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, Ta
     }
 
 }
+
