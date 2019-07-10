@@ -22,7 +22,7 @@ open class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     protected var viewType: Int = 0
-    protected var currentNumberTextView: TextView? = null
+    protected lateinit var currentNumberTextView: TextView
     private var seekBarMax = 0
 
     init {
@@ -69,7 +69,6 @@ open class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
             seekBarMax = format.maxValue - format.minValue
         }
 
-
         formItemView.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 // Write code to perform some action when progress is changed.
@@ -86,22 +85,21 @@ open class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
             }
         })
 
-        currentNumberTextView!!.setSingleLine(true)
+        currentNumberTextView.setSingleLine(true)
 
 
         if (result.result != null) {
             formItemView.seekBar.progress =
                 calculateProgress(result.result, format.minValue, format.maxValue, format.step)
-            currentNumberTextView!!.text = result.result.toString()
-        } else {
-            currentNumberTextView!!.text = calculateDisplayValue(formItemView.seekBar.progress).toString()
+            currentNumberTextView.text = result.result.toString()
         }
 
         return formItemView
     }
 
     private fun calculateDisplayValue(progress: Int): Int {
-        val value = Math.round(progress * (format.maxValue - format.minValue).toDouble() / seekBarMax)
+        val value =
+            Math.round(progress * (format.maxValue - format.minValue).toDouble() / seekBarMax)
         return (value.toInt() + format.minValue) / format.step * format.step
     }
 
@@ -113,9 +111,11 @@ open class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
         if (skipped) {
             result.setResult(null)
         } else {
-            val numString = currentNumberTextView!!.text.toString()
+            val numString = currentNumberTextView.text.toString()
             if (!TextUtils.isEmpty(numString)) {
-                result.result = Integer.valueOf(currentNumberTextView!!.text.toString())
+                result.result = Integer.valueOf(numString)
+            } else {
+                result.setResult(null)
             }
         }
 
@@ -123,9 +123,7 @@ open class ScaleQuestionBody(step: Step, result: StepResult<*>?) : StepBody {
     }
 
     override fun getBodyAnswerState(): BodyAnswer {
-        return if (currentNumberTextView == null) {
-            BodyAnswer.INVALID
-        } else format.validateAnswer(currentNumberTextView!!.text.toString())
+        return format.validateAnswer(currentNumberTextView.text.toString())
 
     }
 
