@@ -28,7 +28,7 @@ import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 
 public class ShoulderRangeOfMotionTaskFactory {
 
-    public static final String RangeOfMotionStepIdentifier = "rangeOfMotion";
+    public static final String ShoulderRangeOfMotionStepIdentifier = "shoulderRangeOfMotion";
 
     /**
      * Returns a predefined task that measures the range of motion for the left shoulder, right shoulder, or both shoulders.
@@ -133,7 +133,7 @@ public class ShoulderRangeOfMotionTaskFactory {
                         String title = String.format(titleFormat, LimbTaskOptions.Limb.RIGHT);
                         String textFormat = context.getString(R.string.rsb_shoulder_range_of_motion_spoken_instruction);
                         String text = String.format(textFormat, LimbTaskOptions.Limb.RIGHT);
-                        RangeOfMotionStep step = new RangeOfMotionStep(RangeOfMotionStepIdentifier, title, text);
+                        RangeOfMotionStep step = new RangeOfMotionStep(ShoulderRangeOfMotionStepIdentifier, title, text);
                         step.setSpokenInstruction(text);
                         step.setRecorderConfigurationList(recorderConfigList);
                         stepList.add(step);
@@ -214,7 +214,7 @@ public class ShoulderRangeOfMotionTaskFactory {
                         String title = String.format(titleFormat, LimbTaskOptions.Limb.LEFT);
                         String textFormat = context.getString(R.string.rsb_shoulder_range_of_motion_spoken_instruction);
                         String text = String.format(textFormat, LimbTaskOptions.Limb.LEFT);
-                        RangeOfMotionStep step = new RangeOfMotionStep(RangeOfMotionStepIdentifier, title, text);
+                        RangeOfMotionStep step = new RangeOfMotionStep(ShoulderRangeOfMotionStepIdentifier, title, text);
                         step.setSpokenInstruction(text);
                         step.setRecorderConfigurationList(recorderConfigList);
                         stepList.add(step);
