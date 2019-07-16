@@ -9,12 +9,12 @@ import org.researchstack.backbone.model.Choice;
  */
 public class ChoiceAnswerFormat extends AnswerFormat {
     private AnswerFormat.ChoiceAnswerStyle answerStyle;
-    public AnswerFormat.ChoiceAnswerStyle getAnswerStyle() {
-        return answerStyle;
-    }
-    public void setAnswerStyle(AnswerFormat.ChoiceAnswerStyle style) {
-        answerStyle = style;
-    }
+//    public AnswerFormat.ChoiceAnswerStyle getAnswerStyle() {
+//        return answerStyle;
+//    }
+//    public void setAnswerStyle(AnswerFormat.ChoiceAnswerStyle style) {
+//        answerStyle = style;
+//    }
     private Choice[] choices;
     public void setChoices(Choice[] choices) {
         this.choices = choices;
