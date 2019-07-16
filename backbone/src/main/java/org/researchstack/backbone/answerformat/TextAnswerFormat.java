@@ -137,13 +137,13 @@ public class TextAnswerFormat extends AnswerFormat {
         boolean valid = text != null && text.length() >= minimumLength &&
                 (maximumLength == UNLIMITED_LENGTH || text.length() <= maximumLength);
 
-        if (valid == false) {
-            return valid;
-        }
-
-        if (validationRegex != null) {
-            valid = text.matches(validationRegex);
-        }
+//        if (valid == false) {
+//            return valid;
+//        }
+//
+//        if (validationRegex != null) {
+//            valid = text.matches(validationRegex);
+//        }
 
         return valid;
     }
