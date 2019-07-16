@@ -21,11 +21,11 @@ public class SingleChoiceQuestionBody<T> implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    protected QuestionStep step;
-    protected StepResult<T> result;
-    protected ChoiceAnswerFormat format;
-    protected Choice<T>[] choices;
-    protected T currentSelected;
+    private QuestionStep step;
+    private StepResult<T> result;
+    private ChoiceAnswerFormat format;
+    private Choice<T>[] choices;
+    private T currentSelected;
 
     public SingleChoiceQuestionBody(Step step, StepResult result) {
         this.step = (QuestionStep) step;
@@ -103,7 +103,11 @@ public class SingleChoiceQuestionBody<T> implements StepBody {
         TextView label = (TextView) inflater.inflate(R.layout.rsb_item_text_view_title_compact,
                 compactView,
                 false);
-        label.setText(step.getTitle());
+        if(step.isOptional()) {
+            label.setText(step.getTitle());
+        }else{
+            label.setText(step.getTitle()+" *");
+        }
 
         compactView.addView(label, 0);
 

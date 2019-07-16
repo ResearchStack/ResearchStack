@@ -147,9 +147,9 @@ public class OrderedTask extends Task implements Serializable {
             uniqueIds.add(step.getIdentifier());
         }
 
-        if (uniqueIds.size() != steps.size()) {
-            throw new InvalidTaskException("OrderedTask has steps with duplicate ids");
-        }
+//        if (uniqueIds.size() != steps.size()) {
+//            throw new InvalidTaskException("OrderedTask has steps with duplicate ids");
+//        }
     }
 
     /**

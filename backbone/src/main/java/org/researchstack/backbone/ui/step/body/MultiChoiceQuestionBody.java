@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -49,7 +50,6 @@ public class MultiChoiceQuestionBody<T> implements StepBody {
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         View view = getViewForType(viewType, inflater, parent);
-
         Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -112,7 +112,11 @@ public class MultiChoiceQuestionBody<T> implements StepBody {
         TextView label = (TextView) inflater.inflate(R.layout.rsb_item_text_view_title_compact,
                 compactView,
                 false);
-        label.setText(step.getTitle());
+        if(step.isOptional()) {
+            label.setText(step.getTitle());
+        }else{
+            label.setText(step.getTitle()+" *");
+        }
 
         compactView.addView(label, 0);
 

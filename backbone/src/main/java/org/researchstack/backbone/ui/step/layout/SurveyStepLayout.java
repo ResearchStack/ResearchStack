@@ -17,6 +17,7 @@ import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
@@ -29,6 +30,9 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
+import java.util.List;
+
+import rx.functions.Action1;
 
 public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 {
@@ -129,20 +133,86 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         TextView title = (TextView) findViewById(R.id.rsb_survey_title);
         TextView summary = (TextView) findViewById(R.id.rsb_survey_text);
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-        submitBar.setPositiveAction(v -> onNextClicked());
-
-        if(questionStep != null)
-        {
-            setupTitleLayout(getContext(), questionStep, title, summary);
-
-            if(questionStep.isOptional())
-            {
-                submitBar.setNegativeTitle(R.string.rsb_step_skip);
-                submitBar.setNegativeAction(v -> onSkipClicked());
+        submitBar.setPositiveAction(new Action1() {
+            @Override
+            public void call(Object v) {
+                SurveyStepLayout.this.onNextClicked();
             }
-            else
-            {
-                submitBar.getNegativeActionView().setVisibility(View.GONE);
+        });
+
+//        if(questionStep != null)
+//        {
+//            setupTitleLayout(getContext(), questionStep, title, summary);
+//
+//            if(questionStep.isOptional())
+//            {
+//                submitBar.setNegativeTitle(R.string.rsb_step_skip);
+//                submitBar.setNegativeAction(v -> onSkipClicked());
+//            }
+//            else
+//            {
+//                submitBar.getNegativeActionView().setVisibility(View.GONE);
+//            }
+//        }
+
+        if (questionStep != null) {
+            if (!TextUtils.isEmpty(questionStep.getTitle())) {
+                title.setVisibility(View.VISIBLE);
+                if(questionStep.isOptional()) {
+                    title.setText(questionStep.getTitle());
+                }else{
+                    title.setText(questionStep.getTitle()+" *");
+                }
+            }
+
+            if (!TextUtils.isEmpty(questionStep.getText())) {
+                summary.setVisibility(View.VISIBLE);
+                summary.setText(Html.fromHtml(questionStep.getText()));
+                summary.setMovementMethod(new TextViewLinkHandler() {
+                    @Override
+                    public void onLinkClick(String url) {
+                        String path = ResourcePathManager.getInstance().
+                                generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
+                        Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
+                                questionStep.getTitle(),
+                                path);
+                        getContext().startActivity(intent);
+                    }
+                });
+            }
+
+            if(questionStep instanceof FormStep){
+                List<QuestionStep> questionSteps =((FormStep) questionStep).getFormSteps();
+                boolean isShowSkip =true;
+                for(int i=0;i<questionSteps.size();i++){
+                    if(!questionSteps.get(i).isOptional()){
+                        isShowSkip =false;
+                        break;
+                    }
+                }
+                if (isShowSkip) {
+                    submitBar.setNegativeTitle(R.string.rsb_step_skip);
+                    submitBar.setNegativeAction(new Action1() {
+                        @Override
+                        public void call(Object v) {
+                            SurveyStepLayout.this.onSkipClicked();
+                        }
+                    });
+                } else {
+                    submitBar.getNegativeActionView().setVisibility(View.GONE);
+                }
+            }else {
+                if (questionStep.isOptional()) {
+                    submitBar.setNegativeTitle(R.string.rsb_step_skip);
+                    submitBar.setNegativeAction(new Action1() {
+                        @Override
+                        public void call(Object v) {
+                            SurveyStepLayout.this.onSkipClicked();
+                        }
+                    });
+                } else {
+                    submitBar.getNegativeActionView().setVisibility(View.GONE);
+                }
             }
         }
     }
@@ -150,7 +220,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     @NonNull
     @MainThread
     // Protected and static so that FormStepLayout can access this method
-    protected static void setupTitleLayout(Context context, QuestionStep questionStep, TextView title, TextView summary) {
+    protected static void setupTitleLayout(final Context context, final QuestionStep questionStep, TextView title, TextView summary) {
         if(! TextUtils.isEmpty(questionStep.getTitle()))
         {
             title.setVisibility(View.VISIBLE);

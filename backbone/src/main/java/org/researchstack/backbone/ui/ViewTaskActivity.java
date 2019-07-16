@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -22,11 +23,15 @@ import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.backbone.ui.views.CircleProgressBar;
+import org.researchstack.backbone.ui.views.RingProgressBar;
 import org.researchstack.backbone.ui.views.StepSwitcher;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepLayoutHelper;
 
 import java.util.Date;
+
+import static org.researchstack.backbone.R.id.rsb_current_step;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 {
@@ -48,6 +53,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         return task;
     }
     protected TaskResult taskResult;
+    RingProgressBar timeProgress;
+    private CircleProgressBar progress_circular;
 
     protected int currentStepAction;
 
@@ -412,7 +419,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         if (showConfigrmDialog) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.rsb_are_you_sure)
-                    .setPositiveButton(R.string.rsb_discard_results, (dialog, i) -> discardResultsAndFinish())
+                    .setPositiveButton(R.string.rsb_discard_results, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+                            ViewTaskActivity.this.discardResultsAndFinish();
+                        }
+                    })
                     .setNegativeButton(R.string.rsb_cancel, null).create().show();
         } else {
             discardResultsAndFinish();
