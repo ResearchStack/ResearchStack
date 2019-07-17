@@ -593,7 +593,7 @@
     <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_PROGRESS_TEXT">Number of Moves: %1$s \n %2$s</string>
     <string name="rsb_TOWER_OF_HANOI_TASK_ACTIVE_STEP_SKIP_BUTTON_TITLE">I cannot solve this puzzle</string>
     <!-- Range of"rsb_Motion active task -->
-    <string name="rsb_LIMB_OPTION_LEFT_OR_RIGHT_ERROR">limbOption must be left or right</string>
+    <string name="rsb_SIDE_OPTION_LEFT_OR_RIGHT_ERROR">sideOption must be left or right</string>
     <!-- Knee Ran"rsb_e of Motion active task -->
     <string name="rsb_knee_range_of_motion_title">%1$s Knee Range of Motion</string>
     <string name="rsb_knee_range_of_motion_text_instruction_0">This activity measures how far you can extend your %1$s knee.</string>
