@@ -38,7 +38,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     protected SensorEvent sensorEvent;
     protected RelativeLayout layout;
-    private RangeOfMotionStep rangeOfMotionStep;
+    protected RangeOfMotionStep rangeOfMotionStep;
     private BroadcastReceiver deviceMotionReceiver;
 
     public float[] startAttitude = new float[4];
@@ -134,7 +134,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * relative to the zero position
      **/
 
-    private double getShiftedStartAngle() {
+    public double getShiftedStartAngle() {
 
         double absolute_start_angle;
         double raw_start_angle = getDeviceAngleInDegreesFromQuaternion(startAttitude);
@@ -224,7 +224,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * screen orientation
      **/
 
-    private double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
+    public double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
 
         double angle_in_degrees = 0;
         int orientation = getResources().getConfiguration().orientation;
