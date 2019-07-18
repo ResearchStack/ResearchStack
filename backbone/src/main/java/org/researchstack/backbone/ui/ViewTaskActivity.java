@@ -29,12 +29,8 @@ import org.researchstack.backbone.ui.views.RingProgressBar;
 import org.researchstack.backbone.ui.views.StepSwitcher;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepLayoutHelper;
-import org.researchstack.backbone.utils.PieProgressDrawable;
 
-import java.lang.reflect.Constructor;
 import java.util.Date;
-
-import static org.researchstack.backbone.R.id.rsb_current_step;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
