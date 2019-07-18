@@ -1,5 +1,6 @@
 package org.researchstack.backbone.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -204,13 +205,16 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
         EditText pincode = (EditText) pinCodeLayout.findViewById(R.id.pincode);
 
-        toggleKeyboardAction = enable -> {
-            pincode.setEnabled(enable);
-            pincode.setText("");
-            pincode.requestFocus();
-            if (enable) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(pincode, InputMethodManager.SHOW_FORCED);
+        toggleKeyboardAction = new Action1<Boolean>() {
+            @Override
+            public void call(Boolean enable) {
+                pincode.setEnabled(enable);
+                pincode.setText("");
+                pincode.requestFocus();
+                if (enable) {
+                    InputMethodManager imm = (InputMethodManager) PinCodeActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(pincode, InputMethodManager.SHOW_FORCED);
+                }
             }
         };
 

@@ -28,6 +28,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
+import org.researchstack.backbone.ui.views.SubmitBar;
 
 public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
@@ -154,7 +155,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
                     });
                 }
             }
-
+            SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
             // Set Next / Skip
             if (submitBar != null) {
                 submitBar.setVisibility(View.VISIBLE);

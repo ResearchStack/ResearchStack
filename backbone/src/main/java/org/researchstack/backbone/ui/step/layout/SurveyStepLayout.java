@@ -308,7 +308,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         }
         else
         {
-            onComplete();
+            //onComplete();
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+                    getStep(),
+                    stepBody.getStepResult(false));
         }
     }
 

@@ -65,4 +65,5 @@
     <color name="rsb_activity_red">#EA3A57</color>
     <color name="rsb_activity_purple">#9240D3</color>
     <color name="rsb_activity_default">@color/rsb_light_gray</color>
+    <color name="rsb_nof1_primary">#092C4C</color>
 </resources>
