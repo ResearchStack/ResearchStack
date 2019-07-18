@@ -55,9 +55,7 @@ public class MultipleDropDownQuestionBody implements StepBody {
     private QuestionStep step;
     //Total number of minutes
     private StepResult<String> result;
-    private String[] strList1;
-    private String[] strList2;
-    private String[] strList3;
+    private ArrayList<String[]> strList;
     private MultipleDropDownAnswerFormat format;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -73,9 +71,7 @@ public class MultipleDropDownQuestionBody implements StepBody {
         this.step = (QuestionStep) step;
         this.result = result == null ? new StepResult<>(step) : result;
         this.format = (MultipleDropDownAnswerFormat) this.step.getAnswerFormat();
-        this.strList1 = format.getList1();
-        this.strList2 = format.getList2();
-        this.strList3 = format.getList3();
+        this.strList = format.getList();
         // Restore results
 //        String resultValue = this.result.getResult();
 //        if (resultValue != null) {
@@ -115,18 +111,11 @@ public class MultipleDropDownQuestionBody implements StepBody {
 
         LinearLayout linearLayout = new LinearLayout(inflater.getContext());
         linearLayout.setWeightSum(1);
-        int first = strList1.length;
-        int second = strList2.length;
-        int third = strList3.length;
-
-        if (first > 0 && second > 0 && third > 0) {
-            linearLayout.addView(getSpinnerViews(inflater.getContext(), strList1, 1, 0.33f));
-            linearLayout.addView(getSpinnerViews(inflater.getContext(), strList2, 2, 0.33f));
-            linearLayout.addView(getSpinnerViews(inflater.getContext(), strList3, 3, 0.33f));
-        } else {
-            linearLayout.addView(getSpinnerViews(inflater.getContext(), strList1, 1, 0.5f));
-            linearLayout.addView(getSpinnerViews(inflater.getContext(), strList2, 2, 0.5f));
+        float weight =  1/ (float)strList.size();
+        for (int i = 0; i < strList.size(); i++) {
+            linearLayout.addView(getSpinnerViews(inflater.getContext(), strList.get(i), i, weight));
         }
+
 
         TextView title = new TextView(inflater.getContext());
         title.setTextColor(ContextCompat.getColor(inflater.getContext(), R.color.rsb_colorAccent));
@@ -146,7 +135,7 @@ public class MultipleDropDownQuestionBody implements StepBody {
     }
 
 
-    private View getSpinnerViews(Context context, String[] strList, int index, float v) {
+    private View getSpinnerViews(Context context, String[] strList, final int index, float v) {
         LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = vi.inflate(R.layout.rsb_item_multiple_drop_down, null);
 
@@ -264,7 +253,12 @@ public class MultipleDropDownQuestionBody implements StepBody {
 
         List<Map.Entry<Integer, String>> sortedEntries = new ArrayList<>(map.entrySet());
 
-        Collections.sort(sortedEntries, (e1, e2) -> e2.getKey().compareTo(e1.getKey()));
+        Collections.sort(sortedEntries, new Comparator<Map.Entry<Integer, String>>() {
+            @Override
+            public int compare(Map.Entry<Integer, String> e1, Map.Entry<Integer, String> e2) {
+                return e2.getKey().compareTo(e1.getKey());
+            }
+        });
 
         return sortedEntries;
     }
@@ -295,34 +289,15 @@ public class MultipleDropDownQuestionBody implements StepBody {
                 }
             }
 
-            int l1 = strList1.length;
-            int l2 = strList2.length;
-            int l3 = strList3.length;
-
-            if (l1 > 0 && l2 > 0 && l3 > 0) {
-                if (ind == 3) {
+            if (ind == strList.size()) {
+                return BodyAnswer.VALID;
+            } else {
+                if (step.isOptional()) {
                     return BodyAnswer.VALID;
                 } else {
-                    if (step.isOptional()) {
-                        return BodyAnswer.VALID;
-                    } else {
-                        return new BodyAnswer(false, R.string.rsb_invalid_answer_choice);
-                    }
-                }
-            } else if (l1 > 0 && l2 > 0) {
-                if (ind == 2) {
-                    return BodyAnswer.VALID;
-                } else {
-                    if (step.isOptional()) {
-                        return BodyAnswer.VALID;
-                    } else {
-                        return new BodyAnswer(false, R.string.rsb_invalid_answer_choice);
-                    }
+                    return new BodyAnswer(false, R.string.rsb_invalid_answer_choice);
                 }
             }
-
-
-            return BodyAnswer.VALID;
         }
     }
 
