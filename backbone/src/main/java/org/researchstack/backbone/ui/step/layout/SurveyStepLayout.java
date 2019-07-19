@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.Html;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
+import org.researchstack.backbone.ui.step.body.FormBody;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
@@ -58,6 +60,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     private SubmitBar submitBar;
 
     private MediatorLiveData<Boolean> mediator = new MediatorLiveData<>();
+    private boolean allStepsAreOptional;
+
     public SurveyStepLayout(Context context) {
         super(context);
     }
@@ -208,8 +212,9 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             container.addView(body, bodyIndex);
             body.setId(R.id.rsb_survey_step_body);
         }
-    }
 
+        checkIfAllStepsAreOptional();
+    }
 
     @NonNull
     private StepBody createStepBody(QuestionStep questionStep, StepResult result) {
@@ -268,11 +273,28 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     private void isStepEmpty(boolean isEmpty) {
-        if (!isEmpty)  {
+        if (!isEmpty || allStepsAreOptional)  {
             submitBar.setPositiveActionEnabled(getStep().getColorSecondary());
         } else {
             submitBar.setPositiveActionDisabled();
         }
 
+    }
+
+    private void checkIfAllStepsAreOptional() {
+        if (stepBody == null || !(stepBody instanceof FormBody)) {
+            return;
+        }
+
+        boolean allStepsAreOptional = true;
+
+        for (final QuestionStep step : ((FormBody) stepBody).getQuestionSteps()) {
+            if (!step.isOptional()) {
+                allStepsAreOptional = false;
+                break;
+            }
+        }
+
+        this.allStepsAreOptional = allStepsAreOptional;
     }
 }
