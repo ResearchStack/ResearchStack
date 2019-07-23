@@ -2,8 +2,6 @@ package org.researchstack.backboneapp;
 
 import android.app.Application;
 
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.storage.database.AppDatabase;
 import org.researchstack.backbone.storage.database.sqlite.DatabaseHelper;
@@ -36,7 +34,6 @@ public class BackboneApplication extends Application
                 null,
                 DatabaseHelper.DEFAULT_VERSION);
 
-        AndroidThreeTen.init(this);
         StorageAccess.getInstance().init(pinCodeConfig, encryptionProvider, fileAccess, database);
     }
 }

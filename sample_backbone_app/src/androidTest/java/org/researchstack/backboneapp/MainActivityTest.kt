@@ -5,26 +5,19 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.LinearLayout
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
-import androidx.test.espresso.action.ViewActions.replaceText
-import androidx.test.espresso.action.ViewActions.scrollTo
-import androidx.test.espresso.action.ViewActions.swipeDown
-import androidx.test.espresso.action.ViewActions.swipeRight
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions.setDate
-import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withClassName
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withSubstring
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import org.hamcrest.*
+import org.hamcrest.Description
+import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
-import org.hamcrest.core.*
-import org.junit.*
+import org.hamcrest.TypeSafeMatcher
+import org.hamcrest.core.IsInstanceOf
+import org.junit.Rule
+import org.junit.Test
 import org.researchstack.backboneapp.R.id
 
 @LargeTest
@@ -54,34 +47,16 @@ class MainActivityTest {
     private fun testSurvey() {
         val appCompatTextView5 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView5.perform(click())
 
         val appCompatEditText2 = onView(
                 allOf(withId(id.value),
-                        childAtPosition(
-                                allOf(withId(id.rsb_survey_step_body),
-                                        childAtPosition(
-                                                withId(id.rsb_survey_content_container),
-                                                2)),
-                                1),
                         isDisplayed()))
         appCompatEditText2.perform(replaceText("test"), closeSoftKeyboard())
 
         val appCompatTextView6 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView6.perform(click())
 
@@ -90,7 +65,7 @@ class MainActivityTest {
                 .perform(click())
 
         onView(isAssignableFrom(DatePicker::class.java))
-                .perform(setDate(2017, 6, 30));
+                .perform(setDate(2017, 6, 30))
 
         val appCompatButton4 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
@@ -103,12 +78,6 @@ class MainActivityTest {
 
         val appCompatTextView7 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView7.perform(click())
 
@@ -125,12 +94,6 @@ class MainActivityTest {
 
         val appCompatTextView8 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView8.perform(click())
 
@@ -158,12 +121,6 @@ class MainActivityTest {
 
         val appCompatTextView9 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView9.perform(click())
 
@@ -244,25 +201,14 @@ class MainActivityTest {
                         isDisplayed()))
         appCompatEditText.perform(replaceText("test"), closeSoftKeyboard())
 
+
         val appCompatTextView3 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.rsb_submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                1)),
-                                2),
                         isDisplayed()))
         appCompatTextView3.perform(click())
 
         val appCompatTextView4 = onView(
                 allOf(withId(id.bar_submit_postitive), withText("next"),
-                        childAtPosition(
-                                allOf(withId(id.submit_bar),
-                                        childAtPosition(
-                                                withId(id.rsb_current_step),
-                                                3)),
-                                2),
                         isDisplayed()))
 
         // ConsentSignatureStep
