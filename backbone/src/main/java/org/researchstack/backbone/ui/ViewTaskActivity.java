@@ -77,6 +77,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
 
     private int stepCount = 0;
 
+
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);

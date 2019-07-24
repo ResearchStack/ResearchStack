@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.print.HtmlToPdfPrinter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -50,7 +49,6 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         Intent intent = new Intent(context, ConsentViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         intent.putExtra(EXTRA_ASSETS_FOLDER, assetsFolder);
-
         return intent;
     }
 
