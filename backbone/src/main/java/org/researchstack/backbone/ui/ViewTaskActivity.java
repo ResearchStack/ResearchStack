@@ -238,7 +238,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
             ((SurveyStepLayout) stepLayout).initialize(step, result, colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
             ((SurveyStepLayout) stepLayout).isStepEmpty().observe(this, (isEmpty) -> { });
         } else if (stepLayout instanceof ConsentVisualStepLayout) {
-            ((ConsentVisualStepLayout) stepLayout).initialize(step, result, colorPrimary, colorSecondary, principalTextColor, secondaryTextColor, preferredLocale);
+            ((ConsentVisualStepLayout) stepLayout).initialize(step, result, colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
         } else {
             stepLayout.initialize(step, result);
         }
