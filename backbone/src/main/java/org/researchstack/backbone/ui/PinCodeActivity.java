@@ -31,20 +31,19 @@ import rx.Observable;
 import rx.functions.Action1;
 
 import static org.researchstack.backbone.utils.LocaleUtils.getLocaleFromString;
+import static org.researchstack.backbone.utils.LocaleUtils.getPreferredLocale;
 import static org.researchstack.backbone.utils.LocaleUtils.wrapLocaleContext;
 
 public class PinCodeActivity extends AppCompatActivity implements StorageAccessListener {
-
-    protected static String preferredLocale = null;
 
     private PinCodeLayout pinCodeLayout;
     private Action1<Boolean> toggleKeyboardAction;
 
     @Override
     protected void attachBaseContext(Context newBase) {
+        String preferredLocale = getPreferredLocale(newBase);
         if (preferredLocale != null) {
             Locale locale = getLocaleFromString(preferredLocale);
-
             super.attachBaseContext(wrapLocaleContext(newBase, locale));
         } else {
             super.attachBaseContext(newBase);

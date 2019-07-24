@@ -2,11 +2,17 @@ package org.researchstack.backbone.utils;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 
 import java.util.Locale;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class LocaleUtils {
+
+    public static final String LOCALE_PREFERENCES = "LocalePreferences";
+    public static final String PREFERRED_LOCALE_FIELD = "PreferredLocale";
 
     public static ContextWrapper wrapLocaleContext(Context context, Locale locale) {
         Configuration config = context.getResources().getConfiguration();
@@ -34,4 +40,16 @@ public class LocaleUtils {
         }
     }
 
+
+    public static void setPreferredLocale(Context context, String newLocale) {
+        SharedPreferences sharedPrefs = context.getSharedPreferences(LOCALE_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putString(PREFERRED_LOCALE_FIELD, newLocale);
+        editor.apply();
+    }
+
+    public static String getPreferredLocale(Context context) {
+        SharedPreferences sharedPrefs = context.getSharedPreferences(LOCALE_PREFERENCES, MODE_PRIVATE);
+        return sharedPrefs.getString(PREFERRED_LOCALE_FIELD, null);
+    }
 }

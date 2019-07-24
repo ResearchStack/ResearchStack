@@ -50,7 +50,6 @@ import java.util.List;
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, PermissionMediator
 {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
-    public static final String EXTRA_LOCALE= "ViewTaskActivity.ExtraLocale";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
     public static final String EXTRA_COLOR_PRIMARY = "ViewTaskActivity.ExtraColorPrimary";
@@ -79,10 +78,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     private int stepCount = 0;
 
 
-    public static Intent newIntent(Context context, Task task, String locale) {
+    public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
-        preferredLocale = locale;
         return intent;
     }
 

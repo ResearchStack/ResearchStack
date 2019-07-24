@@ -45,11 +45,10 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
     private String lastName;
     private String signatureBase64;
 
-    public static Intent newIntent(Context context, Task task, String assetsFolder, String locale) {
+    public static Intent newIntent(Context context, Task task, String assetsFolder) {
         Intent intent = new Intent(context, ConsentViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         intent.putExtra(EXTRA_ASSETS_FOLDER, assetsFolder);
-        preferredLocale = locale;
         return intent;
     }
 
