@@ -30,6 +30,7 @@ public class FormBody implements StepBody {
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private List<StepBody> formStepChildren;
+    private List<QuestionStep> questionSteps;
 
     public FormBody(Step step, StepResult result) {
         this.step = (FormStep) step;
@@ -44,7 +45,7 @@ public class FormBody implements StepBody {
                 parent,
                 false);
 
-        List<QuestionStep> questionSteps = step.getFormSteps();
+        questionSteps = step.getFormSteps();
         formStepChildren = new ArrayList<>(questionSteps.size());
 
         // Iterate through all steps and generate each compact view. Store each StepBody child in a
@@ -97,5 +98,9 @@ public class FormBody implements StepBody {
             LogExt.e(this.getClass(), "Cannot instantiate step body for step " + questionStep.getStepTitle() + ", class name: " + cls.getCanonicalName());
             throw new RuntimeException(e);
         }
+    }
+
+    public List<QuestionStep> getQuestionSteps() {
+        return questionSteps;
     }
 }
