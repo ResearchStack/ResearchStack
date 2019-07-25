@@ -5,6 +5,7 @@ import android.content.Context;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.Serializable;
@@ -122,7 +123,7 @@ public class OrderedTask extends Task implements Serializable {
         String title = super.getTitleForStep(context, step);
         if (TextUtils.isEmpty(title)) {
             int currentIndex = steps.indexOf(step);
-            title = context.getString(R.string.rsb_format_step_title,
+            title = LocaleUtils.getLocalizedString(context, R.string.rsb_format_step_title,
                     currentIndex + 1,
                     steps.size());
         }

@@ -18,6 +18,7 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
@@ -143,7 +144,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
                 @Override
                 public void onClick(View view)
                 {
-                    String webTitle = getResources().getString(R.string.rsb_consent_section_more_info);
+                    String webTitle = LocaleUtils.getLocalizedString(moreInfoView.getContext(), R.string.rsb_consent_section_more_info);
                     URL contentUrl = data.getContentUrl();
                     Intent webDoc;
                     if(contentUrl != null)

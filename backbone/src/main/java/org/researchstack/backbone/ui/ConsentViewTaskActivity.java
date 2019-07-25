@@ -21,6 +21,7 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.RSHTMLPDFWriter;
 
 import java.text.SimpleDateFormat;
@@ -154,10 +155,10 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             List<QuestionStep> formSteps = new ArrayList<>();
             if (requiresName)
             {
-                String firstName = (context != null) ? context.getString(R.string.rsb_name_first) : "First Name";
+                String firstName = (context != null) ? LocaleUtils.getLocalizedString(context, R.string.rsb_name_first) : "First Name";
                 formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, firstName, new TextAnswerFormat()));
 
-                String lastName = (context != null) ? context.getString(R.string.rsb_name_last) : "Last Name";
+                String lastName = (context != null) ? LocaleUtils.getLocalizedString(context,R.string.rsb_name_last) : "Last Name";
                 formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, lastName, new TextAnswerFormat()));
             }
 
@@ -167,11 +168,11 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
                 maxDate.add(Calendar.YEAR, -18);
 
                 DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
-                String dobText = (context != null) ? context.getString(R.string.rsb_consent_dob_full) : "Date of birth";
+                String dobText = (context != null) ? LocaleUtils.getLocalizedString(context, R.string.rsb_consent_dob_full) : "Date of birth";
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
             }
 
-            String formTitle = (context != null) ?  context.getString(R.string.rsb_consent) : "Consent";
+            String formTitle = (context != null) ?  LocaleUtils.getLocalizedString(context, R.string.rsb_consent) : "Consent";
             FormStep formStep = new FormStep(ID_FORM, formTitle, "");
             formStep.setOptional(false);
             formStep.setFormSteps(formSteps);
