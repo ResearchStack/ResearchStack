@@ -269,6 +269,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     protected void onPause() {
         hideKeyboard();
         super.onPause();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
 
         task.onViewChange(Task.ViewChangeType.ActivityPause, this, currentStep);
     }
@@ -276,6 +277,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     @Override
     protected void onResume() {
         super.onResume();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+
         task.onViewChange(Task.ViewChangeType.ActivityResume, this, currentStep);
     }
 
