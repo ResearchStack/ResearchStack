@@ -3,7 +3,10 @@ language: android
 # Required to run retrolambda
 jdk:
     - oraclejdk9
-    
+
+# Use Precise instead of Trusty until the latest tool fixes its Android-tools problem: https://github.com/travis-ci/travis-ci/issues/5370
+dist: precise
+
 android:
   components:
     # Uncomment the lines below if you want to
