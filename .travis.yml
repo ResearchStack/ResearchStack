@@ -2,7 +2,7 @@ language: android
 
 # Required to run retrolambda
 jdk:
-    - oraclejdk8
+    - oraclejdk9
     
 android:
   components:
@@ -28,8 +28,8 @@ android:
 
 # Required to run retrolambda
 before_install:
-  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - export JAVA_HOME=$JAVA8_HOME
+  - export JAVA8_HOME=/usr/lib/jvm/java-9-oracle
+  - export JAVA_HOME=$JAVA9_HOME
 
 before_script:
   # Tests crash if a local.properties file isn't present; this file is not kept
