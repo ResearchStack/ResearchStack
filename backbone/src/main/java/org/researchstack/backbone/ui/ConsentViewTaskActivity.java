@@ -104,15 +104,15 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         // you can also set title / message
         final AlertDialog dialog = new ProgressDialog.Builder(this)
                 .setCancelable(false)
-                .setTitle(getString(R.string.rsb_saving_consent))
-                .setMessage(getString(R.string.rsb_please_wait))
+                .setTitle(LocaleUtils.getLocalizedString(this, R.string.rsb_saving_consent))
+                .setMessage(LocaleUtils.getLocalizedString(this, R.string.rsb_please_wait))
                 .create();
 
         dialog.show();
 
         String consentAssetsFolder = getIntent().getStringExtra(EXTRA_ASSETS_FOLDER);
-        String role = getString(R.string.rsb_consent_role);
-        String dateFormat = getString(R.string.rsb_consent_doc_line_date_format);
+        String role = LocaleUtils.getLocalizedString(this, R.string.rsb_consent_role);
+        String dateFormat = LocaleUtils.getLocalizedString(this, R.string.rsb_consent_doc_line_date_format);
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName),
                 role,
                 signatureBase64,
@@ -135,8 +135,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
      * {@link #getConsentPersonalInfoFormStep(Context context, boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
      */
     @Deprecated
-    public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate)
-    {
+    public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate) {
         return getConsentPersonalInfoFormStep(null, requiresName, requiresBirthDate);
     }
 

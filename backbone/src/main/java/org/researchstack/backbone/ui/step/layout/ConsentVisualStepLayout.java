@@ -116,9 +116,11 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
 
         // Set Title
         TextView titleView = (TextView) findViewById(R.id.title);
-        String title = TextUtils.isEmpty(data.getTitle()) ? getResources().getString(data.getType()
-                .getTitleResId()) : data.getTitle();
-        titleView.setText(title);
+        if (TextUtils.isEmpty(data.getTitle())) {
+            titleView.setText(LocaleUtils.getLocalizedString(getContext(), data.getType().getTitleResId()));
+        } else {
+            titleView.setText(data.getTitle());
+        }
         titleView.setTextColor(principalTextColor);
 
         // Set Summary
@@ -167,7 +169,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         }
 
         final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-        submitBar.setPositiveTitle(step.getNextButtonString());
+        submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(), step.getNextButtonString()));
         submitBar.setNegativeTitleColor(colorPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
         submitBar.setPositiveAction(new OnClickListener()

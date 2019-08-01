@@ -90,7 +90,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
             // Set Next / Skip
             final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-            submitBar.setPositiveTitle(R.string.rsb_next);
+            submitBar.setPositiveTitle(getContext().getString(R.string.rsb_next));
             submitBar.setPositiveAction(new OnClickListener()
             {
                 @Override
@@ -104,7 +104,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             });
 
             if (step.isOptional()) {
-                submitBar.setNegativeTitle(R.string.rsb_step_skip);
+                submitBar.setNegativeTitle(getContext().getString(R.string.rsb_step_skip));
                 submitBar.setNegativeAction(new OnClickListener()
                 {
                     @Override
