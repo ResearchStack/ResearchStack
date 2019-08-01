@@ -42,7 +42,8 @@ public class LocaleUtils {
 
     public static String getLocalizedString(Context context, int stringId, Object... args) {
         String preferredLocale = getPreferredLocale(context);
-        if (preferredLocale == null) {
+        if (preferredLocale == null || context.getResources() == null
+                || context.getResources().getConfiguration() == null) {
             return context.getString(stringId);
         }
         Locale locale = getLocaleFromString(preferredLocale);
