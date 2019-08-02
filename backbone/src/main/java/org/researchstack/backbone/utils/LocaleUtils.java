@@ -44,7 +44,7 @@ public class LocaleUtils {
         String preferredLocale = getPreferredLocale(context);
         if (preferredLocale == null || context.getResources() == null
                 || context.getResources().getConfiguration() == null) {
-            return context.getString(stringId);
+            return context.getString(stringId, args);
         }
         Locale locale = getLocaleFromString(preferredLocale);
         context.getResources().getConfiguration().setLocale(locale);
