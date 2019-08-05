@@ -84,6 +84,7 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
                         }
                     });
         }
+
     }
 
     public @IdRes

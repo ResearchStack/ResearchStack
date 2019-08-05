@@ -9,6 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
@@ -22,10 +26,6 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
-
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 
 public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
@@ -71,7 +71,6 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
         this.questionStep = (QuestionStep) step;
         this.stepResult = result;
-
         initializeStep();
     }
 
@@ -115,6 +114,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveAction(v -> onNextClicked());
 
+        submitBar.setVisibility(View.VISIBLE);
         if (questionStep != null) {
             setupTitleLayout(getContext(), questionStep, title, summary);
 
