@@ -276,7 +276,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     @Override
     protected void onResume() {
         super.onResume();
-
         task.onViewChange(Task.ViewChangeType.ActivityResume, this, currentStep);
     }
 
