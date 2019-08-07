@@ -14,6 +14,7 @@ import android.widget.TextView;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.storage.file.PinCodeConfig;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.ViewUtils;
 
 import java.util.Arrays;
@@ -75,7 +76,7 @@ public class PinCodeLayout extends RelativeLayout {
     public void resetSummaryText() {
         summary = (TextView) findViewById(R.id.text);
         String characterType = getContext().getString(config.getPinType().getInputTypeStringId());
-        String pinCodeInstructions = getContext().getString(R.string.rsb_pincode_enter_summary,
+        String pinCodeInstructions = LocaleUtils.getLocalizedString(getContext(), R.string.rsb_pincode_enter_summary,
                 config.getPinLength(),
                 characterType);
         summary.setText(pinCodeInstructions);

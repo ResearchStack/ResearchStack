@@ -40,6 +40,16 @@ public class LocaleUtils {
         }
     }
 
+    public static String getLocalizedString(Context context, int stringId, Object... args) {
+        String preferredLocale = getPreferredLocale(context);
+        if (preferredLocale == null) {
+            return context.getString(stringId);
+        }
+        Locale locale = getLocaleFromString(preferredLocale);
+        context.getResources().getConfiguration().setLocale(locale);
+        return String.format(locale, context.createConfigurationContext(context.getResources().getConfiguration()).getResources().getString(stringId), args);
+    }
+
 
     public static void setPreferredLocale(Context context, String newLocale) {
         SharedPreferences sharedPrefs = context.getSharedPreferences(LOCALE_PREFERENCES, MODE_PRIVATE);
