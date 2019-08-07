@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 import android.widget.MediaController;
 
 import org.researchstack.backbone.R;
@@ -48,8 +49,16 @@ public class ViewVideoActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
+
         if (videoView.isPlaying()) {
             videoView.pause();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
     }
 }
