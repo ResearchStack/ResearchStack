@@ -107,7 +107,7 @@ public class Step implements Serializable {
 
     /**
      * A boolean value indicating whether the step is a isCompletionStep step.
-     * If the task is a non branching task, the task need to stop after this step is completed.
+     * If the task is a non branching task, the task needs to stop after this step is completed.
      * If the task is branching, and the isCompletionStep step is the trigger for the branch, then the task shall continue to the next step.
      * If the task is branching, and the isCompletionStep step is not the trigger for the branch, then task needs to stop.
      * <p>
