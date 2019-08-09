@@ -43,6 +43,7 @@ public class Step implements Serializable {
     private boolean showsProgress;
     private boolean allowsBackNavigation;
     private boolean useSurveyMode;
+    private boolean completion = false;
 
     /**
      * Returns a new step initialized with the specified identifier.
@@ -102,6 +103,26 @@ public class Step implements Serializable {
      */
     public void setOptional(boolean optional) {
         this.optional = optional;
+    }
+
+    /**
+     * A boolean value indicating whether the flow need to stop after this step is completed.
+     * <p>
+     *
+     * @return a boolean indicating whether the step is the final step of the flow
+     */
+    public boolean isCompletion() {
+        return completion;
+    }
+
+    /**
+     * Sets whether the step is a completion step
+     *
+     * @param completion
+     * @see #isCompletion()
+     */
+    public void setCompletion(boolean completion) {
+        this.completion = completion;
     }
 
     /**
