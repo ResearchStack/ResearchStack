@@ -43,7 +43,7 @@ public class Step implements Serializable {
     private boolean showsProgress;
     private boolean allowsBackNavigation;
     private boolean useSurveyMode;
-    private boolean isCompletionStep = false;
+    protected boolean isCompletionStep = false;
 
     /**
      * Returns a new step initialized with the specified identifier.
