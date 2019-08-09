@@ -43,7 +43,7 @@ public class Step implements Serializable {
     private boolean showsProgress;
     private boolean allowsBackNavigation;
     private boolean useSurveyMode;
-    private boolean completion = false;
+    private boolean isCompletionStep = false;
 
     /**
      * Returns a new step initialized with the specified identifier.
@@ -106,23 +106,26 @@ public class Step implements Serializable {
     }
 
     /**
-     * A boolean value indicating whether the flow need to stop after this step is completed.
+     * A boolean value indicating whether the step is a isCompletionStep step.
+     * If the task is a non branching task, the task need to stop after this step is completed.
+     * If the task is branching, and the isCompletionStep step is the trigger for the branch, then the task shall continue to the next step.
+     * If the task is branching, and the isCompletionStep step is not the trigger for the branch, then task needs to stop.
      * <p>
      *
-     * @return a boolean indicating whether the step is the final step of the flow
+     * @return a boolean indicating whether the step is a isCompletionStep step
      */
-    public boolean isCompletion() {
-        return completion;
+    public boolean isCompletionStep() {
+        return isCompletionStep;
     }
 
     /**
-     * Sets whether the step is a completion step
+     * Sets whether the step is a isCompletionStep step
      *
-     * @param completion
-     * @see #isCompletion()
+     * @param isCompletionStep
+     * @see #isCompletionStep()
      */
-    public void setCompletion(boolean completion) {
-        this.completion = completion;
+    public void isCompletionStep(boolean isCompletionStep) {
+        this.isCompletionStep = isCompletionStep;
     }
 
     /**

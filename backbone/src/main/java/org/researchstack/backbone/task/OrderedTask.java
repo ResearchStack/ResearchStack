@@ -67,7 +67,7 @@ public class OrderedTask extends Task implements Serializable {
             return steps.get(0);
         }
 
-        if (step.isCompletion()) {
+        if (step.isCompletionStep()) {
             return null;
         }
 
