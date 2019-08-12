@@ -60,6 +60,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     protected int currentStepAction;
     int counter =0;
 
+    int NoOfSteps= 0;
+    int stepSize = 0 ;
+
+
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
@@ -94,11 +98,20 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
             currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
         }
 
+        NoOfSteps = (((OrderedTask)task).getStepSize()-2);
+        if(NoOfSteps>0){
+        stepSize = 100/NoOfSteps;
+        }else{
+            stepSize = 0;
+        }
         LogExt.d(ViewTaskActivity.class, "Received task: " + task.getIdentifier());
 
         task.validateParameters();
 
         task.onViewChange(Task.ViewChangeType.ActivityCreate, this, currentStep);
+
+        counter = counter+stepSize;
+        updateProgress(counter);
     }
 
     public void updateProgress(int count) {
@@ -112,7 +125,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
             saveAndFinish();
         } else {
             showStep(nextStep);
-            counter = counter+20;
+            counter = counter+stepSize;
             updateProgress(counter);
         }
     }
@@ -123,7 +136,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         } else {
             showStep(previousStep);
 
-            counter = counter-20;
+            counter = counter-stepSize;
             updateProgress(counter);
         }
     }
@@ -168,6 +181,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
                         ? StepSwitcher.SHIFT_LEFT
                         : StepSwitcher.SHIFT_RIGHT);
         currentStep = step;
+
     }
 
     protected void refreshCurrentStep() {
@@ -290,6 +304,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     protected void notifyStepOfBackPress() {
         StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
         currentStepLayout.isBackEventConsumed();
+        if(counter!=0) {
+            counter = counter - stepSize;
+            updateProgress(counter);
+        }
     }
 
     @Override

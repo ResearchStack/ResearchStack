@@ -34,6 +34,8 @@ public class Step implements Serializable {
 
     private String text;
 
+    private String error;
+
     // The following fields are in RK but not implemented in ResearchStack
     // These options can be developed as needed or removed if we find they are not necessary
     private boolean restorable;
@@ -234,5 +236,13 @@ public class Step implements Serializable {
         }
 
         return identifier.equals(rhs.identifier);
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

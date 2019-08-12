@@ -106,12 +106,12 @@ public class TextQuestionBody implements StepBody {
     @Override
     public BodyAnswer getBodyAnswerState() {
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
-        if(!step.isOptional()) {
-            if (!format.isAnswerValid(editText.getText().toString())) {
+        //if(!step.isOptional()) {
+            if (editText.getText().toString().equals("")) {
                 editText.requestFocus();
                 return BodyAnswer.INVALID;
             }
-        }
+        //}
         return BodyAnswer.VALID;
     }
 

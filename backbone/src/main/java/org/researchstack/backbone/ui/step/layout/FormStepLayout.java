@@ -289,7 +289,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         formTitleTextview = findViewById(getFormTitleId());
         formSummaryTextview = findViewById(getFormTextId());
 
-        SurveyStepLayout.setupTitleLayout(getContext(), step, formTitleTextview, formSummaryTextview);
+       // SurveyStepLayout.setupTitleLayout(getContext(), step, formTitleTextview, formSummaryTextview);
     }
 
     protected @IdRes int getFormTitleId() {
@@ -391,18 +391,23 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
                 // This is the main way to get an error message, it is based off of the StepBody
                 if (invalidReason == null) {
-                    invalidReason = (bodyAnswer == null
-                            ? BodyAnswer.INVALID.getString(getContext())
-                            : bodyAnswer.getString(getContext()));
+                    if(stepData.step.getError().equals("")) {
+                         invalidReason = (bodyAnswer == null
+                                 ? BodyAnswer.INVALID.getString(getContext())
+                                 : bodyAnswer.getString(getContext()));
+                    }else {
+                        invalidReason = stepData.step.getError();
+                    }
                 }
 
                 invalidReasons.add(invalidReason);
+				break;
             }
         }
 
         if(!isAnswerValid && showErrorAlertOnInvalid)
         {
-            String invalidReason = android.text.TextUtils.join(", ", invalidReasons) + ".";
+            String invalidReason = android.text.TextUtils.join(", ", invalidReasons);
             Toast.makeText(getContext(), invalidReason, Toast.LENGTH_SHORT).show();
         }
         return isAnswerValid;

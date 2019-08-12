@@ -189,4 +189,8 @@ public class OrderedTask extends Task implements Serializable {
     public void addStep(int index, Step step) {
         steps.add(index, step);
     }
+
+    public int getStepSize(){
+        return steps.size();
+    }
 }

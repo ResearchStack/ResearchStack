@@ -82,8 +82,8 @@ public abstract class AnswerFormat implements Serializable {
     }
 
     /**
-     * The style of the question (that is, single or multiple choice).
-     */
+    * The style of the question (that is, single or multiple choice).
+    */
     public enum ChoiceAnswerStyle {
         SingleChoice,
         MultipleChoice
