@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
+import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
@@ -23,15 +24,15 @@ public class IntegerQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private QuestionStep step;
-    private StepResult<Integer> result;
-    private IntegerAnswerFormat format;
+    protected QuestionStep step;
+    protected StepResult<Integer> result;
+    protected IntegerAnswerFormat format;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private int viewType;
-    private EditText editText;
+    protected int viewType;
+    protected EditText editText;
 
     public IntegerQuestionBody(Step step, StepResult result) {
         this.step = (QuestionStep) step;
@@ -52,6 +53,12 @@ public class IntegerQuestionBody implements StepBody {
         layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
         view.setLayoutParams(layoutParams);
 
+        if (format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH) {
+            InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(format.getMaximumLength());
+            InputFilter[] filters = ViewUtils.addFilter(editText.getFilters(), maxLengthFilter);
+            editText.setFilters(filters);
+        }
+
         return view;
     }
 
@@ -65,14 +72,14 @@ public class IntegerQuestionBody implements StepBody {
         }
     }
 
-    private View initViewDefault(LayoutInflater inflater, ViewGroup parent) {
+    protected View initViewDefault(LayoutInflater inflater, ViewGroup parent) {
         editText = (EditText) inflater.inflate(R.layout.rsb_item_edit_text, parent, false);
         setFilters(parent.getContext());
 
         return editText;
     }
 
-    private View initViewCompact(LayoutInflater inflater, ViewGroup parent) {
+    protected View initViewCompact(LayoutInflater inflater, ViewGroup parent) {
         View formItemView = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
 
         TextView title = (TextView) formItemView.findViewById(R.id.label);
@@ -84,7 +91,7 @@ public class IntegerQuestionBody implements StepBody {
         return formItemView;
     }
 
-    private void setFilters(Context context) {
+    protected void setFilters(Context context) {
         editText.setSingleLine(true);
         final int minValue = format.getMinValue();
         // allow any positive int if no max value is specified

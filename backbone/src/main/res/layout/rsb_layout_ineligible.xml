@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Change to RelativeLayout for preview to work -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/Backbone.Survey.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rsb_ineligible" />
+
+    <TextView
+        android:id="@+id/ineligible_text"
+        style="@style/Backbone.Survey.Summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rsb_eligibility_you_are_ineligible"
+        android:textColorLink="?attr/colorAccent" />
+
+    <TextView
+        android:id="@+id/ineligible_detail"
+        style="@style/Backbone.Survey.Summary.Detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorLink="?attr/colorAccent"
+        android:text=""
+        />
+</merge>

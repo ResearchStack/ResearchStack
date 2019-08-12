@@ -1,5 +1,7 @@
 package org.researchstack.backbone.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,14 +9,23 @@ import java.io.Serializable;
  * They typically have an integer or string value, always with a string text representation of the
  * choice for the user.
  *
- * @param <T> the type of value for the choice, usually Integer or String
+ * @param <T> the type of value for the choice, usually Integer or String, but must implement Serializable
  */
 public class Choice<T> implements Serializable {
+
+    @SerializedName(value="text", alternate = {"prompt"})
     private String text;
 
+    @SerializedName("value")
     private T value;
 
+    @SerializedName("detailText")
     private String detailText;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    Choice() {
+        super();
+    }
 
     /**
      * Creates a choice object with the provided text and value, detailtext is null

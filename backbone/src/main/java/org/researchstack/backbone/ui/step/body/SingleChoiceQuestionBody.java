@@ -103,7 +103,11 @@ public class SingleChoiceQuestionBody<T> implements StepBody {
         TextView label = (TextView) inflater.inflate(R.layout.rsb_item_text_view_title_compact,
                 compactView,
                 false);
-        label.setText(step.getTitle());
+        if(step.isOptional()) {
+            label.setText(step.getTitle());
+        }else{
+            label.setText(step.getTitle()+" *");
+        }
 
         compactView.addView(label, 0);
 

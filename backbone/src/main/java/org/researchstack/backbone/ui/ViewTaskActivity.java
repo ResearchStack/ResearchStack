@@ -2,12 +2,16 @@ package org.researchstack.backbone.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -16,12 +20,16 @@ import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.backbone.ui.views.CircleProgressBar;
+import org.researchstack.backbone.ui.views.RingProgressBar;
 import org.researchstack.backbone.ui.views.StepSwitcher;
+import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.backbone.utils.StepLayoutHelper;
 
-import java.lang.reflect.Constructor;
 import java.util.Date;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
@@ -29,11 +37,32 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
 
-    private StepSwitcher root;
+    protected StepSwitcher root;
+    protected Toolbar toolbar;
 
-    private Step currentStep;
-    private Task task;
-    private TaskResult taskResult;
+    protected StepLayout currentStepLayout;
+
+    public StepLayout getCurrentStepLayout() {
+        return currentStepLayout;
+    }
+
+    protected Step currentStep;
+    protected Task task;
+
+    public Task getTask() {
+        return task;
+    }
+
+    protected TaskResult taskResult;
+    RingProgressBar timeProgress;
+    private CircleProgressBar progress_circular;
+
+    protected int currentStepAction;
+    int counter =0;
+
+    int NoOfSteps= 0;
+    int stepSize = 0 ;
+
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
@@ -46,12 +75,18 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         super.onCreate(savedInstanceState);
         super.setResult(RESULT_CANCELED);
         super.setContentView(R.layout.rsb_activity_step_switcher);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         root = (StepSwitcher) findViewById(R.id.container);
+
+//        pieProgressDrawable = new PieProgressDrawable();
+//        pieProgressDrawable.setColor(ContextCompat.getColor(this, R.color.rsb_nof1_primary));
+
+        timeProgress = (RingProgressBar) findViewById(R.id.time_progress);
+        progress_circular = (CircleProgressBar) findViewById(R.id.progress_circular);
+        progress_circular.setColor(getResources().getColor(R.color.rsb_nof1_primary));
 
         if (savedInstanceState == null) {
             task = (Task) getIntent().getSerializableExtra(EXTRA_TASK);
@@ -63,9 +98,52 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
             currentStep = (Step) savedInstanceState.getSerializable(EXTRA_STEP);
         }
 
+        NoOfSteps = (((OrderedTask)task).getStepSize()-2);
+        if(NoOfSteps>0){
+        stepSize = 100/NoOfSteps;
+        }else{
+            stepSize = 0;
+        }
+        LogExt.d(ViewTaskActivity.class, "Received task: " + task.getIdentifier());
+
         task.validateParameters();
 
         task.onViewChange(Task.ViewChangeType.ActivityCreate, this, currentStep);
+
+        counter = counter+stepSize;
+        updateProgress(counter);
+    }
+
+    public void updateProgress(int count) {
+        timeProgress.setProgress(count);
+        progress_circular.setProgress(count);
+    }
+    protected void showNextStep() {
+        hideKeyboard();
+        Step nextStep = task.getStepAfterStep(currentStep, taskResult);
+        if (nextStep == null) {
+            saveAndFinish();
+        } else {
+            showStep(nextStep);
+            counter = counter+stepSize;
+            updateProgress(counter);
+        }
+    }
+    protected void showPreviousStep() {
+        Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
+        if (previousStep == null) {
+            discardResultsAndFinish();
+        } else {
+            showStep(previousStep);
+
+            counter = counter-stepSize;
+            updateProgress(counter);
+        }
+    }
+
+    public @IdRes
+    int getToolbarResourceId() {
+        return R.id.toolbar;
     }
 
     /**
@@ -77,25 +155,21 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         return currentStep;
     }
 
-    protected void showNextStep() {
-        Step nextStep = task.getStepAfterStep(currentStep, taskResult);
-        if (nextStep == null) {
-            saveAndFinish();
-        } else {
-            showStep(nextStep);
-        }
+    public @LayoutRes
+    int getContentViewId() {
+        return R.layout.rsb_activity_step_switcher;
     }
 
-    protected void showPreviousStep() {
-        Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
-        if (previousStep == null) {
-            finish();
-        } else {
-            showStep(previousStep);
-        }
+    public @IdRes
+    int getViewSwitcherRootId() {
+        return R.id.container;
     }
 
-    private void showStep(Step step) {
+    protected void showStep(Step step) {
+        showStep(step, false);
+    }
+
+    protected void showStep(Step step, boolean alwaysReplaceView) {
         int currentStepPosition = task.getProgressOfCurrentStep(currentStep, taskResult)
                 .getCurrent();
         int newStepPosition = task.getProgressOfCurrentStep(step, taskResult).getCurrent();
@@ -107,36 +181,45 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
                         ? StepSwitcher.SHIFT_LEFT
                         : StepSwitcher.SHIFT_RIGHT);
         currentStep = step;
+
+    }
+
+    protected void refreshCurrentStep() {
+        showStep(currentStep, true);
     }
 
     protected StepLayout getLayoutForStep(Step step) {
-        // Change the title on the activity
-        String title = task.getTitleForStep(this, step);
-        setActionBarTitle(title);
+        try {
+            updateProgress(counter);
+        } catch (Exception e) {
+            Log.e("myApp", e.toString());
+        }
 
         // Get result from the TaskResult, can be null
         StepResult result = taskResult.getStepResult(step.getIdentifier());
 
         // Return the Class & constructor
-        StepLayout stepLayout = createLayoutFromStep(step);
-        stepLayout.initialize(step, result);
+        StepLayout stepLayout = StepLayoutHelper.createLayoutFromStep(step, this);
         stepLayout.setCallbacks(this);
+        stepLayout.initialize(step, result);
+
+//        // Some step layouts need to know about the task result
+//        if (stepLayout instanceof ResultListener) {
+//            ((ResultListener) stepLayout).taskResult(this, taskResult);
+//        }
 
         return stepLayout;
     }
 
-    @NonNull
-    private StepLayout createLayoutFromStep(Step step) {
-        try {
-            Class cls = step.getStepLayoutClass();
-            Constructor constructor = cls.getConstructor(Context.class);
-            return (StepLayout) constructor.newInstance(this);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    protected void setupStepLayoutBeforeInitializeIsCalled(StepLayout stepLayout) {
+        // can be implemented by sub-classes to set up the step layout before it's initialized
+        stepLayout.setCallbacks(this);
+        if (stepLayout instanceof OnActionListener) {
+            ((OnActionListener) stepLayout).onAction(currentStepAction, this);
         }
     }
 
-    private void saveAndFinish() {
+    protected void saveAndFinish() {
         taskResult.setEndDate(new Date());
         Intent resultIntent = new Intent();
         resultIntent.putExtra(EXTRA_TASK_RESULT, taskResult);
@@ -150,6 +233,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         super.onPause();
 
         task.onViewChange(Task.ViewChangeType.ActivityPause, this, currentStep);
+
+        // Some step layouts need to know about when the activity pauses
+        if (currentStepLayout != null && currentStepLayout instanceof ActivityPauseListener) {
+            ((ActivityPauseListener) currentStepLayout).onActivityPause(this);
+        }
     }
 
     @Override
@@ -165,13 +253,39 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Create Menu which has an "X" or cancel icon
+        getMenuInflater().inflate(R.menu.rsb_task_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == R.id.rsb_clear_menu_item) {
+            showConfirmExitDialog();
+            return true;
+        } else if (item.getItemId() == android.R.id.home) {
             notifyStepOfBackPress();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Clear out all the data that has been saved by this Activity
+     * And push user back to the Overview screen, or whatever screen was below this Activity
+     */
+    protected void discardResultsAndFinish() {
+        if (taskResult != null) {  // taskResult can be null in a bad state
+            taskResult.getResults().clear();
+        } else {
+            LogExt.d(ViewTaskActivity.class,
+                    "Task result is already null when discarding results");
+        }
+        taskResult = null;
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 
     @Override
@@ -187,9 +301,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         outState.putSerializable(EXTRA_STEP, currentStep);
     }
 
-    private void notifyStepOfBackPress() {
+    protected void notifyStepOfBackPress() {
         StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
         currentStepLayout.isBackEventConsumed();
+        if(counter!=0) {
+            counter = counter - stepSize;
+            updateProgress(counter);
+        }
     }
 
     @Override
@@ -218,10 +336,21 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
     }
 
     protected void onSaveStepResult(String id, StepResult result) {
-        taskResult.setStepResultForStepIdentifier(id, result);
+        if (taskResult == null) {
+            LogExt.e(ViewTaskActivity.class, "In bad state, " +
+                    "task result should never be null, skipping onSaveStepResult");
+            return;
+        }
+        if (result != null) {
+            taskResult.setStepResultForStepIdentifier(id, result);
+        } else if (taskResult.getResults() != null) {
+            // result is null, make sure that is reflected in the results
+            taskResult.getResults().remove(id);
+        }
     }
 
     protected void onExecuteStepAction(int action) {
+        currentStepAction = action;
         if (action == StepCallbacks.ACTION_NEXT) {
             showNextStep();
         } else if (action == StepCallbacks.ACTION_PREV) {
@@ -230,33 +359,54 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
             showConfirmExitDialog();
         } else if (action == StepCallbacks.ACTION_NONE) {
             // Used when onSaveInstanceState is called of a view. No action is taken.
+        } else if (action == StepCallbacks.ACTION_REFRESH) {
+            refreshCurrentStep();
         } else {
             throw new IllegalArgumentException("Action with value " + action + " is invalid. " +
                     "See StepCallbacks for allowable arguments");
         }
     }
 
-    private void hideKeyboard() {
+    protected void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (imm.isActive() && imm.isAcceptingText()) {
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
+                imm.hideSoftInputFromInputMethod(getCurrentFocus().getWindowToken(), 0);
+            }
         }
     }
 
-    private void showConfirmExitDialog() {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
-                "Are you sure you want to exit?")
-                .setMessage(R.string.lorem_medium)
-                .setPositiveButton("End Task", (dialog, which) -> finish())
-                .setNegativeButton("Cancel", null)
-                .create();
-        alertDialog.show();
+    /**
+     * Make sure user is 100% wanting to cancel, since their data will be discarded
+     * This may choose to simply exit the activity if the user is on the first step of the OrderedTask
+     */
+    public void showConfirmExitDialog() {
+        boolean showConfigrmDialog = true;
+        // Do not show the "Are you sure?" dialog if we are on the first step
+        if (task instanceof OrderedTask) {
+            OrderedTask orderedTask = (OrderedTask) task;
+            if (currentStep != null && orderedTask.getSteps().indexOf(currentStep) == 0) {
+                showConfigrmDialog = false;
+            }
+        }
+        if (showConfigrmDialog) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.rsb_are_you_sure)
+                    .setPositiveButton(R.string.rsb_discard_results, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+                            ViewTaskActivity.this.discardResultsAndFinish();
+                        }
+                    })
+                    .setNegativeButton(R.string.rsb_cancel, null).create().show();
+        } else {
+            discardResultsAndFinish();
+        }
     }
 
     @Override
     public void onCancelStep() {
-        setResult(Activity.RESULT_CANCELED);
-        finish();
+        discardResultsAndFinish();
     }
 
     public void setActionBarTitle(String title) {
@@ -264,5 +414,20 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks {
         if (actionBar != null) {
             actionBar.setTitle(title);
         }
+    }
+
+    public interface ResultListener {
+        void taskResult(ViewTaskActivity activity, TaskResult taskResult);
+    }
+
+    public interface ActivityPauseListener {
+        void onActivityPause(ViewTaskActivity activity);
+    }
+
+    /**
+     * This interface allows StepLayouts to know what step action brought the user to them
+     */
+    public interface OnActionListener {
+        void onAction(int action, ViewTaskActivity activity);
     }
 }

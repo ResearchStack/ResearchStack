@@ -4,4 +4,36 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:theme="?attr/toolbarTheme" />
+    app:theme="?attr/toolbarTheme">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <org.researchstack.backbone.ui.views.CircleProgressBar
+            android:id="@+id/progress_circular"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center" />
+
+        <org.researchstack.backbone.ui.views.RingProgressBar
+            android:id="@+id/time_progress"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            app:max="100"
+            app:ringColor="@color/rsb_nof1_primary"
+            app:ringProgressColor="@color/rsb_nof1_primary"
+            app:style="FILL"
+            app:textColor="@color/rsb_nof1_primary"
+            app:textIsShow="false"
+            app:textSize="16sp" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.Toolbar>
+
+

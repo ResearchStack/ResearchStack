@@ -2,7 +2,9 @@ package org.researchstack.backbone.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class DocumentProperties {
+import java.io.Serializable;
+
+public class DocumentProperties implements Serializable {
     @SerializedName("htmlDocument")
     private String htmlDocument;
 
@@ -18,6 +20,11 @@ public class DocumentProperties {
     private boolean requiresSignature;
     private boolean requiresName;
     private boolean requiresBirthdate;
+
+    /* Default identifier for serilization/deserialization */
+    DocumentProperties() {
+        super();
+    }
 
     public String getHtmlDocument() {
         return htmlDocument;

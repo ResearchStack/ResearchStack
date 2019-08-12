@@ -18,17 +18,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormBody implements StepBody {
-    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+   //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
     private FormStep step;
     private StepResult<StepResult> result;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private List<StepBody> formStepChildren;
 
+    private List<StepBody> formStepChildren;
     public FormBody(Step step, StepResult result) {
         this.step = (FormStep) step;
         this.result = result == null ? new StepResult<>(step) : result;
@@ -40,20 +41,16 @@ public class FormBody implements StepBody {
         LinearLayout body = (LinearLayout) inflater.inflate(R.layout.rsb_step_layout_form_body,
                 parent,
                 false);
-
         List<QuestionStep> questionSteps = step.getFormSteps();
         formStepChildren = new ArrayList<>(questionSteps.size());
-
         // Iterate through all steps and generate each compact view. Store each StepBody child in a
         // list to iterate over (e.g. within getStepResult())
         for (QuestionStep questionStep : questionSteps) {
             StepBody stepBody = createStepBody(questionStep);
             View bodyView = stepBody.getBodyView(VIEW_TYPE_COMPACT, inflater, body);
             body.addView(bodyView);
-
             formStepChildren.add(stepBody);
         }
-
         return body;
     }
 
@@ -65,7 +62,6 @@ public class FormBody implements StepBody {
                 result.setResultForIdentifier(childResult.getIdentifier(), childResult);
             }
         }
-
         return result;
     }
 
@@ -77,14 +73,12 @@ public class FormBody implements StepBody {
                 return bodyAnswer;
             }
         }
-
         return BodyAnswer.VALID;
     }
-
+    
     @NonNull
     private StepBody createStepBody(QuestionStep questionStep) {
         StepResult childResult = result.getResultForIdentifier(questionStep.getIdentifier());
-
         Class cls = questionStep.getStepBodyClass();
         try {
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);

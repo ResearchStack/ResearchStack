@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+    <TextView
+        android:id="@+id/text"
+        style="@style/Backbone.Survey.Summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:paddingBottom="@dimen/rsb_padding_wedge"
+        android:text="@string/rsb_permission_disclaimer"
+        android:visibility="visible"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/rsb_container_permission_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:showDividers="middle|end"
+            android:divider="@drawable/rsb_divider_1dp"
+            android:orientation="vertical"/>
+
+    </ScrollView>
+
+    <org.researchstack.backbone.ui.views.SubmitBar
+        android:id="@+id/submit_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:negativeActionTitle="@string/rsb_exit"
+        app:positiveActionTitle="@string/rsb_submit"/>
+
+</merge>

@@ -5,6 +5,7 @@ import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ public class TextQuestionBody implements StepBody {
         View body = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
 
         editText = (EditText) body.findViewById(R.id.value);
+        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         if (step.getPlaceholder() != null) {
             editText.setHint(step.getPlaceholder());
         } else {
@@ -50,7 +52,11 @@ public class TextQuestionBody implements StepBody {
         TextView title = (TextView) body.findViewById(R.id.label);
 
         if (viewType == VIEW_TYPE_COMPACT) {
-            title.setText(step.getTitle());
+            if(step.isOptional()){
+                title.setText(step.getTitle());
+            }else {
+                title.setText(step.getTitle()+" *");
+            }
         } else {
             title.setVisibility(View.GONE);
         }
@@ -100,10 +106,12 @@ public class TextQuestionBody implements StepBody {
     @Override
     public BodyAnswer getBodyAnswerState() {
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
-        if (!format.isAnswerValid(editText.getText().toString())) {
-            return BodyAnswer.INVALID;
-        }
-
+        //if(!step.isOptional()) {
+            if (editText.getText().toString().equals("")) {
+                editText.requestFocus();
+                return BodyAnswer.INVALID;
+            }
+        //}
         return BodyAnswer.VALID;
     }
 

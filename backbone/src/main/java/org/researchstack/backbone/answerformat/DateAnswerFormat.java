@@ -1,5 +1,4 @@
 package org.researchstack.backbone.answerformat;
-
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
 import org.researchstack.backbone.utils.FormatHelper;
@@ -10,7 +9,8 @@ import java.util.Date;
  * The DateAnswerFormat class represents the answer format for questions that require users to enter
  * a date, or a date and time.
  */
-public class DateAnswerFormat extends AnswerFormat {
+public class DateAnswerFormat extends AnswerFormat
+{
 
     private DateAnswerStyle style;
 
@@ -20,11 +20,19 @@ public class DateAnswerFormat extends AnswerFormat {
 
     private Date maximumDate;
 
-    public DateAnswerFormat(DateAnswerStyle style) {
+    /* Default constructor needed for serilization/deserialization of object */
+    DateAnswerFormat()
+    {
+        super();
+    }
+
+    public DateAnswerFormat(DateAnswerStyle style)
+    {
         this.style = style;
     }
 
-    public DateAnswerFormat(DateAnswerStyle style, Date defaultDate, Date minimumDate, Date maximumDate) {
+    public DateAnswerFormat(DateAnswerStyle style, Date defaultDate, Date minimumDate, Date maximumDate)
+    {
         this.style = style;
         this.defaultDate = defaultDate;
         this.minimumDate = minimumDate;
@@ -36,7 +44,8 @@ public class DateAnswerFormat extends AnswerFormat {
      *
      * @return the style of the date entry
      */
-    public DateAnswerStyle getStyle() {
+    public DateAnswerStyle getStyle()
+    {
         return style;
     }
 
@@ -48,7 +57,8 @@ public class DateAnswerFormat extends AnswerFormat {
      *
      * @return the default date for the date picker presented to the user, or null
      */
-    public Date getDefaultDate() {
+    public Date getDefaultDate()
+    {
         return defaultDate;
     }
 
@@ -59,7 +69,8 @@ public class DateAnswerFormat extends AnswerFormat {
      *
      * @return returns the minimum allowed date, or null
      */
-    public Date getMinimumDate() {
+    public Date getMinimumDate()
+    {
         return minimumDate;
     }
 
@@ -70,30 +81,35 @@ public class DateAnswerFormat extends AnswerFormat {
      *
      * @return returns the maximum allowed date, or null
      */
-    public Date getMaximumDate() {
+    public Date getMaximumDate()
+    {
         return maximumDate;
     }
 
     @Override
-    public QuestionType getQuestionType() {
-        if (style == DateAnswerStyle.Date) return Type.Date;
-        if (style == DateAnswerStyle.DateAndTime) return Type.DateAndTime;
-        if (style == DateAnswerStyle.TimeOfDay) return Type.TimeOfDay;
+    public QuestionType getQuestionType()
+    {
+        if(style == DateAnswerStyle.Date) return Type.Date;
+        if(style == DateAnswerStyle.DateAndTime) return Type.DateAndTime;
+        if(style == DateAnswerStyle.TimeOfDay) return Type.TimeOfDay;
 
         return Type.None;
     }
 
-    public BodyAnswer validateAnswer(Date resultDate) {
-        if (minimumDate != null && resultDate.getTime() < minimumDate.getTime()) {
+    public BodyAnswer validateAnswer(Date resultDate)
+    {
+        if(minimumDate != null && resultDate.getTime() < minimumDate.getTime())
+        {
             return new BodyAnswer(false,
-                    R.string.rsb_invalid_answer_date_under,
-                    FormatHelper.SIMPLE_FORMAT_DATE.format(minimumDate));
+                                  R.string.rsb_invalid_answer_date_under,
+                                  FormatHelper.SIMPLE_FORMAT_DATE.format(minimumDate));
         }
 
-        if (maximumDate != null && resultDate.getTime() > maximumDate.getTime()) {
+        if(maximumDate != null && resultDate.getTime() > maximumDate.getTime())
+        {
             return new BodyAnswer(false,
-                    R.string.rsb_invalid_answer_date_over,
-                    FormatHelper.SIMPLE_FORMAT_DATE.format(maximumDate));
+                                  R.string.rsb_invalid_answer_date_over,
+                                  FormatHelper.SIMPLE_FORMAT_DATE.format(maximumDate));
         }
 
         return BodyAnswer.VALID;

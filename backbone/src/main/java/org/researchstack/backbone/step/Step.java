@@ -1,6 +1,7 @@
 package org.researchstack.backbone.step;
 
 import org.researchstack.backbone.task.Task;
+import org.researchstack.backbone.utils.ObjectUtils;
 
 import java.io.Serializable;
 
@@ -33,6 +34,8 @@ public class Step implements Serializable {
 
     private String text;
 
+    private String error;
+
     // The following fields are in RK but not implemented in ResearchStack
     // These options can be developed as needed or removed if we find they are not necessary
     private boolean restorable;
@@ -41,6 +44,11 @@ public class Step implements Serializable {
     private boolean showsProgress;
     private boolean allowsBackNavigation;
     private boolean useSurveyMode;
+
+    /* Default constructor needed for serilization/deserialization of object */
+    public Step() {
+        super();
+    }
 
     /**
      * Returns a new step initialized with the specified identifier.
@@ -72,6 +80,8 @@ public class Step implements Serializable {
      * <p>
      * In some cases, it can be useful to link the step identifier to a unique identifier in a
      * database; in other cases, it can make sense to make the identifier human readable.
+     *
+     * @return a short string that uniquely identifies the step
      */
     public String getIdentifier() {
         return identifier;
@@ -95,7 +105,7 @@ public class Step implements Serializable {
     /**
      * Sets whether the step is skippable
      *
-     * @param optional
+     * @param optional a boolean indicating whether the step is skippable
      * @see #isOptional()
      */
     public void setOptional(boolean optional) {
@@ -131,7 +141,7 @@ public class Step implements Serializable {
      * display a long question, it can work well to keep the title short and put the additional
      * content in the <code>text</code> property.
      *
-     * @return
+     * @return the additional text to display
      */
     public String getText() {
         return text;
@@ -190,5 +200,49 @@ public class Step implements Serializable {
      */
     public void setStepLayoutClass(Class stepLayoutClass) {
         this.stepLayoutClass = stepLayoutClass;
+    }
+
+    /**
+     * @param newIdentifier to use instead of cloned step's identifier
+     * @return cloned step using Gson but with different identifier
+     */
+    public Step deepCopy(String newIdentifier) {
+        Step clonedStep = (Step)ObjectUtils.clone(this);
+        clonedStep.identifier = newIdentifier;
+        return clonedStep;
+    }
+
+    @Override
+    public int hashCode() {
+        if (identifier == null) {
+            return super.hashCode();
+        }
+        return identifier.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Step)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+
+        Step rhs = (Step) obj;
+
+        if (identifier == null || rhs.identifier == null) {
+            return false;
+        }
+
+        return identifier.equals(rhs.identifier);
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

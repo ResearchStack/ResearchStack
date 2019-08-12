@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="sequentially">
+    <objectAnimator android:propertyName="trimPathEnd"
+        android:valueFrom="0"
+        android:valueTo="0"
+        android:valueType="floatType"
+        android:duration="@integer/rsb_config_anim_time_check_mark" />
+    <objectAnimator android:propertyName="trimPathEnd"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:valueType="floatType"
+        android:duration="@integer/rsb_config_anim_time_check_mark"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
+</set>

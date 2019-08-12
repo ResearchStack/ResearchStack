@@ -1,0 +1,15 @@
+{
+  "sections" : [
+    {"onboardingType" : "customWelcome"},
+    {"onboardingType" : "consent"},
+    {"onboardingType" : "passcode"},
+    {"onboardingType" : "emailVerification"},
+    {"onboardingType" : "registration"},
+    {"onboardingType" : "login"},
+    {"onboardingType" : "eligibility"},
+    {"onboardingType" : "profile"},
+    {"onboardingType" : "permissions"},
+    {"onboardingType" : "completion"},
+    {"onboardingType" : "customEnd"}
+  ]
+}

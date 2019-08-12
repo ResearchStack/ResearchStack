@@ -18,7 +18,7 @@ public class OrderedTaskTest {
     private Step stepOne = new Step("idOne");
     private Step stepTwo = new Step("idTwo");
     private Step stepThree = new Step("idThree");
-    private Step stepOneDupe = new Step("idOne");
+    private Step stepOneDupe = new Step("idOneDupe");
 
     @Before
     public void setUp() throws Exception {
@@ -60,7 +60,7 @@ public class OrderedTaskTest {
 
     @Test(expected = Task.InvalidTaskException.class)
     public void testValidateParametersDuplicate() throws Exception {
-        Task invalidTask = new OrderedTask("id", stepOne, stepTwo, stepOneDupe);
+        Task invalidTask = new OrderedTask("id", stepOne, stepTwo, stepOne);
         invalidTask.validateParameters();
     }
 

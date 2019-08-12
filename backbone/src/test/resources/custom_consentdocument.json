@@ -1,0 +1,23 @@
+{
+  "sections":
+  [
+    {
+    "sectionType" : "dataGathering",
+    "sectionTitle" : "Overridden Title",
+    "sectionMoreTitle" : "Overridden More Title",
+    "sectionImage" : "image1"
+  },
+    {
+      "sectionType" : "privacy"
+    },
+    {
+      "sectionType" : "custom_step_identifier",
+      "sectionTitle" : "Overridden Title",
+      "sectionMoreTitle" : "Overridden More Title",
+      "sectionImage" : "image1"
+    },
+    {
+      "sectionType" : "custom_step_identifier2"
+    }
+  ]
+}
