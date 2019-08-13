@@ -15,6 +15,7 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
 public class InstructionStepLayout extends FixedSubmitBarLayout implements StepLayout {
@@ -91,28 +92,18 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             // Set Next / Skip
             final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
             submitBar.setPositiveTitle(getContext().getString(R.string.rsb_next));
-            submitBar.setPositiveAction(new OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                            step,
-                            null);
-                    submitBar.clearActions();
-                }
+            submitBar.setPositiveAction(view -> {
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+                        step,
+                        null);
+                submitBar.clearActions();
             });
 
             if (step.isOptional()) {
-                submitBar.setNegativeTitle(getContext().getString(R.string.rsb_step_skip));
-                submitBar.setNegativeAction(new OnClickListener()
-                {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
-                        submitBar.clearActions();
-                    }
+                submitBar.setNegativeTitle(LocaleUtils.getLocalizedString(submitBar.getContext(), R.string.rsb_step_skip));
+                submitBar.setNegativeAction(view -> {
+                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
+                    submitBar.clearActions();
                 });
             } else {
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
