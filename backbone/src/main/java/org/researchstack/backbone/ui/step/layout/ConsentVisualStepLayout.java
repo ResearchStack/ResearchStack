@@ -138,30 +138,25 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
             }
             else
             {
-                moreInfoView.setText(data.getType().getMoreInfoResId());
+                moreInfoView.setText(LocaleUtils.getLocalizedString(moreInfoView.getContext(), data.getType().getMoreInfoResId()));
             }
 
-            moreInfoView.setOnClickListener(new OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
+            moreInfoView.setOnClickListener(view -> {
+                String webTitle = LocaleUtils.getLocalizedString(moreInfoView.getContext(), R.string.rsb_consent_section_more_info);
+                URL contentUrl = data.getContentUrl();
+                Intent webDoc;
+                if(contentUrl != null)
                 {
-                    String webTitle = LocaleUtils.getLocalizedString(moreInfoView.getContext(), R.string.rsb_consent_section_more_info);
-                    URL contentUrl = data.getContentUrl();
-                    Intent webDoc;
-                    if(contentUrl != null)
-                    {
-                         webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle, contentUrl, true);
-                    }
-                    else
-                    {
-                        webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle,
-                                !TextUtils.isEmpty(data.getHtmlContent()) ? data.getHtmlContent() : data.getContent());
-                    }
-
-                    ViewWebDocumentActivity.addThemeColors(webDoc, step.getPrimaryColor(), step.getColorPrimaryDark());
-                    getContext().startActivity(webDoc);
+                     webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle, contentUrl, true);
                 }
+                else
+                {
+                    webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle,
+                            !TextUtils.isEmpty(data.getHtmlContent()) ? data.getHtmlContent() : data.getContent());
+                }
+
+                ViewWebDocumentActivity.addThemeColors(webDoc, step.getPrimaryColor(), step.getColorPrimaryDark());
+                getContext().startActivity(webDoc);
             });
 
         } else {
