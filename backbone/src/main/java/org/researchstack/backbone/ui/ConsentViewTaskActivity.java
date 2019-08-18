@@ -24,7 +24,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.RSHTMLPDFWriter;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -112,11 +112,11 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
         String consentAssetsFolder = getIntent().getStringExtra(EXTRA_ASSETS_FOLDER);
         String role = LocaleUtils.getLocalizedString(this, R.string.rsb_consent_role);
-        String dateFormat = LocaleUtils.getLocalizedString(this, R.string.rsb_consent_doc_line_date_format);
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, LocaleUtils.getLocaleFromString(LocaleUtils.getPreferredLocale(this)));
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName),
                 role,
                 signatureBase64,
-                new SimpleDateFormat(dateFormat).format(new Date())
+                df.format(new Date())
         );
 
         new PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml, consentAssetsFolder, () -> {
