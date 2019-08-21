@@ -15,11 +15,6 @@ android {
             }
         }
     }
-//    libraryVariants.all { variant ->
-//        variant.outputs.all { output ->
-//            outputFileName = new File(".", output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"))
-//        }
-//    }
 
     defaultConfig {
         minSdkVersion 19
