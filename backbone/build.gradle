@@ -4,12 +4,22 @@ android {
 
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
+    afterEvaluate {
+        def originalFilePath = "$buildDir/outputs/aar/backbone-release.aar"
+        def newFilePath = originalFilePath.replace(".aar", "_v${defaultConfig.versionName}.aar")
+        def debugFile = file(originalFilePath)
 
-    libraryVariants.all { variant ->
-        variant.outputs.all { output ->
-            outputFileName = new File(".", output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"))
+        tasks.named("assembleRelease").configure {
+            doLast {
+                debugFile.renameTo(newFilePath)
+            }
         }
     }
+//    libraryVariants.all { variant ->
+//        variant.outputs.all { output ->
+//            outputFileName = new File(".", output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"))
+//        }
+//    }
 
     defaultConfig {
         minSdkVersion 19
@@ -119,7 +129,9 @@ if (project.hasProperty("android")) { // Android libraries
     afterEvaluate {
         javadoc.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
         javadoc.classpath += files(android.libraryVariants.collect { variant ->
-            variant.javaCompile.classpath.files
+            variant.getJavaCompileProvider().configure {
+                it.classpath.files
+            }
         })
     }
 } else { // Java libraries
