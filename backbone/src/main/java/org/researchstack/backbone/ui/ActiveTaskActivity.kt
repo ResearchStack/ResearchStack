@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
-import android.view.MenuItem
+import android.util.Log
 import android.view.Surface
 import android.view.View
 import android.view.WindowManager
@@ -208,7 +208,11 @@ open class ActiveTaskActivity : ViewTaskActivity(), ActivityCallback, ActiveTask
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PermissionRequestManager.PERMISSION_REQUEST_CODE) {
             updateStepLayoutForPermission()
@@ -219,6 +223,16 @@ open class ActiveTaskActivity : ViewTaskActivity(), ActivityCallback, ActiveTask
         val stepLayout = findViewById<View>(R.id.rsb_current_step) as StepLayout
         if (stepLayout is StepPermissionRequest) {
             (stepLayout as StepPermissionRequest).onUpdateForPermissionResult()
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent != null) {
+            val action = intent.action
+            val data = intent.dataString
+            Log.d("Mycap", "New Intent data ------ $data")
+            Log.d("Mycap", "New Intent action ------- $action")
         }
     }
 
