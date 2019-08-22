@@ -1,9 +1,9 @@
 package org.researchstack.backbone.ui.views;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import android.util.AttributeSet;
 
 /**

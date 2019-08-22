@@ -2,7 +2,7 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v7.widget.AppCompatTextView;
+import androidx.appcompat.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -25,7 +25,6 @@ import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ConsentSignatureStepLayout extends RelativeLayout implements StepLayout {

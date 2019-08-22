@@ -1,7 +1,7 @@
 package org.researchstack.backbone.ui.step.body;
 
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatCheckBox;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
