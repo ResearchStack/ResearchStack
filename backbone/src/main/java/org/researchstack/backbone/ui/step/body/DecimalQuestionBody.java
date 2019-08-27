@@ -15,6 +15,7 @@ import org.researchstack.backbone.answerformat.DecimalAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.backbone.utils.ViewUtils;
 
@@ -89,9 +90,9 @@ public class DecimalQuestionBody implements StepBody {
         if (step.getPlaceholder() != null) {
             editText.setHint(step.getPlaceholder());
         } else if (maxValue == Integer.MAX_VALUE) {
-            editText.setHint(context.getString(R.string.rsb_hint_step_body_int_no_max));
+            editText.setHint(LocaleUtils.getLocalizedString(context, R.string.rsb_hint_step_body_int_no_max));
         } else {
-            editText.setHint(context.getString(R.string.rsb_hint_step_body_dec,
+            editText.setHint(LocaleUtils.getLocalizedString(context, R.string.rsb_hint_step_body_dec,
                     minValue,
                     maxValue));
         }

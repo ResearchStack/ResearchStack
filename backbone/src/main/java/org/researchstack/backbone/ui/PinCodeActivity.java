@@ -25,13 +25,30 @@ import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.ThemeUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 import rx.Observable;
 import rx.functions.Action1;
 
+import static org.researchstack.backbone.utils.LocaleUtils.getLocaleFromString;
+import static org.researchstack.backbone.utils.LocaleUtils.getPreferredLocale;
+import static org.researchstack.backbone.utils.LocaleUtils.wrapLocaleContext;
+
 public class PinCodeActivity extends AppCompatActivity implements StorageAccessListener {
+
     private PinCodeLayout pinCodeLayout;
     private Action1<Boolean> toggleKeyboardAction;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String preferredLocale = getPreferredLocale(newBase);
+        if (preferredLocale != null) {
+            Locale locale = getLocaleFromString(preferredLocale);
+            super.attachBaseContext(wrapLocaleContext(newBase, locale));
+        } else {
+            super.attachBaseContext(newBase);
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +58,8 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     @Override
     protected void onPause() {
         super.onPause();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
+
         LogExt.i(getClass(), "logAccessTime()");
         StorageAccess.getInstance().logAccessTime();
     }
@@ -48,6 +67,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     @Override
     protected void onResume() {
         super.onResume();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
         requestStorageAccess();
     }

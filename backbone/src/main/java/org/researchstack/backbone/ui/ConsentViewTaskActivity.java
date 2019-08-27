@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.print.HtmlToPdfPrinter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -22,9 +21,10 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.RSHTMLPDFWriter;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -50,7 +50,6 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         Intent intent = new Intent(context, ConsentViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         intent.putExtra(EXTRA_ASSETS_FOLDER, assetsFolder);
-
         return intent;
     }
 
@@ -105,19 +104,19 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         // you can also set title / message
         final AlertDialog dialog = new ProgressDialog.Builder(this)
                 .setCancelable(false)
-                .setTitle(getString(R.string.rsb_saving_consent))
-                .setMessage(getString(R.string.rsb_please_wait))
+                .setTitle(LocaleUtils.getLocalizedString(this, R.string.rsb_saving_consent))
+                .setMessage(LocaleUtils.getLocalizedString(this, R.string.rsb_please_wait))
                 .create();
 
         dialog.show();
 
         String consentAssetsFolder = getIntent().getStringExtra(EXTRA_ASSETS_FOLDER);
-        String role = getString(R.string.rsb_consent_role);
-        String dateFormat = getString(R.string.rsb_consent_doc_line_date_format);
+        String role = LocaleUtils.getLocalizedString(this, R.string.rsb_consent_role);
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, LocaleUtils.getLocaleFromString(LocaleUtils.getPreferredLocale(this)));
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName),
                 role,
                 signatureBase64,
-                new SimpleDateFormat(dateFormat).format(new Date())
+                df.format(new Date())
         );
 
         new PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml, consentAssetsFolder, () -> {
@@ -136,8 +135,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
      * {@link #getConsentPersonalInfoFormStep(Context context, boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
      */
     @Deprecated
-    public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate)
-    {
+    public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate) {
         return getConsentPersonalInfoFormStep(null, requiresName, requiresBirthDate);
     }
 
@@ -156,10 +154,10 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             List<QuestionStep> formSteps = new ArrayList<>();
             if (requiresName)
             {
-                String firstName = (context != null) ? context.getString(R.string.rsb_name_first) : "First Name";
+                String firstName = (context != null) ? LocaleUtils.getLocalizedString(context, R.string.rsb_name_first) : "First Name";
                 formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, firstName, new TextAnswerFormat()));
 
-                String lastName = (context != null) ? context.getString(R.string.rsb_name_last) : "Last Name";
+                String lastName = (context != null) ? LocaleUtils.getLocalizedString(context,R.string.rsb_name_last) : "Last Name";
                 formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, lastName, new TextAnswerFormat()));
             }
 
@@ -169,11 +167,11 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
                 maxDate.add(Calendar.YEAR, -18);
 
                 DateAnswerFormat dobFormat = new BirthDateAnswerFormat(null, 18, 0);
-                String dobText = (context != null) ? context.getString(R.string.rsb_consent_dob_full) : "Date of birth";
+                String dobText = (context != null) ? LocaleUtils.getLocalizedString(context, R.string.rsb_consent_dob_full) : "Date of birth";
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
             }
 
-            String formTitle = (context != null) ?  context.getString(R.string.rsb_consent) : "Consent";
+            String formTitle = (context != null) ?  LocaleUtils.getLocalizedString(context, R.string.rsb_consent) : "Consent";
             FormStep formStep = new FormStep(ID_FORM, formTitle, "");
             formStep.setOptional(false);
             formStep.setFormSteps(formSteps);

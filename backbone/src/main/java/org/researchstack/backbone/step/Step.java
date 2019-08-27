@@ -43,6 +43,7 @@ public class Step implements Serializable {
     private boolean showsProgress;
     private boolean allowsBackNavigation;
     private boolean useSurveyMode;
+    protected boolean isCompletionStep = false;
 
     /**
      * Returns a new step initialized with the specified identifier.
@@ -102,6 +103,29 @@ public class Step implements Serializable {
      */
     public void setOptional(boolean optional) {
         this.optional = optional;
+    }
+
+    /**
+     * A boolean value indicating whether the step is a isCompletionStep step.
+     * If the task is a non branching task, the task needs to stop after this step is completed.
+     * If the task is branching, and the isCompletionStep step is the trigger for the branch, then the task shall continue to the next step.
+     * If the task is branching, and the isCompletionStep step is not the trigger for the branch, then task needs to stop.
+     * <p>
+     *
+     * @return a boolean indicating whether the step is a isCompletionStep step
+     */
+    public boolean isCompletionStep() {
+        return isCompletionStep;
+    }
+
+    /**
+     * Sets whether the step is a isCompletionStep step
+     *
+     * @param isCompletionStep
+     * @see #isCompletionStep()
+     */
+    public void isCompletionStep(boolean isCompletionStep) {
+        this.isCompletionStep = isCompletionStep;
     }
 
     /**
