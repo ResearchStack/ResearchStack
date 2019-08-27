@@ -2,6 +2,13 @@
 
 ### Change log
 
+#### v1.4.0
+- Multi-language support.
+- Bug fixes & improvements.
+
+#### v1.3.0
+- Bug fixes & improvements.
+
 #### v1.2.0
 - Steps support Question field now.
 - UI fixes.
