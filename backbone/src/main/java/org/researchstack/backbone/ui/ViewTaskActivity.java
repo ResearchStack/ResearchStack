@@ -77,6 +77,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
 
     private int stepCount = 0;
 
+
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
@@ -233,6 +234,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         StepLayout stepLayout = createLayoutFromStep(step);
         if (stepLayout instanceof SurveyStepLayout) {
             ((SurveyStepLayout) stepLayout).initialize(step, result, colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
+            ((SurveyStepLayout) stepLayout).isStepEmpty().observe(this, (isEmpty) -> { });
         } else if (stepLayout instanceof ConsentVisualStepLayout) {
             ((ConsentVisualStepLayout) stepLayout).initialize(step, result, colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
         } else {

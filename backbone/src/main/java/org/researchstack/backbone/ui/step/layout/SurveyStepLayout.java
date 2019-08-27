@@ -1,5 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
@@ -21,6 +23,7 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
+import org.researchstack.backbone.ui.step.body.FormBody;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
@@ -53,6 +56,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     private int colorSecondary;
     private int principalTextColor;
     private int secondaryTextColor;
+    private SubmitBar submitBar;
+
+    private MediatorLiveData<Boolean> mediator = new MediatorLiveData<>();
+    private boolean allStepsAreOptional;
 
     public SurveyStepLayout(Context context) {
         super(context);
@@ -137,7 +144,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         title.setTextColor(principalTextColor);
         TextView summary = findViewById(R.id.rsb_survey_text);
         summary.setTextColor(secondaryTextColor);
-        final SubmitBar submitBar = findViewById(R.id.rsb_submit_bar);
+        submitBar = findViewById(R.id.rsb_submit_bar);
         submitBar.setNegativeTitleColor(coloryPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
         submitBar.setPositiveAction(new OnClickListener()
@@ -175,6 +182,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             }
 
             if (questionStep.isOptional()) {
+
                 submitBar.setNegativeTitle(R.string.rsb_step_skip);
                 submitBar.setNegativeAction(v -> onSkipClicked());
             } else {
@@ -187,7 +195,13 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         LogExt.i(getClass(), "initStepBody()");
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
+        submitBar.setPositiveActionEnabled(getStep().getColorSecondary());
+        if (stepBody != null) {
+            mediator.removeSource(stepBody.isStepEmpty);
+        }
         stepBody = createStepBody(questionStep, stepResult);
+        mediator.addSource(stepBody.isStepEmpty, this::isStepEmpty);
+
         View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, inflater, this);
 
         if (body != null) {
@@ -197,6 +211,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             container.addView(body, bodyIndex);
             body.setId(R.id.rsb_survey_step_body);
         }
+
+        checkIfAllStepsAreOptional();
     }
 
     @NonNull
@@ -249,5 +265,35 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     public String getString(@StringRes int stringResId) {
         return getResources().getString(stringResId);
+    }
+
+    public LiveData<Boolean> isStepEmpty() {
+        return mediator;
+    }
+
+    private void isStepEmpty(boolean isEmpty) {
+        if (!isEmpty || allStepsAreOptional)  {
+            submitBar.setPositiveActionEnabled(getStep().getColorSecondary());
+        } else {
+            submitBar.setPositiveActionDisabled();
+        }
+
+    }
+
+    private void checkIfAllStepsAreOptional() {
+        if (stepBody == null || !(stepBody instanceof FormBody)) {
+            return;
+        }
+
+        boolean allStepsAreOptional = true;
+
+        for (final QuestionStep step : ((FormBody) stepBody).getQuestionSteps()) {
+            if (!step.isOptional()) {
+                allStepsAreOptional = false;
+                break;
+            }
+        }
+
+        this.allStepsAreOptional = allStepsAreOptional;
     }
 }

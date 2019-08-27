@@ -1,6 +1,5 @@
 package org.researchstack.backbone.ui.step.layout;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;

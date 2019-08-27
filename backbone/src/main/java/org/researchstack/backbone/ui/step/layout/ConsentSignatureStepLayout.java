@@ -20,6 +20,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SignatureView;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.FormatHelper;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -139,7 +140,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
 
         String format = ((ConsentSignatureStep) step).getSignatureDateFormat();
         DateFormat signatureDateFormat = !TextUtils.isEmpty(format)
-                ? new SimpleDateFormat(format)
+                ? DateFormat.getDateInstance(DateFormat.MEDIUM, LocaleUtils.getLocaleFromString(LocaleUtils.getPreferredLocale(getContext())))
                 : FormatHelper.getSignatureFormat();
         String formattedSignDate = signatureDateFormat.format(new Date());
 

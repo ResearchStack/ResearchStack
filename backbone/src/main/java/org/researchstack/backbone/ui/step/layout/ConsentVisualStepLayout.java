@@ -18,6 +18,7 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
@@ -115,9 +116,11 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
 
         // Set Title
         TextView titleView = (TextView) findViewById(R.id.title);
-        String title = TextUtils.isEmpty(data.getTitle()) ? getResources().getString(data.getType()
-                .getTitleResId()) : data.getTitle();
-        titleView.setText(title);
+        if (TextUtils.isEmpty(data.getTitle())) {
+            titleView.setText(LocaleUtils.getLocalizedString(getContext(), data.getType().getTitleResId()));
+        } else {
+            titleView.setText(data.getTitle());
+        }
         titleView.setTextColor(principalTextColor);
 
         // Set Summary
@@ -135,30 +138,25 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
             }
             else
             {
-                moreInfoView.setText(data.getType().getMoreInfoResId());
+                moreInfoView.setText(LocaleUtils.getLocalizedString(moreInfoView.getContext(), data.getType().getMoreInfoResId()));
             }
 
-            moreInfoView.setOnClickListener(new OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
+            moreInfoView.setOnClickListener(view -> {
+                String webTitle = LocaleUtils.getLocalizedString(moreInfoView.getContext(), R.string.rsb_consent_section_more_info);
+                URL contentUrl = data.getContentUrl();
+                Intent webDoc;
+                if(contentUrl != null)
                 {
-                    String webTitle = getResources().getString(R.string.rsb_consent_section_more_info);
-                    URL contentUrl = data.getContentUrl();
-                    Intent webDoc;
-                    if(contentUrl != null)
-                    {
-                         webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle, contentUrl, true);
-                    }
-                    else
-                    {
-                        webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle,
-                                !TextUtils.isEmpty(data.getHtmlContent()) ? data.getHtmlContent() : data.getContent());
-                    }
-
-                    ViewWebDocumentActivity.addThemeColors(webDoc, step.getPrimaryColor(), step.getColorPrimaryDark());
-                    getContext().startActivity(webDoc);
+                     webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle, contentUrl, true);
                 }
+                else
+                {
+                    webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle,
+                            !TextUtils.isEmpty(data.getHtmlContent()) ? data.getHtmlContent() : data.getContent());
+                }
+
+                ViewWebDocumentActivity.addThemeColors(webDoc, step.getPrimaryColor(), step.getColorPrimaryDark());
+                getContext().startActivity(webDoc);
             });
 
         } else {
@@ -166,7 +164,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         }
 
         final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-        submitBar.setPositiveTitle(step.getNextButtonString());
+        submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(), step.getNextButtonString()));
         submitBar.setNegativeTitleColor(colorPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
         submitBar.setPositiveAction(new OnClickListener()

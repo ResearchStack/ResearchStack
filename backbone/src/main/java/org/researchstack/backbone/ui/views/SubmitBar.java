@@ -82,6 +82,18 @@ public class SubmitBar extends LinearLayout {
         positiveView.setTextColor(color);
     }
 
+    public void setPositiveActionEnabled(int color) {
+        positiveView.setClickable(true);
+        positiveView.setTextColor(color);
+
+    }
+
+    public void setPositiveActionDisabled() {
+        positiveView.setClickable(false);
+        positiveView.setTextColor(getResources().getColor(R.color.rsb_submit_disabled));
+
+    }
+
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Negative Action Helper Methods
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
