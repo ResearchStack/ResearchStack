@@ -1,7 +1,9 @@
 package org.researchstack.backbone.step;
 
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
+import org.researchstack.backbone.utils.LocaleUtils;
 
 /**
  * The {@link ConsentVisualStep} class represents a step in the visual consent sequence.
@@ -11,9 +13,6 @@ import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
  */
 public class ConsentVisualStep extends Step {
     private ConsentSection section;
-
-    @Deprecated
-    private String nextButtonString;
 
     public ConsentVisualStep(String identifier) {
         super(identifier);
@@ -49,13 +48,12 @@ public class ConsentVisualStep extends Step {
         this.section = section;
     }
 
-    @Deprecated
-    public String getNextButtonString() {
-        return nextButtonString;
-    }
-
-    @Deprecated
-    public void setNextButtonString(String nextButtonString) {
-        this.nextButtonString = nextButtonString;
+    /**
+     * Retrieve the string to use for the next button.
+     *
+     * @return The res id to use for the next button.
+     */
+    public int getNextButtonString() {
+        return R.string.rsb_next;
     }
 }

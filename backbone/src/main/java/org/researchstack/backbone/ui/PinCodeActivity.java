@@ -58,6 +58,8 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     @Override
     protected void onPause() {
         super.onPause();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
+
         LogExt.i(getClass(), "logAccessTime()");
         StorageAccess.getInstance().logAccessTime();
     }
@@ -65,6 +67,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     @Override
     protected void onResume() {
         super.onResume();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
         requestStorageAccess();
     }

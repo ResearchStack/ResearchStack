@@ -1,6 +1,9 @@
 package org.researchstack.backbone.task;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +13,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.LocaleUtils;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TaskTest {
@@ -24,9 +30,16 @@ public class TaskTest {
     public void testGetTitleForStep() throws Exception {
         Task task = new TaskImpl("id");
 
+        SharedPreferences mockSp = Mockito.mock(SharedPreferences.class);
         Context mockContext = Mockito.mock(Context.class);
-        Mockito.when(mockContext.getString(R.string.app_name)).thenReturn("title");
-        Mockito.when(mockContext.getString(0)).thenReturn("title");
+        Resources mockResources = Mockito.mock(Resources.class);
+        Configuration mockConfiguration = Mockito.mock(Configuration.class);
+        Mockito.when(mockContext.getResources()).thenReturn(mockResources);
+        Mockito.when(mockResources.getConfiguration()).thenReturn(mockConfiguration);
+        Mockito.when(mockContext.createConfigurationContext(anyObject())).thenReturn(mockContext);
+        Mockito.when(mockContext.getSharedPreferences(LocaleUtils.LOCALE_PREFERENCES, Context.MODE_PRIVATE)).thenReturn(mockSp);
+        Mockito.when(mockSp.getString(LocaleUtils.PREFERRED_LOCALE_FIELD, null)).thenReturn("en_US");
+        Mockito.when(mockResources.getString(R.string.app_name)).thenReturn("title");
 
         Step mockStepWithTitle = Mockito.mock(Step.class);
         Mockito.when(mockStepWithTitle.getStepTitle()).thenReturn(R.string.app_name);
