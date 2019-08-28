@@ -1,10 +1,12 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Parcelable;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -189,9 +191,16 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         return super.onSaveInstanceState();
     }
 
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+        }
+    }
+
     protected void onNextClicked() {
         BodyAnswer bodyAnswer = stepBody.getBodyAnswerState();
-
+        hideKeyboard();
         if (bodyAnswer == null || !bodyAnswer.isValid()) {
             Toast.makeText(getContext(),
                     bodyAnswer == null
