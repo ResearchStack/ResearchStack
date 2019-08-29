@@ -9,6 +9,8 @@ import org.researchstack.skin.notification.TaskNotificationReceiver;
 
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+
 /**
  * UiManager is responsible for providing an a way to define certain aspects of the UI that cannot
  * be provided / genreated by the framework.
@@ -53,7 +55,7 @@ public abstract class UiManager {
      * All ActionItems returned by this method should define a title, icon, and class. These items
      * are used to fill a pager in the MainActivity. The framework uses the class objects from this
      * list to create a Fragments for tha pager. It is imperative that the defined classes be of
-     * instance  {@link android.support.v4.app.Fragment}.
+     * instance  {@link Fragment}.
      *
      * @return a list of ActionItems for display in the MainActivity ActionBar
      */
