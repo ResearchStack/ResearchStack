@@ -74,7 +74,7 @@
         android:key="rsb_settings_general"
         android:title="@string/rsb_settings_general">
 
-        <org.researchstack.backbone.ui.preference.TextColorPreference
+        <org.sagebionetworks.researchstack.backbone.ui.preference.TextColorPreference
             android:key="rsb_settings_general_join_study"
             android:order="0"
             android:title="@string/rsb_settings_general_join_study" />
@@ -84,7 +84,7 @@
             android:order="1"
             android:title="@string/rsb_settings_general_software_notices" />
 
-        <org.researchstack.backbone.ui.preference.TextColorPreference
+        <org.sagebionetworks.researchstack.backbone.ui.preference.TextColorPreference
             android:key="rsb_settings_general_leave_study"
             android:order="2"
             android:title="@string/rsb_settings_general_leave_study"

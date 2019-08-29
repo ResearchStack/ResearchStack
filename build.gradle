@@ -6,9 +6,13 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+        classpath 'com.android.tools.build:gradle:3.5.0'
+
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.41"
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.18"
+
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -17,6 +21,10 @@ buildscript {
 }
 
 allprojects {
+    version = '1.3.0-alpha'+
+    ''
+    group = 'org.sagebionetworks.researchstack'
+
     repositories {
         jcenter()
         google()
@@ -24,6 +32,35 @@ allprojects {
             url "https://dl.bintray.com/touchlab/Squeaky"
         }
         maven { url "https://jitpack.io" }
+    }
+}
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.plugins.hasPlugin('com.android.library')) {
+            apply plugin: 'org.jetbrains.dokka-android'
+
+            task sourcesJar(type: Jar) {
+                from android.sourceSets.main.java.srcDirs
+                classifier = 'sources'
+            }
+
+            dokka {
+                outputFormat = 'html'
+                outputDirectory = "$buildDir/javadoc"
+            }
+
+            task javadocJar(type: Jar, dependsOn: dokka) {
+                classifier = 'javadoc'
+                from dokka.outputDirectory
+            }
+
+            artifacts {
+                // TODO: package javadoc for maven artifact publishing
+                archives javadocJar
+                archives sourcesJar
+            }
+        }
     }
 }
 

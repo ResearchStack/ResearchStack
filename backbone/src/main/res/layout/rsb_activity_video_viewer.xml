@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <org.researchstack.backbone.ui.views.AssetVideoView
+    <org.sagebionetworks.researchstack.backbone.ui.views.AssetVideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

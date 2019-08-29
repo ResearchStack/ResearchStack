@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <org.researchstack.backbone.ui.views.ObservableScrollView
+    <org.sagebionetworks.researchstack.backbone.ui.views.ObservableScrollView
         android:id="@+id/rsb_content_container_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -21,9 +21,9 @@
 
         </LinearLayout>
 
-    </org.researchstack.backbone.ui.views.ObservableScrollView>
+    </org.sagebionetworks.researchstack.backbone.ui.views.ObservableScrollView>
 
-    <org.researchstack.backbone.ui.views.SubmitBar
+    <org.sagebionetworks.researchstack.backbone.ui.views.SubmitBar
         android:id="@+id/rsb_submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -30,7 +30,7 @@
         android:layout_marginTop="36dp"
         tools:text="@string/lorem_medium" />
 
-    <org.researchstack.backbone.ui.views.SignatureView
+    <org.sagebionetworks.researchstack.backbone.ui.views.SignatureView
         android:id="@+id/layout_consent_review_signature"
         android:layout_width="match_parent"
         android:layout_height="186dp"
@@ -43,7 +43,7 @@
         android:paddingRight="32dp"
         app:signatureColor="?attr/colorAccent" />
 
-    <org.researchstack.backbone.ui.views.SubmitBar
+    <org.sagebionetworks.researchstack.backbone.ui.views.SubmitBar
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 
-version = '2.0.0-SNAPSHOT'
+version = '1.3.0-alpha'
 
 android {
     compileSdkVersion 28
@@ -35,41 +35,6 @@ android {
     }
 
     resourcePrefix 'rsb_'
-}
-
-// Reading in data from local.properties is used here to grab key/value pairs used below in ext
-// Originally, it read the local.properties, but this file should never be committed to vcs,
-// So check if it exists first, because some projects may not care about it
-Properties properties = new Properties()
-if (project.rootProject.file('local.properties').exists()) {
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-}
-
-ext {
-    bintrayRepo = 'ResearchStack'
-    bintrayName = 'Backbone'
-
-    publishedGroupId = 'org.researchstack'
-    libraryName = 'Backbone'
-    artifact = 'backbone'
-
-    libraryDescription = 'Backbone description'
-
-    siteUrl = 'https://researchstack.org'
-    gitUrl = 'https://github.com/ResearchStack/ResearchStack.git'
-
-    libraryVersion = version
-
-    // This grabs the key/value pairs from local.properties and assigns them to variables that
-    // can be used in gradle, and specifically, the mavenInstaller below
-    userOrgName = 'researchstack'
-    developerId = properties.getProperty("bintray.user")
-    developerName = properties.getProperty("bintray.developerName")
-    developerEmail = properties.getProperty("bintray.developerEmail")
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
 }
 
 dependencies {
@@ -126,96 +91,4 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:3.5'
 }
 
-group = publishedGroupId                               // Maven Group ID for the artifact
-
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                groupId publishedGroupId
-                artifactId artifact
-
-                // Add your description here
-                name libraryName
-                description libraryDescription
-                url siteUrl
-
-                // Set your license
-                licenses {
-                    license {
-                        name licenseName
-                        url licenseUrl
-                    }
-                }
-                developers {
-                    developer {
-                        id developerId
-                        name developerName
-                        email developerEmail
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
-
-if (project.hasProperty("android")) { // Android libraries
-    task sourcesJar(type: Jar) {
-        classifier = 'sources'
-        from android.sourceSets.main.java.srcDirs
-    }
-
-    task javadoc(type: Javadoc) {
-        failOnError false
-        source = android.sourceSets.main.java.srcDirs
-        // Exclude generated files
-        exclude '**/BuildConfig.java'
-        exclude '**/R.java'
-    }
-
-    afterEvaluate {
-        javadoc.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-        javadoc.classpath += files(android.libraryVariants.collect { variant ->
-            variant.javaCompile.classpath.files
-        })
-    }
-} else { // Java libraries
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-
-    configurations = ['archives']
-    pkg {
-        repo = bintrayRepo
-        name = bintrayName
-        userOrg = userOrgName
-        desc = libraryDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publish = true
-    }
-}
+apply from: "../config/artifact-deploy.gradle"

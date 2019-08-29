@@ -33,6 +33,13 @@ before_install:
 
 script: ./gradlew build
 
+deploy:
+  provider: script
+  script: ./gradlew bintrayUpload
+  on:
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^stable-.*$
+
 # Uncomment line below to add post-test scripts.
 # after_script:
-#   - cat /home/travis/build/nrlakin/ResearchStack/backbone/build/reports/tests/debug/classes/org.researchstack.backbone.task.TaskTest.html
+#   - cat /home/travis/build/nrlakin/ResearchStack/backbone/build/reports/tests/debug/classes/org.sagebionetworks.researchstack.backbone.task.TaskTest.html

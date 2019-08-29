@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:textColor="@color/rsb_countdown_step_layout_text_color"/>
 
-    <org.researchstack.backbone.ui.views.AudioGraphView
+    <org.sagebionetworks.researchstack.backbone.ui.views.AudioGraphView
         android:id="@+id/rsb_step_layout_audio_graph"
         android:layout_width="match_parent"
         android:layout_height="@dimen/rsb_step_layout_audio_graph_height"

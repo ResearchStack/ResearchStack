@@ -51,7 +51,7 @@
     />
 
 
-    <org.researchstack.backbone.ui.views.SubmitBar
+    <org.sagebionetworks.researchstack.backbone.ui.views.SubmitBar
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
