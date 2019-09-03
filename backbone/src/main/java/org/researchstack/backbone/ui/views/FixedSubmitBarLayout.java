@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
+
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
-import androidx.core.view.ViewCompat;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 
@@ -98,17 +99,7 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
     }
 
     private void onScrollChanged(ScrollView scrollView, View submitBarGuide, View submitBar) {
-        int scrollY = scrollView.getScrollY();
-        int guidePosition = submitBarGuide.getTop() - scrollY;
-        int guideHeight = submitBarGuide.getHeight();
-        int yLimit = scrollView.getHeight() - guideHeight;
-
-        if (guidePosition <= yLimit) {
-            ViewCompat.setTranslationY(submitBar, 0);
-        } else {
-            int translationY = guidePosition - yLimit;
-            ViewCompat.setTranslationY(submitBar, translationY);
-        }
+        submitBar.setTranslationY(0);
     }
 
     /**
