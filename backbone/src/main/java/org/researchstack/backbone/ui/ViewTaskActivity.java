@@ -184,7 +184,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         if (nextStep == null) {
             saveAndFinish();
         } else {
-            showStep(nextStep, true);
+            if(nextStep.isHidden()) {
+                // We will do the save for this step and then go to the next step
+                processHiddenStep(nextStep);
+                showNextStep();
+            } else {
+                showStep(nextStep, true);
+            }
         }
     }
 
@@ -193,7 +199,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         if (previousStep == null) {
             finish();
         } else {
-            showStep(previousStep,false);
+            if(previousStep.isHidden()) {
+                // The previous step was a hidden one so we go back again
+                showPreviousStep();
+            } else {
+                showStep(previousStep, true);
+            }
         }
     }
 
@@ -207,6 +218,16 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         actionBar.setDisplayHomeAsUpEnabled(stepCount > 1 && showBackArrow);
         currentStep = step;
 
+    }
+
+    private void processHiddenStep(Step step) {
+        StepResult result = taskResult.getStepResult(step.getIdentifier()) ;
+        if(result == null) {
+            result = new StepResult<>(step);
+        }
+        result.setResult(step.getHiddenDefaultValue());
+        onSaveStepResult(step.getIdentifier(), result);
+        currentStep = step;
     }
 
     protected StepLayout getLayoutForStep(Step step) {
