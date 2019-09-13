@@ -109,13 +109,12 @@ public class Step implements Serializable {
 
 
     /**
-     * A boolean value indicating whether the user can skip the step without providing an answer.
+     * A boolean value indicating whether the user will see this step or not.
      * <p>
-     * The default value of this property is <code>true</code>. When the value is
-     * <code>false</code>, the Skip button does not appear on this step.
+     * The default value of this property is <code>false</code>. When the value is
+     * <code>true</code>, the step is not display and the hiddenDefaultValue is used as value for this step.
      * <p>
-     * This property may not be meaningful for all steps; for example, an active step might not
-     * provide a way to skip, because it requires a timer to finish.
+     * This property may not be meaningful for all steps;
      *
      * @return a boolean indicating whether the step is hidden
      */
@@ -126,7 +125,7 @@ public class Step implements Serializable {
     /**
      * Sets whether the step is a hidden step
      *
-     * @param hidden a boolean indicating whether the step is hidden
+     * @param hidden a boolean indicating whether the step is a hidden step
      * @see #isHidden()
      */
     public void setHidden(boolean hidden) {
@@ -329,7 +328,7 @@ public class Step implements Serializable {
         this.hiddenDefaultValue = defaultValue;
     }
     /**
-     * Gets the default value use when the step is hidden
+     * Gets the default value use when the step is hide
      */
     public Object getHiddenDefaultValue() {
         return hiddenDefaultValue;
