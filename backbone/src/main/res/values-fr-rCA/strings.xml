@@ -32,10 +32,10 @@
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">En savoir plus</string>
     <string name="rsb_consent_section_more_info_data_gathering">En savoir plus sur la collecte des données</string>
-    <string name="rsb_consent_section_more_info_data_use">En savoir plus sur l\’usage des données</string>
+    <string name="rsb_consent_section_more_info_data_use">En savoir plus sur l\'usage des données</string>
     <string name="rsb_consent_section_more_info_privacy">En savoir plus sur la protection de votre vie privée et de votre identité</string>
-    <string name="rsb_consent_section_more_info_welcome">En savoir plus au sujet de l\’étude en premier</string>
-    <string name="rsb_consent_section_more_info_study_survey">En savoir plus au sujet du sondage de l\’étude</string>
+    <string name="rsb_consent_section_more_info_welcome">En savoir plus au sujet de l\'étude en premier</string>
+    <string name="rsb_consent_section_more_info_study_survey">En savoir plus au sujet du sondage de l\'étude</string>
     <string name="rsb_consent_section_more_info_time_commitment">En savoir plus sur l\'impact de l\'étude sur votre temps</string>
     <string name="rsb_consent_section_more_info_study_tasks">En savoir plus sur les tâches impliquées</string>
     <string name="rsb_consent_section_more_info_withdrawing">En savoir plus au sujet du droit de retrait</string>
@@ -45,7 +45,7 @@
     <string name="rsb_consent_share_widely">Partager mes données avec %1$s et des chercheurs qualifiés du monde entier</string>
     <string name="rsb_consent_share_no">Vos données ne sont pas partagées</string>
     <string name="rsb_consent_share_only">Partager mes données uniquement avec %1$s</string>
-    <string name="rsb_consent_share_description"><![CDATA[%1$s recevra vos données d\'étude provenant de votre participation à cette étude. \n\nLe partage plus large de vos données codées provenant de l\’étude (sans informations telles que votre nom) peut être avantageux pour cette recherche et les recherches à venir.<br/><br/><a href="%2$s">En savoir plus sur le partage de données</a>]]></string>
+    <string name="rsb_consent_share_description"><![CDATA[%1$s recevra vos données d\'étude provenant de votre participation à cette étude. \n\nLe partage plus large de vos données codées provenant de l\'étude (sans informations telles que votre nom) peut être avantageux pour cette recherche et les recherches à venir.<br/><br/><a href="%2$s">En savoir plus sur le partage de données</a>]]></string>
 
     <!-- Consent doc step -->
     <string name="rsb_consent_review_title">Révision</string>
@@ -72,7 +72,7 @@
 
     <!-- Quiz -->
     <string name="rsb_quiz">Jeu-questionnaire</string>
-    <string name="rsb_quiz_evaluation">Jeu-questionnaire d\’évaluation</string>
+    <string name="rsb_quiz_evaluation">Jeu-questionnaire d\'évaluation</string>
     <string name="rsb_quiz_evaluation_try_again">Essayer de nouveau</string>
     <string name="rsb_quiz_evaluation_review_consent">Passer en revue le consentement</string>
     <string name="rsb_quiz_evaluation_retake">Reprendre le jeu-questionnaire</string>
@@ -85,13 +85,13 @@
     <string name="rsb_done">Terminé</string>
     <string name="rsb_step_skip">Ignorer</string>
     <string name="rsb_next">suivant</string>
-    <string name="rsb_what_to_expect">À quoi s’attendre</string>
+    <string name="rsb_what_to_expect">À quoi s\'attendre</string>
     <string name="rsb_name">Nom</string>
     <string name="rsb_name_first">Prénom</string>
     <string name="rsb_name_last">Nom de famille</string>
     <string name="rsb_email">Courriel</string>
     <string name="rsb_disagree">En désaccord</string>
-    <string name="rsb_agree">D\’accord</string>
+    <string name="rsb_agree">D\'accord</string>
     <string name="rsb_ok">OK</string>
     <string name="rsb_cancel">Annuler</string>
     <string name="rsb_yes">Oui</string>
@@ -100,7 +100,7 @@
     <string name="rsb_hours">Heures</string>
     <string name="rsb_minutes">Minutes</string>
     <string name="rsb_task_cancel_title">Quitter l\'activité</string>
-    <string name="rsb_task_cancel_text">Êtes-vous sûr(e) de vouloir quitter cette activité et d’en supprimer les résultats?</string>
+    <string name="rsb_task_cancel_text">Êtes-vous sûr(e) de vouloir quitter cette activité et d\'en supprimer les résultats?</string>
     <string name="rsb_task_cancel_positive">Rejeter les résultats</string>
 
     <!-- Step Errors -->
@@ -148,7 +148,7 @@
     <string name="rsb_error_assetvideoview_button">OK</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Le nom du %1$s (en caractères d’imprimerie)</string>
+    <string name="rsb_consent_doc_line_printed_name">Le nom du %1$s (en caractères d\'imprimerie)</string>
     <string name="rsb_consent_doc_line_signature">Signature du %1$s</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
