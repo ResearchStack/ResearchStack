@@ -1,0 +1,157 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Debug -->
+    <string name="lorem_name" tools:ignore="ResourceName" translatable="false">Lorem Ipsum</string>
+    <string name="lorem_short" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit.
+    </string>
+    <string name="lorem_medium" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
+    </string>
+    <string name="lorem_long" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+        anim id est laborum.
+    </string>
+
+    <!-- Consent Section -->
+    <string name="rsb_consent">Samtykke</string>
+    <string name="rsb_consent_section_welcome">Velkommen</string>
+    <string name="rsb_consent_section_data_gathering">Dataindsamling</string>
+    <string name="rsb_consent_section_privacy">Databeskyttelse</string>
+    <string name="rsb_consent_section_data_use">Databrug</string>
+    <string name="rsb_consent_section_time_commitment">Tidsforpligtelse</string>
+    <string name="rsb_consent_section_study_survey">Spørgeskema for undersøgelse</string>
+    <string name="rsb_consent_section_study_tasks">Undersøgelsesopgaver</string>
+    <string name="rsb_consent_section_withdrawing">Tilbagetrækning</string>
+    <string name="rsb_consent_learn_more">Få mere at vide</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">Få mere at vide</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Få mere at vide om, hvordan data bliver indsamlet</string>
+    <string name="rsb_consent_section_more_info_data_use">Få mere at vide om, hvordan data bliver anvendt</string>
+    <string name="rsb_consent_section_more_info_privacy">Få mere at vide om, hvordan dine personlige oplysninger og identitet er beskyttet</string>
+    <string name="rsb_consent_section_more_info_welcome">Få mere at vide om undersøgelsen først</string>
+    <string name="rsb_consent_section_more_info_study_survey">Få mere at vide om undersøgelsen</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Få mere at vide om undersøgelsens betydning for din tid</string>
+    <string name="rsb_consent_section_more_info_study_tasks">Få mere at vide om de involverede opgaver</string>
+    <string name="rsb_consent_section_more_info_withdrawing">Få mere at vide om tilbagetrækning</string>
+
+    <!-- Consent sharing step -->
+    <string name="rsb_consent_share_title">Indstillinger for deling</string>
+    <string name="rsb_consent_share_widely">Del mine data med %1$s og kvalificerede forskere verden over</string>
+    <string name="rsb_consent_share_no">Deler ikke dine data</string>
+    <string name="rsb_consent_share_only">Del kun mine data med %1$s</string>
+    <string name="rsb_consent_share_description"><![CDATA[%1$s vil modtage dine undersøgelsesdata fra din deltagelse i denne undersøgelse. \n\nEn mere bred deling af dine kodede undersøgelsesdata (uden information såsom dit navn) kan gavne denne og fremtidig forskning.<br/><br/><a href="%2$s">Få mere at vide om datadeling</a>]]></string>
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_title">Gennemse</string>
+    <string name="rsb_consent_review_alert_title">Gennemse</string>
+    <string name="rsb_consent_review_reason">Ved at acceptere bekræfter du, at du har læst informationen, og at du ønsker at deltage i denne forskningsundersøgelse.</string>
+    <string name="rsb_consent_review_instruction">Gennemse formularen nedenfor, og tryk på enig, hvis du er klar til at fortsætte.</string>
+    <string name="rsb_consent_review_cancel">Annullér</string>
+
+    <string name="rsb_saving_consent">Gemmer samtykke</string>
+    <string name="rsb_please_wait">Vent venligst&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_form_title">Samtykke</string>
+    <string name="rsb_consent_name_full">Fulde navn</string>
+    <string name="rsb_consent_dob_full">Fødselsdato</string>
+    <string name="rsb_consent_name_placeholder">Påkrævet</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">Underskrift</string>
+    <string name="rsb_consent_signature_content">Ved at acceptere bekræfter du, at du har læst samtykkeaftalen, og at du ønsker at deltage i denne forskningsundersøgelse.</string>
+    <string name="rsb_consent_signature_instruction">Underskriv med din finger på linjen nedenfor.</string>
+    <string name="rsb_consent_signature_placeholder">Underskriv her</string>
+    <string name="rsb_consent_signature_clear">Ryd</string>
+
+    <!-- Quiz -->
+    <string name="rsb_quiz">Quiz</string>
+    <string name="rsb_quiz_evaluation">Quizevaluering</string>
+    <string name="rsb_quiz_evaluation_try_again">Prøv igen</string>
+    <string name="rsb_quiz_evaluation_review_consent">Gennemse samtykke</string>
+    <string name="rsb_quiz_evaluation_retake">Tag quiz igen</string>
+    <string name="rsb_quiz_evaluation_great_job">Godt gået!</string>
+
+    <!-- Other -->
+    <string name="rsb_submit">Indsend</string>
+    <string name="rsb_exit">Afslut</string>
+    <string name="rsb_get_started">Kom i gang</string>
+    <string name="rsb_done">Færdig</string>
+    <string name="rsb_step_skip">Spring over</string>
+    <string name="rsb_next">næste</string>
+    <string name="rsb_what_to_expect">Hvad du kan forvente</string>
+    <string name="rsb_name">Navn</string>
+    <string name="rsb_name_first">Fornavn</string>
+    <string name="rsb_name_last">Efternavn</string>
+    <string name="rsb_email">E-mail</string>
+    <string name="rsb_disagree">Uenig</string>
+    <string name="rsb_agree">Enig</string>
+    <string name="rsb_ok">OK</string>
+    <string name="rsb_cancel">Annullér</string>
+    <string name="rsb_yes">Ja</string>
+    <string name="rsb_no">Nej</string>
+    <string name="rsb_format_step_title">Trin %1$s af %2$s</string>
+    <string name="rsb_hours">Timer</string>
+    <string name="rsb_minutes">Minutter</string>
+    <string name="rsb_task_cancel_title">Forlad aktivitet</string>
+    <string name="rsb_task_cancel_text">Er du sikker på, at du vil forlade denne aktivitet og slette resultaterne?</string>
+    <string name="rsb_task_cancel_positive">Ryd resultater</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_data_failed">Kunne ikke indlæse krypteret data. Prøv igen.</string>
+    <string name="rsb_error_invalid_signature">Ugyldig underskrift</string>
+    <string name="rsb_invalid_answer_default">Ugyldigt svar. Prøv igen!</string>
+    <string name="rsb_invalid_answer_date_over">Ugyldigt svar. Dato skal være før %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Ugyldigt svar. Dato skal være efter %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Ugyldigt svar. Din værdi skal være %1$s eller lavere</string>
+    <string name="rsb_invalid_answer_integer_under">Ugyldigt svar. Din værdi skal være %1$s eller højere</string>
+    <string name="rsb_invalid_answer_choice">Vælg venligst en værdi!</string>
+    <string name="rsb_invalid_answer_date_none">Vælg en dato.</string>
+    <string name="rsb_birth_date_too_old">Du skal være %1$s år eller yngre</string>
+    <string name="rsb_birth_date_too_young">Du skal være mindst %1$s år gammel</string>
+
+    <!-- Pin Code -->
+    <string name="rsb_pincode_enter_title">Indtast din adgangskode</string>
+    <string name="rsb_pincode_enter_summary">Indtast din %1$d-%2$s-kode for at bekræfte din identitet.</string>
+    <string name="rsb_pincode_enter_digit">ciffer</string>
+    <string name="rsb_pincode_enter_letter">bogstav</string>
+    <string name="rsb_pincode_enter_character">tegn</string>
+    <string name="rsb_pincode_enter_error">Koden stemmer ikke overens med den, som du har indtastet. Prøv igen.</string>
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">Indtast et nummer %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Indtast et nummer %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">Indtast et nummer</string>
+    <string name="rsb_hint_step_body_date">Indtast en dato</string>
+    <string name="rsb_hint_step_body_time">Indtast et tidspunkt</string>
+    <string name="rsb_hint_step_body_datetime">Indtast en dato og et tidspunkt</string>
+    <string name="rsb_hint_step_body_text">Svar</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s af %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_title">Videoproblem</string>
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Denne video er ikke gyldig til streaming til denne enhed.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">Kan ikke afspille denne video.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1$s\'s Navn (trykte bogstaver)</string>
+    <string name="rsb_consent_doc_line_signature">%1$s\'s Underskrift</string>
+    <string name="rsb_consent_doc_line_date">Dato</string>
+    <string name="rsb_consent_role">Deltager</string>
+    <string name="rsb_consent_doc_line_date_format">"MM-dd-åååå"</string>
+
+</resources>

@@ -1,0 +1,157 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Debug -->
+    <string name="lorem_name" tools:ignore="ResourceName" translatable="false">Lorem Ipsum</string>
+    <string name="lorem_short" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit.
+    </string>
+    <string name="lorem_medium" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
+    </string>
+    <string name="lorem_long" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+        anim id est laborum.
+    </string>
+
+    <!-- Consent Section -->
+    <string name="rsb_consent">Onam</string>
+    <string name="rsb_consent_section_welcome">Hoş Geldiniz</string>
+    <string name="rsb_consent_section_data_gathering">Veri Toplama</string>
+    <string name="rsb_consent_section_privacy">Gizlilik Politikası</string>
+    <string name="rsb_consent_section_data_use">Veri Kullanımı</string>
+    <string name="rsb_consent_section_time_commitment">Zaman Taahhüdü</string>
+    <string name="rsb_consent_section_study_survey">Çalışma Anketi</string>
+    <string name="rsb_consent_section_study_tasks">Çalışma Görevleri</string>
+    <string name="rsb_consent_section_withdrawing">Onayı Geri Çekme</string>
+    <string name="rsb_consent_learn_more">Daha Fazla</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">Daha fazla</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Verilerin nasıl toplandığı hakkında daha fazla bilgi edinin</string>
+    <string name="rsb_consent_section_more_info_data_use">Verilerin nasıl kullanıldığı hakkında daha fazla bilgi edinin</string>
+    <string name="rsb_consent_section_more_info_privacy">Gizliliğinizin ve kimliğinizin nasıl korunduğu hakkında daha fazla bilgi edinin</string>
+    <string name="rsb_consent_section_more_info_welcome">Öncelikle çalışma hakkında daha fazla bilgi edinin</string>
+    <string name="rsb_consent_section_more_info_study_survey">Çalışma anketi hakkında daha fazla bilgi edinin</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Çalışmanın zamanınıza etkisi hakkında daha fazla bilgi edinin</string>
+    <string name="rsb_consent_section_more_info_study_tasks">İlgili görevler hakkında daha fazla bilgi edinin</string>
+    <string name="rsb_consent_section_more_info_withdrawing">Onayı geri çekme hakkında daha fazla bilgi edinin</string>
+
+    <!-- Consent sharing step -->
+    <string name="rsb_consent_share_title">Paylaşma Seçenekleri</string>
+    <string name="rsb_consent_share_widely">Verilerimi %1$s ve dünyanın her yerindeki uygun araştırmacılarla paylaş</string>
+    <string name="rsb_consent_share_no">Verilerim paylaşılmasın</string>
+    <string name="rsb_consent_share_only">Verilerimi sadece %1$s ile paylaş</string>
+    <string name="rsb_consent_share_description"><![CDATA[%1$s, bu çalışmaya katılımınızın sonucu elde edilen çalışma verilerini alacak. \n\nKodlanmış çalışma verilerinizi daha geniş kitlelerle paylaşmak (adınız gibi bilgiler olmadan), bu ve gelecekteki araştırmalar için faydalı olabilir.<br/><br/><a href="%2$s">Veri paylaşımı hakkında daha fazla bilgi edinin</a>]]></string>
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_title">İnceleme</string>
+    <string name="rsb_consent_review_alert_title">İnceleme</string>
+    <string name="rsb_consent_review_reason">Kabul ederek, bilgileri okuduğunuzu ve bu araştırma çalışmasına katılmak istediğinizi onaylıyorsunuz.</string>
+    <string name="rsb_consent_review_instruction">Aşağıdaki formu inceleyin ve devam etmek için hazırsanız Kabul Ediyorum üzerine dokunun.</string>
+    <string name="rsb_consent_review_cancel">İptal Et</string>
+
+    <string name="rsb_saving_consent">Onam Kaydediliyor</string>
+    <string name="rsb_please_wait">Lütfen bekleyin&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_form_title">Onam</string>
+    <string name="rsb_consent_name_full">Ad Soyad</string>
+    <string name="rsb_consent_dob_full">Doğum Tarihi</string>
+    <string name="rsb_consent_name_placeholder">Gerekli</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">İmza</string>
+    <string name="rsb_consent_signature_content">Kabul ederek, onamı okuduğunuzu ve bu araştırma çalışmasına katılmak istediğinizi onaylıyorsunuz.</string>
+    <string name="rsb_consent_signature_instruction">Lütfen parmağınızı kullanarak aşağıdaki satırı imzalayın.</string>
+    <string name="rsb_consent_signature_placeholder">Burayı İmzalayın</string>
+    <string name="rsb_consent_signature_clear">Temizle</string>
+
+    <!-- Quiz -->
+    <string name="rsb_quiz">Test</string>
+    <string name="rsb_quiz_evaluation">Test Değerlendirmesi</string>
+    <string name="rsb_quiz_evaluation_try_again">Tekrar Dene</string>
+    <string name="rsb_quiz_evaluation_review_consent">Onamı İncele</string>
+    <string name="rsb_quiz_evaluation_retake">Testi Tekrarla</string>
+    <string name="rsb_quiz_evaluation_great_job">Harika!</string>
+
+    <!-- Other -->
+    <string name="rsb_submit">Gönder</string>
+    <string name="rsb_exit">Çık</string>
+    <string name="rsb_get_started">Başla</string>
+    <string name="rsb_done">Tamam</string>
+    <string name="rsb_step_skip">Atla</string>
+    <string name="rsb_next">ileri</string>
+    <string name="rsb_what_to_expect">Ne Beklenmeli</string>
+    <string name="rsb_name">Ad</string>
+    <string name="rsb_name_first">Ad</string>
+    <string name="rsb_name_last">Soyad</string>
+    <string name="rsb_email">E-posta</string>
+    <string name="rsb_disagree">Reddet</string>
+    <string name="rsb_agree">Kabul Et</string>
+    <string name="rsb_ok">Tamam</string>
+    <string name="rsb_cancel">İptal Et</string>
+    <string name="rsb_yes">Evet</string>
+    <string name="rsb_no">Hayır</string>
+    <string name="rsb_format_step_title">Adım %1$s / %2$s</string>
+    <string name="rsb_hours">Saat</string>
+    <string name="rsb_minutes">Dakika</string>
+    <string name="rsb_task_cancel_title">Etkinlikten Ayrıl</string>
+    <string name="rsb_task_cancel_text">Bu etkinlikten ayrılmak ve sonuçlarını silmek istediğinizden emin misiniz?</string>
+    <string name="rsb_task_cancel_positive">Sonuçları Sil</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_data_failed">Şifreli veriler yüklenemedi, tekrar deneyin!</string>
+    <string name="rsb_error_invalid_signature">İmza Geçersiz</string>
+    <string name="rsb_invalid_answer_default">Geçersiz yanıt, tekrar deneyin!</string>
+    <string name="rsb_invalid_answer_date_over">Geçersiz yanıt, tarih, %1$s tarihinden önce olmalıdır</string>
+    <string name="rsb_invalid_answer_date_under">Geçersiz yanıt, tarih, %1$s tarihinden sonra olmalıdır</string>
+    <string name="rsb_invalid_answer_integer_over">Geçersiz yanıt, değeriniz %1$s veya daha az olmalıdır</string>
+    <string name="rsb_invalid_answer_integer_under">Geçersiz yanıt, değeriniz %1$s veya daha fazla olmalıdır</string>
+    <string name="rsb_invalid_answer_choice">Lütfen bir değer seçin!</string>
+    <string name="rsb_invalid_answer_date_none">Lütfen bir tarih seçin.</string>
+    <string name="rsb_birth_date_too_old">Yaşınız %1$s veya daha küçük olmalıdır</string>
+    <string name="rsb_birth_date_too_young">En az %1$s yaşında olmalısınız</string>
+
+    <!-- Pin Code -->
+    <string name="rsb_pincode_enter_title">Şifrenizi girin</string>
+    <string name="rsb_pincode_enter_summary">Kimliğinizi onaylamak için %1$d-%2$s kodunuzu girin.</string>
+    <string name="rsb_pincode_enter_digit">hane</string>
+    <string name="rsb_pincode_enter_letter">harf</string>
+    <string name="rsb_pincode_enter_character">karakter</string>
+    <string name="rsb_pincode_enter_error">Bu kod, önceki girdiğinizle eşleşmiyor. Tekrar deneyin!</string>
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">%1$d-%2$d arasında bir sayı girin</string>
+    <string name="rsb_hint_step_body_dec">%1$.2f-%2$.2f arasında bir sayı girin</string>
+    <string name="rsb_hint_step_body_int_no_max">Sayı girin</string>
+    <string name="rsb_hint_step_body_date">Tarih girin</string>
+    <string name="rsb_hint_step_body_time">Saat girin</string>
+    <string name="rsb_hint_step_body_datetime">Tarih ve saat girin</string>
+    <string name="rsb_hint_step_body_text">Yanıt</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s / %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_title">Video sorunu</string>
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Bu video, bu cihazda çalıştırmak için geçerli değil.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">Bu video oynatılamıyor.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">Tamam</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1$s\ Adı (basılı)</string>
+    <string name="rsb_consent_doc_line_signature">%1$s\ İmzası</string>
+    <string name="rsb_consent_doc_line_date">Tarih</string>
+    <string name="rsb_consent_role">Katılımcı</string>
+    <string name="rsb_consent_doc_line_date_format">"gg-aa-yyyy"</string>
+
+</resources>

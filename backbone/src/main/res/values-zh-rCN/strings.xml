@@ -1,0 +1,157 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Debug -->
+    <string name="lorem_name" tools:ignore="ResourceName" translatable="false">Lorem Ipsum</string>
+    <string name="lorem_short" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit.
+    </string>
+    <string name="lorem_medium" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
+    </string>
+    <string name="lorem_long" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+        anim id est laborum.
+    </string>
+
+    <!-- Consent Section -->
+    <string name="rsb_consent">同意</string>
+    <string name="rsb_consent_section_welcome">欢迎</string>
+    <string name="rsb_consent_section_data_gathering">数据收集</string>
+    <string name="rsb_consent_section_privacy">隐私</string>
+    <string name="rsb_consent_section_data_use">数据使用</string>
+    <string name="rsb_consent_section_time_commitment">时间保证</string>
+    <string name="rsb_consent_section_study_survey">研究调查</string>
+    <string name="rsb_consent_section_study_tasks">研究任务</string>
+    <string name="rsb_consent_section_withdrawing">撤销</string>
+    <string name="rsb_consent_learn_more">学到更多</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">学到更多</string>
+    <string name="rsb_consent_section_more_info_data_gathering">详细了解如何收集数据</string>
+    <string name="rsb_consent_section_more_info_data_use">详细了解如何使用数据</string>
+    <string name="rsb_consent_section_more_info_privacy">详细了解您的隐私和身份如何受到保护</string>
+    <string name="rsb_consent_section_more_info_welcome">详细了解有关该研究的更多信息</string>
+    <string name="rsb_consent_section_more_info_study_survey">详细了解有关研究调查的更多信息</string>
+    <string name="rsb_consent_section_more_info_time_commitment">详细了解该研究对您的时间的影响</string>
+    <string name="rsb_consent_section_more_info_study_tasks">详细了解所涉及的任务</string>
+    <string name="rsb_consent_section_more_info_withdrawing">了解有关撤销的更多信息</string>
+
+    <!-- Consent sharing step -->
+    <string name="rsb_consent_share_title">共享选项</string>
+    <string name="rsb_consent_share_widely">与%1$s和全球合格的研究人员共享我的数据</string>
+    <string name="rsb_consent_share_no">不共享您的数据</string>
+    <string name="rsb_consent_share_only">仅与%1$s共享我的数据</string>
+    <string name="rsb_consent_share_description"><![CDATA[%1$s将从您参与本研究中获得您的研究数据。\n\n更广泛地共享您的编码研究数据（没有您的姓名等信息）可能有益于此和未来的研究。<br/><br/><a href="%2$s">了解有关数据共享的更多信息</a>]]></string>
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_title">评论</string>
+    <string name="rsb_consent_review_alert_title">评论</string>
+    <string name="rsb_consent_review_reason">同意即表明您确认您已阅读该信息并且您希望参与此研究。</string>
+    <string name="rsb_consent_review_instruction">查看下面的表单，如果您已准备好继续，请点按“同意”。</string>
+    <string name="rsb_consent_review_cancel">取消</string>
+
+    <string name="rsb_saving_consent">保存同意</string>
+    <string name="rsb_please_wait">请稍候&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_form_title">同意</string>
+    <string name="rsb_consent_name_full">全名</string>
+    <string name="rsb_consent_dob_full">出生日期</string>
+    <string name="rsb_consent_name_placeholder">必填</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">签名</string>
+    <string name="rsb_consent_signature_content">同意即表明您确认您已阅读同意并且您希望参与此研究。</string>
+    <string name="rsb_consent_signature_instruction">请在下面的横线上用手指签名。</string>
+    <string name="rsb_consent_signature_placeholder">在这里签名</string>
+    <string name="rsb_consent_signature_clear">明确</string>
+
+    <!-- Quiz -->
+    <string name="rsb_quiz">测验</string>
+    <string name="rsb_quiz_evaluation">测验评估</string>
+    <string name="rsb_quiz_evaluation_try_again">再试一次</string>
+    <string name="rsb_quiz_evaluation_review_consent">审查同意</string>
+    <string name="rsb_quiz_evaluation_retake">重新测验</string>
+    <string name="rsb_quiz_evaluation_great_job">很好！</string>
+
+    <!-- Other -->
+    <string name="rsb_submit">提交</string>
+    <string name="rsb_exit">退出</string>
+    <string name="rsb_get_started">开始</string>
+    <string name="rsb_done">完成</string>
+    <string name="rsb_step_skip">跳过</string>
+    <string name="rsb_next">下一个</string>
+    <string name="rsb_what_to_expect">您能期待什么</string>
+    <string name="rsb_name">名称</string>
+    <string name="rsb_name_first">名字</string>
+    <string name="rsb_name_last">姓氏</string>
+    <string name="rsb_email">电子邮件</string>
+    <string name="rsb_disagree">不同意</string>
+    <string name="rsb_agree">同意</string>
+    <string name="rsb_ok">确定</string>
+    <string name="rsb_cancel">取消</string>
+    <string name="rsb_yes">是</string>
+    <string name="rsb_no">没有</string>
+    <string name="rsb_format_step_title">步骤%2$s的%1$s</string>
+    <string name="rsb_hours">小时</string>
+    <string name="rsb_minutes">分钟</string>
+    <string name="rsb_task_cancel_title">离开活动</string>
+    <string name="rsb_task_cancel_text">您确定要离开此活动并丢弃其结果吗？</string>
+    <string name="rsb_task_cancel_positive">丢弃结果</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_data_failed">无法加载加密数据，请重试！</string>
+    <string name="rsb_error_invalid_signature">签名无效</string>
+    <string name="rsb_invalid_answer_default">答案无效，请再试一次！</string>
+    <string name="rsb_invalid_answer_date_over">答案无效，日期必须在%1$s之前</string>
+    <string name="rsb_invalid_answer_date_under">答案无效，日期必须在%1$s之后</string>
+    <string name="rsb_invalid_answer_integer_over">答案无效，您的值必须为%1$s或更低</string>
+    <string name="rsb_invalid_answer_integer_under">答案无效，您的值必须为%1$s或更高</string>
+    <string name="rsb_invalid_answer_choice">请选择一个值！</string>
+    <string name="rsb_invalid_answer_date_none">请选择一个日期。</string>
+    <string name="rsb_birth_date_too_old">您必须年龄为%1$s或更小</string>
+    <string name="rsb_birth_date_too_young">您必须至少%1$s岁</string>
+
+    <!-- Pin Code -->
+    <string name="rsb_pincode_enter_title">输入您的密码</string>
+    <string name="rsb_pincode_enter_summary">输入您的%1$d-%2$s代码以确认您的身份。</string>
+    <string name="rsb_pincode_enter_digit">数字</string>
+    <string name="rsb_pincode_enter_letter">信件</string>
+    <string name="rsb_pincode_enter_character">字符</string>
+    <string name="rsb_pincode_enter_error">该代码与您输入的代码不符，请重试！</string>
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">输入一个数字%1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">输入一个数字%1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">输入一个数字</string>
+    <string name="rsb_hint_step_body_date">输入日期</string>
+    <string name="rsb_hint_step_body_time">输入时间</string>
+    <string name="rsb_hint_step_body_datetime">输入日期和时间</string>
+    <string name="rsb_hint_step_body_text">回答</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%2$s的%1$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_title">视频问题</string>
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">此视频对于流式传输到此设备无效。</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">无法播放此视频。</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">确定</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1$s\的名称（打印）</string>
+    <string name="rsb_consent_doc_line_signature">%1$s\的签名</string>
+    <string name="rsb_consent_doc_line_date">日期</string>
+    <string name="rsb_consent_role">参加者</string>
+    <string name="rsb_consent_doc_line_date_format">"MM-dd-yyyy" </string>
+
+</resources>
