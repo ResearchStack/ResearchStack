@@ -1,0 +1,157 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Debug -->
+    <string name="lorem_name" tools:ignore="ResourceName" translatable="false">Lorem Ipsum</string>
+    <string name="lorem_short" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit.
+    </string>
+    <string name="lorem_medium" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
+    </string>
+    <string name="lorem_long" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+        anim id est laborum.
+    </string>
+
+    <!-- Consent Section -->
+    <string name="rsb_consent">Toestemming</string>
+    <string name="rsb_consent_section_welcome">Welkom</string>
+    <string name="rsb_consent_section_data_gathering">Dataverzameling</string>
+    <string name="rsb_consent_section_privacy">Privacy</string>
+    <string name="rsb_consent_section_data_use">Gebruik van data</string>
+    <string name="rsb_consent_section_time_commitment">Tijdsbesteding</string>
+    <string name="rsb_consent_section_study_survey">Enquête onderzoek</string>
+    <string name="rsb_consent_section_study_tasks">Taken onderzoek</string>
+    <string name="rsb_consent_section_withdrawing">Terugtrekken</string>
+    <string name="rsb_consent_learn_more">Kom meer te weten</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">Kom meer te weten</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Kom meer te weten over hoe gegevens worden verzameld</string>
+    <string name="rsb_consent_section_more_info_data_use">Kom meer te weten over hoe gegevens worden gebruikt</string>
+    <string name="rsb_consent_section_more_info_privacy">Kom meer te weten over hoe uw privacy en identiteit worden beschermd</string>
+    <string name="rsb_consent_section_more_info_welcome">Kom eerst meer te weten over het onderzoek</string>
+    <string name="rsb_consent_section_more_info_study_survey">Kom meer te weten over de enquête van het onderzoek</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Kom meer te weten over de impact van het onderzoek op uw tijd</string>
+    <string name="rsb_consent_section_more_info_study_tasks">Kom meer te weten over de betrokken taken</string>
+    <string name="rsb_consent_section_more_info_withdrawing">Kom meer te weten over het zich uitschrijven</string>
+
+    <!-- Consent sharing step -->
+    <string name="rsb_consent_share_title">Keuzemogelijkheden inzake delen</string>
+    <string name="rsb_consent_share_widely">Mijn gegevens delen met %1$s en gekwalificeerde onderzoekers wereldwijd</string>
+    <string name="rsb_consent_share_no">Uw gegevens niet delen</string>
+    <string name="rsb_consent_share_only">Mijn gegevens alleen delen met %1$s</string>
+    <string name="rsb_consent_share_description"><![CDATA[%1$s ontvangt uw onderzoeksgegevens door uw deelname aan dit onderzoek. \n\nHet breder delen van uw versleutelde onderzoeksgegevens (zonder informatie zoals uw naam) kan dit en toekomstig onderzoek ten goede komen.<br/><br/><a href="%2$s">Kom meer te weten over het delen van gegevens</a>]]></string>
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_title">Nakijken</string>
+    <string name="rsb_consent_review_alert_title">Nakijken</string>
+    <string name="rsb_consent_review_reason">Door akkoord te gaan, bevestigt u dat u de informatie hebt gelezen en dat u wenst deel te nemen aan dit onderzoek.</string>
+    <string name="rsb_consent_review_instruction">Kijk het onderstaande formulier na, en tik op Akkoord als u klaar bent om verder te gaan.</string>
+    <string name="rsb_consent_review_cancel">Annuleren</string>
+
+    <string name="rsb_saving_consent">Toestemming bewaren</string>
+    <string name="rsb_please_wait">Even geduld&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_form_title">Toestemming</string>
+    <string name="rsb_consent_name_full">Volledige naam</string>
+    <string name="rsb_consent_dob_full">Geboortedatum</string>
+    <string name="rsb_consent_name_placeholder">Vereist</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">Handtekening</string>
+    <string name="rsb_consent_signature_content">Door akkoord te gaan, bevestigt u dat u de toestemming hebt gelezen en dat u wenst deel te nemen aan dit onderzoek.</string>
+    <string name="rsb_consent_signature_instruction">Gelieve te ondertekenen met uw vinger op de onderstaande regel.</string>
+    <string name="rsb_consent_signature_placeholder">Onderteken hier</string>
+    <string name="rsb_consent_signature_clear">Leegmaken</string>
+
+    <!-- Quiz -->
+    <string name="rsb_quiz">Quiz</string>
+    <string name="rsb_quiz_evaluation">Beoordeling quiz</string>
+    <string name="rsb_quiz_evaluation_try_again">Probeer opnieuw</string>
+    <string name="rsb_quiz_evaluation_review_consent">Toestemming nakijken</string>
+    <string name="rsb_quiz_evaluation_retake">Quiz opnieuw afleggen</string>
+    <string name="rsb_quiz_evaluation_great_job">Goed gedaan!</string>
+
+    <!-- Other -->
+    <string name="rsb_submit">Verzenden</string>
+    <string name="rsb_exit">Verlaten</string>
+    <string name="rsb_get_started">Van start gaan</string>
+    <string name="rsb_done">Klaar</string>
+    <string name="rsb_step_skip">Overslaan</string>
+    <string name="rsb_next">volgende</string>
+    <string name="rsb_what_to_expect">Wat u mag verwachten</string>
+    <string name="rsb_name">Naam</string>
+    <string name="rsb_name_first">Voornaam</string>
+    <string name="rsb_name_last">Familienaam</string>
+    <string name="rsb_email">E-mailadres</string>
+    <string name="rsb_disagree">Niet akkoord</string>
+    <string name="rsb_agree">Akkoord</string>
+    <string name="rsb_ok">OK</string>
+    <string name="rsb_cancel">Annuleren</string>
+    <string name="rsb_yes">Ja</string>
+    <string name="rsb_no">Neen</string>
+    <string name="rsb_format_step_title">Stap %1$s van %2$s</string>
+    <string name="rsb_hours">Uren</string>
+    <string name="rsb_minutes">Minuten</string>
+    <string name="rsb_task_cancel_title">Activiteit verlaten</string>
+    <string name="rsb_task_cancel_text">Weet u zeker dat u deze activiteit wilt verlaten en de resultaten ervan wilt verwijderen?</string>
+    <string name="rsb_task_cancel_positive">Resultaten verwijderen</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_data_failed">Versleutelde gegevens niet geladen, probeer het opnieuw!</string>
+    <string name="rsb_error_invalid_signature">Handtekening ongeldig</string>
+    <string name="rsb_invalid_answer_default">Ongeldig antwoord, probeer opnieuw!</string>
+    <string name="rsb_invalid_answer_date_over">Ongeldig antwoord, datum moet voor %1$s liggen</string>
+    <string name="rsb_invalid_answer_date_under">Ongeldig antwoord, datum moet na %1$s liggen</string>
+    <string name="rsb_invalid_answer_integer_over">Ongeldig antwoord, uw waarde moet %1$s of lager zijn</string>
+    <string name="rsb_invalid_answer_integer_under">Ongeldig antwoord, uw waarde moet %1$s of hoger zijn</string>
+    <string name="rsb_invalid_answer_choice">Selecteer een waarde!</string>
+    <string name="rsb_invalid_answer_date_none">Kies een datum.</string>
+    <string name="rsb_birth_date_too_old">U moet %1$s jaar of jonger zijn</string>
+    <string name="rsb_birth_date_too_young">U moet minstens %1$s jaar zijn</string>
+
+    <!-- Pin Code -->
+    <string name="rsb_pincode_enter_title">Voer uw toegangscode in</string>
+    <string name="rsb_pincode_enter_summary">Voer uw %1$d-%2$s code in om uw identiteit te bevestigen.</string>
+    <string name="rsb_pincode_enter_digit">cijfer</string>
+    <string name="rsb_pincode_enter_letter">letter</string>
+    <string name="rsb_pincode_enter_character">teken</string>
+    <string name="rsb_pincode_enter_error">Die code komt niet overeen met de code die u hebt ingevoerd, probeer opnieuw!</string>
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">Voer een nummer in %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Voer een nummer in %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">Voer een nummer in</string>
+    <string name="rsb_hint_step_body_date">Voer een datum in</string>
+    <string name="rsb_hint_step_body_time">Voer een tijdstip in</string>
+    <string name="rsb_hint_step_body_datetime">Voer een datum en tijdstip in</string>
+    <string name="rsb_hint_step_body_text">Antwoord</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s van %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_title">Videoprobleem</string>
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Deze video kan niet naar dit apparaat worden gestreamd.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">Video kan niet worden afgespeeld.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1Naam van $s\ (afgedrukt)</string>
+    <string name="rsb_consent_doc_line_signature">%1Handtekening van $s\</string>
+    <string name="rsb_consent_doc_line_date">Datum</string>
+    <string name="rsb_consent_role">Deelnemer</string>
+    <string name="rsb_consent_doc_line_date_format">"MM-dd-jjjj"</string>
+
+</resources>

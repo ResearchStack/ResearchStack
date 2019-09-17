@@ -1,0 +1,157 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Debug -->
+    <string name="lorem_name" tools:ignore="ResourceName" translatable="false">Lorem Ipsum</string>
+    <string name="lorem_short" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit.
+    </string>
+    <string name="lorem_medium" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
+    </string>
+    <string name="lorem_long" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+        anim id est laborum.
+    </string>
+
+    <!-- Consent Section -->
+    <string name="rsb_consent">Souhlas</string>
+    <string name="rsb_consent_section_welcome">Vítejte</string>
+    <string name="rsb_consent_section_data_gathering">Shromažďování údajů</string>
+    <string name="rsb_consent_section_privacy">Ochrana osobních údajů</string>
+    <string name="rsb_consent_section_data_use">Použití údajů</string>
+    <string name="rsb_consent_section_time_commitment">Časový závazek</string>
+    <string name="rsb_consent_section_study_survey">Výzkumná studie</string>
+    <string name="rsb_consent_section_study_tasks">Úkoly studie</string>
+    <string name="rsb_consent_section_withdrawing">Odstoupení</string>
+    <string name="rsb_consent_learn_more">Zjistit více</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">Zjistit více</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Zjistit více o shromažďování údajů</string>
+    <string name="rsb_consent_section_more_info_data_use">Zjistit více o použití údajů</string>
+    <string name="rsb_consent_section_more_info_privacy">Zjistit více o tom, jak jsou chráněny vaše osobní údaje a totožnost</string>
+    <string name="rsb_consent_section_more_info_welcome">Nejprve zjistit o studii více</string>
+    <string name="rsb_consent_section_more_info_study_survey">Zjistit více o studii</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Zjistit více o časové náročnosti studie</string>
+    <string name="rsb_consent_section_more_info_study_tasks">Zjistit více o zahrnutých úkolech</string>
+    <string name="rsb_consent_section_more_info_withdrawing">Zjistit více o odstoupení</string>
+
+    <!-- Consent sharing step -->
+    <string name="rsb_consent_share_title">Možnosti sdílení</string>
+    <string name="rsb_consent_share_widely">Sdílet moje údaje s %1$s a kvalifikovanými výzkumnými pracovníky po celém světě</string>
+    <string name="rsb_consent_share_no">Vaše údaje nejsou sdíleny</string>
+    <string name="rsb_consent_share_only">Sdílet moje údaje pouze s %1$s</string>
+    <string name="rsb_consent_share_description"><![CDATA[%1$s obdrží vaše údaje studie na základě vaší účasti v této studii. \n\nSdílení vašich zakódovaných údajů studie šířeji (bez informací, jako je vaše jméno) může prospět tomuto a budoucímu výzkumu.<br/><br/><a href="%2$s">Zjistit více o sdílení údajů</a>]]></string>
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_title">Kontrola</string>
+    <string name="rsb_consent_review_alert_title">Kontrola</string>
+    <string name="rsb_consent_review_reason">Odsouhlasením potvrzujete, že jste si přečetli informace a že si přejete zúčastnit se této výzkumné studie.</string>
+    <string name="rsb_consent_review_instruction">Zkontrolujte formulář níže a klepněte na Souhlasím, pokud jste připraveni pokračovat.</string>
+    <string name="rsb_consent_review_cancel">Zrušit</string>
+
+    <string name="rsb_saving_consent">Ukládání souhlasu</string>
+    <string name="rsb_please_wait">Počkejte prosím&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_form_title">Souhlas</string>
+    <string name="rsb_consent_name_full">Celé jméno</string>
+    <string name="rsb_consent_dob_full">Datum narození</string>
+    <string name="rsb_consent_name_placeholder">Povinné</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">Podpis</string>
+    <string name="rsb_consent_signature_content">Odsouhlasením potvrzujete, že jste si přečetli souhlas a že si přejete zúčastnit se této výzkumné studie.</string>
+    <string name="rsb_consent_signature_instruction">Podepište se prosím prstem na řádek níže.</string>
+    <string name="rsb_consent_signature_placeholder">Podepište se sem</string>
+    <string name="rsb_consent_signature_clear">Vymazat</string>
+
+    <!-- Quiz -->
+    <string name="rsb_quiz">Kvíz</string>
+    <string name="rsb_quiz_evaluation">Vyhodnocení kvízu</string>
+    <string name="rsb_quiz_evaluation_try_again">Zkusit znovu</string>
+    <string name="rsb_quiz_evaluation_review_consent">Zkontrolovat souhlas</string>
+    <string name="rsb_quiz_evaluation_retake">Vyplnit kvíz znovu</string>
+    <string name="rsb_quiz_evaluation_great_job">Skvělá práce!</string>
+
+    <!-- Other -->
+    <string name="rsb_submit">Odeslat</string>
+    <string name="rsb_exit">Ukončit</string>
+    <string name="rsb_get_started">Začínáme</string>
+    <string name="rsb_done">Hotovo</string>
+    <string name="rsb_step_skip">Přeskočit</string>
+    <string name="rsb_next">další</string>
+    <string name="rsb_what_to_expect">Co můžete očekávat</string>
+    <string name="rsb_name">Jméno</string>
+    <string name="rsb_name_first">Křestní jméno</string>
+    <string name="rsb_name_last">Příjmení</string>
+    <string name="rsb_email">E-mail</string>
+    <string name="rsb_disagree">Nesouhlasím</string>
+    <string name="rsb_agree">Souhlasím</string>
+    <string name="rsb_ok">OK</string>
+    <string name="rsb_cancel">Zrušit</string>
+    <string name="rsb_yes">Ano</string>
+    <string name="rsb_no">Ne</string>
+    <string name="rsb_format_step_title">Krok %1$s z %2$s</string>
+    <string name="rsb_hours">Hodin</string>
+    <string name="rsb_minutes">Minut</string>
+    <string name="rsb_task_cancel_title">Opustit aktivitu</string>
+    <string name="rsb_task_cancel_text">Opravdu chcete opustit tuto aktivitu a zahodit její výsledky?</string>
+    <string name="rsb_task_cancel_positive">Zahodit výsledky</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_data_failed">Nepodařilo se načíst zašifrované údaje, zkuste to znovu!</string>
+    <string name="rsb_error_invalid_signature">Neplatný podpis</string>
+    <string name="rsb_invalid_answer_default">Neplatná odpověď, zkuste to znovu!</string>
+    <string name="rsb_invalid_answer_date_over">Neplatná odpověď, datum musí být dřívější než %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Neplatná odpověď, datum musí být pozdější než %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Neplatná odpověď, hodnota musí být %1$s nebo nižší</string>
+    <string name="rsb_invalid_answer_integer_under">Neplatná odpověď, hodnota musí být %1$s nebo vyšší</string>
+    <string name="rsb_invalid_answer_choice">Zvolte prosím hodnotu!</string>
+    <string name="rsb_invalid_answer_date_none">Vyberte prosím datum.</string>
+    <string name="rsb_birth_date_too_old">Musí vám být %1$s let nebo méně</string>
+    <string name="rsb_birth_date_too_young">Musí vám být alespoň %1$s let</string>
+
+    <!-- Pin Code -->
+    <string name="rsb_pincode_enter_title">Zadejte svoje heslo</string>
+    <string name="rsb_pincode_enter_summary">Zadejte svůj kód %1$d-%2$s pro potvrzení vaší identity.</string>
+    <string name="rsb_pincode_enter_digit">číslice</string>
+    <string name="rsb_pincode_enter_letter">písmeno</string>
+    <string name="rsb_pincode_enter_character">znak</string>
+    <string name="rsb_pincode_enter_error">Kód se neshoduje s vámi vloženým kódem, zkuste to znovu!</string>
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">Zadejte číslo %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Zadejte číslo %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">Zadejte číslo</string>
+    <string name="rsb_hint_step_body_date">Zadejte datum</string>
+    <string name="rsb_hint_step_body_time">Zadejte čas</string>
+    <string name="rsb_hint_step_body_datetime">Zadejte datum a čas</string>
+    <string name="rsb_hint_step_body_text">Odpověď</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s z %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_title">Problém s videem</string>
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Toto video není platné pro streaming na tomto zařízení.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">Toto video nelze přehrát.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">Jméno %1$s (vytištěno)</string>
+    <string name="rsb_consent_doc_line_signature">Podpis %1$s</string>
+    <string name="rsb_consent_doc_line_date">Datum</string>
+    <string name="rsb_consent_role">Účastník</string>
+    <string name="rsb_consent_doc_line_date_format">„MM-dd-rrrr“</string>
+
+</resources>
