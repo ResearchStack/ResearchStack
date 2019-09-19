@@ -4,6 +4,7 @@
     android:id="@+id/value"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:filterTouchesWhenObscured="true"
     android:imeOptions="actionNext"
     android:inputType="text"
     android:minHeight="@dimen/rsb_item_size_default"
