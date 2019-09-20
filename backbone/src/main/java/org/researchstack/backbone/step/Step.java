@@ -35,7 +35,7 @@ public class Step implements Serializable {
     private int principalTextColor;
     private int secondaryTextColor;
     private int actionFailedColor;
-    private Object hiddenDefaultValue = null;
+    private String hiddenDefaultValue = null;
 
     // The following fields are in RK but not implemented in ResearchStack
     // These options can be developed as needed or removed if we find they are not necessary
@@ -324,13 +324,13 @@ public class Step implements Serializable {
     }
 
 
-    public void setHiddenDefaultValue(Object defaultValue) {
+    public void setHiddenDefaultValue(String defaultValue) {
         this.hiddenDefaultValue = defaultValue;
     }
     /**
      * Gets the default value use when the step is hide
      */
-    public Object getHiddenDefaultValue() {
+    public String getHiddenDefaultValue() {
         return hiddenDefaultValue;
     }
 }
