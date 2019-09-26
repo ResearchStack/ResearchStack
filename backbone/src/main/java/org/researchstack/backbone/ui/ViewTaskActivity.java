@@ -37,6 +37,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.permissions.PermissionListener;
 import org.researchstack.backbone.ui.permissions.PermissionMediator;
 import org.researchstack.backbone.ui.permissions.PermissionResult;
+import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
@@ -64,6 +65,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     private StepSwitcher root;
 
     private Step currentStep;
+    private StepLayout currentStepLayout;
     private Task task;
     private TaskResult taskResult;
     private int colorPrimary;
@@ -76,7 +78,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     private ActionBar actionBar;
 
     private int stepCount = 0;
-
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
@@ -162,6 +163,20 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
             for (PermissionListener listener : permissionListeners) {
                 listener.onPermissionGranted(result);
             }
+
+            // This was designed so the step's layout is some form of View/ViewGroup that implements the PermissionListener interface.
+            // As it turns out, not all steps are created equal, and not all the implementations follow this structure.
+            // RSLocationPermission doesn't extend any View/ViewGroup; it acts more like a custom View that inflates its own layout.
+            // For this reason, we cannot simply search the view Hierarchy and obtain the Layout because it will not implement
+            // the contract; we have to check if the current Layout reference (saved when created) does.
+            if (!(currentStepLayout instanceof SurveyStepLayout)) {
+                return;
+            }
+
+            final StepBody stepBody = ((SurveyStepLayout) currentStepLayout).getStepBody();
+            if (stepBody instanceof PermissionListener) {
+                ((PermissionListener) stepBody).onPermissionGranted(result);
+            }
         }
     }
 
@@ -212,9 +227,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     {
         stepCount +=  isMovingForward ? 1 : -1;
 
-        StepLayout stepLayout = getLayoutForStep(step);
-        stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
-        root.show(stepLayout, isMovingForward ? StepSwitcher.SHIFT_LEFT : StepSwitcher.SHIFT_RIGHT);
+        currentStepLayout = getLayoutForStep(step);
+        currentStepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
+        root.show(currentStepLayout, isMovingForward ? StepSwitcher.SHIFT_LEFT : StepSwitcher.SHIFT_RIGHT);
         actionBar.setDisplayHomeAsUpEnabled(stepCount > 1 && showBackArrow);
         currentStep = step;
 
