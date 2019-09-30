@@ -152,7 +152,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     @Override
     public void requestPermissions(String... permissions) {
         requestPermissions(permissions, STEP_PERMISSION_REQUEST);
-
     }
 
     @Override
@@ -188,7 +187,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
             for (final String permission : permissions) {
                 preferences.edit().putBoolean(permission, true).apply();
             }
-
 
             PermissionResult result = new PermissionResult(permissions, grantResults);
             List<PermissionListener> permissionListeners = ViewUtils.findViewsOf(findViewById(android.R.id.content), PermissionListener.class, true);
@@ -255,8 +253,14 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     }
 
     private void showStep(Step step, boolean isMovingForward) {
-        stepCount += isMovingForward ? 1 : -1;
+        // If the current step is the same, there is no need to recreate anything.
+        if (currentStep != null
+                && currentStepLayout != null
+                && currentStep.getIdentifier().equals(step.getIdentifier())) {
+            return;
+        }
 
+        stepCount += isMovingForward ? 1 : -1;
         currentStepLayout = getLayoutForStep(step);
         currentStepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
         root.show(currentStepLayout, isMovingForward ? StepSwitcher.SHIFT_LEFT : StepSwitcher.SHIFT_RIGHT);
