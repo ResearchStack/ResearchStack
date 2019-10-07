@@ -201,6 +201,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         } else {
             if(previousStep.isHidden()) {
                 // The previous step was a hidden one so we go back again
+                currentStep = previousStep;
                 showPreviousStep();
             } else {
                 showStep(previousStep, true);
