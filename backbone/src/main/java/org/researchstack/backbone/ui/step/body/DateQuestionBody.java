@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.Month;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.AnswerFormat;
@@ -169,10 +168,10 @@ public class DateQuestionBody implements StepBody {
 
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
         if(format.getMinimumDate() != null) {
-            constraintsBuilder.setStart(Month.create(format.getMinimumDate().getTime()));
+            constraintsBuilder.setStart(format.getMinimumDate().getTime());
         }
         if(format.getMaximumDate() != null) {
-            constraintsBuilder.setEnd(Month.create(format.getMaximumDate().getTime()));
+            constraintsBuilder.setEnd(format.getMaximumDate().getTime());
         }
         if(calendar != null) {
             if(format.getMinimumDate() != null && calendar.getTime().before(format.getMinimumDate())) {
@@ -183,7 +182,7 @@ public class DateQuestionBody implements StepBody {
                     calendar.setTime(format.getMaximumDate());
                 }
             }
-            constraintsBuilder.setOpening(Month.create(calendar.getTimeInMillis()));
+            constraintsBuilder.setOpenAt(calendar.getTimeInMillis());
         }
 
         builder.setCalendarConstraints(constraintsBuilder.build());
