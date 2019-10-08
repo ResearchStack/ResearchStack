@@ -127,9 +127,20 @@ public class OrderedTask extends Task implements Serializable {
         String title = super.getTitleForStep(context, step);
         if (TextUtils.isEmpty(title)) {
             int currentIndex = steps.indexOf(step);
+            int currentIndexWithoutHidden = 0;
+            int maxIndexWithoutHidden = 0;
+            for(int i = 0; i < steps.size();i++) {
+                step = steps.get(i);
+                if (!step.isHidden()) {
+                   maxIndexWithoutHidden++;
+                   if (i <= currentIndex) {
+                       currentIndexWithoutHidden++;
+                   }
+                }
+            }
             title = LocaleUtils.getLocalizedString(context, R.string.rsb_format_step_title,
-                    currentIndex + 1,
-                    steps.size());
+                    currentIndexWithoutHidden,
+                    maxIndexWithoutHidden);
         }
         return title;
     }
