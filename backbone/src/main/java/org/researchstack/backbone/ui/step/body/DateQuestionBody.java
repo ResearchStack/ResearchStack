@@ -182,6 +182,7 @@ public class DateQuestionBody implements StepBody {
                     calendar.setTime(format.getMaximumDate());
                 }
             }
+            builder.setSelection(calendar.getTimeInMillis());
             constraintsBuilder.setOpenAt(calendar.getTimeInMillis());
         }
 
