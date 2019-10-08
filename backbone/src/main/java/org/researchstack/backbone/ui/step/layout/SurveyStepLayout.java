@@ -296,4 +296,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
         this.allStepsAreOptional = allStepsAreOptional;
     }
+
+    public StepBody getStepBody() {
+        return stepBody;
+    }
 }
