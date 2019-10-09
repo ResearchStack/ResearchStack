@@ -107,13 +107,13 @@ public class DateQuestionBody implements StepBody {
 
         textView.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
-                showDialog(parent, textView);
+                showDialog(textView);
             }
         });
 
         textView.setOnClickListener(v -> {
             if (v.isFocused()) {
-                showDialog(parent, textView);
+                showDialog(textView);
             }
         });
 
@@ -148,23 +148,23 @@ public class DateQuestionBody implements StepBody {
         return format.validateAnswer(calendar.getTime());
     }
 
-    private void showDialog(ViewGroup parent, TextView tv) {
+    private void showDialog(TextView tv) {
         // need to find a material date picker, since it's not in the support library
         if (format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
-            showDatePicker(parent, tv);
+            showDatePicker(tv);
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
             showTimePicker(tv);
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
-            showDatePicker(parent, tv);
+            showDatePicker(tv);
         } else {
             throw new RuntimeException("DateAnswerStyle " + format.getStyle() + " is not recognised");
         }
     }
 
 
-    private void showDatePicker(ViewGroup parent, TextView tv) {
+    private void showDatePicker(TextView tv) {
         MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
-        builder.setTheme( ResUtils.resolveOrThrow(parent.getContext(), R.attr.materialCalendarTheme));
+        builder.setTheme( ResUtils.resolveOrThrow(tv.getContext(), R.attr.materialCalendarTheme));
 
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
         if(format.getMinimumDate() != null) {
@@ -203,8 +203,8 @@ public class DateQuestionBody implements StepBody {
                     isStepEmpty.postValue(false);
                 }
         );
-        if (parent.getContext() instanceof FragmentActivity) {
-            picker.show(((FragmentActivity) parent.getContext()).getSupportFragmentManager(), picker.toString());
+        if (tv.getContext() instanceof FragmentActivity) {
+            picker.show(((FragmentActivity) tv.getContext()).getSupportFragmentManager(), picker.toString());
         }
     }
 
