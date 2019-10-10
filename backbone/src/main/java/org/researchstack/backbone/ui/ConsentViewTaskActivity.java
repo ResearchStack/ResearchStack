@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -187,11 +188,15 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         StringBuffer body = new StringBuffer();
 
         String hr = "<hr align='left' width='100%' style='height:1px; border:none; color:#000; background-color:#000; margin-top: 5px; margin-bottom: 0px;'/>";
+        String td = "<td style='vertical-align: bottom;" +
+                "width: 33%;" +
+                "padding-right: 10px;" +
+                "padding-left: 10px;'>";
 
-        String signatureElementWrapper = "<div class='sigbox'><div class='inbox'>%s</div></div>%s%s";
+        String signatureElementWrapper = "<div class='sigbox'><div class='inbox'>%s</div></div>";
         String imageTag;
 
-        List<String> signatureElements = new ArrayList<>();
+        List<String[]> table = new ArrayList<>();
 
         if (role == null) {
             throw new RuntimeException("Consent role cannot be empty");
@@ -199,43 +204,41 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
         // Signature
         if (completeName != null) {
-            String base = getString(R.string.rsb_consent_doc_line_printed_name, role);
-            String nameElement = String.format(signatureElementWrapper, completeName, hr, base);
-            signatureElements.add(nameElement);
+            String columnName = getString(R.string.rsb_consent_doc_line_printed_name, role);
+            String columnValue = String.format(signatureElementWrapper, completeName);
+            String[] column = {columnValue, hr, columnName};
+            table.add(column);
         }
 
         if (signatureB64 != null) {
             imageTag = "<img width='100%' alt='star' style='max-height:100px;max-width:200px;height:auto;width:auto;' " +
                     "src='data:image/png;base64," + signatureB64 + "'/>";
-            String base = getString(R.string.rsb_consent_doc_line_signature, role);
-            String signatureElement = String.format(signatureElementWrapper, imageTag, hr, base);
-            signatureElements.add(signatureElement);
+            String columnName = getString(R.string.rsb_consent_doc_line_signature, role);
+            String columnValue = String.format(signatureElementWrapper, imageTag);
+            String[] column = {columnValue, hr, columnName};
+            table.add(column);
         }
 
-        if (signatureElements.size() > 0) {
-            String base = getString(R.string.rsb_consent_doc_line_date);
-            String signatureElement = String.format(signatureElementWrapper, signatureDate, hr, base);
-            signatureElements.add(signatureElement);
+        if (table.size() > 0) {
+            String columnName = getString(R.string.rsb_consent_doc_line_date);
+            String columnValue = String.format(signatureElementWrapper, signatureDate);
+            String[] column = {columnValue, hr, columnName};
+            table.add(column);
         }
 
-        int numElements = signatureElements.size();
-
-        if (numElements > 1) {
-            body
-                    .append("<table cellpadding='20px' width='100%'>")
-                    .append("<tr>");
-
-            for (String element : signatureElements) {
-                body.append("<td style='vertical-align: bottom;width:33%;'>").append(String.format("<div>%s</div>", element))
-                        .append("</td>");
+        if (table.size() > 0) {
+            body.append("<table width='100%'><tr>");
+            for (int i = 0; i < table.size(); i++) {
+                body
+                        .append(td)
+                        .append("<table width='100%'>"); // Nested tables to enable inserting values by column
+                String[] column = table.get(i);
+                for (int j = 0; j < column.length; j++) {
+                    body.append(String.format("<tr><td><div>%s</div></td></tr>", column[j]));
+                }
+                body.append("</table></td>");
             }
-
-            body
-                    .append("</tr>")
-                    .append("</table>");
-
-        } else if (numElements == 1) {
-            body.append(String.format("<div width='200'>%@</div>", signatureElements.get(0)));
+            body.append("</tr></table>");
         }
 
         return body.toString();
