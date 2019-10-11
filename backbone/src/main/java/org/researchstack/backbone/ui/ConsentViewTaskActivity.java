@@ -227,18 +227,19 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         }
 
         if (table.size() > 0) {
-            body.append("<table width='100%'><tr>");
-            for (int i = 0; i < table.size(); i++) {
-                body
-                        .append(td)
-                        .append("<table width='100%'>"); // Nested tables to enable inserting values by column
-                String[] column = table.get(i);
-                for (int j = 0; j < column.length; j++) {
-                    body.append(String.format("<tr><td><div>%s</div></td></tr>", column[j]));
+            int columns = table.get(0).length;
+            body.append("<table width='100%'>");
+            for (int i = 0; i < columns; i++) {
+                body.append("<tr>");
+                for (int j = 0; j < table.size(); j++) {
+                    body
+                            .append(td)
+                            .append(table.get(j)[i])
+                            .append("</td>");
                 }
-                body.append("</table></td>");
+                body.append("</tr>");
             }
-            body.append("</tr></table>");
+            body.append("</table>");
         }
 
         return body.toString();
