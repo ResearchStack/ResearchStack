@@ -25,6 +25,7 @@ import org.researchstack.backbone.utils.ResUtils;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -47,7 +48,9 @@ public class DateQuestionBody implements StepBody {
         this.step = (QuestionStep) step;
         this.result = result == null ? new StepResult<>(step) : result;
         this.format = (DateAnswerFormat) this.step.getAnswerFormat();
+
         this.calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         if (format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
             this.dateformatter = FormatHelper.getFormat(DateFormat.MEDIUM, DateFormat.MEDIUM);
@@ -226,6 +229,7 @@ public class DateQuestionBody implements StepBody {
     }
 
     private String createFormattedResult() {
+        dateformatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         return dateformatter.format(calendar.getTime());
     }
 
