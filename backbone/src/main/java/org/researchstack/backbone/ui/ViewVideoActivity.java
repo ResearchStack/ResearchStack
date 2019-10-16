@@ -29,6 +29,7 @@ public class ViewVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.rsb_activity_video_viewer);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
 
         videoView = (AssetVideoView) findViewById(R.id.videoView);
 
@@ -49,7 +50,6 @@ public class ViewVideoActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
 
         if (videoView.isPlaying()) {
             videoView.pause();

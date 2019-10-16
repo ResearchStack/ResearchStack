@@ -80,6 +80,8 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
+
         if (getIntent() != null && getIntent().hasExtra(KEY_THEME)) {
             setTheme(getIntent().getIntExtra(KEY_THEME, 0));
         }
@@ -164,12 +166,6 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
                 window.setStatusBarColor(primaryColorDark);
             }
         });
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
     }
 
     @Override
