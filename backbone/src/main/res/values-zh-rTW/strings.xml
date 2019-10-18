@@ -55,7 +55,7 @@
     <string name="rsb_consent_review_cancel">取消</string>
 
     <string name="rsb_saving_consent">儲存同意</string>
-    <string name="rsb_please_wait">請稍候...</string>
+    <string name="rsb_please_wait">請稍候&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">同意</string>

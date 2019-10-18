@@ -40,7 +40,7 @@
     <string name="rsb_consent_review_cancel">Abbrechen</string>
 
     <string name="rsb_saving_consent">Einwilligung wird gespeichert</string>
-    <string name="rsb_please_wait">Bitte warten Sie …</string>
+    <string name="rsb_please_wait">Bitte warten Sie&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Einwilligung</string>

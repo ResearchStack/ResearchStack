@@ -55,7 +55,7 @@
     <string name="rsb_consent_review_cancel">İptal Et</string>
 
     <string name="rsb_saving_consent">Onam Kaydediliyor</string>
-    <string name="rsb_please_wait">Lütfen bekleyin...</string>
+    <string name="rsb_please_wait">Lütfen bekleyin&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Onam</string>

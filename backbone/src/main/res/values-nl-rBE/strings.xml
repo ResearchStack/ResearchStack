@@ -55,7 +55,7 @@
     <string name="rsb_consent_review_cancel">Annuleren</string>
 
     <string name="rsb_saving_consent">Toestemming bewaren</string>
-    <string name="rsb_please_wait">Even geduld…</string>
+    <string name="rsb_please_wait">Even geduld&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Toestemming</string>

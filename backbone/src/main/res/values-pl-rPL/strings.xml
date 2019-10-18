@@ -58,7 +58,7 @@
     <string name="rsb_consent_review_cancel">Anuluj</string>
 
     <string name="rsb_saving_consent">Zapisywanie zgody </string>
-    <string name="rsb_please_wait">Zaczekaj…</string>
+    <string name="rsb_please_wait">Zaczekaj&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Zgoda</string>

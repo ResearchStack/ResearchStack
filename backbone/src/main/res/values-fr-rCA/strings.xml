@@ -55,7 +55,7 @@
     <string name="rsb_consent_review_cancel">Annuler</string>
 
     <string name="rsb_saving_consent">Enregistrement du consentement</string>
-    <string name="rsb_please_wait">Veuillez patienter...</string>
+    <string name="rsb_please_wait">Veuillez patienter&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Consentement</string>
@@ -89,10 +89,10 @@
     <string name="rsb_name">Nom</string>
     <string name="rsb_name_first">Prénom</string>
     <string name="rsb_name_last">Nom de famille</string>
-    <string name="rsb_email">COURRIEL</string>
+    <string name="rsb_email">Courriel</string>
     <string name="rsb_disagree">En désaccord</string>
     <string name="rsb_agree">D\'accord</string>
-    <string name="rsb_ok">ok</string>
+    <string name="rsb_ok">OK</string>
     <string name="rsb_cancel">Annuler</string>
     <string name="rsb_yes">Oui</string>
     <string name="rsb_no">Non</string>

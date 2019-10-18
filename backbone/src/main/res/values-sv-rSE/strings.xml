@@ -55,7 +55,7 @@
     <string name="rsb_consent_review_cancel">Avbryt</string>
 
     <string name="rsb_saving_consent">Medgivande av lagring</string>
-    <string name="rsb_please_wait">Vänligen vänta…</string>
+    <string name="rsb_please_wait">Vänligen vänta&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Medgivande</string>

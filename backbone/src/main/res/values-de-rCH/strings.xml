@@ -135,7 +135,7 @@
 
     <!-- Graphing -->
     <string name="rsb_chart_progress_center">%1$s von %2$s</string>
-    <string name="rsb_chart_pie_value">None</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
 
     <!-- AssetVideoView -->
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
@@ -152,6 +152,6 @@
     <string name="rsb_consent_doc_line_signature">Unterschrift von %1$s\'s</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Teilnehmer</string>
-    <string name="rsb_consent_doc_line_date_format">TT-MM-JJJJ</string>
+    <string name="rsb_consent_doc_line_date_format">"TT-MM-JJJJ"</string>
 
 </resources>
