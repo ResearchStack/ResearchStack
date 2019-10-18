@@ -95,10 +95,10 @@
     <string name="rsb_name">Име</string>
     <string name="rsb_name_first">Собствено име</string>
     <string name="rsb_name_last">Фамилно име</string>
-    <string name="rsb_email">Имейл</string>
+    <string name="rsb_email">ИМЕЙЛ</string>
     <string name="rsb_disagree">Не приемам</string>
     <string name="rsb_agree">Приемам</string>
-    <string name="rsb_ok">ОК</string>
+    <string name="rsb_ok">ок</string>
     <string name="rsb_cancel">Отказ</string>
     <string name="rsb_yes">Да</string>
     <string name="rsb_no">Не</string>
@@ -154,10 +154,11 @@
     <string name="rsb_error_assetvideoview_button">ОК</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Името на%1$s\'  (отпечатано)</string>
-    <string name="rsb_consent_doc_line_signature">Подписът на%1$s\' </string>
+    <string name="rsb_consent_doc_line_printed_name">Името на%1$s\'s  (отпечатано)</string>
+    <string name="rsb_consent_doc_line_signature">Подписът на%1$s\'s </string>
     <string name="rsb_consent_doc_line_date">Дата</string>
     <string name="rsb_consent_role">Участник</string>
-    <string name="rsb_consent_doc_line_date_format">"MM-dd-yyyy"</string>
+    <string name="rsb_consent_doc_line_date_format">ММ-дд-гггг</string>
+
 
 </resources>

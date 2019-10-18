@@ -45,7 +45,7 @@
     <string name="rsb_consent_share_widely">Tillgängliggör mina uppgifter för %1$s och kvalificerade forskare i hela världen</string>
     <string name="rsb_consent_share_no">Tillgängliggör inte mina uppgifter</string>
     <string name="rsb_consent_share_only">Tillgängliggör mina uppgifter endast för %1$s</string>
-    <string name="rsb_consent_share_description"><![CDATA[%1$s tar emot dina studieuppgifter genom ditt deltagande i denna studie. \n\nVidare tillgängliggörande av dina kodade studieuppgifter (utom information såsom namn) kan vara till fördel för denna och framtida forskning.<br/><br/><a href="%2$s">Läs mer om tillgängliggörande av uppgifter</a>]]></string>
+    <string name="rsb_consent_share_description"><![CDATA[%1$s tar emot dina studieuppgifter genom ditt deltagande i denna studie. \n\n Vidare tillgängliggörande av dina kodade studieuppgifter (utom information såsom namn) kan vara till fördel för denna och framtida forskning.<br/><br/><a href="%2$s"> Läs mer om tillgängliggörande av uppgifter </a>]]></string>
 
     <!-- Consent doc step -->
     <string name="rsb_consent_review_title">Gå igenom</string>
@@ -89,7 +89,7 @@
     <string name="rsb_name">Namn</string>
     <string name="rsb_name_first">Förnamn</string>
     <string name="rsb_name_last">Efternamn</string>
-    <string name="rsb_email">Mejladress</string>
+    <string name="rsb_email">MEJLADRESS</string>
     <string name="rsb_disagree">Håller inte med</string>
     <string name="rsb_agree">Håller med</string>
     <string name="rsb_ok">OK</string>
@@ -109,7 +109,7 @@
     <string name="rsb_invalid_answer_default">Ogiltigt svar. Försök igen!</string>
     <string name="rsb_invalid_answer_date_over">Ogiltigt svar. Datum måste infalla före %1$s</string>
     <string name="rsb_invalid_answer_date_under">Ogiltigt svar. Datum måste infalla efter %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Ogiltigt svar. Värdet får vara högst %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Ogiltigt svar. Datum måste infalla efter %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Ogiltigt svar. Värdet måste vara minst %1$s</string>
     <string name="rsb_invalid_answer_choice">Välj ett värde!</string>
     <string name="rsb_invalid_answer_date_none">Välj ett datum.</string>
@@ -125,8 +125,8 @@
     <string name="rsb_pincode_enter_error">Koden överensstämmer inte med den du har valt. Försök igen!</string>
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">Ange ett tal mellan %1$d och %2$d</string>
-    <string name="rsb_hint_step_body_dec">Ange ett tal mellan %1$.2f och %2$.2f</string>
+    <string name="rsb_hint_step_body_int">Ange ett tal %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Ange ett tal %1$.2f-%2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Ange ett tal</string>
     <string name="rsb_hint_step_body_date">Ange ett datum</string>
     <string name="rsb_hint_step_body_time">Ange en tid</string>
@@ -148,10 +148,10 @@
     <string name="rsb_error_assetvideoview_button">OK</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">%1$s\:s namn (texta)</string>
-    <string name="rsb_consent_doc_line_signature">%1$s\:s signatur</string>
+    <string name="rsb_consent_doc_line_printed_name">%1$s\'s namn (texta)</string>
+    <string name="rsb_consent_doc_line_signature">%1$s\'s Signatur</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Deltagare</string>
-    <string name="rsb_consent_doc_line_date_format">”MM-dd-yyyy”</string>
+    <string name="rsb_consent_doc_line_date_format">MM-dd-yyyy</string>
 
 </resources>

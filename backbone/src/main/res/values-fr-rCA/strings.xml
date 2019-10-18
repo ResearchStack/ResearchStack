@@ -55,7 +55,7 @@
     <string name="rsb_consent_review_cancel">Annuler</string>
 
     <string name="rsb_saving_consent">Enregistrement du consentement</string>
-    <string name="rsb_please_wait">Veuillez attendre&#8230;</string>
+    <string name="rsb_please_wait">Veuillez patienter&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Consentement</string>
@@ -109,7 +109,7 @@
     <string name="rsb_invalid_answer_default">Réponse non valide, veuillez réessayer!</string>
     <string name="rsb_invalid_answer_date_over">Réponse non valide, la date doit être antérieure à %1$s</string>
     <string name="rsb_invalid_answer_date_under">Réponse non valide, la date doit être postérieure à %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Réponse non valide, la valeur indiquée doit être %1$s ou moins</string>
+    <string name="rsb_invalid_answer_integer_over">Réponse non valide, la date doit être postérieure à %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Réponse non valide, la valeur indiquée doit être %1$s ou plus</string>
     <string name="rsb_invalid_answer_choice">Veuillez sélectionner une valeur!</string>
     <string name="rsb_invalid_answer_date_none">Veuillez sélectionner une date.</string>
@@ -152,6 +152,7 @@
     <string name="rsb_consent_doc_line_signature">Signature du %1$s</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
-    <string name="rsb_consent_doc_line_date_format">« MM-dd-aaaa »</string>
+    <string name="rsb_consent_doc_line_date_format">MM-dd-aaaa</string>
+
 
 </resources>

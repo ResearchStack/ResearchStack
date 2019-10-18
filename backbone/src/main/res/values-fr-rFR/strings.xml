@@ -86,13 +86,13 @@
     <string name="rsb_step_skip">Ignorer</string>
     <string name="rsb_next">suivant</string>
     <string name="rsb_what_to_expect">À quoi s’attendre</string>
-    <string name="rsb_name">Nom</string>
+    <string name="rsb_name">Nom </string>
     <string name="rsb_name_first">Prénom</string>
     <string name="rsb_name_last">Nom</string>
-    <string name="rsb_email">E-mail</string>
+    <string name="rsb_email">E-MAIL</string>
     <string name="rsb_disagree">Ne pas accepter</string>
     <string name="rsb_agree">Accepter</string>
-    <string name="rsb_ok">OK</string>
+    <string name="rsb_ok">Ok</string>
     <string name="rsb_cancel">Annuler</string>
     <string name="rsb_yes">Oui</string>
     <string name="rsb_no">Non</string>
@@ -109,7 +109,7 @@
     <string name="rsb_invalid_answer_default">Réponse non valide, veuillez réessayer !</string>
     <string name="rsb_invalid_answer_date_over">Réponse non valide, la date doit être antérieure à %1$s</string>
     <string name="rsb_invalid_answer_date_under">Réponse non valide, la date doit être postérieure à %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Réponse non valide, votre valeur doit être inférieure ou égale à %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Réponse non valide, la date doit être postérieure à %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Réponse non valide, votre valeur doit être supérieure ou égale à %1$s</string>
     <string name="rsb_invalid_answer_choice">Veuillez sélectionner une valeur !</string>
     <string name="rsb_invalid_answer_date_none">Veuillez choisir une date.</string>
@@ -145,13 +145,13 @@
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Impossible de lire cette vidéo.</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">OK</string>
+    <string name="rsb_error_assetvideoview_button">Ok</string>
 
     <!-- Consent -->
     <string name="rsb_consent_doc_line_printed_name">Nom de %1$s (imprimé)</string>
     <string name="rsb_consent_doc_line_signature">Signature de %1$s</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
-    <string name="rsb_consent_doc_line_date_format">« MM-jj-aaaa »</string>
+    <string name="rsb_consent_doc_line_date_format">MM-jj-aaaa</string>
 
 </resources>

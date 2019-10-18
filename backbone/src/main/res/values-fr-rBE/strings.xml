@@ -33,7 +33,7 @@
     <string name="rsb_consent_section_more_info">Plus d’informations</string>
     <string name="rsb_consent_section_more_info_data_gathering">Plus d’informations sur la manière dont les informations sont collectées</string>
     <string name="rsb_consent_section_more_info_data_use">Plus d’informations sur la manière dont les données sont utilisées</string>
-    <string name="rsb_consent_section_more_info_privacy">Plus d’informations sur la manière dont votre vie privée et identité sont protégées</string>
+    <string name="rsb_consent_section_more_info_privacy">Plus d’informations sur la manière dont votre confidentialité et identité sont protégées</string>
     <string name="rsb_consent_section_more_info_welcome">Plus d’informations sur l’étude pour commencer</string>
     <string name="rsb_consent_section_more_info_study_survey">Plus d’informations sur l’étude par sondage</string>
     <string name="rsb_consent_section_more_info_time_commitment">Plus d’informations sur l’impact de l’étude sur votre temps</string>
@@ -66,7 +66,7 @@
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Signature</string>
     <string name="rsb_consent_signature_content">En acceptant, vous confirmez que vous avez lu le formulaire de consentement et que vous souhaitez participer à cette étude de recherche.</string>
-    <string name="rsb_consent_signature_instruction">Veuillez signer à l’aide de votre doigt sous la ligne ci-dessous.</string>
+    <string name="rsb_consent_signature_instruction">Veuillez signer à l’aide de votre doigt sur la ligne ci-dessous.</string>
     <string name="rsb_consent_signature_placeholder">Signez ici</string>
     <string name="rsb_consent_signature_clear">Effacer</string>
 
@@ -86,13 +86,13 @@
     <string name="rsb_step_skip">Ignorer</string>
     <string name="rsb_next">suivant</string>
     <string name="rsb_what_to_expect">Quelles sont les attentes</string>
-    <string name="rsb_name">Nom</string>
+    <string name="rsb_name">Nom </string>
     <string name="rsb_name_first">Prénom</string>
     <string name="rsb_name_last">Nom de famille</string>
     <string name="rsb_email">E-mail</string>
     <string name="rsb_disagree">Pas d\'accord</string>
     <string name="rsb_agree">D\'accord</string>
-    <string name="rsb_ok">OK</string>
+    <string name="rsb_ok">D\'accord</string>
     <string name="rsb_cancel">Annuler</string>
     <string name="rsb_yes">Oui</string>
     <string name="rsb_no">Non</string>
@@ -109,7 +109,7 @@
     <string name="rsb_invalid_answer_default">Réponse invalide, veuillez réessayer !</string>
     <string name="rsb_invalid_answer_date_over">Réponse invalide, la date doit être antérieure à %1$s</string>
     <string name="rsb_invalid_answer_date_under">Réponse invalide, la date doit être postérieure à %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Réponse invalide, votre valeur doit être %1$s ou inférieure</string>
+    <string name="rsb_invalid_answer_integer_over">Réponse invalide, la date doit être postérieure à %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Réponse invalide, votre valeur doit être %1$s ou supérieure</string>
     <string name="rsb_invalid_answer_choice">Veuillez sélectionner une valeur !</string>
     <string name="rsb_invalid_answer_date_none">Veuillez choisir une date.</string>
@@ -125,8 +125,8 @@
     <string name="rsb_pincode_enter_error">Ce code ne correspond pas à celui que vous avez saisi, veuillez réessayer !</string>
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">Saisissez un nombre %1$d-%2$d</string>
-    <string name="rsb_hint_step_body_dec">Saisissez un nombre %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int">Saisissez un nombre entre  %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Saisissez un nombre entre %1$.2f-%2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Saisissez un nombre</string>
     <string name="rsb_hint_step_body_date">Saisissez une date</string>
     <string name="rsb_hint_step_body_time">Saisissez une heure</string>
@@ -145,14 +145,14 @@
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Impossible de lire cette vidéo.</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">OK</string>
+    <string name="rsb_error_assetvideoview_button">D\'accord</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Nom %1$s (majuscules)</string>
-    <string name="rsb_consent_doc_line_signature">Signature %1$s</string>
+    <string name="rsb_consent_doc_line_printed_name">Nom du %1$s (majuscules)</string>
+    <string name="rsb_consent_doc_line_signature">Signature du %1$s</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
-    <string name="rsb_consent_doc_line_date_format">« MM-jj-aaaa »</string>
+    <string name="rsb_consent_doc_line_date_format">MM-jj-aaaa</string>
 
 </resources>
 

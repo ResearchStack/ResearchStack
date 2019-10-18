@@ -31,8 +31,8 @@
 
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">Learn more</string>
-    <string name="rsb_consent_section_more_info_data_gathering">Learn more about how data is gathered</string>
-    <string name="rsb_consent_section_more_info_data_use">Learn more about how data is used</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Learn more about how data are gathered</string>
+    <string name="rsb_consent_section_more_info_data_use">Learn more about how data are used</string>
     <string name="rsb_consent_section_more_info_privacy">Learn more about how your privacy and identity are protected</string>
     <string name="rsb_consent_section_more_info_welcome">Learn more about the study first</string>
     <string name="rsb_consent_section_more_info_study_survey">Learn more about the study survey</string>
@@ -45,13 +45,13 @@
     <string name="rsb_consent_share_widely">Share my data with %1$s and qualified researchers worldwide</string>
     <string name="rsb_consent_share_no">Not sharing your data</string>
     <string name="rsb_consent_share_only">Only share my data with %1$s</string>
-    <string name="rsb_consent_share_description"><![CDATA[%1$s will receive your study data from your participation in this study. \n\nSharing your coded study data more broadly (without information such as your name) may benefit this project and future research.<br/><br/><a href="%2$s">Learn more about data sharing</a>]]></string>
+    <string name="rsb_consent_share_description"><![CDATA[%1$s will receive your study data through your participation in this study. \n\nSharing your coded study data more broadly (without information such as your name) may benefit this project and future research.<br/><br/><a href="%2$s">Learn more about data sharing</a>]]></string>
 
     <!-- Consent doc step -->
     <string name="rsb_consent_review_title">Review</string>
     <string name="rsb_consent_review_alert_title">Review</string>
-    <string name="rsb_consent_review_reason">By agreeing you confirm that you have read the information and that you wish to take part in this research study.</string>
-    <string name="rsb_consent_review_instruction">Review the form below, and tap Agree if you\'re ready to continue.</string>
+    <string name="rsb_consent_review_reason">By agreeing, you confirm that you have read the information and that you wish to participate in this research study.</string>
+    <string name="rsb_consent_review_instruction">Review the form below, and tap "Agree" if you are ready to continue.</string>
     <string name="rsb_consent_review_cancel">Cancel</string>
 
     <string name="rsb_saving_consent">Saving Consent</string>
@@ -65,7 +65,7 @@
 
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Signature</string>
-    <string name="rsb_consent_signature_content">By agreeing you confirm that you have read the consent and that you wish to take part in this research study.</string>
+    <string name="rsb_consent_signature_content">By agreeing, you confirm that you have read the consent and that you wish to participate in this research study.</string>
     <string name="rsb_consent_signature_instruction">Please sign using your finger on the line below.</string>
     <string name="rsb_consent_signature_placeholder">Sign Here</string>
     <string name="rsb_consent_signature_clear">Clear</string>
@@ -92,7 +92,7 @@
     <string name="rsb_email">Email</string>
     <string name="rsb_disagree">Disagree</string>
     <string name="rsb_agree">Agree</string>
-    <string name="rsb_ok">OK</string>
+    <string name="rsb_ok">ok</string>
     <string name="rsb_cancel">Cancel</string>
     <string name="rsb_yes">Yes</string>
     <string name="rsb_no">No</string>
@@ -104,12 +104,12 @@
     <string name="rsb_task_cancel_positive">Discard Results</string>
 
     <!-- Step Errors -->
-    <string name="rsb_error_data_failed">Failed to load encrypted data, try again!</string>
+    <string name="rsb_error_data_failed">Failed to load encrypted data, please try again!</string>
     <string name="rsb_error_invalid_signature">Signature Invalid</string>
-    <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
+    <string name="rsb_invalid_answer_default">Invalid answer, please try again!</string>
     <string name="rsb_invalid_answer_date_over">Invalid answer, date must be before %1$s</string>
     <string name="rsb_invalid_answer_date_under">Invalid answer, date must be after %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value must be %1$s or lower</string>
+    <string name="rsb_invalid_answer_integer_over">Invalid answer, date must be after %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Invalid answer, your value must be %1$s or higher</string>
     <string name="rsb_invalid_answer_choice">Please select a value!</string>
     <string name="rsb_invalid_answer_date_none">Please choose a date.</string>
@@ -122,7 +122,7 @@
     <string name="rsb_pincode_enter_digit">digit</string>
     <string name="rsb_pincode_enter_letter">letter</string>
     <string name="rsb_pincode_enter_character">character</string>
-    <string name="rsb_pincode_enter_error">That code doesn’t match the one you entered, Try again!</string>
+    <string name="rsb_pincode_enter_error">That code does not match the one you entered, please try again!</string>
 
     <!-- Body Hints -->
     <string name="rsb_hint_step_body_int">Enter a number %1$d-%2$d</string>
@@ -130,7 +130,7 @@
     <string name="rsb_hint_step_body_int_no_max">Enter a number</string>
     <string name="rsb_hint_step_body_date">Enter a date</string>
     <string name="rsb_hint_step_body_time">Enter a time</string>
-    <string name="rsb_hint_step_body_datetime">Enter a date and a time</string>
+    <string name="rsb_hint_step_body_datetime">Enter a date and time</string>
     <string name="rsb_hint_step_body_text">Answer</string>
 
     <!-- Graphing -->
@@ -141,17 +141,18 @@
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
     <string name="rsb_error_assetvideoview_title">Video problem</string>
     <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
-    <string name="rsb_error_assetvideoview_invalid_progressive_playback">This video isn\'t valid for streaming to this device.</string>
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">This video is not valid for streaming to this device.</string>
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
-    <string name="rsb_error_assetvideoview_unknown">Can\'t play this video.</string>
+    <string name="rsb_error_assetvideoview_unknown">Cannot play this video.</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">OK</string>
+    <string name="rsb_error_assetvideoview_button">Ok</string>
 
     <!-- Consent -->
     <string name="rsb_consent_doc_line_printed_name">%1$s\'s Name (printed)</string>
     <string name="rsb_consent_doc_line_signature">%1$s\'s Signature</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
-    <string name="rsb_consent_doc_line_date_format">"DD-mm-yyyy"</string>
+    <string name="rsb_consent_doc_line_date_format">DD-mm-yyyy</string>
+
 
 </resources>

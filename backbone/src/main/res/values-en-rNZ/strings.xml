@@ -89,7 +89,7 @@
     <string name="rsb_name">Name</string>
     <string name="rsb_name_first">First name</string>
     <string name="rsb_name_last">Last name</string>
-    <string name="rsb_email">Email</string>
+    <string name="rsb_email">EMAIL</string>
     <string name="rsb_disagree">Disagree</string>
     <string name="rsb_agree">Agree</string>
     <string name="rsb_ok">OK</string>
@@ -109,7 +109,7 @@
     <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
     <string name="rsb_invalid_answer_date_over">Invalid answer, date must be before %1$s</string>
     <string name="rsb_invalid_answer_date_under">Invalid answer, date must be after %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value must be %1$s or lower</string>
+    <string name="rsb_invalid_answer_integer_over">Invalid answer, date must be after %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Invalid answer, your value must be %1$s or higher</string>
     <string name="rsb_invalid_answer_choice">Please select a value!</string>
     <string name="rsb_invalid_answer_date_none">Please choose a date.</string>
@@ -152,6 +152,6 @@
     <string name="rsb_consent_doc_line_signature">%1$s\'s signature</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
-    <string name="rsb_consent_doc_line_date_format">“dd-MM-yyyy”</string>
+    <string name="rsb_consent_doc_line_date_format">dd-MM-yyyy</string>
 
 </resources>

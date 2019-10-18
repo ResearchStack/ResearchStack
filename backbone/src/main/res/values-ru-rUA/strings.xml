@@ -55,7 +55,7 @@
     <string name="rsb_consent_review_cancel">Отменить</string>
 
     <string name="rsb_saving_consent">Согласие на сохранение</string>
-    <string name="rsb_please_wait">Пожалуйста, подождите&#8230;</string>
+    <string name="rsb_please_wait">Подождите&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Согласие</string>
@@ -89,10 +89,10 @@
     <string name="rsb_name">Название</string>
     <string name="rsb_name_first">Имя</string>
     <string name="rsb_name_last">Фамилия</string>
-    <string name="rsb_email">Эл. почта</string>
+    <string name="rsb_email">ЭЛ. ПОЧТА</string>
     <string name="rsb_disagree">Не согласен</string>
     <string name="rsb_agree">Согласен</string>
-    <string name="rsb_ok">OK</string>
+    <string name="rsb_ok">ОК</string>
     <string name="rsb_cancel">Отменить</string>
     <string name="rsb_yes">Да</string>
     <string name="rsb_no">Нет</string>
@@ -109,7 +109,7 @@
     <string name="rsb_invalid_answer_default">Неверный ответ, попробуйте еще раз!</string>
     <string name="rsb_invalid_answer_date_over">Неверный ответ, дата должна быть до %1$s</string>
     <string name="rsb_invalid_answer_date_under">Неверный ответ, дата должна быть после %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Неверный ответ, ваше значение должно быть %1$s или ниже</string>
+    <string name="rsb_invalid_answer_integer_over">Неверный ответ, дата должна быть после %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Неверный ответ, ваше значение должно быть %1$s или выше</string>
     <string name="rsb_invalid_answer_choice">Выберите значение!</string>
     <string name="rsb_invalid_answer_date_none">Выберите дату.</string>
@@ -152,6 +152,6 @@
     <string name="rsb_consent_doc_line_signature">%1$s\'s Подпись</string>
     <string name="rsb_consent_doc_line_date">Дата</string>
     <string name="rsb_consent_role">Участник</string>
-    <string name="rsb_consent_doc_line_date_format">«дд.мм.гггг»</string>
+    <string name="rsb_consent_doc_line_date_format">дд.мм.гггг</string>
 
 </resources>

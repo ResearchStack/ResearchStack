@@ -27,7 +27,7 @@
     <string name="rsb_consent_section_study_survey">Study Survey</string>
     <string name="rsb_consent_section_study_tasks">Study Tasks</string>
     <string name="rsb_consent_section_withdrawing">Withdrawing</string>
-    <string name="rsb_consent_learn_more">Learn More</string>
+    <string name="rsb_consent_learn_more">Learn more</string>
 
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">Learn more</string>
@@ -89,10 +89,10 @@
     <string name="rsb_name">Name</string>
     <string name="rsb_name_first">First Name</string>
     <string name="rsb_name_last">Last Name</string>
-    <string name="rsb_email">Email</string>
+    <string name="rsb_email">EMAIL</string>
     <string name="rsb_disagree">Disagree</string>
     <string name="rsb_agree">Agree</string>
-    <string name="rsb_ok">OK</string>
+    <string name="rsb_ok">ok</string>
     <string name="rsb_cancel">Cancel</string>
     <string name="rsb_yes">Yes</string>
     <string name="rsb_no">No</string>
@@ -109,7 +109,7 @@
     <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
     <string name="rsb_invalid_answer_date_over">Invalid answer, date must be before %1$s</string>
     <string name="rsb_invalid_answer_date_under">Invalid answer, date must be after %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value must be %1$s or lower</string>
+    <string name="rsb_invalid_answer_integer_over">Invalid answer, date must be after %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Invalid answer, your value must be %1$s or higher</string>
     <string name="rsb_invalid_answer_choice">Please select a value!</string>
     <string name="rsb_invalid_answer_date_none">Please choose a date.</string>
@@ -145,13 +145,13 @@
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Can\'t play this video.</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">OK</string>
+    <string name="rsb_error_assetvideoview_button">ok</string>
 
     <!-- Consent -->
     <string name="rsb_consent_doc_line_printed_name">%1$s\'s Name (printed)</string>
     <string name="rsb_consent_doc_line_signature">%1$s\'s Signature</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
-    <string name="rsb_consent_doc_line_date_format">"MM-dd-yyyy"</string>
+    <string name="rsb_consent_doc_line_date_format">MM-dd-yyyy</string>
 
 </resources>

@@ -89,10 +89,10 @@
     <string name="rsb_name">Navn</string>
     <string name="rsb_name_first">Fornavn</string>
     <string name="rsb_name_last">Efternavn</string>
-    <string name="rsb_email">E-mail</string>
+    <string name="rsb_email">E-MAIL</string>
     <string name="rsb_disagree">Uenig</string>
     <string name="rsb_agree">Enig</string>
-    <string name="rsb_ok">OK</string>
+    <string name="rsb_ok">ok</string>
     <string name="rsb_cancel">Annullér</string>
     <string name="rsb_yes">Ja</string>
     <string name="rsb_no">Nej</string>
@@ -109,7 +109,7 @@
     <string name="rsb_invalid_answer_default">Ugyldigt svar. Prøv igen!</string>
     <string name="rsb_invalid_answer_date_over">Ugyldigt svar. Dato skal være før %1$s</string>
     <string name="rsb_invalid_answer_date_under">Ugyldigt svar. Dato skal være efter %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Ugyldigt svar. Din værdi skal være %1$s eller lavere</string>
+    <string name="rsb_invalid_answer_integer_over">Ugyldigt svar. Dato skal være efter %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Ugyldigt svar. Din værdi skal være %1$s eller højere</string>
     <string name="rsb_invalid_answer_choice">Vælg venligst en værdi!</string>
     <string name="rsb_invalid_answer_date_none">Vælg en dato.</string>
@@ -145,13 +145,13 @@
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Kan ikke afspille denne video.</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">OK</string>
+    <string name="rsb_error_assetvideoview_button">ok</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">%1$s\'s Navn (trykte bogstaver)</string>
+    <string name="rsb_consent_doc_line_printed_name">%1$s\'s\'s Navn (trykte bogstaver)</string>
     <string name="rsb_consent_doc_line_signature">%1$s\'s Underskrift</string>
     <string name="rsb_consent_doc_line_date">Dato</string>
     <string name="rsb_consent_role">Deltager</string>
-    <string name="rsb_consent_doc_line_date_format">"MM-dd-åååå"</string>
+    <string name="rsb_consent_doc_line_date_format">MM-dd-åååå</string>
 
 </resources>

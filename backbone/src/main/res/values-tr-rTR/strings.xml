@@ -27,7 +27,7 @@
     <string name="rsb_consent_section_study_survey">Çalışma Anketi</string>
     <string name="rsb_consent_section_study_tasks">Çalışma Görevleri</string>
     <string name="rsb_consent_section_withdrawing">Onayı Geri Çekme</string>
-    <string name="rsb_consent_learn_more">Daha Fazla</string>
+    <string name="rsb_consent_learn_more">Daha fazla</string>
 
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">Daha fazla</string>
@@ -89,10 +89,10 @@
     <string name="rsb_name">Ad</string>
     <string name="rsb_name_first">Ad</string>
     <string name="rsb_name_last">Soyad</string>
-    <string name="rsb_email">E-posta</string>
+    <string name="rsb_email">E-POSTA</string>
     <string name="rsb_disagree">Reddet</string>
     <string name="rsb_agree">Kabul Et</string>
-    <string name="rsb_ok">Tamam</string>
+    <string name="rsb_ok">tamam</string>
     <string name="rsb_cancel">İptal Et</string>
     <string name="rsb_yes">Evet</string>
     <string name="rsb_no">Hayır</string>
@@ -109,7 +109,7 @@
     <string name="rsb_invalid_answer_default">Geçersiz yanıt, tekrar deneyin!</string>
     <string name="rsb_invalid_answer_date_over">Geçersiz yanıt, tarih, %1$s tarihinden önce olmalıdır</string>
     <string name="rsb_invalid_answer_date_under">Geçersiz yanıt, tarih, %1$s tarihinden sonra olmalıdır</string>
-    <string name="rsb_invalid_answer_integer_over">Geçersiz yanıt, değeriniz %1$s veya daha az olmalıdır</string>
+    <string name="rsb_invalid_answer_integer_over">Geçersiz yanıt, tarih, %1$s tarihinden sonra olmalıdır</string>
     <string name="rsb_invalid_answer_integer_under">Geçersiz yanıt, değeriniz %1$s veya daha fazla olmalıdır</string>
     <string name="rsb_invalid_answer_choice">Lütfen bir değer seçin!</string>
     <string name="rsb_invalid_answer_date_none">Lütfen bir tarih seçin.</string>
@@ -144,14 +144,13 @@
     <string name="rsb_error_assetvideoview_invalid_progressive_playback">Bu video, bu cihazda çalıştırmak için geçerli değil.</string>
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Bu video oynatılamıyor.</string>
-    <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">Tamam</string>
+    <string name="rsb_error_assetvideoview_button">tamam</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">%1$s\ Adı (basılı)</string>
-    <string name="rsb_consent_doc_line_signature">%1$s\ İmzası</string>
+    <string name="rsb_consent_doc_line_printed_name">%1$s\'s Adı (basılı)</string>
+    <string name="rsb_consent_doc_line_signature">%1$s\'s İmzası</string>
     <string name="rsb_consent_doc_line_date">Tarih</string>
     <string name="rsb_consent_role">Katılımcı</string>
-    <string name="rsb_consent_doc_line_date_format">"gg-aa-yyyy"</string>
+    <string name="rsb_consent_doc_line_date_format">gg-aa-yyyy</string>
 
 </resources>

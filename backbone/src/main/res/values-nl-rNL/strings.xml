@@ -89,7 +89,7 @@
     <string name="rsb_name">Naam</string>
     <string name="rsb_name_first">Voornaam</string>
     <string name="rsb_name_last">Achternaam</string>
-    <string name="rsb_email">E-mailadres</string>
+    <string name="rsb_email">E-MAILADRES</string>
     <string name="rsb_disagree">Niet akkoord</string>
     <string name="rsb_agree">Akkoord</string>
     <string name="rsb_ok">OK</string>
@@ -109,7 +109,7 @@
     <string name="rsb_invalid_answer_default">Ongeldig antwoord, probeer het nog eens!</string>
     <string name="rsb_invalid_answer_date_over">Ongeldig antwoord, datum moet vóór %1$s liggen</string>
     <string name="rsb_invalid_answer_date_under">Ongeldig antwoord, datum moet na %1$s liggen</string>
-    <string name="rsb_invalid_answer_integer_over">Ongeldig antwoord, uw waarde moet %1$s of lager zijn</string>
+    <string name="rsb_invalid_answer_integer_over">Ongeldig antwoord, datum moet na %1$s liggen</string>
     <string name="rsb_invalid_answer_integer_under">Ongeldig antwoord, uw waarde moet %1$s of hoger zijn</string>
     <string name="rsb_invalid_answer_choice">Selecteer een waarde!</string>
     <string name="rsb_invalid_answer_date_none">Kies een datum.</string>
@@ -152,6 +152,6 @@
     <string name="rsb_consent_doc_line_signature">Handtekening %1$s</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Deelnemer</string>
-    <string name="rsb_consent_doc_line_date_format">„dd-MM-jjjj”</string>
+    <string name="rsb_consent_doc_line_date_format">dd-MM-jjjj</string>
 
 </resources>

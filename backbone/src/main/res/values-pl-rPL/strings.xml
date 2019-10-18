@@ -63,7 +63,7 @@
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Zgoda</string>
     <string name="rsb_consent_name_full">Pełne imię i nazwisko </string>
-    <string name="rsb_consent_dob_full">Data urodzenia  </string>
+    <string name="rsb_consent_dob_full">Data urodzenia</string>
     <string name="rsb_consent_name_placeholder">Wymagane</string>
 
     <!-- Consent sig step -->
@@ -93,8 +93,8 @@
     <string name="rsb_next">dalej</string>
     <string name="rsb_what_to_expect">Czego można się spodziewać  </string>
     <string name="rsb_name">Imię i nazwisko</string>
-    <string name="rsb_name_first">Imię </string>
-    <string name="rsb_name_last">Nazwisko </string>
+    <string name="rsb_name_first">Imię</string>
+    <string name="rsb_name_last">Nazwisko</string>
     <string name="rsb_email">Adres e-mail</string>
     <string name="rsb_disagree">Nie zgadzam się</string>
     <string name="rsb_agree">Zgadzam się</string>
@@ -140,7 +140,7 @@
     <string name="rsb_hint_step_body_text">Odpowiedź</string>
 
     <!-- Graphing -->
-    <string name="rsb_chart_progress_center">%1$s z %2$s</string>
+    <string name="rsb_chart_progress_center"> %1$s z %2$s</string>
     <string name="rsb_chart_pie_value">%1$s&#65285;</string>
 
     <!-- AssetVideoView -->
@@ -158,6 +158,6 @@
     <string name="rsb_consent_doc_line_signature">Podpis %1$s\' </string>
     <string name="rsb_consent_doc_line_date">Data</string>
     <string name="rsb_consent_role">Uczestnik</string>
-    <string name="rsb_consent_doc_line_date_format">"MM-dd-yyyy"</string>
+    <string name="rsb_consent_doc_line_date_format">MM-dd-rrrr</string>
 
 </resources>

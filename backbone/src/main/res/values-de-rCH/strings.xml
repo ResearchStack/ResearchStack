@@ -89,10 +89,10 @@
     <string name="rsb_name">Name</string>
     <string name="rsb_name_first">Vorname</string>
     <string name="rsb_name_last">Nachname</string>
-    <string name="rsb_email">E-Mail</string>
+    <string name="rsb_email">E-MAIL</string>
     <string name="rsb_disagree">Stimme nicht zu</string>
     <string name="rsb_agree">Stimme zu</string>
-    <string name="rsb_ok">OK</string>
+    <string name="rsb_ok">ok</string>
     <string name="rsb_cancel">Abbrechen</string>
     <string name="rsb_yes">Ja</string>
     <string name="rsb_no">Nein</string>
@@ -145,13 +145,13 @@
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Dieses Video kann nicht abgespielt werden.</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">OK</string>
+    <string name="rsb_error_assetvideoview_button">ok</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Name von %1$s (gedruckt)</string>
-    <string name="rsb_consent_doc_line_signature">Unterschrift von %1$s</string>
+    <string name="rsb_consent_doc_line_printed_name">Name von %1$s\'s (gedruckt)</string>
+    <string name="rsb_consent_doc_line_signature">Unterschrift von %1$s\'s</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Teilnehmer</string>
-    <string name="rsb_consent_doc_line_date_format">«TT-MM-JJJJ»</string>
+    <string name="rsb_consent_doc_line_date_format">"TT-MM-JJJJ"</string>
 
 </resources>
