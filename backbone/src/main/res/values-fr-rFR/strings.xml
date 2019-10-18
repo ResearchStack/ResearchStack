@@ -17,19 +17,15 @@
         anim id est laborum.
     </string>
 
-    <!-- Consent Section -->
     <string name="rsb_consent">Consentement</string>
-    <string name="rsb_consent_section_welcome">Bienvenue</string>
-    <string name="rsb_consent_section_data_gathering">Collecte de données</string>
-    <string name="rsb_consent_section_privacy">Confidentialité</string>
+    <string name="rsb_consent_section_welcome">Collecte de données</string>
+    <string name="rsb_consent_section_data_gathering">Confidentialité</string>
     <string name="rsb_consent_section_data_use">Utilisation des données</string>
     <string name="rsb_consent_section_time_commitment">Engagement de temps</string>
     <string name="rsb_consent_section_study_survey">Enquête d’étude</string>
     <string name="rsb_consent_section_study_tasks">Tâches d’étude</string>
     <string name="rsb_consent_section_withdrawing">Retrait</string>
     <string name="rsb_consent_learn_more">En savoir plus</string>
-
-    <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">En savoir plus</string>
     <string name="rsb_consent_section_more_info_data_gathering">En savoir plus sur la collecte des données</string>
     <string name="rsb_consent_section_more_info_data_use">En savoir plus sur l’utilisation des données</string>
@@ -39,92 +35,68 @@
     <string name="rsb_consent_section_more_info_time_commitment">En savoir plus sur l’impact de l’étude sur votre temps</string>
     <string name="rsb_consent_section_more_info_study_tasks">En savoir plus sur les tâches impliquées</string>
     <string name="rsb_consent_section_more_info_withdrawing">En savoir plus sur le retrait</string>
-
-    <!-- Consent sharing step -->
     <string name="rsb_consent_share_title">Options de partage</string>
     <string name="rsb_consent_share_widely">Partager mes données avec %1$s et des chercheurs qualifiés dans le monde entier</string>
     <string name="rsb_consent_share_no">Ne pas partager vos données</string>
     <string name="rsb_consent_share_only">Partager uniquement mes données avec %1$s</string>
     <string name="rsb_consent_share_description"><![CDATA[%1$s recevra les données d’étude de votre participation à cette étude. \n\nLe partage plus large des données codées de votre étude (sans informations telles que votre nom) peut être avantageux pour cette recherche et les futures.<br/><br/><a href="%2$s">En savoir plus sur le partage de données</a>]]></string>
-
-    <!-- Consent doc step -->
     <string name="rsb_consent_review_title">Consulter</string>
     <string name="rsb_consent_review_alert_title">Consulter</string>
     <string name="rsb_consent_review_reason">En acceptant, vous confirmez que vous avez lu les informations et que vous souhaitez participer à cette étude de recherche.</string>
     <string name="rsb_consent_review_instruction">Consultez le formulaire ci-dessous et appuyez sur Accepter si vous êtes prêt à continuer.</string>
     <string name="rsb_consent_review_cancel">Annuler</string>
-
     <string name="rsb_saving_consent">Enregistrement du consentement</string>
-    <string name="rsb_please_wait">Veuillez patienter&#8230;</string>
-
-    <!-- Consent form step -->
+    <string name="rsb_please_wait">Veuillez patienter…</string>
     <string name="rsb_consent_form_title">Consentement</string>
     <string name="rsb_consent_name_full">Nom et prénom</string>
     <string name="rsb_consent_dob_full">Date de naissance</string>
     <string name="rsb_consent_name_placeholder">Requis</string>
-
-    <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Signature</string>
     <string name="rsb_consent_signature_content">En acceptant, vous confirmez que vous avez lu le consentement et que vous souhaitez participer à cette étude de recherche.</string>
     <string name="rsb_consent_signature_instruction">Veuillez signer en utilisant votre doigt sur la ligne ci-dessous.</string>
     <string name="rsb_consent_signature_placeholder">Signez ici</string>
     <string name="rsb_consent_signature_clear">Annuler</string>
-
-    <!-- Quiz -->
     <string name="rsb_quiz">Questionnaire</string>
     <string name="rsb_quiz_evaluation">Questionnaire d’évaluation</string>
     <string name="rsb_quiz_evaluation_try_again">Réessayer</string>
     <string name="rsb_quiz_evaluation_review_consent">Consulter le consentement</string>
     <string name="rsb_quiz_evaluation_retake">Réessayer le questionnaire</string>
     <string name="rsb_quiz_evaluation_great_job">Excellent travail !</string>
-
-    <!-- Other -->
     <string name="rsb_submit">Envoyer</string>
     <string name="rsb_exit">Quitter</string>
     <string name="rsb_get_started">Commencer</string>
     <string name="rsb_done">Terminé</string>
     <string name="rsb_step_skip">Ignorer</string>
-    <string name="rsb_next">suivant</string>
     <string name="rsb_what_to_expect">À quoi s’attendre</string>
-    <string name="rsb_name">Nom</string>
+    <string name="rsb_name">Nom </string>
     <string name="rsb_name_first">Prénom</string>
     <string name="rsb_name_last">Nom</string>
-    <string name="rsb_email">E-mail</string>
+    <string name="rsb_email">E-MAIL</string>
     <string name="rsb_disagree">Ne pas accepter</string>
     <string name="rsb_agree">Accepter</string>
-    <string name="rsb_ok">OK</string>
+    <string name="rsb_ok">Ok</string>
     <string name="rsb_cancel">Annuler</string>
     <string name="rsb_yes">Oui</string>
     <string name="rsb_no">Non</string>
     <string name="rsb_format_step_title">Étape %1$s sur %2$s</string>
-    <string name="rsb_hours">Heures</string>
-    <string name="rsb_minutes">Minutes</string>
-    <string name="rsb_task_cancel_title">Quitter l’activité</string>
     <string name="rsb_task_cancel_text">Êtes-vous certain de vouloir quitter cette activité et de supprimer les résultats ?</string>
     <string name="rsb_task_cancel_positive">Supprimer les résultats</string>
-
-    <!-- Step Errors -->
     <string name="rsb_error_data_failed">Échec du chargement des données chiffrées, veuillez réessayer !</string>
     <string name="rsb_error_invalid_signature">Signature non valide</string>
     <string name="rsb_invalid_answer_default">Réponse non valide, veuillez réessayer !</string>
     <string name="rsb_invalid_answer_date_over">Réponse non valide, la date doit être antérieure à %1$s</string>
-    <string name="rsb_invalid_answer_date_under">Réponse non valide, la date doit être postérieure à %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Réponse non valide, votre valeur doit être inférieure ou égale à %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Réponse non valide, la date doit être postérieure à %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Réponse non valide, votre valeur doit être supérieure ou égale à %1$s</string>
     <string name="rsb_invalid_answer_choice">Veuillez sélectionner une valeur !</string>
     <string name="rsb_invalid_answer_date_none">Veuillez choisir une date.</string>
     <string name="rsb_birth_date_too_old">Vous devez avoir %1$s ans ou moins</string>
     <string name="rsb_birth_date_too_young">Vous devez avoir au moins %1$s ans ou plus</string>
-
-    <!-- Pin Code -->
     <string name="rsb_pincode_enter_title">Saisissez votre code secret</string>
     <string name="rsb_pincode_enter_summary">Saisissez votre code secret %1$d-%2$s pour confirmer votre identité.</string>
     <string name="rsb_pincode_enter_digit">chiffre</string>
     <string name="rsb_pincode_enter_letter">lettre</string>
     <string name="rsb_pincode_enter_character">caractère</string>
     <string name="rsb_pincode_enter_error">Ce code ne correspond pas à celui que vous avez entré. Veuillez réessayer !</string>
-
-    <!-- Body Hints -->
     <string name="rsb_hint_step_body_int">Saisissez un nombre %1$d-%2$d</string>
     <string name="rsb_hint_step_body_dec">Saisissez un nombre %1$.2f-%2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Saisissez un nombre</string>
@@ -132,26 +104,16 @@
     <string name="rsb_hint_step_body_time">Saisissez une heure</string>
     <string name="rsb_hint_step_body_datetime">Saisissez une date et une heure</string>
     <string name="rsb_hint_step_body_text">Réponse</string>
-
-    <!-- Graphing -->
     <string name="rsb_chart_progress_center">%1$s sur %2$s</string>
-    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
-
-    <!-- AssetVideoView -->
-    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <string name="rsb_chart_pie_value">None</string>
     <string name="rsb_error_assetvideoview_title">Problème avec la vidéo</string>
-    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
     <string name="rsb_error_assetvideoview_invalid_progressive_playback">Cette vidéo n’est pas valide pour la diffusion sur cet appareil.</string>
-    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Impossible de lire cette vidéo.</string>
-    <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">OK</string>
-
-    <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Nom de %1$s (imprimé)</string>
-    <string name="rsb_consent_doc_line_signature">Signature de %1$s</string>
+    <string name="rsb_error_assetvideoview_button">Ok</string>
+    <string name="rsb_consent_doc_line_printed_name">{1}Nom de $s (imprimé)</string>
+    <string name="rsb_consent_doc_line_signature">Signature de %1$s\'s</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
-    <string name="rsb_consent_doc_line_date_format">« MM-jj-aaaa »</string>
+    <string name="rsb_consent_doc_line_date_format">MM-jj-aaaa</string>
 
 </resources>
