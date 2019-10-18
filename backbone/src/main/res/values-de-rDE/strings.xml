@@ -38,6 +38,7 @@
     <string name="rsb_consent_review_reason">Mit Ihrer Zustimmung bestätigen Sie, dass Sie die Informationen gelesen haben und an der Forschungsstudie teilnehmen wollen.</string>
     <string name="rsb_consent_review_instruction">Überprüfen Sie das Formular unten und tippen Sie auf Stimme zu, wenn Sie bereit sind fortzufahren.</string>
     <string name="rsb_consent_review_cancel">Abbrechen</string>
+
     <string name="rsb_saving_consent">Einwilligung wird gespeichert</string>
     <string name="rsb_please_wait">Bitte warten Sie …</string>
 
@@ -86,23 +87,29 @@
     <string name="rsb_task_cancel_title">Aktivität verlassen</string>
     <string name="rsb_task_cancel_text">Sind Sie sicher, dass Sie diese Aktivität verlassen und ihre Ergebnisse verwerfen wollen?</string>
     <string name="rsb_task_cancel_positive">Ergebnisse verwerfen</string>
+
+    <!-- Step Errors -->
     <string name="rsb_error_data_failed">Verschlüsselte Daten konnten nicht geladen werden, versuchen Sie es erneut!</string>
     <string name="rsb_error_invalid_signature">Unterschrift ungültig</string>
     <string name="rsb_invalid_answer_default">Ungültige Antwort, versuchen Sie es erneut!</string>
     <string name="rsb_invalid_answer_date_over">Ungültige Antwort, Datum muss vor %1$s sein</string>
+    <string name="rsb_invalid_answer_date_under">Ungültige Antwort, Datum muss nach dem %1$s liegen.</string>
     <string name="rsb_invalid_answer_integer_over">Ungültige Antwort, Datum muss nach %1$s sein</string>
-
     <string name="rsb_invalid_answer_integer_under">Ungültige Antwort, Ihr Wert muss %1$s oder höher sein</string>
     <string name="rsb_invalid_answer_choice">Bitte wählen Sie einen Wert aus!</string>
     <string name="rsb_invalid_answer_date_none">Bitte wählen Sie ein Datum aus.</string>
     <string name="rsb_birth_date_too_old">Sie dürfen nicht älter als %1$s Jahre alt sein</string>
     <string name="rsb_birth_date_too_young">Sie müssen mindestens %1$s Jahre alt sein</string>
+
+    <!-- Pin Code -->
     <string name="rsb_pincode_enter_title">Geben Sie Ihren Passcode ein</string>
     <string name="rsb_pincode_enter_summary">Geben Sie Ihren %1$d-%2$s-Code ein, um Ihre Identität zu bestätigen.</string>
     <string name="rsb_pincode_enter_digit">Ziffer</string>
     <string name="rsb_pincode_enter_letter">Buchstabe</string>
     <string name="rsb_pincode_enter_character">Sonderzeichen</string>
     <string name="rsb_pincode_enter_error">Dieser Code stimmt nicht mit dem überein, den Sie eingegeben haben, versuchen Sie es erneut!</string>
+
+    <!-- Body Hints -->
     <string name="rsb_hint_step_body_int">Geben Sie eine Zahl %1$d-%2$d ein</string>
     <string name="rsb_hint_step_body_dec">Geben Sie eine Zahl %1$.2f-%2$.2f ein</string>
     <string name="rsb_hint_step_body_int_no_max">Geben Sie eine Zahl ein</string>
@@ -110,15 +117,26 @@
     <string name="rsb_hint_step_body_time">Geben Sie eine Uhrzeit ein</string>
     <string name="rsb_hint_step_body_datetime">Geben Sie ein Datum und eine Uhrzeit ein</string>
     <string name="rsb_hint_step_body_text">Antwort</string>
-    <string name="rsb_chart_progress_center">{1}{2}von{3}{4}</string>
-    <string name="rsb_chart_pie_value">None</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s von %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
     <string name="rsb_error_assetvideoview_title">Videoproblem</string>
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
     <string name="rsb_error_assetvideoview_invalid_progressive_playback">Dieses Video hat für das Streamen auf dieses Gerät keine Gültigkeit.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Dieses Video kann nicht abgespielt werden.</string>
-    <string name="rsb_error_assetvideoview_button">Ok</string>
-    <string name="rsb_consent_doc_line_printed_name">Name von %1$s\'s (gedruckt)</string>
-    <string name="rsb_consent_doc_line_signature">Unterschrift von %1$s\'s</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">ok</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">Name von%1$s\'s (gedruckt) </string>
+    <string name="rsb_consent_doc_line_signature">Unterschrift von%1$s\' </string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Teilnehmer</string>
     <string name="rsb_consent_doc_line_date_format">dd.MM.yyyy</string>
+
 </resources>
