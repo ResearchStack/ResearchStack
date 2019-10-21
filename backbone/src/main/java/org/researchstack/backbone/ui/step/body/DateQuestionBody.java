@@ -41,7 +41,8 @@ public class DateQuestionBody implements StepBody {
     private DateAnswerFormat format;
     private Calendar calendar;
     private DateFormat dateformatter;
-
+    private int defaultHour = 0;
+    private int defaultMinute = 0;
     private boolean hasChosenDate;
 
     public DateQuestionBody(Step step, StepResult result) {
@@ -155,12 +156,18 @@ public class DateQuestionBody implements StepBody {
         // need to find a material date picker, since it's not in the support library
         if (format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
             showDatePicker(tv);
-        } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
-            showTimePicker(tv);
-        } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
-            showDatePicker(tv);
         } else {
-            throw new RuntimeException("DateAnswerStyle " + format.getStyle() + " is not recognised");
+            if(calendar != null) {
+                defaultHour = calendar.get(Calendar.HOUR);
+                defaultMinute = calendar.get(Calendar.MINUTE);
+            }
+            if (format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
+                showTimePicker(tv);
+            } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
+                showDatePicker(tv);
+            } else {
+                throw new RuntimeException("DateAnswerStyle " + format.getStyle() + " is not recognised");
+            }
         }
     }
 
@@ -196,7 +203,6 @@ public class DateQuestionBody implements StepBody {
                     calendar.setTime(new Date(selection));
                     if (format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
                         hasChosenDate = true;
-
                         // Set result to our edit text
                         String formattedResult = createFormattedResult();
                         tv.setText(formattedResult);
@@ -214,8 +220,8 @@ public class DateQuestionBody implements StepBody {
     private void showTimePicker(TextView tv) {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(tv.getContext(),
                 R.style.Theme_Backbone);
-        new TimePickerDialog(contextWrapper,
-                (timePicker, hourOfDay, minute) -> {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(contextWrapper,
+                (currentTimePicker, hourOfDay, minute) -> {
                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     calendar.set(Calendar.MINUTE, minute);
                     hasChosenDate = true;
@@ -223,9 +229,10 @@ public class DateQuestionBody implements StepBody {
                     String formattedResult = createFormattedResult();
                     tv.setText(formattedResult);
                 },
-                calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE),
-                true).show();
+                defaultHour,
+                defaultMinute,
+                true);
+        timePickerDialog.show();
     }
 
     private String createFormattedResult() {
