@@ -1,21 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
-    <string name="lorem_name" tools:ignore="ResourceName" translatable="false">Lorem Ipsum</string>
-    <string name="lorem_short" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit.
-    </string>
-    <string name="lorem_medium" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
-    </string>
-    <string name="lorem_long" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit, sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-        anim id est laborum.
-    </string>
 
     <!-- Consent Section -->
     <string name="rsb_consent">Acconsenti</string>
@@ -32,11 +16,11 @@
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">Maggiori informazioni</string>
     <string name="rsb_consent_section_more_info_data_gathering">Maggiori informazioni sulla raccolta dei dati</string>
-    <string name="rsb_consent_section_more_info_data_use">Maggiori informazioni sull’uso dei dati</string>
+    <string name="rsb_consent_section_more_info_data_use">Maggiori informazioni sull\'uso dei dati</string>
     <string name="rsb_consent_section_more_info_privacy">Maggiori informazioni sulla protezione di dati e identità</string>
     <string name="rsb_consent_section_more_info_welcome">Per prima cosa maggiori informazioni sullo studio</string>
     <string name="rsb_consent_section_more_info_study_survey">Maggiori informazioni sul questionario dello studio</string>
-    <string name="rsb_consent_section_more_info_time_commitment">Maggiori informazioni sull’impatto dello studio a livello di tempo</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Maggiori informazioni sull\'impatto dello studio a livello di tempo</string>
     <string name="rsb_consent_section_more_info_study_tasks">Maggiori informazioni sulle attività incluse</string>
     <string name="rsb_consent_section_more_info_withdrawing">Maggiori informazioni sul ritiro</string>
 
@@ -45,16 +29,16 @@
     <string name="rsb_consent_share_widely">Condividi i dati con %1$s e ricercatori qualificati in tutto il mondo</string>
     <string name="rsb_consent_share_no">Non condividere i dati</string>
     <string name="rsb_consent_share_only">Condividi i dati solo con %1$s</string>
-    <string name="rsb_consent_share_description"><![CDATA[%1$s riceverà i dati dell’utente relativi allo studio derivanti dalla partecipazione a tale studio. \n\nCondividere i dati codificati dello studio (senza informazioni come il nome) su scala più ampia può beneficiare questa ricerca e altre in futuro.<br/><br/><a href="%2$s">Maggiori informazioni sulla condivisione dei dati</a>]]></string>
+    <string name="rsb_consent_share_description"><![CDATA[%1$s riceverà i dati dell\'utente relativi allo studio derivanti dalla partecipazione a tale studio. \n\nCondividere i dati codificati dello studio (senza informazioni come il nome) su scala più ampia può beneficiare questa ricerca e altre in futuro.<br/><br/><a href="%2$s">Maggiori informazioni sulla condivisione dei dati</a>]]></string>
 
     <!-- Consent doc step -->
     <string name="rsb_consent_review_title">Revisione</string>
     <string name="rsb_consent_review_alert_title">Revisione</string>
-    <string name="rsb_consent_review_reason">Accettando il presente, l’utente conferma di aver letto le informazioni e che desidera prendere parte a questo studio di ricerca.</string>
+    <string name="rsb_consent_review_reason">Accettando il presente, l\'utente conferma di aver letto le informazioni e che desidera prendere parte a questo studio di ricerca.</string>
     <string name="rsb_consent_review_instruction">Rivedere il modulo di seguito e toccare Accetto per continuare.</string>
     <string name="rsb_consent_review_cancel">Annulla</string>
 
-    <string name="rsb_saving_consent">Salvataggio del consenso in corso…</string>
+    <string name="rsb_saving_consent">Salvataggio del consenso in corso&#8230;</string>
     <string name="rsb_please_wait">Attendere&#8230;</string>
 
     <!-- Consent form step -->
@@ -65,7 +49,7 @@
 
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Firma</string>
-    <string name="rsb_consent_signature_content">Accettando il presente, l’utente conferma di aver letto il consenso e che desidera prendere parte a questo studio di ricerca.</string>
+    <string name="rsb_consent_signature_content">Accettando il presente, l\'utente conferma di aver letto il consenso e che desidera prendere parte a questo studio di ricerca.</string>
     <string name="rsb_consent_signature_instruction">Si prega di firmare sulla riga qui sotto usando il dito.</string>
     <string name="rsb_consent_signature_placeholder">Firmare qui</string>
     <string name="rsb_consent_signature_clear">Cancella</string>
@@ -91,7 +75,7 @@
     <string name="rsb_name_last">Cognome</string>
     <string name="rsb_email">E-MAIL</string>
     <string name="rsb_disagree">In disaccordo</string>
-    <string name="rsb_agree">D’accordo</string>
+    <string name="rsb_agree">D\'accordo</string>
     <string name="rsb_ok">OK</string>
     <string name="rsb_cancel">Annulla</string>
     <string name="rsb_yes">Sì</string>
@@ -107,14 +91,14 @@
     <string name="rsb_error_data_failed">Impossibile caricare i dati crittografati; riprova!</string>
     <string name="rsb_error_invalid_signature">Firma non valida</string>
     <string name="rsb_invalid_answer_default">Risposta non valida, riprova!</string>
-    <string name="rsb_invalid_answer_date_over">Risposta non valida, la data dev’essere precedente al %1$s</string>
-    <string name="rsb_invalid_answer_date_under">Risposta non valida, la data dev’essere successiva al %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Risposta non valida, la data dev’essere successiva al %1$s</string>
-    <string name="rsb_invalid_answer_integer_under">Risposta non valida, il valore dev’essere superiore o pari a %1$s</string>
+    <string name="rsb_invalid_answer_date_over">Risposta non valida, la data dev\'essere precedente al %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Risposta non valida, la data dev\'essere successiva al %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Risposta non valida, la data dev\'essere successiva al %1$s</string>
+    <string name="rsb_invalid_answer_integer_under">Risposta non valida, il valore dev\'essere superiore o pari a %1$s</string>
     <string name="rsb_invalid_answer_choice">Selezionare un valore.</string>
     <string name="rsb_invalid_answer_date_none">Selezionare una data.</string>
-    <string name="rsb_birth_date_too_old">L’utente deve avere al massimo %1$s anni</string>
-    <string name="rsb_birth_date_too_young">L’utente deve avere almeno %1$s anni</string>
+    <string name="rsb_birth_date_too_old">L\'utente deve avere al massimo %1$s anni</string>
+    <string name="rsb_birth_date_too_young">L\'utente deve avere almeno %1$s anni</string>
 
     <!-- Pin Code -->
     <string name="rsb_pincode_enter_title">Inserire il passcode</string>
@@ -125,12 +109,12 @@
     <string name="rsb_pincode_enter_error">Il codice non corrisponde a quello inserito; riprovare.</string>
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">Inserire un numero nell’intervallo %1$d-%2$d</string>
-    <string name="rsb_hint_step_body_dec">Inserire un numero nell’intervallo %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int">Inserire un numero nell\'intervallo %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Inserire un numero nell\'intervallo %1$.2f-%2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Inserire un numero</string>
     <string name="rsb_hint_step_body_date">Inserire una data</string>
-    <string name="rsb_hint_step_body_time">Inserire un’ora</string>
-    <string name="rsb_hint_step_body_datetime">Inserire una data e un’ora</string>
+    <string name="rsb_hint_step_body_time">Inserire un\'ora</string>
+    <string name="rsb_hint_step_body_datetime">Inserire una data e un\'ora</string>
     <string name="rsb_hint_step_body_text">Risposta</string>
 
     <!-- Graphing -->
