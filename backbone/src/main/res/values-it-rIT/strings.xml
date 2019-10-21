@@ -104,9 +104,9 @@
     <string name="rsb_task_cancel_positive">Elimina risultati</string>
 
     <!-- Step Errors -->
-    <string name="rsb_error_data_failed">Impossibile caricare i dati crittografati; riprovare più tardi.</string>
+    <string name="rsb_error_data_failed">Impossibile caricare i dati crittografati; riprova!</string>
     <string name="rsb_error_invalid_signature">Firma non valida</string>
-    <string name="rsb_invalid_answer_default">Risposta non valida, riprovare.</string>
+    <string name="rsb_invalid_answer_default">Risposta non valida, riprova!</string>
     <string name="rsb_invalid_answer_date_over">Risposta non valida, la data dev’essere precedente al %1$s</string>
     <string name="rsb_invalid_answer_date_under">Risposta non valida, la data dev’essere successiva al %1$s</string>
     <string name="rsb_invalid_answer_integer_over">Risposta non valida, la data dev’essere successiva al %1$s</string>
@@ -148,8 +148,8 @@
     <string name="rsb_error_assetvideoview_button">OK</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Nome di %1$s\ (stampato)</string>
-    <string name="rsb_consent_doc_line_signature">Firma di %1$s\</string>
+    <string name="rsb_consent_doc_line_printed_name">Nome di %1$s (stampato)</string>
+    <string name="rsb_consent_doc_line_signature">Firma di %1$s</string>
     <string name="rsb_consent_doc_line_date">Data</string>
     <string name="rsb_consent_role">Partecipante</string>
     <string name="rsb_consent_doc_line_date_format">gg-MM-aaaa</string>

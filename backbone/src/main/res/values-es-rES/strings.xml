@@ -93,9 +93,9 @@
     <string name="rsb_next">siguiente</string>
     <string name="rsb_what_to_expect">Qué esperar </string>
     <string name="rsb_name">Nombre</string>
-    <string name="rsb_name_first">Nombre </string>
-    <string name="rsb_name_last">Apellidos </string>
-    <string name="rsb_email">Correo electrónico</string>
+    <string name="rsb_name_first">Nombre</string>
+    <string name="rsb_name_last">Apellido</string>
+    <string name="rsb_email">Correo Electrónico</string>
     <string name="rsb_disagree">No estoy de acuerdo</string>
     <string name="rsb_agree">Estoy de acuerdo</string>
     <string name="rsb_ok">Aceptar</string>
@@ -151,13 +151,13 @@
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">No se\'puede reproducir este vídeo.</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">Aceptar</string>
+    <string name="rsb_error_assetvideoview_button">aceptar</string>
 
     <!-- Consent -->
     <string name="rsb_consent_doc_line_printed_name">%1$s\'s Nombre (mayusculas)</string>
     <string name="rsb_consent_doc_line_signature">%1$s\'s Firma</string>
     <string name="rsb_consent_doc_line_date">Fecha</string>
     <string name="rsb_consent_role">Participante</string>
-    <string name="rsb_consent_doc_line_date_format">MM/dd/aaaa</string>
+    <string name="rsb_consent_doc_line_date_format">mm/dd/aaaa</string>
 
 </resources>
