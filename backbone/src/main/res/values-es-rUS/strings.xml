@@ -38,7 +38,7 @@
     <string name="rsb_consent_section_more_info_study_survey">Más información sobre la encuesta del estudio</string>
     <string name="rsb_consent_section_more_info_time_commitment">Más información sobre el impacto del estudio en su tiempo</string>
     <string name="rsb_consent_section_more_info_study_tasks">Más información sobre las tareas involucradas</string>
-    <string name="rsb_consent_section_more_info_withdrawing">Más información sobre la revocación</string>
+    <string name="rsb_consent_section_more_info_withdrawing">Más información sobre retirarse del Estudio</string>
 
     <!-- Consent sharing step -->
     <string name="rsb_consent_share_title">Opciones sobre compartir datos</string>
@@ -54,7 +54,7 @@
     <string name="rsb_consent_review_instruction">Revise el siguiente formulario y toque Aceptar si está listo para continuar.</string>
     <string name="rsb_consent_review_cancel">Cancelar</string>
 
-    <string name="rsb_saving_consent">Guardando el consentimiento</string>
+    <string name="rsb_saving_consent">Guardando Consentimiento</string>
     <string name="rsb_please_wait">Espere&#8230;</string>
 
     <!-- Consent form step -->
@@ -66,9 +66,9 @@
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Firma</string>
     <string name="rsb_consent_signature_content">Al aceptar, confirma que leyó el consentimiento y que desea formar parte de este estudio de investigación.</string>
-    <string name="rsb_consent_signature_instruction">Firme en la siguiente línea con el dedo.</string>
+    <string name="rsb_consent_signature_instruction">Por favor, firme con su dedo en la línea de abajo.</string>
     <string name="rsb_consent_signature_placeholder">Firme aquí</string>
-    <string name="rsb_consent_signature_clear">Borrar</string>
+    <string name="rsb_consent_signature_clear">Limpiar</string>
 
     <!-- Quiz -->
     <string name="rsb_quiz">Cuestionario</string>
@@ -92,7 +92,7 @@
     <string name="rsb_email">Correo electrónico</string>
     <string name="rsb_disagree">No estoy de acuerdo</string>
     <string name="rsb_agree">Estoy de acuerdo</string>
-    <string name="rsb_ok">Aceptar</string>
+    <string name="rsb_ok">OK</string>
     <string name="rsb_cancel">Cancelar</string>
     <string name="rsb_yes">Sí</string>
     <string name="rsb_no">No</string>
@@ -106,7 +106,7 @@
     <!-- Step Errors -->
     <string name="rsb_error_data_failed">Error al cargar datos encriptados. Vuelva a intentarlo.</string>
     <string name="rsb_error_invalid_signature">Firma no válida</string>
-    <string name="rsb_invalid_answer_default">Respuesta no válida. Vuelva a intentarlo.</string>
+    <string name="rsb_invalid_answer_default">Respuesta no válida. Por favor, vuelva a intentarlo.</string>
     <string name="rsb_invalid_answer_date_over">Respuesta no válida: la fecha debe ser anterior a %1$s</string>
     <string name="rsb_invalid_answer_date_under">Respuesta no válida: la fecha debe ser posterior a %1$s</string>
     <string name="rsb_invalid_answer_integer_over">Respuesta no válida: la fecha debe ser posterior a %1$s</string>
