@@ -3,7 +3,7 @@
 
     <!-- Consent Section -->
     <string name="rsb_consent">Toestemming</string>
-    <string name="rsb_consent_section_welcome">Welkom</string>
+    <string name="rsb_consent_section_welcome">Verzameling van gegevens</string>
     <string name="rsb_consent_section_data_gathering">Verzameling van gegevens</string>
     <string name="rsb_consent_section_privacy">Privacy</string>
     <string name="rsb_consent_section_data_use">Gegevensgebruik</string>
@@ -39,7 +39,7 @@
     <string name="rsb_consent_review_cancel">Annuleren</string>
 
     <string name="rsb_saving_consent">Bezig uw toestemming op te slaan</string>
-    <string name="rsb_please_wait">Een ogenblik geduld alstublieft&#8230;</string>
+    <string name="rsb_please_wait">Een ogenblik geduld&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Toestemming</string>
@@ -73,7 +73,7 @@
     <string name="rsb_name">Naam</string>
     <string name="rsb_name_first">Voornaam</string>
     <string name="rsb_name_last">Achternaam</string>
-    <string name="rsb_email">E-MAILADRES</string>
+    <string name="rsb_email">E-mailadres</string>
     <string name="rsb_disagree">Niet akkoord</string>
     <string name="rsb_agree">Akkoord</string>
     <string name="rsb_ok">OK</string>
