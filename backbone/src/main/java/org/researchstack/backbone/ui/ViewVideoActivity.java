@@ -56,9 +56,4 @@ public class ViewVideoActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
-    }
 }

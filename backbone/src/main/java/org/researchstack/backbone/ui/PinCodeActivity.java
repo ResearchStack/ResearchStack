@@ -67,8 +67,7 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     @Override
     protected void onResume() {
         super.onResume();
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
-        
+
         requestStorageAccess();
     }
 
