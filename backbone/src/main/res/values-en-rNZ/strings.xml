@@ -15,8 +15,8 @@
 
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">Learn more</string>
-    <string name="rsb_consent_section_more_info_data_gathering">Learn more about how data is gathered</string>
-    <string name="rsb_consent_section_more_info_data_use">Learn more about how data is used</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Learn more about how data are gathered</string>
+    <string name="rsb_consent_section_more_info_data_use">Learn more about how data are used</string>
     <string name="rsb_consent_section_more_info_privacy">Learn more about how your privacy and identity are protected</string>
     <string name="rsb_consent_section_more_info_welcome">Learn more about the study first</string>
     <string name="rsb_consent_section_more_info_study_survey">Learn more about the study survey</string>
