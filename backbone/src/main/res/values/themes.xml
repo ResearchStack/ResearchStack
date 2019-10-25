@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
-    <style name="Base.Theme.Backbone" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.Theme.Backbone" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
 
         <!-- List item padding -->
         <item name="android:listPreferredItemPaddingLeft">50dp</item>
@@ -17,6 +17,9 @@
         <item name="pieChartCardStyle">@style/Widget.Backbone.Chart.Pie</item>
         <item name="lineChartCardStyle">@style/Widget.Backbone.Chart.Line</item>
         <item name="barChartCardStyle">@style/Widget.Backbone.Chart.Bar</item>
+
+        <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar</item>
     </style>
 
     <style name="Theme.Backbone" parent="Base.Theme.Backbone" />
