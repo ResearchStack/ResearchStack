@@ -89,7 +89,7 @@
     <string name="rsb_name">Название</string>
     <string name="rsb_name_first">Имя</string>
     <string name="rsb_name_last">Фамилия</string>
-    <string name="rsb_email">ЭЛ. ПОЧТА</string>
+    <string name="rsb_email">Эл. почта</string>
     <string name="rsb_disagree">Не согласен</string>
     <string name="rsb_agree">Согласен</string>
     <string name="rsb_ok">ОК</string>
