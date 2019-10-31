@@ -148,8 +148,8 @@
     <string name="rsb_error_assetvideoview_button">Aceptar</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Nombre de %1$s\'s (en imprenta)</string>
-    <string name="rsb_consent_doc_line_signature">Firma de %1$s\'s</string>
+    <string name="rsb_consent_doc_line_printed_name">Nombre de %1$s (en imprenta)</string>
+    <string name="rsb_consent_doc_line_signature">Firma de %1$s</string>
     <string name="rsb_consent_doc_line_date">Fecha</string>
     <string name="rsb_consent_role">Participante</string>
     <string name="rsb_consent_doc_line_date_format">MM-dd-aaaa</string>
