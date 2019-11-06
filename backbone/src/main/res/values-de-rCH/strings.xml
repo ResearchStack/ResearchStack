@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
 
     <!-- Consent Section -->
-    <string name="rsb_consent">Einwilligung</string>
+    <string name="rsb_consent">Einwilligungserklärung</string>
     <string name="rsb_consent_section_welcome">Willkommen</string>
-    <string name="rsb_consent_section_data_gathering">Datenerfassung </string>
+    <string name="rsb_consent_section_data_gathering">Datenerfassung</string>
     <string name="rsb_consent_section_privacy">Datenschutz</string>
-    <string name="rsb_consent_section_data_use">Datennutzung </string>
-    <string name="rsb_consent_section_time_commitment">Zeitaufwand </string>
-    <string name="rsb_consent_section_study_survey">Studienumfrage </string>
-    <string name="rsb_consent_section_study_tasks">Studienaufgaben </string>
-    <string name="rsb_consent_section_withdrawing">Abbruch</string>
+    <string name="rsb_consent_section_data_use">Datenverwendung</string>
+    <string name="rsb_consent_section_time_commitment">Zeitliche Bindung</string>
+    <string name="rsb_consent_section_study_survey">Studienumfrage</string>
+    <string name="rsb_consent_section_study_tasks">Studienaufgaben</string>
+    <string name="rsb_consent_section_withdrawing">Rücktritt</string>
     <string name="rsb_consent_learn_more">Mehr erfahren</string>
 
     <!-- Consent section learn more -->
@@ -33,17 +32,17 @@
     <string name="rsb_consent_share_description"><![CDATA[%1$s erhält Ihre Studiendaten von Ihrer Teilnahme an dieser Studie. \n\nDie weitere Verbreitung Ihrer kodierten Studiendaten (ohne Informationen wie Ihr Name) kann dieser und zukünftigen Forschungen zugutekommen.<br/><br/><a href="%2$s">Erfahren Sie mehr über die Datenweitergabe</a>]]></string>
 
     <!-- Consent doc step -->
-    <string name="rsb_consent_review_title">Lesen</string>
-    <string name="rsb_consent_review_alert_title">Lesen</string>
+    <string name="rsb_consent_review_title">Überprüfen</string>
+    <string name="rsb_consent_review_alert_title">Überprüfen</string>
     <string name="rsb_consent_review_reason">Mit Ihrer Zustimmung bestätigen Sie, dass Sie die Informationen gelesen haben und an der Forschungsstudie teilnehmen wollen.</string>
     <string name="rsb_consent_review_instruction">Überprüfen Sie das Formular unten und tippen Sie auf Stimme zu, wenn Sie bereit sind fortzufahren.</string>
     <string name="rsb_consent_review_cancel">Abbrechen</string>
 
     <string name="rsb_saving_consent">Einwilligung wird gespeichert</string>
-    <string name="rsb_please_wait">Bitte warten Sie&#8230;</string>
+    <string name="rsb_please_wait">Bitte warten&#8230;</string>
 
     <!-- Consent form step -->
-    <string name="rsb_consent_form_title">Einwilligung</string>
+    <string name="rsb_consent_form_title">Einwilligungserklärung</string>
     <string name="rsb_consent_name_full">Vollständiger Name</string>
     <string name="rsb_consent_dob_full">Geburtsdatum</string>
     <string name="rsb_consent_name_placeholder">Erforderlich</string>
@@ -65,7 +64,7 @@
 
     <!-- Other -->
     <string name="rsb_submit">Absenden</string>
-    <string name="rsb_exit">Verlassen</string>
+    <string name="rsb_exit">Beenden</string>
     <string name="rsb_get_started">Erste Schritte</string>
     <string name="rsb_done">Fertig</string>
     <string name="rsb_step_skip">Überspringen</string>
@@ -74,10 +73,10 @@
     <string name="rsb_name">Name</string>
     <string name="rsb_name_first">Vorname</string>
     <string name="rsb_name_last">Nachname</string>
-    <string name="rsb_email">E-MAIL-ADRESSE</string>
-    <string name="rsb_disagree">Ablehnen</string>
-    <string name="rsb_agree">Zustimmen</string>
-    <string name="rsb_ok">Ok</string>
+    <string name="rsb_email">E-MAIL</string>
+    <string name="rsb_disagree">Stimme nicht zu</string>
+    <string name="rsb_agree">Stimme zu</string>
+    <string name="rsb_ok">ok</string>
     <string name="rsb_cancel">Abbrechen</string>
     <string name="rsb_yes">Ja</string>
     <string name="rsb_no">Nein</string>
@@ -93,8 +92,8 @@
     <string name="rsb_error_invalid_signature">Unterschrift ungültig</string>
     <string name="rsb_invalid_answer_default">Ungültige Antwort, versuchen Sie es erneut!</string>
     <string name="rsb_invalid_answer_date_over">Ungültige Antwort, Datum muss vor %1$s sein</string>
-    <string name="rsb_invalid_answer_date_under">Ungültige Antwort, Datum muss nach dem %1$s liegen.</string>
-    <string name="rsb_invalid_answer_integer_over">Ungültige Antwort, Datum muss nach %1$s sein</string>
+    <string name="rsb_invalid_answer_date_under">Ungültige Antwort, Datum muss nach %1$s sein</string>
+    <string name="rsb_invalid_answer_integer_over">Ungültige Antwort, Ihr Wert muss %1$s oder niedriger sein</string>
     <string name="rsb_invalid_answer_integer_under">Ungültige Antwort, Ihr Wert muss %1$s oder höher sein</string>
     <string name="rsb_invalid_answer_choice">Bitte wählen Sie einen Wert aus!</string>
     <string name="rsb_invalid_answer_date_none">Bitte wählen Sie ein Datum aus.</string>
@@ -106,7 +105,7 @@
     <string name="rsb_pincode_enter_summary">Geben Sie Ihren %1$d-%2$s-Code ein, um Ihre Identität zu bestätigen.</string>
     <string name="rsb_pincode_enter_digit">Ziffer</string>
     <string name="rsb_pincode_enter_letter">Buchstabe</string>
-    <string name="rsb_pincode_enter_character">Sonderzeichen</string>
+    <string name="rsb_pincode_enter_character">Zeichen</string>
     <string name="rsb_pincode_enter_error">Dieser Code stimmt nicht mit dem überein, den Sie eingegeben haben, versuchen Sie es erneut!</string>
 
     <!-- Body Hints -->
@@ -133,10 +132,10 @@
     <string name="rsb_error_assetvideoview_button">ok</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Name von%1$s\'s (gedruckt) </string>
-    <string name="rsb_consent_doc_line_signature">Unterschrift von%1$s\' </string>
+    <string name="rsb_consent_doc_line_printed_name">Name von %1$s\'s (gedruckt)</string>
+    <string name="rsb_consent_doc_line_signature">Unterschrift von %1$s\'s</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Teilnehmer</string>
-    <string name="rsb_consent_doc_line_date_format">dd.MM.yyyy</string>
+    <string name="rsb_consent_doc_line_date_format">"TT-MM-JJJJ"</string>
 
 </resources>

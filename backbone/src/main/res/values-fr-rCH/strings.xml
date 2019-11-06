@@ -9,27 +9,27 @@
     <string name="rsb_consent_section_data_use">Utilisation des données</string>
     <string name="rsb_consent_section_time_commitment">Engagement en termes de temps</string>
     <string name="rsb_consent_section_study_survey">Étude par sondage</string>
-    <string name="rsb_consent_section_study_tasks">Tâches de l\'étude</string>
+    <string name="rsb_consent_section_study_tasks">Tâches de l\’étude</string>
     <string name="rsb_consent_section_withdrawing">Retrait</string>
-    <string name="rsb_consent_learn_more">Plus d\'informations</string>
+    <string name="rsb_consent_learn_more">Plus d\’informations</string>
 
     <!-- Consent section learn more -->
-    <string name="rsb_consent_section_more_info">Plus d\'informations</string>
-    <string name="rsb_consent_section_more_info_data_gathering">Plus d\'informations sur la manière dont les informations sont collectées</string>
-    <string name="rsb_consent_section_more_info_data_use">Plus d\'informations sur la manière dont les données sont utilisées</string>
-    <string name="rsb_consent_section_more_info_privacy">Plus d\'informations sur la manière dont votre confidentialité et identité sont protégées</string>
-    <string name="rsb_consent_section_more_info_welcome">Plus d\'informations sur l\'étude pour commencer</string>
-    <string name="rsb_consent_section_more_info_study_survey">Plus d\'informations sur l\'étude par sondage</string>
-    <string name="rsb_consent_section_more_info_time_commitment">Plus d\'informations sur l\'impact de l\'étude sur votre temps</string>
-    <string name="rsb_consent_section_more_info_study_tasks">Plus d\'informations sur les tâches concernées</string>
-    <string name="rsb_consent_section_more_info_withdrawing">Plus d\'informations sur la possibilité de se retirer</string>
+    <string name="rsb_consent_section_more_info">Plus d’informations</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Plus d’informations sur la manière dont les informations sont collectées</string>
+    <string name="rsb_consent_section_more_info_data_use">Plus d\’informations sur la manière dont les données sont utilisées</string>
+    <string name="rsb_consent_section_more_info_privacy">Plus d\’informations sur la manière dont votre vie privée et identité sont protégées</string>
+    <string name="rsb_consent_section_more_info_welcome">Plus d\’informations sur l\’étude pour commencer</string>
+    <string name="rsb_consent_section_more_info_study_survey">Plus d\’informations sur l\’étude par sondage</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Plus d\’informations sur l\’impact de l\’étude sur votre temps</string>
+    <string name="rsb_consent_section_more_info_study_tasks">Plus d\’informations sur les tâches concernées</string>
+    <string name="rsb_consent_section_more_info_withdrawing">Plus d\’informations sur la possibilité de se retirer</string>
 
     <!-- Consent sharing step -->
     <string name="rsb_consent_share_title">Options de partage</string>
     <string name="rsb_consent_share_widely">Partager mes données avec %1$s et les chercheurs qualifiés dans le monde</string>
     <string name="rsb_consent_share_no">Ne pas partager vos données</string>
     <string name="rsb_consent_share_only">Partager mes données uniquement avec %1$s</string>
-    <string name="rsb_consent_share_description"><![CDATA[%1$s recevra les données de l\'étude de votre participation à cette étude. \n\nLe partage plus large de vos données de l\'étude codées (sans informations telles que votre nom) peut s\'avérer intéressant pour cette recherche et de futures recherches. <br/><br/><a href="%2$s">Plus d\'informations sur le partage des données</a>]]></string>
+    <string name="rsb_consent_share_description"><![CDATA[%1$s recevra les données de l’étude de votre participation à cette étude. \n\nLe partage plus large de vos données de l\’étude codées (sans informations telles que votre nom) peut s’avérer intéressant pour cette recherche et de futures recherches. <br/><br/><a href="%2$s">Plus d\’informations sur le partage des données</a>]]></string>
 
     <!-- Consent doc step -->
     <string name="rsb_consent_review_title">Vérifier</string>
@@ -50,7 +50,7 @@
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Signature</string>
     <string name="rsb_consent_signature_content">En acceptant, vous confirmez que vous avez lu le formulaire de consentement et que vous souhaitez participer à cette étude de recherche.</string>
-    <string name="rsb_consent_signature_instruction">Veuillez signer à l\'aide de votre doigt sur la ligne ci-dessous.</string>
+    <string name="rsb_consent_signature_instruction">Veuillez signer à l\’aide de votre doigt sous la ligne ci-dessous.</string>
     <string name="rsb_consent_signature_placeholder">Signez ici</string>
     <string name="rsb_consent_signature_clear">Effacer</string>
 
@@ -70,10 +70,10 @@
     <string name="rsb_step_skip">Ignorer</string>
     <string name="rsb_next">suivant</string>
     <string name="rsb_what_to_expect">Quelles sont les attentes</string>
-    <string name="rsb_name">Nom </string>
+    <string name="rsb_name">Nom </string>
     <string name="rsb_name_first">Prénom</string>
     <string name="rsb_name_last">Nom de famille</string>
-    <string name="rsb_email">E-mail</string>
+    <string name="rsb_email">E-MAIL</string>
     <string name="rsb_disagree">Pas d\'accord</string>
     <string name="rsb_agree">D\'accord</string>
     <string name="rsb_ok">D\'accord</string>
@@ -83,7 +83,7 @@
     <string name="rsb_format_step_title">Étape %1$s sur %2$s</string>
     <string name="rsb_hours">Heures</string>
     <string name="rsb_minutes">Minutes</string>
-    <string name="rsb_task_cancel_title">Quitter l\'activité</string>
+    <string name="rsb_task_cancel_title">Quitter l\’activité</string>
     <string name="rsb_task_cancel_text">Êtes-vous sûr de vouloir quitter cette activité et supprimer ses résultats ?</string>
     <string name="rsb_task_cancel_positive">Supprimer les résultats</string>
 
@@ -109,8 +109,8 @@
     <string name="rsb_pincode_enter_error">Ce code ne correspond pas à celui que vous avez saisi, veuillez réessayer !</string>
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">Saisissez un nombre entre  %1$d-%2$d</string>
-    <string name="rsb_hint_step_body_dec">Saisissez un nombre entre %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int">Saisissez un nombre %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Saisissez un nombre %1$.2f-%2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Saisissez un nombre</string>
     <string name="rsb_hint_step_body_date">Saisissez une date</string>
     <string name="rsb_hint_step_body_time">Saisissez une heure</string>
@@ -125,18 +125,17 @@
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
     <string name="rsb_error_assetvideoview_title">Problème vidéo</string>
     <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
-    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Cette vidéo n\'est pas valide pour être lue sur cet appareil.</string>
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Cette vidéo n’est pas valide pour être lue sur cet appareil.</string>
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Impossible de lire cette vidéo.</string>
     <!-- Button to close error alert when a video cannot be played -->
     <string name="rsb_error_assetvideoview_button">D\'accord</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Nom du %1$s (majuscules)</string>
-    <string name="rsb_consent_doc_line_signature">Signature du %1$s</string>
+    <string name="rsb_consent_doc_line_printed_name">Nom %1$s (majuscules)</string>
+    <string name="rsb_consent_doc_line_signature">Signature %1$s</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
     <string name="rsb_consent_doc_line_date_format">MM-jj-aaaa</string>
 
 </resources>
-
