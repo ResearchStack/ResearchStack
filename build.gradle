@@ -11,7 +11,7 @@ buildscript {
 
     dependencies {
         // change this to 1.5.x if you're not on Android Studio 2.0.0 beta
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
         classpath "com.neenbedankt.gradle.plugins:android-apt:1.4"

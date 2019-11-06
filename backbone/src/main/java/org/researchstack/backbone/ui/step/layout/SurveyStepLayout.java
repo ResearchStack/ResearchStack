@@ -1,12 +1,12 @@
 package org.researchstack.backbone.ui.step.layout;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;

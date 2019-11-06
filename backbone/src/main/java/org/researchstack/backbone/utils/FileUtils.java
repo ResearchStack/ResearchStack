@@ -1,6 +1,6 @@
 package org.researchstack.backbone.utils;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.researchstack.backbone.storage.file.StorageAccessException;
 

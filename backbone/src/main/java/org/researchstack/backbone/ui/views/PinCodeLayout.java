@@ -1,7 +1,7 @@
 package org.researchstack.backbone.ui.views;
 
 import android.content.Context;
-import android.support.annotation.CallSuper;
+import androidx.annotation.CallSuper;
 import android.text.InputFilter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;

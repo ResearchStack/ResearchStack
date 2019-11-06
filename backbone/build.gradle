@@ -2,20 +2,25 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 android {
 
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
+    afterEvaluate {
+        def originalFilePath = "$buildDir/outputs/aar/backbone-release.aar"
+        def newFilePath = originalFilePath.replace(".aar", "_v${defaultConfig.versionName}.aar")
+        def debugFile = file(originalFilePath)
 
-    libraryVariants.all { variant ->
-        variant.outputs.all { output ->
-            outputFileName = new File(".", output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"))
+        tasks.named("assembleRelease").configure {
+            doLast {
+                debugFile.renameTo(newFilePath)
+            }
         }
     }
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
-        versionName "1.4.0"
+        versionName "1.4.1"
     }
 
     buildTypes {
@@ -48,24 +53,58 @@ android {
     resourcePrefix 'rsb_'
 }
 dependencies {
+    def supportLibVersion = '28.0.0'
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'com.android.support:preference-v14:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.code.gson:gson:2.4'
     implementation 'io.reactivex:rxjava:1.1.3'
     implementation 'io.reactivex:rxandroid:1.1.0'
-    implementation 'com.jakewharton.rxbinding:rxbinding:0.2.0'
-    implementation 'com.jakewharton.rxbinding:rxbinding-support-v4:0.2.0'
-    implementation 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0'
-    implementation 'com.jakewharton.rxbinding:rxbinding-design:0.2.0'
+    implementation ('com.jakewharton.rxbinding:rxbinding:0.2.0') {
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'animated-vector-drawable'
+        exclude group: 'com.android.support', module: 'support-media-compat'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    implementation ('com.jakewharton.rxbinding:rxbinding-support-v4:0.2.0') {
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'animated-vector-drawable'
+        exclude group: 'com.android.support', module: 'support-media-compat'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    implementation ('com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0') {
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'animated-vector-drawable'
+        exclude group: 'com.android.support', module: 'support-media-compat'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    implementation ('com.jakewharton.rxbinding:rxbinding-design:0.2.0') {
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'animated-vector-drawable'
+        exclude group: 'com.android.support', module: 'support-media-compat'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+
     implementation 'com.scottyab:aes-crypto:0.0.3'
     implementation 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
     annotationProcessor 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
     implementation 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
-    implementation 'com.afollestad.material-dialogs:core:0.9.0.2'
-    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation ("com.afollestad.material-dialogs:core:0.9.0.2") {
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'animated-vector-drawable'
+        exclude group: 'com.android.support', module: 'support-media-compat'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.robolectric:robolectric:3.0'
     testImplementation 'org.mockito:mockito-core:1.10.19'
@@ -85,7 +124,9 @@ if (project.hasProperty("android")) { // Android libraries
     afterEvaluate {
         javadoc.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
         javadoc.classpath += files(android.libraryVariants.collect { variant ->
-            variant.javaCompile.classpath.files
+            variant.getJavaCompileProvider().configure {
+                it.classpath.files
+            }
         })
     }
 } else { // Java libraries
@@ -142,6 +183,8 @@ afterEvaluate { project ->
 
 buildscript {
     repositories {
+        google()
+        jcenter()
         maven {
             url 'https://maven.google.com/'
             name 'Google'

@@ -1,7 +1,7 @@
 package org.researchstack.backbone.ui.permissions;
 
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
