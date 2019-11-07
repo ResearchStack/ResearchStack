@@ -147,15 +147,9 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         submitBar = findViewById(R.id.rsb_submit_bar);
         submitBar.setNegativeTitleColor(coloryPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
-        submitBar.setPositiveAction(new OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                if(onNextClicked())
-                {
-                    submitBar.clearActions();
-                }
+        submitBar.setPositiveAction(view -> {
+            if(onNextClicked()) {
+                submitBar.clearActions();
             }
         });
 

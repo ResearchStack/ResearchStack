@@ -252,6 +252,10 @@ public class Step implements Serializable {
         return stepLayoutClass;
     }
 
+    public int getDestinationId() {
+        return 0;
+    }
+
     /**
      * Sets the class that should be used to display this step
      *

@@ -3,6 +3,9 @@
  package="org.researchstack.backbone">
     <application>
         <activity android:name="org.researchstack.backbone.ui.ViewTaskActivity"/>
+        <activity android:name="org.researchstack.backbone.ui.task.TaskActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name="org.researchstack.backbone.ui.ViewWebDocumentActivity"/>
         <activity android:name="org.researchstack.backbone.ui.ConsentViewTaskActivity"/>
     </application>
