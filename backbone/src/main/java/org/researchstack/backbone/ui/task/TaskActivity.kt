@@ -20,7 +20,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.researchstack.backbone.R
 import org.researchstack.backbone.task.Task
