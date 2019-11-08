@@ -203,6 +203,7 @@ afterEvaluate { project ->
 }
 
 buildscript {
+
     repositories {
         google()
         jcenter()
@@ -210,5 +211,9 @@ buildscript {
             url 'https://maven.google.com/'
             name 'Google'
         }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.50"
     }
 }
