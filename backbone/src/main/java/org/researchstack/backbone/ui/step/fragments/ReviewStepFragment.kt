@@ -41,19 +41,21 @@ class BooleanStepViewHolder(itemView: View) : BaseReviewStepViewHolder(itemView)
 data class StepAndAnswer(val step: Step, var answer: BodyAnswer)
 
 class ReviewStepAdapter : ListAdapter<StepAndAnswer, RecyclerView.ViewHolder>(DiffUtilCallback()) {
+    private val stepTypeResolver = StepTypeResolver()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            StepType.BOOLEAN.ordinal -> BooleanStepViewHolder(itemView = inflater.inflate(R.layout.rsb_booelan_step_layout, parent, false))
+            StepType.BOOLEAN.ordinal -> BooleanStepViewHolder(inflater.inflate(R.layout.rsb_boolean_step_layout, parent, false))
             else -> throw IllegalArgumentException("Unrecognized Step Type in ReviewStep Adapter, cannot inflate ViewType")
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
+    override fun getItemViewType(position: Int): Int{
         val step = getItem(position).step
 
-        return StepTypeResolver(step).getType().ordinal
+        return stepTypeResolver.getType(step).ordinal
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -75,11 +77,9 @@ internal class DiffUtilCallback : DiffUtil.ItemCallback<StepAndAnswer>() {
     }
 }
 
-class StepTypeResolver(val step: Step) {
-    fun getType(): StepType {
-        val type = step.stepLayoutClass.javaClass.name
-
-        return when (type) {
+class StepTypeResolver {
+    fun getType(step: Step): StepType {
+        return when (step.stepLayoutClass.javaClass.name) {
             "RSBooleanBody" -> StepType.BOOLEAN
             "RSBooleanBody::class.java" -> StepType.BOOLEAN
             else -> throw IllegalArgumentException("Unrecognized Step Type in ReviewStep Adapter")
