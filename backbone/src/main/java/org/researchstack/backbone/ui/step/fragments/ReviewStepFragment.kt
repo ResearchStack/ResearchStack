@@ -24,6 +24,10 @@ internal class ReviewStepFragment : BaseStepFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         reviewStepRecyclerView.adapter = adapter
+
+//        val step = Step("xxx")
+
+//        adapter.submitList(xxx)
     }
 }
 
