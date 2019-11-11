@@ -55,7 +55,10 @@ internal open class BaseStepFragment : Fragment(), StepCallbacks {
             is ConsentVisualStepLayout -> stepView.initialize(currentStep, stepResult,
                 viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
                 viewModel.secondaryTextColor)
-            else -> (stepView as StepLayout).initialize(currentStep, stepResult)
+            else -> {
+                // TODO: Remove/Review this. It will crash if the step is not StepLayout
+                (stepView as StepLayout).initialize(currentStep, stepResult)
+            }
         }
     }
 

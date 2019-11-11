@@ -14,8 +14,12 @@ import org.researchstack.backbone.R
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.ui.step.body.BodyAnswer
 
-class ReviewStepFragment : Fragment(R.layout.rsb_fragment_review_step_layout) {
+internal class ReviewStepFragment : BaseStepFragment() {
     val adapter = ReviewStepAdapter()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.rsb_fragment_review_step_layout, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,7 +56,7 @@ class ReviewStepAdapter : ListAdapter<StepAndAnswer, RecyclerView.ViewHolder>(Di
         }
     }
 
-    override fun getItemViewType(position: Int): Int{
+    override fun getItemViewType(position: Int): Int {
         val step = getItem(position).step
 
         return stepTypeResolver.getType(step).ordinal
