@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,12 +13,8 @@ import org.researchstack.backbone.R
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.ui.step.body.BodyAnswer
 
-internal class ReviewStepFragment : BaseStepFragment() {
+internal class ReviewStepFragment : BaseStepFragment(R.layout.rsb_fragment_review_step_layout) {
     val adapter = ReviewStepAdapter()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.rsb_fragment_review_step_layout, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
