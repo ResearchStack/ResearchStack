@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import org.researchstack.backbone.BuildConfig;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.views.LocalWebView;
 import org.researchstack.backbone.utils.ThemeUtils;
@@ -80,7 +81,9 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
+        if (BuildConfig.USE_SECURE_FLAG) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
 
         if (getIntent() != null && getIntent().hasExtra(KEY_THEME)) {
             setTheme(getIntent().getIntExtra(KEY_THEME, 0));
