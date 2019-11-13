@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.ContextThemeWrapper;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -164,8 +166,8 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
         int errorColor = getResources().getColor(R.color.rsb_error);
 
-        TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
-        EditText pincode = (EditText) pinCodeLayout.findViewById(R.id.pincode);
+        TextView summary = pinCodeLayout.findViewById(R.id.text);
+        EditText pincode = pinCodeLayout.findViewById(R.id.pincode);
 
         toggleKeyboardAction = enable -> {
             pincode.setEnabled(enable);
