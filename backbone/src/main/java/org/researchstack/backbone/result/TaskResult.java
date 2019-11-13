@@ -1,10 +1,14 @@
 package org.researchstack.backbone.result;
 
-import android.net.Uri;
+import org.researchstack.backbone.step.Step;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
+import kotlin.Deprecated;
 
 /**
  * An TaskResult object is a result that contains all the step results generated from one run of a
@@ -20,15 +24,16 @@ import java.util.UUID;
 public class TaskResult extends Result {
     private Map<String, StepResult> results;
 
-    // unimplemented but exists in RK, implement or delete if not needed
-    private UUID uuidTask;
-
-    // unimplemented but exists in RK, implement or delete if not needed
-    private Uri outputDirectory;
+    // Maintain a Second map that stores the full step and results combined, instead of just the
+    // identifier. In time, the original "identifier, result" map should be removed in favor of this
+    // one.
+    // WHY? It simplifies ReviewStep's data source.
+    private Map<Step, StepResult> stepsAndResults;
 
     public TaskResult(String identifier) {
         super(identifier);
         this.results = new HashMap<>();
+        this.stepsAndResults = new HashMap<>();
     }
 
     /**
@@ -36,18 +41,40 @@ public class TaskResult extends Result {
      *
      * @return a Map of the StepResults
      */
+    @Deprecated(message = "Prefer to use getStepsAndResults()")
     public Map<String, StepResult> getResults() {
         return results;
+    }
+
+    public Map<Step, StepResult> getStepsAndResults() {
+        return stepsAndResults;
     }
 
     /**
      * Returns a step result for the specified step identifier, if one exists.
      *
      * @param identifier The identifier for which to search.
-     * @return The result for the specified step, or {@link nil} for none.
+     * @return The result for the specified step, or {@link null} for none.
      */
     public StepResult getStepResult(String identifier) {
         return results.get(identifier);
+    }
+
+    /**
+     * Returns a Pair containing the Step and its StepResult.
+     *
+     * @param identifier the Identifier of the Step
+     * @return a Pair with the Step and its StepResult. The Pair will never be null, but if either
+     * Step or StepResult cannot be found or are null, the pair will contain null values.
+     */
+    public Pair<Step, StepResult> getStepAndResult(String identifier) {
+        for (Step step : stepsAndResults.keySet()) {
+            if (step.getIdentifier().equals(identifier)) {
+                return new Pair<>(step, stepsAndResults.get(step));
+            }
+        }
+
+        return new Pair<>(null, null);
     }
 
     /**
@@ -56,7 +83,19 @@ public class TaskResult extends Result {
      * @param identifier the Step and StepResult's identifier
      * @param stepResult the StepResult for this identifier
      */
+    @Deprecated(message = "Prefer to pass the full Step via setStepResultForStep(Step, StepResult)")
     public void setStepResultForStepIdentifier(String identifier, StepResult stepResult) {
         results.put(identifier, stepResult);
+    }
+
+    /**
+     * Saves the Step's result associated with the entire step.
+     *
+     * @param step       the Step
+     * @param stepResult the StepResult for this Step
+     */
+    public void setStepResultForStep(@NonNull Step step, @Nullable StepResult stepResult) {
+        results.put(step.getIdentifier(), stepResult);
+        stepsAndResults.put(step, stepResult);
     }
 }

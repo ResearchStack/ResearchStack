@@ -64,7 +64,7 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
     }
 
     override fun onSaveStep(action: Int, step: Step, result: StepResult<*>?) {
-        viewModel.taskResult.setStepResultForStepIdentifier(step.identifier, result)
+        viewModel.taskResult.setStepResultForStep(step, result)
 
         when (action) {
             StepCallbacks.ACTION_NEXT -> viewModel.nextStep()

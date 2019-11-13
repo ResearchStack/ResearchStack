@@ -3,41 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="16dp">
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/booleanStepQuestionTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Here goes the Title" />
 
-    <RadioGroup
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/booleanStepQuestionItself"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/booleanStepQuestionTitle">
+        app:layout_constraintTop_toBottomOf="@id/booleanStepQuestionTitle"
+        tools:text="Are you thirsty now?" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/answer_yes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Yes"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/booleanStepQuestionAnswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/booleanStepQuestionItself"
+        tools:text="Yes" />
 
-        <androidx.appcomp1at.widget.AppCompatRadioButton
-            android:id="@+id/answer_no"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="No"
-            android:textSize="16sp" />
-    </RadioGroup>
+    <include
+        layout="@layout/rsb_review_step_edit_button_layout"
+        app:layout_constraintBottom_toBottomOf="@id/booleanStepQuestionAnswer"
+        app:layout_constraintTop_toTopOf="@id/booleanStepQuestionTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
