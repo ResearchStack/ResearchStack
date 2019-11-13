@@ -41,7 +41,7 @@ import static org.threeten.bp.DateTimeUtils.toDate;
 /**
  * Replicates the behavior of ViewTaskActivity while running :backbone tasks on :foundation.
  */
-public class ViewSageBackboneInteropTaskActivity extends PinCodeActivity implements TaskPresentationFragment.OnTaskExitListener {
+public class ViewSageBackboneInteropTaskActivity extends ViewTaskActivity implements TaskPresentationFragment.OnTaskExitListener {
     public static final int CONTENT_VIEW_ID = R.id.rsb_content_container;
 
     /**

@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
+description = "Sage Backbone Interop"
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -43,6 +44,5 @@ dependencies {
     compile "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-repositories {
-    mavenCentral()
-}
+
+apply from: "../config/artifact-deploy.gradle"
