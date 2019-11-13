@@ -42,7 +42,6 @@ import static org.threeten.bp.DateTimeUtils.toDate;
  * Replicates the behavior of ViewTaskActivity while running :backbone tasks on :foundation.
  */
 public class ViewSageBackboneInteropTaskActivity extends ViewTaskActivity implements TaskPresentationFragment.OnTaskExitListener {
-    public static final int CONTENT_VIEW_ID = R.id.rsb_content_container;
 
     /**
      * @param context application context
@@ -61,11 +60,6 @@ public class ViewSageBackboneInteropTaskActivity extends ViewTaskActivity implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setResult(RESULT_CANCELED);
-
-        FrameLayout frame = new FrameLayout(this);
-        frame.setId(CONTENT_VIEW_ID);
-        setContentView(frame, new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
         Step currentStep = null;
         Task task;
@@ -92,7 +86,7 @@ public class ViewSageBackboneInteropTaskActivity extends ViewTaskActivity implem
 
         // wait for data ready and then add TaskPrsentationFragment to the view hierarchy
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(CONTENT_VIEW_ID, taskFragment).commit();
+        ft.add(getViewSwitcherRootId(), taskFragment).commit();
     }
 
     @Override
