@@ -3,6 +3,7 @@ package org.researchstack.backbone.result;
 import org.researchstack.backbone.step.Step;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,7 @@ public class TaskResult extends Result {
     public TaskResult(String identifier) {
         super(identifier);
         this.results = new HashMap<>();
-        this.stepsAndResults = new HashMap<>();
+        this.stepsAndResults = new LinkedHashMap<>();
     }
 
     /**
