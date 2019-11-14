@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="TODO"
-        android:src="@drawable/rsb_ic_check"
-        android:tint="@android:color/black"
+        android:src="@drawable/rsb_ic_edit"
+        android:tint="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="wrap" />
