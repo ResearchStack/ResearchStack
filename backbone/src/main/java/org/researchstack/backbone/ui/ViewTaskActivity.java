@@ -401,7 +401,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     }
 
     private void notifyStepOfBackPress() {
-        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
+        StepLayout currentStepLayout = findViewById(R.id.rsb_current_step);
         currentStepLayout.isBackEventConsumed();
     }
 
