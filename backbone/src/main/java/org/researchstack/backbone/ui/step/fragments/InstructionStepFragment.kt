@@ -1,15 +1,5 @@
 package org.researchstack.backbone.ui.step.fragments
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import org.researchstack.backbone.R
 
-internal class InstructionStepFragment : BaseStepFragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.rsb_fragment_instruction_step, container, false)
-    }
-
-}
+internal class InstructionStepFragment : BaseStepFragment(R.layout.rsb_fragment_instruction_step)

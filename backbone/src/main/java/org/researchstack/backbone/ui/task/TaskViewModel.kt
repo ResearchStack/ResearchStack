@@ -11,7 +11,7 @@ import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.task.Task
 import org.researchstack.backbone.ui.SingleLiveEvent
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK_RESULT
-import java.util.Date
+import java.util.*
 
 internal class TaskViewModel(context: Application, intent: Intent) : AndroidViewModel(context) {
 
@@ -32,7 +32,7 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     init {
         task = intent.getSerializableExtra(EXTRA_TASK) as Task
         taskResult = intent.extras?.get(EXTRA_TASK_RESULT) as TaskResult?
-            ?: TaskResult(task.identifier).apply { startDate = Date() }
+                ?: TaskResult(task.identifier).apply { startDate = Date() }
 
         task.validateParameters()
     }
@@ -84,7 +84,7 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
         val result: StepResult<Any> = taskResult.getStepResult(step.identifier) ?: StepResult(step)
 
         result.result = step.hiddenDefaultValue
-        taskResult.setStepResultForStepIdentifier(step.identifier, result)
+        taskResult.setStepResultForStep(step, result)
     }
 
     companion object {

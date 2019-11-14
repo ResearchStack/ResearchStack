@@ -119,4 +119,9 @@
         android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
         android:label="SurveyFragment" />
 
+    <fragment
+        android:id="@+id/rsb_review_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.ReviewStepFragment"
+        android:label="ReviewStepFragment" />
+
 </navigation>

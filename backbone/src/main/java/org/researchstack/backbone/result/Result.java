@@ -2,6 +2,7 @@ package org.researchstack.backbone.result;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * The Result class defines the attributes of a result from one step or a group of steps. When you
@@ -97,4 +98,23 @@ public class Result implements Serializable {
         this.endDate = endDate;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Result)) {
+            return false;
+        }
+        final Result result = (Result) o;
+        return saveable == result.saveable &&
+                Objects.equals(getIdentifier(), result.getIdentifier()) &&
+                Objects.equals(getStartDate(), result.getStartDate()) &&
+                Objects.equals(getEndDate(), result.getEndDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdentifier(), getStartDate(), getEndDate(), saveable);
+    }
 }

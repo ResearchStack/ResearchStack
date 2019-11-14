@@ -7,6 +7,7 @@ import org.researchstack.backbone.step.Step;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * The StepResult class represents a result produced by a {@link org.researchstack.backbone.ui.step.layout.StepLayout}
@@ -107,5 +108,26 @@ public class StepResult<T> extends Result {
      */
     public AnswerFormat getAnswerFormat() {
         return answerFormat;
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        if (!super.equals(other)) {
+            return false;
+        }
+        final StepResult<?> result = (StepResult<?>) other;
+        return Objects.equals(getResults(), result.getResults()) &&
+                Objects.equals(getAnswerFormat(), result.getAnswerFormat());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getResults(), getAnswerFormat());
     }
 }
