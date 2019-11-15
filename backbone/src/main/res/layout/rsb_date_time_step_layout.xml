@@ -39,7 +39,5 @@
         tools:text="August 12, 2019 11:08 AM" />
 
     <include
-        layout="@layout/rsb_review_step_edit_button_layout"
-        app:layout_constraintBottom_toBottomOf="@id/booleanStepQuestionAnswer"
-        app:layout_constraintTop_toTopOf="@id/booleanStepQuestionTitle" />
+        layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
