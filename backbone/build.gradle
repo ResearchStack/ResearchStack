@@ -36,6 +36,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "default"
+
+    productFlavors {
+        flask {
+            dimension "default"
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'true'
+        }
+        automatedFlask {
+            dimension "default"
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'false'
+        }
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
