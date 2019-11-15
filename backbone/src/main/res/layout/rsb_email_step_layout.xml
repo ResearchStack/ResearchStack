@@ -46,8 +46,5 @@
         app:layout_constraintTop_toBottomOf="@id/emailStepQuestionItself"
         tools:text="Answer" />
 
-    <include
-        layout="@layout/rsb_review_step_edit_button_layout"
-        app:layout_constraintBottom_toBottomOf="@id/emailStepQuestionAnswer"
-        app:layout_constraintTop_toTopOf="@id/emailStepQuestionTitle" />
+    <include layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
