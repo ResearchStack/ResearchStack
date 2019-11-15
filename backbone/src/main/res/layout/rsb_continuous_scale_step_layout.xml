@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/continuousScaleStepQuestionTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Continuous Scale Step Title" />
+
+    <TextView
+        android:id="@+id/continuousScaleStepQuestionItself"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/continuousScaleStepQuestionTitle"
+        tools:text="On a scale of 1-10, how bad is your thirst?" />
+
+    <TextView
+        android:id="@+id/continuousScaleStepQuestionAnswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#f7f8fa"
+        android:padding="5dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/continuousScaleStepQuestionItself"
+        tools:text="4.5" />
+
+    <include
+        layout="@layout/rsb_review_step_edit_button_layout"
+        app:layout_constraintBottom_toBottomOf="@id/booleanStepQuestionAnswer"
+        app:layout_constraintTop_toTopOf="@id/booleanStepQuestionTitle" />
+</androidx.constraintlayout.widget.ConstraintLayout>
