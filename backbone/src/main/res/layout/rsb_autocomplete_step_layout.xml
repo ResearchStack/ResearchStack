@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/autocompleteStepQuestionTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Autocomplete Step Title Really Long" />
+
+    <TextView
+        android:id="@+id/autocompleteStepQuestionItself"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textColor="#757575"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/autocompleteStepQuestionTitle"
+        tools:text="What is the first thing you drank this morning?" />
+
+    <TextView
+        android:id="@+id/autocompleteStepQuestionAnswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#f7f8fa"
+        android:textStyle="bold"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/autocompleteStepQuestionItself"
+        tools:text="Water" />
+
+    <include
+        layout="@layout/rsb_review_step_edit_button_layout" />
+</androidx.constraintlayout.widget.ConstraintLayout>
