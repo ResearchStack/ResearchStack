@@ -125,7 +125,7 @@ public class MultiChoiceQuestionBody<T> implements StepBody {
     public StepResult getStepResult(boolean skipped) {
         if (skipped) {
             currentSelected.clear();
-            result.setResult(new ArrayList<>(currentSelected));
+            result.setResult(null);
         } else {
             result.setResult(new ArrayList<>(currentSelected));
         }
