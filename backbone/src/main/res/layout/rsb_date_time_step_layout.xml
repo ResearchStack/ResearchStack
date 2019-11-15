@@ -7,36 +7,37 @@
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/booleanStepQuestionTitle"
+        android:id="@+id/dateTimeStepQuestionTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Here goes the Title" />
+        tools:text="Date/Time" />
 
     <TextView
-        android:id="@+id/booleanStepQuestionItself"
+        android:id="@+id/dateTimeStepQuestionItself"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/booleanStepQuestionTitle"
-        tools:text="Are you thirsty now?" />
+        app:layout_constraintTop_toBottomOf="@id/dateTimeStepQuestionTitle"
+        tools:text="When did you last drink a glass of water?" />
 
     <TextView
-        android:id="@+id/booleanStepQuestionAnswer"
+        android:id="@+id/dateTimeStepQuestionAnswer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        android:background="#f7f8fa"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/booleanStepQuestionItself"
-        tools:text="Yes" />
+        app:layout_constraintTop_toBottomOf="@id/dateTimeStepQuestionItself"
+        tools:text="August 12, 2019 11:08 AM" />
 
     <include
-        layout="@layout/rsb_review_step_edit_button_layout"
-        />
+        layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
