@@ -38,6 +38,5 @@
 
     <include
         layout="@layout/rsb_review_step_edit_button_layout"
-        app:layout_constraintBottom_toBottomOf="@id/booleanStepQuestionAnswer"
-        app:layout_constraintTop_toTopOf="@id/booleanStepQuestionTitle" />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
