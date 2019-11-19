@@ -134,6 +134,12 @@
         <item name="android:layout_height">100dp</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:scaleType">fitCenter</item>
+   </style>
+    <style name="rsb_image_capture_step_style">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:scaleType">fitCenter</item>
     </style>
 
 </resources>
