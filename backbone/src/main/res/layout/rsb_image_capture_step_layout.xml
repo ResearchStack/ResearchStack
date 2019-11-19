@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/imageCaptureStepQuestionTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Here goes the Title" />
+
+    <TextView
+        android:id="@+id/imageCaptureStepQuestionItself"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageCaptureStepQuestionTitle"
+        tools:text="Are you thirsty now?" />
+
+
+    <TextView
+        android:id="@+id/imageCaptureStepQuestionAnswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageCaptureImageStepQuestionAnswer"
+        tools:text="Yes" />
+
+
+    <ImageView
+        android:id="@+id/imageCaptureImageStepQuestionAnswer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageCaptureStepQuestionItself"
+        app:srcCompat="@drawable/rsb_ic_circle_8dp"
+        style="@style/rsb_image_capture_step_style" />
+
+    <include
+        layout="@layout/rsb_review_step_edit_button_layout"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

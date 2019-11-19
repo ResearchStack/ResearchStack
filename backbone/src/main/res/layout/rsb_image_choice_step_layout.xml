@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/imageChoiceStepQuestionTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Here goes the Title" />
+
+    <TextView
+        android:id="@+id/imageChoiceStepQuestionItself"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageChoiceStepQuestionTitle"
+        tools:text="Are you thirsty now?" />
+
+
+    <TextView
+        android:id="@+id/imageChoiceStepQuestionAnswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageChoiceImageStepQuestionAnswer"
+        tools:text="Yes" />
+
+
+    <ImageView
+        android:id="@+id/imageChoiceImageStepQuestionAnswer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageChoiceStepQuestionItself"
+        app:srcCompat="@drawable/rsb_ic_circle_8dp"
+        style="@style/rsb_image_choice_step_style" />
+
+    <include
+        layout="@layout/rsb_review_step_edit_button_layout"
+       />
+</androidx.constraintlayout.widget.ConstraintLayout>
