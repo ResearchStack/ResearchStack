@@ -32,6 +32,13 @@
         app:layout_constraintTop_toBottomOf="@id/formStepTitle"
         tools:text="SKIPPED" />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/formStepRecyclerViewBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="formStepTitle,formStepSkipped,reviewStepEditButton" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/formStepRecyclerView"
         android:layout_width="0dp"
@@ -41,7 +48,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/formStepTitle" />
+        app:layout_constraintTop_toTopOf="@id/formStepRecyclerViewBarrier" />
 
     <include layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
