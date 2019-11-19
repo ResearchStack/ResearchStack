@@ -58,6 +58,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     private int secondaryTextColor;
     private SubmitBar submitBar;
 
+    private boolean isSkipped = false;
+
     private MediatorLiveData<Boolean> mediator = new MediatorLiveData<>();
     private boolean allStepsAreOptional;
 
@@ -222,7 +224,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     @Override
     public Parcelable onSaveInstanceState() {
-        callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(false));
+        callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(isSkipped));
         return super.onSaveInstanceState();
     }
 
@@ -237,9 +239,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
                     Toast.LENGTH_SHORT).show();
             return false;
         } else {
+            isSkipped = false;
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                     getStep(),
-                    stepBody.getStepResult(false));
+                    stepBody.getStepResult(isSkipped));
             return true;
         }
     }
@@ -247,9 +250,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     public void onSkipClicked() {
         if (callbacks != null) {
             // empty step result when skipped
+            isSkipped = true;
             callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                     getStep(),
-                    stepBody.getStepResult(true));
+                    stepBody.getStepResult(isSkipped));
         }
     }
 
