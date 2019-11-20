@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Date/Time" />
@@ -21,7 +21,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dateTimeStepQuestionTitle"
         tools:text="When did you last drink a glass of water?" />
@@ -36,6 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dateTimeStepQuestionItself"
+        app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
         tools:text="August 12, 2019 11:08 AM" />
 
     <include

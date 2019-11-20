@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Here goes the Title" />
@@ -21,7 +21,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageChoiceStepQuestionTitle"
         tools:text="Are you thirsty now?" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonBarrier"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageChoiceImageStepQuestionAnswer"
         tools:text="Yes" />
@@ -43,6 +43,7 @@
         android:id="@+id/imageChoiceImageStepQuestionAnswer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageChoiceStepQuestionItself"
+        app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
         app:srcCompat="@drawable/rsb_ic_circle_8dp"
         style="@style/rsb_image_choice_step_style" />
 
