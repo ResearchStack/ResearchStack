@@ -19,7 +19,7 @@
         android:contentDescription="TODO"
         android:src="@drawable/rsb_ic_edit"
         android:tint="@android:color/darker_gray"
+        app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="wrap" />
+        app:layout_constraintTop_toTopOf="parent" />
 </merge>
