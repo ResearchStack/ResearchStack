@@ -35,7 +35,6 @@
         android:padding="5dp"
         android:textStyle="bold"
         android:inputType="number"
-        android:maxLength="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/integerScaleStepQuestion"
