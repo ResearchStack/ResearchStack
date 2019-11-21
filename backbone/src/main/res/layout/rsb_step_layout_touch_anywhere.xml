@@ -7,9 +7,18 @@
     
     <TextView
     android:id="@+id/rsb_active_step_layout_touch_anywhere_title"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/rsb_margin_left"
+        android:layout_marginEnd="@dimen/rsb_margin_right"
+        android:layout_marginTop="20dp"
+        android:text="@string/rsb_rsb_knee_range_of_motion_touch_anywhere_step_instruction"
+        android:textColor="?attr/colorAccent"
+        android:textSize="24dp"
+        />
     
 />
     
