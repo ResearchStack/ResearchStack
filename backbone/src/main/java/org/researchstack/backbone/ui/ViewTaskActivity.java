@@ -1,5 +1,15 @@
 package org.researchstack.backbone.ui;
 
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_TASK_RESULT;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_ACTION_FAILED_COLOR;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_COLOR_PRIMARY;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_COLOR_PRIMARY_DARK;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_COLOR_SECONDARY;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_PRINCIPAL_TEXT_COLOR;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_SECONDARY_TEXT_COLOR;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_TASK;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_STEP;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,6 +33,10 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
+import java.lang.reflect.Constructor;
+import java.util.Date;
+import java.util.List;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
@@ -41,10 +55,6 @@ import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
 import org.researchstack.backbone.utils.ViewUtils;
 
-import java.lang.reflect.Constructor;
-import java.util.Date;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -52,16 +62,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, PermissionMediator {
-    public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
-    public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
-    public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
-    public static final String EXTRA_COLOR_PRIMARY = "ViewTaskActivity.ExtraColorPrimary";
-    public static final String EXTRA_COLOR_PRIMARY_DARK = "ViewTaskActivity.ExtraColorPrimaryDark";
-    public static final String EXTRA_COLOR_SECONDARY = "ViewTaskActivity.ExtraColorSecondary";
-    public static final String EXTRA_PRINCIPAL_TEXT_COLOR = "ViewTaskActivity.ExtraPrincipalTextColor";
-    public static final String EXTRA_SECONDARY_TEXT_COLOR = "ViewTaskActivity.ExtraSecondaryTextColor";
-    public static final String EXTRA_ACTION_FAILED_COLOR = "ViewTaskActivity.ExtraActionFailedColor";
-
     private static final int STEP_PERMISSION_REQUEST = 44;
 
     private StepSwitcher root;

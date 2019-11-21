@@ -30,13 +30,6 @@ import org.researchstack.backbone.ui.permissions.PermissionMediator
 import org.researchstack.backbone.ui.permissions.PermissionResult
 import org.researchstack.backbone.ui.step.layout.StepLayout
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_ACTION_FAILED_COLOR
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_COLOR_PRIMARY
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_COLOR_PRIMARY_DARK
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_COLOR_SECONDARY
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_PRINCIPAL_TEXT_COLOR
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_SECONDARY_TEXT_COLOR
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_TASK
 import org.researchstack.backbone.utils.ViewUtils
 
 class TaskActivity : PinCodeActivity(), PermissionMediator {
@@ -100,7 +93,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
     override fun onDataReady() {
         super.onDataReady()
 
-        viewModel.nextStep()
+        viewModel.showCurrentStep()
     }
 
     override fun onDataFailed() {
@@ -222,6 +215,15 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
     companion object {
         const val EXTRA_TASK_RESULT = "TaskActivity.ExtraTaskResult"
+        const val EXTRA_TASK = "TaskActivity.ExtraTask"
+        const val EXTRA_STEP = "ViewTaskActivity.ExtraStep";
+        const val EXTRA_COLOR_PRIMARY = "TaskActivity.ExtraColorPrimary"
+        const val EXTRA_COLOR_PRIMARY_DARK = "TaskActivity.ExtraColorPrimaryDark"
+        const val EXTRA_COLOR_SECONDARY = "TaskActivity.ExtraColorSecondary"
+        const val EXTRA_PRINCIPAL_TEXT_COLOR = "TaskActivity.ExtraPrincipalTextColor"
+        const val EXTRA_SECONDARY_TEXT_COLOR = "TaskActivity.ExtraSecondaryTextColor"
+        const val EXTRA_ACTION_FAILED_COLOR = "TaskActivity.ExtraActionFailedColor"
+
         private const val STEP_PERMISSION_REQUEST = 44
 
         fun newIntent(context: Context, task: Task): Intent {
