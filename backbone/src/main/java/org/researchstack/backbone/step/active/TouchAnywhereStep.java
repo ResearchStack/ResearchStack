@@ -5,15 +5,15 @@ import org.researchstack.backbone.ui.step.layout.TouchAnywhereStepLayout;
 /**
  * Created by David Evans, Laurence Hurst, 2019.
  *
- * The `TouchAnywhereStep` class represents a step that enables the user to
- * begin the task by touching anywhere on the screen.
+ * The `TouchAnywhereStep` class represents a step that enables the user to see instructions
+ * and then begin the following step by touching anywhere on the screen.
  *
  */
 
 public class TouchAnywhereStep extends ActiveStep {
 
     /* Default constructor needed for serilization/deserialization of object */
-    TouchAnywhereStep() {
+    public TouchAnywhereStep() {
         super();
     }
 
@@ -29,12 +29,12 @@ public class TouchAnywhereStep extends ActiveStep {
 
     private void commonInit() {
         setOptional(false);
+        setShouldShowDefaultTimer(false);
         setShouldVibrateOnStart(true);
         setShouldPlaySoundOnStart(true);
         setShouldVibrateOnFinish(true);
         setShouldPlaySoundOnFinish(true);
         setShouldStartTimerAutomatically(true);
-        setShouldShowDefaultTimer(false);
         setShouldContinueOnFinish(true);
         setEstimateTimeInMsToSpeakEndInstruction(0); // do not wait to proceed
     }
