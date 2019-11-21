@@ -2,8 +2,8 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -15,9 +15,10 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 
 
 /**
- * Created by David Evans, Laurence Hurst, 2019.
+ * Created by David Evans, Simon Hartley, Laurence Hurst, 2019.
  *
- * The TouchAnywhereStepLayout displays instruction text and sets an 'onclicklistener' for the main layout
+ * The TouchAnywhereStepLayout displays instruction text and sets an 'onclicklistener' for the main
+ * layout to move to the next step with a single tap of the screen
  *
  * */
 
@@ -43,21 +44,46 @@ public class TouchAnywhereStepLayout extends ActiveStepLayout {
     }
 
     @Override
-    public void initialize(Step step, StepResult result) {
-        super.initialize(step, result);
-        setupTouchAnywhereViews();
+    public View getLayout()
+    {
+        return this;
     }
 
-    private void setupTouchAnywhereViews() { ;
-        
-        layout = (RelativeLayout)findViewById(R.id.rsb_active_step_layout_touch_anywhere);
+    @Override
+    public boolean isBackEventConsumed()
+    {
+        callbacks.onSaveStep(StepCallbacks.ACTION_PREV, activeStep, null);
+        return false;
+    }
+
+    @Override
+    public void initialize(Step step, StepResult result) {
+        super.initialize(step, result);
+
+        LayoutInflater.from(getContext())
+                .inflate(R.layout.rsb_step_layout_touch_anywhere, this, true);
+
+        setupOnClickListener();
+
+        // These relate to elements of the linear layout, which can be displayed or not
+        titleTextview.setVisibility(View.GONE);
+        textTextview.setVisibility(View.GONE);
+        timerTextview.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        progressBarHorizontal.setVisibility(View.GONE);
+        submitBar.setVisibility(View.GONE);
+    }
+
+    private void setupOnClickListener() {
+        layout = findViewById(R.id.rsb_active_step_layout_touch_anywhere);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, null);
+                // we can use skip() as we currently just need to move on to the next step
+                skip();
             }
         });
-        
+
     }
-    
+
 }
