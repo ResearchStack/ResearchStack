@@ -10,15 +10,22 @@ import org.researchstack.backbone.result.TaskResult
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.task.Task
 import org.researchstack.backbone.ui.SingleLiveEvent
+import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_ACTION_FAILED_COLOR
+import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_COLOR_PRIMARY
+import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_COLOR_PRIMARY_DARK
+import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_COLOR_SECONDARY
+import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_PRINCIPAL_TEXT_COLOR
+import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_SECONDARY_TEXT_COLOR
+import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK_RESULT
-import java.util.*
+import java.util.Date
 
 internal class TaskViewModel(context: Application, intent: Intent) : AndroidViewModel(context) {
 
     var taskResult: TaskResult
     var currentStep: Step? = null
 
-    val task: Task
+    val task: Task = intent.getSerializableExtra(EXTRA_TASK) as Task
     val colorPrimary = intent.getIntExtra(EXTRA_COLOR_PRIMARY, R.color.rsb_colorPrimary)
     val colorPrimaryDark = intent.getIntExtra(EXTRA_COLOR_PRIMARY_DARK, R.color.rsb_colorPrimaryDark)
     val colorSecondary = intent.getIntExtra(EXTRA_COLOR_SECONDARY, R.color.rsb_colorAccent)
@@ -30,11 +37,16 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     val currentStepEvent = MutableLiveData<StepNavigationEvent>()
 
     init {
-        task = intent.getSerializableExtra(EXTRA_TASK) as Task
         taskResult = intent.extras?.get(EXTRA_TASK_RESULT) as TaskResult?
                 ?: TaskResult(task.identifier).apply { startDate = Date() }
 
         task.validateParameters()
+    }
+
+    fun showCurrentStep() {
+        if (currentStep == null) {
+            nextStep()
+        }
     }
 
     fun nextStep() {
@@ -85,15 +97,5 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
 
         result.result = step.hiddenDefaultValue
         taskResult.setStepResultForStep(step, result)
-    }
-
-    companion object {
-        const val EXTRA_TASK = "TaskActivity.ExtraTask"
-        const val EXTRA_COLOR_PRIMARY = "TaskActivity.ExtraColorPrimary"
-        const val EXTRA_COLOR_PRIMARY_DARK = "TaskActivity.ExtraColorPrimaryDark"
-        const val EXTRA_COLOR_SECONDARY = "TaskActivity.ExtraColorSecondary"
-        const val EXTRA_PRINCIPAL_TEXT_COLOR = "TaskActivity.ExtraPrincipalTextColor"
-        const val EXTRA_SECONDARY_TEXT_COLOR = "TaskActivity.ExtraSecondaryTextColor"
-        const val EXTRA_ACTION_FAILED_COLOR = "TaskActivity.ExtraActionFailedColor"
     }
 }
