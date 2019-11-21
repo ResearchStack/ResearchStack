@@ -8,9 +8,10 @@
 
     <TextView
         android:id="@+id/dateTimeStepQuestionTitle"
+        style="@style/rsb_review_step_sub_step_title_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/dateTimeStepQuestionItself"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,9 +19,10 @@
 
     <TextView
         android:id="@+id/dateTimeStepQuestionItself"
+        style="@style/rsb_review_step_sub_step_question_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@id/dateTimeStepQuestionAnswer"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dateTimeStepQuestionTitle"
@@ -28,17 +30,14 @@
 
     <TextView
         android:id="@+id/dateTimeStepQuestionAnswer"
+        style="@style/rsb_review_step_sub_step_answer_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:background="#f7f8fa"
-        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateTimeStepQuestionItself"
         app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
         tools:text="August 12, 2019 11:08 AM" />
 
-    <include
-        layout="@layout/rsb_review_step_edit_button_layout" />
+    <include layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

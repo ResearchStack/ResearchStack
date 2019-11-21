@@ -8,11 +8,10 @@
 
     <TextView
         android:id="@+id/textStepQuestionTitle"
+        style="@style/rsb_review_step_sub_step_title_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/rsb_black"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/textStepQuestionItself"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,12 +19,10 @@
 
     <TextView
         android:id="@+id/textStepQuestionItself"
+        style="@style/rsb_review_step_sub_step_question_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/rsb_warm_gray"
-        android:textSize="16sp"
-        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@id/textStepQuestionAnswer"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textStepQuestionTitle"
@@ -33,17 +30,12 @@
 
     <TextView
         android:id="@+id/textStepQuestionAnswer"
+        style="@style/rsb_review_step_sub_step_answer_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/rsb_athens_gray"
-        android:padding="4dp"
-        android:textColor="@color/rsb_greyish_brown"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textStepQuestionItself"
         app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
         tools:text="Answer" />
 

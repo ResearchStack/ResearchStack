@@ -8,9 +8,10 @@
 
     <TextView
         android:id="@+id/imageCaptureStepQuestionTitle"
+        style="@style/rsb_review_step_sub_step_title_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/imageCaptureStepQuestionItself"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,24 +19,23 @@
 
     <TextView
         android:id="@+id/imageCaptureStepQuestionItself"
+        style="@style/rsb_review_step_sub_step_question_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@id/imageCaptureStepQuestionAnswer"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageCaptureStepQuestionTitle"
         tools:text="Are you thirsty now?" />
 
-
     <TextView
         android:id="@+id/imageCaptureStepQuestionAnswer"
+        style="@style/rsb_review_step_sub_step_answer_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageCaptureImageStepQuestionAnswer"
         app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
         tools:text="Yes" />
 
