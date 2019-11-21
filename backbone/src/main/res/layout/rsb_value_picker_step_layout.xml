@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/valuePickerStepQuestionTitle"
+        style="@style/rsb_review_step_sub_step_title_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,10 +18,9 @@
 
     <TextView
         android:id="@+id/valuePickerStepQuestion"
+        style="@style/rsb_review_step_sub_step_question_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="italic"
-        android:textColor="#757575"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/valuePickerStepQuestionTitle"
@@ -29,17 +28,14 @@
 
     <TextView
         android:id="@+id/valuePickerStepQuestionAnswer"
+        style="@style/rsb_review_step_sub_step_answer_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#f7f8fa"
-        android:textStyle="bold"
-        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/valuePickerStepQuestion"
         app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
         tools:text="Orange Juice" />
 
-    <include
-        layout="@layout/rsb_review_step_edit_button_layout" />
+    <include layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

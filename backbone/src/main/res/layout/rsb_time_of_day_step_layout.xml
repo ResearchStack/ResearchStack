@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/timeOfDayStepQuestionTitle"
+        style="@style/rsb_review_step_sub_step_title_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,9 +18,9 @@
 
     <TextView
         android:id="@+id/timeOfDayStepQuestionItself"
+        style="@style/rsb_review_step_sub_step_question_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timeOfDayStepQuestionTitle"
@@ -28,16 +28,14 @@
 
     <TextView
         android:id="@+id/timeOfDayStepQuestionAnswer"
+        style="@style/rsb_review_step_sub_step_answer_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timeOfDayStepQuestionItself"
         app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
         tools:text="Yes" />
 
-    <include
-        layout="@layout/rsb_review_step_edit_button_layout"
-        />
+    <include layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
