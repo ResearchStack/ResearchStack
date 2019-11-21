@@ -1,7 +1,9 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import java.io.File;
 import java.lang.Math;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,20 +12,24 @@ import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.MotionEvent;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.RangeOfMotionResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
-import org.researchstack.backbone.step.active.recorder.AudioRecorder;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.utils.FileUtils;
 import org.researchstack.backbone.utils.MathUtils;
 
 /**
@@ -36,10 +42,17 @@ import org.researchstack.backbone.utils.MathUtils;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
+    public static final String KEY_RANGE_OF_MOTION = "RangeOfMotionStep.Motion";
+    private StepResult<String> rangeOfMotionResult;
+    private String rangeOfMotionFilename;
+    private TextToSpeech tts;
+
     protected SensorEvent sensorEvent;
     protected RelativeLayout layout;
     protected RangeOfMotionStep rangeOfMotionStep;
     private BroadcastReceiver deviceMotionReceiver;
+
+    private boolean isRecordingComplete = false;
 
     public float[] startAttitude = new float[4];
     public float[] finishAttitude = new float[4];
@@ -57,28 +70,47 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         super(context, attrs, defStyleAttr);
     }
 
+    @TargetApi(21)
     public RangeOfMotionStepLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
-    public void initialize(Step step, StepResult result) {
-        super.initialize(step, result);
-        setupRangeOfMotionViews();
-
-        timerTextview.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
+    public View getLayout()
+    {
+        return this;
     }
 
-    private void setupRangeOfMotionViews() {
+    @Override
+    public void initialize(Step step, StepResult result) {
+        super.initialize(step, result);
 
-        layout = findViewById(R.id.rsb_active_step_layout_range_of_motion);
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, activeStep, null);
+        LayoutInflater.from(getContext())
+                .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
+
+        setupOnClickListener();
+
+        // These relate to elements of the linear layout, which can be displayed or not
+        titleTextview.setVisibility(View.GONE);
+        textTextview.setVisibility(View.GONE);
+        timerTextview.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        progressBarHorizontal.setVisibility(View.GONE);
+        submitBar.setVisibility(View.GONE);
+
+        if (rangeOfMotionStep.hasVoice()) {
+            tts = new TextToSpeech(getContext(), this); // not sure how to set this up - copied from super method
+        }
+
+        if (!checkForAndLoadExistingState()) {
+            if (rangeOfMotionStep.getShouldStartTimerAutomatically()) {
+
+                start();
+
+                //final DeviceMotionRecorder deviceMotionRecorder = new DeviceMotionRecorder();
+                //deviceMotionRecorder.startRecording(rangeOfMotionFilename);
             }
-        });
+        }
     }
 
     @Override
@@ -89,6 +121,60 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         rangeOfMotionStep = (RangeOfMotionStep) step;
         super.validateStep(step);
     }
+
+    private void setupOnClickListener() {
+
+        layout = findViewById(R.id.rsb_active_step_layout_range_of_motion);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFinish();
+            }
+        });
+    }
+
+
+    public void onFinish() {
+
+        isRecordingComplete = true;
+
+        RangeOfMotionStepLayout.this.setDataToResult();
+
+        //DeviceMotionRecorder.stopRecording(); // TODO: do we need to implement this?
+
+        unregisterRecorderBroadcastReceivers();
+
+        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, rangeOfMotionStep, rangeOfMotionResult);
+    }
+
+
+    private void setDataToResult() {
+        rangeOfMotionResult.setResultForIdentifier(KEY_RANGE_OF_MOTION, getBase64EncodedAudio()); // TODO: change this to device motion
+    }
+
+
+    private String getBase64EncodedAudio() // TODO: need to implement equivalent for ROM task
+    {
+        if(isRecordingComplete)
+        {
+            File file = new File(rangeOfMotionFilename);
+
+            try {
+                byte[] bytes = FileUtils.readAll(file);
+
+                String encoded = Base64.encodeToString(bytes, Base64.DEFAULT); // TODO: change this to device motion
+                return encoded;
+
+            } catch (Exception e) {
+                return null;
+            }
+        }
+        else
+        {
+            return null;
+        }
+    }
+
 
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
@@ -116,7 +202,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 }
             }
         };
-        IntentFilter intentFilter = new IntentFilter(AudioRecorder.BROADCAST_SAMPLE_ACTION);
+
+        IntentFilter intentFilter = new IntentFilter(DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION);
         LocalBroadcastManager.getInstance(appContext)
                 .registerReceiver(deviceMotionReceiver, intentFilter);
     }
@@ -162,7 +249,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Methods to calculate minimum and maximum range-shifted Euler angles from the entire device
+     * Method to calculate minimum range-shifted Euler angles from the entire device
      * recording session
      **/
 
@@ -173,6 +260,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         return MathUtils.getMinimum(adjusted_angle);
     }
 
+    /**
+     * Method to calculate maximum range-shifted Euler angles from the entire device
+     * recording session
+     **/
 
     public double getShiftedMaximumAngle() {
 
@@ -294,7 +385,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Methods to obtain and hold the quaternion representing the final (finish) position of the
-     * device attitude when recording ends with the downward action during a tap of the screen
+     * device attitude when recording ends with the downward action of a tap on the screen
      **/
 
     @Override
