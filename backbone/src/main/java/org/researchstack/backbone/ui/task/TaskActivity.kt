@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
@@ -16,7 +17,12 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.Navigation
+import androidx.navigation.get
 import androidx.navigation.ui.NavigationUI
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
@@ -50,7 +56,19 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         observe(viewModel.currentStepEvent) { showStep(it) }
         observe(viewModel.taskCompleted) { close(it) }
 
+        observe(viewModel.editStep) {
+            navController.navigate(it.destinationId)
+        }
+
         NavigationUI.setupActionBarWithNavController(this, navController)
+
+        navController.addOnDestinationChangedListener(object: NavController.OnDestinationChangedListener {
+            override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+                Log.d("TaskActivity", "current fragment ${destination.label}")
+            }
+
+        }
+        )
     }
 
     override fun onPause() {
@@ -161,10 +179,13 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
     }
 
     private fun showStep(navigationEvent: StepNavigationEvent) {
+
         if (navigationEvent.isMovingForward) {
+            //val navOptions = NavOptionsBuilder().apply { launchSingleTop = true }.build()
+
             navController.navigate(navigationEvent.step.destinationId)
         } else {
-            navController.popBackStack()
+            navController.popBackStack(navigationEvent.step.destinationId, false)
         }
 
         supportActionBar?.title = viewModel.task.getTitleForStep(this, navigationEvent.step)
@@ -182,7 +203,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         if (completed) {
             val result = Intent().apply {
-                putExtra(EXTRA_TASK_RESULT, viewModel.taskResult)
+                putExtra(EXTRA_TASK_RESULT, viewModel.currentTaskResult)
             }
 
             setResult(Activity.RESULT_OK, result)

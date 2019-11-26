@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui.task
 
 import android.app.Application
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import org.researchstack.backbone.R
@@ -19,11 +20,17 @@ import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_SECONDARY
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK_RESULT
 import java.util.Date
+import java.util.Stack
 
 internal class TaskViewModel(context: Application, intent: Intent) : AndroidViewModel(context) {
 
-    var taskResult: TaskResult
+    var editing = false
     var currentStep: Step? = null
+
+    val currentTaskResult: TaskResult
+        get() {
+            return clonedTaskResult ?: taskResult
+        }
 
     val task: Task = intent.getSerializableExtra(EXTRA_TASK) as Task
     val colorPrimary = intent.getIntExtra(EXTRA_COLOR_PRIMARY, R.color.rsb_colorPrimary)
@@ -35,6 +42,11 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
 
     val taskCompleted = SingleLiveEvent<Boolean>()
     val currentStepEvent = MutableLiveData<StepNavigationEvent>()
+
+    private var taskResult: TaskResult
+    private var clonedTaskResult: TaskResult? = null
+    private var hasBranching = false
+    private val stack = Stack<Step>()
 
     init {
         taskResult = intent.extras?.get(EXTRA_TASK_RESULT) as TaskResult?
@@ -50,38 +62,114 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     }
 
     fun nextStep() {
-        val nextStep = task.getStepAfterStep(currentStep, taskResult)
 
-        if (nextStep == null) {
-            close(true)
-        } else {
-            currentStep = nextStep
+        if (editing) {
+            if (clonedTaskResult == null) {
+                clonedTaskResult = TaskResult(taskResult.identifier)
 
-            if (nextStep.isHidden) {
-                // We will do the save for this step and then go to the nextStep step
-                setHiddenStepResult(nextStep)
-                nextStep()
+                var step = task.getStepAfterStep(null, clonedTaskResult)
+
+                while(step != null) {
+                    val result = taskResult.getStepAndResult(step.identifier).second
+
+                    if (result != null) {
+                        clonedTaskResult?.setStepResultForStep(step, result)
+                    }
+
+                    step = task.getStepAfterStep(step, clonedTaskResult)
+                }
+            }
+
+            var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
+
+            // Current step with branches?
+            hasBranching = clonedTaskResult?.getStepResult(nextStep.identifier) == null
+
+            if (hasBranching) {
+                Log.d(TAG, "Starting a new branch, show warning!")
             } else {
-                currentStepEvent.value = StepNavigationEvent(nextStep)
+                Log.d(TAG, "Same branch")
+            }
+
+            if (hasBranching) {
+                currentStep = nextStep
+
+            } else {
+                nextStep = getReviewStep()
+                currentStep = nextStep
+            }
+
+            if (isReviewStep(nextStep)) {
+                taskResult = clonedTaskResult!!
+                clonedTaskResult = null
+                editing = false
+
+                stack.clear()
+            } else {
+                stack.push(currentStep)
+            }
+
+            currentStepEvent.value = StepNavigationEvent(nextStep)
+
+        } else {
+            val nextStep = task.getStepAfterStep(currentStep, taskResult)
+
+            if (nextStep == null) {
+                close(true)
+            } else {
+                currentStep = nextStep
+
+                if (nextStep.isHidden) {
+                    // We will do the save for this step and then go to the nextStep step
+                    setHiddenStepResult(nextStep)
+                    nextStep()
+                } else {
+                    currentStepEvent.value = StepNavigationEvent(nextStep)
+                }
             }
         }
+
+
     }
 
     fun previousStep() {
-        val previousStep = task.getStepBeforeStep(currentStep, taskResult)
+        Log.d(TAG, "1. CURRENT STEP: $currentStep")
 
-        if (previousStep == null) {
-            close()
+        if (editing) {
+            currentStep = stack.pop()
+            currentStepEvent.value = StepNavigationEvent(currentStep!!, false)
+
+            editing = stack.isEmpty().not()
+
         } else {
-            currentStep = previousStep
+            val previousStep = task.getStepBeforeStep(currentStep, taskResult)
 
-            if (previousStep.isHidden) {
-                // The previous step was a hidden one so we go previousStep again
-                previousStep()
+            if (previousStep == null) {
+                close()
             } else {
-                currentStepEvent.value = StepNavigationEvent(previousStep, false)
+                currentStep = previousStep
+
+                if (previousStep.isHidden) {
+                    // The previous step was a hidden one so we go previousStep again
+                    previousStep()
+                } else {
+                    currentStepEvent.value = StepNavigationEvent(previousStep, false)
+                }
             }
         }
+        Log.d(TAG, "2. CURRENT STEP: $currentStep")
+
+    }
+
+    val editStep = MutableLiveData<Step>()
+
+    fun edit(step: Step) {
+        stack.push(currentStep)
+
+        currentStep = step
+        editing = true
+
+        editStep.postValue(step)
     }
 
     private fun close(completed: Boolean = false) {
@@ -97,5 +185,23 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
 
         result.result = step.hiddenDefaultValue
         taskResult.setStepResultForStep(step, result)
+    }
+
+    private fun getReviewStep(): Step {
+        var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
+        var isReviewStep = isReviewStep(nextStep)
+
+        while(!isReviewStep) {
+            nextStep = task.getStepAfterStep(nextStep, currentTaskResult)
+            isReviewStep = isReviewStep(nextStep)
+        }
+
+        return nextStep
+    }
+
+    private fun isReviewStep(step: Step) = step::class.java.simpleName.contains("RSReviewStep", true)
+
+    companion object {
+        const val TAG = "TaskViewModel"
     }
 }
