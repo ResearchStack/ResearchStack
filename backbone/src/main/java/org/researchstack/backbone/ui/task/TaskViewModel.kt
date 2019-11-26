@@ -92,6 +92,8 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
             }
 
             if (hasBranching) {
+                //TODO:
+                stack.push(currentStep)
                 currentStep = nextStep
 
             } else {
@@ -106,7 +108,8 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
 
                 stack.clear()
             } else {
-                stack.push(currentStep)
+                //TODO: remove
+//                stack.push(currentStep)
             }
 
             currentStepEvent.value = StepNavigationEvent(nextStep)
