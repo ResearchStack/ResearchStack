@@ -30,8 +30,6 @@ import java.util.Set;
  */
 public class OrderedTask extends Task implements Serializable {
 
-    protected List<Step> steps;
-
     /**
      * Returns an initialized ordered task using the specified identifier and array of steps.
      *

@@ -8,6 +8,7 @@ import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LocaleUtils;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * A task to be carried out by a participant in a research study.
@@ -28,6 +29,7 @@ import java.io.Serializable;
  */
 public abstract class Task implements Serializable {
     private String identifier;
+    public List<Step> steps;
 
     /**
      * Class constructor specifying a unique identifier.

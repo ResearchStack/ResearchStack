@@ -3,6 +3,7 @@ package org.researchstack.backbone.step;
 import org.researchstack.backbone.task.Task;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Step is the base class for the steps that can compose a task for presentation in an {@link
@@ -336,5 +337,18 @@ public class Step implements Serializable {
      */
     public String getHiddenDefaultValue() {
         return hiddenDefaultValue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Step step = (Step) o;
+        return Objects.equals(identifier, step.identifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identifier);
     }
 }

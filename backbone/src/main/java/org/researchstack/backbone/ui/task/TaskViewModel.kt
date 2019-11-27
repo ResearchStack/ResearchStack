@@ -63,24 +63,24 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
 
     fun nextStep() {
 
-        if (editing) {
-            if (clonedTaskResult == null) {
-                clonedTaskResult = TaskResult(taskResult.identifier)
+        if (clonedTaskResult == null) {
+            clonedTaskResult = TaskResult(taskResult.identifier)
 
-                var step = task.getStepAfterStep(null, clonedTaskResult)
+            var step = task.getStepAfterStep(null, clonedTaskResult)
 
-                while(step != null) {
-                    val result = taskResult.getStepAndResult(step.identifier).second
+            while(step != null && !isReviewStep(step)) {
+                val result = taskResult.getStepAndResult(step.identifier).second
 
-                    if (result != null) {
-                        clonedTaskResult?.setStepResultForStep(step, result)
-                    }
-
-                    step = task.getStepAfterStep(step, clonedTaskResult)
+                if (result != null) {
+                    clonedTaskResult?.setStepResultForStep(step, result)
                 }
-            }
 
-            var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
+                step = task.getStepAfterStep(step, clonedTaskResult)
+            }
+        }
+        var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
+
+        if (editing) {
 
             // Current step with branches?
             hasBranching = clonedTaskResult?.getStepResult(nextStep.identifier) == null
@@ -115,8 +115,6 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
             currentStepEvent.value = StepNavigationEvent(nextStep)
 
         } else {
-            val nextStep = task.getStepAfterStep(currentStep, taskResult)
-
             if (nextStep == null) {
                 close(true)
             } else {
@@ -127,6 +125,10 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
                     setHiddenStepResult(nextStep)
                     nextStep()
                 } else {
+                    if (isReviewStep(nextStep)) {
+                        taskResult = clonedTaskResult!!
+                        clonedTaskResult = null
+                    }
                     currentStepEvent.value = StepNavigationEvent(nextStep)
                 }
             }

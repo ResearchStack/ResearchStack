@@ -17,6 +17,7 @@ internal class ReviewStepFragment : BaseStepFragment(R.layout.rsb_fragment_revie
         with(view as ReviewStepLayout) {
             // Wire the Layout dependencies.
             this.clickHandler = this@ReviewStepFragment
+            this.taskSteps = viewModel.task.steps
             this.taskResult = viewModel.currentTaskResult
         }
     }
@@ -38,6 +39,7 @@ internal class ReviewStepFragment : BaseStepFragment(R.layout.rsb_fragment_revie
 interface ReviewStepLayout : StepLayout {
     var clickHandler: ReviewStepRowClickHandler?
     var taskResult: TaskResult?
+    var taskSteps: List<Step>?
 }
 
 /**
