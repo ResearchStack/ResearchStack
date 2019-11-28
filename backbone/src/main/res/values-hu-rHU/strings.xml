@@ -55,7 +55,7 @@
     <string name="rsb_consent_review_cancel">Mégse</string>
 
     <string name="rsb_saving_consent">Hozzájárulás mentése</string>
-    <string name="rsb_please_wait">Kérjük, várjon...</string>
+    <string name="rsb_please_wait">Kérjük, várjon&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Hozzájárulás</string>

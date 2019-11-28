@@ -46,7 +46,7 @@
     <string name="rsb_consent_review_cancel">Отмена</string>
 
     <string name="rsb_saving_consent">Сохранение согласия</string>
-    <string name="rsb_please_wait">Подождите...</string>
+    <string name="rsb_please_wait">Подождите&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Согласие</string>
