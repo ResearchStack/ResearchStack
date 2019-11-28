@@ -134,7 +134,6 @@
     <string name="rsb_consent_doc_line_signature">%1$s\'s Signature</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
-    <string name="rsb_consent_doc_line_date_format">DD-mm-yyyy</string>
 
 
 </resources>

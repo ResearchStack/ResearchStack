@@ -133,6 +133,5 @@
     <string name="rsb_consent_doc_line_signature">%1$s\'s İmzası</string>
     <string name="rsb_consent_doc_line_date">Tarih</string>
     <string name="rsb_consent_role">Katılımcı</string>
-    <string name="rsb_consent_doc_line_date_format">gg-aa-yyyy</string>
 
 </resources>
