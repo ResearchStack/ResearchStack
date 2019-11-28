@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Consent Section -->
     <string name="rsb_consent">Согласие</string>
@@ -129,7 +128,7 @@
 
     <!-- Graphing -->
     <string name="rsb_chart_progress_center">%1$s из %2$s</string>
-    <string name="rsb_chart_pie_value">%1$s%</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
 
     <!-- AssetVideoView -->
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->

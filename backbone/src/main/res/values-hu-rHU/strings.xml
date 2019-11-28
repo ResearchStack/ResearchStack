@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-
+<resources>
     <!-- Consent Section -->
     <string name="rsb_consent">Hozzájárulás</string>
     <string name="rsb_consent_section_welcome">Üdvözüljük</string>
