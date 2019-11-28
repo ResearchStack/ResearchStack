@@ -134,6 +134,5 @@
     <string name="rsb_consent_doc_line_signature">Handtekening van %1$s\'s</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Deelnemer</string>
-    <string name="rsb_consent_doc_line_date_format">MM-dd-jjjj</string>
 
 </resources>

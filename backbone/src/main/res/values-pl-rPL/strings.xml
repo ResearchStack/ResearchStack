@@ -155,6 +155,5 @@
     <string name="rsb_consent_doc_line_signature">Podpis %1$s\' </string>
     <string name="rsb_consent_doc_line_date">Data</string>
     <string name="rsb_consent_role">Uczestnik</string>
-    <string name="rsb_consent_doc_line_date_format">MM-dd-rrrr</string>
 
 </resources>

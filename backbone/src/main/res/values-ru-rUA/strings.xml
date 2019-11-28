@@ -134,6 +134,5 @@
     <string name="rsb_consent_doc_line_signature">%1$s\'s Подпись</string>
     <string name="rsb_consent_doc_line_date">Дата</string>
     <string name="rsb_consent_role">Участник</string>
-    <string name="rsb_consent_doc_line_date_format">дд.мм.гггг</string>
 
 </resources>

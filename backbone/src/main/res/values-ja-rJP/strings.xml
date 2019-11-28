@@ -145,5 +145,4 @@
     <string name="rsb_consent_doc_line_signature">%1$sの署名</string>
     <string name="rsb_consent_doc_line_date">日付</string>
     <string name="rsb_consent_role">参加者</string>
-    <string name="rsb_consent_doc_line_date_format">「月-日-年」</string>
 </resources>
