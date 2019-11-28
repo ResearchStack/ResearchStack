@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Debug -->
-
+<resources>
     <!-- Consent Section -->
     <string name="rsb_consent">Consentimiento</string>
     <string name="rsb_consent_section_welcome">Bienvenido/a</string>
