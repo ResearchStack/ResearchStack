@@ -7,17 +7,18 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import androidx.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import androidx.preference.PreferenceManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -211,6 +212,14 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
     private fun <T> observe(liveData: LiveData<T?>, lambda: (T) -> Unit) {
         liveData.observe(this, Observer { if (it != null) lambda(it) })
+    }
+
+    fun getCurrentFragment(): Fragment? {
+        val navHostFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.nav_host_fragment);
+        val fragments = navHostFragment?.childFragmentManager?.fragments
+        return if (fragments != null && fragments.size > 0) {
+            fragments[fragments.size - 1]
+        } else null
     }
 
     companion object {
