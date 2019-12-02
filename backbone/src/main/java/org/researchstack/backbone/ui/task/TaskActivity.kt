@@ -150,8 +150,8 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         } else if (requestCode == STEP_PERMISSION_LISTENER_REQUEST) {
             val result = PermissionResult(permissions, grantResults)
             stepPermissionListener?.onPermissionGranted(result)
+            stepPermissionListener = null
         }
-        stepPermissionListener = null
     }
 
     override fun checkIfShouldShowRequestPermissionRationale(permission: String): Boolean {

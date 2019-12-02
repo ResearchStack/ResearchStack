@@ -219,8 +219,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         } else if (requestCode == STEP_PERMISSION_LISTENER_REQUEST) {
             PermissionResult result = new PermissionResult(permissions, grantResults);
             stepPermissionListener.onPermissionGranted(result);
+            stepPermissionListener = null;
         }
-        stepPermissionListener = null;
     }
 
     /**
