@@ -38,6 +38,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
     private val viewModel: TaskViewModel by viewModel { parametersOf(intent) }
     private val navController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
     private var currentStepLayout: StepLayout? = null
+    private var stepPermissionListener: PermissionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +105,12 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         finish()
     }
 
+    override fun requestPermissions(permissionListener: PermissionListener, vararg permissions:
+    String?) {
+        stepPermissionListener = permissionListener
+        requestPermissions(permissions, STEP_PERMISSION_LISTENER_REQUEST)
+    }
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun requestPermissions(vararg permissions: String?) {
         requestPermissions(permissions, STEP_PERMISSION_REQUEST)
@@ -140,7 +147,11 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
             if (stepBody is PermissionListener) {
                 (stepBody as PermissionListener).onPermissionGranted(result)
             }
+        } else if (requestCode == STEP_PERMISSION_LISTENER_REQUEST) {
+            val result = PermissionResult(permissions, grantResults)
+            stepPermissionListener?.onPermissionGranted(result)
         }
+        stepPermissionListener = null
     }
 
     override fun checkIfShouldShowRequestPermissionRationale(permission: String): Boolean {
@@ -234,6 +245,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         const val EXTRA_ACTION_FAILED_COLOR = "TaskActivity.ExtraActionFailedColor"
 
         private const val STEP_PERMISSION_REQUEST = 44
+        private const val STEP_PERMISSION_LISTENER_REQUEST = 45
 
         fun newIntent(context: Context, task: Task): Intent {
             return Intent(context, TaskActivity::class.java).apply {
