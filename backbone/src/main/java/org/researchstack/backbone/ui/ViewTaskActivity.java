@@ -63,6 +63,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, PermissionMediator {
     private static final int STEP_PERMISSION_REQUEST = 44;
+    private static final int STEP_PERMISSION_LISTENER_REQUEST = 45;
 
     private StepSwitcher root;
 
@@ -80,6 +81,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     private ActionBar actionBar;
 
     private int stepCount = 0;
+    private PermissionListener stepPermissionListener;
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
@@ -148,6 +150,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         task.onViewChange(Task.ViewChangeType.ActivityCreate, this, currentStep);
     }
 
+    @Override
+    public void requestPermissions(PermissionListener permissionListener, String... permissions) {
+        stepPermissionListener = permissionListener;
+        requestPermissions(permissions, STEP_PERMISSION_LISTENER_REQUEST);
+        requestPermissions(permissions);
+    }
+
     @RequiresApi(Build.VERSION_CODES.M)
     @Override
     public void requestPermissions(String... permissions) {
@@ -207,6 +216,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
             if (stepBody instanceof PermissionListener) {
                 ((PermissionListener) stepBody).onPermissionGranted(result);
             }
+        } else if (requestCode == STEP_PERMISSION_LISTENER_REQUEST) {
+            PermissionResult result = new PermissionResult(permissions, grantResults);
+            stepPermissionListener.onPermissionGranted(result);
+            stepPermissionListener = null;
         }
     }
 
