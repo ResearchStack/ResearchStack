@@ -2,6 +2,7 @@ package org.researchstack.backbone.ui.task
 
 import android.app.Application
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import org.researchstack.backbone.R
@@ -19,11 +20,20 @@ import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_SECONDARY
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK_RESULT
 import java.util.Date
+import java.util.Stack
 
 internal class TaskViewModel(context: Application, intent: Intent) : AndroidViewModel(context) {
 
-    var taskResult: TaskResult
+    var editing = false
     var currentStep: Step? = null
+
+
+    var firstStep: Step
+
+    val currentTaskResult: TaskResult
+        get() {
+            return clonedTaskResult ?: taskResult
+        }
 
     val task: Task = intent.getSerializableExtra(EXTRA_TASK) as Task
     val colorPrimary = intent.getIntExtra(EXTRA_COLOR_PRIMARY, R.color.rsb_colorPrimary)
@@ -35,12 +45,20 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
 
     val taskCompleted = SingleLiveEvent<Boolean>()
     val currentStepEvent = MutableLiveData<StepNavigationEvent>()
+    val moveReviewStep = MutableLiveData<StepNavigationEvent>()
+
+
+    private var taskResult: TaskResult
+    private var clonedTaskResult: TaskResult? = null
+    private var hasBranching = false
+    private val stack = Stack<Step>()
 
     init {
         taskResult = intent.extras?.get(EXTRA_TASK_RESULT) as TaskResult?
                 ?: TaskResult(task.identifier).apply { startDate = Date() }
 
         task.validateParameters()
+        firstStep = task.getStepAfterStep(null, taskResult)
     }
 
     fun showCurrentStep() {
@@ -50,38 +68,122 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     }
 
     fun nextStep() {
-        val nextStep = task.getStepAfterStep(currentStep, taskResult)
+        if (editing) {
+            if (clonedTaskResult == null) {
+                clonedTaskResult = TaskResult(taskResult.identifier)
 
-        if (nextStep == null) {
-            close(true)
-        } else {
-            currentStep = nextStep
+                var step = task.getStepAfterStep(null, clonedTaskResult)
 
-            if (nextStep.isHidden) {
-                // We will do the save for this step and then go to the nextStep step
-                setHiddenStepResult(nextStep)
-                nextStep()
+                while (step != null) {
+                    val result = taskResult.getStepAndResult(step.identifier).second
+
+                    if (result != null) {
+                        clonedTaskResult?.setStepResultForStep(step, result)
+                    }
+
+                    step = task.getStepAfterStep(step, clonedTaskResult)
+                }
+            }
+
+
+            var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
+
+            // Current step with branches?
+            hasBranching = clonedTaskResult?.getStepResult(nextStep.identifier) == null
+
+            if (hasBranching) {
+                Log.d(TAG, "Starting a new branch, show warning!")
             } else {
-                currentStepEvent.value = StepNavigationEvent(nextStep)
+                Log.d(TAG, "Same branch")
+            }
+
+            if (hasBranching) {
+                //TODO:
+                stack.push(currentStep)
+                currentStep = nextStep
+
+            } else {
+                nextStep = getReviewStep()
+                currentStep = nextStep
+            }
+
+
+            if (isReviewStep(nextStep)) {
+                clonedTaskResult?.let {
+                    taskResult = updateTaskResultsFrom(it)
+                }
+                clonedTaskResult = null
+                clonedTaskResult = null
+                editing = false
+                stack.clear()
+                moveReviewStep.postValue(StepNavigationEvent(step = nextStep))
+                //   firstStep = null
+            } else {
+                //TODO: remove
+                //   stack.push(currentStep)
+                currentStepEvent.value = StepNavigationEvent(step = nextStep)
+            }
+
+
+        } else {
+            val nextStep = task.getStepAfterStep(currentStep, taskResult)
+
+            if (nextStep == null) {
+                close(true)
+            } else {
+                currentStep = nextStep
+
+                if (nextStep.isHidden) {
+                    // We will do the save for this step and then go to the nextStep step
+                    setHiddenStepResult(nextStep)
+                    nextStep()
+                } else {
+                    currentStepEvent.value = StepNavigationEvent(step = nextStep)
+                }
             }
         }
+
+
     }
 
     fun previousStep() {
-        val previousStep = task.getStepBeforeStep(currentStep, taskResult)
+        Log.d(TAG, "1. CURRENT STEP: $currentStep")
+        if (editing) {
+            currentStep = stack.pop()
+            currentStepEvent.value = StepNavigationEvent(step = currentStep!!, isMovingForward = false)
 
-        if (previousStep == null) {
-            close()
+            editing = stack.isEmpty().not()
+
         } else {
-            currentStep = previousStep
-
-            if (previousStep.isHidden) {
-                // The previous step was a hidden one so we go previousStep again
-                previousStep()
+            val previousStep = task.getStepBeforeStep(currentStep, taskResult)
+            if (previousStep == null) {
+                close()
             } else {
-                currentStepEvent.value = StepNavigationEvent(previousStep, false)
+
+                if (previousStep.isHidden) {
+                    // The previous step was a hidden one so we go previousStep again
+                    previousStep()
+                } else {
+                    currentStepEvent.value = StepNavigationEvent(popUpToStep = currentStep, step = previousStep, isMovingForward = false)
+                }
+
+                currentStep = previousStep
+
             }
         }
+        Log.d(TAG, "2. CURRENT STEP: $currentStep")
+
+    }
+
+    val editStep = MutableLiveData<Step>()
+
+    fun edit(step: Step) {
+        stack.empty()
+        stack.push(currentStep)
+        currentStep = step
+        editing = true
+        editStep.postValue(step)
+
     }
 
     private fun close(completed: Boolean = false) {
@@ -98,4 +200,42 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
         result.result = step.hiddenDefaultValue
         taskResult.setStepResultForStep(step, result)
     }
+
+    private fun getReviewStep(): Step {
+        var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
+        var isReviewStep = isReviewStep(nextStep)
+
+        while (!isReviewStep) {
+            nextStep = task.getStepAfterStep(nextStep, currentTaskResult)
+            isReviewStep = isReviewStep(nextStep)
+        }
+
+        return nextStep
+    }
+
+    private fun isReviewStep(step: Step) = step::class.java.simpleName.contains("RSReviewStep", true)
+
+    companion object {
+        const val TAG = "TaskViewModel"
+    }
+
+
+
+    private fun updateTaskResultsFrom(clonedResults: TaskResult): TaskResult {
+        val stepIds: MutableList<String> = mutableListOf()
+        val results = TaskResult(clonedResults.identifier)
+
+        task.steps.forEach {
+            val result = clonedResults.getStepAndResult(it.identifier).second
+            if (result != null) {
+                results.setStepResultForStep(it, result)
+                stepIds.add(it.identifier)
+            }
+        }
+
+        task.resetCompletedTask(stepIds)
+        return results
+    }
+
+
 }

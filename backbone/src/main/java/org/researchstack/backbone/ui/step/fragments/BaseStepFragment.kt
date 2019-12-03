@@ -21,42 +21,45 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
 
     protected val viewModel: TaskViewModel by sharedViewModel()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
         val currentStep = viewModel.currentStep
-        val stepResult = viewModel.taskResult.getStepResult(currentStep?.identifier)
+        val stepResult = viewModel.currentTaskResult.getStepResult(currentStep?.identifier)
 
         currentStep?.setStepTheme(viewModel.colorPrimary, viewModel.colorPrimaryDark, viewModel.colorSecondary,
-                viewModel.principalTextColor, viewModel.secondaryTextColor, viewModel.actionFailedColor)
+            viewModel.principalTextColor, viewModel.secondaryTextColor, viewModel.actionFailedColor)
 
         if (currentStep is FormStep) {
             currentStep.getFormSteps()?.let { questions ->
                 questions.forEach {
                     with(viewModel) {
                         it.setStepTheme(colorPrimary, colorPrimaryDark, colorSecondary, principalTextColor,
-                                secondaryTextColor, actionFailedColor)
+                            secondaryTextColor, actionFailedColor)
                     }
                 }
             }
 
         }
 
-        when (val stepView = view.findViewById<View>(R.id.stepView)) {
+        when (val stepView = view?.findViewById<View>(R.id.stepView)) {
             is SurveyStepLayout -> {
                 stepView.initialize(currentStep, stepResult,
-                        viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
-                        viewModel.secondaryTextColor)
+                    viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
+                    viewModel.secondaryTextColor)
                 stepView.isStepEmpty.observe(this, Observer { })
                 stepView.setCallbacks(this)
+
+                if (viewModel.editing)
+                    stepView.setPositiveText("Save")
             }
             is StepLayout -> {
                 stepView.initialize(currentStep, stepResult)
                 stepView.setCallbacks(this)
             }
             is ConsentVisualStepLayout -> stepView.initialize(currentStep, stepResult,
-                    viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
-                    viewModel.secondaryTextColor)
+                viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
+                viewModel.secondaryTextColor)
             else -> {
                 Log.d("BaseStepFragment", "WARNING: Unknown stepView type, cannot initialize layout")
             }
@@ -64,7 +67,7 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
     }
 
     override fun onSaveStep(action: Int, step: Step, result: StepResult<*>?) {
-        viewModel.taskResult.setStepResultForStep(step, result)
+        viewModel.currentTaskResult.setStepResultForStep(step, result)
 
         when (action) {
             StepCallbacks.ACTION_NEXT -> viewModel.nextStep()

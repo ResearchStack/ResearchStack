@@ -138,6 +138,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         initStepBody();
     }
 
+    public void setPositiveText(String text) {
+        submitBar.setPositiveTitle(text);
+    }
+
     public void initStepLayout() {
         LogExt.i(getClass(), "initStepLayout()");
 
