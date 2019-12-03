@@ -2,6 +2,8 @@ package org.researchstack.backbone.task;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewTaskActivity;
@@ -40,7 +42,7 @@ public abstract class Task implements Serializable {
      *
      * @param list
      */
-    public abstract void resetCompletedTask(List<String> list);
+    public abstract void resetCompletedTask(@NonNull List<String> list);
 
     /**
      * Class constructor specifying a unique identifier.

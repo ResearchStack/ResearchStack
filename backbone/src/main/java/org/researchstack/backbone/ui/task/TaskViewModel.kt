@@ -109,7 +109,10 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
 
 
             if (isReviewStep(nextStep)) {
-                taskResult = convertResults()
+                clonedTaskResult?.let {
+                    taskResult = updateTaskResultsFrom(it)
+                }
+                clonedTaskResult = null
                 clonedTaskResult = null
                 editing = false
                 stack.clear()
@@ -217,19 +220,21 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     }
 
 
-    private fun convertResults(): TaskResult {
-        var completedStingId: MutableList<String> = mutableListOf()
-        val clonedTaskResult2 = TaskResult(clonedTaskResult!!.identifier)
+
+    private fun updateTaskResultsFrom(clonedResults: TaskResult): TaskResult {
+        val stepIds: MutableList<String> = mutableListOf()
+        val results = TaskResult(clonedResults.identifier)
+
         task.steps.forEach {
-            val result = clonedTaskResult!!.getStepAndResult(it.identifier).second
+            val result = clonedResults.getStepAndResult(it.identifier).second
             if (result != null) {
-                clonedTaskResult2.setStepResultForStep(it, result)
-                completedStingId.add(it.identifier)
+                results.setStepResultForStep(it, result)
+                stepIds.add(it.identifier)
             }
         }
 
-        task.resetCompletedTask(completedStingId)
-        return clonedTaskResult2
+        task.resetCompletedTask(stepIds)
+        return results
     }
 
 

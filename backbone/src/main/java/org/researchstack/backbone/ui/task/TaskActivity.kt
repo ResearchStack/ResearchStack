@@ -58,7 +58,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         observe(viewModel.moveReviewStep) {
             navController.navigate(it.step.destinationId, null,
                     NavOptions.Builder().setPopUpTo(
-                            viewModel.firstStep!!.destinationId,
+                            viewModel.firstStep.destinationId,
                             true
                     ).build())
 

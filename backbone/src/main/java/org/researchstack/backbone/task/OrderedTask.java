@@ -171,6 +171,8 @@ public class OrderedTask extends Task implements Serializable {
 
     @Override
     public void resetCompletedTask(List<String> list) {
-
+        // no-op: During a ReviewStep, the user can change its responses. In Ordered tasks,
+        // step Ids don't change and they are always in the same position,
+        // so there is no need to reset it.
     }
 }
