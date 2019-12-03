@@ -2,6 +2,8 @@ package org.researchstack.backbone.task;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewTaskActivity;
@@ -29,7 +31,18 @@ import java.util.List;
  */
 public abstract class Task implements Serializable {
     private String identifier;
-    public List<Step> steps;
+    /**
+     *
+     * @return the associated step for the task, in order
+     */
+    public abstract List<Step> getSteps();
+
+    /**
+     * Clear all completed steps after editing ends and load new one
+     *
+     * @param list
+     */
+    public abstract void resetCompletedTask(@NonNull List<String> list);
 
     /**
      * Class constructor specifying a unique identifier.

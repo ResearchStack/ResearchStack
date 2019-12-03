@@ -55,11 +55,18 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         observe(viewModel.currentStepEvent) { showStep(it) }
         observe(viewModel.taskCompleted) { close(it) }
+        observe(viewModel.moveReviewStep) {
+            navController.navigate(it.step.destinationId, null,
+                    NavOptions.Builder().setPopUpTo(
+                            viewModel.firstStep.destinationId,
+                            true
+                    ).build())
+
+        }
 
         observe(viewModel.editStep) {
             navController.navigate(it.destinationId)
         }
-
         NavigationUI.setupActionBarWithNavController(this, navController)
 
         navController.addOnDestinationChangedListener(object: NavController.OnDestinationChangedListener {
@@ -179,15 +186,18 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
     }
 
     private fun showStep(navigationEvent: StepNavigationEvent) {
-
-        if (navigationEvent.isMovingForward) {
-            //val navOptions = NavOptionsBuilder().apply { launchSingleTop = true }.build()
-
-            navController.navigate(navigationEvent.step.destinationId)
-        } else {
-            navController.popBackStack(navigationEvent.step.destinationId, false)
+        navigationEvent.popUpToStep?.let {
+            navController.navigate(navigationEvent.step.destinationId, null,
+                    NavOptions.Builder().setPopUpTo(
+                            it.destinationId,
+                            true
+                    ).build())
         }
 
+
+        if (navigationEvent.popUpToStep == null) {
+            navController.navigate(navigationEvent.step.destinationId)
+        }
         supportActionBar?.title = viewModel.task.getTitleForStep(this, navigationEvent.step)
         setActivityTheme(viewModel.colorPrimary, viewModel.colorPrimaryDark)
     }
