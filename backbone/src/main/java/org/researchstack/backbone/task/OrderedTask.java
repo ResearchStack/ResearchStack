@@ -29,7 +29,7 @@ import java.util.Set;
  * {@link #getStepBeforeStep}, and call super for all other methods.
  */
 public class OrderedTask extends Task implements Serializable {
-
+    protected List<Step> steps;
     /**
      * Returns an initialized ordered task using the specified identifier and array of steps.
      *
@@ -167,5 +167,10 @@ public class OrderedTask extends Task implements Serializable {
      */
     public List<Step> getSteps() {
         return new ArrayList<>(steps);
+    }
+
+    @Override
+    public void resetCompletedTask(List<String> list) {
+
     }
 }

@@ -29,7 +29,18 @@ import java.util.List;
  */
 public abstract class Task implements Serializable {
     private String identifier;
-    public List<Step> steps;
+    /**
+     *
+     * @return the associated step for the task, in order
+     */
+    public abstract List<Step> getSteps();
+
+    /**
+     * Clear all completed steps after editing ends and load new one
+     *
+     * @param list
+     */
+    public abstract void resetCompletedTask(List<String> list);
 
     /**
      * Class constructor specifying a unique identifier.

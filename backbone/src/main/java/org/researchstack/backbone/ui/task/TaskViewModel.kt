@@ -27,6 +27,9 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     var editing = false
     var currentStep: Step? = null
 
+
+    var firstStep: Step
+
     val currentTaskResult: TaskResult
         get() {
             return clonedTaskResult ?: taskResult
@@ -42,6 +45,8 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
 
     val taskCompleted = SingleLiveEvent<Boolean>()
     val currentStepEvent = MutableLiveData<StepNavigationEvent>()
+    val moveReviewStep = MutableLiveData<StepNavigationEvent>()
+
 
     private var taskResult: TaskResult
     private var clonedTaskResult: TaskResult? = null
@@ -53,6 +58,7 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
                 ?: TaskResult(task.identifier).apply { startDate = Date() }
 
         task.validateParameters()
+        firstStep = task.getStepAfterStep(null, taskResult)
     }
 
     fun showCurrentStep() {
@@ -62,25 +68,25 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     }
 
     fun nextStep() {
-
-        if (clonedTaskResult == null) {
-            clonedTaskResult = TaskResult(taskResult.identifier)
-
-            var step = task.getStepAfterStep(null, clonedTaskResult)
-
-            while(step != null && !isReviewStep(step)) {
-                val result = taskResult.getStepAndResult(step.identifier).second
-
-                if (result != null) {
-                    clonedTaskResult?.setStepResultForStep(step, result)
-                }
-
-                step = task.getStepAfterStep(step, clonedTaskResult)
-            }
-        }
-        var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
-
         if (editing) {
+            if (clonedTaskResult == null) {
+                clonedTaskResult = TaskResult(taskResult.identifier)
+
+                var step = task.getStepAfterStep(null, clonedTaskResult)
+
+                while (step != null) {
+                    val result = taskResult.getStepAndResult(step.identifier).second
+
+                    if (result != null) {
+                        clonedTaskResult?.setStepResultForStep(step, result)
+                    }
+
+                    step = task.getStepAfterStep(step, clonedTaskResult)
+                }
+            }
+
+
+            var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
 
             // Current step with branches?
             hasBranching = clonedTaskResult?.getStepResult(nextStep.identifier) == null
@@ -101,20 +107,24 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
                 currentStep = nextStep
             }
 
+
             if (isReviewStep(nextStep)) {
-                taskResult = clonedTaskResult!!
+                taskResult = convertResults()
                 clonedTaskResult = null
                 editing = false
-
                 stack.clear()
+                moveReviewStep.postValue(StepNavigationEvent(step = nextStep))
+                //   firstStep = null
             } else {
                 //TODO: remove
-//                stack.push(currentStep)
+                //   stack.push(currentStep)
+                currentStepEvent.value = StepNavigationEvent(step = nextStep)
             }
 
-            currentStepEvent.value = StepNavigationEvent(nextStep)
 
         } else {
+            val nextStep = task.getStepAfterStep(currentStep, taskResult)
+
             if (nextStep == null) {
                 close(true)
             } else {
@@ -125,11 +135,7 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
                     setHiddenStepResult(nextStep)
                     nextStep()
                 } else {
-                    if (isReviewStep(nextStep)) {
-                        taskResult = clonedTaskResult!!
-                        clonedTaskResult = null
-                    }
-                    currentStepEvent.value = StepNavigationEvent(nextStep)
+                    currentStepEvent.value = StepNavigationEvent(step = nextStep)
                 }
             }
         }
@@ -139,27 +145,27 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
 
     fun previousStep() {
         Log.d(TAG, "1. CURRENT STEP: $currentStep")
-
         if (editing) {
             currentStep = stack.pop()
-            currentStepEvent.value = StepNavigationEvent(currentStep!!, false)
+            currentStepEvent.value = StepNavigationEvent(step = currentStep!!, isMovingForward = false)
 
             editing = stack.isEmpty().not()
 
         } else {
             val previousStep = task.getStepBeforeStep(currentStep, taskResult)
-
             if (previousStep == null) {
                 close()
             } else {
-                currentStep = previousStep
 
                 if (previousStep.isHidden) {
                     // The previous step was a hidden one so we go previousStep again
                     previousStep()
                 } else {
-                    currentStepEvent.value = StepNavigationEvent(previousStep, false)
+                    currentStepEvent.value = StepNavigationEvent(popUpToStep = currentStep, step = previousStep, isMovingForward = false)
                 }
+
+                currentStep = previousStep
+
             }
         }
         Log.d(TAG, "2. CURRENT STEP: $currentStep")
@@ -169,12 +175,12 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     val editStep = MutableLiveData<Step>()
 
     fun edit(step: Step) {
+        stack.empty()
         stack.push(currentStep)
-
         currentStep = step
         editing = true
-
         editStep.postValue(step)
+
     }
 
     private fun close(completed: Boolean = false) {
@@ -196,7 +202,7 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
         var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
         var isReviewStep = isReviewStep(nextStep)
 
-        while(!isReviewStep) {
+        while (!isReviewStep) {
             nextStep = task.getStepAfterStep(nextStep, currentTaskResult)
             isReviewStep = isReviewStep(nextStep)
         }
@@ -209,4 +215,22 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     companion object {
         const val TAG = "TaskViewModel"
     }
+
+
+    private fun convertResults(): TaskResult {
+        var completedStingId: MutableList<String> = mutableListOf()
+        val clonedTaskResult2 = TaskResult(clonedTaskResult!!.identifier)
+        task.steps.forEach {
+            val result = clonedTaskResult!!.getStepAndResult(it.identifier).second
+            if (result != null) {
+                clonedTaskResult2.setStepResultForStep(it, result)
+                completedStingId.add(it.identifier)
+            }
+        }
+
+        task.resetCompletedTask(completedStingId)
+        return clonedTaskResult2
+    }
+
+
 }
