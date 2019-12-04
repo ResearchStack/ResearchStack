@@ -66,8 +66,8 @@ public class TouchAnywhereStepLayout extends ActiveStepLayout {
         setupOnClickListener();
 
         // These relate to elements of the linear layout, which can be displayed or not
-        titleTextview.setVisibility(View.GONE);
-        textTextview.setVisibility(View.GONE);
+        titleTextview.setVisibility(View.VISIBLE);
+        textTextview.setVisibility(View.VISIBLE);
         timerTextview.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         progressBarHorizontal.setVisibility(View.GONE);
