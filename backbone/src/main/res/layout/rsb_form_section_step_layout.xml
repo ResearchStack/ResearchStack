@@ -9,13 +9,9 @@
     <TextView
         android:id="@+id/formSectionStepQuestionTitle"
         style="@style/rsb_review_step_sub_step_title_style"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constrainedHeight="true"
-        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Continuous Scale Step Title" />
-
-    <include layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
