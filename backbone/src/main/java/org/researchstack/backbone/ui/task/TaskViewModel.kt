@@ -146,7 +146,12 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
 
     }
 
-    fun previousStep() {
+    /**
+     * Goes to previous step, and in case of editing, it pops from the stack where previous steps were stored
+     * @param popUpToStep Used to keep track of the last visible step before encountering any hidden steps, as we might
+     * have several consecutive hidden steps
+     */
+    fun previousStep(popUpToStep : Step? = currentStep) {
         Log.d(TAG, "1. CURRENT STEP: $currentStep")
         if (editing) {
             currentStep = stack.pop()
@@ -161,13 +166,15 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
             } else {
 
                 if (previousStep.isHidden) {
+                    val lastVisibleStep = if (currentStep?.isHidden!!) popUpToStep else currentStep
+                    currentStep = previousStep
                     // The previous step was a hidden one so we go previousStep again
-                    previousStep()
+                    previousStep(lastVisibleStep)
                 } else {
-                    currentStepEvent.value = StepNavigationEvent(popUpToStep = currentStep, step = previousStep, isMovingForward = false)
+                    currentStep = previousStep
+                    currentStepEvent.value = StepNavigationEvent(popUpToStep = popUpToStep, step = previousStep, isMovingForward = false)
                 }
 
-                currentStep = previousStep
 
             }
         }
