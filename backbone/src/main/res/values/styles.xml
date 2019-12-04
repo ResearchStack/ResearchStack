@@ -142,4 +142,24 @@
         <item name="android:scaleType">fitCenter</item>
     </style>
 
+    <style name="rsb_review_step_sub_step_title_style">
+        <item name="android:textColor">@color/rsb_black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="rsb_review_step_sub_step_question_style">
+        <item name="android:textColor">@color/rsb_warm_gray</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="rsb_review_step_sub_step_answer_style">
+        <item name="android:background">@color/rsb_athens_gray</item>
+        <item name="android:textColor">@color/rsb_greyish_brown</item>
+        <item name="android:padding">4sp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

@@ -2,13 +2,11 @@ package org.researchstack.backbone.ui.step.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import org.researchstack.backbone.R
 import org.researchstack.backbone.result.StepResult
 import org.researchstack.backbone.result.TaskResult
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.ui.step.layout.StepLayout
-
 
 internal class ReviewStepFragment : BaseStepFragment(R.layout.rsb_fragment_review_step_layout),
         ReviewStepRowClickHandler {
@@ -19,12 +17,13 @@ internal class ReviewStepFragment : BaseStepFragment(R.layout.rsb_fragment_revie
         with(view as ReviewStepLayout) {
             // Wire the Layout dependencies.
             this.clickHandler = this@ReviewStepFragment
-            this.taskResult = viewModel.taskResult
+            this.taskSteps = viewModel.task.steps
+            this.taskResult = viewModel.currentTaskResult
         }
     }
 
     override fun onStepTappedForEdition(step: Step, stepResult: StepResult<Any>) {
-        Toast.makeText(requireContext(), "Tapped [${step.identifier}]", Toast.LENGTH_SHORT).show()
+        viewModel.edit(step)
     }
 
     override fun onDestroyView() {
@@ -40,6 +39,7 @@ internal class ReviewStepFragment : BaseStepFragment(R.layout.rsb_fragment_revie
 interface ReviewStepLayout : StepLayout {
     var clickHandler: ReviewStepRowClickHandler?
     var taskResult: TaskResult?
+    var taskSteps: List<Step>?
 }
 
 /**

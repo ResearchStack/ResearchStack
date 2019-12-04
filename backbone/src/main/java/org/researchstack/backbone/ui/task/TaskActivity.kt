@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
@@ -14,8 +15,12 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.afollestad.materialdialogs.MaterialDialog
@@ -30,13 +35,6 @@ import org.researchstack.backbone.ui.permissions.PermissionMediator
 import org.researchstack.backbone.ui.permissions.PermissionResult
 import org.researchstack.backbone.ui.step.layout.StepLayout
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_ACTION_FAILED_COLOR
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_COLOR_PRIMARY
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_COLOR_PRIMARY_DARK
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_COLOR_SECONDARY
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_PRINCIPAL_TEXT_COLOR
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_SECONDARY_TEXT_COLOR
-import org.researchstack.backbone.ui.task.TaskViewModel.Companion.EXTRA_TASK
 import org.researchstack.backbone.utils.ViewUtils
 
 class TaskActivity : PinCodeActivity(), PermissionMediator {
@@ -44,6 +42,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
     private val viewModel: TaskViewModel by viewModel { parametersOf(intent) }
     private val navController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
     private var currentStepLayout: StepLayout? = null
+    private var stepPermissionListener: PermissionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +55,27 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         observe(viewModel.currentStepEvent) { showStep(it) }
         observe(viewModel.taskCompleted) { close(it) }
+        observe(viewModel.moveReviewStep) {
+            navController.navigate(it.step.destinationId, null,
+                    NavOptions.Builder().setPopUpTo(
+                            viewModel.firstStep.destinationId,
+                            true
+                    ).build())
 
+        }
+
+        observe(viewModel.editStep) {
+            navController.navigate(it.destinationId)
+        }
         NavigationUI.setupActionBarWithNavController(this, navController)
+
+        navController.addOnDestinationChangedListener(object: NavController.OnDestinationChangedListener {
+            override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+                Log.d("TaskActivity", "current fragment ${destination.label}")
+            }
+
+        }
+        )
     }
 
     override fun onPause() {
@@ -100,7 +118,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
     override fun onDataReady() {
         super.onDataReady()
 
-        viewModel.nextStep()
+        viewModel.showCurrentStep()
     }
 
     override fun onDataFailed() {
@@ -108,6 +126,12 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         Toast.makeText(this, R.string.rsb_error_data_failed, Toast.LENGTH_LONG).show()
         finish()
+    }
+
+    override fun requestPermissions(permissionListener: PermissionListener, vararg permissions:
+    String?) {
+        stepPermissionListener = permissionListener
+        requestPermissions(permissions, STEP_PERMISSION_LISTENER_REQUEST)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -146,6 +170,10 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
             if (stepBody is PermissionListener) {
                 (stepBody as PermissionListener).onPermissionGranted(result)
             }
+        } else if (requestCode == STEP_PERMISSION_LISTENER_REQUEST) {
+            val result = PermissionResult(permissions, grantResults)
+            stepPermissionListener?.onPermissionGranted(result)
+            stepPermissionListener = null
         }
     }
 
@@ -168,12 +196,18 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
     }
 
     private fun showStep(navigationEvent: StepNavigationEvent) {
-        if (navigationEvent.isMovingForward) {
-            navController.navigate(navigationEvent.step.destinationId)
-        } else {
-            navController.popBackStack()
+        navigationEvent.popUpToStep?.let {
+            navController.navigate(navigationEvent.step.destinationId, null,
+                    NavOptions.Builder().setPopUpTo(
+                            it.destinationId,
+                            true
+                    ).build())
         }
 
+
+        if (navigationEvent.popUpToStep == null) {
+            navController.navigate(navigationEvent.step.destinationId)
+        }
         supportActionBar?.title = viewModel.task.getTitleForStep(this, navigationEvent.step)
         setActivityTheme(viewModel.colorPrimary, viewModel.colorPrimaryDark)
     }
@@ -189,7 +223,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         if (completed) {
             val result = Intent().apply {
-                putExtra(EXTRA_TASK_RESULT, viewModel.taskResult)
+                putExtra(EXTRA_TASK_RESULT, viewModel.currentTaskResult)
             }
 
             setResult(Activity.RESULT_OK, result)
@@ -220,9 +254,27 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         liveData.observe(this, Observer { if (it != null) lambda(it) })
     }
 
+    fun getCurrentFragment(): Fragment? {
+        val navHostFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.nav_host_fragment);
+        val fragments = navHostFragment?.childFragmentManager?.fragments
+        return if (fragments != null && fragments.size > 0) {
+            fragments[fragments.size - 1]
+        } else null
+    }
+
     companion object {
         const val EXTRA_TASK_RESULT = "TaskActivity.ExtraTaskResult"
+        const val EXTRA_TASK = "TaskActivity.ExtraTask"
+        const val EXTRA_STEP = "ViewTaskActivity.ExtraStep";
+        const val EXTRA_COLOR_PRIMARY = "TaskActivity.ExtraColorPrimary"
+        const val EXTRA_COLOR_PRIMARY_DARK = "TaskActivity.ExtraColorPrimaryDark"
+        const val EXTRA_COLOR_SECONDARY = "TaskActivity.ExtraColorSecondary"
+        const val EXTRA_PRINCIPAL_TEXT_COLOR = "TaskActivity.ExtraPrincipalTextColor"
+        const val EXTRA_SECONDARY_TEXT_COLOR = "TaskActivity.ExtraSecondaryTextColor"
+        const val EXTRA_ACTION_FAILED_COLOR = "TaskActivity.ExtraActionFailedColor"
+
         private const val STEP_PERMISSION_REQUEST = 44
+        private const val STEP_PERMISSION_LISTENER_REQUEST = 45
 
         fun newIntent(context: Context, task: Task): Intent {
             return Intent(context, TaskActivity::class.java).apply {

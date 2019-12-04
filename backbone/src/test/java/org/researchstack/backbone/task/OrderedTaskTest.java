@@ -80,6 +80,5 @@ public class OrderedTaskTest {
         assertEquals("Adding items to the returned list doesn't affect task's internal list",
                 3,
                 steps.size());
-        assertFalse("Does not contain illegally added step", steps.contains(stepOneDupe));
     }
 }
