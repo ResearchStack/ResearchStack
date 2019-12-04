@@ -36,10 +36,21 @@ android {
     flavorDimensions "default"
 
     productFlavors {
+        prod {
+            dimension "default"
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'true'
+        }
+
+        dev {
+            dimension "default"
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'false'
+        }
+
         flask {
             dimension "default"
             buildConfigField 'boolean', 'USE_SECURE_FLAG', 'true'
         }
+
         automatedFlask {
             dimension "default"
             buildConfigField 'boolean', 'USE_SECURE_FLAG', 'false'
