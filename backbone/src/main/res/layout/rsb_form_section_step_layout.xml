@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/formSectionStepQuestionTitle"
+        style="@style/rsb_review_step_sub_step_title_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         app:layout_constrainedHeight="true"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
