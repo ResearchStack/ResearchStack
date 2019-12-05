@@ -68,6 +68,9 @@ public class ActiveTaskActivity extends ViewTaskActivity
     public void onResume() {
         super.onResume();
         isPaused = false;
+        if (currentStepLayout != null && currentStepLayout instanceof ActiveStepLayout) {
+            ((ActiveStepLayout) currentStepLayout).resumeActiveStepLayout();
+        }
     }
 
     @Override
