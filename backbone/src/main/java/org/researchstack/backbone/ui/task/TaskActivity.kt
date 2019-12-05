@@ -72,6 +72,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
                     R.string.rsb_edit_step_alert_cancel_save,
                     {
                         it.dismiss()
+                        viewModel.cancelEditDismiss()
                     }, {
                 viewModel.removeUpdatedLayout()
 
@@ -319,6 +320,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
                                 onNegative: (dialog: MaterialDialog) -> (Unit),
                                 onPositive: () -> (Unit)) {
         MaterialDialog.Builder(this)
+                .cancelable(false)
                 .title(title)
                 .content(content)
                 .theme(Theme.LIGHT)

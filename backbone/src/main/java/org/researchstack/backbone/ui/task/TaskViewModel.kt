@@ -146,11 +146,11 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     fun previousStep() {
         Log.d(TAG, "1. CURRENT STEP: $currentStep")
         if (editing) {
-            currentStep = stack.pop()
+            val current = stack.pop()
             if (!stack.isEmpty().not()) {
-                stack.push(currentStep)
                 showCancelEditAlert()
             } else {
+                currentStep = current
                 currentStepEvent.value = StepNavigationEvent(step = currentStep!!, isMovingForward = false)
             }
 
@@ -222,13 +222,13 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
 
-    fun goToReviewStep() {
+    private fun goToReviewStep() {
         clonedTaskResult = null
         clonedTaskResultInCaseOfCancel?.let {
             taskResult = updateTaskResultsFrom(it)
         }
-        val nextStep = getReviewStep()
         clonedTaskResultInCaseOfCancel = null
+        val nextStep = getReviewStep()
         currentStep = nextStep
         moveReviewStep.postValue(StepNavigationEvent(step = nextStep))
     }
@@ -255,13 +255,16 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         showEditDialog.postValue(true)
     }
 
+    fun cancelEditDismiss() {
+        stack.push(currentStep)
+    }
+
 
     fun removeUpdatedLayout() {
         updateCancelEditInLayout.postValue(true)
         goToReviewStep()
-        currentStep = stack.pop()
+        stack.clear()
         editing = false
-
     }
 
 
