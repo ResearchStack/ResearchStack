@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    style="@style/rsb_review_step_cell_style">
 
     <TextView
         android:id="@+id/booleanStepQuestionTitle"
         style="@style/rsb_review_step_sub_step_title_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/rsb_reviewStep_item_title_bottom_margin"
         app:layout_constraintBottom_toTopOf="@id/booleanStepQuestionItself"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
