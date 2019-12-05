@@ -1,5 +1,6 @@
 package org.researchstack.backbone.step;
 
+import androidx.annotation.NonNull;
 import org.researchstack.backbone.task.Task;
 
 import java.io.Serializable;
@@ -21,7 +22,7 @@ import java.util.Objects;
  * To implement a new type of step, subclass Step and add your additional properties. Separately,
  * subclass StepLayout and implement your user interface.
  */
-public class Step implements Serializable {
+public class Step implements Serializable , Cloneable{
     private String identifier;
     private Class stepLayoutClass;
     private int stepTitle;
@@ -350,5 +351,16 @@ public class Step implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(identifier);
+    }
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Step cloned = (Step) super.clone();
+
+        cloned.identifier = identifier;
+        cloned.stepLayoutClass = stepLayoutClass;
+
+        return cloned;
     }
 }

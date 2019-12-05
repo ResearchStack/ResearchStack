@@ -64,12 +64,28 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         }
 
+        observe(viewModel.showEditDialog) {
+            showAlertDialog(
+                    R.string.rsb_task_cancel_title,
+                    R.string.rsb_edit_step_alert_cancel_title,
+                    R.string.rsb_edit_step_alert_cancel_discard,
+                    R.string.rsb_edit_step_alert_cancel_save,
+                    {
+                        it.dismiss()
+                    }, {
+                viewModel.removeUpdatedLayout()
+
+            })
+
+
+        }
+
         observe(viewModel.editStep) {
             navController.navigate(it.destinationId)
         }
         NavigationUI.setupActionBarWithNavController(this, navController)
 
-        navController.addOnDestinationChangedListener(object: NavController.OnDestinationChangedListener {
+        navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener {
             override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
                 Log.d("TaskActivity", "current fragment ${destination.label}")
             }
@@ -91,16 +107,14 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.rsb_action_cancel) {
-            MaterialDialog.Builder(this)
-                .title(R.string.rsb_task_cancel_title)
-                .content(R.string.rsb_task_cancel_text)
-                .theme(Theme.LIGHT)
-                .positiveColor(viewModel.colorPrimary)
-                .negativeColor(viewModel.colorPrimary)
-                .negativeText(R.string.rsb_cancel)
-                .positiveText(R.string.rsb_task_cancel_positive)
-                .onPositive { _, _ -> finish() }
-                .show()
+            showAlertDialog(R.string.rsb_task_cancel_title,
+                    R.string.rsb_task_cancel_text,
+                    R.string.rsb_cancel,
+                    R.string.rsb_task_cancel_positive, {
+                it.dismiss()
+            }, {
+                finish()
+            })
         }
 
         return super.onOptionsItemSelected(item)
@@ -249,11 +263,9 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(primaryColor))
     }
-
     private fun <T> observe(liveData: LiveData<T?>, lambda: (T) -> Unit) {
         liveData.observe(this, Observer { if (it != null) lambda(it) })
     }
-
     fun getCurrentFragment(): Fragment? {
         val navHostFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.nav_host_fragment);
         val fragments = navHostFragment?.childFragmentManager?.fragments
@@ -283,13 +295,13 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         }
 
         fun themeIntent(
-            intent: Intent,
-            colorPrimary: Int,
-            colorPrimaryDark: Int,
-            colorSecondary: Int,
-            principalTextColor: Int,
-            secondaryTextColor: Int,
-            actionFailedColor: Int
+                intent: Intent,
+                colorPrimary: Int,
+                colorPrimaryDark: Int,
+                colorSecondary: Int,
+                principalTextColor: Int,
+                secondaryTextColor: Int,
+                actionFailedColor: Int
         ) {
             with(intent) {
                 putExtra(EXTRA_COLOR_PRIMARY, colorPrimary)
@@ -301,5 +313,23 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
             }
         }
     }
+
+
+    private fun showAlertDialog(title: Int, content: Int, negativeText: Int, positiveText: Int,
+                                onNegative: (dialog: MaterialDialog) -> (Unit),
+                                onPositive: () -> (Unit)) {
+        MaterialDialog.Builder(this)
+                .title(title)
+                .content(content)
+                .theme(Theme.LIGHT)
+                .positiveColor(viewModel.colorPrimary)
+                .negativeColor(viewModel.colorPrimary)
+                .negativeText(negativeText)
+                .positiveText(positiveText)
+                .onPositive { _, _ -> onPositive() }
+                .onNegative { dialog, _ -> onNegative(dialog) }
+                .show()
+    }
+
 
 }

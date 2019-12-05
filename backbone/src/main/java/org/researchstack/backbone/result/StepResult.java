@@ -1,5 +1,7 @@
 package org.researchstack.backbone.result;
 
+import androidx.annotation.NonNull;
+
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
@@ -20,7 +22,7 @@ import java.util.Objects;
  * For example, an {@link QuestionStep} object produces a result of type <code>T</code> that becomes
  * a child of the {@link StepResult} object.
  */
-public class StepResult<T> extends Result {
+public class StepResult<T> extends Result implements Cloneable {
     /**
      * When StepResult only has a single value, pair that value with the following key
      */
@@ -129,5 +131,21 @@ public class StepResult<T> extends Result {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getResults(), getAnswerFormat());
+    }
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        StepResult cloned = (StepResult) super.clone();
+
+        cloned.results = new HashMap<>();
+        for (Map.Entry<String, T> e : results.entrySet())
+            cloned.results.put(e.getKey(), e.getValue());
+
+        cloned.answerFormat = answerFormat;
+        cloned.setStartDate(new Date());
+        // this will be updated when the result is set
+        cloned.setEndDate(new Date());
+        return cloned;
     }
 }

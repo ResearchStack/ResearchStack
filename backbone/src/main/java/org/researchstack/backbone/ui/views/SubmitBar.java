@@ -16,6 +16,10 @@ public class SubmitBar extends LinearLayout {
     private TextView positiveView;
     private TextView negativeView;
 
+   //edit step bottom bar
+    private TextView editSaveView;
+    private TextView editCancelView;
+
     public SubmitBar(Context context) {
         this(context, null);
     }
@@ -42,6 +46,9 @@ public class SubmitBar extends LinearLayout {
         negativeView = (TextView) findViewById(R.id.bar_submit_negative);
         negativeView.setText(a.getString(R.styleable.SubmitBar_negativeActionTitle));
 
+        editSaveView = (TextView) findViewById(R.id.bar_submit_edit_save);
+        editCancelView = (TextView) findViewById(R.id.bar_submit_edit_cancel);
+
         a.recycle();
     }
 
@@ -58,20 +65,29 @@ public class SubmitBar extends LinearLayout {
     }
 
     public void setPositiveAction(final OnClickListener action) {
-        positiveView.setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                action.onClick(view);
-            }
-        });
+        positiveView.setOnClickListener(view -> action.onClick(view));
     }
 
     public void clearActions()
     {
         positiveView.setOnClickListener(null);
         negativeView.setOnClickListener(null);
+    }
+
+    public void toggleViews(boolean isEditView)
+    {
+        if (isEditView)
+        {
+            positiveView.setVisibility(GONE);
+            editCancelView.setVisibility(VISIBLE);
+            editSaveView.setVisibility(VISIBLE);
+        }
+        else {
+            positiveView.setVisibility(VISIBLE);
+            negativeView.setVisibility(VISIBLE);
+            editCancelView.setVisibility(GONE);
+            editSaveView.setVisibility(GONE);
+        }
     }
 
     public View getPositiveActionView() {
@@ -108,14 +124,7 @@ public class SubmitBar extends LinearLayout {
     }
 
     public void setNegativeAction(final OnClickListener action) {
-        negativeView.setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                action.onClick(view);
-            }
-        });
+        negativeView.setOnClickListener(view -> action.onClick(view));
     }
 
     public View getNegativeActionView() {
@@ -125,4 +134,21 @@ public class SubmitBar extends LinearLayout {
     public void setNegativeTitleColor(int color) {
         negativeView.setTextColor(color);
     }
+
+    public void setEditCancelAction(final OnClickListener action) {
+        editCancelView.setOnClickListener(view -> action.onClick(view));
+    }
+
+    public void setEditSaveAction(final OnClickListener action) {
+        editSaveView.setOnClickListener(view -> action.onClick(view));
+    }
+
+    public void setEditSaveColor(int color) {
+        editSaveView.setTextColor(color);
+    }
+
+    public void setEditCancelColor(int color) {
+        editCancelView.setTextColor(color);
+    }
+
 }

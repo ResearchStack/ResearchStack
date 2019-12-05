@@ -78,6 +78,11 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         this.callbacks = callbacks;
     }
 
+    @Override
+    public void setCancelEditMode(boolean isCancelEdit) {
+
+    }
+
     private void initializeStep() {
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);

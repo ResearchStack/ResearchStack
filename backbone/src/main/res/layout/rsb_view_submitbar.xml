@@ -14,6 +14,15 @@
         android:layout_weight="1" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/bar_submit_edit_cancel"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/rsb_consent_review_cancel"
+        tools:text="Cancel" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bar_submit_negative"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
@@ -26,5 +35,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Submit" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/bar_submit_edit_save"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/rsb_consent_review_save"
+        tools:text="Save" />
 
 </merge>

@@ -498,6 +498,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         showBackArrow = setVisible;
     }
 
+    @Override
+    public void onEditCancelStep() {
+    // only when user on edit mode inside reqgular steps
+    }
+
     public void setActionBarTitle(String title) {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

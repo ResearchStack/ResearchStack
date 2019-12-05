@@ -137,5 +137,8 @@
     <string name="rsb_consent_doc_line_date">日期</string>
     <string name="rsb_consent_role">參與者</string>
     <string name="rsb_consent_doc_line_date_format">月月-日日-年年年年</string>
+    <string name="rsb_edit_step_alert_cancel_save">Yes, Save</string>
+    <string name="rsb_edit_step_alert_cancel_discard">No, Discard</string>
+    <string name="rsb_edit_step_alert_cancel_title">Please note that any changes will be discarded if you proceed.</string>
 
-    </resources>
+</resources>

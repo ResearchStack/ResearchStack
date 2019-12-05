@@ -57,6 +57,11 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     @Override
+    public void setCancelEditMode(boolean isCancelEdit) {
+
+    }
+
+    @Override
     public int getContentResourceId() {
         return R.layout.rsb_step_layout_instruction;
     }

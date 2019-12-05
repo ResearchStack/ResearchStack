@@ -73,6 +73,11 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         this.callbacks = callbacks;
     }
 
+    @Override
+    public void setCancelEditMode(boolean isCancelEdit) {
+
+    }
+
     private void initializeStep() {
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_signature, this, true);
 
