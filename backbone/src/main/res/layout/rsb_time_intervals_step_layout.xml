@@ -11,7 +11,7 @@
         style="@style/rsb_review_step_sub_step_title_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="@dimen/rsb_reviewStep_item_title_bottom_margin"
         app:layout_constraintBottom_toTopOf="@id/timeIntervalsStepQuestionItself"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
