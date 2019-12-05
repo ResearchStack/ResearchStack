@@ -73,13 +73,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
                     {
                         it.dismiss()
                         viewModel.cancelEditDismiss()
-                    }, {
-                viewModel.removeUpdatedLayout()
-
-            })
-
-
-        }
+                    }, { viewModel.removeUpdatedLayout()}) }
 
         observe(viewModel.editStep) {
             navController.navigate(it.destinationId)
@@ -90,9 +84,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
             override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
                 Log.d("TaskActivity", "current fragment ${destination.label}")
             }
-
-        }
-        )
+        })
     }
 
     override fun onPause() {
@@ -264,9 +256,11 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(primaryColor))
     }
+
     private fun <T> observe(liveData: LiveData<T?>, lambda: (T) -> Unit) {
         liveData.observe(this, Observer { if (it != null) lambda(it) })
     }
+
     fun getCurrentFragment(): Fragment? {
         val navHostFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.nav_host_fragment);
         val fragments = navHostFragment?.childFragmentManager?.fragments

@@ -80,7 +80,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
 
     @Override
     public void setCancelEditMode(boolean isCancelEdit) {
-
+        // no-op: Only needed when the user is on edit mode inside regular steps
     }
 
     private void initializeStep() {

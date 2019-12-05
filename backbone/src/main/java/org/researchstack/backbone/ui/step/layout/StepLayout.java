@@ -20,6 +20,5 @@ public interface StepLayout {
 
     void setCallbacks(StepCallbacks callbacks);
 
-
     void setCancelEditMode(boolean isCancelEdit);
 }

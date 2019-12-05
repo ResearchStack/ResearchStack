@@ -75,7 +75,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
 
     @Override
     public void setCancelEditMode(boolean isCancelEdit) {
-
+        //no-op only when user on edit mode inside regular steps
     }
 
     private void initializeStep() {

@@ -146,11 +146,11 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     fun previousStep() {
         Log.d(TAG, "1. CURRENT STEP: $currentStep")
         if (editing) {
-            val current = stack.pop()
-            if (!stack.isEmpty().not()) {
+            val tempCurrent = stack.pop()
+            if (stack.isEmpty()) {
                 showCancelEditAlert()
             } else {
-                currentStep = current
+                currentStep = tempCurrent
                 currentStepEvent.value = StepNavigationEvent(step = currentStep!!, isMovingForward = false)
             }
 
@@ -266,6 +266,4 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         stack.clear()
         editing = false
     }
-
-
 }

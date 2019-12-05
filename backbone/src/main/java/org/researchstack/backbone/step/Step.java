@@ -22,7 +22,7 @@ import java.util.Objects;
  * To implement a new type of step, subclass Step and add your additional properties. Separately,
  * subclass StepLayout and implement your user interface.
  */
-public class Step implements Serializable , Cloneable{
+public class Step implements Serializable ,Cloneable{
     private String identifier;
     private Class stepLayoutClass;
     private int stepTitle;

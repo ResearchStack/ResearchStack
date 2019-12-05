@@ -58,7 +58,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
     @Override
     public void setCancelEditMode(boolean isCancelEdit) {
-
+        //no-op only when user on edit mode inside regular steps
     }
 
     @Override

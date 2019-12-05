@@ -78,7 +78,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
 
     @Override
     public void setCancelEditMode(boolean isCancelEdit) {
-
+        //no-op only when user on edit mode inside regular steps
     }
 
     @Override

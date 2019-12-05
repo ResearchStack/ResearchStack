@@ -75,8 +75,7 @@ public class SubmitBar extends LinearLayout {
     }
 
     public void toggleViews(boolean isEditView)
-    {
-        if (isEditView)
+    { if (isEditView)
         {
             positiveView.setVisibility(GONE);
             editCancelView.setVisibility(VISIBLE);
