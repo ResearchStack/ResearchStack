@@ -142,28 +142,57 @@
         <item name="android:scaleType">fitCenter</item>
     </style>
 
+    <style name="rsb_review_step_cell_style">
+        <item name="android:paddingBottom">@dimen/rsb_reviewStep_item_bottom_padding</item>
+    </style>
+
+    <style name="rsb_review_step_list_style">
+        <item name="android:paddingStart">11dp</item>
+        <item name="android:paddingEnd">11dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+    </style>
+
     <style name="rsb_review_step_title_style">
         <item name="android:textColor">@color/rsb_black</item>
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+    </style>
+
+    <style name="rsb_review_step_sub_title_style">
+        <item name="android:textColor">@color/rsb_warm_gray</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
     </style>
 
     <style name="rsb_review_step_sub_step_title_style">
         <item name="android:textColor">@color/rsb_black</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="rsb_review_step_sub_step_question_style">
         <item name="android:textColor">@color/rsb_warm_gray</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingBottom">@dimen/rsb_reviewStep_item_question_bottom_padding</item>
         <item name="android:textStyle">italic</item>
     </style>
 
     <style name="rsb_review_step_sub_step_answer_style">
         <item name="android:background">@color/rsb_athens_gray</item>
         <item name="android:textColor">@color/rsb_greyish_brown</item>
-        <item name="android:padding">4sp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
