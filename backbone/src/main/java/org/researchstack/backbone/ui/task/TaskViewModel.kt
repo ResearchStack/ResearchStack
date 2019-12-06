@@ -22,7 +22,7 @@ import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK_RESU
 import java.util.Date
 import java.util.Stack
 
-internal class TaskViewModel(context: Application, intent: Intent) : AndroidViewModel(context) {
+internal class TaskViewModel(val context: Application, intent: Intent) : AndroidViewModel(context) {
 
     var editing = false
     var currentStep: Step? = null
@@ -46,10 +46,14 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     val taskCompleted = SingleLiveEvent<Boolean>()
     val currentStepEvent = MutableLiveData<StepNavigationEvent>()
     val moveReviewStep = MutableLiveData<StepNavigationEvent>()
+    val showEditDialog = MutableLiveData<Boolean>()
+    val updateCancelEditInLayout = MutableLiveData<Boolean>()
 
 
     private var taskResult: TaskResult
     private var clonedTaskResult: TaskResult? = null
+    private var clonedTaskResultInCaseOfCancel: TaskResult? = null
+    //only used for cancel edit
     private var hasBranching = false
     private val stack = Stack<Step>()
 
@@ -84,10 +88,7 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
                     step = task.getStepAfterStep(step, clonedTaskResult)
                 }
             }
-
-
             var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
-
             // Current step with branches?
             hasBranching = clonedTaskResult?.getStepResult(nextStep.identifier) == null
 
@@ -98,7 +99,6 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
             }
 
             if (hasBranching) {
-                //TODO:
                 stack.push(currentStep)
                 currentStep = nextStep
 
@@ -113,14 +113,11 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
                     taskResult = updateTaskResultsFrom(it)
                 }
                 clonedTaskResult = null
-                clonedTaskResult = null
+                clonedTaskResultInCaseOfCancel = null
                 editing = false
                 stack.clear()
                 moveReviewStep.postValue(StepNavigationEvent(step = nextStep))
-                //   firstStep = null
             } else {
-                //TODO: remove
-                //   stack.push(currentStep)
                 currentStepEvent.value = StepNavigationEvent(step = nextStep)
             }
 
@@ -154,10 +151,13 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     fun previousStep(popUpToStep : Step? = currentStep) {
         Log.d(TAG, "1. CURRENT STEP: $currentStep")
         if (editing) {
-            currentStep = stack.pop()
-            currentStepEvent.value = StepNavigationEvent(step = currentStep!!, isMovingForward = false)
-
-            editing = stack.isEmpty().not()
+            val tempCurrent = stack.pop()
+            if (stack.isEmpty()) {
+                showCancelEditAlert()
+            } else {
+                currentStep = tempCurrent
+                currentStepEvent.value = StepNavigationEvent(step = currentStep!!, isMovingForward = false)
+            }
 
         } else {
             val previousStep = task.getStepBeforeStep(currentStep, taskResult)
@@ -189,8 +189,10 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
         stack.push(currentStep)
         currentStep = step
         editing = true
+        if (clonedTaskResultInCaseOfCancel == null) {
+            clonedTaskResultInCaseOfCancel = taskResult.clone() as TaskResult
+        }
         editStep.postValue(step)
-
     }
 
     private fun close(completed: Boolean = false) {
@@ -209,15 +211,15 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     }
 
     private fun getReviewStep(): Step {
-        var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
-        var isReviewStep = isReviewStep(nextStep)
-
-        while (!isReviewStep) {
-            nextStep = task.getStepAfterStep(nextStep, currentTaskResult)
-            isReviewStep = isReviewStep(nextStep)
-        }
-
-        return nextStep
+       return currentStep?.let {
+           var nextStep = it
+           var isReviewStep =  isReviewStep(nextStep)
+           while (!isReviewStep) {
+               nextStep = task.getStepAfterStep(nextStep, currentTaskResult)
+               isReviewStep = isReviewStep(nextStep)
+           }
+           return nextStep
+        } ?: task.getStepAfterStep(null, currentTaskResult)
     }
 
     private fun isReviewStep(step: Step) = step::class.java.simpleName.contains("RSReviewStep", true)
@@ -226,6 +228,17 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
         const val TAG = "TaskViewModel"
     }
 
+
+    private fun goToReviewStep() {
+        clonedTaskResult = null
+        clonedTaskResultInCaseOfCancel?.let {
+            taskResult = updateTaskResultsFrom(it)
+        }
+        clonedTaskResultInCaseOfCancel = null
+        val nextStep = getReviewStep()
+        currentStep = nextStep
+        moveReviewStep.postValue(StepNavigationEvent(step = nextStep))
+    }
 
 
     private fun updateTaskResultsFrom(clonedResults: TaskResult): TaskResult {
@@ -245,4 +258,19 @@ internal class TaskViewModel(context: Application, intent: Intent) : AndroidView
     }
 
 
+    fun showCancelEditAlert() {
+        showEditDialog.postValue(true)
+    }
+
+    fun cancelEditDismiss() {
+        stack.push(currentStep)
+    }
+
+
+    fun removeUpdatedLayout() {
+        updateCancelEditInLayout.postValue(true)
+        goToReviewStep()
+        stack.clear()
+        editing = false
+    }
 }

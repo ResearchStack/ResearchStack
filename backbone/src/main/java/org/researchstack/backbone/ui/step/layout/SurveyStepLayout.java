@@ -32,6 +32,8 @@ import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
 
+import static org.researchstack.backbone.ui.callbacks.StepCallbacks.ACTION_NEXT;
+
 public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
 
@@ -59,6 +61,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     private SubmitBar submitBar;
 
     private boolean isSkipped = false;
+    private boolean isCancelEdit = false;
+
 
     private MediatorLiveData<Boolean> mediator = new MediatorLiveData<>();
     private boolean allStepsAreOptional;
@@ -129,6 +133,11 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     @Override
+    public void setCancelEditMode(boolean isCancelEdit) {
+        this.isCancelEdit = isCancelEdit;
+    }
+
+    @Override
     public int getContentResourceId() {
         return R.layout.rsb_step_layout;
     }
@@ -142,6 +151,11 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         submitBar.setPositiveTitle(text);
     }
 
+
+    public void isEditView(boolean isEditView) {
+        submitBar.toggleViews(isEditView);
+    }
+
     public void initStepLayout() {
         LogExt.i(getClass(), "initStepLayout()");
 
@@ -153,8 +167,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         submitBar = findViewById(R.id.rsb_submit_bar);
         submitBar.setNegativeTitleColor(coloryPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
+        submitBar.setEditCancelColor(coloryPrimary);
+        submitBar.setEditSaveColor(colorSecondary);
         submitBar.setPositiveAction(view -> {
-            if(onNextClicked()) {
+            if (onNextClicked()) {
                 submitBar.clearActions();
             }
         });
@@ -189,6 +205,15 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
         }
+
+        submitBar.setEditCancelAction(view -> {
+            callbacks.onEditCancelStep();
+        });
+
+        submitBar.setEditSaveAction(view -> {
+            callbacks.onSaveStep(ACTION_NEXT, getStep(),
+                    stepBody.getStepResult(isSkipped));
+        });
     }
 
     public void initStepBody() {
@@ -228,7 +253,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     @Override
     public Parcelable onSaveInstanceState() {
-        callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(isSkipped));
+        if (!isCancelEdit)
+            callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(isSkipped));
         return super.onSaveInstanceState();
     }
 
@@ -274,7 +300,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     private void isStepEmpty(boolean isEmpty) {
-        if (!isEmpty || allStepsAreOptional)  {
+        if (!isEmpty || allStepsAreOptional) {
             submitBar.setPositiveActionEnabled(getStep().getColorSecondary());
         } else {
             submitBar.setPositiveActionDisabled();

@@ -137,5 +137,9 @@
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Teilnehmer</string>
     <string name="rsb_consent_doc_line_date_format">"TT-MM-JJJJ"</string>
+    <string name="rsb_edit_step_alert_cancel_save">[de-CH] Yes, Save</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[de-CH] No, Discard</string>
+    <string name="rsb_edit_step_alert_cancel_title">[de-CH] Please note that any changes will be discarded if you proceed.</string>
+    <string name="rsb_edit_step_alert_step_save">[de-CH] Are you sure you want to save your changes? If so, other responses may be cleared and you may be asked to submit new information.</string>
 
 </resources>

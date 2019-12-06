@@ -158,6 +158,10 @@
     <string name="rsb_consent_doc_line_date">Dátum</string>
     <string name="rsb_consent_role">Résztvevő</string>
     <string name="rsb_consent_doc_line_date_format">MM-dd-yyyy</string>
+    <string name="rsb_edit_step_alert_cancel_save">[hu-HU] Yes, Save</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[hu-HU] No, Discard</string>
+    <string name="rsb_edit_step_alert_cancel_title">[hu-HU] Please note that any changes will be discarded if you proceed.</string>
+    <string name="rsb_edit_step_alert_step_save">[hu-HU] Are you sure you want to save your changes? If so, other responses may be cleared and you may be asked to submit new information.</string>
 
 </resources>
 

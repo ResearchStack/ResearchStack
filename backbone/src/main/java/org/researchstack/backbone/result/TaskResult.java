@@ -22,7 +22,7 @@ import kotlin.Deprecated;
  * <p>
  * The <code>results</code> property contains the step results for the task.
  */
-public class TaskResult extends Result {
+public class TaskResult extends Result implements Cloneable{
     private Map<String, StepResult> results;
 
     // Maintain a Second map that stores the full step and results combined, instead of just the
@@ -33,6 +33,13 @@ public class TaskResult extends Result {
 
     public TaskResult(String identifier) {
         super(identifier);
+        this.results = new HashMap<>();
+        this.stepsAndResults = new LinkedHashMap<>();
+    }
+
+
+    public TaskResult(TaskResult taskResult) {
+        super(taskResult.getIdentifier());
         this.results = new HashMap<>();
         this.stepsAndResults = new LinkedHashMap<>();
     }
@@ -99,4 +106,24 @@ public class TaskResult extends Result {
         results.put(step.getIdentifier(), stepResult);
         stepsAndResults.put(step, stepResult);
     }
+
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        TaskResult cloned = (TaskResult)super.clone();
+
+        cloned.results = new HashMap<>();
+        for(Map.Entry<String, StepResult> e : results.entrySet()) {
+            cloned.results.put(e.getKey(), (StepResult) e.getValue().clone());
+
+        }
+
+        cloned.stepsAndResults = new LinkedHashMap<>();
+        for(Map.Entry<Step, StepResult> e : stepsAndResults.entrySet())
+            cloned.stepsAndResults.put((Step) e.getKey().clone() , (StepResult)e.getValue().clone());
+
+
+        return cloned;
+    }
+
 }

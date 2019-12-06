@@ -153,5 +153,9 @@
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Deltagare</string>
     <string name="rsb_consent_doc_line_date_format">MM-dd-yyyy</string>
+    <string name="rsb_edit_step_alert_cancel_save">[sv-SE] Yes, Save</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[sv-SE] No, Discard</string>
+    <string name="rsb_edit_step_alert_cancel_title">[sv-SE] Please note that any changes will be discarded if you proceed.</string>
+    <string name="rsb_edit_step_alert_step_save">[sv-SE] Are you sure you want to save your changes? If so, other responses may be cleared and you may be asked to submit new information.</string>
 
 </resources>
