@@ -15,6 +15,10 @@ import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LocaleUtils;
 
+import java.util.List;
+
+import androidx.annotation.NonNull;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
@@ -53,6 +57,16 @@ public class TaskTest {
     }
 
     private static class TaskImpl extends Task {
+        @Override
+        public List<Step> getSteps() {
+            return null;
+        }
+
+        @Override
+        public void resetCompletedTask(@NonNull final List<String> list) {
+            //no-op
+        }
+
         public TaskImpl(String identifier) {
             super(identifier);
         }
