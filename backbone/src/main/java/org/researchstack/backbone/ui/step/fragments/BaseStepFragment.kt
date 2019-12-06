@@ -29,7 +29,7 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
         super.onResume()
 
         val currentStep = viewModel.currentStep
-        val stepResult = viewModel.currentTaskResult.getStepResult(currentStep?.identifier)
+        val stepResult =  viewModel.currentTaskResult.getStepResult(currentStep?.identifier)
 
         currentStep?.setStepTheme(viewModel.colorPrimary, viewModel.colorPrimaryDark, viewModel.colorSecondary,
                 viewModel.principalTextColor, viewModel.secondaryTextColor, viewModel.actionFailedColor)
@@ -54,15 +54,14 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
                 stepView.isStepEmpty.observe(this, Observer { })
                 stepView.setCallbacks(this)
                 stepView.isEditView(viewModel.editing)
-            }
-            is StepLayout -> {
-                stepView.initialize(currentStep, stepResult)
-                stepView.setCallbacks(this)
 
                 viewModel.updateCancelEditInLayout.observe(this, Observer {
                     stepView.setCancelEditMode(it)
                 })
-
+            }
+            is StepLayout -> {
+                stepView.initialize(currentStep, stepResult)
+                stepView.setCallbacks(this)
             }
             is ConsentVisualStepLayout -> stepView.initialize(currentStep, stepResult,
                     viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
