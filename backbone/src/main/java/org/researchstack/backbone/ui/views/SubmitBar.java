@@ -74,20 +74,6 @@ public class SubmitBar extends LinearLayout {
         negativeView.setOnClickListener(null);
     }
 
-    public void toggleViews(boolean isEditView)
-    { if (isEditView)
-        {
-            positiveView.setVisibility(GONE);
-            editCancelView.setVisibility(VISIBLE);
-            editSaveView.setVisibility(VISIBLE);
-        }
-        else {
-            positiveView.setVisibility(VISIBLE);
-            negativeView.setVisibility(VISIBLE);
-            editCancelView.setVisibility(GONE);
-            editSaveView.setVisibility(GONE);
-        }
-    }
 
     public View getPositiveActionView() {
         return positiveView;
@@ -150,4 +136,11 @@ public class SubmitBar extends LinearLayout {
         editCancelView.setTextColor(color);
     }
 
+    public View getEditCancelViewActionView() {
+        return editCancelView;
+    }
+
+    public View getEditSaveViewActionView() {
+        return editSaveView;
+    }
 }

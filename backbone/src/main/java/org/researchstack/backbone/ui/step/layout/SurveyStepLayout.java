@@ -153,7 +153,15 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
 
     public void isEditView(boolean isEditView) {
-        submitBar.toggleViews(isEditView);
+        if (isEditView) {
+            submitBar.getPositiveActionView().setVisibility(GONE);
+            submitBar.getEditCancelViewActionView().setVisibility(VISIBLE);
+            submitBar.getEditSaveViewActionView().setVisibility(VISIBLE);
+        } else {
+            submitBar.getPositiveActionView().setVisibility(VISIBLE);
+            submitBar.getEditCancelViewActionView().setVisibility(GONE);
+            submitBar.getEditSaveViewActionView().setVisibility(GONE);
+        }
     }
 
     public void initStepLayout() {
@@ -198,7 +206,6 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             }
 
             if (questionStep.isOptional()) {
-
                 submitBar.setNegativeTitle(R.string.rsb_step_skip);
                 submitBar.setNegativeAction(v -> onSkipClicked());
             } else {
