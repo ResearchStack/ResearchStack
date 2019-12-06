@@ -152,8 +152,8 @@
     <string name="rsb_consent_doc_line_date">Tarih</string>
     <string name="rsb_consent_role">Katılımcı</string>
     <string name="rsb_consent_doc_line_date_format">gg-aa-yyyy</string>
-    <string name="rsb_edit_step_alert_cancel_save">Yes, Save</string>
-    <string name="rsb_edit_step_alert_cancel_discard">No, Discard</string>
-    <string name="rsb_edit_step_alert_cancel_title">Please note that any changes will be discarded if you proceed.</string>
+    <string name="rsb_edit_step_alert_cancel_save">[tr-TR] Yes, Save</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[tr-TR] No, Discard</string>
+    <string name="rsb_edit_step_alert_cancel_title">[tr-TR] Please note that any changes will be discarded if you proceed.</string>
 
 </resources>

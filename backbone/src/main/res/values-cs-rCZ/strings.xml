@@ -137,8 +137,8 @@
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Účastník</string>
     <string name="rsb_consent_doc_line_date_format">MM-dd-rrrr</string>
-    <string name="rsb_edit_step_alert_cancel_save">Yes, Save</string>
-    <string name="rsb_edit_step_alert_cancel_discard">No, Discard</string>
-    <string name="rsb_edit_step_alert_cancel_title">Please note that any changes will be discarded if you proceed.</string>
+    <string name="rsb_edit_step_alert_cancel_save">[cs-CZ] Yes, Save</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[cs-CZ] No, Discard</string>
+    <string name="rsb_edit_step_alert_cancel_title">[cs-CZ] Please note that any changes will be discarded if you proceed.</string>
 
 </resources>
