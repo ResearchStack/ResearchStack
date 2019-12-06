@@ -156,5 +156,6 @@
     <string name="rsb_edit_step_alert_cancel_save">[es-MX] Yes, Save</string>
     <string name="rsb_edit_step_alert_cancel_discard">[es-MX] No, Discard</string>
     <string name="rsb_edit_step_alert_cancel_title">[es-MX] Please note that any changes will be discarded if you proceed.</string>
+    <string name="rsb_edit_step_alert_step_save">[es-MX] Are you sure you want to save your changes? If so, other responses may be cleared and you may be asked to submit new information.</string>
 
 </resources>
