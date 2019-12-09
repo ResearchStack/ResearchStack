@@ -267,7 +267,8 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     fun cancelEditDismiss() {
-        stack.push(currentStep)
+        if(stack.empty())
+          stack.push(currentStep)
     }
 
 
