@@ -51,7 +51,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     val moveReviewStep = MutableLiveData<StepNavigationEvent>()
     val showEditDialog = MutableLiveData<Boolean>()
     val updateCancelEditInLayout = MutableLiveData<Boolean>()
-    val stepInBackMode = MutableLiveData<Boolean>()
+    val stepBackNavigationState = MutableLiveData<Boolean>()
     val hideMenuItemCancel = MutableLiveData<Boolean>()
 
 
@@ -176,7 +176,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
                     previousStep(lastVisibleStep)
                 } else {
                     taskResult.removeStepResultForStep(currentStep!!)
-                    stepInBackMode.postValue(true)
+                    stepBackNavigationState.postValue(true)
                     currentStep = previousStep
                     currentStepEvent.value = StepNavigationEvent(popUpToStep = popUpToStep, step = previousStep, isMovingForward = false)
                 }
