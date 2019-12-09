@@ -43,6 +43,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
     private val navController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
     private var currentStepLayout: StepLayout? = null
     private var stepPermissionListener: PermissionListener? = null
+    private var actionBarCancelMenuItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +74,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
                     {
                         it.dismiss()
                         viewModel.cancelEditDismiss()
-                    }, { viewModel.removeUpdatedLayout()}) }
+                    }, { viewModel.removeUpdatedLayout() }) }
 
         observe(viewModel.editStep) {
             navController.navigate(it.destinationId)
@@ -85,6 +86,12 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
                 Log.d("TaskActivity", "current fragment ${destination.label}")
             }
         })
+
+        observe(viewModel.hideMenuItemCancel) { inEditMode ->
+            actionBarCancelMenuItem?.let {
+                it.isVisible = !inEditMode
+            }
+        }
     }
 
     override fun onPause() {
@@ -95,6 +102,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.rsb_activity_view_task_menu, menu)
+        actionBarCancelMenuItem = menu.findItem(R.id.rsb_action_cancel)
         return true
     }
 
