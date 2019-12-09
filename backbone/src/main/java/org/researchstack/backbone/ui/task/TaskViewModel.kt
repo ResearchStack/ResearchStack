@@ -21,10 +21,13 @@ import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK_RESULT
 import java.util.Date
 import java.util.Stack
+import kotlin.properties.Delegates
 
 internal class TaskViewModel(val context: Application, intent: Intent) : AndroidViewModel(context) {
 
-    var editing = false
+    var editing : Boolean by Delegates.observable(false) { _, _, newValue ->
+        hideMenuItemCancel.postValue(newValue)
+    }
     var currentStep: Step? = null
 
 
@@ -48,6 +51,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     val moveReviewStep = MutableLiveData<StepNavigationEvent>()
     val showEditDialog = MutableLiveData<Boolean>()
     val updateCancelEditInLayout = MutableLiveData<Boolean>()
+    val hideMenuItemCancel = MutableLiveData<Boolean>()
 
 
     private var taskResult: TaskResult
