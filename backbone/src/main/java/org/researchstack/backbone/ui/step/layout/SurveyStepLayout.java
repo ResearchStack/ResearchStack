@@ -62,7 +62,12 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     private boolean isSkipped = false;
     private boolean isCancelEdit = false;
+    private boolean removeFomBackStack = false;
 
+
+    public void setRemoveFomBackStack(boolean backMode) {
+        removeFomBackStack = backMode;
+    }
 
     private MediatorLiveData<Boolean> mediator = new MediatorLiveData<>();
     private boolean allStepsAreOptional;
@@ -260,8 +265,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     @Override
     public Parcelable onSaveInstanceState() {
-//        if (!isCancelEdit)
-//            callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(isSkipped));
+        if (!isCancelEdit && !removeFomBackStack)
+            callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(isSkipped));
         return super.onSaveInstanceState();
     }
 

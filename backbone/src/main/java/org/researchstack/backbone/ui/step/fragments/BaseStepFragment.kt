@@ -58,6 +58,10 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
                 viewModel.updateCancelEditInLayout.observe(this, Observer {
                     stepView.setCancelEditMode(it)
                 })
+
+                viewModel.stepInBackMode.observe(this, Observer {
+                    stepView.setRemoveFomBackStack(it)
+                })
             }
             is StepLayout -> {
                 stepView.initialize(currentStep, stepResult)
