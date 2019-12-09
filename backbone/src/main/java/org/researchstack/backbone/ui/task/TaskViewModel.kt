@@ -166,6 +166,8 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
         } else {
             val previousStep = task.getStepBeforeStep(currentStep, taskResult)
+            taskResult.removeStepResultForStep(currentStep!!)
+            stepBackNavigationState.postValue(true)
             if (previousStep == null) {
                 close()
             } else {
@@ -175,8 +177,6 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
                     // The previous step was a hidden one so we go previousStep again
                     previousStep(lastVisibleStep)
                 } else {
-                    taskResult.removeStepResultForStep(currentStep!!)
-                    stepBackNavigationState.postValue(true)
                     currentStep = previousStep
                     currentStepEvent.value = StepNavigationEvent(popUpToStep = popUpToStep, step = previousStep, isMovingForward = false)
                 }
