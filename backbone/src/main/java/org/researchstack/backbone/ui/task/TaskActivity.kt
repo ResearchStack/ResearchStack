@@ -52,7 +52,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         observe(viewModel.currentStepEvent) { showStep(it) }
         observe(viewModel.taskCompleted) { close(it) }
