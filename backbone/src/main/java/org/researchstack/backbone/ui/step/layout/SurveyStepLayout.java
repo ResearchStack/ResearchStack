@@ -260,8 +260,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     @Override
     public Parcelable onSaveInstanceState() {
-        if (!isCancelEdit)
-            callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(isSkipped));
+//        if (!isCancelEdit)
+//            callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(isSkipped));
         return super.onSaveInstanceState();
     }
 

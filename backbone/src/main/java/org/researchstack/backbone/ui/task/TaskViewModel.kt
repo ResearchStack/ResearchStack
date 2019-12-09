@@ -165,6 +165,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
         } else {
             val previousStep = task.getStepBeforeStep(currentStep, taskResult)
+            taskResult.removeStepResultForStep(currentStep!!)
             if (previousStep == null) {
                 close()
             } else {

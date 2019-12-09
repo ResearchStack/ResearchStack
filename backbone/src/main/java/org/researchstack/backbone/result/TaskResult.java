@@ -106,6 +106,16 @@ public class TaskResult extends Result implements Cloneable {
         stepsAndResults.put(step, stepResult);
     }
 
+    /**
+     * Remove the Step's result associated with the entire step
+     *
+     * @param step       the Step
+     */
+    public void removeStepResultForStep(@NonNull Step step) {
+        results.remove(step.getIdentifier());
+        stepsAndResults.remove(step);
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         TaskResult cloned = (TaskResult) super.clone();
