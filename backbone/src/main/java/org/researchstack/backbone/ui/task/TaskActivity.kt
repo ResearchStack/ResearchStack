@@ -81,7 +81,6 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
             navController.navigate(it.destinationId)
             supportActionBar?.title = ""
         }
-//        NavigationUI.setupActionBarWithNavController(this, navController)
 
         navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener {
             override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
