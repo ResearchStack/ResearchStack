@@ -284,7 +284,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     fun checkForSaveDialog(stepResult: StepResult<*>?) {
-        if (!isSavedDialogAppeared && !checkIfAnswerAreTheSame(stepResult)) {
+        if (!isSavedDialogAppeared && !checkIfAnswersAreTheSame(stepResult)) {
             isSavedDialogAppeared = true
             showSaveEditDialog.postValue(true)
         } else {
@@ -296,7 +296,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         isSavedDialogAppeared = false
     }
 
-    private fun checkIfAnswerAreTheSame(currentAnswer: StepResult<*>?): Boolean {
+    private fun checkIfAnswersAreTheSame(currentAnswer: StepResult<*>?): Boolean {
         return clonedTaskResultInCaseOfCancel?.let {
             val previousAnswer = it.getStepAndResult(currentStep!!.identifier).second
             return previousAnswer?.let { previousAnswerResult ->
