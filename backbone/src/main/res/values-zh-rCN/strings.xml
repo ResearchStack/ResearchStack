@@ -137,9 +137,13 @@
     <string name="rsb_consent_doc_line_date">日期</string>
     <string name="rsb_consent_role">参加者</string>
     <string name="rsb_consent_doc_line_date_format">月-日-年</string>
-    <string name="rsb_edit_step_alert_cancel_save">[zh-CN] Yes, Save</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[zh-CN] No, Discard</string>
-    <string name="rsb_edit_step_alert_cancel_title">[zh-CN] Please note that any changes will be discarded if you proceed.</string>
-    <string name="rsb_edit_step_alert_step_save">[zh-CN] Are you sure you want to save your changes? If so, other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_cancel_positive">[zh-CN] YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[zh-CN] NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">[zh-CN] Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">[zh-CN] All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">[zh-CN] Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">[zh-CN] Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">[zh-CN] No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">[zh-CN] Yes, Save</string>
 
 </resources>

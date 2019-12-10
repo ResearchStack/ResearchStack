@@ -152,9 +152,12 @@
     <string name="rsb_consent_doc_line_date">Tarih</string>
     <string name="rsb_consent_role">Katılımcı</string>
     <string name="rsb_consent_doc_line_date_format">gg-aa-yyyy</string>
-    <string name="rsb_edit_step_alert_cancel_save">[tr-TR] Yes, Save</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[tr-TR] No, Discard</string>
-    <string name="rsb_edit_step_alert_cancel_title">[tr-TR] Please note that any changes will be discarded if you proceed.</string>
-    <string name="rsb_edit_step_alert_step_save">[tr-TR] Are you sure you want to save your changes? If so, other responses may be cleared and you may be asked to submit new information.</string>
-
+    <string name="rsb_edit_step_alert_cancel_positive">[tr-TR] YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[tr-TR] NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">[tr-TR] Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">[tr-TR] All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">[tr-TR] Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">[tr-TR] Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">[tr-TR] No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">[tr-TR] Yes, Save</string>
 </resources>

@@ -177,9 +177,13 @@
 
     <!-- Edit -->
     <string name="rsb_consent_review_save">Save</string>
-    <string name="rsb_edit_step_alert_cancel_save">Yes, Save</string>
-    <string name="rsb_edit_step_alert_cancel_discard">No, Discard</string>
-    <string name="rsb_edit_step_alert_cancel_title">Please note that any changes will be discarded if you proceed.</string>
-    <string name="rsb_edit_step_alert_step_save">Are you sure you want to save your changes? If so, other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_cancel_positive">YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Yes, Save</string>
 
 </resources>

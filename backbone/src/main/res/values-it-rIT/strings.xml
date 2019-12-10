@@ -137,9 +137,13 @@
     <string name="rsb_consent_doc_line_date">Data</string>
     <string name="rsb_consent_role">Partecipante</string>
     <string name="rsb_consent_doc_line_date_format">gg-MM-aaaa</string>
-    <string name="rsb_edit_step_alert_cancel_save">[it-IT] Yes, Save</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[it-IT] No, Discard</string>
-    <string name="rsb_edit_step_alert_cancel_title">[it-IT] Please note that any changes will be discarded if you proceed.</string>
-    <string name="rsb_edit_step_alert_step_save">[it-IT] Are you sure you want to save your changes? If so, other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_cancel_positive">[it-IT] YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[it-IT] NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">[it-IT] Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">[it-IT] All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">[it-IT] Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">[it-IT] Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">[it-IT] No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">[it-IT] Yes, Save</string>
 
 </resources>
