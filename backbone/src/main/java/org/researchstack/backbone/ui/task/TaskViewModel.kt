@@ -99,11 +99,6 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
             // Current step with branches?
             hasBranching = clonedTaskResult?.getStepResult(nextStep.identifier) == null
 
-            if (hasBranching) {
-                Log.d(TAG, "Starting a new branch, show warning!")
-            } else {
-                Log.d(TAG, "Same branch")
-            }
 
             if (hasBranching) {
                 stack.push(currentStep)
@@ -284,7 +279,8 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     fun checkForSaveDialog(stepResult: StepResult<*>?) {
-        if (!isSavedDialogAppeared && !checkIfAnswersAreTheSame(stepResult)) {
+        if ((!isSavedDialogAppeared && !checkIfAnswersAreTheSame(stepResult) && checkIfCurrentStepIsBranchDecisionStep()) ||
+                (currentStep!!.isOptional && checkIfTheNewAnswerIsSkipWhileThePreviousIsNot(stepResult))) {
             isSavedDialogAppeared = true
             showSaveEditDialog.postValue(true)
         } else {
@@ -305,5 +301,23 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
                 } ?: false
             } ?: false
         } ?: false
+    }
+
+
+    private fun checkIfTheNewAnswerIsSkipWhileThePreviousIsNot(currentAnswer: StepResult<*>?): Boolean {
+        return clonedTaskResultInCaseOfCancel?.let {
+            val previousAnswer = it.getStepAndResult(currentStep!!.identifier).second
+            return previousAnswer?.let { previousAnswerResult ->
+                previousAnswerResult.result !=null &&  currentAnswer?.let { currentAnswerResult ->
+                    return currentAnswerResult.result == null
+                } ?: false
+            } ?: false
+        } ?: false
+    }
+
+
+    private fun checkIfCurrentStepIsBranchDecisionStep(): Boolean {
+        var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
+        return currentTaskResult.getStepResult(nextStep.identifier) == null && !isReviewStep(nextStep)
     }
 }

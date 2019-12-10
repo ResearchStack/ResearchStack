@@ -62,6 +62,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     private boolean isSkipped = false;
     private boolean isCancelEdit = false;
+    private boolean isEditViewVisible = false;
     private boolean removeFromBackStack = false;
 
 
@@ -158,6 +159,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
 
     public void isEditView(boolean isEditView) {
+        isEditViewVisible = isEditView;
         if (isEditView) {
             submitBar.getPositiveActionView().setVisibility(GONE);
             submitBar.getEditCancelViewActionView().setVisibility(VISIBLE);
@@ -293,7 +295,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         if (callbacks != null) {
             // empty step result when skipped
             isSkipped = true;
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+            callbacks.onSaveStep(isEditViewVisible ? ACTION_SAVE : StepCallbacks.ACTION_NEXT,
                     getStep(),
                     stepBody.getStepResult(isSkipped));
         }
