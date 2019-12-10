@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Backbone App</string>
+    <string name="consent_button">Start Consent</string>
+    <string name="survey_button">Take Survey</string>
+    <string name="consent_button_done">Consented</string>
+    <string name="clear_button">Clear</string>
+    <string name="survey">Survey</string>
+    <string name="menu_data_cleared">Data has been cleared</string>
+    <string name="user_name">User Name:</string>
+    <string name="date_consented">Date Consented:</string>
+</resources>
