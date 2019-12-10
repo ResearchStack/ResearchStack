@@ -71,7 +71,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
                     R.string.rsb_task_cancel_title,
                     R.string.rsb_edit_step_alert_cancel_title,
                     R.string.rsb_edit_step_alert_cancel_discard,
-                    R.string.rsb_edit_step_alert_cancel_save,
+                    R.string.rsb_edit_step_alert_cancel_positive,
                     {
                         it.dismiss()
                         viewModel.cancelEditDismiss()
