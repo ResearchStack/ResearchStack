@@ -144,6 +144,9 @@ public class StepResult<T> extends Result implements Cloneable {
             boolean isCloned = false;
             if (e.getValue() instanceof Cloneable) {
                 try {
+                    // This is going to clone any object of the type Cloneable, This is inevitable because we need to
+                    // clone every answer in the results map in order to able to make changes to the original object
+                    // without affecting the cloned one.
                     Method method = e.getValue().getClass().getDeclaredMethod("clone");
                     method.setAccessible(true);
 
