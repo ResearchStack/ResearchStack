@@ -1,8 +1,10 @@
 package org.researchstack.backbone.step;
 
+import androidx.annotation.NonNull;
 import org.researchstack.backbone.task.Task;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Step is the base class for the steps that can compose a task for presentation in an {@link
@@ -20,7 +22,7 @@ import java.io.Serializable;
  * To implement a new type of step, subclass Step and add your additional properties. Separately,
  * subclass StepLayout and implement your user interface.
  */
-public class Step implements Serializable {
+public class Step implements Serializable ,Cloneable{
     private String identifier;
     private Class stepLayoutClass;
     private int stepTitle;
@@ -252,6 +254,10 @@ public class Step implements Serializable {
         return stepLayoutClass;
     }
 
+    public int getDestinationId() {
+        return 0;
+    }
+
     /**
      * Sets the class that should be used to display this step
      *
@@ -332,5 +338,29 @@ public class Step implements Serializable {
      */
     public String getHiddenDefaultValue() {
         return hiddenDefaultValue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Step step = (Step) o;
+        return Objects.equals(identifier, step.identifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identifier);
+    }
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Step cloned = (Step) super.clone();
+
+        cloned.identifier = identifier;
+        cloned.stepLayoutClass = stepLayoutClass;
+
+        return cloned;
     }
 }

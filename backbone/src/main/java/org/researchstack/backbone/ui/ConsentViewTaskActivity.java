@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout.KEY_SIGNATURE;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_TASK;
 
 public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCallbacks {
 

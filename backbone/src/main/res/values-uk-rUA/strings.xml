@@ -153,5 +153,12 @@
     <string name="rsb_consent_doc_line_date">Дата</string>
     <string name="rsb_consent_role">Учасник</string>
     <string name="rsb_consent_doc_line_date_format">дд-ММ-рррр</string>
-
+    <string name="rsb_edit_step_alert_cancel_positive">[uk-UA] YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[uk-UA] NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">[uk-UA] Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">[uk-UA] All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">[uk-UA] Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">[uk-UA] Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">[uk-UA] No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">[uk-UA] Yes, Save</string>
 </resources>

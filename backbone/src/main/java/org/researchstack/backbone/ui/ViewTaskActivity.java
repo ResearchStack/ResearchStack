@@ -1,5 +1,15 @@
 package org.researchstack.backbone.ui;
 
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_TASK_RESULT;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_ACTION_FAILED_COLOR;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_COLOR_PRIMARY;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_COLOR_PRIMARY_DARK;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_COLOR_SECONDARY;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_PRINCIPAL_TEXT_COLOR;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_SECONDARY_TEXT_COLOR;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_TASK;
+import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_STEP;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,6 +33,10 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
+import java.lang.reflect.Constructor;
+import java.util.Date;
+import java.util.List;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
@@ -41,10 +55,6 @@ import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
 import org.researchstack.backbone.utils.ViewUtils;
 
-import java.lang.reflect.Constructor;
-import java.util.Date;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -52,17 +62,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, PermissionMediator {
-    public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
-    public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
-    public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
-    public static final String EXTRA_COLOR_PRIMARY = "ViewTaskActivity.ExtraColorPrimary";
-    public static final String EXTRA_COLOR_PRIMARY_DARK = "ViewTaskActivity.ExtraColorPrimaryDark";
-    public static final String EXTRA_COLOR_SECONDARY = "ViewTaskActivity.ExtraColorSecondary";
-    public static final String EXTRA_PRINCIPAL_TEXT_COLOR = "ViewTaskActivity.ExtraPrincipalTextColor";
-    public static final String EXTRA_SECONDARY_TEXT_COLOR = "ViewTaskActivity.ExtraSecondaryTextColor";
-    public static final String EXTRA_ACTION_FAILED_COLOR = "ViewTaskActivity.ExtraActionFailedColor";
-
     private static final int STEP_PERMISSION_REQUEST = 44;
+    private static final int STEP_PERMISSION_LISTENER_REQUEST = 45;
 
     private StepSwitcher root;
 
@@ -80,6 +81,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     private ActionBar actionBar;
 
     private int stepCount = 0;
+    private PermissionListener stepPermissionListener;
 
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
@@ -148,6 +150,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         task.onViewChange(Task.ViewChangeType.ActivityCreate, this, currentStep);
     }
 
+    @Override
+    public void requestPermissions(PermissionListener permissionListener, String... permissions) {
+        stepPermissionListener = permissionListener;
+        requestPermissions(permissions, STEP_PERMISSION_LISTENER_REQUEST);
+        requestPermissions(permissions);
+    }
+
     @RequiresApi(Build.VERSION_CODES.M)
     @Override
     public void requestPermissions(String... permissions) {
@@ -207,6 +216,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
             if (stepBody instanceof PermissionListener) {
                 ((PermissionListener) stepBody).onPermissionGranted(result);
             }
+        } else if (requestCode == STEP_PERMISSION_LISTENER_REQUEST) {
+            PermissionResult result = new PermissionResult(permissions, grantResults);
+            stepPermissionListener.onPermissionGranted(result);
+            stepPermissionListener = null;
         }
     }
 
@@ -483,6 +496,11 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         actionBar.setDisplayShowHomeEnabled(setVisible);
         actionBar.setDisplayHomeAsUpEnabled(setVisible);
         showBackArrow = setVisible;
+    }
+
+    @Override
+    public void onEditCancelStep() {
+    // only when user on edit mode inside reqgular steps
     }
 
     public void setActionBarTitle(String title) {

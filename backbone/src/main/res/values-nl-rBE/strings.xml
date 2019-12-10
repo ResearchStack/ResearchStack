@@ -137,5 +137,13 @@
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Deelnemer</string>
     <string name="rsb_consent_doc_line_date_format">MM-dd-jjjj</string>
+    <string name="rsb_edit_step_alert_cancel_positive">[nl-BE] YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[nl-BE] NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">[nl-BE] Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">[nl-BE] All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">[nl-BE] Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">[nl-BE] Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">[nl-BE] No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">[nl-BE] Yes, Save</string>
 
 </resources>

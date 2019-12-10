@@ -22,4 +22,10 @@
     <dimen name="rsb_text_size_title">35sp</dimen>
     <dimen name="rsb_text_size_summary">18sp</dimen>
 
+    <!-- ReviewStep Dimensions -->
+    <dimen name="rsb_reviewStep_item_bottom_padding">10dp</dimen>
+    <dimen name="rsb_reviewStep_item_question_bottom_padding">10dp</dimen>
+    <dimen name="rsb_reviewStep_item_title_bottom_margin">13dp</dimen>
+
+
 </resources>
