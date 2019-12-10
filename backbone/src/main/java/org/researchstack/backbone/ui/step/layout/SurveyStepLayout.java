@@ -32,7 +32,7 @@ import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
 
-import static org.researchstack.backbone.ui.callbacks.StepCallbacks.ACTION_NEXT;
+import static org.researchstack.backbone.ui.callbacks.StepCallbacks.ACTION_SAVE;
 
 public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
@@ -218,7 +218,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         });
 
         submitBar.setEditSaveAction(view -> {
-            callbacks.onSaveStep(ACTION_NEXT, getStep(),
+            callbacks.onSaveStep(ACTION_SAVE, getStep(),
                     stepBody.getStepResult(isSkipped));
         });
     }

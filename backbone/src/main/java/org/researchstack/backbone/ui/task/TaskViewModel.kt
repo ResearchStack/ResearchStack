@@ -49,11 +49,13 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     val taskCompleted = SingleLiveEvent<Boolean>()
     val currentStepEvent = MutableLiveData<StepNavigationEvent>()
     val moveReviewStep = MutableLiveData<StepNavigationEvent>()
-    val showEditDialog = MutableLiveData<Boolean>()
+    val showCancelEditDialog = MutableLiveData<Boolean>()
     val updateCancelEditInLayout = MutableLiveData<Boolean>()
     val hideMenuItemCancel = MutableLiveData<Boolean>()
+    val showSaveEditDialog = MutableLiveData<Boolean>()
 
 
+    private var isSavedDialogAppeared = false
     private var taskResult: TaskResult
     private var clonedTaskResult: TaskResult? = null
     private var clonedTaskResultInCaseOfCancel: TaskResult? = null
@@ -193,6 +195,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         stack.push(currentStep)
         currentStep = step
         editing = true
+        isSavedDialogAppeared = false
         if (clonedTaskResultInCaseOfCancel == null) {
             clonedTaskResultInCaseOfCancel = taskResult.clone() as TaskResult
         }
@@ -215,14 +218,14 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     private fun getReviewStep(): Step {
-       return currentStep?.let {
-           var nextStep = it
-           var isReviewStep =  isReviewStep(nextStep)
-           while (!isReviewStep) {
-               nextStep = task.getStepAfterStep(nextStep, currentTaskResult)
-               isReviewStep = isReviewStep(nextStep)
-           }
-           return nextStep
+        return currentStep?.let {
+            var nextStep = it
+            var isReviewStep =  isReviewStep(nextStep)
+            while (!isReviewStep) {
+                nextStep = task.getStepAfterStep(nextStep, currentTaskResult)
+                isReviewStep = isReviewStep(nextStep)
+            }
+            return nextStep
         } ?: task.getStepAfterStep(null, currentTaskResult)
     }
 
@@ -263,7 +266,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
 
     fun showCancelEditAlert() {
-        showEditDialog.postValue(true)
+        showCancelEditDialog.postValue(true)
     }
 
     fun cancelEditDismiss() {
@@ -272,9 +275,32 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
 
     fun removeUpdatedLayout() {
-        updateCancelEditInLayout.postValue(true)
         goToReviewStep()
         stack.clear()
         editing = false
+    }
+
+    fun checkForSaveDialog(stepResult: StepResult<*>?) {
+        if (!isSavedDialogAppeared && !checkIfAnswerAreTheSame(stepResult)) {
+            isSavedDialogAppeared = true
+            showSaveEditDialog.postValue(true)
+        } else {
+            nextStep()
+        }
+    }
+
+    fun saveEditDialogDismiss() {
+        isSavedDialogAppeared = false
+    }
+
+    private fun checkIfAnswerAreTheSame(currentAnswer: StepResult<*>?): Boolean {
+        return clonedTaskResultInCaseOfCancel?.let {
+            val previousAnswer = it.getStepAndResult(currentStep!!.identifier).second
+            return previousAnswer?.let { previousAnswerResult ->
+                previousAnswerResult.result == currentAnswer?.let { currentAnswerResult ->
+                    currentAnswerResult.result
+                } ?: false
+            } ?: false
+        } ?: false
     }
 }

@@ -78,6 +78,9 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
             StepCallbacks.ACTION_NEXT -> viewModel.nextStep()
             StepCallbacks.ACTION_PREV -> viewModel.previousStep()
             StepCallbacks.ACTION_END -> viewModel.taskCompleted.value = true
+            StepCallbacks.ACTION_SAVE -> {
+                viewModel.checkForSaveDialog(result)
+            }
             StepCallbacks.ACTION_NONE -> {
                 // Used when onSaveInstanceState is called of a view. No action is taken.
             }
