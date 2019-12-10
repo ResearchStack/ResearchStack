@@ -215,14 +215,14 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     private fun getReviewStep(): Step {
-       return currentStep?.let {
-           var nextStep = it
-           var isReviewStep =  isReviewStep(nextStep)
-           while (!isReviewStep) {
-               nextStep = task.getStepAfterStep(nextStep, currentTaskResult)
-               isReviewStep = isReviewStep(nextStep)
-           }
-           return nextStep
+        return currentStep?.let {
+            var nextStep = it
+            var isReviewStep =  isReviewStep(nextStep)
+            while (!isReviewStep) {
+                nextStep = task.getStepAfterStep(nextStep, currentTaskResult)
+                isReviewStep = isReviewStep(nextStep)
+            }
+            return nextStep
         } ?: task.getStepAfterStep(null, currentTaskResult)
     }
 
@@ -267,8 +267,8 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     fun cancelEditDismiss() {
-        if(stack.empty())
-          stack.push(currentStep)
+        if (stack.empty())
+            stack.push(currentStep)
     }
 
 
