@@ -22,12 +22,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.researchstack.backbone.R
+import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.task.Task
 import org.researchstack.backbone.ui.PinCodeActivity
 import org.researchstack.backbone.ui.permissions.PermissionListener
@@ -52,11 +52,12 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         observe(viewModel.currentStepEvent) { showStep(it) }
         observe(viewModel.taskCompleted) { close(it) }
         observe(viewModel.moveReviewStep) {
+            showStepTitle(it.step)
             navController.navigate(it.step.destinationId, null,
                     NavOptions.Builder().setPopUpTo(
                             viewModel.firstStep.destinationId,
@@ -78,8 +79,8 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         observe(viewModel.editStep) {
             navController.navigate(it.destinationId)
+            supportActionBar?.title = ""
         }
-        NavigationUI.setupActionBarWithNavController(this, navController)
 
         navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener {
             override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
@@ -235,8 +236,14 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         if (navigationEvent.popUpToStep == null) {
             navController.navigate(navigationEvent.step.destinationId)
         }
-        supportActionBar?.title = viewModel.task.getTitleForStep(this, navigationEvent.step)
+        showStepTitle(navigationEvent.step)
         setActivityTheme(viewModel.colorPrimary, viewModel.colorPrimaryDark)
+    }
+
+    private fun showStepTitle(step: Step) {
+        supportActionBar?.title =
+                if (viewModel.editing) ""
+                else viewModel.task.getTitleForStep(this, step)
     }
 
     private fun hideKeyboard() {

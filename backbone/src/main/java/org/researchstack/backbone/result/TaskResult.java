@@ -106,18 +106,34 @@ public class TaskResult extends Result implements Cloneable {
         stepsAndResults.put(step, stepResult);
     }
 
+    /**
+     * Remove the Step's result associated with the entire step
+     *
+     * @param step       the Step
+     */
+    public void removeStepResultForStep(@NonNull Step step) {
+        results.remove(step.getIdentifier());
+        stepsAndResults.remove(step);
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         TaskResult cloned = (TaskResult) super.clone();
 
         cloned.results = new HashMap<>();
         for (Map.Entry<String, StepResult> e : results.entrySet()) {
-            cloned.results.put(e.getKey(), (StepResult) e.getValue().clone());
+            // Checking for null is necessary to avoid NullPointerException caused by having "Health Data Permission"
+            // step in ReviewStep
+            if (e.getKey() != null && e.getValue() != null) {
+                cloned.results.put(e.getKey(), (StepResult) e.getValue().clone());
+            }
         }
 
         cloned.stepsAndResults = new LinkedHashMap<>();
-        for (Map.Entry<Step, StepResult> e : stepsAndResults.entrySet())
-            cloned.stepsAndResults.put((Step) e.getKey().clone(), (StepResult) e.getValue().clone());
+        for(Map.Entry<Step, StepResult> e : stepsAndResults.entrySet()) {
+            if (e.getKey() != null && e.getValue() != null)
+                cloned.stepsAndResults.put((Step) e.getKey().clone(), (StepResult) e.getValue().clone());
+        }
 
         return cloned;
     }
