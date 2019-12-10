@@ -145,6 +145,7 @@
     <string name="rsb_edit_step_alert_step_save_content">[fr-CA] Other responses may be cleared and you may be asked to submit new information.</string>
     <string name="rsb_edit_step_alert_step_save_discard">[fr-CA] No, Discard</string>
     <string name="rsb_edit_step_alert_step_save_positive">[fr-CA] Yes, Save</string>
+    <string name="rsb_consent_review_save">[fr-CA] Save</string>
 
 
 </resources>

@@ -161,4 +161,5 @@
     <string name="rsb_edit_step_alert_step_save_content">[uk-UA] Other responses may be cleared and you may be asked to submit new information.</string>
     <string name="rsb_edit_step_alert_step_save_discard">[uk-UA] No, Discard</string>
     <string name="rsb_edit_step_alert_step_save_positive">[uk-UA] Yes, Save</string>
+    <string name="rsb_consent_review_save">[uk-UA] Save</string>
 </resources>
