@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import org.researchstack.backbone.R
 import org.researchstack.backbone.result.StepResult
 import org.researchstack.backbone.result.TaskResult
+import org.researchstack.backbone.step.FormStep
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.task.Task
 import org.researchstack.backbone.ui.SingleLiveEvent
@@ -25,7 +26,7 @@ import kotlin.properties.Delegates
 
 internal class TaskViewModel(val context: Application, intent: Intent) : AndroidViewModel(context) {
 
-    var editing : Boolean by Delegates.observable(false) { _, _, newValue ->
+    var editing: Boolean by Delegates.observable(false) { _, _, newValue ->
         hideMenuItemCancel.postValue(newValue)
     }
     var currentStep: Step? = null
@@ -150,7 +151,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
      * @param popUpToStep Used to keep track of the last visible step before encountering any hidden steps, as we might
      * have several consecutive hidden steps
      */
-    fun previousStep(popUpToStep : Step? = currentStep) {
+    fun previousStep(popUpToStep: Step? = currentStep) {
         Log.d(TAG, "1. CURRENT STEP: $currentStep")
         if (editing) {
             val tempCurrent = stack.pop()
@@ -217,7 +218,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     private fun getReviewStep(): Step {
         return currentStep?.let {
             var nextStep = it
-            var isReviewStep =  isReviewStep(nextStep)
+            var isReviewStep = isReviewStep(nextStep)
             while (!isReviewStep) {
                 nextStep = task.getStepAfterStep(nextStep, currentTaskResult)
                 isReviewStep = isReviewStep(nextStep)
@@ -261,9 +262,10 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         return results
     }
 
-
     fun showCancelEditAlert() {
-        showCancelEditDialog.postValue(true)
+        val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
+        val modifiedStepResult = taskResult.getStepResult(currentStep?.identifier)
+        showCancelEditDialog.postValue(checkIfAnswersAreTheSame())
     }
 
     fun cancelEditDismiss() {
@@ -279,14 +281,13 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         editing = false
     }
 
-    fun checkForSaveDialog(stepResult: StepResult<*>?) {
+    fun checkForSaveDialog() {
         when {
-            isSavedDialogAppeared.not() && checkIfAnswersAreTheSame(stepResult).not() && checkIfCurrentStepIsBranchDecisionStep() -> {
+            isSavedDialogAppeared.not() && checkIfAnswersAreTheSame() && checkIfCurrentStepIsBranchDecisionStep() -> {
                 isSavedDialogAppeared = true
                 showSaveEditDialog.postValue(true)
             }
-            currentStep!!.isOptional && checkIfNewAnswerIsSkipWhilePreviousIsNot(stepResult) -> {
-                isSavedDialogAppeared = true
+            currentStep!!.isOptional && checkIfNewAnswerIsSkipWhilePreviousIsNot() -> {
                 showSaveEditDialog.postValue(true)
             }
             else -> {
@@ -299,25 +300,17 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         isSavedDialogAppeared = false
     }
 
-    private fun checkIfAnswersAreTheSame(currentAnswer: StepResult<*>?): Boolean {
-        return clonedTaskResultInCaseOfCancel?.let {
-            val previousAnswer = it.getStepAndResult(currentStep!!.identifier).second
-            return previousAnswer?.let { previousAnswerResult ->
-                previousAnswerResult.result == currentAnswer?.result ?: false
-            } ?: false
-        } ?: false
+    private fun checkIfAnswersAreTheSame(): Boolean {
+        val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
+        val modifiedStepResult = taskResult.getStepResult(currentStep?.identifier)
+        return originalStepResult?.equals(modifiedStepResult)?.not() ?: false
     }
 
 
-    private fun checkIfNewAnswerIsSkipWhilePreviousIsNot(currentAnswer: StepResult<*>?): Boolean {
-        return clonedTaskResultInCaseOfCancel?.let {
-            val previousAnswer = it.getStepAndResult(currentStep!!.identifier).second
-            return previousAnswer?.let { previousAnswerResult ->
-                previousAnswerResult.result !=null &&  currentAnswer?.let { currentAnswerResult ->
-                    return currentAnswerResult.result == null
-                } ?: false
-            } ?: false
-        } ?: false
+    private fun checkIfNewAnswerIsSkipWhilePreviousIsNot(): Boolean {
+        val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
+        val modifiedStepResult = taskResult.getStepResult(currentStep?.identifier)
+        return originalStepResult?.result != null && modifiedStepResult.result == null
     }
 
 
