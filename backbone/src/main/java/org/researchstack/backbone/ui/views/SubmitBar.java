@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 
@@ -19,6 +20,7 @@ public class SubmitBar extends LinearLayout {
    //edit step bottom bar
     private TextView editSaveView;
     private TextView editCancelView;
+    private Space editSpaceView;
 
     public SubmitBar(Context context) {
         this(context, null);
@@ -48,6 +50,8 @@ public class SubmitBar extends LinearLayout {
 
         editSaveView = (TextView) findViewById(R.id.bar_submit_edit_save);
         editCancelView = (TextView) findViewById(R.id.bar_submit_edit_cancel);
+
+        editSpaceView = (Space) findViewById(R.id.edit_space_view);
 
         a.recycle();
     }
@@ -142,5 +146,9 @@ public class SubmitBar extends LinearLayout {
 
     public View getEditSaveViewActionView() {
         return editSaveView;
+    }
+
+    public View getEditSpaceView() {
+        return editSpaceView;
     }
 }

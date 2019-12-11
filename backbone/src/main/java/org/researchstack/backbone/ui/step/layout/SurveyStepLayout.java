@@ -164,10 +164,12 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             submitBar.getPositiveActionView().setVisibility(GONE);
             submitBar.getEditCancelViewActionView().setVisibility(VISIBLE);
             submitBar.getEditSaveViewActionView().setVisibility(VISIBLE);
+            submitBar.getEditSpaceView().setVisibility(VISIBLE);
         } else {
             submitBar.getPositiveActionView().setVisibility(VISIBLE);
             submitBar.getEditCancelViewActionView().setVisibility(GONE);
             submitBar.getEditSaveViewActionView().setVisibility(GONE);
+            submitBar.getEditSpaceView().setVisibility(GONE);
         }
     }
 
