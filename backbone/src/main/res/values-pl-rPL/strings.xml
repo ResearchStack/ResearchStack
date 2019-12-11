@@ -168,5 +168,9 @@
     <string name="rsb_edit_step_alert_step_save_discard">[pl-PL] No, Discard</string>
     <string name="rsb_edit_step_alert_step_save_positive">[pl-PL] Yes, Save</string>
     <string name="rsb_consent_review_save">[pl-PL] Save</string>
+    <string name="rsb_edit_step_alert_step_skip_title">[pl-PL] Do you want to skip this step?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">[pl-PL] Your original response will be discarded.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">[pl-PL] YES, SKIP</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">[pl-PL] NO, DON\'T SKIP</string>
 
 </resources>

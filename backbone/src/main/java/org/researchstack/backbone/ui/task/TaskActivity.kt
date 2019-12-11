@@ -115,10 +115,10 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         observe(viewModel.showSkipEditDialog) {
             if (it.first) {
                 showAlertDialog(
-                        R.string.rsb_edit_step_alert_step_save_title,
-                        R.string.rsb_edit_step_alert_step_save_content,
-                        R.string.rsb_edit_step_alert_step_save_discard,
-                        R.string.rsb_edit_step_alert_step_save_positive,
+                        R.string.rsb_edit_step_alert_step_skip_title,
+                        R.string.rsb_edit_step_alert_step_skip_content,
+                        R.string.rsb_edit_step_alert_step_skip_discard,
+                        R.string.rsb_edit_step_alert_step_skip_positive,
                         {dialog ->
                             dialog.dismiss()
                             viewModel.revertToOriginalStepResult(it.second)
