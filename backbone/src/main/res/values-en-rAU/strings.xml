@@ -148,7 +148,7 @@
     <string name="rsb_consent_review_save">[en-AU] Save</string>
     <string name="rsb_edit_step_alert_step_skip_title">[en-AU] Do you want to skip this step?</string>
     <string name="rsb_edit_step_alert_step_skip_content">[en-AU] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[en-AU] YES, SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[en-AU] NO, DON\'T SKIP</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">[en-AU] NO, DON\'T SKIP</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">[en-AU] Yes, skip</string>
 
 </resources>
