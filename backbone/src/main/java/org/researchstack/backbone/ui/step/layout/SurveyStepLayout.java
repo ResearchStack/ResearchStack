@@ -228,6 +228,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         });
 
         submitBar.setEditSaveAction(view -> {
+            isSkipped = false;
             callbacks.onSaveStep(ACTION_SAVE, getStep(),
                     stepBody.getStepResult(isSkipped));
         });
@@ -298,9 +299,19 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         if (callbacks != null) {
             // empty step result when skipped
             isSkipped = true;
-            callbacks.onSaveStep(isEditViewVisible ? ACTION_SAVE : StepCallbacks.ACTION_NEXT,
-                    getStep(),
-                    stepBody.getStepResult(isSkipped));
+            if (isEditViewVisible) {
+                try {
+                    callbacks.onSkipStep(getStep(),
+                            (StepResult<?>) stepBody.getStepResult(false).clone(),
+                            stepBody.getStepResult(isSkipped));
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            }else {
+                callbacks.onSaveStep( StepCallbacks.ACTION_NEXT,
+                        getStep(),
+                        stepBody.getStepResult(isSkipped));
+            }
         }
     }
 

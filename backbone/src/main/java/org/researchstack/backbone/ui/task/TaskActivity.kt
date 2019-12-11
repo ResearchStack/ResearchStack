@@ -68,8 +68,8 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
         observe(viewModel.showCancelEditDialog) {
             if (it) {
-                showAlertDialog(R.string.rsb_task_cancel_title,
-                        R.string.rsb_edit_step_alert_cancel_title,
+                showAlertDialog(R.string.rsb_edit_step_alert_cancel_title,
+                        R.string.rsb_edit_step_alert_cancel_content,
                         R.string.rsb_edit_step_alert_cancel_discard,
                         R.string.rsb_edit_step_alert_cancel_positive,
                         {
@@ -108,7 +108,24 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
                     {
                         it.dismiss()
                         viewModel.saveEditDialogDismiss()
-                    }, { viewModel.nextStep() }) }
+                    }, { viewModel.nextStep() })
+        }
+
+
+        observe(viewModel.showSkipEditDialog) {
+            if (it.first) {
+                showAlertDialog(
+                        R.string.rsb_edit_step_alert_step_save_title,
+                        R.string.rsb_edit_step_alert_step_save_content,
+                        R.string.rsb_edit_step_alert_step_save_discard,
+                        R.string.rsb_edit_step_alert_step_save_positive,
+                        {dialog ->
+                            dialog.dismiss()
+                            viewModel.revertToOriginalStepResult(it.second)
+                        }, { viewModel.nextStep() })
+            }
+        }
+
 
     }
 

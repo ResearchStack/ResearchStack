@@ -19,4 +19,6 @@ public interface StepCallbacks {
 
     void onEditCancelStep();
 
+    void onSkipStep(Step step, StepResult originalStepResult, StepResult modifiedStepResult);
+
 }

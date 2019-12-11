@@ -18,6 +18,9 @@ import org.researchstack.backbone.ui.task.TaskViewModel
 
 internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId), StepCallbacks {
 
+    override fun onSkipStep(step: Step?, originalStepResult: StepResult<*>?, modifiedStepResult: StepResult<*>?) {
+        viewModel.checkForSkipDialog(originalStepResult)
+    }
 
     override fun onEditCancelStep() {
         viewModel.showCancelEditAlert()
