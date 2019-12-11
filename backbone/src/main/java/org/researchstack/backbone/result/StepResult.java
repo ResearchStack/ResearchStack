@@ -6,6 +6,8 @@ import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -124,8 +126,7 @@ public class StepResult<T> extends Result implements Cloneable {
             return false;
         }
         final StepResult<?> result = (StepResult<?>) other;
-        return Objects.equals(getResults(), result.getResults()) &&
-                Objects.equals(getAnswerFormat(), result.getAnswerFormat());
+        return Objects.equals(getResults(), result.getResults());
     }
 
     @Override
@@ -139,13 +140,31 @@ public class StepResult<T> extends Result implements Cloneable {
         StepResult cloned = (StepResult) super.clone();
 
         cloned.results = new HashMap<>();
-        for (Map.Entry<String, T> e : results.entrySet())
-            cloned.results.put(e.getKey(), e.getValue());
+        for (Map.Entry<String, T> e : results.entrySet()) {
+            boolean isCloned = false;
+            if (e.getValue() instanceof Cloneable) {
+                try {
+                    // This is going to clone any object of the type Cloneable, This is inevitable because we need to
+                    // clone every answer in the results map in order to able to make changes to the original object
+                    // without affecting the cloned one.
+                    Method method = e.getValue().getClass().getDeclaredMethod("clone");
+                    method.setAccessible(true);
+
+                    cloned.results.put(e.getKey(), method.invoke(e.getValue()));
+                    isCloned = true;
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (!isCloned) {
+                cloned.results.put(e.getKey(), e.getValue());
+            }
+        }
 
         cloned.answerFormat = answerFormat;
-        cloned.setStartDate(new Date());
+        cloned.setStartDate((Date) getStartDate().clone());
         // this will be updated when the result is set
-        cloned.setEndDate(new Date());
+        cloned.setEndDate((Date) getEndDate().clone());
         return cloned;
     }
 }

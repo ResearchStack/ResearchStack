@@ -67,15 +67,20 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         }
 
         observe(viewModel.showEditDialog) {
-            showAlertDialog(
-                    R.string.rsb_task_cancel_title,
-                    R.string.rsb_edit_step_alert_cancel_title,
-                    R.string.rsb_edit_step_alert_cancel_discard,
-                    R.string.rsb_edit_step_alert_cancel_positive,
-                    {
-                        it.dismiss()
-                        viewModel.cancelEditDismiss()
-                    }, { viewModel.removeUpdatedLayout() }) }
+            if (it) {
+                showAlertDialog(R.string.rsb_task_cancel_title,
+                        R.string.rsb_edit_step_alert_cancel_title,
+                        R.string.rsb_edit_step_alert_cancel_discard,
+                        R.string.rsb_edit_step_alert_cancel_positive,
+                        {
+                            it.dismiss()
+                            viewModel.cancelEditDismiss()
+                        },
+                        { viewModel.removeUpdatedLayout() })
+            } else {
+                viewModel.removeUpdatedLayout()
+            }
+        }
 
         observe(viewModel.editStep) {
             navController.navigate(it.destinationId)

@@ -108,9 +108,7 @@ public class Result implements Serializable {
         }
         final Result result = (Result) o;
         return saveable == result.saveable &&
-                Objects.equals(getIdentifier(), result.getIdentifier()) &&
-                Objects.equals(getStartDate(), result.getStartDate()) &&
-                Objects.equals(getEndDate(), result.getEndDate());
+                Objects.equals(getIdentifier(), result.getIdentifier());
     }
 
     @Override

@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import org.researchstack.backbone.R
 import org.researchstack.backbone.result.StepResult
 import org.researchstack.backbone.result.TaskResult
+import org.researchstack.backbone.step.FormStep
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.task.Task
 import org.researchstack.backbone.ui.SingleLiveEvent
@@ -263,9 +264,11 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         return results
     }
 
-
     fun showCancelEditAlert() {
-        showEditDialog.postValue(true)
+        val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
+        val modifiedStepResult = taskResult.getStepResult(currentStep?.identifier)
+        var showDialog = originalStepResult?.equals(modifiedStepResult)?.not()
+        showEditDialog.postValue(showDialog)
     }
 
     fun cancelEditDismiss() {
