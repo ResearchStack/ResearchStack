@@ -273,6 +273,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     fun removeUpdatedLayout() {
+        updateCancelEditInLayout.postValue(true)
         goToReviewStep()
         stack.clear()
         editing = false
