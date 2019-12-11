@@ -280,12 +280,18 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     fun checkForSaveDialog(stepResult: StepResult<*>?) {
-        if ((!isSavedDialogAppeared && !checkIfAnswersAreTheSame(stepResult) && checkIfCurrentStepIsBranchDecisionStep()) ||
-                (currentStep!!.isOptional && checkIfTheNewAnswerIsSkipWhileThePreviousIsNot(stepResult))) {
-            isSavedDialogAppeared = true
-            showSaveEditDialog.postValue(true)
-        } else {
-            nextStep()
+        when {
+            isSavedDialogAppeared.not() && checkIfAnswersAreTheSame(stepResult).not() && checkIfCurrentStepIsBranchDecisionStep() -> {
+                isSavedDialogAppeared = true
+                showSaveEditDialog.postValue(true)
+            }
+            currentStep!!.isOptional && checkIfNewAnswerIsSkipWhilePreviousIsNot(stepResult) -> {
+                isSavedDialogAppeared = true
+                showSaveEditDialog.postValue(true)
+            }
+            else -> {
+                nextStep()
+            }
         }
     }
 
@@ -297,15 +303,13 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         return clonedTaskResultInCaseOfCancel?.let {
             val previousAnswer = it.getStepAndResult(currentStep!!.identifier).second
             return previousAnswer?.let { previousAnswerResult ->
-                previousAnswerResult.result == currentAnswer?.let { currentAnswerResult ->
-                    currentAnswerResult.result
-                } ?: false
+                previousAnswerResult.result == currentAnswer?.result ?: false
             } ?: false
         } ?: false
     }
 
 
-    private fun checkIfTheNewAnswerIsSkipWhileThePreviousIsNot(currentAnswer: StepResult<*>?): Boolean {
+    private fun checkIfNewAnswerIsSkipWhilePreviousIsNot(currentAnswer: StepResult<*>?): Boolean {
         return clonedTaskResultInCaseOfCancel?.let {
             val previousAnswer = it.getStepAndResult(currentStep!!.identifier).second
             return previousAnswer?.let { previousAnswerResult ->
@@ -318,7 +322,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
 
     private fun checkIfCurrentStepIsBranchDecisionStep(): Boolean {
-        var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
+        val nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
         return currentTaskResult.getStepResult(nextStep.identifier) == null && !isReviewStep(nextStep)
     }
 }
