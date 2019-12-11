@@ -263,8 +263,6 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     fun showCancelEditAlert() {
-        val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
-        val modifiedStepResult = taskResult.getStepResult(currentStep?.identifier)
         showCancelEditDialog.postValue(checkIfAnswersAreTheSame())
     }
 
