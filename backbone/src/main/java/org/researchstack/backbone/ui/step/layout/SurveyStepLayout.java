@@ -223,6 +223,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         }
 
         submitBar.setEditCancelAction(view -> {
+            isSkipped = false;
             stepBody.getStepResult(isSkipped);
             callbacks.onEditCancelStep();
         });
