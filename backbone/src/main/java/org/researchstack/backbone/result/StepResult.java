@@ -172,15 +172,16 @@ public class StepResult<T> extends Result implements Cloneable {
     }
 
     public Boolean allValuesAreNull() {
-        List<Boolean> tempBoolean = new ArrayList<>();
+        int count = 0;
         for (Map.Entry<String, T> e : results.entrySet()) {
-            if (e.getValue() instanceof StepResult) {
-                tempBoolean.add(((StepResult) e.getValue()).getResult() == null);
-            } else {
-                tempBoolean.add(e.getValue() == null);
+            final T value = e.getValue();
+            final boolean isNull = value instanceof StepResult ?
+                    ((StepResult) value).getResult() == null
+                    : value == null;
+            if (isNull) {
+                count++;
             }
         }
-
-        return Collections.frequency(tempBoolean, true) == tempBoolean.size();
+        return results.size() == count;
     }
 }
