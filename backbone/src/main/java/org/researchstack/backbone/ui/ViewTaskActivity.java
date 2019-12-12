@@ -500,7 +500,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
 
     @Override
     public void onEditCancelStep() {
-    // only when user on edit mode inside reqgular steps
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public void onSkipStep(Step step, StepResult originalStepResult, StepResult modifiedStepResult) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
     }
 
     public void setActionBarTitle(String title) {

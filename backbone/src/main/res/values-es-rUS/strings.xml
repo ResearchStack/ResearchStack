@@ -161,4 +161,9 @@
     <string name="rsb_edit_step_alert_step_save_content">[es-US] Other responses may be cleared and you may be asked to submit new information.</string>
     <string name="rsb_edit_step_alert_step_save_discard">[es-US] No, Discard</string>
     <string name="rsb_edit_step_alert_step_save_positive">[es-US] Yes, Save</string>
+    <string name="rsb_consent_review_save">[es-US] Save</string>
+    <string name="rsb_edit_step_alert_step_skip_title">[es-US] Do you want to skip this step?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">[es-US] Your original response will be discarded.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">[es-US] NO, DON\'T SKIP</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">[es-US] Yes, skip</string>
 </resources>

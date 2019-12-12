@@ -145,5 +145,10 @@
     <string name="rsb_edit_step_alert_step_save_content">[cs-CZ] Other responses may be cleared and you may be asked to submit new information.</string>
     <string name="rsb_edit_step_alert_step_save_discard">[cs-CZ] No, Discard</string>
     <string name="rsb_edit_step_alert_step_save_positive">[cs-CZ] Yes, Save</string>
+    <string name="rsb_consent_review_save">[cs-CZ] Save</string>
+    <string name="rsb_edit_step_alert_step_skip_title">[cs-CZ] Do you want to skip this step?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">[cs-CZ] Your original response will be discarded.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">[cs-CZ] NO, DON\'T SKIP</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">[cs-CZ] Yes, skip</string>
 
 </resources>

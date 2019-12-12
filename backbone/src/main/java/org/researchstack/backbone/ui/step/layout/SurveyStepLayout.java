@@ -32,7 +32,7 @@ import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
 
-import static org.researchstack.backbone.ui.callbacks.StepCallbacks.ACTION_NEXT;
+import static org.researchstack.backbone.ui.callbacks.StepCallbacks.ACTION_SAVE;
 
 public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
@@ -62,6 +62,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     private boolean isSkipped = false;
     private boolean isCancelEdit = false;
+    private boolean isEditViewVisible = false;
     private boolean removeFromBackStack = false;
 
 
@@ -158,14 +159,17 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
 
     public void isEditView(boolean isEditView) {
+        isEditViewVisible = isEditView;
         if (isEditView) {
             submitBar.getPositiveActionView().setVisibility(GONE);
             submitBar.getEditCancelViewActionView().setVisibility(VISIBLE);
             submitBar.getEditSaveViewActionView().setVisibility(VISIBLE);
+            submitBar.getEditSpaceView().setVisibility(VISIBLE);
         } else {
             submitBar.getPositiveActionView().setVisibility(VISIBLE);
             submitBar.getEditCancelViewActionView().setVisibility(GONE);
             submitBar.getEditSaveViewActionView().setVisibility(GONE);
+            submitBar.getEditSpaceView().setVisibility(GONE);
         }
     }
 
@@ -219,12 +223,14 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         }
 
         submitBar.setEditCancelAction(view -> {
+            isSkipped = false;
             stepBody.getStepResult(isSkipped);
             callbacks.onEditCancelStep();
         });
 
         submitBar.setEditSaveAction(view -> {
-            callbacks.onSaveStep(ACTION_NEXT, getStep(),
+            isSkipped = false;
+            callbacks.onSaveStep(ACTION_SAVE, getStep(),
                     stepBody.getStepResult(isSkipped));
         });
     }
@@ -294,9 +300,19 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         if (callbacks != null) {
             // empty step result when skipped
             isSkipped = true;
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                    getStep(),
-                    stepBody.getStepResult(isSkipped));
+            if (isEditViewVisible) {
+                try {
+                    callbacks.onSkipStep(getStep(),
+                            (StepResult<?>) stepBody.getStepResult(false).clone(),
+                            stepBody.getStepResult(isSkipped));
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            }else {
+                callbacks.onSaveStep( StepCallbacks.ACTION_NEXT,
+                        getStep(),
+                        stepBody.getStepResult(isSkipped));
+            }
         }
     }
 
