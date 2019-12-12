@@ -8,8 +8,11 @@ import org.researchstack.backbone.step.Step;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -166,5 +169,18 @@ public class StepResult<T> extends Result implements Cloneable {
         // this will be updated when the result is set
         cloned.setEndDate((Date) getEndDate().clone());
         return cloned;
+    }
+
+    public Boolean allValuesAreNull() {
+        List<Boolean> tempBoolean = new ArrayList<>();
+        for (Map.Entry<String, T> e : results.entrySet()) {
+            if (e.getValue() instanceof StepResult) {
+                tempBoolean.add(((StepResult) e.getValue()).getResult() == null);
+            } else {
+                tempBoolean.add(e.getValue()== null);
+            }
+        }
+
+        return Collections.frequency(tempBoolean, true) == tempBoolean.size();
     }
 }

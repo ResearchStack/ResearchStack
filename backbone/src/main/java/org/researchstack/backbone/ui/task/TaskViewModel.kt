@@ -316,7 +316,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     private fun checkIfNewAnswerIsSkipWhilePreviousIsNot(): Boolean {
         val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
         val modifiedStepResult = currentTaskResult.getStepResult(currentStep?.identifier)
-        return originalStepResult?.result != null && modifiedStepResult.result == null
+        return originalStepResult?.allValuesAreNull()!!.not() && modifiedStepResult.allValuesAreNull()
     }
 
 
