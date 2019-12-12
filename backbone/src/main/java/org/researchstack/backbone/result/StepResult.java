@@ -177,7 +177,7 @@ public class StepResult<T> extends Result implements Cloneable {
             if (e.getValue() instanceof StepResult) {
                 tempBoolean.add(((StepResult) e.getValue()).getResult() == null);
             } else {
-                tempBoolean.add(e.getValue()== null);
+                tempBoolean.add(e.getValue() == null);
             }
         }
 
