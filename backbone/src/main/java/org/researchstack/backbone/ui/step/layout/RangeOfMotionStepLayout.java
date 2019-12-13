@@ -84,33 +84,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public void initialize(Step step, StepResult result) {
         super.initialize(step, result);
-
-        LayoutInflater.from(getContext())
-                .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
-
-        setupOnClickListener();
-
-        // These relate to elements of the linear layout, which can be displayed or not
-        titleTextview.setVisibility(View.GONE);
-        textTextview.setVisibility(View.GONE);
-        timerTextview.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
-        progressBarHorizontal.setVisibility(View.GONE);
-        submitBar.setVisibility(View.GONE);
-
-        if (rangeOfMotionStep.hasVoice()) {
-            tts = new TextToSpeech(getContext(), this); // not sure how to set this up - copied from super method
-        }
-
-        if (!checkForAndLoadExistingState()) {
-            if (rangeOfMotionStep.getShouldStartTimerAutomatically()) {
-
-                start();
-
-                //final DeviceMotionRecorder deviceMotionRecorder = new DeviceMotionRecorder();
-                //deviceMotionRecorder.startRecording(rangeOfMotionFilename);
-            }
-        }
     }
 
     @Override
@@ -122,59 +95,33 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         super.validateStep(step);
     }
 
-    private void setupOnClickListener() {
+    @Override
+    public void setupActiveViews() {
+        super.setupActiveViews();
 
-        layout = findViewById(R.id.rsb_active_step_layout_range_of_motion);
+        LayoutInflater.from(getContext())
+                .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
+
+        titleTextview.setVisibility(View.VISIBLE);
+        textTextview.setVisibility(View.GONE); // Will need to change this to VISIBLE for RS framework
+        timerTextview.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        progressBarHorizontal.setVisibility(View.GONE);
+        submitBar.setVisibility(View.GONE);
+
+        setupOnClickListener();
+    }
+
+    private void setupOnClickListener() {
+        layout = findViewById(R.id.rsb_step_layout_range_of_motion);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // we may need to capture finish attitude here if the onTouchEvent() method doesn't capture it.
                 onFinish();
             }
         });
     }
-
-
-    public void onFinish() {
-
-        isRecordingComplete = true;
-
-        RangeOfMotionStepLayout.this.setDataToResult();
-
-        //DeviceMotionRecorder.stopRecording(); // TODO: do we need to implement this?
-
-        unregisterRecorderBroadcastReceivers();
-
-        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, rangeOfMotionStep, rangeOfMotionResult);
-    }
-
-
-    private void setDataToResult() {
-        rangeOfMotionResult.setResultForIdentifier(KEY_RANGE_OF_MOTION, getBase64EncodedAudio()); // TODO: change this to device motion
-    }
-
-
-    private String getBase64EncodedAudio() // TODO: need to implement equivalent for ROM task
-    {
-        if(isRecordingComplete)
-        {
-            File file = new File(rangeOfMotionFilename);
-
-            try {
-                byte[] bytes = FileUtils.readAll(file);
-
-                String encoded = Base64.encodeToString(bytes, Base64.DEFAULT); // TODO: change this to device motion
-                return encoded;
-
-            } catch (Exception e) {
-                return null;
-            }
-        }
-        else
-        {
-            return null;
-        }
-    }
-
 
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
@@ -188,21 +135,28 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 if (DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION.equals(intent.getAction())) {
                     DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder =
                             DeviceMotionRecorder.getDeviceMotionUpdateHolder(intent);
-
                     if (dataHolder != null) {
                         float[] rotation_vector;
 
-                        if (dataHolder.getW() != 0) {
-                            rotation_vector = new float[] {dataHolder.getX(), dataHolder.getY(), dataHolder.getZ(), dataHolder.getW()};
+                        if (dataHolder.getW() != 0.0f) {
+                            rotation_vector = new float[] {
+                                    dataHolder.getX(),
+                                    dataHolder.getY(),
+                                    dataHolder.getZ(),
+                                    dataHolder.getW()
+                            };
                         } else {
-                            rotation_vector = new float[] {dataHolder.getX(), dataHolder.getY(), dataHolder.getZ()};
+                            rotation_vector = new float[] {
+                                    dataHolder.getX(),
+                                    dataHolder.getY(),
+                                    dataHolder.getZ()
+                            };
                         }
                         getDeviceOrientationRelativeToStart(rotation_vector);
                     }
                 }
             }
         };
-
         IntentFilter intentFilter = new IntentFilter(DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION);
         LocalBroadcastManager.getInstance(appContext)
                 .registerReceiver(deviceMotionReceiver, intentFilter);
@@ -215,6 +169,12 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         LocalBroadcastManager.getInstance(appContext).unregisterReceiver(deviceMotionReceiver);
     }
 
+    public void onFinish() {
+        isRecordingComplete = true;
+        stepResultFinished();
+        layout.setOnClickListener(null);
+        stop();
+    }
 
     /**
      * Method to obtain range-shifted Euler angle of first (start) device attitude,
