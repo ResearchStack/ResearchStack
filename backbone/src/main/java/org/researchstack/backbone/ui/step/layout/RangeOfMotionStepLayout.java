@@ -76,12 +76,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     @Override
-    public View getLayout()
-    {
-        return this;
-    }
-
-    @Override
     public void initialize(Step step, StepResult result) {
         super.initialize(step, result);
     }
