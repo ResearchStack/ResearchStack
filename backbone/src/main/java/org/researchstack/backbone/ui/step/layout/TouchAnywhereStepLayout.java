@@ -17,8 +17,10 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 /**
  * Created by David Evans, Simon Hartley, Laurence Hurst, 2019.
  *
- * The TouchAnywhereStepLayout displays instruction text and sets an 'onclicklistener' for the main
- * layout to move to the next step with a single tap of the screen
+ * The TouchAnywhereStepLayout is basically the same as the ActiveStepLayout, except that touching
+ * or tapping (nearly) anywhere on the screen currently skips the step. It is designed to be used
+ * for active tasks during which the user is not looking at the screen, in combination with spoken
+ * instructions that can be set in the TouchAnywhereStep class.
  *
  * */
 
@@ -41,12 +43,6 @@ public class TouchAnywhereStepLayout extends ActiveStepLayout {
     @TargetApi(21)
     public TouchAnywhereStepLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    @Override
-    public View getLayout()
-    {
-        return this;
     }
 
     @Override
@@ -86,4 +82,12 @@ public class TouchAnywhereStepLayout extends ActiveStepLayout {
 
     }
 
+    @Override
+    protected void validateStep(Step step) {
+        if (!(step instanceof TouchAnywhereStep)) {
+            throw new IllegalStateException("TouchAnywhereStepLayout must have a touchanywhereTaskStep");
+        }
+        touchAnywhereStep = (TouchAnywhereStep) step;
+        super.validateStep(step);
+    }
 }
