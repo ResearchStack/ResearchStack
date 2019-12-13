@@ -43,7 +43,7 @@ android {
         }
 
         dev {
-            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'false'
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'true'
         }
 
         automatedFlask {
