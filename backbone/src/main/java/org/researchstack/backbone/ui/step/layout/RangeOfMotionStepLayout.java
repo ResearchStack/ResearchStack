@@ -103,7 +103,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
 
         titleTextview.setVisibility(View.VISIBLE);
-        textTextview.setVisibility(View.GONE); // Will need to change this to VISIBLE for RS framework
+        textTextview.setVisibility(View.VISIBLE);
         timerTextview.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         progressBarHorizontal.setVisibility(View.GONE);
