@@ -360,7 +360,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     /*
-    * Because we call this from onTouchEvent, this code will be executed for both normal touch
+    * Because this is called from onTouchEvent, this code will be executed for both normal touch
     * events and when the system calls this using Accessibility via performClick
     */
 
@@ -382,9 +382,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public float[] getDeviceAttitudeAsQuaternion(float[] rotation_vector) {
 
         float[] attitudeQuaternion = new float[4];
-        int sensorType = sensorEvent.sensor.getType();
 
-        if (sensorType == Sensor.TYPE_ROTATION_VECTOR) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
             SensorManager.getQuaternionFromVector(attitudeQuaternion, rotation_vector);
         }
         return attitudeQuaternion;
@@ -407,7 +406,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         ground), whereas in iOS ResearchKit zero is parallel with the ground. Hence, there will be
         a 90 degree reported difference between these configurations from the same task */
 
-        start = getShiftedStartAngle(); // reports absolute an angle between +270 and -90 degrees
+        start = getShiftedStartAngle(); // reports an absolute angle between +270 and -90 degrees
         rangeOfMotionResult.setStart(start);
 
         /* Because the knee and shoulder tasks task uses pitch in the direction opposite to the
