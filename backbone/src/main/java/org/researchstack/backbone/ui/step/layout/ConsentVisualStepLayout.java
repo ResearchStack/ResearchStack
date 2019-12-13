@@ -82,6 +82,16 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
     }
 
     @Override
+    public void setRemoveFromBackStack(boolean removeFromBackStack) {
+        //no-op only when user on edit mode inside regular steps
+    }
+
+    @Override
+    public void isEditView(boolean isEditView) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
     public int getContentResourceId() {
         return R.layout.rsb_step_layout_consent_visual;
     }

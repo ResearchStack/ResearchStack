@@ -83,6 +83,16 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         // no-op: Only needed when the user is on edit mode inside regular steps
     }
 
+    @Override
+    public void setRemoveFromBackStack(boolean removeFromBackStack) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public void isEditView(boolean isEditView) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
     private void initializeStep() {
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);
