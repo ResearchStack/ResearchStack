@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rsb_active_step_layout_touch_anywhere">
+    android:id="@+id/rsb_step_layout_touch_anywhere">
     
     <TextView
     android:id="@+id/rsb_active_step_layout_touch_anywhere_title"
@@ -17,7 +17,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/rsb_rsb_knee_range_of_motion_touch_anywhere_step_instruction"
         android:textColor="?attr/colorAccent"
-        android:textSize="24dp"
+        android:textSize="20dp"
         />
     
 </RelativeLayout>
