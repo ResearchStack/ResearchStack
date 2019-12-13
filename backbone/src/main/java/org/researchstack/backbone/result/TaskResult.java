@@ -1,5 +1,6 @@
 package org.researchstack.backbone.result;
 
+import org.jetbrains.annotations.NotNull;
 import org.researchstack.backbone.step.Step;
 
 import java.util.HashMap;
@@ -109,30 +110,32 @@ public class TaskResult extends Result implements Cloneable {
     /**
      * Remove the Step's result associated with the entire step
      *
-     * @param step       the Step
+     * @param step the Step
      */
     public void removeStepResultForStep(@NonNull Step step) {
         results.remove(step.getIdentifier());
         stepsAndResults.remove(step);
     }
 
+    @NotNull
     @Override
     public Object clone() throws CloneNotSupportedException {
         TaskResult cloned = (TaskResult) super.clone();
 
         cloned.results = new HashMap<>();
         for (Map.Entry<String, StepResult> e : results.entrySet()) {
-            // Checking for null is necessary to avoid NullPointerException caused by having "Health Data Permission"
-            // step in ReviewStep
+            // Some steps, like Health Data Permission can throw a NullPointerException because they
+            // don't have real results so it must be taken into consideration when cloning references.
             if (e.getKey() != null && e.getValue() != null) {
                 cloned.results.put(e.getKey(), (StepResult) e.getValue().clone());
             }
         }
 
         cloned.stepsAndResults = new LinkedHashMap<>();
-        for(Map.Entry<Step, StepResult> e : stepsAndResults.entrySet()) {
-            if (e.getKey() != null && e.getValue() != null)
+        for (Map.Entry<Step, StepResult> e : stepsAndResults.entrySet()) {
+            if (e.getKey() != null && e.getValue() != null) {
                 cloned.stepsAndResults.put((Step) e.getKey().clone(), (StepResult) e.getValue().clone());
+            }
         }
 
         return cloned;
