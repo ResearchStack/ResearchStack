@@ -42,11 +42,6 @@ import org.researchstack.backbone.utils.MathUtils;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
-    public static final String KEY_RANGE_OF_MOTION = "RangeOfMotionStep.Motion";
-    private StepResult<String> rangeOfMotionResult;
-    private String rangeOfMotionFilename;
-    private TextToSpeech tts;
-
     protected SensorEvent sensorEvent;
     protected RelativeLayout layout;
     protected RangeOfMotionStep rangeOfMotionStep;
