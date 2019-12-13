@@ -71,7 +71,7 @@ public class TouchAnywhereStepLayout extends ActiveStepLayout {
     }
 
     private void setupOnClickListener() {
-        layout = findViewById(R.id.rsb_active_step_layout_touch_anywhere);
+        layout = findViewById(R.id.rsb_step_layout_touch_anywhere);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
