@@ -6,7 +6,7 @@
     android:id="@+id/rsb_active_step_layout_range_of_motion">
     
     <TextView
-    android:id="@+id/rsb_active_step_layout_range_of_motion_title"
+    android:id="@+id/rsb_step_layout_range_of_motion_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -17,7 +17,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/rsb_knee_range_of_motion_spoken_instruction"
         android:textColor="?attr/colorAccent"
-        android:textSize="24dp"
+        android:textSize="20dp"
         />
     
 </RelativeLayout>
