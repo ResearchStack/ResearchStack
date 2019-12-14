@@ -11,7 +11,7 @@ public class RangeOfMotionStep extends ActiveStep {
     public static final int DEFAULT_RANGE_OF_MOTION_STEP_DURATION = 60; // in seconds
 
     /* Default constructor needed for serilization/deserialization of object */
-    RangeOfMotionStep() {
+    public RangeOfMotionStep() {
         super();
     }
 
