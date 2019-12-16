@@ -412,7 +412,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         if (currentStep == null) {
             showNextStep();
         } else {
-            currentStep = task.getStepAfterStep(null, taskResult);
             showStep(currentStep, true);
         }
     }
