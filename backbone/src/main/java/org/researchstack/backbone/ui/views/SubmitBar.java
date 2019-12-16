@@ -95,7 +95,7 @@ public class SubmitBar extends LinearLayout {
 
     public void setPositiveActionDisabled() {
         positiveView.setClickable(false);
-        positiveView.setTextColor(getResources().getColor(R.color.rsb_submit_disabled));
+        positiveView.setTextColor(getContext().getColor(R.color.rsb_submit_disabled));
 
     }
 
@@ -174,7 +174,7 @@ public class SubmitBar extends LinearLayout {
 
     public void setEditSaveActionDisabled() {
         editSaveView.setClickable(false);
-        editSaveView.setTextColor(getResources().getColor(R.color.rsb_submit_disabled));
+        editSaveView.setTextColor(getContext().getColor(R.color.rsb_submit_disabled));
 
     }
 }

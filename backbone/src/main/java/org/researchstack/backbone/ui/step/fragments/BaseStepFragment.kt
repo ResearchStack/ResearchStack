@@ -55,10 +55,12 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
                         viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
                         viewModel.secondaryTextColor)
                 stepView.isStepEmpty.observe(this, Observer { })
+                setupStepCallbacks(stepView)
 
             }
             is StepLayout -> {
                 stepView.initialize(currentStep, stepResult)
+                setupStepCallbacks(stepView)
             }
             is ConsentVisualStepLayout -> stepView.initialize(currentStep, stepResult,
                     viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
@@ -68,17 +70,18 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
             }
         }
 
-        if (stepView is StepLayout) {
-            stepView.setCallbacks(this)
-            stepView.isEditView(viewModel.editing)
-            viewModel.updateCancelEditInLayout.observe(this, Observer {
-                stepView.setCancelEditMode(it)
-            })
+    }
 
-            viewModel.stepBackNavigationState.observe(this, Observer {
-                stepView.setRemoveFromBackStack(it)
-            })
-        }
+    private fun setupStepCallbacks(stepView: StepLayout) {
+        stepView.setCallbacks(this)
+        stepView.isEditView(viewModel.editing)
+        viewModel.updateCancelEditInLayout.observe(this, Observer {
+            stepView.setCancelEditMode(it)
+        })
+
+        viewModel.stepBackNavigationState.observe(this, Observer {
+            stepView.setRemoveFromBackStack(it)
+        })
     }
 
     override fun onSaveStep(action: Int, step: Step, result: StepResult<*>?) {
