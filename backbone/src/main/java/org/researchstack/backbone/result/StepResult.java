@@ -128,8 +128,9 @@ public class StepResult<T> extends Result implements Cloneable {
         if (!super.equals(other)) {
             return false;
         }
-        final StepResult<?> result = (StepResult<?>) other;
-        return Objects.equals(getResults(), result.getResults());
+        final StepResult<?> that = (StepResult<?>) other;
+        return Objects.equals(getResults(), that.getResults()) &&
+                Objects.equals(getAnswerFormat(), that.getAnswerFormat());
     }
 
     @Override
