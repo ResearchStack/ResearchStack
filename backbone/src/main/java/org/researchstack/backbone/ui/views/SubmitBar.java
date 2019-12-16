@@ -165,4 +165,16 @@ public class SubmitBar extends LinearLayout {
             getEditSpaceView().setVisibility(GONE);
         }
     }
+
+    public void setEditSaveActionEnabled(int color) {
+        editSaveView.setClickable(true);
+        editSaveView.setTextColor(color);
+
+    }
+
+    public void setEditSaveActionDisabled() {
+        editSaveView.setClickable(false);
+        editSaveView.setTextColor(getResources().getColor(R.color.rsb_submit_disabled));
+
+    }
 }
