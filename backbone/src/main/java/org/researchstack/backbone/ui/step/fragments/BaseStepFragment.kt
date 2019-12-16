@@ -48,8 +48,7 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
             }
 
         }
-        val stepView = view?.findViewById<View>(R.id.stepView)
-        when (stepView) {
+        when (val stepView = view?.findViewById<View>(R.id.stepView)) {
             is SurveyStepLayout -> {
                 stepView.initialize(currentStep, stepResult,
                         viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
