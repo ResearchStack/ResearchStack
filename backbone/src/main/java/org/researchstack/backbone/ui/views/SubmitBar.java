@@ -17,7 +17,7 @@ public class SubmitBar extends LinearLayout {
     private TextView positiveView;
     private TextView negativeView;
 
-   //edit step bottom bar
+    //edit step bottom bar
     private TextView editSaveView;
     private TextView editCancelView;
     private Space editSpaceView;
@@ -95,7 +95,7 @@ public class SubmitBar extends LinearLayout {
 
     public void setPositiveActionDisabled() {
         positiveView.setClickable(false);
-        positiveView.setTextColor(getResources().getColor(R.color.rsb_submit_disabled));
+        positiveView.setTextColor(getContext().getColor(R.color.rsb_submit_disabled));
 
     }
 
@@ -150,5 +150,31 @@ public class SubmitBar extends LinearLayout {
 
     public View getEditSpaceView() {
         return editSpaceView;
+    }
+
+    public void updateView(boolean isEditView) {
+        if (isEditView) {
+            getPositiveActionView().setVisibility(GONE);
+            getEditCancelViewActionView().setVisibility(VISIBLE);
+            getEditSaveViewActionView().setVisibility(VISIBLE);
+            getEditSpaceView().setVisibility(VISIBLE);
+        } else {
+            getPositiveActionView().setVisibility(VISIBLE);
+            getEditCancelViewActionView().setVisibility(GONE);
+            getEditSaveViewActionView().setVisibility(GONE);
+            getEditSpaceView().setVisibility(GONE);
+        }
+    }
+
+    public void setEditSaveActionEnabled(int color) {
+        editSaveView.setClickable(true);
+        editSaveView.setTextColor(color);
+
+    }
+
+    public void setEditSaveActionDisabled() {
+        editSaveView.setClickable(false);
+        editSaveView.setTextColor(getContext().getColor(R.color.rsb_submit_disabled));
+
     }
 }

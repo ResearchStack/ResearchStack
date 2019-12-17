@@ -78,6 +78,16 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         //no-op only when user on edit mode inside regular steps
     }
 
+    @Override
+    public void setRemoveFromBackStack(boolean removeFromBackStack) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public void isEditView(boolean isEditView) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
     private void initializeStep() {
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_signature, this, true);
 

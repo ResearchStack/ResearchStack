@@ -32,7 +32,7 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
         super.onResume()
 
         val currentStep = viewModel.currentStep
-        val stepResult =  viewModel.currentTaskResult.getStepResult(currentStep?.identifier)
+        val stepResult = viewModel.currentTaskResult.getStepResult(currentStep?.identifier)
 
         currentStep?.setStepTheme(viewModel.colorPrimary, viewModel.colorPrimaryDark, viewModel.colorSecondary,
                 viewModel.principalTextColor, viewModel.secondaryTextColor, viewModel.actionFailedColor)
@@ -48,27 +48,18 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
             }
 
         }
-
         when (val stepView = view?.findViewById<View>(R.id.stepView)) {
             is SurveyStepLayout -> {
                 stepView.initialize(currentStep, stepResult,
                         viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
                         viewModel.secondaryTextColor)
                 stepView.isStepEmpty.observe(this, Observer { })
-                stepView.setCallbacks(this)
-                stepView.isEditView(viewModel.editing)
+                setupStepCallbacks(stepView)
 
-                viewModel.updateCancelEditInLayout.observe(this, Observer {
-                    stepView.setCancelEditMode(it)
-                })
-
-                viewModel.stepBackNavigationState.observe(this, Observer {
-                    stepView.setRemoveFromBackStack(it)
-                })
             }
             is StepLayout -> {
                 stepView.initialize(currentStep, stepResult)
-                stepView.setCallbacks(this)
+                setupStepCallbacks(stepView)
             }
             is ConsentVisualStepLayout -> stepView.initialize(currentStep, stepResult,
                     viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
@@ -77,6 +68,19 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
                 Log.d("BaseStepFragment", "WARNING: Unknown stepView type, cannot initialize layout")
             }
         }
+
+    }
+
+    private fun setupStepCallbacks(stepView: StepLayout) {
+        stepView.setCallbacks(this)
+        stepView.isEditView(viewModel.editing)
+        viewModel.updateCancelEditInLayout.observe(this, Observer {
+            stepView.setCancelEditMode(it)
+        })
+
+        viewModel.stepBackNavigationState.observe(this, Observer {
+            stepView.setRemoveFromBackStack(it)
+        })
     }
 
     override fun onSaveStep(action: Int, step: Step, result: StepResult<*>?) {

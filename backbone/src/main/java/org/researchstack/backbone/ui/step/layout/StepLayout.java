@@ -21,4 +21,8 @@ public interface StepLayout {
     void setCallbacks(StepCallbacks callbacks);
 
     void setCancelEditMode(boolean isCancelEdit);
+
+    void setRemoveFromBackStack(boolean removeFromBackStack);
+
+    void isEditView(boolean isEditView);
 }

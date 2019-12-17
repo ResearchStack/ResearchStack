@@ -157,20 +157,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         submitBar.setPositiveTitle(text);
     }
 
-
+    @Override
     public void isEditView(boolean isEditView) {
         isEditViewVisible = isEditView;
-        if (isEditView) {
-            submitBar.getPositiveActionView().setVisibility(GONE);
-            submitBar.getEditCancelViewActionView().setVisibility(VISIBLE);
-            submitBar.getEditSaveViewActionView().setVisibility(VISIBLE);
-            submitBar.getEditSpaceView().setVisibility(VISIBLE);
-        } else {
-            submitBar.getPositiveActionView().setVisibility(VISIBLE);
-            submitBar.getEditCancelViewActionView().setVisibility(GONE);
-            submitBar.getEditSaveViewActionView().setVisibility(GONE);
-            submitBar.getEditSpaceView().setVisibility(GONE);
-        }
+        submitBar.updateView(isEditView);
     }
 
     public void initStepLayout() {
