@@ -4,15 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.WindowManager;
 import android.widget.MediaController;
 
+import org.researchstack.backbone.BuildConfig;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.views.AssetVideoView;
 
 import java.io.IOException;
-
 
 public class ViewVideoActivity extends AppCompatActivity {
     public static final String KEY_RELATIVE_PATH = "VideoViewActivity.URI";
@@ -29,8 +31,11 @@ public class ViewVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.rsb_activity_video_viewer);
+        if (BuildConfig.USE_SECURE_FLAG) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
 
-        videoView = (AssetVideoView) findViewById(R.id.videoView);
+        videoView = findViewById(R.id.videoView);
 
         MediaController mediaController = new MediaController(this, false);
         mediaController.setAnchorView(videoView);
@@ -49,16 +54,10 @@ public class ViewVideoActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
 
         if (videoView.isPlaying()) {
             videoView.pause();
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
-    }
 }

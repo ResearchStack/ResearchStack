@@ -51,7 +51,12 @@ public class RSHTMLPDFWriter {
         });
 
         StringBuilder sb = new StringBuilder();
-        sb.append("<HTML><HEAD><LINK href=\"consent.css\" type=\"text/css\" rel=\"stylesheet\"/></HEAD><body>");
+        sb.append("<HTML><HEAD><LINK href=\"consent.css\" type=\"text/css\" rel=\"stylesheet\"/>" +
+                "<style type=\"text/css\">\n" +
+                "table { page-break-inside:avoid }\n" +
+                "tr { page-break-inside:avoid}\n" +
+                "</style>" +
+                "</HEAD><body>");
         sb.append(htmlConsentDocument);
         sb.append("</body></HTML>");
         

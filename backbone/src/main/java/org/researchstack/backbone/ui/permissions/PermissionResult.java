@@ -1,10 +1,11 @@
 package org.researchstack.backbone.ui.permissions;
 
 import android.content.pm.PackageManager;
-import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
 
 public class PermissionResult {
 
@@ -21,6 +22,7 @@ public class PermissionResult {
     }
 
     public boolean isGranted(String permission) {
-        return permissionResults.get(permission) == PackageManager.PERMISSION_GRANTED;
+        final Integer result = permissionResults.get(permission);
+        return result != null && result == PackageManager.PERMISSION_GRANTED;
     }
 }

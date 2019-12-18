@@ -19,12 +19,10 @@
 
 package org.researchstack.backbone.ui.views;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import org.researchstack.backbone.R;

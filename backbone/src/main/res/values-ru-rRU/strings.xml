@@ -1,0 +1,149 @@
+<resources>
+    <!-- Consent Section -->
+    <string name="rsb_consent">Согласие</string>
+    <string name="rsb_consent_section_welcome">Добро пожаловать</string>
+    <string name="rsb_consent_section_data_gathering">Сбор данных</string>
+    <string name="rsb_consent_section_privacy">Конфиденциальность</string>
+    <string name="rsb_consent_section_data_use">Использование данных</string>
+    <string name="rsb_consent_section_time_commitment">Затраты времени</string>
+    <string name="rsb_consent_section_study_survey">Анкета исследования</string>
+    <string name="rsb_consent_section_study_tasks">Задачи исследования</string>
+    <string name="rsb_consent_section_withdrawing">Отзыв согласия</string>
+    <string name="rsb_consent_learn_more">Узнать больше</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">Узнать больше</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Узнать больше о сборе данных
+    </string>
+    <string name="rsb_consent_section_more_info_data_use">Узнать больше об использовании данных</string>
+    <string name="rsb_consent_section_more_info_privacy">Узнать больше о защите конфиденциальности и персональных данных
+    </string>
+    <string name="rsb_consent_section_more_info_welcome">Узнать больше об исследовании</string>
+    <string name="rsb_consent_section_more_info_study_survey">Узнать больше об анкете исследования
+    </string>
+    <string name="rsb_consent_section_more_info_time_commitment">Узнать больше о том, сколько времени понадобится вам на участие в исследовании
+    </string>
+    <string name="rsb_consent_section_more_info_study_tasks">Узнать больше о задачах, содержащихся в исследовании
+    </string>
+    <string name="rsb_consent_section_more_info_withdrawing">Узнать больше об отзыве согласия</string>
+
+    <!-- Consent sharing step -->
+    <string name="rsb_consent_share_title">Варианты общего доступа</string>
+    <string name="rsb_consent_share_widely">Предоставить мои данные организации %1$s и квалифицированным исследователям по всему миру
+    </string>
+    <string name="rsb_consent_share_no">Не предоставлять данные</string>
+    <string name="rsb_consent_share_only">Предоставить данные только организации %1$s</string>
+    <string name="rsb_consent_share_description"><![CDATA[Организация ]]><![CDATA[%1$s]]><![CDATA[ получит данные исследования на основании вашего участия в исследовании.]]><![CDATA[ ]]><![CDATA[\n]]><![CDATA[\n]]><![CDATA[Предоставление закодированных данных широкому кругу исследователей позволит улучшить данное исследование, а также будущие исследования.<br/><br/><a href="]]><![CDATA[%2$s]]><![CDATA["> Узнать больше об общем доступе к данным</a>]]><![CDATA[
+    ]]></string>
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_title">Просмотр</string>
+    <string name="rsb_consent_review_alert_title">Просмотр</string>
+    <string name="rsb_consent_review_reason">Соглашаясь, вы подтверждаете, что ознакомились с информацией и хотите принять участие в данном исследовании.
+    </string>
+    <string name="rsb_consent_review_instruction">Просмотрите форму ниже и нажмите "Согласиться", если готовы продолжить.
+    </string>
+    <string name="rsb_consent_review_cancel">Отмена</string>
+
+    <string name="rsb_saving_consent">Сохранение согласия</string>
+    <string name="rsb_please_wait">Подождите&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_form_title">Согласие</string>
+    <string name="rsb_consent_name_full">Полное имя</string>
+    <string name="rsb_consent_dob_full">Дата рождения</string>
+    <string name="rsb_consent_name_placeholder">Обязательно</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">Подпись</string>
+    <string name="rsb_consent_signature_content">Соглашаясь, вы подтверждаете, что прочитали согласие и хотите принять участие в этом исследовании.
+    </string>
+    <string name="rsb_consent_signature_instruction">Подпишитесь с помощью пальца в строке ниже.
+    </string>
+    <string name="rsb_consent_signature_placeholder">Подписаться здесь</string>
+    <string name="rsb_consent_signature_clear">Очистить</string>
+
+    <!-- Quiz -->
+    <string name="rsb_quiz">Опрос</string>
+    <string name="rsb_quiz_evaluation">Оценка опроса</string>
+    <string name="rsb_quiz_evaluation_try_again">Заново</string>
+    <string name="rsb_quiz_evaluation_review_consent">Просмотреть согласие</string>
+    <string name="rsb_quiz_evaluation_retake">Пройти опрос заново</string>
+    <string name="rsb_quiz_evaluation_great_job">Отлично!</string>
+
+    <!-- Other -->
+    <string name="rsb_submit">Отправить</string>
+    <string name="rsb_exit">Выход</string>
+    <string name="rsb_get_started">Начать</string>
+    <string name="rsb_done">Готово</string>
+    <string name="rsb_step_skip">Пропустить</string>
+    <string name="rsb_next">далее</string>
+    <string name="rsb_what_to_expect">Чего ожидать</string>
+    <string name="rsb_name">Имя</string>
+    <string name="rsb_name_first">Имя</string>
+    <string name="rsb_name_last">Фамилия</string>
+    <string name="rsb_email">Адрес электронной почты</string>
+    <string name="rsb_disagree">Не согласен</string>
+    <string name="rsb_agree">Согласен</string>
+    <string name="rsb_ok">OK</string>
+    <string name="rsb_cancel">Отмена</string>
+    <string name="rsb_yes">Да</string>
+    <string name="rsb_no">Нет</string>
+    <string name="rsb_format_step_title">Этап %1$s из %2$s</string>
+    <string name="rsb_hours">Часов</string>
+    <string name="rsb_minutes">Минут</string>
+    <string name="rsb_task_cancel_title">Покинуть действие</string>
+    <string name="rsb_task_cancel_text">Вы действительно хотите покинуть действие и сбросить его результаты?</string>
+    <string name="rsb_task_cancel_positive">Сбросить результаты</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_data_failed">Не удалось загрузить зашифрованные данные. Попробуйте снова!</string>
+    <string name="rsb_error_invalid_signature">Недопустимая подпись</string>
+    <string name="rsb_invalid_answer_default">Недопустимый ответ. Попробуйте заново!</string>
+    <string name="rsb_invalid_answer_date_over">Недопустимый ответ. Дата должна быть ранее %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Недопустимый ответ. Дата должна быть позднее %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Недопустимый ответ. Значение не должно быть ниже %1$s</string>
+    <string name="rsb_invalid_answer_integer_under">Недопустимый ответ. Значение не должно быть выше %1$s</string>
+    <string name="rsb_invalid_answer_choice">Выберите значение!</string>
+    <string name="rsb_invalid_answer_date_none">Выберите дату.</string>
+    <string name="rsb_birth_date_too_old">Максимальный возраст: %1$s</string>
+    <string name="rsb_birth_date_too_young">Минимальный возраст: %1$s</string>
+
+    <!-- Pin Code -->
+    <string name="rsb_pincode_enter_title">Введите код</string>
+    <string name="rsb_pincode_enter_summary">Введите код %1$d-%2$s для проверки личности.</string>
+    <string name="rsb_pincode_enter_digit">цифры</string>
+    <string name="rsb_pincode_enter_letter">буквы</string>
+    <string name="rsb_pincode_enter_character">символы</string>
+    <string name="rsb_pincode_enter_error">Код не соответствует введенному. Попробуйте заново!</string>
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">Введите число %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Введите число %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">Введите число</string>
+    <string name="rsb_hint_step_body_date">Введите дату</string>
+    <string name="rsb_hint_step_body_time">Введите время</string>
+    <string name="rsb_hint_step_body_datetime">Введите дату и время</string>
+    <string name="rsb_hint_step_body_text">Ответ</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s из %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_title">Проблема с видео</string>
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Невозможно воспроизвести данный видеоролик в потоковом режиме на этом устройстве.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">Невозможно воспроизвести видео.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">Полное имя участника %1$s</string>
+    <string name="rsb_consent_doc_line_signature">Подпись участника %1$s</string>
+    <string name="rsb_consent_doc_line_date">Дата</string>
+    <string name="rsb_consent_role">Участник</string>
+
+</resources>

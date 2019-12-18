@@ -52,9 +52,10 @@ public class FormBody implements StepBody {
         // list to iterate over (e.g. within getStepResult())
         for (QuestionStep questionStep : questionSteps) {
             StepBody stepBody = createStepBody(questionStep);
-            View bodyView = stepBody.getBodyView(VIEW_TYPE_COMPACT, inflater, body);
-            body.addView(bodyView);
-
+            if(!questionStep.isHidden()) {
+                View bodyView = stepBody.getBodyView(VIEW_TYPE_COMPACT, inflater, body);
+                body.addView(bodyView);
+            }
             formStepChildren.add(stepBody);
         }
 

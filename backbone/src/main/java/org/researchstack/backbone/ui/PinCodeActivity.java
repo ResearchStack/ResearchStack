@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.ContextThemeWrapper;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import org.researchstack.backbone.BuildConfig;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.storage.file.PinCodeConfig;
@@ -53,12 +56,14 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (BuildConfig.USE_SECURE_FLAG) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
 
         LogExt.i(getClass(), "logAccessTime()");
         StorageAccess.getInstance().logAccessTime();
@@ -67,7 +72,6 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
     @Override
     protected void onResume() {
         super.onResume();
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
         requestStorageAccess();
     }
@@ -162,8 +166,8 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
 
         int errorColor = getResources().getColor(R.color.rsb_error);
 
-        TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
-        EditText pincode = (EditText) pinCodeLayout.findViewById(R.id.pincode);
+        TextView summary = pinCodeLayout.findViewById(R.id.text);
+        EditText pincode = pinCodeLayout.findViewById(R.id.pincode);
 
         toggleKeyboardAction = enable -> {
             pincode.setEnabled(enable);

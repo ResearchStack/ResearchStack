@@ -1,0 +1,148 @@
+<resources>
+    <!-- Consent Section -->
+    <string name="rsb_consent">同意</string>
+    <string name="rsb_consent_section_welcome">ようこそ</string>
+    <string name="rsb_consent_section_data_gathering">データ収集</string>
+    <string name="rsb_consent_section_privacy">プライバシー</string>
+    <string name="rsb_consent_section_data_use">データの使用</string>
+    <string name="rsb_consent_section_time_commitment">時間コミットメント</string>
+    <string name="rsb_consent_section_study_survey">スタディ調査</string>
+    <string name="rsb_consent_section_study_tasks">スタディタスク</string>
+    <string name="rsb_consent_section_withdrawing">辞退</string>
+    <string name="rsb_consent_learn_more">詳細</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">詳細</string>
+    <string name="rsb_consent_section_more_info_data_gathering">データの収集方法についての詳細
+    </string>
+    <string name="rsb_consent_section_more_info_data_use">データの使用方法についての詳細</string>
+    <string name="rsb_consent_section_more_info_privacy">プライバシーや個人情報の保護方法についての詳細
+    </string>
+    <string name="rsb_consent_section_more_info_welcome">スタディについての詳細</string>
+    <string name="rsb_consent_section_more_info_study_survey">スタディ調査についての詳細
+    </string>
+    <string name="rsb_consent_section_more_info_time_commitment">スタディがあなたの時間に与える影響についての詳細
+    </string>
+    <string name="rsb_consent_section_more_info_study_tasks">含まれるタスクについての詳細
+    </string>
+    <string name="rsb_consent_section_more_info_withdrawing">辞退についての詳細</string>
+
+    <!-- Consent sharing step -->
+    <string name="rsb_consent_share_title">オプションの共有</string>
+    <string name="rsb_consent_share_widely">%1$sと世界中の資格を持つ研究者にデータを共有する
+    </string>
+    <string name="rsb_consent_share_no">あなたのデータを共有していません</string>
+    <string name="rsb_consent_share_only">%1$sとだけデータを共有する</string>
+    <string name="rsb_consent_share_description"><![CDATA[あなたがスタディに参加することにより]]><![CDATA[%1$s]]><![CDATA[がデータを受け取ります。]]><![CDATA[\n]]><![CDATA[\n]]><![CDATA[あなたのコード化されたスタディデータ（名前等の情報を含まない）を広く共有することはこのリサーチと将来のリサーチに役立ちます。<br/><br/><a href="]]><![CDATA[%2$s]]><![CDATA[">データ共有についての詳細</a>]]><![CDATA[
+    ]]></string>
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_title">レビュー</string>
+    <string name="rsb_consent_review_alert_title">レビュー</string>
+    <string name="rsb_consent_review_reason">同意により、情報を読み、このリサーチスタディに参加することを承認したとものとみなします。
+    </string>
+    <string name="rsb_consent_review_instruction">下のフォームをレビューして、続ける場合「同意する」をタップしてください。
+    </string>
+    <string name="rsb_consent_review_cancel">キャンセル</string>
+
+    <string name="rsb_saving_consent">同意を保存</string>
+    <string name="rsb_please_wait">お待ちください&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_form_title">同意</string>
+    <string name="rsb_consent_name_full">フルネーム</string>
+    <string name="rsb_consent_dob_full">誕生日</string>
+    <string name="rsb_consent_name_placeholder">必須</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">署名</string>
+    <string name="rsb_consent_signature_content">同意により、同意書を読み、このリサーチスタディに参加することを承認したものとみなします。
+    </string>
+    <string name="rsb_consent_signature_instruction">下の線上に指で署名してください。
+    </string>
+    <string name="rsb_consent_signature_placeholder">ここに署名</string>
+    <string name="rsb_consent_signature_clear">クリア</string>
+
+    <!-- Quiz -->
+    <string name="rsb_quiz">クイズ</string>
+    <string name="rsb_quiz_evaluation">クイズ評価</string>
+    <string name="rsb_quiz_evaluation_try_again">再試行してください</string>
+    <string name="rsb_quiz_evaluation_review_consent">同意内容をレビュー</string>
+    <string name="rsb_quiz_evaluation_retake">クイズに再挑戦</string>
+    <string name="rsb_quiz_evaluation_great_job">素晴らしい！</string>
+
+    <!-- Other -->
+    <string name="rsb_submit">送信</string>
+    <string name="rsb_exit">退出</string>
+    <string name="rsb_get_started">始める</string>
+    <string name="rsb_done">終了</string>
+    <string name="rsb_step_skip">スキップ</string>
+    <string name="rsb_next">次へ</string>
+    <string name="rsb_what_to_expect">期待されるもの</string>
+    <string name="rsb_name">名前</string>
+    <string name="rsb_name_first">名</string>
+    <string name="rsb_name_last">姓</string>
+    <string name="rsb_email">Eメール</string>
+    <string name="rsb_disagree">同意しない</string>
+    <string name="rsb_agree">同意する</string>
+    <string name="rsb_ok">OK</string>
+    <string name="rsb_cancel">キャンセル</string>
+    <string name="rsb_yes">はい</string>
+    <string name="rsb_no">いいえ</string>
+    <string name="rsb_format_step_title">ステップ%2$s/%1$s</string>
+    <string name="rsb_hours">時</string>
+    <string name="rsb_minutes">分</string>
+    <string name="rsb_task_cancel_title">アクティビティから退出</string>
+    <string name="rsb_task_cancel_text">本当にこのアクティビティを退出して、結果を破棄してよろしいですか？</string>
+    <string name="rsb_task_cancel_positive">結果を破棄</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_data_failed">暗号化されたデータのロードに失敗しました、再試行してください！</string>
+    <string name="rsb_error_invalid_signature">署名は無効です</string>
+    <string name="rsb_invalid_answer_default">無効な回答です。再試行してください！</string>
+    <string name="rsb_invalid_answer_date_over">無効な回答です。日付は%1$sより前でなければなりません</string>
+    <string name="rsb_invalid_answer_date_under">無効な回答です。日付は%1$sより後でなければなりません</string>
+    <string name="rsb_invalid_answer_integer_over">無効な回答です。値は%1$s以下でなければなりません</string>
+    <string name="rsb_invalid_answer_integer_under">無効な回答です。値は%1$s以上でなければなりません</string>
+    <string name="rsb_invalid_answer_choice">値を選択してください！</string>
+    <string name="rsb_invalid_answer_date_none">日付を選択してください。</string>
+    <string name="rsb_birth_date_too_old">%1$s歳以下でなければなりません</string>
+    <string name="rsb_birth_date_too_young">%1$s歳以上でなければなりません</string>
+
+    <!-- Pin Code -->
+    <string name="rsb_pincode_enter_title">パスコードを入力します</string>
+    <string name="rsb_pincode_enter_summary">本人確認のために、%1$d-%2$sコードを入力します。</string>
+    <string name="rsb_pincode_enter_digit">桁</string>
+    <string name="rsb_pincode_enter_letter">字</string>
+    <string name="rsb_pincode_enter_character">文字</string>
+    <string name="rsb_pincode_enter_error">コードが入力したものと一致しません。再試行してください！</string>
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">番号を入力してください%1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">番号を入力してください %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">番号を入力してください</string>
+    <string name="rsb_hint_step_body_date">日付を入力してください</string>
+    <string name="rsb_hint_step_body_time">時刻を入力してください</string>
+    <string name="rsb_hint_step_body_datetime">日時を入力してください</string>
+    <string name="rsb_hint_step_body_text">回答</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%2$s/%1$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_title">動画の問題</string>
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">この動画はこのデバイスで有効にストリームできません。</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">この動画を再生できません。</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1$sの名前（印字）</string>
+    <string name="rsb_consent_doc_line_signature">%1$sの署名</string>
+    <string name="rsb_consent_doc_line_date">日付</string>
+    <string name="rsb_consent_role">参加者</string>
+</resources>

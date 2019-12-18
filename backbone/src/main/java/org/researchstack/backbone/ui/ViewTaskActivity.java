@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,6 +34,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.permissions.PermissionListener;
 import org.researchstack.backbone.ui.permissions.PermissionMediator;
 import org.researchstack.backbone.ui.permissions.PermissionResult;
+import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
@@ -47,8 +45,13 @@ import java.lang.reflect.Constructor;
 import java.util.Date;
 import java.util.List;
 
-public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, PermissionMediator
-{
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+
+public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, PermissionMediator {
     public static final String EXTRA_TASK = "ViewTaskActivity.ExtraTask";
     public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
     public static final String EXTRA_STEP = "ViewTaskActivity.ExtraStep";
@@ -64,6 +67,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     private StepSwitcher root;
 
     private Step currentStep;
+    private StepLayout currentStepLayout;
     private Task task;
     private TaskResult taskResult;
     private int colorPrimary;
@@ -77,7 +81,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
 
     private int stepCount = 0;
 
-
     public static Intent newIntent(Context context, Task task) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
@@ -90,8 +93,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
                                    int colorSecondary,
                                    int principalTextColor,
                                    int secondaryTextColor,
-                                   int actionFailedColor)
-    {
+                                   int actionFailedColor) {
         intent.putExtra(EXTRA_COLOR_PRIMARY, colorPrimary);
         intent.putExtra(EXTRA_COLOR_PRIMARY_DARK, colorPrimaryDark);
         intent.putExtra(EXTRA_COLOR_SECONDARY, colorSecondary);
@@ -106,19 +108,19 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         super.setResult(RESULT_CANCELED);
         super.setContentView(R.layout.rsb_activity_step_switcher);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
-        try
-        {
+        try {
             setSupportActionBar(toolbar);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             //there is already an action bar
             toolbar.setVisibility(View.GONE);
         }
 
         actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
 
         root = findViewById(R.id.container);
 
@@ -131,8 +133,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
             secondaryTextColor = getIntent().getIntExtra(EXTRA_SECONDARY_TEXT_COLOR, R.color.rsb_item_text_grey);
             actionFailedColor = getIntent().getIntExtra(EXTRA_ACTION_FAILED_COLOR, R.color.rsb_error);
             taskResult = (TaskResult) getIntent().getExtras().get(EXTRA_TASK_RESULT);
-            if (taskResult == null)
-            {
+            if (taskResult == null) {
                 taskResult = new TaskResult(task.getIdentifier());
             }
             taskResult.setStartDate(new Date());
@@ -147,20 +148,64 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         task.onViewChange(Task.ViewChangeType.ActivityCreate, this, currentStep);
     }
 
-    @RequiresApi(23)
+    @RequiresApi(Build.VERSION_CODES.M)
     @Override
     public void requestPermissions(String... permissions) {
         requestPermissions(permissions, STEP_PERMISSION_REQUEST);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public boolean checkIfShouldShowRequestPermissionRationale(@NonNull final String permission) {
+
+        // ShouldShowRequestPermissionRationale() will return false in these cases:
+        // * You've never asked for the permission before
+        // * The user has checked the 'never again' checkbox
+        // * The permission has been disabled by policy (usually enterprise)
+        // Therefore a flag must be stored once we requested it.
+        // Source: https://stackoverflow.com/questions/33224432/android-m-anyway-to-know-if-a-user-has-chosen-never-to-show-the-grant-permissi?rq=1
+        // Note: ianhanniballake is a Google employee working on Android (September 2019)
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final boolean wasRequestedInThePast = preferences.getBoolean(permission, false);
+        if (!wasRequestedInThePast) {
+            // the user never requested this permission (or we don't have records of it).
+            return true;
+        }
+
+        // If the user requested this permission in the past, we can rely on the rationale flag.
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+                || shouldShowRequestPermissionRationale(permission);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STEP_PERMISSION_REQUEST) {
+            // Save the fact that we requested this permission
+            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            for (final String permission : permissions) {
+                preferences.edit().putBoolean(permission, true).apply();
+            }
+
             PermissionResult result = new PermissionResult(permissions, grantResults);
             List<PermissionListener> permissionListeners = ViewUtils.findViewsOf(findViewById(android.R.id.content), PermissionListener.class, true);
             for (PermissionListener listener : permissionListeners) {
                 listener.onPermissionGranted(result);
+            }
+
+            // This was designed so the step's layout is some form of View/ViewGroup that implements the PermissionListener interface.
+            // As it turns out, not all steps are created equal, and not all the implementations follow this structure.
+            // RSLocationPermission doesn't extend any View/ViewGroup; it acts more like a custom View that inflates its own layout.
+            // For this reason, we cannot simply search the view Hierarchy and obtain the Layout because it will not implement
+            // the contract; we have to check if the current Layout reference (saved when created) does.
+            if (!(currentStepLayout instanceof SurveyStepLayout)) {
+                return;
+            }
+
+            final StepBody stepBody = ((SurveyStepLayout) currentStepLayout).getStepBody();
+            if (stepBody instanceof PermissionListener) {
+                ((PermissionListener) stepBody).onPermissionGranted(result);
             }
         }
     }
@@ -174,8 +219,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         return currentStep;
     }
 
-    protected String getCurrentTaskId()
-    {
+    protected String getCurrentTaskId() {
         return task.getIdentifier();
     }
 
@@ -184,7 +228,13 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         if (nextStep == null) {
             saveAndFinish();
         } else {
-            showStep(nextStep, true);
+            if (nextStep.isHidden()) {
+                // We will do the save for this step and then go to the next step
+                processHiddenStep(nextStep);
+                showNextStep();
+            } else {
+                showStep(nextStep, true);
+            }
         }
     }
 
@@ -193,20 +243,40 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         if (previousStep == null) {
             finish();
         } else {
-            showStep(previousStep,false);
+            if (previousStep.isHidden()) {
+                // The previous step was a hidden one so we go back again
+                currentStep = previousStep;
+                showPreviousStep();
+            } else {
+                showStep(previousStep, true);
+            }
         }
     }
 
-    private void showStep(Step step, boolean isMovingForward)
-    {
-        stepCount +=  isMovingForward ? 1 : -1;
+    private void showStep(Step step, boolean isMovingForward) {
+        // If the current step is the same, there is no need to recreate anything.
+        if (currentStep != null
+                && currentStepLayout != null
+                && currentStep.getIdentifier().equals(step.getIdentifier())) {
+            return;
+        }
 
-        StepLayout stepLayout = getLayoutForStep(step);
-        stepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
-        root.show(stepLayout, isMovingForward ? StepSwitcher.SHIFT_LEFT : StepSwitcher.SHIFT_RIGHT);
+        stepCount += isMovingForward ? 1 : -1;
+        currentStepLayout = getLayoutForStep(step);
+        currentStepLayout.getLayout().setTag(R.id.rsb_step_layout_id, step.getIdentifier());
+        root.show(currentStepLayout, isMovingForward ? StepSwitcher.SHIFT_LEFT : StepSwitcher.SHIFT_RIGHT);
         actionBar.setDisplayHomeAsUpEnabled(stepCount > 1 && showBackArrow);
         currentStep = step;
+    }
 
+    private void processHiddenStep(Step step) {
+        StepResult result = taskResult.getStepResult(step.getIdentifier());
+        if (result == null) {
+            result = new StepResult<>(step);
+        }
+        result.setResult(step.getHiddenDefaultValue());
+        onSaveStepResult(step.getIdentifier(), result);
+        currentStep = step;
     }
 
     protected StepLayout getLayoutForStep(Step step) {
@@ -221,10 +291,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         // Get result from the TaskResult, can be null
         StepResult result = taskResult.getStepResult(step.getIdentifier());
 
-        if(step instanceof FormStep)
-        {
-            for(QuestionStep questionStep : ((FormStep) step).getFormSteps())
-            {
+        if (step instanceof FormStep) {
+            for (QuestionStep questionStep : ((FormStep) step).getFormSteps()) {
                 questionStep.setStepTheme(step.getPrimaryColor(), step.getColorPrimaryDark(), step.getColorSecondary(),
                         step.getPrincipalTextColor(), step.getSecondaryTextColor(), step.getActionFailedColor());
             }
@@ -234,7 +302,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         StepLayout stepLayout = createLayoutFromStep(step);
         if (stepLayout instanceof SurveyStepLayout) {
             ((SurveyStepLayout) stepLayout).initialize(step, result, colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
-            ((SurveyStepLayout) stepLayout).isStepEmpty().observe(this, (isEmpty) -> { });
+            ((SurveyStepLayout) stepLayout).isStepEmpty().observe(this, (isEmpty) -> {
+            });
         } else if (stepLayout instanceof ConsentVisualStepLayout) {
             ((ConsentVisualStepLayout) stepLayout).initialize(step, result, colorPrimary, colorSecondary, principalTextColor, secondaryTextColor);
         } else {
@@ -306,11 +375,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
                     .negativeColor(colorPrimary)
                     .negativeText(R.string.rsb_cancel)
                     .positiveText(R.string.rsb_task_cancel_positive)
-                    .onPositive(new MaterialDialog.SingleButtonCallback()
-                    {
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
-                        {
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             finish();
                         }
                     })
@@ -334,7 +401,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     }
 
     private void notifyStepOfBackPress() {
-        StepLayout currentStepLayout = (StepLayout) findViewById(R.id.rsb_current_step);
+        StepLayout currentStepLayout = findViewById(R.id.rsb_current_step);
         currentStepLayout.isBackEventConsumed();
     }
 
@@ -343,10 +410,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         super.onDataReady();
 
         if (currentStep == null) {
-            currentStep = task.getStepAfterStep(null, taskResult);
+            showNextStep();
+        } else {
+            showStep(currentStep, true);
         }
-
-        showStep(currentStep, true);
     }
 
     @Override
@@ -393,11 +460,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
         AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(
                 "Are you sure you want to exit?")
                 .setMessage(R.string.lorem_medium)
-                .setPositiveButton("End Task", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("End Task", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i)
-                    {
+                    public void onClick(DialogInterface dialogInterface, int i) {
                         finish();
                     }
                 })
@@ -428,11 +493,9 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks, 
     }
 
     private void setActivityTheme(final int primaryColor, final int primaryColorDark) {
-        runOnUiThread(new Runnable()
-        {
+        runOnUiThread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     Window window = getWindow();
 

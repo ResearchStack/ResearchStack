@@ -1,22 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Debug -->
-    <string name="lorem_name" tools:ignore="ResourceName" translatable="false">Lorem Ipsum</string>
-    <string name="lorem_short" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit.
-    </string>
-    <string name="lorem_medium" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
-    </string>
-    <string name="lorem_long" tools:ignore="ResourceName" translatable="false">Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit, sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-        anim id est laborum.
-    </string>
-
+<resources>
     <!-- Consent Section -->
     <string name="rsb_consent">Consent</string>
     <string name="rsb_consent_section_welcome">Welcome</string>
@@ -173,6 +155,5 @@
     <string name="rsb_consent_doc_line_signature">%1$s\'s Signature</string>
     <string name="rsb_consent_doc_line_date">Date</string>
     <string name="rsb_consent_role">Participant</string>
-    <string name="rsb_consent_doc_line_date_format">"MM-dd-yyyy"</string>
 
 </resources>

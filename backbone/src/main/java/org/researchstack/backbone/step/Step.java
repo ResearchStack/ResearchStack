@@ -25,6 +25,7 @@ public class Step implements Serializable {
     private Class stepLayoutClass;
     private int stepTitle;
     private boolean optional = true;
+    private boolean hidden = false;
     private String title;
     private String text;
     private String question;
@@ -34,6 +35,7 @@ public class Step implements Serializable {
     private int principalTextColor;
     private int secondaryTextColor;
     private int actionFailedColor;
+    private String hiddenDefaultValue = null;
 
     // The following fields are in RK but not implemented in ResearchStack
     // These options can be developed as needed or removed if we find they are not necessary
@@ -103,6 +105,31 @@ public class Step implements Serializable {
      */
     public void setOptional(boolean optional) {
         this.optional = optional;
+    }
+
+
+    /**
+     * A boolean value indicating whether the user will see this step or not.
+     * <p>
+     * The default value of this property is <code>false</code>. When the value is
+     * <code>true</code>, the step is not display and the hiddenDefaultValue is used as value for this step.
+     * <p>
+     * This property may not be meaningful for all steps;
+     *
+     * @return a boolean indicating whether the step is hidden
+     */
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * Sets whether the step is a hidden step
+     *
+     * @param hidden a boolean indicating whether the step is a hidden step
+     * @see #isHidden()
+     */
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
     /**
@@ -294,5 +321,16 @@ public class Step implements Serializable {
      */
     public int getActionFailedColor() {
         return actionFailedColor;
+    }
+
+
+    public void setHiddenDefaultValue(String defaultValue) {
+        this.hiddenDefaultValue = defaultValue;
+    }
+    /**
+     * Gets the default value use when the step is hide
+     */
+    public String getHiddenDefaultValue() {
+        return hiddenDefaultValue;
     }
 }

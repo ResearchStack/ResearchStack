@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -56,44 +57,34 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
     @Override
     public void onSaveStep(int action, Step step, StepResult result) {
 
-        if(step instanceof FormStep && step.getIdentifier().equalsIgnoreCase(ID_FORM))
-        {
-            for (QuestionStep question : ((FormStep) step).getFormSteps())
-            {
-                if(question.getIdentifier().equalsIgnoreCase(ID_FORM_FIRST_NAME))
-                {
+        if (step instanceof FormStep && step.getIdentifier().equalsIgnoreCase(ID_FORM)) {
+            for (QuestionStep question : ((FormStep) step).getFormSteps()) {
+                if (question.getIdentifier().equalsIgnoreCase(ID_FORM_FIRST_NAME)) {
                     StepResult nameResult = (StepResult) result.getResultForIdentifier(ID_FORM_FIRST_NAME);
-                    if(nameResult != null && nameResult.getResult() != null)
-                    {
+                    if (nameResult != null && nameResult.getResult() != null) {
                         firstName = (String) nameResult.getResult();
                     }
                 }
-                if(question.getIdentifier().equalsIgnoreCase(ID_FORM_LAST_NAME))
-                {
+                if (question.getIdentifier().equalsIgnoreCase(ID_FORM_LAST_NAME)) {
                     StepResult nameResult = (StepResult) result.getResultForIdentifier(ID_FORM_LAST_NAME);
-                    if(nameResult != null && nameResult.getResult() != null)
-                    {
+                    if (nameResult != null && nameResult.getResult() != null) {
                         lastName = (String) nameResult.getResult();
                     }
                 }
             }
         }
-        if(step instanceof ConsentSignatureStep)
-        {
+        if (step instanceof ConsentSignatureStep) {
             signatureBase64 = (String) result.getResultForIdentifier(KEY_SIGNATURE);
-        }
-        else if(step instanceof ConsentDocumentStep)
-        {
+        } else if (step instanceof ConsentDocumentStep) {
             consentHtml = ((ConsentDocumentStep) step).getConsentHTML();
         }
 
         super.onSaveStep(action, step, result);
     }
 
-    private String getFormalName(String firstName, String lastName)
-    {
+    private String getFormalName(String firstName, String lastName) {
         String completeName = null;
-        if(lastName != null && firstName != null) completeName = lastName+", "+firstName;
+        if (lastName != null && firstName != null) completeName = lastName + ", " + firstName;
         else if (firstName != null) completeName = firstName;
         else completeName = lastName;
         return completeName;
@@ -129,40 +120,38 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
     /**
      * Returns the personal form steps related with the consent view task.
-     *
+     * <p>
      * This method doesn't support multilanguage. If used, it will just print the filed names in English.
      * Please use the method with the new signature
      * {@link #getConsentPersonalInfoFormStep(Context context, boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
      */
     @Deprecated
-    public static @Nullable FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate) {
+    public static @Nullable
+    FormStep getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate) {
         return getConsentPersonalInfoFormStep(null, requiresName, requiresBirthDate);
     }
 
     /**
      * Returns the personal form steps related with the consent view task.
-     *
+     * <p>
      * This new version is prepared to work with multilanguage.
      * Please use this method instead of
      * {@link #getConsentPersonalInfoFormStep(boolean requiresName, boolean requiresBirthDate) getConsentPersonalInfoFormStep}
      */
-    public static @Nullable FormStep getConsentPersonalInfoFormStep(Context context, boolean requiresName,
-                                                                    boolean requiresBirthDate)
-    {
-        if (requiresName || requiresBirthDate)
-        {
+    public static @Nullable
+    FormStep getConsentPersonalInfoFormStep(Context context, boolean requiresName,
+                                            boolean requiresBirthDate) {
+        if (requiresName || requiresBirthDate) {
             List<QuestionStep> formSteps = new ArrayList<>();
-            if (requiresName)
-            {
+            if (requiresName) {
                 String firstName = (context != null) ? LocaleUtils.getLocalizedString(context, R.string.rsb_name_first) : "First Name";
                 formSteps.add(new QuestionStep(ID_FORM_FIRST_NAME, firstName, new TextAnswerFormat()));
 
-                String lastName = (context != null) ? LocaleUtils.getLocalizedString(context,R.string.rsb_name_last) : "Last Name";
+                String lastName = (context != null) ? LocaleUtils.getLocalizedString(context, R.string.rsb_name_last) : "Last Name";
                 formSteps.add(new QuestionStep(ID_FORM_LAST_NAME, lastName, new TextAnswerFormat()));
             }
 
-            if (requiresBirthDate)
-            {
+            if (requiresBirthDate) {
                 Calendar maxDate = Calendar.getInstance();
                 maxDate.add(Calendar.YEAR, -18);
 
@@ -171,7 +160,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
                 formSteps.add(new QuestionStep(ID_FORM_DOB, dobText, dobFormat));
             }
 
-            String formTitle = (context != null) ?  LocaleUtils.getLocalizedString(context, R.string.rsb_consent) : "Consent";
+            String formTitle = (context != null) ? LocaleUtils.getLocalizedString(context, R.string.rsb_consent) : "Consent";
             FormStep formStep = new FormStep(ID_FORM, formTitle, "");
             formStep.setOptional(false);
             formStep.setFormSteps(formSteps);
@@ -187,11 +176,15 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         StringBuffer body = new StringBuffer();
 
         String hr = "<hr align='left' width='100%' style='height:1px; border:none; color:#000; background-color:#000; margin-top: 5px; margin-bottom: 0px;'/>";
+        String td = "<td style='vertical-align: bottom;" +
+                "width: 33%;" +
+                "padding-right: 10px;" +
+                "padding-left: 10px;'>";
 
-        String signatureElementWrapper = "<div class='sigbox'><div class='inbox'>%s</div></div>%s%s";
+        String signatureElementWrapper = "<div class='sigbox'><div class='inbox'>%s</div></div>";
         String imageTag;
 
-        List<String> signatureElements = new ArrayList<>();
+        List<String[]> table = new ArrayList<>();
 
         if (role == null) {
             throw new RuntimeException("Consent role cannot be empty");
@@ -199,43 +192,42 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
         // Signature
         if (completeName != null) {
-            String base = getString(R.string.rsb_consent_doc_line_printed_name, role);
-            String nameElement = String.format(signatureElementWrapper, completeName, hr, base);
-            signatureElements.add(nameElement);
+            String columnName = getString(R.string.rsb_consent_doc_line_printed_name, role);
+            String columnValue = String.format(signatureElementWrapper, completeName);
+            String[] column = {columnValue, hr, columnName};
+            table.add(column);
         }
 
         if (signatureB64 != null) {
             imageTag = "<img width='100%' alt='star' style='max-height:100px;max-width:200px;height:auto;width:auto;' " +
                     "src='data:image/png;base64," + signatureB64 + "'/>";
-            String base = getString(R.string.rsb_consent_doc_line_signature, role);
-            String signatureElement = String.format(signatureElementWrapper, imageTag, hr, base);
-            signatureElements.add(signatureElement);
+            String columnName = getString(R.string.rsb_consent_doc_line_signature, role);
+            String columnValue = String.format(signatureElementWrapper, imageTag);
+            String[] column = {columnValue, hr, columnName};
+            table.add(column);
         }
 
-        if (signatureElements.size() > 0) {
-            String base = getString(R.string.rsb_consent_doc_line_date);
-            String signatureElement = String.format(signatureElementWrapper, signatureDate, hr, base);
-            signatureElements.add(signatureElement);
+        if (table.size() > 0) {
+            String columnName = getString(R.string.rsb_consent_doc_line_date);
+            String columnValue = String.format(signatureElementWrapper, signatureDate);
+            String[] column = {columnValue, hr, columnName};
+            table.add(column);
         }
 
-        int numElements = signatureElements.size();
-
-        if (numElements > 1) {
-            body
-                    .append("<table cellpadding='20px' width='100%'>")
-                    .append("<tr>");
-
-            for (String element : signatureElements) {
-                body.append("<td style='vertical-align: bottom;width:33%;'>").append(String.format("<div>%s</div>", element))
-                        .append("</td>");
+        if (table.size() > 0) {
+            int columns = table.get(0).length;
+            body.append("<table width='100%'>");
+            for (int i = 0; i < columns; i++) {
+                body.append("<tr>");
+                for (int j = 0; j < table.size(); j++) {
+                    body
+                            .append(td)
+                            .append(table.get(j)[i])
+                            .append("</td>");
+                }
+                body.append("</tr>");
             }
-
-            body
-                    .append("</tr>")
-                    .append("</table>");
-
-        } else if (numElements == 1) {
-            body.append(String.format("<div width='200'>%@</div>", signatureElements.get(0)));
+            body.append("</table>");
         }
 
         return body.toString();
@@ -243,7 +235,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
     class PDFWriteExposer extends RSHTMLPDFWriter {
         protected void printPdfFile(Activity context, final String taskId, String htmlConsentDocument, String assetsFolder,
-                PDFFileReadyCallback callback) {
+                                    PDFFileReadyCallback callback) {
             super.printPdfFile(context, taskId, htmlConsentDocument, assetsFolder, callback);
         }
     }

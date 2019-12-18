@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Debug -->
-
+<resources>
     <!-- Consent Section -->
     <string name="rsb_consent">Съгласие</string>
     <string name="rsb_consent_section_welcome">Добре дошли</string>
@@ -158,7 +155,6 @@
     <string name="rsb_consent_doc_line_signature">Подписът на%1$s\'s </string>
     <string name="rsb_consent_doc_line_date">Дата</string>
     <string name="rsb_consent_role">Участник</string>
-    <string name="rsb_consent_doc_line_date_format">ММ-дд-гггг</string>
 
 
 </resources>

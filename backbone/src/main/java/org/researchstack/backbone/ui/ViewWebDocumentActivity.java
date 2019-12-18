@@ -6,14 +6,17 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import org.researchstack.backbone.BuildConfig;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.views.LocalWebView;
 import org.researchstack.backbone.utils.ThemeUtils;
@@ -80,19 +83,21 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (BuildConfig.USE_SECURE_FLAG) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
+
         if (getIntent() != null && getIntent().hasExtra(KEY_THEME)) {
             setTheme(getIntent().getIntExtra(KEY_THEME, 0));
         }
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.rsb_activity_web_document);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
-        try
-        {
+        try {
             setSupportActionBar(toolbar);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             //there is already an action bar
             toolbar.setVisibility(View.GONE);
         }
@@ -113,21 +118,16 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
             actionBar.setTitle(title);
         }
 
-        LocalWebView webView = (LocalWebView) findViewById(R.id.webview);
+        LocalWebView webView = findViewById(R.id.webview);
 
-        if (getIntent().hasExtra(KEY_DOC_PATH))
-        {
+        if (getIntent().hasExtra(KEY_DOC_PATH)) {
             String docPath = getIntent().getStringExtra(KEY_DOC_PATH);
             webView.loadUrl(docPath);
-        }
-        else if (getIntent().hasExtra(KEY_DOC_CONTENT))
-        {
+        } else if (getIntent().hasExtra(KEY_DOC_CONTENT)) {
             String docContent = getIntent().getStringExtra(KEY_DOC_CONTENT);
 //            webView.loadData(docContent, "text/html", "UTF-8");
             webView.loadDataWithBaseURL(null, docContent, "text/html", "UTF-8", null);
-        }
-        else if (getIntent().hasExtra(KEY_CONTENT_URL))
-        {
+        } else if (getIntent().hasExtra(KEY_CONTENT_URL)) {
             webView.loadUrl(getIntent().getStringExtra(KEY_CONTENT_URL));
         }
     }
@@ -164,17 +164,5 @@ public class ViewWebDocumentActivity extends AppCompatActivity {
                 window.setStatusBarColor(primaryColorDark);
             }
         });
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
     }
 }

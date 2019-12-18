@@ -1,6 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Debug -->
-
+<resources>
     <!-- Consent Section -->
     <string name="rsb_consent">Souhlas</string>
     <string name="rsb_consent_section_welcome">Vítejte</string>
@@ -136,6 +134,5 @@
     <string name="rsb_consent_doc_line_signature">Podpis %1$s\'s</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Účastník</string>
-    <string name="rsb_consent_doc_line_date_format">MM-dd-rrrr</string>
 
 </resources>

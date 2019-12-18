@@ -1,6 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Debug -->
-
+<resources>
     <!-- Consent Section -->
     <string name="rsb_consent">Toestemming</string>
     <string name="rsb_consent_section_welcome">Welkom</string>
@@ -136,6 +134,5 @@
     <string name="rsb_consent_doc_line_signature">Handtekening van %1$s\'s</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Deelnemer</string>
-    <string name="rsb_consent_doc_line_date_format">MM-dd-jjjj</string>
 
 </resources>
