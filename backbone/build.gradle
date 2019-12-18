@@ -24,6 +24,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.6.0"
+        dimension "default"
     }
 
     buildTypes {
@@ -39,12 +40,15 @@ android {
     flavorDimensions "default"
 
     productFlavors {
-        flask {
-            dimension "default"
+        prod {
             buildConfigField 'boolean', 'USE_SECURE_FLAG', 'true'
         }
+
+        dev {
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'true'
+        }
+
         automatedFlask {
-            dimension "default"
             buildConfigField 'boolean', 'USE_SECURE_FLAG', 'false'
         }
     }

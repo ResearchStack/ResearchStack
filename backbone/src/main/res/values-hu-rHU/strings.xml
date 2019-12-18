@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Consent Section -->
     <string name="rsb_consent">Hozzájárulás</string>
@@ -57,7 +57,7 @@
     <string name="rsb_consent_review_cancel">Mégse</string>
 
     <string name="rsb_saving_consent">Hozzájárulás mentése</string>
-    <string name="rsb_please_wait">Kérjük, várjon...</string>
+    <string name="rsb_please_wait">Kérjük, várjon&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_form_title">Hozzájárulás</string>
@@ -158,6 +158,8 @@
     <string name="rsb_consent_doc_line_date">Dátum</string>
     <string name="rsb_consent_role">Résztvevő</string>
     <string name="rsb_consent_doc_line_date_format">MM-dd-yyyy</string>
+
+    <!-- Edit -->
     <string name="rsb_edit_step_alert_cancel_positive">[hu-HU] YES, STOP MAKING CHANGES</string>
     <string name="rsb_edit_step_alert_cancel_discard">[hu-HU] NO, KEEP EDITING</string>
     <string name="rsb_edit_step_alert_cancel_title">[hu-HU] Do you want to stop making changes?</string>
@@ -173,4 +175,3 @@
     <string name="rsb_edit_step_alert_step_skip_positive">[hu-HU] Yes, skip</string>
 
 </resources>
-
