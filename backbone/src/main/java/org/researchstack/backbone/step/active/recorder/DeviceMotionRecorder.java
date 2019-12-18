@@ -55,6 +55,8 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     public static final String ROTATION_REFERENCE_COORDINATE_KEY = "referenceCoordinate";
 
+    public static final String TIMESTAMP_KEY   = "timestamp";
+    public static final String END_DATE        = "endDate";
     public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION  = "BroadcastDeviceMotionUpdate";
     private static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY    = "DeviceMotionUpdate";
 
@@ -188,7 +190,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
         return sensorTypeList;
     }
 
-
     @Override
     public void recordSensorEvent(SensorEvent sensorEvent, JsonObject jsonObject) {
         int sensorType = sensorEvent.sensor.getType();
@@ -206,11 +207,12 @@ public class DeviceMotionRecorder extends SensorRecorder {
         switch (sensorType) {
             case Sensor.TYPE_ACCELEROMETER:
                 recordAccelerometerEvent(sensorEvent, jsonObject);
-                sendDeviceMotionUpdateBroadcast(
-                        jsonObject.get(X_KEY).getAsFloat(),
-                        jsonObject.get(Y_KEY).getAsFloat(),
-                        jsonObject.get(Z_KEY).getAsFloat(),
-                        0);
+                onDeviceMotion();
+                //sendDeviceMotionUpdateBroadcast(
+                //        jsonObject.get(X_KEY).getAsFloat(),
+                //        jsonObject.get(Y_KEY).getAsFloat(),
+                //        jsonObject.get(Z_KEY).getAsFloat(),
+                //        0);
                 break;
             case Sensor.TYPE_GRAVITY:
                 recordGravityEvent(sensorEvent, jsonObject);
@@ -233,15 +235,28 @@ public class DeviceMotionRecorder extends SensorRecorder {
             case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
             case Sensor.TYPE_ROTATION_VECTOR:
                 recordRotationVector(sensorEvent, jsonObject);
-                sendDeviceMotionUpdateBroadcast(
-                        jsonObject.get(X_KEY).getAsFloat(),
-                        jsonObject.get(Y_KEY).getAsFloat(),
-                        jsonObject.get(Z_KEY).getAsFloat(),
-                        jsonObject.get(W_KEY).getAsFloat());
+                onDeviceMotion();
+                //sendDeviceMotionUpdateBroadcast(
+                        //jsonObject.get(X_KEY).getAsFloat(),
+                        //jsonObject.get(Y_KEY).getAsFloat(),
+                        //jsonObject.get(Z_KEY).getAsFloat(),
+                        //jsonObject.get(W_KEY).getAsFloat());
                 break;
             default:
                 logger.warn("Unable to record sensor type: " + sensorType);
         }
+    }
+
+    //moved these to here
+    public void onDeviceMotion() {
+        jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis());
+        jsonObject.addProperty(END_DATE, System.currentTimeMillis());
+        sendDeviceMotionUpdateBroadcast(
+                jsonObject.get(X_KEY).getAsFloat(),
+                jsonObject.get(Y_KEY).getAsFloat(),
+                jsonObject.get(Z_KEY).getAsFloat(),
+                jsonObject.get(W_KEY).getAsFloat());
+        super.writeJsonObjectToFile(jsonObject);
     }
 
     /**
@@ -291,7 +306,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
      *     https://source.android.com/devices/sensors/sensor-types#geomagnetic_rotation_vector
      */
     @VisibleForTesting
-    void recordRotationVector(SensorEvent sensorEvent, JsonObject jsonObject) {
+    public void recordRotationVector(SensorEvent sensorEvent, JsonObject jsonObject) {
         // indicate android sensor subtype
         int sensorType = sensorEvent.sensor.getType();
         if (Sensor.TYPE_ROTATION_VECTOR == sensorType) {
@@ -362,7 +377,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
     }
 
     protected void sendDeviceMotionUpdateBroadcast(float x, float y, float z, float w) {
-        DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder = new DeviceMotionRecorder.DeviceMotionUpdateHolder();
+        DeviceMotionUpdateHolder dataHolder = new DeviceMotionUpdateHolder();
         dataHolder.setX(x);
         dataHolder.setY(y);
         dataHolder.setZ(z);
@@ -378,14 +393,14 @@ public class DeviceMotionRecorder extends SensorRecorder {
      * @param intent must have action of BROADCAST_DEVICE_MOTION_UPDATE_ACTION
      * @return the DeviceMotionUpdateHolder contained in the broadcast
      */
-    public static DeviceMotionRecorder.DeviceMotionUpdateHolder getDeviceMotionUpdateHolder(Intent intent) {
+    public static DeviceMotionUpdateHolder getDeviceMotionUpdateHolder(Intent intent) {
         if (intent.getAction() == null ||
                 !intent.getAction().equals(BROADCAST_DEVICE_MOTION_UPDATE_ACTION) ||
                 intent.getExtras() == null ||
                 intent.getExtras().containsKey(BROADCAST_DEVICE_MOTION_UPDATE_KEY)) {
             return null;
         }
-        return (DeviceMotionRecorder.DeviceMotionUpdateHolder) intent.getExtras()
+        return (DeviceMotionUpdateHolder) intent.getExtras()
                 .getSerializable(BROADCAST_DEVICE_MOTION_UPDATE_KEY);
     }
 
@@ -396,7 +411,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
         private float w;
 
         public float getX() { return x; }
-
         public void setX(float x) {
             this.x = x;
         }
@@ -404,7 +418,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
         public float getY() {
             return y;
         }
-
         public void setY(float y) {
             this.y = y;
         }
@@ -412,7 +425,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
         public float getZ() {
             return z;
         }
-
         public void setZ(float z) {
             this.z = z;
         }
@@ -420,7 +432,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
         public float getW() {
             return w;
         }
-
         public void setW(float w) {
             this.w = w;
         }
