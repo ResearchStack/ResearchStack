@@ -55,10 +55,10 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     public static final String ROTATION_REFERENCE_COORDINATE_KEY = "referenceCoordinate";
 
-    public static final String TIMESTAMP_KEY   = "timestamp";
-    public static final String END_DATE        = "endDate";
-    public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION  = "BroadcastDeviceMotionUpdate";
-    private static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY    = "DeviceMotionUpdate";
+    public static final String TIMESTAMP_KEY = "timestamp";
+    public static final String END_DATE = "endDate";
+    public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION = "BroadcastDeviceMotionUpdate";
+    private static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY = "DeviceMotionUpdate";
 
     private JsonObject jsonObject;
 
@@ -207,12 +207,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
         switch (sensorType) {
             case Sensor.TYPE_ACCELEROMETER:
                 recordAccelerometerEvent(sensorEvent, jsonObject);
-                onDeviceMotion();
-                //sendDeviceMotionUpdateBroadcast(
-                //        jsonObject.get(X_KEY).getAsFloat(),
-                //        jsonObject.get(Y_KEY).getAsFloat(),
-                //        jsonObject.get(Z_KEY).getAsFloat(),
-                //        0);
                 break;
             case Sensor.TYPE_GRAVITY:
                 recordGravityEvent(sensorEvent, jsonObject);
@@ -235,29 +229,33 @@ public class DeviceMotionRecorder extends SensorRecorder {
             case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
             case Sensor.TYPE_ROTATION_VECTOR:
                 recordRotationVector(sensorEvent, jsonObject);
-                onDeviceMotion();
-                //sendDeviceMotionUpdateBroadcast(
-                        //jsonObject.get(X_KEY).getAsFloat(),
-                        //jsonObject.get(Y_KEY).getAsFloat(),
-                        //jsonObject.get(Z_KEY).getAsFloat(),
-                        //jsonObject.get(W_KEY).getAsFloat());
                 break;
             default:
+                onDeviceMotion();
                 logger.warn("Unable to record sensor type: " + sensorType);
         }
     }
 
-    //moved these to here
     public void onDeviceMotion() {
         jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis());
         jsonObject.addProperty(END_DATE, System.currentTimeMillis());
-        sendDeviceMotionUpdateBroadcast(
-                jsonObject.get(X_KEY).getAsFloat(),
-                jsonObject.get(Y_KEY).getAsFloat(),
-                jsonObject.get(Z_KEY).getAsFloat(),
-                jsonObject.get(W_KEY).getAsFloat());
         super.writeJsonObjectToFile(jsonObject);
+
+        if (jsonObject.get(W_KEY) != null) {
+            sendDeviceMotionUpdateBroadcast(
+                    jsonObject.get(X_KEY).getAsFloat(),
+                    jsonObject.get(Y_KEY).getAsFloat(),
+                    jsonObject.get(Z_KEY).getAsFloat(),
+                    jsonObject.get(W_KEY).getAsFloat());
+        } else {
+            sendDeviceMotionUpdateBroadcast(
+                    jsonObject.get(X_KEY).getAsFloat(),
+                    jsonObject.get(Y_KEY).getAsFloat(),
+                    jsonObject.get(Z_KEY).getAsFloat(),
+                    0);
+        }
     }
+
 
     /**
      * @see <a href="https://source.android.com/devices/sensors/sensor-types#accelerometer">
