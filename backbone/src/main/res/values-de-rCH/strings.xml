@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Debug -->
 
     <!-- Consent Section -->
@@ -137,6 +137,8 @@
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Teilnehmer</string>
     <string name="rsb_consent_doc_line_date_format">"TT-MM-JJJJ"</string>
+
+    <!-- Edit -->
     <string name="rsb_edit_step_alert_cancel_positive">[de-CH] YES, STOP MAKING CHANGES</string>
     <string name="rsb_edit_step_alert_cancel_discard">[de-CH] NO, KEEP EDITING</string>
     <string name="rsb_edit_step_alert_cancel_title">[de-CH] Do you want to stop making changes?</string>
