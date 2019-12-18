@@ -2,6 +2,10 @@
 
 ### Change log
 
+#### v1.5.0
+- Adding languages: ru_RU, ja_JP 
+- Bug fixes.
+
 #### v1.4.1
 - Introducing the following languages: cs_CZ, da_DK, de_CH, en_NZ, en_GB, en_AU, es_US, es_MX, fr_CA, fr_FR, fr_CH, it_IT, nl_BE, nl_NL, pl_PL, ru_UA, sv_SE, tr_TR, uk_UA, zh_CN, zh_TW
 - Bug fixes & improvements.
