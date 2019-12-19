@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier" />
 
     <TextView
-        android:id="@+id/imageChoiceStepQuestionAnswer"
+        android:id="@+id/imageChoiceStepQuestionSkipped"
         style="@style/rsb_review_step_sub_step_answer_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -48,14 +48,30 @@
         app:layout_constraintTop_toBottomOf="@id/imageChoiceStepImageBarrier"
         tools:text="Yes" />
 
-    <ImageView
-        android:id="@+id/imageChoiceImageStepQuestionAnswer"
-        style="@style/rsb_image_choice_step_style"
+    <LinearLayout
+        android:id="@+id/imageChoiceImageStepAnswerContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageChoiceStepImageBarrier"
-        app:srcCompat="@drawable/rsb_ic_circle_8dp" />
+        app:layout_constraintTop_toBottomOf="@id/imageChoiceStepImageBarrier">
+
+        <ImageView
+            android:id="@+id/imageChoiceImageStepQuestionAnswer"
+            style="@style/rsb_image_choice_step_style"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/rsb_ic_circle_8dp" />
+
+        <TextView
+            android:id="@+id/imageChoiceStepQuestionAnswer"
+            style="@style/rsb_review_step_sub_step_answer_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@null" />
+    </LinearLayout>
 
     <include layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
