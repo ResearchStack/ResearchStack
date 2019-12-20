@@ -55,6 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageChoiceStepImageBarrier"
         android:layout_marginStart="16dp"
+        android:contentDescription="@null"
         app:srcCompat="@drawable/rsb_ic_circle_8dp" />
 
     <TextView
