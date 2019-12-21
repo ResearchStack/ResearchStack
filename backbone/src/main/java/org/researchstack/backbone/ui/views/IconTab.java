@@ -3,9 +3,6 @@ package org.researchstack.backbone.ui.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.researchstack.backbone.R;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 
 public class IconTab extends RelativeLayout implements View.OnLongClickListener {

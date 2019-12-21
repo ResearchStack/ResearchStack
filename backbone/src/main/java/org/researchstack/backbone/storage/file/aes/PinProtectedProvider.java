@@ -1,7 +1,6 @@
 package org.researchstack.backbone.storage.file.aes;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.tozny.crypto.android.AesCbcWithIntegrity;
 
@@ -14,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+
+import androidx.annotation.NonNull;
 
 /**
  * This abstract class allows for pin protection, whether or not the files are actually encrypted

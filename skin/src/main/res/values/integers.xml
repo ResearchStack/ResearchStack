@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="rss_config_maxNumberOfPageIndicatorsToShow">16</integer>
-    <integer name="rss_btn_pressed_animation_duration">100</integer>
-    <integer name="rss_btn_pressed_animation_delay">100</integer>
-</resources>

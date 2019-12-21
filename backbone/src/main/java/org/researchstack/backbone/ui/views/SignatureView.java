@@ -14,7 +14,6 @@ import android.graphics.RectF;
 import android.graphics.drawable.shapes.PathShape;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +23,8 @@ import org.researchstack.backbone.ui.callbacks.SignatureCallbacks;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.core.view.ViewCompat;
 
 /**
  * Note: For save-state to work, the view MUST have an ID
@@ -251,6 +252,8 @@ public class SignatureView extends View {
      * {@link android.graphics.PathMeasure} class and get minX and minY from that.
      * <p>
      * 2. Scale bitmap down. Currently drawing at density of device.
+     *
+     * @return the signature bitmap
      */
     public Bitmap createSignatureBitmap() {
 

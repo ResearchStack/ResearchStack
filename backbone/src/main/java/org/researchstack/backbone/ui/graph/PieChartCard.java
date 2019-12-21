@@ -3,8 +3,6 @@ package org.researchstack.backbone.ui.graph;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.support.annotation.StringRes;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -18,6 +16,9 @@ import com.github.mikephil.charting.data.PieData;
 import org.researchstack.backbone.R;
 
 import java.text.NumberFormat;
+
+import androidx.annotation.StringRes;
+import androidx.cardview.widget.CardView;
 
 public class PieChartCard extends CardView {
     private TextView titleTextView;

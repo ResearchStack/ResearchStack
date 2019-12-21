@@ -1,24 +1,33 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+apply plugin: "kotlin-kapt"
 
-version = '1.1.2'
+
+version = '2.0.0-SNAPSHOT'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 6
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 7
         versionName version
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -34,147 +43,86 @@ android {
     }
 
     resourcePrefix 'rsb_'
+    buildToolsVersion = '28.0.3'
 }
 
+// Reading in data from local.properties is used here to grab key/value pairs used below in ext
+// Originally, it read the local.properties, but this file should never be committed to vcs,
+// So check if it exists first, because some projects may not care about it
 Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+if (project.rootProject.file('local.properties').exists()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
 
 ext {
-    bintrayRepo = 'ResearchStack'
-    bintrayName = 'Backbone'
 
-    publishedGroupId = 'org.researchstack'
-    libraryName = 'Backbone'
-    artifact = 'backbone'
-
-    libraryDescription = 'Backbone description'
-
-    siteUrl = 'https://researchstack.org'
-    gitUrl = 'https://github.com/ResearchStack/ResearchStack.git'
 
     libraryVersion = version
 
-    userOrgName = 'researchstack'
-    developerId = properties.getProperty("bintray.user")
-    developerName = properties.getProperty("bintray.developerName")
-    developerEmail = properties.getProperty("bintray.developerEmail")
 
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:cardview-v7:23.2.1'
-    compile 'com.android.support:preference-v14:23.2.1'
-    compile 'com.android.support:design:23.2.1'
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'io.reactivex:rxjava:1.1.3'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.2.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-design:0.2.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
 
-    compile 'com.scottyab:aes-crypto:0.0.3'
-    compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
-    apt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
-    compile 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.robolectric:robolectric:3.0'
-    testCompile 'org.mockito:mockito-core:1.10.19'
-}
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'com.jakewharton.rxbinding:rxbinding:1.0.1'
+    implementation 'com.jakewharton.rxbinding:rxbinding-support-v4:1.0.1'
+    implementation 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:1.0.1'
+    implementation 'com.jakewharton.rxbinding:rxbinding-design:1.0.1'
+    implementation 'io.reactivex:rxjava:1.3.0'
+    implementation 'nl.littlerobots.rxlint:rxlint:1.7.3'
 
-group = publishedGroupId                               // Maven Group ID for the artifact
+    // These are all support libraries that should be updated when Google releases new ones
+    implementation "androidx.appcompat:appcompat:$versions.appcompat"
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${versions.kotlinCoroutines}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.kotlinCoroutines}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlinCoroutines}"
 
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                groupId publishedGroupId
-                artifactId artifact
+    implementation 'com.google.code.gson:gson:2.8.5'
 
-                // Add your description here
-                name libraryName
-                description libraryDescription
-                url siteUrl
-
-                // Set your license
-                licenses {
-                    license {
-                        name licenseName
-                        url licenseUrl
-                    }
-                }
-                developers {
-                    developer {
-                        id developerId
-                        name developerName
-                        email developerEmail
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
+    implementation 'com.cronutils:cron-utils:8.1.1', {
+        exclude group: 'joda-time', module: 'joda-time'
+        // this can cause dex errors due to duplicate joda times
     }
-}
+    implementation 'net.danlew:android.joda:2.10.1.2'
+    // android specific joda time, jre version causes perf problems
+    testImplementation 'joda-time:joda-time:2.10.1'
 
-if (project.hasProperty("android")) { // Android libraries
-    task sourcesJar(type: Jar) {
-        classifier = 'sources'
-        from android.sourceSets.main.java.srcDirs
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
+
+
+    // Used to display UploadData and study data in various chart formats
+    implementation('com.github.PhilJay:MPAndroidChart:v2.2.3') {
+        exclude group: 'com.google.android', module: 'android'
     }
 
-    task javadoc(type: Javadoc) {
-        failOnError false
-        source = android.sourceSets.main.java.srcDirs
-    }
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
+    implementation "androidx.constraintlayout:constraintlayout-solver:${versions.constraintLayout}"
 
-    afterEvaluate {
-        javadoc.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-        javadoc.classpath += files(android.libraryVariants.collect { variant ->
-            variant.javaCompile.classpath.files
-        })
-    }
-} else { // Java libraries
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
+    implementation 'com.scottyab:aes-crypto:0.0.5'
+    implementation 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
+    kapt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
+    implementation 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
+
+    // Libraries to help with unit testing
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.24.0'
+    testImplementation 'org.powermock:powermock-api-mockito2:1.7.1'
+    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.7.1'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.1'
+    testImplementation 'org.powermock:powermock-module-junit4:1.7.1'
+
+
+
+    testImplementation 'org.robolectric:robolectric:4.2.1'
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
 
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-
-    configurations = ['archives']
-    pkg {
-        repo = bintrayRepo
-        name = bintrayName
-        userOrg = userOrgName
-        desc = libraryDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publish = true
-    }
-}

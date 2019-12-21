@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <SeekBar
+            android:id = "@+id/seekBar"
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_marginStart = "8dp"
+            android:layout_marginTop = "16dp"
+            android:layout_marginEnd = "8dp"
+            android:max = "100"
+            android:progress = "0"
+            android:progressTint = "?attr/colorAccent"
+            android:thumb = "@drawable/rsb_scale_thumb"
+            app:layout_constraintEnd_toStartOf = "@+id/rsbRangeEnd"
+            app:layout_constraintStart_toEndOf = "@+id/rsbRangeStart"
+            app:layout_constraintTop_toBottomOf = "@+id/value"/>
+
+    <TextView
+            android:id = "@+id/value"
+            style = "@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginStart = "8dp"
+            android:layout_marginTop = "16dp"
+            android:layout_marginEnd = "8dp"
+            android:gravity = "center_horizontal"
+            android:padding = "4dp"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toTopOf = "parent"/>
+
+    <TextView
+            android:id = "@+id/rsbRangeStart"
+            style = "@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginStart = "16dp"
+            android:text = "0"
+            app:layout_constraintBottom_toBottomOf = "@+id/seekBar"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toTopOf = "@+id/seekBar"/>
+
+    <TextView
+            android:id = "@+id/rsbRangeEnd"
+            style = "@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginEnd = "16dp"
+            android:text = "10"
+            app:layout_constraintBottom_toBottomOf = "@+id/seekBar"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintTop_toTopOf = "@+id/seekBar"/>
+
+
+    <TextView
+            android:id = "@+id/minDescription"
+            style = "@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_marginStart = "12dp"
+            android:layout_marginTop = "16dp"
+            android:layout_marginEnd = "32dp"
+            android:layout_marginBottom = "16dp"
+            android:gravity = "left"
+            android:padding = "4dp"
+            android:text = "Stringas Stringas Stringas Stringas"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintEnd_toStartOf = "@+id/maxDescription"
+            app:layout_constraintHorizontal_bias = "0.5"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@id/rsbRangeStart" />
+
+    <TextView
+            android:id = "@+id/maxDescription"
+            style = "@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_marginStart = "24dp"
+            android:layout_marginTop = "16dp"
+            android:layout_marginEnd = "12dp"
+            android:layout_marginBottom = "16dp"
+            android:gravity = "right"
+            android:padding = "4dp"
+            android:text = "String Stringas Stringas Stringas"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintHorizontal_bias = "0.5"
+            app:layout_constraintStart_toEndOf = "@+id/minDescription"
+            app:layout_constraintTop_toBottomOf = "@id/rsbRangeEnd" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

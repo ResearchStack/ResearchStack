@@ -9,9 +9,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import org.researchstack.backbone.ResourcePathManager;
-import org.researchstack.backbone.ui.ViewVideoActivity;
-import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.utils.LogExt;
 
 import java.io.File;
@@ -53,15 +50,11 @@ public class LocalWebView extends WebView {
                                 " of PDF for viewing");
                     } else if (file.endsWith(".mp4")) {
                         String fileName = file.substring(0, file.lastIndexOf("."));
-                        String absVideoFilePath = ResourcePathManager.getInstance()
-                                .generatePath(ResourcePathManager.Resource.TYPE_MP4, fileName);
-                        Intent intent = ViewVideoActivity.newIntent(getContext(), absVideoFilePath);
-                        getContext().startActivity(intent);
+
+
                     } else {
-                        Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
-                                null,
-                                url);
-                        getContext().startActivity(intent);
+
+
                     }
                 } else {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));

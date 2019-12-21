@@ -92,7 +92,7 @@ public class DecimalQuestionBody implements StepBody {
 
         if (step.getPlaceholder() != null) {
             editText.setHint(step.getPlaceholder());
-        } else if (maxValue == Integer.MAX_VALUE) {
+        } else if (maxValue == Float.MAX_VALUE) {
             editText.setHint(context.getString(R.string.rsb_hint_step_body_int_no_max));
         } else {
             editText.setHint(context.getString(R.string.rsb_hint_step_body_dec,

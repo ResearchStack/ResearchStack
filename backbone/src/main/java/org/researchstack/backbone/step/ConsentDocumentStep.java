@@ -12,6 +12,11 @@ public class ConsentDocumentStep extends Step {
 
     private String confirmMessage;
 
+    /* Default constructor needed for serilization/deserialization of object */
+    ConsentDocumentStep() {
+        super();
+    }
+
     public ConsentDocumentStep(String identifier) {
         super(identifier);
     }

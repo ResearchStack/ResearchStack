@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.annotation.StringRes;
-import android.support.design.widget.TabLayout;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -16,14 +13,16 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
+import com.google.android.material.tabs.TabLayout;
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.ui.views.IconTabLayout;
 
 import java.text.NumberFormat;
 import java.util.List;
 
+import androidx.annotation.StringRes;
+import androidx.cardview.widget.CardView;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -167,26 +166,7 @@ public class ProgressChartCard extends CardView {
             }
         }
 
-        tabLayout.setOnTabSelectedListener(new IconTabLayout.OnTabSelectedListenerAdapter() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                PieData data = dataSet.get(tab.getPosition());
-                float complete = data.getDataSet().getEntryForIndex(0).getVal();
-                float incomplete = data.getDataSet().getEntryForIndex(1).getVal();
-                chart.setData(data);
-                chart.setCenterText(String.format(centerTextFormat,
-                        numberFormat.format(complete),
-                        numberFormat.format(complete + incomplete)));
-                chart.notifyDataSetChanged();
-                chart.invalidate();
-            }
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                super.onTabReselected(tab);
-                onTabSelected(tab);
-            }
-        });
     }
 
     public PieChart getChart() {

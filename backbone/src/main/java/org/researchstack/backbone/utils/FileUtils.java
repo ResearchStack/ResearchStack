@@ -1,7 +1,5 @@
 package org.researchstack.backbone.utils;
 
-import android.support.annotation.NonNull;
-
 import org.researchstack.backbone.storage.file.StorageAccessException;
 
 import java.io.ByteArrayOutputStream;
@@ -11,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import androidx.annotation.NonNull;
 
 public class FileUtils {
     private FileUtils() {
