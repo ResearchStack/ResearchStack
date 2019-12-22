@@ -1,4 +1,6 @@
-package com.spineapp;
+package org.researchstack.backbone.ui.step.layout;
+
+import java.lang.Math;
 
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
@@ -11,15 +13,17 @@ import android.hardware.SensorManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
-import org.researchstack.backbone.result.RangeOfMotionResult;
+
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.RangeOfMotionResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.step.active.RangeOfMotionStep;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
-import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
 import org.researchstack.backbone.utils.MathUtils;
 
 /**
@@ -32,7 +36,7 @@ import org.researchstack.backbone.utils.MathUtils;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
-    private RangeOfMotionStep rangeOfMotionStep;
+    protected RangeOfMotionStep rangeOfMotionStep;
     private BroadcastReceiver deviceMotionReceiver;
     private Intent intent;
     protected RangeOfMotionResult rangeOfMotionResult;
@@ -85,7 +89,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         super.setupActiveViews();
 
         LayoutInflater.from(getContext())
-                .inflate(R.layout.range_of_motion_step_layout, this, true);
+                .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
 
         titleTextview.setVisibility(View.VISIBLE);
         textTextview.setVisibility(View.GONE); // Will need to be set to VISIBLE for RS framework
@@ -98,7 +102,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     private void setupOnClickListener() {
-        layout = findViewById(R.id.rsb_active_step_layout_range_of_motion);
+        layout = findViewById(R.id.rsb_step_layout_range_of_motion);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -383,9 +387,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     /*
-    * Because this is called by onTouchEvent, this code will be executed for both normal touch
-    * events and when the system calls this using Accessibility via performClick
-    */
+     * Because this is called by onTouchEvent, this code will be executed for both normal touch
+     * events and when the system calls this using Accessibility via performClick
+     */
 
     @Override
     public boolean performClick() {
@@ -407,7 +411,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         float[] attitudeQuaternion = new float[4];
 
-            SensorManager.getQuaternionFromVector(attitudeQuaternion, rotation_vector);
+        SensorManager.getQuaternionFromVector(attitudeQuaternion, rotation_vector);
 
         return attitudeQuaternion;
     }
@@ -451,3 +455,4 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         stepResult.setResultForIdentifier(rangeOfMotionResult.getIdentifier(), rangeOfMotionResult);
     }
 }
+
