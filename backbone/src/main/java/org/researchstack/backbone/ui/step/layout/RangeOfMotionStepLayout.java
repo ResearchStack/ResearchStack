@@ -1,7 +1,4 @@
-package org.researchstack.backbone.ui.step.layout;
-
-import java.io.File;
-import java.lang.Math;
+package com.spineapp;
 
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
@@ -9,27 +6,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-import android.speech.tts.TextToSpeech;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.MotionEvent;
-import android.widget.ProgressBar;
+import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import org.researchstack.backbone.R;
-import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.RangeOfMotionResult;
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.active.RangeOfMotionStep;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.utils.FileUtils;
+import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
 import org.researchstack.backbone.utils.MathUtils;
 
 /**
@@ -42,13 +32,16 @@ import org.researchstack.backbone.utils.MathUtils;
 
 public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
-    protected SensorEvent sensorEvent;
-    protected RelativeLayout layout;
-    protected RangeOfMotionStep rangeOfMotionStep;
+    private RangeOfMotionStep rangeOfMotionStep;
     private BroadcastReceiver deviceMotionReceiver;
+    private Intent intent;
+    protected RangeOfMotionResult rangeOfMotionResult;
+    protected SensorEvent sensorEvent; // evaluating as null
+    protected RelativeLayout layout;
 
     private boolean isRecordingComplete = false;
 
+    //public float[] sensorValues = new float[4];
     public float[] startAttitude = new float[4];
     public float[] finishAttitude = new float[4];
     public float[] updatedAttitude = new float[4];
@@ -73,6 +66,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public void initialize(Step step, StepResult result) {
         super.initialize(step, result);
+
+        // we may need to capture start attitude here as the createActiveStepLayout() method doesn't seem to capture it as onCreate ()is not called
+        startAttitude = getDeviceAttitudeAsQuaternion(getDataFromSensorRecorder());
     }
 
     @Override
@@ -89,10 +85,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         super.setupActiveViews();
 
         LayoutInflater.from(getContext())
-                .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
+                .inflate(R.layout.range_of_motion_step_layout, this, true);
 
         titleTextview.setVisibility(View.VISIBLE);
-        textTextview.setVisibility(View.VISIBLE);
+        textTextview.setVisibility(View.GONE); // Will need to be set to VISIBLE for RS framework
         timerTextview.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         progressBarHorizontal.setVisibility(View.GONE);
@@ -102,11 +98,14 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     private void setupOnClickListener() {
-        layout = findViewById(R.id.rsb_step_layout_range_of_motion);
+        layout = findViewById(R.id.rsb_active_step_layout_range_of_motion);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // we may need to capture finish attitude here if the onTouchEvent() method doesn't capture it.
+
+                // we may need to capture finish attitude here as the onTouchEvent() method doesn't seem to capture it.
+                finishAttitude = getDeviceAttitudeAsQuaternion(getDataFromSensorRecorder());
+
                 onFinish();
             }
         });
@@ -115,10 +114,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     protected void registerRecorderBroadcastReceivers(Context appContext) {
         super.registerRecorderBroadcastReceivers(appContext);
+
         deviceMotionReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent == null || intent.getAction() == null) {
+                if (intent == null || intent.getAction() == null) { // onReceive() is not being called - can we test this in emulator?
                     return;
                 }
                 if (DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION.equals(intent.getAction())) {
@@ -165,6 +165,34 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         stop();
     }
 
+
+    public float[] getDataFromSensorRecorder() {
+        float[] currentSensorValues = new float[4];
+        if (DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION.equals(intent.getAction())) {
+            DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder =
+                    DeviceMotionRecorder.getDeviceMotionUpdateHolder(intent);
+            if (dataHolder != null) {
+
+                if (dataHolder.getW() != 0.0f) {
+                    currentSensorValues = new float[]{
+                            dataHolder.getX(),
+                            dataHolder.getY(),
+                            dataHolder.getZ(),
+                            dataHolder.getW()
+                    };
+                } else {
+                    currentSensorValues = new float[]{
+                            dataHolder.getX(),
+                            dataHolder.getY(),
+                            dataHolder.getZ()
+                    };
+                }
+            }
+        }
+        return currentSensorValues;
+    }
+
+
     /**
      * Method to obtain range-shifted Euler angle of first (start) device attitude,
      * relative to the zero position
@@ -209,6 +237,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         return MathUtils.getMinimum(adjusted_angle);
     }
 
+
     /**
      * Method to calculate maximum range-shifted Euler angles from the entire device
      * recording session
@@ -230,7 +259,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public double getShiftedDeviceAngleUpdates() {
 
         double adjusted_angle;
-        
+
         double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(updatedAttitude);
 
         adjusted_angle = shiftDeviceAngleRange(unadjusted_angle);
@@ -241,7 +270,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to shift default range of calculated angles from +/-180 degrees to -90 to +270 degrees,
-     * to cover all achievable ranges of motion (which can exceed 180 degrees)
+     * to cover all achievable ranges of motion (which can exceed 180 degrees but should not fall
+     * short of 90 degrees)
      **/
 
     public double shiftDeviceAngleRange(double original_angle) {
@@ -270,7 +300,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         int orientation = getResources().getConfiguration().orientation;
 
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getDeviceAttitudeAsQuaternion(sensorEvent.values);
+            //getDeviceAttitudeAsQuaternion(sensorEvent.values);
+            getDeviceAttitudeAsQuaternion(getDataFromSensorRecorder());
             angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForRoll (
                     quaternion[0],
                     quaternion[1],
@@ -279,7 +310,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
             );
         }
         else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            getDeviceAttitudeAsQuaternion(sensorEvent.values);
+            //getDeviceAttitudeAsQuaternion(sensorEvent.values);
+            getDeviceAttitudeAsQuaternion(getDataFromSensorRecorder());
             angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForPitch (
                     quaternion[0],
                     quaternion[1],
@@ -328,7 +360,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public void createActiveStepLayout() {
         super.createActiveStepLayout();
-        startAttitude = getDeviceAttitudeAsQuaternion(sensorEvent.values); // this holds the start attitude quaternion
+
+        //startAttitude = getDeviceAttitudeAsQuaternion(sensorEvent.values);
+        //startAttitude = getDeviceAttitudeAsQuaternion(getDataFromSensorRecorder()); // this holds the start attitude quaternion
     }
 
 
@@ -349,7 +383,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     /*
-    * Because this is called from onTouchEvent, this code will be executed for both normal touch
+    * Because this is called by onTouchEvent, this code will be executed for both normal touch
     * events and when the system calls this using Accessibility via performClick
     */
 
@@ -357,7 +391,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public boolean performClick() {
         super.performClick();
 
-        finishAttitude = getDeviceAttitudeAsQuaternion(sensorEvent.values); // this holds the finish attitude quaternion
+        //finishAttitude = getDeviceAttitudeAsQuaternion(sensorEvent.values);
+        //finishAttitude = getDeviceAttitudeAsQuaternion(sensorValues); // this holds the finish attitude quaternion - not capturing it!
 
         return true;
     }
@@ -372,9 +407,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         float[] attitudeQuaternion = new float[4];
 
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
             SensorManager.getQuaternionFromVector(attitudeQuaternion, rotation_vector);
-        }
+
         return attitudeQuaternion;
     }
 
@@ -389,13 +423,13 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         double maximum;
         double range;
 
-        RangeOfMotionResult rangeOfMotionResult = new RangeOfMotionResult(rangeOfMotionStep.getIdentifier());
-        
-        /* In Android's zero orientation, the device is in portrait mode (i.e. perpendicular to the
-        ground), whereas in iOS ResearchKit zero is parallel with the ground. Hence, there will be
+        rangeOfMotionResult = new RangeOfMotionResult(rangeOfMotionStep.getIdentifier());
+
+        /* In Android's zero orientation {0,0,0,0}, the device is in portrait mode (i.e. screen perpendicular to the
+        ground), whereas in iOS ResearchKit zero orientation is parallel with the ground (i.e. screen face up). Hence, there will be
         a 90 degree reported difference between these configurations from the same task */
 
-        start = getShiftedStartAngle(); // reports an absolute angle between +270 and -90 degrees
+        start = getShiftedStartAngle(); // reports absolute an angle between +270 and -90 degrees
         rangeOfMotionResult.setStart(start);
 
         /* Because the knee and shoulder tasks task uses pitch in the direction opposite to the
