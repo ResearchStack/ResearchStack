@@ -7,7 +7,9 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
@@ -25,13 +27,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+
 /**
  * Created by TheMDP on 2/5/17.
  *
  * The DeviceMotionRecorder incorporates a bunch of sensor fusion sensor readings
  * together to paint a broad picture of the device's orientation and movement over time.
  *
- * This class is an attempt at recording data in a similar way as iOS's device motion recorder.
+ * This class is an attempt at recording data in a similar way to iOS's device motion recorder.
  *
  * @see <a href="https://developer.android.com/reference/android/hardware/SensorEvent.html#values">
  *      Sensor values</a>
@@ -58,10 +61,9 @@ public class DeviceMotionRecorder extends SensorRecorder {
     public static final String TIMESTAMP_KEY = "timestamp";
     public static final String END_DATE = "endDate";
     public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION = "BroadcastDeviceMotionUpdate";
-    private static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY = "DeviceMotionUpdate";
+    public static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY = "DeviceMotionUpdate";
 
     private JsonObject jsonObject;
-
 
     static {
         // build mapping for sensor type and its data type value
@@ -148,15 +150,12 @@ public class DeviceMotionRecorder extends SensorRecorder {
                 && hasAvailableType(availableSensorList, Sensor.TYPE_ACCELEROMETER_UNCALIBRATED)) {
             sensorTypeList.add(Sensor.TYPE_ACCELEROMETER_UNCALIBRATED);
         }
-
         if (hasAvailableType(availableSensorList, Sensor.TYPE_GRAVITY)) {
             sensorTypeList.add(Sensor.TYPE_GRAVITY);
         }
-
         if (hasAvailableType(availableSensorList, Sensor.TYPE_LINEAR_ACCELERATION)) {
             sensorTypeList.add(Sensor.TYPE_LINEAR_ACCELERATION);
         }
-
         if (hasAvailableType(availableSensorList, Sensor.TYPE_GYROSCOPE)) {
             sensorTypeList.add(Sensor.TYPE_GYROSCOPE);
         }
@@ -164,7 +163,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
                 && hasAvailableType(availableSensorList, Sensor.TYPE_GYROSCOPE_UNCALIBRATED)) {
             sensorTypeList.add(Sensor.TYPE_GYROSCOPE_UNCALIBRATED);
         }
-
         if (hasAvailableType(availableSensorList, Sensor.TYPE_MAGNETIC_FIELD)) {
             sensorTypeList.add(Sensor.TYPE_MAGNETIC_FIELD);
         }
@@ -172,7 +170,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
                 && hasAvailableType(availableSensorList, Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED)) {
             sensorTypeList.add(Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED);
         }
-
         if (hasAvailableType(availableSensorList, Sensor.TYPE_ROTATION_VECTOR)) {
             sensorTypeList.add(Sensor.TYPE_ROTATION_VECTOR);
         }
@@ -186,12 +183,11 @@ public class DeviceMotionRecorder extends SensorRecorder {
                 sensorTypeList.add(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR);
             }
         }
-
         return sensorTypeList;
     }
 
     @Override
-    public void recordSensorEvent(SensorEvent sensorEvent, JsonObject jsonObject) {
+    public void recordSensorEvent(SensorEvent sensorEvent, JsonObject jsonObject) { // this is called in onSensorChanged in SensorRecorder()
         int sensorType = sensorEvent.sensor.getType();
         String sensorTypeKey = SENSOR_TYPE_TO_DATA_TYPE.get(sensorType);
 
@@ -236,8 +232,9 @@ public class DeviceMotionRecorder extends SensorRecorder {
         }
     }
 
+    @MainThread
     public void onDeviceMotion() {
-        jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis());
+        jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis()); // this json property may already be added in recordSensorEvent via the SensorRecorder class
         jsonObject.addProperty(END_DATE, System.currentTimeMillis());
         super.writeJsonObjectToFile(jsonObject);
 
@@ -255,7 +252,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
                     0);
         }
     }
-
 
     /**
      * @see <a href="https://source.android.com/devices/sensors/sensor-types#accelerometer">
