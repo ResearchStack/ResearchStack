@@ -39,7 +39,7 @@ class TaskViewModelTest {
     private var originalStepResult: StepResult<String>? = null
 
     // private lateinit var taskViewModel: TaskViewModel
-    private lateinit var spyTaskViewModel: TaskViewModel
+    private lateinit var taskViewModel: TaskViewModel
 
     private val currentStepMocked = createStep()
     private val stepMocked = createStep()
@@ -49,35 +49,35 @@ class TaskViewModelTest {
 
        // taskViewModel = createViewModel()
 
-        spyTaskViewModel = spy(createViewModel())
-        spyTaskViewModel.currentStep = currentStepMocked
-        `when`(spyTaskViewModel.currentTaskResult).thenReturn(currentTaskResult)
+        taskViewModel = spy(createViewModel())
+        taskViewModel.currentStep = currentStepMocked
+        `when`(taskViewModel.currentTaskResult).thenReturn(currentTaskResult)
     }
     @Test
     fun testEditShouldBeTrue_EditStepShouldBeUpdated_CancelMenuShouldBeTrueToHideCancelInTitleBar() {
         // Assemble
         // Act
-        spyTaskViewModel.edit(stepMocked)
+        taskViewModel.edit(stepMocked)
 
         // Assert
-        Assert.assertEquals(spyTaskViewModel.currentStep, stepMocked)
-        Assert.assertEquals(spyTaskViewModel.editStep.value, stepMocked)
-        Assert.assertEquals(spyTaskViewModel.editing, true)
-        Assert.assertEquals(spyTaskViewModel.hideMenuItemCancel.value, true)
+        Assert.assertEquals(taskViewModel.currentStep, stepMocked)
+        Assert.assertEquals(taskViewModel.editStep.value, stepMocked)
+        Assert.assertEquals(taskViewModel.editing, true)
+        Assert.assertEquals(taskViewModel.hideMenuItemCancel.value, true)
     }
 
     @Test
     fun testRemoveUpdatedLayout_editShouldBeFalse_EditStepShouldBeUpdated_CancelMenuShouldBeFalseToShowCancelInTitleBar() {
         // Assemble
-        `when`(spyTaskViewModel.isReviewStep(stepMocked)).thenReturn(true)
+        `when`(taskViewModel.isReviewStep(stepMocked)).thenReturn(true)
 
         // Act
-        spyTaskViewModel.removeUpdatedLayout()
+        taskViewModel.removeUpdatedLayout()
 
         // Assert
-        Assert.assertEquals(spyTaskViewModel.editing, false)
-        Assert.assertEquals(spyTaskViewModel.updateCancelEditInLayout.value, true)
-        Assert.assertEquals(spyTaskViewModel.hideMenuItemCancel.value, false)
+        Assert.assertEquals(taskViewModel.editing, false)
+        Assert.assertEquals(taskViewModel.updateCancelEditInLayout.value, true)
+        Assert.assertEquals(taskViewModel.hideMenuItemCancel.value, false)
     }
 
     @Test
@@ -86,11 +86,11 @@ class TaskViewModelTest {
         `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
 
         // Act
-        spyTaskViewModel.nextStep()
+        taskViewModel.nextStep()
 
         // Assert
-        Assert.assertEquals(spyTaskViewModel.currentStep, stepMocked)
-        Assert.assertEquals(spyTaskViewModel.currentStepEvent.value!!.step, stepMocked)
+        Assert.assertEquals(taskViewModel.currentStep, stepMocked)
+        Assert.assertEquals(taskViewModel.currentStepEvent.value!!.step, stepMocked)
     }
 
     @Test
@@ -98,11 +98,11 @@ class TaskViewModelTest {
         // Assemble
         `when`(task!!.getStepBeforeStep(any(), any())).thenReturn(stepMocked)
         // Act
-        spyTaskViewModel.previousStep()
+        taskViewModel.previousStep()
 
         // Assert
-        Assert.assertEquals(spyTaskViewModel.currentStep, stepMocked)
-        Assert.assertEquals(spyTaskViewModel.currentStepEvent.value!!.step, stepMocked)
+        Assert.assertEquals(taskViewModel.currentStep, stepMocked)
+        Assert.assertEquals(taskViewModel.currentStepEvent.value!!.step, stepMocked)
     }
 
     @Test
@@ -111,48 +111,48 @@ class TaskViewModelTest {
         `when`(task!!.getStepBeforeStep(any(), any())).thenReturn(null)
 
         // Act
-        spyTaskViewModel.previousStep()
+        taskViewModel.previousStep()
 
         // Assert
-        Assert.assertEquals(spyTaskViewModel.taskCompleted.value, false)
+        Assert.assertEquals(taskViewModel.taskCompleted.value, false)
     }
 
     @Test
     fun testNext_shouldCloseTaskFragmentWhenNextIsNull() {
         // Assemble
         // Act
-        spyTaskViewModel.nextStep()
+        taskViewModel.nextStep()
 
         // Assert
-        Assert.assertEquals(spyTaskViewModel.taskCompleted.value, true)
+        Assert.assertEquals(taskViewModel.taskCompleted.value, true)
     }
 
 
     @Test
     fun testWhenEditingAStep_previousStep_shouldCallCancelDialog() {
         // Assemble
-        spyTaskViewModel.edit(currentStepMocked)
+        taskViewModel.edit(currentStepMocked)
 
         // Act
-        spyTaskViewModel.previousStep()
+        taskViewModel.previousStep()
 
         // Assert
-        verify(spyTaskViewModel, times(1)).showCancelEditAlert()
+        verify(taskViewModel, times(1)).showCancelEditAlert()
     }
 
     @Test
     fun testNextStepEditMode_WhenNextStepIsReviewStep_EditShouldBeFalse_moveReviewStepShouldGoToReviewStep() {
         // Assemble
         `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
-        `when`(spyTaskViewModel.isReviewStep(stepMocked)).thenReturn(true)
-        spyTaskViewModel.edit(stepMocked)
+        `when`(taskViewModel.isReviewStep(stepMocked)).thenReturn(true)
+        taskViewModel.edit(stepMocked)
 
         // Act
-        spyTaskViewModel.nextStep()
+        taskViewModel.nextStep()
 
         // Assert
-        Assert.assertEquals(spyTaskViewModel.editing, false)
-        Assert.assertEquals(spyTaskViewModel.moveReviewStep.value?.step, stepMocked)
+        Assert.assertEquals(taskViewModel.editing, false)
+        Assert.assertEquals(taskViewModel.moveReviewStep.value?.step, stepMocked)
     }
 
     @Test
@@ -162,7 +162,7 @@ class TaskViewModelTest {
         addStepResultIntoMockedMethods(originalStepResult, originalStepResult)
 
         // Act
-        val actualResult = spyTaskViewModel.checkIfAnswersAreTheSame()
+        val actualResult = taskViewModel.checkIfAnswersAreTheSame()
 
         // Assert
         Assert.assertEquals(actualResult, false)
@@ -174,7 +174,7 @@ class TaskViewModelTest {
         createAndFillStepResult("one", "tow")
 
         // Act
-        val actualResult = spyTaskViewModel.checkIfAnswersAreTheSame()
+        val actualResult = taskViewModel.checkIfAnswersAreTheSame()
 
         // Assert
         Assert.assertEquals(actualResult, true)
@@ -186,7 +186,7 @@ class TaskViewModelTest {
         createAndFillStepResult("one", null)
 
         // Act
-        val actualResult = spyTaskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot()
+        val actualResult = taskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot()
 
         // Assert
         Assert.assertEquals(actualResult, true)
@@ -198,7 +198,7 @@ class TaskViewModelTest {
         createAndFillStepResult("one", "tow")
 
         // Act
-        val actualResult = spyTaskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot()
+        val actualResult = taskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot()
 
         // Assert
         Assert.assertEquals(actualResult, false)
@@ -209,10 +209,10 @@ class TaskViewModelTest {
     fun testCheckIfCurrentStepIsBranchDecisionStep_ShouldReturnFalse() {
         // Assemble
         `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
-        `when`(spyTaskViewModel.isReviewStep(stepMocked)).thenReturn(true)
+        `when`(taskViewModel.isReviewStep(stepMocked)).thenReturn(true)
 
         // Act
-        val actualResult = spyTaskViewModel.checkIfCurrentStepIsBranchDecisionStep()
+        val actualResult = taskViewModel.checkIfCurrentStepIsBranchDecisionStep()
 
         // Assert
         Assert.assertEquals(actualResult, false)
@@ -222,11 +222,11 @@ class TaskViewModelTest {
     fun testCheckIfCurrentStepIsBranchDecisionStep_ShouldReturnTrue() {
         // Assemble
         `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
-        `when`(spyTaskViewModel.isReviewStep(stepMocked)).thenReturn(false)
-        `when`(spyTaskViewModel.currentTaskResult.getStepResult(any())).thenReturn(null)
+        `when`(taskViewModel.isReviewStep(stepMocked)).thenReturn(false)
+        `when`(taskViewModel.currentTaskResult.getStepResult(any())).thenReturn(null)
 
         // Act
-        val actualResult = spyTaskViewModel.checkIfCurrentStepIsBranchDecisionStep()
+        val actualResult = taskViewModel.checkIfCurrentStepIsBranchDecisionStep()
 
         // Assert
         Assert.assertEquals(actualResult, true)
@@ -235,63 +235,63 @@ class TaskViewModelTest {
     @Test
     fun testShowCancelEditAlert_ShouldShowCancelDialog() {
         // Assemble
-        doReturn(true).`when`(spyTaskViewModel).checkIfAnswersAreTheSame()
+        doReturn(true).`when`(taskViewModel).checkIfAnswersAreTheSame()
 
         //act
-        spyTaskViewModel.showCancelEditAlert()
+        taskViewModel.showCancelEditAlert()
 
         //Assert
-        Assert.assertEquals(spyTaskViewModel.showCancelEditDialog.value, true)
+        Assert.assertEquals(taskViewModel.showCancelEditDialog.value, true)
     }
 
     @Test
     fun testShowCancelEditAlert_ShouldNotShowCancelDialog() {
         // Assemble
-        doReturn(false).`when`(spyTaskViewModel).checkIfAnswersAreTheSame()
+        doReturn(false).`when`(taskViewModel).checkIfAnswersAreTheSame()
 
         //act
-        spyTaskViewModel.showCancelEditAlert()
+        taskViewModel.showCancelEditAlert()
 
         //Assert
-        Assert.assertEquals(spyTaskViewModel.showCancelEditDialog.value, false)
+        Assert.assertEquals(taskViewModel.showCancelEditDialog.value, false)
     }
 
     @Test
     fun testCheckForSaveDialog_ShouldShowSaveDialog() {
         // Assemble
-        doReturn(true).`when`(spyTaskViewModel).checkIfAnswersAreTheSame()
-        doReturn(true).`when`(spyTaskViewModel).checkIfCurrentStepIsBranchDecisionStep()
+        doReturn(true).`when`(taskViewModel).checkIfAnswersAreTheSame()
+        doReturn(true).`when`(taskViewModel).checkIfCurrentStepIsBranchDecisionStep()
 
         //act
-        spyTaskViewModel.checkForSaveDialog()
+        taskViewModel.checkForSaveDialog()
 
         //Assert
-        Assert.assertEquals(spyTaskViewModel.showSaveEditDialog.value, true)
+        Assert.assertEquals(taskViewModel.showSaveEditDialog.value, true)
     }
 
     @Test
     fun testCheckForSaveDialog_ShouldGoToNextStep() {
         // Assemble
-        doReturn(false).`when`(spyTaskViewModel).checkIfAnswersAreTheSame()
+        doReturn(false).`when`(taskViewModel).checkIfAnswersAreTheSame()
 
         //act
-        spyTaskViewModel.checkForSaveDialog()
+        taskViewModel.checkForSaveDialog()
 
         //Assert
-        verify(spyTaskViewModel).nextStep()
+        verify(taskViewModel).nextStep()
     }
 
     @Test
     fun testCheckForSkipDialog_ShouldShowSkipDialog() {
         // Assemble
         currentStepMocked.isOptional = true
-        doReturn(true).`when`(spyTaskViewModel).checkIfNewAnswerIsSkipWhilePreviousIsNot()
+        doReturn(true).`when`(taskViewModel).checkIfNewAnswerIsSkipWhilePreviousIsNot()
 
         //act
-        spyTaskViewModel.checkForSkipDialog(originalStepResult)
+        taskViewModel.checkForSkipDialog(originalStepResult)
 
         //Assert
-        Assert.assertEquals(spyTaskViewModel.showSkipEditDialog.value, Pair(true, originalStepResult!!))
+        Assert.assertEquals(taskViewModel.showSkipEditDialog.value, Pair(true, originalStepResult!!))
     }
 
     @Test
@@ -299,10 +299,10 @@ class TaskViewModelTest {
         // Assemble
         currentStepMocked.isOptional = false
         //act
-        spyTaskViewModel.checkForSkipDialog(originalStepResult)
+        taskViewModel.checkForSkipDialog(originalStepResult)
 
         //Assert
-        verify(spyTaskViewModel).nextStep()
+        verify(taskViewModel).nextStep()
     }
 
     private fun createViewModel() = TaskViewModel(application!!, intent!!)
@@ -314,8 +314,8 @@ class TaskViewModelTest {
         `when`(clonedTaskResultInCaseOfCancel!!.getStepResult(any())).thenReturn(originalStepResult)
         `when`(currentTaskResult!!.getStepResult(any())).thenReturn(modifiedStepResult)
 
-        spyTaskViewModel.clonedTaskResultInCaseOfCancel = clonedTaskResultInCaseOfCancel
-        spyTaskViewModel.taskResult = currentTaskResult!!
+        taskViewModel.clonedTaskResultInCaseOfCancel = clonedTaskResultInCaseOfCancel
+        taskViewModel.taskResult = currentTaskResult!!
     }
 
     private fun createStepResult(answer: String?): StepResult<String> {
