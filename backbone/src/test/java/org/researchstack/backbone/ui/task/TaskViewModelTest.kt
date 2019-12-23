@@ -2,24 +2,21 @@ package org.researchstack.backbone.ui.task
 
 import android.app.Application
 import android.content.Intent
-import com.nhaarman.mockitokotlin2.*
-
-import org.junit.Before
-import org.junit.Test
-import org.mockito.Mockito
-import org.researchstack.backbone.step.Step
-import org.researchstack.backbone.task.Task
-import org.junit.rules.TestRule
-import org.junit.Rule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import junit.framework.TestCase.assertEquals
+import com.nhaarman.mockitokotlin2.*
 import org.junit.Assert
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import org.researchstack.backbone.result.StepResult
 import org.researchstack.backbone.result.TaskResult
+import org.researchstack.backbone.step.Step
+import org.researchstack.backbone.task.Task
 
 @RunWith(MockitoJUnitRunner::class)
 class TaskViewModelTest {
@@ -34,289 +31,202 @@ class TaskViewModelTest {
     private var intent: Intent? = null
     @Mock
     private var task: Task? = null
+    @Mock
+    private var currentTaskResult: TaskResult? = null
+    @Mock
+    private var clonedTaskResultInCaseOfCancel: TaskResult? = null
+    @Mock
+    private var originalStepResult: StepResult<String>? = null
 
-    private lateinit var taskViewModel: TaskViewModel
+    // private lateinit var taskViewModel: TaskViewModel
+    private lateinit var spyTaskViewModel: TaskViewModel
 
+    private val currentStepMocked = createStep()
+    private val stepMocked = createStep()
     @Before
     fun before() {
         whenever(intent?.getSerializableExtra(TaskActivity.EXTRA_TASK)).thenReturn(eq(task))
-    }
 
+       // taskViewModel = createViewModel()
+
+        spyTaskViewModel = spy(createViewModel())
+        spyTaskViewModel.currentStep = currentStepMocked
+        `when`(spyTaskViewModel.currentTaskResult).thenReturn(currentTaskResult)
+    }
     @Test
-    fun testInitViewModel_TaskShouldNotBeEmpty_EditModeMustBeFalse() {
+    fun testEditShouldBeTrue_EditStepShouldBeUpdated_CancelMenuShouldBeTrueToHideCancelInTitleBar() {
         // Assemble
         // Act
-        taskViewModel = createViewModel()
+        spyTaskViewModel.edit(stepMocked)
 
         // Assert
-        assertEquals(taskViewModel.editing, false)
-        assertEquals(taskViewModel.task, task)
+        Assert.assertEquals(spyTaskViewModel.currentStep, stepMocked)
+        Assert.assertEquals(spyTaskViewModel.editStep.value, stepMocked)
+        Assert.assertEquals(spyTaskViewModel.editing, true)
+        Assert.assertEquals(spyTaskViewModel.hideMenuItemCancel.value, true)
     }
-
-    @Test
-    fun testEdit_editShouldBeTrue_EditStepShouldBeUpdated_CancelMenuShouldBeTrueToHideCancelInTitleBar() {
-        // Assemble
-        val selectedEditStep = createCurrentStep("selectedEditStep")
-        taskViewModel = createViewModel()
-
-        // Act
-        taskViewModel.edit(selectedEditStep)
-
-        // Assert
-        Assert.assertEquals(taskViewModel.currentStep, selectedEditStep)
-        Assert.assertEquals(taskViewModel.editStep.value, selectedEditStep)
-        Assert.assertEquals(taskViewModel.editing, true)
-        Assert.assertEquals(taskViewModel.hideMenuItemCancel.value, true)
-    }
-
 
     @Test
     fun testRemoveUpdatedLayout_editShouldBeFalse_EditStepShouldBeUpdated_CancelMenuShouldBeFalseToShowCancelInTitleBar() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        val currentStepMocked = createCurrentStep()
-        val nextStepMocked = createCurrentStep("nextStepMocked")
-        taskViewModel.currentStep = currentStepMocked
-        `when`(task!!.getStepAfterStep(any(), any())).thenReturn(nextStepMocked)
-        `when`(taskViewModel.isReviewStep(nextStepMocked)).thenReturn(true)
+        `when`(spyTaskViewModel.isReviewStep(stepMocked)).thenReturn(true)
 
         // Act
-        taskViewModel.removeUpdatedLayout()
+        spyTaskViewModel.removeUpdatedLayout()
 
         // Assert
-        Assert.assertEquals(taskViewModel.editing, false)
-        Assert.assertEquals(taskViewModel.updateCancelEditInLayout.value, true)
-        Assert.assertEquals(taskViewModel.hideMenuItemCancel.value, false)
+        Assert.assertEquals(spyTaskViewModel.editing, false)
+        Assert.assertEquals(spyTaskViewModel.updateCancelEditInLayout.value, true)
+        Assert.assertEquals(spyTaskViewModel.hideMenuItemCancel.value, false)
     }
 
     @Test
-    fun testNext_ShouldUpdateCurrentStepToNextStep_shouldUpdateCurrentStepEventToNextStep() {
+    fun testNextStep_shouldSetCurrentStepToNext_andShouldUpdateCurrentStepEventToNextStep() {
         // Assemble
-        taskViewModel = createViewModel()
-        val currentStepMocked = createCurrentStep()
-        val nextStepMocked = createCurrentStep("nextStepMocked")
-        taskViewModel.currentStep = currentStepMocked
-        `when`(task!!.getStepAfterStep(any(), any())).thenReturn(nextStepMocked)
+        `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
 
         // Act
-        taskViewModel.nextStep()
+        spyTaskViewModel.nextStep()
 
         // Assert
-        Assert.assertEquals(taskViewModel.currentStep, nextStepMocked)
-        Assert.assertEquals(taskViewModel.currentStepEvent.value!!.step, nextStepMocked)
+        Assert.assertEquals(spyTaskViewModel.currentStep, stepMocked)
+        Assert.assertEquals(spyTaskViewModel.currentStepEvent.value!!.step, stepMocked)
     }
 
     @Test
     fun testPrevious_ShouldUpdateCurrentStepToPreviousStep_shouldUpdateCurrentStepEventToPreviousStep() {
         // Assemble
-        taskViewModel = createViewModel()
-
-        val currentStepMocked = createCurrentStep()
-        val previousStepMocked = createCurrentStep("previousStepMocked")
-        taskViewModel.currentStep = currentStepMocked
-        `when`(task!!.getStepBeforeStep(any(), any())).thenReturn(previousStepMocked)
-
+        `when`(task!!.getStepBeforeStep(any(), any())).thenReturn(stepMocked)
         // Act
-        taskViewModel.previousStep()
+        spyTaskViewModel.previousStep()
 
         // Assert
-        Assert.assertEquals(taskViewModel.currentStep, previousStepMocked)
-        Assert.assertEquals(taskViewModel.currentStepEvent.value!!.step, previousStepMocked)
+        Assert.assertEquals(spyTaskViewModel.currentStep, stepMocked)
+        Assert.assertEquals(spyTaskViewModel.currentStepEvent.value!!.step, stepMocked)
     }
 
     @Test
-    fun checkPrevious_shouldCloseWhenPreviousIsNull() {
+    fun testPrevious_shouldCloseTaskFragmentWhenPreviousIsNull() {
         // Assemble
-        taskViewModel = createViewModel()
         `when`(task!!.getStepBeforeStep(any(), any())).thenReturn(null)
-        val currentStepMocked = createCurrentStep()
-        taskViewModel.currentStep = currentStepMocked
 
         // Act
-        taskViewModel.previousStep()
+        spyTaskViewModel.previousStep()
 
         // Assert
-        Assert.assertEquals(taskViewModel.taskCompleted.value, false)
+        Assert.assertEquals(spyTaskViewModel.taskCompleted.value, false)
     }
 
     @Test
-    fun testNext_shouldCloseWhenNextNull() {
+    fun testNext_shouldCloseTaskFragmentWhenNextIsNull() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-
         // Act
-        taskViewModel.nextStep()
+        spyTaskViewModel.nextStep()
 
         // Assert
-        Assert.assertEquals(taskViewModel.taskCompleted.value, true)
+        Assert.assertEquals(spyTaskViewModel.taskCompleted.value, true)
     }
 
-    @Test
-    fun testShowCurrentStep_ifCurrentStepIsNull_ShowGoToNextStep() {
-        // Assemble
-        taskViewModel = spy(createViewModel())
-        // Act
-        taskViewModel.showCurrentStep()
-
-        // Assert
-        verify(taskViewModel, times(1)).showCurrentStep()
-    }
 
     @Test
-    fun testPreviousOnEditMode_shouldCheckForCancelDialog() {
+    fun testWhenEditingAStep_previousStep_shouldCallCancelDialog() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        val currentStepMocked = createCurrentStep()
-        taskViewModel.edit(currentStepMocked)
+        spyTaskViewModel.edit(currentStepMocked)
 
         // Act
-        taskViewModel.previousStep()
+        spyTaskViewModel.previousStep()
 
         // Assert
-        verify(taskViewModel, times(1)).showCancelEditAlert()
+        verify(spyTaskViewModel, times(1)).showCancelEditAlert()
     }
 
     @Test
     fun testNextStepEditMode_WhenNextStepIsReviewStep_EditShouldBeFalse_moveReviewStepShouldGoToReviewStep() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-
-        val currentStepMocked = createCurrentStep()
-        val nextStepMocked = createCurrentStep("nextStepMocked")
-        taskViewModel.currentStep = currentStepMocked
-
-        `when`(task!!.getStepAfterStep(any(), any())).thenReturn(nextStepMocked)
-        `when`(taskViewModel.isReviewStep(nextStepMocked)).thenReturn(true)
-        taskViewModel.edit(nextStepMocked)
+        `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
+        `when`(spyTaskViewModel.isReviewStep(stepMocked)).thenReturn(true)
+        spyTaskViewModel.edit(stepMocked)
 
         // Act
-        taskViewModel.nextStep()
+        spyTaskViewModel.nextStep()
 
         // Assert
-        Assert.assertEquals(taskViewModel.editing, false)
-        Assert.assertEquals(taskViewModel.moveReviewStep.value?.step, nextStepMocked)
+        Assert.assertEquals(spyTaskViewModel.editing, false)
+        Assert.assertEquals(spyTaskViewModel.moveReviewStep.value?.step, stepMocked)
     }
 
     @Test
-    fun testCheckIfAnswersAreNotTheSame_false() {
+    fun testCheckIfAnswersAreNotTheSame_ShouldReturnFalse() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        val clonedTaskResultInCaseOfCancel = Mockito.mock(TaskResult::class.java)
-        val currentTaskResult = Mockito.mock(TaskResult::class.java)
-
-        val nextStepMocked = createCurrentStep("nextStepMocked")
-        taskViewModel.currentStep = nextStepMocked
-
-        val originalStepResult = spy(StepResult<String>(nextStepMocked))
-        originalStepResult.result = "tow"
-
-        `when`(clonedTaskResultInCaseOfCancel!!.getStepResult(any())).thenReturn(originalStepResult)
-        `when`(currentTaskResult!!.getStepResult(any())).thenReturn(originalStepResult)
-        `when`(taskViewModel.currentTaskResult).thenReturn(currentTaskResult)
-        taskViewModel.clonedTaskResultInCaseOfCancel = clonedTaskResultInCaseOfCancel
+        val originalStepResult = createStepResult("tow")
+        addStepResultIntoMockedMethods(originalStepResult, originalStepResult)
 
         // Act
-        val actualResult = taskViewModel.checkIfAnswersAreTheSame()
+        val actualResult = spyTaskViewModel.checkIfAnswersAreTheSame()
 
         // Assert
         Assert.assertEquals(actualResult, false)
     }
 
     @Test
-    fun testCheckIfAnswersAreNotTheSame_true() {
+    fun testCheckIfAnswersAreNotTheSame_ShouldReturnTrue() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        val clonedTaskResultInCaseOfCancel = Mockito.mock(TaskResult::class.java)
-        val currentTaskResult = Mockito.mock(TaskResult::class.java)
-
-        val nextStepMocked = createCurrentStep("nextStepMocked")
-        taskViewModel.currentStep = nextStepMocked
-
-        val originalStepResult = spy(StepResult<String>(nextStepMocked))
-        originalStepResult.result = "tow"
-
-        val modifiedStepResult = spy(StepResult<String>(nextStepMocked))
-        modifiedStepResult.result = "one"
-
-        `when`(clonedTaskResultInCaseOfCancel!!.getStepResult(any())).thenReturn(originalStepResult)
-        `when`(currentTaskResult!!.getStepResult(any())).thenReturn(modifiedStepResult)
-        `when`(taskViewModel.currentTaskResult).thenReturn(currentTaskResult)
-
-        taskViewModel.clonedTaskResultInCaseOfCancel = clonedTaskResultInCaseOfCancel
-        taskViewModel.taskResult = currentTaskResult
+        createAndFillStepResult("one", "tow")
 
         // Act
-        val actualResult = taskViewModel.checkIfAnswersAreTheSame()
+        val actualResult = spyTaskViewModel.checkIfAnswersAreTheSame()
 
         // Assert
         Assert.assertEquals(actualResult, true)
     }
 
     @Test
-    fun testCheckIfNewAnswerIsSkipWhilePreviousIsNot_true() {
+    fun testCheckIfNewAnswerIsSkipWhilePreviousAnswersIsNot_ShouldReturnTrue() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        val clonedTaskResultInCaseOfCancel = Mockito.mock(TaskResult::class.java)
-        val currentTaskResult = Mockito.mock(TaskResult::class.java)
-        val nextStepMocked = createCurrentStep("nextStepMocked")
-        taskViewModel.currentStep = nextStepMocked
-
-        val originalStepResult = spy(StepResult<String>(nextStepMocked))
-        originalStepResult.result = "tow"
-
-        val modifiedStepResult = spy(StepResult<String>(nextStepMocked))
-        modifiedStepResult.result = null
-
-        `when`(clonedTaskResultInCaseOfCancel!!.getStepResult(any())).thenReturn(originalStepResult)
-        `when`(currentTaskResult!!.getStepResult(any())).thenReturn(modifiedStepResult)
-        `when`(taskViewModel.currentTaskResult).thenReturn(currentTaskResult)
-
-        taskViewModel.clonedTaskResultInCaseOfCancel = clonedTaskResultInCaseOfCancel
-        taskViewModel.taskResult = currentTaskResult
+        createAndFillStepResult("one", null)
 
         // Act
-        val actualResult = taskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot()
+        val actualResult = spyTaskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot()
 
         // Assert
         Assert.assertEquals(actualResult, true)
     }
 
     @Test
-    fun testCheckIfCurrentStepIsBranchDecisionStep_false() {
+    fun testCheckIfNewAnswerIsSkipWhilePreviousAnswersIsNot_ShouldReturnFalse() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        val currentStep = createCurrentStep()
-        taskViewModel.currentStep = currentStep
-
-        val nextStepMocked = createCurrentStep("nextStepMocked")
-        `when`(task!!.getStepAfterStep(any(), any())).thenReturn(nextStepMocked)
-        `when`(taskViewModel.isReviewStep(nextStepMocked)).thenReturn(true)
+        createAndFillStepResult("one", "tow")
 
         // Act
-        val actualResult = taskViewModel.checkIfCurrentStepIsBranchDecisionStep()
+        val actualResult = spyTaskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot()
+
+        // Assert
+        Assert.assertEquals(actualResult, false)
+    }
+
+
+    @Test
+    fun testCheckIfCurrentStepIsBranchDecisionStep_ShouldReturnFalse() {
+        // Assemble
+        `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
+        `when`(spyTaskViewModel.isReviewStep(stepMocked)).thenReturn(true)
+
+        // Act
+        val actualResult = spyTaskViewModel.checkIfCurrentStepIsBranchDecisionStep()
 
         // Assert
         Assert.assertEquals(actualResult, false)
     }
 
     @Test
-    fun testCheckIfCurrentStepIsBranchDecisionStep_true() {
+    fun testCheckIfCurrentStepIsBranchDecisionStep_ShouldReturnTrue() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        val currentTaskResult = Mockito.mock(TaskResult::class.java)
-
-        val currentStep = createCurrentStep()
-        taskViewModel.currentStep = currentStep
-
-        val nextStepMocked = createCurrentStep("nextStepMocked")
-
-        `when`(task!!.getStepAfterStep(any(), any())).thenReturn(nextStepMocked)
-        `when`(taskViewModel.isReviewStep(nextStepMocked)).thenReturn(false)
-        `when`(taskViewModel.currentTaskResult).thenReturn(currentTaskResult)
-        `when`(taskViewModel.currentTaskResult.getStepResult(any())).thenReturn(null)
+        `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
+        `when`(spyTaskViewModel.isReviewStep(stepMocked)).thenReturn(false)
+        `when`(spyTaskViewModel.currentTaskResult.getStepResult(any())).thenReturn(null)
 
         // Act
-        val actualResult = taskViewModel.checkIfCurrentStepIsBranchDecisionStep()
+        val actualResult = spyTaskViewModel.checkIfCurrentStepIsBranchDecisionStep()
 
         // Assert
         Assert.assertEquals(actualResult, true)
@@ -325,95 +235,98 @@ class TaskViewModelTest {
     @Test
     fun testShowCancelEditAlert_ShouldShowCancelDialog() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        doReturn(true).`when`(taskViewModel).checkIfAnswersAreTheSame()
+        doReturn(true).`when`(spyTaskViewModel).checkIfAnswersAreTheSame()
 
         //act
-        taskViewModel.showCancelEditAlert()
+        spyTaskViewModel.showCancelEditAlert()
 
         //Assert
-        Assert.assertEquals(taskViewModel.showCancelEditDialog.value, true)
+        Assert.assertEquals(spyTaskViewModel.showCancelEditDialog.value, true)
     }
 
     @Test
     fun testShowCancelEditAlert_ShouldNotShowCancelDialog() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        doReturn(false).`when`(taskViewModel).checkIfAnswersAreTheSame()
+        doReturn(false).`when`(spyTaskViewModel).checkIfAnswersAreTheSame()
 
         //act
-        taskViewModel.showCancelEditAlert()
+        spyTaskViewModel.showCancelEditAlert()
 
         //Assert
-        Assert.assertEquals(taskViewModel.showCancelEditDialog.value, false)
+        Assert.assertEquals(spyTaskViewModel.showCancelEditDialog.value, false)
     }
 
     @Test
     fun testCheckForSaveDialog_ShouldShowSaveDialog() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-
-        doReturn(true).`when`(taskViewModel).checkIfAnswersAreTheSame()
-        doReturn(true).`when`(taskViewModel).checkIfCurrentStepIsBranchDecisionStep()
+        doReturn(true).`when`(spyTaskViewModel).checkIfAnswersAreTheSame()
+        doReturn(true).`when`(spyTaskViewModel).checkIfCurrentStepIsBranchDecisionStep()
 
         //act
-        taskViewModel.checkForSaveDialog()
+        spyTaskViewModel.checkForSaveDialog()
 
         //Assert
-        Assert.assertEquals(taskViewModel.showSaveEditDialog.value, true)
+        Assert.assertEquals(spyTaskViewModel.showSaveEditDialog.value, true)
     }
 
     @Test
     fun testCheckForSaveDialog_ShouldGoToNextStep() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-
-        doReturn(false).`when`(taskViewModel).checkIfAnswersAreTheSame()
+        doReturn(false).`when`(spyTaskViewModel).checkIfAnswersAreTheSame()
 
         //act
-        taskViewModel.checkForSaveDialog()
+        spyTaskViewModel.checkForSaveDialog()
 
         //Assert
-        verify(taskViewModel).nextStep()
+        verify(spyTaskViewModel).nextStep()
     }
 
     @Test
     fun testCheckForSkipDialog_ShouldShowSkipDialog() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        val originalStepResult = Mockito.mock(StepResult::class.java)
-
-        val currentStepMocked = createCurrentStep()
         currentStepMocked.isOptional = true
-        taskViewModel.currentStep = currentStepMocked
-        doReturn(true).`when`(taskViewModel).checkIfNewAnswerIsSkipWhilePreviousIsNot()
+        doReturn(true).`when`(spyTaskViewModel).checkIfNewAnswerIsSkipWhilePreviousIsNot()
 
         //act
-        taskViewModel.checkForSkipDialog(originalStepResult)
+        spyTaskViewModel.checkForSkipDialog(originalStepResult)
 
         //Assert
-        Assert.assertEquals(taskViewModel.showSkipEditDialog.value, Pair(true, originalStepResult!!))
+        Assert.assertEquals(spyTaskViewModel.showSkipEditDialog.value, Pair(true, originalStepResult!!))
     }
 
     @Test
     fun testCheckForSkipDialog_ShouldGoToNextStep() {
         // Assemble
-        taskViewModel = spy(createViewModel())
-        val originalStepResult = Mockito.mock(StepResult::class.java)
-
-        val currentStepMocked = createCurrentStep()
         currentStepMocked.isOptional = false
-        taskViewModel.currentStep = currentStepMocked
-
         //act
-        taskViewModel.checkForSkipDialog(originalStepResult)
+        spyTaskViewModel.checkForSkipDialog(originalStepResult)
 
         //Assert
-        verify(taskViewModel).nextStep()
+        verify(spyTaskViewModel).nextStep()
     }
 
     private fun createViewModel() = TaskViewModel(application!!, intent!!)
 
-    private fun createCurrentStep(name: String? = "currentStepMocked") = Step(name)
+    private fun createStep() = Step("step")
 
+    private fun addStepResultIntoMockedMethods(originalStepResult: StepResult<String>, modifiedStepResult: StepResult<String>?) {
+
+        `when`(clonedTaskResultInCaseOfCancel!!.getStepResult(any())).thenReturn(originalStepResult)
+        `when`(currentTaskResult!!.getStepResult(any())).thenReturn(modifiedStepResult)
+
+        spyTaskViewModel.clonedTaskResultInCaseOfCancel = clonedTaskResultInCaseOfCancel
+        spyTaskViewModel.taskResult = currentTaskResult!!
+    }
+
+    private fun createStepResult(answer: String?): StepResult<String> {
+        val originalStepResult = spy(StepResult<String>(stepMocked))
+        originalStepResult.result = answer
+        return originalStepResult
+    }
+
+    private fun createAndFillStepResult(originalResult: String, modifiedResult: String?) {
+        val originalStepResult = createStepResult(originalResult)
+        val modifiedStepResult = createStepResult(modifiedResult)
+        addStepResultIntoMockedMethods(originalStepResult, modifiedStepResult)
+    }
 }
