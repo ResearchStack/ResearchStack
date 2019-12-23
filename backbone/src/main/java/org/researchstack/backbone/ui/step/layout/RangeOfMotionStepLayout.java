@@ -28,7 +28,7 @@ import org.researchstack.backbone.utils.MathUtils;
  * Created by David Evans, Simon Hartley, Laurence Hurst, David Jimenez, 2019.
  *
  * The RangeOfMotionStepLayout is essentially the same as the TouchAnywhereStepLayout, except that
- * it calculates absolute device position Tait-Bryan angles in degrees: start, minimum, maximum,
+ * it calculates absolute device position Euler/Tait-Bryan angles in degrees: start, minimum, maximum,
  * finish and range, once the screen is tapped and the step finishes.
  *
  */
@@ -251,7 +251,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
 
     /**
-     * Method to calculate Tait-Bryan angles from the device attitude quaternion, as a function of
+     * Method to calculate angles in degrees from the device attitude quaternion, as a function of
      * screen orientation
      **/
     public double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
