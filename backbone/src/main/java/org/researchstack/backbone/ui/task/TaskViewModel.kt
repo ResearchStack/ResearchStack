@@ -111,7 +111,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
             }
 
 
-            if (isReviewStep(nextStep)) {
+            if (isReviewStep(nextStep) || isCompletionStep(nextStep)) {
                 clonedTaskResult?.let {
                     taskResult = updateTaskResultsFrom(it)
                 }
@@ -228,6 +228,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     private fun isReviewStep(step: Step) = step::class.java.simpleName.contains("RSReviewStep", true)
+    private fun isCompletionStep(step: Step) = step::class.java.simpleName.contains("RSCompletionStep", true)
 
     companion object {
         const val TAG = "TaskViewModel"
