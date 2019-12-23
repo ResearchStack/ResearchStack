@@ -54,7 +54,7 @@ class TaskViewModelTest {
         `when`(taskViewModel.currentTaskResult).thenReturn(currentTaskResult)
     }
     @Test
-    fun testEditShouldBeTrue_EditStepShouldBeUpdated_CancelMenuShouldBeTrueToHideCancelInTitleBar() {
+    fun edit_EditShouldBeTrue_EditStepShouldBeUpdated_CancelMenuShouldBeTrueToHideCancelInTitleBar() {
         // Assemble
         // Act
         taskViewModel.edit(stepMocked)
@@ -67,21 +67,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testRemoveUpdatedLayout_editShouldBeFalse_EditStepShouldBeUpdated_CancelMenuShouldBeFalseToShowCancelInTitleBar() {
-        // Assemble
-        `when`(taskViewModel.isReviewStep(stepMocked)).thenReturn(true)
-
-        // Act
-        taskViewModel.removeUpdatedLayout()
-
-        // Assert
-        Assert.assertEquals(taskViewModel.editing, false)
-        Assert.assertEquals(taskViewModel.updateCancelEditInLayout.value, true)
-        Assert.assertEquals(taskViewModel.hideMenuItemCancel.value, false)
-    }
-
-    @Test
-    fun testNextStep_shouldSetCurrentStepToNext_andShouldUpdateCurrentStepEventToNextStep() {
+    fun nextStep_ShouldSetCurrentStepToNext_andShouldUpdateCurrentStepEventToNextStep() {
         // Assemble
         `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
 
@@ -94,7 +80,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testPrevious_ShouldUpdateCurrentStepToPreviousStep_shouldUpdateCurrentStepEventToPreviousStep() {
+    fun previousStep_ShouldUpdateCurrentStepToPreviousStep_shouldUpdateCurrentStepEventToPreviousStep() {
         // Assemble
         `when`(task!!.getStepBeforeStep(any(), any())).thenReturn(stepMocked)
         // Act
@@ -106,7 +92,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testPrevious_shouldCloseTaskFragmentWhenPreviousIsNull() {
+    fun previousStep_shouldCloseTaskFragmentWhenPreviousIsNull() {
         // Assemble
         `when`(task!!.getStepBeforeStep(any(), any())).thenReturn(null)
 
@@ -118,7 +104,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testNext_shouldCloseTaskFragmentWhenNextIsNull() {
+    fun nextStep_shouldCloseTaskFragmentWhenNextIsNull() {
         // Assemble
         // Act
         taskViewModel.nextStep()
@@ -128,7 +114,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testNextStepEditMode_WhenNextStepIsReviewStep_EditShouldBeFalse_moveReviewStepShouldGoToReviewStep() {
+    fun nextStepInEditModeAndNextStepIsReviewStep_EditShouldBeFalse_ShouldMoveToReviewStep() {
         // Assemble
         `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
         `when`(taskViewModel.isReviewStep(stepMocked)).thenReturn(true)
@@ -143,7 +129,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testCheckIfAnswersAreNotTheSame_ShouldReturnFalse() {
+    fun checkIfAnswersAreNotTheSame_ShouldReturnFalse() {
         // Assemble
         val originalStepResult = createStepResult("tow")
         addStepResultIntoMockedMethods(originalStepResult, originalStepResult)
@@ -156,7 +142,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testCheckIfAnswersAreNotTheSame_ShouldReturnTrue() {
+    fun checkIfAnswersAreNotTheSame_ShouldReturnTrue() {
         // Assemble
         createAndFillStepResult("one", "tow")
 
@@ -168,7 +154,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testCheckIfNewAnswerIsSkipWhilePreviousAnswersIsNot_ShouldReturnTrue() {
+    fun checkIfNewAnswerIsSkipWhilePreviousAnswersIsNot_ShouldReturnTrue() {
         // Assemble
         createAndFillStepResult("one", null)
 
@@ -180,7 +166,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testCheckIfNewAnswerIsSkipWhilePreviousAnswersIsNot_ShouldReturnFalse() {
+    fun checkIfNewAnswerIsSkipWhilePreviousAnswersIsNot_ShouldReturnFalse() {
         // Assemble
         createAndFillStepResult("one", "tow")
 
@@ -193,7 +179,7 @@ class TaskViewModelTest {
 
 
     @Test
-    fun testCheckIfCurrentStepIsBranchDecisionStep_ShouldReturnFalse() {
+    fun checkIfCurrentStepIsBranchDecisionStep_ShouldReturnFalse() {
         // Assemble
         `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
         `when`(taskViewModel.isReviewStep(stepMocked)).thenReturn(true)
@@ -206,7 +192,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testCheckIfCurrentStepIsBranchDecisionStep_ShouldReturnTrue() {
+    fun checkIfCurrentStepIsBranchDecisionStep_ShouldReturnTrue() {
         // Assemble
         `when`(task!!.getStepAfterStep(any(), any())).thenReturn(stepMocked)
         `when`(taskViewModel.isReviewStep(stepMocked)).thenReturn(false)
@@ -220,7 +206,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testShowCancelEditAlert_ShouldShowCancelDialog() {
+    fun whenAnswersAreTheSame_ShouldShowCancelDialog() {
         // Assemble
         doReturn(true).`when`(taskViewModel).checkIfAnswersAreTheSame()
 
@@ -232,7 +218,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testShowCancelEditAlert_ShouldNotShowCancelDialog() {
+    fun whenAnswersAreTheSame_ShouldNotShowCancelDialog() {
         // Assemble
         doReturn(false).`when`(taskViewModel).checkIfAnswersAreTheSame()
 
@@ -244,7 +230,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testCheckForSaveDialog_ShouldShowSaveDialog() {
+    fun whenAnswersAreTheSame_And_CurrentStepIsBranchDecisionStep_ShouldShowSaveDialog() {
         // Assemble
         doReturn(true).`when`(taskViewModel).checkIfAnswersAreTheSame()
         doReturn(true).`when`(taskViewModel).checkIfCurrentStepIsBranchDecisionStep()
@@ -257,7 +243,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testCheckForSaveDialog_ShouldGoToNextStep() {
+    fun whenAnswersAreTheSame_ShouldGoToNextStep() {
         // Assemble
         doReturn(false).`when`(taskViewModel).checkIfAnswersAreTheSame()
 
@@ -269,7 +255,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testCheckForSkipDialog_ShouldShowSkipDialog() {
+    fun whenNewAnswerIsSkipWhilePreviousIsNot_And_StepIsOptional_ShouldShowSkipDialog() {
         // Assemble
         currentStepMocked.isOptional = true
         doReturn(true).`when`(taskViewModel).checkIfNewAnswerIsSkipWhilePreviousIsNot()
@@ -282,7 +268,7 @@ class TaskViewModelTest {
     }
 
     @Test
-    fun testCheckForSkipDialog_ShouldGoToNextStep() {
+    fun whenNewAnswerIsSkipWhilePreviousIsNot_And_StepIsNotOptional_ShouldGoToNextStep() {
         // Assemble
         currentStepMocked.isOptional = false
         //act
