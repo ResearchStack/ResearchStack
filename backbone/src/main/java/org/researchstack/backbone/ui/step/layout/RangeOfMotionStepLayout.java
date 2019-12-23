@@ -39,7 +39,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     protected RangeOfMotionResult rangeOfMotionResult;
     protected BroadcastReceiver deviceMotionReceiver;;
     protected RelativeLayout layout;
-    protected Intent intent;
 
     private boolean isRecordingComplete = false;
     public float[] currentDeviceAttitude = new float[4];
