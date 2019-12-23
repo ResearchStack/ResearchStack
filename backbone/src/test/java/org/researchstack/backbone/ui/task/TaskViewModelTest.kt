@@ -127,19 +127,6 @@ class TaskViewModelTest {
         Assert.assertEquals(taskViewModel.taskCompleted.value, true)
     }
 
-
-    @Test
-    fun testWhenEditingAStep_previousStep_shouldCallCancelDialog() {
-        // Assemble
-        taskViewModel.edit(currentStepMocked)
-
-        // Act
-        taskViewModel.previousStep()
-
-        // Assert
-        verify(taskViewModel, times(1)).showCancelEditAlert()
-    }
-
     @Test
     fun testNextStepEditMode_WhenNextStepIsReviewStep_EditShouldBeFalse_moveReviewStepShouldGoToReviewStep() {
         // Assemble
