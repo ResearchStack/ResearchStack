@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/rsb_reviewStep_item_title_bottom_margin"
         app:layout_constraintBottom_toTopOf="@id/webViewStepQuestionItself"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Web View Step Title" />
@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/webViewStepQuestionAnswer"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/webViewStepQuestionTitle"
         tools:text="Why don't you drink more orange juice?" />
@@ -35,10 +35,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/webViewStepQuestionItself"
+        app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
         tools:text="I ran out" />
 
+    <include layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
