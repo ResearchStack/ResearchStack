@@ -187,12 +187,12 @@ public class DeviceMotionRecorder extends SensorRecorder {
     }
 
     @Override
-    public void recordSensorEvent(SensorEvent sensorEvent, JsonObject jsonObject) { // this is called in onSensorChanged in SensorRecorder()
+    public void recordSensorEvent(SensorEvent sensorEvent, JsonObject jsonObject) {
         int sensorType = sensorEvent.sensor.getType();
         String sensorTypeKey = SENSOR_TYPE_TO_DATA_TYPE.get(sensorType);
 
         if (Strings.isNullOrEmpty(sensorTypeKey)) {
-            logger.warn("Unable find type key for sensor type: "
+            logger.warn("Unable to find type key for sensor type: "
                     + sensorType);
             return;
         }
