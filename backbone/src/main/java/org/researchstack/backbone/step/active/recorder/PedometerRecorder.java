@@ -161,7 +161,7 @@ public class PedometerRecorder extends SensorRecorder
         if (intent.getAction() == null ||
                 !intent.getAction().equals(BROADCAST_PEDOMETER_UPDATE_ACTION) ||
                 intent.getExtras() == null ||
-                intent.getExtras().containsKey(BROADCAST_PEDOMETER_UPDATE_KEY)) {
+                !intent.getExtras().containsKey(BROADCAST_PEDOMETER_UPDATE_KEY)) {
             return null;
         }
         return (PedometerUpdateHolder) intent.getExtras()
