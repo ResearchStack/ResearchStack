@@ -391,7 +391,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         if (intent.getAction() == null ||
                 !intent.getAction().equals(BROADCAST_DEVICE_MOTION_UPDATE_ACTION) ||
                 intent.getExtras() == null ||
-                intent.getExtras().containsKey(BROADCAST_DEVICE_MOTION_UPDATE_KEY)) {
+                !intent.getExtras().containsKey(BROADCAST_DEVICE_MOTION_UPDATE_KEY)) {
             return null;
         }
         return (DeviceMotionUpdateHolder) intent.getExtras()
