@@ -28,13 +28,15 @@ public class RangeOfMotionStep extends ActiveStep {
     private void commonInit() {
         setOptional(false);
         setStepDuration(DEFAULT_RANGE_OF_MOTION_STEP_DURATION);
+        setShouldStartTimerAutomatically(true);
         setShouldShowDefaultTimer(false);
+        setShouldUseNextAsSkipButton(false);
+        setShouldSpeakRemainingTimeAtHalfway(false);
         setShouldVibrateOnStart(true);
         setShouldPlaySoundOnStart(true);
-        setShouldContinueOnFinish(true);
-        setShouldStartTimerAutomatically(true);
         setShouldVibrateOnFinish(true);
         setShouldPlaySoundOnFinish(true);
+        setShouldContinueOnFinish(true);
         setEstimateTimeInMsToSpeakEndInstruction(0); // do not wait to proceed
     }
 
