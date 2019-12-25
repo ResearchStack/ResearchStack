@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
@@ -39,6 +41,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     protected RangeOfMotionResult rangeOfMotionResult;
     protected BroadcastReceiver deviceMotionReceiver;;
     protected RelativeLayout layout;
+    private SensorEvent sensorEvent;
 
     private boolean isRecordingComplete = false;
     public float[] currentDeviceAttitude = new float[4];
@@ -127,21 +130,24 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                             DeviceMotionRecorder.getDeviceMotionUpdateHolder(intent);
                     if (dataHolder != null) {
                         float[] sensor_values;
-                        if (dataHolder.getW() != 0.0f) {
-                            sensor_values = new float[] {
-                                    dataHolder.getX(),
-                                    dataHolder.getY(),
-                                    dataHolder.getZ(),
-                                    dataHolder.getW()
-                            };
-                        } else {
-                            sensor_values = new float[] {
-                                    dataHolder.getX(),
-                                    dataHolder.getY(),
-                                    dataHolder.getZ()
-                            };
+                        int sensorType = sensorEvent.sensor.getType();
+                        if (Sensor.TYPE_ROTATION_VECTOR == sensorType) {
+                            if (dataHolder.getW() != 0) {
+                                sensor_values = new float[] {
+                                        dataHolder.getX(),
+                                        dataHolder.getY(),
+                                        dataHolder.getZ(),
+                                        dataHolder.getW()
+                                };
+                            } else {
+                                sensor_values = new float[] {
+                                        dataHolder.getX(),
+                                        dataHolder.getY(),
+                                        dataHolder.getZ()
+                                };
+                            }
+                            currentDeviceAttitude = getDeviceAttitudeAsQuaternion(sensor_values); // this should capture the current device attitude
                         }
-                        currentDeviceAttitude = getDeviceAttitudeAsQuaternion(sensor_values);
                     }
                 }
             }
