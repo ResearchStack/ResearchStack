@@ -38,16 +38,14 @@ class TaskViewModelTest {
     @Mock
     private var originalStepResult: StepResult<String>? = null
 
-    // private lateinit var taskViewModel: TaskViewModel
     private lateinit var taskViewModel: TaskViewModel
 
     private val currentStepMocked = createStep()
     private val stepMocked = createStep()
-    @Before
-    fun before() {
-        whenever(intent?.getSerializableExtra(TaskActivity.EXTRA_TASK)).thenReturn(eq(task))
 
-       // taskViewModel = createViewModel()
+    @Before
+    fun setUp() {
+        whenever(intent?.getSerializableExtra(TaskActivity.EXTRA_TASK)).thenReturn(eq(task))
 
         taskViewModel = spy(createViewModel())
         taskViewModel.currentStep = currentStepMocked
@@ -245,13 +243,18 @@ class TaskViewModelTest {
     @Test
     fun whenAnswersAreTheSame_ShouldGoToNextStep() {
         // Assemble
+        doNothing().`when`(taskViewModel).nextStep()
         doReturn(false).`when`(taskViewModel).checkIfAnswersAreTheSame()
 
         //act
         taskViewModel.checkForSaveDialog()
 
         //Assert
+        verify(taskViewModel).checkForSaveDialog()
+        verify(taskViewModel).checkIfAnswersAreTheSame()
         verify(taskViewModel).nextStep()
+        verify(taskViewModel).currentStep = any() // called in setUp
+        verifyNoMoreInteractions(taskViewModel)
     }
 
     @Test
@@ -270,12 +273,16 @@ class TaskViewModelTest {
     @Test
     fun whenNewAnswerIsSkipWhilePreviousIsNot_And_StepIsNotOptional_ShouldGoToNextStep() {
         // Assemble
+        doNothing().`when`(taskViewModel).nextStep()
         currentStepMocked.isOptional = false
         //act
         taskViewModel.checkForSkipDialog(originalStepResult)
 
         //Assert
+        verify(taskViewModel).checkForSkipDialog(any())
         verify(taskViewModel).nextStep()
+        verify(taskViewModel).currentStep = any() // called in setUp
+        verifyNoMoreInteractions(taskViewModel)
     }
 
     private fun createViewModel() = TaskViewModel(application!!, intent!!)
