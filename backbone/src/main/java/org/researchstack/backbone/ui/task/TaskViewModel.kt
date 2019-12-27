@@ -3,6 +3,7 @@ package org.researchstack.backbone.ui.task
 import android.app.Application
 import android.content.Intent
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import org.researchstack.backbone.R
@@ -31,7 +32,10 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     var currentStep: Step? = null
 
 
-    var firstStep: Step
+    val firstStep: Step
+        get() {
+            return task.getStepAfterStep(null, taskResult)
+        }
 
     val currentTaskResult: TaskResult
         get() {
@@ -58,9 +62,11 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
 
     private var isSavedDialogAppeared = false
-    private var taskResult: TaskResult
+    @VisibleForTesting
+    var taskResult: TaskResult
     private var clonedTaskResult: TaskResult? = null
-    private var clonedTaskResultInCaseOfCancel: TaskResult? = null
+    @VisibleForTesting
+    var clonedTaskResultInCaseOfCancel: TaskResult? = null
     //only used for cancel edit
     private var hasBranching = false
     private val stack = Stack<Step>()
@@ -70,7 +76,6 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
                 ?: TaskResult(task.identifier).apply { startDate = Date() }
 
         task.validateParameters()
-        firstStep = task.getStepAfterStep(null, taskResult)
     }
 
     fun showCurrentStep() {
@@ -152,7 +157,6 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
      * have several consecutive hidden steps
      */
     fun previousStep(popUpToStep: Step? = currentStep) {
-        Log.d(TAG, "1. CURRENT STEP: $currentStep")
         if (editing) {
             val tempCurrent = stack.pop()
             if (stack.isEmpty()) {
@@ -182,8 +186,6 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
             }
         }
-        Log.d(TAG, "2. CURRENT STEP: $currentStep")
-
     }
 
     val editStep = MutableLiveData<Step>()
@@ -227,7 +229,8 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         } ?: task.getStepAfterStep(null, currentTaskResult)
     }
 
-    private fun isReviewStep(step: Step) = step::class.java.simpleName.contains("RSReviewStep", true)
+    @VisibleForTesting
+    fun isReviewStep(step: Step) = step::class.java.simpleName.contains("RSReviewStep", true)
     private fun isCompletionStep(step: Step) = step::class.java.simpleName.contains("RSCompletionStep", true)
 
     companion object {
@@ -307,26 +310,27 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         isSavedDialogAppeared = false
     }
 
-    private fun checkIfAnswersAreTheSame(): Boolean {
+    @VisibleForTesting
+    fun checkIfAnswersAreTheSame(): Boolean {
         val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
         val modifiedStepResult = currentTaskResult.getStepResult(currentStep?.identifier)
         return originalStepResult?.equals(modifiedStepResult)?.not() ?: false
     }
 
-
-    private fun checkIfNewAnswerIsSkipWhilePreviousIsNot(): Boolean {
+    @VisibleForTesting
+    fun checkIfNewAnswerIsSkipWhilePreviousIsNot(): Boolean {
         val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
         val modifiedStepResult = currentTaskResult.getStepResult(currentStep?.identifier)
         return originalStepResult?.allValuesAreNull()!!.not() && modifiedStepResult.allValuesAreNull()
     }
 
-
-    private fun checkIfCurrentStepIsBranchDecisionStep(): Boolean {
+    @VisibleForTesting
+    fun checkIfCurrentStepIsBranchDecisionStep(): Boolean {
         val nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
         return currentTaskResult.getStepResult(nextStep.identifier) == null && !isReviewStep(nextStep)
     }
 
     fun revertToOriginalStepResult(originalStepResult: StepResult<*>) {
-       currentTaskResult?.getStepResult(currentStep?.identifier).result = originalStepResult.result
+        currentTaskResult.getStepResult(currentStep?.identifier).result = originalStepResult.result
     }
 }
