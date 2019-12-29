@@ -103,7 +103,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
             public void onClick(View v) {
 
                 // This captures the quaternion representing the final (finish) position of the
-                // device attitude when recording ends with a tap on the screen
+                // device attitude once the recorder service has begun
                 finishAttitude = getDeviceAttitudeAsQuaternion(getDeviceOrientationRelativeToStart());
 
                 onFinish();
