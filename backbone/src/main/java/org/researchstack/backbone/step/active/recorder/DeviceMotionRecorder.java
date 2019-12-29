@@ -380,6 +380,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         bundle.putSerializable(BROADCAST_DEVICE_MOTION_UPDATE_KEY, dataHolder);
         Intent intent = new Intent(BROADCAST_DEVICE_MOTION_UPDATE_ACTION);
         intent.putExtras(bundle);
+        intent.setAction(com.spineapp.DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION);
         sendBroadcast(intent);
     }
 
