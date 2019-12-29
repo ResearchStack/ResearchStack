@@ -68,10 +68,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     public void initialize(Step step, StepResult result) {
         super.initialize(step, result);
-
-        // This captures the quaternion representing the start initial (start) position of the device
-        // attitude when the step initialises
-        startAttitude = getDeviceAttitudeAsQuaternion(currentDeviceAttitude);
     }
 
     @Override
@@ -153,10 +149,29 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
             }
         };
         IntentFilter intentFilter = new IntentFilter(DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION);
+        intentFilter.addAction(DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_KEY);
         LocalBroadcastManager.getInstance(appContext)
                 .registerReceiver(deviceMotionReceiver, intentFilter);
     }
 
+    @Override
+    public void startBackgroundRecorderService() {
+        super.startBackgroundRecorderService();
+
+        double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_range_of_motion_task);
+        Context appContext = getContext().getApplicationContext();
+        DeviceMotionRecorder deviceMotionRecorder = new DeviceMotionRecorder (
+                sensorFreq,
+                TaskFactory.Constants.DeviceMotionRecorderIdentifier,
+                rangeOfMotionStep,
+                getOutputDirectory(appContext));
+        deviceMotionRecorder.start(appContext);
+
+        // This captures the quaternion representing the start initial (start) position of the device
+        // attitude when the step initialises
+        startAttitude = getDeviceAttitudeAsQuaternion(currentDeviceAttitude);
+    }
+    
     @Override
     protected void unregisterRecorderBroadcastReceivers() {
         super.unregisterRecorderBroadcastReceivers();
