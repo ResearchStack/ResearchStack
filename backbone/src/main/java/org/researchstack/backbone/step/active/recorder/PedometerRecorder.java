@@ -55,6 +55,7 @@ public class PedometerRecorder extends SensorRecorder
 
     private int stepCounter;
     private JsonObject jsonObject;
+    private Context appContext;
 
     PedometerRecorder(String identifier, Step step, File outputDirectory) {
         super(MANUAL_JSON_FREQUENCY, identifier, step, outputDirectory);
@@ -151,7 +152,8 @@ public class PedometerRecorder extends SensorRecorder
         bundle.putSerializable(BROADCAST_PEDOMETER_UPDATE_KEY, dataHolder);
         Intent intent = new Intent(BROADCAST_PEDOMETER_UPDATE_ACTION);
         intent.putExtras(bundle);
-        sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(appContext).
+            sendBroadcast(intent);
     }
 
     /**
