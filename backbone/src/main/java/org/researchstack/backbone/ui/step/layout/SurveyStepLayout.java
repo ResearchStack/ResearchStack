@@ -32,8 +32,6 @@ import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
 
-import static org.researchstack.backbone.ui.callbacks.StepCallbacks.ACTION_SAVE;
-
 public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
 
@@ -177,7 +175,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         submitBar.setEditCancelColor(coloryPrimary);
         submitBar.setEditSaveColor(colorSecondary);
         submitBar.setPositiveAction(view -> {
-            if (onNextClicked()) {
+            if (onNextClicked(StepCallbacks.ACTION_NEXT)) {
                 submitBar.clearActions();
             }
         });
@@ -219,9 +217,9 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         });
 
         submitBar.setEditSaveAction(view -> {
-            isSkipped = false;
-            callbacks.onSaveStep(ACTION_SAVE, getStep(),
-                    stepBody.getStepResult(isSkipped));
+            if (onNextClicked(StepCallbacks.ACTION_SAVE)) {
+                submitBar.clearActions();
+            }
         });
     }
 
@@ -267,7 +265,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         return super.onSaveInstanceState();
     }
 
-    protected boolean onNextClicked() {
+    private boolean onNextClicked(int action) {
         BodyAnswer bodyAnswer = stepBody.getBodyAnswerState();
 
         if (bodyAnswer == null || !bodyAnswer.isValid()) {
@@ -279,7 +277,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             return false;
         } else {
             isSkipped = false;
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+            callbacks.onSaveStep(action,
                     getStep(),
                     stepBody.getStepResult(isSkipped));
             return true;
