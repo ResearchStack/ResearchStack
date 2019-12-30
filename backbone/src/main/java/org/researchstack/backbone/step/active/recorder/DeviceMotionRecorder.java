@@ -225,31 +225,15 @@ public class DeviceMotionRecorder extends SensorRecorder {
             case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
             case Sensor.TYPE_ROTATION_VECTOR:
                 recordRotationVector(sensorEvent, jsonObject);
-                break;
-            default:
-                onDeviceMotion();
-                logger.warn("Unable to record sensor type: " + sensorType);
-        }
-    }
-
-    @MainThread
-    public void onDeviceMotion() {
-        jsonObject.addProperty(TIMESTAMP_KEY, System.currentTimeMillis()); // this json property may already be added in recordSensorEvent via the SensorRecorder class
-        jsonObject.addProperty(END_DATE, System.currentTimeMillis());
-        super.writeJsonObjectToFile(jsonObject);
-
-        if (jsonObject.get(W_KEY) != null) {
-            sendDeviceMotionUpdateBroadcast(
+                sendDeviceMotionUpdateBroadcast(
                     jsonObject.get(X_KEY).getAsFloat(),
                     jsonObject.get(Y_KEY).getAsFloat(),
                     jsonObject.get(Z_KEY).getAsFloat(),
                     jsonObject.get(W_KEY).getAsFloat());
-        } else {
-            sendDeviceMotionUpdateBroadcast(
-                    jsonObject.get(X_KEY).getAsFloat(),
-                    jsonObject.get(Y_KEY).getAsFloat(),
-                    jsonObject.get(Z_KEY).getAsFloat(),
-                    0);
+                break;
+            default:
+                onDeviceMotion();
+                logger.warn("Unable to record sensor type: " + sensorType);
         }
     }
 
@@ -413,6 +397,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         public float getY() {
             return y;
         }
+        
         public void setY(float y) {
             this.y = y;
         }
@@ -420,6 +405,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         public float getZ() {
             return z;
         }
+        
         public void setZ(float z) {
             this.z = z;
         }
@@ -427,6 +413,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         public float getW() {
             return w;
         }
+        
         public void setW(float w) {
             this.w = w;
         }
