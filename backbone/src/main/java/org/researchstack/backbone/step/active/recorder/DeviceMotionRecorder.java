@@ -314,7 +314,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
             jsonObject.addProperty(W_KEY, sensorEvent.values[3]);
 
             // game rotation vector never provides accuracy, always returns zero
-            if (Sensor.TYPE_GAME_ROTATION_VECTOR!= sensorType) {
+            if (Sensor.TYPE_GAME_ROTATION_VECTOR != sensorType) {
                 // estimated accuracy in radians, or -1 if unavailable
                 jsonObject.addProperty(ACCURACY_KEY, sensorEvent.values[4]);
             }
