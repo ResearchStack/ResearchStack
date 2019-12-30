@@ -233,7 +233,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
                     jsonObject.get(W_KEY).getAsFloat());
                 break;
             default:
-                onDeviceMotion();
                 logger.warn("Unable to record sensor type: " + sensorType);
         }
     }
