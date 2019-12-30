@@ -63,6 +63,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
     public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION = "BroadcastDeviceMotionUpdate";
     public static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY = "DeviceMotionUpdate";
 
+    private Context appContext;
     private JsonObject jsonObject;
 
     static {
