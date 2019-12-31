@@ -44,6 +44,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     private SensorEvent sensorEvent;
 
     private boolean isRecordingComplete = false;
+    private boolean alreadyExecuted = false;
     public float[] currentDeviceAttitude = new float[4];
     public float[] startAttitude = new float[4];
     public float[] finishAttitude = new float[4];
@@ -126,8 +127,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                             DeviceMotionRecorder.getDeviceMotionUpdateHolder(intent);
                     if (dataHolder != null) {
                         float[] sensor_values;
-                        int sensorType = sensorEvent.sensor.getType();
-                        if (Sensor.TYPE_ROTATION_VECTOR == sensorType) {
+                        //int sensorType = sensorEvent.sensor.getType();
+                        //if (Sensor.TYPE_ROTATION_VECTOR == sensorType) {
                             if (dataHolder.getW() != 0) {
                                 sensor_values = new float[] {
                                         dataHolder.getX(),
@@ -143,7 +144,12 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                                 };
                             }
                             currentDeviceAttitude = getDeviceAttitudeAsQuaternion(sensor_values); // this should capture the current device attitude
-                        }
+
+                            if(!alreadyExecuted) { // getStartAttitude() should run once only
+                                getStartAttitude();
+                                alreadyExecuted = true;
+                            }
+                        //}
                     }
                 }
             }
@@ -158,6 +164,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public void startBackgroundRecorderService() {
         super.startBackgroundRecorderService();
 
+        // Commence recording via DeviceMotionRecorder
         double sensorFreq = context.getResources().getInteger(R.integer.rsb_sensor_frequency_range_of_motion_task);
         Context appContext = getContext().getApplicationContext();
         DeviceMotionRecorder deviceMotionRecorder = new DeviceMotionRecorder (
@@ -166,10 +173,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 rangeOfMotionStep,
                 getOutputDirectory(appContext));
         deviceMotionRecorder.start(appContext);
-
-        // This captures the quaternion representing the start initial (start) position of the device
-        // attitude when the step initialises
-        startAttitude = getDeviceAttitudeAsQuaternion(currentDeviceAttitude);
     }
     
     @Override
@@ -186,7 +189,15 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         stop();
     }
 
-
+    
+    /**
+     * Method to obtain the initial (start) device attitude as a quaternion
+     **/
+    public void getStartAttitude() {
+        startAttitude = getDeviceAttitudeAsQuaternion(currentDeviceAttitude);
+    }
+    
+    
     /**
      * Method to obtain range-shifted angle of first (start) device attitude, relative to the zero position
      **/
