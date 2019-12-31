@@ -130,7 +130,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
     public static final String Y_BIAS_KEY           = "yBias";
     public static final String Z_BIAS_KEY           = "zBias";
 
-    DeviceMotionRecorder(double frequency, String identifier, Step step, File outputDirectory) {
+    public DeviceMotionRecorder(double frequency, String identifier, Step step, File outputDirectory) {
         super(frequency, identifier, step, outputDirectory);
     }
 
