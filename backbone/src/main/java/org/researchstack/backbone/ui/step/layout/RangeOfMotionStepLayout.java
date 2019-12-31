@@ -41,6 +41,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     protected RangeOfMotionResult rangeOfMotionResult;
     protected BroadcastReceiver deviceMotionReceiver;;
     protected RelativeLayout layout;
+    private SensorManager sensorManager;
     private SensorEvent sensorEvent;
 
     private boolean isRecordingComplete = false;
@@ -48,6 +49,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public float[] currentDeviceAttitude = new float[4];
     public float[] startAttitude = new float[4];
     public float[] finishAttitude = new float[4];
+    private double sensorFreq = 100.0; // Sensor frequency for device motion recorders
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
