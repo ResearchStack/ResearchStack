@@ -72,6 +72,11 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     @Override
+    public StepResult getStepResult() {
+        return null;
+    }
+
+    @Override
     public int getContentResourceId() {
         return R.layout.rsb_step_layout_instruction;
     }

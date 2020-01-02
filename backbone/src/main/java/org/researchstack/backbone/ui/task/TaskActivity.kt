@@ -33,6 +33,7 @@ import org.researchstack.backbone.ui.PinCodeActivity
 import org.researchstack.backbone.ui.permissions.PermissionListener
 import org.researchstack.backbone.ui.permissions.PermissionMediator
 import org.researchstack.backbone.ui.permissions.PermissionResult
+import org.researchstack.backbone.ui.step.fragments.BaseStepFragment
 import org.researchstack.backbone.ui.step.layout.StepLayout
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout
 import org.researchstack.backbone.utils.ViewUtils
@@ -180,13 +181,22 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
 
     override fun requestPermissions(permissionListener: PermissionListener, vararg permissions:
     String?) {
+        saveCurrentStepResult()
         stepPermissionListener = permissionListener
         requestPermissions(permissions, STEP_PERMISSION_LISTENER_REQUEST)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun requestPermissions(vararg permissions: String?) {
+        saveCurrentStepResult()
         requestPermissions(permissions, STEP_PERMISSION_REQUEST)
+    }
+
+    private fun saveCurrentStepResult() {
+        val fragment = getCurrentFragment()
+        if (fragment is BaseStepFragment) {
+            fragment.saveCurrentStepResult()
+        }
     }
 
     // TODO: this should be handled by each fragment/step/type that needs any sort of permission

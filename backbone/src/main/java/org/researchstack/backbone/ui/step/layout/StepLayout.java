@@ -25,4 +25,6 @@ public interface StepLayout {
     void setRemoveFromBackStack(boolean removeFromBackStack);
 
     void isEditView(boolean isEditView);
+
+    StepResult getStepResult();
 }
