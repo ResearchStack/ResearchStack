@@ -26,5 +26,8 @@ public interface StepLayout {
 
     void isEditView(boolean isEditView);
 
+    /**
+     * @return StepResult for a step even if it's not yet saved
+     */
     StepResult getStepResult();
 }

@@ -73,6 +73,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
     @Override
     public StepResult getStepResult() {
+        // This step doesn't have a result, so we're returning null instead
         return null;
     }
 
