@@ -161,6 +161,11 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         submitBar.updateView(isEditView);
     }
 
+    @Override
+    public StepResult getStepResult() {
+        return stepBody.getStepResult(isSkipped);
+    }
+
     public void initStepLayout() {
         LogExt.i(getClass(), "initStepLayout()");
 

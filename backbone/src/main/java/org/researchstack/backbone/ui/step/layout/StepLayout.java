@@ -25,4 +25,9 @@ public interface StepLayout {
     void setRemoveFromBackStack(boolean removeFromBackStack);
 
     void isEditView(boolean isEditView);
+
+    /**
+     * @return StepResult for a step even if it's not yet saved
+     */
+    StepResult getStepResult();
 }

@@ -92,6 +92,12 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
     }
 
     @Override
+    public StepResult getStepResult() {
+        // This step doesn't have a result, so we're returning null instead
+        return null;
+    }
+
+    @Override
     public int getContentResourceId() {
         return R.layout.rsb_step_layout_consent_visual;
     }

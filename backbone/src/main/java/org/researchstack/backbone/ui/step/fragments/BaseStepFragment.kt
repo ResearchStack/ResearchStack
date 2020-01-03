@@ -111,4 +111,11 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
             it.setDisplayHomeAsUpEnabled(setVisible)
         }
     }
+
+    fun saveCurrentStepResult() {
+        val stepView = view?.findViewById<View>(R.id.stepView)
+        if (viewModel.currentStep != null && stepView is StepLayout) {
+            onSaveStep(StepCallbacks.ACTION_NONE, viewModel.currentStep!!, stepView.stepResult)
+        }
+    }
 }
