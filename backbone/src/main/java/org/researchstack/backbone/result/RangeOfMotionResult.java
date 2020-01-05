@@ -7,11 +7,6 @@ package org.researchstack.backbone.result;
 public class RangeOfMotionResult extends Result {
 
     /**
-     The time limit to complete the task.
-     */
-    private int timeLimit;
-
-    /**
      The task duration (that is, the time taken to perform the movement task).
      */
     private int duration;
@@ -49,14 +44,6 @@ public class RangeOfMotionResult extends Result {
 
     public RangeOfMotionResult(String identifier) {
         super(identifier);
-    }
-
-    public int getTimeLimit() {
-        return timeLimit;
-    }
-
-    public void setTimeLimit(int timeLimit) {
-        this.timeLimit = timeLimit;
     }
 
     public int getDuration() {
