@@ -154,7 +154,7 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
     testImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
 
-    implementation "com.google.android.material:material:1.1.0-beta01"
+    implementation "com.google.android.material:material:1.1.0-rc01"
 }
 
 if (project.hasProperty("android")) { // Android libraries
