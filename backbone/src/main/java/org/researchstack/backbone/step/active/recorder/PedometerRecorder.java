@@ -54,6 +54,7 @@ public class PedometerRecorder extends SensorRecorder
 
     private int stepCounter;
     private JsonObject jsonObject;
+    private Context appContext;
 
     PedometerRecorder(String identifier, Step step, File outputDirectory) {
         super(MANUAL_JSON_FREQUENCY, identifier, step, outputDirectory);
