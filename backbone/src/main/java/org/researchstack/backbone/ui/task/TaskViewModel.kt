@@ -134,18 +134,18 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         } else {
             val nextStep = task.getStepAfterStep(currentStep, taskResult)
 
-            // This checks if the nextStep doesn't have a result and clears all results starting from that step
-            // This is useful in a branching task in case we go back to a certain step, and then go forward again,
-            // this will ensure that if another branch is taken, all next step results will be cleared.
-            // Note: The first check is a workaround that checks if the task is not an OrderedTask, and so it's a
-            // BranchManagedTask (which can't be accessed from ResearchStack so we can't check it directly).
-            if (task !is OrderedTask && taskResult.getStepResult(nextStep.identifier) == null) {
-                clearBranchingResults()
-            }
-
             if (nextStep == null) {
                 close(true)
             } else {
+                // This checks if the nextStep doesn't have a result and clears all results starting from that step
+                // This is useful in a branching task in case we go back to a certain step, and then go forward again,
+                // this will ensure that if another branch is taken, all next step results will be cleared.
+                // Note: The first check is a workaround that checks if the task is not an OrderedTask, and so it's a
+                // BranchManagedTask (which can't be accessed from ResearchStack so we can't check it directly).
+                if (task !is OrderedTask && taskResult.getStepResult(nextStep.identifier) == null) {
+                    clearBranchingResults()
+                }
+
                 currentStep = nextStep
 
                 if (nextStep.isHidden) {
