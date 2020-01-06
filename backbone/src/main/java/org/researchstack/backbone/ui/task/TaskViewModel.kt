@@ -2,7 +2,6 @@ package org.researchstack.backbone.ui.task
 
 import android.app.Application
 import android.content.Intent
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -347,7 +346,11 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     fun checkIfNewAnswerIsSkipWhilePreviousIsNot(): Boolean {
         val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
         val modifiedStepResult = currentTaskResult.getStepResult(currentStep?.identifier)
-        return originalStepResult?.allValuesAreNull()!!.not() && modifiedStepResult.allValuesAreNull()
+        return if (originalStepResult == null) {
+            false
+        } else {
+            originalStepResult.allValuesAreNull()!!.not() && modifiedStepResult.allValuesAreNull()
+        }
     }
 
     @VisibleForTesting
