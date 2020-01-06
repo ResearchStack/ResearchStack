@@ -151,7 +151,8 @@ public class PedometerRecorder extends SensorRecorder
         Intent intent = new Intent(BROADCAST_PEDOMETER_UPDATE_ACTION);
         intent.putExtras(bundle);
         intent.setAction(org.researchstack.backbone.step.active.recorder.PedometerRecorder.BROADCAST_PEDOMETER_UPDATE_ACTION);
-        sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(appContext).
+                sendBroadcast(intent);
     }
 
     /**
