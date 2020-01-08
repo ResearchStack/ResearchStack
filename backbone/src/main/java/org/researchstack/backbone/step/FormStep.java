@@ -23,6 +23,8 @@ import java.util.List;
 public class FormStep extends QuestionStep {
     List<QuestionStep> formSteps;
 
+    private String skipTitle;
+
     /* Default constructor needed for serialization/deserialization of object */
     public FormStep() {
         super();
@@ -36,6 +38,20 @@ public class FormStep extends QuestionStep {
     public FormStep(String identifier, String title, String text, List<QuestionStep> steps) {
         this(identifier, title, text);
         formSteps = steps;
+    }
+
+    /**
+     * If true, the first question body layout with an edittext will receive focus on load
+     * default is false and nothing will occur
+     */
+    private boolean autoFocusFirstEditText;
+
+    public boolean isAutoFocusFirstEditText() {
+        return autoFocusFirstEditText;
+    }
+
+    public void setAutoFocusFirstEditText(boolean autoFocusFirstEditText) {
+        this.autoFocusFirstEditText = autoFocusFirstEditText;
     }
 
     /**
@@ -53,6 +69,20 @@ public class FormStep extends QuestionStep {
 
     public void setFormSteps(List<QuestionStep> formSteps) {
         this.formSteps = formSteps;
+    }
+
+    /**
+     * @return The title of the skip button, default will be localized "Skip"
+     */
+    public String getSkipTitle() {
+        return skipTitle;
+    }
+
+    /**
+     * @param skipTitle The title of the skip button, default will be localized "Skip"
+     */
+    public void setSkipTitle(String skipTitle) {
+        this.skipTitle = skipTitle;
     }
 
     @Override

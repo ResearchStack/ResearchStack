@@ -13,6 +13,7 @@ import org.researchstack.backbone.utils.LogExt;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by TheMDP on 2/9/17.
@@ -65,14 +66,20 @@ public class DataLoggerFileWriterThread {
         private FileWriterHandler(Looper looper) {
             super(looper);
         }
+        private final AtomicBoolean isStopped = new AtomicBoolean(false);
 
         @Override
         public void handleMessage(Message msg) {
             try {
                 switch (msg.what) {
                     case MSG_WRITE_REQUEST:
-
+                        if (isStopped.get()) {
+                            LogExt.w(getClass(), "Data write request received after stopped or cancelled");
+                            return;
+                        }
+    
                         openFileStreamIfNull();
+    
                         Bundle bundle = msg.getData();
                         if (bundle != null) {
                             byte[] bytesToWrite = bundle.getByteArray(BUNDLE_KEY_BYTE_DATA);
@@ -83,7 +90,12 @@ public class DataLoggerFileWriterThread {
 
                         break;
                     case MSG_STOP:
-
+                        if (isStopped.get()) {
+                            LogExt.w(getClass(), "Stop request received after stopped or cancelled");
+                            return;
+                        }
+                        isStopped.set(true);
+                        
                         // call openFileStreamIfNull to combat an edge case where no write requests were processed
                         openFileStreamIfNull();
                         closeFileStream();
@@ -91,6 +103,11 @@ public class DataLoggerFileWriterThread {
 
                         break;
                     case MSG_CANCEL:
+                        if (isStopped.get()) {
+                            LogExt.w(getClass(), "Cancel request received after stopped or cancelled");
+                            return;
+                        }
+                        isStopped.set(true);
 
                         closeFileStream();
                         writeCanceledFromThreadToMainThread();
@@ -105,11 +122,18 @@ public class DataLoggerFileWriterThread {
                         closingException.printStackTrace();
                     }
                 }
-                writeFailedFromThreadToMainThread(e);
+                if (e.getMessage().contains("Stream Closed")) {
+                    // Ignore this IOException, since the message can just be ignored safely
+                } else {
+                    writeFailedFromThreadToMainThread(e);
+                }
             }
         }
 
         private void openFileStreamIfNull() throws IOException {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
             if (fileOutputStream == null) {
                 fileOutputStream = new FileOutputStream(file, true);
                 // Write fileHeader if there is one

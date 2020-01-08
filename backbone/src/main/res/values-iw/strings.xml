@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">נע בין %1$s ל-%2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">הערימה מכילה</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">וגם</string>
-    <string name="rsb_ax_graph_point">נקודה: %1$s</string>
+    <string name="rsb_ax_graph_point">נקודה: %1$d</string>
     
 </resources>

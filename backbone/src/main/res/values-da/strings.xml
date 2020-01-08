@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">Udsnit fra %1$s til %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Stak består af</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">og</string>
-    <string name="rsb_ax_graph_point">Punkt: %1$s</string>
+    <string name="rsb_ax_graph_point">Punkt: %1$d</string>
     
 </resources>

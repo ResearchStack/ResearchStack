@@ -13,7 +13,7 @@ import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 public class ConsentOnboardingSection extends OnboardingSection {
 
     // Serialization must be done manually in OnboardingSectionAdapter
-    ConsentDocument consentDocument;
+    protected ConsentDocument consentDocument;
 
     @Override
     public SurveyFactory getDefaultOnboardingSurveyFactory(

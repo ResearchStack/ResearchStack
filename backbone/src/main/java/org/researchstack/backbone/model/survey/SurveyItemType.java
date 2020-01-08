@@ -19,11 +19,8 @@ public enum SurveyItemType {
     INSTRUCTION                 ("instruction"),            // InstructionStep
     @SerializedName("completion")
     INSTRUCTION_COMPLETION      ("completion"),             // CompletionStep
-    // Question, aka Form, Subtypes
-    @SerializedName("compound")
-    QUESTION_COMPOUND           ("compound"),               // QuestionSteps > 1
-    @SerializedName("toggle")
-    QUESTION_TOGGLE             ("toggle"),                 // SBABooleanToggleFormStep
+    @SerializedName(value="compound", alternate={"form", "toggle"})
+    QUESTION_FORM("compound"),               // QuestionSteps > 1
     @SerializedName("boolean")
     QUESTION_BOOLEAN            ("boolean"),                // ORKBooleanAnswerFormat
     @SerializedName("singleChoiceText")
@@ -32,6 +29,8 @@ public enum SurveyItemType {
     QUESTION_MULTIPLE_CHOICE    ("multipleChoiceText"),     // ORKTextChoiceAnswerFormat of style MultipleChoiceTextQuestion
     @SerializedName("textfield")
     QUESTION_TEXT               ("textfield"),              // ORKTextAnswerFormat
+    @SerializedName("emailTextField")
+    QUESTION_EMAIL ("emailTextField"),                      // EmailAnswerFormat
     @SerializedName("datePicker")
     QUESTION_DATE               ("datePicker"),             // ORKDateAnswerFormat of style Date
     @SerializedName("timeAndDatePicker")
@@ -40,7 +39,7 @@ public enum SurveyItemType {
     QUESTION_TIME               ("timePicker"),             // ORKTimeOfDayAnswerFormat
     @SerializedName("timeInterval")
     QUESTION_DURATION           ("timeInterval"),           // ORKTimeIntervalAnswerFormat
-    @SerializedName("numericInteger")
+    @SerializedName(value="numericInteger", alternate={"integer"})
     QUESTION_INTEGER            ("numericInteger"),         // ORKNumericAnswerFormat of style Integer
     @SerializedName("numericDecimal")
     QUESTION_DECIMAL            ("numericDecimal"),         // ORKNumericAnswerFormat of style Decimal
@@ -53,6 +52,8 @@ public enum SurveyItemType {
     ACCOUNT_REGISTRATION        ("registration"        ),   // ProfileStep
     @SerializedName("login")
     ACCOUNT_LOGIN               ("login"               ),   // LoginStep
+    @SerializedName("loginViaEmail")
+    ACCOUNT_LOGIN_VIA_EMAIL             ("loginViaEmail"               ),   // LoginStep
     @SerializedName("emailVerification")
     ACCOUNT_EMAIL_VERIFICATION  ("emailVerification"   ),   // EmailVerificationStep
     @SerializedName("externalID")
@@ -96,8 +97,7 @@ public enum SurveyItemType {
 
     public boolean isQuestionSubtype() {
         switch (this) {
-            case QUESTION_COMPOUND:
-            case QUESTION_TOGGLE:
+            case QUESTION_FORM:
             case QUESTION_BOOLEAN:
             case QUESTION_SINGLE_CHOICE:
             case QUESTION_MULTIPLE_CHOICE:

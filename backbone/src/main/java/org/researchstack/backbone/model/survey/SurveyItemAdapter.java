@@ -6,9 +6,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import org.researchstack.backbone.model.survey.factory.SurveyFactory;
-import org.researchstack.backbone.step.OnboardingCompletionStep;
-
 import java.lang.reflect.Type;
 
 /**
@@ -32,6 +29,9 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
         JsonObject jsonObject =  json.getAsJsonObject();
 
         JsonElement typeJson = jsonObject.get(SurveyItem.TYPE_GSON);
+        if (typeJson == null) {
+            typeJson = jsonObject.get(SurveyItem.TYPE_GSON_2);
+        }
         SurveyItemType surveyItemType = context.deserialize(typeJson, SurveyItemType.class);
 
         // This was a custom survey item type
@@ -59,11 +59,8 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
             case SUBTASK:
                 item = context.deserialize(json, SubtaskQuestionSurveyItem.class);
                 break;
-            case QUESTION_COMPOUND:
-                item = context.deserialize(json, CompoundQuestionSurveyItem.class);
-                break;
-            case QUESTION_TOGGLE:
-                item = context.deserialize(json, ToggleQuestionSurveyItem.class);
+            case QUESTION_FORM:
+                item = context.deserialize(json, FormSurveyItem.class);
                 break;
             case QUESTION_BOOLEAN:
                 item = context.deserialize(json, BooleanQuestionSurveyItem.class);
@@ -80,7 +77,8 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
                 item = context.deserialize(json, ScaleQuestionSurveyItem.class);
                 break;
             case QUESTION_TEXT:
-                item = context.deserialize(json, CompoundQuestionSurveyItem.class);
+            case QUESTION_EMAIL:
+                item = context.deserialize(json, TextfieldSurveyItem.class);
                 break;
             case QUESTION_DATE:
             case QUESTION_DATE_TIME:
@@ -107,7 +105,9 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
                 break;
             case ACCOUNT_REGISTRATION:
             case ACCOUNT_LOGIN:
+            case ACCOUNT_LOGIN_VIA_EMAIL:
             case ACCOUNT_PROFILE:
+            case ACCOUNT_EXTERNAL_ID:
                 item = context.deserialize(json, ProfileSurveyItem.class);
                 break;
             case ACCOUNT_COMPLETION:
@@ -115,7 +115,6 @@ public class SurveyItemAdapter implements JsonDeserializer<SurveyItem> {
                 item = context.deserialize(json, InstructionSurveyItem.class);
                 break;
             case ACCOUNT_DATA_GROUPS:
-            case ACCOUNT_EXTERNAL_ID:
             case ACCOUNT_PERMISSIONS:
             case PASSCODE:
                 break;

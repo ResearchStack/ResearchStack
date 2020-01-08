@@ -393,6 +393,6 @@
     <string name="rsb_ax_graph_range_format">范围：%1$s ~ %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">圆盘堆组成：</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">、</string>
-    <string name="rsb_ax_graph_point">分数：%1$s</string>
+    <string name="rsb_ax_graph_point">分数：%1$d</string>
     
 </resources>

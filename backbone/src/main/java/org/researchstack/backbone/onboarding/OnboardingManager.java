@@ -82,6 +82,17 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
     }
 
     /**
+     * Override to register custom ConsentSectionAdapters,
+     * but make sure that the adapter extends from ConsentSectionAdapter
+     * This can allow you to provide a custom ConsentDocumentFactory
+     * @param builder the gson builder to add to
+     * @param provider that is needed to create a ConsentSectionAdapter
+     */
+    public void registerOnboardingSectionAdapter(GsonBuilder builder, AdapterContextProvider provider) {
+        builder.registerTypeAdapter(OnboardingSection.class, new OnboardingSectionAdapter(provider));
+    }
+
+    /**
      * @param context should be activity context, just in case this is stored, but
      *                the results of this method should not be since it will store context
      * @return a Gson to be used by the OnboardingManager
@@ -89,17 +100,12 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
     private Gson buildGson(final Context context) {
         // We give access to context through this interface so that once this method
         // is over, we won't hold a reference to context
-        final AdapterContextProvider provider = new AdapterContextProvider() {
-            @Override
-            public Context getContext() {
-                return context;
-            }
-        };
+        final AdapterContextProvider provider = () -> context;
 
         GsonBuilder onboardingGson = new GsonBuilder();
         registerSurveyItemAdapter(onboardingGson);
-        onboardingGson.registerTypeAdapter(OnboardingSection.class, new OnboardingSectionAdapter(provider));
         onboardingGson.registerTypeAdapter(ConsentSection.class, new ConsentSectionAdapter(provider));
+        registerOnboardingSectionAdapter(onboardingGson, provider);
         return onboardingGson.create();
     }
 
@@ -211,7 +217,7 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
     public List<Step> steps(final Context context, OnboardingSection section, OnboardingTaskType taskType) {
 
         // Check to see that the steps for this section should be included
-        if (!shouldInclude(context, section.getOnboardingSectionType(), taskType)) {
+        if (!shouldInclude(context, section, taskType)) {
             Log.d(LOG_TAG, "No sections for the task type " + taskType.ordinal());
             return null;
         }
@@ -244,8 +250,8 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
      Define the rules for including a given section in a given task type.
      @return    `true` if the `SBAOnboardingSection` should be included for this `SBAOnboardingTaskType`
      */
-    boolean shouldInclude(Context context, OnboardingSectionType sectionType, OnboardingTaskType taskType) {
-        switch (sectionType) {
+    protected boolean shouldInclude(Context context, OnboardingSection section, OnboardingTaskType taskType) {
+        switch (section.getOnboardingSectionType()) {
             case LOGIN:
                 return taskType == OnboardingTaskType.LOGIN;
             case CONSENT:
@@ -271,7 +277,20 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
                 // Permissions and completion are included for login and registration
                 return taskType == OnboardingTaskType.REGISTRATION ||
                        taskType == OnboardingTaskType.LOGIN;
+            case CUSTOM:
+                return shouldIncludeCustomSection(context, section.getOnboardingSectionIdentifier(), taskType);
         }
+        return false;
+    }
+
+    /**
+     * @param context can be app or activity
+     * @param sectionIdentifier the custom section type identifier
+     * @param taskType the custom task type
+     * @return true if this section should  be including for the taskType, false otherwise
+     */
+    public boolean shouldIncludeCustomSection(
+            Context context, String sectionIdentifier, OnboardingTaskType taskType) {
         return false;
     }
 
@@ -301,7 +320,7 @@ public class OnboardingManager implements SurveyFactory.CustomStepCreator {
     }
 
     @Override
-    public Step createCustomStep(Context context, SurveyItem item, SurveyFactory factory) {
+    public Step createCustomStep(Context context, SurveyItem item, boolean isSubtaskStep, SurveyFactory factory) {
         return null;
     }
 

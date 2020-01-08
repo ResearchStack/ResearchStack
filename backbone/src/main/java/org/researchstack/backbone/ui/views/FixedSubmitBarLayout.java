@@ -2,6 +2,8 @@ package org.researchstack.backbone.ui.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -52,36 +54,51 @@ public abstract class FixedSubmitBarLayout extends AlertFrameLayout implements S
     {
         // Init root
         layoutInflater = LayoutInflater.from(getContext());
-        layoutInflater.inflate(R.layout.rsb_layout_fixed_submit_bar, this, true);
+        layoutInflater.inflate(getFixedSubmitBarLayoutId(), this, true);
 
         // Add contentContainer to the layout
-        contentContainer = (ViewGroup) findViewById(R.id.rsb_content_container);
+        contentContainer = findViewById(getContentContainerLayoutId());
+
         View content = layoutInflater.inflate(getContentResourceId(), contentContainer, false);
         contentContainer.addView(content, 0);
 
         // Init scrollview and submit bar guide positioning
         submitBarGuide = findViewById(R.id.rsb_submit_bar_guide);
         submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-        scrollView = (ObservableScrollView) findViewById(R.id.rsb_content_container_scrollview);
-        scrollView.setScrollListener(scrollY -> onScrollChanged(scrollView, submitBarGuide, submitBar));
-        scrollView.getViewTreeObserver()
-                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
-                {
-                    @Override
-                    public void onGlobalLayout()
-                    {
-                        scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                        // Set submitBarGuide the same height as submitBar
-                        if(submitBarGuide.getHeight() != submitBar.getHeight())
-                        {
-                            submitBarGuide.getLayoutParams().height = submitBar.getHeight();
-                            submitBarGuide.requestLayout();
+        if (submitBarGuide == null) {
+            // This must be a custom layout
+            return;
+        }
+
+        scrollView = findViewById(R.id.rsb_content_container_scrollview);
+        // Sub-classes can create layouts without scrollview for fullscreen behavior
+        if (scrollView != null) {
+            scrollView.setScrollListener(scrollY -> onScrollChanged(scrollView, submitBarGuide, submitBar));
+            scrollView.getViewTreeObserver()
+                    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                            // Set submitBarGuide the same height as submitBar
+                            if (submitBarGuide.getHeight() != submitBar.getHeight()) {
+                                submitBarGuide.getLayoutParams().height = submitBar.getHeight();
+                                submitBarGuide.requestLayout();
+                            }
+
+                            onScrollChanged(scrollView, submitBarGuide, submitBar);
                         }
+                    });
+        }
+    }
 
-                        onScrollChanged(scrollView, submitBarGuide, submitBar);
-                    }
-                });
+    public @IdRes int getContentContainerLayoutId() {
+        return R.id.rsb_content_container;
+    }
+
+    public @LayoutRes int getFixedSubmitBarLayoutId() {
+        return R.layout.rsb_layout_fixed_submit_bar;
     }
 
     private void onScrollChanged(ScrollView scrollView, View submitBarGuide, View submitBar)

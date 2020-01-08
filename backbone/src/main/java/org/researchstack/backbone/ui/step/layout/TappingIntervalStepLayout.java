@@ -97,7 +97,7 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
     }
 
     @Override
-    protected void setupActiveViews() {
+    public void setupActiveViews() {
         super.setupActiveViews();
 
         remainingHeightOfContainer(new HeightCalculatedListener() {
@@ -203,13 +203,13 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
     }
 
     @Override
-    protected void doUIAnimationPerSecond() {
+    public void doUIAnimationPerSecond() {
         super.doUIAnimationPerSecond();
         progressBarHorizontal.setProgress(progressBarHorizontal.getProgress() + 1);
     }
 
     @Override
-    protected void start() {
+    public void start() {
         super.start();
 
         startTime = System.currentTimeMillis();
@@ -282,7 +282,7 @@ public class TappingIntervalStepLayout extends ActiveStepLayout {
     }
 
     @Override
-    protected void stop() {
+    public void stop() {
         super.stop();
 
         // Complete any touches that have had a down but no up

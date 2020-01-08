@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">Bereik van %1$s tot %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Stack bestaat uit</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">en</string>
-    <string name="rsb_ax_graph_point">Punt: %1$s</string>
+    <string name="rsb_ax_graph_point">Punt: %1$d</string>
     
 </resources>

@@ -1,6 +1,7 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -10,7 +11,6 @@ import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.model.User;
 import org.researchstack.backbone.model.survey.factory.SurveyFactory;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by TheMDP on 1/14/17.
@@ -167,16 +166,18 @@ public class ProfileStepLayout extends FormStepLayout {
         return super.isAnswerValid(stepDataList, showErrorAlertOnInvalid, identifierErrorMap);
     }
 
-                                    /**
+    /**
      * @return Name if this profile form step has it, null otherwise
      */
-                                    protected String getName() {
+    @Nullable
+    protected String getName() {
         return getTextAnswer(ProfileInfoOption.NAME.getIdentifier());
     }
 
     /**
      * @return Email if this profile form step has it, null otherwise
      */
+    @Nullable
     protected String getEmail() {
         return getTextAnswer(ProfileInfoOption.EMAIL.getIdentifier());
     }
@@ -184,13 +185,23 @@ public class ProfileStepLayout extends FormStepLayout {
     /**
      * @return Email QuestionStep if this profile form step has it, null otherwise
      */
+    @Nullable
     protected QuestionStep getEmailStep() {
         return getQuestionStep(ProfileInfoOption.EMAIL.getIdentifier());
     }
 
     /**
+     * @return External ID if this profile form step has it, null otherwise
+     */
+    @Nullable
+    protected String getExternalId() {
+        return getTextAnswer(ProfileInfoOption.EXTERNAL_ID.getIdentifier());
+    }
+
+    /**
      * @return Password if this profile form step has it, null otherwise
      */
+    @Nullable
     protected String getPassword() {
         return getTextAnswer(ProfileInfoOption.PASSWORD.getIdentifier());
     }
@@ -198,6 +209,7 @@ public class ProfileStepLayout extends FormStepLayout {
     /**
      * @return Confirm Password if this profile form step has it, null otherwise
      */
+    @Nullable
     protected String getConfirmPassword() {
         return getTextAnswer(SurveyFactory.PASSWORD_CONFIRMATION_IDENTIFIER);
     }
@@ -205,6 +217,7 @@ public class ProfileStepLayout extends FormStepLayout {
     /**
      * @return User's birthday if this profile form step has it, null otherwise
      */
+    @Nullable
     protected Date getBirthdate() {
         return getDateAnswer(ProfileInfoOption.BIRTHDATE.getIdentifier());
     }
@@ -213,6 +226,7 @@ public class ProfileStepLayout extends FormStepLayout {
      * @param stepIdentifier the identifier for the step
      * @return String answer of step body, null if one doesn't exist or it is not a String
      */
+    @Nullable
     protected String getTextAnswer(String stepIdentifier) {
         Object result = findStepResult(stepIdentifier);
         if (result != null && result instanceof String) {
@@ -225,6 +239,7 @@ public class ProfileStepLayout extends FormStepLayout {
      * @param stepIdentifier the identifier for the step
      * @return Date answer of step body, null if one doesn't exist or it is not a Date
      */
+    @Nullable
     protected Date getDateAnswer(String stepIdentifier) {
         Object result = findStepResult(stepIdentifier);
         if (result != null && result instanceof Long) {

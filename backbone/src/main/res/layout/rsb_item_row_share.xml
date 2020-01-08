@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:background="?android:attr/selectableItemBackground"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal">
+
+    <!-- warning due to layout_width and layout_height not defined here, and not detecting that it is set in the style-->
+
+    <!--suppress AndroidDomInspection -->
+    <ImageView
+        android:id="@+id/share_item_icon"
+        style="@style/RsbLearnItemLogo"
+        android:layout_gravity="center_vertical"
+        tools:ignore="RequiredSize"
+        />
+
+    <TextView
+        android:id="@+id/share_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textAppearance="@style/Preference_TextAppearanceMaterialSubhead"
+        tools:ignore="RequiredSize"
+        tools:text="@string/lorem_name"
+        />
+</LinearLayout>

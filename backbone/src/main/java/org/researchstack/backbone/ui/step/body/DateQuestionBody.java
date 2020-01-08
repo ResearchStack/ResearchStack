@@ -5,10 +5,12 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v7.view.ContextThemeWrapper;
+import android.text.InputType;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -113,8 +115,9 @@ public class DateQuestionBody implements StepBody {
             title.setVisibility(View.GONE);
         }
 
-        TextView textView = (TextView) view.findViewById(R.id.value);
+        EditText textView = view.findViewById(R.id.value);
         textView.setSingleLine(true);
+        textView.setInputType(InputType.TYPE_NULL);
         if (step.getPlaceholder() != null) {
             textView.setHint(step.getPlaceholder());
         } else {

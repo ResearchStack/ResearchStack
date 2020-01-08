@@ -95,6 +95,26 @@ public class StepResultHelper {
     }
 
     /**
+     * Only works with the DEFAULT Result identifier keys
+     * @param taskResult the TaskResult to search within
+     * @param stepIdentifier for result
+     * @return String object if exists, empty string otherwise
+     */
+    public static String findStringResult(TaskResult taskResult, String stepIdentifier) {
+        if (taskResult == null || taskResult.getResults() == null || stepIdentifier == null) {
+            return null;
+        }
+        for (StepResult stepResult : taskResult.getResults().values()) {
+            String stringResult = findStringResult(stepIdentifier, stepResult);
+            if (stringResult != null) {
+                return stringResult;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
      * @param stepIdentifier for result
      * @param stepResult the step result to try and find the String result in
      * @return String object if exists, empty string otherwise
@@ -111,12 +131,12 @@ public class StepResultHelper {
     }
 
     /**
+     * Only works with the DEFAULT Result identifier keys
      * @param stepIdentifier for result
      * @param stepResult the step result to try and find the boolean result in
-     * @param taskResult the task result to try and find the boolean result in
      * @return String object if exists, empty string otherwise
      */
-    public static Boolean findBooleanResult(String stepIdentifier, StepResult stepResult, TaskResult taskResult) {
+    public static Boolean findBooleanResult(String stepIdentifier, StepResult stepResult) {
         StepResult idStepResult = findStepResult(stepResult, stepIdentifier);
         if (idStepResult != null) {
             Object resultValue = idStepResult.getResult();
@@ -128,6 +148,98 @@ public class StepResultHelper {
     }
 
     /**
+     * Only works with the DEFAULT Result identifier keys
+     * @param stepIdentifier for result
+     * @param taskResult the task result to try and find the boolean result in
+     * @return String object if exists, empty string otherwise
+     */
+    public static Boolean findBooleanResult(String stepIdentifier, TaskResult taskResult) {
+        if (taskResult == null || taskResult.getResults() == null || stepIdentifier == null) {
+            return null;
+        }
+        for (StepResult stepResult : taskResult.getResults().values()) {
+            Boolean stringResult = findBooleanResult(stepIdentifier, stepResult);
+            if (stringResult != null) {
+                return stringResult;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
+     * @param stepIdentifier for result
+     * @param stepResult the step result to try and find the Number result in
+     * @return Number object if exists, empty string otherwise
+     */
+    public static Number findNumberResult(String stepIdentifier, StepResult stepResult) {
+        StepResult idStepResult = findStepResult(stepResult, stepIdentifier);
+        if (idStepResult != null) {
+            Object resultValue = idStepResult.getResult();
+            if (resultValue instanceof Number) {
+                return (Number) resultValue;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
+     * @param stepIdentifier for result
+     * @param taskResult the task result to try and find the Number result in
+     * @return Number object if exists, empty string otherwise
+     */
+    public static Number findNumberResult(String stepIdentifier, TaskResult taskResult) {
+        if (taskResult == null || taskResult.getResults() == null || stepIdentifier == null) {
+            return null;
+        }
+        for (StepResult stepResult : taskResult.getResults().values()) {
+            Number result = findNumberResult(stepIdentifier, stepResult);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
+     * @param stepIdentifier for result
+     * @param stepResult the step result to try and find the integer result in
+     * @return Integer object if exists, empty string otherwise
+     */
+    public static Integer findIntegerResult(String stepIdentifier, StepResult stepResult) {
+        StepResult idStepResult = findStepResult(stepResult, stepIdentifier);
+        if (idStepResult != null) {
+            Object resultValue = idStepResult.getResult();
+            if (resultValue instanceof Integer) {
+                return (Integer) resultValue;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
+     * @param stepIdentifier for result
+     * @param taskResult the task result to try and find the integer result in
+     * @return Integer object if exists, empty string otherwise
+     */
+    public static Integer findIntegerResult(String stepIdentifier, TaskResult taskResult) {
+        if (taskResult == null || taskResult.getResults() == null || stepIdentifier == null) {
+            return null;
+        }
+        for (StepResult stepResult : taskResult.getResults().values()) {
+            Integer result = findIntegerResult(stepIdentifier, stepResult);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
      * @param stepIdentifier for result
      * @param stepResult the step result to try and find the date result in
      * @return String object if exists, empty string otherwise
@@ -144,6 +256,26 @@ public class StepResultHelper {
     }
 
     /**
+     * Only works with the DEFAULT Result identifier keys
+     * @param stepIdentifier for result
+     * @param taskResult the task result to try and find the date result in
+     * @return Date object if exists, empty string otherwise
+     */
+    public static Date findDateResult(String stepIdentifier, TaskResult taskResult) {
+        if (taskResult == null || taskResult.getResults() == null || stepIdentifier == null) {
+            return null;
+        }
+        for (StepResult stepResult : taskResult.getResults().values()) {
+            Date result = findDateResult(stepIdentifier, stepResult);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Only works with the DEFAULT Result identifier keys
      * Will find the first Result with a specific class type from within a StepResult
      * @param stepResult the step result to search within
      * @param comparator a class comparator that will be provided by the caller
@@ -170,6 +302,15 @@ public class StepResultHelper {
             }
         }
         return null;
+    }
+
+    /**
+     * @param subtaskId the id of the parent subtask that contains the nested step result
+     * @param stepResultId the step result id
+     * @return the fully qualified identifier for use within StepResultHelper functions
+     */
+    public static String subtaskIdentifier(String subtaskId, String stepResultId) {
+        return subtaskId + "." + stepResultId;
     }
 
     public static abstract class ResultClassComparator<T extends Result> {

@@ -391,6 +391,6 @@
     <string name="rsb_ax_graph_range_format">يتراوح من %1$s إلى %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">مجموعة تتكون من</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">و</string>
-    <string name="rsb_ax_graph_point">النقطة: %1$s</string>
+    <string name="rsb_ax_graph_point">النقطة: %1$d</string>
     
 </resources>

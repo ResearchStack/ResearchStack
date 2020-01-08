@@ -1,11 +1,15 @@
 package org.researchstack.backbone.step.active.recorder;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.MainThread;
 
+import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.DataProvider;
@@ -14,6 +18,7 @@ import org.researchstack.backbone.model.UserHealth;
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,10 +32,13 @@ public class PedometerRecorder extends SensorRecorder
     public static final String TIMESTAMP_KEY   = "timestamp";
     public static final String END_DATE        = "endDate";
     public static final String NUMBER_OF_STEPS = "numberOfSteps";
-    public static final String DISTANCE        = "distance";
+    public static final String DISTANCE        = "totalDistance";
+
+    public static final String BROADCAST_PEDOMETER_UPDATE_ACTION  = "LocationRecorder_BroadcastPedometerUpdate";
+    private static final String BROADCAST_PEDOMETER_UPDATE_KEY    = "PedometerUpdate";
 
     /**
-     * This used to compute the distance the user has traveled while recording the pedometer
+     * This used to compute the totalDistance the user has traveled while recording the pedometer
      * The default value is about half a meter, it will only be used when a user's height is unavailable
      */
     public static final float DEFAULT_METERS_PER_STRIDE = 0.6f; // in meters
@@ -47,8 +55,6 @@ public class PedometerRecorder extends SensorRecorder
 
     private int stepCounter;
     private JsonObject jsonObject;
-
-    private PedometerListener pedometerListener;
 
     PedometerRecorder(String identifier, Step step, File outputDirectory) {
         super(MANUAL_JSON_FREQUENCY, identifier, step, outputDirectory);
@@ -105,13 +111,6 @@ public class PedometerRecorder extends SensorRecorder
         return computedStride;
     }
 
-    @Override
-    protected void writeJsonData() {
-        // We ignore this method call from the base-class,
-        // since we are simply going to write a step taken
-        // when it comes back from the onSensorChanged method
-    }
-
     @MainThread
     @Override
     public void onStepTaken() {
@@ -122,22 +121,21 @@ public class PedometerRecorder extends SensorRecorder
         float distance = strideLength * stepCounter;
         jsonObject.addProperty(DISTANCE, distance);
         super.writeJsonObjectToFile(jsonObject);
-
-        if (pedometerListener != null) {
-            pedometerListener.onStepTaken(stepCounter, distance);
-        }
+        sendPedometerUpdateBroadcast(stepCounter, distance);
     }
 
+
     @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
+    public void recordSensorEvent(SensorEvent sensorEvent, JsonObject object) {
         // Step detector is only available for OS kitkat and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
-            sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR)
+                sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR)
         {
             onStepTaken();
         } else if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             accelerometerStepDetector.processAccelerometerData(sensorEvent);
         }
+        //TODO: fix accelerometer data
     }
 
     @Override
@@ -145,19 +143,50 @@ public class PedometerRecorder extends SensorRecorder
         // NO-OP
     }
 
-    public PedometerListener getPedometerListener() {
-        return pedometerListener;
+    protected void sendPedometerUpdateBroadcast(int stepCount, float totalDistance) {
+        PedometerUpdateHolder dataHolder = new PedometerUpdateHolder();
+        dataHolder.setStepCount(stepCount);
+        dataHolder.setTotalDistance(totalDistance);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BROADCAST_PEDOMETER_UPDATE_KEY, dataHolder);
+        Intent intent = new Intent(BROADCAST_PEDOMETER_UPDATE_ACTION);
+        intent.putExtras(bundle);
+        sendBroadcast(intent);
     }
 
-    public void setPedometerListener(PedometerListener pedometerListener) {
-        this.pedometerListener = pedometerListener;
+    /**
+     * @param intent must have action of BROADCAST_PEDOMETER_UPDATE_ACTION
+     * @return the PedometerUpdateHolder contained in the broadcast
+     */
+    public static PedometerUpdateHolder getPedometerUpdateHolder(Intent intent) {
+        if (intent.getAction() == null ||
+                !intent.getAction().equals(BROADCAST_PEDOMETER_UPDATE_ACTION) ||
+                intent.getExtras() == null ||
+                intent.getExtras().containsKey(BROADCAST_PEDOMETER_UPDATE_KEY)) {
+            return null;
+        }
+        return (PedometerUpdateHolder) intent.getExtras()
+                .getSerializable(BROADCAST_PEDOMETER_UPDATE_KEY);
     }
 
-    public interface PedometerListener {
-        /**
-         * @param stepCount the current step count
-         * @param distance the total distance covered so far, in meters
-         */
-        void onStepTaken(int stepCount, float distance);
+    public static class PedometerUpdateHolder implements Serializable {
+        private int stepCount;
+        private float totalDistance;
+
+        public int getStepCount() {
+            return stepCount;
+        }
+
+        public void setStepCount(int stepCount) {
+            this.stepCount = stepCount;
+        }
+
+        public float getTotalDistance() {
+            return totalDistance;
+        }
+
+        public void setTotalDistance(float totalDistance) {
+            this.totalDistance = totalDistance;
+        }
     }
 }
