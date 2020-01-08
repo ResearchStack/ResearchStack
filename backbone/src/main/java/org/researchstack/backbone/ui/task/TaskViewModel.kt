@@ -320,9 +320,10 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         }
     }
 
-    fun checkForSkipDialog(originalStepResult: StepResult<*>?) {
+    fun checkForSkipDialog(originalStepResult: StepResult<*>?,
+                           modifiedStepResult: StepResult<*>?) {
         when {
-            currentStep!!.isOptional && checkIfNewAnswerIsSkipWhilePreviousIsNot() -> {
+            currentStep!!.isOptional && checkIfNewAnswerIsSkipWhilePreviousIsNot(originalStepResult, modifiedStepResult) -> {
                 showSkipEditDialog.postValue(Pair(true, originalStepResult!!))
             }
             else -> {
@@ -343,13 +344,13 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     }
 
     @VisibleForTesting
-    fun checkIfNewAnswerIsSkipWhilePreviousIsNot(): Boolean {
-        val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
-        val modifiedStepResult = currentTaskResult.getStepResult(currentStep?.identifier)
-        return if (originalStepResult == null) {
+    fun checkIfNewAnswerIsSkipWhilePreviousIsNot(originalStepResult: StepResult<*>?,
+                                                 modifiedStepResult: StepResult<*>?): Boolean {
+        return if (originalStepResult == null || originalStepResult.results.isEmpty()) {
+            currentTaskResult.setStepResultForStep(currentStep!!, modifiedStepResult)
             false
         } else {
-            originalStepResult.allValuesAreNull()!!.not() && modifiedStepResult.allValuesAreNull()
+            originalStepResult.allValuesAreNull()!!.not() && modifiedStepResult!!.allValuesAreNull()
         }
     }
 

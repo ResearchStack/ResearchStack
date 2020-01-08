@@ -264,7 +264,7 @@ class TaskViewModelTest {
         doReturn(true).`when`(taskViewModel).checkIfNewAnswerIsSkipWhilePreviousIsNot()
 
         //act
-        taskViewModel.checkForSkipDialog(originalStepResult)
+        taskViewModel.checkForSkipDialog(originalStepResult, modifiedStepResult)
 
         //Assert
         Assert.assertEquals(taskViewModel.showSkipEditDialog.value, Pair(true, originalStepResult!!))
@@ -276,10 +276,10 @@ class TaskViewModelTest {
         doNothing().`when`(taskViewModel).nextStep()
         currentStepMocked.isOptional = false
         //act
-        taskViewModel.checkForSkipDialog(originalStepResult)
+        taskViewModel.checkForSkipDialog(originalStepResult, modifiedStepResult)
 
         //Assert
-        verify(taskViewModel).checkForSkipDialog(any())
+        verify(taskViewModel).checkForSkipDialog(any(), modifiedStepResult)
         verify(taskViewModel).nextStep()
         verify(taskViewModel).currentStep = any() // called in setUp
         verifyNoMoreInteractions(taskViewModel)
