@@ -7,11 +7,6 @@ package org.researchstack.backbone.result;
 public class RangeOfMotionResult extends Result {
 
     /**
-     The task duration (that is, the time taken to perform the movement task).
-     */
-    private int duration;
-
-    /**
      The angle (degrees) from the device reference position at the start position.
      */
     private double start;
@@ -44,14 +39,6 @@ public class RangeOfMotionResult extends Result {
 
     public RangeOfMotionResult(String identifier) {
         super(identifier);
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 
     public double getStart() {
