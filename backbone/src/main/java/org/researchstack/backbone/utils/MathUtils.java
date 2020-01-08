@@ -4,34 +4,9 @@ import java.lang.Math;
 
 public class MathUtils {
 
-    private double min;
-    private double max;
-
-    /**
-     * Method to obtain minimum from range of real numbers
-     **/
-    public static double getMinimum(double data) {
-        if (data < min) {
-            min = data;
-        }
-        return min;
-    }
-
-
-    /**
-     * Method to obtain maximum from range of real numbers
-     **/
-    public static double getMaximum(double data) {
-        if (data > max) {
-            max = data;
-        }
-        return max;
-    }
-
-
      /**
      * Method to multiply two quaternions (non-commutative).
-     * For formula, see http://mathworld.wolfram.com/Quaternion.html
+     * For original formula, see http://mathworld.wolfram.com/Quaternion.html
      **/
     public static float[] multiplyQuaternions(float[] q1, float[] q2) {
         float[] productQuaternion = new float[4];
@@ -45,7 +20,7 @@ public class MathUtils {
 
     /**
      * Method to calculate the inverse (complex conjugate) of a quaternion.
-     * For formula, see http://mathworld.wolfram.com/Quaternion.html
+     * For original formula, see http://mathworld.wolfram.com/Quaternion.html
      **/
     public static float[] calculateInverseOfQuaternion(float[] originalQuaternion) {
         float[] inverseQuaternion = new float[4];
