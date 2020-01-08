@@ -58,8 +58,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     public static final String ROTATION_REFERENCE_COORDINATE_KEY = "referenceCoordinate";
 
-    public static final String TIMESTAMP_KEY = "timestamp";
-    public static final String END_DATE = "endDate";
     public static final String BROADCAST_ROTATION_VECTOR_UPDATE_ACTION = "BroadcastRotationVectorUpdate";
     public static final String BROADCAST_ROTATION_VECTOR_UPDATE_KEY = "RotationVectorUpdate";
 
