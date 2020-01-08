@@ -46,7 +46,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     private float[] updatedDeviceAttitudeAsQuaternion = new float[4];
     private float[] startAttitude = new float[4];
     private float[] finishAttitude = new float[4];
+    private double min;
     private double minimumAngle;
+    private double max;
     private double maximumAngle;
     public double sensorFreq = 100.0; // Sensor frequency for device motion recorder
 
@@ -89,7 +91,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
 
         titleTextview.setVisibility(View.VISIBLE);
-        textTextview.setVisibility(View.VISIBLE);
+        textTextview.setVisibility(View.GONE); // This will need to be set to VISIBLE for RS framework
         timerTextview.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         progressBarHorizontal.setVisibility(View.GONE);
@@ -120,9 +122,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                     return;
                 }
                 // This obtains values from the rotation vector sensor via a broadcast from DeviceMotionRecorder
-                if (DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION.equals(intent.getAction())) {
-                    DeviceMotionRecorder.DeviceMotionUpdateHolder dataHolder =
-                            DeviceMotionRecorder.getDeviceMotionUpdateHolder(intent);
+                if (DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_ACTION.equals(intent.getAction())) {
+                    DeviceMotionRecorder.RotationVectorUpdateHolder dataHolder =
+                            DeviceMotionRecorder.getRotationVectorUpdateHolder(intent);
                     if (dataHolder != null) {
                         float[] sensor_values;
                         if (dataHolder.getW() != 0.0f) {
@@ -132,28 +134,35 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                                     dataHolder.getZ(),
                                     dataHolder.getW()
                             };
+                            updatedDeviceAttitudeAsQuaternion = getDeviceAttitudeAsQuaternion(sensor_values);
                         } else {
                             sensor_values = new float[]{
                                     dataHolder.getX(),
                                     dataHolder.getY(),
                                     dataHolder.getZ()
                             };
+                            updatedDeviceAttitudeAsQuaternion = getDeviceAttitudeAsQuaternion(sensor_values);
                         }
-                        updatedDeviceAttitudeAsQuaternion = getDeviceAttitudeAsQuaternion(sensor_values); // this should capture the current device attitude
-                            if (!startAttitudeCaptured) { // we want getStartAttitude() to run once only
-                            setStartAttitude(getDeviceAttitudeAsQuaternion(sensor_values));
+                        double updatedAngle = calculateShiftedRelativeAngle(updatedDeviceAttitudeAsQuaternion); // this converts the current device attitude into an angle (degrees)
+                        if (!startAttitudeCaptured) { // we want setStartAttitude() to run once only
+                            setStartAttitude(updatedDeviceAttitudeAsQuaternion);
                             startAttitudeCaptured = true;
                             }
-                        setMinimumAngle(updatedDeviceAttitudeAsQuaternion);
-                        setMaximumAngle(updatedDeviceAttitudeAsQuaternion);
-                        // This should capture the final (finish) position of the device, since the sensor values keep updating until the step finishes
-                        setFinishAttitude(updatedDeviceAttitudeAsQuaternion);
+                        if (updatedAngle < min) { // this captures the minimum angle recorded during the task
+                            min = updatedAngle;
+                            setMinimumAngle(min);
+                            }
+                        if (updatedAngle > max) { // this captures the maximum angle recorded during the task
+                            max = updatedAngle;
+                            setMaximumAngle(max);
+                            }
+                        setFinishAttitude(updatedDeviceAttitudeAsQuaternion); // this captures the final (finish) angle of the task
                     }
                 }
             }
         };
-        IntentFilter intentFilter = new IntentFilter(DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION);
-        intentFilter.addAction(DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_KEY);
+        IntentFilter intentFilter = new IntentFilter(DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_ACTION);
+        intentFilter.addAction(DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_KEY);
         LocalBroadcastManager.getInstance(appContext)
                 .registerReceiver(deviceMotionReceiver, intentFilter);
     }
@@ -183,7 +192,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     public void onFinish() {
         stepResultFinished();
         layout.setOnClickListener(null);
-        stop(); // this should stop the device motion broadcast and recording
+        stop(); // this should stop device motion recording and the broadcast
     }
 
     /**
@@ -229,19 +238,18 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     /**
-     * Methods to obtain and calculate the minimum range-shifted angle (degrees), calculated for all
-     * device motion updates during recording, relative to the start position
+     * Methods to obtain and calculate the minimum and maximum range-shifted angle (degrees), calculated
+     * for all device motion updates during recording, relative to the start position
      **/
-    private double calculateShiftedMinimumAngle(float[] attitudeUpdates) {
+    private double calculateShiftedRelativeAngle(float[] attitudeUpdates) {
+        double shifted_angle;
         float[] attitudeUpdatesRelativeToStart = getDeviceOrientationRelativeToStart(attitudeUpdates);
         double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(attitudeUpdatesRelativeToStart);
-        double adjusted_angle = shiftDeviceAngleRange(unadjusted_angle);
-        double shiftedMinimumAngle = MathUtils.getMinimum(adjusted_angle);
-        return shiftedMinimumAngle;
+        shifted_angle = shiftDeviceAngleRange(unadjusted_angle);
+        return shifted_angle;
     }
 
-    private void setMinimumAngle (float[] attitudeUpdates) {
-        double minimumAngle = calculateShiftedMinimumAngle(attitudeUpdates);
+    private void setMinimumAngle (double minimumAngle) {
         this.minimumAngle = minimumAngle;
     }
 
@@ -249,20 +257,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         return minimumAngle;
     }
 
-    /**
-     * Methods to obtain and calculate the maximum range-shifted angle (degrees), calculated for all
-     * device motion updates during recording, relative to the start position
-     **/
-    private double calculateShiftedMaximumAngle(float[] attitudeUpdates) {
-        float[] attitudeUpdatesRelativeToStart = getDeviceOrientationRelativeToStart(attitudeUpdates);
-        double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(attitudeUpdatesRelativeToStart);
-        double adjusted_angle = shiftDeviceAngleRange(unadjusted_angle);
-        double shiftedMaximumAngle = MathUtils.getMaximum(adjusted_angle);
-        return shiftedMaximumAngle;
-    }
-
-    private void setMaximumAngle (float[] attitudeUpdates) {
-        double maximumAngle = calculateShiftedMaximumAngle(attitudeUpdates);
+    private void setMaximumAngle (double maximumAngle) {
         this.maximumAngle = maximumAngle;
     }
 
@@ -325,8 +320,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      *
      **/
     public float[] getDeviceOrientationRelativeToStart(float[] originalDeviceAttitude) {
-        float[] inverseOfStart = MathUtils.calculateInverseOfQuaternion(getStartAttitude());
         float[] relativeDeviceAttitude;
+        float[] inverseOfStart = MathUtils.calculateInverseOfQuaternion(getStartAttitude());
         relativeDeviceAttitude = MathUtils.multiplyQuaternions(originalDeviceAttitude, inverseOfStart);
         return relativeDeviceAttitude;
     }
@@ -357,8 +352,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         the zero orientation {0,0,0,0} position is parallel with the ground (i.e. screen facing up).
         Hence, tasks in which portrait is the start position (i.e. perpendicular to the ground) require
         a 90 degree adjustment. In addition, the sign of angles calculated from the quaternion need to
-         be reversed for the knee and shoulder tasks, in which the device will be rotated in the direction
-         opposite to that of the device axes (i.e. right hand rule). */
+        be reversed for the knee and shoulder tasks, in which the device will be rotated in the direction
+        opposite to that of the device axes (i.e. right hand rule). */
 
         start = 90 - getShiftedStartAngle(); // reports absolute an angle between +270 and -90 degrees
         rangeOfMotionResult.setStart(start);
@@ -383,3 +378,4 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         stepResult.setResultForIdentifier(rangeOfMotionResult.getIdentifier(), rangeOfMotionResult);
     }
 }
+
