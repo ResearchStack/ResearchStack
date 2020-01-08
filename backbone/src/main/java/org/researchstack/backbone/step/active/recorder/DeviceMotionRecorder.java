@@ -278,7 +278,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
      *     https://source.android.com/devices/sensors/sensor-types#geomagnetic_rotation_vector
      */
     @VisibleForTesting
-    public void recordRotationVector(SensorEvent sensorEvent, JsonObject jsonObject) {
+    void recordRotationVector(SensorEvent sensorEvent, JsonObject jsonObject) {
         // indicate android sensor subtype
         int sensorType = sensorEvent.sensor.getType();
         if (Sensor.TYPE_ROTATION_VECTOR == sensorType) {
