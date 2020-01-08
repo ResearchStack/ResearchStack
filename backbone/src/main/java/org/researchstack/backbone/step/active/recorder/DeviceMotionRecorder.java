@@ -60,8 +60,8 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     public static final String TIMESTAMP_KEY = "timestamp";
     public static final String END_DATE = "endDate";
-    public static final String BROADCAST_DEVICE_MOTION_UPDATE_ACTION = "BroadcastDeviceMotionUpdate";
-    public static final String BROADCAST_DEVICE_MOTION_UPDATE_KEY = "DeviceMotionUpdate";
+    public static final String BROADCAST_ROTATION_VECTOR_UPDATE_ACTION = "BroadcastRotationVectorUpdate";
+    public static final String BROADCAST_ROTATION_VECTOR_UPDATE_KEY = "RotationVectorUpdate";
 
     private Context appContext;
     private JsonObject jsonObject;
@@ -226,7 +226,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
             case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
             case Sensor.TYPE_ROTATION_VECTOR:
                 recordRotationVector(sensorEvent, jsonObject);
-                sendDeviceMotionUpdateBroadcast(
+                sendRotationVectorUpdateBroadcast(
                     jsonObject.get(X_KEY).getAsFloat(),
                     jsonObject.get(Y_KEY).getAsFloat(),
                     jsonObject.get(Z_KEY).getAsFloat(),
@@ -354,37 +354,37 @@ public class DeviceMotionRecorder extends SensorRecorder {
         // no-op
     }
 
-    protected void sendDeviceMotionUpdateBroadcast(float x, float y, float z, float w) {
-        DeviceMotionUpdateHolder dataHolder = new DeviceMotionUpdateHolder();
+    protected void sendRotationVectorUpdateBroadcast(float x, float y, float z, float w) {
+        RotationVectorUpdateHolder dataHolder = new RotationVectorUpdateHolder();
         dataHolder.setX(x);
         dataHolder.setY(y);
         dataHolder.setZ(z);
         dataHolder.setW(w);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(BROADCAST_DEVICE_MOTION_UPDATE_KEY, dataHolder);
-        Intent intent = new Intent(BROADCAST_DEVICE_MOTION_UPDATE_ACTION);
+        bundle.putSerializable(BROADCAST_ROTATION_VECTOR_UPDATE_KEY, dataHolder);
+        Intent intent = new Intent(BROADCAST_ROTATION_VECTOR_UPDATE_ACTION);
         intent.putExtras(bundle);
-        intent.setAction(org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder.BROADCAST_DEVICE_MOTION_UPDATE_ACTION);
+        intent.setAction(org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_ACTION);
         LocalBroadcastManager.getInstance(appContext).
             sendBroadcast(intent);
     }
 
     /**
-     * @param intent must have action of BROADCAST_DEVICE_MOTION_UPDATE_ACTION
-     * @return the DeviceMotionUpdateHolder contained in the broadcast
+     * @param intent must have action of BROADCAST_ROTATION_VECTOR_UPDATE_ACTION
+     * @return the RotationVectorUpdateHolder contained in the broadcast
      */
-    public static DeviceMotionUpdateHolder getDeviceMotionUpdateHolder(Intent intent) {
+    public static RotationVectorUpdateHolder getRotationVectorUpdateHolder(Intent intent) {
         if (intent.getAction() == null ||
-                !intent.getAction().equals(BROADCAST_DEVICE_MOTION_UPDATE_ACTION) ||
+                !intent.getAction().equals(BROADCAST_ROTATION_VECTOR_UPDATE_ACTION) ||
                 intent.getExtras() == null ||
-                !intent.getExtras().containsKey(BROADCAST_DEVICE_MOTION_UPDATE_KEY)) {
+                !intent.getExtras().containsKey(BROADCAST_ROTATION_VECTOR_UPDATE_KEY)) {
             return null;
         }
-        return (DeviceMotionUpdateHolder) intent.getExtras()
-                .getSerializable(BROADCAST_DEVICE_MOTION_UPDATE_KEY);
+        return (RotationVectorUpdateHolder) intent.getExtras()
+                .getSerializable(BROADCAST_ROTATION_VECTOR_UPDATE_KEY);
     }
 
-    public static class DeviceMotionUpdateHolder implements Serializable {
+    public static class RotationVectorUpdateHolder implements Serializable {
         private float x;
         private float y;
         private float z;
