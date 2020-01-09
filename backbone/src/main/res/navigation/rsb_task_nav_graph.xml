@@ -124,6 +124,21 @@
         android:name="org.researchstack.backbone.ui.step.fragments.ReviewStepFragment"
         android:label="ReviewStepFragment" />
 
+    <fragment
+        android:id="@+id/rsb_consent_visual_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.ConsentVisualStepFragment"
+        android:label="ConsentVisualStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_consent_document_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.ConsentDocumentStepFragment"
+        android:label="ConsentDocumentStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_consent_signature_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.ConsentSignatureStepFragment"
+        android:label="ConsentSignatureStepFragment" />
+
     <action android:id="@+id/rsb_action_global_rsb_review_step_fragment"
         app:destination="@id/rsb_review_step_fragment"
         app:launchSingleTop="true"/>

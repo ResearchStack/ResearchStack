@@ -2,7 +2,6 @@ package org.researchstack.backbone.ui.task
 
 import android.app.Application
 import android.content.Intent
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +11,7 @@ import org.researchstack.backbone.result.TaskResult
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.task.Task
 import org.researchstack.backbone.ui.SingleLiveEvent
+import org.researchstack.backbone.ui.callbacks.StepCallbacks
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_ACTION_FAILED_COLOR
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_COLOR_PRIMARY
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_COLOR_PRIMARY_DARK
@@ -24,7 +24,7 @@ import java.util.Date
 import java.util.Stack
 import kotlin.properties.Delegates
 
-internal class TaskViewModel(val context: Application, intent: Intent) : AndroidViewModel(context) {
+class TaskViewModel(val context: Application, intent: Intent) : AndroidViewModel(context) {
 
     var editing: Boolean by Delegates.observable(false) { _, _, newValue ->
         hideMenuItemCancel.postValue(newValue)
@@ -70,6 +70,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     //only used for cancel edit
     private var hasBranching = false
     private val stack = Stack<Step>()
+    var stepCallbacks : StepCallbacks? = null
 
     init {
         taskResult = intent.extras?.get(EXTRA_TASK_RESULT) as TaskResult?

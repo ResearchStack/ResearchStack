@@ -1,14 +1,15 @@
 package org.researchstack.backbone.ui;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.BirthDateAnswerFormat;
@@ -22,6 +23,8 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
+import org.researchstack.backbone.ui.step.fragments.BaseStepFragment;
+import org.researchstack.backbone.ui.task.TaskActivity;
 import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.RSHTMLPDFWriter;
 
@@ -32,9 +35,8 @@ import java.util.Date;
 import java.util.List;
 
 import static org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout.KEY_SIGNATURE;
-import static org.researchstack.backbone.ui.task.TaskActivity.EXTRA_TASK;
 
-public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCallbacks {
+public class ConsentViewTaskActivity extends TaskActivity implements StepCallbacks {
 
     private static final String ID_FORM_FIRST_NAME = "user_info_form_first_name";
     private static final String ID_FORM_LAST_NAME = "user_info_form_last_name";
@@ -53,6 +55,13 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
         intent.putExtra(EXTRA_TASK, task);
         intent.putExtra(EXTRA_ASSETS_FOLDER, assetsFolder);
         return intent;
+    }
+
+    @Override
+    protected void onCreate(@org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        getViewModel().setStepCallbacks(this);
     }
 
     @Override
@@ -80,7 +89,51 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
             consentHtml = ((ConsentDocumentStep) step).getConsentHTML();
         }
 
-        super.onSaveStep(action, step, result);
+        StepCallbacks stepCallbacks = getCurrentFragmentStepCallbacks();
+        if (stepCallbacks != null) {
+            stepCallbacks.onSaveStep(action, step, result);
+        }
+    }
+
+    @Override
+    public void onCancelStep() {
+        StepCallbacks stepCallbacks = getCurrentFragmentStepCallbacks();
+        if (stepCallbacks != null) {
+            stepCallbacks.onEditCancelStep();
+        }
+    }
+
+    @Override
+    public void setActionbarVisible(boolean setVisible) {
+        StepCallbacks stepCallbacks = getCurrentFragmentStepCallbacks();
+        if (stepCallbacks != null) {
+            stepCallbacks.setActionbarVisible(setVisible);
+        }
+    }
+
+    @Override
+    public void onEditCancelStep() {
+        StepCallbacks stepCallbacks = getCurrentFragmentStepCallbacks();
+        if (stepCallbacks != null) {
+            stepCallbacks.onEditCancelStep();
+        }
+    }
+
+    @Override
+    public void onSkipStep(Step step, StepResult originalStepResult, StepResult modifiedStepResult) {
+        StepCallbacks stepCallbacks = getCurrentFragmentStepCallbacks();
+        if (stepCallbacks != null) {
+            stepCallbacks.onSkipStep(step, originalStepResult, modifiedStepResult);
+        }
+    }
+
+    private StepCallbacks getCurrentFragmentStepCallbacks() {
+        Fragment fragment = getCurrentFragment();
+        if (fragment instanceof BaseStepFragment) {
+            return ((BaseStepFragment) fragment);
+        } else {
+            return null;
+        }
     }
 
     private String getFormalName(String firstName, String lastName) {
@@ -92,7 +145,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
     }
 
     @Override
-    protected void saveAndFinish() {
+    protected void close(boolean isCompleted) {
         // you can also set title / message
         final AlertDialog dialog = new ProgressDialog.Builder(this)
                 .setCancelable(false)
@@ -113,7 +166,7 @@ public class ConsentViewTaskActivity extends ViewTaskActivity implements StepCal
 
         new PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml, consentAssetsFolder, () -> {
                     dialog.dismiss();
-                    ConsentViewTaskActivity.super.saveAndFinish();
+                    ConsentViewTaskActivity.super.close(isCompleted);
                 }
         );
     }

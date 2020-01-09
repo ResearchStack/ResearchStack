@@ -19,6 +19,11 @@ public class ConsentVisualStep extends Step {
     }
 
     @Override
+    public int getDestinationId() {
+        return R.id.rsb_consent_visual_step_fragment;
+    }
+
+    @Override
     public int getStepTitle() {
         return org.researchstack.backbone.R.string.rsb_consent;
     }

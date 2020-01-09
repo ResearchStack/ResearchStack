@@ -57,13 +57,16 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
                 setupStepCallbacks(stepView)
 
             }
+            is ConsentVisualStepLayout -> {
+                stepView.initialize(currentStep, stepResult,
+                        viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
+                        viewModel.secondaryTextColor)
+                setupStepCallbacks(stepView)
+            }
             is StepLayout -> {
                 stepView.initialize(currentStep, stepResult)
                 setupStepCallbacks(stepView)
             }
-            is ConsentVisualStepLayout -> stepView.initialize(currentStep, stepResult,
-                    viewModel.colorPrimary, viewModel.colorSecondary, viewModel.principalTextColor,
-                    viewModel.secondaryTextColor)
             else -> {
                 Log.d("BaseStepFragment", "WARNING: Unknown stepView type, cannot initialize layout")
             }
@@ -72,7 +75,7 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
     }
 
     private fun setupStepCallbacks(stepView: StepLayout) {
-        stepView.setCallbacks(this)
+        stepView.setCallbacks(viewModel.stepCallbacks ?: this)
         stepView.isEditView(viewModel.editing)
         viewModel.updateCancelEditInLayout.observe(this, Observer {
             stepView.setCancelEditMode(it)
