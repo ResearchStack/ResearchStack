@@ -339,7 +339,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     protected void updateAllQuestionSteps(boolean skipped) {
         for (FormStepData stepData : subQuestionStepData) {
             StepResult result = stepData.stepBody.getStepResult(skipped);
-            stepResult.getResults().put(stepData.step.getIdentifier(), result);
+            if (result != null) {
+                stepResult.getResults().put(stepData.step.getIdentifier(), result);
+            }
         }
     }
 
